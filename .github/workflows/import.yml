@@ -2,6 +2,8 @@ name: FolioLab Open – testen und veröffentlichen
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -14,11 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-and-deploy:
+  test:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,6 +27,25 @@ jobs:
         run: |
           npm test
           npm run check
+      - name: Install browser test tools
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Browser smoke tests (320–1440 px)
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-smoke.mjs
+          node tests/live-probes.mjs
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
       - name: Prepare static site
         run: |
           mkdir -p _site

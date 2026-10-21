@@ -19,3 +19,6 @@
 .advanced-apis[open] summary{margin-bottom:9px}
 .status-text{font-size:11px;color:#718874;line-height:1.55;max-width:290px}
 @media(max-width:720px){.wallet-scan-row{padding:11px 8px}.wallet-scan-money{max-width:37%}}
+
+/* Separate provider and account rows keep the existing neutral design. */
+.account-entry{display:flex;align-items:center;gap:8px;padding:8px 0 8px 19px;border-bottom:1px solid #f0f3f0;font-size:12px;color:#4a6654}.account-entry span{flex:1;min-width:0;overflow-wrap:anywhere}.account-entry small{color:#92a395}.notice:not(.hidden){background:#fff5e6;border:1px solid #e7d3a9;padding:16px;border-radius:12px;line-height:1.6;margin-bottom:15px;color:#775628}.notice button{margin-left:8px}.panel-head .toolbar-buttons{justify-content:flex-end}
