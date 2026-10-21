@@ -28,7 +28,7 @@ test('Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert'
   const mock=async(_url,opts)=>{const req=JSON.parse(opts.body);methods.push(req.method+':'+(req.params[1]?.programId||''));
     if(req.method==='getBalance')return reply({result:{value:3200000000}});
     const mint='D'.repeat(44);
-    const account={account:{data:{parsed:{info:{mint,tokenAmount:{uiAmountString:'2.5',decimals:6}}}}}};
+    const account={account:{data:{parsed:{info:{mint,tokenAmount:{amount:'2500000',uiAmountString:'2.5',decimals:6}}}}}};
     return reply({result:{value:[account]}});
   };
   const results=await discoverWallet('sol',SOL,{},mock);
@@ -54,3 +54,28 @@ test('Solana-SOL bleibt importierbar, auch wenn beide Token-Programme blockiert 
 
 test('EVM: Native Coin bleibt bei ausgefallenem Token-Explorer erhalten, aber nur als Teilerfolg',async()=>{const mock=async url=>{if(url.endsWith('token-balances'))throw Error('Ratenlimit');return reply({coin_balance:'2500000000000000000'});};const a=await discoverWallet('1',A,{},mock);assert.equal(a.length,1);assert.equal(a[0].quantity,2.5);assert.equal(a.partial,true);});
 test('EVM: kein Native Coin und ausgefallener Token-Explorer dürfen nicht als leeres Wallet gelten',async()=>{const mock=async url=>{if(url.endsWith('token-balances'))throw Error('Ausfall');return reply({coin_balance:'0'});};await assert.rejects(()=>discoverWallet('1',A,{},mock),/nicht verfügbar/);});
+
+test('Solana sums SPL raw balances exactly beyond JS safe integer',async()=>{
+ const mint='D'.repeat(44);let i=0;
+ const mock=async(_url,opts)=>{
+  const req=JSON.parse(opts.body);
+  if(req.method==='getBalance')return reply({result:{value:0}});
+  i++;
+  return reply({result:{value:[{account:{data:{parsed:{info:{mint,tokenAmount:{amount:i===1?'9007199254740993':'2',decimals:6}}}}}}]}});
+ };
+ const result=await discoverWallet('sol',SOL,{},mock);
+ assert.equal(result[0].quantityExact,'9007199254.740995');
+});
+test('EVM discovery preserves exact large atomic balances and identifies incomplete scans',async()=>{
+ const tokens=Array.from({length:500},(_,i)=>({value:String(9007199254740993n+BigInt(i)),token:{type:'ERC-20',address_hash:'0x'+i.toString(16).padStart(40,'0'),decimals:'6',name:'Token '+i,symbol:'T'+i}}));
+ const mock=async url=>reply(url.endsWith('/token-balances')?tokens:{coin_balance:'1'});
+ const result=await discoverWallet('1',A,{},mock);
+ assert.equal(result[0].quantityExact,'0.000000000000000001');
+ assert.equal(result[1].quantityExact,'9007199254.740993');
+ assert.equal(result.partial,true);
+ assert.match(result.warning,/abgeschnitten/);
+});
+test('Missing Solana raw account value never means verified zero',async()=>{
+ const mock=async(_url,opts)=>reply(JSON.parse(opts.body).method==='getBalance'?{result:{}}:{result:{value:[]}});
+ await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohbetrag/);
+});
