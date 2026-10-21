@@ -22,7 +22,7 @@ try{
  await page.reload();
  for(const width of [320,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
-  const nav=width<768?'#mobileNav':'#sidebarNav';
+  const nav=(await page.locator('#mobileNav').isVisible())?'#mobileNav':'#sidebarNav';
   for(const section of ['positions','dashboard','history','more']){
    await page.locator(nav+' [data-page="'+section+'"]').click();
    const dimensions=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));
