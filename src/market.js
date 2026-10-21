@@ -26,7 +26,7 @@ export const PUBLIC_EVM_NETWORKS = {
   56: {name:'BNB Smart Chain', host:'https://bscscan.com', symbol:'BNB', coinId:'binancecoin', explorer:false}
 };
 const isEvmAddress=a=>/^0x[0-9a-fA-F]{40}$/.test(a);
-const solanaPrograms=['TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA','TokenzQdBNbLqP5VEhdkAS6EPFtsfSBeXrnjQ11u'];
+const solanaPrograms=['TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA','TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb'];
 const rpcCall=async (rpc, method, params, fetcher)=>{
   const url=new URL(rpc);
   if(url.protocol!=='https:' || url.username || url.password)throw Error('Nur HTTPS-RPC ohne URL-Zugangsdaten unterstützt.');

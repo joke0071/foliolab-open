@@ -8,7 +8,11 @@ try{
   {name:'Blockstream Bitcoin',url:'https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'},
   {name:'Blockscout Ethereum',url:'https://eth.blockscout.com/api/v2/addresses/0x000000000000000000000000000000000000dEaD'},
   {name:'OpenFIGI search',url:'https://api.openfigi.com/v3/search',method:'POST',body:JSON.stringify({query:'Vanguard FTSE All-World UCITS ETF'})},
-  {name:'Solana public RPC',url:'https://api.mainnet-beta.solana.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})}
+  {name:'Solana public RPC',url:'https://api.mainnet-beta.solana.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
+  {name:'Solana PublicNode RPC',url:'https://solana-rpc.publicnode.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
+  {name:'Solana dRPC',url:'https://solana.drpc.org',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
+  {name:'Solana OnFinality',url:'https://solana.api.onfinality.io/public',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
+  {name:'Solana SubQuery',url:'https://solana.rpc.subquery.network/public',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})}
  ];
  const results=await page.evaluate(async checks=>Promise.all(checks.map(async q=>{
   const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),8000);
