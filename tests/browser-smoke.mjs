@@ -60,6 +60,13 @@ try{
  await page.waitForFunction(()=>document.querySelector('#toast').textContent.includes('Backup wiederhergestellt'));
  page.off('dialog',dialogHandler);
 
+ // Once cached, all pages, scripts and manual holdings must remain usable offline.
+ await page.waitForFunction(()=>navigator.serviceWorker?.controller!==null,{timeout:15000});
+ await context.setOffline(true);await page.reload();
+ await page.locator('#totalValue').waitFor();
+ assert.match(await page.locator('#totalValue').innerText(),/250/);
+ await context.setOffline(false);
+
  // Reload a real legacy data shape and assert one default account is created without modifying original bytes.
  const legacy={...exported,version:1,accounts:undefined,positions:exported.positions.map(({accountId,...p})=>p)};
  const original=JSON.stringify(legacy);

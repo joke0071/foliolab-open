@@ -1,4 +1,22 @@
-const CACHE='foliolab-open-v4';const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/model.js','./src/crypto-backup.js','./src/market.js','./src/format.js','./icons/flask.svg','./manifest.webmanifest'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(x=>x!==CACHE).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET'||new URL(e.request.url).origin!==self.location.origin)return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const copy=r.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));}return r;}).catch(()=>caches.match(e.request)));});
+const CACHE='foliolab-open-v5';
+const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/model.js','./src/market.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
+});
+self.addEventListener('activate',event=>{
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('foliolab-open-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
+});
+// Cache the complete matching app shell per revision; never cache third-party API responses or secret-bearing URLs.
+self.addEventListener('fetch',event=>{
+  const request=event.request,url=new URL(request.url),scope=new URL(self.registration.scope);
+  if(request.method!=='GET'||url.origin!==scope.origin||!url.pathname.startsWith(scope.pathname))return;
+  const file=url.pathname.slice(scope.pathname.length);
+  const key=request.mode==='navigate'?'./index.html':'./'+file;
+  if(!ASSETS.includes(key))return;
+  event.respondWith(caches.open(CACHE).then(async cache=>{
+    const target=new URL(key,scope).toString();
+    const cached=await cache.match(target);
+    if(cached)return cached;
+    return fetch(request);
+  }));
+});
