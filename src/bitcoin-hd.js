@@ -62,7 +62,8 @@ const hash160=async data=>ripemd160(await sha256(data));
 async function base58check(payload){return b58encode(join(payload,(await double(payload)).slice(0,4)));}
 function encodePoint(point){return join(Uint8Array.of(point[1]&1n?3:2),bytes(point[0],32));}
 function decodePoint(data){if(data.length!==33||![2,3].includes(data[0]))throw Error('Ungültiger komprimierter Bitcoin-Public-Key.');
- const x=int(data.slice(1)),rhs=mod(x*x*x+7n),y0=pow(rhs,(P+1n)/4n);
+ const x=int(data.slice(1));if(x>=P)throw Error('Bitcoin-Public-Key-Koordinate außerhalb des Kurvenfeldes.');
+ const rhs=mod(x*x*x+7n),y0=pow(rhs,(P+1n)/4n);
  if(mod(y0*y0)!==rhs)throw Error('Public-Key nicht auf secp256k1.');
  return [x,Boolean(y0&1n)===Boolean(data[0]&1)?y0:P-y0];
 }
