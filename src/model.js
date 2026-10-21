@@ -1,8 +1,9 @@
+import {rebuildAssets} from './assets.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true});
-export const blankModel=()=>({version:2,providers:[],accounts:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
+export const blankModel=()=>({version:2,providers:[],accounts:[],assets:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export function number(v){if(typeof v==='string')v=v.trim().replace(/\s/g,'').replace(',','.');const n=Number(v);return Number.isFinite(n)?n:NaN;}
@@ -48,7 +49,7 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;
   const costBasisEUR=(v.costBasisEUR==null||v.costBasisEUR==='')?null:safeNumber(v.costBasisEUR);
   const realizedPnLEUR=v.realizedPnLEUR==null?null:number(v.realizedPnLEUR);if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,costBasisEUR,realizedPnLEUR,kind,name,symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,costBasisEUR,realizedPnLEUR,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
 export function valueEUR(p){const qty=number(p.quantity),price=number(p.price),rate=p.currency==='EUR'?1:number(p.fxRate);return [qty,price,rate].every(Number.isFinite)?qty*price*rate:0;}
 export function totalEUR(model){return model.positions.reduce((sum,p)=>sum+valueEUR(p),0);}
@@ -92,7 +93,7 @@ export function safeImport(raw){
   if(raw.version===2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
-  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');rebuildAssets(m);
   m.bookings=(raw.bookings||[]).map(x=>{
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
@@ -103,7 +104,7 @@ export function safeImport(raw){
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
   return m;
 }
-export function backup(model){const copy=structuredClone(model);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model){const copy=structuredClone(model);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 export function load(storage=globalThis.localStorage){
   const raw=storage.getItem(STORE_KEY);if(!raw)return blankModel();
@@ -117,7 +118,7 @@ export function load(storage=globalThis.localStorage){
   result.settings=settings;
   return result;
 }
-export function persist(model,storage=globalThis.localStorage){if(model.version!==2)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');storage.setItem(STORE_KEY,JSON.stringify(model));}
+export function persist(model,storage=globalThis.localStorage){if(model.version!==2)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');rebuildAssets(model);storage.setItem(STORE_KEY,JSON.stringify(model));}
 export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
 export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

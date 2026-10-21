@@ -1,5 +1,5 @@
-const CACHE='foliolab-open-v5';
-const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/model.js','./src/market.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+const CACHE='foliolab-open-v7';
+const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/model.js','./src/assets.js','./src/market.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
