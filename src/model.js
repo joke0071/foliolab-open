@@ -1,11 +1,11 @@
 import {rebuildAssets} from './assets.js';
-import {executeTransaction} from './transactions.js';
+import {executeTransaction,captureOpenings,validateJournalEntry} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:''});
-export const blankModel=()=>({version:2,providers:[],accounts:[],assets:[],positions:[],bookings:[],externalCashFlows:[],snapshots:[],performanceFlowTrackingSince:null,settings:defaultSettings()});
+export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export function number(v){if(typeof v==='string')v=v.trim().replace(/\s/g,'').replace(',','.');const n=Number(v);return Number.isFinite(n)?n:NaN;}
@@ -49,27 +49,56 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
-  const costBasisEUR=(v.costBasisEUR==null||v.costBasisEUR==='')?null:safeNumber(v.costBasisEUR);
-  const realizedPnLEUR=v.realizedPnLEUR==null?null:number(v.realizedPnLEUR);if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,realizedPnLEUR,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  const costBasisExact=v.costBasisExact==null?(v.costBasisEUR==null||v.costBasisEUR===''?null:exact(units(v.costBasisEUR))):exact(units(v.costBasisExact));
+  const costBasisEUR=costBasisExact==null?null:safeNumber(costBasisExact);
+  const realizedPnLExact=v.realizedPnLExact==null?(v.realizedPnLEUR==null?null:exact(units(v.realizedPnLEUR))):exact(units(v.realizedPnLExact));
+  const realizedPnLEUR=realizedPnLExact==null?null:number(realizedPnLExact);
+  if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
+  const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
 export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate));}
 export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate)),0n)));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
-export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''){if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Ungültiges Datum.');const amount=totalEUR(model);const existing=model.snapshots.find(x=>x.date===date);if(existing){existing.total=amount;existing.note=cleanString(note||existing.note,180);}else model.snapshots.push({id:uid(),date,recordedAt:new Date().toISOString(),total:amount,note:cleanString(note,180),byAccount:Object.fromEntries(model.accounts.map(a=>[a.id,model.positions.filter(p=>p.accountId===a.id).reduce((s,p)=>s+valueEUR(p),0)])),valuationStatus:'teilweise/ungeprüft',quoteTimes:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt}))});model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));return amount;}
+/**
+ * Historical valuations may ONLY be recorded when their value is explicitly supplied.
+ * A backdated snapshot cannot use today's portfolio prices or balances.
+ */
+export function snapshot(model,date=new Date().toISOString().slice(0,10),note='',options={}){
+ if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date)throw Error('Ungültiges Datum.');
+ const today=new Date().toISOString().slice(0,10);
+ if(date>today)throw Error('Zukünftige Stichtage sind nicht möglich.');
+ const manual=options.manualTotalEUR!=null&&String(options.manualTotalEUR).trim()!=='';
+ if(date!==today&&!manual)throw Error('Für historische Stichtage bitte den tatsächlich damals bekannten Portfoliowert eingeben; heutige Kurse sind keine historischen Daten.');
+ const amountExact=manual?exact(units(options.manualTotalEUR)):exact(units(totalEUR(model)));
+ if(units(amountExact)<0n)throw Error('Stichtagswert darf nicht negativ sein.');
+ const amount=Number(amountExact),recordedAt=new Date().toISOString();
+ const valuationStatus=manual?'manual':'observed',source=manual?'manual':'current';
+ const byAccount=manual?null:Object.fromEntries(model.accounts.map(a=>[a.id,model.positions.filter(p=>p.accountId===a.id).reduce((sum,p)=>sum+valueEUR(p),0)]));
+ const quoteTimes=manual?[]:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt}));
+ const existing=model.snapshots.find(x=>x.date===date);
+ if(existing){
+   // Preserve preceding versions rather than silently rewriting historical evidence.
+   existing.revisions??=[];
+   existing.revisions.push({recordedAt:existing.recordedAt||null,totalEURExact:existing.totalEURExact??String(existing.total),valuationStatus:existing.valuationStatus||'unknown',source:existing.source||'legacy'});
+   Object.assign(existing,{total:amount,totalEURExact:amountExact,recordedAt,valuationStatus,source,byAccount,quoteTimes,note:cleanString(note||existing.note,180)});
+ }else model.snapshots.push({id:uid(),date,recordedAt,total:amount,totalEURExact:amountExact,valuationStatus,source,byAccount,quoteTimes,revisions:[],note:cleanString(note,180)});
+ model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));
+ return amount;
+}
 /** Transactions modify shares but never overwrite the independent market quote. */
 export function addBooking(model,v){const entry=executeTransaction(model,{...v,type:v.type||'buy'});if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);return model.positions.find(p=>p.id===entry.positionId);}
 
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
-/** Importiert alte v1-Backups sicher und hebt sie in das normalisierte v2-Modell. */
+/** Importiert v1/v2-Backups ohne erfundene Transaktionen als dokumentierte v3-Eröffnungsbestände. */
 export function safeImport(raw){
-  if(!raw||![1,2].includes(raw.version)||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');
-  if(raw.version===2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
-  if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
+  if(!raw||![1,2,3].includes(raw.version)||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');
+  if(raw.version>=2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
+  if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
   const m=blankModel();
   m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
-  if(raw.version===2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
+  if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
   m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');rebuildAssets(m);
@@ -77,13 +106,36 @@ export function safeImport(raw){
   if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
   m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date)||!Number.isFinite(Number(x.amountEUR)))throw Error('Cashflow-Historie beschädigt.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
   uniqueIds(m.externalCashFlows,'externen Geldflüssen');
+  m.openingPositions=raw.version===3&&Array.isArray(raw.openingPositions)?raw.openingPositions.map(x=>{
+    if(!x||!x.positionId||!m.positions.some(p=>p.id===x.positionId))throw Error('Ungültiger Eröffnungsbestand.');
+    return {positionId:cleanString(x.positionId,120),quantityExact:exact(units(x.quantityExact)),costBasisExact:x.costBasisExact==null?null:exact(units(x.costBasisExact)),realizedPnLExact:x.realizedPnLExact==null?null:exact(units(x.realizedPnLExact)),source:'observed-opening',asOf:null};
+  }):[];
+  if(raw.version<3)captureOpenings(m);
+  if(raw.version===3){
+    if(!Array.isArray(raw.journalEntries)||!Array.isArray(raw.openingPositions))throw Error('Journal oder Eröffnungsbestände fehlen.');
+    m.journalEntries=raw.journalEntries.map(x=>structuredClone(validateJournalEntry(x)));
+    uniqueIds(m.journalEntries,'Journal-Einträgen');
+    const postingIds=new Set();
+    for(const entry of m.journalEntries)for(const p of entry.postings){
+      if(postingIds.has(p.id))throw Error('Doppelte Journal-Buchungs-ID.');
+      postingIds.add(p.id);
+    }
+  }
+  uniqueIds(m.openingPositions.map(x=>({id:x.positionId})),'Eröffnungsbeständen');
   m.bookings=(raw.bookings||[]).map(x=>{
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
-    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),recordedAt:cleanString(x.recordedAt,40)||null,byAccount:x.byAccount&&typeof x.byAccount==='object'?x.byAccount:null,valuationStatus:cleanString(x.valuationStatus,40)||'historisch',note:cleanString(x.note,180)};
+    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),
+      totalEURExact:exact(units(x.totalEURExact??x.total)),recordedAt:cleanString(x.recordedAt,40)||null,
+      byAccount:x.byAccount&&typeof x.byAccount==='object'?structuredClone(x.byAccount):null,
+      valuationStatus:raw.version<3?'legacy-unverified':cleanString(x.valuationStatus,40)||'unknown',
+      source:raw.version<3?'legacy':cleanString(x.source,40)||'unknown',
+      quoteTimes:Array.isArray(x.quoteTimes)?structuredClone(x.quoteTimes):[],
+      revisions:Array.isArray(x.revisions)?structuredClone(x.revisions):[],
+      note:cleanString(x.note,180)};
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
   return m;
 }
@@ -93,7 +145,7 @@ export function load(storage=globalThis.localStorage){
   const raw=storage.getItem(STORE_KEY);if(!raw)return blankModel();
   const parsed=JSON.parse(raw);
   // Before a v1 -> v2 migration preserve exactly the original bytes for local recovery.
-  if(parsed?.version===1){const key=STORE_KEY+'-premigration-v1';if(!storage.getItem(key))storage.setItem(key,raw);}
+  if(parsed?.version===1||parsed?.version===2){const key=STORE_KEY+'-premigration-v'+parsed.version;if(!storage.getItem(key))storage.setItem(key,raw);}
   const result=safeImport(parsed);
   const input=parsed.settings||{},settings=defaultSettings();
   for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
@@ -101,7 +153,7 @@ export function load(storage=globalThis.localStorage){
   result.settings=settings;
   return result;
 }
-export function persist(model,storage=globalThis.localStorage){if(model.version!==2)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');rebuildAssets(model);storage.setItem(STORE_KEY,JSON.stringify(model));}
+export function persist(model,storage=globalThis.localStorage){if(model.version!==3)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');rebuildAssets(model);storage.setItem(STORE_KEY,JSON.stringify(model));}
 export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
 export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

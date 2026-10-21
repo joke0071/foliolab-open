@@ -19,7 +19,16 @@ export function xirr(flows){
 export function portfolioXirr(model,startDate,endDate){
  const snapshots=model.snapshots.filter(x=>x.date>=startDate&&x.date<=endDate).sort((a,b)=>a.date.localeCompare(b.date));
  if(snapshots.length<2||snapshots[0].date!==startDate||snapshots.at(-1).date!==endDate)return null;
+ // Never use older, unverifiable or backdated-from-current snapshots for returns.
+ if(!['observed','manual'].includes(snapshots[0].valuationStatus)||!['observed','manual'].includes(snapshots.at(-1).valuationStatus))return null;
  if(!Array.isArray(model.externalCashFlows))return null;
+ // No performance report when acquisitions have no identified source of funds,
+ // or when legacy in-kind deliveries/corrections lack a verified external valuation.
+ if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&e.status==='unresolved-clearing'))return null;
+ if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&(
+   ['deliver_in','deliver_out','adjust','correction'].includes(b.type)||
+   (['buy','sell'].includes(b.type)&&!b.journalEntryId)
+  )))return null;
  if(model.bookings.some(x=>x.date>startDate&&x.date<=endDate&&['deposit','withdraw'].includes(x.type)&&!model.externalCashFlows.some(f=>f.id===x.id)))return null;
  const first=snapshots[0],last=snapshots.at(-1);
  const flows=[{date:first.date,amount:-first.total},...model.externalCashFlows.filter(x=>x.date>first.date&&x.date<=last.date).map(x=>({date:x.date,amount:-x.amountEUR})),{date:last.date,amount:last.total}];
