@@ -89,7 +89,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
  const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
  const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
- const byAccount=manual?null:Object.fromEntries(model.accounts.map(a=>[a.id,model.positions.filter(p=>p.accountId===a.id).reduce((sum,p)=>sum+valueEUR(p),0)]));
+ const byAccount=manual?null:(()=>{const totals=Object.fromEntries(model.accounts.map(a=>[a.id,0]));for(const p of model.positions)if(Object.hasOwn(totals,p.accountId))totals[p.accountId]+=valueEUR(p);return totals;})();
  const quoteTimes=manual?[]:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt,quoteAsOf:p.quoteAsOf||null,quoteSource:p.quoteSource||null,fxRateDate:p.fxRateDate||null}));
  const existing=model.snapshots.find(x=>x.date===date);
  if(existing){
