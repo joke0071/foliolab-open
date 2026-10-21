@@ -244,23 +244,50 @@ function startPerformanceTracking(){
  if(!confirm('Heute als Beginn der vollständigen Cashflow-Erfassung festlegen? Ältere Renditen werden nicht geschätzt.'))return;
  model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
 }
-async function refreshAll(){if(busy)return;busy=true;$('refreshAll').disabled=true;$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';const errors=[];let successes=0;const time=new Date().toISOString();try{
-  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&p.coinId),tickers=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol);if(cryptos.length){try{const prices=await cryptoPrices(cryptos.map(p=>p.coinId),model.settings.coinGeckoKey);for(const p of cryptos){const v=Number(prices[p.coinId]?.eur);if(Number.isFinite(v)&&v>0){p.price=v;p.priceExact=String(v);p.currency='EUR';p.fxRate=1;p.updatedAt=time;successes++;}else errors.push(`${p.name}: kein CoinGecko-Kurs`);}}catch(e){errors.push('CoinGecko: '+e.message);}}
-  if(tickers.length&&model.settings.twelveKey){for(const p of tickers){try{p.price=await securityPrice(p.symbol,model.settings.twelveKey);p.priceExact=String(p.price);p.updatedAt=time;successes++;}catch(e){errors.push(`${p.symbol}: ${e.message}`);}}}
-   // Daily reference FX rates need no API key. Failed requests preserve prior rates.
-   const fxCache=new Map([['EUR',1]]);
-   for(const p of model.positions.filter(x=>x.currency!=='EUR')){
-     try{if(!fxCache.has(p.currency))fxCache.set(p.currency,await exchangeRate(p.currency,model.settings.twelveKey));
-       p.fxRate=fxCache.get(p.currency);p.fxUpdatedAt=time;successes++;
-     }catch(e){errors.push(`${p.currency}/EUR: ${e.message}`);}
-   }
-  // Cache identical public explorer reads for multi-token wallets. Without this,
-  // importing 40 ERC-20 tokens would issue the same token-balances request 40 times.
+async function refreshAll(){
+ if(busy)return;
+ busy=true;$('refreshAll').disabled=true;$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';
+ const errors=[];let successes=0;const now=new Date().toISOString();
+ try{
+  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&p.coinId);
+  const securities=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol);
+  if(cryptos.length){
+   try{
+    const quotes=await cryptoPrices(cryptos.map(p=>p.coinId),model.settings.coinGeckoKey);
+    for(const p of cryptos){
+      const item=quotes[p.coinId],price=Number(item?.eur);
+      if(Number.isFinite(price)&&price>0){
+       p.price=price;p.priceExact=String(price);p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
+       p.quoteSource='CoinGecko';p.quoteAsOf=item?.last_updated_at?new Date(item.last_updated_at*1000).toISOString():null;
+       p.quoteFetchedAt=now;p.quoteQuality=p.quoteAsOf?'provider-timestamp':'undated';p.updatedAt=now;p.priceStatus=null;successes++;
+      }else errors.push(`${p.name}: Kein verifizierbarer CoinGecko-Kurs.`);
+    }
+    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
+   }catch(e){errors.push('CoinGecko: '+e.message);}
+  }
+  if(securities.length&&model.settings.twelveKey){
+    for(const p of securities){
+     try{
+      const q=await securityQuote({symbol:p.symbol,exchange:p.exchange,mic:p.mic,currency:p.currency,isin:p.isin},model.settings.twelveKey);
+      p.price=q.price;p.priceExact=String(q.price);p.quoteSource=q.source;p.quoteAsOf=q.asOf;
+      p.quoteFetchedAt=now;p.quoteQuality=q.quality;p.updatedAt=now;p.priceStatus=null;successes++;
+     }catch(e){errors.push(`${p.symbol}: ${e.message}`);}
+    }
+  }
+  // Daily reference rates are not broker execution prices.
+  const fxCache=new Map();
+  for(const p of model.positions.filter(x=>x.currency!=='EUR')){
+   try{
+    if(!fxCache.has(p.currency))fxCache.set(p.currency,await exchangeRateQuote(p.currency,''));
+    const q=fxCache.get(p.currency);
+    p.fxRate=q.rate;p.fxRateExact=String(q.rate);p.fxSource=q.source;p.fxRateDate=q.date;p.fxUpdatedAt=now;successes++;
+   }catch(e){errors.push(`${p.currency}/EUR: ${e.message}`);}
+  }
   const networkCache=new Map();
-  const walletFetch=async (url,opts={})=>{
-    const cacheKey=String(url)+'|'+String(opts.method||'GET')+'|'+String(opts.body||'');
-    if(!networkCache.has(cacheKey))networkCache.set(cacheKey,fetch(url,opts).catch(e=>{networkCache.delete(cacheKey);throw e;}));
-    return (await networkCache.get(cacheKey)).clone();
+  const walletFetch=async(url,opts={})=>{
+    const key=String(url)+'|'+String(opts.method||'GET')+'|'+String(opts.body||'');
+    if(!networkCache.has(key))networkCache.set(key,fetch(url,opts).catch(e=>{networkCache.delete(key);throw e;}));
+    return (await networkCache.get(key)).clone();
   };
   const contractsByChain=new Map();
   for(const p of model.positions.filter(p=>p.kind==='crypto'&&p.wallet?.chain==='erc20'&&p.wallet?.contract)){
@@ -268,14 +295,26 @@ async function refreshAll(){if(busy)return;busy=true;$('refreshAll').disabled=tr
     contractsByChain.get(id).push(p);
   }
   for(const [chainId,positions] of contractsByChain){
-    try{
-      const quotes=await evmContractPrices(chainId,positions.map(p=>p.wallet.contract),model.settings.coinGeckoKey);
-      for(const p of positions){const rate=Number(quotes[p.wallet.contract.toLowerCase()]?.eur);if(rate>0){p.price=rate;p.priceExact=String(rate);p.currency='EUR';p.updatedAt=time;successes++;}}
-    }catch(e){/* A failed optional quote never affects the wallet balance. */}
+   try{
+    const quotes=await evmContractPrices(chainId,positions.map(p=>p.wallet.contract),model.settings.coinGeckoKey);
+    for(const p of positions){const rate=Number(quotes[p.wallet.contract.toLowerCase()]?.eur);
+     if(rate>0){p.price=rate;p.priceExact=String(rate);p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
+      p.quoteSource='CoinGecko Token';p.quoteFetchedAt=now;p.quoteQuality='provider-undated';p.quoteAsOf=null;p.updatedAt=now;p.priceStatus=null;successes++;}}
+   }catch(e){errors.push('Tokenpreise: '+e.message);}
   }
-  for(const p of model.positions.filter(p=>p.wallet?.enabled)){try{p.quantity=await walletBalance(p.wallet,model.settings,walletFetch);p.quantityExact=String(p.quantity);p.updatedAt=time;successes++;}catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}}
-  if(successes){snapshot(model);save();}else render();$('priceInfo').textContent=`${successes} Wert${successes===1?'':'e'} aktualisiert · ${new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})}`;if(errors.length){notify(`${successes} erfolgreich. ${errors.slice(0,3).join(' · ')}${errors.length>3?' · weitere Fehler':''}`,true);}else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
-}catch(e){notify(e.message,true);}finally{busy=false;$('refreshAll').disabled=false;}}
+  for(const p of model.positions.filter(p=>p.wallet?.enabled)){
+   try{
+    p.quantity=await walletBalance(p.wallet,model.settings,walletFetch);
+    p.quantityExact=String(p.quantity);p.updatedAt=now;successes++;
+   }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
+  }
+  if(successes){snapshot(model);save();}else render();
+  $('priceInfo').textContent=`${successes} Werte aktualisiert · ${new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})}`;
+  if(errors.length)notify(`${successes} erfolgreich · ${errors.slice(0,3).join(' · ')}${errors.length>3?' · weitere Fehler':''}`,true);
+  else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
+ }catch(e){notify(e.message,true);}
+ finally{busy=false;$('refreshAll').disabled=false;}
+}
 function downloadBackup(){const file=new Blob([backup(model)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Backup ohne API-Schlüssel erstellt.');}
 async function downloadEncryptedBackup(){
   const input=$('backupPassword'),password=input.value;
