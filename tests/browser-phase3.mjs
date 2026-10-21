@@ -35,6 +35,7 @@ try{
  await page.locator('#cancelDialog').click();
  await page.locator('#sidebarNav [data-page="positions"]').click();
  await page.locator('[data-action="edit-position"][data-id="'+ids.staking+'"]').click();
+ await page.locator('#defiPosition').evaluate(el=>el.open=true);
  await page.locator('#editorForm [name="economicRole"]').selectOption('liquid-staking');
  await page.locator('#editorForm [name="valuationMode"]').selectOption('excluded');
  await page.locator('#editorForm [name="representedByPositionId"]').selectOption(ids.etf);
