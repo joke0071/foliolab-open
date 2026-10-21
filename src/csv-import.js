@@ -7,13 +7,25 @@ export function parseCSV(input,{delimiter}={}){
  const head=raw.slice(0,1200),separators=delimiter?[delimiter]:[';',',','\t'];
  const sep=delimiter||separators.map(c=>({c,n:head.split('\n')[0].split(c).length})).sort((a,b)=>b.n-a.n)[0].c;
  if(![';',',','\t'].includes(sep))throw Error('CSV-Trennzeichen ungültig.');
- const rows=[];let row=[],cell='',quoted=false;
+ const rows=[];let row=[],cell='',quoted=false,closedQuote=false,started=false;
  for(let i=0;i<raw.length;i++){
   const c=raw[i];
-  if(c==='"'){if(quoted&&raw[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}
-  else if(!quoted&&c===sep){row.push(cell);cell='';}
-  else if(!quoted&&(c==='\n'||c==='\r')){if(c==='\r'&&raw[i+1]==='\n')i++;row.push(cell);if(row.some(x=>x.trim()))rows.push(row);row=[];cell='';}
-  else cell+=c;
+  if(c==='"'){
+   if(quoted&&raw[i+1]==='"'){cell+='"';i++;}
+   else if(quoted){quoted=false;closedQuote=true;}
+   else if(!started){quoted=true;started=true;}
+   else throw Error('CSV enthält ein ungültiges Anführungszeichen.');
+  }else if(!quoted&&(c===sep||c==='\n'||c==='\r')){
+   row.push(cell);cell='';started=false;closedQuote=false;
+   if(c!==sep){
+    if(c==='\r'&&raw[i+1]==='\n')i++;
+    if(row.some(x=>x.trim()))rows.push(row);
+    row=[];
+   }
+  }else{
+   if(closedQuote)throw Error('CSV enthält Zeichen nach einem schließenden Anführungszeichen.');
+   cell+=c;started=true;
+  }
  }
  if(quoted)throw Error('CSV enthält ein nicht geschlossenes Anführungszeichen.');
  row.push(cell);if(row.some(x=>x.trim()))rows.push(row);
