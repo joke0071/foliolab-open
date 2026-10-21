@@ -67,11 +67,11 @@ export function safeImport(raw){
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
   m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
   m.bookings=(raw.bookings||[]).map(x=>{
-    if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
+    if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
-    if(!x||!x.id||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
+    if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),note:cleanString(x.note,180)};
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
   return m;
