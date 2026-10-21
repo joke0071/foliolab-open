@@ -43,7 +43,7 @@ export function captureOpenings(model){
 }
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
- if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length)throw Error('Journal-Eintrag ungültig.');
+ if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
  const ids=new Set(),sum=entry.postings.reduce((n,p)=>{
   if(!p.id||ids.has(p.id)||!p.role||p.amountBookEURExact==null)throw Error('Journal-Buchung ungültig.');
   ids.add(p.id);if(p.quantityDeltaExact!=null)units(p.quantityDeltaExact);

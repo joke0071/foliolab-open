@@ -95,7 +95,7 @@ const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.
 export function safeImport(raw){
   if(!raw||![1,2,3].includes(raw.version)||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');
   if(raw.version>=2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
-  if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
+  if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
   const m=blankModel();
   m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}

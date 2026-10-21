@@ -139,3 +139,18 @@ test('Import rejects unbalanced financial journal and duplicate posting identiti
  assert.throws(()=>safeImport(damaged),/nicht ausgeglichen/);
  assert.throws(()=>validateJournalEntry({id:'x',date:'2026-10-21',postings:[]}),/Journal/);
 });
+
+test('An unresolved buy blocks portfolio XIRR rather than reporting fictitious gains',()=>{
+ const {m,etf}=fixture();
+ snapshot(m,'2025-01-01','start',{manualTotalEUR:'1000'});
+ trade(m,etf,'buy',{date:'2025-07-01',quantity:1});
+ snapshot(m,'2026-01-01','end',{manualTotalEUR:'1200'});
+ assert.equal(portfolioXirr(m,'2025-01-01','2026-01-01'),null);
+});
+test('External in-kind deliveries without verified valuation block XIRR',()=>{
+ const {m,etf}=fixture();
+ snapshot(m,'2025-01-01','start',{manualTotalEUR:'1000'});
+ trade(m,etf,'deliver_in',{date:'2025-06-01',quantity:1});
+ snapshot(m,'2026-01-01','end',{manualTotalEUR:'1100'});
+ assert.equal(portfolioXirr(m,'2025-01-01','2026-01-01'),null);
+});
