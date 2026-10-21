@@ -79,3 +79,10 @@ test('Missing Solana raw account value never means verified zero',async()=>{
  const mock=async(_url,opts)=>reply(JSON.parse(opts.body).method==='getBalance'?{result:{}}:{result:{value:[]}});
  await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohbetrag/);
 });
+
+test('Malformed Solana token-account responses never certify complete empty lists',async()=>{
+ const mock=async(_url,opts)=>reply(JSON.parse(opts.body).method==='getBalance'?{result:{value:1000000000}}:{result:{}});
+ const result=await discoverWallet('sol',SOL,{},mock);
+ assert.equal(result[0].quantityExact,'1');
+ assert.equal(result.partial,true);
+});
