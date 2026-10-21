@@ -42,7 +42,7 @@ export function executeTransaction(model,input){
  if(!dateOk(input.date))throw Error('Ungültiges Datum.');
  const copy=structuredClone(model),p=pos(copy,input.positionId),kind=input.type;
  const qty=amount(input.quantity??0),prev=q(p),fee=amount(input.feeEUR??0),tax=amount(input.taxEUR??0);
- const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):amount(input.fxRate,1n);
+ const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
  const cash=mul(mul(qty,unitPrice),fx);
  const b=basis(p);let changed=false;
  const positive=()=>{if(qty<=0n)throw Error('Menge muss positiv sein.');};
@@ -110,6 +110,9 @@ export function executeTransaction(model,input){
    const signed=kind==='deposit'?mul(qty,fx):-mul(qty,fx);
    copy.externalCashFlows.push({id:entry.id,date:input.date,amountEUR:Number(exact(signed)),amountExactEUR:exact(signed)});
  }
+ // Commit validated changes while preserving references used by currently open dialogs.
+ const originals=new Map(model.positions.map(p=>[p.id,p]));
+ copy.positions=copy.positions.map(p=>{const original=originals.get(p.id);if(!original)return p;Object.assign(original,p);return original;});
  Object.assign(model,copy);
  return entry;
 }
