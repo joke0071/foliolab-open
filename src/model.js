@@ -156,8 +156,10 @@ export function safeImport(raw){
 }
 export function backup(model){const copy=structuredClone(model);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
+const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
-  const raw=storage.getItem(STORE_KEY);if(!raw)return blankModel();
+  const raw=storage.getItem(STORE_KEY);
+  if(!raw){observedStorage.set(storage,null);return blankModel();}
   const parsed=JSON.parse(raw);
   // Before a v1 -> v2 migration preserve exactly the original bytes for local recovery.
   if(parsed?.version===1||parsed?.version===2){const key=STORE_KEY+'-premigration-v'+parsed.version;if(!storage.getItem(key))storage.setItem(key,raw);}
@@ -166,9 +168,18 @@ export function load(storage=globalThis.localStorage){
   for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
   if(settings.solanaRpc==='https://api.mainnet-beta.solana.com')settings.solanaRpc='https://solana-rpc.publicnode.com';
   result.settings=settings;
+  observedStorage.set(storage,raw);
   return result;
 }
-export function persist(model,storage=globalThis.localStorage){if(model.version!==3)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');rebuildAssets(model);storage.setItem(STORE_KEY,JSON.stringify(model));}
+export function persist(model,storage=globalThis.localStorage){
+ if(model.version!==3)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');
+ const current=storage.getItem(STORE_KEY);
+ if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
+ rebuildAssets(model);
+ const serialized=JSON.stringify(model);
+ storage.setItem(STORE_KEY,serialized);
+ observedStorage.set(storage,serialized);
+}
 export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
 export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

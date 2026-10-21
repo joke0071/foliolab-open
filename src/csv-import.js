@@ -58,6 +58,7 @@ function resolvePosition(model,key,defaultId){
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
 export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId=''}={}){
+ const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
  const list=[],issues=[];let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
@@ -80,10 +81,11 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    seen.add(id);list.push({line:item.index,status:'ready',row});
   }catch(e){issues.push({line:item.index,message:String(e.message).slice(0,200)});list.push({line:item.index,status:'error',message:String(e.message).slice(0,200)});}
  }
- return {rows:list,issues,duplicates,ready:list.filter(r=>r.status==='ready').length,simulated:draft};
+ return {rows:list,issues,duplicates,ready:list.filter(r=>r.status==='ready').length,simulated:draft,baseline};
 }
 /** All-or-nothing commit. An invalid row never leaves partial imported positions. */
 export function importCSV(model,preview){
+ if(typeof preview.baseline!=='string'||preview.baseline!==JSON.stringify(model))throw Error('Das Portfolio wurde seit der CSV-Vorschau verändert. Bitte Vorschau erneut erstellen.');
  if(preview.issues.length)throw Error('CSV enthält fehlerhafte Zeilen – vor Import korrigieren.');
  if(!preview.ready)return {imported:0,duplicates:preview.duplicates};
  const next=structuredClone(preview.simulated);
