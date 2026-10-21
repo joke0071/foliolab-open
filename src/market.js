@@ -64,7 +64,7 @@ export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
    url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
    const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
    const rate=Number(data.rates?.EUR);
-   if(!(rate>0)||!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(String(data.date||'')))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
+   if(!(rate>0)||!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(String(data.date||'')))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
    return {rate,date:data.date,source:'Frankfurter',reference:true};
  }
  const url=new URL('https://api.twelvedata.com/exchange_rate');
@@ -95,7 +95,7 @@ export async function exchangeRate(from,key='',fetcher=globalThis.fetch){
 }
 /** Uses Frankfurter historical DAILY reference rate, including previous workday fallback. */
 export async function historicalExchangeRate(from,date,fetcher=globalThis.fetch){
- if(!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(String(date))||Number.isNaN(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date)throw Error('Historisches Datum ungültig.');
+ if(!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(String(date))||Number.isNaN(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date)throw Error('Historisches Datum ungültig.');
  if(date>new Date().toISOString().slice(0,10))throw Error('Wechselkursdatum liegt in der Zukunft.');
  if(from==='EUR')return {rate:1,date,requestedDate:date,source:'identity',reference:true};
  if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
@@ -103,7 +103,7 @@ export async function historicalExchangeRate(from,date,fetcher=globalThis.fetch)
  url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
  const data=await json(url.toString(),{ttlMs:TTL.history},fetcher),rate=Number(data.rates?.EUR);
  const actual=String(data.date||'');
- if(!(rate>0)||!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(actual)||actual>date||(Date.parse(date)-Date.parse(actual))/86400000>7)throw Error('Kein gültiger historischer Tagesreferenzkurs verfügbar.');
+ if(!(rate>0)||!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(actual)||actual>date||(Date.parse(date)-Date.parse(actual))/86400000>7)throw Error('Kein gültiger historischer Tagesreferenzkurs verfügbar.');
  return {rate,date:actual,requestedDate:date,source:'Frankfurter',reference:true};
 }
 export async function xrpBalance(address,fetcher=globalThis.fetch){
