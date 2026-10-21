@@ -67,7 +67,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
         }
       }catch(error){failures.push(error.message);}
     }
-    if(!successfulPrograms)throw Error('Solana-Token konnten nicht abgerufen werden: '+failures.join(' / '));
+    if(!successfulPrograms&&!assets.length)throw Error('Solana-Token konnten nicht abgerufen werden: '+failures.join(' / '));
     if(failures.length){assets.partial=true;assets.warning='Ein Solana-Token-Programm konnte nicht vollständig gelesen werden. Vorhandene Bestände bleiben erhalten.';}
     return assets;
   }
