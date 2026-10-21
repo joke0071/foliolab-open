@@ -109,3 +109,12 @@ test('CSV preserves escaped quotes, embedded line breaks and trailing empty fiel
  assert.equal(csv.rows[0].b,'say "hello"');
  assert.equal(csv.rows[0].c,'');
 });
+
+test('CSV preview rejects stale portfolio modifications',()=>{
+ const {m,etf,cash}=fixture();
+ const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs\n2026-10-21;Kauf;IE00BK5BQT80;1;100');
+ const preview=previewCSV(m,csv,inferMapping(csv.headers),{defaultPositionId:etf.id,cashPositionId:cash.id});
+ m.positions.find(p=>p.id===cash.id).price=2;
+ assert.throws(()=>importCSV(m,preview),/seit der CSV-Vorschau/);
+ assert.equal(m.bookings.length,0);
+});
