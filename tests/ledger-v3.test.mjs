@@ -174,3 +174,23 @@ test('Rewards, in-kind deliveries and corrections retain exact quantity deltas',
  assert.equal(ledgerQuantityAudit(m).ok,true);
  assert.deepEqual(m.journalEntries.map(e=>e.postings[0].quantityDeltaExact),['2','0.25','0.75']);
 });
+
+test('Stale browser state cannot overwrite newer storage',()=>{
+ const {m}=fixture();
+ const db=new Map([[STORE_KEY,JSON.stringify(m)]]);
+ const storage={getItem:key=>db.get(key)??null,setItem:(key,value)=>db.set(key,value)};
+ const local=load(storage);
+ const replacement=JSON.stringify({...m,updatedAt:'external-tab-update'});
+ db.set(STORE_KEY,replacement);
+ assert.throws(()=>persist(local,storage),/anderen Tab/);
+ assert.equal(db.get(STORE_KEY),replacement);
+});
+test('Quota error does not mark portfolio as successfully persisted',()=>{
+ const {m}=fixture();const db=new Map([[STORE_KEY,JSON.stringify(m)]]);
+ let fail=true;
+ const storage={getItem:key=>db.get(key)??null,setItem:(key,value)=>{if(fail)throw Error('QuotaExceededError');db.set(key,value);}};
+ const local=load(storage);local.settings.testFlag='changed';
+ assert.throws(()=>persist(local,storage),/QuotaExceededError/);
+ fail=false;persist(local,storage);
+ assert.equal(JSON.parse(db.get(STORE_KEY)).settings.testFlag,'changed');
+});
