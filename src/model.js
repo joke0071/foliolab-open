@@ -38,16 +38,16 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(chain==='btc'&&!(/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(address)))throw Error(error);
   if((chain==='evm'||chain==='erc20')&&!/^0x[a-fA-F0-9]{40}$/.test(address))throw Error(error);
   if(chain==='erc20'&&!/^0x[a-fA-F0-9]{40}$/.test(contract))throw Error('Bitte eine ERC-20-Contract-Adresse angeben.');
-  if((chain==='sol'||chain==='spl')&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);
+  if((chain==='sol'||chain==='spl')&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);if(chain==='xrp'&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(address))throw Error(error);
   if(chain==='spl'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Bitte eine SPL-Mint-Adresse angeben.');
-  if(!['btc','evm','erc20','sol','spl'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
-  const decimals=(chain==='erc20'||chain==='spl')?safeNumber(wallet.decimals??18,0,30):chain==='btc'?8:chain==='sol'?9:18;
+  if(!['btc','evm','erc20','sol','spl','xrp'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
+  const decimals=(chain==='erc20'||chain==='spl')?safeNumber(wallet.decimals??18,0,30):chain==='btc'?8:chain==='sol'?9:chain==='xrp'?6:18;
   const chainId=['evm','erc20'].includes(chain)?safeNumber(wallet.chainId??1,1,1e9):undefined;
   return {enabled:true,chain,address,contract,decimals,chainId};
 }
 export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
-  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
+  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;
   const costBasisEUR=(v.costBasisEUR==null||v.costBasisEUR==='')?null:safeNumber(v.costBasisEUR);
   const realizedPnLEUR=v.realizedPnLEUR==null?null:number(v.realizedPnLEUR);if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
