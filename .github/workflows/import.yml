@@ -36,6 +36,7 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
           node tests/browser-smoke.mjs
+          node tests/browser-extended.mjs
           node tests/live-probes.mjs
   deploy:
     if: github.event_name != 'pull_request'
