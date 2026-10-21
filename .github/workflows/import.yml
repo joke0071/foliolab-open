@@ -40,6 +40,7 @@ jobs:
           node tests/browser-ledger.mjs
           node tests/browser-phase2.mjs
           node tests/browser-phase3.mjs
+          node tests/browser-audit.mjs
           node tests/live-probes.mjs
   deploy:
     if: github.event_name != 'pull_request'
