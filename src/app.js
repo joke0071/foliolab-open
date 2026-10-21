@@ -1,5 +1,5 @@
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,groupByKind,snapshot,addBooking,backup,safeImport,defaultSettings,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
-import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityPrice,exchangeRate,walletBalance} from './market.js';
+import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityPrice,exchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices} from './market.js';
 import {svg} from './format.js';
 let model=load(),page='dashboard',filter='all',range='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -42,17 +42,101 @@ function openPosition(p){if(!model.providers.length){go('more');openProvider();n
 function showCoinResults(){const area=$('coinResults');const term=$('coinQuery').value;const results=searchCatalog(catalog,term);area.classList.remove('hidden');area.innerHTML=results.length?results.map(c=>`<button class="result-item" data-coin="${esc(c.id)}" data-symbol="${esc(c.symbol)}" data-name="${esc(c.name)}" type="button"><span><strong>${esc(c.symbol)}</strong> · ${esc(c.name)}</span><small>${esc(c.id)}</small></button>`).join(''):empty('Kein Treffer. CoinGecko-ID kann auch manuell eingetragen werden.');area.querySelectorAll('[data-coin]').forEach(b=>b.addEventListener('click',()=>{const form=$('editorForm');form.elements.coinId.value=b.dataset.coin;if(!form.elements.name.value)form.elements.name.value=b.dataset.name;form.elements.symbol.value=b.dataset.symbol;form.elements.currency.value='EUR';refreshPosForm();area.classList.add('hidden');}));}
 async function loadCoins(){const button=$('coinCatalogLoad');button.disabled=true;button.textContent='Lade Katalog …';try{catalog=await coinCatalog(model.settings.coinGeckoKey);fullCatalog=true;notify(`${catalog.length} Kryptowährungen verfügbar.`);showCoinResults();}catch(e){notify(`Katalog nicht erreichbar: ${e.message}`,true);}finally{button.disabled=false;button.textContent=fullCatalog?'Katalog aktualisieren':'Alle Coins laden';}}
 async function lookupSecurity(){const area=$('securityResults'),term=$('securityQuery').value.trim();if(!term)return notify('Suchbegriff eingeben.',true);area.classList.remove('hidden');area.innerHTML=empty('Suche läuft …');try{const results=await searchSecurities(term,model.settings.twelveKey);area.innerHTML=results.length?results.map((a,i)=>`<button class="result-item" type="button" data-security="${i}"><span><strong>${esc(a.symbol||'')}</strong> · ${esc(a.instrument_name||a.name||'')}</span><small>${esc(a.exchange||a.country||'')}</small></button>`).join(''):empty('Keine Treffer. Du kannst die ETF-Daten manuell erfassen.');area.querySelectorAll('[data-security]').forEach(b=>b.addEventListener('click',()=>{const a=results[Number(b.dataset.security)],f=$('editorForm').elements;f.symbol.value=a.symbol||'';f.name.value=a.instrument_name||a.name||'';if(['EUR','USD','CHF','GBP'].includes(a.currency))f.currency.value=a.currency;refreshPosForm();area.classList.add('hidden');}));}catch(e){area.innerHTML=empty(e.message);}}
+
+// Wallet-import is deliberately separate from manual asset creation. The user
+// reviews all discovered assets before anything is persisted.
+let scannedWalletAssets=[];let scannedWalletKey='';
+function openWalletImport(){
+  scannedWalletAssets=[];scannedWalletKey='';
+  const networks=[['btc','Bitcoin · einzelne Adresse'],['1','Ethereum · ETH und ERC-20'],['8453','Base · ETH und Tokens'],['42161','Arbitrum · ETH und Tokens'],['10','Optimism · ETH und Tokens'],['137','Polygon · POL und Tokens'],['sol','Solana · SOL und SPL-Token']];
+  const providers=[['__new__','+ Neue Wallet erstellen'],...model.providers.map(p=>[p.id,p.name])];
+  showDialog('Wallet hinzufügen','ÖFFENTLICHE ADRESSE · WATCH-ONLY',`<p class="dialog-intro">Eine öffentliche Wallet-Adresse eingeben und vorhandene Coins automatisch erkennen lassen. <strong>Kein API-Key, kein Login und keine Berechtigung zum Senden.</strong></p>
+    <label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">${options(networks,'1')}</select></label>
+    <label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x… / bc1… / Solana-Adresse"></label>
+    <div class="field-row"><label class="field"><span>Anbieter / Wallet</span><select name="providerId" id="scanProvider">${options(providers,model.providers[0]?.id||'__new__')}</select></label>
+    ${field('Name für neue Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')}</div>
+    <p class="small-help">Für Bitcoin wird hier eine einzelne Adresse unterstützt, noch kein xpub. Ethereum, Base, Arbitrum, Optimism, Polygon und Solana können auch Token finden. Öffentliche Dienste sind mitunter limitiert; gefundene unbekannte Token haben vorerst keinen Kurs.</p>
+    <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
+    <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
+    <p class="small-help">Bitte verdächtige Spam-Token abwählen. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,(v)=>{
+       if(!scannedWalletAssets.length||scannedWalletKey!==v.network+'|'+String(v.address).trim())throw Error('Bitte die aktuelle Adresse erneut scannen.');
+       const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
+       if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
+       let providerId=v.providerId;
+       if(providerId==='__new__'){
+         const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
+         model.providers.push(provider);providerId=provider.id;
+       }
+       let added=0,already=0;
+       for(const asset of chosen){
+         const existing=model.positions.find(p=>p.providerId===providerId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
+         if(existing){already++;continue;}
+         const position=createPosition({kind:'crypto',providerId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals}},model);
+         model.positions.push(position);added++;
+       }
+       if(added){snapshot(model);save();go('positions');}
+       notify(`${added} Coin${added===1?'':'s'} hinzugefügt${already?` · ${already} bereits vorhanden`:''}.`);
+  });
+  $('saveDialog').textContent='Ausgewählte Coins übernehmen';
+  const toggleNew=()=>{$('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');};
+  $('scanProvider').addEventListener('change',toggleNew);toggleNew();
+  $('scanNetwork').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Netzwerk geändert – bitte erneut scannen.';});
+  $('scanAddress').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';});
+  $('scanWalletButton').addEventListener('click',scanWalletNow);
+}
+async function scanWalletNow(){
+  const button=$('scanWalletButton'),status=$('scanWalletStatus'),area=$('walletScanResults');
+  const network=$('scanNetwork').value,address=$('scanAddress').value.trim();
+  if(!address){status.textContent='Bitte die öffentliche Wallet-Adresse eingeben.';return;}
+  button.disabled=true;status.textContent='Lese Blockchain-Bestände …';area.innerHTML='';scannedWalletAssets=[];
+  try{
+    const assets=await discoverWallet(network,address,model.settings);
+    if(!assets.length){status.textContent='Keine positiven Guthaben gefunden.';area.innerHTML=empty('Keine Positionen gefunden. Prüfe Netzwerk und Adresse.');return;}
+    // Fetch contract quotes without a key when possible. A quote error never blocks import.
+    if(PUBLIC_EVM_NETWORKS[Number(network)]){
+      try{
+        const contracts=assets.filter(x=>x.contract).map(x=>x.contract);
+        const quotes=await evmContractPrices(network,contracts,model.settings.coinGeckoKey);
+        for(const a of assets)if(a.contract){const q=Number(quotes[a.contract.toLowerCase()]?.eur);if(q>0)a.price=q;}
+      }catch(e){/* holdings are still valid without quotes */}
+    }
+    scannedWalletAssets=assets.slice(0,150);scannedWalletKey=network+'|'+address;
+    area.innerHTML=`<div class="wallet-scan-header"><strong>${assets.length} Position${assets.length===1?'':'en'} gefunden</strong><span>Zur Übernahme auswählen</span></div>`+
+      scannedWalletAssets.map((a,i)=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'?'Bitcoin':a.chain==='sol'||a.chain==='spl'?'Solana':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small></span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`).join('');
+    status.textContent=assets.length>150?'Maximal 150 Positionen in der Vorschau.':'Bestände abgerufen – bitte vor Übernahme prüfen.';
+  }catch(e){status.textContent='Scan nicht möglich: '+e.message;area.innerHTML=empty('Manuelles Hinzufügen ist weiterhin möglich. Öffentliche API-Zugriffe können zeitweise blockiert oder begrenzt sein.');}
+  finally{button.disabled=false;}
+}
 function openBooking(){if(!model.positions.length)return notify('Bitte zuerst eine Position anlegen.',true);const today=new Date().toISOString().slice(0,10);showDialog('Buchung hinzufügen','MANUELLE BUCHUNGEN',`<p class="dialog-intro">Ein Kauf/Zugang erhöht, ein Verkauf reduziert den Stückbestand. Die Buchung wird in der Historie gespeichert.</p><label class="field"><span>Position</span><select name="positionId">${options(model.positions.map(p=>[p.id,p.name]),model.positions[0].id)}</select></label><div class="field-row"><label class="field"><span>Buchungstyp</span><select name="type">${options([['buy','Kauf'],['sell','Verkauf'],['reward','Rewards / Eingang'],['adjust','Bestandszugang']], 'buy')}</select></label>${field('Datum','date',today,'date','required')}</div><div class="field-row">${field('Menge / Stückzahl','quantity','','number','required min="0.00000000000001" step="any"')}${field('Kurs je Einheit','unitPrice',0,'number','min="0" step="any"')}</div>${field('Notiz (optional)','notes','','text')}`,(v)=>{addBooking(model,v);save();notify('Buchung erfasst.');});}
 function openSnapshot(){showDialog('Stichtag speichern','VERMÖGENSVERLAUF',`<p class="dialog-intro">Der aktuelle Gesamtwert wird für den ausgewählten Tag gespeichert.</p>${field('Stichtag','date',new Date().toISOString().slice(0,10),'date','required')}${field('Notiz (optional)','note','','text')}`,(v)=>{snapshot(model,v.date,v.note);save();notify('Stichtag gespeichert.');});}
 async function refreshAll(){if(busy)return;busy=true;$('refreshAll').disabled=true;$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';const errors=[];let successes=0;const time=new Date().toISOString();try{
   const cryptos=model.positions.filter(p=>p.kind==='crypto'&&p.coinId),tickers=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol);if(cryptos.length){try{const prices=await cryptoPrices(cryptos.map(p=>p.coinId),model.settings.coinGeckoKey);for(const p of cryptos){const v=Number(prices[p.coinId]?.eur);if(Number.isFinite(v)&&v>0){p.price=v;p.currency='EUR';p.fxRate=1;p.updatedAt=time;successes++;}else errors.push(`${p.name}: kein CoinGecko-Kurs`);}}catch(e){errors.push('CoinGecko: '+e.message);}}
-  if(tickers.length){if(!model.settings.twelveKey)errors.push('Wertpapierkurse: eigener Twelve-Data-Schlüssel fehlt.');else{const rates={EUR:1};for(const p of tickers){try{p.price=await securityPrice(p.symbol,model.settings.twelveKey);if(p.currency!=='EUR'){if(!rates[p.currency])rates[p.currency]=await exchangeRate(p.currency,model.settings.twelveKey);p.fxRate=rates[p.currency];}p.updatedAt=time;successes++;}catch(e){errors.push(`${p.symbol}: ${e.message}`);}}}}
-  for(const p of model.positions.filter(p=>p.wallet?.enabled)){try{p.quantity=await walletBalance(p.wallet,model.settings);p.updatedAt=time;successes++;}catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}}
+  if(tickers.length){if(!model.settings.twelveKey){/* Manuelle Wertpapierkurse sind ohne API-Key normal. */}else{const rates={EUR:1};for(const p of tickers){try{p.price=await securityPrice(p.symbol,model.settings.twelveKey);if(p.currency!=='EUR'){if(!rates[p.currency])rates[p.currency]=await exchangeRate(p.currency,model.settings.twelveKey);p.fxRate=rates[p.currency];}p.updatedAt=time;successes++;}catch(e){errors.push(`${p.symbol}: ${e.message}`);}}}}
+  // Cache identical public explorer reads for multi-token wallets. Without this,
+  // importing 40 ERC-20 tokens would issue the same token-balances request 40 times.
+  const networkCache=new Map();
+  const walletFetch=async (url,opts={})=>{
+    const cacheKey=String(url)+'|'+String(opts.method||'GET')+'|'+String(opts.body||'');
+    if(!networkCache.has(cacheKey))networkCache.set(cacheKey,fetch(url,opts).catch(e=>{networkCache.delete(cacheKey);throw e;}));
+    return (await networkCache.get(cacheKey)).clone();
+  };
+  const contractsByChain=new Map();
+  for(const p of model.positions.filter(p=>p.kind==='crypto'&&p.wallet?.chain==='erc20'&&p.wallet?.contract)){
+    const id=Number(p.wallet.chainId||1);if(!contractsByChain.has(id))contractsByChain.set(id,[]);
+    contractsByChain.get(id).push(p);
+  }
+  for(const [chainId,positions] of contractsByChain){
+    try{
+      const quotes=await evmContractPrices(chainId,positions.map(p=>p.wallet.contract),model.settings.coinGeckoKey);
+      for(const p of positions){const rate=Number(quotes[p.wallet.contract.toLowerCase()]?.eur);if(rate>0){p.price=rate;p.currency='EUR';p.updatedAt=time;successes++;}}
+    }catch(e){/* A failed optional quote never affects the wallet balance. */}
+  }
+  for(const p of model.positions.filter(p=>p.wallet?.enabled)){try{p.quantity=await walletBalance(p.wallet,model.settings,walletFetch);p.updatedAt=time;successes++;}catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}}
   if(successes){snapshot(model);save();}else render();$('priceInfo').textContent=`${successes} Wert${successes===1?'':'e'} aktualisiert · ${new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})}`;if(errors.length){notify(`${successes} erfolgreich. ${errors.slice(0,3).join(' · ')}${errors.length>3?' · weitere Fehler':''}`,true);}else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
 }catch(e){notify(e.message,true);}finally{busy=false;$('refreshAll').disabled=false;}}
 function downloadBackup(){const file=new Blob([backup(model)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Backup ohne API-Schlüssel erstellt.');}
 function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'delete-provider':{if(model.positions.some(p=>p.providerId===id))return notify('Dieser Anbieter hat Positionen. Bitte erst die Positionen zuordnen oder löschen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
-function initEvents(){$('addProvider').addEventListener('click',()=>openProvider());$('addPosition').addEventListener('click',()=>openPosition());$('addBooking').addEventListener('click',openBooking);$('addSnapshot').addEventListener('click',openSnapshot);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;renderPositions();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
+function initEvents(){$('addProvider').addEventListener('click',()=>openProvider());$('addPosition').addEventListener('click',()=>openPosition());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('addSnapshot').addEventListener('click',openSnapshot);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;renderPositions();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
   $('exportBackup').addEventListener('click',downloadBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>2e6)return notify('Backup ist zu groß (max. 2 MB).',true);try{const parsed=JSON.parse(await file.text());const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};model=imported;filter='all';save();notify('Backup wiederhergestellt.');}catch(err){notify(err.message,true);}});
   $('deleteAll').addEventListener('click',()=>{if(confirm('Alle lokalen Positionen, Stichtage UND API-Schlüssel endgültig löschen? Stelle vorher ein Backup sicher.')){model=blankModel();save();notify('Alle lokalen Daten gelöscht.');}});
   $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','coinGeckoKey','etherscanKey'])model.settings[key]=String(f.get(key)||'').trim();save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
