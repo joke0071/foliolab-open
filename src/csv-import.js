@@ -60,7 +60,7 @@ function resolvePosition(model,key,defaultId){
 export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId=''}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
- const list=[],issues=[];let duplicates=0;
+ const list=[],issues=[],occurrences=new Map();let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
  for(const item of mapped){
   try{
@@ -75,7 +75,13 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const linked=String(d[mapping.cashPosition]||'').trim();
    const c=linked?resolvePosition(draft,linked,'').id:cashPositionId||'';
    const row={type,date:item.date,positionId:pos.id,quantity:qty,unitPrice:price,feeEUR:fee,taxEUR:tax,fxRate:fx,cashPositionId:c,notes:String(d[mapping.notes]||'').slice(0,180),externalId:ref};
-   const id=fingerprint(row);if(seen.has(id)){duplicates++;list.push({line:item.index,status:'duplicate',row});continue;}
+   const base=fingerprint(row);
+   const count=ref?1:(occurrences.get(base)||0)+1;
+   if(!ref)occurrences.set(base,count);
+   // Identical rows in one file may be distinct transactions. Keep a stable
+   // occurrence number, while explicit broker transaction IDs stay unique.
+   const id=count===1?base:base+'#'+count;
+   if(seen.has(id)){duplicates++;list.push({line:item.index,status:'duplicate',row});continue;}
    const event=executeTransaction(draft,row);const booking=draft.bookings.find(b=>b.id===event.id);
    booking.importFingerprint=id;draft.journalEntries.find(j=>j.id===booking.journalEntryId).source='csv';
    seen.add(id);list.push({line:item.index,status:'ready',row});
