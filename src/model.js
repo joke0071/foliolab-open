@@ -1,7 +1,7 @@
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
-export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://api.mainnet-beta.solana.com',showSmall:true,autoRefresh:true});
+export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true});
 export const blankModel=()=>({version:2,providers:[],accounts:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -86,6 +86,7 @@ export function load(storage=globalThis.localStorage){
   const result=safeImport(parsed);
   const input=parsed.settings||{},settings=defaultSettings();
   for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
+  if(settings.solanaRpc==='https://api.mainnet-beta.solana.com')settings.solanaRpc='https://solana-rpc.publicnode.com';
   result.settings=settings;
   return result;
 }

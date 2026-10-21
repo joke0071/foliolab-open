@@ -10,6 +10,7 @@ try{
   {name:'OpenFIGI search',url:'https://api.openfigi.com/v3/search',method:'POST',body:JSON.stringify({query:'Vanguard FTSE All-World UCITS ETF'})},
   {name:'Solana public RPC',url:'https://api.mainnet-beta.solana.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
   {name:'Solana PublicNode RPC',url:'https://solana-rpc.publicnode.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
+  {name:'Solana PublicNode SPL account scan',url:'https://solana-rpc.publicnode.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountsByOwner',params:['11111111111111111111111111111111',{programId:'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'},{encoding:'jsonParsed'}]})},
   {name:'Solana dRPC',url:'https://solana.drpc.org',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
   {name:'Solana OnFinality',url:'https://solana.api.onfinality.io/public',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
   {name:'Solana SubQuery',url:'https://solana.rpc.subquery.network/public',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})}

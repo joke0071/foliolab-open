@@ -20,7 +20,7 @@ Dann http://localhost:4173 öffnen. Für die Offline-PWA ist HTTPS erforderlich.
 - Beliebige ETFs und weitere Anlagen anhand von Namen, Ticker oder ISIN erfassen. Positionen und Guthaben vollständig manuell bearbeiten.
 - Manuelle Käufe, Verkäufe und Bestandszugänge buchen sowie Vermögensstände speichern.
 - Krypto-Coins frei über die **CoinGecko-ID** erfassen; Katalogsuche über `/coins/list`. CoinGecko bietet limitierten schlüssellosen Zugriff, ein eigener Demo-Key ist optional.
-- **Wallet hinzufügen** in Positionen: öffentliche Adresse eingeben, Netzwerk wählen, entdeckte Guthaben prüfen und mehrere Coins ohne API-Key übernehmen. Unterstützt einzelne Bitcoin-Adressen, Ethereum, Base, Arbitrum, Optimism, Polygon (native Coins und ERC-20) sowie Solana (SOL, SPL und Token-2022). EVM nutzt öffentliche Blockscout-Instanzen, Solana öffentliche RPCs. Endpunkte sind nicht garantiert jederzeit erreichbar.
+- **Wallet hinzufügen** in Positionen: öffentliche Adresse eingeben, Netzwerk wählen, entdeckte Guthaben prüfen und mehrere Coins ohne API-Key übernehmen. Unterstützt einzelne Bitcoin-Adressen, Ethereum, Base, Arbitrum, Optimism, Polygon (native Coins und ERC-20) sowie Solana (SOL, SPL und Token-2022). EVM nutzt öffentliche Blockscout-Instanzen, Solana PublicNode RPC (ohne Schlüssel). Endpunkte sind nicht garantiert jederzeit erreichbar.
 - Tägliche Fremdwährungskurse ohne API-Schlüssel über Frankfurter; optionale ETF-/Aktienkurse über **Twelve Data** mit dem Schlüssel des Nutzers. Ohne Key funktioniert die manuelle Kurspflege. Ein Ticker kann von Börse zu Börse unterschiedlich sein; falls nötig das korrekte Symbol samt Börsen-Suffix eintragen.
 - Optionaler automatischer Kurs- und Wallet-Abruf beim Öffnen (maximal alle 30 Minuten, in „Mehr“ abschaltbar).
 - Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**.
@@ -63,3 +63,5 @@ Quellcode dieses eigenständigen Open-Source-Prototyps: MIT (siehe `LICENSE`). D
 ## Stand der Architekturmodernisierung
 
 In Version 2: getrennte Anbieter/Konten, sichere Datenmigration mit lokaler Vorabkopie, Konto-Dialoge, kostenlose tägliche Wechselkurse. Noch nicht umfassend umgesetzt: schlüssellose Suche für europäische Wertpapiere, vollständige Transaktionskosten-/XIRR-/TWR-Berechnung, alle Blockchains, DeFi-Bewertung und verschlüsselte Sicherungen. Wallet-Import ist ein Bestandsabruf und keine steuerliche Transaktionshistorie.
+
+**Live-Verifikation 21.10.2026:** Frankfurter (FX), Blockstream (BTC), Blockscout (Ethereum) und PublicNode (Solana-RPC `getBalance`) reagierten im echten Browser mit HTTP 200. Der zuvor verwendete Standard-Solana-RPC lieferte HTTP 403. OpenFIGI-Suche war aus dem Browser nicht erreichbar und ist daher nicht als Schlüssel-los-Feature eingebaut. Der Betrieb anderer Adressen und Tokenlisten ist abhängig von externen Dienstgrenzen.
