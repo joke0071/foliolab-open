@@ -1,9 +1,11 @@
 import {rebuildAssets} from './assets.js';
+import {executeTransaction} from './transactions.js';
+import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true});
-export const blankModel=()=>({version:2,providers:[],accounts:[],assets:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
+export const blankModel=()=>({version:2,providers:[],accounts:[],assets:[],positions:[],bookings:[],externalCashFlows:[],snapshots:[],performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export function number(v){if(typeof v==='string')v=v.trim().replace(/\s/g,'').replace(',','.');const n=Number(v);return Number.isFinite(n)?n:NaN;}
@@ -45,42 +47,19 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
 }
 export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
-  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantity=safeNumber(v.quantity??0);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
+  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;
   const costBasisEUR=(v.costBasisEUR==null||v.costBasisEUR==='')?null:safeNumber(v.costBasisEUR);
   const realizedPnLEUR=v.realizedPnLEUR==null?null:number(v.realizedPnLEUR);if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,costBasisEUR,realizedPnLEUR,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,costBasisEUR,realizedPnLEUR,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
-export function valueEUR(p){const qty=number(p.quantity),price=number(p.price),rate=p.currency==='EUR'?1:number(p.fxRate);return [qty,price,rate].every(Number.isFinite)?qty*price*rate:0;}
-export function totalEUR(model){return model.positions.reduce((sum,p)=>sum+valueEUR(p),0);}
+export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate));}
+export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate)),0n)));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
-export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''){if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Ungültiges Datum.');const amount=totalEUR(model);const existing=model.snapshots.find(x=>x.date===date);if(existing){existing.total=amount;existing.note=cleanString(note||existing.note,180);}else model.snapshots.push({id:uid(),date,total:amount,note:cleanString(note,180)});model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));return amount;}
+export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''){if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Ungültiges Datum.');const amount=totalEUR(model);const existing=model.snapshots.find(x=>x.date===date);if(existing){existing.total=amount;existing.note=cleanString(note||existing.note,180);}else model.snapshots.push({id:uid(),date,recordedAt:new Date().toISOString(),total:amount,note:cleanString(note,180),byAccount:Object.fromEntries(model.accounts.map(a=>[a.id,model.positions.filter(p=>p.accountId===a.id).reduce((s,p)=>s+valueEUR(p),0)])),valuationStatus:'teilweise/ungeprüft',quoteTimes:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt}))});model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));return amount;}
 /** Transactions modify shares but never overwrite the independent market quote. */
-export function addBooking(model,v){
- const p=model.positions.find(x=>x.id===v.positionId);if(!p)throw Error('Position nicht gefunden.');
- if(p.wallet?.enabled)throw Error('Automatisch geführte Wallet-Bestände dürfen nicht mit manuellen Buchungen überschrieben werden.');
- const type=['buy','sell','reward','adjust'].includes(v.type)?v.type:'buy';
- const quantity=safeNumber(v.quantity,1e-18),unitPrice=safeNumber(v.unitPrice??p.price);
- const feeEUR=safeNumber(v.feeEUR??0),taxEUR=safeNumber(v.taxEUR??0);
- const fxRate=p.currency==='EUR'?1:safeNumber(v.fxRate,1e-9,1000);
- const date=cleanString(v.date,10);
- if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Datum ungültig.');
- const prev=p.quantity,delta=type==='sell'?-quantity:quantity;
- if(prev+delta < -1e-9)throw Error('Verkauf übersteigt den Bestand.');
- const basis=p.costBasisEUR==null?null:safeNumber(p.costBasisEUR);
- const amountEUR=quantity*unitPrice*fxRate;
- if(type==='buy')p.costBasisEUR=prev===0?amountEUR+feeEUR+taxEUR:basis===null?null:basis+amountEUR+feeEUR+taxEUR;
- else if(type==='sell'&&basis!==null&&prev>0){
-   const taken=basis*Math.min(1,quantity/prev);
-   p.realizedPnLEUR=(p.realizedPnLEUR??0)+amountEUR-taken-feeEUR-taxEUR;
-   p.costBasisEUR=Math.max(0,basis-taken);
- }else if(type==='reward'||type==='adjust')p.costBasisEUR=null;
- p.quantity=Math.max(0,prev+delta);
- model.bookings.unshift({id:uid(),positionId:p.id,positionName:p.name,type,quantity,unitPrice,feeEUR,taxEUR,fxRate,amountEUR,date,notes:cleanString(v.notes,180)});
- if(date===new Date().toISOString().slice(0,10))snapshot(model,date);
- return p;
-}
+export function addBooking(model,v){const entry=executeTransaction(model,{...v,type:v.type||'buy'});if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);return model.positions.find(p=>p.id===entry.positionId);}
 
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
 /** Importiert alte v1-Backups sicher und hebt sie in das normalisierte v2-Modell. */
@@ -94,13 +73,17 @@ export function safeImport(raw){
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
   m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');rebuildAssets(m);
+  m.performanceFlowTrackingSince=raw.performanceFlowTrackingSince&&/^\d{4}-\d{2}-\d{2}$/.test(raw.performanceFlowTrackingSince)?raw.performanceFlowTrackingSince:null;
+  if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
+  m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date)||!Number.isFinite(Number(x.amountEUR)))throw Error('Cashflow-Historie beschädigt.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
+  uniqueIds(m.externalCashFlows,'externen Geldflüssen');
   m.bookings=(raw.bookings||[]).map(x=>{
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
-    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),note:cleanString(x.note,180)};
+    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),recordedAt:cleanString(x.recordedAt,40)||null,byAccount:x.byAccount&&typeof x.byAccount==='object'?x.byAccount:null,valuationStatus:cleanString(x.valuationStatus,40)||'historisch',note:cleanString(x.note,180)};
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
   return m;
 }
