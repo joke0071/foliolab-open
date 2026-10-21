@@ -1,6 +1,7 @@
 import {requestJSON,TTL} from './request-cache.js';
 import {readTrustLines,readTrustLineBalance} from './xrpl-assets.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
+import {atomicDecimal} from './decimal.js';
 const DEFAULT_SOL_RPC='https://solana-rpc.publicnode.com';
 export const POPULAR_COINS=[['bitcoin','BTC','Bitcoin'],['ethereum','ETH','Ethereum'],['solana','SOL','Solana'],['ripple','XRP','XRP'],['tether','USDT','Tether'],['usd-coin','USDC','USDC'],['binancecoin','BNB','BNB'],['cardano','ADA','Cardano'],['dogecoin','DOGE','Dogecoin'],['tron','TRX','TRON'],['chainlink','LINK','Chainlink'],['avalanche-2','AVAX','Avalanche'],['polkadot','DOT','Polkadot'],['litecoin','LTC','Litecoin'],['bitcoin-cash','BCH','Bitcoin Cash'],['stellar','XLM','Stellar'],['uniswap','UNI','Uniswap'],['aave','AAVE','Aave'],['near','NEAR','NEAR Protocol'],['sui','SUI','Sui'],['pepe','PEPE','Pepe'],['shiba-inu','SHIB','Shiba Inu'],['render-token','RENDER','Render'],['cosmos','ATOM','Cosmos'],['arbitrum','ARB','Arbitrum'],['optimism','OP','Optimism']].map(([id,symbol,name])=>({id,symbol,name}));
 async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url,{...opts,fetcher});}
@@ -229,4 +230,59 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
     Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));
   }
   return result;
+}
+
+/** Exact string balances: no JS Number conversion before parsing blockchain atomics. */
+export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.fetch){
+ if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');
+ if(wallet.chain==='btc-hd')return (await scanBitcoinAccount(wallet.address,{fetcher})).quantityExact;
+ if(wallet.chain==='xrp-token')return readTrustLineBalance(wallet.address,wallet.contract,fetcher);
+ if(wallet.chain==='btc'){
+  const d=await json('https://blockstream.info/api/address/'+encodeURIComponent(wallet.address),{ttlMs:TTL.wallet},fetcher),c=d.chain_stats,m=d.mempool_stats;
+  if(!c||!m||![c.funded_txo_sum,c.spent_txo_sum,m.funded_txo_sum,m.spent_txo_sum].every(x=>Number.isSafeInteger(x)&&x>=0))throw Error('Bitcoin-Explorer-Saldo unvollständig.');
+  const sat=BigInt(c.funded_txo_sum)-BigInt(c.spent_txo_sum)+BigInt(m.funded_txo_sum)-BigInt(m.spent_txo_sum);
+  if(sat<0n)throw Error('Unplausibler Bitcoin-Saldo.');
+  return atomicDecimal(sat.toString(),8);
+ }
+ if(wallet.chain==='xrp'){
+  const d=await json('https://xrplcluster.com',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({method:'account_info',params:[{account:wallet.address,ledger_index:'validated'}]}),ttlMs:TTL.wallet},fetcher);
+  if(d.result?.error)throw Error('XRPL: '+String(d.result.error_message||d.result.error));
+  return atomicDecimal(d.result?.account_data?.Balance,6);
+ }
+ if(wallet.chain==='evm'||wallet.chain==='erc20'){
+  const chain=PUBLIC_EVM_NETWORKS[wallet.chainId||1];
+  if(!chain||chain.explorer===false){
+   if(!settings.etherscanKey)throw Error('Ohne öffentlichen Explorer wird ein eigener Etherscan-Key benötigt.');
+   const query={chainid:wallet.chainId||1,module:'account',action:wallet.chain==='erc20'?'tokenbalance':'balance',address:wallet.address,tag:'latest'};
+   if(wallet.chain==='erc20')query.contractaddress=wallet.contract;
+   return atomicDecimal(await etherscan(query,settings.etherscanKey,fetcher),wallet.chain==='erc20'?Number(wallet.decimals):18);
+  }
+  const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(wallet.address);
+  if(wallet.chain==='evm'){const d=await json(base,{ttlMs:TTL.wallet},fetcher);return atomicDecimal(d.coin_balance,18);}
+  const list=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);
+  if(!Array.isArray(list))throw Error('EVM-Tokenliste unvollständig.');
+  if(list.length>=500)throw Error('EVM-Tokenliste möglicherweise abgeschnitten.');
+  const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());
+  return item?atomicDecimal(item.value,Number(item.token?.decimals??wallet.decimals)):'0';
+ }
+ if(['sol','spl'].includes(wallet.chain)){
+  const url=new URL(settings.solanaRpc||DEFAULT_SOL_RPC);
+  if(url.protocol!=='https:'||url.username||url.password)throw Error('Solana-RPC muss HTTPS ohne URL-Schlüssel nutzen.');
+  const isToken=wallet.chain==='spl';
+  const method=isToken?'getTokenAccountsByOwner':'getBalance';
+  const params=isToken?[wallet.address,{mint:wallet.contract},{encoding:'jsonParsed'}]:[wallet.address,{commitment:'confirmed'}];
+  const r=await json(url.toString(),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params}),ttlMs:TTL.wallet},fetcher);
+  if(r.error)throw Error(r.error.message||'Solana-RPC-Fehler.');
+  if(!isToken)return atomicDecimal(r.result?.value,9);
+  const list=r.result?.value;if(!Array.isArray(list))throw Error('SPL-Tokenkonten unvollständig.');
+  const decimalCount=list[0]?.account?.data?.parsed?.info?.tokenAmount?.decimals??Number(wallet.decimals);
+  let raw=0n;
+  for(const row of list){
+   const amount=row.account?.data?.parsed?.info?.tokenAmount;
+   if(!amount||amount.decimals!==decimalCount||!/^\d+$/.test(String(amount.amount||'')))throw Error('SPL-Rohdaten unvollständig.');
+   raw+=BigInt(amount.amount);
+  }
+  return atomicDecimal(raw.toString(),decimalCount);
+ }
+ throw Error('Blockchain nicht unterstützt.');
 }

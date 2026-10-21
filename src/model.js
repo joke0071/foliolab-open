@@ -84,7 +84,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const manual=options.manualTotalEUR!=null&&String(options.manualTotalEUR).trim()!=='';
  if(date!==today&&!manual)throw Error('Für historische Stichtage bitte den tatsächlich damals bekannten Portfoliowert eingeben; heutige Kurse sind keine historischen Daten.');
  const amountExact=manual?exact(units(options.manualTotalEUR)):exact(units(totalEUR(model)));
- if(units(amountExact)<0n)throw Error('Stichtagswert darf nicht negativ sein.');
+ // Net liabilities may lead to a legitimate negative portfolio value.
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
  const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
  const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
@@ -143,7 +143,7 @@ export function safeImport(raw){
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
-    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),
+    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
       totalEURExact:exact(units(x.totalEURExact??x.total)),recordedAt:cleanString(x.recordedAt,40)||null,
       byAccount:x.byAccount&&typeof x.byAccount==='object'?structuredClone(x.byAccount):null,
       valuationStatus:raw.version<3?'legacy-unverified':cleanString(x.valuationStatus,40)||'unknown',

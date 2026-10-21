@@ -44,3 +44,11 @@ export function preciseValue(quantity,price,rate='1'){
 }
 /** Only convert to JS number at UI/external-API boundaries. */
 export function approx(value){return Number(exact(typeof value==='bigint'?value:units(value)));}
+
+/** Exact nonnegative atomic on-chain integer to canonical decimal with 18-digit limit. */
+export function atomicDecimal(raw,decimals){
+ if(!/^\d+$/.test(String(raw??''))||!Number.isInteger(Number(decimals))||decimals<0||decimals>30)throw Error('Unvollständiger oder ungültiger Blockchain-Rohbetrag.');
+ const n=BigInt(String(raw)),base=10n**BigInt(decimals);
+ const fraction=(n%base).toString().padStart(decimals,'0').replace(/0+$/,'');
+ return exact(units((n/base).toString()+(fraction?'.'+fraction:'')));
+}

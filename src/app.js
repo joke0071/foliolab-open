@@ -1,5 +1,5 @@
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,groupByKind,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
-import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices} from './market.js';
+import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact} from './market.js';
 import {svg} from './format.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
@@ -360,8 +360,8 @@ async function refreshAll(){
   }
   for(const p of model.positions.filter(p=>p.wallet?.enabled)){
    try{
-    p.quantity=await walletBalance(p.wallet,model.settings,walletFetch);
-    p.quantityExact=String(p.quantity);p.updatedAt=now;successes++;
+    const exactQty=await walletBalanceExact(p.wallet,model.settings,walletFetch);
+    p.quantityExact=exactQty;p.quantity=Number(exactQty);p.updatedAt=now;successes++;
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
   if(successes){snapshot(model);save();}else render();
