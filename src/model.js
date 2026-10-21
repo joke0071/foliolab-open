@@ -46,13 +46,40 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantity=safeNumber(v.quantity??0);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,kind,name,symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  const costBasisEUR=(v.costBasisEUR==null||v.costBasisEUR==='')?null:safeNumber(v.costBasisEUR);
+  const realizedPnLEUR=v.realizedPnLEUR==null?null:number(v.realizedPnLEUR);if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,costBasisEUR,realizedPnLEUR,kind,name,symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
 export function valueEUR(p){const qty=number(p.quantity),price=number(p.price),rate=p.currency==='EUR'?1:number(p.fxRate);return [qty,price,rate].every(Number.isFinite)?qty*price*rate:0;}
 export function totalEUR(model){return model.positions.reduce((sum,p)=>sum+valueEUR(p),0);}
+export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''){if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Ungültiges Datum.');const amount=totalEUR(model);const existing=model.snapshots.find(x=>x.date===date);if(existing){existing.total=amount;existing.note=cleanString(note||existing.note,180);}else model.snapshots.push({id:uid(),date,total:amount,note:cleanString(note,180)});model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));return amount;}
-export function addBooking(model,v){const p=model.positions.find(x=>x.id===v.positionId);if(!p)throw Error('Position nicht gefunden.');const type=['buy','sell','reward','adjust'].includes(v.type)?v.type:'buy';const quantity=safeNumber(v.quantity,0.00000000000001);const unitPrice=safeNumber(v.unitPrice??p.price);const date=cleanString(v.date,10);if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Datum ungültig.');const delta=type==='sell'?-quantity:quantity;if(p.quantity+delta < -1e-9)throw Error('Verkauf übersteigt den Bestand.');p.quantity=Math.max(0,p.quantity+delta);if(type!=='adjust'&&unitPrice>0)p.price=unitPrice;model.bookings.unshift({id:uid(),positionId:p.id,positionName:p.name,type,quantity,unitPrice,date,notes:cleanString(v.notes,180)});if(date===new Date().toISOString().slice(0,10))snapshot(model,date);return p;}
+/** Transactions modify shares but never overwrite the independent market quote. */
+export function addBooking(model,v){
+ const p=model.positions.find(x=>x.id===v.positionId);if(!p)throw Error('Position nicht gefunden.');
+ if(p.wallet?.enabled)throw Error('Automatisch geführte Wallet-Bestände dürfen nicht mit manuellen Buchungen überschrieben werden.');
+ const type=['buy','sell','reward','adjust'].includes(v.type)?v.type:'buy';
+ const quantity=safeNumber(v.quantity,1e-18),unitPrice=safeNumber(v.unitPrice??p.price);
+ const feeEUR=safeNumber(v.feeEUR??0),taxEUR=safeNumber(v.taxEUR??0);
+ const fxRate=p.currency==='EUR'?1:safeNumber(v.fxRate,1e-9,1000);
+ const date=cleanString(v.date,10);
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Datum ungültig.');
+ const prev=p.quantity,delta=type==='sell'?-quantity:quantity;
+ if(prev+delta < -1e-9)throw Error('Verkauf übersteigt den Bestand.');
+ const basis=p.costBasisEUR==null?null:safeNumber(p.costBasisEUR);
+ const amountEUR=quantity*unitPrice*fxRate;
+ if(type==='buy')p.costBasisEUR=prev===0?amountEUR+feeEUR+taxEUR:basis===null?null:basis+amountEUR+feeEUR+taxEUR;
+ else if(type==='sell'&&basis!==null&&prev>0){
+   const taken=basis*Math.min(1,quantity/prev);
+   p.realizedPnLEUR=(p.realizedPnLEUR??0)+amountEUR-taken-feeEUR-taxEUR;
+   p.costBasisEUR=Math.max(0,basis-taken);
+ }else if(type==='reward'||type==='adjust')p.costBasisEUR=null;
+ p.quantity=Math.max(0,prev+delta);
+ model.bookings.unshift({id:uid(),positionId:p.id,positionName:p.name,type,quantity,unitPrice,feeEUR,taxEUR,fxRate,amountEUR,date,notes:cleanString(v.notes,180)});
+ if(date===new Date().toISOString().slice(0,10))snapshot(model,date);
+ return p;
+}
 
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
 /** Importiert alte v1-Backups sicher und hebt sie in das normalisierte v2-Modell. */
