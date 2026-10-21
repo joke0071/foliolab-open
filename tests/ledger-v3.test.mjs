@@ -194,3 +194,21 @@ test('Quota error does not mark portfolio as successfully persisted',()=>{
  fail=false;persist(local,storage);
  assert.equal(JSON.parse(db.get(STORE_KEY)).settings.testFlag,'changed');
 });
+
+test('V3 backup rejects positions inconsistent with its balanced journal',()=>{
+ const {m,etf}=fixture();
+ trade(m,etf,'buy',{quantity:1});
+ const tampered=JSON.parse(backup(m));
+ tampered.positions.find(p=>p.id===etf.id).quantityExact='2';
+ tampered.positions.find(p=>p.id===etf.id).quantity=2;
+ assert.throws(()=>safeImport(tampered),/Positionsmengen/);
+});
+test('Observed snapshot keeps amounts above JS safe integer precision exact',()=>{
+ const {m,etf,cashPosition}=fixture({cash:0});
+ etf.quantityExact='9007199254740993.125';etf.quantity=Number(etf.quantityExact);
+ etf.price=1;etf.priceExact='1';
+ cashPosition.quantityExact='0';cashPosition.quantity=0;
+ const today=new Date().toISOString().slice(0,10);
+ snapshot(m,today);
+ assert.equal(m.snapshots.at(-1).totalEURExact,'9007199254740993.125');
+});
