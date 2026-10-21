@@ -31,5 +31,25 @@ try{
  }
  assert.equal(await page.evaluate(()=>window.__auditXss),undefined,'HTML injection in asset name');
  assert.equal(await page.locator('#positionList img').count(),0,'Asset name escaped');
- console.log('AUDIT-BROWSER 100 holdings, six viewports, four pages, HD privacy prompt and asset-name XSS PASS');
+ await page.evaluate(async()=>{
+  const {load,persist}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js');
+  const m=load();
+  executeTransaction(m,{type:'buy',positionId:'test-0',date:new Date().toISOString().slice(0,10),quantity:1,unitPrice:50});
+  persist(m);
+ });
+ await page.reload();
+ await page.locator('#sidebarNav [data-page="positions"]').click();
+ await page.locator('[data-action="edit-position"][data-id="test-0"]').click();
+ await page.locator('#deletePosition').click();
+ assert.match(await page.locator('#toast').innerText(),/kann nicht gelöscht/);
+ await page.locator('#closeDialog').click();
+ page.once('dialog',d=>d.accept());
+ await page.locator('[data-action="edit-position"][data-id="test-1"]').click();
+ await page.locator('#deletePosition').click();
+ await page.evaluate(async()=>{
+  const {safeImport}=await import('/src/model.js');
+  safeImport(JSON.parse(localStorage.getItem('foliolab-open-v1')));
+ });
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).positions.length),99);
+ console.log('AUDIT-BROWSER 100 holdings, six viewports, four pages, HD privacy, XSS and ledger deletion guards PASS');
 }finally{await browser.close();}
