@@ -1,0 +1,1 @@
+{"name":"foliolab-open","version":"1.0.0","private":true,"type":"module","description":"Lokale unabhängige Portfolio-PWA ohne Server-Keys","scripts":{"test":"node --test tests/*.test.mjs","start":"python3 -m http.server 4173","check":"node --check src/app.js && node --check src/model.js && node --check src/market.js"},"engines":{"node":">=20"}}
