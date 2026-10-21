@@ -96,3 +96,16 @@ test('Cycles and unlinked excluded DeFi assets are rejected',()=>{
  const {m,etf}=fixture();etf.valuationMode='excluded';etf.representedByPositionId='';
  assert.throws(()=>validateEconomicPosition(etf,m),/Referenz/);
 });
+
+test('CSV rejects malformed quote placement instead of silently changing data',()=>{
+ assert.throws(()=>parseCSV('a;b\nfoo"bar;2'),/Anführungszeichen/);
+ assert.throws(()=>parseCSV('a;b\n"quoted"suffix;2'),/Anführungszeichen/);
+ assert.throws(()=>parseCSV('a;b\n"quoted" "again";2'),/Anführungszeichen/);
+});
+test('CSV preserves escaped quotes, embedded line breaks and trailing empty fields',()=>{
+ const csv=parseCSV('a;b;c\r\n"Line 1\nLine 2";"say ""hello""";\r\n');
+ assert.equal(csv.rows.length,1);
+ assert.equal(csv.rows[0].a,'Line 1\nLine 2');
+ assert.equal(csv.rows[0].b,'say "hello"');
+ assert.equal(csv.rows[0].c,'');
+});
