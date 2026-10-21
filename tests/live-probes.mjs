@@ -5,6 +5,7 @@ try{
  await page.goto('http://127.0.0.1:4173/');
  const checks=[
   {name:'Frankfurter FX',url:'https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR'},
+   {name:'Frankfurter historical FX',url:'https://api.frankfurter.dev/v1/2026-10-20?base=USD&symbols=EUR'},
   {name:'Blockstream Bitcoin',url:'https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'},
   {name:'Blockscout Ethereum',url:'https://eth.blockscout.com/api/v2/addresses/0x000000000000000000000000000000000000dEaD'},
   {name:'Blockscout ERC20 token inventory',url:'https://eth.blockscout.com/api/v2/addresses/0x000000000000000000000000000000000000dEaD/token-balances'},

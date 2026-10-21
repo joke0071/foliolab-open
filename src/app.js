@@ -233,6 +233,11 @@ function openBooking(){
   }catch(e){notify('Historischer FX-Abruf: '+e.message,true);}
   finally{button.disabled=false;}
  });
+ $('editorForm').elements.fxRate.addEventListener('input',()=>{
+   $('editorForm').elements.fxSource.value='Manuell angepasst';
+   $('editorForm').elements.fxRateDate.value='';
+   $('historicalFxNote').textContent='Manuell angepasster FX: bitte den tatsächlich verwendeten Kurs prüfen.';
+ });
  $('bookingType').addEventListener('change',configure);
  $('bookingPosition').addEventListener('change',configure);
  configure();
