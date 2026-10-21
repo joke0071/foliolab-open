@@ -44,7 +44,7 @@ try{
  await page.locator('#sidebarNav [data-page="more"]').click();
  const [dl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportBackup').click()]);
  const exported=JSON.parse(await fs.readFile(await dl.path(),'utf8'));
- assert.equal(exported.version,2);assert.equal(exported.accounts.length,1);
+ assert.equal(exported.version,3);assert.equal(exported.accounts.length,1);
  assert.equal(exported.positions.length,1);assert.ok(exported.positions[0].accountId);
  // Password-protected backups are never plain-text JSON holdings.
  await page.locator('.advanced-apis').filter({has:page.locator('#backupPassword')}).evaluate(el=>el.open=true);
