@@ -32,6 +32,14 @@ try{
  assert.equal(await page.evaluate(()=>window.__auditXss),undefined,'HTML injection in asset name');
  assert.equal(await page.locator('#positionList img').count(),0,'Asset name escaped');
  await page.evaluate(async()=>{
+  const {load,persist}=await import('/src/model.js'),m=load();
+  const unknown=m.positions.find(p=>p.id==='test-2');unknown.price=0;unknown.priceExact='0';
+  persist(m);
+ });
+ await page.reload();
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
+ assert.match(await page.locator('#totalHint').innerText(),/Bewertung unvollständig: 1 ohne Kurs/);
+ await page.evaluate(async()=>{
   const {load,persist}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js');
   const m=load();
   executeTransaction(m,{type:'buy',positionId:'test-0',date:new Date().toISOString().slice(0,10),quantity:1,unitPrice:50});
