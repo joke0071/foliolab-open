@@ -63,6 +63,7 @@ try{
  // Once cached, all pages, scripts and manual holdings must remain usable offline.
  await page.waitForFunction(()=>navigator.serviceWorker?.controller!==null,{timeout:15000});
  await context.setOffline(true);await page.reload();
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
  await page.locator('#totalValue').waitFor();
  assert.match(await page.locator('#totalValue').innerText(),/250/);
  await context.setOffline(false);
