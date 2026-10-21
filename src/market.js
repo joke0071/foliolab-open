@@ -1,7 +1,7 @@
 import {requestJSON,TTL} from './request-cache.js';
 import {readTrustLines,readTrustLineBalance} from './xrpl-assets.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
-import {atomicDecimal} from './decimal.js';
+import {atomicDecimal,units,exact} from './decimal.js';
 const DEFAULT_SOL_RPC='https://solana-rpc.publicnode.com';
 export const POPULAR_COINS=[['bitcoin','BTC','Bitcoin'],['ethereum','ETH','Ethereum'],['solana','SOL','Solana'],['ripple','XRP','XRP'],['tether','USDT','Tether'],['usd-coin','USDC','USDC'],['binancecoin','BNB','BNB'],['cardano','ADA','Cardano'],['dogecoin','DOGE','Dogecoin'],['tron','TRX','TRON'],['chainlink','LINK','Chainlink'],['avalanche-2','AVAX','Avalanche'],['polkadot','DOT','Polkadot'],['litecoin','LTC','Litecoin'],['bitcoin-cash','BCH','Bitcoin Cash'],['stellar','XLM','Stellar'],['uniswap','UNI','Uniswap'],['aave','AAVE','Aave'],['near','NEAR','NEAR Protocol'],['sui','SUI','Sui'],['pepe','PEPE','Pepe'],['shiba-inu','SHIB','Shiba Inu'],['render-token','RENDER','Render'],['cosmos','ATOM','Cosmos'],['arbitrum','ARB','Arbitrum'],['optimism','OP','Optimism']].map(([id,symbol,name])=>({id,symbol,name}));
 async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url,{...opts,fetcher});}
@@ -156,13 +156,15 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   }
   if(network==='btc'){
     if(!/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(a))throw Error('Bitte eine gültige einzelne Bitcoin-Adresse eingeben (kein xpub).');
-    const quantity=await btcBalance(a,fetcher);
-    return quantity>0?[{name:'Bitcoin',symbol:'BTC',coinId:'bitcoin',quantity,chain:'btc',decimals:8}]:[];
+    const quantityExact=await walletBalanceExact({enabled:true,chain:'btc',address:a},settings,fetcher);
+    const quantity=Number(quantityExact);
+    return quantity>0?[{name:'Bitcoin',symbol:'BTC',coinId:'bitcoin',quantity,quantityExact,chain:'btc',decimals:8}]:[];
   }
   if(network==='xrp'){
     if(!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(a))throw Error('Ungültige XRP-Adresse.');
-    const quantity=await xrpBalance(a,fetcher);
-    const result=quantity>0?[{name:'XRP',symbol:'XRP',coinId:'ripple',quantity,quantityExact:String(quantity),chain:'xrp',decimals:6}]:[];
+    const quantityExact=await walletBalanceExact({enabled:true,chain:'xrp',address:a},settings,fetcher);
+    const quantity=Number(quantityExact);
+    const result=quantity>0?[{name:'XRP',symbol:'XRP',coinId:'ripple',quantity,quantityExact,chain:'xrp',decimals:6}]:[];
     try{result.push(...await readTrustLines(a,fetcher));}
     catch(e){if(!result.length)throw e;result.partial=true;result.warning='XRP bekannt, aber Trust-Line-Scan fehlgeschlagen: '+e.message;}
     return result;
@@ -171,22 +173,27 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a))throw Error('Ungültige Solana-Adresse.');
     const rpc=settings.solanaRpc||DEFAULT_SOL_RPC;
     const native=await rpcCall(rpc,'getBalance',[a,{commitment:'confirmed'}],fetcher);
-    const assets=[];const quantity=Number(native.value||0)/1e9;
-    if(quantity>0)assets.push({name:'Solana',symbol:'SOL',coinId:'solana',quantity,chain:'sol',decimals:9});
+    const assets=[];const quantityExact=atomicDecimal(native?.value,9),quantity=Number(quantityExact);
+    if(quantity>0)assets.push({name:'Solana',symbol:'SOL',coinId:'solana',quantity,quantityExact,chain:'sol',decimals:9});
     let successfulPrograms=0;const failures=[];
     for(const programId of solanaPrograms){
       try{
         const data=await rpcCall(rpc,'getTokenAccountsByOwner',[a,{programId},{encoding:'jsonParsed'}],fetcher);
+        if(!Array.isArray(data?.value))throw Error('Solana-Tokenkonten unvollständig.');
         successfulPrograms++;
-        for(const row of data.value||[]){
+        for(const row of data.value){
           const info=row.account?.data?.parsed?.info;const mint=info?.mint;
           if(!mint||!String(mint).match(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/))continue;
           const decimals=Number(info.tokenAmount?.decimals);
-          const amount=Number(info.tokenAmount?.uiAmountString??0);
-          if(!(amount>0)||!Number.isFinite(amount)||decimals<0||decimals>30)continue;
+          if(!Number.isInteger(decimals)||decimals<0||decimals>30)throw Error('Ungültige SPL-Token-Decimals.');
+          const tokenExact=atomicDecimal(info.tokenAmount?.amount,decimals);
+          if(units(tokenExact)<=0n)continue;
           const existing=assets.find(x=>x.chain==='spl'&&x.contract===mint);
-          if(existing)existing.quantity+=amount;
-          else assets.push({name:'Solana Token '+mint.slice(0,6)+'…',symbol:mint.slice(0,6)+'…',coinId:'',quantity:amount,chain:'spl',contract:mint,decimals});
+          if(existing){
+            if(existing.decimals!==decimals)throw Error('Widersprüchliche SPL-Token-Decimals.');
+            existing.quantityExact=exact(units(existing.quantityExact)+units(tokenExact));
+            existing.quantity=Number(existing.quantityExact);
+          }else assets.push({name:'Solana Token '+mint.slice(0,6)+'…',symbol:mint.slice(0,6)+'…',coinId:'',quantity:Number(tokenExact),quantityExact:tokenExact,chain:'spl',contract:mint,decimals});
         }
       }catch(error){failures.push(error.message);}
     }
@@ -201,18 +208,26 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(a);
   const info=await json(base,{ttlMs:TTL.wallet},fetcher);
   let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
-  const assets=[];const native=Number(info.coin_balance||0)/1e18;
-  if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,chain:'evm',chainId,decimals:18});
+  const assets=[];const nativeExact=atomicDecimal(info.coin_balance,18),native=Number(nativeExact);
+  if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,quantityExact:nativeExact,chain:'evm',chainId,decimals:18});
+  let tokenIssues=0;
   for(const row of raw.slice(0,500)){
     const token=row.token||{};
     const contract=String(token.address_hash||token.address||'');
     const decimals=Number(token.decimals);
-    const value=Number(row.value)/10**decimals;
-    if(token.type!=='ERC-20'||!isEvmAddress(contract)||!Number.isInteger(decimals)||decimals<0||decimals>30||!(value>0)||!Number.isFinite(value))continue;
+    if(token.type!=='ERC-20')continue;
+    if(!isEvmAddress(contract)||!Number.isInteger(decimals)||decimals<0||decimals>30){tokenIssues++;continue;}
+    let quantityExact;
+    try{quantityExact=atomicDecimal(row.value,decimals);}catch{tokenIssues++;continue;}
+    if(units(quantityExact)<=0n)continue;
     const symbol=String(token.symbol||'Token').slice(0,32);
-    assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:value,chain:'erc20',chainId,contract,decimals});
+    assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:Number(quantityExact),quantityExact,chain:'erc20',chainId,contract,decimals});
   }
-  if(tokenFailure){if(!assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);assets.partial=true;assets.warning='Native Coin erkannt, Token-Abfrage war nicht verfügbar: '+tokenFailure;}
+  if(tokenFailure&& !assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);
+  if(tokenFailure||raw.length>=500||tokenIssues){
+    assets.partial=true;
+    assets.warning=[tokenFailure&&'Token-Abfrage fehlgeschlagen',raw.length>=500&&'Tokenliste möglicherweise abgeschnitten',tokenIssues&&'einzelne Token-Rohwerte ungültig'].filter(Boolean).join(' · ')+'. Vollständigkeit nicht bestätigt.';
+  }
   return assets;
 }
 
