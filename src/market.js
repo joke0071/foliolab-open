@@ -1,9 +1,9 @@
+import {requestJSON,TTL} from './request-cache.js';
 const DEFAULT_SOL_RPC='https://solana-rpc.publicnode.com';
 export const POPULAR_COINS=[['bitcoin','BTC','Bitcoin'],['ethereum','ETH','Ethereum'],['solana','SOL','Solana'],['ripple','XRP','XRP'],['tether','USDT','Tether'],['usd-coin','USDC','USDC'],['binancecoin','BNB','BNB'],['cardano','ADA','Cardano'],['dogecoin','DOGE','Dogecoin'],['tron','TRX','TRON'],['chainlink','LINK','Chainlink'],['avalanche-2','AVAX','Avalanche'],['polkadot','DOT','Polkadot'],['litecoin','LTC','Litecoin'],['bitcoin-cash','BCH','Bitcoin Cash'],['stellar','XLM','Stellar'],['uniswap','UNI','Uniswap'],['aave','AAVE','Aave'],['near','NEAR','NEAR Protocol'],['sui','SUI','Sui'],['pepe','PEPE','Pepe'],['shiba-inu','SHIB','Shiba Inu'],['render-token','RENDER','Render'],['cosmos','ATOM','Cosmos'],['arbitrum','ARB','Arbitrum'],['optimism','OP','Optimism']].map(([id,symbol,name])=>({id,symbol,name}));
-const timeout=13000;
-async function json(url,opts={},fetcher=globalThis.fetch){const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),timeout);try{const response=await fetcher(url,{...opts,signal:controller.signal,cache:'no-store'});if(!response.ok)throw Error(response.status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${response.status})`);const data=await response.json();if(data?.status==='error'||data?.status==='ERROR')throw Error(String(data.message||'API-Fehler'));return data;}catch(e){if(e.name==='AbortError')throw Error('Zeitüberschreitung beim Abruf.');throw e;}finally{clearTimeout(timer);}}
+async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url,{...opts,fetcher});}
 function cgHeaders(key){return key?{'x-cg-demo-api-key':key}:{};}
-export async function coinCatalog(key='',fetcher=globalThis.fetch){const a=await json('https://api.coingecko.com/api/v3/coins/list?include_platform=false',{headers:cgHeaders(key)},fetcher);if(!Array.isArray(a))throw Error('Ungültiger CoinGecko-Katalog.');return a.map(x=>({id:String(x.id||''),symbol:String(x.symbol||'').toUpperCase(),name:String(x.name||'')}));}
+export async function coinCatalog(key='',fetcher=globalThis.fetch){const a=await json('https://api.coingecko.com/api/v3/coins/list?include_platform=false',{headers:cgHeaders(key),ttlMs:TTL.catalog},fetcher);if(!Array.isArray(a))throw Error('Ungültiger CoinGecko-Katalog.');return a.map(x=>({id:String(x.id||''),symbol:String(x.symbol||'').toUpperCase(),name:String(x.name||'')}));}
 export function searchCatalog(catalog,query){const q=query.trim().toLowerCase();if(!q)return catalog.slice(0,16);return catalog.filter(c=>c.id.toLowerCase().includes(q)||c.symbol.toLowerCase().includes(q)||c.name.toLowerCase().includes(q)).sort((a,b)=>Number(b.symbol.toLowerCase()===q)-Number(a.symbol.toLowerCase()===q)).slice(0,30);}
 export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
  const unique=[...new Set(ids.filter(Boolean))].slice(0,500);
@@ -12,33 +12,113 @@ export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
  for(let i=0;i<unique.length;i+=75){
    const url=new URL('https://api.coingecko.com/api/v3/simple/price');
    url.searchParams.set('ids',unique.slice(i,i+75).join(','));url.searchParams.set('vs_currencies','eur');url.searchParams.set('include_last_updated_at','true');
-   try{Object.assign(result,await json(url.toString(),{headers:cgHeaders(key)},fetcher));passed++;}
+   try{Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));passed++;}
    catch(e){failures.push(e.message);}
  }
  if(!passed&&failures.length)throw Error(failures[0]);
  if(failures.length)Object.defineProperty(result,'partialFailures',{value:failures,enumerable:false});
  return result;
 }
-export async function searchSecurities(term,key,fetcher=globalThis.fetch){if(!key)throw Error('Für die Wertpapiersuche bitte in „Mehr“ einen eigenen Twelve-Data-Schlüssel hinterlegen.');const url=new URL('https://api.twelvedata.com/symbol_search');url.searchParams.set('symbol',term);url.searchParams.set('apikey',key);const res=await json(url.toString(),{},fetcher);if(!Array.isArray(res.data))return [];
+export async function searchSecurities(term,key,fetcher=globalThis.fetch){if(!key)throw Error('Für die Wertpapiersuche bitte in „Mehr“ einen eigenen Twelve-Data-Schlüssel hinterlegen.');const url=new URL('https://api.twelvedata.com/symbol_search');url.searchParams.set('symbol',term);url.searchParams.set('apikey',key);const res=await json(url.toString(),{ttlMs:TTL.catalog},fetcher);if(!Array.isArray(res.data))return [];
   const ranking=x=>{const exchange=String(x.exchange||'').toLowerCase(),type=String(x.instrument_type||x.type||'').toLowerCase();
     return (type.includes('etf')?0:10)+(exchange.includes('xetra')?0:exchange.includes('vienna')||exchange.includes('wien')?1:exchange.includes('euronext')?2:exchange.includes('nasdaq')||exchange.includes('nyse')?8:4);
   };
   return res.data.slice().sort((a,b)=>ranking(a)-ranking(b)).slice(0,30);}
-export async function securityPrice(symbol,key,fetcher=globalThis.fetch){if(!key)throw Error('Twelve-Data-Schlüssel fehlt.');const url=new URL('https://api.twelvedata.com/price');url.searchParams.set('symbol',symbol);url.searchParams.set('apikey',key);const res=await json(url.toString(),{},fetcher);const price=Number(res.price);if(!Number.isFinite(price)||price<0)throw Error('Kein gültiger Kurs geliefert.');return price;}
-export async function exchangeRate(from,key,fetcher=globalThis.fetch){if(from==='EUR')return 1;if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');if(!key){const url=new URL('https://api.frankfurter.dev/v1/latest');url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');const daily=await json(url.toString(),{},fetcher);const rate=Number(daily.rates?.EUR);if(!(rate>0))throw Error('Kein kostenloser Tageswechselkurs verfügbar.');return rate;}const url=new URL('https://api.twelvedata.com/exchange_rate');url.searchParams.set('symbol',`${from}/EUR`);url.searchParams.set('apikey',key);const data=await json(url.toString(),{},fetcher);const rate=Number(data.rate);if(!(rate>0))throw Error(`Kein Wechselkurs für ${from}/EUR.`);return rate;}
+export async function securityPrice(symbol,key,fetcher=globalThis.fetch){if(!key)throw Error('Twelve-Data-Schlüssel fehlt.');const url=new URL('https://api.twelvedata.com/price');url.searchParams.set('symbol',symbol);url.searchParams.set('apikey',key);const res=await json(url.toString(),{ttlMs:TTL.security},fetcher);const price=Number(res.price);if(!Number.isFinite(price)||price<0)throw Error('Kein gültiger Kurs geliefert.');return price;}
+/**
+ * A strictly matched Twelve Data quote. Ticker alone must never certify a listing.
+ * /quote supplies symbol, exchange, currency, datetime and usually a close price.
+ * Returns a rejected promise rather than quietly applying a different listing.
+ */
+export async function securityQuote(listing,key,fetcher=globalThis.fetch){
+ if(!key)throw Error('Twelve-Data-Schlüssel fehlt.');
+ const symbol=String(listing?.symbol||'').trim().toUpperCase();
+ const expectedCurrency=String(listing?.currency||'').trim().toUpperCase();
+ const exchange=String(listing?.exchange||'').trim();
+ const mic=String(listing?.mic||'').trim().toUpperCase();
+ if(!symbol||!expectedCurrency||(!exchange&&!mic))throw Error('Handelsplatz (oder MIC) und Kurswährung müssen für automatische Kurse bestätigt sein.');
+ const url=new URL('https://api.twelvedata.com/quote');
+ url.searchParams.set('symbol',symbol);
+ if(exchange)url.searchParams.set('exchange',exchange);
+ url.searchParams.set('apikey',key);
+ const data=await json(url.toString(),{ttlMs:TTL.security},fetcher);
+ const price=Number(data.close??data.price);
+ if(!Number.isFinite(price)||price<=0)throw Error('Kein gültiger Wertpapierkurs.');
+ if(String(data.symbol||'').trim().toUpperCase()!==symbol)throw Error('Ticker der Kursantwort passt nicht zur Position.');
+ if(String(data.currency||'').trim().toUpperCase()!==expectedCurrency)throw Error('Kurswährung weicht ab; Aktualisierung nicht übernommen.');
+ const returnedMIC=String(data.mic_code||data.mic||'').trim().toUpperCase();
+ const returnedExchange=String(data.exchange||'').trim().toUpperCase();
+ if(mic&&returnedMIC!==mic)throw Error('Börsen-MIC konnte nicht eindeutig bestätigt werden.');
+ if(exchange&&(!returnedExchange||returnedExchange!==exchange.toUpperCase()))throw Error('Handelsplatz stimmt nicht mit der Kursantwort überein.');
+ const reportedIsin=String(data.isin||'').trim().toUpperCase();
+ if(reportedIsin&&listing.isin&&reportedIsin!==String(listing.isin).toUpperCase())throw Error('ISIN der Kursantwort weicht ab.');
+ return {price,currency:expectedCurrency,exchange:data.exchange||exchange,mic:returnedMIC||mic,
+  asOf:String(data.datetime||data.timestamp||data.date||'')||null,source:'Twelve Data',quality:'verified-listing'};
+}
+/** Daily reference rate with its actual publication date; not a broker execution rate. */
+export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
+ if(from==='EUR')return {rate:1,date:new Date().toISOString().slice(0,10),source:'identity',reference:true};
+ if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
+ if(!key){
+   const url=new URL('https://api.frankfurter.dev/v1/latest');
+   url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
+   const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
+   const rate=Number(data.rates?.EUR);
+   if(!(rate>0)||!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(String(data.date||'')))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
+   return {rate,date:data.date,source:'Frankfurter',reference:true};
+ }
+ const url=new URL('https://api.twelvedata.com/exchange_rate');
+ url.searchParams.set('symbol',`${from}/EUR`);url.searchParams.set('apikey',key);
+ const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
+ const rate=Number(data.rate);
+ if(!(rate>0))throw Error(`Kein Wechselkurs für ${from}/EUR.`);
+ return {rate,date:String(data.datetime||data.date||'')||null,source:'Twelve Data',reference:false};
+}
+export async function exchangeRate(from,key='',fetcher=globalThis.fetch){
+ // The numeric compatibility method remains available for v1/v2 clients/tests.
+ if(from==='EUR')return 1;
+ if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
+ if(!key){
+  const url=new URL('https://api.frankfurter.dev/v1/latest');
+  url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
+  const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
+  const rate=Number(data.rates?.EUR);
+  if(!(rate>0))throw Error('Kein kostenloser Tageswechselkurs verfügbar.');
+  return rate;
+ }
+ const url=new URL('https://api.twelvedata.com/exchange_rate');
+ url.searchParams.set('symbol',`${from}/EUR`);url.searchParams.set('apikey',key);
+ const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
+ const rate=Number(data.rate);
+ if(!(rate>0))throw Error(`Kein Wechselkurs für ${from}/EUR.`);
+ return rate;
+}
+/** Uses Frankfurter historical DAILY reference rate, including previous workday fallback. */
+export async function historicalExchangeRate(from,date,fetcher=globalThis.fetch){
+ if(!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(String(date))||Number.isNaN(Date.parse(date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date)throw Error('Historisches Datum ungültig.');
+ if(date>new Date().toISOString().slice(0,10))throw Error('Wechselkursdatum liegt in der Zukunft.');
+ if(from==='EUR')return {rate:1,date,requestedDate:date,source:'identity',reference:true};
+ if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
+ const url=new URL('https://api.frankfurter.dev/v1/'+date);
+ url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
+ const data=await json(url.toString(),{ttlMs:TTL.history},fetcher),rate=Number(data.rates?.EUR);
+ const actual=String(data.date||'');
+ if(!(rate>0)||!/^(?:19|20)\\d{2}-\\d{2}-\\d{2}$/.test(actual)||actual>date||(Date.parse(date)-Date.parse(actual))/86400000>7)throw Error('Kein gültiger historischer Tagesreferenzkurs verfügbar.');
+ return {rate,date:actual,requestedDate:date,source:'Frankfurter',reference:true};
+}
 export async function xrpBalance(address,fetcher=globalThis.fetch){
  if(!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(String(address)))throw Error('Ungültige XRP-Adresse.');
- const data=await json('https://xrplcluster.com',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({method:'account_info',params:[{account:address,ledger_index:'validated'}]})},fetcher);
+ const data=await json('https://xrplcluster.com',{ttlMs:TTL.wallet,method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({method:'account_info',params:[{account:address,ledger_index:'validated'}]})},fetcher);
  if(data.result?.error)throw Error('XRPL: '+String(data.result.error_message||data.result.error));
  const drops=data.result?.account_data?.Balance;
  if(!/^\d+$/.test(String(drops??'')))throw Error('XRPL-Guthaben fehlt – vorhandene Daten bleiben erhalten.');
  return Number(drops)/1e6;
 }
-export async function btcBalance(address,fetcher=globalThis.fetch){const data=await json('https://blockstream.info/api/address/'+encodeURIComponent(address),{},fetcher);const c=data.chain_stats,m=data.mempool_stats;if(!c||!m||![c.funded_txo_sum,c.spent_txo_sum,m.funded_txo_sum,m.spent_txo_sum].every(n=>Number.isSafeInteger(n)&&n>=0))throw Error('Unvollständige Bitcoin-Antwort. Letzter Bestand bleibt erhalten.');const sats=c.funded_txo_sum-c.spent_txo_sum+m.funded_txo_sum-m.spent_txo_sum;if(!Number.isFinite(sats)||sats<0)throw Error('Ungültiger Bitcoin-Kontostand.');return sats/1e8;}
+export async function btcBalance(address,fetcher=globalThis.fetch){const data=await json('https://blockstream.info/api/address/'+encodeURIComponent(address),{ttlMs:TTL.wallet},fetcher);const c=data.chain_stats,m=data.mempool_stats;if(!c||!m||![c.funded_txo_sum,c.spent_txo_sum,m.funded_txo_sum,m.spent_txo_sum].every(n=>Number.isSafeInteger(n)&&n>=0))throw Error('Unvollständige Bitcoin-Antwort. Letzter Bestand bleibt erhalten.');const sats=c.funded_txo_sum-c.spent_txo_sum+m.funded_txo_sum-m.spent_txo_sum;if(!Number.isFinite(sats)||sats<0)throw Error('Ungültiger Bitcoin-Kontostand.');return sats/1e8;}
 async function etherscan(params,key,fetcher){if(!key)throw Error('Für EVM-Wallets bitte einen eigenen Etherscan-Schlüssel unter „Mehr“ eintragen.');const url=new URL('https://api.etherscan.io/v2/api');for(const [k,v]of Object.entries(params))url.searchParams.set(k,String(v));url.searchParams.set('apikey',key);const r=await json(url.toString(),{},fetcher);if(r.status==='0')throw Error(String(r.result||r.message||'Etherscan-Fehler'));return r.result;}
 export async function evmBalance(wallet,key,fetcher=globalThis.fetch){const query={chainid:wallet.chainId||1,module:'account',action:wallet.chain==='erc20'?'tokenbalance':'balance',address:wallet.address,tag:'latest'};if(wallet.chain==='erc20')query.contractaddress=wallet.contract;const balance=await etherscan(query,key,fetcher);if(!/^\d+$/.test(String(balance)))throw Error('Ungültige Blockchain-Antwort.');return Number(balance)/10**Number(wallet.decimals||18);}
 export async function solBalance(wallet,rpc=DEFAULT_SOL_RPC,fetcher=globalThis.fetch){const url=new URL(rpc);if(url.protocol!=='https:')throw Error('Solana-RPC muss HTTPS verwenden.');const method=wallet.chain==='spl'?'getTokenAccountsByOwner':'getBalance';const params=wallet.chain==='spl'?[wallet.address,{mint:wallet.contract},{encoding:'jsonParsed'}]:[wallet.address,{commitment:'confirmed'}];const r=await json(url.toString(),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})},fetcher);if(r.error)throw Error(r.error.message||'Solana-RPC-Fehler');if(wallet.chain==='spl'){const accounts=r.result?.value;if(!Array.isArray(accounts))throw Error('Unvollständige Solana-Token-Antwort.');return accounts.reduce((sum,a)=>{const amount=Number(a.account?.data?.parsed?.info?.tokenAmount?.uiAmountString);if(!Number.isFinite(amount)||amount<0)throw Error('Ungültiger Token-Bestand.');return sum+amount;},0);}const balance=r.result?.value;if(!Number.isSafeInteger(balance)||balance<0)throw Error('Unvollständige Solana-Antwort.');return balance/1e9;}
-export async function walletBalance(wallet,settings,fetcher=globalThis.fetch){if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');switch(wallet.chain){case 'btc':return btcBalance(wallet.address,fetcher);case 'xrp':return xrpBalance(wallet.address,fetcher);case 'evm':case 'erc20':{if(PUBLIC_EVM_NETWORKS[wallet.chainId]?.explorer!==false){const chain=PUBLIC_EVM_NETWORKS[wallet.chainId];if(chain){const address=encodeURIComponent(wallet.address);if(wallet.chain==='evm'){const data=await json(chain.host+'/api/v2/addresses/'+address,{},fetcher);if(!/^\d+$/.test(String(data.coin_balance??'')))throw Error('Unvollständige Blockchain-Antwort.');const amount=Number(data.coin_balance)/1e18;if(Number.isFinite(amount)&&amount>=0)return amount;throw Error('Ungültiger öffentlicher Explorer-Saldo.');}const list=await json(chain.host+'/api/v2/addresses/'+address+'/token-balances',{},fetcher);if(!Array.isArray(list))throw Error('Token-Saldo ungültig.');const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());return item?Number(item.value)/10**Number(item.token?.decimals??wallet.decimals):0;}}return evmBalance(wallet,settings.etherscanKey,fetcher);}case 'sol':case 'spl':return solBalance(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);default:throw Error('Blockchain noch nicht unterstützt.');}}
+export async function walletBalance(wallet,settings,fetcher=globalThis.fetch){if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');switch(wallet.chain){case 'btc':return btcBalance(wallet.address,fetcher);case 'xrp':return xrpBalance(wallet.address,fetcher);case 'evm':case 'erc20':{if(PUBLIC_EVM_NETWORKS[wallet.chainId]?.explorer!==false){const chain=PUBLIC_EVM_NETWORKS[wallet.chainId];if(chain){const address=encodeURIComponent(wallet.address);if(wallet.chain==='evm'){const data=await json(chain.host+'/api/v2/addresses/'+address,{ttlMs:TTL.wallet},fetcher);if(!/^\d+$/.test(String(data.coin_balance??'')))throw Error('Unvollständige Blockchain-Antwort.');const amount=Number(data.coin_balance)/1e18;if(Number.isFinite(amount)&&amount>=0)return amount;throw Error('Ungültiger öffentlicher Explorer-Saldo.');}const list=await json(chain.host+'/api/v2/addresses/'+address+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(list))throw Error('Token-Saldo ungültig.');const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());return item?Number(item.value)/10**Number(item.token?.decimals??wallet.decimals):0;}}return evmBalance(wallet,settings.etherscanKey,fetcher);}case 'sol':case 'spl':return solBalance(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);default:throw Error('Blockchain noch nicht unterstützt.');}}
 
 // Public explorer instances (not the paid Blockscout PRO API). These endpoints
 // have their own rate limits and may be inaccessible from some browsers.
@@ -103,8 +183,8 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   if(!chain?.explorer && chain?.explorer!==undefined)throw Error('Für dieses Netzwerk steht aktuell kein öffentlicher Explorer-Import zur Verfügung.');
   if(!chain||!isEvmAddress(a))throw Error('Bitte ein unterstütztes EVM-Netzwerk und eine gültige öffentliche 0x-Adresse wählen.');
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(a);
-  const info=await json(base,{},fetcher);
-  let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
+  const info=await json(base,{ttlMs:TTL.wallet},fetcher);
+  let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
   const assets=[];const native=Number(info.coin_balance||0)/1e18;
   if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,chain:'evm',chainId,decimals:18});
   for(const row of raw.slice(0,500)){
@@ -131,7 +211,7 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
   for(let i=0;i<items.length;i+=30){
     const url=new URL('https://api.coingecko.com/api/v3/simple/token_price/'+platform);
     url.searchParams.set('contract_addresses',items.slice(i,i+30).join(','));url.searchParams.set('vs_currencies','eur');
-    Object.assign(result,await json(url.toString(),{headers:cgHeaders(key)},fetcher));
+    Object.assign(result,await json(url.toString(),{headers:cgHeaders(key),ttlMs:TTL.crypto},fetcher));
   }
   return result;
 }
