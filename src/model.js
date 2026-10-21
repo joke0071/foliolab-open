@@ -2,12 +2,34 @@ export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://api.mainnet-beta.solana.com',showSmall:true,autoRefresh:true});
-export const blankModel=()=>({version:1,providers:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
+export const blankModel=()=>({version:2,providers:[],accounts:[],positions:[],bookings:[],snapshots:[],settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export function number(v){if(typeof v==='string')v=v.trim().replace(/\s/g,'').replace(',','.');const n=Number(v);return Number.isFinite(n)?n:NaN;}
 export function safeNumber(v,min=0,max=1e18){const n=number(v);if(!Number.isFinite(n)||n<min||n>max)throw Error(`Bitte eine gültige Zahl zwischen ${min} und ${max} eingeben.`);return n;}
 export function createProvider(v){const name=cleanString(v.name,80);if(!name)throw Error('Bitte einen Anbieternamen eingeben.');return {id:v.id||uid(),name,type:['broker','bank','wallet','other'].includes(v.type)?v.type:'other'};}
+
+/** @typedef {'securities'|'checking'|'savings'|'exchange'|'wallet'|'other'} AccountType */
+/** @typedef {{id:string,providerId:string,name:string,type:AccountType,currency:string}} Account */
+/** Create a distinct custody/account record under a provider; providers can own many accounts. */
+export function createAccount(v,model){
+  if(!model.providers.some(p=>p.id===v.providerId))throw Error('Unbekannter Anbieter für dieses Konto.');
+  const name=cleanString(v.name,100);if(!name)throw Error('Bitte einen Kontonamen eingeben.');
+  const type=['securities','checking','savings','exchange','wallet','other'].includes(v.type)?v.type:'other';
+  const currency=cleanString(v.currency||'EUR',3).toUpperCase();
+  if(!/^[A-Z]{3}$/.test(currency))throw Error('Ungültige Kontowährung.');
+  return {id:v.id||uid(),providerId:v.providerId,name,type,currency};
+}
+export const suggestedAccountType=kind=>({etf:'securities',stock:'securities',fund:'securities',crypto:'wallet',cash:'savings'})[kind]||'other';
+function defaultAccount(model,providerId){
+  const provider=model.providers.find(p=>p.id===providerId);
+  if(!provider)throw Error('Unbekannter Anbieter.');
+  const existing=model.accounts.find(a=>a.providerId===providerId);
+  if(existing)return existing;
+  const type={broker:'securities',bank:'savings',wallet:'wallet'}[provider.type]||'other';
+  const account=createAccount({providerId,name:provider.type==='wallet'?'Wallet':provider.type==='bank'?'Guthabenkonto':provider.type==='broker'?'Depot':'Standardkonto',type},model);
+  model.accounts.push(account);return account;
+}
 export function validateWallet(wallet){if(!wallet?.enabled)return null;const chain=cleanString(wallet.chain,20);const address=cleanString(wallet.address,180);const contract=cleanString(wallet.contract,120);const error='Ungültige öffentliche Wallet-Adresse. Keine privaten Schlüssel eingeben.';
   if(/\b(seed|mnemonic|xprv|yprv|zprv)\b/i.test(address)||/^(xprv|yprv|zprv)/i.test(address))throw Error(error);
   if(chain==='btc'&&!(/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(address)))throw Error(error);
@@ -21,19 +43,53 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   return {enabled:true,chain,address,contract,decimals,chainId};
 }
 export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
+  model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantity=safeNumber(v.quantity??0);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;
-  return {id:v.id||uid(),providerId:v.providerId,kind,name,symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,kind,name,symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
 export function valueEUR(p){const qty=number(p.quantity),price=number(p.price),rate=p.currency==='EUR'?1:number(p.fxRate);return [qty,price,rate].every(Number.isFinite)?qty*price*rate:0;}
 export function totalEUR(model){return model.positions.reduce((sum,p)=>sum+valueEUR(p),0);}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''){if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Ungültiges Datum.');const amount=totalEUR(model);const existing=model.snapshots.find(x=>x.date===date);if(existing){existing.total=amount;existing.note=cleanString(note||existing.note,180);}else model.snapshots.push({id:uid(),date,total:amount,note:cleanString(note,180)});model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));return amount;}
 export function addBooking(model,v){const p=model.positions.find(x=>x.id===v.positionId);if(!p)throw Error('Position nicht gefunden.');const type=['buy','sell','reward','adjust'].includes(v.type)?v.type:'buy';const quantity=safeNumber(v.quantity,0.00000000000001);const unitPrice=safeNumber(v.unitPrice??p.price);const date=cleanString(v.date,10);if(!/^\d{4}-\d\d-\d\d$/.test(date)||Number.isNaN(Date.parse(date)))throw Error('Datum ungültig.');const delta=type==='sell'?-quantity:quantity;if(p.quantity+delta < -1e-9)throw Error('Verkauf übersteigt den Bestand.');p.quantity=Math.max(0,p.quantity+delta);if(type!=='adjust'&&unitPrice>0)p.price=unitPrice;model.bookings.unshift({id:uid(),positionId:p.id,positionName:p.name,type,quantity,unitPrice,date,notes:cleanString(v.notes,180)});snapshot(model,date);return p;}
-export function safeImport(raw){if(!raw||raw.version!==1||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||((raw.bookings||[]).length>25000))throw Error('Backup überschreitet die vorgesehenen Größenlimits.');const model=blankModel();model.providers=raw.providers.map(createProvider);model.positions=raw.positions.map(p=>createPosition(p,model));model.bookings=(raw.bookings||[]).filter(x=>x&&typeof x==='object').map(x=>({...x,notes:cleanString(x.notes,180)}));model.snapshots=raw.snapshots.map(s=>({id:cleanString(s.id,120)||uid(),date:cleanString(s.date,10),total:safeNumber(s.total),note:cleanString(s.note,180)})).filter(s=>/^\d{4}-\d\d-\d\d$/.test(s.date)).sort((a,b)=>a.date.localeCompare(b.date));return model;}
+
+const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
+/** Importiert alte v1-Backups sicher und hebt sie in das normalisierte v2-Modell. */
+export function safeImport(raw){
+  if(!raw||![1,2].includes(raw.version)||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');
+  if(raw.version===2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
+  if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
+  const m=blankModel();
+  m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
+  if(raw.version===2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
+  // v1 stored holdings directly under providers; create a default account per provider.
+  if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
+  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  m.bookings=(raw.bookings||[]).map(x=>{
+    if(!x||typeof x!=='object'||!x.id||!x.positionId||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x.date||'')||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
+    return {...x,notes:cleanString(x.notes,180)};
+  });uniqueIds(m.bookings,'Buchungen');
+  m.snapshots=raw.snapshots.map(x=>{
+    if(!x||!x.id||!/^\\d{4}-\\d{2}-\\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
+    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),note:cleanString(x.note,180)};
+  }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
+  return m;
+}
 export function backup(model){const copy=structuredClone(model);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
-export function load(storage=globalThis.localStorage){try{const raw=storage.getItem(STORE_KEY);if(!raw)return blankModel();const parsed=JSON.parse(raw);const result=safeImport(parsed);result.settings={...defaultSettings(),...parsed.settings};return result;}catch(e){console.warn('Lokales Portfolio konnte nicht geladen werden.',e);return blankModel();}}
-export function persist(model,storage=globalThis.localStorage){storage.setItem(STORE_KEY,JSON.stringify(model));}
+/** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
+export function load(storage=globalThis.localStorage){
+  const raw=storage.getItem(STORE_KEY);if(!raw)return blankModel();
+  const parsed=JSON.parse(raw);
+  // Before a v1 -> v2 migration preserve exactly the original bytes for local recovery.
+  if(parsed?.version===1){const key=STORE_KEY+'-premigration-v1';if(!storage.getItem(key))storage.setItem(key,raw);}
+  const result=safeImport(parsed);
+  const input=parsed.settings||{},settings=defaultSettings();
+  for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
+  result.settings=settings;
+  return result;
+}
+export function persist(model,storage=globalThis.localStorage){if(model.version!==2)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');storage.setItem(STORE_KEY,JSON.stringify(model));}
 export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
 export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
