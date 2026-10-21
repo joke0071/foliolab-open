@@ -1,0 +1,42 @@
+name: FolioLab Open import
+on:
+  push:
+    paths:
+      - 'foliolab-open-v1.zip'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+jobs:
+  import-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract independent app and run tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f foliolab-open-v1.zip
+          unzip -q -o foliolab-open-v1.zip -x '.github/*'
+          npm test
+          npm run check
+      - name: Publish readable source files to repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'foliolab-open-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm foliolab-open-v1.zip
+          git add -A
+          git commit -m 'feat: publish FolioLab Open standalone app'
+          git push
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
