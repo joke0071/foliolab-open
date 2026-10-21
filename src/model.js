@@ -1,6 +1,6 @@
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
-import {executeTransaction,captureOpenings,validateJournalEntry} from './transactions.js';
+import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
@@ -70,7 +70,8 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
 }
 export function grossValueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
 export function valueEUR(p){return grossValueEUR(p)*valueSign(p);}
-export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)))*BigInt(valueSign(p)),0n)));}
+export function totalExactEUR(model){return exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)))*BigInt(valueSign(p)),0n));}
+export function totalEUR(model){return Number(totalExactEUR(model));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 /**
@@ -83,7 +84,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  if(date>today)throw Error('Zukünftige Stichtage sind nicht möglich.');
  const manual=options.manualTotalEUR!=null&&String(options.manualTotalEUR).trim()!=='';
  if(date!==today&&!manual)throw Error('Für historische Stichtage bitte den tatsächlich damals bekannten Portfoliowert eingeben; heutige Kurse sind keine historischen Daten.');
- const amountExact=manual?exact(units(options.manualTotalEUR)):exact(units(totalEUR(model)));
+ const amountExact=manual?exact(units(options.manualTotalEUR)):totalExactEUR(model);
  // Net liabilities may lead to a legitimate negative portfolio value.
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
  const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
@@ -152,6 +153,10 @@ export function safeImport(raw){
       revisions:Array.isArray(x.revisions)?structuredClone(x.revisions):[],
       note:cleanString(x.note,180)};
   }).sort((a,b)=>a.date.localeCompare(b.date));uniqueIds(m.snapshots,'Stichtagen');
+  if(raw.version===3&&m.journalEntries.length){
+   const audit=ledgerQuantityAudit(m);
+   if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');
+  }
   return m;
 }
 export function backup(model){const copy=structuredClone(model);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
