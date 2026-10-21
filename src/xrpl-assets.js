@@ -12,8 +12,10 @@ export async function readTrustLines(address,fetcher=globalThis.fetch,{maxPages=
   if(marker!==undefined)params.marker=marker;
   const data=await requestJSON('https://xrplcluster.com',{fetcher,method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({method:'account_lines',params:[params]}),ttlMs:TTL.wallet});
   const result=data?.result;if(!result||result.error||!Array.isArray(result.lines))throw Error('XRPL Trust Lines konnten nicht verlässlich gelesen werden.');
-  if(result.validated===false)throw Error('XRPL meldet einen nicht validierten Ledger.');
-  if(ledger==null&&Number.isInteger(result.ledger_index))ledger=result.ledger_index;
+  if(result.validated!==true)throw Error('XRPL-Antwort ist nicht nachweislich validiert.');
+  if(!Number.isSafeInteger(result.ledger_index)||result.ledger_index<=0)throw Error('XRPL-Antwort enthält keinen verlässlichen Ledger-Index.');
+  if(ledger==null)ledger=result.ledger_index;
+  else if(result.ledger_index!==ledger)throw Error('XRPL-Ledger wechselte während der paginierten Abfrage; Scan abgebrochen.');
   for(const row of result.lines){
    if(!addressRe.test(String(row.account))||!currencyRe.test(String(row.currency)))continue;
    const qty=exact(units(row.balance));

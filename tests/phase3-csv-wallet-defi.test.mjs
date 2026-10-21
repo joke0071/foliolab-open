@@ -79,8 +79,8 @@ test('Trust-lines paginate and preserve identical symbols from different issuers
 });
 test('Unverified XRPL reads and marker loops cannot silently claim completeness',async()=>{
  const fail=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:{validated:false,lines:[]}})});
- await assert.rejects(()=>readTrustLines(addr,fail),/validierten/);
- const partial=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:{validated:true,marker:'next',lines:[]}})});
+ await assert.rejects(()=>readTrustLines(addr,fail),/validiert/);
+ const partial=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:{validated:true,ledger_index:999,marker:'next',lines:[]}})});
  await assert.rejects(()=>readTrustLines(addr,partial,{maxPages:1}),/Scanlimit/);
 });
 test('Economic links explicitly exclude representation and count liabilities once',()=>{
@@ -117,4 +117,12 @@ test('CSV preview rejects stale portfolio modifications',()=>{
  m.positions.find(p=>p.id===cash.id).price=2;
  assert.throws(()=>importCSV(m,preview),/seit der CSV-Vorschau/);
  assert.equal(m.bookings.length,0);
+});
+
+test('XRP trust-line pagination rejects inconsistent or unverified ledger pages',async()=>{
+ let count=0;
+ const mock=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:++count===1?{validated:true,ledger_index:999,marker:'next',lines:[]}:{validated:true,ledger_index:1000,lines:[]}})});
+ await assert.rejects(()=>readTrustLines(addr,mock),/Ledger wechselte/);
+ const unproven=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:{ledger_index:999,lines:[]}})});
+ await assert.rejects(()=>readTrustLines(addr,unproven),/nicht nachweislich validiert/);
 });
