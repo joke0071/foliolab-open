@@ -98,6 +98,7 @@ export function executeTransaction(model,input){
  default:throw Error('Unbekannte Buchung.');
  }
  if(!changed)throw Error('Keine Änderung.');
+ p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
  const entry=remember(copy,p,input,qty,fee,tax,fx,cash);
  if(kind==='transfer'||kind==='swap'||kind==='merger')entry.targetQuantityExact=kind==='transfer'?exact(qty):exact(amount(input.targetQuantity,1n));
  if(kind==='split'){entry.ratioNumerator=String(input.ratioNumerator??input.quantity);entry.ratioDenominator=String(input.ratioDenominator??1);}

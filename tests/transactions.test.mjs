@@ -19,3 +19,5 @@ test('Validated failures cannot mutate holdings or journal',()=>{const {m,p,targ
 test('Delisting never zeroes out the last observed price',()=>{const {m,p}=setup();book(m,p,'delist',{quantity:0});assert.equal(p.price,100);assert.match(p.priceStatus,/Delisting/);});
 test('Staking reward preserves explicit unknown acquisition basis',()=>{const {m,p}=setup();book(m,p,'reward',{quantity:'0.125'});assert.equal(p.quantity,10.125);assert.equal(p.costBasisEUR,null);});
 test('18-decimal transactions remain exact in serialized quantityExact',()=>{const {m,p}=setup();book(m,p,'buy',{quantity:'0.000000000000000001',unitPrice:100});assert.equal(p.quantityExact,'10.000000000000000001');});
+
+test('Der erste Journal-Vorgang sperrt den Bestand für widersprüchliche manuelle Pflege',()=>{const {m,p,target}=setup();assert.equal(p.managementSource,'manual');book(m,p,'transfer',{quantity:1,targetPositionId:target.id});assert.equal(p.managementSource,'transactions');assert.equal(target.managementSource,'transactions');});
