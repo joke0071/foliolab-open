@@ -9,3 +9,5 @@ test('ETF Kurs, FX und Suchfilter',async()=>{assert.equal(await securityPrice('V
 test('Täglicher EUR-Wechselkurs ohne API-Key',async()=>{const mock=async url=>{assert.equal(new URL(url).hostname,'api.frankfurter.dev');return {ok:true,json:async()=>({date:'2026-10-20',rates:{EUR:0.93}})}};assert.equal(await exchangeRate('USD','',mock),.93);});
 
 test('Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden',async()=>{await assert.rejects(()=>btcBalance('bc1qxyz',mock({})),/Unvollständige/);await assert.rejects(()=>solBalance({chain:'sol',address:'A'.repeat(40)},undefined,mock({result:{}})),/Unvollständige/);});
+
+test('Große Coin-Listen werden gebündelt und nicht still bei 100 abgeschnitten',async()=>{const ids=Array.from({length:180},(_,i)=>'token-'+i);let calls=0;const mock=async url=>{calls++;const ids=new URL(url).searchParams.get('ids').split(',');assert.ok(ids.length<=75);return {ok:true,json:async()=>Object.fromEntries(ids.map(id=>[id,{eur:1}]))};};const prices=await cryptoPrices(ids,'',mock);assert.equal(calls,3);assert.equal(Object.keys(prices).length,180);});

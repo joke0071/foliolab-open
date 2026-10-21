@@ -5,7 +5,20 @@ async function json(url,opts={},fetcher=globalThis.fetch){const controller=new A
 function cgHeaders(key){return key?{'x-cg-demo-api-key':key}:{};}
 export async function coinCatalog(key='',fetcher=globalThis.fetch){const a=await json('https://api.coingecko.com/api/v3/coins/list?include_platform=false',{headers:cgHeaders(key)},fetcher);if(!Array.isArray(a))throw Error('Ungültiger CoinGecko-Katalog.');return a.map(x=>({id:String(x.id||''),symbol:String(x.symbol||'').toUpperCase(),name:String(x.name||'')}));}
 export function searchCatalog(catalog,query){const q=query.trim().toLowerCase();if(!q)return catalog.slice(0,16);return catalog.filter(c=>c.id.toLowerCase().includes(q)||c.symbol.toLowerCase().includes(q)||c.name.toLowerCase().includes(q)).sort((a,b)=>Number(b.symbol.toLowerCase()===q)-Number(a.symbol.toLowerCase()===q)).slice(0,30);}
-export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){const unique=[...new Set(ids.filter(Boolean))].slice(0,100);if(!unique.length)return {};const url=new URL('https://api.coingecko.com/api/v3/simple/price');url.searchParams.set('ids',unique.join(','));url.searchParams.set('vs_currencies','eur');url.searchParams.set('include_last_updated_at','true');return json(url.toString(),{headers:cgHeaders(key)},fetcher);}
+export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
+ const unique=[...new Set(ids.filter(Boolean))].slice(0,500);
+ if(!unique.length)return {};
+ const result={},failures=[];let passed=0;
+ for(let i=0;i<unique.length;i+=75){
+   const url=new URL('https://api.coingecko.com/api/v3/simple/price');
+   url.searchParams.set('ids',unique.slice(i,i+75).join(','));url.searchParams.set('vs_currencies','eur');url.searchParams.set('include_last_updated_at','true');
+   try{Object.assign(result,await json(url.toString(),{headers:cgHeaders(key)},fetcher));passed++;}
+   catch(e){failures.push(e.message);}
+ }
+ if(!passed&&failures.length)throw Error(failures[0]);
+ if(failures.length)Object.defineProperty(result,'partialFailures',{value:failures,enumerable:false});
+ return result;
+}
 export async function searchSecurities(term,key,fetcher=globalThis.fetch){if(!key)throw Error('Für die Wertpapiersuche bitte in „Mehr“ einen eigenen Twelve-Data-Schlüssel hinterlegen.');const url=new URL('https://api.twelvedata.com/symbol_search');url.searchParams.set('symbol',term);url.searchParams.set('apikey',key);const res=await json(url.toString(),{},fetcher);if(!Array.isArray(res.data))return [];
   const ranking=x=>{const exchange=String(x.exchange||'').toLowerCase(),type=String(x.instrument_type||x.type||'').toLowerCase();
     return (type.includes('etf')?0:10)+(exchange.includes('xetra')?0:exchange.includes('vienna')||exchange.includes('wien')?1:exchange.includes('euronext')?2:exchange.includes('nasdaq')||exchange.includes('nyse')?8:4);
