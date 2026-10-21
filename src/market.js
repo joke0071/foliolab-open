@@ -179,8 +179,9 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     for(const programId of solanaPrograms){
       try{
         const data=await rpcCall(rpc,'getTokenAccountsByOwner',[a,{programId},{encoding:'jsonParsed'}],fetcher);
+        if(!Array.isArray(data?.value))throw Error('Solana-Tokenkonten unvollständig.');
         successfulPrograms++;
-        for(const row of data.value||[]){
+        for(const row of data.value){
           const info=row.account?.data?.parsed?.info;const mint=info?.mint;
           if(!mint||!String(mint).match(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/))continue;
           const decimals=Number(info.tokenAmount?.decimals);
