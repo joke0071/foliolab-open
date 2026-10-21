@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {webcrypto} from 'node:crypto';globalThis.crypto??=webcrypto;
+import {webcrypto,createHash} from 'node:crypto';globalThis.crypto??=webcrypto;
 import {deriveBitcoinAddress,scanBitcoinAccount} from '../src/bitcoin-hd.js';
 import {parseCSV,inferMapping,previewCSV,importCSV} from '../src/csv-import.js';
 import {readTrustLines,readTrustLineBalance} from '../src/xrpl-assets.js';
@@ -125,4 +125,33 @@ test('XRP trust-line pagination rejects inconsistent or unverified ledger pages'
  await assert.rejects(()=>readTrustLines(addr,mock),/Ledger wechselte/);
  const unproven=async()=>({ok:true,status:200,headers:{get:()=>null},json:async()=>({result:{ledger_index:999,lines:[]}})});
  await assert.rejects(()=>readTrustLines(addr,unproven),/nicht nachweislich validiert/);
+});
+
+const B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+function decode58(value){
+ let n=0n;for(const c of value)n=n*58n+BigInt(B58.indexOf(c));
+ const raw=Buffer.alloc(82);for(let i=81;i>=0;i--){raw[i]=Number(n&255n);n>>=8n;}return raw;
+}
+function encode58(raw){
+ let n=BigInt('0x'+raw.toString('hex')),encoded='';
+ while(n){encoded=B58[Number(n%58n)]+encoded;n/=58n;}return encoded;
+}
+function checksumKey(input,version,publicX){
+ const raw=decode58(input);raw.set(version,0);
+ if(publicX!==undefined){raw[45]=2;let x=publicX;for(let i=77;i>=46;i--){raw[i]=Number(x&255n);x>>=8n;}}
+ const h=x=>createHash('sha256').update(x).digest();
+ h(h(raw.subarray(0,78))).copy(raw,78,0,4);
+ return encode58(raw);
+}
+test('All supported extended public key versions derive legacy, nested and native SegWit addresses',async()=>{
+ const xpub=checksumKey(ZPUB,[0x04,0x88,0xb2,0x1e]);
+ const ypub=checksumKey(ZPUB,[0x04,0x9d,0x7c,0xb2]);
+ assert.match(await deriveBitcoinAddress(xpub,0,0),/^1[1-9A-HJ-NP-Za-km-z]+$/);
+ assert.match(await deriveBitcoinAddress(ypub,0,0),/^3[1-9A-HJ-NP-Za-km-z]+$/);
+ assert.equal(await deriveBitcoinAddress(ZPUB,0,0),'bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu');
+});
+test('A checksummed extended key with out-of-range secp256k1 X coordinate is rejected',async()=>{
+ const prime=(1n<<256n)-(1n<<32n)-977n;
+ const key=checksumKey(ZPUB,[0x04,0xb2,0x47,0x46],prime+1n);
+ await assert.rejects(()=>deriveBitcoinAddress(key),/Kurvenfeld/);
 });
