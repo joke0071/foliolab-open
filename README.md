@@ -16,12 +16,12 @@ Dann http://localhost:4173 öffnen. Für die Offline-PWA ist HTTPS erforderlich.
 
 ## Funktionen
 
-- Anbieter frei erstellen und bearbeiten (Broker, Banken, Börsen, Wallets, Sonstige).
+- Anbieter frei erstellen und bearbeiten, mit mehreren separaten Konten pro Anbieter. Anbietervorschläge ohne Zwang oder automatisch angelegte Leer-Konten.
 - Beliebige ETFs und weitere Anlagen anhand von Namen, Ticker oder ISIN erfassen. Positionen und Guthaben vollständig manuell bearbeiten.
 - Manuelle Käufe, Verkäufe und Bestandszugänge buchen sowie Vermögensstände speichern.
 - Krypto-Coins frei über die **CoinGecko-ID** erfassen; Katalogsuche über `/coins/list`. CoinGecko bietet limitierten schlüssellosen Zugriff, ein eigener Demo-Key ist optional.
 - **Wallet hinzufügen** in Positionen: öffentliche Adresse eingeben, Netzwerk wählen, entdeckte Guthaben prüfen und mehrere Coins ohne API-Key übernehmen. Unterstützt einzelne Bitcoin-Adressen, Ethereum, Base, Arbitrum, Optimism, Polygon (native Coins und ERC-20) sowie Solana (SOL, SPL und Token-2022). EVM nutzt öffentliche Blockscout-Instanzen, Solana öffentliche RPCs. Endpunkte sind nicht garantiert jederzeit erreichbar.
-- Optional ETF/Aktien-Kurse und FX über **Twelve Data** mit einem vom Benutzer hinterlegten Key; ohne Key funktioniert die manuelle Eingabe. Ein Ticker kann von Börse zu Börse unterschiedlich sein; falls nötig das korrekte Symbol samt Börsen-Suffix eintragen.
+- Tägliche Fremdwährungskurse ohne API-Schlüssel über Frankfurter; optionale ETF-/Aktienkurse über **Twelve Data** mit dem Schlüssel des Nutzers. Ohne Key funktioniert die manuelle Kurspflege. Ein Ticker kann von Börse zu Börse unterschiedlich sein; falls nötig das korrekte Symbol samt Börsen-Suffix eintragen.
 - Optionaler automatischer Kurs- und Wallet-Abruf beim Öffnen (maximal alle 30 Minuten, in „Mehr“ abschaltbar).
 - Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**.
 
@@ -59,3 +59,7 @@ Für eine Anbindung an `unperfekt.at` bietet sich eine Subdomain wie `foliolab.u
 ## Lizenz
 
 Quellcode dieses eigenständigen Open-Source-Prototyps: MIT (siehe `LICENSE`). Drittanbieter-API-Daten bleiben ihren jeweiligen Nutzungsbedingungen unterworfen.
+
+## Stand der Architekturmodernisierung
+
+In Version 2: getrennte Anbieter/Konten, sichere Datenmigration mit lokaler Vorabkopie, Konto-Dialoge, kostenlose tägliche Wechselkurse. Noch nicht umfassend umgesetzt: schlüssellose Suche für europäische Wertpapiere, vollständige Transaktionskosten-/XIRR-/TWR-Berechnung, alle Blockchains, DeFi-Bewertung und verschlüsselte Sicherungen. Wallet-Import ist ein Bestandsabruf und keine steuerliche Transaktionshistorie.

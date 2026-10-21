@@ -45,3 +45,5 @@ test('ERC20-Kursabruf über CoinGecko contract ohne Schlüssel',async()=>{
   assert.equal((await evmContractPrices(1,[C],'',mock))[C].eur,2.2);
   assert.equal(PUBLIC_EVM_NETWORKS[8453].name,'Base');
 });
+
+test('Solana-Teilfehler bleibt erkennbar',async()=>{const mock=async(_u,opts)=>{const r=JSON.parse(opts.body);if(r.method==='getBalance')return reply({result:{value:1e9}});if(r.params[1].programId==='TokenzQdBNbLqP5VEhdkAS6EPFtsfSBeXrnjQ11u')throw Error('temporär gesperrt');return reply({result:{value:[]}});};const assets=await discoverWallet('sol',SOL,{},mock);assert.equal(assets.length,1);assert.equal(assets.partial,true);});
