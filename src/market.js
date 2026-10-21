@@ -80,8 +80,8 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   if(!chain?.explorer && chain?.explorer!==undefined)throw Error('Für dieses Netzwerk steht aktuell kein öffentlicher Explorer-Import zur Verfügung.');
   if(!chain||!isEvmAddress(a))throw Error('Bitte ein unterstütztes EVM-Netzwerk und eine gültige öffentliche 0x-Adresse wählen.');
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(a);
-  const [info,raw]=await Promise.all([json(base,{},fetcher),json(base+'/token-balances',{},fetcher)]);
-  if(!Array.isArray(raw))throw Error('Token-Liste des Explorers ist ungültig.');
+  const info=await json(base,{},fetcher);
+  let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
   const assets=[];const native=Number(info.coin_balance||0)/1e18;
   if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,chain:'evm',chainId,decimals:18});
   for(const row of raw.slice(0,500)){
@@ -93,6 +93,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     const symbol=String(token.symbol||'Token').slice(0,32);
     assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:value,chain:'erc20',chainId,contract,decimals});
   }
+  if(tokenFailure){if(!assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);assets.partial=true;assets.warning='Native Coin erkannt, Token-Abfrage war nicht verfügbar: '+tokenFailure;}
   return assets;
 }
 
