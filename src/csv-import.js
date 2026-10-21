@@ -36,7 +36,7 @@ export function normalizeCSVNumber(input,{optional=false}={}){
  return exact(units(s));
 }
 function typeOf(value){const t=String(value||'buy').toLowerCase().trim();return ({kauf:'buy',buy:'buy',verkauf:'sell',sell:'sell',einzahlung:'deposit',deposit:'deposit',auszahlung:'withdraw',withdraw:'withdraw',dividende:'dividend',dividend:'dividend',zinsen:'interest',interest:'interest',gebühr:'fee',gebuehr:'fee',fee:'fee',steuer:'tax',tax:'tax',reward:'reward',airdrop:'airdrop',transfer:'transfer'})[t]||null;}
-const fingerprint=r=>JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.cashPositionId,r.externalId||'']);
+const fingerprint=r=>JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId||'']);
 function resolvePosition(model,key,defaultId){
  const needle=String(key||'').trim().toLowerCase();
  if(!needle){const p=model.positions.find(p=>p.id===defaultId);if(!p)throw Error('Standardposition fehlt.');return p;}
