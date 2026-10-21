@@ -1,4 +1,5 @@
 import {rebuildAssets,listingId} from './assets.js';
+import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
@@ -35,13 +36,15 @@ function defaultAccount(model,providerId){
 }
 export function validateWallet(wallet){if(!wallet?.enabled)return null;const chain=cleanString(wallet.chain,20);const address=cleanString(wallet.address,180);const contract=cleanString(wallet.contract,120);const error='Ungültige öffentliche Wallet-Adresse. Keine privaten Schlüssel eingeben.';
   if(/\b(seed|mnemonic|xprv|yprv|zprv)\b/i.test(address)||/^(xprv|yprv|zprv)/i.test(address))throw Error(error);
+  if(chain==='btc-hd'&&!/^(xpub|ypub|zpub)[1-9A-HJ-NP-Za-km-z]{90,120}$/.test(address))throw Error('Bitcoin-HD: bitte öffentlichen Account-xpub/ypub/zpub eingeben.');
   if(chain==='btc'&&!(/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(address)))throw Error(error);
   if((chain==='evm'||chain==='erc20')&&!/^0x[a-fA-F0-9]{40}$/.test(address))throw Error(error);
   if(chain==='erc20'&&!/^0x[a-fA-F0-9]{40}$/.test(contract))throw Error('Bitte eine ERC-20-Contract-Adresse angeben.');
-  if((chain==='sol'||chain==='spl')&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);if(chain==='xrp'&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(address))throw Error(error);
+  if((chain==='sol'||chain==='spl')&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);if(['xrp','xrp-token'].includes(chain)&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(address))throw Error(error);
+  if(chain==='xrp-token'&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}:(?:[A-Z0-9]{3}|[A-Fa-f0-9]{40})$/.test(contract))throw Error('Ungültiger XRP-Token-Identifier.');
   if(chain==='spl'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Bitte eine SPL-Mint-Adresse angeben.');
-  if(!['btc','evm','erc20','sol','spl','xrp'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
-  const decimals=(chain==='erc20'||chain==='spl')?safeNumber(wallet.decimals??18,0,30):chain==='btc'?8:chain==='sol'?9:chain==='xrp'?6:18;
+  if(!['btc','btc-hd','evm','erc20','sol','spl','xrp','xrp-token'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
+  const decimals=(chain==='erc20'||chain==='spl'||chain==='xrp-token')?safeNumber(wallet.decimals??18,0,30):['btc','btc-hd'].includes(chain)?8:chain==='sol'?9:chain==='xrp'?6:18;
   const chainId=['evm','erc20'].includes(chain)?safeNumber(wallet.chainId??1,1,1e9):undefined;
   return {enabled:true,chain,address,contract,decimals,chainId};
 }
@@ -58,14 +61,16 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
   const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
   return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
+    economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,
     quoteSource:cleanString(v.quoteSource,70)||null,quoteAsOf:cleanString(v.quoteAsOf,45)||null,
     quoteFetchedAt:cleanString(v.quoteFetchedAt,45)||null,quoteQuality:cleanString(v.quoteQuality,45)||null,
     fxSource:cleanString(v.fxSource,70)||null,fxRateDate:cleanString(v.fxRateDate,20)||null,
     fxRateExact:v.fxRateExact==null?exact(units(fxRate)):exact(units(v.fxRateExact)),
     exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
-export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
-export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate))),0n)));}
+export function grossValueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
+export function valueEUR(p){return grossValueEUR(p)*valueSign(p);}
+export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)))*BigInt(valueSign(p)),0n)));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 /**
@@ -79,7 +84,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const manual=options.manualTotalEUR!=null&&String(options.manualTotalEUR).trim()!=='';
  if(date!==today&&!manual)throw Error('Für historische Stichtage bitte den tatsächlich damals bekannten Portfoliowert eingeben; heutige Kurse sind keine historischen Daten.');
  const amountExact=manual?exact(units(options.manualTotalEUR)):exact(units(totalEUR(model)));
- if(units(amountExact)<0n)throw Error('Stichtagswert darf nicht negativ sein.');
+ // Net liabilities may lead to a legitimate negative portfolio value.
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
  const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
  const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
@@ -109,7 +114,9 @@ export function safeImport(raw){
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
-  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');rebuildAssets(m);
+  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  for(const p of m.positions)validateEconomicPosition(p,m);
+  rebuildAssets(m);
   m.performanceFlowTrackingSince=raw.performanceFlowTrackingSince&&/^\d{4}-\d{2}-\d{2}$/.test(raw.performanceFlowTrackingSince)?raw.performanceFlowTrackingSince:null;
   if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
   m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date)||!Number.isFinite(Number(x.amountEUR)))throw Error('Cashflow-Historie beschädigt.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
@@ -136,7 +143,7 @@ export function safeImport(raw){
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date||'')||Number.isNaN(Date.parse(x.date)))throw Error('Ungültiger Stichtag im Backup.');
-    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total),
+    return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
       totalEURExact:exact(units(x.totalEURExact??x.total)),recordedAt:cleanString(x.recordedAt,40)||null,
       byAccount:x.byAccount&&typeof x.byAccount==='object'?structuredClone(x.byAccount):null,
       valuationStatus:raw.version<3?'legacy-unverified':cleanString(x.valuationStatus,40)||'unknown',
