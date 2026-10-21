@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const page=await browser.newPage();
+try {
+ await page.goto('http://127.0.0.1:4173/');
+ const setup=await page.evaluate(async()=>{
+   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
+   const m=blankModel(),provider=createProvider({name:'Ledger Browser Broker',type:'broker'});m.providers.push(provider);
+   const custody=createAccount({providerId:provider.id,name:'Depot',type:'securities'},m);
+   const cashAccount=createAccount({providerId:provider.id,name:'Verrechnungskonto',type:'checking'},m);m.accounts.push(custody,cashAccount);
+   const asset=createPosition({providerId:provider.id,accountId:custody.id,name:'Global ETF',kind:'etf',isin:'IE00BK5BQT80',symbol:'VWCE',quantity:0,price:100},m);
+   const cash=createPosition({providerId:provider.id,accountId:cashAccount.id,name:'Cash EUR',kind:'cash',quantity:3000,price:1},m);m.positions.push(asset,cash);
+   persist(m);return {asset:asset.id,cash:cash.id};
+ });
+ await page.reload();
+ await page.locator('#sidebarNav [data-page="bookings"]').click();
+ await page.locator('#addBooking').click();
+ await page.locator('#bookingPosition').selectOption(setup.asset);
+ await page.locator('#bookingQuantityWrap [name="quantity"]').fill('10');
+ await page.locator('#bookingQuantityWrap [name="unitPrice"]').fill('100');
+ await page.locator('#bookingCash').selectOption(setup.cash);
+ await page.locator('#bookingAdvanced').evaluate(el=>el.open=true);
+ await page.locator('#bookingAdvanced [name="feeEUR"]').fill('5');
+ await page.locator('#saveDialog').click();
+ const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
+ const etf=state.positions.find(p=>p.id===setup.asset),cash=state.positions.find(p=>p.id===setup.cash);
+ assert.equal(state.version,3);
+ assert.equal(etf.quantityExact,'10');assert.equal(etf.costBasisExact,'1005');
+ assert.equal(cash.quantityExact,'1995');
+ assert.equal(state.journalEntries.length,1);
+ assert.equal(state.journalEntries[0].postings.length,3);
+ assert.equal(state.journalEntries[0].postings.map(p=>Number(p.amountBookEURExact)).reduce((a,b)=>a+b,0),0);
+ assert.equal(state.externalCashFlows.length,0);
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
+ assert.match(await page.locator('#totalValue').innerText(),/2.995/);
+ await page.reload();
+ assert.match(await page.locator('#totalValue').innerText(),/2.995/);
+ console.log('Ledger browser: ETF buy settles 1005 EUR against cash; balanced journal, no external flow and persisted net worth PASS');
+} finally {await browser.close();}
