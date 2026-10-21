@@ -39,7 +39,7 @@ test('Security quotes require confirmed exchange, ticker, currency and MIC',asyn
  await assert.rejects(()=>securityQuote({...listing,exchange:'',mic:''},'USER',async()=>good()),/Handelsplatz/);
  for(const wrong of [{currency:'USD'},{symbol:'VWRL'},{exchange:'NYSE'},{mic_code:'XNYS'},{isin:'US1234567890'}]){
   const f=async()=>ok({...await good().json(),...wrong});
-  await assert.rejects(()=>securityQuote(listing,'USER',f),/abweicht|Ticker|Handelsplatz|MIC|ISIN/);
+  await assert.rejects(()=>securityQuote(listing,'USER',f),/abweicht|weicht ab|Ticker|Handelsplatz|MIC|ISIN/);
  }
 });
 test('Historical reference FX uses exact request date and reports prior working day',async()=>{
