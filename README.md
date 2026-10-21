@@ -99,3 +99,16 @@ Der In-Memory-API-Cache nutzt getrennte TTLs für Kurs-, FX-, Katalog- und Walle
 Frankfurter liefert kostenlose EUR-Tagesreferenzkurse, auch historisch per Buchungsdatum; der tatsächlich abgerechnete FX des Brokers kann abweichen. Unter „Buchungen“ lässt sich die Referenz abrufen und vor dem Speichern anpassen. Bei nachträglich geänderten Beträgen sollten Datum und FX-Quelle kontrolliert werden.
 
 XIRR bleibt nur bei ausreichend vollständigen Ein-/Auszahlungen und verwertbaren Anfangs-/Endwerten verfügbar. Die TWR wird **nur** für verifizierte, cashflowfreie Bewertungszeiträume berechnet; für echte Cashflow-Teilperioden fehlen gegenwärtig Pre-/Post-Flow-Bewertungen, sodass bewusst kein geschätzter TWR-Wert angezeigt wird. Nicht eindeutig einem Listing zuordenbare ETF-Kurse und kostenlose Datenquellen ohne nachgewiesene Browser-Kompatibilität werden nicht automatisch als sichere Alternative verwendet.
+
+
+## Phase 3 – CSV, Wallet-Scan und wirtschaftliche Beziehungen
+
+Unter **Buchungen** lassen sich CSV-Dateien lokal einlesen. Die Spalten werden frei zugeordnet, die Transaktionslogik validiert einen vollständigen Probelauf auf einer Modellkopie. Ungültige Zeilen sperren den gesamten Import; wiederholte Imports werden durch stabile Fingerprints erkannt. Bestandspositionen müssen vor dem Import zugeordnet werden; die App konstruiert weder unbekannte Wertpapiere noch historische Guthaben. Maximal 5.000 CSV-Zeilen / 2 MB.
+
+Das XRP Ledger nutzt `account_lines`, einschließlich paginierter Antworten und einer Ledger-Referenz. Token sind nur anhand **Currency + Issuer** eindeutig. Positive Trust-Line-Assets werden als **unbewertet** vorgeschlagen und wegen Spam-/Gegenparteirisiken nicht automatisch vorausgewählt. Teilerfolge/Fehler werden markiert und nicht als beweisbarer Nullbestand interpretiert.
+
+Bitcoin Watch-only unterstützt Account-xpub/ypub/zpub für BIP44-/49-/84-Adressen (öffentliche Ableitung ab Accountebene, nicht gehärtet) mit Empfangs- und Wechselgeldpfad und Gap-Limit 20. Die öffentliche HD-Wallet ist datenschutzsensibel: Ein Explorer kann die zusammengehörigen abgeleiteten Adressen miteinander verbinden. Unvollständige Scans werden abgebrochen; öffentliche Endpunkte können Rate Limits auslösen. Keine Seeds oder privaten Schlüssel eingeben.
+
+Für DeFi kann eine Position bewusst als Collateral, Wrapped Asset, Vault, LP oder Liquid Staking eingeordnet werden. **Doppelte wirtschaftliche Vermögenswerte** können nur nach ausdrücklicher Zuordnung und Entscheidung zur Nichtanrechnung aus der Summe genommen werden. Verbindlichkeiten werden als Abzug berücksichtigt. Diese Zuordnung ist ein **manuelles Modell**, kein Versprechen vollständiger automatischer DeFi-Erkennung oder DeFi-Steuerrechnung.
+
+EVM/ERC-20 und Solana sind weiterhin **Best-Effort**: Öffentliche RPCs können Tokeninventare blockieren oder auf Teildaten begrenzen. Ohne nachweislich vollständigen Scan wird keine Nullbilanz zugesichert. DefiLlama bleibt ein möglicher späterer Preis-Fallback, bis reale Browserprüfung und Vertragsidentität verifiziert sind.
