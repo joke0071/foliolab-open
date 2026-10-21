@@ -1,4 +1,5 @@
 import {rebuildAssets,listingId} from './assets.js';
+import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
@@ -60,14 +61,16 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
   const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
   return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
+    economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,
     quoteSource:cleanString(v.quoteSource,70)||null,quoteAsOf:cleanString(v.quoteAsOf,45)||null,
     quoteFetchedAt:cleanString(v.quoteFetchedAt,45)||null,quoteQuality:cleanString(v.quoteQuality,45)||null,
     fxSource:cleanString(v.fxSource,70)||null,fxRateDate:cleanString(v.fxRateDate,20)||null,
     fxRateExact:v.fxRateExact==null?exact(units(fxRate)):exact(units(v.fxRateExact)),
     exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
-export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
-export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate))),0n)));}
+export function grossValueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
+export function valueEUR(p){return grossValueEUR(p)*valueSign(p);}
+export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)))*BigInt(valueSign(p)),0n)));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 /**
@@ -111,7 +114,9 @@ export function safeImport(raw){
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
-  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');rebuildAssets(m);
+  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  for(const p of m.positions)validateEconomicPosition(p,m);
+  rebuildAssets(m);
   m.performanceFlowTrackingSince=raw.performanceFlowTrackingSince&&/^\d{4}-\d{2}-\d{2}$/.test(raw.performanceFlowTrackingSince)?raw.performanceFlowTrackingSince:null;
   if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
   m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!/^\d{4}-\d{2}-\d{2}$/.test(x.date)||!Number.isFinite(Number(x.amountEUR)))throw Error('Cashflow-Historie beschädigt.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});

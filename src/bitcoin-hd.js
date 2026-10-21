@@ -125,5 +125,5 @@ export async function scanBitcoinAccount(xpub,{fetcher=globalThis.fetch,gapLimit
    if(index===maxAddressesPerBranch-1)throw Error('Gap Limit nicht erreicht; HD-Scan unvollständig.');
   }
  }
- return {quantityExact:(()=>{const p=total.toString().padStart(9,'0');return p.slice(0,-8)+'.'+p.slice(-8).replace(/0+$/,'')||'0';})(),satoshis:total.toString(),addressesChecked:checked,usedAddresses:observed,details:summaries,complete:true};
+ return {quantityExact:(()=>{const p=total.toString().padStart(9,'0');const frac=p.slice(-8).replace(/0+$/,'');return p.slice(0,-8)+(frac?'.'+frac:'');})(),satoshis:total.toString(),addressesChecked:checked,usedAddresses:observed,details:summaries,complete:true};
 }
