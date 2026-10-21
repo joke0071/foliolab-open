@@ -10,7 +10,7 @@ function fixture(){
 test('XIRR requires explicit cashflow completeness marker in caller and two valuations',()=>{
  const {m,p}=fixture();m.performanceFlowTrackingSince='2025-01-01';snapshot(m,'2025-01-01','',{manualTotalEUR:'1000'});
  executeTransaction(m,{positionId:p.id,type:'deposit',date:'2025-07-01',quantity:500,unitPrice:1});
- p.quantity=1650;p.quantityExact='1650';snapshot(m,'2026-01-01','',{manualTotalEUR:'1650'});
+ executeTransaction(m,{positionId:p.id,type:'interest',date:'2025-08-01',quantity:150,unitPrice:1});snapshot(m,'2026-01-01','',{manualTotalEUR:'1650'});
  const rate=portfolioXirr(m,'2025-01-01','2026-01-01');
  assert.ok(rate!=null&&Number.isFinite(rate));
  assert.equal(portfolioXirr(m,'2025-02-01','2026-01-01'),null);
