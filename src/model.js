@@ -1,4 +1,4 @@
-import {rebuildAssets} from './assets.js';
+import {rebuildAssets,listingId} from './assets.js';
 import {executeTransaction,captureOpenings,validateJournalEntry} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 export const STORE_KEY='foliolab-open-v1';
@@ -47,6 +47,8 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
 }
 export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
+  const mic=cleanString(v.mic,8).toUpperCase();
+  if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
   const costBasisExact=v.costBasisExact==null?(v.costBasisEUR==null||v.costBasisEUR===''?null:exact(units(v.costBasisEUR))):exact(units(v.costBasisExact));
@@ -55,10 +57,15 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   const realizedPnLEUR=realizedPnLExact==null?null:number(realizedPnLExact);
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
   const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
+  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
+    quoteSource:cleanString(v.quoteSource,70)||null,quoteAsOf:cleanString(v.quoteAsOf,45)||null,
+    quoteFetchedAt:cleanString(v.quoteFetchedAt,45)||null,quoteQuality:cleanString(v.quoteQuality,45)||null,
+    fxSource:cleanString(v.fxSource,70)||null,fxRateDate:cleanString(v.fxRateDate,20)||null,
+    fxRateExact:v.fxRateExact==null?exact(units(fxRate)):exact(units(v.fxRateExact)),
+    exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(v.coinId,110).toLowerCase(),quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
-export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate));}
-export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.price,p.currency==='EUR'?1:p.fxRate)),0n)));}
+export function valueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
+export function totalEUR(model){return Number(exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate))),0n)));}
 export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
 export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
 /**
@@ -74,9 +81,10 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const amountExact=manual?exact(units(options.manualTotalEUR)):exact(units(totalEUR(model)));
  if(units(amountExact)<0n)throw Error('Stichtagswert darf nicht negativ sein.');
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
- const valuationStatus=manual?'manual':'observed',source=manual?'manual':'current';
+ const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
+ const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
  const byAccount=manual?null:Object.fromEntries(model.accounts.map(a=>[a.id,model.positions.filter(p=>p.accountId===a.id).reduce((sum,p)=>sum+valueEUR(p),0)]));
- const quoteTimes=manual?[]:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt}));
+ const quoteTimes=manual?[]:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt,quoteAsOf:p.quoteAsOf||null,quoteSource:p.quoteSource||null,fxRateDate:p.fxRateDate||null}));
  const existing=model.snapshots.find(x=>x.date===date);
  if(existing){
    // Preserve preceding versions rather than silently rewriting historical evidence.

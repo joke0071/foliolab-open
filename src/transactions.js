@@ -23,7 +23,7 @@ const remember=(m,p,v,quantity,fee,tax,fx,tradeEUR)=>{
  const entry={id:v.id||((globalThis.crypto?.randomUUID?.())||'tx-'+Date.now()+'-'+Math.random()),type:v.type,date:v.date,
    positionId:p.id,accountId:p.accountId,positionName:p.name,quantity:Number(exact(quantity)),
    quantityExact:exact(quantity),unitPrice:Number(v.unitPrice??p.price),feeEUR:Number(exact(fee)),taxEUR:Number(exact(tax)),
-   fxRate:Number(exact(fx)),amountEUR:Number(exact(tradeEUR)),amountExactEUR:exact(tradeEUR),
+   fxRate:Number(exact(fx)),fxRateDate:words(v.fxRateDate,20)||null,fxSource:words(v.fxSource,80)||null,amountEUR:Number(exact(tradeEUR)),amountExactEUR:exact(tradeEUR),
    targetPositionId:v.targetPositionId||null,external:v.type==='deposit'||v.type==='withdraw',notes:words(v.notes,180)};
  if(m.bookings.some(t=>t.id===entry.id))throw Error('Buchungs-ID existiert bereits.');
  m.bookings.unshift(entry);

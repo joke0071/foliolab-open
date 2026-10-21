@@ -1,6 +1,13 @@
-/** @typedef {{symbol:string,exchange:string,currency:string}} Listing */
+/** @typedef {{id:string,symbol:string,mic:string,exchange:string,currency:string}} Listing */
 /** @typedef {{id:string,key:string,kind:string,name:string,isin:string,coinId:string,listings:Listing[]}} Asset */
 const lower=x=>String(x??'').trim().toLowerCase();
+const upper=x=>String(x??'').trim().toUpperCase();
+/** An ISIN identifies a security, not the stock-exchange listing or trading currency. */
+export function listingId(p){
+ const symbol=upper(p.symbol),mic=upper(p.mic),exchange=upper(p.exchange),currency=upper(p.currency||'EUR');
+ if(!symbol)return null;
+ return 'listing:'+encodeURIComponent([assetKey(p),mic||exchange||'unspecified',symbol,currency].join('|'));
+}
 export function assetKey(p){
  const kind=p.kind||'other';
  if(kind==='crypto'){
@@ -14,7 +21,7 @@ export function assetKey(p){
  }
  if(kind==='cash')return 'fiat:'+lower(p.currency||'EUR');
  if(['etf','stock','fund'].includes(kind)){
-   if(/^[A-Z]{2}[A-Z0-9]{10}$/.test(String(p.isin||'').toUpperCase()))return 'security:isin:'+lower(p.isin);
+   if(/^[A-Z]{2}[A-Z0-9]{10}$/.test(upper(p.isin)))return 'security:isin:'+lower(p.isin);
    return 'security:unverified:'+lower(p.name)+':'+lower(p.symbol)+':'+lower(p.currency);
  }
  return 'other:'+kind+':'+lower(p.name);
@@ -22,11 +29,12 @@ export function assetKey(p){
 export function rebuildAssets(model){
  const assets=new Map();
  for(const p of model.positions){
-   const key=assetKey(p),id='asset:'+encodeURIComponent(key),listing={symbol:String(p.symbol||''),exchange:String(p.exchange||''),currency:String(p.currency||'EUR')};
+   const key=assetKey(p),id='asset:'+encodeURIComponent(key);
+   const listing={id:listingId(p),symbol:upper(p.symbol),mic:upper(p.mic),exchange:String(p.exchange||''),currency:upper(p.currency||'EUR')};
    let asset=assets.get(key);
-   if(!asset){asset={id,key,kind:p.kind,name:String(p.name||''),isin:String(p.isin||''),coinId:String(p.coinId||''),listings:[]};assets.set(key,asset);}
-   if(listing.symbol&&!asset.listings.some(l=>l.symbol===listing.symbol&&l.exchange===listing.exchange&&l.currency===listing.currency))asset.listings.push(listing);
-   p.assetId=id;
+   if(!asset){asset={id,key,kind:p.kind,name:String(p.name||''),isin:upper(p.isin),coinId:String(p.coinId||''),listings:[]};assets.set(key,asset);}
+   if(listing.id&&!asset.listings.some(l=>l.id===listing.id))asset.listings.push(listing);
+   p.assetId=id;p.listingId=listing.id;
  }
  model.assets=[...assets.values()];
  return model.assets;

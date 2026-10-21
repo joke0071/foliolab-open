@@ -50,3 +50,28 @@ export function modifiedDietz({start,end,netFlowEUR=0,weightedFlowEUR=0}){
  const denominator=start+weightedFlowEUR;
  return denominator>0?(end-start-netFlowEUR)/denominator:null;
 }
+
+/** Common proof requirements before attributing changes to investment performance. */
+export function performanceIssues(model,startDate,endDate){
+ const problems=[];
+ const shots=(model.snapshots||[]).filter(s=>s.date>=startDate&&s.date<=endDate).sort((a,b)=>a.date.localeCompare(b.date));
+ if(shots.length<2||shots[0].date!==startDate||shots.at(-1).date!==endDate)problems.push('Start- oder Endbewertung fehlt');
+ if(shots.some(s=>!['observed','manual'].includes(s.valuationStatus)))problems.push('Ungeprüfte oder unvollständige Stichtage');
+ if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&e.status==='unresolved-clearing'))problems.push('Kauf oder Verkauf ohne geklärtes Verrechnungskonto');
+ if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&(['deliver_in','deliver_out','adjust','correction'].includes(b.type)||(['buy','sell'].includes(b.type)&&!b.journalEntryId))))problems.push('Unbewertete Einlieferung, Korrektur oder historische Buchung');
+ if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&['deposit','withdraw'].includes(b.type)&&!(model.externalCashFlows||[]).some(f=>f.id===b.id)))problems.push('Externe Cashflows unvollständig');
+ return [...new Set(problems)];
+}
+/**
+ * Exact no-flow TWR: a chain of verified boundary valuations.
+ * Cashflows within the period require pre/post-flow valuations not currently
+ * represented in the snapshot model; NEVER interpolate or mislabel as TWR.
+ */
+export function portfolioTwr(model,startDate,endDate){
+ if(performanceIssues(model,startDate,endDate).length)return null;
+ if((model.externalCashFlows||[]).some(f=>f.date>startDate&&f.date<=endDate&&Number(f.amountEUR)!==0))return null;
+ const shots=model.snapshots.filter(s=>s.date>=startDate&&s.date<=endDate).sort((a,b)=>a.date.localeCompare(b.date));
+ const periods=[];
+ for(let i=1;i<shots.length;i++)periods.push({start:Number(shots[i-1].totalEURExact??shots[i-1].total),end:Number(shots[i].totalEURExact??shots[i].total)});
+ return twr(periods);
+}
