@@ -47,3 +47,5 @@ test('ERC20-Kursabruf über CoinGecko contract ohne Schlüssel',async()=>{
 });
 
 test('Solana-Teilfehler bleibt erkennbar',async()=>{const mock=async(_u,opts)=>{const r=JSON.parse(opts.body);if(r.method==='getBalance')return reply({result:{value:1e9}});if(r.params[1].programId==='TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb')throw Error('temporär gesperrt');return reply({result:{value:[]}});};const assets=await discoverWallet('sol',SOL,{},mock);assert.equal(assets.length,1);assert.equal(assets.partial,true);});
+
+test('Fehlender Blockscout-Native-Saldo wird nie als Null gespeichert',async()=>{await assert.rejects(()=>walletBalance({enabled:true,chain:'evm',chainId:1,address:A,decimals:18},{},async()=>reply({})),/Unvollständige/);});

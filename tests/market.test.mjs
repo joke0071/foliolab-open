@@ -7,3 +7,5 @@ test('Solana native und Token-Salden',async()=>{const n=await solBalance({chain:
 test('ETF Kurs, FX und Suchfilter',async()=>{assert.equal(await securityPrice('VWCE','USER',mock({price:'125.88'})),125.88);assert.equal(await exchangeRate('USD','USER',mock({rate:'0.93'})),.93);assert.equal(searchCatalog(POPULAR_COINS,'BTC')[0].id,'bitcoin');});
 
 test('Täglicher EUR-Wechselkurs ohne API-Key',async()=>{const mock=async url=>{assert.equal(new URL(url).hostname,'api.frankfurter.dev');return {ok:true,json:async()=>({date:'2026-10-20',rates:{EUR:0.93}})}};assert.equal(await exchangeRate('USD','',mock),.93);});
+
+test('Unvollständige Bitcoin- oder Solana-Antwort darf nicht als 0 interpretiert werden',async()=>{await assert.rejects(()=>btcBalance('bc1qxyz',mock({})),/Unvollständige/);await assert.rejects(()=>solBalance({chain:'sol',address:'A'.repeat(40)},undefined,mock({result:{}})),/Unvollständige/);});
