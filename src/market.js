@@ -40,6 +40,7 @@ export async function securityQuote(listing,key,fetcher=globalThis.fetch){
  const url=new URL('https://api.twelvedata.com/quote');
  url.searchParams.set('symbol',symbol);
  if(exchange)url.searchParams.set('exchange',exchange);
+ if(mic)url.searchParams.set('mic_code',mic);
  url.searchParams.set('apikey',key);
  const data=await json(url.toString(),{ttlMs:TTL.security},fetcher);
  const price=Number(data.close??data.price);
