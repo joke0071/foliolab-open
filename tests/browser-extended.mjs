@@ -1,0 +1,51 @@
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const ctx=await browser.newContext({acceptDownloads:true});
+const page=await ctx.newPage();
+const providerName='Bank <img src=x onerror=window.__xss=1>';
+try{
+ await page.goto('http://127.0.0.1:4173/');
+ await page.locator('#sidebarNav [data-page="more"]').click();
+ await page.locator('#addProvider').click();
+ await page.locator('#editorForm [name="name"]').fill(providerName);
+ await page.locator('#saveDialog').click();
+ assert.equal(await page.evaluate(()=>window.__xss),undefined,'XSS in provider name');
+ assert.equal(await page.locator('#providerSettings img').count(),0);
+ for(const [name,balance,type] of [['Giro',1000,'checking'],['Tagesgeld',500,'savings']]){
+  await page.locator('#addAccount').click();
+  await page.locator('#editorForm [name="name"]').fill(name);
+  await page.locator('#editorForm [name="type"]').selectOption(type);
+  await page.locator('#editorForm [name="initialBalance"]').fill(String(balance));
+  await page.locator('#saveDialog').click();
+ }
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
+ assert.match(await page.locator('#totalValue').innerText(),/1.500/);
+ await page.locator('#sidebarNav [data-page="bookings"]').click();
+ await page.locator('#addBooking').click();
+ const options=await page.locator('#bookingPosition option').evaluateAll(xs=>xs.map(x=>({value:x.value,label:x.textContent})));
+ assert.equal(options.length,2);
+ await page.locator('#bookingType').selectOption('transfer');
+ await page.locator('#bookingQuantityWrap [name="quantity"]').fill('150');
+ await page.locator('#bookingTarget').selectOption(options[1].value);
+ await page.locator('#saveDialog').click();
+ const afterTransfer=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
+ assert.deepEqual(afterTransfer.positions.map(x=>x.quantity).sort((a,b)=>a-b),[650,850]);
+ assert.equal(afterTransfer.externalCashFlows.length,0,'internal transfers cannot be external flows');
+ await page.locator('#addBooking').click();
+ await page.locator('#bookingType').selectOption('deposit');
+ await page.locator('#bookingQuantityWrap [name="quantity"]').fill('100');
+ await page.locator('#saveDialog').click();
+ const afterDeposit=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
+ assert.equal(afterDeposit.externalCashFlows.length,1);
+ assert.equal(afterDeposit.externalCashFlows[0].amountEUR,100);
+ await page.locator('#sidebarNav [data-page="dashboard"]').click();
+ assert.match(await page.locator('#totalValue').innerText(),/1.600/);
+ await page.locator('#sidebarNav [data-page="history"]').click();
+ page.once('dialog',d=>d.accept());
+ await page.locator('#startPerformance').click();
+ const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
+ assert.equal(state.performanceFlowTrackingSince,new Date().toISOString().slice(0,10));
+ assert.equal(state.bookings.length,2);
+ console.log('Extended browser: cash-onboarding, XSS, transfers, deposits, 1600 EUR valuation and guarded performance PASS');
+}finally{await browser.close();}
