@@ -38,12 +38,17 @@ const zero=0n;
 /** Preserve an explicit, undated opening baseline; never reconstruct invented historical trades. */
 export function captureOpenings(model){
  model.openingPositions??=[];
- for(const p of model.positions)if(!model.openingPositions.some(x=>x.positionId===p.id))
-  model.openingPositions.push({positionId:p.id,quantityExact:String(p.quantityExact??p.quantity),costBasisExact:p.costBasisExact??(p.costBasisEUR==null?null:String(p.costBasisEUR)),realizedPnLExact:p.realizedPnLExact??(p.realizedPnLEUR==null?null:String(p.realizedPnLEUR)),source:'observed-opening',asOf:null});
+ for(const p of model.positions){
+  const opening=model.openingPositions.find(x=>x.positionId===p.id);
+  const baseline={positionId:p.id,quantityExact:String(p.quantityExact??p.quantity),costBasisExact:p.costBasisExact??(p.costBasisEUR==null?null:String(p.costBasisEUR)),realizedPnLExact:p.realizedPnLExact??(p.realizedPnLEUR==null?null:String(p.realizedPnLEUR)),source:'observed-opening',asOf:null};
+  if(!opening)model.openingPositions.push(baseline);
+  else if(!(model.journalEntries||[]).some(e=>e.postings.some(post=>post.positionId===p.id)))
+    Object.assign(opening,baseline); // Manual or wallet position not yet journal-managed.
+ }
 }
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
- if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
+ if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||Number.isNaN(Date.parse(entry.date))||new Date(entry.date+'T12:00:00Z').toISOString().slice(0,10)!==entry.date||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
  const ids=new Set(),sum=entry.postings.reduce((n,p)=>{
   if(!p.id||ids.has(p.id)||!p.role||p.amountBookEURExact==null)throw Error('Journal-Buchung ungültig.');
   ids.add(p.id);if(p.quantityDeltaExact!=null)units(p.quantityDeltaExact);
@@ -52,10 +57,30 @@ export function validateJournalEntry(entry){
  if(sum!==zero)throw Error('Buchungssätze sind nicht ausgeglichen.');
  return entry;
 }
+/** Compare recorded holdings to opening balance plus chronological, exact journal movements. */
+export function ledgerQuantityAudit(model){
+ const balances=new Map((model.openingPositions||[]).map(x=>[x.positionId,units(x.quantityExact)]));
+ const ordered=[...(model.journalEntries||[])].sort((a,b)=>a.date.localeCompare(b.date)||(a.sequence||0)-(b.sequence||0));
+ for(const entry of ordered){
+  validateJournalEntry(entry);
+  for(const posting of entry.postings){
+   if(posting.quantityDeltaExact===null||posting.quantityDeltaExact===undefined)continue;
+   if(!balances.has(posting.positionId))throw Error('Journal ohne dokumentierten Eröffnungsbestand.');
+   balances.set(posting.positionId,balances.get(posting.positionId)+units(posting.quantityDeltaExact));
+   if(balances.get(posting.positionId)<0n)throw Error('Chronologischer Buchungsverlauf führt zu negativem Bestand.');
+  }
+ }
+ const mismatches=[];
+ for(const p of model.positions){
+  const expected=balances.get(p.id);if(expected===undefined)continue;
+  if(expected!==units(p.quantityExact??p.quantity))mismatches.push({positionId:p.id,expected:exact(expected),actual:String(p.quantityExact??p.quantity)});
+ }
+ return {ok:mismatches.length===0,mismatches};
+}
 function lastJournalDate(model,positionId){
  return (model.journalEntries||[]).filter(e=>e.postings.some(p=>p.positionId===positionId)).map(e=>e.date).sort().at(-1)||null;
 }
-function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash){
+function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuantity){
  const postings=[],post=(role,value,position=null,delta=null)=>{
    const n=typeof value==='bigint'?value:units(value);
    postings.push({id:id(),role,positionId:position?.id??null,accountId:position?.accountId??null,quantityDeltaExact:delta==null?null:exact(delta),amountBookEURExact:exact(n)});
@@ -76,10 +101,14 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash){
  }else if(kind==='transfer'){
    const target=copy.positions.find(x=>x.id===v.targetPositionId);
    post('transfer-out',-cash,p,-qty);post('transfer-in',cash,target,qty);
+ }else if(kind==='swap'||kind==='merger'){
+   const target=copy.positions.find(x=>x.id===v.targetPositionId);
+   post('nonmonetary-out',zero,p,-qty);
+   post('nonmonetary-in',zero,target,units(v.targetQuantity));
  }else {
-   // Events that change units but do not specify a realizable monetary exchange.
-   // Monetary postings remain zero; these events are not labeled balanced economic trades.
-   post('nonmonetary',zero,p,null);
+   // Corporate actions, manual adjustments and in-kind movements are zero-book-value
+   // postings until an independent fair market valuation exists.
+   post('nonmonetary',zero,p,q(p)-previousQuantity);
  }
  const entry={id:v.id??id(),type:kind,date:v.date,recordedAt:new Date().toISOString(),
   sequence:(copy.journalEntries?.length||0)+1,postings,
@@ -103,6 +132,8 @@ export function executeTransaction(model,input){
  const affected=[p.id,input.targetPositionId,input.cashPositionId].filter(Boolean);
  for(const positionId of affected){const last=lastJournalDate(copy,positionId);if(last&&input.date<last)throw Error('Rückdatierte Buchung vor einem bereits verbuchten Vorgang: bitte zuerst die Chronologie klären.');}
  const qty=amount(input.quantity??0),prev=q(p),fee=amount(input.feeEUR??0),tax=amount(input.taxEUR??0);
+ if((fee>0n||tax>0n)&&!['buy','sell'].includes(kind))throw Error('Nebenkosten für diesen Vorgang bitte separat als Gebühren-/Steuerbuchung erfassen.');
+ if(p.kind==='cash'&&['buy','sell'].includes(kind))throw Error('Geldkonten über Ein-/Auszahlung oder Transfer buchen, nicht als Wertpapier kaufen/verkaufen.');
  const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
  const cash=mul(mul(qty,unitPrice),fx);
  const b=basis(p);let changed=false,linkedCash=null;
@@ -177,7 +208,7 @@ export function executeTransaction(model,input){
  if(kind==='ticker_change')entry.newSymbol=p.symbol;
  if(kind==='isin_change')entry.newIsin=p.isin;
  copy.journalEntries??=[];
- const journal=postingsFor(copy,p,kind,input,qty,fee,tax,fx,cash,linkedCash);
+ const journal=postingsFor(copy,p,kind,input,qty,fee,tax,fx,cash,linkedCash,prev);
  copy.journalEntries.push(journal);
  entry.journalEntryId=journal.id;
  entry.cashPositionId=journal.cashPositionId;
@@ -189,6 +220,8 @@ export function executeTransaction(model,input){
    const signed=kind==='deposit'?mul(qty,fx):-mul(qty,fx);
    copy.externalCashFlows.push({id:entry.id,date:input.date,amountEUR:Number(exact(signed)),amountExactEUR:exact(signed)});
  }
+ const audit=ledgerQuantityAudit(copy);
+ if(!audit.ok)throw Error('Journal und Bestände stimmen nicht überein. Buchung abgebrochen.');
  // Commit validated changes while preserving references used by currently open dialogs.
  const originals=new Map(model.positions.map(p=>[p.id,p]));
  copy.positions=copy.positions.map(p=>{const original=originals.get(p.id);if(!original)return p;Object.assign(original,p);return original;});

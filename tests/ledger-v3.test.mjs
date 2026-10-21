@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,createProvider,createAccount,createPosition,totalEUR,safeImport,backup,load,persist,STORE_KEY,snapshot} from '../src/model.js';
-import {executeTransaction,validateJournalEntry} from '../src/transactions.js';
+import {executeTransaction,validateJournalEntry,ledgerQuantityAudit} from '../src/transactions.js';
 import {portfolioXirr} from '../src/performance.js';
 function fixture({cash=3000,security=0,currency='EUR',fx=1}={}){
  const m=blankModel(),provider=createProvider({name:'Open Broker',type:'broker'});m.providers.push(provider);
@@ -153,4 +153,24 @@ test('External in-kind deliveries without verified valuation block XIRR',()=>{
  trade(m,etf,'deliver_in',{date:'2025-06-01',quantity:1});
  snapshot(m,'2026-01-01','end',{manualTotalEUR:'1100'});
  assert.equal(portfolioXirr(m,'2025-01-01','2026-01-01'),null);
+});
+
+test('Opening quantities plus journal movements reconstruct every current position exactly',()=>{
+ const {m,etf,cashPosition}=fixture({cash:3000,security:10});
+ trade(m,etf,'sell',{cashPositionId:cashPosition.id,quantity:2,unitPrice:120,feeEUR:3});
+ trade(m,etf,'buy',{cashPositionId:cashPosition.id,quantity:1,unitPrice:100});
+ trade(m,etf,'split',{ratioNumerator:2,ratioDenominator:1,quantity:0});
+ const audit=ledgerQuantityAudit(m);assert.deepEqual(audit,{ok:true,mismatches:[]});
+ const original=JSON.stringify(m);etf.quantityExact='999';
+ assert.equal(ledgerQuantityAudit(m).ok,false);etf.quantityExact='18';
+ assert.equal(ledgerQuantityAudit(m).ok,true);
+});
+test('Rewards, in-kind deliveries and corrections retain exact quantity deltas',()=>{
+ const {m,etf}=fixture();
+ trade(m,etf,'deliver_in',{quantity:2});
+ trade(m,etf,'reward',{quantity:'0.25'});
+ trade(m,etf,'correction',{targetQuantity:'3',quantity:0});
+ assert.equal(etf.quantityExact,'3');
+ assert.equal(ledgerQuantityAudit(m).ok,true);
+ assert.deepEqual(m.journalEntries.map(e=>e.postings[0].quantityDeltaExact),['2','0.25','0.75']);
 });
