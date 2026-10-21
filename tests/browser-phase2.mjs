@@ -24,6 +24,7 @@ try{
   m.settings.twelveKey='TEST_USER_KEY';persist(m);
  });
  await page.reload();
+ await page.locator('#sidebarNav [data-page="positions"]').click();
  await page.locator('#refreshAll').click();
  await page.waitForFunction(()=>document.querySelector('#refreshAll').disabled===false,{timeout:18000});
  const s=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
