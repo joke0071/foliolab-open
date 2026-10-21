@@ -155,3 +155,14 @@ test('A checksummed extended key with out-of-range secp256k1 X coordinate is rej
  const key=checksumKey(ZPUB,[0x04,0xb2,0x47,0x46],prime+1n);
  await assert.rejects(()=>deriveBitcoinAddress(key),/Kurvenfeld/);
 });
+
+test('Two identical broker CSV rows are distinct if both occur in one file, but repeat imports dedupe',()=>{
+ const {m,etf,cash}=fixture();
+ const file='Datum;Typ;ISIN;Menge;Kurs\n2026-10-21;Kauf;IE00BK5BQT80;1;100\n2026-10-21;Kauf;IE00BK5BQT80;1;100';
+ const csv=parseCSV(file),mapping=inferMapping(csv.headers),options={defaultPositionId:etf.id,cashPositionId:cash.id};
+ const first=previewCSV(m,csv,mapping,options);
+ assert.equal(first.ready,2);assert.equal(first.duplicates,0);
+ importCSV(m,first);assert.equal(m.bookings.length,2);
+ const repeated=previewCSV(m,csv,mapping,options);
+ assert.equal(repeated.ready,0);assert.equal(repeated.duplicates,2);
+});
