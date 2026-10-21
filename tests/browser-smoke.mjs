@@ -46,6 +46,20 @@ try{
  const exported=JSON.parse(await fs.readFile(await dl.path(),'utf8'));
  assert.equal(exported.version,2);assert.equal(exported.accounts.length,1);
  assert.equal(exported.positions.length,1);assert.ok(exported.positions[0].accountId);
+ // Password-protected backups are never plain-text JSON holdings.
+ await page.locator('.advanced-apis').filter({has:page.locator('#backupPassword')}).evaluate(el=>el.open=true);
+ await page.locator('#backupPassword').fill('unverwechselbares-testpasswort');
+ const [encDl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportEncryptedBackup').click()]);
+ const encrypted=await fs.readFile(await encDl.path(),'utf8');
+ const envelope=JSON.parse(encrypted);
+ assert.equal(envelope.format,'foliolab-open-encrypted-v1');
+ assert.ok(!encrypted.includes('ETF-Test'));
+ const dialogHandler=async dialog=>{if(dialog.type()==='prompt')await dialog.accept('unverwechselbares-testpasswort');else await dialog.accept();};
+ page.on('dialog',dialogHandler);
+ await page.locator('#backupFile').setInputFiles({name:'verschluesselt.json',mimeType:'application/json',buffer:Buffer.from(encrypted)});
+ await page.waitForFunction(()=>document.querySelector('#toast').textContent.includes('Backup wiederhergestellt'));
+ page.off('dialog',dialogHandler);
+
  // Reload a real legacy data shape and assert one default account is created without modifying original bytes.
  const legacy={...exported,version:1,accounts:undefined,positions:exported.positions.map(({accountId,...p})=>p)};
  const original=JSON.stringify(legacy);

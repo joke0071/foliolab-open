@@ -1,0 +1,22 @@
+import {chromium} from 'playwright';
+const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const page=await browser.newPage();
+try{
+ await page.goto('http://127.0.0.1:4173/');
+ const checks=[
+  {name:'Frankfurter FX',url:'https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR'},
+  {name:'Blockstream Bitcoin',url:'https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'},
+  {name:'Blockscout Ethereum',url:'https://eth.blockscout.com/api/v2/addresses/0x000000000000000000000000000000000000dEaD'},
+  {name:'OpenFIGI search',url:'https://api.openfigi.com/v3/search',method:'POST',body:JSON.stringify({query:'Vanguard FTSE All-World UCITS ETF'})},
+  {name:'Solana public RPC',url:'https://api.mainnet-beta.solana.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})}
+ ];
+ const results=await page.evaluate(async checks=>Promise.all(checks.map(async q=>{
+  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),8000);
+  try{const res=await fetch(q.url,{method:q.method||'GET',headers:q.body?{'content-type':'application/json'}:{},body:q.body,signal:controller.signal});
+    const body=await res.text();return {api:q.name,status:res.status,cors:'success',data:body.slice(0,110)};}
+  catch(err){return {api:q.name,cors:'blocked/unavailable',error:String(err).slice(0,150)}}
+  finally{clearTimeout(timer)}
+ })),checks);
+ for(const r of results)console.log('LIVE-PROBE '+JSON.stringify(r));
+ // External APIs are inherently transient; a failed probe is reported, never misrepresented as verified.
+}finally{await browser.close()}
