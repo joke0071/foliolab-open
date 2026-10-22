@@ -26,7 +26,9 @@ const trim=(s,max=120)=>String(s??'').trim().slice(0,max);
 const upper=s=>trim(s).toUpperCase();
 const validIsin=s=>isinPattern.test(upper(s));
 export function normalizeListing(row,source){
- const symbol=upper(row.symbol||row.Code),currency=upper(row.currency||row.Currency),
+ const providerSymbol=upper(row.symbol||row.Code),rawExchange=upper(row.exchange||row.Exchange),
+  symbol=source==='fmp'&&/^[A-Z0-9_-]+\.(DE|F|AS|PA|L|MI)$/.test(providerSymbol)&&['XETRA','FRANKFURT','AMSTERDAM','PARIS','LSE'].includes(rawExchange)?providerSymbol.split('.')[0]:providerSymbol,
+  currency=upper(row.currency||row.Currency),
   name=trim(row.name||row.Name||row.instrument_name||row.companyName,140),
   isin=upper(row.isin||row.ISIN),exchange=trim(row.exchangeFullName||row.exchange||row.Exchange,65),
   mic=upper(row.mic_code||row.mic);
@@ -39,7 +41,7 @@ export function normalizeListing(row,source){
  // Never derive an EODHD exchange from an unverified place name or a ticker.
  const eodhdSymbol=source==='eodhd'&&suffix&&/^[A-Z0-9]{1,12}$/.test(suffix)?
    symbol+'.'+suffix:source==='twelve'&&mapping?symbol+'.'+mapping[3]:'';
- const fmpSymbol=source==='fmp'?symbol:'';
+ const fmpSymbol=source==='fmp'?providerSymbol:'';
  const tradingViewSymbol=mapping?mapping[2]+':'+symbol:'';
  return {source,name,symbol,isin,currency,exchange:mic&&mapping?mapping[0]:exchange,mic:mic||mapping?.[1]||'',
    eodhdSymbol,fmpSymbol,tradingViewSymbol,
