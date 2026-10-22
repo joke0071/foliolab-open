@@ -69,10 +69,16 @@ test('CoinPaprika uses curated source identity, EUR currency, valid provider tim
 });
 test('CoinPaprika historical URL specifies EUR explicitly and rejects conflicting daily values',async()=>{
  const seen=[];
- const good=async url=>{seen.push(url);return ok([{timestamp:timestamp(3),price:98},{timestamp:timestamp(2),price:100},{timestamp:timestamp(1),price:101}]);};
+ const good=async url=>{
+  seen.push(url);
+  if(url.includes('frankfurter'))return ok({base:'USD',rates:{[day(3)]:{EUR:.9},[day(2)]:{EUR:.9},[day(1)]:{EUR:.9}}});
+  return ok([{timestamp:timestamp(3),price:98},{timestamp:timestamp(2),price:100},{timestamp:timestamp(1),price:101}]);
+ };
  const r=await coinPaprikaHistoricalQuote(coins.bitcoin,good);
- assert.equal(r.currency,'EUR');assert.equal(r.source,'CoinPaprika');assert.deepEqual(r.points.map(p=>p.total),[98,100,101]);
- assert.ok(seen[0].includes('quote=EUR')&&seen[0].includes('interval=1d'));
+ assert.equal(r.currency,'EUR');assert.match(r.source,/CoinPaprika/);
+ assert.deepEqual(r.points.map(p=>Number(p.total.toFixed(2))),[88.2,90,90.9]);
+ assert.ok(!seen[0].includes('quote=')&&seen[0].includes('interval=1d'));
+ assert.ok(seen[1].includes('frankfurter')&&seen[1].includes('base=USD'));
  await assert.rejects(()=>coinPaprikaHistoricalQuote(coins.chainlink,async()=>ok([{timestamp:timestamp(2),price:2},{timestamp:timestamp(2),price:3}])),/widersprüchliche/);
 });
 test('Failed CoinGecko historical chart safely uses CoinPaprika EUR, not guessed token',async()=>{
@@ -80,10 +86,11 @@ test('Failed CoinGecko historical chart safely uses CoinPaprika EUR, not guessed
  const mock=async url=>{
   calls.push(url);
   if(url.includes('coingecko'))return {ok:false,status:429,headers:{get:()=>null},json:async()=>({})};
+  if(url.includes('frankfurter'))return ok({base:'USD',rates:{[day(4)]:{EUR:.9},[day(2)]:{EUR:.9},[day(1)]:{EUR:.9}}});
   return ok([{timestamp:timestamp(4),price:100},{timestamp:timestamp(2),price:103},{timestamp:timestamp(1),price:104}]);
  };
  const out=await fetchPositionMarketHistory(coins.bitcoin,{},30,mock);
- assert.equal(out.source,'CoinPaprika');assert.equal(out.points.length,3);
+ assert.match(out.source,/CoinPaprika/);assert.equal(out.points.length,3);
  assert.ok(calls.some(url=>url.includes('coinpaprika')));
  await assert.rejects(()=>fetchPositionMarketHistory(coins.wrong,{},30,async()=>({ok:false,status:429,headers:{get:()=>null},json:async()=>({})})),/CoinPaprika/);
 });
