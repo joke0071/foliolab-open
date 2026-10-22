@@ -46,9 +46,10 @@ try{
  assert.equal(p.quoteAsOf,today);
  assert.equal(p.quantityExact,'10');
  await page.locator('#mobileNav [data-page="dashboard"]').click();
- await page.locator('#providerOverview .provider-accordion > summary').click();
+ const providerRow=page.locator('#providerOverview .provider-accordion').first();
+ if(!(await providerRow.getAttribute('open')!==null))await providerRow.locator(':scope > summary').click();
  const refreshed=page.locator('#providerOverview [data-position-id="etf-test"]');
- await refreshed.locator('summary').click();
+ if(await refreshed.getAttribute('open')===null)await refreshed.locator('summary').click();
  await refreshed.locator('.position-history-chart .chart-plot').waitFor();
  assert.match(await refreshed.innerText(),/EODHD/);
  for(const width of [320,360,390,430,768,1024,1440]){
