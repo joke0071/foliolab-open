@@ -132,3 +132,6 @@
  .alloc-legend-row .legend-left{flex-direction:row}
 }
 @media(prefers-reduced-motion:reduce){.allocation-segment{transition:none}}
+
+/* Refresh errors live below the toolbar instead of covering portfolio rows. */
+#priceInfo.refresh-warning{color:#925d43;background:#fff5ec;border:1px solid #efdfce;border-radius:10px;padding:10px 13px;margin:0 0 17px;overflow-wrap:anywhere;line-height:1.6}

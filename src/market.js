@@ -136,6 +136,18 @@ export const PUBLIC_EVM_NETWORKS = {
   56: {name:'BNB Smart Chain', host:'https://bscscan.com', symbol:'BNB', coinId:'binancecoin', explorer:false}
 };
 const isEvmAddress=a=>/^0x[0-9a-fA-F]{40}$/.test(a);
+/** Official Avalanche C-Chain fallback; invalid RPC data must never turn into zero. */
+export async function avalancheNativeBalanceExact(address,fetcher=globalThis.fetch){
+ if(!isEvmAddress(address))throw Error('Ungültige öffentliche Avalanche-Adresse.');
+ const payload={jsonrpc:'2.0',id:1,method:'eth_getBalance',params:[address,'latest']};
+ const response=await json('https://api.avax.network/ext/bc/C/rpc',{
+  method:'POST',headers:{'content-type':'application/json'},
+  body:JSON.stringify(payload),ttlMs:TTL.wallet
+ },fetcher);
+ if(response?.error)throw Error('Avalanche-RPC: '+String(response.error.message||'Blockchain-Abfrage fehlgeschlagen.'));
+ if(!/^0x[0-9a-f]+$/i.test(String(response?.result??'')))throw Error('Avalanche-RPC: Unvollständiger Saldo. Bestehender Bestand bleibt erhalten.');
+ return atomicDecimal(BigInt(response.result).toString(),18);
+}
 const solanaPrograms=['TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA','TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb'];
 const rpcCall=async (rpc, method, params, fetcher)=>{
   const url=new URL(rpc);
@@ -206,9 +218,17 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   if(!chain?.explorer && chain?.explorer!==undefined)throw Error('Für dieses Netzwerk steht aktuell kein öffentlicher Explorer-Import zur Verfügung.');
   if(!chain||!isEvmAddress(a))throw Error('Bitte ein unterstütztes EVM-Netzwerk und eine gültige öffentliche 0x-Adresse wählen.');
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(a);
-  const info=await json(base,{ttlMs:TTL.wallet},fetcher);
+  let info=null,explorerIssue=null;
+  try{info=await json(base,{ttlMs:TTL.wallet},fetcher);}catch(error){explorerIssue=error;}
+  if(explorerIssue&&chainId!==43114)throw explorerIssue;
   let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
-  const assets=[];const nativeExact=atomicDecimal(info.coin_balance,18),native=Number(nativeExact);
+  const assets=[];let nativeExact;
+  try{nativeExact=atomicDecimal(info?.coin_balance,18);}
+  catch(error){
+    if(chainId!==43114)throw error;
+    nativeExact=await avalancheNativeBalanceExact(a,fetcher);
+  }
+  const native=Number(nativeExact);
   if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,quantityExact:nativeExact,chain:'evm',chainId,decimals:18});
   let tokenIssues=0;
   for(const row of raw.slice(0,500)){
@@ -273,7 +293,13 @@ export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.f
    return atomicDecimal(await etherscan(query,settings.etherscanKey,fetcher),wallet.chain==='erc20'?Number(wallet.decimals):18);
   }
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(wallet.address);
-  if(wallet.chain==='evm'){const d=await json(base,{ttlMs:TTL.wallet},fetcher);return atomicDecimal(d.coin_balance,18);}
+  if(wallet.chain==='evm'){
+   try{const d=await json(base,{ttlMs:TTL.wallet},fetcher);return atomicDecimal(d?.coin_balance,18);}
+   catch(error){
+    if(Number(wallet.chainId||1)!==43114)throw error;
+    return avalancheNativeBalanceExact(wallet.address,fetcher);
+   }
+  }
   const list=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);
   if(!Array.isArray(list))throw Error('EVM-Tokenliste unvollständig.');
   if(list.length>=500)throw Error('EVM-Tokenliste möglicherweise abgeschnitten.');
