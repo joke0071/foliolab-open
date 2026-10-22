@@ -25,7 +25,7 @@ try{
  assert.match(await row.innerText(),/Öffentliches Diagramm laden/);
  await row.locator('[data-action="load-tradingview"]').click();
  const source=await row.locator('.tradingview-slot script').getAttribute('src');
- assert.equal(source,'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js');
+ assert.equal(source,'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js');
  assert.match(await row.locator('.tradingview-slot script').textContent(),/XETR:VWCE/);
  assert.equal(await row.locator('.tradingview-slot a').getAttribute('rel'),'noopener noreferrer');
  await page.locator('#mobileNav [data-page="more"]').click();
