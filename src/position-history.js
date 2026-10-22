@@ -59,6 +59,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   if(String(meta.currency||'').trim().toUpperCase()!==capability.currency)throw Error('Währung der historischen Kurse stimmt nicht überein.');
   if(capability.exchange&&String(meta.exchange||'').trim().toUpperCase()!==capability.exchange.toUpperCase())throw Error('Handelsplatz der historischen Kurse nicht bestätigt.');
   if(capability.mic&&String(meta.mic_code||meta.mic||'').trim().toUpperCase()!==capability.mic)throw Error('Börsen-MIC der historischen Kurse nicht bestätigt.');
+  if(p.isin&&meta.isin&&String(meta.isin).trim().toUpperCase()!==String(p.isin).trim().toUpperCase())throw Error('ISIN der historischen Kurse weicht von der Position ab.');
   if(!Array.isArray(data.values)||data.values.length<2)throw Error('Keine historischen Schlusskurse geliefert.');
   rows=data.values.map(v=>({timestamp:Date.parse(String(v.datetime)+'T12:00:00Z'),price:Number(v.close)}));
   source='Twelve Data · bestätigter Handelsplatz';currency=capability.currency;
