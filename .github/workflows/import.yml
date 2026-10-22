@@ -46,6 +46,7 @@ jobs:
           node tests/browser-avalanche-valuation.mjs
           node tests/browser-ledger-xpub.mjs
           node tests/browser-position-drilldown.mjs
+          node tests/browser-historical-csv.mjs
           node tests/live-probes.mjs
   deploy:
     if: github.event_name != 'pull_request'

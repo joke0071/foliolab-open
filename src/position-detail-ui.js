@@ -1,5 +1,6 @@
 import {POSITION_PERIODS,marketHistoryCapability,recordedPositionHistory,fetchPositionMarketHistory} from './position-history.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+import {importedHistoryForPeriod} from './historical-csv.js';
 
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
 export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
@@ -17,10 +18,14 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
    '<div class="position-share"><div class="position-share-label"><span>Anteil am Konto</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
    '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
+ const imported=model.priceHistories?.[p.id];
+ const csvTool=['etf','stock','fund'].includes(p.kind)?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
+  (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'" aria-label="Importierten Kursverlauf entfernen">Entfernen</button>':'')+
+  '</div><p class="position-csv-help">Ohne API-Schlüssel · lokal gespeichert. Benötigt Datum und Schlusskurs in der Handelswährung dieser Position.</p>':'';
  const controls='<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
    POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
+   csvTool+controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
@@ -34,7 +39,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
   const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel})+'</div>'+
-   '<p class="position-detail-note">'+esc(kind==='market'?source+' · Marktpreis, nicht deine persönliche Rendite.':'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
+   '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
   attachChartInteractions(target);
  };
  const fallback=(message)=>{
@@ -47,8 +52,10 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    ' Neue Stichtage erfassen künftig Einzelpositionswerte.';
   target.append(p);
  };
+ const imported=importedHistoryForPeriod(model,position,days);
+ if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
  const capability=marketHistoryCapability(position,model.settings);
- if(!capability){fallback(position.kind==='cash'?'Für Guthaben gibt es keinen Börsenkurs.':'Keine bestätigte Kursquelle eingerichtet.');return;}
+ if(!capability){fallback(imported?'Für diesen Zeitraum liegen weniger als zwei CSV-Kurstage vor. Bitte längeren Zeitraum wählen.':position.kind==='cash'?'Für Guthaben gibt es keinen Börsenkurs.':'Keine bestätigte Kursquelle eingerichtet.');return;}
  try{
   const history=await fetchPositionMarketHistory(position,model.settings,days,fetcher);
   render(history.points,history.kind,history.currency,history.source);
