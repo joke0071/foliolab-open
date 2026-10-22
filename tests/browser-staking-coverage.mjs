@@ -9,7 +9,7 @@ try{
  await page.locator('#addWallet').click();
  const options=await page.locator('#scanAsset option').count();
  assert.equal(options,51,'50 reference assets plus optional empty selection');
- await page.locator('#scanAsset').selectOption({label:/^Cosmos \(ATOM\)/.source}); // fallback checked below
+ await page.locator('#scanAsset').selectOption('11');
  assert.equal(await page.locator('#scanNetwork').inputValue(),'cosmos');
  assert.match(await page.locator('#scanAssetInfo').innerText(),/Unbonding/);
  await page.locator('#scanAsset').selectOption('13'); // Sui — old public JSON-RPC is deprecated
