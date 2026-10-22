@@ -31,7 +31,7 @@ export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel) {
   ).join('');
 }
 
-export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new Set()) {
+export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new Set(),expandedPositions=new Set()) {
   if(!model.providers.length) return '<div class="empty">Lege unter „Mehr“ deinen ersten Anbieter an.</div>';
   const positionsByAccount=new Map();
   for(const position of model.positions){
@@ -45,9 +45,13 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
     const rows=accounts.map(account=>{
       const positions=positionsByAccount.get(account.id)||[];
       const sum=positions.reduce((n,p)=>n+valueEUR(p),0);
-      const holdings=positions.map(p=>
-        '<div class="provider-holding"><span>'+esc(p.name)+'</span><span>'+esc(money(valueEUR(p)))+'</span></div>'
-      ).join('');
+      const holdings=positions.map(p=>{
+        const id=esc(p.id),opened=expandedPositions.has(p.id);
+        return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
+          '<summary class="provider-holding" aria-label="'+esc(p.name)+': Details '+(opened?'einklappen':'aufklappen')+'"><span class="provider-holding-name">'+esc(p.name)+'</span>'+
+          '<span class="provider-holding-right"><strong>'+esc(money(valueEUR(p)))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
+          '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
+      }).join('');
       return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small></div><strong>'+esc(money(sum))+'</strong></div>'+
         (holdings?'<div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
     }).join('');
