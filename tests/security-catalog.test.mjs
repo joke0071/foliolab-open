@@ -51,3 +51,21 @@ test('Source timestamp triggers explicit refresh after 30d without network traff
  assert.equal(directoryAge(catalog,Date.parse('2026-09-05T00:00:00Z')).stale,true);
  assert.equal(directoryAge(catalog,Date.parse('2026-08-03T00:00:00Z')).stale,false);
 });
+
+
+test('Realistic public Xetra T7 headers keep settlement currency distinct from quote currency',()=>{
+ const realLike=[
+  'Market: XETR',
+  'Date Last Update: 22.10.2026',
+  'Instrument;ISIN;Mnemonic;MIC Code;Primary Market MIC Code;Settlement Currency;Instrument Type',
+  'Vanguard FTSE All-World UCITS ETF;IE00BK5BQT80;VWCE;XETR;XETR;EUR;ETF',
+  'Example US share;US1234567890;EXM;XETR;XNAS;USD;Shares'
+ ].join('\n');
+ const cat=parseSecurityDirectory(realLike,{filename:'t7-xetr-allTradableInstruments.csv'});
+ assert.equal(cat.entries.length,2);
+ assert.equal(cat.entries[0].mic,'XETR');
+ assert.equal(cat.entries[0].settlementCurrency,'EUR');
+ assert.equal(cat.entries[0].currency,'','Settlement currency alone must not be assumed to be the trading quote currency');
+ assert.equal(cat.entries[1].settlementCurrency,'USD');
+ assert.equal(cat.entries[1].currency,'');
+});
