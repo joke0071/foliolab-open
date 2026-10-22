@@ -1,0 +1,33 @@
+name: Public wallet live audit (informational)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/*wallet*'
+      - 'src/*staking*'
+      - 'src/market.js'
+      - 'src/solana-rpc.js'
+      - 'src/bnb-token-scanner.js'
+      - 'tests/browser-wallet-live-audit.mjs'
+      - '.github/workflows/wallet-live-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  real-browser-connectivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium --only-shell
+      - name: Probe published APIs from browser origin
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-wallet-live-audit.mjs
