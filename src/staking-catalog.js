@@ -11,7 +11,7 @@ const data=[
  // name | ticker | network | kind | mode | selector | concise limitation
  ['Ethereum','ETH','Ethereum','Native PoS','partial','1','ETH und ERC-20/Liquid-Staking-Tokens; Validatorguthaben auf der Beacon Chain nicht aus EVM-Adresse ableitbar'],
  ['Solana','SOL','Solana','Native PoS','partial','sol','SOL, SPL und eigene Stake-Accounts; RPC muss getProgramAccounts unterstützen'],
- ['BNB','BNB','BNB Smart Chain','Native PoS','partial','56','Nur freie BNB. Staking-Delegationen und Contracts werden nicht vollständig ausgelesen'],
+ ['BNB','BNB','BNB Smart Chain','Native PoS','partial','56','BNB und BEP-20-Tokens; Staking-Delegationen und DeFi-Vaults nicht vollständig'],
  ['TRON','TRX','TRON','Native DPoS','manual','','Staking 2.0/Votes benötigen einen gesonderten TRON-Adapter'],
  ['Cardano','ADA','Cardano','Ouroboros PoS','manual','','Stake-Key und Kontoadressen; erfordert einen nativen Cardano-Indexer'],
  ['Avalanche','AVAX','Avalanche P-/C-Chain','Native PoS + Liquid Staking','partial','43114','C-Chain inklusive BENQI sAVAX; natives Validator-/Delegator-Staking auf P-Chain nicht abgedeckt'],
@@ -58,7 +58,7 @@ const data=[
  ['Akash Network','AKT','Akash','Native PoS','manual','','Eigenes Cosmos-LCD/Denom nötig'],
  ['Render','RNDR / RENDER','Solana / Ethereum','Netzwerk-/Tokenmigration','partial','sol','RENDER SPL mint nur nach Verifikation; RNDR ERC-20 ist ein anderes Token'],
  ['Band Protocol','BAND','BandChain','Native PoS','manual','','Eigenes Cosmos-LCD/Denom nötig'],
- ['Trust Wallet Token','TWT','BNB Smart Chain','DeFi-Token (Staking optional)','partial','56','Freie BNB scanbar; TWT-BEP-20/DeFi ohne verifizierte Token-Inventarisierung']
+ ['Trust Wallet Token','TWT','BNB Smart Chain','DeFi-Token (Staking optional)','partial','56','BNB und BEP-20-Token-Bestände; TWT-Staking oder Vaults gesondert']
 ];
 export const STAKING_ASSETS=Object.freeze(data.map(([name,ticker,network,kind,mode,scannerNetwork,note],i)=>Object.freeze({id:i+1,name,ticker,network,kind,mode,scannerNetwork,note})));
 export const STAKING_MODES=Object.freeze({
