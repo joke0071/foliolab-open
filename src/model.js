@@ -44,11 +44,14 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(chain==='btc'&&!(/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(address)))throw Error(error);
   if((chain==='evm'||chain==='erc20')&&!/^0x[a-fA-F0-9]{40}$/.test(address))throw Error(error);
   if(chain==='erc20'&&!/^0x[a-fA-F0-9]{40}$/.test(contract))throw Error('Bitte eine ERC-20-Contract-Adresse angeben.');
-  if((chain==='sol'||chain==='spl')&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);if(['xrp','xrp-token'].includes(chain)&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(address))throw Error(error);
+  if(['sol','spl','sol-stake'].includes(chain)&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address))throw Error(error);
+  if(chain==='sonic-stake'&&!/^0x[0-9a-fA-F]{40}$/.test(address))throw Error(error);if(['xrp','xrp-token'].includes(chain)&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(address))throw Error(error);
   if(chain==='xrp-token'&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}:(?:[A-Z0-9]{3}|[A-Fa-f0-9]{40})$/.test(contract))throw Error('Ungültiger XRP-Token-Identifier.');
   if(chain==='spl'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Bitte eine SPL-Mint-Adresse angeben.');
-  if(!['btc','btc-hd','evm','erc20','sol','spl','xrp','xrp-token'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
-  const decimals=(chain==='erc20'||chain==='spl'||chain==='xrp-token')?safeNumber(wallet.decimals??18,0,30):['btc','btc-hd'].includes(chain)?8:chain==='sol'?9:chain==='xrp'?6:18;
+  if(chain==='sol-stake'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Ungültige Solana-Stake-Adresse.');
+  if(chain==='sonic-stake'&&!/^[1-9]\d{0,5}$/.test(contract))throw Error('Ungültige Sonic-Validator-ID.');
+  if(!['btc','btc-hd','evm','erc20','sol','spl','sol-stake','sonic-stake','xrp','xrp-token'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
+  const decimals=(chain==='erc20'||chain==='spl'||chain==='xrp-token')?safeNumber(wallet.decimals??18,0,30):['btc','btc-hd'].includes(chain)?8:['sol','sol-stake'].includes(chain)?9:chain==='xrp'?6:18;
   const chainId=['evm','erc20'].includes(chain)?safeNumber(wallet.chainId??1,1,1e9):undefined;
   const addressType=chain==='btc-hd'?cleanString(wallet.addressType||'auto',25):undefined;
   if(chain==='btc-hd'&&!['auto','p2wpkh','p2sh-p2wpkh','p2pkh'].includes(addressType))throw Error('Unbekannter Bitcoin-HD-Adresstyp.');

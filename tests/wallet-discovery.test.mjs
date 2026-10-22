@@ -33,7 +33,7 @@ test('Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert'
   };
   const results=await discoverWallet('sol',SOL,{},mock);
   assert.equal(results.length,2);assert.equal(results[0].quantity,3.2);assert.equal(results[1].quantity,5);
-  assert.equal(methods.length,3);
+  assert.equal(methods.length,4); // SOL + Token/SPL-2022 + separate Stake-Account-Suche
 });
 test('Wallet-Abfrage für EVM-Token ohne Etherscan Key',async()=>{
   const mock=async url=>reply(url.endsWith('/token-balances')?[{value:'125000000',token:{type:'ERC-20',address_hash:C,decimals:'6'}}]:{});
@@ -119,9 +119,12 @@ test('Avalanche RPC failures must not produce artificial zero balances',async()=
  }
 });
 test('Avalanche discovery recovers native balance from public RPC',async()=>{
- const mock=async url=>{
+ const mock=async (url,opts={})=>{
   if(url.endsWith('/token-balances'))return reply([]);
-  if(url.includes('api.avax.network'))return reply({result:'0xde0b6b3a7640000'});
+  if(url.includes('api.avax.network')){
+   const method=JSON.parse(opts.body).method;
+   return reply({result:method==='eth_call'?'0x0':'0xde0b6b3a7640000'});
+  }
   return reply({coin_balance:null});
  };
  const result=await discoverWallet('43114',A,{},mock);
