@@ -44,7 +44,7 @@ test('Historical position values remain valid after a position was removed',()=>
 test('Malformed byPosition record rejected with no side effects',()=>{
  const {m,add}=fixture(),p=add({});snapshot(m,today);
  for(const v of [['bad','wrong-number'],['__proto__','1']]){
-  const input=JSON.parse(backup(m));input.snapshots.at(-1).byPosition[v[0]]=v[1];
+  const input=JSON.parse(backup(m));Object.defineProperty(input.snapshots.at(-1).byPosition,v[0],{value:v[1],enumerable:true,configurable:true});
   assert.throws(()=>safeImport(input),/Ungültiger|Dezimal|Zahl/);
  }
  const input=JSON.parse(backup(m));input.snapshots.at(-1).source='manual';
@@ -90,5 +90,5 @@ test('Twelve Data time-series checks symbol currency and exchange before display
 test('Range and data quality filters reject invalid periods',async()=>{
  const {add}=fixture(),p=add({});
  assert.throws(()=>recordedPositionHistory({snapshots:[]},p.id,366),/Zeitraum/);
- await assert.rejects(()=>fetchPositionMarketHistory(p,{},0),/Zeitraum/);
+ await assert.rejects(()=>fetchPositionMarketHistory(p,{},0),/Kurszeitraum/);
 });
