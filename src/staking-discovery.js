@@ -26,9 +26,9 @@ async function rpc(url,method,params,fetcher){
 async function evmCall(url,to,data,fetcher){
  return rpc(url,'eth_call',[{to,data},'latest'],fetcher);
 }
-export async function evmTokenBalanceExact(rpcUrl,contract,address,fetcher=globalThis.fetch){
+export async function evmTokenBalanceExact(rpcUrl,contract,address,fetcher=globalThis.fetch,decimals=18){
  if(!EVM_RE.test(contract)||!EVM_RE.test(address))throw Error('Ungültige öffentliche EVM-Adresse.');
- return quantityFromHex(await evmCall(rpcUrl,contract,'0x70a08231'+addressWord(address),fetcher),18);
+ return quantityFromHex(await evmCall(rpcUrl,contract,'0x70a08231'+addressWord(address),fetcher),decimals);
 }
 export async function sonicNativeBalanceExact(address,fetcher=globalThis.fetch){
  if(!EVM_RE.test(address))throw Error('Ungültige Sonic-Adresse.');
@@ -40,10 +40,10 @@ export async function sonicStakeBalanceExact(address,validatorId,fetcher=globalT
  return quantityFromHex(await evmCall(SONIC_RPC,SONIC_SFC,data,fetcher),18);
 }
 const sonicTokens=[
- {contract:STS_CONTRACT,name:'Beets Staked Sonic',symbol:'stS'},
- {contract:'0x039e2fb66102314ce7b64ce5ce3e5183bc94ad38',name:'Wrapped Sonic',symbol:'wS'},
- {contract:'0x29219dd400f2bf60e5a23d13be72b486d4038894',name:'USDC',symbol:'USDC'},
- {contract:'0x6047828dc181963ba44974801ff68e538da5eaf9',name:'Bridged USDT',symbol:'USDT'}
+ {contract:STS_CONTRACT,name:'Beets Staked Sonic',symbol:'stS',decimals:18},
+ {contract:'0x039e2fb66102314ce7b64ce5ce3e5183bc94ad38',name:'Wrapped Sonic',symbol:'wS',decimals:18},
+ {contract:'0x29219dd400f2bf60e5a23d13be72b486d4038894',name:'USDC',symbol:'USDC',decimals:6},
+ {contract:'0x6047828dc181963ba44974801ff68e538da5eaf9',name:'Bridged USDT',symbol:'USDT',decimals:6}
 ];
 /** Public key only; native S, known ERC20 and direct SFC delegations. No signing. */
 export async function discoverSonicWallet(address,fetcher=globalThis.fetch){
@@ -52,12 +52,12 @@ export async function discoverSonicWallet(address,fetcher=globalThis.fetch){
  const assets=[];
  if(Number(balance)>0)assets.push({name:'Sonic',symbol:'S',coinId:'sonic-3',quantity:Number(balance),quantityExact:balance,chain:'evm',chainId:146,decimals:18});
  const problems=[];
- const tokenResults=await Promise.allSettled(sonicTokens.map(async token=>({...token,quantityExact:await evmTokenBalanceExact(SONIC_RPC,token.contract,address,fetcher)})));
+ const tokenResults=await Promise.allSettled(sonicTokens.map(async token=>({...token,quantityExact:await evmTokenBalanceExact(SONIC_RPC,token.contract,address,fetcher,token.decimals)})));
  for(let i=0;i<tokenResults.length;i++){
   const result=tokenResults[i];
   if(result.status!=='fulfilled'){problems.push(sonicTokens[i].symbol+'-Contract nicht lesbar');continue;}
   const token=result.value;
-  if(Number(token.quantityExact)>0)assets.push({name:token.name,symbol:token.symbol,coinId:'',quantity:Number(token.quantityExact),quantityExact:token.quantityExact,chain:'erc20',chainId:146,contract:token.contract,decimals:18});
+  if(Number(token.quantityExact)>0)assets.push({name:token.name,symbol:token.symbol,coinId:'',quantity:Number(token.quantityExact),quantityExact:token.quantityExact,chain:'erc20',chainId:146,contract:token.contract,decimals:token.decimals});
  }
  try{
   const latest=BigInt(await evmCall(SONIC_RPC,SONIC_SFC,'0xc7be95de',fetcher)); // lastValidatorID()
