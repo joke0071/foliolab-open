@@ -238,7 +238,7 @@ function openAccount(a,defaultProviderId){
   const next=createAccount({...v,id:a?.id},model);
   const opening=a?null:openingCashInput({amount:v.initialBalance,currency:next.currency,fxRate:v.openingFxRate});
   const openingDate=String(v.initialBalanceDate||'').trim();
-  if(opening&&(!/^\\d{4}-\\d{2}-\\d{2}$/.test(openingDate)||Number.isNaN(Date.parse(openingDate))||new Date(openingDate+'T12:00:00Z').toISOString().slice(0,10)!==openingDate||openingDate>new Date().toISOString().slice(0,10)))throw Error('Bitte ein gültiges Anfangsbestandsdatum bis heute angeben.');
+  if(opening&&(!/^\d{4}-\d{2}-\d{2}$/.test(openingDate)||Number.isNaN(Date.parse(openingDate))||new Date(openingDate+'T12:00:00Z').toISOString().slice(0,10)!==openingDate||openingDate>new Date().toISOString().slice(0,10)))throw Error('Bitte ein gültiges Anfangsbestandsdatum bis heute angeben.');
   const firstPosition=opening?createPosition({...opening,notes:'Anfangsbestand zum '+openingDate,providerId:next.providerId,accountId:next.id},{...model,accounts:[...model.accounts,next]}):null;
   if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
   if(firstPosition)model.positions.push(firstPosition);
