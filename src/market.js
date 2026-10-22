@@ -250,7 +250,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     try{quantityExact=atomicDecimal(row.value,decimals);}catch{tokenIssues++;continue;}
     if(units(quantityExact)<=0n)continue;
     const symbol=String(token.symbol||'Token').slice(0,32);
-    assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:Number(quantityExact),quantityExact,chain:'erc20',chainId,contract,decimals});
+    assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:Number(quantityExact),quantityExact,chain:'erc20',chainId,contract,decimals,reputation:String(token.reputation||'')});
   }
   if(tokenFailure&& !assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);
   if(tokenFailure||raw.length>=500||tokenIssues){
