@@ -38,7 +38,7 @@ try{
   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(data)});
  });
  await page.locator('#refreshAll').click();
- await page.waitForFunction(()=>document.querySelector('#priceInfo').textContent.includes('Datenupdates'),{timeout:70000});
+ await page.waitForFunction(()=>document.querySelector('#priceInfo').textContent.includes('Datenupdates'),null,{timeout:70000});
  const position=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).positions[0]);
  assert.equal(position.quantityExact,'0.12620376');
  assert.equal(position.wallet.addressType,'p2wpkh');
