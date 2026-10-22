@@ -1,6 +1,5 @@
 import {escapeHTML,defaultSettings} from './model.js';
 import {cryptoChoices,loadTopCrypto,loadAllCrypto,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog} from './instrument-catalog.js';
-import {referenceSearch} from './reference-listings.js';
 import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
 const e=escapeHTML;
@@ -47,7 +46,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    (list.length?'<div class="wizard-matches">'+list.map((x,i)=>'<button type="button" data-wizard-pick="'+i+'" class="result-item"><span><strong>'+e(x.name)+'</strong><small>'+
     e([x.kind==='crypto'?'Krypto':x.kind==='stock'?'Aktie':x.kind==='fund'?'Fonds':x.kind==='other'?'Sonstiges':'ETF',x.isin,x.symbol,x.kind==='crypto'?x.id:''].filter(Boolean).join(' · '))+
     '</small></span><small>'+e([x.rank?'#'+x.rank:'',x.exchange,x.mic,x.currency,x.source].filter(Boolean).join(' · '))+'</small></button>').join('')+'</div>':
-    '<p class="small-help">Keine Treffer in den verfügbaren Katalogen. Manuelle Eingabe bleibt möglich.</p>');
+    '<p class="small-help">'+(state.kind!=='crypto'&&!directories.length&&!funds?'Noch kein lokaler Wertpapierkatalog importiert. Öffne „Wertpapierkatalog importieren (CSV/TXT)“, oder nutze die externe Suche bzw. die manuelle Eingabe.':'Keine passenden Einträge in deinen importierten Katalogen. Du kannst extern suchen oder die Anlage manuell erfassen.')+'</p>');
  };
  const updateResults=()=>{
   const q=state.query.trim();
@@ -57,19 +56,21 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     'CoinGecko · Top '+leaders.length+(allCoins.length?' + '+allCoins.length+' weitere Coin-IDs':' · vollständiger Katalog wird bei Suche geladen')):
     (cryptoLoading?'CoinGecko Top 100 werden abgerufen …':'Offline-Auswahl · vollständige Liste vorübergehend nicht verfügbar');
   }else if(q.length>=2){
-   const locals=referenceSearch(q).filter(x=>x.kind===state.kind);
+   // Only explicitly imported catalogs are searchable: never mix in the
+   // former four hard-coded ETF suggestions.
    const matching=searchFundCatalog(q,state.kind,funds,100),securities=searchSecurityDirectories(q,state.kind,directories,100);
    const identified=new Set(),unique=[];
-   for(const item of [...locals,...securities.results,...matching.results]){
+   for(const item of [...securities.results,...matching.results]){
     const key=[item.isin||item.symbol,item.symbol,item.mic,item.currency].join('|');
     if(identified.has(key))continue;
     identified.add(key);unique.push(item);
    }
    state.results=unique.slice(0,100);
-   state.status=(directories.length?'Wertpapier-Verzeichnisse: '+securities.total+' Treffer · ':'')+
-    (funds?'Fonds-CSV: '+matching.total+' Treffer · ':'')+
-    'Referenznotierungen: '+locals.length+
-    (unique.length>100?' · erste 100 Treffer – genauer suchen':'');
+   const sources=[];
+   if(directories.length)sources.push('Wertpapier-CSV/TXT: '+securities.total+' Treffer');
+   if(funds)sources.push('Fonds-CSV: '+matching.total+' Treffer');
+   state.status=(sources.length?sources.join(' · '):'Kein lokaler Wertpapierkatalog importiert')+
+    (securities.total+matching.total>100?' · erste 100 Treffer – Suche präzisieren':'');
   }else{state.results=[];state.status='';}
   if($('wizardMatches'))$('wizardMatches').innerHTML=resultsMarkup();
  };
@@ -97,7 +98,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
    '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Externe Treffer suchen (optional)</button>'+
    (['etf','fund','stock','other'].includes(state.kind)?
-    '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog erweitern</summary><div class="wizard-catalog-content">'+
+    '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog importieren (CSV/TXT)</summary><div class="wizard-catalog-content">'+
     '<p>Zusätzliche Wertpapiere aus offiziellen Dateien lokal ergänzen. Auf der Xetra-Seite „T7 (Xetra) Alle handelbaren Instrumente“ als CSV wählen.</p>'+
     '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra-Downloadseite ↗</a>'+
     '<div class="wizard-source-inline"><a href="https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt" target="_blank" rel="noopener noreferrer">Nasdaq-Werte (.txt) ↗</a><a href="https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt" target="_blank" rel="noopener noreferrer">Weitere US-Börsen (.txt) ↗</a></div>'+

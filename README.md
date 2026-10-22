@@ -240,7 +240,7 @@ node tests/browser-position-search.mjs
 
 Unter **Positionen → Anlage hinzufügen** führt die Anwendung durch drei Schritte:
 
-1. **Anlage finden:** Anlageklasse wählen, nach Name/ISIN/Ticker/Coin suchen oder vollständig manuell erfassen. Nur ausdrücklich ausgewählte Metadaten übernehmen. Lokale Referenznotierungen können ohne API-Key genutzt werden. Börsenkurse werden daraus nicht abgeleitet.
+1. **Anlage finden:** Anlageklasse wählen, nach Name/ISIN/Ticker/Coin suchen oder vollständig manuell erfassen. Nur ausdrücklich ausgewählte Metadaten übernehmen. Lokal importierte CSV/TXT-Kataloge lassen sich ohne API-Key durchsuchen. Börsenkurse werden daraus nicht abgeleitet.
 2. **Depot wählen:** Anbieter und Konto gezielt auswählen oder innerhalb des Assistenten neu anlegen. Namen und Typen sind frei editierbar. Bis zum finalen Speichern bleibt die Neuanlage vorläufig.
 3. **Bestand erfassen:** „Aktueller Bestand“ erzeugt einen Anfangsbestand ohne erfundenen Kauf oder Cashflow. „Kauf erfassen“ nutzt das bestehende Transaktionsjournal, enthält den tatsächlichen Ausführungskurs und optional Gebühren. Ein Ausführungskurs ist **nicht automatisch ein aktueller Marktpreis**; ohne unabhängigen aktuellen Kurs wird die Bewertung als unvollständig dargestellt.
 
@@ -293,7 +293,7 @@ Die [OeKB-Fondsabfrage](https://my.oekb.at/kapitalmarkt-services/kms-output/fond
 ### Datenquellen
 - **OeKB:** offizielle Fonds-Einzelabfrage zur steuerlichen Kontrolle; kein behaupteter Komplettdownload im Assistenten.
 - **CoinGecko:** öffentlicher Top-100- und vollständiger ID-Katalog ohne verpflichtende persönliche API-Schlüssel, abhängig von Netzwerk und Limits.
-- **Referenznotierungen:** bisheriges Offline-Minikatalogangebot plus lokal importierte Fonds; nicht als vollständige Börsenkursdatenbank ausgeben.
+- **Wertpapier-Suche:** nur ausdrücklich importierte Wertpapierverzeichnisse und Fondsdaten sowie bewusst angeforderte externe Suchergebnisse. Keine sichtbaren fest hinterlegten Beispiel-ETFs.
 - **OpenFIGI/weitere Provider:** bleiben wie zuvor optional, abhängig von vorhandenen Worker- oder Nutzerzugängen.
 
 Bei fehlendem Online-Katalog ist die manuelle Anlage weiterhin möglich. Der Service Worker speichert lediglich den statischen App-Code, niemals externe API-Antworten, personenbezogene Kontodaten oder aus dem OeKB-Portal gescrapte Daten.
@@ -301,7 +301,7 @@ Bei fehlendem Online-Katalog ist die manuelle Anlage weiterhin möglich. Der Ser
 
 ## Große Wertpapierverzeichnisse – lokale Imports (v1.3.0)
 
-Die bisher vier Offline-ETF-Referenzen sind nur der Startkatalog. Für umfangreiche Suchtreffer gibt es jetzt unter **Positionen → Anlage hinzufügen → ETF/Aktie/Fonds/Sonstiges** den unaufdringlichen, standardmäßig zugeklappten Bereich **„Wertpapierkatalog erweitern“** unter den Suchergebnissen. Darin liegen der Link zur Xetra-Downloadseite und **„CSV/TXT auswählen“**. Unterstützte Eingaben:
+Die sichtbare Suche enthält **keine** fest hinterlegten ETF-Beispieltreffer. Erst nach Import einer CSV/TXT-Datei wird der lokale Wertpapierkatalog gefüllt. Interne Legacy-Zuordnungen für alte Backups bleiben erhalten. Für umfangreiche Suchtreffer gibt es jetzt unter **Positionen → Anlage hinzufügen → ETF/Aktie/Fonds/Sonstiges** den unaufdringlichen, standardmäßig zugeklappten Bereich **„Wertpapierkatalog importieren (CSV/TXT)“** unter den Suchergebnissen. Darin liegen der Link zur Xetra-Downloadseite und **„CSV/TXT auswählen“**. Unterstützte Eingaben:
 
 - **Deutsche Börse Xetra:** Offizielle Datei **T7 (Xetra) All tradable instruments** (CSV mit Zeilen \`Market: XETR\`, \`Date Last Update\`, Kopfzeile). Importiert ISIN, Instrumentbezeichnung, vorhandenes Börsenkürzel, Währung und nur eindeutig bezeichnete Instrumentklassen. Ausdrücklich im Dateiheader genannte MIC \`XETR\` wird übernommen. Bereits zur Löschung vorgemerkte und inaktive Werte bleiben außen vor. Die **Static Instrument Reference Data**-ZIP ist **nicht** die erwartete CSV und kann in diesem Dialog nicht gelesen werden.
 - **Nasdaq Trader:** \`nasdaqlisted.txt\`, \`otherlisted.txt\`, \`nasdaqtraded.txt\` soweit deren erwartete Spalten vorhanden sind; Symbol, Name, explizites ETF-Merkmal, Test-Issue und ggf. Börsencode. Unterschiedliche Dateien ergänzen sich. Ein NASDAQ-Kürzel ist **keine ISIN**; ohne Währungsfeld wird **keine USD-Währung geschätzt**.

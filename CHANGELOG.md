@@ -1,3 +1,11 @@
+## 1.3.3 — 2026-10-22
+
+- Entfernt alle vier fest hinterlegten Beispiel-ETFs aus der sichtbaren Anlage-Suche.
+- Treffer kommen aus ausdrücklich importierten CSV/TXT-Verzeichnissen oder bewusst ausgelöster externer Suche.
+- Bei noch leerem Katalog klare Importanleitung; die manuelle Eingabe bleibt möglich.
+- Interne verifizierte Alt-Backup-Zuordnung bleibt ohne sichtbare Vorauswahl erhalten.
+- Browser-Test für die leere ETF-Suche und Treffer nach Xetra-CSV-Import.
+
 ## 1.3.2 — 2026-10-22
 
 - Vollständige Originaldatenquellen erneut verifiziert und von unvollständigen Oberflächen-Exporten abgegrenzt.

@@ -6,6 +6,12 @@ try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#addWizard').click();
+ // Empty catalogs must not show four historical examples as suggestions.
+ await page.locator('#wizardQuery').fill('Wor');
+ assert.equal(await page.locator('#wizardMatches [data-wizard-pick]').count(),0);
+ assert.match(await page.locator('#wizardMatches').innerText(),/Noch kein lokaler Wertpapierkatalog importiert/);
+ assert.match(await page.locator('#wizardCatalogTools summary').innerText(),/CSV\/TXT/);
+ await page.locator('#wizardQuery').fill('');
  assert.equal(await page.locator('#wizardCatalogTools').getAttribute('open'),null);
  assert.equal(await page.locator('#wizardDirectoryImport').isVisible(),false);
  await page.locator('#wizardCatalogTools summary').click();
@@ -26,6 +32,10 @@ try{
  rows.push(record('Vanguard FTSE All-World UCITS ETF','IE00BK5BQT80','VWCE','ETF'));
  for(let i=0;i<6000;i++)rows.push(record('Example European Stock '+String(i).padStart(5,'0'),'DE'+String(1000000000+i),'ST'+i,'CS'));
  await page.locator('#wizardDirectoryFile').setInputFiles({name:'t7-xetr-allTradableInstruments.csv',mimeType:'text/csv',buffer:Buffer.from(rows.join('\n'))});
+ await page.waitForFunction(()=>document.querySelector('#wizardDirectoryStatus')?.textContent.includes('6'));
+ await page.locator('#wizardQuery').fill('Wor');
+ assert.equal(await page.locator('#wizardMatches [data-wizard-pick]').count(),1);
+ assert.match(await page.locator('#wizardMatches').innerText(),/Vanguard FTSE All-World/);
  await page.locator('#wizardQuery').fill('Example European Stock 01234');
  await page.locator('#wizardKind').selectOption('stock');
  await page.locator('#wizardQuery').fill('Example European Stock 01234');
