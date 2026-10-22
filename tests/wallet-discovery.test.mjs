@@ -27,6 +27,7 @@ test('Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert'
   const methods=[];
   const mock=async(_url,opts)=>{const req=JSON.parse(opts.body);methods.push(req.method+':'+(req.params[1]?.programId||''));
     if(req.method==='getBalance')return reply({result:{value:3200000000}});
+    if(req.method==='getProgramAccounts')return reply({result:[]});
     const mint='D'.repeat(44);
     const account={account:{data:{parsed:{info:{mint,tokenAmount:{amount:'2500000',uiAmountString:'2.5',decimals:6}}}}}};
     return reply({result:{value:[account]}});
