@@ -20,6 +20,7 @@ try{
  await page.locator('#providerOverview .provider-accordion > summary').click();
  const row=page.locator('#providerOverview [data-position-id="etf-test"]');
  await row.locator('summary').click();
+ await row.locator('[data-action="load-tradingview"]').waitFor();
  assert.equal(await row.locator('.tradingview-slot script').count(),0,'No third-party script loaded without user action');
  assert.match(await row.innerText(),/Öffentliches Diagramm laden/);
  await row.locator('[data-action="load-tradingview"]').click();
