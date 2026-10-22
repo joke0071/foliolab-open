@@ -504,7 +504,7 @@ async function scanWalletNow(){
     area.innerHTML=`<div class="wallet-scan-header"><strong>${displayed.length} Position${displayed.length===1?'':'en'} zur Auswahl</strong><span>${hidden.length?'Unbekannte Tokens ausgeblendet':'Zur Übernahme auswählen'}</span></div>`+
       displayed.map((a,i)=>renderRow(a,i,true)).join('')+
       (!displayed.length?empty('Keine automatisch vorgeschlagenen Positionen. Bei Bedarf ausgeblendete Tokens prüfen.'): '')+extra;
-    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Bestände abgerufen.')+
+    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.warning|| (assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Bestände abgerufen.'))+
       (hidden.length?' · '+hidden.length+' ungeprüfte oder auffällige Tokens ausgeblendet.':'');
   }catch(e){status.textContent='Scan nicht möglich: '+e.message;area.innerHTML=empty('Manuelles Hinzufügen ist weiterhin möglich. Öffentliche API-Zugriffe können zeitweise blockiert oder begrenzt sein.');}
   finally{button.disabled=false;}
