@@ -4,6 +4,9 @@ const page=await browser.newPage();
 try{
  await page.goto('http://127.0.0.1:4173/');
  const checks=[
+  {name:'CoinPaprika EUR ticker',url:'https://api.coinpaprika.com/v1/tickers/btc-bitcoin?quotes=EUR'},
+  {name:'CoinPaprika EUR history',url:'https://api.coinpaprika.com/v1/tickers/btc-bitcoin/historical?start=2026-10-01&interval=1d&quote=EUR'},
+  {name:'DefiLlama verified contract prices',url:'https://coins.llama.fi/prices/current/ethereum:0xae7ab96520de3a18e5e111b5eaab095312d7fe84'},
   {name:'CoinGecko market chart, keyless',url:'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=eur&days=365'},
   {name:'Frankfurter FX',url:'https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR'},
    {name:'Frankfurter historical FX',url:'https://api.frankfurter.dev/v1/2026-10-20?base=USD&symbols=EUR'},
