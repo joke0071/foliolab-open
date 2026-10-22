@@ -39,24 +39,44 @@ export async function coinPaprikaCurrentQuote(p,fetcher=globalThis.fetch){
 export async function coinPaprikaHistoricalQuote(p,fetcher=globalThis.fetch,now=Date.now()){
  const m=coinPaprikaMapping(p);
  if(!m)throw Error('Keine bestätigte CoinPaprika-ID.');
+ const start=new Date(now-360*864e5).toISOString().slice(0,10),end=new Date(now).toISOString().slice(0,10);
  const url=new URL('https://api.coinpaprika.com/v1/tickers/'+encodeURIComponent(m.id)+'/historical');
- url.searchParams.set('start',new Date(now-366*864e5).toISOString().slice(0,10));
- url.searchParams.set('end',new Date(now).toISOString().slice(0,10));
+ url.searchParams.set('start',start);
  url.searchParams.set('interval','1d');
- url.searchParams.set('quote','EUR');
+ // CoinPaprika's historical ticker defaults to USD. Some keyless requests
+ // reject quote=EUR as invalid. Convert USD to EUR using *historical* FX,
+ // never today's FX or an unverified claimed EUR price.
  const data=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
  if(!Array.isArray(data))throw Error('CoinPaprika-Historie fehlt oder ist im Tarif nicht freigeschaltet.');
- const values=new Map();
+ const usd=new Map();
  for(const row of data){
   const when=Date.parse(String(row?.timestamp||'')),v=Number(row?.price);
-  if(!Number.isFinite(when)||when>now+864e5||when<now-367*864e5||!validPositivePrice(v))continue;
+  if(!Number.isFinite(when)||when>now+864e5||when<now-361*864e5||!validPositivePrice(v))continue;
   const day=new Date(when).toISOString().slice(0,10);
-  if(values.has(day)&&values.get(day)!==v)throw Error('CoinPaprika hat widersprüchliche Tageskurse geliefert.');
-  values.set(day,v);
+  if(usd.has(day)&&usd.get(day)!==v)throw Error('CoinPaprika hat widersprüchliche Tageskurse geliefert.');
+  usd.set(day,v);
  }
- const points=[...values].sort(([a],[b])=>a.localeCompare(b)).map(([date,total])=>({date,total}));
- if(points.length<2)throw Error('Zu wenige bestätigte EUR-Kurstage von CoinPaprika.');
- return {kind:'market',currency:'EUR',source:'CoinPaprika',points};
+ if(usd.size<2)throw Error('Zu wenige bestätigte USD-Kurstage von CoinPaprika.');
+ const fxURL=new URL('https://api.frankfurter.dev/v1/'+start+'..'+end);
+ fxURL.searchParams.set('base','USD');fxURL.searchParams.set('symbols','EUR');
+ const fx=await requestJSON(fxURL.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
+ if(fx.base!=='USD'||!fx.rates||typeof fx.rates!=='object')throw Error('Historische USD/EUR-Referenzkurse fehlen.');
+ const fxRows=Object.entries(fx.rates).filter(([day,row])=>
+  /^\d{4}-\d{2}-\d{2}$/.test(day)&&day<=end&&day>=start&&Number(row?.EUR)>0&&Number.isFinite(Number(row?.EUR)))
+  .sort(([a],[b])=>a.localeCompare(b));
+ if(!fxRows.length)throw Error('Keine datierten USD/EUR-Referenzkurse vorhanden.');
+ const points=[];
+ for(const [day,price] of [...usd].sort(([a],[b])=>a.localeCompare(b))){
+  const previous=fxRows.filter(([d])=>d<=day).at(-1);
+  if(!previous)continue;
+  const lag=(Date.parse(day)-Date.parse(previous[0]))/864e5;
+  if(lag<0||lag>5)continue;
+  const converted=price*Number(previous[1].EUR);
+  if(!validPositivePrice(converted))continue;
+  points.push({date:day,total:converted});
+ }
+ if(points.length<2)throw Error('Unzureichende tagesgenaue USD/EUR-Umrechnung.');
+ return {kind:'market',currency:'EUR',source:'CoinPaprika · USD/EUR-Referenzkurs (Frankfurter)',points};
 }
 const DEFILLAMA_CHAINS=Object.freeze({1:'ethereum',10:'optimism',137:'polygon',42161:'arbitrum',43114:'avax',8453:'base'});
 export function defiLlamaContractKey(p){
