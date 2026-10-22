@@ -1,6 +1,7 @@
 import {POSITION_PERIODS,marketHistoryCapability,recordedPositionHistory,fetchPositionMarketHistory} from './position-history.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
+import {tradingViewIdentifier} from './security-sources.js';
 
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
 export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
@@ -22,10 +23,13 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const csvTool=['etf','stock','fund'].includes(p.kind)?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
   (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'" aria-label="Importierten Kursverlauf entfernen">Entfernen</button>':'')+
   '</div><p class="position-csv-help">Ohne API-Schlüssel · lokal gespeichert. Benötigt Datum und Schlusskurs in der Handelswährung dieser Position.</p>':'';
+ const tvSymbol=['etf','stock','fund'].includes(p.kind)?tradingViewIdentifier(p):null;
+ const publicChart=tvSymbol?'<div class="public-chart"><p class="position-csv-help">Öffentliches Börsendiagramm von TradingView · erscheint erst nach Klick. Dabei wird eine Verbindung zu TradingView aufgebaut; die dort angezeigten Kurse werden nicht zur Portfoliobewertung übernommen.</p><button type="button" class="position-csv-import" data-action="load-tradingview" data-id="'+esc(p.id)+'">Öffentliches Diagramm laden</button><div data-tv-slot="'+esc(p.id)+'" class="tradingview-slot"></div></div>':
+  ['etf','stock','fund'].includes(p.kind)?'<p class="position-csv-help">Für den öffentlichen TradingView-Chart bitte in der Position einen bestätigten Handelsplatz (z. B. Xetra) oder ein TradingView-Börsenkürzel hinterlegen.</p>':'';
  const controls='<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
    POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   csvTool+controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
+   csvTool+publicChart+controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
