@@ -67,9 +67,12 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
  if(source!=='auto'&&!knownSources.includes(source))throw Error('Unbekannte Verzeichnisquelle.');
  const raw=input.replace(/^\uFEFF/,'');
  const lines=rowsFrom(input);
- let headerRow=0,sourceFromFile=source;
+ let headerRow=0,sourceFromFile=source,declaredMarket='',sourceAsOf=null;
  if(/^Market:\s*(XETR|XFRA)/i.test(lines[0]?.[0]||'')){
-  const market=upper(lines[0][0].split(':')[1]);
+  const market=upper(lines[0][0].split(':')[1]);declaredMarket=market;
+  const preamble=lines.slice(0,3).find(row=>/^Date Last Update:/i.test(row?.[0]||''));
+  const foundDate=preamble?.[0]?.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
+  if(foundDate)sourceAsOf=foundDate[3]+'-'+foundDate[2].padStart(2,'0')+'-'+foundDate[1].padStart(2,'0');
   if(source!=='auto'&&source!=='xetra'&&source!=='custom')throw Error('Datei und gewählte Quelle widersprechen sich.');
   sourceFromFile='xetra';headerRow=lines.findIndex((row,i)=>i<=5&&row.some(v=>h(v)==='isin')&&row.some(v=>h(v)==='instrument'));
   if(headerRow<0)throw Error('Xetra-Datei ohne ISIN/Instrument-Kopfzeile.');
@@ -110,7 +113,7 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   const originalISIN=upper(value(isinIdx)),code=isin(originalISIN)?originalISIN:'';
   const currency=upper(value(ccyIdx)),rawMic=upper(value(micIdx));
   const sourceExchange=upper(value(exchangeIdx));
-  const codeMIC=mic(rawMic)?rawMic:sourceFromFile==='nasdaq'?nasdaqMIC[sourceExchange]||'':'';
+  const codeMIC=mic(rawMic)?rawMic:sourceFromFile==='nasdaq'?nasdaqMIC[sourceExchange]||'':sourceFromFile==='xetra'&&declaredMarket==='XETR'?'XETR':'';
   if(name.length<3||(!ticker(symbol)&&!code)||originalISIN&&!code||currency&&!cc(currency)){skipped++;continue;}
   const kind=typeFrom(name,value(typeIdx),value(etfIdx),value(cfiIdx));
   const rowSource=sourceFromFile==='xetra'?'Xetra (Datei, lokal)':sourceFromFile==='nasdaq'?'Nasdaq (Datei, lokal)':sourceFromFile==='esma'?'ESMA (Datei, lokal)':'CSV (Datei, lokal)';
@@ -124,7 +127,7 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
  const fileBase=folded(filename).replace(/[^a-z0-9._-]/g,'').slice(0,60);
  const datasetId=sourceFromFile==='nasdaq'?(fileBase.includes('otherlisted')?'otherlisted':fileBase.includes('nasdaqtraded')?'nasdaqtraded':'nasdaqlisted'):
    sourceFromFile==='xetra'?'all-tradable':fileBase||'custom';
- return {format:SECURITY_CATALOG_FORMAT,source:sourceFromFile,datasetId,filename:norm(filename).slice(0,130),importedAt,
+ return {format:SECURITY_CATALOG_FORMAT,source:sourceFromFile,datasetId,filename:norm(filename).slice(0,130),importedAt,sourceAsOf,
   entries:out,skipped,testIssues:tests,fileRows:lines.length-headerRow-1};
 }
 export function searchSecurityDirectories(query,kind,catalogs=[],limit=100){
@@ -145,7 +148,7 @@ export function searchSecurityDirectories(query,kind,catalogs=[],limit=100){
  return {total:deduped.length,results:deduped.slice(0,Math.min(Math.max(1,limit),100))};
 }
 export function directoryAge(catalog,now=Date.now()){
- const time=Date.parse(catalog?.importedAt||'');
+ const time=Date.parse(catalog?.sourceAsOf||catalog?.importedAt||'');
  if(!Number.isFinite(time))return {days:null,stale:true};
  const days=Math.max(0,Math.floor((now-time)/86400000));
  return {days,stale:days>=REVIEW_AFTER_DAYS};

@@ -147,7 +147,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     directories=await loadSecurityDirectories();
     updateResults();
     const status=$('wizardDirectoryStatus');if(status)status.textContent=directorySummary();
-    error(catalog.entries.length+' Instrumente lokal übernommen ('+e(catalog.source)+'). '+catalog.skipped+' ungültige/inaktive Einträge übersprungen. Bitte Börsenzuordnung und Währung beim Hinzufügen prüfen.');
+    notify(catalog.entries.length+' Instrumente lokal übernommen ('+catalog.source+'). '+catalog.skipped+' ungültige/inaktive Einträge übersprungen. Börsenzuordnung und Währung vor der Auswahl prüfen.');
    }catch(ex){error('Verzeichnisimport: '+String(ex.message||ex).slice(0,220));}
   });
   $('wizardFundImport')?.addEventListener('click',()=>$('wizardFundFile')?.click());

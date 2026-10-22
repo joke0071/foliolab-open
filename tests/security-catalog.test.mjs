@@ -13,7 +13,8 @@ test('Xetra reference format: preamble, header, MIC, instrument metadata and ina
  assert.equal(parsed.entries[0].currency,'EUR');
  assert.equal(parsed.entries[0].kind,'etf');
  assert.equal(parsed.entries[1].kind,'stock');
- assert.equal(parsed.entries[0].mic,'');
+ assert.equal(parsed.entries[0].mic,'XETR');
+ assert.equal(parsed.sourceAsOf,'2026-10-22');
  assert.equal(searchSecurityDirectories('VWCE','etf',[parsed]).total,1);
  assert.equal(searchSecurityDirectories('example share','stock',[parsed]).total,1);
 });
