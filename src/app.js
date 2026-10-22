@@ -9,16 +9,21 @@ import {providerDirectory,providerSuggestions,providerExact,accountSuggestions,a
 import {fetchSecurityQuote,tradingViewIdentifier,marketSourceOptions} from './security-sources.js';
 import {discoverSecurityListings,rankListings,listingCompatibility} from './security-discovery.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
-import {oldProviderQuote,valuationWarnings,valuationHeadline} from './valuation-status.js';
+import {oldProviderQuote,valuationWarnings,valuationHeadline,valuationIssues} from './valuation-status.js';
 import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} from './allocation-ui.js';
+import {searchAndSortPositions} from './position-search.js';
+import {createAssetWizard} from './asset-wizard.js';
+import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
+import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
+import {openingCashInput} from './account-opening.js';
 const positionDetailRanges=new Map();
-let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}let page='dashboard',filter='all',range='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
+let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
@@ -26,7 +31,7 @@ const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstig
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungskonto',savings:'Tages- / Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
-function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}}
+function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
 function save(){if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');persist(model);try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}render();}
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -36,8 +41,16 @@ function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;docu
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);$('refreshIcon').innerHTML=svg('refresh',17);$('addIcon').innerHTML=svg('plus',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function render(){switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}}
 function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);$('totalValue').textContent=money(total);
-  $('totalHint').textContent=valuationHeadline(valuationWarnings(model))||`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
-  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei Foliolab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-provider">Anbieter hinzufügen</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
+  const warning=valuationHeadline(valuationWarnings(model)),hint=$('totalHint');
+  hint.replaceChildren();
+  if(warning){
+   const review=document.createElement('button');
+   review.type='button';review.className='hero-valuation-link';
+   review.textContent=warning+' · Betroffene Positionen ansehen →';
+   review.addEventListener('click',()=>{filter='__review';go('positions');});
+   hint.append(review);
+  }else hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
+  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei Foliolab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel);
   const alloc=allocationBreakdown(model,valueEUR,TYPES);
   const previousKey=$('allocationLegend').querySelector('[data-allocation-key][aria-pressed="true"]')?.dataset.allocationKey||null;
@@ -50,7 +63,18 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
   $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
   for(const id of expandedPositions)showPositionDetail(id);
-  $('miniChart').innerHTML=drawChart(model.snapshots.slice(-18));attachChartInteractions($('miniChart'));}
+  const shots=model.snapshots;
+  const days={month:31,quarter:92,year:366}[miniRange];
+  const cutoff=days?new Date(Date.now()-days*864e5).toISOString().slice(0,10):null;
+  const visible=days?shots.filter(x=>x.date>=cutoff):shots;
+  $('miniChart').innerHTML=drawChart(visible);
+  attachChartInteractions($('miniChart'));
+  $('miniChartPeriods').querySelectorAll('[data-mini-range]').forEach(btn=>{
+   const period={month:31,quarter:92,year:366}[btn.dataset.miniRange];
+   const available=period?shots.filter(x=>x.date>=new Date(Date.now()-period*864e5).toISOString().slice(0,10)).length:shots.length;
+   btn.disabled=available<2;btn.classList.toggle('selected',btn.dataset.miniRange===miniRange);
+  });
+}
 function showPositionDetail(id){
   const p=model.positions.find(x=>x.id===id);
   const mount=[...$('providerOverview').querySelectorAll('[data-position-detail]')].find(el=>el.dataset.positionDetail===id);
@@ -65,10 +89,99 @@ function renderHistory(){const info=$('performanceInfo');const start=model.perfo
  info.textContent=rate==null?'XIRR noch nicht belastbar: '+(issues.length?issues.join(' · '):'Startwert, externe Cashflows oder ausreichend bewertete Endpunkte fehlen.'):`XIRR (geldgewichtet, jährlich): ${new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(rate)} · ${dateLabel(start)} bis ${dateLabel(end)}.`;
  info.textContent+=timeWeighted==null?' · TWR: nicht berechenbar (exakte Bewertungen vor/nach externen Geldflüssen fehlen oder Stichtage unvollständig).':` · TWR (cashflowfreier Bewertungszeitraum): ${new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(timeWeighted)}.`;
  const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);} $('historyChart').innerHTML=drawChart(data);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>btn.classList.toggle('selected',btn.dataset.range===range));$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><button class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag löschen">${svg('trash',15)}</button></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');}
-function renderPositions(){$('resolveListings').classList.toggle('hidden',unresolvedListings().length===0);$('resolveListings').textContent='Zuordnungen prüfen'+(unresolvedListings().length?' ('+unresolvedListings().length+')':'');const providers=model.providers.map(p=>[p.id,p.name]);$('positionFilters').innerHTML=[['all','Alle'],...providers].map(([id,label])=>`<button class="filter ${filter===id?'active':''}" data-filter="${esc(id)}">${esc(label)}</button>`).join('');const filtered=model.positions.filter(p=>filter==='all'||p.providerId===filter);$('positionList').innerHTML=filtered.length?filtered.slice().sort((a,b)=>valueEUR(b)-valueEUR(a)).slice(0,positionLimit).map(p=>{const provider=model.providers.find(x=>x.id===p.providerId);const account=model.accounts.find(a=>a.id===p.accountId);const updated=p.updatedAt?` · ${esc(dateLabel(p.updatedAt.slice(0,10)))}`:'';const stale=oldProviderQuote(p);const caption=`${esc(provider?.name||'Unbekannt')}${account?' · '+esc(account.name):''} · ${esc(p.quantityExact??String(p.quantity))} × ${money(p.price,p.currency)}${p.currency!=='EUR'?' · Wechselkurs '+quant(p.fxRate):''}${updated}${p.quoteSource?' · Kurs: '+esc(p.quoteSource):''}${p.quoteAsOf?' · '+esc(p.quoteAsOf.slice(0,10)):''}`;return `<div class="holding-row"><div class="holding-l"><div class="holding-mark">${svg(p.wallet?.enabled?'wallet':'positions',21)}</div><div class="holding-info"><div class="holding-name" title="${esc(p.name)}">${esc(p.name)}</div><div class="holding-note">${caption}</div><div><span class="tag">${esc(TYPES[p.kind])}</span>${p.symbol?`<span class="tag neutral">${esc(p.symbol)}</span>`:''}${p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':''}${p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':''}${stale||p.priceStatus?`<span class="tag warn">${esc(p.priceStatus||(stale?'Kurs veraltet':'Kurs prüfen'))}</span>`:''}</div></div></div><div class="holding-r"><strong class="holding-money">${money(valueEUR(p))}</strong><button class="row-btn" data-action="edit-position" data-id="${esc(p.id)}" title="Position bearbeiten" aria-label="Position bearbeiten">${svg('pencil',15)}</button></div></div>`;}).join('')+(filtered.length>positionLimit?`<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere ${Math.min(100,filtered.length-positionLimit)} Positionen anzeigen</button></div>`:''):empty(filter==='all'?'Noch keine Positionen. Erstelle zuerst unter „Mehr“ einen Anbieter und füge deine Anlage hinzu.':'Keine Positionen bei diesem Anbieter.');}
-function renderBookings(){$('bookingList').innerHTML=model.bookings.length?model.bookings.slice(0,bookingLimit).map(b=>`<div class="history-row"><div><div class="history-title">${esc(b.positionName||model.positions.find(p=>p.id===b.positionId)?.name||'Entfernte Position')}</div><div class="history-sub">${esc(dateLabel(b.date))} · ${esc(TX_TYPES[b.type]||b.type)} · ${esc(b.quantityExact??String(b.quantity))}${b.targetPositionId?' · Zielposition: '+esc(model.positions.find(p=>p.id===b.targetPositionId)?.name||'historische Position'):''}${b.notes?' · '+esc(b.notes):''}</div></div><div class="holding-r"><strong class="history-amount">${Number.isFinite(b.amountEUR)?money(b.amountEUR):'–'}</strong></div></div>`).join('')+(model.bookings.length>bookingLimit?`<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere Vorgänge anzeigen</button></div>`:''):empty('Noch keine Vorgänge erfasst.');}
-function renderSettings(){const settings=$('providerSettings');settings.innerHTML=model.providers.length?model.providers.map(p=>`<div class="setting-provider"><div><strong>${esc(p.name)}</strong><small>${esc(types[p.type]||types.other)} · ${model.accounts.filter(a=>a.providerId===p.id).length} Konto/Konten</small></div><div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="${esc(p.id)}" title="Bearbeiten" aria-label="Bearbeiten">${svg('pencil',15)}</button><button class="row-btn" data-action="delete-provider" data-id="${esc(p.id)}" title="Löschen" aria-label="Löschen">${svg('trash',15)}</button></div></div>
-${model.accounts.filter(a=>a.providerId===p.id).map(a=>`<div class="account-entry"><span>${esc(a.name)} <small>· ${esc(accountTypes[a.type]||accountTypes.other)}</small></span><button type="button" class="row-btn" data-action="edit-account" data-id="${esc(a.id)}" aria-label="Konto bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-account" data-id="${esc(a.id)}" aria-label="Konto löschen">${svg('trash',15)}</button></div>`).join('')}`).join(''):empty('Noch kein Anbieter hinterlegt.');if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';const reminder=$('backupReminder');let last=0;try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));}
+function renderPositions(){
+ const unresolved=unresolvedListings(),reviewItems=valuationIssues(model),reviewIds=new Set(reviewItems.map(x=>x.id));
+ $('resolveListings').classList.toggle('hidden',unresolved.length===0);
+ $('resolveListings').textContent='Zuordnungen prüfen'+(unresolved.length?' ('+unresolved.length+')':'');
+ const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
+ $('positionFilters').innerHTML=[['all','Alle'],...(reviewItems.length?[['__review','Zu prüfen ('+reviewItems.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
+  .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
+ const filtered=model.positions.filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
+ const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
+ const list=visible.slice(0,positionLimit).map(p=>{
+  const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(a=>a.id===p.accountId),stale=oldProviderQuote(p);
+  const quoteDate=p.quoteAsOf?dateLabel(p.quoteAsOf.slice(0,10)):null;
+  const source=p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Zuletzt gespeicherter Wert':'');
+  // Quote date takes precedence: do not print an unrelated position-edit timestamp beside it.
+  const caption=[provider?.name||'Unbekannt',account?.name||'',source,quoteDate].filter(Boolean).map(esc).join(' · ');
+  const tags='<span class="tag">'+esc(TYPES[p.kind])+'</span>'+
+   (p.symbol?'<span class="tag neutral">'+esc(p.symbol)+'</span>':'')+
+   (p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':'')+
+   (p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':'')+
+   (stale||p.priceStatus?'<span class="tag warn">'+esc(p.priceStatus||(stale?'Kurs veraltet':'Kurs prüfen'))+'</span>':'');
+  const facts=[
+   ['Bestand',String(p.quantityExact??p.quantity)],
+   ['Kurs je Einheit',String(p.priceExact??p.price)+' '+p.currency],
+   ...(p.currency!=='EUR'?[['EUR je Einheit Kurswährung',String(p.fxRateExact??p.fxRate)]]:[]),
+   ['Kursquelle',p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Gespeicherter Stichtag':'Nicht angegeben')],
+   ['Kursstand',quoteDate||'Nicht angegeben'],
+   ...(p.updatedAt?[['Position zuletzt geändert',dateLabel(p.updatedAt.slice(0,10))]]:[]),
+   ...(p.isin?[['ISIN',p.isin]]:[]),
+   ...(p.exchange?[['Börse',p.exchange]]:[]),
+   ...(p.mic?[['MIC',p.mic]]:[]),
+   ...(p.coinId?[['CoinGecko-ID',p.coinId]]:[]),
+   ...(p.wallet?.enabled?[['Netzwerk',p.wallet.chain],['Öffentliche Wallet-Adresse',p.wallet.address]]:[])
+  ];
+  const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
+  return '<div class="position-entry"><div class="holding-row">'+
+   '<div class="holding-l"><div class="holding-mark">'+svg(p.wallet?.enabled?'wallet':'positions',21)+'</div>'+
+   '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
+   '<div class="holding-note">'+caption+'</div><div>'+tags+'</div></div></div>'+
+   '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
+   '<button class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="Position bearbeiten">'+svg('pencil',15)+'</button></div></div>'+
+   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details></div>';
+ });
+ $('positionList').innerHTML=visible.length?list.join('')+
+  (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
+  empty(filter==='all'?'Noch keine Positionen. Erstelle zuerst unter „Mehr“ einen Anbieter und füge deine Anlage hinzu.':
+   filter==='__review'?'Keine Positionen zur Prüfung.':'Keine Positionen bei diesem Anbieter.');
+}
+function renderBookings(){
+ const query=$('bookingSearch').value.trim().toLocaleLowerCase('de'),type=$('bookingFilterType').value;
+ const list=model.bookings.filter(b=>(!type||b.type===type)&&(!query||
+  [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date]
+   .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
+ $('bookingList').innerHTML=model.bookings.length?(
+  list.length?list.slice(0,bookingLimit).map(b=>'<div class="history-row"><div><div class="history-title">'+esc(b.positionName||model.positions.find(p=>p.id===b.positionId)?.name||'Entfernte Position')+
+   '</div><div class="history-sub">'+esc(dateLabel(b.date))+' · '+esc(TX_TYPES[b.type]||b.type)+' · '+esc(b.quantityExact??String(b.quantity))+
+   (b.targetPositionId?' · Zielposition: '+esc(model.positions.find(p=>p.id===b.targetPositionId)?.name||'historische Position'):'')+
+   (b.notes?' · '+esc(b.notes):'')+'</div></div><div class="holding-r"><strong class="history-amount">'+
+   (Number.isFinite(b.amountEUR)?money(b.amountEUR):'Betrag unbekannt')+'</strong></div></div>').join('')+
+   (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
+   empty('Keine Buchungen zu diesem Filter gefunden.')):
+  '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Einzahlungen, Käufe, Verkäufe und Gebühren helfen, Bestände und bekannte Anschaffungskosten nachzuvollziehen. Eine unvollständige Historie ergibt noch keine verlässliche Rendite.</p><div class="toolbar-buttons"><button type="button" class="btn primary" data-action="start-booking">+ Buchung</button><button type="button" class="btn outline" data-action="start-csv">CSV importieren</button></div></div>';
+}
+function renderSettings(){
+ const settings=$('providerSettings');
+ const expanded=new Set([...settings.querySelectorAll('details[open][data-provider-settings]')].map(x=>x.dataset.providerSettings));
+ settings.innerHTML=model.providers.length?model.providers.map(p=>{
+  const accounts=model.accounts.filter(a=>a.providerId===p.id);
+  const children=accounts.map(a=>'<div class="account-entry"><span>'+esc(a.name)+' <small>· '+esc(accountTypes[a.type]||accountTypes.other)+'</small></span>'+
+   '<button type="button" class="row-btn" data-action="edit-account" data-id="'+esc(a.id)+'" aria-label="Konto bearbeiten">'+svg('pencil',15)+'</button>'+
+   '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>').join('');
+  return '<div class="setting-provider provider-settings-row">'+
+   '<details class="provider-settings-group" data-provider-settings="'+esc(p.id)+'"'+(expanded.has(p.id)?' open':'')+'>'+
+   '<summary><strong>'+esc(p.name)+'</strong><small>'+esc(types[p.type]||types.other)+' · '+accounts.length+' Konto/Konten</small></summary>'+
+   '<div class="provider-settings-accounts">'+(children||'<p class="small-help">Noch keine Konten.</p>')+'</div></details>'+
+   '<div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="'+esc(p.id)+'" title="Anbieter bearbeiten" aria-label="Anbieter bearbeiten">'+svg('pencil',15)+'</button>'+
+   '<button class="row-btn" data-action="delete-provider" data-id="'+esc(p.id)+'" title="Anbieter löschen" aria-label="Anbieter löschen">'+svg('trash',15)+'</button></div></div>';
+ }).join(''):empty('Noch kein Anbieter hinterlegt.');
+ if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';
+ const reminder=$('backupReminder');let last=0;
+ try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}
+ reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));
+ renderBackupStatus();
+}
+function renderBackupStatus(){
+ const element=$('backupStatus');
+ if(!element)return;
+ let value='';
+ try{value=localStorage.getItem('foliolab-open-last-backup-at')||'';}catch{}
+ const date=new Date(value);
+ element.textContent=value&&Number.isFinite(date.getTime())
+  ?'Zuletzt für einen Download erstellt: '+date.toLocaleDateString('de-AT')+' · '+date.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})+'. Prüfe, ob du die Datei sicher abgelegt hast.'
+  :'Noch kein Backup erstellt. Sichere deine lokalen Daten regelmäßig.';
+}
 function showDialog(title,kicker,html,onSave){editor={onSave};$('dialogTitle').textContent=title;$('dialogKicker').textContent=kicker;$('dialogFields').innerHTML=html;$('saveDialog').textContent='Speichern';$('saveDialog').disabled=false;$('editDialog').showModal();}
 function closeDialog(){$('editDialog').close();editor=null;}
 function providerMatchMarkup(query){
@@ -115,19 +228,39 @@ function openAccount(a,defaultProviderId){
  '<label class="field"><span>Kontoname</span><input name="name" id="accountName" type="text" required maxlength="100" autocomplete="off" value="'+esc(a?.name||suggestion[0])+'" placeholder="Girokonto, Wertpapierdepot …"></label>'+
  '<div class="onboarding-suggestions" id="accountMatches" role="region" aria-label="Kontovorschläge"></div>'+
  '<div class="field-row"><label class="field"><span>Kontotyp</span><select name="type" id="accountType">'+options(Object.entries(accountTypes),a?.type||suggestion[1])+'</select></label>'+
- '<label class="field"><span>Kontowährung</span><select name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
- (a?'':field('Optionales EUR-Startguthaben','initialBalance','','text','inputmode="decimal" placeholder="z. B. 2500 (nur EUR)"')),
+ '<label class="field"><span>Kontowährung</span><select id="accountCurrency" name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
+ (a?'':('<label class="field"><span id="accountOpeningLabel">Startguthaben (EUR) · optional</span><input id="accountOpeningAmount" name="initialBalance" type="text" inputmode="decimal" placeholder="z. B. 2500"></label>'+
+ '<label class="field hidden" id="accountOpeningFxWrap"><span>EUR je Einheit Kontowährung (manueller Umrechnungskurs)</span><input name="openingFxRate" id="accountOpeningFx" type="number" min="0.00000001" step="any" placeholder="z. B. 0.92"><small>Nur bei einem Startguthaben in Fremdwährung erforderlich; keine automatische Schätzung.</small></label>'+
+ '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>')),
  v=>{
   if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
-  const init=String(v.initialBalance||'').trim();
-  if(init&&v.currency!=='EUR')throw Error('Fremdwährungsguthaben bitte als Position mit eigenem EUR-Wechselkurs hinzufügen.');
-  const balance=init?safeNumber(init,0):0;
+  // Validate account and opening valuation before mutating either collection.
   const next=createAccount({...v,id:a?.id},model);
+  const opening=a?null:openingCashInput({amount:v.initialBalance,currency:next.currency,fxRate:v.openingFxRate});
+  const openingDate=String(v.initialBalanceDate||'').trim();
+  if(opening&&(!/^\d{4}-\d{2}-\d{2}$/.test(openingDate)||Number.isNaN(Date.parse(openingDate))||new Date(openingDate+'T12:00:00Z').toISOString().slice(0,10)!==openingDate||openingDate>new Date().toISOString().slice(0,10)))throw Error('Bitte ein gültiges Anfangsbestandsdatum bis heute angeben.');
+  const firstPosition=opening?createPosition({...opening,notes:'Anfangsbestand zum '+openingDate,providerId:next.providerId,accountId:next.id},{...model,accounts:[...model.accounts,next]}):null;
   if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
-  if(!a&&balance>0)model.positions.push(createPosition({providerId:next.providerId,accountId:next.id,kind:'cash',name:'EUR Guthaben',symbol:'EUR',quantity:init,price:1,currency:'EUR'},model));
+  if(firstPosition)model.positions.push(firstPosition);
   model.settings.lastAccountId=next.id;save();notify('Konto gespeichert.');
  });
  const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
+ if(!a){
+  const currency=$('accountCurrency'),amount=$('accountOpeningAmount'),wrap=$('accountOpeningFxWrap'),fx=$('accountOpeningFx');
+  let previousCurrency=currency.value;
+  const sync=()=>{
+   $('accountOpeningLabel').textContent='Startguthaben ('+currency.value+') · optional';
+   wrap.classList.toggle('hidden',currency.value==='EUR');
+   fx.required=currency.value!=='EUR'&&amount.value.trim()!=='';
+  };
+  currency.addEventListener('change',()=>{
+   if(amount.value.trim()&&currency.value!==previousCurrency&&!confirm('Das eingetragene Startguthaben wird als '+currency.value+' statt '+previousCurrency+' gespeichert. Fortfahren?')){
+    currency.value=previousCurrency;return;
+   }
+   previousCurrency=currency.value;sync();
+  });
+  amount.addEventListener('input',sync);sync();
+ }
  const show=()=>{area.innerHTML=accountMatchMarkup(providerSelect.value,name.value);area.classList.toggle('hidden',!name.value.trim());};
  const align=()=>{const p=model.providers.find(x=>x.id===providerSelect.value),exact=accountExact(name.value,p?.type||'other');if(exact)type.value=exact[1];};
  providerSelect.addEventListener('change',()=>{
@@ -155,19 +288,22 @@ function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);
 <details class="advanced-apis"><summary>Einstandswert (optional)</summary><p class="small-help">Nur den tatsächlich bekannten gesamten Anschaffungswert des aktuellen Bestands in EUR eintragen. Leer lassen, wenn unbekannt.</p>${field('Einstandswert in EUR','costBasisEUR',p?.costBasisEUR??'','number','min="0" step="any" placeholder="Unbekannt"')}</details>
 <details class="advanced-apis" id="defiPosition"><summary>Wirtschaftliche Position / DeFi (optional)</summary><p class="small-help">Sicherheiten, Liquid Staking und derivative Positionen bewusst zuordnen. Kein automatisches Entfernen oder Bewerten.</p><label class="field"><span>Wirtschaftliche Funktion</span><select name="economicRole">${options([['standard','Normal'],['collateral','Hinterlegt / Collateral'],['liquid-staking','Liquid Staking'],['vault','Vault'],['liquidity-pool','Liquidity Pool'],['lending','Lending'],['borrowed','Geliehene Assets / Verbindlichkeit'],['wrapped','Wrapped Token']],p?.economicRole||'standard')}</select></label><label class="field"><span>In der Vermögenssumme</span><select name="valuationMode">${options([['included','Anrechnen'],['excluded','Nicht anrechnen (bereits durch andere Position repräsentiert)'],['liability','Als Verbindlichkeit abziehen']],p?.valuationMode||'included')}</select></label><label class="field"><span>Wird repräsentiert durch (optional)</span><select name="representedByPositionId">${options([['','Keine Zuordnung'],...model.positions.filter(x=>x.id!==p?.id).map(x=>[x.id,x.name])],p?.representedByPositionId||'')}</select></label></details>${field('Notiz (optional)','notes',p?.notes||'','text','maxlength="300"')}<div class="small-help">Kurse für Fremdwährungen werden nur mit einem gültigen EUR-Umrechnungskurs korrekt berücksichtigt. Wallet-Adressen werden beim Abruf an den jeweiligen Blockchain-Dienst gesendet.</div>${p?`<button type="button" class="danger-link" id="deletePosition">Position löschen</button>`:''}`;}
 function refreshPositionAccounts(){
- const provider=$('positionProvider').value,kind=$('positionKind').value,select=$('positionAccount'),prev=select.value;
+ const select=$('positionAccount'),selected=select.dataset.selectedAccountId||select.value;
+ const provider=$('positionProvider').value,kind=$('positionKind').value;
  const q=String($('positionAccountSearch')?.value||'').trim().toLocaleLowerCase('de');
  const accounts=model.accounts.filter(a=>a.providerId===provider&&(!q||a.name.toLocaleLowerCase('de').includes(q)))
   .sort((a,b)=>Number(b.type===suggestedAccountType(kind))-Number(a.type===suggestedAccountType(kind)));
- select.innerHTML=options(accounts.map(a=>[a.id,a.name]),accounts.some(a=>a.id===prev)?prev:accounts[0]?.id);
+ // A filter only changes visibility, never the confirmed account selection.
+ select.innerHTML=options(accounts.map(a=>[a.id,a.name]),selected);
+ if(!accounts.some(a=>a.id===selected))select.selectedIndex=-1;
  select.required=true;
 }
 function refreshPositionProviders(){
- const filter=String($('positionProviderSearch')?.value||'').trim().toLocaleLowerCase('de');
- const select=$('positionProvider'),prev=select.value;
- const providers=model.providers.filter(p=>!filter||p.name.toLocaleLowerCase('de').includes(filter));
- select.innerHTML=options(providers.map(p=>[p.id,p.name]),providers.some(x=>x.id===prev)?prev:providers[0]?.id);
- $('positionAccountSearch').value='';
+ const q=String($('positionProviderSearch')?.value||'').trim().toLocaleLowerCase('de');
+ const select=$('positionProvider'),selected=select.dataset.selectedProviderId||select.value;
+ const providers=model.providers.filter(p=>!q||p.name.toLocaleLowerCase('de').includes(q));
+ select.innerHTML=options(providers.map(p=>[p.id,p.name]),selected);
+ if(!providers.some(p=>p.id===selected))select.selectedIndex=-1;
  refreshPositionAccounts();
 }
 function refreshPosForm(){const kind=$('positionKind').value,crypto=kind==='crypto';$('coinGroup').classList.toggle('hidden',!crypto);$('walletGroup').classList.toggle('hidden',!crypto);$('securityGroup').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('exchangeField').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('marketIdentifiers').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));const coinCurrency=$('positionCurrency');if(crypto&&coinCurrency.value!=='EUR'){coinCurrency.value='EUR';} if(crypto){const currPos=$('fxWrap').querySelector('input');currPos.value=1;}$('fxWrap').classList.toggle('hidden',coinCurrency.value==='EUR'||crypto);$('walletDetails').classList.toggle('hidden',!$('walletEnabled').checked);const chain=$('walletChain').value;$('tokenFields').classList.toggle('hidden',!['erc20','spl'].includes(chain));$('chainIdField').classList.toggle('hidden',!['evm','erc20'].includes(chain));$('walletHdField').classList.toggle('hidden',chain!=='btc-hd');}
@@ -183,7 +319,15 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
    fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
    fxSource:p&&String(v.fxRate)===String(p.fxRate)?p.fxSource:null,
    fxRateDate:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateDate:null,
-   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').addEventListener('change',()=>{$('positionAccountSearch').value='';refreshPositionAccounts();});
+   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
+ $('positionAccount').dataset.selectedAccountId=$('positionAccount').value;
+ $('positionAccount').addEventListener('change',e=>{e.target.dataset.selectedAccountId=e.target.value;});
+ $('positionProvider').addEventListener('change',e=>{
+  e.target.dataset.selectedProviderId=e.target.value;
+  $('positionAccount').dataset.selectedAccountId='';
+  $('positionAccountSearch').value='';
+  refreshPositionAccounts();
+ });
  $('positionProviderSearch').addEventListener('input',refreshPositionProviders);
  $('positionAccountSearch').addEventListener('input',refreshPositionAccounts);
  refreshPositionAccounts();refreshPosForm();$('coinQuery').addEventListener('input',showCoinResults);$('coinCatalogLoad').addEventListener('click',loadCoins);$('securitySearch').addEventListener('click',lookupSecurity);$('securityQuery').addEventListener('input',()=>{clearTimeout(securityDebounce);const q=$('securityQuery').value.trim();if(q.length>=3&&(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey))securityDebounce=setTimeout(lookupSecurity,650);});$('securityQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupSecurity();}});if(p)$('deletePosition').addEventListener('click',()=>{if(model.bookings.some(x=>x.positionId===p.id||x.targetPositionId===p.id)||model.journalEntries.some(e=>e.postings.some(x=>x.positionId===p.id)))return notify('Position hat Buchungen oder Journal-Einträge und kann nicht gelöscht werden.',true);if(model.positions.some(x=>x.representedByPositionId===p.id))return notify('Position wird von einer DeFi-Verknüpfung referenziert. Bitte zuerst die Verknüpfung lösen.',true);if(confirm('Diese unverbuchte Position wirklich löschen?')){model.positions=model.positions.filter(x=>x.id!==p.id);model.openingPositions=model.openingPositions.filter(x=>x.positionId!==p.id);if(model.priceHistories)delete model.priceHistories[p.id];snapshot(model);save();closeDialog();notify('Position gelöscht.');}});}
@@ -552,10 +696,15 @@ async function refreshAll(){
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
   if(successes){snapshot(model);save();}else render();
-  const details=errors.length?' · '+errors.length+' Abfragefehler: '+errors.slice(0,2).join(' · ')+(errors.length>2?' · weitere Fehler':''):'';
-  $('priceInfo').textContent=`${successes} Datenupdates · ${new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})}${details}`;
+  const status=refreshHeadline(successes,errors),details=$('refreshErrorDetails');
+  $('priceInfo').textContent=status+' · '+new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});
   $('priceInfo').classList.toggle('refresh-warning',errors.length>0);
-  if(errors.length)notify(`${successes} Datenupdates · ${errors.length} Abfragefehler. Details unter „Aktualisieren“.`,true);
+  const grouped=refreshFailures(errors);
+  details.classList.toggle('hidden',grouped.length===0);
+  details.open=false;
+  details.innerHTML=grouped.length?'<summary>'+errors.length+' Fehlerdetails anzeigen</summary><div class="refresh-error-list">'+
+   grouped.map(x=>'<div><strong>'+x.count+'× '+esc(x.cause)+'</strong><small>Betroffen: '+esc(x.positions.join(', '))+'</small></div>').join('')+'</div>':'';
+  if(errors.length)notify(status+' · Details unter „Positionen“.',true);
   else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
  }catch(e){notify(e.message,true);}
  finally{busy=false;$('refreshAll').disabled=false;}
@@ -637,20 +786,32 @@ function openPublicTradingView(positionId){
  });
  wrap.append(script);
 }
-function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
-function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
+function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
+function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
   $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text());if(isEncryptedBackup(parsed)){
    const password=prompt('Passwort für dieses verschlüsselte Foliolab-Backup:');
    if(password===null)return;parsed=JSON.parse(await decryptBackup(parsed,password));
   }
   const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};loadFailure=null;model=imported;filter='all';save();notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
   $('deleteAll').addEventListener('click',()=>{if(confirm('Alle lokalen Positionen, Stichtage UND API-Schlüssel endgültig löschen? Stelle vorher ein Backup sicher.')){loadFailure=null;model=blankModel();save();notify('Alle lokalen Daten gelöscht.');}});
-  $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+  $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',e=>{model.settings.autoRefresh=e.target.checked;save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
   for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey'])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
+ $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').classList.remove('hidden');});$('installButton').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();installPrompt=null;$('installButton').classList.add('hidden');});
 }
+const assetWizard=createAssetWizard($('wizardDialog'),{
+ getModel:()=>model,
+ onCommit:({draft})=>{
+  const previous=model;
+  model=draft;
+  try{save();notify('Anlage sicher gespeichert.');}
+  catch(error){model=previous;throw error;}
+ },
+ lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
+ lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
+});
 initNav();initEvents();
 if(loadFailure){
  const notice=$('notice');notice.classList.remove('hidden');notice.innerHTML='<strong>Lokaler Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. Lade die Originaldaten herunter und stelle danach ein funktionierendes Backup wieder her. <button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button>';

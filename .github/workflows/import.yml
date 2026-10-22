@@ -51,6 +51,17 @@ jobs:
           node tests/browser-etf-crypto-fallbacks.mjs
           node tests/browser-universal-security-discovery.mjs
           node tests/browser-onboarding-suggestions.mjs
+          node tests/browser-account-opening.mjs
+          node tests/browser-valuation-drilldown.mjs
+          node tests/browser-settings-backup.mjs
+          node tests/browser-position-search.mjs
+          node tests/browser-position-details.mjs
+          node tests/browser-asset-wizard.mjs
+          node tests/browser-booking-filters.mjs
+          node tests/browser-dashboard-periods.mjs
+          node tests/browser-provider-accordion.mjs
+          node tests/browser-public-instruments.mjs
+          node tests/browser-account-deeplink.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:

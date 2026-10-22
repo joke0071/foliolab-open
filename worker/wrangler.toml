@@ -1,0 +1,5 @@
+name = "foliolab-open-instruments"
+main = "src/index.js"
+compatibility_date = "2026-10-22"
+workers_dev = true
+# No deploy workflow or binding to private portfolio data; manual publish only.

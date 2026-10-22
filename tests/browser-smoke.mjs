@@ -24,6 +24,7 @@ try{
  await page.locator('#editorForm [name="name"]').fill('Testdepot');
  await page.locator('#saveDialog').click();
  assert.match(await page.locator('#providerSettings').innerText(),/Test-Broker/);
+ await page.locator('#providerSettings details summary').first().click();
  assert.match(await page.locator('#providerSettings').innerText(),/Testdepot/);
  await page.locator('#sidebarNav [data-page="positions"]').click();
  await page.locator('#addPosition').click();

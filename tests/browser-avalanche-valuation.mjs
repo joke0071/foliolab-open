@@ -17,7 +17,7 @@ try{
  await page.reload();
  await page.locator('#totalHint').waitFor();
  const initial=await page.locator('#totalHint').innerText();
- assert.match(initial,/1 aus Stichtag abgeleitet/);
+ assert.match(initial,/1 mit zuletzt gespeichertem Wert/);
  assert.doesNotMatch(initial,/veraltet/);
  await page.route('https://cccscan.org/**',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({coin_balance:null})}));
  await page.route('https://api.avax.network/**',r=>{

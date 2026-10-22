@@ -5,10 +5,10 @@
  * This is a REFERENCE listing, not an asserted execution venue.
  */
 const KNOWN=Object.freeze([
- {symbol:'5MVL',kind:'etf',name:/\bishares\b.*\bmsci\b.*\bem\b.*\bvalue\b/i,isin:'IE00BG0SKF03'},
- {symbol:'VWCE',kind:'etf',name:/\bvanguard\b.*\bftse\b.*\ball.world\b/i,isin:'IE00BK5BQT80'},
- {symbol:'XDEM',kind:'etf',name:/\bxtrackers\b.*\bmsci\b.*\bworld\b.*\bmomentum\b/i,isin:'IE00BL25JP72'},
- {symbol:'XDEQ',kind:'etf',name:/\bxtrackers\b.*\bmsci\b.*\bworld\b.*\bquality\b/i,isin:'IE00BL25JL35'}
+ {symbol:'5MVL',label:'iShares MSCI EM Value Factor ETF',kind:'etf',name:/\bishares\b.*\bmsci\b.*\bem\b.*\bvalue\b/i,isin:'IE00BG0SKF03'},
+ {symbol:'VWCE',label:'Vanguard FTSE All-World UCITS ETF',kind:'etf',name:/\bvanguard\b.*\bftse\b.*\ball.world\b/i,isin:'IE00BK5BQT80'},
+ {symbol:'XDEM',label:'Xtrackers MSCI World Momentum UCITS ETF',kind:'etf',name:/\bxtrackers\b.*\bmsci\b.*\bworld\b.*\bmomentum\b/i,isin:'IE00BL25JP72'},
+ {symbol:'XDEQ',label:'Xtrackers MSCI World Quality UCITS ETF',kind:'etf',name:/\bxtrackers\b.*\bmsci\b.*\bworld\b.*\bquality\b/i,isin:'IE00BL25JL35'}
 ]);
 export function knownReferenceListing(position){
  if(!position||String(position.currency||'EUR').toUpperCase()!=='EUR')return null;
@@ -33,4 +33,14 @@ export function enhanceKnownReferenceListing(position){
  for(const key of ['isin','exchange','mic','tradingViewSymbol','eodhdSymbol','fmpSymbol'])
   if(!String(copy[key]||'').trim())copy[key]=found[key];
  return copy;
+}
+
+/** Curated offline suggestions. These are reference listings, not current prices. */
+export function referenceSearch(query=''){
+ const q=String(query||'').trim().toUpperCase();
+ if(q.length<2)return [];
+ return KNOWN.filter(x=>[x.label,x.symbol,x.isin].some(v=>v.toUpperCase().includes(q)))
+  .map(x=>({source:'local-reference',name:x.label,symbol:x.symbol,isin:x.isin,kind:x.kind,
+    currency:'EUR',exchange:'Xetra',mic:'XETR',
+    eodhdSymbol:x.symbol+'.XETRA',fmpSymbol:x.symbol+'.DE',tradingViewSymbol:'XETR:'+x.symbol}));
 }
