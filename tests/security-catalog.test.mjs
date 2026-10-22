@@ -27,6 +27,8 @@ test('Nasdaq pipe directory: ETF flags, test issue exclusion, tickers without fi
  const parsed=parseSecurityDirectory(sample,{filename:'nasdaqlisted.txt'});
  assert.equal(parsed.source,'nasdaq');assert.equal(parsed.entries.length,2);assert.equal(parsed.testIssues,1);
  assert.equal(parsed.entries[0].currency,'');assert.equal(parsed.entries[0].isin,'');
+ assert.equal(parsed.entries[0].mic,'XNAS');
+ assert.equal(parsed.sourceAsOf,'2026-10-22');
  assert.equal(parsed.entries[0].kind,'stock');assert.equal(parsed.entries[1].kind,'etf');
 });
 test('Other-listed directory retains explicit exchange-to-MIC map and separate listing identity',()=>{
@@ -50,4 +52,32 @@ test('Source timestamp triggers explicit refresh after 30d without network traff
  const catalog=parseSecurityDirectory('Symbol;Security Name;ETF\nTST;Test Security;N',{filename:'test.csv',importedAt:'2026-08-01T00:00:00Z'});
  assert.equal(directoryAge(catalog,Date.parse('2026-09-05T00:00:00Z')).stale,true);
  assert.equal(directoryAge(catalog,Date.parse('2026-08-03T00:00:00Z')).stale,false);
+});
+
+
+test('Realistic public Xetra T7 headers keep settlement currency distinct from quote currency',()=>{
+ const realLike=[
+  'Market: XETR',
+  'Date Last Update: 22.10.2026',
+  'Instrument;ISIN;Mnemonic;MIC Code;Primary Market MIC Code;Settlement Currency;Instrument Type',
+  'Vanguard FTSE All-World UCITS ETF;IE00BK5BQT80;VWCE;XETR;XETR;EUR;ETF',
+  'Example US share;US1234567890;EXM;XETR;XNAS;USD;Shares'
+ ].join('\n');
+ const cat=parseSecurityDirectory(realLike,{filename:'t7-xetr-allTradableInstruments.csv'});
+ assert.equal(cat.entries.length,2);
+ assert.equal(cat.entries[0].mic,'XETR');
+ assert.equal(cat.entries[0].settlementCurrency,'EUR');
+ assert.equal(cat.entries[0].currency,'','Settlement currency alone must not be assumed to be the trading quote currency');
+ assert.equal(cat.entries[1].settlementCurrency,'USD');
+ assert.equal(cat.entries[1].currency,'');
+});
+
+test('Published is not equivalent to inactive in security directories',()=>{
+ const csv='Market: XETR\nDate Last Update: 22.10.2026\nInstrument Status;Instrument;ISIN;Mnemonic;Trading Currency;MIC Code;Instrument Type\n'+
+  'Published;Published Example ETF;IE0000011111;PUBL;EUR;XETR;ETF\n'+
+  'Inactive;Inactive Example ETF;IE0000022222;DONT;EUR;XETR;ETF';
+ const catalog=parseSecurityDirectory(csv,{filename:'t7-xetr-allTradableInstruments.csv'});
+ assert.equal(catalog.entries.length,1);
+ assert.equal(catalog.entries[0].currency,'EUR');
+ assert.equal(catalog.entries[0].mic,'XETR');
 });

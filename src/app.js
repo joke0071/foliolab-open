@@ -828,7 +828,14 @@ if(loadFailure){
  const notice=$('notice');notice.classList.remove('hidden');notice.innerHTML='<strong>Lokaler Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. Lade die Originaldaten herunter und stelle danach ein funktionierendes Backup wieder her. <button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button>';
  $('downloadRaw').addEventListener('click',()=>{const raw=localStorage.getItem('foliolab-open-v1')||'';const url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='foliolab-original-datenschutzsicherung.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 }
-if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127.0.0.1'].includes(location.hostname)))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127.0.0.1'].includes(location.hostname))){
+ let existingController=Boolean(navigator.serviceWorker.controller);
+ navigator.serviceWorker.addEventListener('controllerchange',()=>{
+  if(existingController)notify('Neue FolioLab-Version verfügbar. Bitte die Seite neu laden.');
+  existingController=true;
+ });
+ navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});
+}
 if(location.protocol==='https:'&&model.settings.autoRefresh!==false){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey)&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
