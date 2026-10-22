@@ -96,3 +96,39 @@
 .provider-holding span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
 @media(max-width:420px){.provider-total{font-size:12px}.provider-detail{margin-left:16px;padding-left:10px}.provider-holding{gap:6px}}
 @media(prefers-reduced-motion:reduce){.provider-chevron{transition:none}}
+
+
+/* Interactive allocation donut; matches FolioLab's existing green/neutral system. */
+.donut{position:relative;background:none!important;isolation:isolate}
+.allocation-svg{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}
+.allocation-track{pointer-events:none}
+.allocation-segment{cursor:pointer;touch-action:manipulation;transition:stroke-width .13s ease,filter .13s ease;outline:none}
+.allocation-segment.active,.allocation-segment:focus-visible{stroke-width:35;filter:drop-shadow(0 1px 1px #153d2955)}
+.donut-inner.allocation-center{position:relative;z-index:1;min-width:0;border:0;padding:7px 4px;cursor:pointer;color:#244331;font:inherit;border-radius:50%;line-height:1.15}
+.allocation-center>span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#829687;font-size:10px}
+.allocation-center>strong{display:block;max-width:100%;font-size:clamp(11px,1.2vw,14px);letter-spacing:-.4px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.allocation-center>small{font-size:10px;color:#658a6d;white-space:nowrap}
+.donut-inner.allocation-center:focus-visible{outline:3px solid #7bb08c;outline-offset:2px}
+.alloc-legend{gap:5px}
+.alloc-legend-row{width:100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:6px;border:1px solid transparent;border-radius:9px;background:transparent;padding:8px 6px;text-align:left;cursor:pointer;color:#718273}
+.alloc-legend-row.active,.alloc-legend-row:hover,.alloc-legend-row:focus-visible{background:#edf5ee;border-color:#deeadf}
+.alloc-legend-row:focus-visible{outline:2px solid #74a984;outline-offset:1px}
+.alloc-legend-row .legend-left{flex:1;min-width:0;align-items:center}
+.alloc-legend-row .alloc-legend-copy{min-width:0;display:grid;gap:3px}
+.alloc-legend-copy strong{font-size:12px;font-weight:670;line-height:1.3;color:#344b3b;overflow-wrap:anywhere}
+.alloc-legend-copy small{font-size:10px;line-height:1.3;color:#87978a;white-space:nowrap;font-variant-numeric:tabular-nums}
+.alloc-legend-row b{font-size:12px;font-weight:750;font-variant-numeric:tabular-nums}
+.allocation-note{font-size:10.5px;line-height:1.5;color:#798e7e;margin:6px 4px 0}
+.allocation-empty{font-size:12px;color:#819384;line-height:1.6}
+@media(max-width:720px){
+ .allocation-layout{min-height:200px}
+ .allocation-center>strong{font-size:12px}
+ .alloc-legend-row{padding:8px 4px;min-height:42px}
+}
+@media(max-width:360px){
+ .allocation-layout{flex-direction:column;gap:12px}
+ .alloc-legend{width:100%;min-width:0}
+ .allocation-center>strong{font-size:12px}
+ .alloc-legend-row .legend-left{flex-direction:row}
+}
+@media(prefers-reduced-motion:reduce){.allocation-segment{transition:none}}
