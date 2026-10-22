@@ -46,7 +46,9 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(!['btc','btc-hd','evm','erc20','sol','spl','xrp','xrp-token'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
   const decimals=(chain==='erc20'||chain==='spl'||chain==='xrp-token')?safeNumber(wallet.decimals??18,0,30):['btc','btc-hd'].includes(chain)?8:chain==='sol'?9:chain==='xrp'?6:18;
   const chainId=['evm','erc20'].includes(chain)?safeNumber(wallet.chainId??1,1,1e9):undefined;
-  return {enabled:true,chain,address,contract,decimals,chainId};
+  const addressType=chain==='btc-hd'?cleanString(wallet.addressType||'auto',25):undefined;
+  if(chain==='btc-hd'&&!['auto','p2wpkh','p2sh-p2wpkh','p2pkh'].includes(addressType))throw Error('Unbekannter Bitcoin-HD-Adresstyp.');
+  return {enabled:true,chain,address,contract,decimals,chainId,addressType};
 }
 export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
