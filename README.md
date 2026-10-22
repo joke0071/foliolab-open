@@ -219,4 +219,47 @@ node tests/browser-settings-backup.mjs
 node tests/browser-position-search.mjs
 ```
 
-**Nicht durch diese Teiländerungen abgedeckt:** Ein neuer vollständiger Drei-Schritt-Anlage-Wizard und ein veröffentlichter öffentlicher Instrumentensuch-Worker. Die manuelle Anlage ohne API-Key bleibt möglich; die erweiterte Wertpapiersuche benötigt vorerst weiterhin die in den Einstellungen dokumentierten Anbieter-Zugangsdaten.
+**Aktueller Stand:** Der dreistufige Anlage-Assistent ist als primäre Standarderfassung ergänzt; die frühere technische Maske bleibt für Spezialfälle über „Erweitert“ erreichbar. Der öffentliche OpenFIGI-Worker liegt weiterhin ausschließlich als separat getesteter Quellcode unter `/worker` und ist **nicht automatisch veröffentlicht**. Ist kein HTTPS-Worker-Endpunkt konfiguriert, funktionieren kuratierte lokale Treffer, bestehende persönliche Suchanbieter und die manuelle Erfassung unabhängig davon.
+
+
+## Anlage-Assistent (Oktober 2026)
+
+Unter **Positionen → Anlage hinzufügen** führt die Anwendung durch drei Schritte:
+
+1. **Anlage finden:** Anlageklasse wählen, nach Name/ISIN/Ticker/Coin suchen oder vollständig manuell erfassen. Nur ausdrücklich ausgewählte Metadaten übernehmen. Lokale Referenznotierungen können ohne API-Key genutzt werden. Börsenkurse werden daraus nicht abgeleitet.
+2. **Depot wählen:** Anbieter und Konto gezielt auswählen oder innerhalb des Assistenten neu anlegen. Namen und Typen sind frei editierbar. Bis zum finalen Speichern bleibt die Neuanlage vorläufig.
+3. **Bestand erfassen:** „Aktueller Bestand“ erzeugt einen Anfangsbestand ohne erfundenen Kauf oder Cashflow. „Kauf erfassen“ nutzt das bestehende Transaktionsjournal, enthält den tatsächlichen Ausführungskurs und optional Gebühren. Ein Ausführungskurs ist **nicht automatisch ein aktueller Marktpreis**; ohne unabhängigen aktuellen Kurs wird die Bewertung als unvollständig dargestellt.
+
+Der Assistent bewahrt Eingaben bei Zurücknavigation; nach dem Speichern stehen „Weitere Position hinzufügen“ und „Zum Portfolio“ bereit. Bereits vorhandene Positionen werden weiterhin im bestehenden Editor bearbeitet. Bei ungewöhnlichen Marktdatenschnittstellen stehen die technischen Felder dort zur Verfügung.
+
+### Öffentliche Instrumentensuche (optional)
+
+Für eine Community-Suche ohne persönlichen Marktdaten-API-Key kann ein unabhängig bereitgestellter Cloudflare Worker auf Basis von OpenFIGI v3 konfiguriert werden:
+
+**Mehr → Automatische Aktualisierung → Erweiterte Einstellungen → Öffentlicher Instrumentensuchdienst**
+
+Trage dort ausschließlich eine ausdrücklich vertrauenswürdige HTTPS-Basisadresse ein, beispielsweise die URL deines selbst bereitgestellten Workers. **Das Repository stellt keinen öffentlich erreichbaren, betriebsbereiten Worker zur Verfügung.** Bei leerer Adresse wird keine solche Verbindung hergestellt. Fehlende Treffer, Ratenlimits und Ausfälle führen nicht zum Verlust der manuellen Erfassung.
+
+OpenFIGI liefert Stammdaten und mögliche Börsenzuordnungen, **keine aktuellen Kurse**. Fehlende Notierungswährungen müssen bewusst ausgewählt werden. Für automatisch aktualisierte Aktien- und ETF-Kurse sind weiterhin geeignete Quellen und gegebenenfalls persönliche Anbieter-Schlüssel erforderlich. Die Suche sendet nur den vom Nutzer eingegebenen öffentlichen Suchbegriff an den konfigurierten Dienst, keine Depotbestände, Kontoangaben oder Wallet-Schlüssel.
+
+### Konten und Backup
+
+Neue Konten können einen Eröffnungsstand in ihrer Kontowährung erhalten. Bei Fremdwährungen ist eine explizite EUR-Umrechnung erforderlich; das optionale Anfangsdatum dokumentiert nur den vorhandenen Bestand und erzeugt keinen rückdatierten Portfoliowert. Das Browser-Backup meldet den Zeitpunkt einer für den Download erstellten Datei. Es kann weder garantieren, dass der Download tatsächlich aufbewahrt wird, noch einen automatischen externen Schutz vor Browserlöschung bieten.
+
+### Qualitätssicherung und Release
+
+Lokal oder in GitHub Actions:
+
+\`\`\`bash
+npm test
+npm run check
+# Browserprüfung nach Installation der im Workflow fixierten Playwright-Version:
+npm install --no-save playwright@1.56.1
+npx playwright install chromium --only-shell
+python3 -m http.server 4173
+# In einer zweiten Konsole die Browser-Skripte aus .github/workflows/import.yml ausführen.
+\`\`\`
+
+Der Workflow testet die Kompatibilität von Backups, Wallets, Krypto-/ETF-Datenquellen, Buchungsjournal, UI und responsive Ansichten. Er veröffentlicht GitHub Pages erst nach einem erfolgreichen Testjob auf \`main\`. Der Worker wird nicht auf Pages ausgeliefert oder im Frontend vorinstalliert.
+
+Rollback: Frühere \`main\`-Commits bleiben erhalten und können bei kritischen Fehlern gezielt per Revert-Commit wiederhergestellt werden. Alte lokale Datenbestände und Backups werden nicht aktiv migriert oder extern gespeichert, solange sie nicht geladen werden.
