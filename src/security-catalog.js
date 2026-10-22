@@ -90,8 +90,9 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
  const nameIdx=pick(columns,['instrument','securityname','name','fullname','fullnm','financialinstrumentname','instrumentname','shortname','fondsbezeichnung','fondsname','fundname','issuername']);
  const symbolIdx=pick(columns,['mnemonic','symbol','actsymbol','nasdaqsymbol','tradingsymbol','tickercode','ticker','tradingshortcode','exchangeinstrumentid']);
  const isinIdx=pick(columns,['isin','isincode','instrumentisin']);
- const ccyIdx=pick(columns,['currency','tradingcurrency','currencycode','tradingcurr','notionalcurrency']);
- const micIdx=pick(columns,['mic','venue','tradingvenue','marketidentifiercode']);
+ const ccyIdx=pick(columns,['tradingcurrency','quotecurrency','pricecurrency','currency','currencycode','tradingcurr','notionalcurrency']);
+ const settlementIdx=pick(columns,['settlementcurrency','settlementcurr','settlementccy']);
+ const micIdx=pick(columns,['miccode','mic','tradingvenuemiccode','marketidentifiercode','venue','tradingvenue']);
  const exchangeIdx=pick(columns,['exchange','listingexchange']);
  const typeIdx=pick(columns,['type','producttype','instrumenttype','securitytype','productassignmentgroup','productassignment','assetclass','cficode','cficlassification','classificationtype']);
  const cfiIdx=pick(columns,['cficode','cficlassification']);
@@ -111,14 +112,14 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   if(status&&['inactive','pending deletion','deleted','published'].includes(status)){skipped++;continue;}
   const name=value(nameIdx).slice(0,140),symbol=upper(value(symbolIdx)).slice(0,32);
   const originalISIN=upper(value(isinIdx)),code=isin(originalISIN)?originalISIN:'';
-  const currency=upper(value(ccyIdx)),rawMic=upper(value(micIdx));
+  const currency=upper(value(ccyIdx)),settlementCurrency=upper(value(settlementIdx)),rawMic=upper(value(micIdx));
   const sourceExchange=upper(value(exchangeIdx));
   const codeMIC=mic(rawMic)?rawMic:sourceFromFile==='nasdaq'?nasdaqMIC[sourceExchange]||'':sourceFromFile==='xetra'&&declaredMarket==='XETR'?'XETR':'';
   if(name.length<3||(!ticker(symbol)&&!code)||originalISIN&&!code||currency&&!cc(currency)){skipped++;continue;}
   const kind=typeFrom(name,value(typeIdx),value(etfIdx),value(cfiIdx));
   const rowSource=sourceFromFile==='xetra'?'Xetra (Datei, lokal)':sourceFromFile==='nasdaq'?'Nasdaq (Datei, lokal)':sourceFromFile==='esma'?'ESMA (Datei, lokal)':'CSV (Datei, lokal)';
   const exchange=codeMIC==='XETR'?'Xetra':codeMIC||sourceExchange;
-  const record={name,kind,symbol:ticker(symbol)?symbol:'',isin:code,currency:cc(currency)?currency:'',mic:codeMIC,exchange,source:rowSource};
+  const record={name,kind,symbol:ticker(symbol)?symbol:'',isin:code,currency:cc(currency)?currency:'',settlementCurrency:cc(settlementCurrency)?settlementCurrency:'',mic:codeMIC,exchange,source:rowSource};
   const identity=[record.isin||record.symbol,record.symbol,record.currency,record.mic||record.exchange].join('|');
   if(duplicates.has(identity)){skipped++;continue;}
   duplicates.add(identity);out.push(record);
