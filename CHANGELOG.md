@@ -1,3 +1,9 @@
+## 1.3.1 — 2026-10-22
+
+- Entfernt den irreführenden prominent platzierten OeKB-Meldefonds-CSV-Import aus dem Anlage-Assistenten; die OeKB bleibt für die Einzelabfrage relevant.
+- Verlegt die Xetra-Downloadhilfe und den lokalen CSV/TXT-Katalogimport in ein dezentes, standardmäßig geschlossenes Details-Element unter der Suche.
+- Vorhandene lokal importierte Fondsdaten und die breiten Katalogfunktionen bleiben erhalten. Browser-Tests für versteckten und geöffneten Zustand ergänzt.
+
 ## 1.3.0 — 2026-10-22
 
 - Unterstützt lokale, große CSV/TXT-Wertpapierverzeichnisse (Xetra T7 All tradable instruments, Nasdaq-Trader-Symboldateien, kompatible ESMA-FIRDS-CSV-Auszüge und eigene Tabellen).
