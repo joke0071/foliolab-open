@@ -45,6 +45,6 @@ test('Foreign currency requires explicit rate and no automatic 1:1 assumption',(
 test('Reject future dates, empty names and unsafe cash purchases',()=>{
  const required={...base,providerId:'__new__',providerName:'Broker',accountId:'__new__',accountName:'Depot'};
  assert.throws(()=>buildAssetWizardDraft(init(),{...required,date:'2099-01-01'}),/Datum/);
- assert.throws(()=>buildAssetWizardDraft(init(),{...required,name:''}),/Bezeichnung/);
+ assert.throws(()=>buildAssetWizardDraft(init(),{...required,name:''}),/Anlagenbezeichnung/);
  assert.throws(()=>buildAssetWizardDraft(init(),{...required,kind:'cash',mode:'buy',currency:'EUR'}),/Guthaben/);
 });
