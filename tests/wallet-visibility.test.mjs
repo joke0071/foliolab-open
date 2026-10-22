@@ -39,3 +39,10 @@ test('classification preserves identity and order; hidden assets remain recovera
   assert.deepEqual(visible,[native,priced]);
   assert.deepEqual(hidden,[unpriced]);
 });
+
+test('rETH canonical contract trusted only on Ethereum',()=>{
+  const reth=a({name:'Rocket Pool ETH',symbol:'rETH',contract:'0xae78736cd615f374d3085123a210448e74fc6393'});
+  assert.equal(walletTokenVisibility(reth).show,true);
+  assert.equal(walletTokenVisibility({...reth,chainId:56}).show,false);
+  assert.equal(walletTokenVisibility({...reth,contract:'0x'+'f'.repeat(40)}).show,false);
+});
