@@ -99,7 +99,8 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    (['etf','fund','stock','other'].includes(state.kind)?
     '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog erweitern</summary><div class="wizard-catalog-content">'+
     '<p>Zusätzliche Wertpapiere aus offiziellen Dateien lokal ergänzen. Auf der Xetra-Seite „T7 (Xetra) Alle handelbaren Instrumente“ als CSV wählen.</p>'+
-    '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra-Downloadseite öffnen ↗</a>'+
+    '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra-Downloadseite ↗</a>'+
+    '<div class="wizard-source-inline"><a href="https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt" target="_blank" rel="noopener noreferrer">Nasdaq-Werte (.txt) ↗</a><a href="https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt" target="_blank" rel="noopener noreferrer">Weitere US-Börsen (.txt) ↗</a></div>'+
     '<div class="wizard-catalog-actions"><button id="wizardDirectoryImport" class="btn outline" type="button">CSV/TXT auswählen</button>'+
     '<input id="wizardDirectoryFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"></div>'+
     '<small id="wizardDirectoryStatus">'+e(directorySummary())+'</small><small>Quelle und Ausgabedatum prüfen. Eine Abwicklungswährung aus einer Datei ist nicht automatisch die Kurswährung.</small></div></details>':'')+
