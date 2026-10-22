@@ -465,7 +465,7 @@ async function scanWalletNow(){
   button.disabled=true;status.textContent=network==='btc-hd'?'Scanne Empfangs- und Wechselgeldadressen (Bitcoin HD) …':'Lese Blockchain-Bestände …';area.innerHTML='';scannedWalletAssets=[];
   try{
     const assets=await getAdapter(network).discoverAssets(address,network==='btc-hd'?{...model.settings,hdAddressType:$('scanHdType').value}:model.settings);
-    if(!assets.length){status.textContent='Keine positiven Guthaben gefunden.';area.innerHTML=empty('Keine Positionen gefunden. Prüfe Netzwerk und Adresse.');return;}
+    if(!assets.length){status.textContent=assets.partial?'Teilscan unvollständig: '+(assets.warning||'Einige Wallet-Bestände konnten nicht geprüft werden.'):'Keine positiven Guthaben gefunden.';area.innerHTML=empty(assets.partial?'Keine bestätigten Positionen. Netzwerk-/Staking-Abfragen waren unvollständig.':'Keine Positionen gefunden. Prüfe Netzwerk und Adresse.');return;}
     // Fetch contract quotes without a key when possible. A quote error never blocks import.
     if(PUBLIC_EVM_NETWORKS[Number(network)]){
       try{
