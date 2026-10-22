@@ -54,6 +54,7 @@ jobs:
           node tests/browser-account-opening.mjs
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
+          node tests/browser-position-search.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:
