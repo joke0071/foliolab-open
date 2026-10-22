@@ -58,7 +58,7 @@ const typeFrom=(rawName,rawCategory,rawETF,rawCFI)=>{
  if(upper(rawETF)==='Y'||/\b(etf|exchange.traded.fund|active etf)\b/.test(t))return 'etf';
  if(/\b(etn|etc|warrant|future|option|certificate|bond|zertifikat|anleihe)\b/.test(t))return 'other';
  if(/\b(fund|mutual|investmentfond|fonds)\b/.test(t))return 'fund';
- if(/\b(stock|share|equity|aktie|common)\b/.test(t)||upper(rawCFI).startsWith('ES'))return 'stock';
+ if(/\b(stock|shares?|equities|equity|aktien?|common)\b/.test(t)||upper(rawCFI).startsWith('ES')||/\b(common stock|ordinary shares?|registered shares?|aktien?)\b/i.test(rawName))return 'stock';
  // Never invent ETF status from ticker or an unverified instrument name.
  if(/\bETF\b/i.test(rawName))return 'etf';
  return 'other';
