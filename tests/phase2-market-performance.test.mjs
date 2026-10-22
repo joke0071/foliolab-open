@@ -24,6 +24,19 @@ test('429 Retry-After is respected without an unbounded retry loop',async()=>{
  assert.deepEqual(await cache.request('https://api.example.test/rate',{fetcher:mock,ttlMs:1}),{result:'recovered'});
  assert.equal(attempts,2);assert.deepEqual(waits,[2000]);
 });
+test('Long Retry-After does not cause premature repeated 429 requests',async()=>{
+ let attempts=0;const waits=[];const cache=createRequestCache({pause:async t=>waits.push(t),random:()=>0});
+ const mock=async()=>{attempts++;return {ok:false,status:429,headers:{get:key=>key==='Retry-After'?'120':null}};};
+ await assert.rejects(()=>cache.request('https://api.example.test/long-limit',{fetcher:mock}),/Ratenlimit/);
+ assert.equal(attempts,1,'Provider must not be retried before its 120s cooldown');
+ assert.deepEqual(waits,[],'Do not keep the UI waiting or fake a shorter cooldown');
+});
+test('Long Retry-After on HTTP 503 fails safely instead of retrying early',async()=>{
+ let attempts=0;const cache=createRequestCache({pause:async()=>{},random:()=>0});
+ const mock=async()=>{attempts++;return {ok:false,status:503,headers:{get:key=>key==='Retry-After'?'60':null}};};
+ await assert.rejects(()=>cache.request('https://api.example.test/unavailable',{fetcher:mock}),/503/);
+ assert.equal(attempts,1);
+});
 test('Persistent token secrecy: only memory cache, separated by key and fetch function',async()=>{
  const cache=createRequestCache();let calls=0;const f=async()=>{calls++;return ok({ok:true});};
  await cache.request('https://api.example.test/quote',{fetcher:f,headers:{authorization:'my-key-1'},ttlMs:10000});
