@@ -24,9 +24,12 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
  if(!target)return;
+ const token=String(Number(mount.dataset.loadSequence||0)+1);
+ mount.dataset.loadSequence=token;
+ const isCurrent=()=>mount.isConnected&&target.isConnected&&mount.dataset.loadSequence===token;
  const local=recordedPositionHistory(model,position.id,days);
  const render=(points,kind,currency='EUR',source='')=>{
-  if(!mount.isConnected||!target.isConnected)return;
+  if(!isCurrent())return;
   const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel})+'</div>'+
@@ -35,7 +38,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  };
  const fallback=(message)=>{
   if(local.length>=2){render(local,'local');return;}
-  if(!mount.isConnected||!target.isConnected)return;
+  if(!isCurrent())return;
   target.replaceChildren();
   const p=document.createElement('p');p.className='position-history-unavailable';
   p.textContent=(message?message+' ':'')+
