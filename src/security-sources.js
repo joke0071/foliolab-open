@@ -60,7 +60,7 @@ export function marketSourceOptions(p,settings={}){
  return list.includes(preferred)?[preferred]:[];
 }
 function validateCurrency(data,expected){
- if(data?.currency&&String(data.currency).toUpperCase()!==expected)throw Error('Kurswährung stimmt nicht mit der Position überein.');
+ if(data?.currency&&String(data.currency).toUpperCase()!==expected)throw Error('Währung des Kurses stimmt nicht mit der Position überein.');
 }
 function validateIdentity(symbol,requested){if(String(symbol||'').toUpperCase()!==requested)throw Error('API-Symbol stimmt nicht mit der gewählten Notierung überein.');}
 async function eodhdBars(p,settings,days,fetcher){
