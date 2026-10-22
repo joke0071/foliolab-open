@@ -81,3 +81,42 @@ test('Published is not equivalent to inactive in security directories',()=>{
  assert.equal(catalog.entries[0].currency,'EUR');
  assert.equal(catalog.entries[0].mic,'XETR');
 });
+
+
+test('Official Xetra 22.10.2026 CSV two-field preamble and 153-column schema',()=>{
+ const headers=Array.from({length:153},(_,i)=>'Field '+i);
+ for(const [idx,name] of [[0,'Product Status'],[1,'Instrument Status'],[2,'Instrument'],[3,'ISIN'],
+  [7,'Mnemonic'],[8,'MIC Code'],[18,'Instrument Type'],[67,'Settlement Currency'],[129,'Currency']])headers[idx]=name;
+ const row=(name,code,symbol,kind,status='Active',ccy='EUR')=>{
+  const parts=Array(153).fill('');
+  parts[0]='Active';parts[1]=status;parts[2]=name;parts[3]=code;parts[7]=symbol;
+  parts[8]='XETR';parts[18]=kind;parts[67]=ccy;parts[129]=ccy;
+  return parts.join(';');
+ };
+ const raw=['Market:;XETR','Date Last Update:;22.10.2026',headers.join(';'),
+  row('STRABAG SE','AT000000STR1','XD4','CS'),
+  row('Vanguard FTSE All-World UCITS ETF','IE00BK5BQT80','VWCE','ETF'),
+  row('Austrian Exchange Traded Note','XS0000000001','ETN1','ETN'),
+  row('Example ETC','XS0000000002','ETC1','ETC'),
+  row('Recently inactive','IE0000000003','INAC','ETF','Inactive'),
+  row('Awaiting deletion','IE0000000004','PD','ETF','PendingDeletion')].join('\r\n');
+ const found=parseSecurityDirectory(raw,{filename:'t7-xetr-allTradableInstruments.csv'});
+ assert.equal(found.source,'xetra');
+ assert.equal(found.sourceAsOf,'2026-10-22');
+ assert.equal(found.fileRows,6);
+ assert.equal(found.entries.length,4);
+ assert.equal(found.skipped,2);
+ assert.deepEqual(found.entries.map(x=>x.kind),['stock','etf','other','other']);
+ assert.equal(found.entries[0].isin,'AT000000STR1');
+ assert.equal(found.entries[0].currency,'EUR');
+ assert.equal(found.entries[0].mic,'XETR');
+ assert.equal(found.entries[1].symbol,'VWCE');
+ assert.equal(searchSecurityDirectories('Vanguard','etf',[found]).total,1);
+});
+test('Xetra old single-cell market/date metadata remains supported',()=>{
+ const raw='Market: XETR\nDate Last Update: 22.10.2026\nInstrument;ISIN;Mnemonic;MIC Code;Currency;Instrument Type\n'+
+  'Legacy Example ETF;IE00BK5BQT80;VWCE;XETR;EUR;ETF';
+ const parsed=parseSecurityDirectory(raw,{filename:'t7-xetr-allTradableInstruments.csv'});
+ assert.equal(parsed.entries.length,1);
+ assert.equal(parsed.sourceAsOf,'2026-10-22');
+});
