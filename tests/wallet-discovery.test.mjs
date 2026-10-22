@@ -78,7 +78,7 @@ test('EVM discovery preserves exact large atomic balances and identifies incompl
 });
 test('Missing Solana raw account value never means verified zero',async()=>{
  const mock=async(_url,opts)=>reply(JSON.parse(opts.body).method==='getBalance'?{result:{}}:{result:{value:[]}});
- await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohbetrag/);
+ await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohsaldo|Rohbetrag/);
 });
 
 test('Malformed Solana token-account responses never certify complete empty lists',async()=>{
