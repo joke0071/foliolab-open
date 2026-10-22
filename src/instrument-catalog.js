@@ -124,3 +124,51 @@ export function searchFundCatalog(query,kind='etf',catalog=loadFundCatalog(),lim
  matching.sort((a,b)=>Number(lower(b.isin)===q)-Number(lower(a.isin)===q)||Number(lower(b.name).startsWith(q))-Number(lower(a.name).startsWith(q))||a.name.localeCompare(b.name));
  return {total:matching.length,results:matching.slice(0,Math.max(1,Math.min(100,limit)))};
 }
+
+
+// IndexedDB is used for large lists: Web Storage is typically too small for
+// tens of thousands of fund names. Data never leaves the current browser.
+export const FUND_DB='foliolab-open-reference-catalog-v1';
+function openFundDB(factory){
+ return new Promise((resolve,reject)=>{
+  const request=factory.open(FUND_DB,1);
+  request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains('catalogs'))db.createObjectStore('catalogs');};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>reject(request.error||Error('Lokale Katalogdatenbank nicht erreichbar.'));
+ });
+}
+export async function saveFundCatalogPersistent(catalog,{factory=globalThis.indexedDB,storage=globalThis.localStorage}={}){
+ if(catalog?.schemaVersion!==1||!Array.isArray(catalog.entries)||!catalog.entries.length||catalog.entries.length>MAX_FUND_ROWS)throw Error('Ungültige oder zu große Fondsdatei.');
+ if(!factory)return saveFundCatalog(catalog,storage);
+ const db=await openFundDB(factory);
+ try{
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction('catalogs','readwrite');
+   tx.objectStore('catalogs').put(catalog,'oekb');
+   tx.oncomplete=resolve;
+   tx.onabort=()=>reject(tx.error||Error('Fondsimport konnte nicht gespeichert werden.'));
+   tx.onerror=()=>reject(tx.error||Error('Fondsimport fehlgeschlagen.'));
+  });
+ }finally{db.close();}
+ temporaryFunds=catalog;
+ try{storage?.removeItem(FUND_CATALOG_KEY);}catch{}
+ return catalog.entries.length;
+}
+export async function loadFundCatalogPersistent({factory=globalThis.indexedDB,storage=globalThis.localStorage}={}){
+ if(temporaryFunds)return temporaryFunds;
+ if(factory){
+  let db;
+  try{
+   db=await openFundDB(factory);
+   const result=await new Promise((resolve,reject)=>{
+    const tx=db.transaction('catalogs','readonly');
+    const get=tx.objectStore('catalogs').get('oekb');
+    get.onsuccess=()=>resolve(get.result||null);
+    get.onerror=()=>reject(get.error);
+   });
+   if(result?.schemaVersion===1&&Array.isArray(result.entries)&&result.entries.length<=MAX_FUND_ROWS){temporaryFunds=result;return result;}
+  }catch{/* private browser mode may prohibit IndexedDB; legacy localStorage remains usable */}
+  finally{db?.close();}
+ }
+ return loadFundCatalog(storage);
+}
