@@ -90,6 +90,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   catch(error){
    const message=String(error?.message||'');
    if(/Ratenlimit|429|quota|rate limit/i.test(message))throw Error('CoinGecko-Limit erreicht. Weniger Diagramme gleichzeitig öffnen oder einen eigenen kostenlosen Demo-API-Schlüssel hinterlegen.');
+   if(/401|403|Zugriff verweigert/i.test(message))throw Error('CoinGecko verweigert die Historienabfrage. Ein eigener kostenloser Demo-API-Schlüssel kann helfen.');
    if(/Failed to fetch|NetworkError|Load failed|Zeitüberschreitung|fetch failed/i.test(message))throw Error('CoinGecko aus diesem Browser gerade nicht erreichbar (Netzwerk, CORS oder Sperre).');
    throw error;
   }
