@@ -63,7 +63,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"')+'</div>'+
    (state.kind==='crypto'?input('wizardCoinId','CoinGecko-ID (optional)',state.coinId,'maxlength="110"'):
     ['etf','stock','fund'].includes(state.kind)?input('wizardIsin','ISIN (optional)',state.isin,'maxlength="20"'):'')+
-   (state.kind==='cash'?'':('<label class="field"><span>Kurswährung</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen').replace('<option value="">Währung wählen</option>','')+'</select></label>'))+
+   (state.kind==='crypto'?'':('<label class="field"><span>'+ (state.kind==='cash'?'Kontowährung':'Kurswährung') +'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen').replace('<option value="">Währung wählen</option>','')+'</select></label>'))+
    '<details class="advanced-apis"><summary>Erweiterte Einstellungen · Börsennotierung</summary>'+
    input('wizardExchange','Handelsplatz',state.exchange,'maxlength="60"')+
    input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
