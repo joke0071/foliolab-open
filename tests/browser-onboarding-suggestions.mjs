@@ -90,9 +90,20 @@ try{
  }
  // Existing holdings must stay valid after reopening and filtering selection.
  await page.locator('[data-action="edit-position"]').first().click();
+ const previousProvider=await page.locator('#positionProvider').inputValue();
+ const previousAccount=await page.locator('#positionAccount').inputValue();
  await page.locator('#positionProviderSearch').fill('n2');
  assert.equal(await page.locator('#positionProvider option').count(),1);
+ assert.equal(await page.locator('#positionProvider').inputValue(),'','Filter must not select another provider');
+ await page.locator('#saveDialog').click();
+ assert.equal(await page.locator('#editDialog').isVisible(),true,'Cannot silently save an unconfirmed match');
  await page.locator('#positionProviderSearch').fill('');
  assert.equal(await page.locator('#positionProvider option').count(),2);
+ assert.equal(await page.locator('#positionProvider').inputValue(),previousProvider,'Provider restored after filtering');
+ assert.equal(await page.locator('#positionAccount').inputValue(),previousAccount,'Account restored after filtering');
+ await page.locator('#positionAccountSearch').fill('not-a-real-account');
+ assert.equal(await page.locator('#positionAccount').inputValue(),'','Filtered account must not become implicit selection');
+ await page.locator('#positionAccountSearch').fill('');
+ assert.equal(await page.locator('#positionAccount').inputValue(),previousAccount,'Account restored when filter clears');
  console.log('ONBOARDING: offline Flatex/broker and N26/bank, account type suggestions, searchable position dropdowns, ETF field autofill and responsive widths PASS');
 }finally{await browser.close();}

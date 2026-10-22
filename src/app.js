@@ -155,19 +155,22 @@ function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);
 <details class="advanced-apis"><summary>Einstandswert (optional)</summary><p class="small-help">Nur den tatsächlich bekannten gesamten Anschaffungswert des aktuellen Bestands in EUR eintragen. Leer lassen, wenn unbekannt.</p>${field('Einstandswert in EUR','costBasisEUR',p?.costBasisEUR??'','number','min="0" step="any" placeholder="Unbekannt"')}</details>
 <details class="advanced-apis" id="defiPosition"><summary>Wirtschaftliche Position / DeFi (optional)</summary><p class="small-help">Sicherheiten, Liquid Staking und derivative Positionen bewusst zuordnen. Kein automatisches Entfernen oder Bewerten.</p><label class="field"><span>Wirtschaftliche Funktion</span><select name="economicRole">${options([['standard','Normal'],['collateral','Hinterlegt / Collateral'],['liquid-staking','Liquid Staking'],['vault','Vault'],['liquidity-pool','Liquidity Pool'],['lending','Lending'],['borrowed','Geliehene Assets / Verbindlichkeit'],['wrapped','Wrapped Token']],p?.economicRole||'standard')}</select></label><label class="field"><span>In der Vermögenssumme</span><select name="valuationMode">${options([['included','Anrechnen'],['excluded','Nicht anrechnen (bereits durch andere Position repräsentiert)'],['liability','Als Verbindlichkeit abziehen']],p?.valuationMode||'included')}</select></label><label class="field"><span>Wird repräsentiert durch (optional)</span><select name="representedByPositionId">${options([['','Keine Zuordnung'],...model.positions.filter(x=>x.id!==p?.id).map(x=>[x.id,x.name])],p?.representedByPositionId||'')}</select></label></details>${field('Notiz (optional)','notes',p?.notes||'','text','maxlength="300"')}<div class="small-help">Kurse für Fremdwährungen werden nur mit einem gültigen EUR-Umrechnungskurs korrekt berücksichtigt. Wallet-Adressen werden beim Abruf an den jeweiligen Blockchain-Dienst gesendet.</div>${p?`<button type="button" class="danger-link" id="deletePosition">Position löschen</button>`:''}`;}
 function refreshPositionAccounts(){
- const provider=$('positionProvider').value,kind=$('positionKind').value,select=$('positionAccount'),prev=select.value;
+ const select=$('positionAccount'),selected=select.dataset.selectedAccountId||select.value;
+ const provider=$('positionProvider').value,kind=$('positionKind').value;
  const q=String($('positionAccountSearch')?.value||'').trim().toLocaleLowerCase('de');
  const accounts=model.accounts.filter(a=>a.providerId===provider&&(!q||a.name.toLocaleLowerCase('de').includes(q)))
   .sort((a,b)=>Number(b.type===suggestedAccountType(kind))-Number(a.type===suggestedAccountType(kind)));
- select.innerHTML=options(accounts.map(a=>[a.id,a.name]),accounts.some(a=>a.id===prev)?prev:accounts[0]?.id);
+ // A filter only changes visibility, never the confirmed account selection.
+ select.innerHTML=options(accounts.map(a=>[a.id,a.name]),selected);
+ if(!accounts.some(a=>a.id===selected))select.selectedIndex=-1;
  select.required=true;
 }
 function refreshPositionProviders(){
- const filter=String($('positionProviderSearch')?.value||'').trim().toLocaleLowerCase('de');
- const select=$('positionProvider'),prev=select.value;
- const providers=model.providers.filter(p=>!filter||p.name.toLocaleLowerCase('de').includes(filter));
- select.innerHTML=options(providers.map(p=>[p.id,p.name]),providers.some(x=>x.id===prev)?prev:providers[0]?.id);
- $('positionAccountSearch').value='';
+ const q=String($('positionProviderSearch')?.value||'').trim().toLocaleLowerCase('de');
+ const select=$('positionProvider'),selected=select.dataset.selectedProviderId||select.value;
+ const providers=model.providers.filter(p=>!q||p.name.toLocaleLowerCase('de').includes(q));
+ select.innerHTML=options(providers.map(p=>[p.id,p.name]),selected);
+ if(!providers.some(p=>p.id===selected))select.selectedIndex=-1;
  refreshPositionAccounts();
 }
 function refreshPosForm(){const kind=$('positionKind').value,crypto=kind==='crypto';$('coinGroup').classList.toggle('hidden',!crypto);$('walletGroup').classList.toggle('hidden',!crypto);$('securityGroup').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('exchangeField').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('marketIdentifiers').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));const coinCurrency=$('positionCurrency');if(crypto&&coinCurrency.value!=='EUR'){coinCurrency.value='EUR';} if(crypto){const currPos=$('fxWrap').querySelector('input');currPos.value=1;}$('fxWrap').classList.toggle('hidden',coinCurrency.value==='EUR'||crypto);$('walletDetails').classList.toggle('hidden',!$('walletEnabled').checked);const chain=$('walletChain').value;$('tokenFields').classList.toggle('hidden',!['erc20','spl'].includes(chain));$('chainIdField').classList.toggle('hidden',!['evm','erc20'].includes(chain));$('walletHdField').classList.toggle('hidden',chain!=='btc-hd');}
@@ -183,7 +186,15 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
    fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
    fxSource:p&&String(v.fxRate)===String(p.fxRate)?p.fxSource:null,
    fxRateDate:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateDate:null,
-   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').addEventListener('change',()=>{$('positionAccountSearch').value='';refreshPositionAccounts();});
+   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
+ $('positionAccount').dataset.selectedAccountId=$('positionAccount').value;
+ $('positionAccount').addEventListener('change',e=>{e.target.dataset.selectedAccountId=e.target.value;});
+ $('positionProvider').addEventListener('change',e=>{
+  e.target.dataset.selectedProviderId=e.target.value;
+  $('positionAccount').dataset.selectedAccountId='';
+  $('positionAccountSearch').value='';
+  refreshPositionAccounts();
+ });
  $('positionProviderSearch').addEventListener('input',refreshPositionProviders);
  $('positionAccountSearch').addEventListener('input',refreshPositionAccounts);
  refreshPositionAccounts();refreshPosForm();$('coinQuery').addEventListener('input',showCoinResults);$('coinCatalogLoad').addEventListener('click',loadCoins);$('securitySearch').addEventListener('click',lookupSecurity);$('securityQuery').addEventListener('input',()=>{clearTimeout(securityDebounce);const q=$('securityQuery').value.trim();if(q.length>=3&&(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey))securityDebounce=setTimeout(lookupSecurity,650);});$('securityQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupSecurity();}});if(p)$('deletePosition').addEventListener('click',()=>{if(model.bookings.some(x=>x.positionId===p.id||x.targetPositionId===p.id)||model.journalEntries.some(e=>e.postings.some(x=>x.positionId===p.id)))return notify('Position hat Buchungen oder Journal-Einträge und kann nicht gelöscht werden.',true);if(model.positions.some(x=>x.representedByPositionId===p.id))return notify('Position wird von einer DeFi-Verknüpfung referenziert. Bitte zuerst die Verknüpfung lösen.',true);if(confirm('Diese unverbuchte Position wirklich löschen?')){model.positions=model.positions.filter(x=>x.id!==p.id);model.openingPositions=model.openingPositions.filter(x=>x.positionId!==p.id);if(model.priceHistories)delete model.priceHistories[p.id];snapshot(model);save();closeDialog();notify('Position gelöscht.');}});}
