@@ -263,3 +263,26 @@ python3 -m http.server 4173
 Der Workflow testet die Kompatibilität von Backups, Wallets, Krypto-/ETF-Datenquellen, Buchungsjournal, UI und responsive Ansichten. Er veröffentlicht GitHub Pages erst nach einem erfolgreichen Testjob auf \`main\`. Der Worker wird nicht auf Pages ausgeliefert oder im Frontend vorinstalliert.
 
 Rollback: Frühere \`main\`-Commits bleiben erhalten und können bei kritischen Fehlern gezielt per Revert-Commit wiederhergestellt werden. Alte lokale Datenbestände und Backups werden nicht aktiv migriert oder extern gespeichert, solange sie nicht geladen werden.
+
+
+## Erweiterte Instrumentensuche und OeKB-Meldefonds (v1.2.0)
+
+### Kryptowährungen
+Im Assistenten **Anlage hinzufügen → Kryptowährung** werden die nach Marktkapitalisierung führenden **100 Coins** über den öffentlichen CoinGecko-Endpunkt \`/coins/markets\` geladen. Die Ranking-Reihenfolge ist eine aktuelle Anbieterinformation (kein fest verdrahteter Stand). Sobald eine Suche eingegeben wird, kann zusätzlich \`/coins/list\` nachgeladen werden: Der gesamte von CoinGecko unterstützte Coin-ID-Katalog wird ausschließlich im Speicher durchsucht, mit einer auf maximal 100 sichtbare Treffer begrenzten Ansicht. Die Auswahl eines Coins ist immer ausdrücklich erforderlich.
+
+Diese Stammdaten sind **keine automatisch gespeicherten Kurse und Bestände**. Unterschiedliche Coins können dasselbe Symbol tragen; entscheidend ist die bewusst ausgewählte CoinGecko-ID. Bei Rate-Limits, CORS-Fehlern oder Offlinebetrieb bleiben die kuratierten Offline-Vorschläge und die manuelle Erfassung erhalten. Öffentliche Aufrufe unterliegen CoinGecko-Limits und werden je Session sparsam wiederverwendet; nach Freigabe der Antwort sind Name, Ticker und ID lokal sichtbar.
+
+### Österreichische KESt-Meldefonds
+Die OeKB bietet die <https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f> zur offiziellen Abfrage an. **Es wird kein ungeprüfter oder kostenpflichtiger Feed automatisch heruntergeladen.** Stattdessen ist unter **Anlage hinzufügen → ETF/Fonds** eine lokale Importfunktion für eine vom Nutzer aus der OeKB bereitgestellte **CSV/TSV** enthalten.
+
+Die Datei muss erkennbare Spalten **ISIN** und **Fondsbezeichnung** (oder \`Fondsname\`, \`Fund Name\`, \`Name\`, \`Bezeichnung\`) besitzen. Werte werden auf plausible ISIN-Form und Namen geprüft, doppelte ISINs übersprungen; die Daten bleiben unter \`foliolab-open-fund-catalog-v1\` ausschließlich in diesem Browser gespeichert und verändern kein Portfolio. Maximal 14 MB und 120.000 Zeilen. Der Katalog gilt **nicht automatisch als tagesaktuelle Bestätigung des Meldefonds-Status** – maßgeblich bleibt die OeKB-Auskunft, insbesondere bei ehemaligen Meldefonds und Statuswechseln. Eine Fondsliste enthält keine bestätigten Börsenticker, Handelsplätze oder Kurswährungen; der Nutzer muss diese Informationen bei Bedarf selbst auswählen.
+
+Die laufende KESt-Einstufung ist **von** einer Instrumentenidentifikation zu unterscheiden. Es werden weder automatische steuerliche Berechnungen aus dem Import abgeleitet noch historische Fondsstatus vorgetäuscht. Die App bietet keine Steuerberatung.
+
+### Datenquellen
+- **OeKB:** amtlicher Abruf und benutzerseitiger CSV-Import; nicht als versteckter Scraper.
+- **CoinGecko:** öffentlicher Top-100- und vollständiger ID-Katalog ohne verpflichtende persönliche API-Schlüssel, abhängig von Netzwerk und Limits.
+- **Referenznotierungen:** bisheriges Offline-Minikatalogangebot plus lokal importierte Fonds; nicht als vollständige Börsenkursdatenbank ausgeben.
+- **OpenFIGI/weitere Provider:** bleiben wie zuvor optional, abhängig von vorhandenen Worker- oder Nutzerzugängen.
+
+Bei fehlendem Online-Katalog ist die manuelle Anlage weiterhin möglich. Der Service Worker speichert lediglich den statischen App-Code, niemals externe API-Antworten, personenbezogene Kontodaten oder aus dem OeKB-Portal gescrapte Daten.
