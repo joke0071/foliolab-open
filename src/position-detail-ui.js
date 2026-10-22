@@ -11,6 +11,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
  const price=quoteCurrency(Number(p.priceExact??p.price)||0,p.currency||'EUR');
  const quote=p.quoteSource?esc(p.quoteSource):'Manuell',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
+ const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
     ['Kurs je Einheit',price],['Positionswert',money(amount)],['Einstandswert',cost]]
@@ -30,7 +31,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const controls=needsOwnChart?'<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
    POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>':'';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   csvTool+publicChart+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':'');
+   quoteCredit+csvTool+publicChart+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':'');
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
