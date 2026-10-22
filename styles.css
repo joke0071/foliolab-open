@@ -192,3 +192,7 @@
 .position-csv-import:focus-visible,.position-csv-remove:focus-visible{outline:2px solid #598f69;outline-offset:2px}
 .position-csv-help{font-size:10px;line-height:1.5;color:#84958a;margin:6px 0 0}
 @media(max-width:380px){.position-csv-actions{display:grid;grid-template-columns:1fr}.position-csv-import,.position-csv-remove{width:100%}}
+
+/* Keep fallback navigation within narrow crypto detail cards. */
+.position-history-external{display:inline-flex;max-width:100%;margin:10px 2px 0;color:#286c47;font-size:11px;font-weight:650;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.position-history-external:focus-visible{outline:2px solid #528c64;outline-offset:3px;border-radius:3px}
