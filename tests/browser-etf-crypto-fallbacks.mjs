@@ -25,7 +25,7 @@ try{
  await page.route('https://s3.tradingview.com/**',route=>{external++;return route.fulfill({status:200,contentType:'application/javascript',body:'/* external widget test stub */'});});
  await detail.locator('[data-action="load-tradingview"]').click();
  const script=detail.locator('script[src*="embed-widget-advanced-chart"]');
- await script.waitFor();
+ await script.waitFor({state:'attached'});
  const opts=JSON.parse(await script.textContent());
  assert.equal(opts.symbol,'XETR:5MVL');
  assert.equal(opts.interval,'D');
