@@ -53,11 +53,11 @@ export const providerDirectory=Object.freeze(DIRECTORY.map(([name,type,aliases])
 export function providerSuggestions(query='',limit=12){
  const term=norm(query);
  if(!term)return providerDirectory.slice(0,limit);
- return providerDirectory.map(p=>{
+ return providerDirectory.map((p,rank)=>{
   const words=[p.name,...p.aliases].map(norm);
   const score=words.some(s=>s===term)?0:words.some(s=>s.startsWith(term))?1:words.some(s=>s.split(' ').some(w=>w.startsWith(term)))?2:words.some(s=>s.includes(term))?3:99;
-  return {p,score};
- }).filter(x=>x.score<99).sort((a,b)=>a.score-b.score||a.p.name.localeCompare(b.p.name,'de')).slice(0,limit).map(x=>x.p);
+  return {p,score,rank};
+ }).filter(x=>x.score<99).sort((a,b)=>a.score-b.score||a.rank-b.rank).slice(0,limit).map(x=>x.p);
 }
 /** Only exact name/known alias may change the suggested provider type. */
 export function providerExact(name){
