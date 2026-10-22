@@ -134,3 +134,17 @@ Bei ungeklärter automatischer Zuordnung oder unterbrochenem Explorer-Abruf blei
 Unter **Übersicht → Anbieter → Konto → Position** lassen sich einzelne Positionen aufklappen. Angezeigt werden Bestand, Einzelkurs, EUR-Wert, bekannter Einstandswert und Kontoanteil sowie ein Zeitraumfilter (7 Tage / 1 Monat / 3 Monate / 1 Jahr). **Krypto-Marktkurse** werden ausschließlich nach Nutzerinteraktion aus CoinGecko geladen; **Wertpapier-Marktdaten** erfordern einen eigenen Twelve-Data-Schlüssel sowie einen eindeutig geprüften Ticker, Handelsplatz und Kurswährung. Es werden keine geheimen Standard-API-Schlüssel mitgeliefert. Drittanbieter können den Datenabruf blockieren oder begrenzen.
 
 Foliolab speichert ab dieser Version beim **aktuellen** Portfolio-Stichtag zusätzlich die exakt berechneten Werte der Einzelpositionen lokal. Vergangene Gesamtstichtage ohne Positionshistorie werden **nicht künstlich in Einzelpositionen aufgeteilt**. Wenn mindestens zwei echte Einzelpositionsstichtage vorhanden sind, steht auch eine lokale Wertentwicklung als Rückfallanzeige bereit. Diese enthält mögliche Ein-/Auszahlungen und Bestandsänderungen und ist **keine bereinigte persönliche Rendite**. Marktdatenkurven zeigen dagegen den Marktpreis je Einheit, nicht den persönlichen Depotwert. Sämtliche Detaildiagramme werden erst beim Aufklappen angefordert; Wallet-Schlüssel werden nicht für Markthistorie an den Kursanbieter übertragen.
+
+### ETF-/Aktien-Kursverläufe ohne API-Schlüssel (CSV)
+
+In **Übersicht → Anbieter → Konto → Position → CSV-Kursverlauf importieren** kannst du eine *echte* historische Schlusskursreihe lokal einlesen. Unterstützte Dateiformate: UTF-8-CSV mit Semikolon, Komma oder Tab und mindestens den Spalten **Datum/Date** und **Schlusskurs/Close**. Beispiele:
+
+```csv
+Datum;Schlusskurs;Währung;ISIN
+2026-10-19;85,32;EUR;IE00BG0SKF03
+2026-10-20;86,19;EUR;IE00BG0SKF03
+```
+
+Oder `Date,Open,High,Low,Close,Adj Close,Volume`. Bevor die Kurse importiert werden, musst du bestätigen, dass CSV-Daten **genau zur gewählten Börsennotierung und Handelswährung** gehören. Wenn in der CSV Ticker, ISIN oder Währung stehen, werden sie gegen die Position geprüft. Doppelte widersprüchliche Daten, ungültige Kurse und zukünftige Daten werden abgewiesen. Maximal 1,5 MB und 1.600 Kurstage je Datei. Der Import ist *keine unabhängige Kursprüfung* und ändert niemals die aktuelle Positionsmenge, den letzten Kurs oder Buchungen. Kein Upload: Die Daten werden ausschließlich im Browser gespeichert und zusammen mit dem normalen Backup exportiert. Optionales Entfernen ist im Positionsdetail möglich.
+
+Ein `xpub` oder andere Wallet-Daten werden beim historischen CSV-Import nicht übertragen. Wenn kein geeigneter Datenexport und kein bestätigter API-Zugang vorliegt, zeigt die App ausdrücklich **keine künstliche Kurskurve**. Bei europäisch notierten ETFs ist die kostenlose Twelve-Data-Stufe nicht uneingeschränkt verfügbar.
