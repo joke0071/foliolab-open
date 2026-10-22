@@ -36,14 +36,14 @@ export function normalizeListing(row,source){
  if(isin&&!validIsin(isin))return null;
  if(mic&&!/^[A-Z0-9]{4}$/.test(mic))return null;
  const suffix=source==='eodhd'?upper(row.Exchange):'';
- const mapping=marketMappings[mic]||marketMappings[upper(exchange)]||null;
+ const mapping=marketMappings[mic]||marketMappings[upper(row.exchange||row.Exchange)]||marketMappings[upper(exchange)]||null;
  // Provider-specific identifiers must be returned or uniquely known by mapping.
  // Never derive an EODHD exchange from an unverified place name or a ticker.
  const eodhdSymbol=source==='eodhd'&&suffix&&/^[A-Z0-9]{1,12}$/.test(suffix)?
    symbol+'.'+suffix:source==='twelve'&&mapping?symbol+'.'+mapping[3]:'';
  const fmpSymbol=source==='fmp'?providerSymbol:'';
  const tradingViewSymbol=mapping?mapping[2]+':'+symbol:'';
- return {source,name,symbol,isin,currency,exchange:mic&&mapping?mapping[0]:exchange,mic:mic||mapping?.[1]||'',
+ return {source,name,symbol,isin,currency,exchange:mapping?mapping[0]:exchange,mic:mic||mapping?.[1]||'',
    eodhdSymbol,fmpSymbol,tradingViewSymbol,
    type:trim(row.instrument_type||row.type||row.Type,40)};
 }
