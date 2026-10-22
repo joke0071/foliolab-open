@@ -50,7 +50,7 @@ try {
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  const accordion=page.locator('#providerOverview details').first();
  assert.equal(await accordion.getAttribute('open'),null);
- await accordion.locator('summary').click();
+ await accordion.locator(':scope > summary').click();
  assert.ok(await accordion.getAttribute('open')!==null);
  assert.match(await accordion.innerText(),/Wertpapierdepot/);
  assert.match(await accordion.innerText(),/World ETF/);
