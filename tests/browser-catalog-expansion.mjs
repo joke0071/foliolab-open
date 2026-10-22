@@ -30,7 +30,7 @@ try{
  assert.equal(await page.locator('a:has-text("OeKB")').count(),0);
  assert.equal(await page.locator('#wizardCatalogTools').count(),1);
  assert.equal(await page.locator('#wizardCatalogTools').getAttribute('open'),null);
- assert.equal(await page.locator('a:has-text("Xetra-Liste herunterladen")').isVisible(),false);
+ assert.equal(await page.locator('a:has-text("Xetra-Downloadseite öffnen")').isVisible(),false);
  await page.locator('#wizardCatalogTools summary').click();
  const xetra=page.locator('#wizardCatalogTools a').first();
  assert.equal(await xetra.isVisible(),true);
