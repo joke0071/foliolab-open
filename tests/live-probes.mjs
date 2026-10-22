@@ -4,6 +4,7 @@ const page=await browser.newPage();
 try{
  await page.goto('http://127.0.0.1:4173/');
  const checks=[
+  {name:'CoinGecko market chart, keyless',url:'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=eur&days=365'},
   {name:'Frankfurter FX',url:'https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR'},
    {name:'Frankfurter historical FX',url:'https://api.frankfurter.dev/v1/2026-10-20?base=USD&symbols=EUR'},
   {name:'Blockstream Bitcoin',url:'https://blockstream.info/api/address/1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa'},

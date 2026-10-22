@@ -39,3 +39,10 @@ test('Escaped provider accordions preserve per-account position breakdown',()=>{
  assert.ok(!html.includes('<img src=x>'));
  assert.match(html,/&lt;img src=x&gt;/);
 });
+test('Tiny positive crypto prices use a tight, nonnegative axis rather than a one-euro minimum span',()=>{
+ const rows=[{date:'2026-10-20',total:0.0054},{date:'2026-10-21',total:0.0058}];
+ const chart=drawInteractiveChart(rows,{money,esc:escapeHTML,dateLabel:labels,axisFormat:v=>'€ '+v.toFixed(6)});
+ const axis=chart.split('chart-y-labels')[1].split('</div>')[0];
+ assert.match(axis,/€ 0\.005/);
+ assert.doesNotMatch(axis,/-€ /);
+});

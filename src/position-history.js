@@ -6,6 +6,54 @@ export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[36
 const allowed=new Set(POSITION_PERIODS.map(([days])=>days));
 const isoFromMs=ms=>new Date(ms).toISOString().slice(0,10);
 const finitePositive=n=>Number.isFinite(n)&&n>0;
+/**
+ * The public CoinGecko limit is shared between quote and chart requests.
+ * Use a single 365-day series per coin across UI time-range changes and pace
+ * simultaneous on-demand history requests. A throttle does not bypass CORS,
+ * provider quotas or blocked networks.
+ */
+const chartCoordinators=new WeakMap();
+const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function historyCoordinator(fetcher){
+ let c=chartCoordinators.get(fetcher);
+ if(!c){c={tail:Promise.resolve(),earliest:0,pending:new Map(),completed:new Map()};chartCoordinators.set(fetcher,c);}
+ return c;
+}
+export async function coinGeckoHistoricalResponse(coinId,settings={},fetcher=globalThis.fetch){
+ if(!/^[a-z0-9-]{2,100}$/.test(coinId))throw Error('CoinGecko-ID der Position ist ungültig.');
+ const url=new URL('https://api.coingecko.com/api/v3/coins/'+encodeURIComponent(coinId)+'/market_chart');
+ url.searchParams.set('vs_currency','eur');url.searchParams.set('days','365');
+ const headers=settings.coinGeckoKey?{'x-cg-demo-api-key':settings.coinGeckoKey}:{};
+ const id=url.toString()+'|'+(settings.coinGeckoKey||'');
+ const c=historyCoordinator(fetcher);
+ const cached=c.completed.get(id);
+ if(cached?.expires>Date.now())return structuredClone(cached.data);
+ if(cached)c.completed.delete(id);
+ if(c.pending.has(id))return c.pending.get(id);
+ const result=c.tail.then(async()=>{
+  // Mocks are not throttled. Production history calls from all expanded
+  // positions share a deliberately conservative rate limit.
+  const spacing=fetcher===globalThis.fetch?(settings.coinGeckoKey?2500:8500):0;
+  if(spacing)await wait(Math.max(0,c.earliest-Date.now()));
+  c.earliest=Date.now()+spacing;
+  try{
+   const data=await requestJSON(url.toString(),{fetcher,headers,ttlMs:TTL.history,attempts:1});
+   if(Array.isArray(data?.prices)&&data.prices.length>=2){
+    c.completed.set(id,{data:structuredClone(data),expires:Date.now()+TTL.history});
+    if(c.completed.size>80)c.completed.delete(c.completed.keys().next().value);
+   }
+   return data;
+  }catch(error){
+   if(/Ratenlimit|429|quota|rate limit/i.test(String(error?.message||'')))c.earliest=Math.max(c.earliest,Date.now()+30000);
+   throw error;
+  }
+ });
+ c.pending.set(id,result);
+ c.tail=result.catch(()=>{});
+ try{return await result;}
+ finally{c.pending.delete(id);}
+}
+
 export function currentPositionValues(model){
  const values=Object.create(null);
  for(const p of model.positions){
@@ -37,10 +85,15 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
  if(!capability)throw Error('Keine bestätigte historische Kursquelle eingerichtet.');
  let rows=[],currency='EUR',source='';
  if(capability.kind==='crypto'){
-  const url=new URL('https://api.coingecko.com/api/v3/coins/'+encodeURIComponent(capability.id)+'/market_chart');
-  url.searchParams.set('vs_currency','eur');url.searchParams.set('days',String(days));
-  const headers=settings.coinGeckoKey?{'x-cg-demo-api-key':settings.coinGeckoKey}:{};
-  const data=await requestJSON(url.toString(),{fetcher,headers,ttlMs:TTL.history});
+  let data;
+  try{data=await coinGeckoHistoricalResponse(capability.id,settings,fetcher);}
+  catch(error){
+   const message=String(error?.message||'');
+   if(/Ratenlimit|429|quota|rate limit/i.test(message))throw Error('CoinGecko-Limit erreicht. Weniger Diagramme gleichzeitig öffnen oder einen eigenen kostenlosen Demo-API-Schlüssel hinterlegen.');
+   if(/401|403|Zugriff verweigert/i.test(message))throw Error('CoinGecko verweigert die Historienabfrage. Ein eigener kostenloser Demo-API-Schlüssel kann helfen.');
+   if(/Failed to fetch|NetworkError|Load failed|Zeitüberschreitung|fetch failed/i.test(message))throw Error('CoinGecko aus diesem Browser gerade nicht erreichbar (Netzwerk, CORS oder Sperre).');
+   throw error;
+  }
   if(!Array.isArray(data?.prices)||data.prices.length<2)throw Error('CoinGecko hat keine ausreichenden historischen Kurse geliefert.');
   rows=data.prices.map(([timestamp,price])=>({timestamp:Number(timestamp),price:Number(price)}));
   source='CoinGecko';currency='EUR';
@@ -64,7 +117,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   rows=data.values.map(v=>({timestamp:Date.parse(String(v.datetime)+'T12:00:00Z'),price:Number(v.close)}));
   source='Twelve Data · bestätigter Handelsplatz';currency=capability.currency;
  }
- const from=isoFromMs(Date.now()-(days+2)*864e5);
+ const from=isoFromMs(Date.now()-((capability.kind==='crypto'?days-1:days+2))*864e5);
  const today=isoFromMs(Date.now());
  const byDay=new Map();
  for(const row of rows){

@@ -41,22 +41,15 @@ try{
  await btc.locator('[data-position-range="7"]').click();
  assert.equal(await btc.locator('[data-position-range="7"]').getAttribute('aria-pressed'),'true');
  await btc.locator('.position-history-chart .chart-plot').waitFor();
- // Late responses from older ranges must never replace a newer selected range.
- await page.unroute('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart**');
- await page.route('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart**',async route=>{
-  const days=Number(new URL(route.request().url()).searchParams.get('days'));
-  if(days===90)await new Promise(resolve=>setTimeout(resolve,650));
-  const now=Date.now(),base=days===365?75000:66000;
-  return route.fulfill({status:200,contentType:'application/json',
-   body:JSON.stringify({prices:[[now-3*864e5,base-1000],[now-864e5,base]]})});
- });
+ // Switching ranges should filter the cached one-year dataset without
+ // sending repeated CoinGecko API calls or mixing responses from old ranges.
  await btc.locator('[data-position-range="90"]').click();
  await btc.locator('[data-position-range="365"]').click();
  await btc.locator('.position-history-chart .chart-plot').waitFor();
- await page.waitForTimeout(800);
  await btc.locator('.position-history-chart .chart-plot').focus();
  await page.keyboard.press('End');
- assert.match(await btc.locator('.chart-tooltip').innerText(),/75.000/,'Older delayed range cannot overwrite new range');
+ assert.match(await btc.locator('.chart-tooltip').innerText(),/73.000/);
+ assert.equal(calls,1,'Only one annual history request should serve all chart ranges');
  await btc.locator('summary').click();
  assert.equal(await btc.getAttribute('open'),null);
  await btc.locator('summary').click();

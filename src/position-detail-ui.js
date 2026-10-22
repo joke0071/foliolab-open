@@ -37,8 +37,12 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  const render=(points,kind,currency='EUR',source='')=>{
   if(!isCurrent())return;
   const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
+  const axisFormat=kind==='market'?x=>new Intl.NumberFormat('de-AT',{
+   style:'currency',currency,notation:Math.abs(x)>=1000?'compact':'standard',
+   maximumFractionDigits:Math.abs(x)<0.0001?8:Math.abs(x)<1?6:1
+  }).format(x):undefined;
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
-   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel})+'</div>'+
+   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
   attachChartInteractions(target);
  };
@@ -51,6 +55,14 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    (local.length===1?'Für diese Position liegt erst ein gespeicherter Stichtag vor.':'Noch keine belastbare historische Einzelpositionsreihe gespeichert.')+
    ' Neue Stichtage erfassen künftig Einzelpositionswerte.';
   target.append(p);
+  if(position.kind==='crypto'&&/^[a-z0-9-]{2,100}$/.test(position.coinId||'')){
+   const link=document.createElement('a');
+   link.href='https://www.coingecko.com/en/coins/'+encodeURIComponent(position.coinId);
+   link.target='_blank';link.rel='noopener noreferrer';
+   link.className='position-history-external';
+   link.textContent='Kursverlauf bei CoinGecko öffnen ↗';
+   target.append(link);
+  }
  };
  const imported=importedHistoryForPeriod(model,position,days);
  if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}

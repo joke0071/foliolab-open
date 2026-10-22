@@ -8,6 +8,15 @@ async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url
 function cgHeaders(key){return key?{'x-cg-demo-api-key':key}:{};}
 export async function coinCatalog(key='',fetcher=globalThis.fetch){const a=await json('https://api.coingecko.com/api/v3/coins/list?include_platform=false',{headers:cgHeaders(key),ttlMs:TTL.catalog},fetcher);if(!Array.isArray(a))throw Error('Ungültiger CoinGecko-Katalog.');return a.map(x=>({id:String(x.id||''),symbol:String(x.symbol||'').toUpperCase(),name:String(x.name||'')}));}
 export function searchCatalog(catalog,query){const q=query.trim().toLowerCase();if(!q)return catalog.slice(0,16);return catalog.filter(c=>c.id.toLowerCase().includes(q)||c.symbol.toLowerCase().includes(q)||c.name.toLowerCase().includes(q)).sort((a,b)=>Number(b.symbol.toLowerCase()===q)-Number(a.symbol.toLowerCase()===q)).slice(0,30);}
+/** Quote freshness is based on provider time, not the time the app last fetched it. */
+export function coinQuoteFreshness(item,now=Date.now()){
+ const reported=Number(item?.last_updated_at);
+ if(!Number.isFinite(reported)||reported<=0)return {ok:true,dated:false};
+ const timestamp=reported*1000;
+ if(timestamp>now+86400000)return {ok:false,reason:'CoinGecko-Kursdatum liegt in der Zukunft.'};
+ if(now-timestamp>7*86400000)return {ok:false,reason:'CoinGecko-Kurs vom '+new Date(timestamp).toISOString().slice(0,10)+' ist älter als 7 Tage.'};
+ return {ok:true,dated:true};
+}
 export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
  const unique=[...new Set(ids.filter(Boolean))].slice(0,500);
  if(!unique.length)return {};
