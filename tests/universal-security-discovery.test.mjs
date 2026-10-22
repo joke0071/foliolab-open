@@ -16,7 +16,7 @@ test('EODHD supports arbitrary ETFs by ISIN with distinct listing currencies and
  assert.equal(out[0].symbol,'SPYY');assert.equal(out[0].isin,'IE00BFY0GT14');
  assert.equal(out[0].currency,'EUR');assert.equal(out[0].mic,'XETR');
  assert.equal(out[0].eodhdSymbol,'SPYY.XETRA');assert.equal(out[0].tradingViewSymbol,'XETR:SPYY');
- assert.equal(out[1].currency,'GBP');assert.equal(out[1].tradingViewSymbol,'');
+ assert.equal(out[1].currency,'GBP');assert.equal(out[1].tradingViewSymbol,'LSE:SPYY');
  assert.match(url[0].pathname,/\/api\/search\/IE00BFY0GT14/);
  assert.equal(url[0].searchParams.get('api_token'),'test-key');
 });
