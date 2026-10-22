@@ -286,3 +286,29 @@ Die laufende KESt-Einstufung ist **von** einer Instrumentenidentifikation zu unt
 - **OpenFIGI/weitere Provider:** bleiben wie zuvor optional, abhängig von vorhandenen Worker- oder Nutzerzugängen.
 
 Bei fehlendem Online-Katalog ist die manuelle Anlage weiterhin möglich. Der Service Worker speichert lediglich den statischen App-Code, niemals externe API-Antworten, personenbezogene Kontodaten oder aus dem OeKB-Portal gescrapte Daten.
+
+
+## Große Wertpapierverzeichnisse – lokale Imports (v1.3.0)
+
+Die bisher vier Offline-ETF-Referenzen sind nur der Startkatalog. Für umfangreiche Suchtreffer gibt es jetzt unter **Positionen → Anlage hinzufügen → ETF/Aktie/Fonds/Sonstiges** einen universellen **„Heruntergeladene CSV/TXT einlesen“**-Dialog. Unterstützte Eingaben:
+
+- **Deutsche Börse Xetra:** Offizielle Datei **T7 (Xetra) All tradable instruments** (CSV mit Zeilen \`Market: XETR\`, \`Date Last Update\`, Kopfzeile). Importiert ISIN, Instrumentbezeichnung, vorhandenes Börsenkürzel, Währung und nur eindeutig bezeichnete Instrumentklassen. Ausdrücklich im Dateiheader genannte MIC \`XETR\` wird übernommen. Bereits zur Löschung vorgemerkte und inaktive Werte bleiben außen vor. Die **Static Instrument Reference Data**-ZIP ist **nicht** die erwartete CSV und kann in diesem Dialog nicht gelesen werden.
+- **Nasdaq Trader:** \`nasdaqlisted.txt\`, \`otherlisted.txt\`, \`nasdaqtraded.txt\` soweit deren erwartete Spalten vorhanden sind; Symbol, Name, explizites ETF-Merkmal, Test-Issue und ggf. Börsencode. Unterschiedliche Dateien ergänzen sich. Ein NASDAQ-Kürzel ist **keine ISIN**; ohne Währungsfeld wird **keine USD-Währung geschätzt**.
+- **ESMA FIRDS:** Nur sinnvoll strukturierte, bereits **als CSV aufbereitete Teilmengen** mit erkennbaren Spalten \`ISIN\`, \`FullNm\`/Name, gegebenenfalls CFI, Währung und MIC. Die amtlichen vollständigen ESMA-FIRDS-XML-/ZIP-Veröffentlichungen werden derzeit **nicht direkt verarbeitet**, da dies einen gesonderten ETL-Prozess erfordert.
+- **Eigene Tabellen:** UTF-8-/Windows-1252-CSV mit eindeutig benannten Namens- und Kennungsfeldern, Semikolon, Komma, Tab oder Pipe. Keine nicht bestätigten Werte erfinden.
+
+Je Datei maximal 24 MB / 160.000 Zeilen. Die App verwendet IndexedDB nur auf dem Endgerät; eine erfolgreiche erneute Einspielung desselben Verzeichnisses ersetzt dessen alte Version, andere Quellen bleiben erhalten. Nichts wird in GitHub hochgeladen und keine Portfolio-Buchung durch den Import ausgelöst. Von großen Verzeichnissen werden **höchstens 100 passende Treffer gleichzeitig** angezeigt; das Suchfeld filtert weiterhin den gesamten lokal gespeicherten Datenbestand.
+
+### Periodische Aktualisierung und Datenrechte
+
+Die App **spiegelt keine Datenverzeichnisse zentral** und lädt sie **nicht ungefragt periodisch von Drittservern**. Nutzer können die Originaldatei von der jeweils offiziellen Website herunterladen und später über den Importbutton ersetzen. Bei Verzeichnissen ab 30 Tagen Alter erscheint eine klare Erinnerung im Suchdialog. Soweit die Datei ein eigenes Aktualitätsdatum enthält (beispielsweise Xetra), wird dieses statt des Importdatums verwendet. Für Einhaltung der jeweiligen Bezugs-/Nutzungsrechte ist die konkrete Herkunft maßgeblich – regelmäßiges Herunterladen allein erteilt **keine** Weiterveröffentlichungslizenz.
+
+Offizielle Anlaufstellen und Rechtshinweise, geprüft am 22.10.2026:
+
+- Xetra: https://www.cashmarket.deutsche-boerse.com/cash-de/Handel/Handelbare-Werte-Xetra/Downloads/xetra-downloads — öffentlich herunterladbare Dateien; **allgemeines Recht auf zentrale Weiterverteilung nicht nachgewiesen**.
+- Nasdaq Symbol Directory: https://www.nasdaqtrader.com/trader.aspx?id=symboldirdefs — **verschiedene** Nutzungsregeln für Nasdaq-Listed-Ereignisdaten und Nasdaq Fund Network; keine pauschale Rehosting-Freigabe sämtlicher Daten.
+- ESMA FIRDS: https://registers.esma.europa.eu/publication/searchRegister?core=esma_registers_firds_files ; Register-Rechtshinweis https://registers.esma.europa.eu/publication/legalNoticePage — Reproduktion mit Quellenkennzeichnung, korrekter Veränderungskennzeichnung und weiteren Bedingungen gestattet; Drittanbieterrechte gesondert beachten.
+- OpenFIGI: https://www.openfigi.com/docs/terms-of-service — FIGI-Identifier Public Domain; ergänzende API unter https://www.openfigi.com/api/documentation; der bisherige optionale Worker ist nicht automatisch live verfügbar.
+- OeKB: https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f — öffentliche Abfrage; Wiederveröffentlichung vollständiger Steuerdaten und automatische Datenlieferung nicht als freigegeben unterstellen.
+
+Die Kataloge sind **Instrumentenstammdaten, keine Kurse, Depotbestände oder Steuerstatus-Bestätigungen**. ISIN bezeichnet ein Wertpapier; die notierungsbezogene Identifikation benötigt die konkrete Währung und Börsenzuordnung. Eine Auswahl übernimmt keine historische Performance und aktualisiert keine Position ohne abschließendes Speichern des Nutzers. Bei Fehlern kann weiterhin manuell erfasst werden.

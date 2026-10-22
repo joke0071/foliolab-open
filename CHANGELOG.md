@@ -1,3 +1,12 @@
+## 1.3.0 — 2026-10-22
+
+- Unterstützt lokale, große CSV/TXT-Wertpapierverzeichnisse (Xetra T7 All tradable instruments, Nasdaq-Trader-Symboldateien, kompatible ESMA-FIRDS-CSV-Auszüge und eigene Tabellen).
+- Datenschutzfreundliche IndexedDB-Speicherung, gleichzeitige Verwendung mehrerer Datenquellen und differenzierte Treffer nach ISIN/MIC/Ticker/Währung.
+- Importprüfung und Ausklammerung von inaktiven bzw. Testwerten; keine fingierte ISIN oder Kurswährung.
+- Aktualitätswarnung ab 30 Tagen (bei Xetra nach Quell-Datum), erneuter Import ersetzt nur die betreffende Datei.
+- Keine zweifelhafte zentrale Redistribution oder unautorisierter periodischer Drittserver-Download; direkte Bezugslinks mit transparenter Quellenangabe.
+- Browser- und Unit-Tests für große Verzeichnisse, mobile Darstellung, Offline-Cache und Portfoliointegrität.
+
 ## 1.2.0 — 2026-10-22
 
 - Live geladene CoinGecko-Top-100 mit korrekter ID, expliziter Auswahl und Ranking; auf Wunsch erweiterte Suche im gesamten öffentlichen CoinGecko-Katalog ohne verpflichtenden API-Key.
