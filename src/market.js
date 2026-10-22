@@ -232,7 +232,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
       }catch(error){failures.push(error.message);}
     }
     try{assets.push(...await discoverSolanaStakes(a,rpc,fetcher));}
-    catch(error){failures.push('Stake-Accounts: '+error.message);}
+    catch(error){failures.push('Stake-Accounts: '+error.message+' · Für natives Solana-Staking unter Mehr einen eigenen, für getProgramAccounts freigeschalteten Solana-RPC eintragen.');}
     if(!successfulPrograms&&!assets.length)throw Error('Solana-Token und Staking konnten nicht abgerufen werden: '+failures.join(' / '));
     if(failures.length){assets.partial=true;assets.warning='Solana-Teilscan unvollständig ('+failures.join(' · ')+'). Vorhandene Bestände bleiben erhalten.';}
     else if(fallbackUsed)assets.warning='Solana: öffentlicher Ersatz-RPC erfolgreich verwendet; eigener RPC unter Mehr konfigurierbar.';
