@@ -1,3 +1,11 @@
+## 1.3.2 — 2026-10-22
+
+- Vollständige Originaldatenquellen erneut verifiziert und von unvollständigen Oberflächen-Exporten abgegrenzt.
+- Xetra-Schemafelder MIC Code und Settlement Currency korrekt eingelesen, ohne Settlement Currency als Kurswährung auszugeben.
+- Nasdaq-Listed und Other-Listed mit direkten HTTPS-Downloads, Marktzuteilung und Quelldatum.
+- PWA meldet Updates ohne automatische Neuladung offener Eingabeformulare.
+- Tatsächlich noch nicht umgesetzten automatischen Wertpapier-Grundkatalog transparent dokumentiert.
+
 ## 1.3.1 — 2026-10-22
 
 - Entfernt den irreführenden prominent platzierten OeKB-Meldefonds-CSV-Import aus dem Anlage-Assistenten; die OeKB bleibt für die Einzelabfrage relevant.

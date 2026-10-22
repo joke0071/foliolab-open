@@ -309,3 +309,6 @@ Offizielle Anlaufstellen und Rechtshinweise, geprüft am 22.10.2026:
 - OeKB: https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f — öffentliche Abfrage; Wiederveröffentlichung vollständiger Steuerdaten und automatische Datenlieferung nicht als freigegeben unterstellen.
 
 Die Kataloge sind **Instrumentenstammdaten, keine Kurse, Depotbestände oder Steuerstatus-Bestätigungen**. ISIN bezeichnet ein Wertpapier; die notierungsbezogene Identifikation benötigt die konkrete Währung und Börsenzuordnung. Eine Auswahl übernimmt keine historische Performance und aktualisiert keine Position ohne abschließendes Speichern des Nutzers. Bei Fehlern kann weiterhin manuell erfasst werden.
+
+
+Ein detaillierter, kritisch überprüfter Vergleich von Massen-Downloads, Datenrechten und noch offenen Funktionen ist unter [SOURCE_DATA.md](SOURCE_DATA.md) dokumentiert.
