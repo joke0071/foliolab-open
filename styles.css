@@ -218,3 +218,20 @@
  .public-chart .tradingview-widget-container{height:370px}
  .public-chart .tradingview-widget-container iframe{min-height:310px}
 }
+
+
+/* Onboarding: offline provider and account suggestions, no floating controls. */
+.onboarding-suggestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:230px;overflow:auto;margin:8px 0 15px;scrollbar-width:thin}
+.onboarding-suggestions.hidden{display:none}
+.onboarding-suggestion{appearance:none;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;min-width:0;border:1px solid #dbe5dc;background:#f7faf7;color:#294b35;border-radius:10px;padding:11px 12px;cursor:pointer;font:inherit;font-size:12px}
+.onboarding-suggestion strong{min-width:0;overflow-wrap:anywhere;font-weight:700}
+.onboarding-suggestion span{font-size:10px;color:#738d7b;flex-shrink:0}
+.onboarding-suggestion:hover{background:#e9f3eb;border-color:#b3cdb9}
+.onboarding-suggestion:focus-visible{outline:2px solid #3e895d;outline-offset:2px}
+.field .picker-search{margin:0 0 6px;padding:9px 10px;background:#fbfdfb;border:1px solid #e1e9e2;border-radius:9px;font-size:12px}
+.step-indicator{display:inline-flex;width:20px;height:20px;margin-right:5px;align-items:center;justify-content:center;border-radius:99px;background:#e4f0e6;color:#2e6243;font-weight:750;font-size:11px}
+@media(max-width:460px){
+ .onboarding-suggestions{grid-template-columns:1fr;max-height:205px}
+ .onboarding-suggestion{padding:12px;min-height:42px}
+ .field .picker-search{font-size:12px}
+}

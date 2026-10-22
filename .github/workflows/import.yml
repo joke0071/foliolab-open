@@ -50,6 +50,7 @@ jobs:
           node tests/browser-crypto-history-resilience.mjs
           node tests/browser-etf-crypto-fallbacks.mjs
           node tests/browser-universal-security-discovery.mjs
+          node tests/browser-onboarding-suggestions.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:
