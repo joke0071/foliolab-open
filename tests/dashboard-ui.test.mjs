@@ -14,7 +14,7 @@ test('Compact axis uses de-AT thousands while keeping precision in point values'
  assert.match(html,/Tsd\./);
  assert.match(html,/188\.922,79/);
  assert.match(html,/data-chart-points/);
- assert.match(html,/Arrow/gi);
+ assert.match(html,/Pfeiltasten/);
 });
 test('Dashboard stats show comparable money values and explicitly distinguish wealth change',()=>{
  const m=blankModel();const p=createProvider({name:'Broker'});m.providers.push(p);
