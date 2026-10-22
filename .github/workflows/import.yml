@@ -43,6 +43,7 @@ jobs:
           node tests/browser-audit.mjs
           node tests/browser-dashboard-polish.mjs
           node tests/browser-allocation.mjs
+          node tests/browser-avalanche-valuation.mjs
           node tests/live-probes.mjs
   deploy:
     if: github.event_name != 'pull_request'
