@@ -58,7 +58,7 @@ const typeFrom=(rawName,rawCategory,rawETF,rawCFI)=>{
  if(upper(rawETF)==='Y'||/\b(etf|exchange.traded.fund|active etf)\b/.test(t))return 'etf';
  if(/\b(etn|etc|warrant|future|option|certificate|bond|zertifikat|anleihe)\b/.test(t))return 'other';
  if(/\b(fund|mutual|investmentfond|fonds)\b/.test(t))return 'fund';
- if(/\b(stock|shares?|equities|equity|aktien?|common)\b/.test(t)||upper(rawCFI).startsWith('ES')||/\b(common stock|ordinary shares?|registered shares?|aktien?)\b/i.test(rawName))return 'stock';
+ if(upper(rawCategory)==='CS'||/\b(stock|shares?|equities|equity|aktien?|common)\b/.test(t)||upper(rawCFI).startsWith('ES')||/\b(common stock|ordinary shares?|registered shares?|aktien?)\b/i.test(rawName))return 'stock';
  // Never invent ETF status from ticker or an unverified instrument name.
  if(/\bETF\b/i.test(rawName))return 'etf';
  return 'other';
@@ -68,16 +68,24 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
  const raw=input.replace(/^\uFEFF/,'');
  const lines=rowsFrom(input);
  let headerRow=0,sourceFromFile=source,declaredMarket='',sourceAsOf=null;
- if(/^Market:\s*(XETR|XFRA)/i.test(lines[0]?.[0]||'')){
-  const market=upper(lines[0][0].split(':')[1]);declaredMarket=market;
-  const preamble=lines.slice(0,3).find(row=>/^Date Last Update:/i.test(row?.[0]||''));
-  const foundDate=preamble?.[0]?.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/);
-  if(foundDate)sourceAsOf=foundDate[3]+'-'+foundDate[2].padStart(2,'0')+'-'+foundDate[1].padStart(2,'0');
+ // Official T7 CSV uses two semicolon-separated preamble cells:
+ // Market:;XETR and Date Last Update:;DD.MM.YYYY.
+ // Keep support for older files with both values in the first cell.
+ const firstRow=lines[0]||[],marketMatch=String(firstRow[0]||'').match(/^Market:\s*(XETR|XFRA)?\s*$/i);
+ if(marketMatch){
+  const market=upper(marketMatch[1]||firstRow[1]);
+  if(!['XETR','XFRA'].includes(market))throw Error('Unbekannter Xetra-Markt in der CSV-Kopfzeile.');
+  declaredMarket=market;
   if(source!=='auto'&&source!=='xetra'&&source!=='custom')throw Error('Datei und gewählte Quelle widersprechen sich.');
-  sourceFromFile='xetra';headerRow=lines.findIndex((row,i)=>i<=5&&row.some(v=>h(v)==='isin')&&row.some(v=>h(v)==='instrument'));
+  const dateRow=lines.slice(0,5).find(row=>/^Date Last Update:/i.test(row?.[0]||''));
+  const dateValue=String(dateRow?.[1]||dateRow?.[0]?.replace(/^Date Last Update:\s*/i,'')||'');
+  const foundDate=dateValue.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if(foundDate)sourceAsOf=foundDate[3]+'-'+foundDate[2].padStart(2,'0')+'-'+foundDate[1].padStart(2,'0');
+  sourceFromFile=market==='XFRA'?'custom':'xetra';
+  headerRow=lines.findIndex((row,i)=>i<=8&&row.some(v=>h(v)==='isin')&&row.some(v=>h(v)==='instrument'));
   if(headerRow<0)throw Error('Xetra-Datei ohne ISIN/Instrument-Kopfzeile.');
-  if(market==='XFRA')sourceFromFile='custom';
  }
+
  if(headerRow===0){
   const keys=lines[0].map(h);
   const isNasdaq=keys.includes('symbol')&&keys.includes('securityname')&&keys.includes('testissue')||keys.includes('actsymbol')&&keys.includes('securityname')&&keys.includes('etf');
@@ -104,6 +112,7 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
  const etfIdx=pick(columns,['etf']);
  const testIdx=pick(columns,['testissue']);
  const statusIdx=pick(columns,['instrumentstatus','productstatus','marketsegmentstatus']);
+ const productStatusIdx=pick(columns,['productstatus']);
  if(nameIdx<0||(symbolIdx<0&&isinIdx<0))throw Error('Verzeichnis braucht Name sowie ISIN oder Börsenkürzel; Kopfzeile nicht erkannt.');
  if(sourceFromFile==='xetra'&&isinIdx<0)throw Error('Xetra-Import erfordert die ISIN-Spalte.');
  const out=[],duplicates=new Set();let skipped=0,tests=0;
@@ -113,8 +122,9 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   if(row[0]?.startsWith('File Creation Time'))continue;
   const value=n=>n<0?'':norm(row[n]);
   if(testIdx>=0&&upper(value(testIdx))==='Y'){tests++;continue;}
-  const status=folded(value(statusIdx));
-  if(status&&['inactive','pending deletion','deleted'].includes(status)){skipped++;continue;}
+  const stateCode=folded(value(statusIdx)).replace(/[\s_-]/g,'');
+  const productCode=folded(value(productStatusIdx)).replace(/[\s_-]/g,'');
+  if([stateCode,productCode].some(code=>['inactive','pendingdeletion','deleted'].includes(code))){skipped++;continue;}
   const name=value(nameIdx).slice(0,140),symbol=upper(value(symbolIdx)).slice(0,32);
   const originalISIN=upper(value(isinIdx)),code=isin(originalISIN)?originalISIN:'';
   const currency=upper(value(ccyIdx)),settlementCurrency=upper(value(settlementIdx)),rawMic=upper(value(micIdx));
