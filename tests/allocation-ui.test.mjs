@@ -16,7 +16,7 @@ test('Asset shares use gross positive assets and liabilities are reported separa
  assert.equal(result.slices.reduce((sum,x)=>sum+x.percent,0),100);
  const rendered=renderAllocationDonut(result,{money,esc:escapeHTML,colors,netTotal:150});
  assert.match(rendered.legend,/Anteile der positiven Anlagen/);
- assert.match(rendered.legend,/−\s*50,00|-\s*50,00/);
+ assert.ok(rendered.legend.includes(money(-50)),'Signed liability remains visible');
  assert.match(rendered.legend,/70\s*%/);
  assert.match(rendered.donut,/Nettovermögen/);
 });
@@ -28,7 +28,7 @@ test('Donut offers accessible focusable sectors and keyed pressed states',()=>{
  assert.match(view.donut,/tabindex="0"/);
  assert.match(view.donut,/data-allocation-key="crypto"/);
  assert.match(view.donut,/25\s*%/);
- assert.match(view.donut,/Kryptowährungen/);
+ assert.match(view.donut,/>Krypto<\/span>/);
  assert.equal((view.legend.match(/aria-pressed="true"/g)||[]).length,1);
  assert.match(view.legend,/25,00/);
 });
