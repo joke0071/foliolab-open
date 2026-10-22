@@ -6,6 +6,7 @@ import {discoverCosmos,cosmosLiquidExact,cosmosStakeExact,discoverHedera,hederaB
 import {SAVAX_CONTRACT,AVALANCHE_RPC,SONIC_RPC,evmTokenBalanceExact,discoverSonicWallet,sonicNativeBalanceExact,sonicStakeBalanceExact,discoverSolanaStakes,solanaStakeBalanceExact} from './staking-discovery.js';
 import {discoverBnbTokens,bnbBep20BalanceExact} from './bnb-token-scanner.js';
 import {solanaRpcRead} from './solana-rpc.js';
+import {ethereumNativeExact,ethereumTokenExact,discoverEthereumLsts} from './ethereum-fallback.js';
 const DEFAULT_SOL_RPC='https://solana-rpc.publicnode.com';
 export const POPULAR_COINS=[['bitcoin','BTC','Bitcoin'],['ethereum','ETH','Ethereum'],['solana','SOL','Solana'],['ripple','XRP','XRP'],['tether','USDT','Tether'],['usd-coin','USDC','USDC'],['binancecoin','BNB','BNB'],['cardano','ADA','Cardano'],['dogecoin','DOGE','Dogecoin'],['tron','TRX','TRON'],['chainlink','LINK','Chainlink'],['avalanche-2','AVAX','Avalanche'],['polkadot','DOT','Polkadot'],['litecoin','LTC','Litecoin'],['bitcoin-cash','BCH','Bitcoin Cash'],['stellar','XLM','Stellar'],['uniswap','UNI','Uniswap'],['aave','AAVE','Aave'],['near','NEAR','NEAR Protocol'],['sui','SUI','Sui'],['pepe','PEPE','Pepe'],['shiba-inu','SHIB','Shiba Inu'],['render-token','RENDER','Render'],['cosmos','ATOM','Cosmos'],['arbitrum','ARB','Arbitrum'],['optimism','OP','Optimism']].map(([id,symbol,name])=>({id,symbol,name}));
 async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url,{...opts,fetcher});}
@@ -244,13 +245,14 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   const base=chain.host+'/api/v2/addresses/'+encodeURIComponent(a);
   let info=null,explorerIssue=null;
   try{info=await json(base,{ttlMs:TTL.wallet},fetcher);}catch(error){explorerIssue=error;}
-  if(explorerIssue&&chainId!==43114)throw explorerIssue;
-  let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
+  if(explorerIssue&&chainId!==43114&&chainId!==1)throw explorerIssue;
+  let raw=[],tokenFailure='';try{raw=await json(base+'/token-balances',{ttlMs:TTL.wallet,attempts:1,timeoutMs:8500},fetcher);if(!Array.isArray(raw))throw Error('Unerwartete Token-Antwort.');}catch(e){raw=[];tokenFailure=e.message;}
   const assets=[];let nativeExact;
   try{nativeExact=atomicDecimal(info?.coin_balance,18);}
   catch(error){
-    if(chainId!==43114)throw error;
-    nativeExact=await avalancheNativeBalanceExact(a,fetcher);
+    if(chainId===43114)nativeExact=await avalancheNativeBalanceExact(a,fetcher);
+    else if(chainId===1)nativeExact=await ethereumNativeExact(a,fetcher);
+    else throw error;
   }
   const native=Number(nativeExact);
   if(native>0)assets.push({name:chain.name==='Polygon'?'POL':chain.symbol,symbol:chain.symbol,coinId:chain.coinId,quantity:native,quantityExact:nativeExact,chain:'evm',chainId,decimals:18});
@@ -272,6 +274,13 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
       const sav=await evmTokenBalanceExact(AVALANCHE_RPC,SAVAX_CONTRACT,a,fetcher);
       if(Number(sav)>0)assets.push({name:'BENQI Staked AVAX',symbol:'sAVAX',coinId:'',quantity:Number(sav),quantityExact:sav,chain:'erc20',chainId:43114,contract:SAVAX_CONTRACT,decimals:18});
     }catch(e){tokenFailure=[tokenFailure,'BENQI sAVAX: '+e.message].filter(Boolean).join(' · ');}
+  }
+  if(chainId===1&&tokenFailure){
+    try{
+      const {assets:known,errors:lstErrors}=await discoverEthereumLsts(a,fetcher);
+      for(const token of known)if(!assets.some(x=>x.chain==='erc20'&&String(x.contract||'').toLowerCase()===token.contract))assets.push(token);
+      if(lstErrors.length)tokenFailure+=' · LST-Contract-Abfragen: '+lstErrors.length+' fehlgeschlagen';
+    }catch(error){tokenFailure+=' · Ethereum-LST-RPC: '+error.message;}
   }
   if(tokenFailure&& !assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);
   if(tokenFailure||raw.length>=500||tokenIssues){
@@ -349,13 +358,19 @@ export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.f
   if(wallet.chain==='evm'){
    try{const d=await json(base,{ttlMs:TTL.wallet},fetcher);return atomicDecimal(d?.coin_balance,18);}
    catch(error){
-    if(Number(wallet.chainId||1)!==43114)throw error;
-    return avalancheNativeBalanceExact(wallet.address,fetcher);
+    if(Number(wallet.chainId||1)===43114)return avalancheNativeBalanceExact(wallet.address,fetcher);
+    if(Number(wallet.chainId||1)===1)return ethereumNativeExact(wallet.address,fetcher);
+    throw error;
    }
   }
-  const list=await json(base+'/token-balances',{ttlMs:TTL.wallet},fetcher);
-  if(!Array.isArray(list))throw Error('EVM-Tokenliste unvollständig.');
-  if(list.length>=500)throw Error('EVM-Tokenliste möglicherweise abgeschnitten.');
+  let list;
+  try{
+   list=await json(base+'/token-balances',{ttlMs:TTL.wallet,attempts:1,timeoutMs:8500},fetcher);
+   if(!Array.isArray(list)||list.length>=500)throw Error('Explorer-Tokenliste nicht vollständig.');
+  }catch(error){
+   if(Number(wallet.chainId||1)===1)return ethereumTokenExact(wallet.address,wallet.contract,Number(wallet.decimals),fetcher);
+   throw error;
+  }
   const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());
   return item?atomicDecimal(item.value,Number(item.token?.decimals??wallet.decimals)):'0';
  }
