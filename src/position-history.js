@@ -1,4 +1,5 @@
 import {requestJSON,TTL} from './request-cache.js';
+import {marketSourceOptions,fetchSecurityHistory} from './security-sources.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {valueSign} from './defi.js';
 
@@ -74,15 +75,16 @@ export function marketHistoryCapability(p,settings={}){
  if(p.kind==='crypto'){
   return p.coinId&&/^[a-z0-9-]{2,100}$/.test(p.coinId)?{kind:'crypto',id:p.coinId}:null;
  }
- if(!['etf','stock','fund'].includes(p.kind)||!settings.twelveKey)return null;
- const symbol=String(p.symbol||'').trim().toUpperCase(),exchange=String(p.exchange||'').trim(),mic=String(p.mic||'').trim().toUpperCase();
- if(!/^[A-Z0-9./^_-]{1,32}$/.test(symbol)||(!exchange&&!mic)||!/^[A-Z]{3}$/.test(String(p.currency||'')))return null;
- return {kind:'security',symbol,exchange,mic,currency:p.currency};
+ if(!['etf','stock','fund'].includes(p.kind))return null;
+ try{
+  return marketSourceOptions(p,settings).length?{kind:'security',symbol:p.symbol,currency:p.currency}:null;
+ }catch{return null;}
 }
 export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=globalThis.fetch){
  if(!allowed.has(days))throw Error('Ungültiger Kurszeitraum.');
  const capability=marketHistoryCapability(p,settings);
  if(!capability)throw Error('Keine bestätigte historische Kursquelle eingerichtet.');
+ if(capability.kind==='security')return fetchSecurityHistory(p,settings,days,fetcher);
  let rows=[],currency='EUR',source='';
  if(capability.kind==='crypto'){
   let data;

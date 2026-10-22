@@ -196,3 +196,12 @@
 /* Keep fallback navigation within narrow crypto detail cards. */
 .position-history-external{display:inline-flex;max-width:100%;margin:10px 2px 0;color:#286c47;font-size:11px;font-weight:650;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
 .position-history-external:focus-visible{outline:2px solid #528c64;outline-offset:3px;border-radius:3px}
+
+/* Opt-in public stock/ETF TradingView panel; never a floating chart or toolbar. */
+.public-chart{margin-top:14px;min-width:0;max-width:100%;border:1px solid #e1eae1;border-radius:12px;padding:10px;overflow:hidden;background:#f7faf7}
+.public-chart>button{display:block;width:100%;margin-top:10px}
+.tradingview-slot{width:100%;min-width:0;max-width:100%;margin-top:10px;overflow:hidden}
+.tradingview-widget-container{position:relative;width:100%;height:340px;min-width:0;max-width:100%}
+.tradingview-widget-container__widget{width:100%;height:305px;overflow:hidden}
+.tradingview-widget-container iframe{width:100%!important;max-width:100%;border:0}
+@media(max-width:430px){.public-chart{padding:7px}.tradingview-widget-container{height:300px}.tradingview-widget-container__widget{height:265px}}
