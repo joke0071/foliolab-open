@@ -20,7 +20,7 @@ try{
  assert.ok(page.url().includes('page=positions'));
  assert.match(await page.locator('#positionFilters .active').innerText(),/Zu prüfen/);
  const rows=await page.locator('#positionList .holding-name').allTextContents();
- assert.deepEqual(rows,['Ohne Kurs','Veralteter ETF']);
+ assert.deepEqual(rows.slice().sort(),['Ohne Kurs','Veralteter ETF'].sort(),'Warning filter includes exactly the affected positions independent of value sorting');
  await page.locator('[data-filter="all"]').click();
  assert.equal(await page.locator('#positionList .holding-row').count(),3);
  console.log('VALUATION DRILL-DOWN: exact warning-based position filter PASS');
