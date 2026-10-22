@@ -37,8 +37,12 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  const render=(points,kind,currency='EUR',source='')=>{
   if(!isCurrent())return;
   const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
+  const axisFormat=kind==='market'?x=>new Intl.NumberFormat('de-AT',{
+   style:'currency',currency,notation:Math.abs(x)>=1000?'compact':'standard',
+   maximumFractionDigits:Math.abs(x)<0.0001?8:Math.abs(x)<1?6:1
+  }).format(x):undefined;
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
-   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel})+'</div>'+
+   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
   attachChartInteractions(target);
  };
