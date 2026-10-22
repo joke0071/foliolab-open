@@ -36,7 +36,7 @@ test('EODHD rejects outdated or empty prices and falls back without changing a h
  const p=position();
  const mock=async url=>{
   if(url.includes('eodhd.com'))return ok([{date:'2021-01-01',close:1.2}]);
-  return ok({symbol:'VWCE',exchange:'Xetra',currency:'EUR',close:105,datetime:today});
+  return ok({symbol:'VWCE',exchange:'Xetra',mic_code:'XETR',currency:'EUR',close:105,datetime:today});
  };
  const q=await fetchSecurityQuote(p,{eodhdKey:'a',twelveKey:'b'},mock);
  assert.equal(q.price,105);assert.equal(q.source,'Twelve Data');
