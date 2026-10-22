@@ -2,6 +2,7 @@ import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact} from './market.js';
 import {svg} from './format.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
 import {oldProviderQuote,valuationWarnings,valuationHeadline} from './valuation-status.js';
 import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} from './allocation-ui.js';
@@ -11,6 +12,7 @@ import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
+const positionDetailRanges=new Map();
 let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}let page='dashboard',filter='all',range='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
@@ -40,8 +42,18 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   $('dashboardPage').dataset.hasLiabilities=String(alloc.liabilities>0);
   attachAllocationInteractions($('dashboardPage'),{slices:alloc.slices,money,netTotal:total,initialIndex:pie.activeIndex});
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
-  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded);
+  const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
+  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
+  for(const id of expandedPositions)showPositionDetail(id);
   $('miniChart').innerHTML=drawChart(model.snapshots.slice(-18));attachChartInteractions($('miniChart'));}
+function showPositionDetail(id){
+  const p=model.positions.find(x=>x.id===id);
+  const mount=[...$('providerOverview').querySelectorAll('[data-position-detail]')].find(el=>el.dataset.positionDetail===id);
+  if(!p||!mount||!mount.closest('details[data-position-id]')?.open)return;
+  const days=positionDetailRanges.get(id)||30;
+  mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days});
+  void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
+}
 function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
 function drawChart(samples){return drawInteractiveChart(samples,{money,esc,dateLabel});}
 function renderHistory(){const info=$('performanceInfo');const start=model.performanceFlowTrackingSince,end=model.snapshots.at(-1)?.date;const rate=start&&end&&start!==end?portfolioXirr(model,start,end):null;const timeWeighted=start&&end&&start!==end?portfolioTwr(model,start,end):null;const issues=start&&end&&start!==end?performanceIssues(model,start,end):[];
@@ -406,6 +418,20 @@ async function downloadEncryptedBackup(){
   }catch(e){notify(e.message,true);}
   finally{input.value='';}
 }
+$('providerOverview').addEventListener('toggle',event=>{
+ const node=event.target;
+ if(node.matches?.('details[data-position-id]')&&node.open)showPositionDetail(node.dataset.positionId);
+},true);
+$('providerOverview').addEventListener('click',event=>{
+ const rangeButton=event.target.closest('[data-position-range]');
+ if(!rangeButton)return;
+ const mount=rangeButton.closest('[data-position-detail]');
+ if(!mount)return;
+ const days=Number(rangeButton.dataset.positionRange),id=mount.dataset.positionDetail;
+ if(![7,30,90,365].includes(days)||!model.positions.some(x=>x.id===id))return;
+ positionDetailRanges.set(id,days);
+ showPositionDetail(id);
+});
 function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
 function initEvents(){$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
   $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text());if(isEncryptedBackup(parsed)){
