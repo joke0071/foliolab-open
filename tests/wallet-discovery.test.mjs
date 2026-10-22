@@ -86,3 +86,50 @@ test('Malformed Solana token-account responses never certify complete empty list
  assert.equal(result[0].quantityExact,'1');
  assert.equal(result.partial,true);
 });
+
+test('Avalanche null explorer balance uses official public RPC with exact wei balance',async()=>{
+ const AVALANCHE='https://api.avax.network/ext/bc/C/rpc';
+ const wei='1500000000000000001',urls=[];
+ const mock=async(url,opts={})=>{
+  urls.push(url);
+  if(url===AVALANCHE){
+   const body=JSON.parse(opts.body);
+   assert.equal(body.method,'eth_getBalance');
+   assert.deepEqual(body.params,[A,'latest']);
+   assert.equal(body.jsonrpc,'2.0');
+   return reply({jsonrpc:'2.0',id:1,result:'0x'+BigInt(wei).toString(16)});
+  }
+  return reply({coin_balance:null});
+ };
+ const {walletBalanceExact}=await import('../src/market.js');
+ assert.equal(await walletBalanceExact({enabled:true,chain:'evm',chainId:43114,address:A},{},mock),'1.500000000000000001');
+ assert.equal(urls.at(-1),AVALANCHE);
+});
+test('Avalanche valid explorer balance is retained without unnecessary RPC fallback',async()=>{
+ const {walletBalanceExact}=await import('../src/market.js');
+ const urls=[];
+ const balance=await walletBalanceExact({enabled:true,chain:'evm',chainId:43114,address:A},{},async url=>{urls.push(url);return reply({coin_balance:'0'});});
+ assert.equal(balance,'0');assert.equal(urls.length,1);
+});
+test('Avalanche RPC failures must not produce artificial zero balances',async()=>{
+ const {walletBalanceExact}=await import('../src/market.js');
+ for(const broken of [{result:null},{result:'0x'},{error:{message:'blocked'}}]){
+  const mock=async url=>reply(url.includes('api.avax.network')?broken:{coin_balance:null});
+  await assert.rejects(()=>walletBalanceExact({enabled:true,chain:'evm',chainId:43114,address:A},{},mock),/Avalanche-RPC/);
+ }
+});
+test('Avalanche discovery recovers native balance from public RPC',async()=>{
+ const mock=async url=>{
+  if(url.endsWith('/token-balances'))return reply([]);
+  if(url.includes('api.avax.network'))return reply({result:'0xde0b6b3a7640000'});
+  return reply({coin_balance:null});
+ };
+ const result=await discoverWallet('43114',A,{},mock);
+ assert.equal(result.length,1);
+ assert.equal(result[0].quantityExact,'1');
+ assert.equal(result[0].symbol,'AVAX');
+});
+test('Other EVM networks still reject missing explorer balance instead of fabricating one',async()=>{
+ const {walletBalanceExact}=await import('../src/market.js');
+ await assert.rejects(()=>walletBalanceExact({enabled:true,chain:'evm',chainId:1,address:A},{},async()=>reply({coin_balance:null})),/Rohbetrag/);
+});
