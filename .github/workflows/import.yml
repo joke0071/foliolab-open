@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: foliolab-open-pages-${{ github.ref }}
+  group: foliolab-open-pages-${{ github.event_name == 'pull_request' && github.sha || github.ref }}
   cancel-in-progress: true
 
 jobs:
