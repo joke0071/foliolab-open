@@ -14,7 +14,7 @@ export const NETWORKS=[
  {id:'146',name:'Sonic Mainnet',mode:'tokens-best-effort',note:'S, stS und SFC-Delegationen'},
  {id:'xrp',name:'XRP Ledger',mode:'tokens-best-effort',note:'XRP und Trust Lines (Issuer prüfen)'},
  {id:'sol',name:'Solana',mode:'tokens-best-effort',note:'SOL, SPL und Stake-Accounts (RPC-abhängig)'},
- {id:'56',name:'BNB Smart Chain',mode:'native',note:'Nur BNB; Staking-Delegationen fehlen'},
+ {id:'56',name:'BNB Smart Chain',mode:'tokens-best-effort',note:'BNB + BEP-20 (Binplorer/RPC), Delegationen separat'},
  {id:'cosmos',name:'Cosmos Hub',mode:'staking-best-effort',note:'ATOM liquid, delegiert, Unbonding (LCD-abhängig)'},
  {id:'hedera',name:'Hedera',mode:'native',note:'HBAR; Staking ohne zusätzliche Guthaben-Position'},
  {id:'near',name:'NEAR',mode:'staking-best-effort',note:'Account-Saldo und Locked; Pools nicht vollständig'},

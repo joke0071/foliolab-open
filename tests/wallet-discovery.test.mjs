@@ -27,6 +27,7 @@ test('Solana erkennt SOL und SPL sowie Token-2022; gleiche Mint wird aggregiert'
   const methods=[];
   const mock=async(_url,opts)=>{const req=JSON.parse(opts.body);methods.push(req.method+':'+(req.params[1]?.programId||''));
     if(req.method==='getBalance')return reply({result:{value:3200000000}});
+    if(req.method==='getProgramAccounts')return reply({result:[]});
     const mint='D'.repeat(44);
     const account={account:{data:{parsed:{info:{mint,tokenAmount:{amount:'2500000',uiAmountString:'2.5',decimals:6}}}}}};
     return reply({result:{value:[account]}});
@@ -77,7 +78,7 @@ test('EVM discovery preserves exact large atomic balances and identifies incompl
 });
 test('Missing Solana raw account value never means verified zero',async()=>{
  const mock=async(_url,opts)=>reply(JSON.parse(opts.body).method==='getBalance'?{result:{}}:{result:{value:[]}});
- await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohbetrag/);
+ await assert.rejects(()=>discoverWallet('sol',SOL,{},mock),/Rohsaldo|Rohbetrag/);
 });
 
 test('Malformed Solana token-account responses never certify complete empty lists',async()=>{
