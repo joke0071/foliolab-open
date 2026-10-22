@@ -151,8 +151,27 @@ function renderBookings(){
    empty('Keine Buchungen zu diesem Filter gefunden.')):
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Einzahlungen, Käufe, Verkäufe und Gebühren helfen, Bestände und bekannte Anschaffungskosten nachzuvollziehen. Eine unvollständige Historie ergibt noch keine verlässliche Rendite.</p><div class="toolbar-buttons"><button type="button" class="btn primary" data-action="start-booking">+ Buchung</button><button type="button" class="btn outline" data-action="start-csv">CSV importieren</button></div></div>';
 }
-function renderSettings(){const settings=$('providerSettings');settings.innerHTML=model.providers.length?model.providers.map(p=>`<div class="setting-provider"><div><strong>${esc(p.name)}</strong><small>${esc(types[p.type]||types.other)} · ${model.accounts.filter(a=>a.providerId===p.id).length} Konto/Konten</small></div><div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="${esc(p.id)}" title="Bearbeiten" aria-label="Bearbeiten">${svg('pencil',15)}</button><button class="row-btn" data-action="delete-provider" data-id="${esc(p.id)}" title="Löschen" aria-label="Löschen">${svg('trash',15)}</button></div></div>
-${model.accounts.filter(a=>a.providerId===p.id).map(a=>`<div class="account-entry"><span>${esc(a.name)} <small>· ${esc(accountTypes[a.type]||accountTypes.other)}</small></span><button type="button" class="row-btn" data-action="edit-account" data-id="${esc(a.id)}" aria-label="Konto bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-account" data-id="${esc(a.id)}" aria-label="Konto löschen">${svg('trash',15)}</button></div>`).join('')}`).join(''):empty('Noch kein Anbieter hinterlegt.');if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';const reminder=$('backupReminder');let last=0;try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));renderBackupStatus();}
+function renderSettings(){
+ const settings=$('providerSettings');
+ const expanded=new Set([...settings.querySelectorAll('details[open][data-provider-settings]')].map(x=>x.dataset.providerSettings));
+ settings.innerHTML=model.providers.length?model.providers.map(p=>{
+  const accounts=model.accounts.filter(a=>a.providerId===p.id);
+  const children=accounts.map(a=>'<div class="account-entry"><span>'+esc(a.name)+' <small>· '+esc(accountTypes[a.type]||accountTypes.other)+'</small></span>'+
+   '<button type="button" class="row-btn" data-action="edit-account" data-id="'+esc(a.id)+'" aria-label="Konto bearbeiten">'+svg('pencil',15)+'</button>'+
+   '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>').join('');
+  return '<div class="setting-provider provider-settings-row">'+
+   '<details class="provider-settings-group" data-provider-settings="'+esc(p.id)+'"'+(expanded.has(p.id)?' open':'')+'>'+
+   '<summary><strong>'+esc(p.name)+'</strong><small>'+esc(types[p.type]||types.other)+' · '+accounts.length+' Konto/Konten</small></summary>'+
+   '<div class="provider-settings-accounts">'+(children||'<p class="small-help">Noch keine Konten.</p>')+'</div></details>'+
+   '<div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="'+esc(p.id)+'" title="Anbieter bearbeiten" aria-label="Anbieter bearbeiten">'+svg('pencil',15)+'</button>'+
+   '<button class="row-btn" data-action="delete-provider" data-id="'+esc(p.id)+'" title="Anbieter löschen" aria-label="Anbieter löschen">'+svg('trash',15)+'</button></div></div>';
+ }).join(''):empty('Noch kein Anbieter hinterlegt.');
+ if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';
+ const reminder=$('backupReminder');let last=0;
+ try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}
+ reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));
+ renderBackupStatus();
+}
 function renderBackupStatus(){
  const element=$('backupStatus');
  if(!element)return;

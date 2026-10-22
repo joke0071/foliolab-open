@@ -327,3 +327,17 @@
 .mini-chart-periods{margin:-2px 0 10px;flex-wrap:wrap}
 .mini-chart-periods button{min-width:42px;min-height:31px}
 .mini-chart-periods button:disabled{opacity:.4;cursor:not-allowed}
+
+/* Provider settings: compact account grouping with always-visible controls. */
+.provider-settings-row{align-items:flex-start}
+.provider-settings-group{flex:1;min-width:0}
+.provider-settings-group summary{cursor:pointer;display:grid;gap:4px;position:relative;padding:5px 19px 5px 0;list-style:none;min-height:35px}
+.provider-settings-group summary::-webkit-details-marker{display:none}
+.provider-settings-group summary:after{content:'';position:absolute;right:4px;top:15px;width:7px;height:7px;border-right:1.5px solid #6b8c73;border-bottom:1.5px solid #6b8c73;transform:rotate(45deg)}
+.provider-settings-group[open] summary:after{transform:rotate(225deg);top:18px}
+.provider-settings-group summary:focus-visible{outline:2px solid #4c8a61;outline-offset:2px;border-radius:5px}
+.provider-settings-group summary strong{font-size:13px;color:#365b42;overflow-wrap:anywhere}
+.provider-settings-group summary small{font-size:11px;color:#829587}
+.provider-settings-accounts{padding:6px 0}
+.provider-settings-accounts .account-entry{padding-left:9px}
+.provider-settings-row .settings-provider-actions{padding-top:5px}
