@@ -2,6 +2,7 @@ import {requestJSON,TTL} from './request-cache.js';
 import {readTrustLines,readTrustLineBalance} from './xrpl-assets.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
 import {atomicDecimal,units,exact} from './decimal.js';
+import {SAVAX_CONTRACT,AVALANCHE_RPC,SONIC_RPC,evmTokenBalanceExact,discoverSonicWallet,sonicNativeBalanceExact,sonicStakeBalanceExact,discoverSolanaStakes,solanaStakeBalanceExact} from './staking-discovery.js';
 const DEFAULT_SOL_RPC='https://solana-rpc.publicnode.com';
 export const POPULAR_COINS=[['bitcoin','BTC','Bitcoin'],['ethereum','ETH','Ethereum'],['solana','SOL','Solana'],['ripple','XRP','XRP'],['tether','USDT','Tether'],['usd-coin','USDC','USDC'],['binancecoin','BNB','BNB'],['cardano','ADA','Cardano'],['dogecoin','DOGE','Dogecoin'],['tron','TRX','TRON'],['chainlink','LINK','Chainlink'],['avalanche-2','AVAX','Avalanche'],['polkadot','DOT','Polkadot'],['litecoin','LTC','Litecoin'],['bitcoin-cash','BCH','Bitcoin Cash'],['stellar','XLM','Stellar'],['uniswap','UNI','Uniswap'],['aave','AAVE','Aave'],['near','NEAR','NEAR Protocol'],['sui','SUI','Sui'],['pepe','PEPE','Pepe'],['shiba-inu','SHIB','Shiba Inu'],['render-token','RENDER','Render'],['cosmos','ATOM','Cosmos'],['arbitrum','ARB','Arbitrum'],['optimism','OP','Optimism']].map(([id,symbol,name])=>({id,symbol,name}));
 async function json(url,opts={},fetcher=globalThis.fetch){return requestJSON(url,{...opts,fetcher});}
@@ -131,7 +132,7 @@ export async function btcBalance(address,fetcher=globalThis.fetch){const data=aw
 async function etherscan(params,key,fetcher){if(!key)throw Error('Für EVM-Wallets bitte einen eigenen Etherscan-Schlüssel unter „Mehr“ eintragen.');const url=new URL('https://api.etherscan.io/v2/api');for(const [k,v]of Object.entries(params))url.searchParams.set(k,String(v));url.searchParams.set('apikey',key);const r=await json(url.toString(),{},fetcher);if(r.status==='0')throw Error(String(r.result||r.message||'Etherscan-Fehler'));return r.result;}
 export async function evmBalance(wallet,key,fetcher=globalThis.fetch){const query={chainid:wallet.chainId||1,module:'account',action:wallet.chain==='erc20'?'tokenbalance':'balance',address:wallet.address,tag:'latest'};if(wallet.chain==='erc20')query.contractaddress=wallet.contract;const balance=await etherscan(query,key,fetcher);if(!/^\d+$/.test(String(balance)))throw Error('Ungültige Blockchain-Antwort.');return Number(balance)/10**Number(wallet.decimals||18);}
 export async function solBalance(wallet,rpc=DEFAULT_SOL_RPC,fetcher=globalThis.fetch){const url=new URL(rpc);if(url.protocol!=='https:')throw Error('Solana-RPC muss HTTPS verwenden.');const method=wallet.chain==='spl'?'getTokenAccountsByOwner':'getBalance';const params=wallet.chain==='spl'?[wallet.address,{mint:wallet.contract},{encoding:'jsonParsed'}]:[wallet.address,{commitment:'confirmed'}];const r=await json(url.toString(),{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params})},fetcher);if(r.error)throw Error(r.error.message||'Solana-RPC-Fehler');if(wallet.chain==='spl'){const accounts=r.result?.value;if(!Array.isArray(accounts))throw Error('Unvollständige Solana-Token-Antwort.');return accounts.reduce((sum,a)=>{const amount=Number(a.account?.data?.parsed?.info?.tokenAmount?.uiAmountString);if(!Number.isFinite(amount)||amount<0)throw Error('Ungültiger Token-Bestand.');return sum+amount;},0);}const balance=r.result?.value;if(!Number.isSafeInteger(balance)||balance<0)throw Error('Unvollständige Solana-Antwort.');return balance/1e9;}
-export async function walletBalance(wallet,settings,fetcher=globalThis.fetch){if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');switch(wallet.chain){case 'btc':return btcBalance(wallet.address,fetcher);case 'btc-hd':return Number((await scanBitcoinAccount(wallet.address,{fetcher})).quantityExact);case 'xrp':return xrpBalance(wallet.address,fetcher);case 'xrp-token':return Number(await readTrustLineBalance(wallet.address,wallet.contract,fetcher));case 'evm':case 'erc20':{if(PUBLIC_EVM_NETWORKS[wallet.chainId]?.explorer!==false){const chain=PUBLIC_EVM_NETWORKS[wallet.chainId];if(chain){const address=encodeURIComponent(wallet.address);if(wallet.chain==='evm'){const data=await json(chain.host+'/api/v2/addresses/'+address,{ttlMs:TTL.wallet},fetcher);if(!/^\d+$/.test(String(data.coin_balance??'')))throw Error('Unvollständige Blockchain-Antwort.');const amount=Number(data.coin_balance)/1e18;if(Number.isFinite(amount)&&amount>=0)return amount;throw Error('Ungültiger öffentlicher Explorer-Saldo.');}const list=await json(chain.host+'/api/v2/addresses/'+address+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(list))throw Error('Token-Saldo ungültig.');const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());return item?Number(item.value)/10**Number(item.token?.decimals??wallet.decimals):0;}}return evmBalance(wallet,settings.etherscanKey,fetcher);}case 'sol':case 'spl':return solBalance(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);default:throw Error('Blockchain noch nicht unterstützt.');}}
+export async function walletBalance(wallet,settings,fetcher=globalThis.fetch){if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');if(['sol-stake','sonic-stake'].includes(wallet.chain)||Number(wallet.chainId)===146||(Number(wallet.chainId)===43114&&String(wallet.contract||'').toLowerCase()===SAVAX_CONTRACT))return Number(await walletBalanceExact(wallet,settings,fetcher));switch(wallet.chain){case 'btc':return btcBalance(wallet.address,fetcher);case 'btc-hd':return Number((await scanBitcoinAccount(wallet.address,{fetcher})).quantityExact);case 'xrp':return xrpBalance(wallet.address,fetcher);case 'xrp-token':return Number(await readTrustLineBalance(wallet.address,wallet.contract,fetcher));case 'evm':case 'erc20':{if(PUBLIC_EVM_NETWORKS[wallet.chainId]?.explorer!==false){const chain=PUBLIC_EVM_NETWORKS[wallet.chainId];if(chain){const address=encodeURIComponent(wallet.address);if(wallet.chain==='evm'){const data=await json(chain.host+'/api/v2/addresses/'+address,{ttlMs:TTL.wallet},fetcher);if(!/^\d+$/.test(String(data.coin_balance??'')))throw Error('Unvollständige Blockchain-Antwort.');const amount=Number(data.coin_balance)/1e18;if(Number.isFinite(amount)&&amount>=0)return amount;throw Error('Ungültiger öffentlicher Explorer-Saldo.');}const list=await json(chain.host+'/api/v2/addresses/'+address+'/token-balances',{ttlMs:TTL.wallet},fetcher);if(!Array.isArray(list))throw Error('Token-Saldo ungültig.');const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());return item?Number(item.value)/10**Number(item.token?.decimals??wallet.decimals):0;}}return evmBalance(wallet,settings.etherscanKey,fetcher);}case 'sol':case 'spl':return solBalance(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);default:throw Error('Blockchain noch nicht unterstützt.');}}
 
 // Public explorer instances (not the paid Blockscout PRO API). These endpoints
 // have their own rate limits and may be inaccessible from some browsers.
@@ -142,6 +143,7 @@ export const PUBLIC_EVM_NETWORKS = {
   10: {name:'Optimism', host:'https://optimism.blockscout.com', symbol:'ETH', coinId:'ethereum'},
   137: {name:'Polygon', host:'https://polygon.blockscout.com', symbol:'POL', coinId:'polygon-ecosystem-token'},
   43114:{name:'Avalanche C-Chain',host:'https://cccscan.org',symbol:'AVAX',coinId:'avalanche-2'},
+  146:{name:'Sonic Mainnet',rpc:SONIC_RPC,symbol:'S',coinId:'sonic-3',explorer:false},
   56: {name:'BNB Smart Chain', host:'https://bscscan.com', symbol:'BNB', coinId:'binancecoin', explorer:false}
 };
 const isEvmAddress=a=>/^0x[0-9a-fA-F]{40}$/.test(a);
@@ -190,6 +192,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     catch(e){if(!result.length)throw e;result.partial=true;result.warning='XRP bekannt, aber Trust-Line-Scan fehlgeschlagen: '+e.message;}
     return result;
   }
+  if(String(network)==='146')return discoverSonicWallet(a,fetcher);
   if(network==='sol'){
     if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a))throw Error('Ungültige Solana-Adresse.');
     const rpc=settings.solanaRpc||DEFAULT_SOL_RPC;
@@ -218,8 +221,10 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
         }
       }catch(error){failures.push(error.message);}
     }
-    if(!successfulPrograms&&!assets.length)throw Error('Solana-Token konnten nicht abgerufen werden: '+failures.join(' / '));
-    if(failures.length){assets.partial=true;assets.warning='Ein Solana-Token-Programm konnte nicht vollständig gelesen werden. Vorhandene Bestände bleiben erhalten.';}
+    try{assets.push(...await discoverSolanaStakes(a,rpc,fetcher));}
+    catch(error){failures.push('Stake-Accounts: '+error.message);}
+    if(!successfulPrograms&&!assets.length)throw Error('Solana-Token und Staking konnten nicht abgerufen werden: '+failures.join(' / '));
+    if(failures.length){assets.partial=true;assets.warning='Solana-Teilscan unvollständig ('+failures.join(' · ')+'). Vorhandene Bestände bleiben erhalten.';}
     return assets;
   }
   const chainId=Number(network);
@@ -252,6 +257,12 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
     const symbol=String(token.symbol||'Token').slice(0,32);
     assets.push({name:String(token.name||symbol).slice(0,100),symbol,coinId:'',quantity:Number(quantityExact),quantityExact,chain:'erc20',chainId,contract,decimals,reputation:String(token.reputation||'')});
   }
+  if(chainId===43114&&!assets.some(x=>x.chain==='erc20'&&String(x.contract).toLowerCase()===SAVAX_CONTRACT)){
+    try{
+      const sav=await evmTokenBalanceExact(AVALANCHE_RPC,SAVAX_CONTRACT,a,fetcher);
+      if(Number(sav)>0)assets.push({name:'BENQI Staked AVAX',symbol:'sAVAX',coinId:'',quantity:Number(sav),quantityExact:sav,chain:'erc20',chainId:43114,contract:SAVAX_CONTRACT,decimals:18});
+    }catch(e){tokenFailure=[tokenFailure,'BENQI sAVAX: '+e.message].filter(Boolean).join(' · ');}
+  }
   if(tokenFailure&& !assets.length)throw Error('Token-Liste nicht verfügbar: '+tokenFailure);
   if(tokenFailure||raw.length>=500||tokenIssues){
     assets.partial=true;
@@ -263,7 +274,7 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
 // Keyless market-data requests, with strict boundaries: this does not imply
 // every token will have a quote or that public endpoints guarantee uptime.
 export async function evmContractPrices(chainId,contracts,key='',fetcher=globalThis.fetch){
-  const platform={1:'ethereum',8453:'base',42161:'arbitrum-one',10:'optimistic-ethereum',137:'polygon-pos',43114:'avalanche'}[Number(chainId)];
+  const platform={1:'ethereum',8453:'base',42161:'arbitrum-one',10:'optimistic-ethereum',137:'polygon-pos',43114:'avalanche',146:'sonic'}[Number(chainId)];
   if(!platform)return {};
   const items=[...new Set(contracts.map(c=>String(c||'').toLowerCase()).filter(isEvmAddress))];
   if(!items.length)return {};
@@ -279,6 +290,11 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
 /** Exact string balances: no JS Number conversion before parsing blockchain atomics. */
 export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.fetch){
  if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');
+ if(wallet.chain==='sol-stake')return solanaStakeBalanceExact(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);
+ if(wallet.chain==='sonic-stake')return sonicStakeBalanceExact(wallet.address,wallet.contract,fetcher);
+ if(wallet.chain==='evm'&&Number(wallet.chainId)===146)return sonicNativeBalanceExact(wallet.address,fetcher);
+ if(wallet.chain==='erc20'&&Number(wallet.chainId)===146)return evmTokenBalanceExact(SONIC_RPC,wallet.contract,wallet.address,fetcher,Number(wallet.decimals??18));
+ if(wallet.chain==='erc20'&&Number(wallet.chainId)===43114&&String(wallet.contract||'').toLowerCase()===SAVAX_CONTRACT)return evmTokenBalanceExact(AVALANCHE_RPC,SAVAX_CONTRACT,wallet.address,fetcher);
  if(wallet.chain==='btc-hd')return (await scanBitcoinAccount(wallet.address,{fetcher,addressType:wallet.addressType||'auto'})).quantityExact;
  if(wallet.chain==='xrp-token')return readTrustLineBalance(wallet.address,wallet.contract,fetcher);
  if(wallet.chain==='btc'){

@@ -9,9 +9,10 @@ export const NETWORKS=[
  {id:'42161',name:'Arbitrum',mode:'tokens-best-effort',note:'ETH / ERC-20'},
  {id:'10',name:'Optimism',mode:'tokens-best-effort',note:'ETH / ERC-20'},
  {id:'137',name:'Polygon',mode:'tokens-best-effort',note:'POL / ERC-20'},
- {id:'43114',name:'Avalanche C-Chain',mode:'tokens-best-effort',note:'AVAX / ERC-20'},
+ {id:'43114',name:'Avalanche C-Chain',mode:'tokens-best-effort',note:'AVAX, BENQI sAVAX / ERC-20'},
+ {id:'146',name:'Sonic Mainnet',mode:'tokens-best-effort',note:'S, stS und SFC-Delegationen'},
  {id:'xrp',name:'XRP Ledger',mode:'tokens-best-effort',note:'XRP und Trust Lines (Issuer prüfen)'},
- {id:'sol',name:'Solana',mode:'native',note:'SOL, SPL-Abfrage eingeschränkt'},
+ {id:'sol',name:'Solana',mode:'tokens-best-effort',note:'SOL, SPL und Stake-Accounts (RPC-abhängig)'},
  ...[['bnb','BNB Smart Chain'],['cardano','Cardano'],['cosmos','Cosmos'],['ton','TON'],['sui','Sui'],['aptos','Aptos']].map(([id,name])=>({id,name,mode:'manual',note:'Manuell; keine verifizierte Schlüssel-los-Erkennung'}))
 ];
 export function getCapabilities(network){
