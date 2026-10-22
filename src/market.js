@@ -293,7 +293,7 @@ export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.f
  if(wallet.chain==='sol-stake')return solanaStakeBalanceExact(wallet,settings.solanaRpc||DEFAULT_SOL_RPC,fetcher);
  if(wallet.chain==='sonic-stake')return sonicStakeBalanceExact(wallet.address,wallet.contract,fetcher);
  if(wallet.chain==='evm'&&Number(wallet.chainId)===146)return sonicNativeBalanceExact(wallet.address,fetcher);
- if(wallet.chain==='erc20'&&Number(wallet.chainId)===146)return evmTokenBalanceExact(SONIC_RPC,wallet.contract,wallet.address,fetcher);
+ if(wallet.chain==='erc20'&&Number(wallet.chainId)===146)return evmTokenBalanceExact(SONIC_RPC,wallet.contract,wallet.address,fetcher,Number(wallet.decimals??18));
  if(wallet.chain==='erc20'&&Number(wallet.chainId)===43114&&String(wallet.contract||'').toLowerCase()===SAVAX_CONTRACT)return evmTokenBalanceExact(AVALANCHE_RPC,SAVAX_CONTRACT,wallet.address,fetcher);
  if(wallet.chain==='btc-hd')return (await scanBitcoinAccount(wallet.address,{fetcher,addressType:wallet.addressType||'auto'})).quantityExact;
  if(wallet.chain==='xrp-token')return readTrustLineBalance(wallet.address,wallet.contract,fetcher);
