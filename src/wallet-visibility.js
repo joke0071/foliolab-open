@@ -14,6 +14,13 @@ const canonicalContracts = {
     '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
     '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC
     '0x1f9840a85d5af5bf1d1762f925bdadc4201f984'  // UNI
+  ]),
+  43114:new Set(['0x2b2c81e08f1af8835a78bb2a90ae924ace0ea4be']), // BENQI sAVAX
+  146:new Set([
+    '0xe5da20f15420ad15de0fa650600afc998bbe3955', // Beets stS
+    '0x039e2fb66102314ce7b64ce5ce3e5183bc94ad38', // wS
+    '0x29219dd400f2bf60e5a23d13be72b486d4038894', // USDC
+    '0x6047828dc181963ba44974801ff68e538da5eaf9'  // USDT
   ])
 };
 const suspiciousText = /(?:https?:\/\/|www\.|(?:^|[\s/_.-])(?:airdrop|claim|bonus|free|gift|reward|rewards|voucher|visit|verify|redeem|presale|connectwallet|connect-wallet)(?:$|[\s/_.-])|(?:^|[\s/])(?:[a-z0-9-]+\.(?:com|net|xyz|site|top|io))(?:$|[\s/]))/i;
@@ -21,6 +28,7 @@ const dangerousReputation = /^(scam|spam|suspicious|malicious|unsafe|phishing|fa
 
 /** Classifies *visibility*, not legitimacy; restores are always possible. */
 export function walletTokenVisibility(asset){
+  if(['sol-stake','sonic-stake'].includes(asset?.chain))return {show:true,reason:''}; // on-chain verified staking
   if(!asset?.contract)return {show:true,reason:''}; // native coins are never suppressed
   const reputation=String(asset.reputation||'').trim();
   if(dangerousReputation.test(reputation))return {show:false,reason:'Vom Explorer als verdächtig markiert'};
