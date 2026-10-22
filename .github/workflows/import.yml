@@ -12,7 +12,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: foliolab-open-pages-${{ github.ref }}
+  group: foliolab-open-pages-${{ github.event_name == 'pull_request' && github.sha || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: Install browser test tools
         run: |
           npm install --no-save playwright@1.56.1
-          npx playwright install --with-deps chromium
+          npx playwright install chromium --only-shell
       - name: Browser smoke tests (320–1440 px)
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
@@ -48,6 +48,7 @@ jobs:
           node tests/browser-position-drilldown.mjs
           node tests/browser-historical-csv.mjs
           node tests/browser-crypto-history-resilience.mjs
+          node tests/browser-etf-crypto-fallbacks.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:

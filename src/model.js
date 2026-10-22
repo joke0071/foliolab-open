@@ -4,6 +4,7 @@ import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAu
 import {units,exact,preciseValue} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
+import {enhanceKnownReferenceListing} from './reference-listings.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
@@ -121,7 +122,7 @@ export function safeImport(raw){
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
-  m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  m.positions=raw.positions.map(p=>createPosition(enhanceKnownReferenceListing(p),m));uniqueIds(m.positions,'Positionen');
   if(raw.priceHistories!=null){
    if(typeof raw.priceHistories!=='object'||Array.isArray(raw.priceHistories))throw Error('Kurshistorien im Backup sind beschädigt.');
    const entries=Object.entries(raw.priceHistories);

@@ -11,6 +11,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
  const price=quoteCurrency(Number(p.priceExact??p.price)||0,p.currency||'EUR');
  const quote=p.quoteSource?esc(p.quoteSource):'Manuell',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
+ const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
     ['Kurs je Einheit',price],['Positionswert',money(amount)],['Einstandswert',cost]]
@@ -26,10 +27,11 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const tvSymbol=['etf','stock','fund'].includes(p.kind)?tradingViewIdentifier(p):null;
  const publicChart=tvSymbol?'<div class="public-chart"><p class="position-csv-help">Öffentliches Börsendiagramm von TradingView · erscheint erst nach Klick. Dabei wird eine Verbindung zu TradingView aufgebaut; die dort angezeigten Kurse werden nicht zur Portfoliobewertung übernommen.</p><button type="button" class="position-csv-import" data-action="load-tradingview" data-id="'+esc(p.id)+'">Öffentliches Diagramm laden</button><div data-tv-slot="'+esc(p.id)+'" class="tradingview-slot"></div></div>':
   ['etf','stock','fund'].includes(p.kind)?'<p class="position-csv-help">Für den öffentlichen TradingView-Chart bitte in der Position einen bestätigten Handelsplatz (z. B. Xetra) oder ein TradingView-Börsenkürzel hinterlegen.</p>':'';
- const controls='<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
-   POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>';
+ const needsOwnChart=!tvSymbol||Boolean(imported)||Boolean(marketHistoryCapability(p,model.settings))||recordedPositionHistory(model,p.id,days).length>=2;
+ const controls=needsOwnChart?'<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
+   POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>':'';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   csvTool+publicChart+controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
+   quoteCredit+csvTool+publicChart+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':'');
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
@@ -49,6 +51,12 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
   attachChartInteractions(target);
+  if(source.startsWith('CoinPaprika')){
+   const credit=document.createElement('a');credit.href='https://coinpaprika.com/';
+   credit.textContent='Powered by CoinPaprika';credit.target='_blank';credit.rel='noopener noreferrer';
+   credit.className='position-history-external';
+   target.append(credit);
+  }
  };
  const fallback=(message)=>{
   if(local.length>=2){render(local,'local');return;}

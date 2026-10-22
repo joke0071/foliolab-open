@@ -61,8 +61,8 @@ try{
  const etf=page.locator('#providerOverview [data-position-id="etf-test"]');
  await etf.locator('summary').focus();await page.keyboard.press('Enter');
  assert.equal(await etf.getAttribute('open'),'');
- await etf.locator('.position-history-unavailable').waitFor();
- assert.match(await etf.innerText(),/Keine bestätigte Kursquelle/);
+ await etf.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
+ assert.equal(await etf.locator('.position-history-unavailable').count(),0,'Known ETFs use the public TradingView chart instead of redundant empty placeholder');
  const cash=page.locator('#providerOverview [data-position-id="cash-test"]');
  await cash.locator('summary').click();
  assert.match(await cash.locator('.position-history-unavailable').innerText(),/keinen Börsenkurs/);

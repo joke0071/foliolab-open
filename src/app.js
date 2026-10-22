@@ -3,6 +3,7 @@ import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,se
 import {svg} from './format.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
+import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
 import {parseHistoricalPriceCSV} from './historical-csv.js';
 import {fetchSecurityQuote,tradingViewIdentifier,marketSourceOptions} from './security-sources.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
@@ -339,27 +340,35 @@ async function refreshAll(){
  busy=true;$('refreshAll').disabled=true;$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';
  const errors=[];let successes=0;const now=new Date().toISOString();
  try{
-  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&p.coinId);
+  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)));
   const securities=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol);
   if(cryptos.length){
-   try{
-    const quotes=await cryptoPrices(cryptos.map(p=>p.coinId),model.settings.coinGeckoKey);
-    for(const p of cryptos){
-      const item=quotes[p.coinId],price=Number(item?.eur);
-      if(Number.isFinite(price)&&price>0){
-       const freshness=coinQuoteFreshness(item);
-       if(!freshness.ok){
-        const sonicHint=String(p.symbol||'').toUpperCase()==='S'&&p.coinId==='sonic'?' Prüfe die CoinGecko-ID: Sonic (S) verwendet sonic-3.':'';
-        errors.push(`${p.name}: ${freshness.reason}${sonicHint} Bisheriger Kurs bleibt erhalten.`);
-        continue;
-       }
-       p.price=price;p.priceExact=String(price);p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
-       p.quoteSource='CoinGecko';p.quoteAsOf=item?.last_updated_at?new Date(item.last_updated_at*1000).toISOString():null;
-       p.quoteFetchedAt=now;p.quoteQuality=p.quoteAsOf?'provider-timestamp':'undated';p.updatedAt=now;p.priceStatus=null;successes++;
-      }else errors.push(`${p.name}: Kein verifizierbarer CoinGecko-Kurs.`);
+   let quotes={},primaryFailure='';
+   try{quotes=await cryptoPrices(cryptos.map(p=>p.coinId).filter(Boolean),model.settings.coinGeckoKey);}
+   catch(e){primaryFailure=String(e.message||e);}
+   for(const p of cryptos){
+    const item=quotes[p.coinId],price=Number(item?.eur);
+    const freshness=coinQuoteFreshness(item);
+    let result=null,issue='';
+    if(Number.isFinite(price)&&price>0&&freshness.ok){
+     result={price,source:'CoinGecko',asOf:item?.last_updated_at?new Date(item.last_updated_at*1000).toISOString():null,
+      quality:item?.last_updated_at?'provider-timestamp':'undated'};
+    }else{
+     issue=primaryFailure||(!freshness.ok?freshness.reason:'CoinGecko lieferte keinen gültigen EUR-Kurs.');
+     try{result=await cryptoFallbackQuote(p);}
+     catch(e){issue+=' · '+String(e.message||e);}
     }
-    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
-   }catch(e){errors.push('CoinGecko: '+e.message);}
+    if(result){
+     p.price=result.price;p.priceExact=String(result.price);
+     p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
+     p.quoteSource=result.source;p.quoteAsOf=result.asOf;
+     p.quoteFetchedAt=now;p.quoteQuality=result.quality;p.updatedAt=now;p.priceStatus=null;successes++;
+    }else{
+     const hint=p.coinId==='sonic'&&String(p.symbol||'').toUpperCase()==='S'?' Prüfe die CoinGecko-ID sonic-3.':'';
+     errors.push(p.name+': '+issue.slice(0,150)+hint+' Bisheriger Kurs bleibt erhalten.');
+    }
+   }
+   if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
   }
   if(securities.length&&(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey)){
     for(const p of securities){
@@ -482,12 +491,14 @@ function openPublicTradingView(positionId){
  attribution.className='position-history-external';
  wrap.append(widget,attribution);container.replaceChildren(wrap);
  const script=document.createElement('script');
- script.type='text/javascript';script.async=true;script.src='https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js';
- script.textContent=JSON.stringify({symbols:[[p.name,symbol+'|1D']],chartOnly:false,scalePosition:'right',scaleMode:'Normal',
-  fontFamily:'system-ui',fontColor:'#556a5b',gridLineColor:'rgba(46,74,52,0.10)',colorTheme:'light',isTransparent:true,
-  locale:'de',chartType:'area',lineWidth:2,lineType:0,valuesTracking:'1',changeMode:'price-and-percent',
-  dateRanges:['1d|1','1m|30','3m|60','12m|1D'],fontSize:'11',autosize:true,width:'100%',height:'100%',
-  noTimeScale:false,hideDateRanges:false,hideMarketStatus:false,hideSymbolLogo:false});
+ script.type='text/javascript';script.async=true;script.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+ script.textContent=JSON.stringify({
+  autosize:true,symbol,interval:'D',timezone:'Europe/Berlin',theme:'light',style:'3',
+  locale:'de',backgroundColor:'#f7faf7',gridColor:'rgba(46,74,52,0.08)',
+  hide_side_toolbar:true,hide_top_toolbar:true,hide_volume:true,withdateranges:true,
+  allow_symbol_change:false,save_image:false,calendar:false,details:false,
+  support_host:'https://www.tradingview.com'
+ });
  wrap.append(script);
 }
 function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
