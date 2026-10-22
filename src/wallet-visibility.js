@@ -6,6 +6,7 @@
 const canonicalContracts = {
   1:new Set([
     '0xae7ab96520de3a18e5e111b5eaab095312d7fe84', // Lido stETH
+    '0xae78736cd615f374d3085123a210448e74fc6393', // Rocket Pool rETH
     '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0', // Lido wstETH
     '0x514910771af9ca656af840dff83e8264ecf986ca', // Chainlink
     '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // WETH
@@ -14,6 +15,12 @@ const canonicalContracts = {
     '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
     '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC
     '0x1f9840a85d5af5bf1d1762f925bdadc4201f984'  // UNI
+  ]),
+  56:new Set([
+    '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c', // WBNB
+    '0x55d398326f99059ff775485246999027b3197955', // Binance-Peg USDT
+    '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d', // Binance-Peg USDC
+    '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'  // BTCB
   ]),
   43114:new Set(['0x2b2c81e08f1af8835a78bb2a90ae924ace0ea4be']), // BENQI sAVAX
   146:new Set([
