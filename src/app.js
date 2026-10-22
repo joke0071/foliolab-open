@@ -1,5 +1,5 @@
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
-import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact} from './market.js';
+import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
@@ -345,6 +345,12 @@ async function refreshAll(){
     for(const p of cryptos){
       const item=quotes[p.coinId],price=Number(item?.eur);
       if(Number.isFinite(price)&&price>0){
+       const freshness=coinQuoteFreshness(item);
+       if(!freshness.ok){
+        const sonicHint=String(p.symbol||'').toUpperCase()==='S'&&p.coinId==='sonic'?' Prüfe die CoinGecko-ID: Sonic (S) verwendet sonic-3.':'';
+        errors.push(`${p.name}: ${freshness.reason}${sonicHint} Bisheriger Kurs bleibt erhalten.`);
+        continue;
+       }
        p.price=price;p.priceExact=String(price);p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
        p.quoteSource='CoinGecko';p.quoteAsOf=item?.last_updated_at?new Date(item.last_updated_at*1000).toISOString():null;
        p.quoteFetchedAt=now;p.quoteQuality=p.quoteAsOf?'provider-timestamp':'undated';p.updatedAt=now;p.priceStatus=null;successes++;
