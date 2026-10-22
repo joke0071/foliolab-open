@@ -273,14 +273,11 @@ Im Assistenten **Anlage hinzufügen → Kryptowährung** werden die nach Marktka
 Diese Stammdaten sind **keine automatisch gespeicherten Kurse und Bestände**. Unterschiedliche Coins können dasselbe Symbol tragen; entscheidend ist die bewusst ausgewählte CoinGecko-ID. Bei Rate-Limits, CORS-Fehlern oder Offlinebetrieb bleiben die kuratierten Offline-Vorschläge und die manuelle Erfassung erhalten. Öffentliche Aufrufe unterliegen CoinGecko-Limits und werden je Session sparsam wiederverwendet; nach Freigabe der Antwort sind Name, Ticker und ID lokal sichtbar.
 
 ### Österreichische KESt-Meldefonds
-Die OeKB bietet die <https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f> zur offiziellen Abfrage an. **Es wird kein ungeprüfter oder kostenpflichtiger Feed automatisch heruntergeladen.** Stattdessen ist unter **Anlage hinzufügen → ETF/Fonds** eine lokale Importfunktion für eine vom Nutzer aus der OeKB bereitgestellte **CSV/TSV** enthalten.
 
-Die Datei muss erkennbare Spalten **ISIN** und **Fondsbezeichnung** (oder \`Fondsname\`, \`Fund Name\`, \`Name\`, \`Bezeichnung\`) besitzen. Werte werden auf plausible ISIN-Form und Namen geprüft, doppelte ISINs übersprungen; die Daten bleiben unter \`foliolab-open-fund-catalog-v1\` ausschließlich in diesem Browser gespeichert und verändern kein Portfolio. Maximal 14 MB und 120.000 Zeilen. Der Katalog gilt **nicht automatisch als tagesaktuelle Bestätigung des Meldefonds-Status** – maßgeblich bleibt die OeKB-Auskunft, insbesondere bei ehemaligen Meldefonds und Statuswechseln. Eine Fondsliste enthält keine bestätigten Börsenticker, Handelsplätze oder Kurswährungen; der Nutzer muss diese Informationen bei Bedarf selbst auswählen.
-
-Die laufende KESt-Einstufung ist **von** einer Instrumentenidentifikation zu unterscheiden. Es werden weder automatische steuerliche Berechnungen aus dem Import abgeleitet noch historische Fondsstatus vorgetäuscht. Die App bietet keine Steuerberatung.
+Die [OeKB-Fondsabfrage](https://my.oekb.at/kapitalmarkt-services/kms-output/fonds-info/sd/af/f) ist für die Prüfung einzelner Fonds verfügbar. Ein allgemein verfügbarer vollständiger CSV-Gesamtexport ist nicht gesichert. Deshalb zeigt der Anlage-Assistent **keinen vermeintlichen OeKB-Gesamtdownload oder OeKB-CSV-Importbutton** mehr. Zuvor lokal importierte Fondskataloge bleiben lesbar, sofern sie bereits im Browser gespeichert wurden. Daraus folgt keine aktuelle Bestätigung des steuerlichen Meldefonds-Status.
 
 ### Datenquellen
-- **OeKB:** amtlicher Abruf und benutzerseitiger CSV-Import; nicht als versteckter Scraper.
+- **OeKB:** offizielle Fonds-Einzelabfrage zur steuerlichen Kontrolle; kein behaupteter Komplettdownload im Assistenten.
 - **CoinGecko:** öffentlicher Top-100- und vollständiger ID-Katalog ohne verpflichtende persönliche API-Schlüssel, abhängig von Netzwerk und Limits.
 - **Referenznotierungen:** bisheriges Offline-Minikatalogangebot plus lokal importierte Fonds; nicht als vollständige Börsenkursdatenbank ausgeben.
 - **OpenFIGI/weitere Provider:** bleiben wie zuvor optional, abhängig von vorhandenen Worker- oder Nutzerzugängen.
@@ -290,7 +287,7 @@ Bei fehlendem Online-Katalog ist die manuelle Anlage weiterhin möglich. Der Ser
 
 ## Große Wertpapierverzeichnisse – lokale Imports (v1.3.0)
 
-Die bisher vier Offline-ETF-Referenzen sind nur der Startkatalog. Für umfangreiche Suchtreffer gibt es jetzt unter **Positionen → Anlage hinzufügen → ETF/Aktie/Fonds/Sonstiges** einen universellen **„Heruntergeladene CSV/TXT einlesen“**-Dialog. Unterstützte Eingaben:
+Die bisher vier Offline-ETF-Referenzen sind nur der Startkatalog. Für umfangreiche Suchtreffer gibt es jetzt unter **Positionen → Anlage hinzufügen → ETF/Aktie/Fonds/Sonstiges** den unaufdringlichen, standardmäßig zugeklappten Bereich **„Wertpapierkatalog erweitern“** unter den Suchergebnissen. Darin liegen der Link zur Xetra-Downloadseite und **„CSV/TXT auswählen“**. Unterstützte Eingaben:
 
 - **Deutsche Börse Xetra:** Offizielle Datei **T7 (Xetra) All tradable instruments** (CSV mit Zeilen \`Market: XETR\`, \`Date Last Update\`, Kopfzeile). Importiert ISIN, Instrumentbezeichnung, vorhandenes Börsenkürzel, Währung und nur eindeutig bezeichnete Instrumentklassen. Ausdrücklich im Dateiheader genannte MIC \`XETR\` wird übernommen. Bereits zur Löschung vorgemerkte und inaktive Werte bleiben außen vor. Die **Static Instrument Reference Data**-ZIP ist **nicht** die erwartete CSV und kann in diesem Dialog nicht gelesen werden.
 - **Nasdaq Trader:** \`nasdaqlisted.txt\`, \`otherlisted.txt\`, \`nasdaqtraded.txt\` soweit deren erwartete Spalten vorhanden sind; Symbol, Name, explizites ETF-Merkmal, Test-Issue und ggf. Börsencode. Unterschiedliche Dateien ergänzen sich. Ein NASDAQ-Kürzel ist **keine ISIN**; ohne Währungsfeld wird **keine USD-Währung geschätzt**.

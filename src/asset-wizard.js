@@ -1,5 +1,5 @@
 import {escapeHTML,defaultSettings} from './model.js';
-import {cryptoChoices,loadTopCrypto,loadAllCrypto,cryptoCatalogState,parseFundCatalogCSV,saveFundCatalogPersistent,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog,OeKB_FUNDS_URL} from './instrument-catalog.js';
+import {cryptoChoices,loadTopCrypto,loadAllCrypto,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog} from './instrument-catalog.js';
 import {referenceSearch} from './reference-listings.js';
 import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
@@ -94,20 +94,15 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   const fields='<p class="dialog-intro">Welche Anlage möchtest du hinzufügen? Wähle einen Treffer oder erfasse die Daten selbst. Es werden keine Bestände oder Kurse übernommen.</p>'+
    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
    '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
-   (['etf','fund','stock','other'].includes(state.kind)?'<div class="wizard-fund-source wizard-security-source">'+
-    '<strong>Große Wertpapierlisten</strong><div class="wizard-source-links">'+
-    '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra ↗</a> · '+
-    '<a href="'+e(DIRECTORY_PAGE_LINKS.nasdaq)+'" target="_blank" rel="noopener noreferrer">Nasdaq ↗</a> · '+
-    '<a href="'+e(DIRECTORY_PAGE_LINKS.esma)+'" target="_blank" rel="noopener noreferrer">ESMA FIRDS ↗</a>'+
-    '</div><button id="wizardDirectoryImport" type="button" class="btn outline">Heruntergeladene CSV/TXT einlesen</button>'+
-    '<input id="wizardDirectoryFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden">'+
-    '<small id="wizardDirectoryStatus">'+directorySummary()+'</small>'+
-    '<small>Periodische Aktualisierung: Datei bei der Quelle erneut herunterladen und lokal einlesen. Die App lädt keine fremden Listen unbemerkt herunter oder veröffentlicht sie weiter.</small></div>':'')+
-   (['etf','fund'].includes(state.kind)?'<div class="wizard-fund-source"><a href="'+e(OeKB_FUNDS_URL)+'" target="_blank" rel="noopener noreferrer">OeKB: offizielle KESt-Meldefonds-Liste ↗</a><button id="wizardFundImport" class="btn outline" type="button">OeKB-Liste als CSV importieren</button><input id="wizardFundFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"><small>'+
-    '<span id="wizardFundSourceStatus">'+(funds?e(funds.entries.length+' Fonds lokal · importiert am '+new Date(funds.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft'):'Die amtliche Liste wird nicht automatisch abgerufen. Die CSV wird ausschließlich lokal gespeichert.')+'</span>'+
-    '</small></div>':'')+
    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
    '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Externe Treffer suchen (optional)</button>'+
+   (['etf','fund','stock','other'].includes(state.kind)?
+    '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog erweitern</summary><div class="wizard-catalog-content">'+
+    '<p>Größere Wertpapierlisten kannst du lokal ergänzen.</p>'+
+    '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra-Liste herunterladen ↗</a>'+
+    '<div class="wizard-catalog-actions"><button id="wizardDirectoryImport" class="btn outline" type="button">CSV/TXT auswählen</button>'+
+    '<input id="wizardDirectoryFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"></div>'+
+    '<small id="wizardDirectoryStatus">'+e(directorySummary())+'</small></div></details>':'')+
    '<div class="wizard-manual"><strong>Anlage manuell hinzufügen</strong><div class="field-row">'+
    input('wizardName','Bezeichnung',state.name,'required maxlength="110"')+
    input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"')+'</div>'+
@@ -149,22 +144,6 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     const status=$('wizardDirectoryStatus');if(status)status.textContent=directorySummary();
     notify(catalog.entries.length+' Instrumente lokal übernommen ('+catalog.source+'). '+catalog.skipped+' ungültige/inaktive Einträge übersprungen. Börsenzuordnung und Währung vor der Auswahl prüfen.');
    }catch(ex){error('Verzeichnisimport: '+String(ex.message||ex).slice(0,220));}
-  });
-  $('wizardFundImport')?.addEventListener('click',()=>$('wizardFundFile')?.click());
-  $('wizardFundFile')?.addEventListener('change',async event=>{
-   const file=event.target.files?.[0];event.target.value='';
-   if(!file)return;
-   if(file.size>14_000_000)return error('CSV ist zu groß (maximal 14 MB).');
-   try{
-    let raw=await file.text();
-    if(raw.includes('\uFFFD'))raw=new TextDecoder('windows-1252').decode(await file.arrayBuffer());
-    const next=parseFundCatalogCSV(raw,{filename:file.name});
-    await saveFundCatalogPersistent(next);
-    funds=next;
-    updateResults();
-    render();
-    error('Fondsliste erfolgreich lokal eingelesen: '+next.entries.length+' gültige ISINs. Der Meldefonds-Status ist nur zum Datum des Exports relevant und nicht live verifiziert.');
-   }catch(ex){error('Fondsimport: '+(ex.message||ex));}
   });
   $('wizardExternalSearch').addEventListener('click',externalSearch);
   if(state.kind==='crypto'){updateResults();loadCoins();}
@@ -285,7 +264,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    }).catch(()=>{if(dialog.open){const status=$('wizardDirectoryStatus');if(status)status.textContent='Lokale Wertpapierlisten konnten nicht gelesen werden.';}});
    void loadFundCatalogPersistent().then(next=>{if(!next||!dialog.open)return;funds=next;
      if(state.step===1&&['etf','fund'].includes(state.kind)){
-       const hint=$('wizardFundSourceStatus');if(hint)hint.textContent=next.entries.length+' Fonds lokal · importiert am '+new Date(next.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft';
+       // Existing locally imported fund references remain available without a misleading OeKB download control.
        updateResults();
      }
    });
