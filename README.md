@@ -190,3 +190,33 @@ Unter **Mehr → + Anbieter** zeigt die Anwendung schon beim Tippen, etwa „f�
 Unter **Mehr → + Konto** werden je nach ausgewähltem Anbietertyp Vorschläge für Kontonamen und passenden Typ angeboten, beispielsweise bei Brokern Wertpapierdepot, bei Banken Giro-/Tagesgeldkonto und bei Wallet-Anbietern Krypto-Wallet. Ein selbst benanntes Konto bleibt möglich. Keine Kontonummern oder Zugangsdaten werden gesucht oder übernommen.
 
 In **Position hinzufügen / bearbeiten** lassen sich bereits angelegte Anbieter und Konten mit kurzen Suchfeldern direkt filtern. Bei ETFs, Aktien oder Fonds erscheint die **universelle Wertpapiersuche vor den manuellen Eingabefeldern**. Nach ausdrücklicher Bestätigung einer Börsennotierung übernimmt Foliolab Bezeichnung, Ticker, ISIN (falls durch Quelle bestätigt), Börse, MIC und passende externe Börsensymbole. Stückzahlen, Kurse, Buchungen, Kostenbasis und Stichtage bleiben unverändert. Die Wertpapiersuche erfordert einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel und die jeweilige Tarifberechtigung; ansonsten können Daten manuell eingegeben werden.
+
+
+## UI- und Datenintegritätsverbesserungen (Entwicklungsstand Oktober 2026)
+
+Diese Änderungen werden zunächst im Entwicklungsbranch geprüft und sind erst nach erfolgreicher Freigabe Bestandteil der veröffentlichten Version.
+
+- **Anbieterauswahl:** Suchfilter ändern lediglich sichtbare Vorschläge. Weder Anbieter noch Konto werden ohne ausdrückliche Bestätigung durch den ersten Treffer ersetzt. Bei leerem Trefferfilter ist Speichern nicht möglich.
+- **Startguthaben:** Optionaler Eröffnungsbestand bei der Kontoanlage wird in der gewählten Kontowährung erfasst. Für Fremdwährungen wird ein ausdrücklich eingegebener EUR-Umrechnungskurs verlangt. Der Eröffnungsbestand ist keine erfundene Kauftransaktion und kein automatisch gebuchter externer Geldfluss.
+- **Bewertungswarnungen:** Ein Hinweis zu fehlenden, abgeleiteten oder veralteten Kursen führt direkt zu den betroffenen Positionen. Der Hinweis auf zuletzt gespeicherte Werte ist nicht mit einem aktuellen Börsenkurs gleichzusetzen.
+- **Positionen:** Lokale Suche nach Name, ISIN, Symbol, Anbieter oder Konto und Sortierung nach Wert, Name, Anbieter, Anlageklasse oder Kursdatum. Suche und Sortierung verändern keine gespeicherten Positionen.
+- **Buchungen:** Der Leerzustand bietet direkte Einstiege in die manuelle Buchung und den vorhandenen CSV-Import. Ohne ausreichende Transaktionshistorie wird keine verlässliche Rendite abgeleitet.
+- **Backup-Anzeige:** Zeitpunkt des zuletzt angestoßenen Download-Exports wird als „für einen Download erstellt“ angezeigt, nicht als Garantie für dauerhaft gesicherte Dateien. Den tatsächlichen Download und sicheren Ablageort müssen Nutzer selbst kontrollieren.
+- **Einstellungen und Dialoge:** Die Solana-RPC-Konfiguration liegt hinter einem aufklappbaren erweiterten Bereich. Dialoginhalt lässt sich unabhängig von Kopfzeile und Speichern/Abbrechen scrollen.
+- **Legacy-Sonic:** Nur klar als native Sonic-Währung identifizierte Krypto-Positionen mit der bisherigen CoinGecko-ID `sonic` werden auf `sonic-3` normalisiert. Mehrdeutige Tokens bleiben unberührt; Bestandsmengen und historische Stichtage werden nicht rückwirkend umgeschrieben.
+
+Weitere Prüfungen im Entwicklungsbranch:
+
+```bash
+npm test
+npm run check
+npm start
+# In einer zweiten Konsole (mit installiertem Playwright):
+node tests/browser-onboarding-suggestions.mjs
+node tests/browser-account-opening.mjs
+node tests/browser-valuation-drilldown.mjs
+node tests/browser-settings-backup.mjs
+node tests/browser-position-search.mjs
+```
+
+**Nicht durch diese Teiländerungen abgedeckt:** Ein neuer vollständiger Drei-Schritt-Anlage-Wizard und ein veröffentlichter öffentlicher Instrumentensuch-Worker. Die manuelle Anlage ohne API-Key bleibt möglich; die erweiterte Wertpapiersuche benötigt vorerst weiterhin die in den Einstellungen dokumentierten Anbieter-Zugangsdaten.
