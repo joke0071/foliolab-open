@@ -1,7 +1,8 @@
-import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,groupByKind,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
+import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact} from './market.js';
 import {svg} from './format.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} from './allocation-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
@@ -32,7 +33,13 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   $('totalHint').textContent=missing.length||stale.length?`⚠ Bewertung unvollständig: ${missing.length} ohne Kurs${stale.length?' · '+stale.length+' veraltet':''}`:`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei Foliolab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-provider">Anbieter hinzufügen</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel);
-  const alloc=groupByKind(model);let acc=0;const stops=alloc.map(a=>{const a0=acc;acc+=a.total/Math.max(total,1)*100;return `${colors[a.key]} ${a0.toFixed(2)}% ${acc.toFixed(2)}%`});$('donut').style.background=stops.length?`conic-gradient(${stops.join(',')})`:'#edf3ed';$('donutTotal').textContent=money(total);$('allocationLegend').innerHTML=alloc.length?alloc.map(a=>`<div class="alloc-legend-row"><span class="legend-left"><span class="legend-dot" style="background:${colors[a.key]}"></span>${esc(a.name)}</span><b>${Math.round(a.total/total*100)} %</b></div>`).join(''):empty('Noch keine Positionen');
+  const alloc=allocationBreakdown(model,valueEUR,TYPES);
+  const previousKey=$('allocationLegend').querySelector('[data-allocation-key][aria-pressed="true"]')?.dataset.allocationKey||null;
+  const pie=renderAllocationDonut(alloc,{money,esc,colors,netTotal:total,selectedKey:previousKey});
+  $('donut').innerHTML=pie.donut;
+  $('allocationLegend').innerHTML=pie.legend;
+  $('dashboardPage').dataset.hasLiabilities=String(alloc.liabilities>0);
+  attachAllocationInteractions($('dashboardPage'),{slices:alloc.slices,money,netTotal:total,initialIndex:pie.activeIndex});
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded);
   $('miniChart').innerHTML=drawChart(model.snapshots.slice(-18));attachChartInteractions($('miniChart'));}
