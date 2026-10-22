@@ -158,7 +158,7 @@ export function safeImport(raw){
         if(entries.length>5000)throw Error('Zu viele historische Einzelpositionswerte.');
         const values=Object.create(null);
         for(const [positionId,amount] of entries){
-          if(!positionId||positionId.length>120||!m.positions.some(p=>p.id===positionId))throw Error('Ungültiger Positionsbezug im historischen Verlauf.');
+          if(!positionId||positionId.length>120||positionId==='__proto__'||positionId==='constructor')throw Error('Ungültiger Positionsbezug im historischen Verlauf.');
           values[positionId]=exact(units(amount));
         }
         return values;
