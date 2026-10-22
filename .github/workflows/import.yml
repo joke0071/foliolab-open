@@ -52,6 +52,7 @@ jobs:
           node tests/browser-universal-security-discovery.mjs
           node tests/browser-onboarding-suggestions.mjs
           node tests/browser-account-opening.mjs
+          node tests/browser-valuation-drilldown.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:

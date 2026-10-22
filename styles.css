@@ -235,3 +235,7 @@
  .onboarding-suggestion{padding:12px;min-height:42px}
  .field .picker-search{font-size:12px}
 }
+
+/* Compact, keyboard-accessible explanation of incomplete valuations. */
+.hero-valuation-link{background:transparent;border:0;padding:0;text-align:left;color:inherit;font:inherit;text-decoration:underline;text-decoration-color:#d9e5d38c;text-underline-offset:3px;cursor:pointer;line-height:1.55}
+.hero-valuation-link:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:3px}
