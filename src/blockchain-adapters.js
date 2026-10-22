@@ -1,5 +1,6 @@
 import {discoverWallet,walletBalance,PUBLIC_EVM_NETWORKS} from './market.js';
 import {deriveBitcoinAddress} from './bitcoin-hd.js';
+import {validateNativeStakingAddress} from './native-staking-networks.js';
 /** @typedef {{network:string,name:string,mode:string,canScan:boolean,note:string}} WalletCapabilities */
 export const NETWORKS=[
  {id:'btc',name:'Bitcoin',mode:'native',note:'Einzeladresse'},
@@ -13,7 +14,11 @@ export const NETWORKS=[
  {id:'146',name:'Sonic Mainnet',mode:'tokens-best-effort',note:'S, stS und SFC-Delegationen'},
  {id:'xrp',name:'XRP Ledger',mode:'tokens-best-effort',note:'XRP und Trust Lines (Issuer prüfen)'},
  {id:'sol',name:'Solana',mode:'tokens-best-effort',note:'SOL, SPL und Stake-Accounts (RPC-abhängig)'},
- ...[['bnb','BNB Smart Chain'],['cardano','Cardano'],['cosmos','Cosmos'],['ton','TON'],['sui','Sui'],['aptos','Aptos']].map(([id,name])=>({id,name,mode:'manual',note:'Manuell; keine verifizierte Schlüssel-los-Erkennung'}))
+ {id:'56',name:'BNB Smart Chain',mode:'native',note:'Nur BNB; Staking-Delegationen fehlen'},
+ {id:'cosmos',name:'Cosmos Hub',mode:'staking-best-effort',note:'ATOM liquid, delegiert, Unbonding (LCD-abhängig)'},
+ {id:'hedera',name:'Hedera',mode:'native',note:'HBAR; Staking ohne zusätzliche Guthaben-Position'},
+ {id:'near',name:'NEAR',mode:'staking-best-effort',note:'Account-Saldo und Locked; Pools nicht vollständig'},
+ ...[['cardano','Cardano'],['ton','TON'],['sui','Sui (gRPC/GraphQL erforderlich)'],['aptos','Aptos']].map(([id,name])=>({id,name,mode:'manual',note:'Manuell; keine verifizierte Schlüssel-los-Erkennung'}))
 ];
 export function getCapabilities(network){
  const n=NETWORKS.find(x=>x.id===String(network));if(!n)throw Error('Unbekanntes Netzwerk.');
@@ -22,7 +27,7 @@ export function getCapabilities(network){
 export function validateAddress(network,address){
  const id=String(network),a=String(address||'').trim();
  if(/^(xprv|yprv|zprv)/i.test(a)||/\b(seed|mnemonic|private key)\b/i.test(a))throw Error('Keine privaten Schlüssel oder Seed-Phrases eingeben.');
- const valid=id==='btc-hd'?/^(xpub|ypub|zpub)[1-9A-HJ-NP-Za-km-z]{90,120}$/.test(a):id==='btc'?/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(a):id==='sol'?/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a):id==='xrp'?/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(a):PUBLIC_EVM_NETWORKS[Number(id)]?/^0x[0-9a-fA-F]{40}$/.test(a):false;
+ const valid=id==='btc-hd'?/^(xpub|ypub|zpub)[1-9A-HJ-NP-Za-km-z]{90,120}$/.test(a):id==='btc'?/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(a):id==='sol'?/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(a):id==='xrp'?/^r[1-9A-HJ-NP-Za-km-z]{24,34}$/.test(a):['cosmos','hedera','near'].includes(id)?(()=>{try{validateNativeStakingAddress(id,a);return true;}catch{return false;}})():PUBLIC_EVM_NETWORKS[Number(id)]?/^0x[0-9a-fA-F]{40}$/.test(a):false;
  if(!valid)throw Error('Öffentliche Adresse passt nicht zum Netzwerk.');return a;
 }
 export function getAdapter(network){
