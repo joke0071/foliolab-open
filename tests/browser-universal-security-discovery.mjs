@@ -33,7 +33,8 @@ try{
  await page.locator('#securityResults [data-security]').first().waitFor();
  const choices=page.locator('#securityResults [data-security]');
  assert.equal(await choices.count(),3);
- assert.equal(await choices.nth(1).isDisabled(),true,'GBP listing cannot silently alter EUR quoted holdings');
+ const gbpChoice=page.locator('#securityResults [data-security]').filter({hasText:'GBP'});
+ assert.equal(await gbpChoice.isDisabled(),true,'GBP listing cannot silently alter EUR quoted holdings');
  assert.match(await choices.first().innerText(),/XETR/);
  page.once('dialog',dialog=>{assert.match(dialog.message(),/IE00A1234567/);return dialog.accept();});
  await choices.first().click();
