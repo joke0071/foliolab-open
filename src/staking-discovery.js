@@ -1,5 +1,6 @@
 import {atomicDecimal} from './decimal.js';
 import {requestJSON,TTL} from './request-cache.js';
+import {solanaRpcRead} from './solana-rpc.js';
 
 export const SAVAX_CONTRACT='0x2b2c81e08f1af8835a78bb2a90ae924ace0ea4be';
 export const STS_CONTRACT='0xe5da20f15420ad15de0fa650600afc998bbe3955';
@@ -80,7 +81,7 @@ export async function discoverSonicWallet(address,fetcher=globalThis.fetch){
 /** Only withdraw-authorized stake accounts are economically attributed to this wallet. */
 export async function discoverSolanaStakes(owner,rpcUrl,fetcher=globalThis.fetch){
  if(!SOL_RE.test(owner))throw Error('Ungültige Solana-Adresse.');
- const rows=await rpc(rpcUrl,'getProgramAccounts',[SOLANA_STAKE_PROGRAM,{encoding:'jsonParsed',commitment:'confirmed',filters:[{dataSize:200},{memcmp:{offset:44,bytes:owner}}]}],fetcher);
+ const {result:rows}=await solanaRpcRead(rpcUrl,'getProgramAccounts',[SOLANA_STAKE_PROGRAM,{encoding:'jsonParsed',commitment:'confirmed',filters:[{dataSize:200},{memcmp:{offset:44,bytes:owner}}]}],fetcher);
  if(!Array.isArray(rows))throw Error('Solana-Stake-Accounts nicht vollständig lesbar.');
  if(rows.length>500)throw Error('Solana-Stake-Scanlimit erreicht.');
  const result=[],seen=new Set();
@@ -99,7 +100,7 @@ export async function discoverSolanaStakes(owner,rpcUrl,fetcher=globalThis.fetch
 }
 export async function solanaStakeBalanceExact(wallet,rpcUrl,fetcher=globalThis.fetch){
  if(!SOL_RE.test(String(wallet?.address||''))||!SOL_RE.test(String(wallet?.contract||'')))throw Error('Ungültiger Solana-Stake-Account.');
- const account=await rpc(rpcUrl,'getAccountInfo',[wallet.contract,{encoding:'jsonParsed',commitment:'confirmed'}],fetcher);
+ const {result:account}=await solanaRpcRead(rpcUrl,'getAccountInfo',[wallet.contract,{encoding:'jsonParsed',commitment:'confirmed'}],fetcher);
  if(!account.value)throw Error('Stake-Account nicht mehr vorhanden; vorherigen Bestand nicht ungeprüft auf null setzen.');
  const a=account.value;
  if(a.owner!==SOLANA_STAKE_PROGRAM||a.data?.parsed?.info?.meta?.authorized?.withdrawer!==wallet.address)throw Error('Stake-Account nicht mehr der angegebenen Wallet zugeordnet.');
