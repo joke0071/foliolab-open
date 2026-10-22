@@ -6,6 +6,12 @@ try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#addWizard').click();
+ assert.equal(await page.locator('#wizardCatalogTools').getAttribute('open'),null);
+ assert.equal(await page.locator('#wizardDirectoryImport').isVisible(),false);
+ await page.locator('#wizardCatalogTools summary').click();
+ assert.equal(await page.locator('#wizardDirectoryImport').isVisible(),true);
+ await page.locator('#wizardCatalogTools summary').click();
+
  const rows=['Market: XETR','Date Last Update: 22.10.2026','Product Status;Instrument Status;Instrument;ISIN;Mnemonic;Currency;Instrument Type'];
  rows.push('Active;Active;Vanguard FTSE All-World UCITS ETF;IE00BK5BQT80;VWCE;EUR;ETF');
  for(let i=0;i<6000;i++)rows.push('Active;Active;Example European Stock '+String(i).padStart(5,'0')+';DE'+String(1000000000+i)+';ST'+i+';EUR;Shares');
