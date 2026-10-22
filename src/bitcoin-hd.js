@@ -97,34 +97,72 @@ function bech32(data){
  chk^=1;let suffix='';for(let i=0;i<6;i++)suffix+=B32[(chk>>>(5*(5-i)))&31];
  return 'bc1'+words.map(v=>B32[v]).join('')+suffix;
 }
-export async function deriveBitcoinAddress(xpub,change=0,index=0){
+export const HD_ADDRESS_TYPES=Object.freeze([
+ ['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],
+ ['p2wpkh','Native SegWit · bc1q… (BIP84)'],
+ ['p2sh-p2wpkh','Nested SegWit · 3… (BIP49)'],
+ ['p2pkh','Legacy · 1… (BIP44)']
+]);
+function supportedHdFormats(account,addressType='auto'){
+ const names=HD_ADDRESS_TYPES.map(([value])=>value);
+ if(!names.includes(addressType))throw Error('Unbekannter Bitcoin-HD-Adresstyp.');
+ if(addressType!=='auto'){
+  if(account.format!=='p2pkh'&&addressType!==account.format)throw Error('ypub/zpub-Adresstyp darf nicht überschrieben werden.');
+  return [addressType];
+ }
+ // Ledger exports BIP84 native SegWit accounts as ordinary "xpub".
+ // The xpub header alone cannot identify the BIP44/49/84 address type.
+ return account.format==='p2pkh'?['p2wpkh','p2sh-p2wpkh','p2pkh']:[account.format];
+}
+async function addressFromBranch(branch,index,format){
+ const target=await child(branch,index);
+ const keyHash=await hash160(target.point);
+ if(format==='p2wpkh')return bech32(keyHash);
+ if(format==='p2sh-p2wpkh')return base58check(join(Uint8Array.of(5),await hash160(join(Uint8Array.of(0,20),keyHash))));
+ if(format==='p2pkh')return base58check(join(Uint8Array.of(0),keyHash));
+ throw Error('Bitcoin-HD-Adresstyp nicht unterstützt.');
+}
+export async function deriveBitcoinAddress(xpub,change=0,index=0,addressType=null){
  if(![0,1].includes(change)||!Number.isInteger(index)||index<0||index>100000)throw Error('Ungültiger HD-Wallet-Index.');
  const account=await decodeExtended(xpub);
- const branch=await child(account,change),target=await child(branch,index);
- const keyHash=await hash160(target.point);
- if(target.format==='p2wpkh')return bech32(keyHash);
- if(target.format==='p2sh-p2wpkh')return base58check(join(Uint8Array.of(5),await hash160(join(Uint8Array.of(0,20),keyHash))));
- return base58check(join(Uint8Array.of(0),keyHash));
+ const format=addressType==null?account.format:supportedHdFormats(account,addressType)[0];
+ return addressFromBranch(await child(account,change),index,format);
 }
-/** Reads both receiving/change chains until twenty unused addresses; throws if incomplete. */
-export async function scanBitcoinAccount(xpub,{fetcher=globalThis.fetch,gapLimit=20,maxAddressesPerBranch=100}={}){
- if(!Number.isInteger(gapLimit)||gapLimit<1||gapLimit>20||maxAddressesPerBranch<gapLimit||maxAddressesPerBranch>200)throw Error('Ungültiges HD-Scanlimit.');
+/**
+ * Watch-only: scan both receiving/change branches until the 20-address gap.
+ * Generic xpubs are ambiguous: detect BIP84, then BIP49, then BIP44.
+ * If an xpub shows no history in any format, DO NOT treat that as a verified
+ * zero balance: the user must explicitly choose the right format.
+ */
+export async function scanBitcoinAccount(xpub,{fetcher=globalThis.fetch,gapLimit=20,maxAddressesPerBranch=100,addressType='auto'}={}){
+ if(!Number.isInteger(gapLimit)||gapLimit<1||gapLimit>20||!Number.isInteger(maxAddressesPerBranch)||maxAddressesPerBranch<gapLimit||maxAddressesPerBranch>200)throw Error('Ungültiges HD-Scanlimit.');
+ const account=await decodeExtended(xpub);
+ const formats=supportedHdFormats(account,addressType);
  const {requestJSON,TTL}=await import('./request-cache.js');
- const summaries=[];let total=0n,observed=0,checked=0;
- for(const branch of [0,1]){
-  let gap=0;
-  for(let index=0;index<maxAddressesPerBranch;index++){
-   const address=await deriveBitcoinAddress(xpub,branch,index);
-   const data=await requestJSON('https://blockstream.info/api/address/'+address,{fetcher,ttlMs:TTL.wallet});
-   const c=data.chain_stats,m=data.mempool_stats;
-   if(!c||!m||![c.funded_txo_sum,c.spent_txo_sum,m.funded_txo_sum,m.spent_txo_sum].every(Number.isSafeInteger)||!Number.isSafeInteger(c.funded_txo_count))throw Error('Bitcoin-Explorer-Antwort unvollständig; Scan abgebrochen.');
-   const used=c.funded_txo_count>0||m.funded_txo_count>0,delta=BigInt(c.funded_txo_sum)-BigInt(c.spent_txo_sum)+BigInt(m.funded_txo_sum)-BigInt(m.spent_txo_sum);
-   if(delta<0n)throw Error('Unplausibler Bitcoin-Adresssaldo.');
-   total+=delta;checked++;if(used){gap=0;observed++;}else gap++;
-   if(used||delta>0n)summaries.push({address,branch,index,satoshis:delta.toString()});
-   if(gap>=gapLimit)break;
-   if(index===maxAddressesPerBranch-1)throw Error('Gap Limit nicht erreicht; HD-Scan unvollständig.');
+ for(const format of formats){
+  const summaries=[];let total=0n,observed=0,checked=0;
+  for(const branch of [0,1]){
+   const branchKey=await child(account,branch);
+   let gap=0;
+   for(let index=0;index<maxAddressesPerBranch;index++){
+    const address=await addressFromBranch(branchKey,index,format);
+    const data=await requestJSON('https://blockstream.info/api/address/'+address,{fetcher,ttlMs:TTL.wallet});
+    const c=data?.chain_stats,m=data?.mempool_stats;
+    if(!c||!m||![c.funded_txo_count,m.funded_txo_count,c.funded_txo_sum,c.spent_txo_sum,m.funded_txo_sum,m.spent_txo_sum].every(n=>Number.isSafeInteger(n)&&n>=0))throw Error('Bitcoin-Explorer-Antwort unvollständig; bisheriger Bestand bleibt erhalten.');
+    const used=c.funded_txo_count>0||m.funded_txo_count>0;
+    const delta=BigInt(c.funded_txo_sum)-BigInt(c.spent_txo_sum)+BigInt(m.funded_txo_sum)-BigInt(m.spent_txo_sum);
+    if(delta<0n)throw Error('Unplausibler Bitcoin-Adresssaldo.');
+    total+=delta;checked++;
+    if(used){gap=0;observed++;}else gap++;
+    if(used||delta>0n)summaries.push({address,branch,index,satoshis:delta.toString()});
+    if(gap>=gapLimit)break;
+    if(index===maxAddressesPerBranch-1)throw Error('Gap Limit nicht erreicht; HD-Scan unvollständig.');
+   }
+  }
+  if(observed>0||formats.length===1){
+   const p=total.toString().padStart(9,'0'),fraction=p.slice(-8).replace(/0+$/,'');
+   return {quantityExact:p.slice(0,-8)+(fraction?'.'+fraction:''),satoshis:total.toString(),addressesChecked:checked,usedAddresses:observed,details:summaries,addressType:format,complete:true};
   }
  }
- return {quantityExact:(()=>{const p=total.toString().padStart(9,'0');const frac=p.slice(-8).replace(/0+$/,'');return p.slice(0,-8)+(frac?'.'+frac:'');})(),satoshis:total.toString(),addressesChecked:checked,usedAddresses:observed,details:summaries,complete:true};
+ throw Error('Für diesen xpub wurde in Legacy, Nested und Native SegWit kein Verlauf gefunden. Bitte den Adresstyp in der Position auswählen; Taproot (bc1p) wird noch nicht unterstützt. Bisheriger Bestand bleibt erhalten.');
 }

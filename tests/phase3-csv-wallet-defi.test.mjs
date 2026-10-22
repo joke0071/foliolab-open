@@ -166,3 +166,52 @@ test('Two identical broker CSV rows are distinct if both occur in one file, but 
  const repeated=previewCSV(m,csv,mapping,options);
  assert.equal(repeated.ready,0);assert.equal(repeated.duplicates,2);
 });
+
+
+test('Ledger Native SegWit account exported as xpub is auto-discovered using bc1q addresses',async()=>{
+ const xpub=checksumKey(ZPUB,[0x04,0x88,0xb2,0x1e]);
+ const native='bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu';
+ assert.equal(await deriveBitcoinAddress(xpub,0,0,'p2wpkh'),native);
+ assert.match(await deriveBitcoinAddress(xpub,0,0),/^1/,'The raw xpub prefix alone specifies legacy in generic decoders');
+ const urls=[],zero={chain_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0},mempool_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0}};
+ const mock=async url=>{
+  urls.push(url);
+  const body=url.endsWith(native)?{chain_stats:{funded_txo_count:1,funded_txo_sum:12620376,spent_txo_sum:0},mempool_stats:zero.mempool_stats}:zero;
+  return {ok:true,status:200,headers:{get:()=>null},json:async()=>body};
+ };
+ const result=await scanBitcoinAccount(xpub,{fetcher:mock,gapLimit:2,maxAddressesPerBranch:4});
+ assert.equal(result.quantityExact,'0.12620376');
+ assert.equal(result.addressType,'p2wpkh');
+ assert.equal(result.usedAddresses,1);
+ assert.equal(urls[0],'https://blockstream.info/api/address/'+native);
+ assert.equal(urls.length,5,'Only matching scheme should be scanned after detection');
+});
+test('xpub without any address history must not erase an existing BTC amount',async()=>{
+ const xpub=checksumKey(ZPUB,[0x04,0x88,0xb2,0x1e]);
+ let count=0;
+ const empty=async()=>{count++;return {ok:true,status:200,headers:{get:()=>null},json:async()=>({chain_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0},mempool_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0}})};};
+ await assert.rejects(()=>scanBitcoinAccount(xpub,{fetcher:empty,gapLimit:1,maxAddressesPerBranch:2}),/kein Verlauf gefunden/);
+ assert.equal(count,6,'Scan checks native, nested and legacy on receive/change branches');
+ const explicit=await scanBitcoinAccount(xpub,{fetcher:empty,gapLimit:1,maxAddressesPerBranch:2,addressType:'p2pkh'});
+ assert.equal(explicit.quantityExact,'0','Only an explicitly chosen script type can certify an unused xpub as empty');
+ assert.equal(explicit.addressType,'p2pkh');
+});
+test('A generic Ledger xpub can explicitly derive native, nested and legacy scripts',async()=>{
+ const xpub=checksumKey(ZPUB,[0x04,0x88,0xb2,0x1e]);
+ assert.match(await deriveBitcoinAddress(xpub,0,0,'p2wpkh'),/^bc1q/);
+ assert.match(await deriveBitcoinAddress(xpub,0,0,'p2sh-p2wpkh'),/^3/);
+ assert.match(await deriveBitcoinAddress(xpub,0,0,'p2pkh'),/^1/);
+ await assert.rejects(()=>deriveBitcoinAddress(ZPUB,0,0,'p2pkh'),/darf nicht überschrieben werden/);
+});
+test('HD script format is retained across backup and migration, existing import defaults auto',()=>{
+ const {m,cash}=fixture();
+ const xpub=checksumKey(ZPUB,[0x04,0x88,0xb2,0x1e]);
+ const base={providerId:cash.providerId,accountId:cash.accountId,kind:'crypto',name:'BTC',quantity:'0.12620376',price:1,wallet:{enabled:true,chain:'btc-hd',address:xpub}};
+ const a=createPosition(base,m);m.positions.push(a);
+ assert.equal(a.wallet.addressType,'auto');
+ const next=safeImport(JSON.parse(backup(m)));
+ assert.equal(next.positions.at(-1).wallet.addressType,'auto');
+ next.positions.at(-1).wallet.addressType='p2wpkh';
+ assert.equal(safeImport(JSON.parse(backup(next))).positions.at(-1).wallet.addressType,'p2wpkh');
+ assert.throws(()=>createPosition({...base,wallet:{...base.wallet,addressType:'p2tr'}},m),/Adresstyp/);
+});

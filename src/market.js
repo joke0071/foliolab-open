@@ -162,9 +162,9 @@ export async function discoverWallet(network,address,settings={},fetcher=globalT
   const a=String(address||'').trim();
   if(/^(xprv|yprv|zprv)/i.test(a)||/\b(seed|mnemonic|private key)\b/i.test(a))throw Error('Niemals private Schlüssel oder Seed-Phrases eingeben.');
   if(network==='btc-hd'){
-    const result=await scanBitcoinAccount(a,{fetcher});
+    const result=await scanBitcoinAccount(a,{fetcher,addressType:settings.hdAddressType||'auto'});
     const quantity=Number(result.quantityExact);
-    return quantity>0?[{name:'Bitcoin HD (Watch-only)',symbol:'BTC',coinId:'bitcoin',quantity,quantityExact:result.quantityExact,chain:'btc-hd',decimals:8,complete:result.complete}]:[];
+    return quantity>0?[{name:'Bitcoin HD (Watch-only)',symbol:'BTC',coinId:'bitcoin',quantity,quantityExact:result.quantityExact,chain:'btc-hd',addressType:result.addressType,decimals:8,complete:result.complete}]:[];
   }
   if(network==='btc'){
     if(!/^(bc1[ac-hj-np-z02-9]{11,87}|[13][a-km-zA-HJ-NP-Z1-9]{24,47})$/.test(a))throw Error('Bitte eine gültige einzelne Bitcoin-Adresse eingeben (kein xpub).');
@@ -270,7 +270,7 @@ export async function evmContractPrices(chainId,contracts,key='',fetcher=globalT
 /** Exact string balances: no JS Number conversion before parsing blockchain atomics. */
 export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.fetch){
  if(!wallet?.enabled)throw Error('Kein Wallet konfiguriert.');
- if(wallet.chain==='btc-hd')return (await scanBitcoinAccount(wallet.address,{fetcher})).quantityExact;
+ if(wallet.chain==='btc-hd')return (await scanBitcoinAccount(wallet.address,{fetcher,addressType:wallet.addressType||'auto'})).quantityExact;
  if(wallet.chain==='xrp-token')return readTrustLineBalance(wallet.address,wallet.contract,fetcher);
  if(wallet.chain==='btc'){
   const d=await json('https://blockstream.info/api/address/'+encodeURIComponent(wallet.address),{ttlMs:TTL.wallet},fetcher),c=d.chain_stats,m=d.mempool_stats;
