@@ -1,5 +1,5 @@
 import {escapeHTML,defaultSettings} from './model.js';
-import {cryptoChoices,loadTopCrypto,loadAllCrypto,cryptoCatalogState,parseFundCatalogCSV,saveFundCatalog,loadFundCatalog,searchFundCatalog,OeKB_FUNDS_URL} from './instrument-catalog.js';
+import {cryptoChoices,loadTopCrypto,loadAllCrypto,cryptoCatalogState,parseFundCatalogCSV,saveFundCatalogPersistent,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog,OeKB_FUNDS_URL} from './instrument-catalog.js';
 import {referenceSearch} from './reference-listings.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
 const e=escapeHTML;
@@ -80,7 +80,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
    '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
    (['etf','fund'].includes(state.kind)?'<div class="wizard-fund-source"><a href="'+e(OeKB_FUNDS_URL)+'" target="_blank" rel="noopener noreferrer">OeKB: offizielle KESt-Meldefonds-Liste ↗</a><button id="wizardFundImport" class="btn outline" type="button">OeKB-Liste als CSV importieren</button><input id="wizardFundFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"><small>'+
-    (funds?e(funds.entries.length+' Fonds lokal · importiert am '+new Date(funds.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft'):'Die amtliche Liste wird nicht automatisch abgerufen. Die CSV wird ausschließlich lokal gespeichert.')+
+    '<span id="wizardFundSourceStatus">'+(funds?e(funds.entries.length+' Fonds lokal · importiert am '+new Date(funds.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft'):'Die amtliche Liste wird nicht automatisch abgerufen. Die CSV wird ausschließlich lokal gespeichert.')+'</span>'+
     '</small></div>':'')+
    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
    '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Externe Treffer suchen (optional)</button>'+
@@ -119,7 +119,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     let raw=await file.text();
     if(raw.includes('\uFFFD'))raw=new TextDecoder('windows-1252').decode(await file.arrayBuffer());
     const next=parseFundCatalogCSV(raw,{filename:file.name});
-    saveFundCatalog(next);
+    await saveFundCatalogPersistent(next);
     funds=next;
     updateResults();
     render();
@@ -234,5 +234,12 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  const close=()=>{sequence++;if(dialog.open)dialog.close();opener?.focus?.();};
  dialog.addEventListener('cancel',ev=>{if(state.busy){ev.preventDefault();return;}sequence++;});
  dialog.addEventListener('close',()=>opener?.focus?.());
- return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;dialog.showModal();render();},close,getState:()=>({...state})};
+ return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;dialog.showModal();render();
+   void loadFundCatalogPersistent().then(next=>{if(!next||!dialog.open)return;funds=next;
+     if(state.step===1&&['etf','fund'].includes(state.kind)){
+       const hint=$('wizardFundSourceStatus');if(hint)hint.textContent=next.entries.length+' Fonds lokal · importiert am '+new Date(next.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft';
+       updateResults();
+     }
+   });
+ },close,getState:()=>({...state})};
 }
