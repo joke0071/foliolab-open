@@ -275,3 +275,40 @@
 .holding-facts dd{font-size:12px;margin:0;color:#354e3d;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
 @media(max-width:720px){.holding-expand{margin-left:10px}.holding-facts{grid-template-columns:1fr 1fr;column-gap:12px}}
 @media(max-width:390px){.holding-facts{grid-template-columns:1fr}}
+
+/* Three step asset onboarding. Same cards, controls and palette as the native editor. */
+.asset-wizard-dialog{max-width:600px}
+.asset-wizard-dialog .wizard-shell{display:flex;flex-direction:column;max-height:min(90dvh,900px);min-height:0}
+.asset-wizard-dialog .dialog-head{flex-shrink:0}
+.asset-wizard-dialog #wizardFields{padding:0 24px 16px;overflow-y:auto;overscroll-behavior:contain;min-height:0;scrollbar-gutter:stable}
+.asset-wizard-dialog .dialog-footer{flex-shrink:0}
+.wizard-progress{display:flex;gap:7px;padding:4px 24px 15px;flex-shrink:0}
+.wizard-progress span{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid #dce9df;border-radius:50%;background:#f3f7f3;color:#8a9e8d;font-size:11px;font-weight:800}
+.wizard-progress span.is-current{background:#245c40;color:#fff;border-color:#245c40}
+.wizard-progress span.is-done{background:#d8ebdc;color:#3a7850}
+.wizard-search-status{font-size:11px;color:#718b76;line-height:1.5;margin:9px 0}
+.wizard-matches{max-height:208px;overflow:auto;border:1px solid #e4ebe5;border-radius:11px}
+.wizard-matches .result-item{min-width:0;text-align:left}
+.wizard-matches .result-item>span{min-width:0;overflow-wrap:anywhere}
+.wizard-matches small{display:block;font-size:10px;line-height:1.4;color:#879d8a}
+.wizard-lookup{font-size:11px;margin-top:10px}
+.wizard-manual{margin-top:16px;padding-top:12px;border-top:1px solid #e8efe8}
+.wizard-manual>strong{font-size:13px;color:#496d50}
+.wizard-inline-new{padding:10px 13px;background:#f7faf7;border-radius:11px;border:1px solid #e7eee8}
+.wizard-mode{border:0;padding:0;margin:15px 0;display:flex;flex-wrap:wrap;gap:15px}
+.wizard-mode legend{font-size:13px;font-weight:750;color:#45684d;padding:0 0 11px}
+.wizard-mode label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:#4b7157}
+.wizard-mode input{accent-color:#2d6e48}
+.wizard-feedback{padding:0 24px;color:#9c4238;font-size:12px;line-height:1.5}
+.wizard-feedback.visible{padding:10px 24px}
+.wizard-success{text-align:center;padding:22px 0 30px}
+.wizard-success strong{font-size:18px;color:#2b583e}
+.wizard-success p{max-width:390px;margin:12px auto 20px;color:#78927d;font-size:12px;line-height:1.7}
+.wizard-success .toolbar-buttons{justify-content:center}
+@media(max-width:720px){
+ .asset-wizard-dialog .wizard-shell{max-height:calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}
+ .asset-wizard-dialog #wizardFields{padding:0 16px 16px}
+ .wizard-progress{padding:4px 16px 13px}
+ .wizard-feedback{padding:0 16px}.wizard-feedback.visible{padding:10px 16px}
+ #positionsPage .toolbar-buttons #addPosition{font-size:11px}
+}
