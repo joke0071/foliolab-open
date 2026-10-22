@@ -71,7 +71,8 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  const values=sampled.map(s=>Number(s.totalEURExact??s.total));
  if(values.some(x=>!Number.isFinite(x)))return '<p class="chart-zero">Diagrammwerte nicht verfügbar.</p>';
  const lo=Math.min(...values),hi=Math.max(...values);
- const span=Math.max(hi-lo,Math.abs(hi)*.055,1);
+ const magnitude=Math.max(Math.abs(hi),Math.abs(lo));
+ const span=Math.max(hi-lo,magnitude*.055,magnitude?Number.MIN_VALUE:1);
  const yMin=lo-span*.30,yMax=hi+span*.20,range=yMax-yMin;
  const width=600,height=180,pad=5;
  const points=sampled.map((s,i)=>({
