@@ -51,7 +51,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
   attachChartInteractions(target);
-  if(source==='CoinPaprika'){
+  if(source.startsWith('CoinPaprika')){
    const credit=document.createElement('a');credit.href='https://coinpaprika.com/';
    credit.textContent='Powered by CoinPaprika';credit.target='_blank';credit.rel='noopener noreferrer';
    credit.className='position-history-external';
