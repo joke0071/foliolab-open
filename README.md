@@ -25,6 +25,20 @@ Dann http://localhost:4173 öffnen. Für die Offline-PWA ist HTTPS erforderlich.
 - Optionaler automatischer Kurs- und Wallet-Abruf beim Öffnen (maximal alle 30 Minuten, in „Mehr“ abschaltbar).
 - Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**.
 
+## Staking-Scanner: 50 Asset-Einträge (Stand Oktober 2026)
+
+Unter **Positionen → Wallet hinzufügen → Staking-Asset** bietet FolioLab Open einen transparenten Katalog zu den 50 gelieferten Coin-/Netzwerk-Kombinationen. Die Auswahl eines Assets ist nur eine Orientierungshilfe und **keine** Bestätigung, dass sämtliche Stakes oder Rewards erkannt wurden. Bei nicht unterstützten Netzwerken wird automatisches Scannen deaktiviert; die Anlage kann manuell erfasst werden.
+
+- **Bisherige unterstützte Netze:** Ethereum/EVM, Solana-SPL und eigene Stake-Accounts, Sonic SFC und ausgewählte ERC-20-Liquid-Staking-Tokens, Avalanche C-Chain inklusive BENQI sAVAX. EVM/ERC-20-Inventare liefern Tokenbestände, aber keinen Beweis für Protokoll-Staking, Vault-Anteile oder staked Validator-Balances.
+- **Cosmos Hub (ATOM):** freies ATOM (Bank), aktive Delegationen und Unbonding getrennt über das öffentliche Cosmos-SDK-LCD `rest.cosmos.directory/cosmoshub`. Unerhobene Rewards, Interchain-Accounts oder andere Cosmos-Netzwerke werden **nicht** pauschal mitgescannt. Validator-Identitäten bleiben im Positionsbezug; Paginierungsfehler werden nicht als verifizierter Nullbestand übernommen.
+- **Hedera (HBAR):** HBAR-Kontosaldo aus dem öffentlichen Mirror Node. HBAR bleibt auch bei aktiviertem Staking Teil desselben verfügbaren Kontos; es gibt **keine zusätzliche Staking-Position**. Ausstehende Rewards werden nicht als bereits verfügbare HBAR gezählt.
+- **NEAR:** Kontoguthaben und die direkt gesperrte `locked`-Menge via `view_account`. NEAR in fremden Staking-Pool-Verträgen kann aus der reinen Account-Abfrage nicht vollständig erkannt werden; der Scan bleibt deshalb ausdrücklich teilweise.
+- **BNB Smart Chain:** nur freier BNB-Native-Saldo über read-only `eth_getBalance`, keine implizite automatische Erkennung von Validator-Staking, Beacon-Chain-Positionen, BEP-20-Inventaren oder DeFi.
+- **Explizite Grenzen:** Validator-ETH auf der Ethereum Consensus Layer ist nicht der EVM-Walletsaldo. Primäres AVAX-Staking liegt auf der Avalanche P-Chain und **nicht** der C-Chain. Sui JSON-RPC über Foundation-Fullnodes wurde 2026 abgeschaltet; es wird ohne geprüften gRPC/GraphQL-Anbieter nichts vorgetäuscht. Fantom FTM, EOS/Vaulta A und Maker MKR/SKY verlangen migrationsbewusste Bestandszuordnung.
+- **Schutz gegen Doppelzählung:** protokollinterne Stake-Accounts und separate Liquid-Staking-Token werden nicht automatisch miteinander verrechnet, denn dazu wäre der wirtschaftliche Zusammenhang jedes Vertrags nachzuweisen. Für doppelt repräsentierte Werte bietet FolioLab die bewusste wirtschaftliche Zuordnung unter „Erweitert“.
+
+Alle Adapter fragen **nur öffentliche Adressen** ab. Sie signieren keine Transaktionen und verlangen keine privaten Schlüssel. Fehlende CORS-Freigaben, 429/403, Seitenlimits oder abweichende API-Rohdaten werden als Fehler/Teilscan signalisiert. Nur positiv belegte Mengen werden übernommen; bei Aktualisierungsfehlern bleiben die vorhandenen Werte erhalten.
+
 ## Datenschutz und Sicherheitsmodell
 
 Das Portfolio wird ausschließlich in `localStorage` gespeichert (unverschlüsselt, gerätegebunden). Für jedes Gerät / Browserprofil gibt es einen eigenen Datensatz. Keine zentrale Nutzerverwaltung, keine Serverdatenbank, keine Tracker. API-Schlüssel werden lokal, **nicht verschlüsselt** gespeichert und über HTTPS an die jeweiligen Dienste gesendet, wenn deren Funktionen benutzt werden. Eine Website und ihre Skripte sind keine Hochsicherheitsumgebung: nur eigene, ggf. eingeschränkte API-Schlüssel verwenden. Im Backup sind keine API-Schlüssel enthalten. Es werden keine privaten Wallet-Schlüssel oder Seed-Phrases angefordert.
