@@ -261,3 +261,17 @@
 .booking-onboarding p{max-width:440px;margin:10px auto 15px;color:#718776}
 .booking-onboarding .toolbar-buttons{justify-content:center}
 @media(max-width:500px){.position-search-tools{grid-template-columns:minmax(0,1fr)}.booking-onboarding .toolbar-buttons{justify-content:center}}
+
+/* Two-level holdings: only summary data is visible until intentionally expanded. */
+.position-entry{border-bottom:1px solid #edf2ed;min-width:0}
+.position-entry:last-child{border-bottom:0}
+.position-entry>.holding-row{border-bottom:0}
+.holding-expand{margin:0 0 12px 52px;color:#648070}
+.holding-expand summary{display:inline-flex;align-items:center;min-height:30px;padding:4px 2px;cursor:pointer;color:#527e60;font-size:11px;font-weight:700}
+.holding-expand summary:focus-visible{outline:2px solid #367c53;outline-offset:3px;border-radius:4px}
+.holding-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;row-gap:10px;margin:9px 0 3px}
+.holding-facts>div{min-width:0}
+.holding-facts dt{font-size:10px;color:#829686;margin-bottom:3px}
+.holding-facts dd{font-size:12px;margin:0;color:#354e3d;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+@media(max-width:720px){.holding-expand{margin-left:10px}.holding-facts{grid-template-columns:1fr 1fr;column-gap:12px}}
+@media(max-width:390px){.holding-facts{grid-template-columns:1fr}}
