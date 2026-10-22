@@ -63,7 +63,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"')+'</div>'+
    (state.kind==='crypto'?input('wizardCoinId','CoinGecko-ID (optional)',state.coinId,'maxlength="110"'):
     ['etf','stock','fund'].includes(state.kind)?input('wizardIsin','ISIN (optional)',state.isin,'maxlength="20"'):'')+
-   (state.kind==='crypto'?'':('<label class="field"><span>'+ (state.kind==='cash'?'Kontowährung':'Kurswährung') +'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen').replace('<option value="">Währung wählen</option>','')+'</select></label>'))+
+   (state.kind==='crypto'?'':('<label class="field"><span>'+ (state.kind==='cash'?'Kontowährung':'Kurswährung') +'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen')+'</select></label>'))+
    '<details class="advanced-apis"><summary>Erweiterte Einstellungen · Börsennotierung</summary>'+
    input('wizardExchange','Handelsplatz',state.exchange,'maxlength="60"')+
    input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
@@ -82,7 +82,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    state.name=item.name;state.symbol=item.symbol||'';state.isin=item.isin||'';state.coinId=item.coinId||'';
    state.exchange=item.exchange||'';state.mic=item.mic||'';
    state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';state.tradingViewSymbol=item.tradingViewSymbol||'';
-   state.currency=item.currency||'EUR';state.query='';render();
+   state.currency=item.currency||'';state.query='';render();
   });
   $('wizardExternalSearch').addEventListener('click',externalSearch);
   $('wizardQuery').focus();
@@ -166,6 +166,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(state.busy||state.saved)return;
   if(state.step===1){
    if(!state.name.trim())return error('Bitte eine Anlage aus der Suche wählen oder manuell benennen.');
+   if(state.kind!=='crypto'&&!state.currency)return error('Bitte Währung des Instruments ausdrücklich auswählen.');
    if(['etf','fund','stock'].includes(state.kind)&&!state.isin&&!state.symbol)return error('Für dieses Wertpapier bitte ISIN oder Ticker angeben.');
    state.step=2;render();return;
   }

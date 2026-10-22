@@ -32,7 +32,8 @@ export function buildAssetWizardDraft(source,input){
   if(draft.accounts.some(a=>a.providerId===provider.id&&a.name.toLocaleLowerCase('de')===account.name.toLocaleLowerCase('de')))throw Error('Konto existiert bereits; bitte auswählen.');
   draft.accounts.push(account);
  }
- const currency=kind==='crypto'?'EUR':String(input.currency||'EUR').toUpperCase();
+ const currency=kind==='crypto'?'EUR':String(input.currency||'').toUpperCase();
+ if(kind!=='crypto'&&!currency)throw Error('Bitte die Handels- oder Kontowährung ausdrücklich wählen.');
  const qty=String(input.quantity??'').trim();
  if(!qty)throw Error('Bitte einen Bestand oder eine Stückzahl angeben.');
  const quantity=safeNumber(qty,mode==='buy'?0.000000000000000001:0);
