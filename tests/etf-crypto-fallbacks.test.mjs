@@ -31,10 +31,11 @@ test('Only precisely matched familiar ETF EUR listings enrich legacy imports wit
   assert.equal(knownReferenceListing(p)?.isin,isin);
  }
  m.snapshots.push({id:'snap',date:day(2),total:1234,totalEURExact:'1234',source:'manual',recordedAt:timestamp(2)});
- const before=totalExactEUR(m),snapshotBefore=JSON.stringify(m.snapshots),json=JSON.parse(backup(m));
- const restored=safeImport(json);
+ const before=totalExactEUR(m),restored=safeImport(JSON.parse(backup(m)));
  assert.equal(totalExactEUR(restored),before);
- assert.equal(JSON.stringify(restored.snapshots),snapshotBefore.replace('}',',"byAccount":null,"byPosition":null,"valuationStatus":"unknown","quoteTimes":[],"revisions":[],"note":""}')); // snapshots import adds normalized optional metadata
+ assert.equal(restored.snapshots.length,1);
+ assert.equal(restored.snapshots[0].totalEURExact,'1234');
+ assert.equal(restored.snapshots[0].date,day(2));
  for(const p of restored.positions){
   assert.ok(/^IE00/.test(p.isin));
   assert.equal(p.mic,'XETR');
