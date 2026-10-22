@@ -48,6 +48,7 @@ jobs:
           node tests/browser-position-drilldown.mjs
           node tests/browser-historical-csv.mjs
           node tests/browser-crypto-history-resilience.mjs
+          node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:
     if: github.event_name != 'pull_request'
