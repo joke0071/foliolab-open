@@ -35,8 +35,11 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
          const retryable=Boolean(requestError)||[408,429,500,502,503,504].includes(status);
          if(retryable&&attempt<attempts-1){
            const retryAfter=response?.headers?.get?.('Retry-After');
-           const wait=Math.min(3500,Math.max(parseRetryAfter(retryAfter,clock()),Math.min(2000,250*2**attempt+random()*150)));
-           await pause(wait);continue;
+           const serverDelay=parseRetryAfter(retryAfter,clock());
+           const wait=Math.max(serverDelay,Math.min(2000,250*2**attempt+random()*150));
+           // Never violate a provider's Retry-After by silently truncating it.
+           // A long cooldown should fail fast, not keep the interface busy for minutes.
+           if(wait<=3500){await pause(wait);continue;}
          }
          if(requestError)throw requestError;
          if(!response?.ok)throw Error(status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${status||'unbekannt'})`);
