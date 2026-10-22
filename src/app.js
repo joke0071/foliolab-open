@@ -18,6 +18,7 @@ import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
+import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
@@ -411,12 +412,14 @@ function openWalletImport(){
   const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
   const providers=[['__new__','+ Neue Wallet erstellen'],...model.providers.map(p=>[p.id,p.name])];
   showDialog('Wallet hinzufügen','ÖFFENTLICHE ADRESSE · WATCH-ONLY',`<p class="dialog-intro">Eine öffentliche Wallet-Adresse eingeben und vorhandene Coins automatisch erkennen lassen. <strong>Kein API-Key, kein Login und keine Berechtigung zum Senden.</strong></p>
+    <label class="field"><span>Staking-Asset aus dem geprüften 50er-Katalog (optional)</span><select id="scanAsset">${options([['','– Ohne Vorauswahl –'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')}</select></label>
+    <p id="scanAssetInfo" class="small-help" role="status">Der Katalog unterscheidet Token-Salden, native Delegationen und nicht unterstützte Staking-Verträge.</p>
     <label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">${options(networks,'1')}</select></label>
     <div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-HD-Adresstyp</span><select id="scanHdType" name="hdAddressType">${options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')}</select></label></div>
     <label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x… / bc1… / Solana-Adresse"></label>
     <div class="field-row"><label class="field"><span>Anbieter / Wallet</span><select name="providerId" id="scanProvider">${options(providers,model.providers[0]?.id||'__new__')}</select></label>
     ${field('Name für neue Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')}</div><label class="field"><span>Konto / Wallet</span><select name="accountId" id="scanAccount"></select></label>
-    <p class="small-help">Für Bitcoin sind einzelne Adressen oder öffentliche Account-Keys (xpub/ypub/zpub) möglich. Ethereum, Base, Arbitrum, Optimism, Polygon, Avalanche, Sonic und Solana erkennen unterstützte Token; Sonic- und Solana-Staking werden separat geprüft. Kostenlose Datenquellen sind teilweise unvollständig; unbekannte Tokens haben vorerst keinen Kurs.</p>
+    <p class="small-help">Nur bestätigte, öffentliche Bestände werden vorgeschlagen. Cosmos delegiert/Unbonding, Hedera (ohne zusätzliche Staking-Doppelzählung), NEAR-Kontostände und BNB-Saldo sind ergänzt. Nicht alle Staking-Verträge sind automatisch lesbar. Avalanche-P-Chain, ETH-Validatoren, Vaults und externe NEAR-Pools benötigen eigene Adapter oder manuelle Erfassung.</p>
     <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
     <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
     <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
@@ -452,7 +455,22 @@ function openWalletImport(){
   };
   $('scanProvider').addEventListener('change',toggleNew);toggleNew();
   const updateHdHint=()=>{const hd=$('scanNetwork').value==='btc-hd';$('hdPrivacyHint').classList.toggle('hidden',!hd);$('scanHdField').classList.toggle('hidden',!hd);};
-  $('scanNetwork').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Netzwerk geändert – bitte erneut scannen.';updateHdHint();});
+  const resetWalletScan=()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Auswahl geändert – bitte erneut scannen.';};
+  $('scanNetwork').addEventListener('change',()=>{
+    resetWalletScan();$('scanAsset').value='';$('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
+    $('scanWalletButton').disabled=false;updateHdHint();
+  });
+  $('scanAsset').addEventListener('change',()=>{
+    const selected=lookupStakingAsset($('scanAsset').value);
+    resetWalletScan();
+    if(!selected){$('scanAssetInfo').textContent='Blockchain separat auswählen. Bei Staking ist nicht jede Position aus einer Adresse ableitbar.';$('scanWalletButton').disabled=false;return;}
+    $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; bitte unter Positionen manuell hinzufügen.');
+    $('scanWalletButton').disabled=!selected.scannerNetwork;
+    if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
+      $('scanNetwork').value=selected.scannerNetwork;
+      $('scanAddress').value='';updateHdHint();
+    }
+  });
   updateHdHint();
   $('scanHdType').addEventListener('change',()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Adresstyp geändert – bitte erneut scannen.';});
   $('scanAddress').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';});
@@ -480,7 +498,7 @@ async function scanWalletNow(){
     scannedWalletAssets=[...displayed,...review];
     scannedWalletKey=walletScanIdentity(network,address,$('scanHdType').value);
     const partial=assets.partial===true;
-    const renderRow=(a,i,preselect=false,reason='')=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${preselect&&i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':a.chain==='sol-stake'?'Solana Staking':a.chain==='sonic-stake'?'Sonic Staking':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small>${reason?`<small>${esc(reason)}</small>`:''}</span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`;
+    const renderRow=(a,i,preselect=false,reason='')=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${preselect&&i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':a.chain==='sol-stake'?'Solana Staking':a.chain==='sonic-stake'?'Sonic Staking':a.chain.startsWith('cosmos')?'Cosmos Hub':a.chain==='hedera'?'Hedera':a.chain.startsWith('near')?'NEAR':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small>${reason?`<small>${esc(reason)}</small>`:''}</span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`;
     const extra=hidden.length?
       `<details class="wallet-spam-review"><summary>${hidden.length} ausgeblendete Tokens prüfen</summary><p>Unbekannte, auffällige und sehr kleine Guthaben werden nicht automatisch übernommen. Einblenden und bei Bedarf einzeln auswählen.</p>${review.map((a,i)=>renderRow(a,displayed.length+i,false,walletTokenVisibility(a).reason)).join('')}${review.length<hidden.length?'<p>Vorschau auf maximal 150 Positionen begrenzt.</p>':''}</details>`:'';
     area.innerHTML=`<div class="wallet-scan-header"><strong>${displayed.length} Position${displayed.length===1?'':'en'} zur Auswahl</strong><span>${hidden.length?'Unbekannte Tokens ausgeblendet':'Zur Übernahme auswählen'}</span></div>`+
