@@ -13,6 +13,7 @@ try{
   {name:'Solana public RPC',url:'https://api.mainnet-beta.solana.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
   {name:'XRPL public CORS JSON-RPC',url:'https://xrplcluster.com',method:'POST',body:JSON.stringify({method:'account_info',params:[{account:'rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn',ledger_index:'validated'}]})},
   {name:'Avalanche C-Chain Blockscout',url:'https://cccscan.org/api/v2/addresses/0x000000000000000000000000000000000000dEaD'},
+  {name:'Avalanche official C-Chain RPC balance',url:'https://api.avax.network/ext/bc/C/rpc',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_getBalance',params:['0x000000000000000000000000000000000000dEaD','latest']})},
   {name:'BNB Blockscout candidate',url:'https://bsc.blockscout.com/api/v2/addresses/0x000000000000000000000000000000000000dEaD'},
   {name:'Solana PublicNode RPC',url:'https://solana-rpc.publicnode.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:['11111111111111111111111111111111']})},
   {name:'Solana PublicNode SPL account scan',url:'https://solana-rpc.publicnode.com',method:'POST',body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountsByOwner',params:['11111111111111111111111111111111',{programId:'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'},{encoding:'jsonParsed'}]})},
