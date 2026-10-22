@@ -57,6 +57,7 @@ jobs:
           node tests/browser-position-search.mjs
           node tests/browser-position-details.mjs
           node tests/browser-asset-wizard.mjs
+          node tests/browser-booking-filters.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:

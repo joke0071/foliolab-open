@@ -319,3 +319,7 @@
 .refresh-error-list>div{font-size:11px;color:#6b816f;line-height:1.5}
 .refresh-error-list strong{display:block;color:#8b5b42;font-weight:650;overflow-wrap:anywhere}
 .refresh-error-list small{display:block;color:#78927c;margin-top:3px;overflow-wrap:anywhere}
+
+.booking-filter-tools{display:grid;grid-template-columns:minmax(0,2fr) minmax(140px,1fr);align-items:end;gap:12px;margin-bottom:12px}
+.booking-filter-tools .field{margin:0}
+@media(max-width:500px){.booking-filter-tools{grid-template-columns:1fr}}
