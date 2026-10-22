@@ -28,7 +28,7 @@ const dangerousReputation = /^(scam|spam|suspicious|malicious|unsafe|phishing|fa
 
 /** Classifies *visibility*, not legitimacy; restores are always possible. */
 export function walletTokenVisibility(asset){
-  if(['sol-stake','sonic-stake'].includes(asset?.chain))return {show:true,reason:''}; // on-chain verified staking
+  if(['sol-stake','sonic-stake','cosmos-stake','cosmos-unbonding','near-locked'].includes(asset?.chain))return {show:true,reason:''}; // on-chain verified staking
   if(!asset?.contract)return {show:true,reason:''}; // native coins are never suppressed
   const reputation=String(asset.reputation||'').trim();
   if(dangerousReputation.test(reputation))return {show:false,reason:'Vom Explorer als verdächtig markiert'};
