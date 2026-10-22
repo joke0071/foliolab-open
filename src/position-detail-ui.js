@@ -16,9 +16,10 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const allocation=weight==null?'<p class="position-detail-note">Anteil am Konto nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
    '<div class="position-share"><div class="position-share-label"><span>Anteil am Konto</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
    '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
+ const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
  const controls='<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
    POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>';
- return meta+allocation+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
+ return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
    controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
