@@ -49,7 +49,7 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(chain==='xrp-token'&&!/^r[1-9A-HJ-NP-Za-km-z]{24,34}:(?:[A-Z0-9]{3}|[A-Fa-f0-9]{40})$/.test(contract))throw Error('Ungültiger XRP-Token-Identifier.');
   if(chain==='spl'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Bitte eine SPL-Mint-Adresse angeben.');
   if(chain==='sol-stake'&&!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(contract))throw Error('Ungültige Solana-Stake-Adresse.');
-  if(chain==='sonic-stake'&&!/^[1-9]\\d{0,5}$/.test(contract))throw Error('Ungültige Sonic-Validator-ID.');
+  if(chain==='sonic-stake'&&!/^[1-9]\d{0,5}$/.test(contract))throw Error('Ungültige Sonic-Validator-ID.');
   if(!['btc','btc-hd','evm','erc20','sol','spl','sol-stake','sonic-stake','xrp','xrp-token'].includes(chain))throw Error('Nicht unterstütztes Wallet-Netzwerk.');
   const decimals=(chain==='erc20'||chain==='spl'||chain==='xrp-token')?safeNumber(wallet.decimals??18,0,30):['btc','btc-hd'].includes(chain)?8:['sol','sol-stake'].includes(chain)?9:chain==='xrp'?6:18;
   const chainId=['evm','erc20'].includes(chain)?safeNumber(wallet.chainId??1,1,1e9):undefined;
