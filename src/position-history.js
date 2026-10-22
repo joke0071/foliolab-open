@@ -16,7 +16,7 @@ const chartCoordinators=new WeakMap();
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 function historyCoordinator(fetcher){
  let c=chartCoordinators.get(fetcher);
- if(!c){c={tail:Promise.resolve(),earliest:0,pending:new Map()};chartCoordinators.set(fetcher,c);}
+ if(!c){c={tail:Promise.resolve(),earliest:0,pending:new Map(),completed:new Map()};chartCoordinators.set(fetcher,c);}
  return c;
 }
 export async function coinGeckoHistoricalResponse(coinId,settings={},fetcher=globalThis.fetch){
@@ -26,6 +26,9 @@ export async function coinGeckoHistoricalResponse(coinId,settings={},fetcher=glo
  const headers=settings.coinGeckoKey?{'x-cg-demo-api-key':settings.coinGeckoKey}:{};
  const id=url.toString()+'|'+(settings.coinGeckoKey||'');
  const c=historyCoordinator(fetcher);
+ const cached=c.completed.get(id);
+ if(cached?.expires>Date.now())return structuredClone(cached.data);
+ if(cached)c.completed.delete(id);
  if(c.pending.has(id))return c.pending.get(id);
  const result=c.tail.then(async()=>{
   // Mocks are not throttled. Production history calls from all expanded
@@ -34,7 +37,12 @@ export async function coinGeckoHistoricalResponse(coinId,settings={},fetcher=glo
   if(spacing)await wait(Math.max(0,c.earliest-Date.now()));
   c.earliest=Date.now()+spacing;
   try{
-   return await requestJSON(url.toString(),{fetcher,headers,ttlMs:TTL.history,attempts:1});
+   const data=await requestJSON(url.toString(),{fetcher,headers,ttlMs:TTL.history,attempts:1});
+   if(Array.isArray(data?.prices)&&data.prices.length>=2){
+    c.completed.set(id,{data:structuredClone(data),expires:Date.now()+TTL.history});
+    if(c.completed.size>80)c.completed.delete(c.completed.keys().next().value);
+   }
+   return data;
   }catch(error){
    if(/Ratenlimit|429|quota|rate limit/i.test(String(error?.message||'')))c.earliest=Math.max(c.earliest,Date.now()+30000);
    throw error;
