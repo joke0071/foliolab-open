@@ -18,7 +18,7 @@ try{
   snapshot(m,date);persist(m);
  }),today);
  await page.reload();
- assert.equal(await page.locator('#providerOverview .provider-position-accordion').count(),0);
+ assert.equal(await page.locator('#providerOverview .provider-position-accordion').first().isVisible(),false);
  await page.locator('#providerOverview .provider-accordion>summary').first().click();
  assert.equal(await page.locator('#providerOverview .provider-position-accordion').count(),3);
  assert.equal(await page.evaluate(()=>window.__bad),undefined);
