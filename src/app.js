@@ -17,6 +17,7 @@ import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
+import {openingCashInput} from './account-opening.js';
 const positionDetailRanges=new Map();
 let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}let page='dashboard',filter='all',range='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -115,19 +116,36 @@ function openAccount(a,defaultProviderId){
  '<label class="field"><span>Kontoname</span><input name="name" id="accountName" type="text" required maxlength="100" autocomplete="off" value="'+esc(a?.name||suggestion[0])+'" placeholder="Girokonto, Wertpapierdepot …"></label>'+
  '<div class="onboarding-suggestions" id="accountMatches" role="region" aria-label="Kontovorschläge"></div>'+
  '<div class="field-row"><label class="field"><span>Kontotyp</span><select name="type" id="accountType">'+options(Object.entries(accountTypes),a?.type||suggestion[1])+'</select></label>'+
- '<label class="field"><span>Kontowährung</span><select name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
- (a?'':field('Optionales EUR-Startguthaben','initialBalance','','text','inputmode="decimal" placeholder="z. B. 2500 (nur EUR)"')),
+ '<label class="field"><span>Kontowährung</span><select id="accountCurrency" name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
+ (a?'':('<label class="field"><span id="accountOpeningLabel">Startguthaben (EUR) · optional</span><input id="accountOpeningAmount" name="initialBalance" type="text" inputmode="decimal" placeholder="z. B. 2500"></label>'+
+ '<label class="field hidden" id="accountOpeningFxWrap"><span>EUR je Einheit Kontowährung (manueller Umrechnungskurs)</span><input name="openingFxRate" id="accountOpeningFx" type="number" min="0.00000001" step="any" placeholder="z. B. 0.92"><small>Nur bei einem Startguthaben in Fremdwährung erforderlich; keine automatische Schätzung.</small></label>')),
  v=>{
   if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
-  const init=String(v.initialBalance||'').trim();
-  if(init&&v.currency!=='EUR')throw Error('Fremdwährungsguthaben bitte als Position mit eigenem EUR-Wechselkurs hinzufügen.');
-  const balance=init?safeNumber(init,0):0;
+  // Validate account and opening valuation before mutating either collection.
   const next=createAccount({...v,id:a?.id},model);
+  const opening=a?null:openingCashInput({amount:v.initialBalance,currency:next.currency,fxRate:v.openingFxRate});
+  const firstPosition=opening?createPosition({...opening,providerId:next.providerId,accountId:next.id},{...model,accounts:[...model.accounts,next]}):null;
   if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
-  if(!a&&balance>0)model.positions.push(createPosition({providerId:next.providerId,accountId:next.id,kind:'cash',name:'EUR Guthaben',symbol:'EUR',quantity:init,price:1,currency:'EUR'},model));
+  if(firstPosition)model.positions.push(firstPosition);
   model.settings.lastAccountId=next.id;save();notify('Konto gespeichert.');
  });
  const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
+ if(!a){
+  const currency=$('accountCurrency'),amount=$('accountOpeningAmount'),wrap=$('accountOpeningFxWrap'),fx=$('accountOpeningFx');
+  let previousCurrency=currency.value;
+  const sync=()=>{
+   $('accountOpeningLabel').textContent='Startguthaben ('+currency.value+') · optional';
+   wrap.classList.toggle('hidden',currency.value==='EUR');
+   fx.required=currency.value!=='EUR'&&amount.value.trim()!=='';
+  };
+  currency.addEventListener('change',()=>{
+   if(amount.value.trim()&&currency.value!==previousCurrency&&!confirm('Das eingetragene Startguthaben wird als '+currency.value+' statt '+previousCurrency+' gespeichert. Fortfahren?')){
+    currency.value=previousCurrency;return;
+   }
+   previousCurrency=currency.value;sync();
+  });
+  amount.addEventListener('input',sync);sync();
+ }
  const show=()=>{area.innerHTML=accountMatchMarkup(providerSelect.value,name.value);area.classList.toggle('hidden',!name.value.trim());};
  const align=()=>{const p=model.providers.find(x=>x.id===providerSelect.value),exact=accountExact(name.value,p?.type||'other');if(exact)type.value=exact[1];};
  providerSelect.addEventListener('change',()=>{
