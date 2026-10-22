@@ -86,11 +86,16 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   if(source==='xetra'&&(!keys.includes('isin')||!keys.includes('instrument')))throw Error('Kein erkennbarer Xetra-Instrumentenkatalog.');
  }
  if(sourceFromFile==='auto')sourceFromFile='custom';
+ if(sourceFromFile==='nasdaq'){
+  const footer=lines.findLast(row=>/^File Creation Time:\s*\d{8}/i.test(row?.[0]||''));
+  const m=footer?.[0]?.match(/File Creation Time:\s*(\d{2})(\d{2})(\d{4})/i);
+  if(m)sourceAsOf=m[3]+'-'+m[1]+'-'+m[2];
+ }
  const columns=lines[headerRow].map(h);
  const nameIdx=pick(columns,['instrument','securityname','name','fullname','fullnm','financialinstrumentname','instrumentname','shortname','fondsbezeichnung','fondsname','fundname','issuername']);
  const symbolIdx=pick(columns,['mnemonic','symbol','actsymbol','nasdaqsymbol','tradingsymbol','tickercode','ticker','tradingshortcode','exchangeinstrumentid']);
  const isinIdx=pick(columns,['isin','isincode','instrumentisin']);
- const ccyIdx=pick(columns,['tradingcurrency','quotecurrency','pricecurrency','currency','currencycode','tradingcurr','notionalcurrency']);
+ const ccyIdx=pick(columns,['tradingcurrency','quotecurrency','pricecurrency','currency','currencycode','tradingcurr']);
  const settlementIdx=pick(columns,['settlementcurrency','settlementcurr','settlementccy']);
  const micIdx=pick(columns,['miccode','mic','tradingvenuemiccode','marketidentifiercode','venue','tradingvenue']);
  const exchangeIdx=pick(columns,['exchange','listingexchange']);
@@ -109,12 +114,12 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   const value=n=>n<0?'':norm(row[n]);
   if(testIdx>=0&&upper(value(testIdx))==='Y'){tests++;continue;}
   const status=folded(value(statusIdx));
-  if(status&&['inactive','pending deletion','deleted','published'].includes(status)){skipped++;continue;}
+  if(status&&['inactive','pending deletion','deleted'].includes(status)){skipped++;continue;}
   const name=value(nameIdx).slice(0,140),symbol=upper(value(symbolIdx)).slice(0,32);
   const originalISIN=upper(value(isinIdx)),code=isin(originalISIN)?originalISIN:'';
   const currency=upper(value(ccyIdx)),settlementCurrency=upper(value(settlementIdx)),rawMic=upper(value(micIdx));
   const sourceExchange=upper(value(exchangeIdx));
-  const codeMIC=mic(rawMic)?rawMic:sourceFromFile==='nasdaq'?nasdaqMIC[sourceExchange]||'':sourceFromFile==='xetra'&&declaredMarket==='XETR'?'XETR':'';
+  const codeMIC=mic(rawMic)?rawMic:sourceFromFile==='nasdaq'?(nasdaqMIC[sourceExchange]||(/^nasdaqlisted/i.test(filename)?'XNAS':'')):sourceFromFile==='xetra'&&declaredMarket==='XETR'?'XETR':'';
   if(name.length<3||(!ticker(symbol)&&!code)||originalISIN&&!code||currency&&!cc(currency)){skipped++;continue;}
   const kind=typeFrom(name,value(typeIdx),value(etfIdx),value(cfiIdx));
   const rowSource=sourceFromFile==='xetra'?'Xetra (Datei, lokal)':sourceFromFile==='nasdaq'?'Nasdaq (Datei, lokal)':sourceFromFile==='esma'?'ESMA (Datei, lokal)':'CSV (Datei, lokal)';
