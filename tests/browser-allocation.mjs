@@ -34,7 +34,7 @@ try{
  await sector.focus();await page.keyboard.press('Enter');
  assert.equal(await sector.getAttribute('aria-pressed'),'true');
  await page.keyboard.press('ArrowRight');
- assert.equal(await page.locator('#donutLabel').innerText(),'Kryptowährungen');
+ assert.equal(await page.locator('#donutLabel').innerText(),'Krypto');
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#donutLabel').innerText(),'Portfolio');
  const saved=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
@@ -57,7 +57,7 @@ try{
   const touch=await mobile.newPage();await touch.goto('http://127.0.0.1:4173/');
   await touch.evaluate(value=>localStorage.setItem('foliolab-open-v1',value),saved);await touch.reload();
   await touch.locator('#allocationLegend [data-allocation-key="crypto"]').tap();
-  assert.equal(await touch.locator('#donutLabel').innerText(),'Kryptowährungen');
+  assert.equal(await touch.locator('#donutLabel').innerText(),'Krypto');
   await touch.locator('#donut .allocation-center').tap();
   assert.equal(await touch.locator('#donutLabel').innerText(),'Portfolio');
  }finally{await mobile.close();}
