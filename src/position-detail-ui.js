@@ -51,6 +51,14 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    (local.length===1?'Für diese Position liegt erst ein gespeicherter Stichtag vor.':'Noch keine belastbare historische Einzelpositionsreihe gespeichert.')+
    ' Neue Stichtage erfassen künftig Einzelpositionswerte.';
   target.append(p);
+  if(position.kind==='crypto'&&/^[a-z0-9-]{2,100}$/.test(position.coinId||'')){
+   const link=document.createElement('a');
+   link.href='https://www.coingecko.com/en/coins/'+encodeURIComponent(position.coinId);
+   link.target='_blank';link.rel='noopener noreferrer';
+   link.className='position-history-external';
+   link.textContent='Kursverlauf bei CoinGecko öffnen ↗';
+   target.append(link);
+  }
  };
  const imported=importedHistoryForPeriod(model,position,days);
  if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
