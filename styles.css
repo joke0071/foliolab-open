@@ -365,3 +365,7 @@
 .wizard-catalog-content .btn{font-size:11px;min-height:36px;white-space:normal}
 .wizard-catalog-content small{font-size:10px;color:#788d7e;line-height:1.5;overflow-wrap:anywhere}
 @media(max-width:500px){.wizard-catalog-content .btn{min-height:40px}}
+
+/* Compact source file links remain secondary to instrument search. */
+.wizard-source-inline{display:flex;gap:12px;flex-wrap:wrap}
+.wizard-source-inline a{font-size:11px}
