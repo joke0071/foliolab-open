@@ -372,7 +372,11 @@ export async function walletBalanceExact(wallet,settings={},fetcher=globalThis.f
    throw error;
   }
   const item=list.find(t=>String(t.token?.address_hash||t.token?.address||'').toLowerCase()===String(wallet.contract||'').toLowerCase());
-  return item?atomicDecimal(item.value,Number(item.token?.decimals??wallet.decimals)):'0';
+  if(!item){
+   if(Number(wallet.chainId||1)===1)return ethereumTokenExact(wallet.address,wallet.contract,Number(wallet.decimals),fetcher);
+   throw Error('Explorer meldet keinen Token-Eintrag; ein tatsächlicher Nullbestand ist nicht bestätigt. Vorhandener Bestand bleibt erhalten.');
+  }
+  return atomicDecimal(item.value,Number(item.token?.decimals??wallet.decimals));
  }
  if(['sol','spl'].includes(wallet.chain)){
   const url=new URL(settings.solanaRpc||DEFAULT_SOL_RPC);
