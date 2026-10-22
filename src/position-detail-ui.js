@@ -1,0 +1,54 @@
+import {POSITION_PERIODS,marketHistoryCapability,recordedPositionHistory,fetchPositionMarketHistory} from './position-history.js';
+import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+
+const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
+export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
+ const account=model.accounts.find(a=>a.id===p.accountId);
+ const accValue=model.positions.filter(x=>x.accountId===p.accountId).reduce((sum,x)=>sum+valueEUR(x),0);
+ const amount=valueEUR(p),weight=accValue>0&&amount>=0?100*amount/accValue:null;
+ const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
+ const price=quoteCurrency(Number(p.priceExact??p.price)||0,p.currency||'EUR');
+ const quote=p.quoteSource?esc(p.quoteSource):'Manuell',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
+ const meta='<div class="position-detail-grid">'+
+   [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
+    ['Kurs je Einheit',price],['Positionswert',money(amount)],['Einstandswert',cost]]
+   .map(([name,value])=>'<div class="position-detail-stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong></div>').join('')+'</div>';
+ const allocation=weight==null?'<p class="position-detail-note">Anteil am Konto nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
+   '<div class="position-share"><div class="position-share-label"><span>Anteil am Konto</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
+   '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
+ const controls='<div class="position-period" role="group" aria-label="Zeitraum des Positionsverlaufs">'+
+   POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>';
+ return meta+allocation+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
+   controls+'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>';
+}
+export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
+ const target=mount.querySelector('.position-history-plot');
+ if(!target)return;
+ const local=recordedPositionHistory(model,position.id,days);
+ const render=(points,kind,currency='EUR',source='')=>{
+  if(!mount.isConnected||!target.isConnected)return;
+  const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
+  target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
+   '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel})+'</div>'+
+   '<p class="position-detail-note">'+esc(kind==='market'?source+' · Marktpreis, nicht deine persönliche Rendite.':'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
+  attachChartInteractions(target);
+ };
+ const fallback=(message)=>{
+  if(local.length>=2){render(local,'local');return;}
+  if(!mount.isConnected||!target.isConnected)return;
+  target.replaceChildren();
+  const p=document.createElement('p');p.className='position-history-unavailable';
+  p.textContent=(message?message+' ':'')+
+   (local.length===1?'Für diese Position liegt erst ein gespeicherter Stichtag vor.':'Noch keine belastbare historische Einzelpositionsreihe gespeichert.')+
+   ' Neue Stichtage erfassen künftig Einzelpositionswerte.';
+  target.append(p);
+ };
+ const capability=marketHistoryCapability(position,model.settings);
+ if(!capability){fallback(position.kind==='cash'?'Für Guthaben gibt es keinen Börsenkurs.':'Keine bestätigte Kursquelle eingerichtet.');return;}
+ try{
+  const history=await fetchPositionMarketHistory(position,model.settings,days,fetcher);
+  render(history.points,history.kind,history.currency,history.source);
+ }catch(error){
+  fallback('Kursverlauf nicht verfügbar: '+String(error?.message||'Datenquelle nicht erreichbar.').slice(0,130));
+ }
+}
