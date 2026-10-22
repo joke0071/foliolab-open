@@ -43,7 +43,7 @@ try{
    return window.__originalSetItem.call(this,key,value);
   };
  });
- await page.locator('#autoRefresh').uncheck();
+ await page.locator('#autoRefresh').click(); // A failed save must immediately restore checked state.
  assert.match(await page.locator('#toast').innerText(),/Änderung nicht gespeichert/);
  assert.equal(await page.locator('#autoRefresh').isChecked(),true,'Failed save must restore visible committed settings');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh),true,'Quota must not modify saved data');
