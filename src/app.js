@@ -14,6 +14,7 @@ import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} 
 import {searchAndSortPositions} from './position-search.js';
 import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
+import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
@@ -648,10 +649,15 @@ async function refreshAll(){
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
   if(successes){snapshot(model);save();}else render();
-  const details=errors.length?' · '+errors.length+' Abfragefehler: '+errors.slice(0,2).join(' · ')+(errors.length>2?' · weitere Fehler':''):'';
-  $('priceInfo').textContent=`${successes} Datenupdates · ${new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})}${details}`;
+  const status=refreshHeadline(successes,errors),details=$('refreshErrorDetails');
+  $('priceInfo').textContent=status+' · '+new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});
   $('priceInfo').classList.toggle('refresh-warning',errors.length>0);
-  if(errors.length)notify(`${successes} Datenupdates · ${errors.length} Abfragefehler. Details unter „Aktualisieren“.`,true);
+  const grouped=refreshFailures(errors);
+  details.classList.toggle('hidden',grouped.length===0);
+  details.open=false;
+  details.innerHTML=grouped.length?'<summary>'+errors.length+' Fehlerdetails anzeigen</summary><div class="refresh-error-list">'+
+   grouped.map(x=>'<div><strong>'+x.count+'× '+esc(x.cause)+'</strong><small>Betroffen: '+esc(x.positions.join(', '))+'</small></div>').join('')+'</div>':'';
+  if(errors.length)notify(status+' · Details unter „Positionen“.',true);
   else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
  }catch(e){notify(e.message,true);}
  finally{busy=false;$('refreshAll').disabled=false;}

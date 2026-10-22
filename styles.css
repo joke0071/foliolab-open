@@ -312,3 +312,10 @@
  .wizard-feedback{padding:0 16px}.wizard-feedback.visible{padding:10px 16px}
  #positionsPage .toolbar-buttons #addPosition{font-size:11px}
 }
+
+/* Refresh failures are secondary details, not multiline overlays. */
+#refreshErrorDetails{margin:-4px 0 14px}
+.refresh-error-list{display:grid;gap:10px}
+.refresh-error-list>div{font-size:11px;color:#6b816f;line-height:1.5}
+.refresh-error-list strong{display:block;color:#8b5b42;font-weight:650;overflow-wrap:anywhere}
+.refresh-error-list small{display:block;color:#78927c;margin-top:3px;overflow-wrap:anywhere}

@@ -18,5 +18,5 @@ export function refreshFailures(errors){
 }
 export function refreshHeadline(successes,errors){
  const count=(errors||[]).length;
- return successes+' Aktualisierungen erfolgreich'+(count?' · '+count+' Position'+(count===1?'':'en')+' prüfen':'');
+ return successes+' Datenupdates'+(count?' · '+count+' Abfragen prüfen':'');
 }
