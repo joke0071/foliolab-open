@@ -17,7 +17,7 @@ const PAIRS=Object.freeze({
  'near':['near-near-protocol','NEAR'],'sui':['sui-sui','SUI']
 });
 const stampValid=(date,now=Date.now(),maxAge=7*864e5)=>{
- const time=Date.parse(String(date||''));
+ const time=typeof date==='number'?date:Date.parse(String(date||''));
  return Number.isFinite(time)&&time<=now+864e5&&time>=now-maxAge;
 };
 export function coinPaprikaMapping(p){
