@@ -91,7 +91,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   let primaryError=null;
   try{
    const data=await coinGeckoHistoricalResponse(capability.id,settings,fetcher);
-   if(!Array.isArray(data?.prices)||data.prices.length<2)throw Error('CoinGecko-Historie leer.');
+   if(!Array.isArray(data?.prices)||data.prices.length<2)throw Error('CoinGecko hat keine ausreichenden historischen Kurse geliefert.');
    rows=data.prices.map(([timestamp,price])=>({timestamp:Number(timestamp),price:Number(price)}));
    if(rows.filter(x=>Number.isFinite(x.timestamp)&&finitePositive(x.price)).length<2)
     throw Error('CoinGecko-Historie enthält nicht genügend gültige Kurse.');
@@ -109,7 +109,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
     let cause=message;
     if(/Ratenlimit|429|quota|rate limit/i.test(message))cause='CoinGecko-Limit erreicht';
     else if(/401|403|Zugriff verweigert/i.test(message))cause='CoinGecko-Zugriff verweigert';
-    else if(/Failed to fetch|NetworkError|Load failed|Zeitüberschreitung|fetch failed/i.test(message))cause='CoinGecko im Browser nicht erreichbar (Netzwerk/CORS)';
+    else if(/Failed to fetch|NetworkError|Load failed|Zeitüberschreitung|fetch failed/i.test(message))cause='CoinGecko aus diesem Browser gerade nicht erreichbar (Netzwerk, CORS oder Sperre)';
     throw Error(cause+'. CoinPaprika-Fallback: '+String(fallbackError.message||fallbackError).slice(0,105));
    }
   }
