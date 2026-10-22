@@ -60,6 +60,7 @@ jobs:
           node tests/browser-booking-filters.mjs
           node tests/browser-dashboard-periods.mjs
           node tests/browser-provider-accordion.mjs
+          node tests/browser-public-instruments.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:
