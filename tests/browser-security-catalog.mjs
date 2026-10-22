@@ -12,9 +12,19 @@ try{
  assert.equal(await page.locator('#wizardDirectoryImport').isVisible(),true);
  await page.locator('#wizardCatalogTools summary').click();
 
- const rows=['Market: XETR','Date Last Update: 22.10.2026','Product Status;Instrument Status;Instrument;ISIN;Mnemonic;Currency;Instrument Type'];
- rows.push('Active;Active;Vanguard FTSE All-World UCITS ETF;IE00BK5BQT80;VWCE;EUR;ETF');
- for(let i=0;i<6000;i++)rows.push('Active;Active;Example European Stock '+String(i).padStart(5,'0')+';DE'+String(1000000000+i)+';ST'+i+';EUR;Shares');
+ // Mirror the actual T7 CSV layout (two-field metadata rows and 153 columns)
+ // without committing an exchange-licensed production download to GitHub.
+ const headers=Array.from({length:153},(_,i)=>'Field '+i);
+ for(const [at,key] of [[0,'Product Status'],[1,'Instrument Status'],[2,'Instrument'],[3,'ISIN'],[7,'Mnemonic'],[8,'MIC Code'],[18,'Instrument Type'],[67,'Settlement Currency'],[129,'Currency']])headers[at]=key;
+ const record=(name,isin,symbol,kind)=>{
+  const cells=Array(153).fill('');
+  cells[0]='Active';cells[1]='Active';cells[2]=name;cells[3]=isin;cells[7]=symbol;
+  cells[8]='XETR';cells[18]=kind;cells[67]='EUR';cells[129]='EUR';
+  return cells.join(';');
+ };
+ const rows=['Market:;XETR','Date Last Update:;22.10.2026',headers.join(';')];
+ rows.push(record('Vanguard FTSE All-World UCITS ETF','IE00BK5BQT80','VWCE','ETF'));
+ for(let i=0;i<6000;i++)rows.push(record('Example European Stock '+String(i).padStart(5,'0'),'DE'+String(1000000000+i),'ST'+i,'CS'));
  await page.locator('#wizardDirectoryFile').setInputFiles({name:'t7-xetr-allTradableInstruments.csv',mimeType:'text/csv',buffer:Buffer.from(rows.join('\n'))});
  await page.locator('#wizardQuery').fill('Example European Stock 01234');
  await page.locator('#wizardKind').selectOption('stock');
