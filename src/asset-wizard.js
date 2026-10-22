@@ -1,6 +1,7 @@
 import {escapeHTML,defaultSettings} from './model.js';
 import {cryptoChoices,loadTopCrypto,loadAllCrypto,cryptoCatalogState,parseFundCatalogCSV,saveFundCatalogPersistent,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog,OeKB_FUNDS_URL} from './instrument-catalog.js';
 import {referenceSearch} from './reference-listings.js';
+import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
 const e=escapeHTML;
 const kinds=[['etf','ETF'],['stock','Aktie'],['fund','Fonds'],['crypto','Kryptowährung'],['cash','Guthaben'],['other','Sonstiges']];
@@ -20,8 +21,15 @@ const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:''
  * atomic model validation and one onCommit call.
  */
 export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify}){
- let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),cryptoLoading=false,coinFullLoading=false;
+ let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),directories=[],cryptoLoading=false,coinFullLoading=false;
  const $=id=>dialog.querySelector('#'+id);
+ const directorySummary=()=>{
+  if(!directories.length)return 'Noch keine Wertpapierliste importiert. Dateiverarbeitung nur in diesem Browser.';
+  const total=directories.reduce((sum,x)=>sum+x.entries.length,0),stale=directories.some(x=>directoryAge(x).stale);
+  return total.toLocaleString('de-AT')+' Wertpapiernotierungen aus '+directories.length+' Dateien gespeichert · '+
+   (stale?'Mindestens eine Datei ist älter als 30 Tage – erneut von der Quelle herunterladen.':'Aktualisierung nach spätestens 30 Tagen empfohlen.');
+ };
+
  const updateValue=(key,val)=>{state[key]=val;};
  const shell=(fields,title)=>{
   dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
@@ -37,7 +45,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(!query&&state.kind!=='crypto')return '<p class="small-help">Suche nach Fondsname, ISIN oder Ticker – oder lege eine Anlage manuell an.</p>';
   return '<div class="wizard-search-status" role="status">'+e(state.status||'')+'</div>'+
    (list.length?'<div class="wizard-matches">'+list.map((x,i)=>'<button type="button" data-wizard-pick="'+i+'" class="result-item"><span><strong>'+e(x.name)+'</strong><small>'+
-    e([x.kind==='crypto'?'Krypto':x.kind==='stock'?'Aktie':x.kind==='fund'?'Fonds':'ETF',x.isin,x.symbol,x.kind==='crypto'?x.id:''].filter(Boolean).join(' · '))+
+    e([x.kind==='crypto'?'Krypto':x.kind==='stock'?'Aktie':x.kind==='fund'?'Fonds':x.kind==='other'?'Sonstiges':'ETF',x.isin,x.symbol,x.kind==='crypto'?x.id:''].filter(Boolean).join(' · '))+
     '</small></span><small>'+e([x.rank?'#'+x.rank:'',x.exchange,x.mic,x.currency,x.source].filter(Boolean).join(' · '))+'</small></button>').join('')+'</div>':
     '<p class="small-help">Keine Treffer in den verfügbaren Katalogen. Manuelle Eingabe bleibt möglich.</p>');
  };
@@ -50,11 +58,18 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     (cryptoLoading?'CoinGecko Top 100 werden abgerufen …':'Offline-Auswahl · vollständige Liste vorübergehend nicht verfügbar');
   }else if(q.length>=2){
    const locals=referenceSearch(q).filter(x=>x.kind===state.kind);
-   const matching=searchFundCatalog(q,state.kind,funds,100),seen=new Set(locals.map(x=>x.isin));
-   state.results=[...locals,...matching.results.filter(x=>!seen.has(x.isin))].slice(0,100);
-   state.status=(funds?'Lokal importierte Fondsliste: '+matching.total+' Treffer · ': '')+
-    'Kuratierte Referenznotierungen: '+locals.length+
-    (state.results.length>=100?' · erste 100 Treffer; Suche präzisieren':'');
+   const matching=searchFundCatalog(q,state.kind,funds,100),securities=searchSecurityDirectories(q,state.kind,directories,100);
+   const identified=new Set(),unique=[];
+   for(const item of [...locals,...securities.results,...matching.results]){
+    const key=[item.isin||item.symbol,item.symbol,item.mic,item.currency].join('|');
+    if(identified.has(key))continue;
+    identified.add(key);unique.push(item);
+   }
+   state.results=unique.slice(0,100);
+   state.status=(directories.length?'Wertpapier-Verzeichnisse: '+securities.total+' Treffer · ':'')+
+    (funds?'Fonds-CSV: '+matching.total+' Treffer · ':'')+
+    'Referenznotierungen: '+locals.length+
+    (unique.length>100?' · erste 100 Treffer – genauer suchen':'');
   }else{state.results=[];state.status='';}
   if($('wizardMatches'))$('wizardMatches').innerHTML=resultsMarkup();
  };
@@ -79,6 +94,15 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   const fields='<p class="dialog-intro">Welche Anlage möchtest du hinzufügen? Wähle einen Treffer oder erfasse die Daten selbst. Es werden keine Bestände oder Kurse übernommen.</p>'+
    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
    '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
+   (['etf','fund','stock','other'].includes(state.kind)?'<div class="wizard-fund-source wizard-security-source">'+
+    '<strong>Große Wertpapierlisten</strong><div class="wizard-source-links">'+
+    '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra ↗</a> · '+
+    '<a href="'+e(DIRECTORY_PAGE_LINKS.nasdaq)+'" target="_blank" rel="noopener noreferrer">Nasdaq ↗</a> · '+
+    '<a href="'+e(DIRECTORY_PAGE_LINKS.esma)+'" target="_blank" rel="noopener noreferrer">ESMA FIRDS ↗</a>'+
+    '</div><button id="wizardDirectoryImport" type="button" class="btn outline">Heruntergeladene CSV/TXT einlesen</button>'+
+    '<input id="wizardDirectoryFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden">'+
+    '<small id="wizardDirectoryStatus">'+directorySummary()+'</small>'+
+    '<small>Periodische Aktualisierung: Datei bei der Quelle erneut herunterladen und lokal einlesen. Die App lädt keine fremden Listen unbemerkt herunter oder veröffentlicht sie weiter.</small></div>':'')+
    (['etf','fund'].includes(state.kind)?'<div class="wizard-fund-source"><a href="'+e(OeKB_FUNDS_URL)+'" target="_blank" rel="noopener noreferrer">OeKB: offizielle KESt-Meldefonds-Liste ↗</a><button id="wizardFundImport" class="btn outline" type="button">OeKB-Liste als CSV importieren</button><input id="wizardFundFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"><small>'+
     '<span id="wizardFundSourceStatus">'+(funds?e(funds.entries.length+' Fonds lokal · importiert am '+new Date(funds.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft'):'Die amtliche Liste wird nicht automatisch abgerufen. Die CSV wird ausschließlich lokal gespeichert.')+'</span>'+
     '</small></div>':'')+
@@ -109,6 +133,22 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    state.exchange=item.exchange||'';state.mic=item.mic||'';
    state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';state.tradingViewSymbol=item.tradingViewSymbol||'';
    state.currency=item.currency||'';state.query='';render();
+  });
+  $('wizardDirectoryImport')?.addEventListener('click',()=>$('wizardDirectoryFile')?.click());
+  $('wizardDirectoryFile')?.addEventListener('change',async event=>{
+   const file=event.target.files?.[0];event.target.value='';
+   if(!file)return;
+   if(file.size>MAX_DIRECTORY_BYTES)return error('Verzeichnis überschreitet 24 MB. Bitte kleinere CSV/TXT-Datei wählen.');
+   try{
+    let raw=await file.text();
+    if(raw.includes('\uFFFD'))raw=new TextDecoder('windows-1252').decode(await file.arrayBuffer());
+    const catalog=parseSecurityDirectory(raw,{filename:file.name});
+    await saveSecurityDirectory(catalog);
+    directories=await loadSecurityDirectories();
+    updateResults();
+    const status=$('wizardDirectoryStatus');if(status)status.textContent=directorySummary();
+    notify(catalog.entries.length+' Instrumente lokal übernommen ('+catalog.source+'). '+catalog.skipped+' ungültige/inaktive Einträge übersprungen. Börsenzuordnung und Währung vor der Auswahl prüfen.');
+   }catch(ex){error('Verzeichnisimport: '+String(ex.message||ex).slice(0,220));}
   });
   $('wizardFundImport')?.addEventListener('click',()=>$('wizardFundFile')?.click());
   $('wizardFundFile')?.addEventListener('change',async event=>{
@@ -235,6 +275,14 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  dialog.addEventListener('cancel',ev=>{if(state.busy){ev.preventDefault();return;}sequence++;});
  dialog.addEventListener('close',()=>opener?.focus?.());
  return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;dialog.showModal();render();
+   void loadSecurityDirectories().then(list=>{
+    if(!dialog.open)return;
+    directories=list;
+    if(state.step===1&&['stock','etf','fund','other'].includes(state.kind)){
+     const status=$('wizardDirectoryStatus');if(status)status.textContent=directorySummary();
+     updateResults();
+    }
+   }).catch(()=>{if(dialog.open){const status=$('wizardDirectoryStatus');if(status)status.textContent='Lokale Wertpapierlisten konnten nicht gelesen werden.';}});
    void loadFundCatalogPersistent().then(next=>{if(!next||!dialog.open)return;funds=next;
      if(state.step===1&&['etf','fund'].includes(state.kind)){
        const hint=$('wizardFundSourceStatus');if(hint)hint.textContent=next.entries.length+' Fonds lokal · importiert am '+new Date(next.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft';
