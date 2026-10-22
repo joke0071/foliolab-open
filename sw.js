@@ -1,5 +1,5 @@
-const CACHE='foliolab-open-v21';
-const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/dashboard-ui.js','./src/position-history.js','./src/position-detail-ui.js','./src/allocation-ui.js','./src/valuation-status.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/request-cache.js','./src/csv-import.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+const CACHE='foliolab-open-v22';
+const ASSETS=['./','./index.html','./styles.css','./src/app.js','./src/dashboard-ui.js','./src/position-history.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/allocation-ui.js','./src/valuation-status.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/request-cache.js','./src/csv-import.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
 });
