@@ -5,6 +5,7 @@ import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachCha
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
 import {parseHistoricalPriceCSV} from './historical-csv.js';
+import {providerDirectory,providerSuggestions,providerExact,accountSuggestions,accountExact,suggestedAccountForProvider} from './onboarding-suggestions.js';
 import {fetchSecurityQuote,tradingViewIdentifier,marketSourceOptions} from './security-sources.js';
 import {discoverSecurityListings,rankListings,listingCompatibility} from './security-discovery.js';
 import {scanBitcoinAccount} from './bitcoin-hd.js';
@@ -23,7 +24,7 @@ const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungskonto',savings:'Tages- / Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
-const providerPresets=['Flatex','Trade Republic','Scalable Capital','Erste Bank','DADAT','Interactive Brokers','WeltSparen','C24','N26','Renault Bank direkt','Bitpanda','Binance','Coinbase','Kraken','Ledger','Trezor','MetaMask','Phantom'];
+const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}}
 function save(){if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');persist(model);try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}render();}
@@ -70,24 +71,75 @@ function renderSettings(){const settings=$('providerSettings');settings.innerHTM
 ${model.accounts.filter(a=>a.providerId===p.id).map(a=>`<div class="account-entry"><span>${esc(a.name)} <small>· ${esc(accountTypes[a.type]||accountTypes.other)}</small></span><button type="button" class="row-btn" data-action="edit-account" data-id="${esc(a.id)}" aria-label="Konto bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-account" data-id="${esc(a.id)}" aria-label="Konto löschen">${svg('trash',15)}</button></div>`).join('')}`).join(''):empty('Noch kein Anbieter hinterlegt.');if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';const reminder=$('backupReminder');let last=0;try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));}
 function showDialog(title,kicker,html,onSave){editor={onSave};$('dialogTitle').textContent=title;$('dialogKicker').textContent=kicker;$('dialogFields').innerHTML=html;$('saveDialog').textContent='Speichern';$('saveDialog').disabled=false;$('editDialog').showModal();}
 function closeDialog(){$('editDialog').close();editor=null;}
-function openProvider(p){showDialog(p?'Anbieter bearbeiten':'Anbieter hinzufügen','FREIE ANBIETERWAHL',`<p class="dialog-intro">Wähle einen Vorschlag oder gib einen eigenen Namen ein.</p><datalist id="providerSuggestions">${providerPresets.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>${field('Anbietername','name',p?.name||'','text','required maxlength="80" list="providerSuggestions"')}<label class="field"><span>Typ</span><select name="type">${options(Object.entries(types),p?.type||'broker')}</select></label>`,(v)=>{const x=createProvider({...v,id:p?.id});if(p)model.providers=model.providers.map(a=>a.id===p.id?x:a);else model.providers.push(x);save();notify('Anbieter gespeichert.');});}
+function providerMatchMarkup(query){
+ const found=providerSuggestions(query,6);
+ return found.length?found.map(x=>'<button type="button" class="onboarding-suggestion" data-provider-preset="'+esc(x.name)+'"><strong>'+esc(x.name)+'</strong><span>'+esc(types[x.type])+'</span></button>').join(''):'<p class="small-help">Kein Vorschlag? Eigene Anbieterbezeichnung und Typ frei eintragen.</p>';
+}
+function openProvider(p){
+ showDialog(p?'Anbieter bearbeiten':'Anbieter hinzufügen','FREIE ANBIETERWAHL',
+ '<p class="dialog-intro">Name eingeben, z. B. „f“, und einen passenden Anbieter aus den Vorschlägen wählen. Der Typ wird vorgeschlagen, kann aber geändert werden. Die Liste funktioniert offline; es findet keine Internetsuche statt.</p>'+
+ '<label class="field"><span>Anbietername</span><input name="name" id="providerName" required maxlength="80" autocomplete="off" value="'+esc(p?.name||'')+'" placeholder="z. B. Flatex, Trade Republic …"></label>'+
+ '<div id="providerMatches" class="onboarding-suggestions" role="region" aria-label="Anbietervorschläge"></div>'+
+ '<label class="field"><span>Typ</span><select name="type" id="providerType">'+options(Object.entries(types),p?.type||providerExact(p?.name)?.type||'broker')+'</select></label>',
+ (v)=>{
+  const name=String(v.name||'').trim();
+  // Provider names are not IDs: prevent accidental duplicates from common suggestions.
+  const duplicate=model.providers.find(x=>x.id!==p?.id&&x.name.trim().toLocaleLowerCase('de')===name.toLocaleLowerCase('de'));
+  if(duplicate)throw Error('Diesen Anbieter gibt es bereits. Bitte den bestehenden Anbieter auswählen.');
+  const x=createProvider({...v,name,id:p?.id});
+  if(p)model.providers=model.providers.map(a=>a.id===p.id?x:a);else model.providers.push(x);
+  save();notify('Anbieter gespeichert.');
+ });
+ const name=$('providerName'),matches=$('providerMatches'),type=$('providerType');
+ const show=()=>{matches.innerHTML=providerMatchMarkup(name.value);matches.classList.toggle('hidden',!name.value.trim());};
+ name.addEventListener('input',()=>{const exact=providerExact(name.value);if(exact)type.value=exact.type;show();});
+ name.addEventListener('change',()=>{const exact=providerExact(name.value);if(exact)type.value=exact.type;});
+ matches.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-provider-preset]');if(!btn)return;
+  const item=providerExact(btn.dataset.providerPreset);if(!item)return;
+  name.value=item.name;type.value=item.type;matches.classList.add('hidden');name.focus();
+ });
+}
+function accountMatchMarkup(providerId,query){
+ const provider=model.providers.find(p=>p.id===providerId);
+ const list=accountSuggestions(provider?.type||'other',query).slice(0,6);
+ return list.length?list.map(([name,type])=>'<button type="button" class="onboarding-suggestion" data-account-preset="'+esc(name)+'"><strong>'+esc(name)+'</strong><span>'+esc(accountTypes[type])+'</span></button>').join(''):'<p class="small-help">Eigene Kontobezeichnung möglich.</p>';
+}
 function openAccount(a,defaultProviderId){
  if(!model.providers.length){openProvider();notify('Bitte zuerst einen Anbieter anlegen.');return;}
  const providerId=a?.providerId||defaultProviderId||model.providers[0].id;
- showDialog(a?'Konto bearbeiten':'Konto hinzufügen','KONTEN UND DEPOTS',`
- <label class="field"><span>Anbieter</span><select name="providerId">${options(model.providers.map(p=>[p.id,p.name]),providerId)}</select></label>
- ${field('Kontoname','name',a?.name||'Mein Depot','text','required maxlength="100"')}
- <div class="field-row"><label class="field"><span>Kontotyp</span><select name="type">${options(Object.entries(accountTypes),a?.type||'securities')}</select></label>
- <label class="field"><span>Kontowährung</span><select name="currency">${options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')}</select></label></div>
- ${a?'':field('Optionales EUR-Startguthaben','initialBalance','','text','inputmode="decimal" placeholder="z. B. 2500 (nur EUR)"')}`,v=>{
- if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
- const init=String(v.initialBalance||'').trim();
- if(init&&v.currency!=='EUR')throw Error('Fremdwährungsguthaben bitte als Position mit eigenem EUR-Wechselkurs hinzufügen.');
- const balance=init?safeNumber(init,0):0;
- const next=createAccount({...v,id:a?.id},model);
- if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
- if(!a&&balance>0)model.positions.push(createPosition({providerId:next.providerId,accountId:next.id,kind:'cash',name:'EUR Guthaben',symbol:'EUR',quantity:init,price:1,currency:'EUR'},model));
- model.settings.lastAccountId=next.id;save();notify('Konto gespeichert.');
+ const provider=model.providers.find(p=>p.id===providerId),suggestion=suggestedAccountForProvider(provider?.type||'other');
+ showDialog(a?'Konto bearbeiten':'Konto hinzufügen','KONTEN UND DEPOTS',
+ '<p class="dialog-intro">Anbieter auswählen und einen Kontonamen eintippen. Passende Kontotypen werden vorgeschlagen; Name und Typ bleiben frei bearbeitbar.</p>'+
+ '<label class="field"><span>Anbieter</span><select id="accountProvider" name="providerId">'+options(model.providers.map(p=>[p.id,p.name]),providerId)+'</select></label>'+
+ '<label class="field"><span>Kontoname</span><input name="name" id="accountName" type="text" required maxlength="100" autocomplete="off" value="'+esc(a?.name||suggestion[0])+'" placeholder="Girokonto, Wertpapierdepot …"></label>'+
+ '<div class="onboarding-suggestions" id="accountMatches" role="region" aria-label="Kontovorschläge"></div>'+
+ '<div class="field-row"><label class="field"><span>Kontotyp</span><select name="type" id="accountType">'+options(Object.entries(accountTypes),a?.type||suggestion[1])+'</select></label>'+
+ '<label class="field"><span>Kontowährung</span><select name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
+ (a?'':field('Optionales EUR-Startguthaben','initialBalance','','text','inputmode="decimal" placeholder="z. B. 2500 (nur EUR)"')),
+ v=>{
+  if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
+  const init=String(v.initialBalance||'').trim();
+  if(init&&v.currency!=='EUR')throw Error('Fremdwährungsguthaben bitte als Position mit eigenem EUR-Wechselkurs hinzufügen.');
+  const balance=init?safeNumber(init,0):0;
+  const next=createAccount({...v,id:a?.id},model);
+  if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
+  if(!a&&balance>0)model.positions.push(createPosition({providerId:next.providerId,accountId:next.id,kind:'cash',name:'EUR Guthaben',symbol:'EUR',quantity:init,price:1,currency:'EUR'},model));
+  model.settings.lastAccountId=next.id;save();notify('Konto gespeichert.');
+ });
+ const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
+ const show=()=>{area.innerHTML=accountMatchMarkup(providerSelect.value,name.value);area.classList.toggle('hidden',!name.value.trim());};
+ const align=()=>{const p=model.providers.find(x=>x.id===providerSelect.value),exact=accountExact(name.value,p?.type||'other');if(exact)type.value=exact[1];};
+ providerSelect.addEventListener('change',()=>{
+  const p=model.providers.find(x=>x.id===providerSelect.value),next=suggestedAccountForProvider(p?.type||'other');
+  if(!a||!name.dataset.userEdited){name.value=next[0];type.value=next[1];}
+  show();
+ });
+ name.addEventListener('input',()=>{name.dataset.userEdited='true';align();show();});
+ name.addEventListener('change',align);
+ area.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-account-preset]');if(!btn)return;
+  name.value=btn.dataset.accountPreset;name.dataset.userEdited='true';align();area.classList.add('hidden');name.focus();
  });
 }
 function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Alle Anlagen werden manuell angelegt. Automatische Wertpapierkurse benötigen einen bestätigten Handelsplatz und die passende Kurswährung.</p>
