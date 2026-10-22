@@ -29,10 +29,10 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
  const segments=slices.map((item,index)=>{
   const start=offset;offset+=item.percent;
   const title=esc(item.name+': '+money(item.value)+' ('+formatAllocationShare(item.percent)+')');
-  return '<circle class="allocation-segment" data-allocation-index="'+index+'" tabindex="0" role="button" aria-label="'+title+'" aria-pressed="'+(chosen?.key===item.key)+'" cx="100" cy="100" r="84" pathLength="100" stroke-width="30" fill="none"'+
+  return '<circle class="allocation-segment" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" tabindex="0" role="button" aria-label="'+title+'" aria-pressed="'+(chosen?.key===item.key)+'" cx="100" cy="100" r="84" pathLength="100" stroke-width="30" fill="none"'+
   ' transform="rotate(-90 100 100)" stroke="'+esc(colors[item.key]||'#a2a3b2')+'" stroke-dasharray="'+item.percent.toFixed(8)+' '+(100-item.percent).toFixed(8)+'" stroke-dashoffset="'+(-start).toFixed(8)+'"></circle>';
  }).join('');
- const rows=slices.map((item,index)=>'<button class="alloc-legend-row" type="button" data-allocation-index="'+index+'" aria-pressed="'+(chosen?.key===item.key)+'">'+
+ const rows=slices.map((item,index)=>'<button class="alloc-legend-row" type="button" data-allocation-index="'+index+'" data-allocation-key="'+esc(item.key)+'" aria-pressed="'+(chosen?.key===item.key)+'">'+
   '<span class="legend-left"><span class="legend-dot" style="background:'+esc(colors[item.key]||'#a2a3b2')+'"></span>'+
   '<span class="alloc-legend-copy"><strong>'+esc(item.name)+'</strong><small>'+esc(money(item.value))+'</small></span></span>'+
   '<b>'+esc(formatAllocationShare(item.percent))+'</b></button>').join('');
@@ -72,8 +72,7 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
   label.textContent=item?.name||'Portfolio';
   value.textContent=compact(item?.value??netTotal);
   value.title=money(item?.value??netTotal);
-  share.textContent=item?formatAllocationShare(item.percent):slices.some(()=>false)?'':'Gesamtwert';
-  if(!item)share.textContent=root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert';
+  share.textContent=item?formatAllocationShare(item.percent):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert');
   controls.forEach(el=>{
    const active=Number(el.dataset.allocationIndex)===index;
    el.classList.toggle('active',active);
