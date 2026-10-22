@@ -62,3 +62,14 @@ test('Hard-coded Ethereum LST whitelist does not infer non-whitelisted token hol
  assert.equal(await ethereumNativeExact(A,fetcher),'2');
  assert.equal(await ethereumTokenExact(A,RETH,18,fetcher),'3');
 });
+
+test('Ethereum token omitted by nominally successful explorer is verified via balanceOf, not assumed zero',async()=>{
+ const {fetcher}=fixture({explorerFail:false,reth:8n});
+ const wallet={enabled:true,chain:'erc20',chainId:1,address:A,contract:RETH,decimals:18};
+ assert.equal(await walletBalanceExact(wallet,{},fetcher),'8');
+});
+test('Other EVM explorers omitting an already imported contract fail closed',async()=>{
+ const token={enabled:true,chain:'erc20',chainId:137,address:A,contract:RETH,decimals:18};
+ const fake=async(url)=>reply(url.endsWith('/token-balances')?[]:{coin_balance:'0'});
+ await assert.rejects(()=>walletBalanceExact(token,{},fake),/Nullbestand ist nicht bestätigt/);
+});
