@@ -119,9 +119,12 @@ test('Avalanche RPC failures must not produce artificial zero balances',async()=
  }
 });
 test('Avalanche discovery recovers native balance from public RPC',async()=>{
- const mock=async url=>{
+ const mock=async (url,opts={})=>{
   if(url.endsWith('/token-balances'))return reply([]);
-  if(url.includes('api.avax.network'))return reply({result:'0xde0b6b3a7640000'});
+  if(url.includes('api.avax.network')){
+   const method=JSON.parse(opts.body).method;
+   return reply({result:method==='eth_call'?'0x0':'0xde0b6b3a7640000'});
+  }
   return reply({coin_balance:null});
  };
  const result=await discoverWallet('43114',A,{},mock);
