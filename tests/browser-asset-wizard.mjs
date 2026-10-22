@@ -8,7 +8,10 @@ try{
  await page.locator('#addWizard').click();
  assert.match(await page.locator('#wizardTitle').innerText(),/Welche Anlage/);
  await page.locator('#wizardQuery').fill('VWCE');
- await page.locator('[data-wizard-pick="0"]').click();
+ assert.equal(await page.locator('[data-wizard-pick]').count(),0,'No built-in ETF samples should appear');
+ await page.locator('#wizardName').fill('Vanguard FTSE All-World UCITS ETF');
+ await page.locator('#wizardSymbol').fill('VWCE');
+ await page.locator('#wizardIsin').fill('IE00BK5BQT80');
  assert.match(await page.locator('#wizardName').inputValue(),/Vanguard/);
  assert.equal(await page.locator('#wizardIsin').inputValue(),'IE00BK5BQT80');
  await page.locator('#wizardNext').click();
@@ -62,5 +65,5 @@ try{
   const scroll=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(scroll<=1,'Wizard context horizontal overflow '+width+'px: '+scroll);
  }
- console.log('ASSET WIZARD: local no-key ETF, new broker/account, back-navigation, opening, purchase ledger, mobile widths PASS');
+ console.log('ASSET WIZARD: manual no-key ETF, new broker/account, back-navigation, opening, purchase ledger, mobile widths PASS');
 }finally{await browser.close();}
