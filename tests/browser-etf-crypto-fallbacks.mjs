@@ -19,6 +19,8 @@ try{
  await detail.locator(':scope > summary').click();
  await detail.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
  assert.match(await detail.innerText(),/Öffentliches Diagramm laden/);
+ assert.equal(await detail.locator('.position-history-unavailable').count(),0,'Do not show a second empty chart beneath public TradingView');
+ assert.equal(await detail.locator('[data-position-range]').count(),0,'TradingView has its own chart ranges');
  let external=0;
  await page.route('https://s3.tradingview.com/**',route=>{external++;return route.fulfill({status:200,contentType:'application/javascript',body:'/* external widget test stub */'});});
  await detail.locator('[data-action="load-tradingview"]').click();
