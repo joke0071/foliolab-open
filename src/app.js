@@ -18,6 +18,7 @@ import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
+import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
@@ -419,7 +420,7 @@ function openWalletImport(){
     <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
     <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
     <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
-    <p class="small-help">Bitte verdächtige Spam-Token abwählen. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,(v)=>{
+    <p class="small-help">Spam- und unbekannte Tokens werden zunächst ausgeblendet. Über „Ausgeblendete Tokens prüfen“ können echte Bestände bei Bedarf manuell hinzugefügt werden. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,(v)=>{
        if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
        const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
        if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
@@ -473,10 +474,20 @@ async function scanWalletNow(){
         for(const a of assets)if(a.contract){const q=Number(quotes[a.contract.toLowerCase()]?.eur);if(q>0)a.price=q;}
       }catch(e){/* holdings are still valid without quotes */}
     }
-    scannedWalletAssets=assets.slice(0,150);scannedWalletKey=walletScanIdentity(network,address,$('scanHdType').value);const partial=assets.partial===true;
-    area.innerHTML=`<div class="wallet-scan-header"><strong>${assets.length} Position${assets.length===1?'':'en'} gefunden</strong><span>Zur Übernahme auswählen</span></div>`+
-      scannedWalletAssets.map((a,i)=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${i<80&&(!a.contract||a.price>0)&&!/(claim|airdrop|visit|https?:|www\.|reward\.com)/i.test(a.name+' '+a.symbol)?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small></span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`).join('');
-    status.textContent=partial?'Teilweise erfolgreich: '+assets.warning:assets.length>150?'Maximal 150 Positionen in der Vorschau.':'Bestände abgerufen – unbekannte Tokens bitte einzeln prüfen.';
+    const {visible,hidden}=partitionWalletAssets(assets);
+    const displayed=visible.slice(0,150);
+    const review=hidden.slice(0,Math.max(0,150-displayed.length));
+    scannedWalletAssets=[...displayed,...review];
+    scannedWalletKey=walletScanIdentity(network,address,$('scanHdType').value);
+    const partial=assets.partial===true;
+    const renderRow=(a,i,preselect=false,reason='')=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${preselect&&i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small>${reason?`<small>${esc(reason)}</small>`:''}</span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`;
+    const extra=hidden.length?
+      `<details class="wallet-spam-review"><summary>${hidden.length} ausgeblendete Tokens prüfen</summary><p>Unbekannte, auffällige und sehr kleine Guthaben werden nicht automatisch übernommen. Einblenden und bei Bedarf einzeln auswählen.</p>${review.map((a,i)=>renderRow(a,displayed.length+i,false,walletTokenVisibility(a).reason)).join('')}${review.length<hidden.length?'<p>Vorschau auf maximal 150 Positionen begrenzt.</p>':''}</details>`:'';
+    area.innerHTML=`<div class="wallet-scan-header"><strong>${displayed.length} Position${displayed.length===1?'':'en'} zur Auswahl</strong><span>${hidden.length?'Unbekannte Tokens ausgeblendet':'Zur Übernahme auswählen'}</span></div>`+
+      displayed.map((a,i)=>renderRow(a,i,true)).join('')+
+      (!displayed.length?empty('Keine automatisch vorgeschlagenen Positionen. Bei Bedarf ausgeblendete Tokens prüfen.'): '')+extra;
+    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Bestände abgerufen.')+
+      (hidden.length?' · '+hidden.length+' ungeprüfte oder auffällige Tokens ausgeblendet.':'');
   }catch(e){status.textContent='Scan nicht möglich: '+e.message;area.innerHTML=empty('Manuelles Hinzufügen ist weiterhin möglich. Öffentliche API-Zugriffe können zeitweise blockiert oder begrenzt sein.');}
   finally{button.disabled=false;}
 }

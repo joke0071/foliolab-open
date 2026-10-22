@@ -14,6 +14,10 @@
 .wallet-scan-info small{font-size:10px;color:#91a396}
 .wallet-scan-money{text-align:right;font-weight:700;flex-shrink:0;max-width:40%;overflow-wrap:anywhere}
 .wallet-scan-money small{display:block;font-size:10px;font-weight:400;color:#94a396;margin-top:3px}
+.wallet-spam-review{border-top:1px solid #e4ece6;background:#fafcfb}
+.wallet-spam-review>summary{cursor:pointer;padding:12px 14px;color:#536d5c;font-size:12px;font-weight:700;list-style:revert}
+.wallet-spam-review>p{font-size:11px;line-height:1.55;color:#829588;padding:4px 14px 10px;margin:0}
+.wallet-spam-review .wallet-scan-row{background:#fff}
 .advanced-apis{margin-top:14px;border:1px solid #e4ebe4;border-radius:12px;padding:12px 15px}
 .advanced-apis summary{cursor:pointer;color:#52755f;font-size:12px;font-weight:750;line-height:1.7}
 .advanced-apis[open] summary{margin-bottom:9px}
