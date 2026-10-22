@@ -341,3 +341,6 @@
 .provider-settings-accounts{padding:6px 0}
 .provider-settings-accounts .account-entry{padding-left:9px}
 .provider-settings-row .settings-provider-actions{padding-top:5px}
+
+.provider-account-head{flex-wrap:wrap}
+.provider-account-head>[data-action=view-account]{font-size:11px;white-space:nowrap;padding:3px 0}
