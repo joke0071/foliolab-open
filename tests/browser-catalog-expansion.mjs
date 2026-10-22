@@ -35,8 +35,22 @@ try{
  await page.locator('#wizardMatches [data-wizard-pick="0"]').click();
  assert.equal(await page.locator('#wizardIsin').inputValue(),'IE0000012345');
  assert.equal(await page.locator('#wizardCurrency').inputValue(),'','Imported fund list must not guess listing currency');
- const count=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-fund-catalog-v1')).entries.length);
+ const count=await page.evaluate(()=>new Promise((resolve,reject)=>{
+  const req=indexedDB.open('foliolab-open-reference-catalog-v1',1);
+  req.onerror=()=>reject(req.error);
+  req.onsuccess=()=>{
+   const db=req.result,tx=db.transaction('catalogs','readonly'),get=tx.objectStore('catalogs').get('oekb');
+   get.onsuccess=()=>{resolve(get.result.entries.length);db.close();};get.onerror=()=>reject(get.error);
+  };
+ }));
  assert.equal(count,3);
+ await page.locator('#wizardClose').click();
+ await page.reload();
+ await page.locator('#mobileNav [data-page="positions"]').click();
+ await page.locator('#addWizard').click();
+ await page.locator('#wizardQuery').fill('Synthetic Austrian');
+ await page.locator('#wizardMatches [data-wizard-pick="0"]').waitFor();
+ assert.match(await page.locator('#wizardMatches').innerText(),/Synthetic Austrian ETF/);
  const appState=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))||{positions:[]});
  assert.equal(appState.positions.length,0,'Searching/importing catalogs never creates holdings');
  console.log('CATALOG BROWSER: live Top100, extended crypto search, local OeKB-style CSV, explicit currency and no portfolio mutation PASS');
