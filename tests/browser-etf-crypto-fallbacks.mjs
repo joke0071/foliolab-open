@@ -16,7 +16,8 @@ try{
  await page.reload();
  await page.locator('#providerOverview .provider-accordion>summary').click();
  const detail=page.locator('#providerOverview [data-position-id="etf-demo"]');
- await detail.locator('summary').click();
+ await detail.locator(':scope > summary').click();
+ await detail.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
  assert.match(await detail.innerText(),/Öffentliches Diagramm laden/);
  let external=0;
  await page.route('https://s3.tradingview.com/**',route=>{external++;return route.fulfill({status:200,contentType:'application/javascript',body:'/* external widget test stub */'});});
