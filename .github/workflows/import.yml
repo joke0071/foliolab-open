@@ -62,6 +62,7 @@ jobs:
           node tests/browser-provider-accordion.mjs
           node tests/browser-public-instruments.mjs
           node tests/browser-account-deeplink.mjs
+          node tests/browser-catalog-expansion.mjs
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
   deploy:
