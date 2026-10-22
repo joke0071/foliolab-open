@@ -1,5 +1,5 @@
 import {escapeHTML,defaultSettings} from './model.js';
-import {POPULAR_COINS} from './market.js';
+import {cryptoChoices,loadTopCrypto,loadAllCrypto,cryptoCatalogState,parseFundCatalogCSV,saveFundCatalog,loadFundCatalog,searchFundCatalog,OeKB_FUNDS_URL} from './instrument-catalog.js';
 import {referenceSearch} from './reference-listings.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
 const e=escapeHTML;
@@ -20,7 +20,7 @@ const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:''
  * atomic model validation and one onCommit call.
  */
 export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify}){
- let state=fresh(),sequence=0,opener=null;
+ let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),cryptoLoading=false,coinFullLoading=false;
  const $=id=>dialog.querySelector('#'+id);
  const updateValue=(key,val)=>{state[key]=val;};
  const shell=(fields,title)=>{
@@ -33,29 +33,55 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   $('wizardNext')?.addEventListener('click',advance);
  };
  const resultsMarkup=()=>{
-  if(!state.query.trim())return '<p class="small-help">Suche nach Name, ISIN oder Ticker – oder gib die Anlage direkt manuell ein.</p>';
-  const list=state.results||[];
-  return '<div class="wizard-search-status">'+e(state.status||'')+'</div>'+
-   (list.length?'<div class="wizard-matches">'+list.map((x,i)=>'<button type="button" data-wizard-pick="'+i+'" class="result-item"><span><strong>'+e(x.name)+'</strong><small>'+e([x.kind||state.kind,x.isin,x.symbol].filter(Boolean).join(' · '))+'</small></span><small>'+e([x.exchange,x.mic,x.currency].filter(Boolean).join(' · '))+'</small></button>').join('')+'</div>':
-    '<p class="small-help">Keine bestätigten lokalen Treffer. Manuelle Eingabe bleibt verfügbar.</p>');
+  const query=state.query.trim(),list=state.results||[];
+  if(!query&&state.kind!=='crypto')return '<p class="small-help">Suche nach Fondsname, ISIN oder Ticker – oder lege eine Anlage manuell an.</p>';
+  return '<div class="wizard-search-status" role="status">'+e(state.status||'')+'</div>'+
+   (list.length?'<div class="wizard-matches">'+list.map((x,i)=>'<button type="button" data-wizard-pick="'+i+'" class="result-item"><span><strong>'+e(x.name)+'</strong><small>'+
+    e([x.kind==='crypto'?'Krypto':x.kind==='stock'?'Aktie':x.kind==='fund'?'Fonds':'ETF',x.isin,x.symbol,x.kind==='crypto'?x.id:''].filter(Boolean).join(' · '))+
+    '</small></span><small>'+e([x.rank?'#'+x.rank:'',x.exchange,x.mic,x.currency,x.source].filter(Boolean).join(' · '))+'</small></button>').join('')+'</div>':
+    '<p class="small-help">Keine Treffer in den verfügbaren Katalogen. Manuelle Eingabe bleibt möglich.</p>');
  };
  const updateResults=()=>{
-  const q=state.query.trim().toLowerCase();
-  if(!q){state.results=[];state.status='';}else if(state.kind==='crypto'){
-   state.results=POPULAR_COINS.filter(c=>[c.name,c.symbol,c.id].some(v=>v.toLowerCase().includes(q))).slice(0,16)
-    .map(c=>({...c,kind:'crypto',currency:'EUR',coinId:c.id}));
-   state.status='Lokale Kryptowährungsnamen; CoinGecko-ID bitte bei Bedarf bestätigen';
-  }else{
-   state.results=referenceSearch(state.query).filter(c=>c.kind===state.kind);
-   state.status=state.results.length?'Lokale, manuell kuratierte Referenznotierungen':'Keine lokale Referenznotierung';
-  }
+  const q=state.query.trim();
+  if(state.kind==='crypto'){
+   state.results=cryptoChoices(q,{leaders,all:allCoins,limit:100});
+   state.status=leaders.length?(!q?'CoinGecko · Top '+leaders.length+' nach Marktkapitalisierung (Live-Katalog, nur Metadaten)':
+    'CoinGecko · Top '+leaders.length+(allCoins.length?' + '+allCoins.length+' weitere Coin-IDs':' · vollständiger Katalog wird bei Suche geladen')):
+    (cryptoLoading?'CoinGecko Top 100 werden abgerufen …':'Offline-Auswahl · vollständige Liste vorübergehend nicht verfügbar');
+  }else if(q.length>=2){
+   const locals=referenceSearch(q).filter(x=>x.kind===state.kind);
+   const matching=searchFundCatalog(q,state.kind,funds,100),seen=new Set(locals.map(x=>x.isin));
+   state.results=[...locals,...matching.results.filter(x=>!seen.has(x.isin))].slice(0,100);
+   state.status=(funds?'Lokal importierte Fondsliste: '+matching.total+' Treffer · ': '')+
+    'Kuratierte Referenznotierungen: '+locals.length+
+    (state.results.length>=100?' · erste 100 Treffer; Suche präzisieren':'');
+  }else{state.results=[];state.status='';}
   if($('wizardMatches'))$('wizardMatches').innerHTML=resultsMarkup();
+ };
+ const loadCoins=({all=false}={})=>{
+  if(state.kind!=='crypto')return;
+  const apiKey=getModel()?.settings?.coinGeckoKey||'';
+  if(!leaders.length&&!cryptoLoading){
+   cryptoLoading=true;
+   loadTopCrypto({key:apiKey}).then(items=>{leaders=items;}).catch(error=>{
+    if(state.kind==='crypto'&&state.step===1){state.status='CoinGecko nicht erreichbar: '+String(error.message).slice(0,90)+'. Offline-Suche weiterhin möglich.';}
+   }).finally(()=>{cryptoLoading=false;if(dialog.open&&state.kind==='crypto'&&state.step===1)updateResults();});
+  }
+  if(all&&!allCoins.length&&!coinFullLoading){
+   coinFullLoading=true;
+   loadAllCrypto({key:apiKey}).then(items=>{allCoins=items;}).catch(()=>{}).finally(()=>{
+    coinFullLoading=false;if(dialog.open&&state.kind==='crypto'&&state.step===1)updateResults();
+   });
+  }
  };
  const renderOne=()=>{
   const kindChoices=opts(kinds,state.kind,'Anlageklasse wählen').replace('<option value="">Anlageklasse wählen</option>','');
   const fields='<p class="dialog-intro">Welche Anlage möchtest du hinzufügen? Wähle einen Treffer oder erfasse die Daten selbst. Es werden keine Bestände oder Kurse übernommen.</p>'+
    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
    '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
+   (['etf','fund'].includes(state.kind)?'<div class="wizard-fund-source"><a href="'+e(OeKB_FUNDS_URL)+'" target="_blank" rel="noopener noreferrer">OeKB: offizielle KESt-Meldefonds-Liste ↗</a><button id="wizardFundImport" class="btn outline" type="button">OeKB-Liste als CSV importieren</button><input id="wizardFundFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"><small>'+
+    (funds?e(funds.entries.length+' Fonds lokal · importiert am '+new Date(funds.importedAt).toLocaleDateString('de-AT')+' · nicht live geprüft'):'Die amtliche Liste wird nicht automatisch abgerufen. Die CSV wird ausschließlich lokal gespeichert.')+
+    '</small></div>':'')+
    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
    '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Externe Treffer suchen (optional)</button>'+
    '<div class="wizard-manual"><strong>Anlage manuell hinzufügen</strong><div class="field-row">'+
@@ -73,9 +99,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   shell(fields,'Welche Anlage möchtest du hinzufügen?');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
-  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render();});
+  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render();if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);
-  $('wizardQuery').addEventListener('input',x=>{state.query=x.target.value;updateResults();});
+  $('wizardQuery').addEventListener('input',x=>{state.query=x.target.value;updateResults();if(state.kind==='crypto'&&state.query.trim().length>=2)loadCoins({all:true});});
   $('wizardMatches').addEventListener('click',x=>{
    const b=x.target.closest('[data-wizard-pick]');if(!b)return;
    const item=state.results[Number(b.dataset.wizardPick)];if(!item)return;
@@ -84,7 +110,24 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';state.tradingViewSymbol=item.tradingViewSymbol||'';
    state.currency=item.currency||'';state.query='';render();
   });
+  $('wizardFundImport')?.addEventListener('click',()=>$('wizardFundFile')?.click());
+  $('wizardFundFile')?.addEventListener('change',async event=>{
+   const file=event.target.files?.[0];event.target.value='';
+   if(!file)return;
+   if(file.size>14_000_000)return error('CSV ist zu groß (maximal 14 MB).');
+   try{
+    let raw=await file.text();
+    if(raw.includes('\uFFFD'))raw=new TextDecoder('windows-1252').decode(await file.arrayBuffer());
+    const next=parseFundCatalogCSV(raw,{filename:file.name});
+    saveFundCatalog(next);
+    funds=next;
+    updateResults();
+    render();
+    error('Fondsliste erfolgreich lokal eingelesen: '+next.entries.length+' gültige ISINs. Der Meldefonds-Status ist nur zum Datum des Exports relevant und nicht live verifiziert.');
+   }catch(ex){error('Fondsimport: '+(ex.message||ex));}
+  });
   $('wizardExternalSearch').addEventListener('click',externalSearch);
+  if(state.kind==='crypto'){updateResults();loadCoins();}
   $('wizardQuery').focus();
  };
  const externalSearch=async()=>{
@@ -191,5 +234,5 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  const close=()=>{sequence++;if(dialog.open)dialog.close();opener?.focus?.();};
  dialog.addEventListener('cancel',ev=>{if(state.busy){ev.preventDefault();return;}sequence++;});
  dialog.addEventListener('close',()=>opener?.focus?.());
- return {open(){opener=document.activeElement;state=fresh();sequence++;dialog.showModal();render();},close,getState:()=>({...state})};
+ return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;dialog.showModal();render();},close,getState:()=>({...state})};
 }
