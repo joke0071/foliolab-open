@@ -181,3 +181,14 @@
  .position-detail-grid{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.provider-position-chevron{transition:none}}
+
+
+/* Self-provided historical price CSV controls stay inside the position detail panel. */
+.position-csv-actions{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:12px 0 0}
+.position-csv-import,.position-csv-remove{appearance:none;border:1px solid #d6e2d9;border-radius:9px;padding:10px 12px;background:#fff;color:#2f6245;font:inherit;font-size:11px;font-weight:650;line-height:1.35;cursor:pointer;min-width:0;white-space:normal}
+.position-csv-import{flex:1 1 170px}
+.position-csv-remove{color:#975c4d;flex:0 1 auto}
+.position-csv-import:hover,.position-csv-remove:hover{background:#eff6ef}
+.position-csv-import:focus-visible,.position-csv-remove:focus-visible{outline:2px solid #598f69;outline-offset:2px}
+.position-csv-help{font-size:10px;line-height:1.5;color:#84958a;margin:6px 0 0}
+@media(max-width:380px){.position-csv-actions{display:grid;grid-template-columns:1fr}.position-csv-import,.position-csv-remove{width:100%}}
