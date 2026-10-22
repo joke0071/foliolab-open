@@ -121,7 +121,10 @@ export function parseSecurityDirectory(input,{filename='referenz.csv',source='au
   duplicates.add(identity);out.push(record);
  }
  if(!out.length)throw Error('Keine nutzbaren Datensätze gefunden; Dateiformat und Quelle überprüfen.');
- return {format:SECURITY_CATALOG_FORMAT,source:sourceFromFile,filename:norm(filename).slice(0,130),importedAt,
+ const fileBase=folded(filename).replace(/[^a-z0-9._-]/g,'').slice(0,60);
+ const datasetId=sourceFromFile==='nasdaq'?(fileBase.includes('otherlisted')?'otherlisted':fileBase.includes('nasdaqtraded')?'nasdaqtraded':'nasdaqlisted'):
+   sourceFromFile==='xetra'?'all-tradable':fileBase||'custom';
+ return {format:SECURITY_CATALOG_FORMAT,source:sourceFromFile,datasetId,filename:norm(filename).slice(0,130),importedAt,
   entries:out,skipped,testIssues:tests,fileRows:lines.length-headerRow-1};
 }
 export function searchSecurityDirectories(query,kind,catalogs=[],limit=100){
@@ -161,7 +164,7 @@ export async function saveSecurityDirectory(catalog,{factory=globalThis.indexedD
  const db=await openDB(factory);
  try{await new Promise((resolve,reject)=>{
   const tx=db.transaction('catalogs','readwrite');
-  tx.objectStore('catalogs').put(catalog,'security:'+catalog.source);
+  tx.objectStore('catalogs').put(catalog,'security:'+catalog.source+':'+(catalog.datasetId||'default'));
   tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error||Error('Speichern fehlgeschlagen.'));tx.onabort=()=>reject(tx.error||Error('Speichern abgebrochen.'));
  });}finally{db.close();}
  return catalog.entries.length;
