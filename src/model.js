@@ -3,11 +3,12 @@ import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
+import {validateImportedPriceHistory} from './historical-csv.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',coinGeckoKey:'',etherscanKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:''});
-export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],performanceFlowTrackingSince:null,settings:defaultSettings()});
+export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],priceHistories:Object.create(null),performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 export function number(v){if(typeof v==='string')v=v.trim().replace(/\s/g,'').replace(',','.');const n=Number(v);return Number.isFinite(n)?n:NaN;}
@@ -120,6 +121,16 @@ export function safeImport(raw){
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
   m.positions=raw.positions.map(p=>createPosition(p,m));uniqueIds(m.positions,'Positionen');
+  if(raw.priceHistories!=null){
+   if(typeof raw.priceHistories!=='object'||Array.isArray(raw.priceHistories))throw Error('Kurshistorien im Backup sind beschädigt.');
+   const entries=Object.entries(raw.priceHistories);
+   if(entries.length>500||entries.reduce((sum,[,v])=>sum+(Array.isArray(v?.points)?v.points.length:0),0)>100000)throw Error('Zu viele importierte Kursdaten.');
+   for(const [id,h] of entries){
+    const p=m.positions.find(p=>p.id===id);
+    if(!p||!['etf','fund','stock','crypto'].includes(p.kind)||id==='__proto__'||id==='constructor')throw Error('Kurshistorie hat keinen gültigen Positionsbezug.');
+    m.priceHistories[id]=validateImportedPriceHistory(h,p);
+   }
+  }
   for(const p of m.positions)validateEconomicPosition(p,m);
   rebuildAssets(m);
   m.performanceFlowTrackingSince=raw.performanceFlowTrackingSince&&/^\d{4}-\d{2}-\d{2}$/.test(raw.performanceFlowTrackingSince)?raw.performanceFlowTrackingSince:null;
