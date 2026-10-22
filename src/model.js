@@ -2,6 +2,7 @@ import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
+import {currentPositionValues} from './position-history.js';
 export const STORE_KEY='foliolab-open-v1';
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
@@ -92,14 +93,15 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
  const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
  const byAccount=manual?null:(()=>{const totals=Object.fromEntries(model.accounts.map(a=>[a.id,0]));for(const p of model.positions)if(Object.hasOwn(totals,p.accountId))totals[p.accountId]+=valueEUR(p);return totals;})();
+ const byPosition=manual?null:currentPositionValues(model);
  const quoteTimes=manual?[]:model.positions.filter(p=>p.updatedAt).map(p=>({positionId:p.id,updatedAt:p.updatedAt,quoteAsOf:p.quoteAsOf||null,quoteSource:p.quoteSource||null,fxRateDate:p.fxRateDate||null}));
  const existing=model.snapshots.find(x=>x.date===date);
  if(existing){
    // Preserve preceding versions rather than silently rewriting historical evidence.
    existing.revisions??=[];
    existing.revisions.push({recordedAt:existing.recordedAt||null,totalEURExact:existing.totalEURExact??String(existing.total),valuationStatus:existing.valuationStatus||'unknown',source:existing.source||'legacy'});
-   Object.assign(existing,{total:amount,totalEURExact:amountExact,recordedAt,valuationStatus,source,byAccount,quoteTimes,note:cleanString(note||existing.note,180)});
- }else model.snapshots.push({id:uid(),date,recordedAt,total:amount,totalEURExact:amountExact,valuationStatus,source,byAccount,quoteTimes,revisions:[],note:cleanString(note,180)});
+   Object.assign(existing,{total:amount,totalEURExact:amountExact,recordedAt,valuationStatus,source,byAccount,byPosition,quoteTimes,note:cleanString(note||existing.note,180)});
+ }else model.snapshots.push({id:uid(),date,recordedAt,total:amount,totalEURExact:amountExact,valuationStatus,source,byAccount,byPosition,quoteTimes,revisions:[],note:cleanString(note,180)});
  model.snapshots.sort((a,b)=>a.date.localeCompare(b.date));
  return amount;
 }
@@ -149,6 +151,18 @@ export function safeImport(raw){
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
       totalEURExact:exact(units(x.totalEURExact??x.total)),recordedAt:cleanString(x.recordedAt,40)||null,
       byAccount:x.byAccount&&typeof x.byAccount==='object'?structuredClone(x.byAccount):null,
+      byPosition:(()=>{
+        if(x.byPosition==null)return null;
+        if(x.source!=='current'||!x.byPosition||typeof x.byPosition!=='object'||Array.isArray(x.byPosition))throw Error('Ungültige historische Einzelpositionswerte im Backup.');
+        const entries=Object.entries(x.byPosition);
+        if(entries.length>5000)throw Error('Zu viele historische Einzelpositionswerte.');
+        const values=Object.create(null);
+        for(const [positionId,amount] of entries){
+          if(!positionId||positionId.length>120||!m.positions.some(p=>p.id===positionId))throw Error('Ungültiger Positionsbezug im historischen Verlauf.');
+          values[positionId]=exact(units(amount));
+        }
+        return values;
+      })(),
       valuationStatus:raw.version<3?'legacy-unverified':cleanString(x.valuationStatus,40)||'unknown',
       source:raw.version<3?'legacy':cleanString(x.source,40)||'unknown',
       quoteTimes:Array.isArray(x.quoteTimes)?structuredClone(x.quoteTimes):[],
