@@ -323,3 +323,7 @@
 .booking-filter-tools{display:grid;grid-template-columns:minmax(0,2fr) minmax(140px,1fr);align-items:end;gap:12px;margin-bottom:12px}
 .booking-filter-tools .field{margin:0}
 @media(max-width:500px){.booking-filter-tools{grid-template-columns:1fr}}
+
+.mini-chart-periods{margin:-2px 0 10px;flex-wrap:wrap}
+.mini-chart-periods button{min-width:42px;min-height:31px}
+.mini-chart-periods button:disabled{opacity:.4;cursor:not-allowed}
