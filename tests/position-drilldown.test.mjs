@@ -58,6 +58,10 @@ test('Rendered position drills include exact account context and escape injected
  const detail=positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});
  assert.match(detail,/Kurs je Einheit/);assert.match(detail,/Positionswert/);
  assert.match(detail,/Anteil am Konto/);assert.match(detail,/7 T/);assert.match(detail,/1 J/);
+ p.valuationMode='excluded';
+ assert.match(positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR}),/Nicht doppelt mitgezählt/);
+ p.valuationMode='liability';
+ assert.match(positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR}),/Verbindlichkeit/);
 });
 test('CoinGecko history only accepts finite positive real market prices and exact source',async()=>{
  const {add}=fixture(),p=add({kind:'crypto',coinId:'bitcoin'});
@@ -85,6 +89,8 @@ test('Twelve Data time-series checks symbol currency and exchange before display
  assert.equal(result.points.length,2);assert.equal(result.points[1].total,102);
  await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,currency:'USD'})),/Währung/);
  await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,exchange:'Wrong'})),/Handelsplatz/);
+ p.isin='IE00BK5BQT80';
+ await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,isin:'INVALID'})),/ISIN/);
  assert.equal(marketHistoryCapability({...p,exchange:'',mic:''},settings),null);
 });
 test('Range and data quality filters reject invalid periods',async()=>{
