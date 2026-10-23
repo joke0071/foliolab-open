@@ -264,6 +264,10 @@ export function load(storage=globalThis.localStorage){
   return result;
 }
 export function persist(model,storage=globalThis.localStorage){
+ // A pre-existing legacy tab may not overwrite a superseded localStorage copy
+ // once another tab has activated transactional IndexedDB.
+ if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
+  throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
  if(model.version!==3)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');

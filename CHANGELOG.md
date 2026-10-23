@@ -1,3 +1,10 @@
+## PWA-Revision v88 — 2026-10-23
+
+- Abbruchfester Rückwechsel von IndexedDB zu localStorage: Ein minimaler, schlüsselfreier Rückwechsel-Marker ermöglicht das Wiederherstellen der zuletzt bestätigten lokalen Kopie, wenn der Browser nach dem atomaren IndexedDB-Lösch-Commit, aber vor dem Entfernen des Modusmarkers abstürzt.
+- Automatische Fortsetzung nur bei passender Speicherrevision und unveränderter lokaler Kopie; sonst kein stillschweigender Datenwechsel. Vollständiges Löschen kann nicht durch einen älteren Rückwechsel-Marker rückgängig gemacht werden.
+- Ein bereits geöffnetes älteres localStorage-Tab mit aktuellem Anwendungscode wird nach der Aktivierung von IndexedDB am Speichern gehindert.
+- Zusätzliche Chromium-Browserregression; keine automatische Migration und keine Änderung von Renditen oder Buchungen.
+
 ## PWA-Revision v86 — 2026-10-23
 
 - Sicherheitskorrektur für den optionalen IndexedDB-Wechsel: bereits vor dem Start veraltete lokale Portfolio- und Einstellungsversionen werden zuverlässig erkannt und dürfen nicht migriert werden.

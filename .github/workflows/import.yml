@@ -76,6 +76,7 @@ jobs:
           node tests/browser-atomic-storage.mjs
           node tests/browser-idb-cutover.mjs
           node tests/browser-idb-migration-resilience.mjs
+          node tests/browser-idb-crash-recovery.mjs
           node tests/browser-idb-concurrent-imports.mjs
           node tests/browser-idb-corrupt-recovery.mjs
           node tests/browser-key-privacy.mjs
