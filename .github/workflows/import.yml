@@ -87,3 +87,23 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published homepage and matching service-worker version
+        env:
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${PAGE_URL%/}"
+          expected="$(head -n 1 sw.js)"
+          test -n "$expected"
+          for attempt in $(seq 1 24); do
+            homepage="$(curl -fsSL --connect-timeout 7 --max-time 15 "$base/" || true)"
+            service_worker="$(curl -fsSL --connect-timeout 7 --max-time 15 "$base/sw.js" || true)"
+            if [[ "$homepage" == *'FolioLab Open'* && "$service_worker" == *"$expected"* ]]; then
+              echo "Published homepage and service worker verified: $base (attempt $attempt)"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'Live deployment not verified: homepage or service-worker revision differs.' >&2
+          exit 1
+
