@@ -108,6 +108,12 @@ export class PortfolioStorage {
  }
  async removeAll(){
   if(this.isIndexedDB){
+   // A failed older rollback may have left a recovery intent. Never allow an
+   // intentional delete-all tombstone to accidentally match that old intent.
+   if(this.storage.getItem(REVERT_INTENT_KEY)!==null)
+    this.storage.removeItem(REVERT_INTENT_KEY);
+   if(this.storage.getItem(REVERT_INTENT_KEY)!==null)
+    throw Error('Alter Rückwechsel-Marker konnte nicht entfernt werden. Löschung abgebrochen.');
    const record=await commitPortfolioRecord(this.db,{expectedRevision:this.revision,raw:null,settings:null});
    this.revision=record.revision;
    return;
