@@ -57,7 +57,7 @@ try{
  await page.locator('#refreshAll').click();
  await page.waitForFunction(()=>document.querySelector('#priceInfo')?.textContent?.includes('Datenupdates'));
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
- assert.equal(saved.positions[0].price,102.75);
+ assert.equal(saved.positions[0].price,102.75,'Worker quote failed. Calls='+workerCalls+' direct='+directCalls+'; settings='+JSON.stringify({source:saved.settings.securitySource,hasWorker:!!saved.settings.eodhdWorkerEndpoint,hasToken:!!saved.settings.eodhdWorkerAccessToken})+'; UI='+await page.locator('#priceInfo').innerText()+'; errors='+await page.locator('#refreshErrorDetails').innerText());
  assert.equal(saved.positions[0].quantityExact,'10');
  assert.equal(directCalls,0,'Configured worker must prevent direct EODHD requests');
  await page.locator('#mobileNav [data-page="dashboard"]').click();
