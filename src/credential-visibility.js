@@ -10,7 +10,7 @@ const labels=Object.freeze({
  solanaRpc:'Solana RPC-Adresse'
 });
 export function installCredentialVisibility(root=document){
- const inputs=root.querySelectorAll('#apiSettings input[type="password"], #solanaRpc');
+ const inputs=root.querySelectorAll('#apiSettings input[type="password"], #blockchainSettings input[type="password"], #solanaRpc');
  for(const input of inputs){
   if(input.closest('.credential-control'))continue;
   const id=input.id==='solanaRpc'?'solanaRpc':input.name;
