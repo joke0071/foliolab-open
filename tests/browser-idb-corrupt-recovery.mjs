@@ -45,6 +45,7 @@ try{
  assert.equal(state.settings.eodhdKey,'');
  assert.ok(!state.raw.includes('SYNTHETIC_RECOVERY_SECRET'));
  await page.reload();
+ await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv'),null,{timeout:15000});
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.match(await page.locator('#portfolioStorageState').innerText(),/IndexedDB aktiv/);
  console.log('IDB RECOVERY: original export, explicit repair, atomic revision and no secret revival PASS');
