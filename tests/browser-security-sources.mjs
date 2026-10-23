@@ -19,8 +19,10 @@ try{
  await page.route('https://s.tradingview.com/widgetembed/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Isolated chart</title>'}));
  await page.locator('#providerOverview .provider-accordion > summary').click();
  const row=page.locator('#providerOverview [data-position-id="etf-test"]');
- await row.locator('summary').click();
- await row.locator('[data-action="load-tradingview"]').waitFor();
+ await row.locator(':scope > summary').click();
+ assert.equal(await row.locator('[data-action="load-tradingview"]').isVisible(),false);
+ await row.locator('.position-chart-options>summary').click();
+ await row.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
  assert.equal(await row.locator('.tradingview-slot iframe').count(),0,'No third-party chart loaded without user action');
  assert.match(await row.innerText(),/Öffentliches Diagramm laden/);
  await row.locator('[data-action="load-tradingview"]').click();
@@ -52,7 +54,7 @@ try{
  const providerRow=page.locator('#providerOverview .provider-accordion').first();
  if(!(await providerRow.getAttribute('open')!==null))await providerRow.locator(':scope > summary').click();
  const refreshed=page.locator('#providerOverview [data-position-id="etf-test"]');
- if(await refreshed.getAttribute('open')===null)await refreshed.locator('summary').click();
+ if(await refreshed.getAttribute('open')===null)await refreshed.locator(':scope > summary').click();
  await refreshed.locator('.position-history-chart .chart-plot').waitFor();
  assert.match(await refreshed.innerText(),/EODHD/);
  for(const width of [320,360,390,430,768,1024,1440]){
