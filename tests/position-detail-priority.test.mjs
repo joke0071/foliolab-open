@@ -73,3 +73,35 @@ test('Only specific safe non-truncated failure guidance is shown',()=>{
  assert.match(safeHistoryError(new Error('Ratenlimit erreicht')),/Abruflimit/);
  assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar (Netzwerk/CORS)'),{security:true}),/nicht überprüft/);
 });
+
+test('Klarna savings and term deposits show their provider share instead of 100% each',()=>{
+ const positions=[
+  {id:'flex',accountId:'flex-account',providerId:'klarna',kind:'cash',name:'Flexkonto',symbol:'EUR',currency:'EUR',quantity:9765.54,price:1},
+  {id:'fixed-6',accountId:'fixed-6-account',providerId:'klarna',kind:'cash',name:'Festgeld 6 Monate',symbol:'EUR',currency:'EUR',quantity:5000,price:1},
+  {id:'fixed-12',accountId:'fixed-12-account',providerId:'klarna',kind:'cash',name:'Festgeld 12 Monate',symbol:'EUR',currency:'EUR',quantity:5000,price:1},
+  {id:'etf',accountId:'flatex-account',providerId:'flatex',kind:'etf',name:'ETF',symbol:'VWCE',currency:'EUR',quantity:50000,price:1}
+ ];
+ const accounts=[
+  {id:'flex-account',providerId:'klarna'},
+  {id:'fixed-6-account',providerId:'klarna'},
+  {id:'fixed-12-account',providerId:'klarna'},
+  {id:'flatex-account',providerId:'flatex'}
+ ];
+ const m={accounts,positions,priceHistories:{},settings:{}};
+ const totals=positions.slice(0,3).map(p=>positionDetailMarkup(p,m,config));
+ assert.match(totals[0],/Anteil am Anbieter<\/span><strong>49,4 %/);
+ assert.match(totals[1],/Anteil am Anbieter<\/span><strong>25,3 %/);
+ assert.match(totals[2],/Anteil am Anbieter<\/span><strong>25,3 %/);
+ assert.doesNotMatch(totals.join(''),/Anteil am Konto/);
+ const unrelated=positionDetailMarkup(positions[3],m,config);
+ assert.match(unrelated,/Anteil am Anbieter<\/span><strong>100 %/);
+});
+test('Provider allocations exclude separately configured providers and handle liabilities defensively',()=>{
+ const p={id:'one',accountId:'a',providerId:'p',kind:'cash',symbol:'EUR',quantity:100,price:1,currency:'EUR'};
+ const q={id:'two',accountId:'b',providerId:'q',kind:'cash',symbol:'EUR',quantity:999,price:1,currency:'EUR'};
+ const m={accounts:[{id:'a',providerId:'p'},{id:'b',providerId:'q'}],positions:[p,q],settings:{},priceHistories:{}};
+ assert.match(positionDetailMarkup(p,m,config),/Anteil am Anbieter<\/span><strong>100 %/);
+ const bad={...p,id:'liability'};
+ m.positions=[bad,{...p,id:'negative',quantity:-200}];
+ assert.match(positionDetailMarkup(bad,m,config),/Anteil am Anbieter nicht sinnvoll bestimmbar/);
+});
