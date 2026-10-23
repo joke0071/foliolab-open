@@ -4,7 +4,7 @@
  * always exclude credentials. Switching modes requires explicit user consent.
  */
 import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY} from './model.js';
-import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord} from './atomic-storage.js';
+import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
 const clone = model => structuredClone(model);
@@ -25,9 +25,10 @@ export class PortfolioStorage {
  async initialize(){
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)return load(this.storage);
   this.db=await openPortfolioDB();
+  this.mode='idb'; // retain connection for safe export/recovery on corrupt records
   const record=await readPortfolioRecord(this.db); // fail closed
   if(!record)throw Error('Aktiver IndexedDB-Speicher nicht gefunden. Bitte eine Sicherung wiederherstellen.');
-  this.mode='idb';this.revision=record.revision;
+  this.revision=record.revision;
   return restored(record);
  }
  async reload(){
@@ -53,9 +54,16 @@ export class PortfolioStorage {
   const db=await openPortfolioDB();
   try{
    const existing=await readPortfolioRecord(db);
-   if(existing)throw Error('IndexedDB enthält bereits einen Datensatz. Eine automatische Überschreibung ist gesperrt.');
-   const record=await commitPortfolioRecord(db,{
-    expectedRevision:null,raw:backup(model),settings:clone(model.settings)
+   const portable=backup(model),preferences=clone(model.settings);
+   let record;
+   if(existing){
+    // Interrupted prior migration may be resumed only when its bytes and
+    // credentials are exactly the same; never overwrite a different record.
+    if(existing.raw!==portable||JSON.stringify(existing.settings)!==JSON.stringify(preferences))
+     throw Error('IndexedDB enthält einen abweichenden Datenstand. Automatische Überschreibung verweigert.');
+    record=existing;
+   }else record=await commitPortfolioRecord(db,{
+    expectedRevision:null,raw:portable,settings:preferences
    });
    const check=await readPortfolioRecord(db);
    if(check?.revision!==record.revision||!check.settings||!check.raw)
@@ -66,6 +74,16 @@ export class PortfolioStorage {
    this.storage.setItem(MODE_KEY,MODE_VALUE);
    this.db=db;this.revision=record.revision;this.mode='idb';
   }catch(error){db.close();throw error;}
+ }
+ async unverifiedBackup(){
+  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht geöffnet.');
+  return readUnverifiedRecord(this.db);
+ }
+ async recoverFromBackup(model,expected){
+  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
+  const recovered=await restoreDamagedRecord(this.db,{expected,raw:backup(model),settings:clone(model.settings)});
+  this.revision=recovered.revision;
+  return recovered;
  }
  async removeAll(){
   if(this.isIndexedDB){
