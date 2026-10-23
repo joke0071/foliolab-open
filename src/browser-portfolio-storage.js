@@ -24,8 +24,8 @@ export class PortfolioStorage {
  get isIndexedDB(){return this.mode==='idb';}
  async initialize(){
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)return load(this.storage);
-  this.db=await openPortfolioDB();
-  this.mode='idb'; // retain connection for safe export/recovery on corrupt records
+  this.mode='idb'; // marker decides canonical store, even if opening IndexedDB fails
+  this.db=await openPortfolioDB(); // never fall back to stale localStorage on error
   const record=await readPortfolioRecord(this.db); // fail closed
   if(!record)throw Error('Aktiver IndexedDB-Speicher nicht gefunden. Bitte eine Sicherung wiederherstellen.');
   this.revision=record.revision;
