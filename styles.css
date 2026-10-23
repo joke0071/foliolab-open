@@ -594,6 +594,9 @@
  #historyPage .history-add-button{width:36px;min-width:36px;flex:0 0 36px;padding:0}
  #historyPage .history-add-glyph{font-size:23px}
 }
+@media(max-width:380px){
+ #historyPage .history-add-button{flex:0 0 33px;min-width:33px;width:33px;height:33px;min-height:33px}
+}
 @media(max-width:360px){
  #positionsPage .action-group .responsive-action,
  #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{
