@@ -385,7 +385,7 @@
 .settings-icon{height:22px;width:22px;flex-shrink:0;color:#537a60}
 .settings-summary{min-width:0;flex:1}
 .settings-summary strong{display:block;font-size:13px;line-height:1.45;font-weight:780}
-.settings-summary small{display:block;margin-top:3px;font-size:11px;line-height:1.5;color:#718575;font-weight:450}
+.settings-summary small{display:block;margin-top:3px;font-size:11px;line-height:1.5;color:#4d6756;font-weight:450}
 .source-detail>p,.source-detail>form,.source-detail>.field,.source-detail>.source-actions,.source-detail>#solanaRpcSetup{margin-left:16px;margin-right:16px}
 .source-detail>p:first-of-type{margin-top:15px}
 .source-detail>p:last-child{margin-bottom:17px}
