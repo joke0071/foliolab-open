@@ -202,7 +202,7 @@ export function safeImport(raw){
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!validCalendarDate(x.date)||!Number.isFinite(number(x.quantity))||!exactMatchesDisplay(x.quantity,x.quantityExact))throw Error('Ungültige Buchung oder widersprüchliche Menge im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
-  const journalIds=new Set(m.journalEntries.map(x=>x.id));
+  const journalById=new Map(m.journalEntries.map(x=>[x.id,x]));
   for(const booking of m.bookings){
     if(!knownPositionIds.has(booking.positionId))
       throw Error('Backup: Buchung referenziert eine nicht vorhandene Position.');
@@ -210,8 +210,12 @@ export function safeImport(raw){
       if(booking[key]!=null&&booking[key]!==''&&!knownPositionIds.has(booking[key]))
         throw Error('Backup: Buchung enthält einen ungültigen Positionsbezug.');
     }
-    if(booking.journalEntryId!=null&&booking.journalEntryId!==''&&!journalIds.has(booking.journalEntryId))
-      throw Error('Backup: Buchung referenziert einen fehlenden Journal-Eintrag.');
+    if(booking.journalEntryId!=null&&booking.journalEntryId!==''){
+      const linked=journalById.get(booking.journalEntryId);
+      if(!linked||linked.type!==booking.type||
+         !linked.postings.some(posting=>posting.positionId===booking.positionId))
+        throw Error('Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich.');
+    }
   }
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
