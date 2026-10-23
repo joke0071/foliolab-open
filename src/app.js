@@ -750,76 +750,111 @@ function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
  if(!list.length)return notify('Lege zuerst eine manuell verwaltete Position oder ein Guthaben an.',true);
  const today=new Date().toISOString().slice(0,10);
- const defaultId=list[0].id;
- showDialog('Vorgang erfassen','BUCHUNGEN & CORPORATE ACTIONS',
- '<p class="dialog-intro">Alle Bewegungen werden nachvollziehbar gespeichert. Interne Transfers zählen nicht als Einzahlung. Automatische Wallet-Bestände bleiben unverändert.</p>'+
- '<label class="field"><span>Position</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),defaultId)+'</select></label>'+
- '<div class="field-row"><label class="field"><span>Vorgang</span><select name="type" id="bookingType">'+options(Object.entries(TX_TYPES),'buy')+'</select></label>'+
- field('Datum','date',today,'date','required')+'</div>'+
- '<div id="bookingQuantityWrap" class="field-row">'+field('Menge / Betrag','quantity','1','text','required inputmode="decimal" placeholder="z. B. 0.000000000000000001"')+
- field('Ausführungskurs','unitPrice','100','text','inputmode="decimal"')+'</div>'+
- '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Verrechnungskonto für Kauf / Verkauf</span><select name="cashPositionId" id="bookingCash"><option value="">Ohne Verrechnungskonto (Finanzierung ungeklärt)</option></select></label><p class="dialog-intro">Nur zugeordnete Geldpositionen werden automatisch mitgebucht. Ohne Gegenkonto bleibt die Finanzierung ungeklärt, niemals als Einzahlung geschätzt.</p></div>'+
- '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list[1]?.id||defaultId)+'</select></label>'+
- field('Zielmenge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+'<p class="small-help">Bei Umtausch mit Barausgleich oder Barabfindung ist eine gesonderte Abstimmung mit der Brokerabrechnung nötig. Diese Buchung erfasst nur den bargeldlosen Teil.</p></div>'+
- '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile (Zähler)','ratioNumerator','2','text','inputmode="decimal"')+
- field('Alte Anteile (Nenner)','ratioDenominator','1','text','inputmode="decimal"')+'</div><p class="small-help">Ein Split berücksichtigt keinen Barausgleich für Bruchstücke. Bei Barabfindung die Brokerabrechnung prüfen; keine automatische steuerliche Behandlung.</p></div>'+
- '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
- field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
- '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
- '<details class="advanced-apis" id="bookingAdvanced"><summary>Gebühren, Steuern und historischer Wechselkurs</summary>'+
- '<div class="field-row">'+field('Gebühren in EUR','feeEUR','0','text','inputmode="decimal"')+field('Steuern in EUR','taxEUR','0','text','inputmode="decimal"')+'</div>'+
- field('Historischer Kurs: EUR je Währungseinheit','fxRate','','text','inputmode="decimal" placeholder="Bei USD / CHF / GBP nötig"')+
- '<button type="button" class="btn outline" id="loadHistoricalFx">Frankfurter-Referenzkurs für Buchungsdatum laden</button>'+
- '<p class="small-help" id="historicalFxNote">Referenzkurs kann vom tatsächlichen Ausführungskurs des Brokers abweichen.</p>'+
- field('Referenzkursdatum','fxRateDate','','text','readonly')+
- field('Wechselkursquelle','fxSource','','text','readonly')+'</details>'+
- field('Notiz (optional)','notes','','text','maxlength="180"'),
- async (v)=>{
-   // The correction selector has the same semantic targetQuantity field as swaps.
+ const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||list.find(p=>p.kind!=='cash')||list[0];
+ const commonTypes=['buy','sell','deposit','withdraw','dividend','interest','reward','fee','tax','transfer'];
+ const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred.kind==='cash'?'deposit':'buy')+'</optgroup>'+
+   '<optgroup label="Weitere Vorgänge & Kapitalmaßnahmen">'+options(Object.entries(TX_TYPES).filter(([k])=>!commonTypes.includes(k)),null)+'</optgroup>';
+ showDialog('Buchung hinzufügen','BUCHUNGEN',
+  '<p class="dialog-intro">Wähle die Anlage und den Vorgang. FolioLab zeigt nur die dafür benötigten Angaben.</p>'+
+  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),preferred.id)+'</select></label>'+
+  '<div class="field-row"><label class="field"><span>Was ist passiert?</span><select name="type" id="bookingType">'+typeOptions+'</select></label>'+
+    field('Datum','date',today,'date','required max="'+today+'"')+'</div>'+
+  '<div id="bookingQuantityWrap" class="field-row">'+
+    field('Stückzahl / Betrag','quantity','','text','required inputmode="decimal" placeholder="z. B. 10"')+
+    '<label class="field" id="bookingPriceWrap"><span id="bookingPriceLabel">Kauf-/Verkaufskurs je Stück</span><input name="unitPrice" type="text" inputmode="decimal" placeholder="Tatsächlicher Ausführungskurs"></label></div>'+
+  '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
+    '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
+  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list.find(p=>p.id!==preferred.id)?.id||preferred.id)+'</select></label>'+
+    field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
+    '<p class="small-help">Ein Barausgleich oder eine Barabfindung wird nicht automatisch verbucht. Bitte mit der Brokerabrechnung abgleichen.</p></div>'+
+  '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile','ratioNumerator','2','text','inputmode="decimal"')+
+    field('Bisherige Anteile','ratioDenominator','1','text','inputmode="decimal"')+'</div>'+
+    '<p class="small-help">Beispiel: Beim Split 2:1 erhältst du 2 neue Anteile je altem Anteil. Barausgleich separat prüfen.</p></div>'+
+  '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
+    field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
+  '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
+  '<details class="advanced-apis" id="bookingAdvanced"><summary>Gebühren & Steuern (optional)</summary>'+
+    '<div class="field-row">'+field('Gebühren in EUR','feeEUR','0','text','inputmode="decimal"')+
+    field('Steuern in EUR','taxEUR','0','text','inputmode="decimal"')+'</div></details>'+
+  '<div id="bookingFxWrap" class="hidden"><label class="field"><span>Wechselkurs zum Buchungsdatum (EUR je '+ '<span id="bookingFxCurrency">Fremdwährung</span>'+ ')</span>'+
+    '<input name="fxRate" type="text" inputmode="decimal" placeholder="z. B. 0,92"></label>'+
+    '<button type="button" class="btn outline booking-fx-button" id="loadHistoricalFx">Referenzkurs abrufen</button>'+
+    '<p class="small-help" id="historicalFxNote">Bei Fremdwährungen den damals verwendeten Wechselkurs eintragen. Der Referenzkurs kann vom Brokerkurs abweichen.</p>'+
+    '<details class="advanced-apis" id="bookingFxDetails"><summary>Wechselkursdetails</summary>'+
+      field('Referenzkursdatum','fxRateDate','','text','readonly')+
+      field('Wechselkursquelle','fxSource','','text','readonly')+'</details></div>'+
+  '<details class="advanced-apis booking-notes"><summary>Notiz hinzufügen (optional)</summary>'+
+    field('Notiz','notes','','text','maxlength="180"')+'</details>',
+  async v=>{
    if(v.type==='correction')v.targetQuantity=$('bookingCorrectWrap').querySelector('input').value;
    const event=executeTransaction(model,v);
    if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);
-   await save();notify('Vorgang gespeichert: '+TX_TYPES[event.type]+'.');
- });
+   await save();notify('Buchung gespeichert: '+TX_TYPES[event.type]+'.');
+  });
+ const form=$('editorForm'),fee=form.elements.feeEUR,tax=form.elements.taxEUR,fx=form.elements.fxRate,price=form.elements.unitPrice;
+ let lastType='',lastPosition='';
  function configure(){
-   const type=$('bookingType').value,meta=['ticker_change','isin_change','delist'].includes(type);
-   const ratio=type==='split',correct=type==='correction',target=['transfer','swap','merger'].includes(type);
-   $('bookingQuantityWrap').classList.toggle('hidden',meta||ratio||correct);
-   $('bookingTargetWrap').classList.toggle('hidden',!target);
-   $('bookingRatioWrap').classList.toggle('hidden',!ratio);
-   $('bookingCorrectWrap').classList.toggle('hidden',!correct);
-   $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(type));
-   $('bookingMetadataWrap').querySelector('[name="newSymbol"]').parentElement.classList.toggle('hidden',type!=='ticker_change');
-   $('bookingMetadataWrap').querySelector('[name="newIsin"]').parentElement.classList.toggle('hidden',type!=='isin_change');
-   const current=list.find(p=>p.id===$('bookingPosition').value);
-   const linked=type==='buy'||type==='sell';
-   $('bookingCashWrap').classList.toggle('hidden',!linked);
-   if(linked){
-     const available=list.filter(p=>p.kind==='cash'&&p.id!==current?.id&&['EUR',current?.currency].includes(p.currency));
-     const preferred=available.find(p=>p.providerId===current?.providerId)||available[0];
-     $('bookingCash').innerHTML=options([['','Ohne Verrechnungskonto (Finanzierung ungeklärt)'],...available.map(p=>[p.id,p.name+' · '+p.currency])],preferred?.id||'');
-   }
-   if(current)$('bookingQuantityWrap').querySelector('[name="unitPrice"]').value=String(current.kind==='cash'?1:current.price);
-   // Invisible fields never impose accidental HTML validation on unrelated events.
-   for(const element of $('dialogFields').querySelectorAll('.hidden [required]'))element.required=false;
+  const type=$('bookingType').value;
+  const position=list.find(p=>p.id===$('bookingPosition').value);
+  if(position?.kind==='cash'&&['buy','sell'].includes(type)){
+   $('bookingType').value='deposit';
+  }
+  const actual=$('bookingType').value;
+  const changed=lastType!==actual||lastPosition!==position?.id;
+  const meta=['ticker_change','isin_change','delist'].includes(actual);
+  const ratio=actual==='split',correct=actual==='correction',target=['transfer','swap','merger'].includes(actual);
+  const trade=['buy','sell'].includes(actual);
+  const needsQuantity=!meta&&!ratio&&!correct;
+  $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
+  $('bookingTargetWrap').classList.toggle('hidden',!target);
+  $('bookingRatioWrap').classList.toggle('hidden',!ratio);
+  $('bookingCorrectWrap').classList.toggle('hidden',!correct);
+  $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(actual));
+  $('bookingMetadataWrap').querySelector('[name="newSymbol"]').parentElement.classList.toggle('hidden',actual!=='ticker_change');
+  $('bookingMetadataWrap').querySelector('[name="newIsin"]').parentElement.classList.toggle('hidden',actual!=='isin_change');
+  const priceRequired=trade,priceRelevant=trade||['swap','merger','transfer','deliver_in','deliver_out','adjust'].includes(actual);
+  $('bookingPriceWrap').classList.toggle('hidden',!priceRelevant);
+  $('bookingPriceLabel').textContent=trade?'Tatsächlicher Kurs je Stück':'Kurs je Stück (für die Bewertung)';
+  price.required=priceRequired;
+  if(changed)price.value=trade?'':String(position?.kind==='cash'?1:position?.price??0);
+  $('bookingCashWrap').classList.toggle('hidden',!trade);
+  if(trade){
+   const available=list.filter(p=>p.kind==='cash'&&p.id!==position?.id&&['EUR',position?.currency].includes(p.currency));
+   const selected=$('bookingCash').value;
+   $('bookingCash').innerHTML=options([['','Kein Konto zuordnen'],...available.map(p=>[p.id,p.name+' · '+p.currency])],available.some(p=>p.id===selected)?selected:'');
+  }
+  const advanced=$('bookingAdvanced');
+  advanced.classList.toggle('hidden',!trade);
+  if(trade&&!lastType)advanced.open=false;
+  fee.disabled=!trade;tax.disabled=!trade;
+  if(!trade){fee.value='0';tax.value='0';}
+  const foreign=position?.currency!=='EUR';
+  $('bookingFxWrap').classList.toggle('hidden',!foreign);
+  $('bookingFxCurrency').textContent=position?.currency||'Fremdwährung';
+  fx.required=Boolean(foreign);
+  if(!foreign){fx.value='1';form.elements.fxRateDate.value='';form.elements.fxSource.value='';}
+  else if(changed){fx.value='';form.elements.fxRateDate.value='';form.elements.fxSource.value='';$('historicalFxNote').textContent='Verwende den Kurs deiner Abrechnung oder lade einen Referenzkurs. Referenzkurse können abweichen.';}
+  $('bookingQuantityWrap').querySelector('[name="quantity"]').required=needsQuantity;
+  for(const el of $('dialogFields').querySelectorAll('.hidden [required]'))el.required=false;
+  lastType=actual;lastPosition=position?.id||'';
  }
  $('loadHistoricalFx').addEventListener('click',async()=>{
-  const button=$('loadHistoricalFx'),selected=list.find(p=>p.id===$('bookingPosition').value),date=$('editorForm').elements.date.value;
-  if(!selected)return;
+  const button=$('loadHistoricalFx'),selected=list.find(p=>p.id===$('bookingPosition').value),date=form.elements.date.value;
+  if(!selected||selected.currency==='EUR')return;
   button.disabled=true;
   try{
-    const quote=await historicalExchangeRate(selected.currency,date);
-    $('editorForm').elements.fxRate.value=String(quote.rate);
-    $('editorForm').elements.fxRateDate.value=quote.date;
-    $('editorForm').elements.fxSource.value=quote.source+' (Referenz)';
-    $('historicalFxNote').textContent=`Referenzkurs vom ${quote.date}, angefragt für ${date}. Abweichungen vom Broker-Ausführungskurs möglich.`;
-  }catch(e){notify('Historischer FX-Abruf: '+e.message,true);}
+   const quote=await historicalExchangeRate(selected.currency,date);
+   fx.value=String(quote.rate);
+   form.elements.fxRateDate.value=quote.date;
+   form.elements.fxSource.value=quote.source+' (Referenz)';
+   $('historicalFxNote').textContent='Referenzkurs vom '+quote.date+' für '+date+'. Der Kurs des Brokers kann abweichen.';
+  }catch(error){notify('Referenzkurs nicht verfügbar: '+error.message,true);}
   finally{button.disabled=false;}
  });
- $('editorForm').elements.fxRate.addEventListener('input',()=>{
-   $('editorForm').elements.fxSource.value='Manuell angepasst';
-   $('editorForm').elements.fxRateDate.value='';
-   $('historicalFxNote').textContent='Manuell angepasster FX: bitte den tatsächlich verwendeten Kurs prüfen.';
+ fx.addEventListener('input',()=>{
+  form.elements.fxSource.value='Manuell eingetragen';
+  form.elements.fxRateDate.value='';
+  $('historicalFxNote').textContent='Manuellen Wechselkurs mit deiner Abrechnung abgleichen.';
  });
  $('bookingType').addEventListener('change',configure);
  $('bookingPosition').addEventListener('change',configure);
