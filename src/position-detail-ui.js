@@ -6,10 +6,10 @@ import {tradingViewIdentifier} from './security-sources.js';
 /** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
  * Always display a complete, credential-safe explanation rather than a raw
  * truncated provider exception. */
-export function safeHistoryError(error){
+export function safeHistoryError(error,{security=false}={}){
  const reason=String(error?.message||error||'');
- if(/EODHD im Browser|Netzwerk\/CORS|NetworkError|Failed to fetch|Load failed|Zeitüberschreitung/i.test(reason))
-  return 'Der Kursanbieter ist aus diesem Browser nicht erreichbar. Möglich sind CORS, Netzwerkfilter oder eine Verbindungssperre. Der API-Schlüssel konnte deshalb nicht überprüft werden.';
+ if(/EODHD im Browser|Netzwerk|CORS|NetworkError|Failed to fetch|Load failed|Zeitüberschreitung/i.test(reason))
+  return 'Der Kursanbieter ist aus diesem Browser nicht erreichbar. Möglich sind CORS, Netzwerkfilter oder eine Verbindungssperre. '+(security?'Der API-Schlüssel konnte deshalb nicht überprüft werden.':'Es wurden keine historischen Kurse übernommen.');
  if(/HTTP 401|HTTP 403|HTTP 402|Zugang|Tarif/i.test(reason))
   return 'Der Kursanbieter hat den Abruf abgelehnt. Bitte API-Schlüssel, Tarif und freigeschaltete Börsen prüfen.';
  if(/429|Ratenlimit|rate limit|quota/i.test(reason))
@@ -108,7 +108,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    return;
   }catch(error){
    if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
-   fallback(safeHistoryError(error));
+   fallback(safeHistoryError(error,{security:['etf','stock','fund'].includes(position.kind)}));
    return;
   }
  }
