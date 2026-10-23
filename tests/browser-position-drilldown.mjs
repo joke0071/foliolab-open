@@ -61,6 +61,8 @@ try{
  const etf=page.locator('#providerOverview [data-position-id="etf-test"]');
  await etf.locator('summary').focus();await page.keyboard.press('Enter');
  assert.equal(await etf.getAttribute('open'),'');
+ assert.equal(await etf.locator('.position-history-compact').getAttribute('open'),null,'Missing ETF chart stays collapsed');
+ await etf.locator('.position-history-compact>summary').click();
  assert.match(await etf.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  assert.equal(await etf.locator('[data-action="load-tradingview"]').isVisible(),false,'Optional TradingView must start collapsed');
  await etf.locator('.position-chart-options>summary').click();
