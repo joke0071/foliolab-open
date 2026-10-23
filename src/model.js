@@ -8,6 +8,22 @@ import {enhanceKnownReferenceListing} from './reference-listings.js';
 import {normalizeLegacyCoinId} from './coin-identity.js';
 import {validateNativeStakingAddress} from './native-staking-networks.js';
 export const STORE_KEY='foliolab-open-v1';
+/** Remove only app-owned keys; other apps sharing this origin remain untouched. */
+export function purgeLocalAppData(storage=globalThis.localStorage){
+ const keys=[];
+ for(let i=0;i<storage.length;i++){
+  const key=storage.key(i);
+  if(typeof key==='string'&&key.startsWith('foliolab-open-'))keys.push(key);
+ }
+ for(const key of keys)storage.removeItem(key);
+ observedStorage.set(storage,null);
+ return keys.length;
+}
+/** Old pre-migration snapshots can retain credentials after the current model was cleaned. */
+export function purgeLegacySnapshots(storage=globalThis.localStorage){
+ for(const version of [1,2])storage.removeItem(STORE_KEY+'-premigration-v'+version);
+}
+
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
 export const defaultSettings=()=>({currency:'EUR',twelveKey:'',eodhdKey:'',fmpKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:''});
