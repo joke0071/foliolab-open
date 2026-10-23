@@ -30,7 +30,7 @@ try{
  assert.doesNotMatch(s,/SYNTHETIC_ONLY_FOR_TEST/);assert.equal(calls,2);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before,'Diagnostic must not write any portfolio bytes');
  await page.locator('#mobileNav [data-page="positions"]').click();
- assert.match(await page.locator('#quoteQualitySummary').innerText(),/Kursqualität/);
+ assert.match(await page.locator('#quoteQualitySummary').innerText(),/Kurse:/);
  for(const width of [320,390,430,768,1440]){
   await page.setViewportSize({width,height:844});
   const d=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));

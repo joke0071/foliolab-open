@@ -38,7 +38,7 @@ try{
  await page.locator('#totalValue').waitFor();
  assert.match(await page.locator('#totalValue').innerText(),/2.400/);
  await page.locator('#mobileNav [data-page="positions"]').click();
- assert.match(await page.locator('#quoteQualitySummary').innerText(),/Kursqualität/);
+ assert.match(await page.locator('#quoteQualitySummary').innerText(),/Kurse:/);
  await page.locator('#positionSearch').fill('Synthetic mobile ETF 125');
  assert.match(await page.locator('#positionList').innerText(),/Synthetic mobile ETF 125/);
  for(const width of [320,360,390,430]){

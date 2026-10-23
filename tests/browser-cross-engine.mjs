@@ -27,7 +27,8 @@ for(const [name,engine] of [['Firefox',firefox],['WebKit',webkit]]){
   await page.locator('#editorForm [name="name"]').fill('Testdepot');
   await page.locator('#saveDialog').click();
   await page.locator(nav+' [data-page="positions"]').click();
-  await page.locator('#addPosition').click();
+  await page.locator('#addWizard').click();
+ await page.locator('#wizardAdvanced').click();
   await page.locator('#editorForm [name="name"]').fill('Audit ETF');
   await page.locator('#editorForm [name="symbol"]').fill('VWCE');
   await page.locator('#editorForm [name="isin"]').fill('IE00BK5BQT80');

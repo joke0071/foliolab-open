@@ -44,7 +44,8 @@ try{
   {Code:'GLBL',Exchange:'LSE',Name:'Generic Global ETF',Type:'ETF',Currency:'GBP',ISIN:'IE00A1234567'}
  ])}));
  await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();
- await page.locator('#addPosition').click();
+ await page.locator('#addWizard').click();
+ await page.locator('#wizardAdvanced').click();
  const providerFilter=page.locator('#positionProviderSearch');
  await providerFilter.fill('f');
  assert.equal(await page.locator('#positionProvider option').count(),1);
