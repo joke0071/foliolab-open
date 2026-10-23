@@ -18,7 +18,7 @@ try{
    const measured=await group.evaluate(el=>{
     const buttons=[...el.querySelectorAll('.responsive-action')];
     const rects=buttons.map(x=>x.getBoundingClientRect());
-    const parent=el.closest(name==='positions'?'.toolbar':'.panel').getBoundingClientRect();
+    const parent=(el.closest('.toolbar')||el.closest('.panel')).getBoundingClientRect();
     const labelVisible=buttons.map(x=>getComputedStyle(x.querySelector('.action-label')).display!=='none');
     return {
      labels:labelVisible,rects:rects.map(r=>({x:r.left,y:r.top,w:r.width,h:r.height})),
