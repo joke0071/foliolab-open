@@ -73,6 +73,7 @@ jobs:
           node tests/browser-settings-backup.mjs
           node tests/browser-key-privacy.mjs
           node tests/browser-solana-rpc-help.mjs
+          node tests/browser-data-source-settings.mjs
           node tests/browser-position-search.mjs
           node tests/browser-position-details.mjs
           node tests/browser-asset-wizard.mjs
