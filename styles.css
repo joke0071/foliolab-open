@@ -609,7 +609,7 @@
 }
 
 /* Compact action hierarchy: readable desktop labels, clear mobile iconography. */
-.page-description{max-width:520px;margin:6px 0 0;color:#698171;font-size:12px;line-height:1.5}
+.page-description{max-width:520px;margin:6px 0 0;color:#4d6756;font-size:12px;line-height:1.5}
 .page-description:empty{display:none}
 .heading-row:has(.page-description:not(:empty)){margin-bottom:16px}
 #historyPage .history-panel>.panel-head,#bookingsPage .panel-head-actions{margin-bottom:12px}
