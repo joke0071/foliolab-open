@@ -566,84 +566,125 @@ function openListingReview(){
 }
 // Wallet-import is deliberately separate from manual asset creation. The user
 // reviews all discovered assets before anything is persisted.
-let scannedWalletAssets=[];let scannedWalletKey='';
+let scannedWalletAssets=[];let scannedWalletKey='',walletScanGeneration=0;
 const walletScanIdentity=(network,address,addressType='auto')=>network+'|'+address+'|'+(network==='btc-hd'?addressType:'');
 function openWalletImport(){
+ scannedWalletAssets=[];scannedWalletKey='';walletScanGeneration++;
+ const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
+ const walletProviders=model.providers.filter(p=>p.type==='wallet');
+ const otherProviders=model.providers.filter(p=>p.type!=='wallet');
+ const selectedProvider=walletProviders[0]?.id||'__new__';
+ const providers='<option value="__new__"'+(selectedProvider==='__new__'?' selected':'')+'>+ Neue Wallet anlegen</option>'+
+  (walletProviders.length?'<optgroup label="Wallet-Anbieter">'+options(walletProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'')+
+  (otherProviders.length?'<optgroup label="Andere Anbieter">'+options(otherProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'');
+ showDialog('Wallet hinzufügen','NUR ÖFFENTLICHE DATEN',
+  '<p class="dialog-intro">Lass FolioLab deine Coins anhand einer öffentlichen Adresse erkennen. Du verbindest kein Konto und gibst keine Zugriffsrechte frei.</p>'+
+  '<label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">'+options(networks,'1')+'</select></label>'+
+  '<label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x…" aria-describedby="scanAddressHint"></label>'+
+  '<p id="scanAddressHint" class="small-help">Kopiere die öffentliche Empfangsadresse deiner Wallet. Niemals Seed-Phrase oder privaten Schlüssel eingeben.</p>'+
+  '<div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-Adresstyp (optional)</span><select id="scanHdType" name="hdAddressType">'+
+  options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')+'</select></label></div>'+
+  '<p id="hdPrivacyHint" class="small-help hidden">Bitcoin-HD: Bei einem xpub-Scan werden mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer gesendet. Dadurch können Adressen miteinander verknüpft werden. Taproot (bc1p) wird derzeit nicht unterstützt.</p>'+
+  '<details class="advanced-apis wallet-staking-options" id="walletStakingOptions"><summary>Bestimmtes Staking-Asset prüfen (optional)</summary>'+
+    '<p class="small-help">Nur nötig, wenn du gezielt nach einem Staking-Bestand suchen möchtest. Die normale Suche erkennt unterstützte Coins automatisch.</p>'+
+    '<label class="field"><span>Staking-Asset</span><select id="scanAsset">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
+    '<p id="scanAssetInfo" class="small-help" role="status">Einige Staking-Formen sind nur manuell erfassbar.</p></details>'+
+  '<div class="wallet-scan-action"><button class="btn primary" type="button" id="scanWalletButton">Coins suchen</button><p id="scanWalletStatus" class="small-help" role="status">Noch keine Suche gestartet.</p></div>'+
+  '<div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>'+
+  '<section id="scanSaveSettings" class="wallet-save-settings hidden"><h3>Wo möchtest du die Coins speichern?</h3>'+
+    '<p class="small-help">Die gefundenen Coins werden unter dieser Wallet in FolioLab abgelegt. Du kannst auch einen vorhandenen Anbieter verwenden.</p>'+
+    '<label class="field"><span>Wallet / Anbieter</span><select name="providerId" id="scanProvider">'+providers+'</select></label>'+
+    field('Name der neuen Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')+
+    '<label class="field"><span>Wallet-Konto</span><select name="accountId" id="scanAccount"></select></label></section>'+
+  '<details class="advanced-apis wallet-scan-help"><summary>Welche Coins und Staking-Arten werden erkannt?</summary>'+
+    '<p class="small-help">Die Suche zeigt bestätigte öffentliche Guthaben. Unbekannte oder auffällige Tokens werden aus Sicherheitsgründen zunächst ausgeblendet. Einige Staking-Verträge, ETH-Validatoren, Vaults, Avalanche-P-Chain und externe NEAR-Pools erfordern eine manuelle Erfassung oder eigene Adapter. Natives SOL-Staking benötigt gegebenenfalls einen Solana-RPC (Mehr → Solana-Staking einrichten).</p>'+
+    '<p class="small-help">Beim Suchen wird die öffentliche Adresse an den jeweiligen Blockchain-Dienst übertragen. Ein API-Schlüssel oder Login ist für die üblichen Netzwerke nicht nötig.</p></details>',
+  async v=>{
+   if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
+   const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
+   if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
+   let providerId=v.providerId;
+   if(providerId==='__new__'){
+    const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
+    model.providers.push(provider);providerId=provider.id;
+   }
+   let accountId=v.accountId;
+   if(accountId==='__new__'){
+    const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},model);
+    model.accounts.push(account);accountId=account.id;
+   }
+   if(!model.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
+   let added=0,updated=0;
+   for(const asset of chosen){
+    const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
+    if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
+    const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
+    model.positions.push(position);added++;
+   }
+   if(added||updated){snapshot(model);await save();go('positions');}
+   notify(added+' neu · '+updated+' aktualisiert. Nicht erkannte Coins bleiben erhalten.');
+  });
+ $('saveDialog').disabled=true;
+ $('saveDialog').textContent='Coins speichern';
+ const updateSave=()=>{
+  const count=$('walletScanResults').querySelectorAll('[data-wallet-asset]:checked').length;
+  $('saveDialog').disabled=!count||!scannedWalletKey;
+  $('saveDialog').textContent=count?count+' Coin'+(count===1?'':'s')+' speichern':'Coins speichern';
+ };
+ const toggleNew=()=>{
+  $('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');
+  const wallets=model.accounts.filter(a=>a.providerId===$('scanProvider').value&&a.type==='wallet');
+  $('scanAccount').innerHTML=options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],wallets[0]?.id||'__new__');
+ };
+ $('scanProvider').addEventListener('change',toggleNew);toggleNew();
+ const updateHdHint=()=>{
+  const network=$('scanNetwork').value,hd=network==='btc-hd';
+  $('hdPrivacyHint').classList.toggle('hidden',!hd);
+  $('scanHdField').classList.toggle('hidden',!hd);
+  $('scanAddress').placeholder=hd?'xpub… / ypub… / zpub…':network==='btc'?'bc1… / 1… / 3…':network==='sol'?'Solana-Adresse':network==='xrp'?'r…':'0x… / öffentliche Adresse';
+ };
+ const resetWalletScan=()=>{
+  walletScanGeneration++;
   scannedWalletAssets=[];scannedWalletKey='';
-  const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
-  const providers=[['__new__','+ Neue Wallet erstellen'],...model.providers.map(p=>[p.id,p.name])];
-  showDialog('Wallet hinzufügen','ÖFFENTLICHE ADRESSE · WATCH-ONLY',`<p class="dialog-intro">Eine öffentliche Wallet-Adresse eingeben und vorhandene Coins automatisch erkennen lassen. <strong>Kein API-Key, kein Login und keine Berechtigung zum Senden.</strong></p>
-    <label class="field"><span>Staking-Asset aus dem geprüften 50er-Katalog (optional)</span><select id="scanAsset">${options([['','– Ohne Vorauswahl –'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')}</select></label>
-    <p id="scanAssetInfo" class="small-help" role="status">Der Katalog unterscheidet Token-Salden, native Delegationen und nicht unterstützte Staking-Verträge.</p>
-    <label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">${options(networks,'1')}</select></label>
-    <div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-HD-Adresstyp</span><select id="scanHdType" name="hdAddressType">${options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')}</select></label></div>
-    <label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x… / bc1… / Solana-Adresse"></label>
-    <div class="field-row"><label class="field"><span>Anbieter / Wallet</span><select name="providerId" id="scanProvider">${options(providers,model.providers[0]?.id||'__new__')}</select></label>
-    ${field('Name für neue Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')}</div><label class="field"><span>Konto / Wallet</span><select name="accountId" id="scanAccount"></select></label>
-    <p class="small-help">Nur bestätigte, öffentliche Bestände werden vorgeschlagen. Cosmos delegiert/Unbonding, Hedera (ohne zusätzliche Staking-Doppelzählung), NEAR-Kontostände und BNB-Saldo sind ergänzt. Für natives SOL-Staking brauchst du häufig einen eigenen RPC, z. B. von Helius. Anleitung und Verbindungstest unter Mehr → Solana-Staking einrichten. Nicht alle Staking-Verträge sind automatisch lesbar. Avalanche-P-Chain, ETH-Validatoren, Vaults und externe NEAR-Pools benötigen eigene Adapter oder manuelle Erfassung.</p>
-    <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
-    <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
-    <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
-    <p class="small-help">Spam- und unbekannte Tokens werden zunächst ausgeblendet. Über „Ausgeblendete Tokens prüfen“ können echte Bestände bei Bedarf manuell hinzugefügt werden. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,async (v)=>{
-       if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
-       const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
-       if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
-       let providerId=v.providerId;
-       if(providerId==='__new__'){
-         const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
-         model.providers.push(provider);providerId=provider.id;
-       }
-       let accountId=v.accountId;
-       if(accountId==='__new__'){
-         const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},model);
-         model.accounts.push(account);accountId=account.id;
-       }
-       if(!model.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
-       let added=0,updated=0;
-       for(const asset of chosen){
-         const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
-         if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
-         const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
-         model.positions.push(position);added++;
-       }
-       if(added||updated){snapshot(model);await save();go('positions');}
-       notify(`${added} neu · ${updated} aktualisiert. Nicht erkannte Coins bleiben erhalten.`);
-  });
-  $('saveDialog').textContent='Ausgewählte Coins übernehmen';
-  const toggleNew=()=>{$('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');
-    const wallets=model.accounts.filter(a=>a.providerId===$('scanProvider').value&&a.type==='wallet');
-    $('scanAccount').innerHTML=options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],wallets[0]?.id||'__new__');
-  };
-  $('scanProvider').addEventListener('change',toggleNew);toggleNew();
-  const updateHdHint=()=>{const hd=$('scanNetwork').value==='btc-hd';$('hdPrivacyHint').classList.toggle('hidden',!hd);$('scanHdField').classList.toggle('hidden',!hd);};
-  const resetWalletScan=()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Auswahl geändert – bitte erneut scannen.';};
-  $('scanNetwork').addEventListener('change',()=>{
-    resetWalletScan();$('scanAsset').value='';$('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
-    $('scanWalletButton').disabled=false;updateHdHint();
-  });
-  $('scanAsset').addEventListener('change',()=>{
-    const selected=lookupStakingAsset($('scanAsset').value);
-    resetWalletScan();
-    if(!selected){$('scanAssetInfo').textContent='Blockchain separat auswählen. Bei Staking ist nicht jede Position aus einer Adresse ableitbar.';$('scanWalletButton').disabled=false;return;}
-    $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; bitte unter Positionen manuell hinzufügen.');
-    $('scanWalletButton').disabled=!selected.scannerNetwork;
-    if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
-      $('scanNetwork').value=selected.scannerNetwork;
-      $('scanAddress').value='';updateHdHint();
-    }
-  });
-  updateHdHint();
-  $('scanHdType').addEventListener('change',()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Adresstyp geändert – bitte erneut scannen.';});
-  $('scanAddress').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';});
-  $('scanWalletButton').addEventListener('click',scanWalletNow);
+  $('walletScanResults').innerHTML='';
+  $('scanSaveSettings').classList.add('hidden');
+  $('scanWalletStatus').textContent='Eingabe geändert – bitte erneut suchen.';
+  updateSave();
+  const staking=lookupStakingAsset($('scanAsset').value);
+  $('scanWalletButton').disabled=Boolean(staking&&!staking.scannerNetwork);
+ };
+ $('scanNetwork').addEventListener('change',()=>{
+  resetWalletScan();$('scanAsset').value='';
+  $('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
+  $('scanWalletButton').disabled=false;updateHdHint();
+ });
+ $('scanAsset').addEventListener('change',()=>{
+  const selected=lookupStakingAsset($('scanAsset').value);
+  resetWalletScan();
+  if(!selected){$('scanAssetInfo').textContent='Normale Coins werden auch ohne Vorauswahl gefunden.';$('scanWalletButton').disabled=false;return;}
+  $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; stattdessen Position manuell hinzufügen.');
+  $('scanWalletButton').disabled=!selected.scannerNetwork;
+  if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
+   $('scanNetwork').value=selected.scannerNetwork;
+   $('scanAddress').value='';updateHdHint();
+  }
+ });
+ $('scanHdType').addEventListener('change',resetWalletScan);
+ $('scanAddress').addEventListener('input',resetWalletScan);
+ $('walletScanResults').addEventListener('change',updateSave);
+ updateHdHint();
+ $('scanWalletButton').addEventListener('click',scanWalletNow);
 }
 async function scanWalletNow(){
   const button=$('scanWalletButton'),status=$('scanWalletStatus'),area=$('walletScanResults');
   const network=$('scanNetwork').value,address=$('scanAddress').value.trim();
   if(!address){status.textContent='Bitte die öffentliche Wallet-Adresse eingeben.';return;}
-  button.disabled=true;status.textContent=network==='btc-hd'?'Scanne Empfangs- und Wechselgeldadressen (Bitcoin HD) …':'Lese Blockchain-Bestände …';area.innerHTML='';scannedWalletAssets=[];
+  const scanGeneration=++walletScanGeneration;
+  const scanKey=walletScanIdentity(network,address,$('scanHdType').value);
+  button.disabled=true;status.textContent=network==='btc-hd'?'Scanne Bitcoin-Adressen …':'Suche vorhandene Coins …';area.innerHTML='';scannedWalletAssets=[];scannedWalletKey='';$('scanSaveSettings').classList.add('hidden');$('saveDialog').disabled=true;
   try{
     const assets=await getAdapter(network).discoverAssets(address,network==='btc-hd'?{...model.settings,hdAddressType:$('scanHdType').value}:model.settings);
+    if(scanGeneration!==walletScanGeneration)return;
     if(!assets.length){status.textContent=assets.partial?'Teilscan unvollständig: '+(assets.warning||'Einige Wallet-Bestände konnten nicht geprüft werden.'):'Keine positiven Guthaben gefunden.';area.innerHTML=empty(assets.partial?'Keine bestätigten Positionen. Netzwerk-/Staking-Abfragen waren unvollständig.':'Keine Positionen gefunden. Prüfe Netzwerk und Adresse.');return;}
     // Fetch contract quotes without a key when possible. A quote error never blocks import.
     if(PUBLIC_EVM_NETWORKS[Number(network)]){
@@ -653,11 +694,12 @@ async function scanWalletNow(){
         for(const a of assets)if(a.contract){const q=Number(quotes[a.contract.toLowerCase()]?.eur);if(q>0)a.price=q;}
       }catch(e){/* holdings are still valid without quotes */}
     }
+    if(scanGeneration!==walletScanGeneration)return;
     const {visible,hidden}=partitionWalletAssets(assets);
     const displayed=visible.slice(0,150);
     const review=hidden.slice(0,Math.max(0,150-displayed.length));
     scannedWalletAssets=[...displayed,...review];
-    scannedWalletKey=walletScanIdentity(network,address,$('scanHdType').value);
+    scannedWalletKey=scanKey;
     const partial=assets.partial===true;
     const renderRow=(a,i,preselect=false,reason='')=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${preselect&&i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':a.chain==='sol-stake'?'Solana Staking':a.chain==='sonic-stake'?'Sonic Staking':a.chain.startsWith('cosmos')?'Cosmos Hub':a.chain==='hedera'?'Hedera':a.chain.startsWith('near')?'NEAR':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small>${reason?`<small>${esc(reason)}</small>`:''}</span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`;
     const extra=hidden.length?
@@ -665,10 +707,12 @@ async function scanWalletNow(){
     area.innerHTML=`<div class="wallet-scan-header"><strong>${displayed.length} Position${displayed.length===1?'':'en'} zur Auswahl</strong><span>${hidden.length?'Unbekannte Tokens ausgeblendet':'Zur Übernahme auswählen'}</span></div>`+
       displayed.map((a,i)=>renderRow(a,i,true)).join('')+
       (!displayed.length?empty('Keine automatisch vorgeschlagenen Positionen. Bei Bedarf ausgeblendete Tokens prüfen.'): '')+extra;
-    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.warning|| (assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Bestände abgerufen.'))+
+    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.warning|| (assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Coins gefunden. Wähle die Bestände aus, die du speichern möchtest.'))+
       (hidden.length?' · '+hidden.length+' ungeprüfte oder auffällige Tokens ausgeblendet.':'');
-  }catch(e){status.textContent='Scan nicht möglich: '+e.message;area.innerHTML=empty('Manuelles Hinzufügen ist weiterhin möglich. Öffentliche API-Zugriffe können zeitweise blockiert oder begrenzt sein.');}
-  finally{button.disabled=false;}
+    $('scanSaveSettings').classList.remove('hidden');
+    area.dispatchEvent(new Event('change',{bubbles:true}));
+  }catch(e){if(scanGeneration===walletScanGeneration){status.textContent='Suche fehlgeschlagen: '+e.message;area.innerHTML=empty('Bitte Netzwerk und Adresse prüfen. Du kannst die Position auch manuell hinzufügen.');}}
+  finally{if(scanGeneration===walletScanGeneration)button.disabled=false;}
 }
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
 function openCSVImport(){
@@ -750,76 +794,114 @@ function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
  if(!list.length)return notify('Lege zuerst eine manuell verwaltete Position oder ein Guthaben an.',true);
  const today=new Date().toISOString().slice(0,10);
- const defaultId=list[0].id;
- showDialog('Vorgang erfassen','BUCHUNGEN & CORPORATE ACTIONS',
- '<p class="dialog-intro">Alle Bewegungen werden nachvollziehbar gespeichert. Interne Transfers zählen nicht als Einzahlung. Automatische Wallet-Bestände bleiben unverändert.</p>'+
- '<label class="field"><span>Position</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),defaultId)+'</select></label>'+
- '<div class="field-row"><label class="field"><span>Vorgang</span><select name="type" id="bookingType">'+options(Object.entries(TX_TYPES),'buy')+'</select></label>'+
- field('Datum','date',today,'date','required')+'</div>'+
- '<div id="bookingQuantityWrap" class="field-row">'+field('Menge / Betrag','quantity','1','text','required inputmode="decimal" placeholder="z. B. 0.000000000000000001"')+
- field('Ausführungskurs','unitPrice','100','text','inputmode="decimal"')+'</div>'+
- '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Verrechnungskonto für Kauf / Verkauf</span><select name="cashPositionId" id="bookingCash"><option value="">Ohne Verrechnungskonto (Finanzierung ungeklärt)</option></select></label><p class="dialog-intro">Nur zugeordnete Geldpositionen werden automatisch mitgebucht. Ohne Gegenkonto bleibt die Finanzierung ungeklärt, niemals als Einzahlung geschätzt.</p></div>'+
- '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list[1]?.id||defaultId)+'</select></label>'+
- field('Zielmenge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+'<p class="small-help">Bei Umtausch mit Barausgleich oder Barabfindung ist eine gesonderte Abstimmung mit der Brokerabrechnung nötig. Diese Buchung erfasst nur den bargeldlosen Teil.</p></div>'+
- '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile (Zähler)','ratioNumerator','2','text','inputmode="decimal"')+
- field('Alte Anteile (Nenner)','ratioDenominator','1','text','inputmode="decimal"')+'</div><p class="small-help">Ein Split berücksichtigt keinen Barausgleich für Bruchstücke. Bei Barabfindung die Brokerabrechnung prüfen; keine automatische steuerliche Behandlung.</p></div>'+
- '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
- field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
- '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
- '<details class="advanced-apis" id="bookingAdvanced"><summary>Gebühren, Steuern und historischer Wechselkurs</summary>'+
- '<div class="field-row">'+field('Gebühren in EUR','feeEUR','0','text','inputmode="decimal"')+field('Steuern in EUR','taxEUR','0','text','inputmode="decimal"')+'</div>'+
- field('Historischer Kurs: EUR je Währungseinheit','fxRate','','text','inputmode="decimal" placeholder="Bei USD / CHF / GBP nötig"')+
- '<button type="button" class="btn outline" id="loadHistoricalFx">Frankfurter-Referenzkurs für Buchungsdatum laden</button>'+
- '<p class="small-help" id="historicalFxNote">Referenzkurs kann vom tatsächlichen Ausführungskurs des Brokers abweichen.</p>'+
- field('Referenzkursdatum','fxRateDate','','text','readonly')+
- field('Wechselkursquelle','fxSource','','text','readonly')+'</details>'+
- field('Notiz (optional)','notes','','text','maxlength="180"'),
- async (v)=>{
-   // The correction selector has the same semantic targetQuantity field as swaps.
+ const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||list.find(p=>p.kind!=='cash')||list[0];
+ const commonTypes=['buy','sell','deposit','withdraw','dividend','interest','reward','fee','tax','transfer'];
+ const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred.kind==='cash'?'deposit':'buy')+'</optgroup>'+
+   '<optgroup label="Weitere Vorgänge & Kapitalmaßnahmen">'+options(Object.entries(TX_TYPES).filter(([k])=>!commonTypes.includes(k)),null)+'</optgroup>';
+ showDialog('Buchung hinzufügen','BUCHUNGEN',
+  '<p class="dialog-intro">Wähle die Anlage und den Vorgang. FolioLab zeigt nur die dafür benötigten Angaben.</p>'+
+  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),preferred.id)+'</select></label>'+
+  '<div class="field-row"><label class="field"><span>Was ist passiert?</span><select name="type" id="bookingType">'+typeOptions+'</select></label>'+
+    field('Datum','date',today,'date','required max="'+today+'"')+'</div>'+
+  '<div id="bookingQuantityWrap" class="field-row">'+
+    field('Stückzahl / Betrag','quantity','','text','required inputmode="decimal" placeholder="z. B. 10"')+
+    '<label class="field" id="bookingPriceWrap"><span id="bookingPriceLabel">Kauf-/Verkaufskurs je Stück</span><input name="unitPrice" type="text" inputmode="decimal" placeholder="Tatsächlicher Ausführungskurs"></label></div>'+
+  '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
+    '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
+  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list.find(p=>p.id!==preferred.id)?.id||preferred.id)+'</select></label>'+
+    field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
+    '<p class="small-help">Ein Barausgleich oder eine Barabfindung wird nicht automatisch verbucht. Bitte mit der Brokerabrechnung abgleichen.</p></div>'+
+  '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile','ratioNumerator','2','text','inputmode="decimal"')+
+    field('Bisherige Anteile','ratioDenominator','1','text','inputmode="decimal"')+'</div>'+
+    '<p class="small-help">Beispiel: Beim Split 2:1 erhältst du 2 neue Anteile je altem Anteil. Barausgleich separat prüfen.</p></div>'+
+  '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
+    field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
+  '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
+  '<details class="advanced-apis" id="bookingAdvanced"><summary>Gebühren & Steuern (optional)</summary>'+
+    '<div class="field-row">'+field('Gebühren in EUR','feeEUR','0','text','inputmode="decimal"')+
+    field('Steuern in EUR','taxEUR','0','text','inputmode="decimal"')+'</div></details>'+
+  '<div id="bookingFxWrap" class="hidden"><label class="field"><span>Wechselkurs zum Buchungsdatum (EUR je '+ '<span id="bookingFxCurrency">Fremdwährung</span>'+ ')</span>'+
+    '<input name="fxRate" type="text" inputmode="decimal" placeholder="z. B. 0,92"></label>'+
+    '<button type="button" class="btn outline booking-fx-button" id="loadHistoricalFx">Referenzkurs abrufen</button>'+
+    '<p class="small-help" id="historicalFxNote">Bei Fremdwährungen den damals verwendeten Wechselkurs eintragen. Der Referenzkurs kann vom Brokerkurs abweichen.</p>'+
+    '<details class="advanced-apis" id="bookingFxDetails"><summary>Wechselkursdetails</summary>'+
+      field('Referenzkursdatum','fxRateDate','','text','readonly')+
+      field('Wechselkursquelle','fxSource','','text','readonly')+'</details></div>'+
+  '<details class="advanced-apis booking-notes"><summary>Notiz hinzufügen (optional)</summary>'+
+    field('Notiz','notes','','text','maxlength="180"')+'</details>',
+  async v=>{
    if(v.type==='correction')v.targetQuantity=$('bookingCorrectWrap').querySelector('input').value;
    const event=executeTransaction(model,v);
    if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);
-   await save();notify('Vorgang gespeichert: '+TX_TYPES[event.type]+'.');
- });
+   await save();notify('Buchung gespeichert: '+TX_TYPES[event.type]+'.');
+  });
+ const form=$('editorForm'),fee=form.elements.feeEUR,tax=form.elements.taxEUR,fx=form.elements.fxRate,price=form.elements.unitPrice;
+ let lastType='',lastPosition='';
  function configure(){
-   const type=$('bookingType').value,meta=['ticker_change','isin_change','delist'].includes(type);
-   const ratio=type==='split',correct=type==='correction',target=['transfer','swap','merger'].includes(type);
-   $('bookingQuantityWrap').classList.toggle('hidden',meta||ratio||correct);
-   $('bookingTargetWrap').classList.toggle('hidden',!target);
-   $('bookingRatioWrap').classList.toggle('hidden',!ratio);
-   $('bookingCorrectWrap').classList.toggle('hidden',!correct);
-   $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(type));
-   $('bookingMetadataWrap').querySelector('[name="newSymbol"]').parentElement.classList.toggle('hidden',type!=='ticker_change');
-   $('bookingMetadataWrap').querySelector('[name="newIsin"]').parentElement.classList.toggle('hidden',type!=='isin_change');
-   const current=list.find(p=>p.id===$('bookingPosition').value);
-   const linked=type==='buy'||type==='sell';
-   $('bookingCashWrap').classList.toggle('hidden',!linked);
-   if(linked){
-     const available=list.filter(p=>p.kind==='cash'&&p.id!==current?.id&&['EUR',current?.currency].includes(p.currency));
-     const preferred=available.find(p=>p.providerId===current?.providerId)||available[0];
-     $('bookingCash').innerHTML=options([['','Ohne Verrechnungskonto (Finanzierung ungeklärt)'],...available.map(p=>[p.id,p.name+' · '+p.currency])],preferred?.id||'');
-   }
-   if(current)$('bookingQuantityWrap').querySelector('[name="unitPrice"]').value=String(current.kind==='cash'?1:current.price);
-   // Invisible fields never impose accidental HTML validation on unrelated events.
-   for(const element of $('dialogFields').querySelectorAll('.hidden [required]'))element.required=false;
+  const type=$('bookingType').value;
+  const position=list.find(p=>p.id===$('bookingPosition').value);
+  if(position?.kind==='cash'&&['buy','sell'].includes(type)){
+   $('bookingType').value='deposit';
+  }
+  const actual=$('bookingType').value;
+  const changed=lastType!==actual||lastPosition!==position?.id;
+  const meta=['ticker_change','isin_change','delist'].includes(actual);
+  const ratio=actual==='split',correct=actual==='correction',target=['transfer','swap','merger'].includes(actual);
+  const trade=['buy','sell'].includes(actual);
+  const needsQuantity=!meta&&!ratio&&!correct;
+  $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
+  $('bookingTargetWrap').classList.toggle('hidden',!target);
+  $('bookingRatioWrap').classList.toggle('hidden',!ratio);
+  $('bookingCorrectWrap').classList.toggle('hidden',!correct);
+  $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(actual));
+  $('bookingMetadataWrap').querySelector('[name="newSymbol"]').parentElement.classList.toggle('hidden',actual!=='ticker_change');
+  $('bookingMetadataWrap').querySelector('[name="newIsin"]').parentElement.classList.toggle('hidden',actual!=='isin_change');
+  const priceRequired=trade,priceRelevant=trade||['swap','merger','transfer','deliver_in','deliver_out','adjust'].includes(actual);
+  $('bookingPriceWrap').classList.toggle('hidden',!priceRelevant);
+  $('bookingPriceLabel').textContent=trade?'Tatsächlicher Kurs je Stück':'Kurs je Stück (für die Bewertung)';
+  price.required=priceRequired;
+  if(changed)price.value=trade?'':String(position?.kind==='cash'?1:position?.price??0);
+  $('bookingCashWrap').classList.toggle('hidden',!trade);
+  if(trade){
+   const available=list.filter(p=>p.kind==='cash'&&p.id!==position?.id&&['EUR',position?.currency].includes(p.currency));
+   const selected=$('bookingCash').value;
+   $('bookingCash').innerHTML=options([['','Kein Konto zuordnen'],...available.map(p=>[p.id,p.name+' · '+p.currency])],available.some(p=>p.id===selected)?selected:'');
+  }
+  const advanced=$('bookingAdvanced');
+  advanced.classList.toggle('hidden',!trade);
+  if(trade&&!lastType)advanced.open=false;
+  fee.disabled=!trade;tax.disabled=!trade;
+  if(!trade){fee.value='0';tax.value='0';}
+  const foreign=position?.currency!=='EUR';
+  $('bookingFxWrap').classList.toggle('hidden',!foreign);
+  $('bookingFxCurrency').textContent=position?.currency||'Fremdwährung';
+  fx.required=Boolean(foreign);
+  if(!foreign){fx.value='1';form.elements.fxRateDate.value='';form.elements.fxSource.value='';}
+  else if(changed){fx.value='';form.elements.fxRateDate.value='';form.elements.fxSource.value='';$('historicalFxNote').textContent='Verwende den Kurs deiner Abrechnung oder lade einen Referenzkurs. Referenzkurse können abweichen.';}
+  const quantityInput=$('bookingQuantityWrap').querySelector('[name="quantity"]');
+  quantityInput.required=needsQuantity;
+  if(!needsQuantity)quantityInput.value='0';
+  else if(changed)quantityInput.value='';
+  for(const el of $('dialogFields').querySelectorAll('.hidden [required]'))el.required=false;
+  lastType=actual;lastPosition=position?.id||'';
  }
  $('loadHistoricalFx').addEventListener('click',async()=>{
-  const button=$('loadHistoricalFx'),selected=list.find(p=>p.id===$('bookingPosition').value),date=$('editorForm').elements.date.value;
-  if(!selected)return;
+  const button=$('loadHistoricalFx'),selected=list.find(p=>p.id===$('bookingPosition').value),date=form.elements.date.value;
+  if(!selected||selected.currency==='EUR')return;
   button.disabled=true;
   try{
-    const quote=await historicalExchangeRate(selected.currency,date);
-    $('editorForm').elements.fxRate.value=String(quote.rate);
-    $('editorForm').elements.fxRateDate.value=quote.date;
-    $('editorForm').elements.fxSource.value=quote.source+' (Referenz)';
-    $('historicalFxNote').textContent=`Referenzkurs vom ${quote.date}, angefragt für ${date}. Abweichungen vom Broker-Ausführungskurs möglich.`;
-  }catch(e){notify('Historischer FX-Abruf: '+e.message,true);}
+   const quote=await historicalExchangeRate(selected.currency,date);
+   fx.value=String(quote.rate);
+   form.elements.fxRateDate.value=quote.date;
+   form.elements.fxSource.value=quote.source+' (Referenz)';
+   $('historicalFxNote').textContent='Referenzkurs vom '+quote.date+' für '+date+'. Abweichungen vom Broker-Ausführungskurs möglich.';
+  }catch(error){notify('Referenzkurs nicht verfügbar: '+error.message,true);}
   finally{button.disabled=false;}
  });
- $('editorForm').elements.fxRate.addEventListener('input',()=>{
-   $('editorForm').elements.fxSource.value='Manuell angepasst';
-   $('editorForm').elements.fxRateDate.value='';
-   $('historicalFxNote').textContent='Manuell angepasster FX: bitte den tatsächlich verwendeten Kurs prüfen.';
+ fx.addEventListener('input',()=>{
+  form.elements.fxSource.value='Manuell eingetragen';
+  form.elements.fxRateDate.value='';
+  $('historicalFxNote').textContent='Manuellen Wechselkurs mit deiner Abrechnung abgleichen.';
  });
  $('bookingType').addEventListener('change',configure);
  $('bookingPosition').addEventListener('change',configure);

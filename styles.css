@@ -654,3 +654,32 @@
  .asset-wizard-dialog .wizard-group .field-row,.csv-import-mapping .field-row{grid-template-columns:minmax(0,1fr)}
  .csv-import-summary{font-size:11px}
 }
+
+/* Focused manual booking / watch-only wallet dialogs (v102). */
+#bookingFxWrap{margin:14px 0 4px;padding:13px 14px;border:1px solid #dfe9e1;border-radius:12px;background:#f8faf8}
+#bookingFxWrap>.field{margin:0 0 9px}
+#bookingFxWrap .booking-fx-button{font-size:12px;max-width:100%;white-space:normal;text-align:center}
+#bookingFxWrap .small-help{margin:8px 0 0;line-height:1.5}
+#bookingFxDetails{margin-top:12px;background:#fff}
+#bookingAdvanced>.field-row{gap:12px}
+#bookingAdvanced .field{min-width:0}
+.booking-notes{margin-top:12px}
+.wallet-staking-options{margin:12px 0 14px}
+.wallet-staking-options>.small-help,.wallet-scan-help .small-help{font-weight:400;line-height:1.55}
+.wallet-staking-options .field{margin:10px 0}
+.wallet-scan-action{margin:17px 0 9px;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.wallet-scan-action .btn{min-height:43px}
+.wallet-scan-action p{margin:0;flex:1 1 210px}
+.wallet-save-settings{padding:15px 0 6px;border-top:1px solid #e2eae4;margin-top:17px}
+.wallet-save-settings h3{font-size:14px;color:#305742;font-weight:750;margin:0 0 8px}
+.wallet-save-settings>.small-help{margin:0 0 12px}
+.wallet-save-settings>.field{margin:10px 0}
+.wallet-scan-help{margin:14px 0}
+#scanAddressHint,#hdPrivacyHint{overflow-wrap:anywhere;line-height:1.55}
+@media(max-width:500px){
+ #bookingFxWrap{padding:12px}
+ #bookingAdvanced>.field-row{grid-template-columns:minmax(0,1fr)}
+ .wallet-scan-action{flex-direction:column;align-items:stretch;gap:7px}
+ .wallet-scan-action .btn{width:100%}
+ .wallet-scan-action p{flex:auto}
+}
