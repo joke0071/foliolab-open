@@ -62,6 +62,7 @@ jobs:
           node tests/browser-allocation.mjs
           node tests/browser-avalanche-valuation.mjs
           node tests/browser-staking-coverage.mjs
+          node tests/browser-modal-clarity.mjs
           node tests/browser-ledger-xpub.mjs
           node tests/browser-position-drilldown.mjs
           node tests/browser-historical-csv.mjs
