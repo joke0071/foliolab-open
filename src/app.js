@@ -26,7 +26,8 @@ import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
 import {openingCashInput} from './account-opening.js';
 const positionDetailRanges=new Map();
-let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
+let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}
+let otherTabChangedPortfolio=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
@@ -38,6 +39,7 @@ function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',ne
 function save(){
  try{
   if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');
+  if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diese Seite neu laden, bevor du weitere Änderungen speicherst.');
   persist(model);
  }catch(error){
   // Reconcile with the last committed portfolio so a failed write cannot
@@ -906,6 +908,16 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
 initNav();initEvents();
+// Keep a user's draft visible, but block stale writes until an explicit reload.
+// localStorage compare-before-set alone is not an atomic multi-tab lock.
+window.addEventListener('storage',event=>{
+ if(event.storageArea!==localStorage||event.key!=='foliolab-open-v1'||event.oldValue===event.newValue||loadFailure)return;
+ otherTabChangedPortfolio=true;
+ const notice=$('notice');
+ notice.textContent='Portfolio in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst. Ungespeicherte Eingaben vorher sichern.';
+ notice.setAttribute('role','alert');
+ notice.classList.remove('hidden');
+});
 if(loadFailure){
  const notice=$('notice');notice.classList.remove('hidden');notice.innerHTML='<strong>Lokaler Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. Lade die Originaldaten herunter und stelle danach ein funktionierendes Backup wieder her. <button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button>';
  $('downloadRaw').addEventListener('click',()=>{const raw=localStorage.getItem('foliolab-open-v1')||'';const url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='foliolab-original-datenschutzsicherung.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
