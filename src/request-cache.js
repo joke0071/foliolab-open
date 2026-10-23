@@ -41,11 +41,14 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
            // A long cooldown should fail fast, not keep the interface busy for minutes.
            if(wait<=3500){await pause(wait);continue;}
          }
-         if(requestError)throw requestError;
+         // A browser/provider exception can include a full key-bearing request URL.
+         // Never forward that untrusted diagnostic to UI, error history or logs.
+         if(requestError)throw Error(requestError.message==='Zeitüberschreitung beim Abruf.'?'Zeitüberschreitung beim Abruf.':'Failed to fetch (Netzwerk-/CORS-Fehler).');
          if(!response?.ok)throw Error(status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${status||'unbekannt'})`);
          let data;
          try{data=await response.json();}catch{throw Error('API lieferte keine gültigen JSON-Daten.');}
-         if(data?.status==='error'||data?.status==='ERROR')throw Error(String(data.message||'API-Fehler').slice(0,180));
+         // Upstream messages sometimes echo credentials. Provide a stable, safe status.
+         if(data?.status==='error'||data?.status==='ERROR')throw Error('Datenanbieter meldet einen Fehler. API-Zugang und Tarif prüfen.');
          if(ttlMs>0){entries.set(key,{data:structuredClone(data),expires:clock()+ttlMs});while(entries.size>maxEntries)entries.delete(entries.keys().next().value);}
          return data;
        }
