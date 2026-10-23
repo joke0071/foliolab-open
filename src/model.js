@@ -120,7 +120,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
 export function addBooking(model,v){const entry=executeTransaction(model,{...v,type:v.type||'buy'});if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);return model.positions.find(p=>p.id===entry.positionId);}
 
 // Do not accept normalized dates like 2026-02-30 as valid financial records.
-const validCalendarDate=d=>typeof d==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d+'T12:00:00Z'))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+const validCalendarDate=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d+'T12:00:00Z'))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
 // Reject contradictory financial representations before restoring a portfolio.
 // The tolerance only covers cent-level display rounding and IEEE-754 conversion.
 const exactMatchesDisplay=(display,precise)=>{
