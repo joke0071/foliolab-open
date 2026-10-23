@@ -97,7 +97,7 @@ try{
   assert.ok(history.within,'History add button escapes card at '+width);
   assert.ok(history.scroll<=width+1,'History horizontal overflow at '+width);
   if(mobile)assert.ok(history.w<=38,'History add action not compact on '+width);
-  else assert.ok(history.w>100,'History add action does not display text on '+width);
+  else assert.ok(history.w>70,'History add action must have enough room for its short desktop label on '+width);
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="dashboard"]').click();
