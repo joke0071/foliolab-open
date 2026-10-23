@@ -1,3 +1,9 @@
+## PWA-Revision v82 — 2026-10-23
+
+- Read-only EODHD-Verbindungsdiagnose auf Knopfdruck für bis zu vier tatsächlich vorhandene Wertpapiernotierungen (direkt oder über eigenen Worker). Keine weiteren Versuche nach globalen Netzwerk-, Zugangs- oder Ratenlimitfehlern.
+- Kursqualität nach Quellnachweis und Datierung gekennzeichnet; historische Stichtagswerte, undatierte und ungeprüfte Kurse werden nicht als aktuelle Börsenkurse dargestellt.
+- Browser- und Unit-Regression ohne echten API-Schlüssel; Portfolio, Journal und Stichtage bleiben unangetastet.
+
 ## PWA-Revision v76 — 2026-10-23
 
 - EODHD-Netzwerkfehler werden gezielt über den zweiten offiziell dokumentierten EODHD-HTTPS-Host abgefangen. Kein stiller Wechsel bei Authentifizierungs-, Tarif- oder Ratenlimitfehlern; vorhandene Kurse bleiben bei Ausfall erhalten.
