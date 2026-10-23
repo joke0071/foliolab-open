@@ -1009,7 +1009,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   else{calendarSelection=[calendarSelection[0],day].sort();range='calendar';$('historyCalendarDisclosure').open=false;}
   renderHistory();
  });
- document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!popup.contains(e.target))popup.open=false;});
+ document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!e.composedPath().includes(popup))popup.open=false;});
  document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;popup.querySelector('summary')?.focus();}});
 
   $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text());if(isEncryptedBackup(parsed)){
