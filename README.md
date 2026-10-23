@@ -54,6 +54,14 @@ Ein reproduzierbarer Live-Befund: Ethereum Blockscout beantwortete eine einzelne
 
 Für Solana-Stake-Accounts benötigen öffentliche RPCs oft eine kostenpflichtige oder persönliche Indexberechtigung; `getProgramAccounts` kann mit HTTP 403 blockiert sein. Nach einem Fehlschlag wird kein Nullbestand geschrieben. Für echten produktiven Stake-Scan empfiehlt sich ein vom Nutzer selbst konfigurierter, zu `getProgramAccounts` berechtigter RPC unter **Mehr**. Private RPC-URLs werden nicht an andere RPCs weitergeleitet.
 
+### Solana-Staking für Nicht-Techniker einrichten
+
+Der öffentliche Standard-RPC liefert häufig freie SOL, unterstützt aber nicht zwingend die Suche nach nativen Stake-Accounts. Im Menü **Mehr → Blockchain und Hinweise → Solana-Staking einrichten (optional)** gibt es deshalb eine kurze, verständliche Einrichtungshilfe mit Beispiel **Helius** ([Helius-Dashboard](https://dashboard.helius.dev/)): Konto anlegen, vollständige **Solana-Mainnet-HTTPS-RPC-URL** aus dem Anbieter-Dashboard kopieren und im Feld „Eigene Solana-RPC-Adresse“ einfügen. Ein eigener API-Schlüssel darf Bestandteil der URL sein; er bleibt auf diesem Gerät in lokalen Einstellungen und wird nicht im Backup exportiert.
+
+Anschließend prüft **„Verbindung & Staking prüfen“** ohne Nutzer-Walletdaten mit der öffentlichen Solana-Systemadresse zwei read-only Methoden: `getBalance` (Netzwerk erreichbar) und `getProgramAccounts` für das native Stake-Programm (erforderliche Indexberechtigung). Die Rückmeldung unterscheidet: vollständig erfolgreich, RPC erreichbar aber Staking-Abfrage blockiert, RPC nicht erreichbar. Der Test bestätigt die *Methode*, nicht das Vorliegen eigener Stakes oder die Vollständigkeit späterer Wallet-Scans.
+
+Die URL einschließlich enthaltenem Anbieter-Schlüssel ist ein Zugangstoken und sollte nicht weitergegeben werden; der Browser speichert diese Konfiguration lokal im Klartext. Niemals Seed-Phrase oder private Wallet-Schlüssel einfügen. Ein selbst konfigurierter RPC wird nicht ungefragt an öffentliche Fallback-Provider weitergeleitet.
+
 ## Datenschutz und Sicherheitsmodell
 
 Das Portfolio wird ausschließlich in `localStorage` gespeichert (unverschlüsselt, gerätegebunden). Für jedes Gerät / Browserprofil gibt es einen eigenen Datensatz. Keine zentrale Nutzerverwaltung, keine Serverdatenbank, keine Tracker. API-Schlüssel werden lokal, **nicht verschlüsselt** gespeichert und über HTTPS an die jeweiligen Dienste gesendet, wenn deren Funktionen benutzt werden. Eine Website und ihre Skripte sind keine Hochsicherheitsumgebung: nur eigene, ggf. eingeschränkte API-Schlüssel verwenden. Im Backup sind keine API-Schlüssel enthalten. Es werden keine privaten Wallet-Schlüssel oder Seed-Phrases angefordert.
