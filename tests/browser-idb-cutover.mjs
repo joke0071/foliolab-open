@@ -86,6 +86,25 @@ try{
  await page.reload();
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).providers.some(p=>p.name==='Tab A')),true);
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdKey),'SYNTHETIC_LOCAL_SECRET_FOR_TEST');
- assert.equal(dialogLabels.length,4);
- console.log('IDB-CUTOVER: opt-in, predownload, idb-only edits, CAS stale-tab rejection, key separation, rollback PASS');
+ // A deliberate rollback leaves a tombstone. A new consented migration must
+ // be able to supersede the exact tombstone revision without stale resurrection.
+ await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#storageMigrationSetup').evaluate(el=>el.open=true);
+ await Promise.all([page.waitForEvent('download'),page.locator('#migrateToIDB').click()]);
+ await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv'),null,{timeout:15000});
+ // Clear all app data in IDB mode; this writes a durable tombstone first.
+ await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#deleteAll').click();
+ await page.waitForFunction(()=>localStorage.getItem('foliolab-open-v1')===null&&localStorage.getItem('foliolab-open-storage-mode')==='idb-v1');
+ const deleted=await page.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+  const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
+ });
+ assert.equal(deleted.raw,null);
+ assert.equal(deleted.settings,null);
+ await page.reload();
+ await page.locator('#totalValue').waitFor();
+ assert.match(await page.locator('#totalValue').innerText(),/0,00/);
+ assert.equal(dialogLabels.length,7);
+ console.log('IDB-CUTOVER: opt-in, predownload, IDB-only writes, stale CAS rejection, rollback, re-migration, durable delete PASS');
 }finally{await context.close();await browser.close();}
