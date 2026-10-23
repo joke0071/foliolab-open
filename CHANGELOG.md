@@ -1,8 +1,8 @@
-## PWA-Revision v83 — 2026-10-23
+## PWA-Revision v84 — 2026-10-23
 
-- Nicht-aktive IndexedDB-Engine erkennt jetzt auch semantisch beschädigte Records und verweigert deren Überschreibung.
-- Zusätzliche Firefox-/WebKit-Regression für gleichzeitige Transaktionen, Tab-Neustarts und beschädigte Speicherdaten.
-- Noch keine automatische Portfolio-Migration; produktiver Speichertyp unverändert. Issue #44 bleibt offen.
+- Sicherere, bislang nicht aktivierte IndexedDB-Speicher-Engine: beschädigte Portfolios werden weder akzeptiert noch unbemerkt überschrieben.
+- Browserübergreifende Regression für parallele Transaktionen, Tab-Neustarts und beschädigte Datensätze.
+- Keine Änderung der produktiven localStorage-Quelle; vollständiger Cutover ist weiterhin offen (#44).
 
 ## PWA-Revision v82 — 2026-10-23
 
