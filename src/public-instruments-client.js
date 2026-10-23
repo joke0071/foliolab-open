@@ -25,11 +25,21 @@ export async function queryPublicInstruments(base,term,{fetcher=globalThis.fetch
   if(!res.ok)throw Error('Öffentliche Stammdatensuche vorübergehend nicht verfügbar.');
   const value=await res.json();
   if(value?.schemaVersion!==1||!['ok','no_results'].includes(value.status)||!Array.isArray(value.results))throw Error('Unbekanntes Antwortformat der Stammdatensuche.');
-  return value.results.slice(0,25).map(item=>({
-   ...item,name:String(item.name||'').slice(0,140),ticker:String(item.ticker||'').slice(0,32),
-   symbol:String(item.ticker||'').slice(0,32),isin:String(item.isin||'').slice(0,20),
-   exchange:String(item.exchangeCode||'').slice(0,16),currency:String(item.currency||'').slice(0,3),
-   mic:String(item.mic||'').slice(0,8),source:'openfigi'
+  // Never spread untrusted HTTP response objects into application state.
+  // Only documented public instrument metadata is allowed across this boundary.
+  return value.results.slice(0,25).filter(item=>item&&typeof item==='object'&&!Array.isArray(item)).map(item=>({
+   figi:String(item.figi||'').slice(0,32),
+   name:String(item.name||'').slice(0,140),
+   ticker:String(item.ticker||'').slice(0,32),
+   symbol:String(item.ticker||'').slice(0,32),
+   isin:String(item.isin||'').slice(0,20),
+   exchange:String(item.exchangeCode||'').slice(0,16),
+   exchangeCode:String(item.exchangeCode||'').slice(0,16),
+   currency:String(item.currency||'').slice(0,3),
+   mic:String(item.mic||'').slice(0,8),
+   securityType:String(item.securityType||'').slice(0,70),
+   shareClassFIGI:String(item.shareClassFIGI||'').slice(0,32),
+   source:'openfigi'
   })).filter(x=>x.name&&x.figi);
  }finally{clearTimeout(timeout);}
 }
