@@ -74,6 +74,7 @@ jobs:
           node tests/browser-corrupt-backup-restore.mjs
           node tests/browser-multitab-integrity.mjs
           node tests/browser-atomic-storage.mjs
+          node tests/browser-idb-cutover.mjs
           node tests/browser-key-privacy.mjs
           node tests/browser-solana-rpc-help.mjs
           node tests/browser-data-source-settings.mjs
@@ -113,7 +114,6 @@ jobs:
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
           node tests/browser-cross-engine.mjs
           node tests/browser-atomic-storage-cross-engine.mjs
-          node tests/browser-idb-cutover.mjs
   deploy:
     if: github.event_name != 'pull_request'
     needs: [test, cross-engine]
