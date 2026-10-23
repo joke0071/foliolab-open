@@ -9,12 +9,13 @@ export function updateScannedWalletPosition(existing,asset,{updatedAt=new Date()
  if(!existing?.wallet?.enabled||!asset)throw Error('Ungültige Wallet-Scan-Daten.');
  const quantityExact=exact(units(asset.quantityExact??asset.quantity));
  if(units(quantityExact)<0n)throw Error('Wallet-Bestand darf nicht negativ sein.');
+ const hasFreshPrice=Number.isFinite(asset.price)&&asset.price>0;
+ const priceExact=hasFreshPrice?exact(units(asset.price)):null;
  existing.quantityExact=quantityExact;
  existing.quantity=Number(quantityExact);
  existing.updatedAt=updatedAt;
  if(asset.chain==='btc-hd'&&asset.addressType)existing.wallet.addressType=asset.addressType;
- if(Number.isFinite(asset.price)&&asset.price>0){
-  const priceExact=exact(units(asset.price));
+ if(hasFreshPrice){
   existing.price=Number(priceExact);
   existing.priceExact=priceExact;
   existing.currency='EUR';
