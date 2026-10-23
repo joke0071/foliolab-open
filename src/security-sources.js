@@ -6,6 +6,7 @@
  */
 import {requestJSON,TTL} from './request-cache.js';
 import {requestEodhdJSON} from './eodhd-transport.js';
+import {configuredMarketWorker,fetchWorkerEodhdBars} from './eodhd-worker-client.js';
 import {securityQuote} from './market.js';
 
 const symbolPattern=/^[A-Z0-9^._/-]{1,45}$/i;
@@ -52,7 +53,7 @@ function configuredFmp(p){
 }
 export function marketSourceOptions(p,settings={}){
  const l=listingInfo(p),list=[];
- if(settings.eodhdKey&&configuredEodhd(p))list.push('eodhd');
+ if((settings.eodhdKey||configuredMarketWorker(settings))&&configuredEodhd(p))list.push('eodhd');
  if(settings.fmpKey&&configuredFmp(p))list.push('fmp');
  if(settings.twelveKey)list.push('twelve');
  const preferred=String(settings.securitySource||'auto');
@@ -69,12 +70,20 @@ async function eodhdBars(p,settings,days,fetcher){
  if(!sym)throw Error('EODHD-Börsencode fehlt; bitte Xetra/MIC bestätigen oder EODHD-Symbol eintragen.');
  const to=new Date().toISOString().slice(0,10);
  const from=new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10);
- const url=new URL('https://eodhd.com/api/eod/'+encodeURIComponent(sym));
- for(const [key,val] of Object.entries({api_token:settings.eodhdKey,fmt:'json',period:'d',order:'a',from,to}))url.searchParams.set(key,val);
- const res=await requestEodhdJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
+ let res,source='EODHD · End-of-Day';
+ if(configuredMarketWorker(settings)){
+  // The user's own worker holds the EODHD API secret. The browser sends only
+  // a verified listing and date window, authenticated with its local access token.
+  res=await fetchWorkerEodhdBars(sym,from,to,settings,fetcher);
+  source='EODHD · eigener Worker';
+ }else{
+  const url=new URL('https://eodhd.com/api/eod/'+encodeURIComponent(sym));
+  for(const [key,val] of Object.entries({api_token:settings.eodhdKey,fmt:'json',period:'d',order:'a',from,to}))url.searchParams.set(key,val);
+  res=await requestEodhdJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
+ }
  if(!Array.isArray(res)||res.length===0)throw Error('EODHD liefert keine Börsenkurse für '+sym+'.');
  const points=parseBars(res,p.currency);
- return {points,source:'EODHD · End-of-Day',verifiedSymbol:sym,quality:'configured-listing'};
+ return {points,source,verifiedSymbol:sym,quality:'configured-listing'};
 }
 async function fmpBars(p,settings,days,fetcher){
  const l=listingInfo(p),sym=configuredFmp(p);
