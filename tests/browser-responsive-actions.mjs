@@ -90,14 +90,31 @@ try{
   const add=page.locator('#addSnapshot');
   const history=await add.evaluate(el=>{
    const r=el.getBoundingClientRect(),parent=el.closest('.panel').getBoundingClientRect();
+   const controls=el.closest('.history-controls').getBoundingClientRect();
+   const calendar=el.closest('.history-controls').querySelector('#historyCalendarDisclosure').getBoundingClientRect();
+   const label=el.querySelector('.history-add-label').getBoundingClientRect();
+   const style=getComputedStyle(el);
    return {w:r.width,h:r.height,within:r.left>=parent.left-1&&r.right<=parent.right+1,
-    label:getComputedStyle(el.querySelector('.history-add-label')).display,scroll:document.documentElement.scrollWidth};
+    label:getComputedStyle(el.querySelector('.history-add-label')).display,scroll:document.documentElement.scrollWidth,
+    background:style.backgroundColor,display:style.display,nowrap:style.whiteSpace,
+    controlsRight:controls.right,addRight:r.right,calendarRight:calendar.right,addLeft:r.left,
+    labelCenter:label.top+label.height/2,buttonCenter:r.top+r.height/2};
   });
   assert.equal(history.label==='none',mobile,'Stichtag label breakpoint '+width);
   assert.ok(history.within,'History add button escapes card at '+width);
   assert.ok(history.scroll<=width+1,'History horizontal overflow at '+width);
-  if(mobile)assert.ok(history.w<=38,'History add action not compact on '+width);
-  else assert.ok(history.w>70,'History add action must have enough room for its short desktop label on '+width);
+  if(mobile){
+   assert.ok(history.w<=38,'History add action not compact on '+width);
+   assert.ok(Math.abs(history.addRight-history.controlsRight)<=2,'History buttons should sit at right edge on '+width+': '+JSON.stringify(history));
+   assert.ok(history.addLeft-history.calendarRight>=3,'Mobile calendar and plus must remain separate on '+width);
+   assert.equal(history.background,'rgb(255, 255, 255)','Mobile plus retains outlined style on '+width);
+  }else{
+   assert.ok(history.w>70,'History add action must have room for desktop Stichtag text at '+width);
+   assert.ok(['flex','inline-flex'].includes(history.display),'Desktop plus and Stichtag text must use flex layout at '+width);
+   assert.equal(history.nowrap,'nowrap','Desktop plus label must not wrap at '+width);
+   assert.ok(Math.abs(history.labelCenter-history.buttonCenter)<=2,'Desktop Stichtag label must be vertically centered at '+width);
+   assert.equal(history.background,'rgb(38, 86, 61)','Desktop plus action must be green like other primary actions at '+width);
+  }
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="dashboard"]').click();
