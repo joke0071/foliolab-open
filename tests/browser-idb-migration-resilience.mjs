@@ -25,12 +25,15 @@ async function testStaleSource(){
    const db=await openPortfolioDB();
    const noPartialWrite=(await readPortfolioRecord(db))===null;
    db.close();
-   const fresh=load();
-   await service.migrate(fresh);
+   // An actual app reload constructs a fresh controller that observes the new
+   // canonical legacy bytes before consenting to migration again.
+   const reloadedService=new PortfolioStorage();
+   const fresh=await reloadedService.initialize();
+   await reloadedService.migrate(fresh);
    const activated=localStorage.getItem(MODE_KEY)==='idb-v1';
    const preserved=localStorage.getItem(STORE_KEY)===original;
-   const verified=await service.reload();
-   service.close();
+   const verified=await reloadedService.reload();
+   reloadedService.close();service.close();
    return {blocked,noMarker,noPartialWrite,activated,preserved,
     names:verified.providers.map(x=>x.name),key:verified.settings.eodhdKey};
   });
