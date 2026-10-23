@@ -369,3 +369,34 @@
 /* Compact source file links remain secondary to instrument search. */
 .wizard-source-inline{display:flex;gap:12px;flex-wrap:wrap}
 .wizard-source-inline a{font-size:11px}
+
+/* Settings: one mobile-friendly data-sources panel with four accordions. */
+.settings-grid>.data-source-panel{grid-column:1/-1}
+.data-source-panel{overflow-wrap:anywhere}
+.data-source-panel .data-auto{align-items:flex-start;line-height:1.5;margin:5px 0 20px}
+.data-source-panel .data-auto input{flex-shrink:0;margin-top:1px}
+.data-source-groups{display:grid;gap:10px}
+.data-source-groups>.advanced-apis{margin:0;padding:0;border-radius:12px}
+.source-detail>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:15px 16px;min-width:0;color:#355a43}
+.source-detail>summary::-webkit-details-marker{display:none}
+.source-detail>summary::after{content:"⌄";font-size:19px;line-height:1;color:#668671;margin-left:auto;flex-shrink:0}
+.source-detail[open]>summary::after{transform:rotate(180deg)}
+.source-detail[open]>summary{margin-bottom:0;border-bottom:1px solid #e4ebe4}
+.settings-icon{height:22px;width:22px;flex-shrink:0;color:#537a60}
+.settings-summary{min-width:0;flex:1}
+.settings-summary strong{display:block;font-size:13px;line-height:1.45;font-weight:780}
+.settings-summary small{display:block;margin-top:3px;font-size:11px;line-height:1.5;color:#718575;font-weight:450}
+.source-detail>p,.source-detail>form,.source-detail>.field,.source-detail>.source-actions,.source-detail>#solanaRpcSetup{margin-left:16px;margin-right:16px}
+.source-detail>p:first-of-type{margin-top:15px}
+.source-detail>p:last-child{margin-bottom:17px}
+.source-detail .field small{display:block;padding-left:0;margin-top:4px;line-height:1.5;font-size:11px;color:#718575}
+.source-detail .field a,.source-detail .small-help a{color:#2c6347;text-underline-offset:2px}
+.source-detail .small-help{line-height:1.75}
+.source-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px;margin-bottom:16px}
+.source-detail #solanaRpcSetup{margin-top:16px;margin-bottom:16px}
+@media(max-width:420px){
+ .source-detail>summary{padding:13px 12px;gap:10px}
+ .source-detail>p,.source-detail>form,.source-detail>.field,.source-detail>.source-actions,.source-detail>#solanaRpcSetup{margin-left:12px;margin-right:12px}
+ .settings-summary strong{font-size:12px}
+ .source-actions .btn{min-width:0;width:100%;white-space:normal;line-height:1.4}
+}
