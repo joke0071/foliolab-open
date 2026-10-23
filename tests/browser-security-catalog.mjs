@@ -9,7 +9,7 @@ try{
  // Empty catalogs must not show four historical examples as suggestions.
  await page.locator('#wizardQuery').fill('Wor');
  assert.equal(await page.locator('#wizardMatches [data-wizard-pick]').count(),0);
- assert.match(await page.locator('#wizardMatches').innerText(),/Noch kein lokaler Wertpapierkatalog importiert/);
+ assert.match(await page.locator('#wizardMatches').innerText(),/Kein lokaler Katalog vorhanden/);
  assert.match(await page.locator('#wizardCatalogTools summary').innerText(),/CSV\/TXT/);
  await page.locator('#wizardQuery').fill('');
  assert.equal(await page.locator('#wizardCatalogTools').getAttribute('open'),null);
