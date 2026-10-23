@@ -1,3 +1,9 @@
+## PWA-Revision v86 — 2026-10-23
+
+- Sicherheitskorrektur für den optionalen IndexedDB-Wechsel: bereits vor dem Start veraltete lokale Portfolio- und Einstellungsversionen werden zuverlässig erkannt und dürfen nicht migriert werden.
+- Neue Browserregressionen für abweichende Ursprungsdaten, unterbrochenen Cutover vor Speicherung des Modusmarkers, simulierte Quota-Fehler und gleichzeitige Backup-Imports.
+- Bestehende Portfolios bleiben standardmäßig auf localStorage; keine automatische Migration und keine Änderung der Finanzberechnungen.
+
 ## PWA-Revision v85 — 2026-10-23
 
 - Optionaler, ausdrücklich bestätigter Wechsel zu transaktionaler IndexedDB mit lokalem Backup und rückgängig machbarem Cutover.

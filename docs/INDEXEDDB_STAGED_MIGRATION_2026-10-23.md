@@ -41,3 +41,9 @@ The database holds only sanitized portfolio data, strictly local to the device a
 Der bisherige Speicher bleibt der Standard für bestehende Installationen. Unter **Mehr → Deine Daten → Speicherarchitektur** kann nach bestätigtem Download-Backup der Wechsel zu IndexedDB aktiviert werden. Die lokale Originalkopie bleibt bis zu einer bewussten Rückmigration erhalten. Die neue Speichersteuerung nutzt revisionsgebundene IndexedDB-Transaktionen für jeden Portfolio-Speichervorgang. Userkonfigurierte Zugangsdaten werden nur nach Zustimmung lokal und unverschlüsselt in IndexedDB gehalten; Export-Backups enthalten keine API-Schlüssel. Historische Werte werden nicht neu berechnet.
 
 Vor Wechsel und Rückwechsel müssen andere Tabs geschlossen werden. Bereits geöffnete veraltete FolioLab-Versionen könnten weiterhin die alte lokale Kopie verändern; dieser Risiko-Hinweis ist Teil der Zustimmung. Nach Speicher-Eviction bleibt ein Download-Backup erforderlich. Version v3 des Portfolioformats bleibt unverändert.
+
+## v86: Restabsicherung (Regressionen, kein automatischer Wechsel)
+
+Die Vorabprüfung vergleicht nun das **zuletzt tatsächlich gespeicherte** lokale Portfolio einschließlich erlaubter Einstellungen mit dem aktuell gehaltenen Model, **bevor** ein IndexedDB-Schreibvorgang möglich ist. Ein bereits beim Öffnen eines zweiten Tabs entstandener Konflikt darf nicht mehr durch die spätere Migration verdeckt werden. Der Vergleich während des Staging bleibt bestehen. Browser-Regressionen prüfen außerdem den Crash-ähnlichen Abbruch nach IDB-Commit, aber vor dem Markerwechsel, den sicheren erneuten Versuch mit identischem Portfolio, simulierten Quota-Abbruch und parallele Backup-Imports, von denen höchstens einer committen darf.
+
+Ein synthetischer Browserfehler ersetzt keinen realen Geräte-/OS-Absturz, keinen manuellen Screenreader-Test und keine Prüfung physischer Storage-Eviction. Issue #44 bleibt bis zur gesonderten Abnahme dieser Faktoren offen.
