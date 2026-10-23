@@ -33,7 +33,8 @@ try{
  await page.locator('#providerSettings details summary').first().click();
  assert.match(await page.locator('#providerSettings').innerText(),/Testdepot/);
  await page.locator('#sidebarNav [data-page="positions"]').click();
- await page.locator('#addPosition').click();
+ await page.locator('#addWizard').click();
+ await page.locator('#wizardAdvanced').click();
  assert.equal(await page.locator('#positionAccount').inputValue(),(await page.locator('#positionAccount option').first().getAttribute('value')));
  await page.locator('#editorForm [name="name"]').fill('ETF-Test');
  await page.locator('#editorForm [name="symbol"]').fill('VWCE');
