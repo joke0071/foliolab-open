@@ -122,13 +122,13 @@ export function addBooking(model,v){const entry=executeTransaction(model,{...v,t
 // Do not accept normalized dates like 2026-02-30 as valid financial records.
 const validCalendarDate=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d+'T12:00:00Z'))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
 // Reject contradictory financial representations before restoring a portfolio.
-// The tolerance only covers cent-level display rounding and IEEE-754 conversion.
+// The tolerance only covers IEEE-754 conversion, not real differences in tiny asset quantities.
 const exactMatchesDisplay=(display,precise)=>{
  if(precise==null)return true;
  try{
   const shown=Number(display),expected=Number(exact(units(precise)));
   return Number.isFinite(shown)&&Number.isFinite(expected)&&
-   Math.abs(shown-expected)<=Math.max(0.005,4*Number.EPSILON*Math.abs(expected));
+   Math.abs(shown-expected)<=8*Number.EPSILON*Math.max(1,Math.abs(shown),Math.abs(expected));
  }catch{return false;}
 };
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
