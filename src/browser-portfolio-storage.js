@@ -56,7 +56,13 @@ export class PortfolioStorage {
    const existing=await readPortfolioRecord(db);
    const portable=backup(model),preferences=clone(model.settings);
    let record;
-   if(existing){
+   if(existing?.deleted&&existing.raw===null){
+    // A deliberate prior rollback/reset leaves an IDB tombstone. Only a NEW,
+    // explicitly consented migration may supersede it at its exact revision.
+    record=await commitPortfolioRecord(db,{
+     expectedRevision:existing.revision,raw:portable,settings:preferences
+    });
+   }else if(existing){
     // Interrupted prior migration may be resumed only when its bytes and
     // credentials are exactly the same; never overwrite a different record.
     if(existing.raw!==portable||JSON.stringify(existing.settings)!==JSON.stringify(preferences))
