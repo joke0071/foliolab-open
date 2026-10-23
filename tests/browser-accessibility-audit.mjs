@@ -12,6 +12,12 @@ const issues=[];
 try{
  await page.route('**/__audit_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
  await page.goto('http://127.0.0.1:4173/');
+ await page.keyboard.press('Tab');
+ assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('href')),'#mainContent','Keyboard must reach the skip link first');
+ assert.equal(await page.locator('.skip-to-content').isVisible(),true,'Skip link must become visible on focus');
+ assert.equal(await page.locator('.skip-to-content').evaluate(el=>getComputedStyle(el).outlineColor),'rgb(45, 105, 70)','Keyboard focus ring must be dark enough');
+ await page.keyboard.press('Enter');
+ assert.equal(await page.evaluate(()=>location.hash),'#mainContent','Skip link must navigate to main landmark');
  await page.addScriptTag({url:'http://127.0.0.1:4173/__audit_axe.js'});
  for(const width of [390,1440]){
   await page.setViewportSize({width,height:900});
