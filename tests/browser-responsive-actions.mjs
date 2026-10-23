@@ -101,7 +101,7 @@ try{
     background:style.backgroundColor,display:style.display,nowrap:style.whiteSpace,
     controlsRight:controls.right,addRight:r.right,calendarRight:calendar.right,addLeft:r.left,
     labelCenter:label.top+label.height/2,buttonCenter:r.top+r.height/2,
-    calendarStyle: (()=>{const el=el.closest('.history-controls').querySelector('#historyCalendarDisclosure > summary');const r=el.getBoundingClientRect(),c=getComputedStyle(el),svg=el.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height,borderRadius:c.borderRadius,color:c.color,background:c.backgroundColor,svgWidth:svg.width,svgHeight:svg.height}})(),
+    calendarStyle: (()=>{const calendarEl=el.closest('.history-controls').querySelector('#historyCalendarDisclosure > summary');const r=calendarEl.getBoundingClientRect(),c=getComputedStyle(calendarEl),svg=calendarEl.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height,borderRadius:c.borderRadius,color:c.color,background:c.backgroundColor,svgWidth:svg.width,svgHeight:svg.height}})(),
     plusIconSize:(()=>{const r=el.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height}})(),
     borderRadius:style.borderRadius,color:style.color};
   });
