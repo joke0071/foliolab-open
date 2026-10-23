@@ -18,6 +18,7 @@ import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
+import {solanaRpcRead} from './solana-rpc.js';
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
@@ -419,7 +420,7 @@ function openWalletImport(){
     <label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x… / bc1… / Solana-Adresse"></label>
     <div class="field-row"><label class="field"><span>Anbieter / Wallet</span><select name="providerId" id="scanProvider">${options(providers,model.providers[0]?.id||'__new__')}</select></label>
     ${field('Name für neue Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')}</div><label class="field"><span>Konto / Wallet</span><select name="accountId" id="scanAccount"></select></label>
-    <p class="small-help">Nur bestätigte, öffentliche Bestände werden vorgeschlagen. Cosmos delegiert/Unbonding, Hedera (ohne zusätzliche Staking-Doppelzählung), NEAR-Kontostände und BNB-Saldo sind ergänzt. Solana-Stake-Accounts benötigen meist einen eigenen indexfähigen RPC (unter Mehr eintragen). Nicht alle Staking-Verträge sind automatisch lesbar. Avalanche-P-Chain, ETH-Validatoren, Vaults und externe NEAR-Pools benötigen eigene Adapter oder manuelle Erfassung.</p>
+    <p class="small-help">Nur bestätigte, öffentliche Bestände werden vorgeschlagen. Cosmos delegiert/Unbonding, Hedera (ohne zusätzliche Staking-Doppelzählung), NEAR-Kontostände und BNB-Saldo sind ergänzt. Für natives SOL-Staking brauchst du häufig einen eigenen RPC, z. B. von Helius. Anleitung und Verbindungstest unter Mehr → Solana-Staking einrichten. Nicht alle Staking-Verträge sind automatisch lesbar. Avalanche-P-Chain, ETH-Validatoren, Vaults und externe NEAR-Pools benötigen eigene Adapter oder manuelle Erfassung.</p>
     <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
     <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
     <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
@@ -823,7 +824,29 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   }
   const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};loadFailure=null;model=imported;filter='all';save();notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
   $('deleteAll').addEventListener('click',()=>{if(confirm('Alle lokalen Positionen, Stichtage UND API-Schlüssel endgültig löschen? Stelle vorher ein Backup sicher.')){loadFailure=null;model=blankModel();save();notify('Alle lokalen Daten gelöscht.');}});
-  $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+  $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+  $('testSolanaRpc').addEventListener('click',async()=>{
+   const button=$('testSolanaRpc'),status=$('solanaRpcTestStatus'),rpc=$('solanaRpc').value.trim();
+   button.disabled=true;
+   status.textContent='Verbindung und native Staking-Abfrage werden geprüft …';
+   try{
+    if(!rpc)throw Error('Bitte zuerst die vollständige HTTPS-RPC-Adresse einfügen.');
+    const knownAddress='11111111111111111111111111111111';
+    // Test only public Blockchain metadata; no signing, no wallet or API secret logging.
+    await solanaRpcRead(rpc,'getBalance',[knownAddress,{commitment:'confirmed'}]);
+    try{
+     await solanaRpcRead(rpc,'getProgramAccounts',[
+      'Stake11111111111111111111111111111111111111',
+      {encoding:'jsonParsed',commitment:'confirmed',filters:[{dataSize:200},{memcmp:{offset:44,bytes:knownAddress}}]}
+     ]);
+     status.textContent='Verbindung erfolgreich. Der RPC unterstützt native Solana-Staking-Abfragen. Du kannst deine Wallet jetzt erneut scannen.';
+    }catch(error){
+     status.textContent='RPC erreichbar, aber die native Staking-Abfrage ist blockiert. Prüfe den Anbieterzugang (z. B. Helius) oder dessen Limits. Details: '+String(error.message||error).slice(0,180);
+    }
+   }catch(error){
+    status.textContent='Solana-RPC nicht erreichbar: '+String(error.message||error).slice(0,180);
+   }finally{button.disabled=false;}
+  });
   $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',e=>{model.settings.autoRefresh=e.target.checked;save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
   for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
