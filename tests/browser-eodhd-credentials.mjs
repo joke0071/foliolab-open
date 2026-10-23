@@ -76,5 +76,18 @@ try{
   const {scrollWidth,innerWidth}=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth}));
   assert.ok(scrollWidth<=innerWidth+1,'No horizontal overflow at '+width);
  }
+ // Real touch emulation: tapping the visibility eye must not leave a green hover tile.
+ const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ try{
+  const touch=await touchContext.newPage();
+  await touch.goto('http://127.0.0.1:4173/');
+  await touch.locator('#mobileNav [data-page="more"]').click();
+  await touch.locator('#marketSettings').evaluate(el=>el.open=true);
+  const eye=touch.locator('[name="eodhdKey"] + .credential-toggle');
+  await eye.click();
+  assert.equal(await touch.locator('[name="eodhdKey"]').getAttribute('type'),'text');
+  const bg=await eye.evaluate(el=>getComputedStyle(el).backgroundColor);
+  assert.ok(bg==='rgba(0, 0, 0, 0)'||bg==='transparent','Touch toggle retained colored hover background: '+bg);
+ }finally{await touchContext.close();}
  console.log('EODHD + CREDENTIALS: alternate host, price update, masked/visible keys, no vendor links, responsive PASS');
 }finally{await browser.close();}
