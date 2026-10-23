@@ -95,6 +95,7 @@ jobs:
           node tests/live-probes.mjs
           node tests/browser-accessibility-audit.mjs
           node tests/browser-portfolio-scale.mjs
+          node tests/browser-offline-mobile.mjs
   cross-engine:
     runs-on: ubuntu-24.04
     steps:
