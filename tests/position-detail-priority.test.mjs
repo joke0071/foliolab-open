@@ -74,27 +74,26 @@ test('Only specific safe non-truncated failure guidance is shown',()=>{
  assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar (Netzwerk/CORS)'),{security:true}),/nicht überprüft/);
 });
 
-test('Klarna savings and term deposits show their provider share instead of 100% each',()=>{
+test('Generic provider allocation spans multiple single-position accounts',()=>{
  const positions=[
-  {id:'flex',accountId:'flex-account',providerId:'klarna',kind:'cash',name:'Flexkonto',symbol:'EUR',currency:'EUR',quantity:9765.54,price:1},
-  {id:'fixed-6',accountId:'fixed-6-account',providerId:'klarna',kind:'cash',name:'Festgeld 6 Monate',symbol:'EUR',currency:'EUR',quantity:5000,price:1},
-  {id:'fixed-12',accountId:'fixed-12-account',providerId:'klarna',kind:'cash',name:'Festgeld 12 Monate',symbol:'EUR',currency:'EUR',quantity:5000,price:1},
-  {id:'etf',accountId:'flatex-account',providerId:'flatex',kind:'etf',name:'ETF',symbol:'VWCE',currency:'EUR',quantity:50000,price:1}
+  {id:'a',accountId:'cash-a',providerId:'provider-alpha',kind:'cash',name:'Savings A',symbol:'EUR',currency:'EUR',quantity:120,price:1},
+  {id:'b',accountId:'cash-b',providerId:'provider-alpha',kind:'cash',name:'Savings B',symbol:'EUR',currency:'EUR',quantity:80,price:1},
+  {id:'c',accountId:'cash-c',providerId:'provider-alpha',kind:'cash',name:'Savings C',symbol:'EUR',currency:'EUR',quantity:200,price:1},
+  {id:'d',accountId:'asset-d',providerId:'provider-beta',kind:'cash',name:'Other provider',symbol:'EUR',currency:'EUR',quantity:1000,price:1}
  ];
  const accounts=[
-  {id:'flex-account',providerId:'klarna'},
-  {id:'fixed-6-account',providerId:'klarna'},
-  {id:'fixed-12-account',providerId:'klarna'},
-  {id:'flatex-account',providerId:'flatex'}
+  {id:'cash-a',providerId:'provider-alpha'},
+  {id:'cash-b',providerId:'provider-alpha'},
+  {id:'cash-c',providerId:'provider-alpha'},
+  {id:'asset-d',providerId:'provider-beta'}
  ];
  const m={accounts,positions,priceHistories:{},settings:{}};
- const totals=positions.slice(0,3).map(p=>positionDetailMarkup(p,m,config));
- assert.match(totals[0],/Anteil am Anbieter<\/span><strong>49,4 %/);
- assert.match(totals[1],/Anteil am Anbieter<\/span><strong>25,3 %/);
- assert.match(totals[2],/Anteil am Anbieter<\/span><strong>25,3 %/);
- assert.doesNotMatch(totals.join(''),/Anteil am Konto/);
- const unrelated=positionDetailMarkup(positions[3],m,config);
- assert.match(unrelated,/Anteil am Anbieter<\/span><strong>100 %/);
+ const details=positions.slice(0,3).map(p=>positionDetailMarkup(p,m,config));
+ assert.match(details[0],/Anteil am Anbieter<\/span><strong>30 %/);
+ assert.match(details[1],/Anteil am Anbieter<\/span><strong>20 %/);
+ assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
+ assert.doesNotMatch(details.join(''),/Anteil am Konto/);
+ assert.match(positionDetailMarkup(positions[3],m,config),/Anteil am Anbieter<\/span><strong>100 %/);
 });
 test('Provider allocations exclude separately configured providers and handle liabilities defensively',()=>{
  const p={id:'one',accountId:'a',providerId:'p',kind:'cash',symbol:'EUR',quantity:100,price:1,currency:'EUR'};
@@ -106,7 +105,7 @@ test('Provider allocations exclude separately configured providers and handle li
  assert.match(positionDetailMarkup(bad,m,config),/Anteil am Anbieter nicht sinnvoll bestimmbar/);
 });
 
-test('Provider share is generic across many account structures, not a Klarna-specific workaround',()=>{
+test('Provider share handles multiple holdings within the same account across providers',()=>{
  const holdings=[
   {id:'a',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Daily account',symbol:'EUR',currency:'EUR',quantity:100,price:1},
   {id:'b',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Reserve 1',symbol:'EUR',currency:'EUR',quantity:100,price:1},
