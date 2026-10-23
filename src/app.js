@@ -194,7 +194,7 @@ function renderBookings(){
    (Number.isFinite(b.amountEUR)?money(b.amountEUR):'Betrag unbekannt')+'</strong></div></div>').join('')+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
    empty('Keine Buchungen zu diesem Filter gefunden.')):
-  '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Einzahlungen, Käufe, Verkäufe und Gebühren helfen, Bestände und bekannte Anschaffungskosten nachzuvollziehen. Eine unvollständige Historie ergibt noch keine verlässliche Rendite.</p><div class="toolbar-buttons"><button type="button" class="btn primary" data-action="start-booking">+ Buchung</button><button type="button" class="btn outline" data-action="start-csv">CSV importieren</button></div></div>';
+  '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Neue Buchungen und CSV-Importe erscheinen hier.</p></div>';
 }
 function renderSettings(){
  if(legacyAuditPerformed)renderLegacyQuoteAudit();

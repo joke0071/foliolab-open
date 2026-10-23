@@ -4,6 +4,12 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await browser.newPage({viewport:{width:390,height:850}});
 try{
  await page.goto('http://127.0.0.1:4173/');
+ await page.locator('#mobileNav [data-page="bookings"]').click();
+ assert.equal(await page.locator('#bookingsPage #addBooking').count(),1);
+ assert.equal(await page.locator('#bookingsPage #openCSVImport').count(),1);
+ assert.equal(await page.locator('#bookingsPage .booking-onboarding button').count(),0);
+ assert.equal(await page.locator('#bookingsPage .body-copy').count(),0);
+ assert.match(await page.locator('#bookingList').innerText(),/Noch keine Buchungen erfasst/);
  await page.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
   const m=blankModel(),p=createProvider({name:'Synthetic Bank'});m.providers.push(p);
