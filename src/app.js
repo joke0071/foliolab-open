@@ -1199,13 +1199,49 @@ if(loadFailure){
   $('backupFile').click();
  });
 }
+function pwaUpdateShouldDefer(){
+ const active=document.activeElement;
+ return saving||busy||Boolean(editor)||Boolean(document.querySelector('dialog[open]'))||
+  Boolean(active&&active.matches('input, textarea, select, [contenteditable="true"]'));
+}
+function showPwaUpdateNotice(){
+ let banner=$('pwaUpdateNotice');
+ if(banner)return;
+ banner=document.createElement('div');
+ banner.id='pwaUpdateNotice';
+ banner.className='pwa-update-notice';
+ banner.setAttribute('role','status');
+ const message=document.createElement('span');
+ message.textContent='Neue FolioLab-Version verfügbar.';
+ const button=document.createElement('button');
+ button.type='button';
+ button.textContent='Jetzt aktualisieren';
+ button.addEventListener('click',()=>{
+  if(saving||busy||editor||document.querySelector('dialog[open]')){
+   notify('Bitte den laufenden Vorgang zuerst abschließen.',true);return;
+  }
+  location.reload();
+ });
+ banner.append(message,button);
+ document.body.appendChild(banner);
+}
 if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127.0.0.1'].includes(location.hostname))){
  let existingController=Boolean(navigator.serviceWorker.controller);
  navigator.serviceWorker.addEventListener('controllerchange',()=>{
-  if(existingController)notify('Neue FolioLab-Version verfügbar. Bitte die Seite neu laden.');
+  if(existingController){
+   if(pwaUpdateShouldDefer())showPwaUpdateNotice();
+   else location.reload();
+  }
   existingController=true;
  });
- navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});
+ navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(registration=>{
+  let lastUpdateCheck=Date.now();
+  document.addEventListener('visibilitychange',()=>{
+   if(document.hidden||Date.now()-lastUpdateCheck<10*60*1000)return;
+   lastUpdateCheck=Date.now();
+   void registration.update().catch(()=>{});
+  });
+ }).catch(()=>{});
 }
 if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));

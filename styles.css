@@ -549,3 +549,10 @@
  #historyPage .history-calendar-popover>summary,#historyPage .history-add-button{flex-basis:33px;width:33px;min-width:33px;height:33px;min-height:33px}
 }
 @media(prefers-reduced-motion:reduce){#historyPage .snapshot-manager>summary::before{transition:none}}
+
+/* PWA update available while a form or background save is active. Never erase browser data. */
+.pwa-update-notice{position:fixed;z-index:10020;bottom:calc(86px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:space-between;gap:13px;max-width:min(540px,calc(100vw - 28px));width:max-content;min-width:min(340px,calc(100vw - 28px));padding:11px 13px;border:1px solid #bdd5c3;border-radius:12px;background:#f6faf7;color:#264f38;box-shadow:0 12px 28px #122e201c;font-size:12px;font-weight:650;line-height:1.4}
+.pwa-update-notice button{white-space:nowrap;border:1px solid #b5d0bd;border-radius:9px;background:white;color:#255b3d;padding:8px 11px;font:inherit;cursor:pointer}
+.pwa-update-notice button:focus-visible{outline:2px solid #368253;outline-offset:2px}
+@media(min-width:721px){.pwa-update-notice{bottom:20px}}
+@media(max-width:360px){.pwa-update-notice{font-size:11px;gap:8px;flex-wrap:wrap;min-width:0}.pwa-update-notice button{min-height:36px}}
