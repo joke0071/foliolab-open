@@ -66,6 +66,14 @@ try{
  await page.locator('#addWizard').click();
  assert.equal(await page.locator('#wizardDialog').isVisible(),true,'Plus action must retain wizard');
  await page.keyboard.press('Escape');
+ await page.evaluate(async()=>{
+  const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
+  const m=blankModel(),provider=createProvider({name:'UI-Test'});m.providers.push(provider);
+  const account=createAccount({name:'Testdepot',providerId:provider.id},m);m.accounts.push(account);
+  m.positions.push(createPosition({name:'Test-ETF',kind:'etf',quantity:1,price:10,providerId:provider.id,accountId:account.id},m));
+  persist(m);
+ });
+ await page.reload();
  await page.locator('#mobileNav [data-page="bookings"]').click();
  await page.locator('#openCSVImport').click();
  assert.equal(await page.locator('#editDialog').isVisible(),true,'CSV import must retain its form');
