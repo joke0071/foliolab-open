@@ -58,6 +58,7 @@ jobs:
           node tests/browser-phase3.mjs
           node tests/browser-audit.mjs
           node tests/browser-dashboard-polish.mjs
+          node tests/browser-responsive-actions.mjs
           node tests/browser-allocation.mjs
           node tests/browser-avalanche-valuation.mjs
           node tests/browser-staking-coverage.mjs
