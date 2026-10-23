@@ -16,8 +16,12 @@ try{
  await page.locator('#providerOverview .provider-accordion>summary').click();
  const row=page.locator('[data-position-id="sonic-test"]');
  await row.locator('summary').click();
+ await row.locator('.position-history-compact').waitFor({state:'attached'});
+ assert.equal(await row.locator('.position-history-compact').getAttribute('open'),null,'Failed chart starts collapsed');
+ assert.equal(await row.locator('[data-position-range="30"]').isVisible(),false,'Failed chart hides empty period selector');
+ await row.locator('.position-history-compact>summary').click();
  await row.locator('.position-history-external').waitFor();
- assert.match(await row.locator('.position-history-unavailable').innerText(),/CoinGecko aus diesem Browser gerade nicht erreichbar/);
+ assert.match(await row.locator('.position-history-unavailable').innerText(),/Browser nicht erreichbar|CORS/);
  assert.equal(await row.locator('.position-history-external').getAttribute('href'),'https://www.coingecko.com/en/coins/sonic-3');
  assert.equal(await row.locator('.position-history-chart').count(),0,'Network errors must not display synthetic prices');
  const model=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
@@ -30,6 +34,8 @@ try{
   const now=Date.now();
   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({prices:[[now-3*86400000,.0054],[now-86400000,.0056],[now,.0058]]})});
  });
+ await row.locator('[data-action="retry-price-chart"]').click();
+ await row.locator('.chart-y-labels').waitFor();
  await row.locator('[data-position-range="7"]').click();
  await row.locator('.chart-y-labels').waitFor();
  assert.match(await row.locator('.chart-y-labels').innerText(),/0,00/);
