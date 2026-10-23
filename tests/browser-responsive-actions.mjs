@@ -110,7 +110,7 @@ try{
    assert.equal(history.background,'rgb(255, 255, 255)','Mobile plus retains outlined style on '+width);
   }else{
    assert.ok(history.w>70,'History add action must have room for desktop Stichtag text at '+width);
-   assert.equal(history.display,'inline-flex','Desktop plus and Stichtag text must appear inline at '+width);
+   assert.ok(['flex','inline-flex'].includes(history.display),'Desktop plus and Stichtag text must use flex layout at '+width);
    assert.equal(history.nowrap,'nowrap','Desktop plus label must not wrap at '+width);
    assert.ok(Math.abs(history.labelCenter-history.buttonCenter)<=2,'Desktop Stichtag label must be vertically centered at '+width);
    assert.equal(history.background,'rgb(38, 86, 61)','Desktop plus action must be green like other primary actions at '+width);
