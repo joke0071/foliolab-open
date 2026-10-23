@@ -36,11 +36,19 @@ try{
    assert.ok(measured.rects.every(x=>Math.abs(x.y-measured.rects[0].y)<=1),name+' buttons wrapped at '+width);
    assert.ok(measured.labels.every(x=>x!==mobile),name+' labels do not match breakpoint at '+width);
    assert.equal(measured.nowrap,true,name+' action group wraps at '+width);
+   const expectedLabels=name==='positions'
+    ?['Anlage','Aktualisieren','Wallet']
+    :['CSV-Import','Buchung'];
+   assert.deepEqual(await group.locator('.action-label').allTextContents(),expectedLabels,name+' action labels');
+   const description=await page.locator('#pageDescription').textContent();
+   assert.ok(description?.length>35,name+' missing explanatory subtitle');
    for(const id of buttons){
     const button=page.locator('#'+id);
     assert.ok((await button.getAttribute('aria-label'))?.length>0,id+' lacks accessible label');
     assert.ok((await button.getAttribute('title'))?.length>0,id+' lacks title');
     assert.equal(await button.locator('.action-icon svg').count(),1,id+' lacks a real SVG icon');
+    const stroke=await button.locator('.action-icon svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
+    assert.ok(stroke>=2.1,id+' icon stroke too thin at '+width+': '+stroke);
    }
    if(mobile)assert.ok(measured.rects.every(x=>x.w>=38&&x.w<=41&&x.h>=38&&x.h<=41),name+' not compact squares at '+width);
    else assert.ok(measured.rects.every(x=>x.w>65),name+' desktop labels have no space at '+width);
@@ -51,6 +59,12 @@ try{
   await page.locator(nav+' [data-page="history"]').click();
   assert.equal(await page.locator('#historyPage #addWallet').count(),0,'History must not have a wallet action');
   assert.equal((await page.locator('#historyCalendarDisclosure > summary').textContent()).trim(),'','Calendar trigger must stay icon-only');
+  assert.ok((await page.locator('#pageDescription').textContent())?.includes('Stichtagen'),'History needs a descriptive subtitle');
+  assert.equal((await page.locator('#addSnapshot .history-add-label').textContent()).trim(),'Stichtag','Desktop snapshot text must stay short');
+  const calendarStroke=await page.locator('#historyCalendarDisclosure > summary svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
+  assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
+  const plusWeight=await page.locator('#historyPage .history-add-glyph').evaluate(el=>Number(getComputedStyle(el).fontWeight));
+  assert.ok(plusWeight>=600,'History plus icon should not be lighter than other actions');
   assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
   const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
    const container=getComputedStyle(el);
@@ -83,9 +97,12 @@ try{
   assert.ok(history.within,'History add button escapes card at '+width);
   assert.ok(history.scroll<=width+1,'History horizontal overflow at '+width);
   if(mobile)assert.ok(history.w<=38,'History add action not compact on '+width);
-  else assert.ok(history.w>100,'History add action does not display text on '+width);
+  else assert.ok(history.w>70,'History add action must have enough room for its short desktop label on '+width);
  }
  await page.setViewportSize({width:390,height:850});
+ await page.locator('#mobileNav [data-page="dashboard"]').click();
+ assert.equal((await page.locator('#pageDescription').textContent()).trim(),'','Dashboard does not need an action subtitle');
+ await page.locator('#mobileNav [data-page="history"]').click();
  await page.locator('#historyPage #performanceDetails > summary').click();
  assert.equal(await page.locator('#historyPage #performanceDetails[open]').count(),1,'Renditeauswertung expands');
  assert.equal(await page.locator('#historyPage #snapshotManager[open]').count(),0,'Stichtage remains independently collapsed');

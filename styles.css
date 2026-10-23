@@ -607,3 +607,17 @@
   flex-basis:38px;min-width:38px;width:38px;max-width:38px;height:38px;min-height:38px
  }
 }
+
+/* Compact action hierarchy: readable desktop labels, clear mobile iconography. */
+.page-description{max-width:520px;margin:6px 0 0;color:#4d6756;font-size:12px;line-height:1.5}
+.page-description:empty{display:none}
+.heading-row:has(.page-description:not(:empty)){margin-bottom:16px}
+#historyPage .history-panel>.panel-head,#bookingsPage .panel-head-actions{margin-bottom:12px}
+#positionsPage>.toolbar{margin-bottom:12px}
+.action-group .action-icon svg,.action-group .action-svg,
+#historyPage .history-calendar-popover>summary svg{stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#historyPage .history-add-glyph{font-weight:650}
+@media(max-width:767px){
+ .page-description{margin-top:5px;font-size:11px;line-height:1.45}
+ .heading-row:has(.page-description:not(:empty)){margin-bottom:12px}
+}
