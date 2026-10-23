@@ -591,9 +591,9 @@ function openBooking(){
  field('Ausführungskurs','unitPrice','100','text','inputmode="decimal"')+'</div>'+
  '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Verrechnungskonto für Kauf / Verkauf</span><select name="cashPositionId" id="bookingCash"><option value="">Ohne Verrechnungskonto (Finanzierung ungeklärt)</option></select></label><p class="dialog-intro">Nur zugeordnete Geldpositionen werden automatisch mitgebucht. Ohne Gegenkonto bleibt die Finanzierung ungeklärt, niemals als Einzahlung geschätzt.</p></div>'+
  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list[1]?.id||defaultId)+'</select></label>'+
- field('Zielmenge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+'</div>'+
+ field('Zielmenge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+'<p class="small-help">Bei Umtausch mit Barausgleich oder Barabfindung ist eine gesonderte Abstimmung mit der Brokerabrechnung nötig. Diese Buchung erfasst nur den bargeldlosen Teil.</p></div>'+
  '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile (Zähler)','ratioNumerator','2','text','inputmode="decimal"')+
- field('Alte Anteile (Nenner)','ratioDenominator','1','text','inputmode="decimal"')+'</div></div>'+
+ field('Alte Anteile (Nenner)','ratioDenominator','1','text','inputmode="decimal"')+'</div><p class="small-help">Ein Split berücksichtigt keinen Barausgleich für Bruchstücke. Bei Barabfindung die Brokerabrechnung prüfen; keine automatische steuerliche Behandlung.</p></div>'+
  '<div id="bookingMetadataWrap" class="hidden">'+field('Neuer Ticker','newSymbol','','text','maxlength="32"')+
  field('Neue ISIN','newIsin','','text','maxlength="20"')+'</div>'+
  '<div id="bookingCorrectWrap" class="hidden">'+field('Korrekter neuer Bestand','targetQuantity','0','text','inputmode="decimal"')+'</div>'+
