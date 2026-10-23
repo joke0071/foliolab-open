@@ -19,6 +19,7 @@ import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
+import {updateScannedWalletPosition} from './wallet-scan-update.js';
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
@@ -459,7 +460,7 @@ function openWalletImport(){
        let added=0,updated=0;
        for(const asset of chosen){
          const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
-         if(existing){existing.quantity=Number(asset.quantityExact??asset.quantity);existing.quantityExact=String(asset.quantityExact??asset.quantity);existing.updatedAt=new Date().toISOString();if(asset.chain==='btc-hd'&&asset.addressType)existing.wallet.addressType=asset.addressType;if(asset.price>0){existing.price=asset.price;existing.currency='EUR';existing.fxRate=1;}updated++;continue;}
+         if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
          const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
          model.positions.push(position);added++;
        }
