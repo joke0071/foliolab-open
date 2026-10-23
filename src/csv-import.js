@@ -47,25 +47,26 @@ export function normalizeCSVNumber(input,{optional=false}={}){
  else if((s.match(/\./g)||[]).length>1)s=s.replaceAll('.','');
  return exact(units(s));
 }
-function typeOf(value){const t=String(value||'buy').toLowerCase().trim();return ({kauf:'buy',buy:'buy',verkauf:'sell',sell:'sell',einzahlung:'deposit',deposit:'deposit',auszahlung:'withdraw',withdraw:'withdraw',dividende:'dividend',dividend:'dividend',zinsen:'interest',interest:'interest',gebühr:'fee',gebuehr:'fee',fee:'fee',steuer:'tax',tax:'tax',reward:'reward',airdrop:'airdrop',transfer:'transfer'})[t]||null;}
+function typeOf(value){const t=String(value??'').toLowerCase().trim();return ({kauf:'buy',buy:'buy',verkauf:'sell',sell:'sell',einzahlung:'deposit',deposit:'deposit',auszahlung:'withdraw',withdraw:'withdraw',dividende:'dividend',dividend:'dividend',zinsen:'interest',interest:'interest',gebühr:'fee',gebuehr:'fee',fee:'fee',steuer:'tax',tax:'tax',reward:'reward',airdrop:'airdrop',transfer:'transfer'})[t]||null;}
 const fingerprint=r=>JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId||'']);
 function resolvePosition(model,key,defaultId){
  const needle=String(key||'').trim().toLowerCase();
- if(!needle){const p=model.positions.find(p=>p.id===defaultId);if(!p)throw Error('Standardposition fehlt.');return p;}
+ if(!needle){const p=model.positions.find(p=>p.id===defaultId);if(!p)throw Error('Anlage fehlt – bitte diese Buchung ausdrücklich zuordnen.');return p;}
  const hits=model.positions.filter(p=>[p.id,p.name,p.isin,p.symbol].some(s=>s&&String(s).toLowerCase()===needle));
- if(hits.length!==1)throw Error('Asset-Zuordnung fehlt oder ist mehrdeutig: '+needle.slice(0,42));
+ if(hits.length!==1)throw Error('Anlage nicht eindeutig erkannt: '+needle.slice(0,42)+'. Bitte zuordnen.');
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId=''}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[]}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
- const list=[],issues=[],occurrences=new Map();let duplicates=0;
+ const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
  for(const item of mapped){
+  if(ignored.has(item.index)){list.push({line:item.index,status:'skipped'});continue;}
   try{
    const d=item.data,type=typeOf(d[mapping.type]);if(!type)throw Error('Buchungstyp unbekannt.');
-   const pos=resolvePosition(draft,d[mapping.position],defaultPositionId);
+   const pos=resolvePosition(draft,positionOverrides[item.index]||d[mapping.position],defaultPositionId);
    const qty=normalizeCSVNumber(d[mapping.quantity]);
    const price=normalizeCSVNumber(d[mapping.unitPrice]||pos.price,{optional:true});
    const fee=normalizeCSVNumber(d[mapping.feeEUR],{optional:true});
@@ -73,7 +74,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const fx=normalizeCSVNumber(d[mapping.fxRate]|| (pos.currency==='EUR'?'1':''),{optional:pos.currency==='EUR'});
    const ref=String(d[mapping.externalId]||'').trim().slice(0,100);
    const linked=String(d[mapping.cashPosition]||'').trim();
-   const c=linked?resolvePosition(draft,linked,'').id:cashPositionId||'';
+   const c=linked?resolvePosition(draft,linked,'').id:(['buy','sell'].includes(type)?cashPositionId||'':'');
    const row={type,date:item.date,positionId:pos.id,quantity:qty,unitPrice:price,feeEUR:fee,taxEUR:tax,fxRate:fx,cashPositionId:c,notes:String(d[mapping.notes]||'').slice(0,180),externalId:ref};
    const base=fingerprint(row);
    const count=ref?1:(occurrences.get(base)||0)+1;
@@ -87,7 +88,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    seen.add(id);list.push({line:item.index,status:'ready',row});
   }catch(e){issues.push({line:item.index,message:String(e.message).slice(0,200)});list.push({line:item.index,status:'error',message:String(e.message).slice(0,200)});}
  }
- return {rows:list,issues,duplicates,ready:list.filter(r=>r.status==='ready').length,simulated:draft,baseline};
+ return {rows:list,issues,duplicates,skipped:list.filter(r=>r.status==='skipped').length,ready:list.filter(r=>r.status==='ready').length,simulated:draft,baseline};
 }
 /** All-or-nothing commit. An invalid row never leaves partial imported positions. */
 export function importCSV(model,preview){

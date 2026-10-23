@@ -26,8 +26,9 @@ try{
  await page.locator('#wizardNext').click();
  assert.match(await page.locator('#wizardError').innerText(),/Währung/);
  await page.locator('#wizardCurrency').selectOption('EUR');
+ assert.equal(await page.locator('#wizardProvider').count(),1,'Account selection is available in the same dialog');
  await page.locator('#wizardNext').click();
- assert.match(await page.locator('#wizardTitle').innerText(),/Wo verwahrst/);
+ assert.match(await page.locator('#wizardError').innerText(),/Anbieter/);
  await page.locator('#wizardClose').click();
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.length,0);
