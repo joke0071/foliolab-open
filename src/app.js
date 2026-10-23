@@ -584,7 +584,7 @@ function openWalletImport(){
   '<p id="scanAddressHint" class="small-help">Kopiere die öffentliche Empfangsadresse deiner Wallet. Niemals Seed-Phrase oder privaten Schlüssel eingeben.</p>'+
   '<div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-Adresstyp (optional)</span><select id="scanHdType" name="hdAddressType">'+
   options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')+'</select></label></div>'+
-  '<p id="hdPrivacyHint" class="small-help hidden">Bitcoin-HD: Bei einem xpub-Scan werden mehrere zugehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer gesendet. Dadurch können Adressen miteinander verknüpft werden. Taproot (bc1p) wird derzeit nicht unterstützt.</p>'+
+  '<p id="hdPrivacyHint" class="small-help hidden">Bitcoin-HD: Bei einem xpub-Scan werden mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer gesendet. Dadurch können Adressen miteinander verknüpft werden. Taproot (bc1p) wird derzeit nicht unterstützt.</p>'+
   '<details class="advanced-apis wallet-staking-options" id="walletStakingOptions"><summary>Bestimmtes Staking-Asset prüfen (optional)</summary>'+
     '<p class="small-help">Nur nötig, wenn du gezielt nach einem Staking-Bestand suchen möchtest. Die normale Suche erkennt unterstützte Coins automatisch.</p>'+
     '<label class="field"><span>Staking-Asset</span><select id="scanAsset">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
