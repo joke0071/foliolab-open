@@ -105,3 +105,20 @@ test('Provider allocations exclude separately configured providers and handle li
  m.positions=[bad,{...p,id:'negative',quantity:-200}];
  assert.match(positionDetailMarkup(bad,m,config),/Anteil am Anbieter nicht sinnvoll bestimmbar/);
 });
+
+test('Provider share is generic across many account structures, not a Klarna-specific workaround',()=>{
+ const holdings=[
+  {id:'a',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Daily account',symbol:'EUR',currency:'EUR',quantity:100,price:1},
+  {id:'b',accountId:'wallet-a',providerId:'provider-one',kind:'cash',name:'Reserve 1',symbol:'EUR',currency:'EUR',quantity:100,price:1},
+  {id:'c',accountId:'wallet-b',providerId:'provider-one',kind:'cash',name:'Reserve 2',symbol:'EUR',currency:'EUR',quantity:200,price:1},
+  {id:'d',accountId:'wallet-c',providerId:'provider-two',kind:'cash',name:'Other provider',symbol:'EUR',currency:'EUR',quantity:1000,price:1}
+ ];
+ const m={positions:holdings,accounts:[
+  {id:'wallet-a',providerId:'provider-one'},{id:'wallet-b',providerId:'provider-one'},
+  {id:'wallet-c',providerId:'provider-two'}],settings:{},priceHistories:{}};
+ const details=holdings.map(h=>positionDetailMarkup(h,m,config));
+ assert.match(details[0],/Anteil am Anbieter<\/span><strong>25 %/);
+ assert.match(details[1],/Anteil am Anbieter<\/span><strong>25 %/);
+ assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
+ assert.match(details[3],/Anteil am Anbieter<\/span><strong>100 %/);
+});
