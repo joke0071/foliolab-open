@@ -413,3 +413,11 @@
 .data-source-panel .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
 .data-source-panel .source-detail,.data-source-panel .field,.data-source-panel form{min-width:0;max-width:100%}
 .data-source-panel .field input,.data-source-panel .field select{min-width:0;max-width:100%}
+
+/* Password reveal controls use the same understated icon language as the settings UI. */
+.credential-control{position:relative;display:block;width:100%;min-width:0}
+.data-source-panel .field .credential-control input{width:100%;padding-right:51px;min-width:0}
+.credential-toggle{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:41px;height:41px;border:0;border-radius:8px;background:transparent;color:#597664;display:grid;place-items:center;padding:0}
+.credential-toggle:hover{background:#eff5ef;color:#245c3e}
+.credential-toggle:focus-visible{outline:2px solid #2d6946;outline-offset:0}
+.credential-toggle svg{pointer-events:none}

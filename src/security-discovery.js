@@ -7,6 +7,7 @@
  * may require a separate paid data add-on.
  */
 import {requestJSON,TTL} from './request-cache.js';
+import {requestEodhdJSON} from './eodhd-transport.js';
 const isinPattern=/^[A-Z]{2}[A-Z0-9]{10}$/;
 const currencyPattern=/^[A-Z]{3}$/;
 const tickerPattern=/^[A-Z0-9^._/-]{1,40}$/;
@@ -62,7 +63,7 @@ export async function queryProviderListings(provider,term,settings,fetcher=globa
   validIsin(t)?{isin:t,apikey:key}:{query:t,limit:50,apikey:key});
  else if(provider==='twelve')url=urlWith('https://api.twelvedata.com/symbol_search',{symbol:t,outputsize:50,apikey:key});
  else throw Error('Unbekannter Suchanbieter.');
- const raw=await requestJSON(url,{fetcher,ttlMs:TTL.catalog,attempts:1});
+ const raw=await (provider==='eodhd'?requestEodhdJSON(url,{fetcher,ttlMs:TTL.catalog,attempts:1}):requestJSON(url,{fetcher,ttlMs:TTL.catalog,attempts:1}));
  if(raw?.status==='error'||raw?.['Error Message'])throw Error(trim(raw.message||raw['Error Message'],150));
  const list=provider==='twelve'?raw?.data:raw;
  if(!Array.isArray(list))throw Error('Suchanbieter liefert keine gültige Trefferliste.');

@@ -70,3 +70,37 @@ test('FMP and EODHD provider identifiers survive backups, secret API keys never 
  assert.equal(decoded.positions[0].fmpSymbol,'VWCE.DE');
  assert.equal(decoded.positions[0].tradingViewSymbol,'XETR:VWCE');
 });
+
+test('EODHD retries the second official host only for network failures, preserving symbol and private key',async()=>{
+ const attempts=[];
+ const key='SYNTHETIC_SECRET_LOCAL_ONLY';
+ const mock=async url=>{
+  const u=new URL(url);
+  attempts.push(u);
+  if(u.hostname==='eodhd.com')throw new TypeError('Failed to fetch');
+  return ok([{date:yday,close:114.23}]);
+ };
+ const quote=await fetchSecurityQuote(position(),{eodhdKey:key,securitySource:'eodhd'},mock);
+ assert.equal(quote.price,114.23);
+ assert.deepEqual(attempts.map(x=>x.hostname),['eodhd.com','eodhistoricaldata.com']);
+ assert.ok(attempts.every(x=>x.searchParams.get('api_token')===key&&x.pathname.endsWith('/VWCE.XETRA')));
+});
+test('EODHD does not retry auth, tariff, or quota errors on alternate host',async()=>{
+ for(const status of [401,402,403,429]){
+  const calls=[];
+  const mock=async url=>{calls.push(url);return {ok:false,status,headers:{get:()=>null}};};
+  await assert.rejects(()=>fetchSecurityQuote(position(),{eodhdKey:'private',securitySource:'eodhd'},mock));
+  assert.equal(calls.length,1,'HTTP '+status+' must not cause a second billable call');
+ }
+});
+test('EODHD double network failure gives safe diagnostic without leaking credentials',async()=>{
+ const token='SYNTHETIC_SECRET_DO_NOT_LOG',calls=[];
+ await assert.rejects(async()=>{
+  await fetchSecurityQuote(position(),{eodhdKey:token},async url=>{calls.push(new URL(url).hostname);throw new TypeError('Failed to fetch at '+url);});
+ },error=>{
+  assert.match(error.message,/Netzwerk\/CORS/);
+  assert.ok(!error.message.includes(token));
+  return true;
+ });
+ assert.deepEqual(calls,['eodhd.com','eodhistoricaldata.com']);
+});

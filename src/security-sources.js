@@ -5,6 +5,7 @@
  * matching exchange; Twelve Data: existing strict listing verification.
  */
 import {requestJSON,TTL} from './request-cache.js';
+import {requestEodhdJSON} from './eodhd-transport.js';
 import {securityQuote} from './market.js';
 
 const symbolPattern=/^[A-Z0-9^._/-]{1,45}$/i;
@@ -70,7 +71,7 @@ async function eodhdBars(p,settings,days,fetcher){
  const from=new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10);
  const url=new URL('https://eodhd.com/api/eod/'+encodeURIComponent(sym));
  for(const [key,val] of Object.entries({api_token:settings.eodhdKey,fmt:'json',period:'d',order:'a',from,to}))url.searchParams.set(key,val);
- const res=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
+ const res=await requestEodhdJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
  if(!Array.isArray(res)||res.length===0)throw Error('EODHD liefert keine Börsenkurse für '+sym+'.');
  const points=parseBars(res,p.currency);
  return {points,source:'EODHD · End-of-Day',verifiedSymbol:sym,quality:'configured-listing'};
