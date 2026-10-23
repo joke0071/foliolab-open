@@ -1,4 +1,4 @@
-import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
+import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
@@ -843,8 +843,30 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
    if(password===null)return;parsed=JSON.parse(await decryptBackup(parsed,password));
   }
   const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};loadFailure=null;model=imported;filter='all';save();notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
-  $('deleteAll').addEventListener('click',()=>{if(confirm('Alle lokalen Positionen, Stichtage UND API-Schlüssel endgültig löschen? Stelle vorher ein Backup sicher.')){loadFailure=null;model=blankModel();save();notify('Alle lokalen Daten gelöscht.');}});
-  $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+  $('deleteAll').addEventListener('click',()=>{
+ if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
+ try{
+  purgeLocalAppData(localStorage);
+  loadFailure=null;model=blankModel();filter='all';render();
+  notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
+ }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
+});
+  const apiCredentialFields=['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'];
+$('clearApiKeys').addEventListener('click',()=>{
+ if(!confirm('Alle gespeicherten API-Schlüssel und den privaten Solana-RPC-Zugang auf diesem Gerät entfernen? Portfolio und Konten bleiben erhalten.'))return;
+ try{
+  for(const key of apiCredentialFields)model.settings[key]='';
+  model.settings.solanaRpc=defaultSettings().solanaRpc;
+  save();
+  purgeLegacySnapshots(localStorage);
+  for(const key of apiCredentialFields)$('apiSettings').elements[key].value='';
+  $('solanaRpc').value=model.settings.solanaRpc;
+  notify('API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
+ }catch(error){
+  notify('Zugangsdaten konnten nicht vollständig entfernt werden. Bitte den lokalen Speicher prüfen.',true);
+ }
+});
+$('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
    const button=$('testSolanaRpc'),status=$('solanaRpcTestStatus'),rpc=$('solanaRpc').value.trim();
    button.disabled=true;
