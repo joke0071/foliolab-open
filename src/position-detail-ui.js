@@ -3,6 +3,26 @@ import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {tradingViewIdentifier} from './security-sources.js';
 
+/** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
+ * Always display a complete, credential-safe explanation rather than a raw
+ * truncated provider exception. */
+export function safeHistoryError(error){
+ const reason=String(error?.message||error||'');
+ if(/EODHD im Browser|Netzwerk\/CORS|NetworkError|Failed to fetch|Load failed|Zeitüberschreitung/i.test(reason))
+  return 'Der Kursanbieter ist aus diesem Browser nicht erreichbar. Möglich sind CORS, Netzwerkfilter oder eine Verbindungssperre. Der API-Schlüssel konnte deshalb nicht überprüft werden.';
+ if(/HTTP 401|HTTP 403|HTTP 402|Zugang|Tarif/i.test(reason))
+  return 'Der Kursanbieter hat den Abruf abgelehnt. Bitte API-Schlüssel, Tarif und freigeschaltete Börsen prüfen.';
+ if(/429|Ratenlimit|rate limit|quota/i.test(reason))
+  return 'Das Abruflimit ist erreicht. Bitte später erneut versuchen oder den API-Tarif prüfen.';
+ if(/Zu wenige|weniger als zwei|nicht genügend|keine.*Kursdaten/i.test(reason))
+  return 'Für den ausgewählten Zeitraum liegen nicht genug historische Kurse vor. Bitte einen längeren Zeitraum wählen.';
+ return 'Der Kursanbieter konnte aktuell keinen verlässlichen Kursverlauf liefern. Bitte Datenquelle, Börsenkürzel und Verbindung prüfen.';
+}
+function collapsedHistory(message,{esc,id='',retry=false}){
+ const action=retry?'<button type="button" class="position-history-retry" data-action="retry-price-chart" data-id="'+esc(id)+'">Erneut prüfen</button>':'';
+ return '<details class="position-history-compact"><summary>Kursverlauf nicht verfügbar</summary><p class="position-history-unavailable">'+esc(message)+'</p>'+action+'</details>';
+}
+
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
 export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
  const account=model.accounts.find(a=>a.id===p.accountId);
@@ -33,9 +53,9 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const controls=needsOwnChart?'<div class="position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
    POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>':'';
  const hasMarketKey=Boolean(model.settings?.eodhdKey||model.settings?.fmpKey||model.settings?.twelveKey);
- const noMarketChart=isSecurity&&!needsOwnChart?'<p class="position-history-unavailable">'+
-   (hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.')+
-   '</p>':'';
+ const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
+   hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.',
+   {esc}):'';
  const extraTools=isSecurity?'<details class="position-chart-options"><summary>Weitere Kursoptionen</summary><div class="position-chart-options-body">'+csvTool+publicChart+'</div></details>':'';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
    quoteCredit+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+extraTools;
@@ -56,6 +76,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
+  mount.querySelector('.position-period')?.classList.remove('hidden');
   attachChartInteractions(target);
   if(source.startsWith('CoinPaprika')){
    const credit=document.createElement('a');credit.href='https://coinpaprika.com/';
@@ -66,17 +87,15 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  };
  const fallback=(message)=>{
   if(!isCurrent())return;
-  target.replaceChildren();
-  const p=document.createElement('p');p.className='position-history-unavailable';
-  p.textContent=message||'Kein verifizierter Marktpreisverlauf für diesen Zeitraum verfügbar.';
-  target.append(p);
+  mount.querySelector('.position-period')?.classList.add('hidden');
+  target.innerHTML=collapsedHistory(message,{esc,id:position.id,retry:true});
   if(position.kind==='crypto'&&/^[a-z0-9-]{2,100}$/.test(position.coinId||'')){
    const link=document.createElement('a');
    link.href='https://www.coingecko.com/en/coins/'+encodeURIComponent(position.coinId);
    link.target='_blank';link.rel='noopener noreferrer';
    link.className='position-history-external';
    link.textContent='Kursverlauf bei CoinGecko öffnen ↗';
-   target.append(link);
+   target.querySelector('.position-history-compact')?.append(link);
   }
  };
  const imported=importedHistoryForPeriod(model,position,days);
@@ -89,7 +108,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    return;
   }catch(error){
    if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
-   fallback('Kursverlauf nicht verfügbar: '+String(error?.message||'Datenquelle nicht erreichbar.').slice(0,130));
+   fallback(safeHistoryError(error));
    return;
   }
  }
