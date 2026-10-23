@@ -400,3 +400,9 @@
  .settings-summary strong{font-size:12px}
  .source-actions .btn{min-width:0;width:100%;white-space:normal;line-height:1.4}
 }
+
+/* Keep long localized settings actions inside narrow 320px screens. */
+.data-source-panel .button-row{display:flex;flex-wrap:wrap;gap:9px}
+.data-source-panel .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+.data-source-panel .source-detail,.data-source-panel .field,.data-source-panel form{min-width:0;max-width:100%}
+.data-source-panel .field input,.data-source-panel .field select{min-width:0;max-width:100%}
