@@ -60,7 +60,19 @@ try{
  await other.locator('#addProvider').click();
  await other.locator('#providerName').fill('Stale Tab B');
  await other.locator('#editorForm button[type="submit"]').click();
- await other.locator('#toast').getByText(/nicht gespeichert/).waitFor();
+ await other.waitForTimeout(600);
+ const state=await other.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+  const db=await openPortfolioDB();try{
+   const record=await readPortfolioRecord(db);
+   return {revision:record.revision,providers:JSON.parse(record.raw).providers.map(x=>x.name),
+     toast:document.querySelector('#toast')?.textContent,
+     dialogOpen:document.querySelector('#editDialog')?.open,
+     notice:document.querySelector('#notice')?.textContent,
+     mode:localStorage.getItem('foliolab-open-storage-mode')};
+  }finally{db.close();}
+ });
+ assert.match(state.toast||'',/nicht gespeichert/,'Stale IDB form must reject: '+JSON.stringify(state));
  const afterConflict=await page.evaluate(async()=>{
   const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
   const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
