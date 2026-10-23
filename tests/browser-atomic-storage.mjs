@@ -119,6 +119,40 @@ try {
   assert.ok(!migration.record.raw.includes('SECRET'));
   assert.equal((await read(a)).revision, 4);
 
+  // Legacy v2 and v3 backups are also staged without mutating the source.
+  for (const version of [2, 3]) {
+    const migrated = await b.evaluate(async ({modulePath, version}) => {
+      const {openPortfolioDB, stageLegacyPortfolio} = await import(modulePath);
+      const {blankModel, STORE_KEY} = await import('/src/model.js');
+      const m = blankModel();
+      m.version = version;
+      m.settings.coinGeckoKey = 'PRIVATE_KEY_NOT_FOR_IDB';
+      const legacy = JSON.stringify(m);
+      localStorage.setItem(STORE_KEY, legacy);
+      const db = await openPortfolioDB();
+      try {
+        const result = await stageLegacyPortfolio(db, localStorage, {expectedRevision: version + 2});
+        return {...result, unchangedBytes: localStorage.getItem(STORE_KEY) === legacy};
+      } finally { db.close(); }
+    }, {modulePath, version});
+    assert.equal(migrated.record.revision, version + 3);
+    assert.equal(migrated.legacyUnchanged, true);
+    assert.equal(migrated.unchangedBytes, true);
+    assert.equal(JSON.parse(migrated.record.raw).version, 3);
+    assert.ok(!migrated.record.raw.includes('PRIVATE_KEY_NOT_FOR_IDB'));
+  }
+  const beforeBadMigration = await read(a);
+  await b.evaluate(key => localStorage.setItem(key, '{damaged'), 'foliolab-open-v1');
+  await assert.rejects(
+    () => b.evaluate(async modulePath => {
+      const {openPortfolioDB, stageLegacyPortfolio} = await import(modulePath);
+      const db = await openPortfolioDB();
+      try { return await stageLegacyPortfolio(db, localStorage, {expectedRevision: 6}); }
+      finally { db.close(); }
+    }, modulePath),
+    /Unexpected token|JSON/
+  );
+  assert.deepEqual(await read(a), beforeBadMigration);
   // An explicit stale revision during a competing import is rejected.
   await assert.rejects(() => write(a, 3, 'Old import'), /anderen Tab geändert/);
   console.log('ATOMIC-STORAGE: competing writes, conflicts, quota rollback, tombstone, key-free v1 migration PASS');

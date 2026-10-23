@@ -5,6 +5,17 @@
 **Finaler Audit-PR:** `audit/2026-10-23-final-legacy-quotes-chevrons`, Service Worker v72.  
 **Geltungsbereich:** Community-PWA FolioLab Open; keine Änderung der privaten FolioLab-Instanz.
 
+## Nachtrag: Release v75 und Folgeprojekt #44
+
+Am 23.10.2026 wurde nach dem ursprünglichen v72-Auditstand die **Produktionsversion v75** veröffentlicht (Merge-Commit `d415a749e9ac62f868e692d5a3c62d034abb57b3`, [PR #55](https://github.com/joke0071/foliolab-open/pull/55)). Das zugehörige GitHub-Actions-Push-Workflow-Ergebnis ist **erfolgreich** (Unit-, Chromium-, Firefox-/WebKit- und GitHub-Pages-Deployment-Checks).
+
+- In v75 ist `src/atomic-storage.js` als **noch nicht aktivierter** transaktionaler IndexedDB-Speicherkern enthalten. Versionierte Writes, Mehr-Tab-CAS, Tombstone-Reset und explizite schlüsselfreie v1/v2/v3-Staging-Schnittstelle bilden die technische Grundlage der Folgearbeit.
+- Die produktive App verwendet weiterhin `localStorage`; es gibt **keine** automatische Übertragung bestehender Portfolios und **keine** vollständige atomare Garantie für die aktuell genutzten Schreibvorgänge.
+- Die Aktivierung verlangt zuerst die dokumentierten asynchronen UI-/Import-/Reset-Umbauten, Rückfallebenen sowie umfangreiche Migrationstests. Issue #44 bleibt offen. Siehe `docs/INDEXEDDB_STAGED_MIGRATION_2026-10-23.md`.
+- Issue #52 zu Kapitalmaßnahmen mit Barausgleich bleibt bewusst unverändert offen.
+
+Die nachfolgenden v71-/v72-Angaben sind **historische Grundlagen des ursprünglichen Audits**, keine Behauptung über die aktuellste veröffentlichte Version.
+
 ## Abgeschlossene Auditschwerpunkte
 
 1. **Persistenz und Recovery:** keine stillschweigende Rücksetzung beschädigter Portfolios; Speicherquoten-Fehlerbehandlung; Warnungen und Schreibsperre für erkannte konkurrierende Tabs; invalides Backup verändert keine gespeicherten Bytes.
@@ -24,7 +35,7 @@
 
 | GitHub-Issue | Status / Risiko | Begründung |
 |---|---|---|
-| [#44](https://github.com/joke0071/foliolab-open/issues/44) | Offen · P2 | `localStorage` hat weder garantierte atomare Multi-Tab-Transaktionen noch unbegrenzte Kapazität. IndexedDB nur nach eigenem versioniertem Migrations-/Rollback-Konzept. |
+| [#44](https://github.com/joke0071/foliolab-open/issues/44) | Offen · P2 | `localStorage` hat weder garantierte atomare Multi-Tab-Transaktionen noch unbegrenzte Kapazität. Ein inaktiver IndexedDB-Speicherkern ist in v75 vorhanden; der kontrollierte Produktivwechsel mit Migration, Rollback und UI-Integration steht aus. |
 | [#52](https://github.com/joke0071/foliolab-open/issues/52) | Offen · P2 | Eine Kapitalmaßnahme mit tatsächlicher Barabfindung benötigt gesonderte Geld- und steuerlich nachvollziehbare Basisbuchungen. Unbelegte Werte werden nicht erfunden. |
 
 **Weitere dokumentierte Grenzen:** Geräte mit schwacher Leistung, manuelle Screenreader-/Zoom-Tests, ein formaler OWASP-ASVS-/Penetrationstest, Sicherheits-HTTP-Header bei GitHub Pages und weiterhin unverschlüsselte lokale API-Zugangsdaten. Watch-only-Blockchain-Abfragen hängen von Drittanbieter-Abdeckung und Limits ab.

@@ -1,3 +1,11 @@
+## PWA-Revision v75 — 2026-10-23
+
+- Erste, bewusst noch nicht aktivierte IndexedDB-Speicherkomponente: transaktionale Revisionen und Mehr-Tab-Konfliktschutz per atomarem Compare-and-Swap.
+- Revisions-Tombstones verhindern das Wiederherstellen gelöschter Portfolios durch veraltete Tabs.
+- Opt-in-Migrationsschnittstelle für alte v1/v2/v3-Portfolioformate ohne automatische Übertragung; API-Keys bleiben aus der neuen Kopie ausgeschlossen.
+- Browser-Regression für parallele Schreibvorgänge, fehlgeschlagene Transaktionen, Wiederherstellung und Offline-Modulcache.
+- Aktiver Speichertyp bleibt unverändert `localStorage`. Weitere Schritte und offene Risiken in `docs/INDEXEDDB_STAGED_MIGRATION_2026-10-23.md`.
+
 ## 1.3.3 — 2026-10-22
 
 - Entfernt alle vier fest hinterlegten Beispiel-ETFs aus der sichtbaren Anlage-Suche.
