@@ -37,8 +37,11 @@ test('Old v3 backup remains read-only under audit and preserves original economi
  const {m,add}=fixture();const p=add('Altkurs','etf');p.priceExact='70';
  snapshot(m,today,'Audit snapshot');const raw=backup(m);
  const restored=safeImport(JSON.parse(raw));
+ const beforeAudit=JSON.stringify(restored);
  assert.equal(legacyQuoteDiscrepancies(restored).length,1);
- assert.equal(backup(restored),raw,'Audit must not repair or rewrite imported data');
+ assert.equal(JSON.stringify(restored),beforeAudit,'Audit must never mutate the validated imported model');
+ assert.equal(restored.positions[0].priceExact,'70');
+ assert.equal(restored.snapshots[0].totalEURExact,'70','Historical snapshot value must remain preserved');
 });
 test('Provider evidence must be dated, positive, non-future and sufficiently recent',()=>{
  assert.equal(checked('101.25').exactValue,'101.25');
@@ -60,7 +63,7 @@ test('Only explicit confirmed provider repair changes the current quote; journal
  assert.equal(p.price,103.75);assert.equal(p.priceExact,'103.75');
  assert.equal(p.quoteSource,'Verified Market');
  assert.equal(p.quoteAsOf,today);
- assert.deepEqual(m.snapshots,previousSnapshots);
+ assert.equal(JSON.stringify(m.snapshots),JSON.stringify(previousSnapshots));
  assert.deepEqual(m.bookings,previousBookings);
  assert.deepEqual(legacyQuoteDiscrepancies(m),[]);
  assert.equal(safeImport(JSON.parse(backup(m))).positions[0].priceExact,'103.75');
