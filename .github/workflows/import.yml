@@ -55,6 +55,7 @@ jobs:
           node tests/browser-account-opening.mjs
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
+          node tests/browser-solana-rpc-help.mjs
           node tests/browser-position-search.mjs
           node tests/browser-position-details.mjs
           node tests/browser-asset-wizard.mjs
