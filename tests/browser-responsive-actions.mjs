@@ -51,7 +51,26 @@ try{
   await page.locator(nav+' [data-page="history"]').click();
   assert.equal(await page.locator('#historyPage #addWallet').count(),0,'History must not have a wallet action');
   assert.equal((await page.locator('#historyCalendarDisclosure > summary').textContent()).trim(),'','Calendar trigger must stay icon-only');
-  assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared tile must contain exactly two disclosures');
+  assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
+  const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
+   const container=getComputedStyle(el);
+   const separator=getComputedStyle(el.querySelector('#snapshotManager'));
+   const performance=getComputedStyle(el.querySelector('#performanceDetails'));
+   return {
+    border:container.borderTopWidth,
+    background:container.backgroundColor,
+    separator:separator.borderTopWidth,
+    separatorStyle:separator.borderTopStyle,
+    performanceBorder:performance.borderTopWidth,
+    performanceBackground:performance.backgroundColor
+   };
+  });
+  assert.equal(insightStyle.border,'0px','History disclosures must have no enclosing border');
+  assert.equal(insightStyle.background,'rgba(0, 0, 0, 0)','History disclosures must have no card background');
+  assert.equal(insightStyle.separator,'1px','History rows must be separated by a single thin line');
+  assert.equal(insightStyle.separatorStyle,'solid','Separator should be a continuous thin line');
+  assert.equal(insightStyle.performanceBorder,'0px','Renditeauswertung must not have its own border');
+  assert.equal(insightStyle.performanceBackground,'rgba(0, 0, 0, 0)','Renditeauswertung must not have a card surface');
   assert.equal(await page.locator('#historyPage .history-insights > details[open]').count(),0,'Both disclosures must start collapsed');
   assert.equal(await page.locator('.side-caption, .mobile-label').count(),0,'Remove redundant portfolio header labels');
   const add=page.locator('#addSnapshot');
