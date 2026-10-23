@@ -18,7 +18,7 @@ try{
  await second.locator('#addProvider').click();
  await second.locator('#editorForm [name="name"]').fill('Provider Tab B');
  await second.locator('#saveDialog').click();
- assert.match(await second.locator('#toast').innerText(),/Änderung nicht gespeichert/);
+ assert.match(await second.locator('#toast').innerText(),/Portfolio wurde in einem anderen Tab geändert/);
  let recorded=await second.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.deepEqual(recorded.providers.map(x=>x.name),['Provider Tab A'],'Stale tab must never overwrite another tab');
  assert.match(await second.locator('#notice').innerText(),/neu laden/);
