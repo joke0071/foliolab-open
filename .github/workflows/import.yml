@@ -85,6 +85,7 @@ jobs:
           node tests/browser-security-sources.mjs
           node tests/live-probes.mjs
           node tests/browser-accessibility-audit.mjs
+          node tests/browser-portfolio-scale.mjs
   cross-engine:
     runs-on: ubuntu-latest
     steps:
