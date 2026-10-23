@@ -57,7 +57,7 @@ test('Rendered position drills include exact account context and escape injected
  assert.match(html,/open/);assert.ok(!html.includes('<img src=x>'));
  const detail=positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});
  assert.match(detail,/Kurs je Einheit/);assert.match(detail,/Positionswert/);
- assert.match(detail,/Anteil am Konto/);assert.match(detail,/Kein nativer Kursverlauf/);assert.match(detail,/Weitere Kursoptionen/);assert.doesNotMatch(detail,/data-position-range/);
+ assert.match(detail,/Anteil am Anbieter/);assert.match(detail,/Kein nativer Kursverlauf/);assert.match(detail,/Weitere Kursoptionen/);assert.doesNotMatch(detail,/data-position-range/);
  p.valuationMode='excluded';
  assert.match(positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR}),/Nicht doppelt mitgezählt/);
  p.valuationMode='liability';
