@@ -20,10 +20,19 @@ function restored(record){
  return m;
 }
 export class PortfolioStorage {
- constructor(storage=globalThis.localStorage){this.storage=storage;this.mode='local';this.db=null;this.revision=null;}
+ constructor(storage=globalThis.localStorage){
+  this.storage=storage;this.mode='local';this.db=null;this.revision=null;
+  // Capture the source bytes without re-importing legacy v1/v2 portfolios.
+  // v1 normalization can create fresh internal account IDs on each parse.
+  try{this.legacyRaw=storage.getItem(STORE_KEY);}catch{this.legacyRaw=undefined;}
+ }
  get isIndexedDB(){return this.mode==='idb';}
  async initialize(){
-  if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)return load(this.storage);
+  if(this.storage.getItem(MODE_KEY)!==MODE_VALUE){
+   const m=load(this.storage);
+   this.legacyRaw=this.storage.getItem(STORE_KEY);
+   return m;
+  }
   this.mode='idb'; // marker decides canonical store, even if opening IndexedDB fails
   this.db=await openPortfolioDB(); // never fall back to stale localStorage on error
   const record=await readPortfolioRecord(this.db); // fail closed
@@ -39,7 +48,11 @@ export class PortfolioStorage {
   return restored(current);
  }
  async save(model){
-  if(!this.isIndexedDB){persist(model,this.storage);return;}
+  if(!this.isIndexedDB){
+   persist(model,this.storage);
+   this.legacyRaw=this.storage.getItem(STORE_KEY);
+   return;
+  }
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
@@ -50,22 +63,9 @@ export class PortfolioStorage {
  async migrate(model){
   if(this.isIndexedDB)throw Error('IndexedDB ist bereits aktiv.');
   const original=this.storage.getItem(STORE_KEY);
-  if(original!==null){
-   // The current tab may have loaded an older portfolio before another tab
-   // committed. Comparing bytes *only after* the migration would miss that
-   // pre-existing divergence and silently adopt an obsolete in-memory model.
-   const parsed=JSON.parse(original);
-   const source=safeImport(parsed);
-   const sourceSettings={...defaultSettings()};
-   for(const key of Object.keys(sourceSettings)){
-    if(Object.hasOwn(parsed.settings||{},key))sourceSettings[key]=parsed.settings[key];
-   }
-   if(sourceSettings.solanaRpc==='https://api.mainnet-beta.solana.com')
-    sourceSettings.solanaRpc='https://solana-rpc.publicnode.com';
-   if(backup(source)!==backup(model)||
-      JSON.stringify(sourceSettings)!==JSON.stringify(model.settings))
-    throw Error('Das lokale Portfolio wurde in einem anderen Tab geändert. Bitte neu laden und die Migration erneut starten.');
-  }
+  if(this.legacyRaw!==undefined&&original!==this.legacyRaw)
+   throw Error('Das lokale Portfolio wurde in einem anderen Tab geändert. Bitte neu laden und die Migration erneut starten.');
+  if(original!==null)safeImport(JSON.parse(original)); // reject corrupt source without rebuilding ID comparisons
   const db=await openPortfolioDB();
   try{
    const existing=await readPortfolioRecord(db);
