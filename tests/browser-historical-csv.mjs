@@ -25,6 +25,8 @@ try{
  await page.reload();
  await page.locator('#providerOverview .provider-accordion>summary').click();
  await page.locator('[data-position-id="etf-csv"]>summary').click();
+ assert.equal(await page.locator('.position-history-compact').getAttribute('open'),null);
+ await page.locator('.position-history-compact>summary').click();
  assert.match(await page.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  const csv='Datum;Schlusskurs;ISIN;Währung\n'+day(5)+';82,2;IE00BG0SKF03;EUR\n'+day(2)+';85,1;IE00BG0SKF03;EUR\n'+day(1)+';86,2;IE00BG0SKF03;EUR';
  const before=await getModel();
