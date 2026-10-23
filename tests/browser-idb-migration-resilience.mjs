@@ -93,7 +93,42 @@ async function testQuotaBeforeCommit(){
   assert.deepEqual(result,{denied:true,record:null,legacyUnchanged:true,marker:null});
  }finally{await context.close();}
 }
+async function testLegacyFormats(){
+ for(const version of [1,2]){
+  const context=await browser.newContext(),page=await context.newPage();
+  try{
+   await page.goto('http://127.0.0.1:4173/');
+   const result=await page.evaluate(async version=>{
+    const {blankModel,createProvider,STORE_KEY}=await import('/src/model.js');
+    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
+    const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+    const old=blankModel();
+    old.version=version;old.providers.push(createProvider({name:'Legacy v'+version}));
+    if(version===1)delete old.accounts;
+    localStorage.setItem(STORE_KEY,JSON.stringify(old));
+    const raw=localStorage.getItem(STORE_KEY);
+    const service=new PortfolioStorage();
+    const normalized=await service.initialize();
+    await service.migrate(normalized);
+    const db=await openPortfolioDB();
+    const record=await readPortfolioRecord(db);
+    db.close();service.close();
+    return {mode:localStorage.getItem(MODE_KEY),bytesPreserved:localStorage.getItem(STORE_KEY)===raw,
+     revision:record.revision,version:JSON.parse(record.raw).version,
+     accounts:JSON.parse(record.raw).accounts.length,name:JSON.parse(record.raw).providers[0].name};
+   },version);
+   assert.equal(result.mode,'idb-v1');
+   assert.equal(result.bytesPreserved,true);
+   assert.equal(result.revision,1);
+   assert.equal(result.version,3);
+   assert.ok(result.accounts>=0);
+   assert.equal(result.name,'Legacy v'+version);
+   if(version===1)assert.ok(result.accounts>=1);
+  }finally{await context.close();}
+ }
+}
 try{
  await testStaleSource();await testInterruptedMarker();await testQuotaBeforeCommit();
- console.log('IDB MIGRATION RESILIENCE: stale legacy source, interrupted marker retry, quota rollback PASS');
+ await testLegacyFormats();
+ console.log('IDB MIGRATION RESILIENCE: stale bytes, interrupted marker retry, quota rollback, v1/v2 normalization PASS');
 }finally{await browser.close();}
