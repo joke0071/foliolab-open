@@ -63,8 +63,10 @@ try{
   assert.equal((await page.locator('#addSnapshot .history-add-label').textContent()).trim(),'Stichtag','Desktop snapshot text must stay short');
   const calendarStroke=await page.locator('#historyCalendarDisclosure > summary svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
   assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
-  const plusWeight=await page.locator('#historyPage .history-add-glyph').evaluate(el=>Number(getComputedStyle(el).fontWeight));
-  assert.ok(plusWeight>=600,'History plus icon should not be lighter than other actions');
+  const plusIcon=page.locator('#historyPage .history-add-glyph svg');
+  assert.equal(await plusIcon.count(),1,'History plus must use the same SVG icon geometry as other action buttons');
+  const plusStroke=await plusIcon.evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
+  assert.ok(plusStroke>=2.1,'History plus must match the global action stroke');
   assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
   const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
    const container=getComputedStyle(el);
@@ -98,16 +100,27 @@ try{
     label:getComputedStyle(el.querySelector('.history-add-label')).display,scroll:document.documentElement.scrollWidth,
     background:style.backgroundColor,display:style.display,nowrap:style.whiteSpace,
     controlsRight:controls.right,addRight:r.right,calendarRight:calendar.right,addLeft:r.left,
-    labelCenter:label.top+label.height/2,buttonCenter:r.top+r.height/2};
+    labelCenter:label.top+label.height/2,buttonCenter:r.top+r.height/2,
+    calendarStyle: (()=>{const calendarEl=el.closest('.history-controls').querySelector('#historyCalendarDisclosure > summary');const r=calendarEl.getBoundingClientRect(),c=getComputedStyle(calendarEl),svg=calendarEl.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height,borderRadius:c.borderRadius,color:c.color,background:c.backgroundColor,svgWidth:svg.width,svgHeight:svg.height}})(),
+    plusIconSize:(()=>{const r=el.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height}})(),
+    borderRadius:style.borderRadius,color:style.color};
   });
   assert.equal(history.label==='none',mobile,'Stichtag label breakpoint '+width);
   assert.ok(history.within,'History add button escapes card at '+width);
   assert.ok(history.scroll<=width+1,'History horizontal overflow at '+width);
   if(mobile){
-   assert.ok(history.w<=38,'History add action not compact on '+width);
+   const expectedSide=width<=360?38:40;
+   assert.equal(history.w,expectedSide,'History plus must equal other mobile action size at '+width);
+   assert.equal(history.h,expectedSide,'History plus must equal other mobile action height at '+width);
+   assert.equal(history.calendarStyle.width,expectedSide,'History calendar must equal other mobile action size at '+width);
+   assert.equal(history.calendarStyle.height,expectedSide,'History calendar must equal other mobile action height at '+width);
+   assert.equal(history.borderRadius,history.calendarStyle.borderRadius,'Calendar and plus corner radii must match');
+   assert.equal(history.background,history.calendarStyle.background,'Calendar and plus background must match');
+   assert.equal(history.color,history.calendarStyle.color,'Calendar and plus icon color must match');
+   assert.equal(history.plusIconSize.width,history.calendarStyle.svgWidth,'Calendar and plus icon sizes must match');
+   assert.equal(history.plusIconSize.height,history.calendarStyle.svgHeight,'Calendar and plus icon heights must match');
    assert.ok(Math.abs(history.addRight-history.controlsRight)<=2,'History buttons should sit at right edge on '+width+': '+JSON.stringify(history));
    assert.ok(history.addLeft-history.calendarRight>=3,'Mobile calendar and plus must remain separate on '+width);
-   assert.equal(history.background,'rgb(255, 255, 255)','Mobile plus retains outlined style on '+width);
   }else{
    assert.ok(history.w>70,'History add action must have room for desktop Stichtag text at '+width);
    assert.ok(['flex','inline-flex'].includes(history.display),'Desktop plus and Stichtag text must use flex layout at '+width);
