@@ -15,6 +15,7 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.match(await page.locator('#backupStatus').innerText(),/für einen Download erstellt/);
  assert.equal(await page.locator('#solanaRpc').isVisible(),false);
+ await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  await page.locator('#solanaRpc').evaluate(el=>el.closest('details').querySelector('summary').click());
  assert.equal(await page.locator('#solanaRpc').isVisible(),true);
  await page.locator('#addProvider').click();
