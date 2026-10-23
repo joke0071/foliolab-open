@@ -878,7 +878,10 @@ function openBooking(){
   fx.required=Boolean(foreign);
   if(!foreign){fx.value='1';form.elements.fxRateDate.value='';form.elements.fxSource.value='';}
   else if(changed){fx.value='';form.elements.fxRateDate.value='';form.elements.fxSource.value='';$('historicalFxNote').textContent='Verwende den Kurs deiner Abrechnung oder lade einen Referenzkurs. Referenzkurse können abweichen.';}
-  $('bookingQuantityWrap').querySelector('[name="quantity"]').required=needsQuantity;
+  const quantityInput=$('bookingQuantityWrap').querySelector('[name="quantity"]');
+  quantityInput.required=needsQuantity;
+  if(!needsQuantity)quantityInput.value='0';
+  else if(changed)quantityInput.value='';
   for(const el of $('dialogFields').querySelectorAll('.hidden [required]'))el.required=false;
   lastType=actual;lastPosition=position?.id||'';
  }
