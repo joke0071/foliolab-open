@@ -16,6 +16,7 @@ await page.route(/https:\/\/rpc-(ok|limited)\.example\.test\//,async route=>{
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="more"]').click();
+ await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  const setup=page.locator('#solanaRpcSetup');
  await setup.locator('summary').click();
  assert.match(await setup.innerText(),/Helius/);
