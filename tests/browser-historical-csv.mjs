@@ -5,8 +5,10 @@ const page=await browser.newPage({viewport:{width:390,height:850}});
 const day=n=>new Date(Date.now()-n*86400000).toISOString().slice(0,10);
 const getModel=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
 async function chooseCSV(csv,accept=true){
+ const button=page.locator('[data-action="import-price-history"]');
+ if(!await button.isVisible())await page.locator('[data-position-id="etf-csv"] .position-chart-options>summary').click();
  const chooser=page.waitForEvent('filechooser');
- await page.locator('[data-action="import-price-history"]').click();
+ await button.click();
  const picker=await chooser;
  page.once('dialog',dialog=>accept?dialog.accept():dialog.dismiss());
  await picker.setFiles({name:'prices.csv',mimeType:'text/csv',buffer:Buffer.from(csv,'utf8')});
@@ -23,7 +25,7 @@ try{
  await page.reload();
  await page.locator('#providerOverview .provider-accordion>summary').click();
  await page.locator('[data-position-id="etf-csv"]>summary').click();
- assert.match(await page.locator('.position-history-unavailable').innerText(),/Keine bestätigte Kursquelle/);
+ assert.match(await page.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  const csv='Datum;Schlusskurs;ISIN;Währung\n'+day(5)+';82,2;IE00BG0SKF03;EUR\n'+day(2)+';85,1;IE00BG0SKF03;EUR\n'+day(1)+';86,2;IE00BG0SKF03;EUR';
  const before=await getModel();
  await chooseCSV(csv);
@@ -52,6 +54,7 @@ try{
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(overflow<=1,'CSV import details overflow at '+width);
  }
+ await row.locator('.position-chart-options>summary').click();
  page.once('dialog',d=>d.accept());
  await page.locator('[data-action="remove-price-history"]').click();
  assert.equal((await getModel()).priceHistories['etf-csv'],undefined);
