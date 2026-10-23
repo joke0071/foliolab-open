@@ -246,9 +246,9 @@ async function confirmLegacyQuoteRepair(positionId,field,button){
   const checked=verifiedCurrentQuote(value,{source,date});
   const old=field==='price'?p.priceExact:p.fxRateExact;
   const label=field==='price'?'Kurs '+p.currency:'Wechselkurs '+p.currency+'/EUR';
-  if(!confirm('Korrektur für „'+p.name+'“ bestätigen?\\n'+label+': bisher exakt '+old+
-   ' · neuer Anbieterwert '+checked.exactValue+'\\nQuelle: '+checked.source+' · Kursdatum: '+checked.date+
-   '\\n\\nZuerst wird ein Backup der ursprünglichen Daten heruntergeladen. Historische Buchungen und Stichtage bleiben unverändert.'))return;
+  if(!confirm('Korrektur für „'+p.name+'“ bestätigen?\n'+label+': bisher exakt '+old+
+   ' · neuer Anbieterwert '+checked.exactValue+'\nQuelle: '+checked.source+' · Kursdatum: '+checked.date+
+   '\n\nZuerst wird ein Backup der ursprünglichen Daten heruntergeladen. Historische Buchungen und Stichtage bleiben unverändert.'))return;
   downloadBackup();
   applyVerifiedQuoteRepair(model,p.id,field,checked,{confirmed:true});
   save();
