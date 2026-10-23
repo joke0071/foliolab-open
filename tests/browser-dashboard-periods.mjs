@@ -38,6 +38,7 @@ try{
  }
  const before=await summary.evaluate(el=>getComputedStyle(el,'::after').transform);
  await summary.click();
+ await page.waitForTimeout(220);
  const after=await summary.evaluate(el=>getComputedStyle(el,'::after').transform);
  assert.notEqual(after,before,'Arrow turns when returns detail opens');
  console.log('RETURNS CHEVRON: right aligned, unified caret and expanded state on 320–1440px PASS');
