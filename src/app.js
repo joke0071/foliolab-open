@@ -51,7 +51,7 @@ async function save(){
  saving=true;
  try{
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
-  if(otherTabChangedPortfolio)throw Error('Portfolio in einem anderen Tab geändert. Diesen Tab erst neu laden.');
+  if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
   await portfolioStore.save(model);
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
