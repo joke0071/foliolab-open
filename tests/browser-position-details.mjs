@@ -38,6 +38,8 @@ try{
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="history"]').click();
+ assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
+ await page.locator('#snapshotManager>summary').click();
  const list=page.locator('#snapshotList .history-row');
  assert.equal(await list.count(),2);
  assert.equal(await list.first().locator('[data-action="edit-snapshot"]').count(),1);
