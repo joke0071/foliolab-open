@@ -38,7 +38,8 @@ try{
  });
  await page.reload();
  await page.locator('#sidebarNav [data-page="dashboard"]').click();
- assert.match(await page.locator('#totalHint').innerText(),/Bewertung eingeschränkt: 1 ohne Kurs/);
+ assert.match(await page.locator('#totalHint button').innerText(),/1 Position prüfen/);
+  assert.match(await page.locator('#totalHint button').getAttribute('title'),/Bewertung eingeschränkt: 1 ohne Kurs/);
  await page.evaluate(async()=>{
   const {load,persist}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js');
   const m=load();
