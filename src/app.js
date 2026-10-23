@@ -70,14 +70,28 @@ function field(label,name,val='',type='text',attributes=''){return `<label class
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function render(){switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}}
+function showValuationIssues(){
+ filter='__review';
+ positionLimit=100;
+ $('positionSearch').value='';
+ go('positions');
+ $('positionQuoteDetails').open=true;
+ const first=$('positionList').querySelector('.position-entry .holding-expand');
+ if(first)first.open=true;
+ const active=$('positionFilters').querySelector('[data-filter="__review"]');
+ active?.scrollIntoView({block:'start',behavior:'instant'});
+ active?.focus({preventScroll:true});
+}
 function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);$('totalValue').textContent=money(total);
-  const warning=valuationHeadline(valuationWarnings(model)),hint=$('totalHint');
+  const issues=valuationIssues(model),hint=$('totalHint');
   hint.replaceChildren();
-  if(warning){
+  if(issues.length){
    const review=document.createElement('button');
    review.type='button';review.className='hero-valuation-link';
-   review.textContent=warning+' · Betroffene Positionen ansehen →';
-   review.addEventListener('click',()=>{filter='__review';go('positions');});
+   review.textContent=`${issues.length} Position${issues.length===1?'':'en'} prüfen ›`;
+   review.title=valuationHeadline(valuationWarnings(model))||'Betroffene Positionen ansehen';
+   review.setAttribute('aria-label',`${issues.length} Position${issues.length===1?'':'en'} mit eingeschränkter Bewertung anzeigen`);
+   review.addEventListener('click',showValuationIssues);
    hint.append(review);
   }else hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei Foliolab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
@@ -167,6 +181,12 @@ function renderPositions(){
  const breakdown=[q.stale&&q.stale+' älter als 7 Tage',q.derived&&q.derived+' aus Stichtagen',q.missing&&q.missing+' ohne Kurs',q.review&&q.review+' mit Prüfhinweis',q.undated&&q.undated+' ohne Kursdatum',q.unverified&&q.unverified+' ohne bestätigte Quelle'].filter(Boolean);
  $('quoteQualityBreakdown').textContent=breakdown.length?breakdown.join(' · '):quality.total?'Alle berücksichtigten Kurse sind aktuell bestätigt.':'Hier werden später Kursquellen und Einschränkungen erklärt.';
  const unresolved=unresolvedListings(),reviewItems=valuationIssues(model),reviewIds=new Set(reviewItems.map(x=>x.id));
+ const reviewReasons=new Map(reviewItems.map(({id,type})=>[id,({
+  missing:'Kurs fehlt',
+  derived:'Zuletzt gespeicherter Wert',
+  review:'Kursstatus unklar',
+  outdated:'Kurs älter als 7 Tage'
+ })[type]]));
  $('resolveListings').classList.toggle('hidden',unresolved.length===0);
  $('resolveListings').textContent='Zuordnungen prüfen'+(unresolved.length?' ('+unresolved.length+')':'');
  const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
@@ -192,6 +212,7 @@ function renderPositions(){
    ['Kursquelle',p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Gespeicherter Stichtag':'Nicht angegeben')],
    ['Kursstand',quoteDate||'Nicht angegeben'],
    ['Kursqualität',quality.label],
+   ...(reviewReasons.has(p.id)?[['Bewertungshinweis',reviewReasons.get(p.id)]]:[]),
    ...(p.updatedAt?[['Position zuletzt geändert',dateLabel(p.updatedAt.slice(0,10))]]:[]),
    ...(p.isin?[['ISIN',p.isin]]:[]),
    ...(p.exchange?[['Börse',p.exchange]]:[]),
@@ -203,7 +224,9 @@ function renderPositions(){
   return '<div class="position-entry"><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(p.wallet?.enabled?'wallet':'positions',21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
-   '<div class="holding-note">'+caption+'</div><div>'+tags+'</div></div></div>'+
+   '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
+   (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
+   '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
    '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button></div></div></div>'+
    '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details></div>';

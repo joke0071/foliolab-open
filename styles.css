@@ -237,9 +237,13 @@
  .field .picker-search{font-size:12px}
 }
 
-/* Compact, keyboard-accessible explanation of incomplete valuations. */
-.hero-valuation-link{background:transparent;border:0;padding:0;text-align:left;color:inherit;font:inherit;text-decoration:underline;text-decoration-color:#d9e5d38c;text-underline-offset:3px;cursor:pointer;line-height:1.55}
-.hero-valuation-link:focus-visible{outline:2px solid #fff;outline-offset:3px;border-radius:3px}
+/* Compact valuation chip; detailed context belongs in the Positionen drill-down. */
+.hero-valuation-link{display:inline-flex;align-items:center;gap:7px;max-width:100%;min-height:34px;padding:6px 11px;border:1px solid #ffffff38;border-radius:999px;background:#ffffff16;color:#e9f3e9;text-align:left;font:inherit;font-size:11px;font-weight:700;line-height:1.35;cursor:pointer}
+.hero-valuation-link::before{content:'!';display:inline-grid;place-items:center;flex:0 0 15px;width:15px;height:15px;border-radius:50%;background:#f3d89f;color:#284a35;font-size:10px;font-weight:800}
+.hero-valuation-link:hover{background:#ffffff28}
+.hero-valuation-link:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.position-review-reason{margin-top:6px;color:#855f3a;font-size:11px;font-weight:700;line-height:1.4}
+#positionFilters .filter:focus-visible{outline:2px solid #286644;outline-offset:3px}
 
 /* Dialog content scrolls independently; saving/canceling stays reachable on mobile keyboards. */
 .edit-dialog{padding:0;overflow:hidden;max-height:min(90dvh,900px)}
