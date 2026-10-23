@@ -7,6 +7,13 @@ import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY} fro
 import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
+export const REVERT_INTENT_KEY='foliolab-open-idb-revert-intent';
+// This non-secret checksum catches accidental local-copy changes, not attacks.
+function localFingerprint(raw){
+ let h=2166136261;
+ for(let i=0;i<raw.length;i++)h=Math.imul(h^raw.charCodeAt(i),16777619);
+ return raw.length+':'+(h>>>0).toString(16);
+}
 const clone = model => structuredClone(model);
 function restored(record){
  if(!record)return null;
@@ -38,6 +45,27 @@ export class PortfolioStorage {
   const record=await readPortfolioRecord(this.db); // fail closed
   if(!record)throw Error('Aktiver IndexedDB-Speicher nicht gefunden. Bitte eine Sicherung wiederherstellen.');
   this.revision=record.revision;
+  // A rollback can be interrupted AFTER the IDB tombstone has committed but
+  // BEFORE the storage-mode marker is cleared. Recover only its exact intent.
+  if(record.deleted&&record.raw===null){
+   const pending=this.storage.getItem(REVERT_INTENT_KEY);
+   if(pending!==null){
+    let intent;
+    try{intent=JSON.parse(pending);}
+    catch{throw Error('Rückwechsel-Marker beschädigt. Keine Daten automatisch übernommen.');}
+    if(intent?.revision===record.revision){
+     const raw=this.storage.getItem(STORE_KEY);
+     if(typeof raw!=='string'||localFingerprint(raw)!==intent.fingerprint)
+      throw Error('Die lokale Kopie stimmt nicht mit der Rückmigration überein. Kein automatischer Wechsel.');
+     const copy=load(this.storage); // validate legacy bytes before switching
+     this.storage.removeItem(MODE_KEY);
+     try{this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
+     this.db.close();this.db=null;this.mode='local';this.revision=null;
+     this.legacyRaw=this.storage.getItem(STORE_KEY);
+     return copy;
+    }
+   }
+  }
   return restored(record);
  }
  async reload(){
@@ -126,20 +154,32 @@ export class PortfolioStorage {
   if(current?.revision!==this.revision)throw Error('Ein anderer Tab hat den IndexedDB-Datensatz geändert. Zuerst neu laden.');
   const before=this.storage.getItem(STORE_KEY);
   const raw=JSON.stringify(clone(model));
+  const priorIntent=this.storage.getItem(REVERT_INTENT_KEY);
   this.storage.setItem(STORE_KEY,raw); // failure leaves IndexedDB canonical
   try{
+   this.storage.setItem(REVERT_INTENT_KEY,JSON.stringify({
+    revision:current.revision+1,fingerprint:localFingerprint(raw)
+   }));
    const deleted=await commitPortfolioRecord(this.db,{expectedRevision:this.revision,raw:null,settings:null});
    this.revision=deleted.revision;
   }catch(error){
-   // Restore recovery bytes only if this write is still ours.
-   if(this.storage.getItem(STORE_KEY)===raw){
-    if(before===null)this.storage.removeItem(STORE_KEY);
-    else this.storage.setItem(STORE_KEY,before);
-   }
+   // The IDB transaction did not commit, so keep it as the canonical source.
+   try{
+    if(this.storage.getItem(STORE_KEY)===raw){
+     if(before===null)this.storage.removeItem(STORE_KEY);
+     else this.storage.setItem(STORE_KEY,before);
+    }
+    if(priorIntent===null)this.storage.removeItem(REVERT_INTENT_KEY);
+    else this.storage.setItem(REVERT_INTENT_KEY,priorIntent);
+   }catch{} // never overwrite the original transaction error
    throw error;
   }
-  this.storage.removeItem(MODE_KEY); // final marker switch
+  // A crash here leaves MODE_KEY and the exact recovery intent in place. The
+  // next startup can finish the switch safely if local bytes still match.
+  this.storage.removeItem(MODE_KEY);
+  try{this.storage.removeItem(REVERT_INTENT_KEY);}catch{}
   this.mode='local';this.db.close();this.db=null;
+  this.legacyRaw=this.storage.getItem(STORE_KEY);
  }
  close(){this.db?.close();this.db=null;}
 }
