@@ -75,12 +75,14 @@ try{
  const btc=audit.locator('.legacy-quote-item').filter({hasText:'Bitcoin Altbestand'});
  const [firstBackup]=await Promise.all([page.waitForEvent('download'),btc.locator('[data-audit-fix="price"]').click()]);
  assert.match(firstBackup.suggestedFilename(),/foliolab-backup/);
+ await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.positions?.some(p=>p.name==='Bitcoin Altbestand'&&p.priceExact==='123.5'));
  let state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.find(x=>x.name==='Bitcoin Altbestand').priceExact,'123.5');
  assert.equal(state.positions.find(x=>x.name==='Bitcoin Altbestand').quoteSource,'CoinGecko');
  assert.equal(state.snapshots.length,1,'Historical snapshots must be unchanged');
  const eth=audit.locator('.legacy-quote-item').filter({hasText:'Ethereum veralteter Kurs'});
  await eth.locator('[data-audit-fix="price"]').click();
+ await page.waitForFunction(()=>String(document.getElementById('toast')?.textContent||'').startsWith('Kursprüfung:'));
  assert.match(await page.locator('#toast').innerText(),/Kursprüfung:|datierten Kurs/);
  state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.find(x=>x.name==='Ethereum veralteter Kurs').priceExact,'80',
@@ -89,6 +91,7 @@ try{
  const fx=audit.locator('.legacy-quote-item').filter({hasText:'USD ETF'});
  const [secondBackup]=await Promise.all([page.waitForEvent('download'),fx.locator('[data-audit-fix="fx"]').click()]);
  assert.match(secondBackup.suggestedFilename(),/foliolab-backup/);
+ await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.positions?.some(p=>p.name==='USD ETF'&&p.fxRateExact==='0.94'));
  state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.find(x=>x.name==='USD ETF').fxRateExact,'0.94');
  assert.equal(state.positions.find(x=>x.name==='USD ETF').fxSource,'Frankfurter');
