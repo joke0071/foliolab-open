@@ -51,3 +51,9 @@ test('Tiny fractional bookings never tolerate cent-sized quantity discrepancies'
  m.bookings.push({id:'book-micro',date:'2026-01-23',positionId:'asset-1',type:'reward',quantity:0.00000001,quantityExact:'0.00000002'});
  assert.throws(()=>safeImport(m),/Menge|Buchung/);
 });
+
+test('18-decimal wallet-style quantities are compared exactly after numeric conversion',()=>{
+ const m=valid();
+ m.bookings.push({id:'book-wei',date:'2026-01-23',positionId:'asset-1',type:'reward',quantity:0.000000000000000001,quantityExact:'0.000000000000000002'});
+ assert.throws(()=>safeImport(m),/Menge|Buchung/);
+});
