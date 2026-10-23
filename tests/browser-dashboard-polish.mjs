@@ -22,7 +22,6 @@ try {
    const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
    for(const [tab,selector] of [
     ['bookings','#bookingsPage .panel-head-actions'],
-    ['history','#historyPage .panel-head-actions'],
     ['more','#morePage .panel-head-actions']
    ]){
      await page.locator(nav+' [data-page="'+tab+'"]').click();
@@ -38,6 +37,15 @@ try {
      assert.equal(result.within,true,tab+' button escapes card at '+width+' px');
      assert.ok(result.scroll<=width+1,tab+' horizontal overflow at '+width+' px');
    }
+   await page.locator(nav+' [data-page="history"]').click();
+   const compact=await page.locator('#historyPage .history-controls').evaluate(el=>{
+     const parent=el.closest('.panel').getBoundingClientRect();
+     const items=[...el.querySelectorAll('#chartPeriods button,.history-calendar-popover>summary,#addSnapshot')].map(x=>x.getBoundingClientRect());
+     return {within:items.every(x=>x.left>=parent.left-1&&x.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
+   });
+   assert.equal(compact.within,true,'compact history controls escape card at '+width+' px');
+   assert.ok(compact.scroll<=width+1,'history horizontal overflow at '+width+' px');
+   assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
    await page.locator(nav+' [data-page="dashboard"]').click();
    assert.ok(await page.locator('#summaryStats .stat').count()===4);
    const summary=await page.locator('#summaryStats').innerText();
@@ -47,6 +55,20 @@ try {
    assert.match(axis,/Tsd\.|€ \d/);
  }
  await page.setViewportSize({width:390,height:850});
+ await page.locator('#mobileNav [data-page="history"]').click();
+ assert.match(await page.locator('#pageTitle').innerText(),/Vermögensentwicklung/);
+ await page.locator('#historyCalendarDisclosure>summary').click();
+ assert.ok(await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').count());
+ await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-18"]').click();
+ await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-21"]').click();
+ assert.equal(await page.locator('#historyCalendarDisclosure').getAttribute('open'),null);
+ await page.locator('#historyCalendarDisclosure>summary').click();
+ assert.equal(await page.locator('#historyCalendarGrid [data-calendar-day="2026-10-20"]').getAttribute('aria-pressed'),'true');
+ await page.locator('#historyCalendarReset').click();
+ assert.equal(await page.locator('#chartPeriods [data-range="all"]').getAttribute('aria-pressed'),'true');
+ assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
+ await page.locator('#snapshotManager>summary').click();
+ assert.ok(await page.locator('#snapshotList .history-row').count()>=2);
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  const accordion=page.locator('#providerOverview details').first();
  assert.equal(await accordion.getAttribute('open'),null);
@@ -58,7 +80,7 @@ try {
  await page.keyboard.press('ArrowLeft');
  assert.ok(await page.locator('#miniChart .chart-tooltip').isVisible());
  assert.match(await page.locator('#miniChart .chart-tooltip').innerText(),/900,00/);
- console.log('DASHBOARD UI responsive action groups 320–1440px, accessible chart, coherent KPIs and provider drilldowns PASS');
+ console.log('DASHBOARD UI responsive actions 320–1440px, history calendar, chart, KPIs and provider drilldowns PASS');
 }finally{
  await browser.close();
 }
