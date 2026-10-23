@@ -19,6 +19,15 @@ const q=p=>units(p.quantityExact??p.quantity);
 const setQ=(p,u)=>{p.quantityExact=exact(u);p.quantity=Number(p.quantityExact);};
 const basis=p=>p.costBasisExact!=null?units(p.costBasisExact):p.costBasisEUR==null?null:units(p.costBasisEUR);
 const setBasis=(p,u)=>{p.costBasisEUR=u==null?null:Number(exact(u));p.costBasisExact=u==null?null:exact(u);};
+// Perform a/b proportional fixed-point arithmetic with ONE final rounding.
+// Computing mul(value,div(a,b)) rounds a/b first and introduces phantom dust
+// even when value*a/b is mathematically exact (e.g. 300 * 2 / 3).
+const proportional=(value,numerator,denominator)=>{
+ if(denominator<=0n||numerator<0n)throw Error('Ungültiges Mengenverhältnis.');
+ const product=value*numerator,abs=product<0n?-product:product;
+ const rounded=(abs+denominator/2n)/denominator;
+ return product<0n?-rounded:rounded;
+};
 const remember=(m,p,v,quantity,fee,tax,fx,tradeEUR)=>{
  const entry={id:v.id||((globalThis.crypto?.randomUUID?.())||'tx-'+Date.now()+'-'+Math.random()),type:v.type,date:v.date,
    positionId:p.id,accountId:p.accountId,positionName:p.name,quantity:Number(exact(quantity)),
@@ -151,12 +160,12 @@ export function executeTransaction(model,input){
  const enough=()=>{if(qty>prev)throw Error('Abgang übersteigt den Bestand.');};
  const deductBasis=()=>{
    if(b===null||prev===0n){setBasis(p,null);return null;}
-   const used=mul(b,div(qty,prev));setBasis(p,b-used);return used;
+   const used=proportional(b,qty,prev);setBasis(p,b-used);return used;
  };
  switch(kind){
  case 'buy':positive();setQ(p,prev+qty);setBasis(p,prev===0n?cash+fee+tax:b==null?null:b+cash+fee+tax);changed=true;break;
  case 'sell':positive();enough();{const used=deductBasis();setQ(p,prev-qty);
-   if(used!==null){const realized=units(p.realizedPnLEUR??0)+cash-used-fee-tax;p.realizedPnLEUR=Number(exact(realized));p.realizedPnLExact=exact(realized);}
+   if(used!==null){const realized=units(p.realizedPnLExact??p.realizedPnLEUR??0)+cash-used-fee-tax;p.realizedPnLEUR=Number(exact(realized));p.realizedPnLExact=exact(realized);}
    changed=true;break;}
  case 'deposit':case 'withdraw':case 'dividend':case 'interest':case 'fee':case 'tax':
    if(p.kind!=='cash')throw Error('Geldbewegungen benötigen eine manuelle Guthabenposition.');
@@ -170,7 +179,7 @@ export function executeTransaction(model,input){
    positive();enough();const target=checkTarget(copy,p,input.targetPositionId);
    if(assetKey(p)!==assetKey(target)||p.currency!==target.currency)throw Error('Interner Transfer erfordert dasselbe Asset und dieselbe Währung.');
    if(target.wallet?.enabled)throw Error('Automatisches Wallet-Ziel ist nicht manuell veränderbar.');
-   const tb=basis(target),taken=b===null||prev===0n?null:mul(b,div(qty,prev));
+   const tb=basis(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
    setQ(p,prev-qty);setQ(target,q(target)+qty);
    setBasis(p,taken==null?null:b-taken);
    setBasis(target,taken==null||tb==null?null:tb+taken);
@@ -179,17 +188,16 @@ export function executeTransaction(model,input){
    const replacement=amount(input.targetQuantity??input.quantity);
    setQ(p,replacement);setBasis(p,null);changed=true;break;}
  case 'split':{
+   if(p.kind==='cash')throw Error('Aktiensplit ist auf einem Geldkonto nicht zulässig.');
    const numer=amount(input.ratioNumerator??input.quantity,1n),denom=amount(input.ratioDenominator??1,1n);
-   const ratio=div(numer,denom);
-   if(ratio<=0n)throw Error('Splitfaktor muss positiv sein.');
-   setQ(p,mul(prev,ratio));
+   setQ(p,proportional(prev,numer,denom));
    // Adjust quote mechanically only; do not present this as a new live market quote.
-   const newPrice=div(units(p.priceExact??p.price),ratio);
+   const newPrice=proportional(units(p.priceExact??p.price),denom,numer);
    p.price=Number(exact(newPrice));p.priceExact=exact(newPrice);p.updatedAt=null;p.priceStatus='rechnerisch nach Split angepasst';
    changed=true;break;}
  case 'swap':case 'merger':{
    positive();enough();const target=checkTarget(copy,p,input.targetPositionId),out=amount(input.targetQuantity,1n);
-   const tb=basis(target),taken=b===null||prev===0n?null:mul(b,div(qty,prev));
+   const tb=basis(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
    setQ(p,prev-qty);setQ(target,q(target)+out);
    setBasis(p,taken==null?null:b-taken);setBasis(target,taken==null||tb==null?null:tb+taken);
    // No assumed tax treatment on conversions or mergers.
