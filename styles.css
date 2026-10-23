@@ -501,3 +501,51 @@
 .wizard-advanced-link{font-size:11px;font-weight:650;color:#53745f;background:transparent;border:0;padding:7px 0;text-decoration:underline;text-underline-offset:3px;white-space:normal;text-align:right}
 .wizard-advanced-link:hover{color:#245c40}
 @media(max-width:720px){.wizard-alternative{padding:3px 16px 6px}}
+
+
+/* Compact private-style history controls and accessible two-date calendar. */
+#historyPage .history-panel{min-width:0}
+#historyPage .history-controls{position:relative;display:flex;align-items:center;gap:7px;flex-wrap:nowrap;min-width:0;margin:0 0 14px}
+#historyPage .history-chart-period{display:flex;align-items:center;flex-wrap:nowrap;min-width:0;margin:0;padding:3px;border:1px solid #e1eae2;border-radius:12px;background:#f2f7f2;gap:1px}
+#historyPage .history-chart-period button{border:0;background:transparent;min-height:36px;padding:8px 12px;white-space:nowrap;border-radius:9px}
+#historyPage .history-chart-period button.selected{background:white;color:#245a3d;box-shadow:0 1px 4px #183b2715}
+#historyPage .history-calendar-popover{flex:0 0 auto;position:static}
+#historyPage .history-calendar-popover>summary,#historyPage .history-add-button{list-style:none;display:grid;place-items:center;flex:0 0 38px;width:38px;min-width:38px;height:38px;min-height:38px;padding:0;margin:0;border:1px solid #dae6dd;border-radius:10px;background:#fff;color:#4e775a;cursor:pointer}
+#historyPage .history-calendar-popover>summary::-webkit-details-marker{display:none}
+#historyPage .history-calendar-popover>summary::marker{content:''}
+#historyPage .history-calendar-popover>summary svg{display:block}
+#historyPage .history-add-button{font-size:25px;font-weight:500;line-height:1}
+#historyPage .history-calendar-popover>summary:hover,#historyPage .history-calendar-popover[open]>summary,#historyPage .history-add-button:hover{background:#f0f6f1;border-color:#bcd4c3}
+#historyPage .history-calendar-popover>summary:focus-visible,#historyPage .history-add-button:focus-visible,#historyPage .history-calendar-panel button:focus-visible{outline:2px solid #397f52;outline-offset:2px}
+#historyPage .history-calendar-panel{position:absolute;left:0;top:calc(100% + 9px);z-index:30;width:min(338px,calc(100vw - 56px));max-height:min(70dvh,440px);overflow-y:auto;padding:12px;border:1px solid #dce8df;border-radius:13px;background:white;box-shadow:0 15px 36px #183b2730}
+#historyPage .history-calendar-header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;color:#2f5c41}
+#historyPage .history-calendar-header strong{font-size:13px;font-weight:760}
+#historyPage .history-calendar-header button{width:32px;height:32px;border:1px solid #e1eae2;border-radius:8px;background:#fff;color:#477455;cursor:pointer;font-size:20px}
+#historyPage .history-calendar-weekdays,#historyPage .history-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;text-align:center}
+#historyPage .history-calendar-weekdays{font-size:10px;color:#8b9f91;padding:0 0 6px}
+#historyPage .history-calendar-day{position:relative;min-width:0;height:35px;padding:0;border:0;border-radius:8px;background:#fff;color:#355b43;font-size:12px;cursor:pointer}
+#historyPage .history-calendar-day:hover,#historyPage .history-calendar-day:focus-visible{background:#edf5ee}
+#historyPage .history-calendar-day.selected{background:#d9eee0;color:#1e5637;font-weight:760}
+#historyPage .history-calendar-dot{position:absolute;bottom:3px;left:calc(50% - 2px);width:4px;height:4px;border-radius:50%;background:#3b8e5f}
+#historyPage .history-calendar-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:12px;font-size:10px;line-height:1.4;color:#708775}
+#historyPage .history-calendar-foot>span{flex:1;min-width:0}
+#historyPage .history-calendar-foot button{border:0;background:none;color:#2b7348;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+#historyPage .snapshot-manager{margin-top:18px;border-top:1px solid #e4ece5}
+#historyPage .snapshot-manager>summary{display:flex;align-items:center;gap:12px;list-style:none;padding:18px 2px 7px;color:#315e43;font-size:13px;font-weight:750;cursor:pointer}
+#historyPage .snapshot-manager>summary::-webkit-details-marker{display:none}
+#historyPage .snapshot-manager>summary::before{content:'';width:6px;height:6px;border-right:1.6px solid #678c73;border-bottom:1.6px solid #678c73;transform:rotate(-45deg);transition:transform .15s ease}
+#historyPage .snapshot-manager[open]>summary::before{transform:rotate(45deg)}
+#historyPage .snapshot-manager>summary:focus-visible{outline:2px solid #397f52;outline-offset:3px;border-radius:7px}
+#historyPage .snapshot-manager-body{margin-top:9px}
+@media(max-width:720px){
+ #historyPage .history-controls{gap:5px}
+ #historyPage .history-chart-period{padding:3px;flex:0 1 auto}
+ #historyPage .history-chart-period button{min-height:32px;padding:7px 8px;font-size:11px}
+ #historyPage .history-calendar-popover>summary,#historyPage .history-add-button{flex-basis:36px;width:36px;min-width:36px;height:36px;min-height:36px}
+}
+@media(max-width:380px){
+ #historyPage .history-controls{gap:4px}
+ #historyPage .history-chart-period button{min-height:30px;padding:7px 6px;font-size:10px}
+ #historyPage .history-calendar-popover>summary,#historyPage .history-add-button{flex-basis:33px;width:33px;min-width:33px;height:33px;min-height:33px}
+}
+@media(prefers-reduced-motion:reduce){#historyPage .snapshot-manager>summary::before{transition:none}}
