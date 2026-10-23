@@ -55,14 +55,18 @@ export function deleteSnapshot(model,id){
  if(model.performanceFlowTrackingSince===item.date)model.performanceFlowTrackingSince=null;
  return {resetPerformanceStart:model.performanceFlowTrackingSince===null&&item.note==='Beginn der Renditeerfassung'};
 }
-export function deletePosition(model,id){
+export function assertPositionDeletable(model,id){
  const item=model.positions.find(x=>x.id===id);
  if(!item)throw Error('Position nicht mehr vorhanden.');
  if(model.bookings.some(x=>x.positionId===id||x.targetPositionId===id)||
     model.journalEntries.some(e=>e.postings?.some(x=>x.positionId===id)))
   throw Error('Position hat Buchungen oder Journal-Einträge und kann nicht gelöscht werden.');
  if(model.positions.some(x=>x.representedByPositionId===id))
-  throw Error('Position wird von einer DeFi-Verknüpfung referenziert. Bitte zuerst die Verknüpfung lösen.');
+  throw Error('Position wird von einer DeFi-Verknüpfung referenziert und kann nicht gelöscht werden. Bitte zuerst die Verknüpfung lösen.');
+ return item;
+}
+export function deletePosition(model,id){
+ const item=assertPositionDeletable(model,id);
  model.positions=model.positions.filter(x=>x.id!==id);
  model.openingPositions=model.openingPositions.filter(x=>x.positionId!==id);
  if(model.priceHistories)delete model.priceHistories[id];
