@@ -63,10 +63,19 @@ try{
   assert.equal((await page.locator('#addSnapshot .history-add-label').textContent()).trim(),'Stichtag','Desktop snapshot text must stay short');
   const calendarStroke=await page.locator('#historyCalendarDisclosure > summary svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
   assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
-  const plusIcon=page.locator('#historyPage .history-add-glyph svg');
-  assert.equal(await plusIcon.count(),1,'History plus must use the same SVG icon geometry as other action buttons');
-  const plusStroke=await plusIcon.evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
-  assert.ok(plusStroke>=2.1,'History plus must match the global action stroke');
+  const inspectPlus=locator=>locator.evaluate(el=>{
+   const s=getComputedStyle(el);
+   return {markup:el.outerHTML,viewBox:el.getAttribute('viewBox'),paths:[...el.querySelectorAll('path')].map(p=>p.getAttribute('d')),
+    width:s.width,height:s.height,strokeWidth:s.strokeWidth,linecap:s.strokeLinecap,linejoin:s.strokeLinejoin,color:s.color};
+  });
+  const [historyPlus,positionPlus,bookingPlus]=await Promise.all([
+   inspectPlus(page.locator('#addSnapshot .action-icon svg')),
+   inspectPlus(page.locator('#addWizard .action-icon svg')),
+   inspectPlus(page.locator('#addBooking .action-icon svg'))
+  ]);
+  assert.deepEqual(historyPlus,positionPlus,'History and Positionen must render the exact same plus SVG at '+width);
+  assert.deepEqual(historyPlus,bookingPlus,'History and Buchungen must render the exact same plus SVG at '+width);
+  assert.equal(historyPlus.strokeWidth,'2.2px','Plus icons must share the thick action stroke at '+width);
   assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
   const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
    const container=getComputedStyle(el);
