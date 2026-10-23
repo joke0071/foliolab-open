@@ -812,24 +812,29 @@ function openPublicTradingView(positionId){
  const p=model.positions.find(x=>x.id===positionId),symbol=p&&tradingViewIdentifier(p);
  const container=[...$('providerOverview').querySelectorAll('[data-tv-slot]')].find(el=>el.dataset.tvSlot===positionId);
  if(!p||!symbol||!container)return notify('Für dieses Wertpapier fehlt ein bestätigtes TradingView-Börsensymbol.',true);
- if(container.querySelector('script'))return;
+ if(container.querySelector('iframe'))return;
+ // A vendor <script> loaded in the app origin could access local portfolio data and
+ // user API keys. Use an isolated, cross-origin chart frame instead.
+ const url=new URL('https://s.tradingview.com/widgetembed/');
+ for(const [key,value] of Object.entries({
+  symbol,interval:'D',hidesidetoolbar:'1',symboledit:'0',saveimage:'0',
+  hideideas:'1',theme:'Light',style:'3',timezone:'Europe/Berlin',withdateranges:'1'
+ }))url.searchParams.set(key,value);
  const wrap=document.createElement('div');wrap.className='tradingview-widget-container';
  const widget=document.createElement('div');widget.className='tradingview-widget-container__widget';
+ const frame=document.createElement('iframe');
+ frame.src=url.toString();
+ frame.title='Öffentliches TradingView-Börsendiagramm: '+p.name;
+ frame.loading='lazy';frame.referrerPolicy='no-referrer';
+ frame.setAttribute('sandbox','allow-scripts allow-same-origin allow-popups');
+ widget.append(frame);
  const attribution=document.createElement('a');
  attribution.href='https://www.tradingview.com/symbols/'+encodeURIComponent(symbol.replace(':','-'))+'/';
- attribution.textContent='Kursdiagramm bei TradingView öffnen ↗';attribution.target='_blank';attribution.rel='noopener noreferrer';
+ attribution.textContent='Kursdiagramm bei TradingView öffnen ↗';
+ attribution.target='_blank';attribution.rel='noopener noreferrer';attribution.referrerPolicy='no-referrer';
  attribution.className='position-history-external';
- wrap.append(widget,attribution);container.replaceChildren(wrap);
- const script=document.createElement('script');
- script.type='text/javascript';script.async=true;script.src='https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
- script.textContent=JSON.stringify({
-  autosize:true,symbol,interval:'D',timezone:'Europe/Berlin',theme:'light',style:'3',
-  locale:'de',backgroundColor:'#f7faf7',gridColor:'rgba(46,74,52,0.08)',
-  hide_side_toolbar:true,hide_top_toolbar:true,hide_volume:true,withdateranges:true,
-  allow_symbol_change:false,save_image:false,calendar:false,details:false,
-  support_host:'https://www.tradingview.com'
- });
- wrap.append(script);
+ wrap.append(widget,attribution);
+ container.replaceChildren(wrap);
 }
 function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':if(confirm('Stichtag wirklich löschen?')){model.snapshots=model.snapshots.filter(x=>x.id!==id);save();}break;}}
 function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});

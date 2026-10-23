@@ -21,22 +21,23 @@ try{
  assert.match(await detail.innerText(),/Öffentliches Diagramm laden/);
  assert.equal(await detail.locator('.position-history-unavailable').count(),0,'Do not show a second empty chart beneath public TradingView');
  assert.equal(await detail.locator('[data-position-range]').count(),0,'TradingView has its own chart ranges');
- let external=0;
- await page.route('https://s3.tradingview.com/**',route=>{external++;return route.fulfill({status:200,contentType:'application/javascript',body:'/* external widget test stub */'});});
+ await page.route('https://s.tradingview.com/widgetembed/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Isolated public chart</title>'}));
  await detail.locator('[data-action="load-tradingview"]').click();
- const script=detail.locator('script[src*="embed-widget-advanced-chart"]');
- await script.waitFor({state:'attached'});
- const opts=JSON.parse(await script.textContent());
- assert.equal(opts.symbol,'XETR:5MVL');
- assert.equal(opts.interval,'D');
- assert.equal(opts.allow_symbol_change,false);
+ const frame=detail.locator('iframe[src*="s.tradingview.com/widgetembed/"]');
+ await frame.waitFor({state:'attached'});
+ const url=new URL(await frame.getAttribute('src'));
+ assert.equal(url.searchParams.get('symbol'),'XETR:5MVL');
+ assert.equal(url.searchParams.get('interval'),'D');
+ assert.equal(url.searchParams.get('symboledit'),'0');
+ assert.match(await frame.getAttribute('sandbox'),/allow-scripts/);
+ assert.equal(await detail.locator('script[src*="tradingview"]').count(),0,'External scripts must never run in FolioLab origin');
  const model=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(model.positions[0].isin,'IE00BG0SKF03');
  assert.equal(model.positions[0].quantityExact,'228.652303');
  assert.equal(model.positions[0].priceExact,'86.18999127246927');
  assert.equal(model.positions[0].mic,'XETR');
  assert.equal(model.positions[0].eodhdSymbol,'5MVL.XETRA');
- await script.waitFor({state:'attached'});
+ await frame.waitFor({state:'attached'});
  for(const width of [320,360,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const dims=await page.evaluate(()=>{

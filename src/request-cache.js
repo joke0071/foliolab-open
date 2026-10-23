@@ -5,6 +5,24 @@
 export const TTL=Object.freeze({security:180000,crypto:120000,fx:21600000,history:86400000,catalog:86400000,wallet:15000});
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const parseRetryAfter=(value,now)=>{if(value==null)return 0;const seconds=Number(value);if(Number.isFinite(seconds))return Math.max(0,seconds*1000);const stamp=Date.parse(value);return Number.isFinite(stamp)?Math.max(0,stamp-now):0;};
+const safeNetworkDiagnostic=(error,url,headers)=>{
+ const message=String(error?.message||'').slice(0,180);
+ const credentials=[];
+ try{
+  const address=new URL(String(url));
+  for(const [name,value] of address.searchParams){
+   if(/key|token|secret|password|auth|credential/i.test(name))credentials.push(value);
+  }
+ }catch{}
+ for(const [name,value] of Object.entries(headers||{})){
+  if(/key|token|secret|password|auth|credential/i.test(name))credentials.push(String(value));
+ }
+ // Do not forward URLs, query parameters or recognized credentials in an exception.
+ // Keep innocuous provider diagnostics to preserve meaningful fallback behavior.
+ if(!message||message.includes('://')||credentials.some(v=>v&&message.includes(v)))
+  return 'Failed to fetch (Netzwerk-/CORS-Fehler).';
+ return message;
+};
 export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Date.now(),pause=delay,random=Math.random}={}){
  const entries=new Map(),pending=new Map();let active=0;const queue=[];
  const acquire=async()=>{if(active<maxConcurrent){active++;return;}await new Promise(resolve=>queue.push(resolve));};
@@ -41,11 +59,14 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
            // A long cooldown should fail fast, not keep the interface busy for minutes.
            if(wait<=3500){await pause(wait);continue;}
          }
-         if(requestError)throw requestError;
+         // A browser/provider exception can include a full key-bearing request URL.
+         // Never forward that untrusted diagnostic to UI, error history or logs.
+         if(requestError)throw Error(safeNetworkDiagnostic(requestError,url,headers));
          if(!response?.ok)throw Error(status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${status||'unbekannt'})`);
          let data;
          try{data=await response.json();}catch{throw Error('API lieferte keine gültigen JSON-Daten.');}
-         if(data?.status==='error'||data?.status==='ERROR')throw Error(String(data.message||'API-Fehler').slice(0,180));
+         // Upstream messages sometimes echo credentials. Provide a stable, safe status.
+         if(data?.status==='error'||data?.status==='ERROR')throw Error('Datenanbieter meldet einen Fehler. API-Zugang und Tarif prüfen.');
          if(ttlMs>0){entries.set(key,{data:structuredClone(data),expires:clock()+ttlMs});while(entries.size>maxEntries)entries.delete(entries.keys().next().value);}
          return data;
        }
