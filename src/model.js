@@ -121,6 +121,16 @@ export function addBooking(model,v){const entry=executeTransaction(model,{...v,t
 
 // Do not accept normalized dates like 2026-02-30 as valid financial records.
 const validCalendarDate=d=>typeof d==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d+'T12:00:00Z'))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+// Reject contradictory financial representations before restoring a portfolio.
+// The tolerance only covers cent-level display rounding and IEEE-754 conversion.
+const exactMatchesDisplay=(display,precise)=>{
+ if(precise==null)return true;
+ try{
+  const shown=Number(display),expected=Number(exact(units(precise)));
+  return Number.isFinite(shown)&&Number.isFinite(expected)&&
+   Math.abs(shown-expected)<=Math.max(0.005,4*Number.EPSILON*Math.abs(expected));
+ }catch{return false;}
+};
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
 /** Importiert v1/v2-Backups ohne erfundene Transaktionen als dokumentierte v3-Eröffnungsbestände. */
 export function safeImport(raw){
@@ -147,7 +157,7 @@ export function safeImport(raw){
   rebuildAssets(m);
   m.performanceFlowTrackingSince=validCalendarDate(raw.performanceFlowTrackingSince)?raw.performanceFlowTrackingSince:null;
   if(raw.externalCashFlows!=null&&!Array.isArray(raw.externalCashFlows))throw Error('Ungültige Cashflow-Historie.');
-  m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!validCalendarDate(x.date)||!Number.isFinite(Number(x.amountEUR)))throw Error('Cashflow-Historie beschädigt.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
+  m.externalCashFlows=(raw.externalCashFlows||[]).map(x=>{if(!x||!x.id||!validCalendarDate(x.date)||!Number.isFinite(Number(x.amountEUR))||!exactMatchesDisplay(x.amountEUR,x.amountExactEUR))throw Error('Cashflow-Historie: Datum oder Betrag widersprüchlich.');return {id:cleanString(x.id,120),date:x.date,amountEUR:Number(x.amountEUR),amountExactEUR:exact(units(x.amountExactEUR??x.amountEUR))};});
   uniqueIds(m.externalCashFlows,'externen Geldflüssen');
   m.openingPositions=raw.version===3&&Array.isArray(raw.openingPositions)?raw.openingPositions.map(x=>{
     if(!x||!x.positionId||!m.positions.some(p=>p.id===x.positionId))throw Error('Ungültiger Eröffnungsbestand.');
@@ -166,11 +176,11 @@ export function safeImport(raw){
   }
   uniqueIds(m.openingPositions.map(x=>({id:x.positionId})),'Eröffnungsbeständen');
   m.bookings=(raw.bookings||[]).map(x=>{
-    if(!x||typeof x!=='object'||!x.id||!x.positionId||!validCalendarDate(x.date)||!Number.isFinite(number(x.quantity)))throw Error('Ungültige Buchung im Backup.');
+    if(!x||typeof x!=='object'||!x.id||!x.positionId||!validCalendarDate(x.date)||!Number.isFinite(number(x.quantity))||!exactMatchesDisplay(x.quantity,x.quantityExact))throw Error('Ungültige Buchung oder widersprüchliche Menge im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
   m.snapshots=raw.snapshots.map(x=>{
-    if(!x||!x.id||!validCalendarDate(x.date))throw Error('Ungültiger Stichtag im Backup.');
+    if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
       totalEURExact:exact(units(x.totalEURExact??x.total)),recordedAt:cleanString(x.recordedAt,40)||null,
       byAccount:x.byAccount&&typeof x.byAccount==='object'?structuredClone(x.byAccount):null,
