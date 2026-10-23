@@ -1,4 +1,4 @@
-import {backup, safeImport, STORE_KEY} from './model.js';
+import {backup, safeImport, STORE_KEY,defaultSettings} from './model.js';
 
 // Opt-in transactional storage foundation. Not wired to the live app until the
 // async save, restore and reset flows have been migrated and regression-tested.
@@ -30,6 +30,21 @@ export function openPortfolioDB(factory = globalThis.indexedDB) {
   });
 }
 
+function portableSettings(settings) {
+ if(settings===undefined)return undefined; // old staged records remain readable
+ if(settings===null)return null; // deletion tombstone
+ const defaults=defaultSettings();
+ if(!settings||typeof settings!=='object'||Array.isArray(settings))throw Error('Ungültige Portfoliokonfiguration.');
+ const values={};
+ for(const [key,reference] of Object.entries(defaults)){
+  const value=Object.hasOwn(settings,key)?settings[key]:reference;
+  if(typeof value!==typeof reference|| (typeof value==='string'&&value.length>4096))
+   throw Error('Ungültige Einstellung: '+key);
+  values[key]=value;
+ }
+ return values;
+}
+
 function portablePortfolio(raw) {
   if (typeof raw !== 'string') throw new TypeError('Ein Portfolio muss als JSON-Text vorliegen.');
   // Validation happens before opening a readwrite transaction. Never transfer
@@ -40,7 +55,8 @@ function portablePortfolio(raw) {
 function assertRecord(record) {
   if (record == null) return;
   if (record.schemaVersion !== 1 || !Number.isSafeInteger(record.revision) || record.revision < 1 ||
-      (record.raw !== null && typeof record.raw !== 'string')) {
+      (record.raw !== null && typeof record.raw !== 'string') ||
+      (record.settings!==undefined && record.settings!==null && (typeof record.settings!=='object'||Array.isArray(record.settings)))) {
     throw new Error('Unbekannte oder beschädigte Speicherrevision. Keine Änderungen vorgenommen.');
   }
   // A structurally plausible but invalid portfolio must not be silently
@@ -71,13 +87,13 @@ export function readPortfolioRecord(db) {
  * tombstone, preserving the revision and preventing a stale tab from reviving it.
  * raw=null removes the portfolio without resetting the conflict history.
  */
-export function commitPortfolioRecord(db, {expectedRevision, raw}) {
+export function commitPortfolioRecord(db, {expectedRevision, raw,settings}) {
   if (expectedRevision !== null &&
       (!Number.isSafeInteger(expectedRevision) || expectedRevision < 1)) {
     return Promise.reject(new TypeError('Ungültige erwartete Speicherrevision.'));
   }
-  let portable;
-  try { portable = raw === null ? null : portablePortfolio(raw); }
+  let portable,portablePrefs;
+  try { portable = raw === null ? null : portablePortfolio(raw);portablePrefs=portableSettings(settings); }
   catch (error) { return Promise.reject(error); }
   return new Promise((resolve, reject) => {
     let failure = null;
@@ -100,6 +116,7 @@ export function commitPortfolioRecord(db, {expectedRevision, raw}) {
           schemaVersion: 1,
           revision: (revision ?? 0) + 1,
           raw: portable,
+          ...(portablePrefs===undefined?{}:{settings:portablePrefs}),
           deleted: portable === null,
           updatedAt: new Date().toISOString()
         };

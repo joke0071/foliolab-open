@@ -18,6 +18,7 @@ import {queryPublicInstruments,validatedPublicEndpoint} from './public-instrumen
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {diagnoseEodhd} from './market-diagnostics.js';
 import {priceQuality,quoteQualitySummary} from './quote-quality.js';
+import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
@@ -32,7 +33,9 @@ import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js'
 import {openingCashInput} from './account-opening.js';
 import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPositionDeletable} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
-let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}
+const portfolioStore=new PortfolioStorage();
+let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
+let saving=false;
 let otherTabChangedPortfolio=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -43,21 +46,21 @@ const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungsk
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
-function save(){
+async function save(){
+ if(saving)throw Error('Ein Speichervorgang läuft bereits.');
+ saving=true;
  try{
-  if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');
-  if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diese Seite neu laden, bevor du weitere Änderungen speicherst.');
-  persist(model);
- }catch(error){
-  // Reconcile with the last committed portfolio so a failed write cannot
-  // silently be included in a later successful save (quota or stale tab).
-  if(!loadFailure){try{model=load();}catch(recoveryError){loadFailure=recoveryError;}}
+  if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
+  if(otherTabChangedPortfolio)throw Error('Portfolio in einem anderen Tab geändert. Diesen Tab erst neu laden.');
+  await portfolioStore.save(model);
+  try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
-  notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Daten sichern und Speicher freigeben.':String(error?.message||error)),true);
+ }catch(error){
+  if(!loadFailure){try{model=await portfolioStore.reload();}catch(recoveryError){loadFailure=recoveryError;}}
+  render();
+  notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }
- try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
- render();
+ }finally{saving=false;}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -271,7 +274,7 @@ async function confirmLegacyQuoteRepair(positionId,field,button){
    '\n\nZuerst wird ein Backup der ursprünglichen Daten heruntergeladen. Historische Buchungen und Stichtage bleiben unverändert.'))return;
   downloadBackup();
   applyVerifiedQuoteRepair(model,p.id,field,checked,{confirmed:true});
-  save();
+  await save();
   renderLegacyQuoteAudit();
   notify('Aktueller Kurs aus '+checked.source+' übernommen. Historische Daten unverändert.');
  }catch(error){notify('Kursprüfung: '+String(error.message||error).slice(0,180),true);}
@@ -299,14 +302,14 @@ function openProvider(p){
  '<label class="field"><span>Anbietername</span><input name="name" id="providerName" required maxlength="80" autocomplete="off" value="'+esc(p?.name||'')+'" placeholder="z. B. Flatex, Trade Republic …"></label>'+
  '<div id="providerMatches" class="onboarding-suggestions" role="region" aria-label="Anbietervorschläge"></div>'+
  '<label class="field"><span>Typ</span><select name="type" id="providerType">'+options(Object.entries(types),p?.type||providerExact(p?.name)?.type||'broker')+'</select></label>',
- (v)=>{
+ async (v)=>{
   const name=String(v.name||'').trim();
   // Provider names are not IDs: prevent accidental duplicates from common suggestions.
   const duplicate=model.providers.find(x=>x.id!==p?.id&&x.name.trim().toLocaleLowerCase('de')===name.toLocaleLowerCase('de'));
   if(duplicate)throw Error('Diesen Anbieter gibt es bereits. Bitte den bestehenden Anbieter auswählen.');
   const x=createProvider({...v,name,id:p?.id});
   if(p)model.providers=model.providers.map(a=>a.id===p.id?x:a);else model.providers.push(x);
-  save();notify('Anbieter gespeichert.');
+  await save();notify('Anbieter gespeichert.');
  });
  const name=$('providerName'),matches=$('providerMatches'),type=$('providerType');
  const show=()=>{matches.innerHTML=providerMatchMarkup(name.value);matches.classList.toggle('hidden',!name.value.trim());};
@@ -337,7 +340,7 @@ function openAccount(a,defaultProviderId){
  (a?'':('<label class="field"><span id="accountOpeningLabel">Startguthaben (EUR) · optional</span><input id="accountOpeningAmount" name="initialBalance" type="text" inputmode="decimal" placeholder="z. B. 2500"></label>'+
  '<label class="field hidden" id="accountOpeningFxWrap"><span>EUR je Einheit Kontowährung (manueller Umrechnungskurs)</span><input name="openingFxRate" id="accountOpeningFx" type="number" min="0.00000001" step="any" placeholder="z. B. 0.92"><small>Nur bei einem Startguthaben in Fremdwährung erforderlich; keine automatische Schätzung.</small></label>'+
  '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>')),
- v=>{
+ async v=>{
   if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
   // Validate account and opening valuation before mutating either collection.
   const next=createAccount({...v,id:a?.id},model);
@@ -347,7 +350,7 @@ function openAccount(a,defaultProviderId){
   const firstPosition=opening?createPosition({...opening,notes:'Anfangsbestand zum '+openingDate,providerId:next.providerId,accountId:next.id},{...model,accounts:[...model.accounts,next]}):null;
   if(a)model.accounts=model.accounts.map(x=>x.id===a.id?next:x);else model.accounts.push(next);
   if(firstPosition)model.positions.push(firstPosition);
-  model.settings.lastAccountId=next.id;save();notify('Konto gespeichert.');
+  model.settings.lastAccountId=next.id;await save();notify('Konto gespeichert.');
  });
  const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
  if(!a){
@@ -412,7 +415,7 @@ function refreshPositionProviders(){
  refreshPositionAccounts();
 }
 function refreshPosForm(){const kind=$('positionKind').value,crypto=kind==='crypto';$('coinGroup').classList.toggle('hidden',!crypto);$('walletGroup').classList.toggle('hidden',!crypto);$('securityGroup').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('exchangeField').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('marketIdentifiers').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));const coinCurrency=$('positionCurrency');if(crypto&&coinCurrency.value!=='EUR'){coinCurrency.value='EUR';} if(crypto){const currPos=$('fxWrap').querySelector('input');currPos.value=1;}$('fxWrap').classList.toggle('hidden',coinCurrency.value==='EUR'||crypto);$('walletDetails').classList.toggle('hidden',!$('walletEnabled').checked);const chain=$('walletChain').value;$('tokenFields').classList.toggle('hidden',!['erc20','spl'].includes(chain));$('chainIdField').classList.toggle('hidden',!['evm','erc20'].includes(chain));$('walletHdField').classList.toggle('hidden',chain!=='btc-hd');}
-function openPosition(p){++lookupSequence;securityCache.clear();if(!model.providers.length){go('more');openProvider();notify('Lege zuerst einen Anbieter an.');return;}const target=p?.providerId||model.providers[0].id;if(!model.accounts.some(a=>a.providerId===target)){openAccount(null,target);notify('Lege zuerst ein Konto oder Depot an.');return;}showDialog(p?'Position bearbeiten':'Position hinzufügen','DEIN PORTFOLIO',posForm(p),(v)=>{const wallet=v.walletEnabled?{enabled:true,chain:v.walletChain,address:v.walletAddress,contract:v.walletContract,decimals:v.walletDecimals,chainId:v.walletChainId,addressType:v.walletHdType}:null;if(p?.managementSource==='transactions'){v.quantity=p.quantityExact??p.quantity;v.costBasisEUR=p.costBasisEUR;}const listingChanged=Boolean(p&&['symbol','currency','exchange','mic','isin'].some(k=>String(p[k]||'').toUpperCase()!==String(v[k]||'').toUpperCase()));const pos=createPosition({...v,id:p?.id,wallet,managementSource:p?.managementSource,updatedAt:p?.updatedAt,realizedPnLEUR:p?.realizedPnLEUR,
+function openPosition(p){++lookupSequence;securityCache.clear();if(!model.providers.length){go('more');openProvider();notify('Lege zuerst einen Anbieter an.');return;}const target=p?.providerId||model.providers[0].id;if(!model.accounts.some(a=>a.providerId===target)){openAccount(null,target);notify('Lege zuerst ein Konto oder Depot an.');return;}showDialog(p?'Position bearbeiten':'Position hinzufügen','DEIN PORTFOLIO',posForm(p),async (v)=>{const wallet=v.walletEnabled?{enabled:true,chain:v.walletChain,address:v.walletAddress,contract:v.walletContract,decimals:v.walletDecimals,chainId:v.walletChainId,addressType:v.walletHdType}:null;if(p?.managementSource==='transactions'){v.quantity=p.quantityExact??p.quantity;v.costBasisEUR=p.costBasisEUR;}const listingChanged=Boolean(p&&['symbol','currency','exchange','mic','isin'].some(k=>String(p[k]||'').toUpperCase()!==String(v[k]||'').toUpperCase()));const pos=createPosition({...v,id:p?.id,wallet,managementSource:p?.managementSource,updatedAt:p?.updatedAt,realizedPnLEUR:p?.realizedPnLEUR,
    costBasisExact:p&&String(v.costBasisEUR)===String(p.costBasisEUR)?p.costBasisExact:undefined,
    realizedPnLExact:p?.realizedPnLExact,
    priceExact:p&&String(v.price)===String(p.price)?p.priceExact:undefined,
@@ -424,7 +427,7 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
    fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
    fxSource:p&&String(v.fxRate)===String(p.fxRate)?p.fxSource:null,
    fxRateDate:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateDate:null,
-   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
+   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);await save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
  $('positionAccount').dataset.selectedAccountId=$('positionAccount').value;
  $('positionAccount').addEventListener('change',e=>{e.target.dataset.selectedAccountId=e.target.value;});
  $('positionProvider').addEventListener('change',e=>{
@@ -526,7 +529,7 @@ function openWalletImport(){
     <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
     <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
     <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
-    <p class="small-help">Spam- und unbekannte Tokens werden zunächst ausgeblendet. Über „Ausgeblendete Tokens prüfen“ können echte Bestände bei Bedarf manuell hinzugefügt werden. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,(v)=>{
+    <p class="small-help">Spam- und unbekannte Tokens werden zunächst ausgeblendet. Über „Ausgeblendete Tokens prüfen“ können echte Bestände bei Bedarf manuell hinzugefügt werden. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,async (v)=>{
        if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
        const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
        if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
@@ -548,7 +551,7 @@ function openWalletImport(){
          const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
          model.positions.push(position);added++;
        }
-       if(added||updated){snapshot(model);save();go('positions');}
+       if(added||updated){snapshot(model);await save();go('positions');}
        notify(`${added} neu · ${updated} aktualisiert. Nicht erkannte Coins bleiben erhalten.`);
   });
   $('saveDialog').textContent='Ausgewählte Coins übernehmen';
@@ -623,13 +626,13 @@ function openCSVImport(){
   <label class="field"><span>Standardposition für Zeilen ohne eindeutigen Identifier</span><select id="csvDefaultPosition">${options(positions.map(p=>[p.id,p.name+' · '+(p.isin||p.symbol||'')]),positions[0].id)}</select></label>
   <label class="field"><span>Verrechnungskonto (optional)</span><select id="csvCashPosition">${options([['','Ohne Gegenkonto'],...positions.filter(p=>p.kind==='cash').map(p=>[p.id,p.name])],'')}</select></label>
   <div id="csvMapping"></div><div id="csvPreview" class="small-help" role="status">Datei auswählen, dann Spalten überprüfen.</div>
- `,()=>{
+ `,async ()=>{
   if(!parsed)throw Error('CSV-Datei fehlt.');
   const mapping=Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
   const preview=previewCSV(model,parsed,mapping,{defaultPositionId:$('csvDefaultPosition').value,cashPositionId:$('csvCashPosition').value});
   if(preview.issues.length)throw Error(preview.issues.length+' fehlerhafte CSV-Zeilen. Bitte die Vorschau korrigieren.');
   if(!preview.ready)return notify('Keine neuen Buchungen; erkannte Dubletten wurden übersprungen.');
-  const imported=importCSV(model,preview);snapshot(model);save();
+  const imported=importCSV(model,preview);snapshot(model);await save();
   notify(imported.imported+' CSV-Buchungen importiert · '+imported.duplicates+' Dubletten übersprungen.');
  });
  $('saveDialog').disabled=true;$('saveDialog').textContent='Geprüfte CSV übernehmen';
@@ -689,12 +692,12 @@ function openBooking(){
  field('Referenzkursdatum','fxRateDate','','text','readonly')+
  field('Wechselkursquelle','fxSource','','text','readonly')+'</details>'+
  field('Notiz (optional)','notes','','text','maxlength="180"'),
- (v)=>{
+ async (v)=>{
    // The correction selector has the same semantic targetQuantity field as swaps.
    if(v.type==='correction')v.targetQuantity=$('bookingCorrectWrap').querySelector('input').value;
    const event=executeTransaction(model,v);
    if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);
-   save();notify('Vorgang gespeichert: '+TX_TYPES[event.type]+'.');
+   await save();notify('Vorgang gespeichert: '+TX_TYPES[event.type]+'.');
  });
  function configure(){
    const type=$('bookingType').value,meta=['ticker_change','isin_change','delist'].includes(type);
@@ -751,36 +754,36 @@ function openSnapshot(s=null){
   field(editing?'Gespeicherter Gesamtwert in EUR':'Historischer Gesamtwert in EUR (bei früherem Datum erforderlich)','manualTotalEUR',total,'text','inputmode="decimal"'+(editing?' required':'')+(locked?' readonly':'')+' placeholder="z. B. 12345,67"')+
   field('Notiz (optional)','note',s?.note||'','text','maxlength="180"')+
   (locked?'<p class="small-help" id="snapshotLocked">Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.</p>':''),
-  (v)=>{
+  async (v)=>{
    if(editing){
     const values={date:v.date,totalEUR:v.manualTotalEUR,note:v.note};
     const change=snapshotEditChanges(model,s.id,values);
     if(change.correction&&!confirm('Datum oder Betrag wirklich korrigieren? Der Stichtag wird als manuell bestätigt gespeichert; die alte Einzelpositions-Aufschlüsselung entfällt. Die ursprüngliche Version bleibt im Änderungsverlauf dokumentiert.'))
      throw Error('Korrektur nicht übernommen.');
     editSnapshot(model,s.id,values,{confirmCorrection:change.correction});
-    save();notify('Stichtag aktualisiert.');
+    await save();notify('Stichtag aktualisiert.');
    }else{
-    snapshot(model,v.date,v.note,{manualTotalEUR:v.manualTotalEUR});save();notify('Stichtag gespeichert.');
+    snapshot(model,v.date,v.note,{manualTotalEUR:v.manualTotalEUR});await save();notify('Stichtag gespeichert.');
    }
   });
 }
-function confirmDeletePosition(id,{fromDialog=false}={}){
+async function confirmDeletePosition(id,{fromDialog=false}={}){
  let p;
  try{p=assertPositionDeletable(model,id);}catch(error){return notify(String(error.message||error),true);}
  if(!confirm('Position „'+p.name+'“ wirklich löschen? Historische Stichtage bleiben erhalten. Bei bestehenden Buchungen oder DeFi-Verknüpfungen wird das Löschen blockiert.'))return;
  try{
   deletePosition(model,id);
   snapshot(model);
-  save();
+  await save();
   if(fromDialog)closeDialog();
   notify('Position gelöscht. Historische Stichtage wurden nicht gelöscht.');
  }catch(error){notify(String(error.message||error),true);}
 }
-function startPerformanceTracking(){
+async function startPerformanceTracking(){
  if(model.performanceFlowTrackingSince)return notify('Renditestart bereits festgelegt: '+model.performanceFlowTrackingSince);
  const date=new Date().toISOString().slice(0,10);
  if(!confirm('Heute als Beginn der vollständigen Cashflow-Erfassung festlegen? Ältere Renditen werden nicht geschätzt.'))return;
- model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
+ model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');await save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
 }
 async function refreshAll(){
  if(busy)return;
@@ -862,7 +865,7 @@ async function refreshAll(){
     p.quantityExact=exactQty;p.quantity=Number(exactQty);p.updatedAt=now;successes++;
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
-  if(successes){snapshot(model);save();}else render();
+  if(successes){snapshot(model);await save();}else render();
   const status=refreshHeadline(successes,errors),details=$('refreshErrorDetails');
   $('priceInfo').textContent=status+' · '+new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});
   $('priceInfo').classList.toggle('refresh-warning',errors.length>0);
@@ -924,7 +927,7 @@ function openHistoricalPriceCSV(positionId){
    model.priceHistories??=Object.create(null);
    const previous=model.priceHistories[p.id];
    model.priceHistories[p.id]=data;
-   try{save();}catch(err){if(previous)model.priceHistories[p.id]=previous;else delete model.priceHistories[p.id];throw err;}
+   try{await save();}catch(err){if(previous)model.priceHistories[p.id]=previous;else delete model.priceHistories[p.id];throw err;}
    notify(data.points.length+' Kursdaten lokal importiert. Bitte ein Backup erstellen.');
   }catch(error){notify('Kurs-CSV: '+String(error?.message||error).slice(0,150),true);}
  },{once:true});
@@ -958,34 +961,37 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
- try{deleteSnapshot(model,id);save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
+ try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
-function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',e=>{e.preventDefault();if(!editor)return;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}});document.addEventListener('click',handleActions);$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
+function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addPosition').addEventListener('click',()=>openPosition());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',async e=>{e.preventDefault();if(!editor||saving)return;const button=$('saveDialog');button.disabled=true;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{await editor.onSave(v);closeDialog();}catch(err){notify(err.message,true);}finally{button.disabled=false;}});document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;renderHistory();}});
   $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text());if(isEncryptedBackup(parsed)){
    const password=prompt('Passwort für dieses verschlüsselte Foliolab-Backup:');
    if(password===null)return;parsed=JSON.parse(await decryptBackup(parsed,password));
   }
-  const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};loadFailure=null;model=imported;filter='all';save();notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
-  $('deleteAll').addEventListener('click',()=>{
+  const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
+  $('deleteAll').addEventListener('click',async ()=>{
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
+  await portfolioStore.removeAll();
   purgeLocalAppData(localStorage);
+  if(portfolioStore.isIndexedDB)localStorage.setItem(MODE_KEY,MODE_VALUE);
   loadFailure=null;model=blankModel();filter='all';render();
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
 });
   const apiCredentialFields=['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
-$('clearApiKeys').addEventListener('click',()=>{
+$('clearApiKeys').addEventListener('click',async ()=>{
  if(!confirm('Alle gespeicherten API-Schlüssel und den privaten Solana-RPC-Zugang auf diesem Gerät entfernen? Portfolio und Konten bleiben erhalten.'))return;
  try{
   for(const key of apiCredentialFields)model.settings[key]='';
   model.settings.solanaRpc=defaultSettings().solanaRpc;
-  save();
+  await save();
   purgeLegacySnapshots(localStorage);
+  if(portfolioStore.isIndexedDB)localStorage.removeItem('foliolab-open-v1');
   for(const key of apiCredentialFields)$('apiSettings').elements[key].value='';
   $('solanaRpc').value=model.settings.solanaRpc;
   notify('API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
@@ -1012,6 +1018,28 @@ $('checkMarketSources').addEventListener('click',async()=>{
   status.textContent='Diagnose nicht möglich. Keine Portfoliodaten verändert.';
  }finally{button.disabled=false;}
 });
+$('migrateToIDB').addEventListener('click',async()=>{
+ const button=$('migrateToIDB');
+ if(button.disabled||saving||loadFailure)return;
+ if(!confirm('Andere FolioLab-Tabs schließen. Jetzt wird ein Backup ohne API-Schlüssel zum Download angeboten. Deine bisherige Kopie bleibt als Rückfall erhalten. Fortfahren?'))return;
+ downloadBackup();
+ if(!confirm('Backup sicher gespeichert? Zugangsdaten bleiben im neuen IndexedDB-Speicher lokal und unverschlüsselt. Jetzt umstellen?'))return;
+ button.disabled=true;saving=true;
+ try{await portfolioStore.migrate(model);location.reload();}
+ catch(error){notify('Speicherumstellung abgebrochen: '+String(error.message||error).slice(0,170),true);}
+ finally{saving=false;button.disabled=false;}
+});
+$('revertFromIDB').addEventListener('click',async()=>{
+ const button=$('revertFromIDB');
+ if(button.disabled||saving||loadFailure)return;
+ if(!confirm('Andere Tabs schließen. Zuerst aktuelles Backup herunterladen; danach wird der neue Datenstand nach localStorage übertragen. Fortfahren?'))return;
+ downloadBackup();
+ if(!confirm('Ist das Backup sicher gespeichert? IndexedDB deaktivieren und aktuellen Stand in localStorage übernehmen?'))return;
+ saving=true;button.disabled=true;
+ try{await portfolioStore.revert(model);location.reload();}
+ catch(error){notify('Rückwechsel abgebrochen: '+String(error.message||error).slice(0,170),true);}
+ finally{saving=false;button.disabled=false;}
+});
 $('runLegacyQuoteAudit').addEventListener('click',()=>{
  legacyAuditPerformed=true;renderLegacyQuoteAudit();
 });
@@ -1019,7 +1047,7 @@ $('legacyQuoteAuditResults').addEventListener('click',event=>{
  const button=event.target.closest('button[data-audit-fix]');
  if(button&&!button.disabled)void confirmLegacyQuoteRepair(button.dataset.id,button.dataset.auditFix,button);
 });
-$('apiSettings').addEventListener('submit',e=>{
+$('apiSettings').addEventListener('submit',async e=>{
  e.preventDefault();
  const f=new FormData(e.currentTarget);
  try{
@@ -1035,9 +1063,9 @@ $('apiSettings').addEventListener('submit',e=>{
   for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
    changes[key]=String(f.get(key)||'').trim();
   Object.assign(model.settings,changes);
-  save();notify('Datenquellen und Zugänge lokal gespeichert.');
+  await save();notify('Datenquellen und Zugänge lokal gespeichert.');
  }catch(error){notify(error.message,true);}
-});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+});$('solanaRpc').addEventListener('change',async e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();await save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
    const button=$('testSolanaRpc'),status=$('solanaRpcTestStatus'),rpc=$('solanaRpc').value.trim();
    button.disabled=true;
@@ -1060,7 +1088,7 @@ $('apiSettings').addEventListener('submit',e=>{
     status.textContent='Solana-RPC nicht erreichbar: '+String(error.message||error).slice(0,180);
    }finally{button.disabled=false;}
   });
-  $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',e=>{model.settings.autoRefresh=e.target.checked;save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
+  $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',async e=>{model.settings.autoRefresh=e.target.checked;await save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
   for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
@@ -1070,19 +1098,22 @@ $('apiSettings').addEventListener('submit',e=>{
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
- onCommit:({draft})=>{
+ onCommit:async ({draft})=>{
   model=draft;
-  save();
+  await save();
   notify('Anlage sicher gespeichert.');
  },
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
 initNav();initEvents();installCredentialVisibility();
+$('portfolioStorageState').textContent=portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
+$('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
+$('revertFromIDB').classList.toggle('hidden',!portfolioStore.isIndexedDB);
 // Keep a user's draft visible, but block stale writes until an explicit reload.
 // localStorage compare-before-set alone is not an atomic multi-tab lock.
 window.addEventListener('storage',event=>{
- if(event.storageArea!==localStorage||event.key!=='foliolab-open-v1'||event.oldValue===event.newValue||loadFailure)return;
+ if(event.storageArea!==localStorage||!['foliolab-open-v1',MODE_KEY].includes(event.key)||event.oldValue===event.newValue||loadFailure)return;
  otherTabChangedPortfolio=true;
  const notice=$('notice');
  notice.textContent='Portfolio in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst. Ungespeicherte Eingaben vorher sichern.';
@@ -1101,7 +1132,7 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  });
  navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});
 }
-if(location.protocol==='https:'&&model.settings.autoRefresh!==false){
+if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
 }

@@ -1,3 +1,9 @@
+## PWA-Revision v85 — 2026-10-23
+
+- Optionaler, ausdrücklich bestätigter Wechsel zu transaktionaler IndexedDB mit lokalem Backup und rückgängig machbarem Cutover.
+- Asynchrone Speicherpfade warten vor Erfolgsmeldungen auf Transaktionsabschluss, einschließlich CSV/Backup-Import.
+- API-Schlüssel bleiben lokal in IndexedDB; Download-Backups bleiben ohne Zugangsdaten.
+
 ## PWA-Revision v84 — 2026-10-23
 
 - Sicherere, bislang nicht aktivierte IndexedDB-Speicher-Engine: beschädigte Portfolios werden weder akzeptiert noch unbemerkt überschrieben.
