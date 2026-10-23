@@ -19,7 +19,7 @@ const safeNetworkDiagnostic=(error,url,headers)=>{
  }
  // Do not forward URLs, query parameters or recognized credentials in an exception.
  // Keep innocuous provider diagnostics to preserve meaningful fallback behavior.
- if(!message||/https?:\\/\\//i.test(message)||credentials.some(v=>v&&message.includes(v)))
+ if(!message||message.includes('://')||credentials.some(v=>v&&message.includes(v)))
   return 'Failed to fetch (Netzwerk-/CORS-Fehler).';
  return message;
 };
