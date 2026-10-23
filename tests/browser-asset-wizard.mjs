@@ -5,8 +5,11 @@ const page=await browser.newPage({viewport:{width:390,height:850}});
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="positions"]').click();
+ assert.equal(await page.locator('#addPosition').count(),0,'No redundant advanced toolbar action');
  await page.locator('#addWizard').click();
  assert.match(await page.locator('#wizardTitle').innerText(),/Welche Anlage/);
+ assert.equal(await page.locator('#wizardAdvanced').count(),1,'Advanced editor is accessible inside wizard');
+ assert.equal(await page.locator('#wizardMatches').innerText(),'','No catalog warning before search');
  await page.locator('#wizardQuery').fill('VWCE');
  assert.equal(await page.locator('[data-wizard-pick]').count(),0,'No built-in ETF samples should appear');
  await page.locator('#wizardName').fill('Vanguard FTSE All-World UCITS ETF');
@@ -35,6 +38,11 @@ try{
  assert.equal(state.positions[0].costBasisEUR,null);
  assert.equal(state.bookings.length,0);
  await page.locator('#wizardPortfolio').click();
+ await page.locator('#addWizard').click();
+ await page.locator('#wizardAdvanced').click();
+ assert.equal(await page.locator('#wizardDialog').isVisible(),false);
+ assert.equal(await page.locator('#editDialog').isVisible(),true);
+ await page.locator('#cancelDialog').click();
  await page.locator('#addWizard').click();
  await page.locator('#wizardKind').selectOption('stock');
  await page.locator('#wizardName').fill('Synthetic Equity');

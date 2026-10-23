@@ -19,7 +19,7 @@ const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:''
  * Native modal wizard. Provider/account drafts remain transient until final,
  * atomic model validation and one onCommit call.
  */
-export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify}){
+export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify,openAdvanced}){
  let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),directories=[],cryptoLoading=false,coinFullLoading=false;
  const $=id=>dialog.querySelector('#'+id);
  const directorySummary=()=>{
@@ -34,19 +34,27 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
   '<div class="wizard-progress" aria-label="Fortschritt">'+[1,2,3].map((x,i)=>'<span class="'+(x===state.step?'is-current':x<state.step||state.saved?'is-done':'')+'">'+(i+1)+'</span>').join('')+'</div>'+
   '<div id="wizardFields">'+fields+'</div><div class="wizard-feedback" id="wizardError" role="alert" aria-live="polite"></div>'+
+   (state.step===1&&!state.saved?'<div class="wizard-alternative"><button type="button" id="wizardAdvanced" class="wizard-advanced-link" title="Zusatzfelder für Wallets, DeFi und Sonderfälle">Spezialfall? Erweiterte Eingabe öffnen →</button></div>':'')+
   '<div class="dialog-footer"><button class="btn light" type="button" id="wizardPrev">'+(state.step===1||state.saved?'Abbrechen':'Zurück')+'</button><button class="btn primary" type="button" id="wizardNext"'+(state.saved?' hidden':'')+'>'+(state.step===3?'Bestand speichern':'Weiter →')+'</button></div></div>';
   $('wizardClose').addEventListener('click',close);
   $('wizardPrev').addEventListener('click',()=>{if(state.step>1&&!state.saved){state.step--;render();}else close();});
   $('wizardNext')?.addEventListener('click',advance);
+   $('wizardAdvanced')?.addEventListener('click',()=>{
+    if(state.query.trim()||state.name.trim()||state.symbol.trim()||state.isin.trim()){
+     if(!confirm('Zur erweiterten Eingabe wechseln? Die bisherigen Eingaben aus dem Assistenten werden nicht übernommen.'))return;
+    }
+    close();openAdvanced?.();
+   });
  };
  const resultsMarkup=()=>{
   const query=state.query.trim(),list=state.results||[];
-  if(!query&&state.kind!=='crypto')return '<p class="small-help">Suche nach Fondsname, ISIN oder Ticker – oder lege eine Anlage manuell an.</p>';
-  return '<div class="wizard-search-status" role="status">'+e(state.status||'')+'</div>'+
+  if(!query&&state.kind!=='crypto')return '';
+   if(state.kind!=='crypto'&&query.length<2)return '<p class="small-help">Bitte mindestens zwei Zeichen eingeben.</p>';
+  return (state.status?'<div class="wizard-search-status" role="status">'+e(state.status)+'</div>':'')+
    (list.length?'<div class="wizard-matches">'+list.map((x,i)=>'<button type="button" data-wizard-pick="'+i+'" class="result-item"><span><strong>'+e(x.name)+'</strong><small>'+
     e([x.kind==='crypto'?'Krypto':x.kind==='stock'?'Aktie':x.kind==='fund'?'Fonds':x.kind==='other'?'Sonstiges':'ETF',x.isin,x.symbol,x.kind==='crypto'?x.id:''].filter(Boolean).join(' · '))+
     '</small></span><small>'+e([x.rank?'#'+x.rank:'',x.exchange,x.mic,x.currency,x.source].filter(Boolean).join(' · '))+'</small></button>').join('')+'</div>':
-    '<p class="small-help">'+(state.kind!=='crypto'&&!directories.length&&!funds?'Noch kein lokaler Wertpapierkatalog importiert. Öffne „Wertpapierkatalog importieren (CSV/TXT)“, oder nutze die externe Suche bzw. die manuelle Eingabe.':'Keine passenden Einträge in deinen importierten Katalogen. Du kannst extern suchen oder die Anlage manuell erfassen.')+'</p>');
+    '<p class="small-help">'+(state.kind!=='crypto'&&!directories.length&&!funds?'Kein lokaler Katalog vorhanden. Nutze die externe Suche oder gib die Daten unten ein.':'Keine Treffer im lokalen Katalog. Extern suchen oder unten selbst eingeben.')+'</p>');
  };
  const updateResults=()=>{
   const q=state.query.trim();
@@ -69,7 +77,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    const sources=[];
    if(directories.length)sources.push('Wertpapier-CSV/TXT: '+securities.total+' Treffer');
    if(funds)sources.push('Fonds-CSV: '+matching.total+' Treffer');
-   state.status=(sources.length?sources.join(' · '):'Kein lokaler Wertpapierkatalog importiert')+
+   state.status=(sources.length?sources.join(' · '):'')+
     (securities.total+matching.total>100?' · erste 100 Treffer – Suche präzisieren':'');
   }else{state.results=[];state.status='';}
   if($('wizardMatches'))$('wizardMatches').innerHTML=resultsMarkup();
@@ -92,20 +100,20 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  };
  const renderOne=()=>{
   const kindChoices=opts(kinds,state.kind,'Anlageklasse wählen').replace('<option value="">Anlageklasse wählen</option>','');
-  const fields='<p class="dialog-intro">Welche Anlage möchtest du hinzufügen? Wähle einen Treffer oder erfasse die Daten selbst. Es werden keine Bestände oder Kurse übernommen.</p>'+
-   '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
-   '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
-   '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
-   '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Externe Treffer suchen (optional)</button>'+
-   (['etf','fund','stock','other'].includes(state.kind)?
+  const catalogTools=(['etf','fund','stock','other'].includes(state.kind)?
     '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog importieren (CSV/TXT)</summary><div class="wizard-catalog-content">'+
     '<p>Zusätzliche Wertpapiere aus offiziellen Dateien lokal ergänzen. Auf der Xetra-Seite „T7 (Xetra) Alle handelbaren Instrumente“ als CSV wählen.</p>'+
     '<a href="'+e(DIRECTORY_PAGE_LINKS.xetra)+'" target="_blank" rel="noopener noreferrer">Xetra-Downloadseite ↗</a>'+
     '<div class="wizard-source-inline"><a href="https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt" target="_blank" rel="noopener noreferrer">Nasdaq-Werte (.txt) ↗</a><a href="https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt" target="_blank" rel="noopener noreferrer">Weitere US-Börsen (.txt) ↗</a></div>'+
     '<div class="wizard-catalog-actions"><button id="wizardDirectoryImport" class="btn outline" type="button">CSV/TXT auswählen</button>'+
     '<input id="wizardDirectoryFile" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain" class="hidden"></div>'+
-    '<small id="wizardDirectoryStatus">'+e(directorySummary())+'</small><small>Quelle und Ausgabedatum prüfen. Eine Abwicklungswährung aus einer Datei ist nicht automatisch die Kurswährung.</small></div></details>':'')+
-   '<div class="wizard-manual"><strong>Anlage manuell hinzufügen</strong><div class="field-row">'+
+    '<small id="wizardDirectoryStatus">'+e(directorySummary())+'</small><small>Quelle und Ausgabedatum prüfen. Eine Abwicklungswährung aus einer Datei ist nicht automatisch die Kurswährung.</small></div></details>':'');
+  const fields='<p class="dialog-intro">Suche optional nach einem Wertpapier oder gib die Anlagedaten direkt ein.</p>'+
+   '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
+   '<label class="field"><span>Anlage suchen</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN, Ticker oder Coin"></label>'+
+   '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
+   '<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Online nach Wertpapier suchen</button>'+
+   '<div class="wizard-manual"><strong>Anlagedaten</strong><div class="field-row">'+
    input('wizardName','Bezeichnung',state.name,'required maxlength="110"')+
    input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"')+'</div>'+
    (state.kind==='crypto'?input('wizardCoinId','CoinGecko-ID (optional)',state.coinId,'maxlength="110"'):
@@ -116,7 +124,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
    input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+
    input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+
-   input('wizardTV','TradingView-Symbol',state.tradingViewSymbol,'maxlength="48"')+'</details></div>';
+   input('wizardTV','TradingView-Symbol',state.tradingViewSymbol,'maxlength="48"')+'</details></div>'+catalogTools;
   shell(fields,'Welche Anlage möchtest du hinzufügen?');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));

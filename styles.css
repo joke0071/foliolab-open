@@ -46,7 +46,10 @@
 @media(max-width:420px){
  .toolbar-buttons{flex-wrap:wrap;gap:8px}
  #positionsPage .toolbar-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- #positionsPage .toolbar-buttons #refreshAll{grid-column:1/-1}
+ #positionsPage .toolbar-buttons #addWizard{grid-column:1/-1;grid-row:1}
+ #positionsPage .toolbar-buttons #refreshAll{grid-column:1;grid-row:2}
+ #positionsPage .toolbar-buttons #addWallet{grid-column:2;grid-row:2}
+ #positionsPage .toolbar-buttons #resolveListings{grid-column:1/-1}
  #positionsPage .toolbar-buttons .btn{min-width:0;white-space:normal;padding:10px 7px}
  .settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .settings-actions .btn{white-space:normal;min-width:0}
@@ -314,7 +317,7 @@
  .asset-wizard-dialog #wizardFields{padding:0 16px 16px}
  .wizard-progress{padding:4px 16px 13px}
  .wizard-feedback{padding:0 16px}.wizard-feedback.visible{padding:10px 16px}
- #positionsPage .toolbar-buttons #addPosition{font-size:11px}
+
 }
 
 /* Refresh failures are secondary details, not multiline overlays. */
@@ -484,3 +487,17 @@
 .market-diagnostic .diagnostic-row{border-top:1px solid #e7eee7;padding-top:7px}
 .market-diagnostic .diagnostic-row strong{font-weight:700;color:#42694f}
 @media(max-width:420px){.market-diagnostic{margin-left:12px;margin-right:12px}}
+
+/* Condensed quote information, technical fields only on demand. */
+.position-quote-details{margin:0 0 12px;color:#59725e}
+.position-quote-details>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;min-height:36px;font-size:12px;font-weight:650}
+.position-quote-details>summary::-webkit-details-marker{display:none}
+.position-quote-details>summary:after{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);margin-right:5px;flex:0 0 auto}
+.position-quote-details[open]>summary:after{transform:translateY(2px) rotate(225deg)}
+.position-quote-details>summary:focus-visible{outline:2px solid #2d6946;outline-offset:3px;border-radius:4px}
+.position-quote-body{padding:3px 0 9px;font-size:12px;line-height:1.65}
+.position-quote-body p{margin:7px 0}
+.wizard-alternative{display:flex;justify-content:flex-end;padding:5px 24px 8px;flex-shrink:0}
+.wizard-advanced-link{font-size:11px;font-weight:650;color:#53745f;background:transparent;border:0;padding:7px 0;text-decoration:underline;text-underline-offset:3px;white-space:normal;text-align:right}
+.wizard-advanced-link:hover{color:#245c40}
+@media(max-width:720px){.wizard-alternative{padding:3px 16px 6px}}
