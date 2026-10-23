@@ -89,11 +89,11 @@ test('Generic provider allocation spans multiple single-position accounts',()=>{
  ];
  const m={accounts,positions,priceHistories:{},settings:{}};
  const details=positions.slice(0,3).map(p=>positionDetailMarkup(p,m,config));
- assert.match(details[0],/Anteil am Anbieter<\\/span><strong>30 %/);
- assert.match(details[1],/Anteil am Anbieter<\\/span><strong>20 %/);
- assert.match(details[2],/Anteil am Anbieter<\\/span><strong>50 %/);
+ assert.match(details[0],/Anteil am Anbieter<\/span><strong>30 %/);
+ assert.match(details[1],/Anteil am Anbieter<\/span><strong>20 %/);
+ assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
  assert.doesNotMatch(details.join(''),/Anteil am Konto/);
- assert.match(positionDetailMarkup(positions[3],m,config),/Anteil am Anbieter<\\/span><strong>100 %/);
+ assert.match(positionDetailMarkup(positions[3],m,config),/Anteil am Anbieter<\/span><strong>100 %/);
 });
 test('Provider allocations exclude separately configured providers and handle liabilities defensively',()=>{
  const p={id:'one',accountId:'a',providerId:'p',kind:'cash',symbol:'EUR',quantity:100,price:1,currency:'EUR'};
