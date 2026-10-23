@@ -58,6 +58,7 @@ try{
  page.once('dialog',d=>d.accept());
  await page.locator('[data-action="remove-price-history"]').click();
  assert.equal((await getModel()).priceHistories['etf-csv'],undefined);
- await page.locator('.position-history-unavailable').waitFor();
+ await page.locator('.position-history-compact').waitFor({state:'attached'});
+ assert.equal(await page.locator('.position-history-compact').getAttribute('open'),null,'Unavailable chart should default to collapsed');
  console.log('CSV PRICE HISTORY: private offline import, chart, cancellation, deletion, mobile widths and unchanged holdings PASS');
 }finally{await browser.close();}
