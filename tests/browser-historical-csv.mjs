@@ -25,6 +25,8 @@ try{
  await page.reload();
  await page.locator('#providerOverview .provider-accordion>summary').click();
  await page.locator('[data-position-id="etf-csv"]>summary').click();
+ assert.equal(await page.locator('.position-history-compact').getAttribute('open'),null);
+ await page.locator('.position-history-compact>summary').click();
  assert.match(await page.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  const csv='Datum;Schlusskurs;ISIN;Währung\n'+day(5)+';82,2;IE00BG0SKF03;EUR\n'+day(2)+';85,1;IE00BG0SKF03;EUR\n'+day(1)+';86,2;IE00BG0SKF03;EUR';
  const before=await getModel();
@@ -58,6 +60,7 @@ try{
  page.once('dialog',d=>d.accept());
  await page.locator('[data-action="remove-price-history"]').click();
  assert.equal((await getModel()).priceHistories['etf-csv'],undefined);
- await page.locator('.position-history-unavailable').waitFor();
+ await page.locator('.position-history-compact').waitFor({state:'attached'});
+ assert.equal(await page.locator('.position-history-compact').getAttribute('open'),null,'Unavailable chart should default to collapsed');
  console.log('CSV PRICE HISTORY: private offline import, chart, cancellation, deletion, mobile widths and unchanged holdings PASS');
 }finally{await browser.close();}

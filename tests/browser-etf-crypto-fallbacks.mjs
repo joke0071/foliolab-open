@@ -18,6 +18,8 @@ try{
  const detail=page.locator('#providerOverview [data-position-id="etf-demo"]');
  await detail.locator(':scope > summary').click();
  assert.equal(await detail.locator('[data-action="load-tradingview"]').isVisible(),false,'External chart must start collapsed');
+ assert.equal(await detail.locator('.position-history-compact').getAttribute('open'),null);
+ await detail.locator('.position-history-compact>summary').click();
  assert.match(await detail.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
  await detail.locator('.position-chart-options>summary').click();
  await detail.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
