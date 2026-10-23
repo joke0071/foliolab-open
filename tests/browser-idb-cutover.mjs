@@ -95,7 +95,19 @@ try{
  // Clear all app data in IDB mode; this writes a durable tombstone first.
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#deleteAll').click();
- await page.waitForFunction(()=>localStorage.getItem('foliolab-open-v1')===null&&localStorage.getItem('foliolab-open-storage-mode')==='idb-v1');
+ await page.waitForTimeout(700);
+ const resetState=await page.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+  const db=await openPortfolioDB();let record=null;
+  try{record=await readPortfolioRecord(db);}finally{db.close();}
+  return {legacy:localStorage.getItem('foliolab-open-v1'),
+   mode:localStorage.getItem('foliolab-open-storage-mode'),
+   intent:localStorage.getItem('foliolab-open-idb-revert-intent'),
+   record:{revision:record?.revision,deleted:record?.deleted,raw:record?.raw?.slice(0,100)},
+   toast:document.querySelector('#toast')?.textContent};
+ });
+ assert.equal(resetState.legacy,null,'Legacy data must be removed: '+JSON.stringify(resetState).slice(0,500));
+ assert.equal(resetState.mode,'idb-v1','IDB must remain canonical: '+JSON.stringify(resetState).slice(0,500));
  const deleted=await page.evaluate(async()=>{
   const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
   const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
