@@ -35,7 +35,7 @@ import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPos
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
-let saving=false;
+let saving=false,recoveryDownloaded=false,recoveryOriginal=null;
 let otherTabChangedPortfolio=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -972,7 +972,18 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
    const password=prompt('Passwort für dieses verschlüsselte Foliolab-Backup:');
    if(password===null)return;parsed=JSON.parse(await decryptBackup(parsed,password));
   }
-  const imported=safeImport(parsed);if(!confirm(`Backup mit ${imported.positions.length} Positionen und ${imported.providers.length} Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.`))return;imported.settings={...defaultSettings(),...model.settings};model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
+  const imported=safeImport(parsed);
+  if(loadFailure&&portfolioStore.isIndexedDB){
+   if(!recoveryDownloaded)throw Error('Vor der Wiederherstellung zuerst die beschädigte IndexedDB-Originaldatei herunterladen.');
+   if(!confirm('Beschädigten IndexedDB-Datensatz mit diesem Backup ersetzen? Nur nach gesicherter Originaldatei fortfahren. Alte API-Schlüssel werden NICHT aus dem beschädigten Datensatz übernommen.'))return;
+   imported.settings=defaultSettings();
+   await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
+   location.reload();return;
+  }
+  if(!confirm('Backup mit '+imported.positions.length+' Positionen und '+imported.providers.length+' Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.'))return;
+  imported.settings={...defaultSettings(),...model.settings};
+  if(loadFailure&&!portfolioStore.isIndexedDB)loadFailure=null;
+  model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
   $('deleteAll').addEventListener('click',async ()=>{
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
@@ -1121,8 +1132,27 @@ window.addEventListener('storage',event=>{
  notice.classList.remove('hidden');
 });
 if(loadFailure){
- const notice=$('notice');notice.classList.remove('hidden');notice.innerHTML='<strong>Lokaler Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. Lade die Originaldaten herunter und stelle danach ein funktionierendes Backup wieder her. <button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button>';
- $('downloadRaw').addEventListener('click',()=>{const raw=localStorage.getItem('foliolab-open-v1')||'';const url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='foliolab-original-datenschutzsicherung.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+ const notice=$('notice');notice.classList.remove('hidden');
+ notice.innerHTML='<strong>Gespeicherter Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. '+
+  'Zuerst Originaldaten sichern, dann ein geprüftes Backup wiederherstellen. '+
+  (portfolioStore.isIndexedDB?'<strong>Hinweis: Die IDB-Originaldatei kann lokale API-Schlüssel enthalten!</strong> ':'')+
+  '<button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button> '+
+  '<button class="btn outline" type="button" id="recoverBackup">Backup auswählen</button>';
+ $('downloadRaw').addEventListener('click',async()=>{
+  try{
+   const data=portfolioStore.isIndexedDB?await portfolioStore.unverifiedBackup():localStorage.getItem('foliolab-open-v1')||'';
+   const raw=typeof data==='string'?data:JSON.stringify(data,null,2);
+   const url=URL.createObjectURL(new Blob([raw],{type:'application/json'}));
+   const a=document.createElement('a');a.href=url;a.download=portfolioStore.isIndexedDB?'foliolab-idb-original-mit-lokalen-zugaengen.json':'foliolab-original-datenschutzsicherung.json';
+   document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   recoveryDownloaded=true;recoveryOriginal=typeof data==='string'?null:data;
+   notify('Originaldaten als Datei angeboten. Datei vor dem Fortfahren sicher speichern.');
+  }catch(error){notify('Originaldaten konnten nicht exportiert werden: '+String(error.message||error),true);}
+ });
+ $('recoverBackup').addEventListener('click',()=>{
+  if(!recoveryDownloaded)return notify('Zuerst die Originaldaten als Datei sichern.',true);
+  $('backupFile').click();
+ });
 }
 if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127.0.0.1'].includes(location.hostname))){
  let existingController=Boolean(navigator.serviceWorker.controller);
