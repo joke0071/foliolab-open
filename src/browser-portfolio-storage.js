@@ -50,7 +50,22 @@ export class PortfolioStorage {
  async migrate(model){
   if(this.isIndexedDB)throw Error('IndexedDB ist bereits aktiv.');
   const original=this.storage.getItem(STORE_KEY);
-  if(original!==null)safeImport(JSON.parse(original)); // never adopt corrupt local bytes
+  if(original!==null){
+   // The current tab may have loaded an older portfolio before another tab
+   // committed. Comparing bytes *only after* the migration would miss that
+   // pre-existing divergence and silently adopt an obsolete in-memory model.
+   const parsed=JSON.parse(original);
+   const source=safeImport(parsed);
+   const sourceSettings={...defaultSettings()};
+   for(const key of Object.keys(sourceSettings)){
+    if(Object.hasOwn(parsed.settings||{},key))sourceSettings[key]=parsed.settings[key];
+   }
+   if(sourceSettings.solanaRpc==='https://api.mainnet-beta.solana.com')
+    sourceSettings.solanaRpc='https://solana-rpc.publicnode.com';
+   if(backup(source)!==backup(model)||
+      JSON.stringify(sourceSettings)!==JSON.stringify(model.settings))
+    throw Error('Das lokale Portfolio wurde in einem anderen Tab geändert. Bitte neu laden und die Migration erneut starten.');
+  }
   const db=await openPortfolioDB();
   try{
    const existing=await readPortfolioRecord(db);
