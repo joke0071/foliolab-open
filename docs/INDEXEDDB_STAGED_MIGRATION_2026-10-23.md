@@ -29,3 +29,9 @@ The new `src/atomic-storage.js` is intentionally opt-in and never called at appl
 ## Privacy and accounting
 
 The database holds only sanitized portfolio data, strictly local to the device and origin. The legacy copy (which may contain locally configured API credentials) is left untouched by staging. Nothing is uploaded to GitHub, a server, or a third-party storage provider. No changes to financial transactions, tax classifications, or v1/v2/v3 backup meaning.
+
+## Nachtrag zu v83
+
+- Aus bestehenden IndexedDB-Records gelesene Portfolio-JSON wird vor Verwendung und vor jedem konkurrierenden Überschreiben fachlich validiert. Beschädigte Records werden weder still geleert noch durch eine vermeintlich erfolgreiche Bearbeitung ersetzt.
+- Firefox- und WebKit-Browserregression: konkurrierende readwrite-Transaktionen, genau ein erfolgreicher Commit, Schließen sämtlicher Tabs und erneutes Öffnen sowie explizit beschädigte Records und verweigerte Folge-Schreibvorgänge.
+- **Keine Produktivmigration:** Sync-`localStorage` bleibt die Quelle der produktiven App. Vollständige UI-Umstellung und die in dieser Datei genannten Release-Gates sind weiterhin offen (#44).

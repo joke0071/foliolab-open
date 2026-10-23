@@ -1,3 +1,9 @@
+## PWA-Revision v83 — 2026-10-23
+
+- Nicht-aktive IndexedDB-Engine erkennt jetzt auch semantisch beschädigte Records und verweigert deren Überschreibung.
+- Zusätzliche Firefox-/WebKit-Regression für gleichzeitige Transaktionen, Tab-Neustarts und beschädigte Speicherdaten.
+- Noch keine automatische Portfolio-Migration; produktiver Speichertyp unverändert. Issue #44 bleibt offen.
+
 ## PWA-Revision v82 — 2026-10-23
 
 - Read-only EODHD-Verbindungsdiagnose auf Knopfdruck für bis zu vier tatsächlich vorhandene Wertpapiernotierungen (direkt oder über eigenen Worker). Keine weiteren Versuche nach globalen Netzwerk-, Zugangs- oder Ratenlimitfehlern.
