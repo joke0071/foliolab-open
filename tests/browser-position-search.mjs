@@ -22,8 +22,8 @@ try{
  await page.locator('#positionSort').selectOption('name');
  assert.deepEqual(await page.locator('#positionList .holding-name').allTextContents(),['Global ETF','Other ETF']);
  await page.locator('#mobileNav [data-page="bookings"]').click();
- await page.locator('#bookingList [data-action="start-booking"]').click();
+ await page.locator('#addBooking').click();
  assert.equal(await page.locator('#editDialog').isVisible(),true);
  await page.locator('#cancelDialog').click();
- console.log('POSITION SEARCH / BOOKING EMPTY: filter, sort and onboarding actions PASS');
+ console.log('POSITION SEARCH / BOOKING EMPTY: filter, sort and header booking action PASS');
 }finally{await browser.close();}
