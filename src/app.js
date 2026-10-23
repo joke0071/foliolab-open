@@ -672,51 +672,78 @@ async function scanWalletNow(){
 }
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
 function openCSVImport(){
- if(!model.positions.some(p=>!p.wallet?.enabled))return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
- let parsed=null;
- showDialog('CSV-Transaktionen importieren','LOKALER IMPORT',`
-  <p class="dialog-intro">Die CSV bleibt auf deinem Gerät. Spalten zuordnen, Buchungen prüfen und erst danach gesammelt übernehmen. Historisch unbekannte Positionen werden nicht automatisch erfunden.</p>
-  <label class="field"><span>CSV-Datei (maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain"></label>
-  <label class="field"><span>Standardposition für Zeilen ohne eindeutigen Identifier</span><select id="csvDefaultPosition">${options(positions.map(p=>[p.id,p.name+' · '+(p.isin||p.symbol||'')]),positions[0].id)}</select></label>
-  <label class="field"><span>Verrechnungskonto (optional)</span><select id="csvCashPosition">${options([['','Ohne Gegenkonto'],...positions.filter(p=>p.kind==='cash').map(p=>[p.id,p.name])],'')}</select></label>
-  <div id="csvMapping"></div><div id="csvPreview" class="small-help" role="status">Datei auswählen, dann Spalten überprüfen.</div>
- `,async ()=>{
-  if(!parsed)throw Error('CSV-Datei fehlt.');
-  const mapping=Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
-  const preview=previewCSV(model,parsed,mapping,{defaultPositionId:$('csvDefaultPosition').value,cashPositionId:$('csvCashPosition').value});
-  if(preview.issues.length)throw Error(preview.issues.length+' fehlerhafte CSV-Zeilen. Bitte die Vorschau korrigieren.');
-  if(!preview.ready)return notify('Keine neuen Buchungen; erkannte Dubletten wurden übersprungen.');
-  const imported=importCSV(model,preview);snapshot(model);await save();
-  notify(imported.imported+' CSV-Buchungen importiert · '+imported.duplicates+' Dubletten übersprungen.');
- });
- $('saveDialog').disabled=true;$('saveDialog').textContent='Geprüfte CSV übernehmen';
- const fieldLabels={date:'Datum',type:'Buchungstyp',position:'Position / ISIN / Ticker',quantity:'Menge',unitPrice:'Ausführungskurs',feeEUR:'Gebühren EUR',taxEUR:'Steuern EUR',fxRate:'EUR je Kurswährung',cashPosition:'Verrechnungskonto (ID / Name)',notes:'Notiz',externalId:'Externe Transaktions-ID'};
- const preview=()=>{
+ if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
+ let parsed=null,positionOverrides={},skippedLines=[];
+ const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
+ const necessary=['date','type','position','quantity','unitPrice'];
+ const currentMapping=()=>Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
+ const previewOptions=()=>({positionOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||''});
+ showDialog('CSV importieren','BUCHUNGEN',
+  '<p class="dialog-intro">Wähle deine Buchungsdatei. Vor dem Import kannst du die Spalten und jede unklare Zuordnung prüfen. Die Datei bleibt auf deinem Gerät.</p>'+
+  '<label class="field"><span>CSV-Datei (maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain"></label>'+
+  '<div id="csvMapping"></div><div id="csvReview" role="status" aria-live="polite"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
+  async ()=>{
+   if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
+   const result=previewCSV(model,parsed,currentMapping(),previewOptions());
+   if(result.issues.length)throw Error('Bitte die '+result.issues.length+' noch ungeklärten Buchungen prüfen oder ausdrücklich überspringen.');
+   if(!result.ready)throw Error('Keine neuen Buchungen zum Import vorhanden.');
+   const imported=importCSV(model,result);snapshot(model);await save();
+   notify(imported.imported+' Buchungen importiert · '+imported.duplicates+' Dubletten übersprungen'+(result.skipped?' · '+result.skipped+' bewusst ausgelassen':'')+'.');
+  });
+ $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';
+ const review=()=>{
   if(!parsed)return;
-  const mapping=Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
   try{
-   const result=previewCSV(model,parsed,mapping,{defaultPositionId:$('csvDefaultPosition').value,cashPositionId:$('csvCashPosition').value});
-   $('csvPreview').innerHTML='<strong>'+result.ready+' neu · '+result.duplicates+' Dubletten · '+result.issues.length+' Fehler</strong>'+
-     '<div class="small-help">Beispielzeilen (max. 10):</div>'+
-     result.rows.slice(0,10).map(x=>'<div class="history-sub">Zeile '+x.line+' · '+esc(x.status==='ready'?'prüfbar: '+x.row.date+' · '+x.row.type+' · '+x.row.quantity:x.status==='duplicate'?'bereits vorhanden':x.message)+'</div>').join('');
+   const result=previewCSV(model,parsed,currentMapping(),previewOptions());
+   const needsMatch=m=>/^Anlage fehlt|^Anlage nicht eindeutig/.test(m);
+   const status='<div class="csv-import-summary"><strong>'+result.ready+' bereit · '+result.duplicates+' bereits vorhanden · '+result.issues.length+' zu prüfen'+(result.skipped?' · '+result.skipped+' übersprungen':'')+'</strong></div>';
+   const errors=result.rows.filter(x=>x.status==='error');
+   const detail=errors.map(x=>{
+    const unmatched=needsMatch(x.message);
+    const select=unmatched?'<label class="field"><span>Passende Anlage</span><select data-csv-assign="'+x.line+'">'+
+      options([['','Bitte auswählen'],...positions.map(p=>[p.id,p.name+(p.isin?' · '+p.isin:p.symbol?' · '+p.symbol:'')])],positionOverrides[x.line]||'')+
+      '</select></label>':'';
+    return '<div class="csv-review-row"><strong>Zeile '+x.line+'</strong><p>'+esc(x.message)+'</p>'+select+
+      '<label class="csv-skip"><input type="checkbox" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
+   }).join('');
+   const examples=result.rows.filter(x=>x.status==='ready').slice(0,5).map(x=>
+     '<div class="history-sub">Zeile '+x.line+' · '+esc(x.row.date+' · '+x.row.type+' · '+x.row.quantity)+'</div>').join('');
+   const skipped=result.rows.filter(x=>x.status==='skipped').map(x=>
+    '<div class="csv-review-row"><strong>Zeile '+x.line+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
+   $('csvReview').innerHTML='<div class="csv-import-review"><h3>Buchungen prüfen</h3>'+status+
+    (errors.length?'<p class="small-help">Unklare Anlagen werden niemals automatisch einer anderen Position zugeordnet.</p>'+detail:'<p class="small-help">Alle übrigen Buchungen sind zugeordnet.</p>')+skipped+
+    (examples?'<details class="advanced-apis"><summary>Beispielbuchungen ansehen</summary>'+examples+'</details>':'')+'</div>';
+   $('csvReview').querySelectorAll('[data-csv-assign]').forEach(el=>el.addEventListener('change',()=>{
+    if(el.value)positionOverrides[Number(el.dataset.csvAssign)]=el.value;else delete positionOverrides[Number(el.dataset.csvAssign)];
+    review();
+   }));
+   $('csvReview').querySelectorAll('[data-csv-skip]').forEach(el=>el.addEventListener('change',()=>{
+    const line=Number(el.dataset.csvSkip);
+    if(el.checked){if(!skippedLines.includes(line))skippedLines.push(line);}
+    else skippedLines=skippedLines.filter(x=>x!==line);
+    review();
+   }));
    $('saveDialog').disabled=Boolean(result.issues.length)||result.ready===0;
-  }catch(e){$('csvPreview').textContent='Importprüfung: '+e.message;$('saveDialog').disabled=true;}
+   $('saveDialog').textContent=result.ready?result.ready+' Buchung'+(result.ready===1?'':'en')+' importieren':'Buchungen importieren';
+  }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('saveDialog').disabled=true;}
  };
- $('csvFile').addEventListener('change',async e=>{
-  const file=e.target.files?.[0];parsed=null;$('saveDialog').disabled=true;
-  if(!file)return;
+ $('csvFile').addEventListener('change',async event=>{
+  const file=event.target.files?.[0];parsed=null;positionOverrides={};skippedLines=[];$('saveDialog').disabled=true;
+  if(!file){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
-   if(file.size>2_000_000)throw Error('CSV zu groß (max. 2 MB).');
+   if(file.size>2_000_000)throw Error('CSV-Datei zu groß (maximal 2 MB).');
    parsed=parseCSV(await file.text());
    const inferred=inferMapping(parsed.headers);
-   $('csvMapping').innerHTML='<strong>CSV-Spalten zuordnen</strong><div class="field-row">'+
-    CSV_FIELDS.map(key=>'<label class="field"><span>'+esc(fieldLabels[key])+'</span><select id="csvMap-'+key+'">'+options([['','– Keine –'],...parsed.headers.map(head=>[head,head])],inferred[key])+'</select></label>').join('')+'</div>';
-   $('csvMapping').querySelectorAll('select').forEach(el=>el.addEventListener('change',preview));
-   $('csvDefaultPosition').addEventListener('change',preview);
-   $('csvCashPosition').addEventListener('change',preview);
-   preview();
-  }catch(error){$('csvPreview').textContent='CSV konnte nicht gelesen werden: '+error.message;}
+   const mappingControl=key=>'<label class="field"><span>'+esc(labels[key])+'</span><select id="csvMap-'+key+'">'+options([['','Nicht vorhanden'],...parsed.headers.map(head=>[head,head])],inferred[key])+'</select></label>';
+   $('csvMapping').innerHTML='<div class="csv-import-mapping"><h3>Spalten zuordnen</h3><p class="small-help">Prüfe, ob FolioLab die Spalten richtig erkannt hat.</p>'+
+    '<div class="field-row">'+necessary.map(mappingControl).join('')+'</div>'+
+    '<details class="advanced-apis"><summary>Weitere Spalten (optional)</summary><div class="field-row">'+CSV_FIELDS.filter(x=>!necessary.includes(x)).map(mappingControl).join('')+'</div></details>'+
+    (positions.some(p=>p.kind==='cash')&&parsed.rows.some(row=>/^(kauf|verkauf|buy|sell)$/i.test(String(row[inferred.type]||'').trim()))?'<details class="advanced-apis"><summary>Verrechnungskonto zuordnen (optional)</summary><p class="small-help">Nur auswählen, wenn Käufe und Verkäufe tatsächlich über dieses Konto abgerechnet wurden. Ohne Zuordnung wird keine Geldbewegung erfunden.</p><label class="field"><span>Gegenkonto für Buchungen ohne eigene Kontoangabe</span><select id="csvCashPosition">'+options([['','Ohne Gegenkonto'],...positions.filter(p=>p.kind==='cash').map(p=>[p.id,p.name])],'')+'</select></label></details>':'')+
+    '</div>';
+   $('csvMapping').querySelectorAll('select').forEach(el=>el.addEventListener('change',review));
+   review();
+  }catch(error){$('csvMapping').innerHTML='';$('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;}
  });
 }
 function openBooking(){

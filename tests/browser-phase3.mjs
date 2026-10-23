@@ -19,8 +19,9 @@ try{
  await page.locator('#sidebarNav [data-page="bookings"]').click();
  await page.locator('#openCSVImport').click();
  await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5')});
+ await page.locator('#csvCashPosition').evaluate(el=>el.closest('details').open=true);
  await page.locator('#csvCashPosition').selectOption(ids.cash);
- await page.waitForFunction(()=>document.querySelector('#csvPreview').textContent.includes('1 neu'));
+ await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereit'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
  await page.locator('#saveDialog').click();
  const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
@@ -30,7 +31,7 @@ try{
  assert.equal(state.bookings[0].importFingerprint!=null,true);
  await page.locator('#openCSVImport').click();
  await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5')});
- await page.waitForFunction(()=>document.querySelector('#csvPreview').textContent.includes('1 Dubletten'));
+ await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereits vorhanden'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),true);
  await page.locator('#cancelDialog').click();
  await page.locator('#sidebarNav [data-page="positions"]').click();

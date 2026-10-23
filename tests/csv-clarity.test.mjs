@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {webcrypto} from 'node:crypto';
+globalThis.crypto??=webcrypto;
+import {blankModel,createProvider,createAccount,createPosition} from '../src/model.js';
+import {parseCSV,inferMapping,previewCSV,importCSV} from '../src/csv-import.js';
+
+test('Missing instrument identifiers never fall back to first portfolio position',()=>{
+ const model=blankModel(),provider=createProvider({name:'Testbroker'});
+ model.providers.push(provider);
+ const account=createAccount({providerId:provider.id,name:'Depot',type:'securities'},model);
+ model.accounts.push(account);
+ const a=createPosition({providerId:provider.id,accountId:account.id,kind:'etf',name:'ETF A',symbol:'AAA',quantity:0,price:100},model);
+ const b=createPosition({providerId:provider.id,accountId:account.id,kind:'etf',name:'ETF B',symbol:'BBB',quantity:0,price:100},model);
+ model.positions.push(a,b);
+ const raw=parseCSV('Datum;Typ;Menge;Kurs\n2026-10-21;Kauf;1;100\n2026-10-22;Kauf;2;100');
+ const mapping=inferMapping(raw.headers),before=JSON.stringify(model);
+ const unidentified=previewCSV(model,raw,mapping);
+ assert.equal(unidentified.ready,0);
+ assert.equal(unidentified.issues.length,2);
+ assert.match(unidentified.issues[0].message,/Anlage fehlt/);
+ assert.equal(JSON.stringify(model),before);
+ const approved=previewCSV(model,raw,mapping,{positionOverrides:{2:b.id},skippedLines:[3]});
+ assert.equal(approved.ready,1);
+ assert.equal(approved.skipped,1);
+ assert.equal(approved.issues.length,0);
+ const result=importCSV(model,approved);
+ assert.equal(result.imported,1);
+ assert.equal(model.positions.find(p=>p.id===a.id).quantityExact,'0');
+ assert.equal(model.positions.find(p=>p.id===b.id).quantityExact,'1');
+});
