@@ -28,7 +28,7 @@ import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-impor
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
 import {openingCashInput} from './account-opening.js';
-import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition} from './portfolio-edit-actions.js';
+import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPositionDeletable} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
 let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}
 let otherTabChangedPortfolio=false;
@@ -747,8 +747,8 @@ function openSnapshot(s=null){
   });
 }
 function confirmDeletePosition(id,{fromDialog=false}={}){
- const p=model.positions.find(x=>x.id===id);
- if(!p)return notify('Position nicht mehr vorhanden.',true);
+ let p;
+ try{p=assertPositionDeletable(model,id);}catch(error){return notify(String(error.message||error),true);}
  if(!confirm('Position „'+p.name+'“ wirklich löschen? Historische Stichtage bleiben erhalten. Bei bestehenden Buchungen oder DeFi-Verknüpfungen wird das Löschen blockiert.'))return;
  try{
   deletePosition(model,id);
