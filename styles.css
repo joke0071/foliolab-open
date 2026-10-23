@@ -462,18 +462,18 @@
 
 /* Compact return reporting: technical details only on demand. */
 .performance-details{margin-top:12px;border:1px solid #e0e9e0;border-radius:12px;min-width:0;background:#fbfdfb}
-.performance-details>summary{list-style:none;display:flex;gap:8px;align-items:center;justify-content:space-between;min-height:48px;cursor:pointer;padding:12px 14px;color:#355c42}
+.performance-details>summary{list-style:none;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;row-gap:3px;align-items:center;min-height:48px;cursor:pointer;padding:12px 16px;color:#355c42}
 .performance-details>summary::-webkit-details-marker{display:none}
-.performance-details>summary::after{content:'⌄';font-size:18px;line-height:1;color:#53715c;flex-shrink:0;margin-left:6px}
-.performance-details[open]>summary::after{transform:rotate(180deg)}
-.performance-details>summary>span{font-weight:750;font-size:12px}
-.performance-details>summary>small{text-align:right;color:#4e6955;font-size:11px;line-height:1.45;max-width:65%}
+.performance-details>summary::after{content:'';display:block;grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:center;width:9px;height:9px;border-right:1.8px solid #6b8c73;border-bottom:1.8px solid #6b8c73;transform:rotate(45deg);transition:transform .15s ease;margin-right:5px;margin-top:-4px}
+.performance-details[open]>summary::after{transform:rotate(225deg)}
+.performance-details>summary>span{grid-column:1;grid-row:1;min-width:0;font-weight:750;font-size:12px}
+.performance-details>summary>small{grid-column:1;grid-row:2;min-width:0;text-align:left;color:#4e6955;font-size:11px;line-height:1.45;overflow-wrap:anywhere}
 .performance-details>summary:focus-visible{outline:2px solid #327f52;outline-offset:2px;border-radius:12px}
 .performance-details-body{border-top:1px solid #e3ebe4;padding:8px 14px 13px}
 .performance-details-body #performanceInfo p{margin:8px 0;line-height:1.65}
 .performance-details-body .btn{margin-top:6px;max-width:100%;white-space:normal}
 .performance-details-body>p{margin:12px 0 0}
-@media(max-width:520px){.performance-details>summary{align-items:flex-start;flex-direction:column;gap:4px}.performance-details>summary>small{text-align:left;max-width:none}}
+@media(prefers-reduced-motion:reduce){.performance-details>summary::after{transition:none}}
 /* Status belongs to the same padded content column as the surrounding settings. */
 #legacyQuoteAudit>#legacyQuoteAuditStatus{margin:10px 12px 15px;min-height:16px}
 
