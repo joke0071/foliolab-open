@@ -69,3 +69,32 @@ test('A missing journal link is still allowed for legacy V2 bookings',()=>{
  assert.equal(reloaded.bookings.length,1);
  assert.equal(reloaded.positions.length,2);
 });
+
+test('A booking cannot be silently linked to an unrelated but valid journal entry',()=>{
+ const {m,security,cash}=fixture();
+ executeTransaction(m,{type:'deposit',date:'2026-10-22',positionId:cash.id,quantity:50,unitPrice:1});
+ const tampered=corrupt(m,x=>{
+  x.bookings.find(b=>b.positionId===security.id).journalEntryId=
+   x.journalEntries.find(j=>j.type==='deposit').id;
+ });
+ assert.throws(()=>safeImport(tampered),/Buchung|Journal|Referenz|Position/);
+});
+
+test('Independent cash and security reference amounts remain consistent across repeated trades',()=>{
+ const {m,security,cash}=fixture();
+ let expectedSecurity=2.125,expectedCash=1786.25;
+ for(let i=0;i<8;i++){
+  executeTransaction(m,{type:'buy',date:'2026-10-22',positionId:security.id,
+   cashPositionId:cash.id,quantity:1,unitPrice:100,feeEUR:'0.5'});
+  expectedSecurity+=1;expectedCash-=100.5;
+  executeTransaction(m,{type:'sell',date:'2026-10-22',positionId:security.id,
+   cashPositionId:cash.id,quantity:1,unitPrice:100,feeEUR:'0.5'});
+  expectedSecurity-=1;expectedCash+=99.5;
+ }
+ const checked=restored(m);
+ assert.equal(ledgerQuantityAudit(checked).ok,true);
+ assert.equal(checked.positions.find(p=>p.id===security.id).quantityExact,String(expectedSecurity));
+ assert.equal(checked.positions.find(p=>p.id===cash.id).quantityExact,String(expectedCash));
+ assert.equal(checked.externalCashFlows.length,0,'Internal trading never invents external deposits');
+ assert.equal(checked.journalEntries.length,17);
+});
