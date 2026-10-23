@@ -20,6 +20,7 @@ import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './perf
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
 import {updateScannedWalletPosition} from './wallet-scan-update.js';
+import {legacyQuoteDiscrepancies,verifiedCurrentQuote,applyVerifiedQuoteRepair} from './legacy-quote-audit.js';
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
@@ -28,7 +29,8 @@ import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js'
 import {openingCashInput} from './account-opening.js';
 const positionDetailRanges=new Map();
 let model,loadFailure=null;try{model=load();}catch(e){loadFailure=e;model=blankModel();}
-let otherTabChangedPortfolio=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
+let otherTabChangedPortfolio=false;
+let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
@@ -172,6 +174,7 @@ function renderBookings(){
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Einzahlungen, Käufe, Verkäufe und Gebühren helfen, Bestände und bekannte Anschaffungskosten nachzuvollziehen. Eine unvollständige Historie ergibt noch keine verlässliche Rendite.</p><div class="toolbar-buttons"><button type="button" class="btn primary" data-action="start-booking">+ Buchung</button><button type="button" class="btn outline" data-action="start-csv">CSV importieren</button></div></div>';
 }
 function renderSettings(){
+ if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
  const expanded=new Set([...settings.querySelectorAll('details[open][data-provider-settings]')].map(x=>x.dataset.providerSettings));
  settings.innerHTML=model.providers.length?model.providers.map(p=>{
@@ -192,6 +195,67 @@ function renderSettings(){
  try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}
  reminder.classList.toggle('hidden',!(backupCounter()>=15&&Date.now()-last>30*864e5));
  renderBackupStatus();
+}
+function renderLegacyQuoteAudit(){
+ const status=$('legacyQuoteAuditStatus'),results=$('legacyQuoteAuditResults');
+ if(!legacyAuditPerformed||!status||!results)return;
+ const issues=legacyQuoteDiscrepancies(model);
+ status.textContent=issues.length
+  ?issues.length+' Position'+(issues.length===1?' enthält':'en enthalten')+' abweichende gespeicherte Kurswerte. Es wurde nichts geändert.'
+  :'Keine Abweichung zwischen Anzeige- und Exaktkursen gefunden. Historische Renditen wurden nicht neu berechnet.';
+ results.innerHTML=issues.map(issue=>{
+  const p=model.positions.find(x=>x.id===issue.id);
+  const rows=issue.fields.map(field=>{
+   const price=field==='price',label=price?'Kurs':'EUR-Wechselkurs';
+   const display=price?issue.displayPrice:issue.displayFx,precise=price?issue.exactPrice:issue.exactFx;
+   return '<div class="legacy-quote-values">'+esc(label)+': Anzeige '+esc(String(display))+' · genaue Bewertung '+esc(String(precise))+'</div>';
+  }).join('');
+  const actions=issue.fields.map(field=>{
+   if(field==='price'&&!issue.hasQuoteSource)
+    return '<span class="small-help">Für diesen Kurs ist kein bestätigter automatischer Anbieter konfiguriert. Bitte die Position und externe Belege manuell prüfen.</span>';
+   return '<button type="button" class="btn outline" data-audit-fix="'+esc(field)+'" data-id="'+esc(issue.id)+'">'+
+    (field==='price'?'Aktuellen Anbieterkurs prüfen':'Aktuellen Wechselkurs prüfen')+'</button>';
+  }).join('');
+  return '<div class="legacy-quote-item"><strong>'+esc(issue.name||'Position')+
+   (p?.symbol?' · '+esc(p.symbol):'')+'</strong>'+rows+
+   '<div class="legacy-quote-actions">'+actions+'</div></div>';
+ }).join('');
+}
+async function confirmLegacyQuoteRepair(positionId,field,button){
+ const p=model.positions.find(x=>x.id===positionId);
+ if(!p||!legacyQuoteDiscrepancies({positions:[p]})[0]?.fields.includes(field))
+  return notify('Diese gespeicherte Kursabweichung besteht nicht mehr.',true);
+ button.disabled=true;
+ try{
+  let value,source,date;
+  if(field==='price'){
+   if(['etf','fund','stock'].includes(p.kind)){
+    const q=await fetchSecurityQuote(p,model.settings);
+    value=q.price;source=q.source;date=q.asOf;
+   }else if(p.kind==='crypto'&&p.coinId){
+    const quotes=await cryptoPrices([p.coinId],model.settings.coinGeckoKey);
+    const q=quotes[p.coinId],freshness=coinQuoteFreshness(q);
+    if(!freshness.ok||!freshness.dated)throw Error('CoinGecko hat keinen ausreichend aktuellen datierten Kurs geliefert.');
+    value=q.eur;source='CoinGecko';date=new Date(Number(q.last_updated_at)*1000).toISOString().slice(0,10);
+   }else throw Error('Für diese Position fehlt eine verifizierbare Kursquelle.');
+  }else{
+   if(p.currency==='EUR')throw Error('EUR benötigt keinen Wechselkurs.');
+   const q=await exchangeRateQuote(p.currency,'');
+   value=q.rate;source=q.source;date=q.date;
+  }
+  const checked=verifiedCurrentQuote(value,{source,date});
+  const old=field==='price'?p.priceExact:p.fxRateExact;
+  const label=field==='price'?'Kurs '+p.currency:'Wechselkurs '+p.currency+'/EUR';
+  if(!confirm('Korrektur für „'+p.name+'“ bestätigen?\\n'+label+': bisher exakt '+old+
+   ' · neuer Anbieterwert '+checked.exactValue+'\\nQuelle: '+checked.source+' · Kursdatum: '+checked.date+
+   '\\n\\nZuerst wird ein Backup der ursprünglichen Daten heruntergeladen. Historische Buchungen und Stichtage bleiben unverändert.'))return;
+  downloadBackup();
+  applyVerifiedQuoteRepair(model,p.id,field,checked,{confirmed:true});
+  save();
+  renderLegacyQuoteAudit();
+  notify('Aktueller Kurs aus '+checked.source+' übernommen. Historische Daten unverändert.');
+ }catch(error){notify('Kursprüfung: '+String(error.message||error).slice(0,180),true);}
+ finally{button.disabled=false;}
 }
 function renderBackupStatus(){
  const element=$('backupStatus');
@@ -868,6 +932,13 @@ $('clearApiKeys').addEventListener('click',()=>{
  }catch(error){
   notify('Zugangsdaten konnten nicht vollständig entfernt werden. Bitte den lokalen Speicher prüfen.',true);
  }
+});
+$('runLegacyQuoteAudit').addEventListener('click',()=>{
+ legacyAuditPerformed=true;renderLegacyQuoteAudit();
+});
+$('legacyQuoteAuditResults').addEventListener('click',event=>{
+ const button=event.target.closest('button[data-audit-fix]');
+ if(button&&!button.disabled)void confirmLegacyQuoteRepair(button.dataset.id,button.dataset.auditFix,button);
 });
 $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
