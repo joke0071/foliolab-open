@@ -12,7 +12,13 @@ try{
    await page.setViewportSize({width,height:850});
    await page.waitForTimeout(100);
    const overflow=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:innerWidth}));
-   assert.ok(overflow.scroll<=overflow.inner+1,'Horizontal overflow at '+width+' px: '+JSON.stringify(overflow));
+   if(overflow.scroll>overflow.inner+1){
+    const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].filter(el=>{
+     const r=el.getBoundingClientRect(),style=getComputedStyle(el);
+     return style.display!=='none'&&style.visibility!=='hidden'&&r.width>0&&r.right>innerWidth+1&&r.left>=0;
+    }).slice(0,12).map(el=>({tag:el.tagName,id:el.id,cls:typeof el.className==='string'?el.className.slice(0,90):'',right:Math.round(el.getBoundingClientRect().right),width:Math.round(el.getBoundingClientRect().width)})));
+    assert.fail('Horizontal overflow at '+width+' px: '+JSON.stringify({...overflow,offenders}));
+   }
  }
  await page.setViewportSize({width:1440,height:900});
  await page.locator('#sidebarNav [data-page="more"]').click();
