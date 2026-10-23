@@ -71,6 +71,7 @@ jobs:
           node tests/browser-account-opening.mjs
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
+          node tests/browser-multitab-integrity.mjs
           node tests/browser-key-privacy.mjs
           node tests/browser-solana-rpc-help.mjs
           node tests/browser-data-source-settings.mjs
