@@ -109,9 +109,23 @@ function showPositionDetail(id){
 }
 function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
 function drawChart(samples){return drawInteractiveChart(samples,{money,esc,dateLabel});}
-function renderHistory(){const info=$('performanceInfo');const start=model.performanceFlowTrackingSince,end=model.snapshots.at(-1)?.date;const rate=start&&end&&start!==end?portfolioXirr(model,start,end):null;const timeWeighted=start&&end&&start!==end?portfolioTwr(model,start,end):null;const issues=start&&end&&start!==end?performanceIssues(model,start,end):[];
- info.textContent=rate==null?'XIRR noch nicht belastbar: '+(issues.length?issues.join(' · '):'Startwert, externe Cashflows oder ausreichend bewertete Endpunkte fehlen.'):`XIRR (geldgewichtet, jährlich): ${new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(rate)} · ${dateLabel(start)} bis ${dateLabel(end)}.`;
- info.textContent+=timeWeighted==null?' · TWR: nicht berechenbar (exakte Bewertungen vor/nach externen Geldflüssen fehlen oder Stichtage unvollständig).':` · TWR (cashflowfreier Bewertungszeitraum): ${new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(timeWeighted)}.`;
+function renderHistory(){
+ const info=$('performanceInfo'),summary=$('performanceSummary'),start=model.performanceFlowTrackingSince,end=model.snapshots.at(-1)?.date;
+ const rate=start&&end&&start!==end?portfolioXirr(model,start,end):null;
+ const twr=start&&end&&start!==end?portfolioTwr(model,start,end):null;
+ const issues=start&&end&&start!==end?performanceIssues(model,start,end):[];
+ const percent=v=>new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(v);
+ summary.textContent=rate==null&&twr==null?'Noch keine verlässliche Rendite berechenbar':
+  [rate==null?null:'XIRR '+percent(rate),twr==null?null:'TWR '+percent(twr)].filter(Boolean).join(' · ');
+ const issueText=issues.length?' Fehlende Angaben: '+issues.slice(0,4).join('; ')+'.':'';
+ info.innerHTML='<p><strong>XIRR:</strong> '+(rate==null?
+  esc(start?'Für eine geldgewichtete Rendite fehlen noch vollständige Bewertungen oder Ein- und Auszahlungen.'+issueText:
+  'Für die geldgewichtete Rendite zuerst einen Startwert festlegen und Geldflüsse erfassen.'):
+  esc(percent(rate)+' pro Jahr · '+dateLabel(start)+' bis '+dateLabel(end)))+'</p>'+
+  '<p><strong>TWR:</strong> '+(twr==null?
+  'Für eine zeitgewichtete Rendite fehlen noch bewertete Zeitpunkte vor und nach externen Geldflüssen.':
+  esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
+ $('startPerformance').classList.toggle('hidden',Boolean(start));
  const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);} $('historyChart').innerHTML=drawChart(data);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>btn.classList.toggle('selected',btn.dataset.range===range));$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');}
 function renderPositions(){
  const unresolved=unresolvedListings(),reviewItems=valuationIssues(model),reviewIds=new Set(reviewItems.map(x=>x.id));
@@ -799,7 +813,7 @@ async function refreshAll(){
    }
    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
   }
-  if(securities.length&&(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey)){
+  if(securities.length&&(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
     for(const p of securities){
      try{
       const q=await fetchSecurityQuote(p,model.settings);
@@ -960,7 +974,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
 });
-  const apiCredentialFields=['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'];
+  const apiCredentialFields=['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
 $('clearApiKeys').addEventListener('click',()=>{
  if(!confirm('Alle gespeicherten API-Schlüssel und den privaten Solana-RPC-Zugang auf diesem Gerät entfernen? Portfolio und Konten bleiben erhalten.'))return;
  try{
@@ -982,7 +996,25 @@ $('legacyQuoteAuditResults').addEventListener('click',event=>{
  const button=event.target.closest('button[data-audit-fix]');
  if(button&&!button.disabled)void confirmLegacyQuoteRepair(button.dataset.id,button.dataset.auditFix,button);
 });
-$('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.currentTarget);for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])model.settings[key]=String(f.get(key)||'').trim();model.settings.securitySource=String(f.get('securitySource')||'auto');try{model.settings.publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';}catch(error){notify(error.message,true);return;}save();notify('Eigene API-Schlüssel lokal gespeichert.');});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
+$('apiSettings').addEventListener('submit',e=>{
+ e.preventDefault();
+ const f=new FormData(e.currentTarget);
+ try{
+  const publicInstrumentEndpoint=validatedPublicEndpoint(String(f.get('publicInstrumentEndpoint')||'').trim())||'';
+  const eodhdWorkerEndpoint=validatedPublicEndpoint(String(f.get('eodhdWorkerEndpoint')||'').trim())||'';
+  const eodhdWorkerAccessToken=String(f.get('eodhdWorkerAccessToken')||'').trim();
+  if(Boolean(eodhdWorkerEndpoint)!==Boolean(eodhdWorkerAccessToken))
+   throw Error('Für den EODHD-Worker bitte Adresse und Zugriffsschlüssel gemeinsam eintragen oder beide leer lassen.');
+  if(eodhdWorkerAccessToken&&!/^[A-Za-z0-9_-]{24,128}$/.test(eodhdWorkerAccessToken))
+   throw Error('Der Worker-Zugriffsschlüssel muss 24 bis 128 Zeichen aus Buchstaben, Zahlen, _ oder - enthalten.');
+  const changes={publicInstrumentEndpoint,eodhdWorkerEndpoint,eodhdWorkerAccessToken,
+   securitySource:String(f.get('securitySource')||'auto')};
+  for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
+   changes[key]=String(f.get(key)||'').trim();
+  Object.assign(model.settings,changes);
+  save();notify('Datenquellen und Zugänge lokal gespeichert.');
+ }catch(error){notify(error.message,true);}
+});$('solanaRpc').addEventListener('change',e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
    const button=$('testSolanaRpc'),status=$('solanaRpcTestStatus'),rpc=$('solanaRpc').value.trim();
    button.disabled=true;
@@ -1009,6 +1041,8 @@ $('apiSettings').addEventListener('submit',e=>{e.preventDefault();const f=new Fo
   for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
+ $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
+ $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').classList.remove('hidden');});$('installButton').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();installPrompt=null;$('installButton').classList.add('hidden');});
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
@@ -1045,7 +1079,7 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{});
 }
 if(location.protocol==='https:'&&model.settings.autoRefresh!==false){
-  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey)&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
+  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
 }
 

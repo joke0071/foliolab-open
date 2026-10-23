@@ -104,3 +104,43 @@ test('EODHD double network failure gives safe diagnostic without leaking credent
  });
  assert.deepEqual(calls,['eodhd.com','eodhistoricaldata.com']);
 });
+
+test('Optional authenticated EODHD worker is a safe first-class market source without local EODHD key',async()=>{
+ const token='SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012';
+ const settings={eodhdWorkerEndpoint:'https://my-worker.workers.dev',eodhdWorkerAccessToken:token,securitySource:'eodhd'};
+ assert.deepEqual(marketSourceOptions(position(),settings),['eodhd']);
+ const visited=[];
+ const fetcher=async(url,options={})=>{
+  visited.push({url,options});
+  assert.equal(url,'https://my-worker.workers.dev/api/market/eodhd');
+  assert.equal(options.method,'POST');
+  assert.equal(options.headers.authorization,'Bearer '+token);
+  const request=JSON.parse(options.body);
+  assert.equal(request.symbol,'VWCE.XETRA');
+  assert.equal(request.api_token,undefined,'Worker requests must never include an EODHD token');
+  return ok({schemaVersion:1,status:'ok',symbol:'VWCE.XETRA',points:[{date:older,close:101.25},{date:yday,close:102.75}]});
+ };
+ const quote=await fetchSecurityQuote(position(),settings,fetcher);
+ assert.equal(quote.price,102.75);
+ assert.equal(quote.asOf,yday);
+ const chart=await fetchSecurityHistory(position(),settings,30,fetcher);
+ assert.deepEqual(chart.points.map(p=>p.total),[101.25,102.75]);
+ assert.match(chart.source,/eigener Worker/);
+ assert.equal(visited.length,2);
+});
+test('Worker endpoint and access key must be an explicitly configured HTTPS pair',async()=>{
+ const p=position();
+ const onlyUrl={eodhdWorkerEndpoint:'https://my-worker.workers.dev'};
+ assert.deepEqual(marketSourceOptions(p,onlyUrl),[]);
+ const onlyToken={eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'};
+ assert.deepEqual(marketSourceOptions(p,onlyToken),[]);
+ assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'http://insecure.example',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'}),/HTTPS/);
+ assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev/path',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'}),/Basisadresse/);
+ assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev',eodhdWorkerAccessToken:'short'}),/Zugriffsschlüssel/);
+});
+test('No worker secrets can escape an unencrypted portfolio backup',()=>{
+ const m=blankModel();
+ m.settings.eodhdWorkerEndpoint='https://my-worker.workers.dev';
+ m.settings.eodhdWorkerAccessToken='SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012';
+ assert.doesNotMatch(backup(m),/my-worker|SYNTHETIC_WORKER/);
+});

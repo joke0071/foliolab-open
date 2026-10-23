@@ -43,6 +43,7 @@ try{
  assert.match(await page.locator('#totalValue').innerText(),/1.600/);
  await page.locator('#sidebarNav [data-page="history"]').click();
  page.once('dialog',d=>d.accept());
+ await page.locator('#performanceDetails > summary').click();
  await page.locator('#startPerformance').click();
  const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.performanceFlowTrackingSince,new Date().toISOString().slice(0,10));

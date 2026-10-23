@@ -4,13 +4,13 @@
  */
 import {svg} from './format.js';
 const labels=Object.freeze({
- eodhdKey:'EODHD API-Schlüssel',fmpKey:'FMP API-Schlüssel',
+ eodhdKey:'EODHD API-Schlüssel',eodhdWorkerAccessToken:'Worker-Zugriffsschlüssel',fmpKey:'FMP API-Schlüssel',
  twelveKey:'Twelve Data API-Schlüssel',coinGeckoKey:'CoinGecko API-Schlüssel',
  etherscanKey:'Etherscan API-Schlüssel',binplorerKey:'Binplorer API-Schlüssel',
  solanaRpc:'Solana RPC-Adresse'
 });
 export function installCredentialVisibility(root=document){
- const inputs=root.querySelectorAll('#apiSettings input[type="password"], #blockchainSettings input[type="password"], #solanaRpc');
+ const inputs=root.querySelectorAll('#apiSettings input[type="password"], #blockchainSettings input[type="password"], #marketWorkerSetup input[type="password"], #solanaRpc');
  for(const input of inputs){
   if(input.closest('.credential-control'))continue;
   const id=input.id==='solanaRpc'?'solanaRpc':input.name;
