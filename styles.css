@@ -421,3 +421,13 @@
 .credential-toggle:hover{background:#eff5ef;color:#245c3e}
 .credential-toggle:focus-visible{outline:2px solid #2d6946;outline-offset:0}
 .credential-toggle svg{pointer-events:none}
+
+/* Optional sources stay collapsed; the native chart is the primary view. */
+.position-chart-options{margin-top:16px;border-top:1px solid #e4ece5;padding-top:10px;min-width:0}
+.position-chart-options>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:650;color:#53715c;padding:5px 2px}
+.position-chart-options>summary::-webkit-details-marker{display:none}
+.position-chart-options>summary::after{content:'⌄';font-size:18px;font-weight:500;line-height:1}
+.position-chart-options[open]>summary::after{transform:rotate(180deg)}
+.position-chart-options>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
+.position-chart-options-body{min-width:0;padding:4px 0 8px}
+.position-chart-options-body .public-chart{margin-top:12px}

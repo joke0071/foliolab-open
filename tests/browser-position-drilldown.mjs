@@ -10,7 +10,7 @@ try{
   const account=createAccount({providerId:provider.id,name:'Langfristiges Depot',type:'securities'},m);
   m.accounts.push(account);m.settings.autoRefresh=false;
   const positions=[
-   {id:'etf-test',name:'Vanguard FTSE All-World <img src=x onerror=window.__bad=true>',kind:'etf',symbol:'VWCE',quantity:'10',price:'100'},
+   {id:'etf-test',name:'Vanguard FTSE All-World <img src=x onerror=window.__bad=true>',kind:'etf',symbol:'VWCE',exchange:'Xetra',mic:'XETR',quantity:'10',price:'100'},
    {id:'btc-test',name:'Bitcoin',kind:'crypto',symbol:'BTC',coinId:'bitcoin',quantity:'0.5',price:'70000'},
    {id:'cash-test',name:'Guthaben',kind:'cash',symbol:'EUR',quantity:'500',price:'1'}
   ];
@@ -61,11 +61,13 @@ try{
  const etf=page.locator('#providerOverview [data-position-id="etf-test"]');
  await etf.locator('summary').focus();await page.keyboard.press('Enter');
  assert.equal(await etf.getAttribute('open'),'');
+ assert.match(await etf.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
+ assert.equal(await etf.locator('[data-action="load-tradingview"]').isVisible(),false,'Optional TradingView must start collapsed');
+ await etf.locator('.position-chart-options>summary').click();
  await etf.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
- assert.equal(await etf.locator('.position-history-unavailable').count(),0,'Known ETFs use the public TradingView chart instead of redundant empty placeholder');
  const cash=page.locator('#providerOverview [data-position-id="cash-test"]');
  await cash.locator('summary').click();
- assert.match(await cash.locator('.position-history-unavailable').innerText(),/keinen Börsenkurs/);
+ assert.equal(await cash.locator('.position-history-plot').count(),0,'Cash has no meaningless market-price chart');
  const snap=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(snap.snapshots.at(-1).byPosition['btc-test'],'35000');
  assert.equal(snap.snapshots.at(-1).byPosition['cash-test'],'500');

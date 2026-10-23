@@ -17,9 +17,11 @@ try{
  await page.locator('#providerOverview .provider-accordion>summary').click();
  const detail=page.locator('#providerOverview [data-position-id="etf-demo"]');
  await detail.locator(':scope > summary').click();
+ assert.equal(await detail.locator('[data-action="load-tradingview"]').isVisible(),false,'External chart must start collapsed');
+ assert.match(await detail.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
+ await detail.locator('.position-chart-options>summary').click();
  await detail.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
  assert.match(await detail.innerText(),/Öffentliches Diagramm laden/);
- assert.equal(await detail.locator('.position-history-unavailable').count(),0,'Do not show a second empty chart beneath public TradingView');
  assert.equal(await detail.locator('[data-position-range]').count(),0,'TradingView has its own chart ranges');
  await page.route('https://s.tradingview.com/widgetembed/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Isolated public chart</title>'}));
  await detail.locator('[data-action="load-tradingview"]').click();
