@@ -141,6 +141,11 @@ export function executeTransaction(model,input){
  const affected=[p.id,input.targetPositionId,input.cashPositionId].filter(Boolean);
  for(const positionId of affected){const last=lastJournalDate(copy,positionId);if(last&&input.date<last)throw Error('Rückdatierte Buchung vor einem bereits verbuchten Vorgang: bitte zuerst die Chronologie klären.');}
  const qty=amount(input.quantity??0),prev=q(p),fee=amount(input.feeEUR??0),tax=amount(input.taxEUR??0);
+ // No mixed stock-and-cash corporate action ledger exists yet. Never silently
+ // ignore a separately specified broker cash settlement on conversion/split.
+ if(['split','swap','merger'].includes(kind)&&input.cashInLieuEUR!=null&&
+    amount(input.cashInLieuEUR)>0n)
+   throw Error('Barabfindung/Barausgleich wird bei dieser Kapitalmaßnahme nicht automatisch gebucht. Brokerabrechnung separat prüfen.');
  if((fee>0n||tax>0n)&&!['buy','sell'].includes(kind))throw Error('Nebenkosten für diesen Vorgang bitte separat als Gebühren-/Steuerbuchung erfassen.');
  if(p.kind==='cash'&&['buy','sell'].includes(kind))throw Error('Geldkonten über Ein-/Auszahlung oder Transfer buchen, nicht als Wertpapier kaufen/verkaufen.');
  const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
@@ -190,13 +195,18 @@ export function executeTransaction(model,input){
  case 'split':{
    if(p.kind==='cash')throw Error('Aktiensplit ist auf einem Geldkonto nicht zulässig.');
    const numer=amount(input.ratioNumerator??input.quantity,1n),denom=amount(input.ratioDenominator??1,1n);
-   setQ(p,proportional(prev,numer,denom));
+   const next=proportional(prev,numer,denom);
+   if(prev>0n&&next===0n)
+     throw Error('Reverse Split würde einen Kleinstbestand auf null runden. Barabfindung und Brokerabrechnung separat prüfen.');
+   setQ(p,next);
    // Adjust quote mechanically only; do not present this as a new live market quote.
    const newPrice=proportional(units(p.priceExact??p.price),denom,numer);
    p.price=Number(exact(newPrice));p.priceExact=exact(newPrice);p.updatedAt=null;p.priceStatus='rechnerisch nach Split angepasst';
    changed=true;break;}
  case 'swap':case 'merger':{
    positive();enough();const target=checkTarget(copy,p,input.targetPositionId),out=amount(input.targetQuantity,1n);
+   if(p.kind==='cash'||target.kind==='cash')
+     throw Error('Ein Umtausch mit Geldkonto benötigt nachvollziehbare Kauf-/Verkaufs- und Geldbuchungen; kein bargeldloser Token-Swap.');
    const tb=basis(target),taken=b===null||prev===0n?null:proportional(b,qty,prev);
    setQ(p,prev-qty);setQ(target,q(target)+out);
    setBasis(p,taken==null?null:b-taken);setBasis(target,taken==null||tb==null?null:tb+taken);
