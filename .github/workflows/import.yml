@@ -20,9 +20,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Require a service-worker cache revision for shipped asset changes
+        run: |
+          set -euo pipefail
+          if git diff --quiet HEAD^ HEAD -- index.html styles.css manifest.webmanifest src icons; then
+            echo 'No shipped application assets changed; cache revision unchanged is allowed.'
+            exit 0
+          fi
+          previous="$(git show HEAD^:sw.js | grep '^const CACHE=' || true)"
+          current="$(grep '^const CACHE=' sw.js || true)"
+          if [[ -z "$previous" || -z "$current" || "$previous" == "$current" ]]; then
+            echo 'Shipped app assets changed without a new PWA cache revision.' >&2
+            exit 1
+          fi
+          echo "PWA cache revision changed: $previous -> $current"
       - name: Verify standalone application
         run: |
           npm test
