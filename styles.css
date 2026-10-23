@@ -464,6 +464,8 @@
 .performance-details{margin-top:12px;border:1px solid #e0e9e0;border-radius:12px;min-width:0;background:#fbfdfb}
 .performance-details>summary{list-style:none;display:flex;gap:8px;align-items:center;justify-content:space-between;min-height:48px;cursor:pointer;padding:12px 14px;color:#355c42}
 .performance-details>summary::-webkit-details-marker{display:none}
+.performance-details>summary::after{content:'⌄';font-size:18px;line-height:1;color:#53715c;flex-shrink:0;margin-left:6px}
+.performance-details[open]>summary::after{transform:rotate(180deg)}
 .performance-details>summary>span{font-weight:750;font-size:12px}
 .performance-details>summary>small{text-align:right;color:#6f8275;font-size:11px;line-height:1.45;max-width:65%}
 .performance-details>summary:focus-visible{outline:2px solid #327f52;outline-offset:2px;border-radius:12px}
