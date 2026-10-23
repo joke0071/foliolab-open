@@ -71,5 +71,5 @@ test('Failed EODHD request collapses its chart, hides periods and never exposes 
 test('Only specific safe non-truncated failure guidance is shown',()=>{
  assert.match(safeHistoryError(new Error('HTTP 403')),/Tarif/);
  assert.match(safeHistoryError(new Error('Ratenlimit erreicht')),/Abruflimit/);
- assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar \u0028Netzwerk\/CORS\u0029')),/nicht überprüft/);
+ assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar (Netzwerk/CORS)'),{security:true}),/nicht überprüft/);
 });
