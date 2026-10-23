@@ -15,12 +15,26 @@ try{
   persist(m);
  });
  await page.reload();
- assert.match(await page.locator('#totalHint').innerText(),/Bewertung eingeschränkt/);
+ assert.equal((await page.locator('#totalHint button').innerText()).trim(),'2 Positionen prüfen ›');
+ const hint=await page.locator('#totalHint button').evaluate(el=>{
+  const r=el.getBoundingClientRect();return {height:r.height,width:r.width,parent:el.closest('.hero').getBoundingClientRect().width};
+ });
+ assert.ok(hint.height<=40&&hint.width<hint.parent,'Valuation status must be a compact chip on mobile');
+ assert.match(await page.locator('#totalHint button').getAttribute('title'),/Bewertung eingeschränkt/);
+ await page.locator('#mobileNav [data-page="positions"]').click();
+ await page.locator('#positionSearch').fill('keine solche Position');
+ await page.locator('#mobileNav [data-page="dashboard"]').click();
  await page.locator('#totalHint button').click();
  assert.ok(page.url().includes('page=positions'));
+ assert.equal(await page.locator('#positionSearch').inputValue(),'','Hero review clears stale search');
  assert.match(await page.locator('#positionFilters .active').innerText(),/Zu prüfen/);
+ assert.equal(await page.locator('#positionQuoteDetails').getAttribute('open'),'','Quote details must open');
+ assert.equal(await page.locator('#positionList .holding-expand[open]').count(),1,'First affected position expands');
+ assert.equal(await page.locator('#positionFilters .active').evaluate(el=>document.activeElement===el),true,'Active filter receives keyboard focus');
  const rows=await page.locator('#positionList .holding-name').allTextContents();
- assert.deepEqual(rows.slice().sort(),['Ohne Kurs','Veralteter ETF'].sort(),'Warning filter includes exactly the affected positions independent of value sorting');
+ assert.deepEqual(rows.slice().sort(),['Ohne Kurs','Veralteter ETF'].sort(),'Filter shows precisely affected positions');
+ assert.equal(await page.locator('#positionList .position-review-reason').count(),2,'Every affected position explains its warning');
+ assert.match(await page.locator('#positionList .holding-expand[open]').innerText(),/Bewertungshinweis/);
  await page.locator('[data-filter="all"]').click();
  assert.equal(await page.locator('#positionList .holding-row').count(),3);
  console.log('VALUATION DRILL-DOWN: exact warning-based position filter PASS');
