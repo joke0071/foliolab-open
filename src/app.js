@@ -894,7 +894,7 @@ function openBooking(){
    fx.value=String(quote.rate);
    form.elements.fxRateDate.value=quote.date;
    form.elements.fxSource.value=quote.source+' (Referenz)';
-   $('historicalFxNote').textContent='Referenzkurs vom '+quote.date+' für '+date+'. Der Kurs des Brokers kann abweichen.';
+   $('historicalFxNote').textContent='Referenzkurs vom '+quote.date+' für '+date+'. Abweichungen vom Broker-Ausführungskurs möglich.';
   }catch(error){notify('Referenzkurs nicht verfügbar: '+error.message,true);}
   finally{button.disabled=false;}
  });
