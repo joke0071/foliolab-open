@@ -79,5 +79,30 @@ try{
   return {blocked,unchanged:localStorage.getItem(STORE_KEY)===old};
  });
  assert.deepEqual(legacyWriter,{blocked:true,unchanged:true});
- console.log('CRASH-RESILIENT ROLLBACK: interrupted mode marker, safe recovery, no reset revival, stale legacy guard PASS');
+ const eviction=await visit(async()=>{
+  const {blankModel,createProvider,persist,STORE_KEY}=await import('/src/model.js');
+  const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
+  const {openPortfolioDB}=await import('/src/atomic-storage.js');
+  const model=blankModel();model.settings.autoRefresh=false;
+  model.providers.push(createProvider({name:'Legacy rescue copy'}));persist(model);
+  const before=localStorage.getItem(STORE_KEY);
+  const active=new PortfolioStorage();await active.migrate(model);active.close();
+  // Proxy a browser storage eviction: the canonical IDB record disappears,
+  // but a stale localStorage copy and IDB mode marker remain present.
+  const db=await openPortfolioDB();
+  await new Promise((resolve,reject)=>{
+   const tx=db.transaction('records','readwrite');
+   tx.objectStore('records').delete('portfolio');
+   tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);
+  });db.close();
+  const reloaded=new PortfolioStorage();let stopped=false;
+  try{await reloaded.initialize();}
+  catch(e){stopped=/Speicher nicht gefunden|Datensatz fehlt|Aktiver IndexedDB-Speicher/.test(e.message);}
+  const result={stopped,idbMode:reloaded.isIndexedDB,
+   marker:localStorage.getItem(MODE_KEY),
+   legacyUnchanged:localStorage.getItem(STORE_KEY)===before};
+  reloaded.close();return result;
+ });
+ assert.deepEqual(eviction,{stopped:true,idbMode:true,marker:'idb-v1',legacyUnchanged:true});
+ console.log('CRASH-RESILIENT ROLLBACK: interrupted mode marker, safe recovery, no reset revival, stale legacy guard, missing-IDB fail-closed PASS');
 }finally{await browser.close();}
