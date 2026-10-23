@@ -46,3 +46,9 @@ Bei fehlgeschlagenen Schreibvorgängen verhindert die bereits implementierte Sto
 ## Release- und Testgrenzen
 
 Der Chromium-Belastungstest ist jetzt Teil des regulären GitHub-Actions-Testlaufs. Die Firefox-/WebKit-Smokes prüfen weiterhin die Kernworkflows, enthalten aber aktuell keinen vollständigen 1.000-Positionen-Stresstest. Echte Android-/iOS-Geräte, CPU-Throttling und kontrollierte Speicherprofile sind weiterhin ausständig.
+
+## Erweiterte Browserregression (Oktober 2026)
+
+`tests/browser-offline-mobile.mjs` ergänzt die bestehenden Last- und Skalierungstests um ein **synthetisches** Portfolio mit 240 ETF-Positionen und 730 Stichtagen, Chromium bei 4× CPU-Drosselung und Viewports 320/360/390/430 px. Der Test stellt die Bedienbarkeit von Positionssuche und Kursqualität, anschließend das Offline-Neuladen über den Service Worker sowie die Integrität aller lokalen Daten fest.
+
+Dies ist **keine** Messung auf echter schwacher Android- oder iOS-Hardware. Insbesondere Storage Eviction, begrenztes RAM, Touch/Screenreader und geräteabhängige Batterieoptimierungen bleiben außerhalb des automatisierten Nachweises. Enge Timing-SLAs werden bewusst nicht vorgetäuscht.
