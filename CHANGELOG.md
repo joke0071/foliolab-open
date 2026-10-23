@@ -1,3 +1,9 @@
+## PWA-Revision v84 — 2026-10-23
+
+- Sicherere, bislang nicht aktivierte IndexedDB-Speicher-Engine: beschädigte Portfolios werden weder akzeptiert noch unbemerkt überschrieben.
+- Browserübergreifende Regression für parallele Transaktionen, Tab-Neustarts und beschädigte Datensätze.
+- Keine Änderung der produktiven localStorage-Quelle; vollständiger Cutover ist weiterhin offen (#44).
+
 ## PWA-Revision v82 — 2026-10-23
 
 - Read-only EODHD-Verbindungsdiagnose auf Knopfdruck für bis zu vier tatsächlich vorhandene Wertpapiernotierungen (direkt oder über eigenen Worker). Keine weiteren Versuche nach globalen Netzwerk-, Zugangs- oder Ratenlimitfehlern.

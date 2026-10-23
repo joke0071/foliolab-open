@@ -43,6 +43,12 @@ function assertRecord(record) {
       (record.raw !== null && typeof record.raw !== 'string')) {
     throw new Error('Unbekannte oder beschädigte Speicherrevision. Keine Änderungen vorgenommen.');
   }
+  // A structurally plausible but invalid portfolio must not be silently
+  // accepted or overwritten. Preserve its original IndexedDB bytes.
+  if(record.raw !== null){
+    try{safeImport(JSON.parse(record.raw));}
+    catch{throw Error('Gespeicherte Portfolio-Daten sind beschädigt. Keine Änderungen vorgenommen.');}
+  }
 }
 
 export function readPortfolioRecord(db) {
