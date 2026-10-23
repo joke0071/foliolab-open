@@ -45,12 +45,6 @@
 }
 @media(max-width:420px){
  .toolbar-buttons{flex-wrap:wrap;gap:8px}
- #positionsPage .toolbar-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
- #positionsPage .toolbar-buttons #addWizard{grid-column:1/-1;grid-row:1}
- #positionsPage .toolbar-buttons #refreshAll{grid-column:1;grid-row:2}
- #positionsPage .toolbar-buttons #addWallet{grid-column:2;grid-row:2}
- #positionsPage .toolbar-buttons #resolveListings{grid-column:1/-1}
- #positionsPage .toolbar-buttons .btn{min-width:0;white-space:normal;padding:10px 7px}
  .settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
  .settings-actions .btn{white-space:normal;min-width:0}
  .settings-actions .btn.danger{grid-column:1/-1}
@@ -556,3 +550,53 @@
 .pwa-update-notice button:focus-visible{outline:2px solid #368253;outline-offset:2px}
 @media(min-width:721px){.pwa-update-notice{bottom:20px}}
 @media(max-width:360px){.pwa-update-notice{font-size:11px;gap:8px;flex-wrap:wrap;min-width:0}.pwa-update-notice button{min-height:36px}}
+
+
+/* Shared responsive action controls: icon-only phone, readable one-line labels above phone. */
+.action-group{display:flex;align-items:center;justify-content:flex-end;flex-wrap:nowrap;gap:8px;min-width:0}
+.action-group .responsive-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:0 0 auto;min-width:0;min-height:40px;white-space:nowrap;line-height:1.2}
+.action-group .action-icon{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px}
+.action-group .action-icon svg,.action-group .action-svg{display:block;width:19px;height:19px;stroke:currentColor}
+.action-group .action-label{display:inline;white-space:nowrap}
+#positionsPage>.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
+#positionsPage>.toolbar>.filter-list{flex:1 1 250px;min-width:0}
+#positionsPage>.toolbar>.action-group{flex:0 0 auto;width:auto}
+#positionsPage .position-review-action:not(:has(.hidden)){display:flex;justify-content:flex-end;margin:0 0 10px}
+#positionsPage .position-review-action:has(.hidden){display:none}
+#bookingsPage .panel-head-actions .panel-actions.action-group{display:flex;flex:0 0 auto;width:auto;flex-wrap:nowrap;justify-content:flex-end}
+#bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{width:auto;min-width:0;padding:10px 13px;white-space:nowrap}
+#historyPage .history-add-button{flex:0 0 auto;width:auto;min-width:38px;max-width:none;padding:0 12px;gap:7px;font-size:12px;font-weight:730}
+#historyPage .history-add-glyph{display:block;line-height:1;font-size:23px;font-weight:500}
+#historyPage .history-add-label{display:inline;white-space:nowrap}
+@media(max-width:1023px) and (min-width:768px){
+ #positionsPage>.toolbar{align-items:flex-start}
+ #positionsPage>.toolbar>.filter-list{flex:1 1 100%;width:100%}
+ #positionsPage>.toolbar>.action-group{margin-left:auto}
+ #positionsPage .action-group .responsive-action{padding:10px 11px;font-size:11px}
+ #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{padding:9px 10px;font-size:11px}
+}
+@media(max-width:767px){
+ #positionsPage>.toolbar{flex-direction:column;align-items:stretch;gap:10px}
+ #positionsPage>.toolbar>.filter-list{flex:0 1 auto;width:100%}
+ #positionsPage>.toolbar>.action-group{width:100%;margin:0;justify-content:flex-end;display:flex;flex-wrap:nowrap;gap:7px}
+ .action-group .action-label,#historyPage .history-add-label{display:none}
+ #positionsPage .action-group .responsive-action,
+ #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{
+  display:grid;place-items:center;flex:0 0 40px;min-width:40px;width:40px;max-width:40px;
+  height:40px;min-height:40px;padding:0;white-space:nowrap;line-height:1;
+  border:1px solid #dae6dd;border-radius:10px;background:#fff;color:#50785d;box-shadow:none
+ }
+ #positionsPage .action-group .responsive-action:hover,
+ #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action:hover{background:#f0f6f1;border-color:#bcd4c3}
+ #bookingsPage .panel-head-actions .panel-actions.action-group{
+  display:flex;flex:0 0 auto;width:100%;gap:7px;justify-content:flex-end;flex-wrap:nowrap
+ }
+ #historyPage .history-add-button{width:36px;min-width:36px;flex:0 0 36px;padding:0}
+ #historyPage .history-add-glyph{font-size:23px}
+}
+@media(max-width:360px){
+ #positionsPage .action-group .responsive-action,
+ #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{
+  flex-basis:38px;min-width:38px;width:38px;max-width:38px;height:38px;min-height:38px
+ }
+}
