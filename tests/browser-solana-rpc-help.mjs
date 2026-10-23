@@ -22,7 +22,8 @@ try{
  assert.match(await setup.innerText(),/Helius/);
  assert.match(await setup.innerText(),/Mainnet-HTTPS-RPC-Adresse/);
  assert.match(await setup.innerText(),/nativ gestakte SOL/);
- assert.equal(await setup.locator('a[href="https://dashboard.helius.dev/"]').count(),1);
+ assert.equal(await setup.locator('a[href="https://dashboard.helius.dev/"]').count(),0,'No external API-provider link in Mehr');
+ assert.equal(await page.locator('#solanaRpc').getAttribute('type'),'password','RPC URL with API key is masked');
  await page.locator('#solanaRpc').fill('https://rpc-ok.example.test/solana?api-key=dummy-test');
  await page.locator('#testSolanaRpc').click();
  await page.locator('#solanaRpcTestStatus').getByText(/Verbindung erfolgreich/).waitFor();

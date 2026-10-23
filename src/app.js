@@ -1,6 +1,7 @@
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
+import {installCredentialVisibility} from './credential-visibility.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
@@ -979,7 +980,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
-initNav();initEvents();
+initNav();initEvents();installCredentialVisibility();
 // Keep a user's draft visible, but block stale writes until an explicit reload.
 // localStorage compare-before-set alone is not an atomic multi-tab lock.
 window.addEventListener('storage',event=>{

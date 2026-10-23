@@ -1,3 +1,10 @@
+## PWA-Revision v76 — 2026-10-23
+
+- EODHD-Netzwerkfehler werden gezielt über den zweiten offiziell dokumentierten EODHD-HTTPS-Host abgefangen. Kein stiller Wechsel bei Authentifizierungs-, Tarif- oder Ratenlimitfehlern; vorhandene Kurse bleiben bei Ausfall erhalten.
+- Alle API-Schlüssel in „Mehr“ lassen sich per barrierearm beschriftetem Auge-Symbol anzeigen und wieder maskieren. Die Solana-RPC-Adresse wird wegen möglicher eingebetteter API-Tokens ebenfalls standardmäßig verborgen.
+- Externe Anbieterlinks zu Binplorer und Helius aus „Mehr“ entfernt; sachliche Einrichtungshinweise bleiben bestehen.
+- Tests für EODHD-Host-Fallback, Schutz von API-Zugangsdaten, Link-Entfernung und responsive Darstellung ergänzt.
+
 ## PWA-Revision v75 — 2026-10-23
 
 - Erste, bewusst noch nicht aktivierte IndexedDB-Speicherkomponente: transaktionale Revisionen und Mehr-Tab-Konfliktschutz per atomarem Compare-and-Swap.
