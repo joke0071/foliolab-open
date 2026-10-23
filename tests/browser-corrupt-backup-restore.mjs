@@ -32,6 +32,7 @@ try{
  await page.locator('#backupFile').setInputFiles({
   name:'broken-foliolab.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(invalid))
  });
+ await page.waitForFunction(()=>/Buchung|Position|Referenz/.test(document.getElementById('toast')?.textContent||''));
  assert.match(await page.locator('#toast').innerText(),/Buchung|Position|Referenz/);
  assert.equal(await page.evaluate(key=>localStorage.getItem(key),STORE_KEY),original,
   'Invalid backup must not modify a single persisted byte');
@@ -45,6 +46,7 @@ try{
  await page.locator('#backupFile').setInputFiles({
   name:'valid-foliolab.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(changed))
  });
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent?.includes('Backup wiederhergestellt'),null,{timeout:10000});
  assert.match(await page.locator('#toast').innerText(),/Backup wiederhergestellt/);
  const restored=await page.evaluate(key=>JSON.parse(localStorage.getItem(key)),STORE_KEY);
  assert.equal(restored.providers[0].name,'Gültige Wiederherstellung');
