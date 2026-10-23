@@ -19,5 +19,27 @@ try{
  await page.locator('[data-mini-range="all"]').click();
  assert.equal(await page.locator('[data-mini-range="all"]').evaluate(el=>el.classList.contains('selected')),true);
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots.length),3);
+ await page.locator('#mobileNav [data-page="history"]').click();
+ const returns=page.locator('#performanceDetails'),summary=returns.locator(':scope > summary');
+ assert.equal(await returns.getAttribute('open'),null,'Renditeauswertung starts collapsed');
+ for(const width of [320,390,430,768,1440]){
+  await page.setViewportSize({width,height:850});
+  const geometry=await summary.evaluate(el=>{
+   const style=getComputedStyle(el),arrow=getComputedStyle(el,'::after');
+   return {layout:style.display,column:arrow.gridColumnStart,row:arrow.gridRowStart,
+    border:arrow.borderRightStyle,content:arrow.content,
+    overflow:document.documentElement.scrollWidth-innerWidth};
+  });
+  assert.equal(geometry.layout,'grid','Return disclosure should keep icon to the right at '+width);
+  assert.equal(geometry.column,'2','Chevron stays in right column at '+width);
+  assert.equal(geometry.row,'1','Chevron stays aligned with both text rows at '+width);
+  assert.equal(geometry.border,'solid','Chevron shape matches settings accordions at '+width);
+  assert.ok(geometry.overflow<=1,'No horizontal overflow at '+width+': '+geometry.overflow);
+ }
+ const before=await summary.evaluate(el=>getComputedStyle(el,'::after').transform);
+ await summary.click();
+ const after=await summary.evaluate(el=>getComputedStyle(el,'::after').transform);
+ assert.notEqual(after,before,'Arrow turns when returns detail opens');
+ console.log('RETURNS CHEVRON: right aligned, unified caret and expanded state on 320–1440px PASS');
  console.log('DASHBOARD PERIODS: real snapshot filtering and no persisted mutations PASS');
 }finally{await browser.close();}
