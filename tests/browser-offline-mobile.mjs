@@ -51,7 +51,9 @@ try{
  // service worker has cached first-party modules and the network goes offline.
  await context.setOffline(true);
  await page.reload({waitUntil:'domcontentloaded'});
- await page.locator('#totalValue').waitFor();
+ await page.locator('#mobileNav [data-page="positions"]').click();
+ assert.match(await page.locator('#positionList').innerText(),/Synthetic mobile ETF/);
+ await page.locator('#mobileNav [data-page="dashboard"]').click();
  assert.match(await page.locator('#totalValue').innerText(),/2.400/);
  await page.locator('#mobileNav [data-page="history"]').click();
  assert.equal(await page.locator('#historyPage').isVisible(),true);
