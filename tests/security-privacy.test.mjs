@@ -82,7 +82,7 @@ test('Only same-origin JavaScript is permitted by the portfolio CSP',()=>{
  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
  assert.match(html,/script-src 'self';/);
- assert.doesNotMatch(html,/script-src[^"]*https:/,'CSP must not grant third-party scripts access to locally stored keys');
+ assert.equal(html.match(/script-src\s+([^;]+);/)?.[1]?.trim(),"'self'",'CSP must not grant third-party scripts access to locally stored keys');
  assert.doesNotMatch(app,/external-embedding\/embed-widget-advanced-chart/,'No vendor script must run in portfolio origin');
  assert.match(app,/https:\/\/s\.tradingview\.com\/widgetembed\//,'Charts must be isolated in a cross-origin iframe');
  assert.match(app,/allow-scripts allow-same-origin allow-popups/,'iframe must be explicitly sandboxed');
