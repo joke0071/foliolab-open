@@ -45,3 +45,9 @@ test('Restore refuses contradictory rounded and exact booking quantities',()=>{
  m.bookings.push({id:'book-1',date:'2026-01-23',positionId:'asset-1',type:'buy',quantity:1,quantityExact:'2'});
  assert.throws(()=>safeImport(m),/Buchung|Menge|abweich/);
 });
+
+test('Tiny fractional bookings never tolerate cent-sized quantity discrepancies',()=>{
+ const m=valid();
+ m.bookings.push({id:'book-micro',date:'2026-01-23',positionId:'asset-1',type:'reward',quantity:0.00000001,quantityExact:'0.00000002'});
+ assert.throws(()=>safeImport(m),/Menge|Buchung/);
+});
