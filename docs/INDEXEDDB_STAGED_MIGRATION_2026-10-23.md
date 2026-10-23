@@ -48,7 +48,7 @@ Die Vorabprüfung vergleicht nun das **zuletzt tatsächlich gespeicherte** lokal
 
 Ein synthetischer Browserfehler ersetzt keinen realen Geräte-/OS-Absturz, keinen manuellen Screenreader-Test und keine Prüfung physischer Storage-Eviction. Issue #44 bleibt bis zur gesonderten Abnahme dieser Faktoren offen.
 
-## v87: Rückwechsel nach unterbrochenem Browser-Lebenszyklus
+## v88: Rückwechsel nach unterbrochenem Browser-Lebenszyklus
 
 Ein ausdrücklich gestarteter Rückwechsel schreibt zuerst das vollständige lokale Portfolio, danach einen kompakten `foliolab-open-idb-revert-intent`-Marker mit vorgesehener Tombstone-Revision und Prüfsumme (ohne API-Schlüssel oder Portfolio-Inhalt), und löscht erst danach den kanonischen IndexedDB-Datensatz transaktional. Das Entfernen des aktiven Modusmarkers ist die abschließende Umstellung. Falls der Prozess genau dazwischen unterbrochen wird, akzeptiert der nächste Start **nur** die bestätigte lokale Kopie, deren Prüfsumme zur genauen tombstone-Revision passt; bei Abweichung stoppt die App geschlossen statt still Daten zu ersetzen. Ein regulärer „Alles löschen“-Vorgang beseitigt einen älteren Intent vor dem Commit, sodass gelöschte Daten nicht wieder auferstehen. Eine `persist`-Sperre verhindert, dass ein Tab mit aktuellem Legacy-Code nach erfolgter Migration weiter das stillgelegte `localStorage`-Portfolio verändert.
 

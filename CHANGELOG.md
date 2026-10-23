@@ -1,4 +1,4 @@
-## PWA-Revision v87 — 2026-10-23
+## PWA-Revision v88 — 2026-10-23
 
 - Abbruchfester Rückwechsel von IndexedDB zu localStorage: Ein minimaler, schlüsselfreier Rückwechsel-Marker ermöglicht das Wiederherstellen der zuletzt bestätigten lokalen Kopie, wenn der Browser nach dem atomaren IndexedDB-Lösch-Commit, aber vor dem Entfernen des Modusmarkers abstürzt.
 - Automatische Fortsetzung nur bei passender Speicherrevision und unveränderter lokaler Kopie; sonst kein stillschweigender Datenwechsel. Vollständiges Löschen kann nicht durch einen älteren Rückwechsel-Marker rückgängig gemacht werden.
