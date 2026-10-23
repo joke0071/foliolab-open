@@ -190,11 +190,33 @@ export function safeImport(raw){
       postingIds.add(p.id);
     }
   }
+  // A balanced journal can still contain orphaned *non-quantity* postings:
+  // those must not silently survive an imported financial backup.
+  const knownPositionIds=new Set(m.positions.map(p=>p.id));
+  for(const entry of m.journalEntries)for(const posting of entry.postings){
+    if(posting.positionId!=null&&!knownPositionIds.has(posting.positionId))
+      throw Error('Backup: Journal referenziert eine nicht vorhandene Position.');
+  }
   uniqueIds(m.openingPositions.map(x=>({id:x.positionId})),'Eröffnungsbeständen');
   m.bookings=(raw.bookings||[]).map(x=>{
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!validCalendarDate(x.date)||!Number.isFinite(number(x.quantity))||!exactMatchesDisplay(x.quantity,x.quantityExact))throw Error('Ungültige Buchung oder widersprüchliche Menge im Backup.');
     return {...x,notes:cleanString(x.notes,180)};
   });uniqueIds(m.bookings,'Buchungen');
+  const journalById=new Map(m.journalEntries.map(x=>[x.id,x]));
+  for(const booking of m.bookings){
+    if(!knownPositionIds.has(booking.positionId))
+      throw Error('Backup: Buchung referenziert eine nicht vorhandene Position.');
+    for(const key of ['targetPositionId','cashPositionId']){
+      if(booking[key]!=null&&booking[key]!==''&&!knownPositionIds.has(booking[key]))
+        throw Error('Backup: Buchung enthält einen ungültigen Positionsbezug.');
+    }
+    if(booking.journalEntryId!=null&&booking.journalEntryId!==''){
+      const linked=journalById.get(booking.journalEntryId);
+      if(!linked||linked.type!==booking.type||
+         !linked.postings.some(posting=>posting.positionId===booking.positionId))
+        throw Error('Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich.');
+    }
+  }
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
