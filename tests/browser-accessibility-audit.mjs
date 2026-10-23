@@ -21,7 +21,7 @@ try{
    const report=await page.evaluate(async()=>await window.axe.run(document,{
     runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
    }));
-   const violations=report.violations.map(v=>({id:v.id,impact:v.impact,description:v.help,targets:v.nodes.slice(0,5).map(n=>n.target.join(' '))}));
+   const violations=report.violations.map(v=>({id:v.id,impact:v.impact,description:v.help,targets:v.nodes.slice(0,140).map(n=>({selector:n.target.join(' '),contrast:n.any.find(c=>c.id==='color-contrast')?.data??null}))}));
    for(const issue of violations)issues.push({viewport:width,section,...issue});
   }
  }
@@ -30,10 +30,10 @@ try{
  const dialog=await page.evaluate(async()=>await window.axe.run(document.getElementById('editDialog'),{
   runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
  }));
- for(const v of dialog.violations)issues.push({viewport:1440,section:'provider-dialog',id:v.id,impact:v.impact,description:v.help,targets:v.nodes.slice(0,5).map(n=>n.target.join(' '))});
+ for(const v of dialog.violations)issues.push({viewport:1440,section:'provider-dialog',id:v.id,impact:v.impact,description:v.help,targets:v.nodes.slice(0,140).map(n=>({selector:n.target.join(' '),contrast:n.any.find(c=>c.id==='color-contrast')?.data??null}))});
  const unique=[...new Set(issues.map(i=>i.id))];
  console.log('ACCESSIBILITY-AUDIT '+JSON.stringify({scans:pages.length*2+1,violations:issues,uniqueRules:unique}));
  // Initial inventory gate: critical issues are unsafe to ship; other findings must
  // be triaged explicitly instead of falsely claiming complete WCAG conformity.
- assert.equal(issues.filter(x=>x.impact==='critical').length,0,'Critical WCAG accessibility violations');
+ assert.equal(issues.filter(x=>['serious','critical'].includes(x.impact)).length,0,'Serious/critical WCAG accessibility violations');
 }finally{await browser.close();}
