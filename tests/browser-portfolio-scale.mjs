@@ -53,7 +53,26 @@ try{
  const remaining=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(remaining.positions.length,1000);
  assert.equal(remaining.snapshots.length,1825);
- console.log('BROWSER-SCALE '+JSON.stringify({...seeded,reloadMs,positionsMs,filterMs,historyMs,overflow}));
+ const quota=await page.evaluate(()=>{
+  const key='foliolab-open-v1',before=localStorage.getItem(key);
+  const temporary=[],chunk='Q'.repeat(1024*1024);
+  let quotaExceeded=false;
+  try{
+   for(let i=0;i<16;i++){
+    const name='__temporary_scale_quota_'+i;
+    try{localStorage.setItem(name,chunk);temporary.push(name);}
+    catch(error){
+     if(error?.name!=='QuotaExceededError')throw error;
+     quotaExceeded=true;break;
+    }
+   }
+  }finally{
+   for(const name of temporary)localStorage.removeItem(name);
+  }
+  return {extraMiBAccepted:temporary.length,quotaExceeded,portfolioUnchanged:localStorage.getItem(key)===before};
+ });
+ assert.equal(quota.portfolioUnchanged,true,'Quota probe may never alter saved portfolio');
+ console.log('BROWSER-SCALE '+JSON.stringify({...seeded,reloadMs,positionsMs,filterMs,historyMs,overflow,quota}));
  // Performance measurements are runner-dependent, so strict benchmarks are reported
  // separately; this gate verifies usability and integrity without fragile millisecond SLAs.
 }finally{await browser.close();}
