@@ -16,6 +16,8 @@ import {searchAndSortPositions} from './position-search.js';
 import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
+import {diagnoseEodhd} from './market-diagnostics.js';
+import {priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
@@ -128,6 +130,7 @@ function renderHistory(){
  $('startPerformance').classList.toggle('hidden',Boolean(start));
  const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);} $('historyChart').innerHTML=drawChart(data);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>btn.classList.toggle('selected',btn.dataset.range===range));$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');}
 function renderPositions(){
+ $('quoteQualitySummary').textContent=quoteQualitySummary(model.positions).label;
  const unresolved=unresolvedListings(),reviewItems=valuationIssues(model),reviewIds=new Set(reviewItems.map(x=>x.id));
  $('resolveListings').classList.toggle('hidden',unresolved.length===0);
  $('resolveListings').textContent='Zuordnungen prüfen'+(unresolved.length?' ('+unresolved.length+')':'');
@@ -137,7 +140,7 @@ function renderPositions(){
  const filtered=model.positions.filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
  const list=visible.slice(0,positionLimit).map(p=>{
-  const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(a=>a.id===p.accountId),stale=oldProviderQuote(p);
+  const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(a=>a.id===p.accountId),stale=oldProviderQuote(p),quality=priceQuality(p);
   const quoteDate=p.quoteAsOf?dateLabel(p.quoteAsOf.slice(0,10)):null;
   const source=p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Zuletzt gespeicherter Wert':'');
   // Quote date takes precedence: do not print an unrelated position-edit timestamp beside it.
@@ -146,13 +149,14 @@ function renderPositions(){
    (p.symbol?'<span class="tag neutral">'+esc(p.symbol)+'</span>':'')+
    (p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':'')+
    (p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':'')+
-   (stale||p.priceStatus?'<span class="tag warn">'+esc(p.priceStatus||(stale?'Kurs veraltet':'Kurs prüfen'))+'</span>':'');
+   (quality.state==='ignored'?'':'<span class="tag '+(quality.state==='confirmed'?'neutral':'warn')+'">'+esc(quality.label)+'</span>');
   const facts=[
    ['Bestand',String(p.quantityExact??p.quantity)],
    ['Kurs je Einheit',String(p.priceExact??p.price)+' '+p.currency],
    ...(p.currency!=='EUR'?[['EUR je Einheit Kurswährung',String(p.fxRateExact??p.fxRate)]]:[]),
    ['Kursquelle',p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Gespeicherter Stichtag':'Nicht angegeben')],
    ['Kursstand',quoteDate||'Nicht angegeben'],
+   ['Kursqualität',quality.label],
    ...(p.updatedAt?[['Position zuletzt geändert',dateLabel(p.updatedAt.slice(0,10))]]:[]),
    ...(p.isin?[['ISIN',p.isin]]:[]),
    ...(p.exchange?[['Börse',p.exchange]]:[]),
@@ -988,6 +992,25 @@ $('clearApiKeys').addEventListener('click',()=>{
  }catch(error){
   notify('Zugangsdaten konnten nicht vollständig entfernt werden. Bitte den lokalen Speicher prüfen.',true);
  }
+});
+$('checkMarketSources').addEventListener('click',async()=>{
+ const button=$('checkMarketSources'),status=$('marketDiagnosticStatus');
+ if(button.disabled)return;
+ button.disabled=true;
+ status.textContent='Prüfe höchstens vier vorhandene Notierungen über den gespeicherten EODHD-Zugang …';
+ try{
+  const result=await diagnoseEodhd(model.settings,model.positions);
+  status.replaceChildren();
+  const headline=document.createElement('p');headline.textContent=result.message;status.append(headline);
+  for(const item of result.rows){
+   const row=document.createElement('p');row.className='diagnostic-row';
+   const strong=document.createElement('strong');strong.textContent=item.symbol+' · '+item.label;
+   const hint=document.createElement('span');hint.textContent=' '+item.help;
+   row.append(strong,hint);status.append(row);
+  }
+ }catch{
+  status.textContent='Diagnose nicht möglich. Keine Portfoliodaten verändert.';
+ }finally{button.disabled=false;}
 });
 $('runLegacyQuoteAudit').addEventListener('click',()=>{
  legacyAuditPerformed=true;renderLegacyQuoteAudit();

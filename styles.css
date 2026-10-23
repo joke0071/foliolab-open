@@ -476,3 +476,11 @@
 @media(max-width:520px){.performance-details>summary{align-items:flex-start;flex-direction:column;gap:4px}.performance-details>summary>small{text-align:left;max-width:none}}
 /* Status belongs to the same padded content column as the surrounding settings. */
 #legacyQuoteAudit>#legacyQuoteAuditStatus{margin:10px 12px 15px;min-height:16px}
+
+/* Read-only EODHD diagnostics and date-based quote evidence */
+.quote-quality-summary{color:#59725e;line-height:1.65;margin:0 0 10px;font-size:11px}
+.market-diagnostic{margin:3px 16px 15px;line-height:1.65;overflow-wrap:anywhere}
+.market-diagnostic p{margin:7px 0}
+.market-diagnostic .diagnostic-row{border-top:1px solid #e7eee7;padding-top:7px}
+.market-diagnostic .diagnostic-row strong{font-weight:700;color:#42694f}
+@media(max-width:420px){.market-diagnostic{margin-left:12px;margin-right:12px}}

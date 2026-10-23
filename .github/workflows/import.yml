@@ -91,6 +91,7 @@ jobs:
           node tests/browser-security-catalog.mjs
           node tests/browser-security-sources.mjs
           node tests/browser-eodhd-worker.mjs
+          node tests/browser-market-diagnostics.mjs
           node tests/live-probes.mjs
           node tests/browser-accessibility-audit.mjs
           node tests/browser-portfolio-scale.mjs
