@@ -34,7 +34,21 @@ const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungsk
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
-function save(){if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');persist(model);try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}render();}
+function save(){
+ try{
+  if(loadFailure)throw Error('Der lokale Datenstand konnte nicht geladen werden. Bitte zuerst eine gültige Sicherung wiederherstellen.');
+  persist(model);
+ }catch(error){
+  // Reconcile with the last committed portfolio so a failed write cannot
+  // silently be included in a later successful save (quota or stale tab).
+  if(!loadFailure){try{model=load();}catch(recoveryError){loadFailure=recoveryError;}}
+  render();
+  notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Daten sichern und Speicher freigeben.':String(error?.message||error)),true);
+  throw error;
+ }
+ try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
+ render();
+}
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
@@ -168,6 +182,7 @@ function renderSettings(){
    '<div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="'+esc(p.id)+'" title="Anbieter bearbeiten" aria-label="Anbieter bearbeiten">'+svg('pencil',15)+'</button>'+
    '<button class="row-btn" data-action="delete-provider" data-id="'+esc(p.id)+'" title="Anbieter löschen" aria-label="Anbieter löschen">'+svg('trash',15)+'</button></div></div>';
  }).join(''):empty('Noch kein Anbieter hinterlegt.');
+ $('autoRefresh').checked=model.settings.autoRefresh!==false;
  if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';
  const reminder=$('backupReminder');let last=0;
  try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}
@@ -833,10 +848,9 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
  onCommit:({draft})=>{
-  const previous=model;
   model=draft;
-  try{save();notify('Anlage sicher gespeichert.');}
-  catch(error){model=previous;throw error;}
+  save();
+  notify('Anlage sicher gespeichert.');
  },
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
