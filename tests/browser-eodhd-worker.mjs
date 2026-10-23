@@ -41,6 +41,11 @@ try{
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('[name="securitySource"]').selectOption('eodhd');
  await page.locator('[name="eodhdWorkerEndpoint"]').fill('https://my-owned-worker.workers.dev');
+ assert.equal(await page.locator('#marketWorkerSetup .credential-toggle').count(),1,'Worker token gets the same visibility eye as other keys');
+ await page.locator('#marketWorkerSetup .credential-toggle').click();
+ assert.equal(await page.locator('[name="eodhdWorkerAccessToken"]').getAttribute('type'),'text');
+ await page.locator('#marketWorkerSetup .credential-toggle').click();
+ assert.equal(await page.locator('[name="eodhdWorkerAccessToken"]').getAttribute('type'),'password');
  await page.locator('[name="eodhdWorkerAccessToken"]').fill('short');
  await page.locator('#marketWorkerSetup button[type="submit"]').click();
  assert.match(await page.locator('#toast').innerText(),/24 bis 128 Zeichen/);
