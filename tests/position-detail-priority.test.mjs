@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {positionDetailMarkup,loadPositionDetail} from '../src/position-detail-ui.js';
+import {positionDetailMarkup,loadPositionDetail,safeHistoryError} from '../src/position-detail-ui.js';
 
 const today=()=>new Date().toISOString().slice(0,10);
 const daysAgo=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
@@ -51,4 +51,25 @@ test('EODHD market history outranks a valid imported CSV; CSV remains a fallback
  const failMount=fakeMount();
  await loadPositionDetail(p,m,failMount.mount,{...config,fetcher:async()=>({ok:false,status:401,headers:{get:()=>null}})});
  assert.match(failMount.target.innerHTML,/CSV-Daten vom Nutzer/);
+});
+
+test('Failed EODHD request collapses its chart, hides periods and never exposes the key',async()=>{
+ const p=position(),m=model(p);
+ const secret='SYNTHETIC_SECRET_TEST_ONLY';
+ m.settings.eodhdKey=secret;
+ const period={classList:{items:new Set(),add(x){this.items.add(x)},remove(x){this.items.delete(x)}}};
+ const target={isConnected:true,innerHTML:''};
+ const mount={isConnected:true,dataset:{},querySelector:selector=>selector==='.position-history-plot'?target:selector==='.position-period'?period:null};
+ const fetcher=async url=>{throw new TypeError('Failed to fetch '+url)};
+ await loadPositionDetail(p,m,mount,{...config,fetcher});
+ assert.ok(period.classList.items.has('hidden'));
+ assert.match(target.innerHTML,/<details class="position-history-compact"><summary>Kursverlauf nicht verfügbar<\/summary>/);
+ assert.match(target.innerHTML,/data-action="retry-price-chart"/);
+ assert.match(target.innerHTML,/CORS/);
+ assert.doesNotMatch(target.innerHTML,/SYNTHETIC_SECRET/);
+});
+test('Only specific safe non-truncated failure guidance is shown',()=>{
+ assert.match(safeHistoryError(new Error('HTTP 403')),/Tarif/);
+ assert.match(safeHistoryError(new Error('Ratenlimit erreicht')),/Abruflimit/);
+ assert.match(safeHistoryError(new Error('EODHD im Browser nicht erreichbar \u0028Netzwerk\/CORS\u0029')),/nicht überprüft/);
 });
