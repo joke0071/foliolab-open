@@ -813,7 +813,7 @@ async function refreshAll(){
    }
    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
   }
-  if(securities.length&&(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey)){
+  if(securities.length&&(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
     for(const p of securities){
      try{
       const q=await fetchSecurityQuote(p,model.settings);
