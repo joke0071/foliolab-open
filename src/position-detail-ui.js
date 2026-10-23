@@ -25,9 +25,13 @@ function collapsedHistory(message,{esc,id='',retry=false}){
 
 const quoteCurrency=(value,currency)=>new Intl.NumberFormat('de-AT',{style:'currency',currency,maximumFractionDigits:currency==='JPY'?0:6}).format(value);
 export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30}){
+ // Provider allocation reflects the provider heading above all its accounts.
+ // Account allocation would show a misleading 100% for every single-holding
+ // savings or term-deposit account at the same provider.
  const account=model.accounts.find(a=>a.id===p.accountId);
- const accValue=model.positions.filter(x=>x.accountId===p.accountId).reduce((sum,x)=>sum+valueEUR(x),0);
- const amount=valueEUR(p),weight=accValue>0&&amount>=0?100*amount/accValue:null;
+ const providerAccountIds=new Set(model.accounts.filter(a=>a.providerId===(account?.providerId||p.providerId)).map(a=>a.id));
+ const providerTotal=model.positions.filter(x=>providerAccountIds.has(x.accountId)).reduce((sum,x)=>sum+valueEUR(x),0);
+ const amount=valueEUR(p),weight=providerTotal>0&&amount>=0?100*amount/providerTotal:null;
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
  const price=quoteCurrency(Number(p.priceExact??p.price)||0,p.currency||'EUR');
  const quote=p.quoteSource?esc(p.quoteSource):'Manuell',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
@@ -36,8 +40,8 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
     ['Kurs je Einheit',price],['Positionswert',money(amount)],['Einstandswert',cost]]
    .map(([name,value])=>'<div class="position-detail-stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong></div>').join('')+'</div>';
- const allocation=weight==null?'<p class="position-detail-note">Anteil am Konto nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
-   '<div class="position-share"><div class="position-share-label"><span>Anteil am Konto</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
+ const allocation=weight==null?'<p class="position-detail-note">Anteil am Anbieter nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
+   '<div class="position-share"><div class="position-share-label"><span>Anteil am Anbieter</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+
    '<div class="position-share-track"><div style="width:'+Math.max(0,Math.min(100,weight)).toFixed(2)+'%"></div></div></div>';
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
  const isSecurity=['etf','stock','fund'].includes(p.kind);
