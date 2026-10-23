@@ -226,7 +226,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   $('wizardPortfolio').focus();
  };
  const error=message=>{const target=$('wizardError');if(target){target.textContent=String(message);target.classList.add('visible');}};
- const advance=()=>{
+ const advance=async ()=>{
   if(state.busy||state.saved)return;
   if(state.step===1){
    if(!state.name.trim())return error('Bitte eine Anlage aus der Suche wählen oder manuell benennen.');
@@ -244,7 +244,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   state.busy=true;$('wizardNext').disabled=true;$('wizardNext').textContent='Speichere …';
   try{
    const output=buildAssetWizardDraft(getModel(),state);
-   onCommit(output);
+   await onCommit(output);
    state.saved=true;renderSuccess();
   }catch(ex){state.busy=false;error(ex.message||String(ex));$('wizardNext').disabled=false;$('wizardNext').textContent='Bestand speichern';}
  };

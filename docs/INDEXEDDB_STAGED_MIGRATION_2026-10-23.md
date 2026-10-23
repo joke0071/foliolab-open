@@ -35,3 +35,9 @@ The database holds only sanitized portfolio data, strictly local to the device a
 - Aus bestehenden IndexedDB-Records gelesene Portfolio-JSON wird vor Verwendung und vor jedem konkurrierenden Überschreiben fachlich validiert. Beschädigte Records werden weder still geleert noch durch eine vermeintlich erfolgreiche Bearbeitung ersetzt.
 - Firefox- und WebKit-Browserregression: konkurrierende readwrite-Transaktionen, genau ein erfolgreicher Commit, Schließen sämtlicher Tabs und erneutes Öffnen sowie explizit beschädigte Records und verweigerte Folge-Schreibvorgänge.
 - **Keine Produktivmigration:** Sync-`localStorage` bleibt die Quelle der produktiven App. Vollständige UI-Umstellung und die in dieser Datei genannten Release-Gates sind weiterhin offen (#44).
+
+## v85: explizite Opt-in-Migration
+
+Der bisherige Speicher bleibt der Standard für bestehende Installationen. Unter **Mehr → Deine Daten → Speicherarchitektur** kann nach bestätigtem Download-Backup der Wechsel zu IndexedDB aktiviert werden. Die lokale Originalkopie bleibt bis zu einer bewussten Rückmigration erhalten. Die neue Speichersteuerung nutzt revisionsgebundene IndexedDB-Transaktionen für jeden Portfolio-Speichervorgang. Userkonfigurierte Zugangsdaten werden nur nach Zustimmung lokal und unverschlüsselt in IndexedDB gehalten; Export-Backups enthalten keine API-Schlüssel. Historische Werte werden nicht neu berechnet.
+
+Vor Wechsel und Rückwechsel müssen andere Tabs geschlossen werden. Bereits geöffnete veraltete FolioLab-Versionen könnten weiterhin die alte lokale Kopie verändern; dieser Risiko-Hinweis ist Teil der Zustimmung. Nach Speicher-Eviction bleibt ein Download-Backup erforderlich. Version v3 des Portfolioformats bleibt unverändert.

@@ -74,6 +74,8 @@ jobs:
           node tests/browser-corrupt-backup-restore.mjs
           node tests/browser-multitab-integrity.mjs
           node tests/browser-atomic-storage.mjs
+          node tests/browser-idb-cutover.mjs
+          node tests/browser-idb-corrupt-recovery.mjs
           node tests/browser-key-privacy.mjs
           node tests/browser-solana-rpc-help.mjs
           node tests/browser-data-source-settings.mjs
