@@ -569,73 +569,108 @@ function openListingReview(){
 let scannedWalletAssets=[];let scannedWalletKey='';
 const walletScanIdentity=(network,address,addressType='auto')=>network+'|'+address+'|'+(network==='btc-hd'?addressType:'');
 function openWalletImport(){
+ scannedWalletAssets=[];scannedWalletKey='';
+ const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
+ const walletProviders=model.providers.filter(p=>p.type==='wallet');
+ const otherProviders=model.providers.filter(p=>p.type!=='wallet');
+ const selectedProvider=walletProviders[0]?.id||'__new__';
+ const providers='<option value="__new__"'+(selectedProvider==='__new__'?' selected':'')+'>+ Neue Wallet anlegen</option>'+
+  (walletProviders.length?'<optgroup label="Wallet-Anbieter">'+options(walletProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'')+
+  (otherProviders.length?'<optgroup label="Andere Anbieter">'+options(otherProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'');
+ showDialog('Wallet hinzufügen','NUR ÖFFENTLICHE DATEN',
+  '<p class="dialog-intro">Lass FolioLab deine Coins anhand einer öffentlichen Adresse erkennen. Du verbindest kein Konto und gibst keine Zugriffsrechte frei.</p>'+
+  '<label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">'+options(networks,'1')+'</select></label>'+
+  '<label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x…" aria-describedby="scanAddressHint"></label>'+
+  '<p id="scanAddressHint" class="small-help">Kopiere die öffentliche Empfangsadresse deiner Wallet. Niemals Seed-Phrase oder privaten Schlüssel eingeben.</p>'+
+  '<div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-Adresstyp (optional)</span><select id="scanHdType" name="hdAddressType">'+
+  options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')+'</select></label></div>'+
+  '<p id="hdPrivacyHint" class="small-help hidden">Bitcoin-HD: Bei einem xpub-Scan werden mehrere zugehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer gesendet. Dadurch können Adressen miteinander verknüpft werden. Taproot (bc1p) wird derzeit nicht unterstützt.</p>'+
+  '<details class="advanced-apis wallet-staking-options" id="walletStakingOptions"><summary>Bestimmtes Staking-Asset prüfen (optional)</summary>'+
+    '<p class="small-help">Nur nötig, wenn du gezielt nach einem Staking-Bestand suchen möchtest. Die normale Suche erkennt unterstützte Coins automatisch.</p>'+
+    '<label class="field"><span>Staking-Asset</span><select id="scanAsset">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
+    '<p id="scanAssetInfo" class="small-help" role="status">Einige Staking-Formen sind nur manuell erfassbar.</p></details>'+
+  '<div class="wallet-scan-action"><button class="btn primary" type="button" id="scanWalletButton">Coins suchen</button><p id="scanWalletStatus" class="small-help" role="status">Noch keine Suche gestartet.</p></div>'+
+  '<div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>'+
+  '<section id="scanSaveSettings" class="wallet-save-settings hidden"><h3>Wo möchtest du die Coins speichern?</h3>'+
+    '<p class="small-help">Die gefundenen Coins werden unter dieser Wallet in FolioLab abgelegt. Du kannst auch einen vorhandenen Anbieter verwenden.</p>'+
+    '<label class="field"><span>Wallet / Anbieter</span><select name="providerId" id="scanProvider">'+providers+'</select></label>'+
+    field('Name der neuen Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')+
+    '<label class="field"><span>Wallet-Konto</span><select name="accountId" id="scanAccount"></select></label></section>'+
+  '<details class="advanced-apis wallet-scan-help"><summary>Welche Coins und Staking-Arten werden erkannt?</summary>'+
+    '<p class="small-help">Die Suche zeigt bestätigte öffentliche Guthaben. Unbekannte oder auffällige Tokens werden aus Sicherheitsgründen zunächst ausgeblendet. Einige Staking-Verträge, ETH-Validatoren, Vaults, Avalanche-P-Chain und externe NEAR-Pools erfordern eine manuelle Erfassung oder eigene Adapter. Natives SOL-Staking benötigt gegebenenfalls einen Solana-RPC (Mehr → Solana-Staking einrichten).</p>'+
+    '<p class="small-help">Beim Suchen wird die öffentliche Adresse an den jeweiligen Blockchain-Dienst übertragen. Ein API-Schlüssel oder Login ist für die üblichen Netzwerke nicht nötig.</p></details>',
+  async v=>{
+   if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
+   const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
+   if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
+   let providerId=v.providerId;
+   if(providerId==='__new__'){
+    const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
+    model.providers.push(provider);providerId=provider.id;
+   }
+   let accountId=v.accountId;
+   if(accountId==='__new__'){
+    const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},model);
+    model.accounts.push(account);accountId=account.id;
+   }
+   if(!model.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
+   let added=0,updated=0;
+   for(const asset of chosen){
+    const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
+    if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
+    const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
+    model.positions.push(position);added++;
+   }
+   if(added||updated){snapshot(model);await save();go('positions');}
+   notify(added+' neu · '+updated+' aktualisiert. Nicht erkannte Coins bleiben erhalten.');
+  });
+ $('saveDialog').disabled=true;
+ $('saveDialog').textContent='Coins speichern';
+ const updateSave=()=>{
+  const count=$('walletScanResults').querySelectorAll('[data-wallet-asset]:checked').length;
+  $('saveDialog').disabled=!count||!scannedWalletKey;
+  $('saveDialog').textContent=count?count+' Coin'+(count===1?'':'s')+' speichern':'Coins speichern';
+ };
+ const toggleNew=()=>{
+  $('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');
+  const wallets=model.accounts.filter(a=>a.providerId===$('scanProvider').value&&a.type==='wallet');
+  $('scanAccount').innerHTML=options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],wallets[0]?.id||'__new__');
+ };
+ $('scanProvider').addEventListener('change',toggleNew);toggleNew();
+ const updateHdHint=()=>{
+  const network=$('scanNetwork').value,hd=network==='btc-hd';
+  $('hdPrivacyHint').classList.toggle('hidden',!hd);
+  $('scanHdField').classList.toggle('hidden',!hd);
+  $('scanAddress').placeholder=hd?'xpub… / ypub… / zpub…':network==='btc'?'bc1… / 1… / 3…':network==='sol'?'Solana-Adresse':network==='xrp'?'r…':'0x… / öffentliche Adresse';
+ };
+ const resetWalletScan=()=>{
   scannedWalletAssets=[];scannedWalletKey='';
-  const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
-  const providers=[['__new__','+ Neue Wallet erstellen'],...model.providers.map(p=>[p.id,p.name])];
-  showDialog('Wallet hinzufügen','ÖFFENTLICHE ADRESSE · WATCH-ONLY',`<p class="dialog-intro">Eine öffentliche Wallet-Adresse eingeben und vorhandene Coins automatisch erkennen lassen. <strong>Kein API-Key, kein Login und keine Berechtigung zum Senden.</strong></p>
-    <label class="field"><span>Staking-Asset aus dem geprüften 50er-Katalog (optional)</span><select id="scanAsset">${options([['','– Ohne Vorauswahl –'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')}</select></label>
-    <p id="scanAssetInfo" class="small-help" role="status">Der Katalog unterscheidet Token-Salden, native Delegationen und nicht unterstützte Staking-Verträge.</p>
-    <label class="field"><span>Blockchain</span><select id="scanNetwork" name="network">${options(networks,'1')}</select></label>
-    <div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-HD-Adresstyp</span><select id="scanHdType" name="hdAddressType">${options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')}</select></label></div>
-    <label class="field"><span>Öffentliche Wallet-Adresse</span><input name="address" id="scanAddress" required autocomplete="off" spellcheck="false" placeholder="0x… / bc1… / Solana-Adresse"></label>
-    <div class="field-row"><label class="field"><span>Anbieter / Wallet</span><select name="providerId" id="scanProvider">${options(providers,model.providers[0]?.id||'__new__')}</select></label>
-    ${field('Name für neue Wallet','providerName','Meine Wallet','text','id="scanProviderName" maxlength="80"')}</div><label class="field"><span>Konto / Wallet</span><select name="accountId" id="scanAccount"></select></label>
-    <p class="small-help">Nur bestätigte, öffentliche Bestände werden vorgeschlagen. Cosmos delegiert/Unbonding, Hedera (ohne zusätzliche Staking-Doppelzählung), NEAR-Kontostände und BNB-Saldo sind ergänzt. Für natives SOL-Staking brauchst du häufig einen eigenen RPC, z. B. von Helius. Anleitung und Verbindungstest unter Mehr → Solana-Staking einrichten. Nicht alle Staking-Verträge sind automatisch lesbar. Avalanche-P-Chain, ETH-Validatoren, Vaults und externe NEAR-Pools benötigen eigene Adapter oder manuelle Erfassung.</p>
-    <p id="hdPrivacyHint" class="small-help hidden">Datenschutzhinweis für Bitcoin-HD: Der Scan übermittelt mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer. Dieser kann daraus Verbindungen zwischen deinen Adressen erkennen. Der xpub-Präfix allein identifiziert bei Ledger den Adresstyp nicht; Taproot (bc1p) wird derzeit nicht unterstützt.</p>
-    <div class="button-row"><button class="btn outline" type="button" id="scanWalletButton">◇ Wallet scannen</button><span id="scanWalletStatus" class="status-text" role="status">Noch kein Scan gestartet.</span></div>
-    <div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>
-    <p class="small-help">Spam- und unbekannte Tokens werden zunächst ausgeblendet. Über „Ausgeblendete Tokens prüfen“ können echte Bestände bei Bedarf manuell hinzugefügt werden. Die Adresse wird an den jeweiligen öffentlichen Blockchain-Dienst gesendet. Seed-Phrase und private Schlüssel niemals eingeben.</p>`,async (v)=>{
-       if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
-       const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
-       if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
-       let providerId=v.providerId;
-       if(providerId==='__new__'){
-         const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
-         model.providers.push(provider);providerId=provider.id;
-       }
-       let accountId=v.accountId;
-       if(accountId==='__new__'){
-         const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},model);
-         model.accounts.push(account);accountId=account.id;
-       }
-       if(!model.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
-       let added=0,updated=0;
-       for(const asset of chosen){
-         const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
-         if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
-         const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
-         model.positions.push(position);added++;
-       }
-       if(added||updated){snapshot(model);await save();go('positions');}
-       notify(`${added} neu · ${updated} aktualisiert. Nicht erkannte Coins bleiben erhalten.`);
-  });
-  $('saveDialog').textContent='Ausgewählte Coins übernehmen';
-  const toggleNew=()=>{$('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');
-    const wallets=model.accounts.filter(a=>a.providerId===$('scanProvider').value&&a.type==='wallet');
-    $('scanAccount').innerHTML=options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],wallets[0]?.id||'__new__');
-  };
-  $('scanProvider').addEventListener('change',toggleNew);toggleNew();
-  const updateHdHint=()=>{const hd=$('scanNetwork').value==='btc-hd';$('hdPrivacyHint').classList.toggle('hidden',!hd);$('scanHdField').classList.toggle('hidden',!hd);};
-  const resetWalletScan=()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Auswahl geändert – bitte erneut scannen.';};
-  $('scanNetwork').addEventListener('change',()=>{
-    resetWalletScan();$('scanAsset').value='';$('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
-    $('scanWalletButton').disabled=false;updateHdHint();
-  });
-  $('scanAsset').addEventListener('change',()=>{
-    const selected=lookupStakingAsset($('scanAsset').value);
-    resetWalletScan();
-    if(!selected){$('scanAssetInfo').textContent='Blockchain separat auswählen. Bei Staking ist nicht jede Position aus einer Adresse ableitbar.';$('scanWalletButton').disabled=false;return;}
-    $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; bitte unter Positionen manuell hinzufügen.');
-    $('scanWalletButton').disabled=!selected.scannerNetwork;
-    if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
-      $('scanNetwork').value=selected.scannerNetwork;
-      $('scanAddress').value='';updateHdHint();
-    }
-  });
-  updateHdHint();
-  $('scanHdType').addEventListener('change',()=>{scannedWalletAssets=[];scannedWalletKey='';$('walletScanResults').innerHTML='';$('scanWalletStatus').textContent='Adresstyp geändert – bitte erneut scannen.';});
-  $('scanAddress').addEventListener('change',()=>{scannedWalletAssets=[];$('walletScanResults').innerHTML='';});
-  $('scanWalletButton').addEventListener('click',scanWalletNow);
+  $('walletScanResults').innerHTML='';
+  $('scanSaveSettings').classList.add('hidden');
+  $('scanWalletStatus').textContent='Eingabe geändert – bitte erneut suchen.';
+  updateSave();
+ };
+ $('scanNetwork').addEventListener('change',()=>{
+  resetWalletScan();$('scanAsset').value='';
+  $('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
+  $('scanWalletButton').disabled=false;updateHdHint();
+ });
+ $('scanAsset').addEventListener('change',()=>{
+  const selected=lookupStakingAsset($('scanAsset').value);
+  resetWalletScan();
+  if(!selected){$('scanAssetInfo').textContent='Normale Coins werden auch ohne Vorauswahl gefunden.';$('scanWalletButton').disabled=false;return;}
+  $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; stattdessen Position manuell hinzufügen.');
+  $('scanWalletButton').disabled=!selected.scannerNetwork;
+  if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
+   $('scanNetwork').value=selected.scannerNetwork;
+   $('scanAddress').value='';updateHdHint();
+  }
+ });
+ $('scanHdType').addEventListener('change',resetWalletScan);
+ $('scanAddress').addEventListener('input',resetWalletScan);
+ $('walletScanResults').addEventListener('change',updateSave);
+ updateHdHint();
+ $('scanWalletButton').addEventListener('click',scanWalletNow);
 }
 async function scanWalletNow(){
   const button=$('scanWalletButton'),status=$('scanWalletStatus'),area=$('walletScanResults');
