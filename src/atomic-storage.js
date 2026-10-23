@@ -148,3 +148,46 @@ export async function stageLegacyPortfolio(db, storage, {expectedRevision = null
     legacyPreserved: true
   };
 }
+
+/** For explicit disaster recovery downloads only. Bypasses semantic validation;
+ * the returned record may contain private API keys under .settings. */
+export function readUnverifiedRecord(db){
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readonly');
+  let value=null;
+  const req=tx.objectStore(STORE).get(KEY);
+  req.onsuccess=()=>{value=req.result??null;};
+  tx.oncomplete=()=>resolve(value);
+  tx.onabort=()=>reject(tx.error||Error('Wiederherstellungsdaten konnten nicht gelesen werden.'));
+ });
+}
+/**
+ * ONLY for explicit user-approved recovery from a damaged IDB record, after
+ * downloading original bytes. Compare original record in one readwrite tx, so
+ * a concurrently repaired or changed record cannot be overwritten.
+ */
+export function restoreDamagedRecord(db,{expected,raw,settings}){
+ let portable,prefs;
+ try{portable=portablePortfolio(raw);prefs=portableSettings(settings);}
+ catch(error){return Promise.reject(error);}
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readwrite');
+  const storage=tx.objectStore(STORE);
+  let failure=null,record=null;
+  const read=storage.get(KEY);
+  read.onsuccess=()=>{
+   try{
+    const current=read.result??null;
+    if(JSON.stringify(current)!==JSON.stringify(expected))
+     throw Error('Speicher wurde zwischen Sicherung und Wiederherstellung verändert. Nichts überschrieben.');
+    const revision=current?.revision??0;
+    if(!Number.isSafeInteger(revision)||revision<0||revision>=Number.MAX_SAFE_INTEGER)
+     throw Error('Beschädigte Versionskennung; automatische Wiederherstellung verweigert.');
+    record={schemaVersion:1,revision:revision+1,raw:portable,settings:prefs,deleted:false,updatedAt:new Date().toISOString()};
+    storage.put(record,KEY);
+   }catch(error){failure=error;tx.abort();}
+  };
+  tx.oncomplete=()=>resolve(record);
+  tx.onabort=()=>reject(failure||tx.error||Error('Wiederherstellung abgebrochen.'));
+ });
+}
