@@ -49,6 +49,11 @@ try{
   assert.equal(await page.locator('#positionsPage .action-group #resolveListings').count(),0,'Review action must not crowd the three primary actions');
   assert.equal(await page.locator('#positionsPage .position-review-action #resolveListings').count(),1);
   await page.locator(nav+' [data-page="history"]').click();
+  assert.equal(await page.locator('#historyPage #addWallet').count(),0,'History must not have a wallet action');
+  assert.equal((await page.locator('#historyCalendarDisclosure > summary').textContent()).trim(),'','Calendar trigger must stay icon-only');
+  assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared tile must contain exactly two disclosures');
+  assert.equal(await page.locator('#historyPage .history-insights > details[open]').count(),0,'Both disclosures must start collapsed');
+  assert.equal(await page.locator('.side-caption, .mobile-label').count(),0,'Remove redundant portfolio header labels');
   const add=page.locator('#addSnapshot');
   const history=await add.evaluate(el=>{
    const r=el.getBoundingClientRect(),parent=el.closest('.panel').getBoundingClientRect();
@@ -62,6 +67,13 @@ try{
   else assert.ok(history.w>100,'History add action does not display text on '+width);
  }
  await page.setViewportSize({width:390,height:850});
+ await page.locator('#historyPage #performanceDetails > summary').click();
+ assert.equal(await page.locator('#historyPage #performanceDetails[open]').count(),1,'Renditeauswertung expands');
+ assert.equal(await page.locator('#historyPage #snapshotManager[open]').count(),0,'Stichtage remains independently collapsed');
+ await page.locator('#historyPage #snapshotManager > summary').click();
+ assert.equal(await page.locator('#historyPage .history-insights > details[open]').count(),2,'Both disclosures can expand independently');
+ await page.locator('#historyPage #performanceDetails > summary').click();
+ await page.locator('#historyPage #snapshotManager > summary').click();
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#addWizard').click();
  assert.equal(await page.locator('#wizardDialog').isVisible(),true,'Plus action must retain wizard');
