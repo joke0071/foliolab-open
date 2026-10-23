@@ -1,3 +1,4 @@
+import {handleMarketRequest} from './market.js';
 /** Public OpenFIGI metadata only. No personal portfolio, token, quote or user key data. */
 const UPSTREAM='https://api.openfigi.com/v3';
 const DEFAULT_ORIGIN='https://joke0071.github.io';
@@ -6,7 +7,7 @@ const json=(value,status=200,headers={})=>new Response(JSON.stringify(value),{
  status,headers:{'content-type':'application/json; charset=utf-8','x-content-type-options':'nosniff','cache-control':'no-store',...headers}
 });
 function cors(origin){
- return {'access-control-allow-origin':origin,'access-control-allow-methods':'GET, OPTIONS','access-control-allow-headers':'content-type','vary':'Origin'};
+ return {'access-control-allow-origin':origin,'access-control-allow-methods':'GET, POST, OPTIONS','access-control-allow-headers':'content-type, authorization','vary':'Origin'};
 }
 function asString(v,max=120){return String(v??'').trim().slice(0,max);}
 export function normalizeOpenFigi(raw,{isin=''}={}){
@@ -32,6 +33,12 @@ export async function handleInstrumentRequest(request,env={},ctx={},fetcher=glob
  if(!allowed.has(origin))return json({schemaVersion:1,status:'forbidden'},403);
  const headers=cors(origin);
  if(request.method==='OPTIONS')return new Response(null,{status:204,headers:{...headers,'access-control-max-age':'600'}});
+ if(url.pathname==='/api/market/eodhd'){
+  const response=await handleMarketRequest(request,env,fetcher);
+  const wrapped=new Response(response.body,{status:response.status,headers:response.headers});
+  for(const [key,value] of Object.entries(headers))wrapped.headers.set(key,value);
+  return wrapped;
+ }
  if(request.method!=='GET')return json({schemaVersion:1,status:'invalid_request'},405,headers);
  const path=url.pathname;
  const isSearch=path==='/api/instruments/search',isResolve=path==='/api/instruments/resolve';
