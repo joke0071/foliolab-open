@@ -566,10 +566,10 @@ function openListingReview(){
 }
 // Wallet-import is deliberately separate from manual asset creation. The user
 // reviews all discovered assets before anything is persisted.
-let scannedWalletAssets=[];let scannedWalletKey='';
+let scannedWalletAssets=[];let scannedWalletKey='',walletScanGeneration=0;
 const walletScanIdentity=(network,address,addressType='auto')=>network+'|'+address+'|'+(network==='btc-hd'?addressType:'');
 function openWalletImport(){
- scannedWalletAssets=[];scannedWalletKey='';
+ scannedWalletAssets=[];scannedWalletKey='';walletScanGeneration++;
  const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
  const walletProviders=model.providers.filter(p=>p.type==='wallet');
  const otherProviders=model.providers.filter(p=>p.type!=='wallet');
@@ -644,11 +644,14 @@ function openWalletImport(){
   $('scanAddress').placeholder=hd?'xpub… / ypub… / zpub…':network==='btc'?'bc1… / 1… / 3…':network==='sol'?'Solana-Adresse':network==='xrp'?'r…':'0x… / öffentliche Adresse';
  };
  const resetWalletScan=()=>{
+  walletScanGeneration++;
   scannedWalletAssets=[];scannedWalletKey='';
   $('walletScanResults').innerHTML='';
   $('scanSaveSettings').classList.add('hidden');
   $('scanWalletStatus').textContent='Eingabe geändert – bitte erneut suchen.';
   updateSave();
+  const staking=lookupStakingAsset($('scanAsset').value);
+  $('scanWalletButton').disabled=Boolean(staking&&!staking.scannerNetwork);
  };
  $('scanNetwork').addEventListener('change',()=>{
   resetWalletScan();$('scanAsset').value='';
@@ -676,9 +679,12 @@ async function scanWalletNow(){
   const button=$('scanWalletButton'),status=$('scanWalletStatus'),area=$('walletScanResults');
   const network=$('scanNetwork').value,address=$('scanAddress').value.trim();
   if(!address){status.textContent='Bitte die öffentliche Wallet-Adresse eingeben.';return;}
-  button.disabled=true;status.textContent=network==='btc-hd'?'Scanne Empfangs- und Wechselgeldadressen (Bitcoin HD) …':'Lese Blockchain-Bestände …';area.innerHTML='';scannedWalletAssets=[];
+  const scanGeneration=++walletScanGeneration;
+  const scanKey=walletScanIdentity(network,address,$('scanHdType').value);
+  button.disabled=true;status.textContent=network==='btc-hd'?'Scanne Bitcoin-Adressen …':'Suche vorhandene Coins …';area.innerHTML='';scannedWalletAssets=[];scannedWalletKey='';$('scanSaveSettings').classList.add('hidden');$('saveDialog').disabled=true;
   try{
     const assets=await getAdapter(network).discoverAssets(address,network==='btc-hd'?{...model.settings,hdAddressType:$('scanHdType').value}:model.settings);
+    if(scanGeneration!==walletScanGeneration)return;
     if(!assets.length){status.textContent=assets.partial?'Teilscan unvollständig: '+(assets.warning||'Einige Wallet-Bestände konnten nicht geprüft werden.'):'Keine positiven Guthaben gefunden.';area.innerHTML=empty(assets.partial?'Keine bestätigten Positionen. Netzwerk-/Staking-Abfragen waren unvollständig.':'Keine Positionen gefunden. Prüfe Netzwerk und Adresse.');return;}
     // Fetch contract quotes without a key when possible. A quote error never blocks import.
     if(PUBLIC_EVM_NETWORKS[Number(network)]){
@@ -688,11 +694,12 @@ async function scanWalletNow(){
         for(const a of assets)if(a.contract){const q=Number(quotes[a.contract.toLowerCase()]?.eur);if(q>0)a.price=q;}
       }catch(e){/* holdings are still valid without quotes */}
     }
+    if(scanGeneration!==walletScanGeneration)return;
     const {visible,hidden}=partitionWalletAssets(assets);
     const displayed=visible.slice(0,150);
     const review=hidden.slice(0,Math.max(0,150-displayed.length));
     scannedWalletAssets=[...displayed,...review];
-    scannedWalletKey=walletScanIdentity(network,address,$('scanHdType').value);
+    scannedWalletKey=scanKey;
     const partial=assets.partial===true;
     const renderRow=(a,i,preselect=false,reason='')=>`<label class="wallet-scan-row"><input type="checkbox" data-wallet-asset="${i}" ${preselect&&i<80?'checked':''}><span class="wallet-scan-info"><strong>${esc(a.name)}</strong><small>${esc(a.symbol)} · ${esc(a.chain==='btc'||a.chain==='btc-hd'?'Bitcoin':a.chain==='xrp'||a.chain==='xrp-token'?'XRP Ledger':a.chain==='sol'||a.chain==='spl'?'Solana':a.chain==='sol-stake'?'Solana Staking':a.chain==='sonic-stake'?'Sonic Staking':a.chain.startsWith('cosmos')?'Cosmos Hub':a.chain==='hedera'?'Hedera':a.chain.startsWith('near')?'NEAR':PUBLIC_EVM_NETWORKS[a.chainId]?.name||'EVM')}${a.contract?' · '+esc(a.contract.slice(0,9))+'…':''}</small>${reason?`<small>${esc(reason)}</small>`:''}</span><span class="wallet-scan-money">${quant(a.quantity)}${a.price?`<small>≈ ${money(a.price*a.quantity)}</small>`:'<small>Kurs offen</small>'}</span></label>`;
     const extra=hidden.length?
@@ -700,10 +707,12 @@ async function scanWalletNow(){
     area.innerHTML=`<div class="wallet-scan-header"><strong>${displayed.length} Position${displayed.length===1?'':'en'} zur Auswahl</strong><span>${hidden.length?'Unbekannte Tokens ausgeblendet':'Zur Übernahme auswählen'}</span></div>`+
       displayed.map((a,i)=>renderRow(a,i,true)).join('')+
       (!displayed.length?empty('Keine automatisch vorgeschlagenen Positionen. Bei Bedarf ausgeblendete Tokens prüfen.'): '')+extra;
-    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.warning|| (assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Bestände abgerufen.'))+
+    status.textContent=(partial?'Teilweise erfolgreich: '+assets.warning:assets.warning|| (assets.length>150?'Vorschau auf maximal 150 Positionen begrenzt.':'Coins gefunden. Wähle die Bestände aus, die du speichern möchtest.'))+
       (hidden.length?' · '+hidden.length+' ungeprüfte oder auffällige Tokens ausgeblendet.':'');
-  }catch(e){status.textContent='Scan nicht möglich: '+e.message;area.innerHTML=empty('Manuelles Hinzufügen ist weiterhin möglich. Öffentliche API-Zugriffe können zeitweise blockiert oder begrenzt sein.');}
-  finally{button.disabled=false;}
+    $('scanSaveSettings').classList.remove('hidden');
+    area.dispatchEvent(new Event('change',{bubbles:true}));
+  }catch(e){if(scanGeneration===walletScanGeneration){status.textContent='Suche fehlgeschlagen: '+e.message;area.innerHTML=empty('Bitte Netzwerk und Adresse prüfen. Du kannst die Position auch manuell hinzufügen.');}}
+  finally{if(scanGeneration===walletScanGeneration)button.disabled=false;}
 }
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
 function openCSVImport(){
