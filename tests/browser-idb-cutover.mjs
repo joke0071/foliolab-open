@@ -103,6 +103,7 @@ try{
  assert.equal(deleted.raw,null);
  assert.equal(deleted.settings,null);
  await page.reload();
+ await page.locator('#mobileNav [data-page="dashboard"]').click();
  await page.locator('#totalValue').waitFor();
  assert.match(await page.locator('#totalValue').innerText(),/0,00/);
  assert.equal(dialogLabels.length,7);
