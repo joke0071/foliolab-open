@@ -54,6 +54,9 @@ try{
  assert.equal(arrows.provider.content,'""','Chevron must be shape, not a Unicode glyph');
  await provider.locator('summary').click();
  await market.locator('summary').click();
+ // CSS transitions animate over 150 ms. Assert the final shared shape,
+ // not two different intermediate animation frames.
+ await page.waitForTimeout(220);
  arrows=await chevron();
  assert.equal(arrows.provider.transform,arrows.source.transform,'Both disclosure arrows rotate identically on open');
  assert.notEqual(arrows.provider.transform,'none');
