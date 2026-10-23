@@ -20,7 +20,7 @@ export async function queryPublicInstruments(base,term,{fetcher=globalThis.fetch
  url.searchParams.set(isIsin?'isin':'q',query);
  const abort=new AbortController();const timeout=setTimeout(()=>abort.abort(),7000);
  try{
-  const res=await fetcher(url.toString(),{method:'GET',signal:abort.signal,headers:{accept:'application/json'}});
+  const res=await fetcher(url.toString(),{method:'GET',signal:abort.signal,headers:{accept:'application/json'},credentials:'omit',referrerPolicy:'no-referrer',redirect:'error'});
   if(res.status===429)throw Error('Öffentliche Suche ist ausgelastet; später versuchen oder manuell erfassen.');
   if(!res.ok)throw Error('Öffentliche Stammdatensuche vorübergehend nicht verfügbar.');
   const value=await res.json();

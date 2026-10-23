@@ -45,7 +45,7 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
        for(let attempt=0;attempt<attempts;attempt++){
          const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
          let response,requestError;
-         try{response=await fetcher(url,{...options,signal:controller.signal,cache:'no-store'});}
+         try{response=await fetcher(url,{...options,signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error'});}
          catch(error){requestError=error;}
          finally{clearTimeout(timer);}
          if(requestError?.name==='AbortError')requestError=Error('Zeitüberschreitung beim Abruf.');
