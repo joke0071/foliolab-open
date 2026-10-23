@@ -20,11 +20,10 @@ try{
  assert.equal(await page.locator('#editDialog').isVisible(),true);
  assert.equal(await page.locator('#editorForm [name="note"]').inputValue(),'Nicht gespeichert');
 
- // The explicit reload action is blocked until editing is complete.
- await page.locator('#pwaUpdateNotice button').click();
- assert.equal(await page.locator('#editDialog').isVisible(),true);
+ // The modal remains in front of the update notice: no update action
+ // can interrupt an unsaved entry. After closing it, the user may reload.
+ assert.equal(await page.locator('#pwaUpdateNotice').count(),1);
  assert.equal(await page.locator('#editorForm [name="note"]').inputValue(),'Nicht gespeichert');
-
  await page.locator('#cancelDialog').click();
  await Promise.all([
   page.waitForEvent('load',{timeout:15000}),
