@@ -1,31 +1,23 @@
-/* FolioLab Google Drive backup (opt-in, no backend, no refresh tokens).
- * OAuth: Google Identity Services token client; scope drive.file.
- * Encrypted: AES-GCM key in this browser's IndexedDB. A separate recovery
- * key must be downloaded to restore data after browser/device loss.
+/* Optional encrypted Google Drive backup with user-owned OAuth (drive.file).
+ * Only one user password is needed to restore on a different device.
+ * Session credentials and device keys never enter a backup.
  */
 (()=>{
 'use strict';
 const SCOPE='https://www.googleapis.com/auth/drive.file';
 const PREF_KEY='foliolab-open-drive-backup-settings-v1';
-const KEY_DB='foliolab-open-drive-recovery-keys-v1';
 const FOLDER='FolioLab Backups';
 const LABEL='foliolab-open-v1';
-const NEW_BACKUP_LABEL='foliolab-open-v2';
-const FORMATS=['foliolab-drive-encrypted-v1'];
+const NEW_BACKUP_LABEL='foliolab-open-v3';
 const get=id=>document.getElementById(id);
-const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',recoverySaved:false,folderId:'',folderName:'',cleanupPending:false};
+const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',folderId:'',folderName:'',cleanupPending:false};
 let prefs={...DEFAULT},accessToken='',tokenExpires=0,tokenClient=null,scriptPromise=null;
-let backend=null,keyCache=null,busy=false,started=false,initialAutoDone=false;
+let backend=null,busy=false,started=false,initialAutoDone=false;
 let googleClientId='',clientConfigLoaded=false,clientConfigError='';
-let recoveryRevealTimer=null;
 let lastKnownBackupCount=null,vaultConfigured=false;
 const iso=()=>new Date().toISOString();
 const asDate=value=>Number.isFinite(Date.parse(value||''))?new Date(value):null;
 const day=value=>value.toLocaleDateString('sv-SE');
-const toHex=bytes=>Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
-const fromHex=hex=>new Uint8Array((hex.match(/.{2}/g)||[]).map(pair=>parseInt(pair,16)));
-const encodeBytes=bytes=>{let str='';for(let i=0;i<bytes.length;i+=8192)str+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(str)};
-const decodeBytes=text=>Uint8Array.from(atob(text),s=>s.charCodeAt(0));
 function updateBackupOverview(){
  const el=get('driveBackupOverview');if(!el)return;
  const d=asDate(prefs.lastBackupAt);
@@ -46,7 +38,6 @@ function loadPrefs(){
    cleanupPending:raw.cleanupPending===true,
    retention:Number.isInteger(raw.retention)&&raw.retention>=1&&raw.retention<=30?raw.retention:3,
    lastBackupAt:typeof raw.lastBackupAt==='string'?raw.lastBackupAt:'',
-   recoverySaved:raw.recoverySaved===true,
    folderId:typeof raw.folderId==='string'&&/^[A-Za-z0-9_-]{10,160}$/.test(raw.folderId)?raw.folderId:'',
    folderName:typeof raw.folderName==='string'?raw.folderName.slice(0,80):''
   };
@@ -85,139 +76,6 @@ function updateDueStatus(){
  if(prefs.cleanupPending){status('Letztes Backup gespeichert · ältere Sicherungen werden bei nächster Verbindung bereinigt.');return}
  if(prefs.lastBackupAt){const d=asDate(prefs.lastBackupAt);status('Letzte Drive-Sicherung: '+(d?d.toLocaleString('de-AT'):'unbekannt')+'.');return}
  status('Bereit für die erste verschlüsselte Drive-Sicherung.');
-}
-function storage(){
- return new Promise((resolve,reject)=>{
-  const request=indexedDB.open(KEY_DB,1);
-  request.onupgradeneeded=()=>request.result.createObjectStore('keys');
-  request.onsuccess=()=>resolve(request.result);
-  request.onerror=()=>reject(request.error||Error('Lokaler Schlüsselspeicher nicht verfügbar'));
- });
-}
-async function keyAction(mode,value){
- const db=await storage();
- try{return await new Promise((resolve,reject)=>{
-  const tx=db.transaction('keys',mode==='get'?'readonly':'readwrite');
-  const op=tx.objectStore('keys')[mode](...(mode==='get'?['aes']: [value,'aes']));
-  op.onerror=()=>reject(op.error||Error('Schlüsselspeicher fehlgeschlagen'));
-  tx.oncomplete=()=>resolve(op.result);
-  tx.onabort=()=>reject(tx.error||Error('Schlüsselspeicher abgebrochen'));
- })}finally{db.close()}
-}
-async function getKey(create=false){
- if(keyCache)return keyCache;
- const previous=await keyAction('get');
- if(previous){keyCache=previous;return previous}
- if(!create)return null;
- const fresh=await crypto.subtle.generateKey({name:'AES-GCM',length:256},true,['encrypt','decrypt']);
- await keyAction('put',fresh);
- keyCache=fresh;
- return fresh;
-}
-async function downloadFile(name,text){
- const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
- const url=URL.createObjectURL(blob),link=document.createElement('a');
- link.href=url;link.download=name;document.body.appendChild(link);
- try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
- return {native:false};
-}
-function recoveryMessage(message){
- const el=get('recoveryKeyStatus');if(el)el.textContent=message;
-}
-function hideRecoveryKey(){
- if(recoveryRevealTimer){clearTimeout(recoveryRevealTimer);recoveryRevealTimer=null}
- const field=get('recoveryKeyDisplay');
- if(field){field.value='';field.type='password';field.setAttribute('aria-label','Verborgener Wiederherstellungsschlüssel')}
- const button=get('recoveryKeyReveal');
- if(button){button.classList.remove('is-visible');button.setAttribute('aria-pressed','false');button.setAttribute('aria-label','Wiederherstellungsschlüssel anzeigen');button.title='Schlüssel 30 Sekunden anzeigen'}
-}
-async function recoveryString(create=true){
- if(!window.crypto?.subtle||!window.indexedDB)throw Error('Schlüsselverwaltung erfordert HTTPS, WebCrypto und IndexedDB.');
- const key=await getKey(create);
- if(!key)throw Error('Noch kein Wiederherstellungsschlüssel vorhanden.');
- const raw=new Uint8Array(await crypto.subtle.exportKey('raw',key));
- return 'FLBK1-'+toHex(raw);
-}
-async function revealRecoveryKey(){
- try{
-  const field=get('recoveryKeyDisplay');
-  if(field.type==='text'){hideRecoveryKey();return}
-  const key=await recoveryString(true);
-  field.type='text';field.value=key;
-  field.setAttribute('aria-label','Wiederherstellungsschlüssel sichtbar – nach 30 Sekunden automatisch verborgen');
-  const button=get('recoveryKeyReveal');button.classList.add('is-visible');button.setAttribute('aria-pressed','true');button.setAttribute('aria-label','Wiederherstellungsschlüssel verbergen');button.title='Schlüssel verbergen';
-  
-  if(recoveryRevealTimer)clearTimeout(recoveryRevealTimer);
-  recoveryRevealTimer=setTimeout(()=>{
-   hideRecoveryKey();
-   
-  },30000);
- }catch(e){hideRecoveryKey();recoveryMessage('Schlüssel konnte nicht angezeigt werden: '+e.message)}
-}
-async function copyRecoveryKey(){
- try{
-  const value=await recoveryString(true);
-  if(!navigator.clipboard?.writeText)throw Error('Zwischenablage nicht verfügbar');
-  await navigator.clipboard.writeText(value);
-  recoveryMessage('Schlüssel kopiert. Im Passwortmanager speichern und unten bestätigen. Zwischenablage anschließend überschreiben.');
- }catch(e){
-  recoveryMessage('Kopieren nicht möglich. „Kurz anzeigen“ wählen und den Schlüssel manuell kopieren.');
- }
-}
-async function confirmRecoverySaved(checked){
- if(!checked){prefs.recoverySaved=false;savePrefs();updateUi();updateDueStatus();return}
- try{
-  await recoveryString(false);
-  prefs.recoverySaved=true;
-  savePrefs();updateUi();updateDueStatus();
-  recoveryMessage('Sichere Aufbewahrung bestätigt. Verschlüsselte Backups sind freigeschaltet.');
- }catch(e){
-  prefs.recoverySaved=false;
-  get('recoveryKeyConfirmed').checked=false;
-  savePrefs();updateUi();
-  recoveryMessage('Bitte zuerst den Schlüssel anzeigen oder kopieren.');
- }
-}
-async function exportRecovery(){
- try{
-  const key=await recoveryString(true);
-  const exported=await downloadFile('FolioLab-Wiederherstellungsschluessel.txt',
-   'FolioLab · Wiederherstellungsschlüssel\n\n'+key+'\n\nSicher getrennt von Google Drive aufbewahren. Nicht veröffentlichen.\n');
-  // A download trigger is not proof that the browser saved the key: require the user's explicit confirmation.
-  recoveryMessage('Schlüsseldatei-Download gestartet. Bitte Ablage prüfen und anschließend die sichere Aufbewahrung bestätigen.');
- }catch(e){recoveryMessage('Schlüsseldatei fehlgeschlagen: '+e.message)}
-}
-async function importRecovery(secret){
- const normalized=String(secret||'').trim().replace(/\s/g,'');
- if(!/^FLBK1-[0-9a-fA-F]{64}$/.test(normalized))throw Error('Ungültiger Wiederherstellungsschlüssel.');
- const fresh=await crypto.subtle.importKey('raw',fromHex(normalized.slice(6)),{name:'AES-GCM'},true,['encrypt','decrypt']);
- // Importing a backup must never destroy a different existing AES key:
- // otherwise older Drive backups could become permanently unreadable.
- const existing=await getKey(false);
- if(!existing){
-  await keyAction('put',fresh);keyCache=fresh;
- }
- prefs.recoverySaved=true;savePrefs();
- const confirm=get('recoveryKeyConfirmed');if(confirm)confirm.checked=true;
- updateUi();updateDueStatus();
- const input=get('driveRecoveryInput');if(input)input.value='';
- return fresh;
-}
-async function encrypt(payload){
- const key=await getKey(false);if(!key)throw Error('Wiederherstellungsschlüssel zuerst sichern.');
- const iv=crypto.getRandomValues(new Uint8Array(12));
- const plaintext=new TextEncoder().encode(JSON.stringify(payload));
- const ciphertext=new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM',iv,additionalData:new TextEncoder().encode('FolioLab Backup v1')},key,plaintext));
- return JSON.stringify({format:FORMATS[0],createdAt:iso(),iv:encodeBytes(iv),ciphertext:encodeBytes(ciphertext)});
-}
-async function decrypt(json,secret){
- if(!json||!FORMATS.includes(json.format)||typeof json.iv!=='string'||typeof json.ciphertext!=='string')throw Error('Unbekanntes oder ungültiges Backupformat.');
- let key=secret?await crypto.subtle.importKey('raw',fromHex(String(secret).replace(/\s/g,'').replace(/^FLBK1-/i,'')),{name:'AES-GCM'},true,['encrypt','decrypt']):await getKey(false);
- if(!key)throw Error('Auf diesem Gerät fehlt der Schlüssel. Bitte unten den Wiederherstellungsschlüssel eingeben.');
- try{
-  const bytes=await crypto.subtle.decrypt({name:'AES-GCM',iv:decodeBytes(json.iv),additionalData:new TextEncoder().encode('FolioLab Backup v1')},key,decodeBytes(json.ciphertext));
-  return JSON.parse(new TextDecoder().decode(bytes));
- }catch{throw Error('Backup konnte nicht entschlüsselt werden. Prüfe den Wiederherstellungsschlüssel.')}
 }
 async function loadGoogle(){
  if(window.google?.accounts?.oauth2)return;
@@ -411,7 +269,7 @@ async function reloadFolders(){
 async function filesInFolder(id){
  if(!id)return [];
  const folderId=id.replace(/[^A-Za-z0-9_-]/g,'');
- const q="'"+folderId+"' in parents and trashed = false and (appProperties has { key='foliolabBackup' and value='"+LABEL+"' } or appProperties has { key='foliolabBackup' and value='"+NEW_BACKUP_LABEL+"' })";
+ const q="'"+folderId+"' in parents and trashed = false and appProperties has { key='foliolabBackup' and value='"+NEW_BACKUP_LABEL+"' }";
  const items=await listQuery(q,'id,name,createdTime,size,appProperties');
  return items.filter(f=>/^FolioLab-\d{4}-\d{2}-\d{2}T[\d-]+Z\.encrypted\.json$/.test(f.name||''))
   .sort((a,b)=>String(b.createdTime||'').localeCompare(String(a.createdTime||'')));
@@ -459,7 +317,8 @@ async function backup(automatic=false){
   const data=backend.readData();
   if(!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Lokale Bestände sind nicht lesbar.');
   if(data.positions.length===0&&data.providers.length===0&&data.accounts.length===0)throw Error('Portfolio ist leer. Vorhandene Drive-Backups bleiben erhalten.');
-  const encrypted=await backend.encryptPasswordBackup(JSON.stringify({kind:'FolioLab',data,exportedAt:iso()}));
+  const full=backend.buildCompleteBackup(data,backend.readBackupConfiguration?.()??null);
+  const encrypted=await backend.encryptPasswordBackup(JSON.stringify(full));
   const dir=await folder(true);
   const uploaded=await createFile(dir,encrypted);
   prefs.lastBackupAt=iso();savePrefs();
@@ -500,22 +359,15 @@ async function inspectSelectedDriveBackup(){
  if(!id)throw Error('Bitte zuerst ein Drive-Backup auswählen.');
  const res=await api('drive/v3/files/'+encodeURIComponent(id)+'?alt=media');
  const text=await res.text();
- if(text.length>15000000)throw Error('Backup zu groß.');
+ if(text.length>15000000)throw Error('Backup ist zu groß.');
  const envelope=JSON.parse(text);
- const enteredSecret=get('driveRecoveryInput').value;
- const secret=envelope.format==='foliolab-open-encrypted-v2'?enteredSecret:enteredSecret.trim();
- let payload,legacy=false;
- if(envelope.format==='foliolab-open-encrypted-v2'){
-  if(secret.length<10)throw Error('Bitte das Backup-Passwort eingeben.');
-  payload=JSON.parse(await backend.decryptPasswordBackup(envelope,secret));
- }else if(FORMATS.includes(envelope.format)){
-  legacy=true;
-  if(secret&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(secret.replace(/\s/g,'')))throw Error('Für ältere Backups ist der FLBK1-Schlüssel erforderlich.');
-  payload=await decrypt(envelope,secret||null);
- }else throw Error('Unbekanntes Drive-Backupformat.');
- if(payload.kind!=='FolioLab'||!payload.data)throw Error('Backupinhalt ungültig.');
- const data=backend.validateData(payload.data,{strict:true});
- return {data,secret,legacy,envelope};
+ if(envelope.format!=='foliolab-open-encrypted-v2')throw Error('Diese Sicherung verwendet ein altes Format. Bitte ein neues Passwort-Backup auswählen.');
+ const password=get('driveRecoveryInput').value;
+ if(password.length<10)throw Error('Bitte dein Backup-Passwort eingeben.');
+ const payload=JSON.parse(await backend.decryptPasswordBackup(envelope,password));
+ const unpacked=backend.unpackCompleteBackup(payload);
+ const data=backend.validateData(unpacked.data,{strict:true});
+ return {data,configuration:unpacked.configuration,password,envelope};
 }
 function backupDescription(data){
  const dates=data.snapshots.map(s=>s.date).sort();
@@ -529,7 +381,7 @@ async function checkSelectedDriveBackup(){
   const {data}=await inspectSelectedDriveBackup();
   status('✓ Drive-Backup geprüft (keine Daten verändert): '+backupDescription(data)+'.');
  }catch(e){status('Backup-Prüfung fehlgeschlagen: '+e.message,true)}
- finally{get('driveRecoveryInput').value='';const proxy=get('restoreKeyProxy');if(proxy)proxy.value='';busy=false;updateUi()}
+ finally{get('driveRecoveryInput').value='';busy=false;updateUi()}
 }
 async function restore(){
  if(!hasToken())return updateDueStatus();
@@ -537,15 +389,14 @@ async function restore(){
  if(busy)return;
  busy=true;updateUi();status('Backup wird heruntergeladen und entschlüsselt …');
  try{
-  const {data:next,secret,legacy,envelope}=await inspectSelectedDriveBackup();
+  const {data:next,configuration,password,envelope}=await inspectSelectedDriveBackup();
   if(!confirm('Dieses Backup mit '+next.positions.length+' Positionen und '+next.snapshots.length+' Stichtagen wiederherstellen? Deine aktuellen lokalen Daten werden ersetzt.'))return status('Wiederherstellung abgebrochen.');
-  await backend.restoreData(next);
-  if(legacy&&secret)await importRecovery(secret);
-  if(!legacy)await backend.adoptPasswordVault(envelope,secret);
+  await backend.restoreData(next,configuration);
+  await backend.adoptPasswordVault(envelope,password);
   get('restoreBackupDialog')?.close();
   status('Drive-Backup wiederhergestellt. '+next.positions.length+' Positionen geladen. Vorheriger Stand lokal gesichert.');
  }catch(e){status('Wiederherstellung fehlgeschlagen: '+e.message,true)}
- finally{get('driveRecoveryInput').value='';const proxy=get('restoreKeyProxy');if(proxy)proxy.value='';busy=false;updateUi()}
+ finally{get('driveRecoveryInput').value='';busy=false;updateUi()}
 }
 async function trimExisting(){
  if(!hasToken()||busy)return;
@@ -625,21 +476,17 @@ async function init(app){
  started=true;
  // No silent browser authorization: Drive is user-initiated.
 }
-// The local download uses the exact same authenticated-encryption format as
-// Google Drive. No OAuth or Drive connection is required for local backups.
-async function encryptLocal(data){
- if(!prefs.recoverySaved)throw Error('Bitte den Wiederherstellungsschlüssel sicher ablegen und bestätigen.');
- if(!data||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Lokale Portfoliodaten sind ungültig.');
- return JSON.parse(await encrypt({kind:'FolioLab',data,exportedAt:iso()}));
+function reloadRestoredConfiguration(){
+ const oldId=prefs.clientId;
+ loadPrefs();
+ if(oldId!==prefs.clientId){accessToken='';tokenExpires=0;tokenClient=null}
+ googleClientId=prefs.clientId;
+ const id=get('driveClientId');if(id)id.value=prefs.clientId;
+ const mode=get('driveAutoMode');if(mode)mode.value=prefs.mode;
+ const limit=get('driveRetention');if(limit)limit.value=String(prefs.retention);
+ updateUi();updateDueStatus();
 }
-async function decryptLocal(envelope,secret=''){
- const normalized=String(secret||'').trim().replace(/\s/g,'');
- if(normalized&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(normalized))throw Error('Ungültiger Wiederherstellungsschlüssel.');
- const payload=await decrypt(envelope,normalized||null);
- if(payload.kind!=='FolioLab'||!payload.data)throw Error('Die verschlüsselte Datei enthält kein gültiges FolioLab-Backup.');
- return payload.data;
-}
-window.FolioDriveBackup={init,checkDue:maybeAuto,refreshVaultStatus:async()=>{
-  vaultConfigured=await backend.hasPasswordVault();updateUi();updateDueStatus();
-},decryptLegacyLocal:decryptLocal,installRecovery:importRecovery};
+window.FolioDriveBackup={init,checkDue:maybeAuto,reloadRestoredConfiguration,
+ refreshVaultStatus:async()=>{vaultConfigured=await backend.hasPasswordVault();updateUi();updateDueStatus()}
+};
 })();

@@ -6,7 +6,7 @@ const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 
-function fixture({vault=false,clientId='',withGoogle=false}={}){
+function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false}={}){
  const values=new Map(),requests=[],written=[];
  if(clientId)values.set('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId,retention:3,mode:'off'}));
  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
@@ -30,8 +30,11 @@ function fixture({vault=false,clientId='',withGoogle=false}={}){
  const backend={
   hasPasswordVault:async()=>vault,
   readData:()=>({version:3,positions:[{id:'p'}],snapshots:[],providers:[{id:'prov'}],accounts:[]}),
+  readBackupConfiguration:()=>includeConfig?{settings:{eodhdKey:'test-private-key'},drive:{clientId,mode:'daily',retention:5}}:null,
+  buildCompleteBackup:(data,configuration)=>({kind:'FolioLabCompleteBackup',backupVersion:1,data,configuration}),
+  unpackCompleteBackup:payload=>({data:payload.data,configuration:payload.configuration}),
   encryptPasswordBackup:async plain=>{written.push(JSON.parse(plain));return '{"format":"foliolab-open-encrypted-v2","fake":true}'},
-  decryptPasswordBackup:async()=>JSON.stringify({kind:'FolioLab',data:{version:3,positions:[],snapshots:[],providers:[],accounts:[]}}),
+  decryptPasswordBackup:async()=>JSON.stringify({kind:'FolioLabCompleteBackup',backupVersion:1,data:{version:3,positions:[],snapshots:[],providers:[],accounts:[]},configuration:null}),
   validateData:data=>data,restoreData:async()=>{},adoptPasswordVault:async()=>{},
   onBackedUp:()=>{}
  };
@@ -72,7 +75,8 @@ test('Drive upload encrypts only the sanitized portfolio through the shared pass
  assert.equal(t.elements.driveSaveNow.disabled,false,t.elements.driveBackupStatus.textContent);
  await t.elements.driveSaveNow.onclick();
  assert.equal(t.written.length,1);
- assert.equal(t.written[0].kind,'FolioLab');
+ assert.equal(t.written[0].kind,'FolioLabCompleteBackup');
+ assert.equal(t.written[0].configuration,null);
  assert.ok(t.requests.some(x=>x.url.includes('upload/drive/v3/files')&&x.method==='POST'));
  assert.match(t.elements.driveBackupStatus.textContent,/erfolgreich/);
 });
@@ -86,20 +90,32 @@ test('only the user-selected OAuth client ID is stored and no access token persi
  assert.equal(JSON.stringify(saved).includes('ephemeral-test-token'),false);
  assert.equal(t.elements.driveConnect.disabled,false);
 });
-test('public UI has one password setup, no new FLBK1 generation and retains legacy restore support',()=>{
+test('public UI offers full encrypted backup without any recovery-code workflow',()=>{
  assert.equal((html.match(/id="backupPasswordSetup"/g)||[]).length,1);
- for(const id of ['backupPassword','backupPasswordConfirm','backupOldPassword','saveBackupPassword','driveRecoveryInput']){
+ for(const id of ['backupPassword','backupPasswordConfirm','backupOldPassword','saveBackupPassword','driveRecoveryInput','fullBackupIncludeSettings']){
   assert.match(html,new RegExp('id="'+id+'"'));
  }
  for(const id of ['recoveryKeyDisplay','recoveryKeyReveal','recoveryKeyCopy','recoveryKeyConfirmed']){
   assert.doesNotMatch(html,new RegExp('id="'+id+'"'));
  }
- assert.match(source,/FORMATS\.includes\(envelope\.format\)/);
- assert.match(source,/backend\.decryptPasswordBackup\(envelope,secret\)/);
+ assert.doesNotMatch(source,/FLBK1|importRecovery|decryptLegacyLocal/);
+ assert.match(source,/backend\.decryptPasswordBackup\(envelope,password\)/);
  assert.match(source,/backend\.encryptPasswordBackup\(/);
- assert.match(source,/backend\.adoptPasswordVault\(envelope,secret\)/);
+ assert.match(source,/backend\.adoptPasswordVault\(envelope,password\)/);
  assert.match(app,/configureBackupPassword\(/);
- assert.match(app,/encryptWithBackupPassword\(backup\(model\)\)/);
- assert.match(app,/decryptPasswordBackup\(parsed,backupPass\)/);
+ assert.match(app,/encryptWithBackupPassword\(JSON\.stringify\(fullBackupPayload\(\)\)\)/);
+ assert.match(app,/decryptPasswordBackup\(parsed,password\)/);
  assert.doesNotMatch(source,/api\/public-config|client_secret|refresh_token|FolioLabNativeGoogleAuth/);
+});
+
+test('the optional full Drive payload includes configuration but no OAuth session token',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,includeConfig:true});
+ await t.window.FolioDriveBackup.init(t.backend);
+ await t.elements.driveConnect.onclick();
+ await t.elements.driveSaveNow.onclick();
+ assert.equal(t.written[0]?.kind,'FolioLabCompleteBackup');
+ assert.equal(t.written[0]?.configuration.settings.eodhdKey,'test-private-key');
+ assert.equal(t.written[0]?.configuration.drive.mode,'daily');
+ assert.ok(!JSON.stringify(t.written).includes('ephemeral-test-token'));
+ assert.ok(!String(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).includes('ephemeral-test-token'));
 });
