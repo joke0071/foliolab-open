@@ -90,7 +90,7 @@ Solana events intentionally represent proven transaction/account net changes, wi
 | No financial engine changes | No edits to performance, transactions, Flatex, FIFO or tax engines; UI financial byte checks | PASS |
 | Cross-chain integration + storage/privacy | BTC/ETH/SOL/SPL UI, actual AES vault v2, two tabs, old backup/credential gates | PASS |
 | Performance/cancel/offline/PWA | Worker heartbeat, cancellation, real SW offline computation, PWA update/offline-mobile | PASS; explicit size/time limits |
-| Full regression and CI | Commands below; GitHub run and tested target SHA recorded in final PR | Await final CI evidence |
+| Full regression and CI | Commands below; GitHub run and tested target SHA recorded in final PR | PASS; final target/run linked in PR |
 
 ## Final executed verification and manual gates
 
@@ -103,4 +103,4 @@ Solana events intentionally represent proven transaction/account net changes, wi
 
 Remaining manual release gates: encrypted Google Drive upload/restore on a real account, real phone/tablet/Safari devices, browser/OS eviction and physical power loss, and production archive/provider limits with representative consenting public addresses. Deterministic mocks/fault injection are explicitly not those hardware/account tests. Native ETH protocol credits and rebase/complex tokens retain the WH03 partial contract; Solana SPL totals/closed accounts stay partial. Historical EUR availability depends on provider retention/free limits or explicitly mapped local EUR CSV data. There is no promise of universal verified history.
 
-Recommendation: review the single PR and its final green CI; merge only by separate maintainer approval. Do not deploy or automatically promote historical data into portfolio accounting. All four engineering phases are implemented; final CI status is tracked in the PR.
+Recommendation: review the single PR and its final green CI; merge only by separate maintainer approval. Do not deploy or automatically promote historical data into portfolio accounting. All four engineering phases are implemented. Full source CI run 40139371361 on d22ca3ffaf09ae10438539e88e3770f096ec36fe passed test + cross-engine, deployment skipped. Final target and latest CI evidence are tracked in PR #123. The existing Drive upload simulator additionally passes a validated accepted history through the actual complete-backup builder and unpacker, while its encryption/OAuth/Google transport remain explicit stubs; actual vault v2 encryption/decryption is separately exercised in all three browsers.
