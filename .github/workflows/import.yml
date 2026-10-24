@@ -45,7 +45,7 @@ jobs:
           npm run check
       - name: Install browser test tools
         run: |
-          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
           npx playwright install chromium --only-shell
       - name: Browser smoke tests (320–1440 px)
         run: |
@@ -70,6 +70,7 @@ jobs:
           node tests/browser-modal-clarity.mjs
           node tests/browser-dialog-consistency.mjs
           node tests/browser-dialog-visual.mjs
+          node tests/browser-dialog-visual-regression.mjs
           node tests/browser-dialog-a11y-mobile.mjs
           node tests/browser-dialog-financial-choices.mjs
           node tests/browser-ledger-xpub.mjs
@@ -120,7 +121,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dialog-visual-reference
-          path: artifacts/dialog-visual/
+          path: |
+            artifacts/dialog-visual/
+            artifacts/dialog-visual-diff/
           if-no-files-found: ignore
   cross-engine:
     runs-on: ubuntu-24.04
