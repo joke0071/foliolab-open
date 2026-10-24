@@ -45,8 +45,13 @@ export function prepareFlatexBackfillPreview(model,prepared,accountId,options={}
   return blocked('Zu den betroffenen Anlagen existieren bereits Buchungen. Historie nicht überschreiben.');
  if((model.journalEntries||[]).some(e=>e.postings?.some(p=>ids.has(p.positionId))))
   return blocked('Zu den betroffenen Anlagen existiert bereits ein Journal. Rückdatierung nicht erlaubt.');
- if(selected.some(p=>(model.openingPositions||[]).some(o=>o.positionId===p.id&&o.asOf)))
-  return blocked('Ein datierter Eröffnungsbestand darf nicht durch eine neue Schätzung ersetzt werden.');
+ if(selected.some(p=>(model.openingPositions||[]).some(o=>o.positionId===p.id&&
+    (o.asOf||o.costBasisExact!=null||o.realizedPnLExact!=null))))
+  return blocked('Ein datierter Eröffnungsbestand oder bereits dokumentierte Anschaffungskosten dürfen nicht überschrieben werden.');
+ const earliest=prepared.parsed.rows.map(r=>r.date).sort()[0];
+ if((model.snapshots||[]).some(shot=>shot.date<earliest&&selected.some(p=>
+    shot.byPosition&&Object.hasOwn(shot.byPosition,p.id)&&units(shot.byPosition[p.id])!==0n)))
+  return blocked('Ein älterer Stichtag enthält bereits einen Wert für dieses Wertpapier. Die historische Rekonstruktion muss zuerst mit den Stichtagen abgeglichen werden.');
  if((prepared.parsed.rows||[]).some(x=>!['buy','sell'].includes(x.type)||!x.externalId))
   return blocked('Die Exportdaten enthalten Vorgänge ohne eindeutige Importidentität.');
  const original=JSON.stringify(model),draft=structuredClone(model);
