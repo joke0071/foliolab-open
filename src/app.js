@@ -20,6 +20,7 @@ import {diagnoseEodhd} from './market-diagnostics.js';
 import {priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
+import {bookedIncomeSummary} from './booking-insights.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
@@ -238,6 +239,12 @@ function renderPositions(){
    filter==='__review'?'Keine Positionen zur Prüfung.':'Keine Positionen bei diesem Anbieter.');
 }
 function renderBookings(){
+ const income=bookedIncomeSummary(model.bookings);
+ $('bookingIncome').innerHTML='<p class="small-help">Summen aus vorhandenen Buchungen, keine Steuerberechnung und keine geschätzte Rendite.</p>'+
+ '<div class="field-row"><p>Ausschüttungen: <strong>'+money(income.dividend)+'</strong></p><p>Zinsen: <strong>'+money(income.interest)+'</strong></p></div>'+
+ '<div class="field-row"><p>Gebühren: <strong>'+money(income.fee)+'</strong></p><p>Erfasste Steuern: <strong>'+money(income.tax)+'</strong></p></div>'+
+ '<p>Netto-Erträge nach erfassten Abzügen: <strong>'+money(income.net)+'</strong></p>'+
+ (income.unavailable?'<p class="small-help">'+income.unavailable+' Buchungen ohne belastbaren EUR-Betrag nicht berücksichtigt.</p>':'');
  const query=$('bookingSearch').value.trim().toLocaleLowerCase('de'),type=$('bookingFilterType').value;
  const list=model.bookings.filter(b=>(!type||b.type===type)&&(!query||
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date]
