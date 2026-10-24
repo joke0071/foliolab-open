@@ -69,8 +69,8 @@ test('the backup code requires cryptographic restore material and scopes its Dri
  assert.match(source,/Portfolio ist leer/);
  assert.match(source,/function trimExisting\(\)/);
  assert.match(source,/function maybeAuto\(\)/);
- assert.doesNotMatch(source,/api\\/public-config/);
- assert.match(source,/prefs\\.clientId/);
+ assert.equal(source.includes('/api/public-config'),false);
+ assert.equal(source.includes('prefs.clientId'),true);
  assert.doesNotMatch(source,/client_secret|refresh_token|localStorage\.setItem\(.+accessToken/);
 });
 
