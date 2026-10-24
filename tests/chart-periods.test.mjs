@@ -4,7 +4,7 @@ import {CHART_PERIODS,chartPeriodDays,renderChartPeriodButtons,filterChartPeriod
 
 test('wealth and market charts share labels, ordering and a coherent preset contract',()=>{
  assert.deepEqual(CHART_PERIODS.wealth.map(x=>x.label),['1 M','3 M','1 J','Alles']);
- assert.deepEqual(CHART_PERIODS.market.map(x=>x.label),['7 T','1 M','3 M','1 J']);
+ assert.deepEqual(CHART_PERIODS.market.map(x=>x.label),['7 T','1 M','3 M','1 J','5 J','Max']);
  assert.equal(chartPeriodDays('wealth','quarter'),90);
  assert.equal(chartPeriodDays('market','30'),30);
  assert.equal(chartPeriodDays('wealth','all'),null);
