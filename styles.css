@@ -720,3 +720,9 @@
 /* Only concise CSV result counts are live-announced, never the entire review list. */
 .visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
 #csvReviewHeading:focus{outline:none}
+
+/* Contextual DeFi valuation guidance shared by editor and asset wizard. */
+.economic-guidance{margin:10px 0 4px;padding:10px 12px;border-radius:9px;background:#f3f7f3;color:#43654f;font-size:12px;font-weight:500;line-height:1.6}
+.economic-guidance:empty{display:none}
+.economic-guidance-warning{background:#fff7ee;color:#82512b;border:1px solid #eadbc8}
+#defiRole[aria-invalid="true"],#wizardEconomicRole[aria-invalid="true"]{border-color:#a65a35}
