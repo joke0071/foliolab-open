@@ -1,3 +1,4 @@
+import {importSourceKey,bookingOwnership,sourceUnmodified} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction} from './transactions.js';
 /** Client-only CSV parser; never uploads the original document to a remote service. */
@@ -57,7 +58,7 @@ function resolvePosition(model,key,defaultId,allowedAccountId=''){
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={}}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={},sourceId='generic-csv',sourceIdentities={}}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
@@ -75,10 +76,22 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const providedFx=Object.hasOwn(fxRateOverrides,item.index)?fxRateOverrides[item.index]:(d[mapping.fxRate]||(pos.currency==='EUR'?'1':''));
    if(pos.currency!=='EUR'&&!String(providedFx).trim())throw Error('Historischer Wechselkurs fehlt. Bitte den tatsächlichen Brokerkurs in EUR je Handelswährung eingeben.');
    const fx=normalizeCSVNumber(providedFx,{optional:pos.currency==='EUR'});
-   const ref=String(d[mapping.externalId]||'').trim().slice(0,100);
+   const ref=String(d[mapping.externalId]||'').trim();
+   if(ref.length>200)throw Error('Buchungs-ID ist zu lang.');
    const linked=String(d[mapping.cashPosition]||'').trim();
    const c=linked?resolvePosition(draft,linked,'').id:(['buy','sell'].includes(type)?cashPositionId||'':'');
    const row={type,date:item.date,positionId:pos.id,quantity:qty,unitPrice:price,feeEUR:fee,taxEUR:tax,fxRate:fx,cashPositionId:c,notes:String(d[mapping.notes]||'').slice(0,180),externalId:ref};
+   const origin=sourceIdentities[item.index]||parsed.sourceIdentities?.[item.index];
+   const source={version:1,sourceId:origin?.sourceId||sourceId,accountId:pos.accountId,
+    externalId:origin?origin.externalId:ref,sourcePayload:JSON.stringify(row),fileId:'',occurrence:1,ownership:'imported',ownedSnapshot:''};
+   const key=importSourceKey(source);
+   const matches=key?draft.bookings.filter(b=>importSourceKey(b.importSource)===key):[];
+   if(matches.length){
+    if(matches.length!==1||matches[0].importSource.sourcePayload!==source.sourcePayload)
+     throw Error('Quellkonflikt: dieselbe Buchungs-ID enthält abweichende Angaben. Bitte prüfen.');
+    if(!sourceUnmodified(draft,matches[0]))throw Error('Manuell geänderte Buchung bleibt geschützt. Bitte Importkonflikt prüfen.');
+    duplicates++;list.push({line:item.index,status:'duplicate',row});continue;
+   }
    const base=fingerprint(row);
    const count=ref?1:(occurrences.get(base)||0)+1;
    if(!ref)occurrences.set(base,count);
@@ -88,6 +101,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    if(seen.has(id)){duplicates++;list.push({line:item.index,status:'duplicate',row});continue;}
    const event=executeTransaction(draft,row);const booking=draft.bookings.find(b=>b.id===event.id);
    booking.importFingerprint=id;draft.journalEntries.find(j=>j.id===booking.journalEntryId).source='csv';
+   source.occurrence=count;source.ownedSnapshot=bookingOwnership(draft,booking);booking.importSource=source;
    seen.add(id);list.push({line:item.index,status:'ready',row});
   }catch(e){issues.push({line:item.index,message:String(e.message).slice(0,200)});list.push({line:item.index,status:'error',message:String(e.message).slice(0,200)});}
  }
