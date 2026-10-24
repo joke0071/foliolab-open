@@ -726,3 +726,6 @@
 .economic-guidance:empty{display:none}
 .economic-guidance-warning{background:#fff7ee;color:#82512b;border:1px solid #eadbc8}
 #defiRole[aria-invalid="true"],#wizardEconomicRole[aria-invalid="true"]{border-color:#a65a35}
+
+/* Staking scan guidance is intentionally an explanation, not a failed-scan banner. */
+.wallet-staking-options #scanAssetInfo{line-height:1.6;overflow-wrap:anywhere}
