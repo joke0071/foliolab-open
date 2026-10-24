@@ -124,3 +124,24 @@ test('zero execution price is quarantined rather than treated as a free buy',()=
  assert.equal(r.parsed.rows.length,0);
  assert.equal(r.issues[0].code,'invalid');
 });
+
+test('same broker reference with differing quantities cannot be silently imported twice',()=>{
+ const r=prepareFlatexImport([upload(classicDepot([
+  '20.10.2026;21.10.2026;'+B+';ETF;2;ORDER Kauf;TX-COLLIDE;100,25;A',
+  '20.10.2026;21.10.2026;'+B+';ETF;3;ORDER Kauf;TX-COLLIDE;100,25;A'
+ ]))]);
+ assert.equal(r.parsed.rows.length,1);
+ assert.equal(r.issues.length,1);
+ assert.equal(r.issues[0].code,'ambiguous-duplicate');
+ assert.match(r.issues[0].message,/abweichende Stückzahlen/);
+});
+test('same cash booking reference with altered amount is always quarantined',()=>{
+ const r=prepareFlatexImport([upload(nextAccount([
+  '20.10.2026;21.10.2026;AT123;ORDER Kauf '+B+';TX-COLLIDE;-200,50',
+  '20.10.2026;21.10.2026;AT123;ORDER Kauf '+B+';TX-COLLIDE;-202,50'
+ ]))]);
+ assert.equal(r.cashItems.length,1);
+ assert.equal(r.issues.length,1);
+ assert.equal(r.issues[0].code,'ambiguous-duplicate');
+ assert.match(r.issues[0].message,/widersprüchliche Beträge/);
+});
