@@ -493,9 +493,9 @@ function openAccount(a,defaultProviderId){
   name.value=btn.dataset.accountPreset;name.dataset.userEdited='true';if(editor)editor.dirty=true;align();area.classList.add('hidden');name.focus();
  });
 }
-function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Anbieter und Konto über die Suchfelder auswählen. Für ETFs, Aktien und Fonds können die Wertpapierdaten mit einem bestätigten Suchtreffer vorgeschlagen werden. Stückzahl und Kurs bleiben deine Eingaben.</p>
+function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Prüfe die wichtigsten Positionsdaten. Weitere Zuordnungen und technische Angaben findest du in den aufklappbaren Bereichen.</p>
 <div class="field-row"><label class="field"><span>Anbieter</span><input type="search" id="positionProviderSearch" class="picker-search" autocomplete="off" placeholder="Suchen, z. B. f → Flatex" aria-label="Anbieter filtern"><select name="providerId" id="positionProvider" required>${options(providerOptions,p?.providerId||model.providers[0]?.id)}</select></label><label class="field"><span>Konto / Depot</span><input type="search" id="positionAccountSearch" class="picker-search" autocomplete="off" placeholder="Konto suchen" aria-label="Konten filtern"><select name="accountId" id="positionAccount" required>${options(model.accounts.filter(a=>a.providerId===(p?.providerId||model.providers[0]?.id)).map(a=>[a.id,a.name]),currentAccount)}</select></label></div>
-<div class="dialog-group" id="securityGroup"><strong><span class="step-indicator">1</span> Wertpapier suchen und übernehmen</strong><p class="dialog-intro">ISIN, Ticker oder Name eintippen: Mit eigenem EODHD-, FMP- oder Twelve-Data-Key erscheinen Vorschläge. Nach Auswahl werden Name, ISIN, Ticker, Börse und MIC übernommen. Ohne Key alles manuell möglich.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></div>
+<details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Mit eigenem EODHD-, FMP- oder Twelve-Data-Schlüssel nach ISIN, Ticker oder Name suchen. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
 <div class="field-row"><label class="field"><span>Anlageklasse</span><select name="kind" id="positionKind">${options(Object.entries(TYPES),kind)}</select></label>${field('Name / Bezeichnung','name',p?.name||'','text','required maxlength="110" placeholder="Oder selbst eintippen"')}</div>
 <div class="field-row">${field('Ticker / Symbol','symbol',p?.symbol||'','text','maxlength="32"')}${field('ISIN (optional)','isin',p?.isin||'','text','maxlength="20"')}</div><div id="exchangeField"><div class="field-row">${field('Handelsplatz (z. B. Xetra)','exchange',p?.exchange||'','text','maxlength="60"')}${field('Börsen-MIC (optional, z. B. XETR)','mic',p?.mic||'','text','maxlength="8"')}</div></div>
 <div id="marketIdentifiers"><details class="advanced-apis"><summary>Externe Börsenkürzel (optional)</summary><p class="small-help">Nur den Ticker derselben ISIN, Handelswährung und Börsennotierung verwenden. Ein falsches Kürzel kann falsche Kurse liefern.</p><div class="field-row">${field('EODHD (z. B. VWCE.XETRA)','eodhdSymbol',p?.eodhdSymbol||'','text','maxlength="45"')}${field('FMP (z. B. VWCE.DE)','fmpSymbol',p?.fmpSymbol||'','text','maxlength="45"')}</div>${field('TradingView (z. B. XETR:VWCE)','tradingViewSymbol',p?.tradingViewSymbol||'','text','maxlength="48"')}</details></div>
@@ -535,7 +535,53 @@ function refreshPositionProviders(){
  if(!providers.some(p=>p.id===selected))select.selectedIndex=-1;
  refreshPositionAccounts();
 }
-function refreshPosForm(){const kind=$('positionKind').value,crypto=kind==='crypto';$('coinGroup').classList.toggle('hidden',!crypto);$('walletGroup').classList.toggle('hidden',!crypto);$('securityGroup').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('exchangeField').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('marketIdentifiers').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));const coinCurrency=$('positionCurrency');if(crypto&&coinCurrency.value!=='EUR'){coinCurrency.value='EUR';} if(crypto){const currPos=$('fxWrap').querySelector('input');currPos.value=1;}$('fxWrap').classList.toggle('hidden',coinCurrency.value==='EUR'||crypto);$('walletDetails').classList.toggle('hidden',!$('walletEnabled').checked);const chain=$('walletChain').value;$('tokenFields').classList.toggle('hidden',!['erc20','spl'].includes(chain));$('chainIdField').classList.toggle('hidden',!['evm','erc20'].includes(chain));$('walletHdField').classList.toggle('hidden',chain!=='btc-hd');}
+function polishPositionEditorLayout(position){
+ // Presentation-only rearrangement: move the original, already-populated form
+ // controls rather than cloning or recreating them (preserves names and values).
+ const selectRow=$('positionProvider').closest('.field-row');
+ const picker=document.createElement('details');
+ picker.id='positionPickerSearch';
+ picker.className='advanced-apis position-editor-optional';
+ const pickerTitle=document.createElement('summary');
+ pickerTitle.textContent='Anbieter oder Konto suchen';
+ const pickerFields=document.createElement('div');
+ pickerFields.className='field-row';
+ for(const [id,label] of [['positionProviderSearch','Anbieter filtern'],['positionAccountSearch','Konten filtern']]){
+  const search=$(id);
+  const wrap=document.createElement('label');
+  wrap.className='field';
+  const heading=document.createElement('span');
+  heading.textContent=label;
+  wrap.append(heading,search);
+  pickerFields.append(wrap);
+ }
+ picker.append(pickerTitle,pickerFields);
+ selectRow.after(picker);
+ const identity=$('positionKind').closest('.field-row');
+ const ticker=$('positionKind').closest('.field-row').nextElementSibling;
+ const holdings=$('positionCurrency').closest('.field-row');
+ const fx=$('fxWrap');
+ const finder=$('securityGroup');
+ ticker.after(holdings,fx,finder);
+ const market=document.createElement('details');
+ market.id='positionMarketMore';
+ market.className='advanced-apis position-editor-optional';
+ const marketTitle=document.createElement('summary');
+ marketTitle.textContent='Handelsplatz und technische Börsenkürzel';
+ market.append(marketTitle,$('exchangeField'),$('marketIdentifiers'));
+ finder.after(market);
+ const crypto=$('coinGroup');
+ const wallet=$('walletGroup');
+ const walletMore=document.createElement('details');
+ walletMore.id='positionWalletMore';
+ walletMore.className='advanced-apis position-editor-optional';
+ const walletTitle=document.createElement('summary');
+ walletTitle.textContent='Öffentliche Wallet-Verknüpfung (optional)';
+ wallet.before(walletMore);
+ walletMore.append(walletTitle,wallet);
+ if(position?.wallet?.enabled)walletMore.open=true;
+}
+function refreshPosForm(){const kind=$('positionKind').value,crypto=kind==='crypto';$('coinGroup').classList.toggle('hidden',!crypto);$('walletGroup').classList.toggle('hidden',!crypto);$('securityGroup').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('exchangeField').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('marketIdentifiers').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('positionMarketMore').classList.toggle('hidden',!['etf','stock','fund'].includes(kind));$('positionWalletMore').classList.toggle('hidden',!crypto);const coinCurrency=$('positionCurrency');if(crypto&&coinCurrency.value!=='EUR'){coinCurrency.value='EUR';} if(crypto){const currPos=$('fxWrap').querySelector('input');currPos.value=1;}$('fxWrap').classList.toggle('hidden',coinCurrency.value==='EUR'||crypto);$('walletDetails').classList.toggle('hidden',!$('walletEnabled').checked);const chain=$('walletChain').value;$('tokenFields').classList.toggle('hidden',!['erc20','spl'].includes(chain));$('chainIdField').classList.toggle('hidden',!['evm','erc20'].includes(chain));$('walletHdField').classList.toggle('hidden',chain!=='btc-hd');}
 function openPosition(p){++lookupSequence;securityCache.clear();if(!model.providers.length){go('more');openProvider();notify('Lege zuerst einen Anbieter an.');return;}const target=p?.providerId||model.providers[0].id;if(!model.accounts.some(a=>a.providerId===target)){openAccount(null,target);notify('Lege zuerst ein Konto oder Depot an.');return;}showDialog(p?'Position bearbeiten':'Position hinzufügen','DEIN PORTFOLIO',posForm(p),async (v)=>{const wallet=v.walletEnabled?{enabled:true,chain:v.walletChain,address:v.walletAddress,contract:v.walletContract,decimals:v.walletDecimals,chainId:v.walletChainId,addressType:v.walletHdType}:null;if(p?.managementSource==='transactions'){v.quantity=p.quantityExact??p.quantity;v.costBasisEUR=p.costBasisEUR;}const listingChanged=Boolean(p&&['symbol','currency','exchange','mic','isin'].some(k=>String(p[k]||'').toUpperCase()!==String(v[k]||'').toUpperCase()));const pos=createPosition({...v,id:p?.id,wallet,managementSource:p?.managementSource,updatedAt:p?.updatedAt,realizedPnLEUR:p?.realizedPnLEUR,
    costBasisExact:p&&String(v.costBasisEUR)===String(p.costBasisEUR)?p.costBasisExact:undefined,
    realizedPnLExact:p?.realizedPnLExact,
@@ -548,7 +594,7 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
    fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
    fxSource:p&&String(v.fxRate)===String(p.fxRate)?p.fxSource:null,
    fxRateDate:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateDate:null,
-   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);await save();notify('Position gespeichert.');});['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
+   fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);await save();notify('Position gespeichert.');});polishPositionEditorLayout(p);['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
  $('positionAccount').dataset.selectedAccountId=$('positionAccount').value;
  $('positionAccount').addEventListener('change',e=>{e.target.dataset.selectedAccountId=e.target.value;});
  $('positionProvider').addEventListener('change',e=>{
@@ -630,6 +676,7 @@ function openListingReview(){
  const p=outstanding[0];
  openPosition(p);
  if(!$('securityQuery'))return;
+ $('securityGroup').open=true;
  $('securityQuery').value=p.isin||p.symbol||p.name;
  if(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey)void lookupSecurity();
  else notify(outstanding.length+' unvollständige Wertpapierzuordnungen. Für die automatische Suche erst einen API-Schlüssel unter „Mehr“ eintragen.');
