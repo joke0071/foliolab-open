@@ -48,6 +48,7 @@ try{
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('#marketSettings > .more-panel-help').evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
  assert.equal(settings.binplorerKey,'','Credential removal must clear blockchain keys');
  assert.equal(settings.eodhdKey,'','Credential removal must clear market data keys');

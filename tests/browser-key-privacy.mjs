@@ -27,6 +27,7 @@ try{
  assert.equal(await removeKeysHelp.evaluate(el=>el.open),false,'Destructive key removal is collapsed by default');
  await removeKeysHelp.evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  const after=await page.evaluate(()=>({
   data:JSON.parse(localStorage.getItem('foliolab-open-v1')),
   old1:localStorage.getItem('foliolab-open-v1-premigration-v1'),
