@@ -54,7 +54,13 @@ try{
   await page.locator(nav+' [data-page="positions"]').click();
   await page.locator('#addWallet').click();
   await page.locator('#editDialog').screenshot({path:'artifacts/dialog-visual/wallet-'+width+'.png'});
+  await page.locator('#walletStakingOptions > summary').click();
+  await page.locator('#scanAsset').selectOption('13');
+  await page.locator('#editDialog').screenshot({path:'artifacts/dialog-visual/staking-manual-'+width+'.png'});
+  await page.locator('#scanAsset').selectOption('11');
+  await page.locator('#editDialog').screenshot({path:'artifacts/dialog-visual/staking-partial-'+width+'.png'});
+  page.once('dialog',d=>d.accept());
   await page.locator('#cancelDialog').click();
  }
- console.log('DIALOG VISUAL: 4 widths, editor/wizard/expanded, bookings and wallet screenshots PASS');
+ console.log('DIALOG VISUAL: 4 widths plus supported/manual staking screenshots for mobile and desktop PASS');
 }finally{await browser.close();}

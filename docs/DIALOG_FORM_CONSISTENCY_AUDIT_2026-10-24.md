@@ -94,3 +94,14 @@ Offen bleiben reale Android-/TalkBack-Tests, vollständige Pixel-Regressionen un
 - Unverändert: `validateEconomicPosition`, `valueSign`, Portfoliobewertung, Transaktionen und Snapshot-/Backupformate.
 
 Offen: manuelle TalkBack-/Android-Tastaturtests, Pixel-basierte visuelle Referenzregression und vollständige seltene Staking-Scanner-Varianten.
+
+## Korrekturrunde 7 – Reichweite von Staking-Scans transparent machen
+
+- Bisherige Beschriftung „Bestimmtes Staking-Asset prüfen“ suggerierte eine auf genau dieses Produkt gefilterte Abfrage. Das ist fachlich falsch: Der Netzwerkadapter liest alle vom Netzwerk unterstützten Wallet-Guthaben. Neue Beschriftung „Staking-Unterstützung prüfen (optional)“ erklärt die Grenze ausdrücklich.
+- Der Staking-Auswahlliste ist die Status-/Hinweismeldung über `aria-describedby` zugeordnet. Für 50 Referenz-Assets werden je nach Capability weiterhin die allgemeinen Netzwerkscans angeboten oder bei nicht verfügbaren/Legacy-Scannern blockiert, mit Hinweis auf manuelle Erfassung.
+- Bei automatischem Staking-Netzwerkwechsel wird das Löschen einer schon eingegebenen Wallet-Adresse jetzt deutlich angesagt. Ein **manueller** Netzwerkwechsel entfernt aus demselben Sicherheitsgrund eine alte Adresse und die vorherige Staking-Auswahl; auch dies wird angekündigt.
+- Vor dem ersten Scan erzeugt eine bloße Änderung der Netzwerk-/Staking-Auswahl keine irreführende Meldung „bitte erneut suchen“.
+- Neuer Browser-Regressionstest prüft alle 50 Catalog-Modi auf korrekte Scanfreigabe, unterstützten Netzwerkwechsel, manuelle/Legacy-Scanner, Fokus, Abbruch ohne Portfolioänderung, sieben Viewports und Status-Beschriftung.
+- Das bestehende CI-Screenshot-Artefakt enthält zusätzlich die Zustände **manueller Scanner nicht verfügbar** und **teilweise unterstützter Netzwerk-Scan** bei 390 und 1440 Pixel.
+
+Die Scannerlogik, Staking-Bewertung, Portfolio-Cashflows, lokale Datenpersistenz und API-Aufrufwege wurden **nicht verändert**. Pixelgenaue visuelle Baselines und reale Android-/TalkBack-Prüfungen bleiben offen.
