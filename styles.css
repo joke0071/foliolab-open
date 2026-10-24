@@ -812,3 +812,13 @@
 @media(max-width:360px){
  .chart-period.position-period .position-period-more>summary{min-width:39px;padding:7px 6px;font-size:10px}
 }
+
+/* Position editor: primary holdings first; optional lookup and technical mapping second. */
+#positionPickerSearch,#positionMarketMore,#positionWalletMore,#securityGroup{min-width:0}
+#positionPickerSearch .field-row{margin-top:10px}
+#positionPickerSearch .field{margin-bottom:0}
+#securityGroup .inline-actions{margin-top:10px}
+#positionMarketMore #exchangeField,#positionMarketMore #marketIdentifiers{margin-top:10px}
+#positionWalletMore #walletGroup{margin:0;padding:0;border:0;background:transparent}
+#positionWalletMore #walletDetails{min-width:0}
+#positionWalletMore .dialog-intro{margin:8px 0}

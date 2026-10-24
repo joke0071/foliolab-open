@@ -80,6 +80,7 @@ try{
  await page.locator('[data-action="edit-position"]').first().click();
  const previousProvider=await page.locator('#positionProvider').inputValue();
  const previousAccount=await page.locator('#positionAccount').inputValue();
+ await page.locator('#positionPickerSearch > summary').click();
  await page.locator('#positionProviderSearch').fill('n2');
  assert.equal(await page.locator('#positionProvider option').count(),1);
  assert.equal(await page.locator('#positionProvider').inputValue(),'','Filter must not select another provider');
