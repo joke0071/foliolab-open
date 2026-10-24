@@ -116,7 +116,7 @@ async function getKey(create=false){
 async function downloadFile(name,text){
  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
  const url=URL.createObjectURL(blob),link=document.createElement('a');
- link.href=url;link.download=name;document.body.append(link);
+ link.href=url;link.download=name;document.body.appendChild(link);
  try{link.click()}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
  return {native:false};
 }
