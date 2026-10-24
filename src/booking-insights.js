@@ -9,7 +9,7 @@ export function bookedIncomeSummary(bookings){
  for(const b of bookings||[]){
   if(!Object.hasOwn(totals,b?.type))continue;
   const amount=Number(b.amountEUR);
-  if(!Number.isFinite(amount)||amount<0){unavailable++;continue;}
+  if(b.amountEUR==null||!Number.isFinite(amount)||amount<0){unavailable++;continue;}
   totals[b.type]+=amount;
   counts[b.type]++;
  }
