@@ -1,5 +1,6 @@
 import {createProvider,createAccount,createPosition,snapshot,safeNumber} from './model.js';
 import {executeTransaction} from './transactions.js';
+import {validateEconomicPosition} from './defi.js';
 /**
  * Pure, atomic setup of a portfolio position.
  * Only the returned draft may be persisted; validation never mutates the source.
@@ -41,6 +42,16 @@ export function buildAssetWizardDraft(source,input){
  const rawPrice=String(input.currentPrice??'').trim();
  const price=kind==='cash'?1:rawPrice?safeNumber(rawPrice,0):0;
  const rate=currency==='EUR'?1:safeNumber(input.fxRate,0.00000001,1000);
+ if(input.walletEnabled&&kind!=='crypto')throw Error('Eine Wallet-Adresse kann nur mit Kryptowährungen verknüpft werden.');
+ if(input.walletEnabled&&mode==='buy')throw Error('Wallet-Bestände werden ohne fiktive Kaufbuchung erfasst. Bitte „Aktueller Bestand“ auswählen.');
+ const rawBasis=mode==='opening'?String(input.costBasisEUR??'').trim():'';
+ if(rawBasis)safeNumber(rawBasis,0);
+ const role=String(input.economicRole||'standard'),valuationMode=String(input.valuationMode||'included');
+ const related=String(input.representedByPositionId||'');
+ const wallet=input.walletEnabled?{
+  enabled:true,chain:input.walletChain,address:input.walletAddress,contract:input.walletContract,
+  decimals:input.walletDecimals,chainId:input.walletChainId,addressType:input.walletHdType
+ }:null;
  const isin=String(input.isin||'').trim().toUpperCase();
  const symbol=String(input.symbol||'').trim().toUpperCase();
  const coinId=String(input.coinId||'').trim().toLowerCase();
@@ -56,10 +67,14 @@ export function buildAssetWizardDraft(source,input){
  const position=createPosition({providerId:provider.id,accountId:account.id,kind,name,
   symbol,isin,coinId,exchange:input.exchange||'',mic:input.mic||'',
   eodhdSymbol:input.eodhdSymbol||'',fmpSymbol:input.fmpSymbol||'',tradingViewSymbol:input.tradingViewSymbol||'',
-  currency,fxRate:rate,quantity:mode==='buy'?'0':qty,price,
+  currency,fxRate:rate,quantity:mode==='buy'?'0':qty,price,wallet,
+  economicRole:role,valuationMode,representedByPositionId:related,
+  costBasisEUR:rawBasis||null,
+  notes:String(input.notes||'').trim().slice(0,300)||(mode==='opening'?'Anfangsbestand zum '+date:'Kaufhistorie ab '+date),
   priceStatus:kind==='cash'?null:price>0?'Manuell angegebener Kurs':'Aktueller Kurs fehlt – Bewertung offen',
-  notes:mode==='opening'?'Anfangsbestand zum '+date:'Kaufhistorie ab '+date},draft);
+  },draft);
  draft.positions.push(position);
+ validateEconomicPosition(position,draft);
  if(mode==='buy'){
   const purchase=String(input.unitPrice??'').trim();
   if(!purchase)throw Error('Für einen Kauf wird der tatsächliche Ausführungskurs benötigt.');
