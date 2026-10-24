@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
+import {renderChartPeriodButtons} from '../src/chart-periods.js';
 
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
@@ -9,7 +10,9 @@ const css=readFileSync(new URL('../styles.css',import.meta.url),'utf8');
 
 test('history has compact periods, popup calendar and closed snapshot manager',()=>{
  assert.match(html,/id="chartPeriods"/);
- for(const range of ['month','quarter','year','all']) assert.match(html,new RegExp('data-range="'+range+'"'));
+ const generated=renderChartPeriodButtons('wealth','data-range','all');
+ for(const range of ['month','quarter','year','all']) assert.match(generated,new RegExp('data-range="'+range+'"'));
+ assert.match(app,/renderChartPeriodButtons\('wealth','data-range',range\)/);
  assert.match(html,/id="historyCalendarDisclosure"/);
  assert.match(html,/id="historyCalendarGrid"/);
  assert.match(html,/id="addSnapshot" aria-label="Stichtag speichern"/);

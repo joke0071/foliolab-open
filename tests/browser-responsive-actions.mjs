@@ -73,8 +73,12 @@ try{
    inspectPlus(page.locator('#addWizard .action-icon svg')),
    inspectPlus(page.locator('#addBooking .action-icon svg'))
   ]);
-  assert.deepEqual(historyPlus,positionPlus,'History and Positionen must render the exact same plus SVG at '+width);
-  assert.deepEqual(historyPlus,bookingPlus,'History and Buchungen must render the exact same plus SVG at '+width);
+  // The primary green history action intentionally has a white icon on phones;
+  // its shape, size and stroke must still match the shared plus geometry.
+  const geometry=({color,...rest})=>rest;
+  assert.deepEqual(geometry(historyPlus),geometry(positionPlus),'History and Positionen must share plus SVG geometry at '+width);
+  assert.deepEqual(geometry(historyPlus),geometry(bookingPlus),'History and Buchungen must share plus SVG geometry at '+width);
+  assert.equal(historyPlus.color,'rgb(255, 255, 255)','Primary Stichtag icon stays legible on green at '+width);
   assert.equal(historyPlus.strokeWidth,'2.2px','Plus icons must share the thick action stroke at '+width);
   assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
   const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
@@ -124,8 +128,12 @@ try{
    assert.equal(history.calendarStyle.width,expectedSide,'History calendar must equal other mobile action size at '+width);
    assert.equal(history.calendarStyle.height,expectedSide,'History calendar must equal other mobile action height at '+width);
    assert.equal(history.borderRadius,history.calendarStyle.borderRadius,'Calendar and plus corner radii must match');
-   assert.equal(history.background,history.calendarStyle.background,'Calendar and plus background must match');
-   assert.equal(history.color,history.calendarStyle.color,'Calendar and plus icon color must match');
+   // Kalender ist sekundär (weiß), der Stichtag ein grüner Primär-CTA.
+   // Geometrie muss übereinstimmen, der Farbkontrast bewusst nicht.
+   assert.equal(history.background,'rgb(38, 86, 61)','Primary Stichtag background must remain green at '+width);
+   assert.equal(history.color,'rgb(255, 255, 255)','Primary Stichtag icon must remain white at '+width);
+   assert.equal(history.calendarStyle.background,'rgb(255, 255, 255)','Secondary calendar button must remain white at '+width);
+   assert.notEqual(history.color,history.calendarStyle.color,'Primary and secondary actions need distinct visual hierarchy at '+width);
    assert.equal(history.plusIconSize.width,history.calendarStyle.svgWidth,'Calendar and plus icon sizes must match');
    assert.equal(history.plusIconSize.height,history.calendarStyle.svgHeight,'Calendar and plus icon heights must match');
    assert.ok(Math.abs(history.addRight-history.controlsRight)<=2,'History buttons should sit at right edge on '+width+': '+JSON.stringify(history));
