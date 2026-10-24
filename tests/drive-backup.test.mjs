@@ -15,7 +15,7 @@ function fixture({vault=false,clientId='',withGoogle=false}={}){
   'driveFolderSelect','driveFolderRefresh','driveFolderNewName','driveFolderCreate','driveCheck',
   'driveConnectionBadge','driveBackupOverview','driveFolderCurrentName'];
  const elements=Object.fromEntries(ids.map(id=>[id,{
-  id,value:'',textContent:'',disabled:false,options:[],checked:false,style:{},
+  id,value:'',textContent:'',disabled:false,options:[],checked:false,style:{},dataset:{},
   classList:{toggle(){},add(){},remove(){}},
   setAttribute(){},addEventListener(){},
   replaceChildren(){this.options=[];this.value=''},
