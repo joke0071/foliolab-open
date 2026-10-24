@@ -57,7 +57,7 @@ function resolvePosition(model,key,defaultId){
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[]}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId=''}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
@@ -67,6 +67,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
   try{
    const d=item.data,type=typeOf(d[mapping.type]);if(!type)throw Error('Buchungstyp unbekannt.');
    const pos=resolvePosition(draft,positionOverrides[item.index]||d[mapping.position],defaultPositionId);
+   if(allowedAccountId&&pos.accountId!==allowedAccountId)throw Error('Anlage gehört nicht zum gewählten Depot. Bitte Flatex-Depot und ISIN prüfen.');
    const qty=normalizeCSVNumber(d[mapping.quantity]);
    const price=normalizeCSVNumber(d[mapping.unitPrice]||pos.price,{optional:true});
    const fee=normalizeCSVNumber(d[mapping.feeEUR],{optional:true});
