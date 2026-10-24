@@ -78,11 +78,12 @@ test('Unencrypted backup always omits configured provider secrets and private RP
  assert.ok(!json.includes('rpc.example.test'),'Backup must not reveal a private RPC provider URL');
 });
 
-test('Only same-origin JavaScript is permitted by the portfolio CSP',()=>{
+test('CSP allows only the Google OAuth script alongside same-origin JavaScript',()=>{
  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
- assert.match(html,/script-src 'self';/);
- assert.equal(html.match(/script-src\s+([^;]+);/)?.[1]?.trim(),"'self'",'CSP must not grant third-party scripts access to locally stored keys');
+ const drive=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf8');
+ assert.equal(html.match(/script-src\s+([^;]+);/)?.[1]?.trim(),"'self' https://accounts.google.com",'No general third-party script execution allowed');
+ assert.match(drive,/script\.src='https:\/\/accounts\.google\.com\/gsi\/client'/,'Only Google Identity Services loads on demand');
  assert.doesNotMatch(app,/external-embedding\/embed-widget-advanced-chart/,'No vendor script must run in portfolio origin');
  assert.match(app,/https:\/\/s\.tradingview\.com\/widgetembed\//,'Charts must be isolated in a cross-origin iframe');
  assert.match(app,/allow-scripts allow-same-origin allow-popups/,'iframe must be explicitly sandboxed');
