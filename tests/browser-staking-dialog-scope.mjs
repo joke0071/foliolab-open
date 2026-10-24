@@ -35,7 +35,7 @@ try{
  assert.match(await page.locator('#scanAssetInfo').innerText(),/Kein automatischer Scan/);
  assert.match(await page.locator('#scanAssetInfo').innerText(),/Position hinzufügen/);
  assert.match(await page.locator('#scanAssetInfo').innerText(),/gRPC\/GraphQL/);
- await page.locator('#scanAsset').selectOption('23'); // Fantom -> Sonic migration
+ await page.locator('#scanAsset').selectOption('22'); // Fantom -> Sonic migration
  assert.equal(await page.locator('#scanWalletButton').isDisabled(),true);
  assert.match(await page.locator('#scanAssetInfo').innerText(),/Migration/);
  await page.locator('#scanAsset').selectOption('17'); // Hedera
