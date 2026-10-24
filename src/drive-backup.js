@@ -10,6 +10,7 @@ const PREF_KEY='foliolab-open-drive-backup-settings-v1';
 const KEY_DB='foliolab-open-drive-recovery-keys-v1';
 const FOLDER='FolioLab Backups';
 const LABEL='foliolab-open-v1';
+const NEW_BACKUP_LABEL='foliolab-open-v2';
 const FORMATS=['foliolab-drive-encrypted-v1'];
 const get=id=>document.getElementById(id);
 const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',recoverySaved:false,folderId:'',folderName:'',cleanupPending:false};
@@ -17,7 +18,7 @@ let prefs={...DEFAULT},accessToken='',tokenExpires=0,tokenClient=null,scriptProm
 let backend=null,keyCache=null,busy=false,started=false,initialAutoDone=false;
 let googleClientId='',clientConfigLoaded=false,clientConfigError='';
 let recoveryRevealTimer=null;
-let lastKnownBackupCount=null;
+let lastKnownBackupCount=null,vaultConfigured=false;
 const iso=()=>new Date().toISOString();
 const asDate=value=>Number.isFinite(Date.parse(value||''))?new Date(value):null;
 const day=value=>value.toLocaleDateString('sv-SE');
@@ -58,7 +59,7 @@ function updateUi(){
  const connectionBadge=get('driveConnectionBadge');
  if(connectionBadge){connectionBadge.textContent=connected?'Verbunden':'Nicht verbunden';connectionBadge.dataset.connected=String(connected)}
  const save=get('driveSaveNow');
- if(save)save.disabled=!connected||busy||!prefs.recoverySaved;
+ if(save)save.disabled=!connected||busy||!vaultConfigured;
  const connect=get('driveConnect');
  if(connect){connect.disabled=busy||!googleClientId;connect.textContent=connected?'Drive erneuern':'Drive verbinden';connect.setAttribute?.('aria-label',connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden');connect.title=connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden'}
  const folderButton=get('openDriveFolderDialog');
@@ -79,7 +80,7 @@ function due(){
 function updateDueStatus(){
  if(!clientConfigLoaded){status('Google-Drive-Konfiguration wird geladen …');return}
  if(!googleClientId){status(clientConfigError||'Google Drive ist noch nicht eingerichtet. FolioLab funktioniert weiterhin lokal.',!!clientConfigError);return}
- if(!prefs.recoverySaved){status('Wiederherstellungsschlüssel bitte erst sicher ablegen und bestätigen.');return}
+ if(!vaultConfigured){status('Bitte zuerst ein Backup-Passwort unter „Backup-Verschlüsselung“ einrichten.');return}
  if(prefs.mode!=='off'&&due()&&!hasToken()){status('Automatisches Backup fällig. Bitte Google Drive verbinden.');return}
  if(prefs.cleanupPending){status('Letztes Backup gespeichert · ältere Sicherungen werden bei nächster Verbindung bereinigt.');return}
  if(prefs.lastBackupAt){const d=asDate(prefs.lastBackupAt);status('Letzte Drive-Sicherung: '+(d?d.toLocaleString('de-AT'):'unbekannt')+'.');return}
@@ -409,10 +410,13 @@ async function reloadFolders(){
 }
 async function filesInFolder(id){
  if(!id)return [];
- const q="'"+id.replace(/[^A-Za-z0-9_-]/g,'')+"' in parents and trashed = false and appProperties has { key='foliolabBackup' and value='"+LABEL+"' }";
- const items=await listQuery(q,'id,name,createdTime,size');
- return items.filter(f=>/^FolioLab-\d{4}-\d{2}-\d{2}T[\d-]+Z\.encrypted\.json$/.test(f.name||'')).sort((a,b)=>String(b.createdTime||'').localeCompare(String(a.createdTime||'')));
+ const folderId=id.replace(/[^A-Za-z0-9_-]/g,'');
+ const q="'"+folderId+"' in parents and trashed = false and (appProperties has { key='foliolabBackup' and value='"+LABEL+"' } or appProperties has { key='foliolabBackup' and value='"+NEW_BACKUP_LABEL+"' })";
+ const items=await listQuery(q,'id,name,createdTime,size,appProperties');
+ return items.filter(f=>/^FolioLab-\d{4}-\d{2}-\d{2}T[\d-]+Z\.encrypted\.json$/.test(f.name||''))
+  .sort((a,b)=>String(b.createdTime||'').localeCompare(String(a.createdTime||'')));
 }
+const isCurrentBackup=file=>file.appProperties?.foliolabBackup===NEW_BACKUP_LABEL;
 async function refreshList(){
  if(!hasToken())return;
  try{
@@ -436,7 +440,7 @@ async function refreshList(){
 async function createFile(parent,encrypted){
  const stamp=iso().replace(/[:.]/g,'-');
  const name='FolioLab-'+stamp+'.encrypted.json';
- const metadata={name,mimeType:'application/json',parents:[parent],appProperties:{foliolabBackup:LABEL}};
+ const metadata={name,mimeType:'application/json',parents:[parent],appProperties:{foliolabBackup:NEW_BACKUP_LABEL}};
  const boundary='foliolab'+Math.random().toString(36).slice(2);
  const body=new Blob(['--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n',JSON.stringify(metadata),
   '\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n',encrypted,'\r\n--'+boundary+'--'],
@@ -449,13 +453,13 @@ async function createFile(parent,encrypted){
 async function backup(automatic=false){
  if(busy)return;
  if(!hasToken()){updateDueStatus();return}
- if(!prefs.recoverySaved){updateDueStatus();return}
+ if(!vaultConfigured){updateDueStatus();return}
  busy=true;updateUi();status('Verschlüsseltes Backup wird erstellt …');
  try{
   const data=backend.readData();
   if(!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Lokale Bestände sind nicht lesbar.');
   if(data.positions.length===0&&data.providers.length===0&&data.accounts.length===0)throw Error('Portfolio ist leer. Vorhandene Drive-Backups bleiben erhalten.');
-  const encrypted=await encrypt({kind:'FolioLab',data,exportedAt:iso()});
+  const encrypted=await backend.encryptPasswordBackup(JSON.stringify({kind:'FolioLab',data,exportedAt:iso()}));
   const dir=await folder(true);
   const uploaded=await createFile(dir,encrypted);
   prefs.lastBackupAt=iso();savePrefs();
@@ -466,7 +470,7 @@ async function backup(automatic=false){
    const saved=await filesInFolder(dir);
    if(!saved.some(f=>f.id===uploaded.id))throw Error('Hochgeladenes Backup fehlt in der Dateiliste; ältere Dateien bleiben erhalten.');
    verified=true;
-   for(const old of saved.slice(prefs.retention)){
+   for(const old of saved.filter(isCurrentBackup).slice(prefs.retention)){
     await api('drive/v3/files/'+encodeURIComponent(old.id),{method:'DELETE'});
     removed++;
    }
@@ -498,12 +502,20 @@ async function inspectSelectedDriveBackup(){
  const text=await res.text();
  if(text.length>15000000)throw Error('Backup zu groß.');
  const envelope=JSON.parse(text);
- const secret=get('driveRecoveryInput').value.trim();
- if(secret&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(secret.replace(/\s/g,'')))throw Error('Wiederherstellungsschlüssel ungültig.');
- const payload=await decrypt(envelope,secret||null);
+ const enteredSecret=get('driveRecoveryInput').value;
+ const secret=envelope.format==='foliolab-open-encrypted-v2'?enteredSecret:enteredSecret.trim();
+ let payload,legacy=false;
+ if(envelope.format==='foliolab-open-encrypted-v2'){
+  if(secret.length<10)throw Error('Bitte das Backup-Passwort eingeben.');
+  payload=JSON.parse(await backend.decryptPasswordBackup(envelope,secret));
+ }else if(FORMATS.includes(envelope.format)){
+  legacy=true;
+  if(secret&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(secret.replace(/\s/g,'')))throw Error('Für ältere Backups ist der FLBK1-Schlüssel erforderlich.');
+  payload=await decrypt(envelope,secret||null);
+ }else throw Error('Unbekanntes Drive-Backupformat.');
  if(payload.kind!=='FolioLab'||!payload.data)throw Error('Backupinhalt ungültig.');
  const data=backend.validateData(payload.data,{strict:true});
- return {data,secret};
+ return {data,secret,legacy,envelope};
 }
 function backupDescription(data){
  const dates=data.snapshots.map(s=>s.date).sort();
@@ -525,10 +537,11 @@ async function restore(){
  if(busy)return;
  busy=true;updateUi();status('Backup wird heruntergeladen und entschlüsselt …');
  try{
-  const {data:next,secret}=await inspectSelectedDriveBackup();
+  const {data:next,secret,legacy,envelope}=await inspectSelectedDriveBackup();
   if(!confirm('Dieses Backup mit '+next.positions.length+' Positionen und '+next.snapshots.length+' Stichtagen wiederherstellen? Deine aktuellen lokalen Daten werden ersetzt.'))return status('Wiederherstellung abgebrochen.');
   await backend.restoreData(next);
-  if(secret)await importRecovery(secret);
+  if(legacy&&secret)await importRecovery(secret);
+  if(!legacy)await backend.adoptPasswordVault(envelope,secret);
   get('restoreBackupDialog')?.close();
   status('Drive-Backup wiederhergestellt. '+next.positions.length+' Positionen geladen. Vorheriger Stand lokal gesichert.');
  }catch(e){status('Wiederherstellung fehlgeschlagen: '+e.message,true)}
@@ -542,7 +555,7 @@ async function trimExisting(){
   if(!dir){prefs.cleanupPending=false;savePrefs();status('Noch keine Drive-Backups vorhanden.');return}
   const items=await filesInFolder(dir);
   let removed=0;
-  for(const item of items.slice(prefs.retention)){
+  for(const item of items.filter(isCurrentBackup).slice(prefs.retention)){
    await api('drive/v3/files/'+encodeURIComponent(item.id),{method:'DELETE'});
    removed++;
   }
@@ -569,6 +582,7 @@ function persistControls(){
 }
 async function init(app){
  backend=app;loadPrefs();
+ try{vaultConfigured=await backend.hasPasswordVault()}catch{vaultConfigured=false}
  const idInput=get('driveClientId');
  if(idInput){
   idInput.value=prefs.clientId;
@@ -589,13 +603,6 @@ async function init(app){
  get('driveRetention').onchange=persistControls;
  get('driveConnect').onclick=connect;
  get('driveSaveNow').onclick=()=>backup(false);
- get('driveRecoveryExport').onclick=exportRecovery;
- get('recoveryKeyDisplay').type='password';
- get('recoveryKeyDisplay').value='';
- get('recoveryKeyReveal').onclick=revealRecoveryKey;
- get('recoveryKeyCopy').onclick=copyRecoveryKey;
- get('recoveryKeyConfirmed').checked=prefs.recoverySaved;
- get('recoveryKeyConfirmed').onchange=e=>confirmRecoverySaved(e.target.checked);
  get('driveRefreshList').onclick=refreshList;
  const confirmFolder=get('confirmDriveFolder');
  if(confirmFolder)confirmFolder.onclick=async()=>{await onFolderChanged();get('driveFolderDialog')?.close();};
@@ -611,7 +618,6 @@ async function init(app){
  const checkButton=get('driveCheck');if(checkButton)checkButton.onclick=checkSelectedDriveBackup;
  window.addEventListener('online',()=>{if(backend)void maybeAuto()});
  document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='hidden')hideRecoveryKey();
   if(document.visibilityState==='visible'&&backend){void maybeAuto()}
  });
  updateUi();updateDueStatus();
@@ -633,5 +639,7 @@ async function decryptLocal(envelope,secret=''){
  if(payload.kind!=='FolioLab'||!payload.data)throw Error('Die verschlüsselte Datei enthält kein gültiges FolioLab-Backup.');
  return payload.data;
 }
-window.FolioDriveBackup={init,checkDue:maybeAuto,encryptLocal,decryptLocal,installRecovery:importRecovery};
+window.FolioDriveBackup={init,checkDue:maybeAuto,refreshVaultStatus:async()=>{
+  vaultConfigured=await backend.hasPasswordVault();updateUi();updateDueStatus();
+},decryptLegacyLocal:decryptLocal,installRecovery:importRecovery};
 })();

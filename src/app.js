@@ -43,7 +43,8 @@ import {exportFlatexAuditCSV} from './flatex-review-export.js';
 import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
-import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
+import {decryptBackup,isEncryptedBackup} from './crypto-backup.js';
+import {hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup,isPasswordBackup,adoptBackupPassword} from './backup-vault.js';
 import {openingCashInput} from './account-opening.js';
 import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPositionDeletable} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
@@ -1376,16 +1377,29 @@ async function refreshAll(){
  finally{busy=false;$('refreshAll').disabled=false;}
 }
 function downloadBackup(){const file=new Blob([backup(model)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Backup ohne API-Schlüssel erstellt.');}
+async function exportEncryptedFile(){
+ const json=await encryptWithBackupPassword(backup(model));
+ const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+ const a=document.createElement('a');a.href=url;a.download=`foliolab-verschluesselt-${new Date().toISOString().slice(0,10)}.json`;
+ document.body.append(a);
+ try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+ backupDone();
+}
 async function downloadEncryptedBackup(){
-  const input=$('backupPassword'),password=input.value;
-  if(password.length<10)return notify('Bitte ein Passwort mit mindestens 10 Zeichen angeben.',true);
-  try{
-    const json=await encryptBackup(backup(model),password);
-    const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
-    const a=document.createElement('a');a.href=url;a.download=`foliolab-verschluesselt-${new Date().toISOString().slice(0,10)}.json`;a.click();
-    setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Verschlüsseltes Backup heruntergeladen. Passwort sicher aufbewahren.');
-  }catch(e){notify(e.message,true);}
-  finally{input.value='';}
+ try{
+  await exportEncryptedFile();
+  notify('Verschlüsseltes Backup heruntergeladen. Zur Wiederherstellung genügt dein Backup-Passwort.');
+ }catch(e){notify(e.message,true)}
+}
+async function refreshBackupPasswordStatus(){
+ const label=$('backupPasswordStatus');
+ if(!label)return;
+ try{
+  const available=await hasBackupPassword();
+  label.textContent=available
+    ?'Backup-Passwort eingerichtet · Lokale und Google-Drive-Backups verwenden dieselbe Verschlüsselung. Passwort wird nicht gespeichert.'
+    :'Noch kein gemeinsames Backup-Passwort eingerichtet.';
+ }catch(e){label.textContent='Backup-Verschlüsselung nicht verfügbar: '+String(e.message||e)}
 }
 $('providerOverview').addEventListener('toggle',event=>{
  const node=event.target;
@@ -1501,9 +1515,28 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
  document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!e.composedPath().includes(popup))popup.open=false;});
  document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;popup.querySelector('summary')?.focus();}});
 
-  $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text());if(isEncryptedBackup(parsed)){
-   const password=prompt('Passwort für dieses verschlüsselte Foliolab-Backup:');
-   if(password===null)return;parsed=JSON.parse(await decryptBackup(parsed,password));
+  $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);
+  $('saveBackupPassword').addEventListener('click',async()=>{
+    const input=$('backupPassword'),confirmInput=$('backupPasswordConfirm'),old=$('backupOldPassword'),button=$('saveBackupPassword');
+    button.disabled=true;
+    try{
+      const result=await configureBackupPassword(input.value,confirmInput.value,old.value);
+      notify(result.changed?'Passwort geändert. Bereits vorhandene Backups benötigen gegebenenfalls weiterhin das alte Passwort.':'Gemeinsames Backup-Passwort eingerichtet.');
+      await refreshBackupPasswordStatus();
+      await window.FolioDriveBackup?.refreshVaultStatus?.();
+    }catch(error){notify(String(error.message||error),true)}
+    finally{input.value='';confirmInput.value='';old.value='';button.disabled=false;}
+  });
+  void refreshBackupPasswordStatus();$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);try{let parsed=JSON.parse(await file.text()),v2Envelope=null,backupPass='';
+  if(isPasswordBackup(parsed)){
+    backupPass=prompt('Backup-Passwort für diese Sicherung:');
+    if(backupPass===null)return;
+    v2Envelope=parsed;
+    parsed=JSON.parse(await decryptPasswordBackup(parsed,backupPass));
+  }else if(isEncryptedBackup(parsed)){
+    const password=prompt('Passwort für das ältere verschlüsselte FolioLab-Backup:');
+    if(password===null)return;
+    parsed=JSON.parse(await decryptBackup(parsed,password));
   }
   const imported=safeImport(parsed);
   if(loadFailure&&portfolioStore.isIndexedDB){
@@ -1511,12 +1544,15 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
    if(!confirm('Beschädigten IndexedDB-Datensatz mit diesem Backup ersetzen? Nur nach gesicherter Originaldatei fortfahren. Alte API-Schlüssel werden NICHT aus dem beschädigten Datensatz übernommen.'))return;
    imported.settings=defaultSettings();
    await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
+   if(v2Envelope)await adoptBackupPassword(v2Envelope,backupPass);
    location.reload();return;
   }
   if(!confirm('Backup mit '+imported.positions.length+' Positionen und '+imported.providers.length+' Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.'))return;
   imported.settings={...defaultSettings(),...model.settings};
   if(loadFailure&&!portfolioStore.isIndexedDB)loadFailure=null;
-  model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));}catch(err){notify(err.message,true);}});
+  model=imported;filter='all';await save();loadFailure=null;
+  if(v2Envelope){await adoptBackupPassword(v2Envelope,backupPass);await refreshBackupPasswordStatus();await window.FolioDriveBackup?.refreshVaultStatus?.()}
+  notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));}catch(err){notify(err.message,true);}});
   // The Google Drive adapter is optional. All API credentials remain local; the
   // sanitized backup() payload deliberately excludes keys and wallet provider secrets.
   if(window.FolioDriveBackup){
@@ -1527,6 +1563,14 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
         return JSON.parse(backup(model));
       },
       validateData(data){return safeImport(data);},
+      hasPasswordVault:hasBackupPassword,
+      encryptPasswordBackup:encryptWithBackupPassword,
+      decryptPasswordBackup,
+      async adoptPasswordVault(envelope,password){
+        await adoptBackupPassword(envelope,password);
+        await refreshBackupPasswordStatus();
+        await window.FolioDriveBackup?.refreshVaultStatus?.();
+      },
       async restoreData(data){
         if(saving||otherTabChangedPortfolio)throw Error('Speicherung aktiv oder Daten durch anderen Tab verändert. Bitte zuerst neu laden.');
         const imported=safeImport(data);
@@ -1536,8 +1580,16 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
           await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
           location.reload();return;
         }
-        // Before replacing financial records, offer a local rollback copy.
-        downloadBackup();
+        // Before overwriting meaningful local data, offer a rollback backup.
+        // On a fresh device with no holdings yet, no rollback is required.
+        if(model.providers.length||model.positions.length||model.snapshots.length){
+          if(await hasBackupPassword())await exportEncryptedFile();
+          else{
+            if(!confirm('Auf diesem Gerät ist noch kein Backup-Passwort eingerichtet. Die Rückfallsicherung wird deshalb als unverschlüsselte JSON-Datei angeboten. Fortfahren?'))
+              throw Error('Wiederherstellung abgebrochen, bis eine lokale Rückfallsicherung möglich ist.');
+            downloadBackup();
+          }
+        }
         imported.settings={...defaultSettings(),...model.settings};
         const previous=model;
         model=imported;filter='all';
