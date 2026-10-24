@@ -34,6 +34,8 @@ try{
  await page.locator('[name="binplorerKey"]').fill('TEST_BSC_KEY');
  await page.locator('[name="etherscanKey"]').fill('TEST_ETH_KEY');
  await page.locator('#publicSearchSetup button[type="submit"]').click();
+ // Shared settings are committed asynchronously under the portfolio Web Lock.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  let settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
  assert.equal(settings.eodhdKey,'TEST_MARKET_KEY');
  assert.equal(settings.binplorerKey,'TEST_BSC_KEY');

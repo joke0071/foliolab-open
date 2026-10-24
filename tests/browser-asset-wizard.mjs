@@ -23,6 +23,8 @@ try{
  assert.match(await page.locator('#wizardName').inputValue(),/Vanguard/);
  assert.equal(await page.locator('#wizardIsin').inputValue(),'IE00BK5BQT80');
  await page.locator('#wizardNext').click();
+ // Success view appears only after the portfolio save has completed.
+ await page.waitForFunction(()=>document.getElementById('wizardTitle')?.textContent==='Anlage hinzugefügt');
  assert.match(await page.locator('#wizardTitle').innerText(),/Anlage hinzugefügt/);
  let state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.length,1);
@@ -52,6 +54,8 @@ try{
  await page.locator('#wizardUnitPrice').fill('100');
  await page.locator('#wizardFee').fill('5');
  await page.locator('#wizardNext').click();
+ // Success view appears only after the portfolio save has completed.
+ await page.waitForFunction(()=>document.getElementById('wizardTitle')?.textContent==='Anlage hinzugefügt');
  state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.bookings.length,1);
  assert.equal(state.journalEntries.length,1);

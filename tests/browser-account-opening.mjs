@@ -8,7 +8,7 @@ try{
  await page.locator('#addProvider').click();
  await page.locator('#providerName').fill('Example Bank');
  await page.locator('#providerType').selectOption('bank');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#addAccount').click();
  await page.locator('#accountOpeningAmount').fill('120');
  assert.match(await page.locator('#accountOpeningLabel').innerText(),/EUR/);
@@ -18,7 +18,7 @@ try{
  assert.match(await page.locator('#accountOpeningLabel').innerText(),/USD/);
  assert.equal(await page.locator('#accountOpeningFxWrap').isVisible(),true);
  await page.locator('#accountOpeningFx').fill('0.9');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const data=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  const a=data.accounts.find(a=>a.currency==='USD');
  const p=data.positions.find(p=>p.accountId===a.id);
