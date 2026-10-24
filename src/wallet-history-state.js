@@ -39,8 +39,8 @@ export function historyPreview(result,{id,chain,walletKey,acceptedAt=new Date().
  if(!result.replay)throw Error('Keine rekonstruierte Vorschau vorhanden.');
  const streams=result.replay.balances.map(b=>({network:b.network,chainId:b.chainId,accountId:b.accountId,assetId:b.assetId,contract:b.contract,mint:b.mint,decimals:b.decimals,throughBlock:b.throughBlock,
   // A zero genesis is retained only if the adapter proved its exact delta equals its verified balance.
-  opening:b.coverage==='verified'&&b.quantityBaseUnits===b.knownDeltaBaseUnits?{quantityBaseUnits:'0',beforeBlock:'0',source:'adapter-complete-history'}:null,
-  coverage:{status:b.coverage==='verified'&&b.quantityBaseUnits===b.knownDeltaBaseUnits?'verified':'partial',fromBlock:'0',toBlock:b.throughBlock,tipHash:b.blockHash,source:chain+'-history-adapter'}}));
+  opening:result.openings?.find(o=>o.accountId===b.accountId&&o.assetId===b.assetId&&o.mint===b.mint)??(b.coverage==='verified'&&b.quantityBaseUnits===b.knownDeltaBaseUnits?{quantityBaseUnits:'0',beforeBlock:'0',source:'adapter-complete-history'}:null),
+  coverage:{status:b.coverage==='verified'&&(result.openings?.some(o=>o.accountId===b.accountId&&o.assetId===b.assetId&&o.mint===b.mint)||b.quantityBaseUnits===b.knownDeltaBaseUnits)?'verified':'partial',fromBlock:result.openings?.find(o=>o.accountId===b.accountId&&o.assetId===b.assetId&&o.mint===b.mint)?.beforeBlock??'0',toBlock:b.throughBlock,tipHash:b.blockHash,source:chain+'-history-adapter'}}));
  return validateHistorySession({id,chain,walletKey,acceptedAt,events:result.replay.events,streams,issues:result.issues??[]});
 }
 /** Explicit encrypted exports exclude resume metadata and raw provider cache. */

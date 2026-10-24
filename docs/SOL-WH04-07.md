@@ -22,7 +22,11 @@ Gate B passed before C: existing Positionen → wallet row → Historie rekonstr
 
 ## C — WH06
 
-Not started before Gate B. Acceptance matrix pending implementation.
+Gate C passed before D: existing Solana/Helius URL validation is reused; historical RPC methods require an explicit history=true option and a narrow read-only whitelist. Mainnet genesis is verified against the official Solana full genesis hash (https://solana.com/docs/payments/agentic-payments/x402). Same configured archive is retained throughout a session, without silently switching private endpoints. Secrets are not placed in checkpoint scope: configuration is SHA-256 bound; accepted source is hostname only.
+
+SOL uses exact pre/post native deltas with separately applied fee, failed fee-only, observed prebalance anchors, canonical finalized slot/block proof and same-slot native scanner reconciliation. v0 loaded addresses and signature block ordering are handled. SPL tracks mint/owner/decimals/account index and exact raw net effects, including 24 decimals, and learns historical token accounts for further paging. These are transaction/account net facts, not fabricated instruction-level rewards. Closed accounts/missing owner/open-close sides/Token-2022 and extensions are partial; no inferred zero/reward. Signatures use before pagination; state is scope/tip bound, retained transactions and signature prefixes are revalidated, archive gaps remain marked across resume. Missing pre/post continuity is a gap, not a verified balance. No Solana private key or send method.
+
+21 targeted Node cases passed including existing Solana scanner fallback regressions; new native/SPL, v0, closed/unknown owner, Token-2022, fee, failed, overlap, pagination/resume/corrupt cursor, archive-null, HTTP 403/429/500, timeout, abort and method denial fixtures. Chromium/Firefox/WebKit cross-chain UI E2E passed with SOL/SPL accepted in the same store and actual AES encrypted BTC/ETH/SOL history roundtrip. Native-only fixture reconstructs 85 lamports from an observed 100-lamport opening minus movement/fee. SPL fixture correctly shows unknown total holdings while keeping its exact 7-base-unit event. Quality explanations are human-readable; raw codes remain available in titles for diagnosis. No live archive or real Helius account has been certified by fixtures.
 
 ## D — WH07
 
