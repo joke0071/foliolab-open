@@ -37,7 +37,7 @@
    </details>
    <button type="button" class="history-add-button" id="addSnapshot" aria-label="Stichtag speichern" title="Stichtag speichern"><span class="action-icon"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><span class="history-add-label">Stichtag</span></button>
  </div>
- <div id="historyChart" class="chart-area large"></div>
+ <div id="historyChart" class="chart-area large"></div><label class="csv-skip" for="compareCapital"><input id="compareCapital" type="checkbox"> Startvermögen und Nettoeinzahlungen vergleichen</label><p class="small-help" id="capitalCompareHelp"></p>
  <div class="history-insights" aria-label="Rendite und Stichtage">
  <details class="performance-details" id="performanceDetails"><summary><span>Renditeauswertung</span><small id="performanceSummary">Noch nicht verfügbar</small></summary><div class="performance-details-body"><div class="small-help" id="performanceInfo" role="status"></div><button type="button" class="btn outline" id="startPerformance">Renditeerfassung beginnen</button><p class="small-help">Das Diagramm zeigt deine Vermögenswerte einschließlich Ein- und Auszahlungen, nicht die reine Anlagerendite.</p></div></details>
  <details class="snapshot-manager" id="snapshotManager"><summary>Stichtage verwalten</summary><div class="snapshot-manager-body" id="snapshotList"></div></details>
