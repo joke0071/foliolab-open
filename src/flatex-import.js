@@ -110,7 +110,7 @@ const shortIdentity=s=>{
  */
 export function prepareFlatexImport(files){
  if(!Array.isArray(files)||!files.length||files.length>20)throw Error('Bitte 1 bis 20 Flatex-CSV-Dateien auswählen.');
- const reports=[],issues=[],cashItems=[],rows=[],keys=new Map();
+ const reports=[],issues=[],cashItems=[],rows=[],keys=new Map(),depotIdentifiers=new Set();
  let duplicates=0,total=0;
  for(const [fileIndex,file] of files.entries()){
   const name=String(file?.name??'').slice(0,140)||'Datei '+(fileIndex+1);
@@ -128,6 +128,7 @@ export function prepareFlatexImport(files){
    try{
     const date=exactDate(value(row,'date',heads));
     const account=value(row,type==='depot'?'depotNumber':'accountNumber',heads);
+    if(type==='depot'&&account)depotIdentifiers.add(account);
     if(type==='account'){
      const amount=singleAmount(value(row,'accountAmount',heads));
      const hint=cashHint(details);
@@ -174,5 +175,5 @@ export function prepareFlatexImport(files){
  if(rows.length===0&&!cashItems.length&&!issues.length)
   throw Error('Keine Flatex-Buchungen erkannt.');
  return {parsed:{headers:first,rows},mapping:{...FLATEX_MAPPING},reports,issues,cashItems,duplicates,
-  requiresCashReview:cashItems.length>0};
+  depotIdentifiers:[...depotIdentifiers],requiresCashReview:cashItems.length>0};
 }
