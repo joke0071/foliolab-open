@@ -64,6 +64,7 @@ jobs:
           node tests/browser-staking-coverage.mjs
           node tests/browser-modal-clarity.mjs
           node tests/browser-dialog-consistency.mjs
+          node tests/browser-dialog-visual.mjs
           node tests/browser-ledger-xpub.mjs
           node tests/browser-position-drilldown.mjs
           node tests/browser-historical-csv.mjs
@@ -105,6 +106,13 @@ jobs:
           node tests/browser-portfolio-scale.mjs
           node tests/browser-offline-mobile.mjs
           node tests/browser-pwa-updates.mjs
+      - name: Preserve representative dialog screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dialog-visual-reference
+          path: artifacts/dialog-visual/
+          if-no-files-found: ignore
   cross-engine:
     runs-on: ubuntu-24.04
     steps:

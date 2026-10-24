@@ -44,7 +44,7 @@ const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['
 const PAGE_DESCRIPTIONS={history:'Vermögensstände nach Zeitraum und Stichtagen ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.'};
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
-const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungskonto',savings:'Tages- / Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
+const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
@@ -1335,7 +1335,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  onCommit:async ({draft})=>{
   model=draft;
   await save();
-  notify('Anlage sicher gespeichert.');
+  notify('Position gespeichert.');
  },
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results

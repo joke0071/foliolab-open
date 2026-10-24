@@ -6,7 +6,7 @@ import {createDialogDiscardGuard} from './dialog-discard.js';
 const e=escapeHTML;
 const kinds=[['etf','ETF'],['stock','Aktie'],['fund','Fonds'],['crypto','Kryptowährung'],['cash','Guthaben'],['other','Sonstiges']];
 const providerKinds=[['broker','Broker'],['bank','Bank'],['wallet','Wallet-Anbieter'],['other','Sonstiges']];
-const accountKinds=[['securities','Wertpapierdepot'],['checking','Giro- / Verrechnungskonto'],['savings','Tages- / Festgeld'],['exchange','Kryptobörsenkonto'],['wallet','Kryptowallet'],['other','Sonstiges']];
+const accountKinds=[['securities','Wertpapierdepot'],['checking','Giro- oder Verrechnungskonto'],['savings','Tagesgeld oder Festgeld'],['exchange','Kryptobörsenkonto'],['wallet','Kryptowallet'],['other','Sonstiges']];
 const currencies=['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK','DKK','PLN','CZK','HUF','NZD','SGD'];
 const walletChains=[['btc','Bitcoin'],['btc-hd','Bitcoin HD (xpub / ypub / zpub)'],['xrp','XRP Ledger'],['xrp-token','XRP Token'],['evm','EVM Coin'],['erc20','ERC-20 Token'],['sol','Solana'],['spl','SPL Token'],['sol-stake','Solana Staking'],['sonic-stake','Sonic Staking'],['cosmos','Cosmos'],['cosmos-stake','Cosmos Staking'],['cosmos-unbonding','Cosmos Unbonding'],['hedera','Hedera'],['near','NEAR'],['near-locked','NEAR Locked']];
 const roleChoices=[['standard','Normal'],['collateral','Sicherheit / Collateral'],['liquid-staking','Liquid Staking'],['vault','Vault'],['liquidity-pool','Liquidity Pool'],['lending','Lending'],['borrowed','Geliehene Assets / Verbindlichkeit'],['wrapped','Wrapped Token']];
@@ -116,7 +116,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     '<small id="wizardDirectoryStatus">'+e(directorySummary())+'</small><small>Quelle und Ausgabedatum prüfen. Eine Abwicklungswährung aus einer Datei ist nicht automatisch die Kurswährung.</small></div></details>':'');
   const m=getModel(),providerChoices=[...m.providers.map(x=>[x.id,x.name]),['__new__','+ Neuen Anbieter anlegen']];
   const accountChoices=[...m.accounts.filter(a=>a.providerId===state.providerId).map(x=>[x.id,x.name]),['__new__','+ Neues Konto anlegen']];
-  let storage='<section class="wizard-group"><h3>Konto / Depot</h3>'+
+  let storage='<section class="wizard-group"><h3>Konto oder Depot</h3>'+
     '<label class="field"><span>Anbieter</span><select id="wizardProvider">'+opts(providerChoices,state.providerId)+'</select></label>';
   if(state.providerId==='__new__')storage+='<div class="wizard-inline-new">'+input('wizardProviderName','Name des Anbieters',state.providerName,'maxlength="80"')+
     '<label class="field"><span>Typ des Anbieters</span><select id="wizardProviderType">'+opts(providerKinds,state.providerType)+'</select></label></div>';
