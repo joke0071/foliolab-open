@@ -102,3 +102,25 @@ test('Flatex treats lone German dot-grouped amounts as thousands',()=>{
  assert.equal(r.parsed.rows[0].quantity,'1234');
  assert.equal(r.parsed.rows[0].unitPrice,'1234');
 });
+
+test('overlapping account exports deduplicate only reference-identical movements',()=>{
+ const line='20.10.2026;21.10.2026;AT123;Dividendenzahlung IE00BK5BQT80;TA-1;15,50';
+ const r=prepareFlatexImport([upload(nextAccount([line]),'first.csv'),upload(nextAccount([line]),'second.csv')]);
+ assert.equal(r.cashItems.length,1);
+ assert.equal(r.duplicates,1);
+ assert.equal(r.issues.length,0);
+});
+test('duplicate cash rows without an identifier trigger explicit review',()=>{
+ const line='20.10.2026;21.10.2026;AT123;Dividendenzahlung IE00BK5BQT80;;15,50';
+ const r=prepareFlatexImport([upload(nextAccount([line,line]))]);
+ assert.equal(r.cashItems.length,1);
+ assert.equal(r.duplicates,0);
+ assert.equal(r.issues[0].code,'ambiguous-duplicate');
+});
+test('zero execution price is quarantined rather than treated as a free buy',()=>{
+ const r=prepareFlatexImport([upload(classicDepot([
+  '20.10.2026;21.10.2026;'+B+';ETF;2;ORDER Kauf;XYZ;0;123'
+ ]))]);
+ assert.equal(r.parsed.rows.length,0);
+ assert.equal(r.issues[0].code,'invalid');
+});
