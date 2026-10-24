@@ -28,7 +28,7 @@ try{
  assert.equal(await page.locator('#accountName').inputValue(),'Individuell angelegtes Wallet-Konto','User name survives provider change');
  await page.locator('#accountProvider').selectOption(ids.p1);
  assert.equal(await page.locator('#accountName').inputValue(),'Individuell angelegtes Wallet-Konto');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#editDialog').waitFor({state:'hidden'});
  let model=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  const added=model.accounts.find(a=>a.name==='Individuell angelegtes Wallet-Konto');

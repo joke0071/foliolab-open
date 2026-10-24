@@ -70,13 +70,13 @@ try{
    return window.__oldSetItem.call(this,key,value);
   };
  });
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(await page.locator('#editDialog').isVisible(),true);
  assert.match(await page.locator('#dialogError').innerText(),/Änderung nicht gespeichert/);
  assert.equal(await page.evaluate(()=>document.activeElement?.id),'dialogError','Accessible feedback is focused on failed save');
  assert.equal(await page.locator('#providerName').inputValue(),'Testunternehmen');
  await page.evaluate(()=>{Storage.prototype.setItem=window.__oldSetItem;delete window.__oldSetItem;});
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(await page.locator('#editDialog').isVisible(),false);
  assert.equal(await opener.evaluate(el=>document.activeElement===el),true);
  console.log('DIALOG A11Y MOBILE: inline field error, focus retention, axe, short viewports, save failure draft PASS');

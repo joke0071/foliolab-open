@@ -56,6 +56,7 @@ function assertRecord(record) {
   if (record == null) return;
   if (record.schemaVersion !== 1 || !Number.isSafeInteger(record.revision) || record.revision < 1 ||
       (record.raw !== null && typeof record.raw !== 'string') ||
+      typeof record.deleted !== 'boolean' || record.deleted !== (record.raw === null) ||
       (record.settings!==undefined && record.settings!==null && (typeof record.settings!=='object'||Array.isArray(record.settings)))) {
     throw new Error('Unbekannte oder beschädigte Speicherrevision. Keine Änderungen vorgenommen.');
   }

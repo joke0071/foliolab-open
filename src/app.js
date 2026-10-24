@@ -1682,8 +1682,6 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
   await portfolioStore.removeAll();
-  purgeLocalAppData(localStorage);
-  if(portfolioStore.isIndexedDB)localStorage.setItem(MODE_KEY,MODE_VALUE);
   loadFailure=null;model=blankModel();filter='all';render();
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}

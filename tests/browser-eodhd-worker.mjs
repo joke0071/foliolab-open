@@ -51,6 +51,8 @@ try{
  assert.match(await page.locator('#toast').innerText(),/24 bis 128 Zeichen/);
  await page.locator('[name="eodhdWorkerAccessToken"]').fill(token);
  await page.locator('#marketWorkerSetup button[type="submit"]').click();
+ // Wait for the successful settings write before inspecting stored worker access.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdKey),'','Never require local EODHD token');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdWorkerEndpoint),'https://my-owned-worker.workers.dev');
  await page.locator('#mobileNav [data-page="positions"]').click();

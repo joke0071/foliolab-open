@@ -9,7 +9,8 @@ try{
  await page.locator('#sidebarNav [data-page="more"]').click();
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill(providerName);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
+ await page.locator('#editDialog').waitFor({state:'hidden'});
  assert.equal(await page.evaluate(()=>window.__xss),undefined,'XSS in provider name');
  assert.equal(await page.locator('#providerSettings img').count(),0);
  for(const [name,balance,type] of [['Giro',1000,'checking'],['Tagesgeld',500,'savings']]){
@@ -17,7 +18,8 @@ try{
   await page.locator('#editorForm [name="name"]').fill(name);
   await page.locator('#editorForm [name="type"]').selectOption(type);
   await page.locator('#editorForm [name="initialBalance"]').fill(String(balance));
-  await page.locator('#saveDialog').click();
+  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
+ await page.locator('#editDialog').waitFor({state:'hidden'});
  }
  await page.locator('#sidebarNav [data-page="dashboard"]').click();
  assert.match(await page.locator('#totalValue').innerText(),/1.500/);
@@ -30,7 +32,8 @@ try{
  await page.locator('#bookingType').selectOption('transfer');
  await page.locator('#bookingQuantityWrap [name="quantity"]').fill('150');
  await page.locator('#bookingTarget').selectOption(options[1].value);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
+ await page.locator('#editDialog').waitFor({state:'hidden'});
  const afterTransfer=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.deepEqual(afterTransfer.positions.map(x=>x.quantity).sort((a,b)=>a-b),[650,850]);
  assert.equal(afterTransfer.externalCashFlows.length,0,'internal transfers cannot be external flows');
@@ -38,7 +41,8 @@ try{
  await page.locator('#bookingPosition').selectOption(options[0].value);
  await page.locator('#bookingType').selectOption('deposit');
  await page.locator('#bookingQuantityWrap [name="quantity"]').fill('100');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
+ await page.locator('#editDialog').waitFor({state:'hidden'});
  const afterDeposit=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(afterDeposit.externalCashFlows.length,1);
  assert.equal(afterDeposit.externalCashFlows[0].amountEUR,100);
@@ -48,6 +52,7 @@ try{
  page.once('dialog',d=>d.accept());
  await page.locator('#performanceDetails > summary').click();
  await page.locator('#startPerformance').click();
+ await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).performanceFlowTrackingSince!==null);
  const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.performanceFlowTrackingSince,new Date().toISOString().slice(0,10));
  assert.equal(state.bookings.length,2);
