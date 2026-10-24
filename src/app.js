@@ -633,10 +633,10 @@ function openWalletImport(){
   '<div class="field hidden" id="scanHdField"><label class="field"><span>Bitcoin-Adresstyp (optional)</span><select id="scanHdType" name="hdAddressType">'+
   options([['auto','Automatisch erkennen (Ledger: Native SegWit zuerst)'],['p2wpkh','Native SegWit (bc1q…)'],['p2sh-p2wpkh','Nested SegWit (3…)'],['p2pkh','Legacy (1…)']],'auto')+'</select></label></div>'+
   '<p id="hdPrivacyHint" class="small-help hidden">Bitcoin-HD: Bei einem xpub-Scan werden mehrere zusammengehörige Empfangs- und Wechselgeldadressen an einen öffentlichen Explorer gesendet. Dadurch können Adressen miteinander verknüpft werden. Taproot (bc1p) wird derzeit nicht unterstützt.</p>'+
-  '<details class="advanced-apis wallet-staking-options" id="walletStakingOptions"><summary>Bestimmtes Staking-Asset prüfen (optional)</summary>'+
-    '<p class="small-help">Nur nötig, wenn du gezielt nach einem Staking-Bestand suchen möchtest. Die normale Suche erkennt unterstützte Coins automatisch.</p>'+
-    '<label class="field"><span>Staking-Asset</span><select id="scanAsset">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
-    '<p id="scanAssetInfo" class="small-help" role="status">Einige Staking-Formen sind nur manuell erfassbar.</p></details>'+
+  '<details class="advanced-apis wallet-staking-options" id="walletStakingOptions"><summary>Staking-Unterstützung prüfen (optional)</summary>'+
+    '<p class="small-help">Hier erfährst du, welche Staking-Arten für die Netzwerksuche unterstützt werden. Diese Auswahl filtert den Scan nicht auf ein einzelnes Staking-Asset: Er zeigt alle vom jeweiligen Netzwerk unterstützten Guthaben.</p>'+
+    '<label class="field"><span>Staking-Asset auswählen</span><select id="scanAsset" aria-describedby="scanAssetInfo">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
+    '<p id="scanAssetInfo" class="small-help" role="status">Nicht alle Staking-Positionen sind anhand einer öffentlichen Adresse automatisch erkennbar.</p></details>'+
   '<div class="wallet-scan-action"><button class="btn primary" type="button" id="scanWalletButton">Coins suchen</button><p id="scanWalletStatus" class="small-help" role="status">Noch keine Suche gestartet.</p></div>'+
   '<div id="walletScanResults" class="wallet-scan-results"></div>'+
   '<section id="scanSaveSettings" class="wallet-save-settings hidden"><h3>Wo möchtest du die Coins speichern?</h3>'+
@@ -701,29 +701,46 @@ function openWalletImport(){
   $('scanAddress').placeholder=hd?'xpub… / ypub… / zpub…':network==='btc'?'bc1… / 1… / 3…':network==='sol'?'Solana-Adresse':network==='xrp'?'r…':'0x… / öffentliche Adresse';
  };
  const resetWalletScan=()=>{
+  const hadScan=$('scanWalletStatus').textContent!=='Noch keine Suche gestartet.';
   walletScanGeneration++;
   scannedWalletAssets=[];scannedWalletKey='';
   $('walletScanResults').innerHTML='';
   $('scanSaveSettings').classList.add('hidden');
-  $('scanWalletStatus').textContent='Eingabe geändert – bitte erneut suchen.';
+  $('scanWalletStatus').textContent=hadScan?'Eingabe geändert – bitte erneut suchen.':'Noch keine Suche gestartet.';
   updateSave();
   const staking=lookupStakingAsset($('scanAsset').value);
   $('scanWalletButton').disabled=Boolean(staking&&!staking.scannerNetwork);
  };
  $('scanNetwork').addEventListener('change',()=>{
+  const addressWasEntered=Boolean($('scanAddress').value.trim());
+  $('scanAddress').value='';
   resetWalletScan();$('scanAsset').value='';
-  $('scanAssetInfo').textContent=NETWORKS.find(n=>n.id===$('scanNetwork').value)?.note||'Netzwerk wählen.';
+  const name=NETWORKS.find(n=>n.id===$('scanNetwork').value);
+  $('scanAssetInfo').textContent='Netzwerk manuell auf '+(name?.name||'Auswahl')+' gewechselt. Staking-Vorauswahl zurückgesetzt.'+
+   (addressWasEntered?' Die bisherige Adresse wurde aus Sicherheitsgründen geleert; bitte die passende öffentliche Adresse erneut eingeben.':'')+
+   (name?.note?' '+name.note:'');
   $('scanWalletButton').disabled=false;updateHdHint();
  });
  $('scanAsset').addEventListener('change',()=>{
   const selected=lookupStakingAsset($('scanAsset').value);
   resetWalletScan();
-  if(!selected){$('scanAssetInfo').textContent='Normale Coins werden auch ohne Vorauswahl gefunden.';$('scanWalletButton').disabled=false;return;}
-  $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+(selected.scannerNetwork?'':' · Kein automatischer Scan; stattdessen Position manuell hinzufügen.');
-  $('scanWalletButton').disabled=!selected.scannerNetwork;
-  if(selected.scannerNetwork&&$('scanNetwork').value!==selected.scannerNetwork){
+  if(!selected){
+   $('scanAssetInfo').textContent='Die normale Suche zeigt alle vom Netzwerk unterstützten Guthaben – keine Auswahl eines einzelnen Assets.';
+   $('scanWalletButton').disabled=false;return;
+  }
+  const supported=Boolean(selected.scannerNetwork);
+  $('scanAssetInfo').textContent=STAKING_MODES[selected.mode]+': '+selected.note+
+   (supported?' · Die Suche prüft alle vom Netzwerk unterstützten Guthaben, nicht nur '+selected.ticker+'.':
+    ' · Kein automatischer Scan für dieses Staking-Asset. Erfasse den Bestand unter Positionen → Position hinzufügen manuell.');
+  $('scanWalletButton').disabled=!supported;
+  if(supported&&$('scanNetwork').value!==selected.scannerNetwork){
+   const oldAddress=Boolean($('scanAddress').value.trim());
    $('scanNetwork').value=selected.scannerNetwork;
    $('scanAddress').value='';updateHdHint();
+   const name=NETWORKS.find(n=>n.id===selected.scannerNetwork)?.name||selected.network;
+   $('scanAssetInfo').textContent+=' · Netzwerk automatisch auf '+name+' umgestellt.'+
+    (oldAddress?' Die bisherige Adresse wurde geleert; bitte die passende öffentliche Adresse erneut eingeben.':
+     ' Bitte die öffentliche Adresse für dieses Netzwerk eingeben.');
   }
  });
  $('scanHdType').addEventListener('change',resetWalletScan);
