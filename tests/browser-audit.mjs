@@ -11,6 +11,7 @@ try{
  assert.match(await page.locator('#hdPrivacyHint').innerText(),/zusammengehörige/);
  await page.locator('#scanNetwork').selectOption('1');
  assert.equal(await page.locator('#hdPrivacyHint').isVisible(),false);
+ page.once('dialog',d=>d.accept()); // Network controls were touched.
  await page.locator('#closeDialog').click();
  await page.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');

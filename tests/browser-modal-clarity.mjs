@@ -39,6 +39,7 @@ try{
  assert.equal(await page.locator('[name="quantity"]').inputValue(),'0','Metadata events have neutral quantity');
  await page.locator('#bookingType').selectOption('buy');
  assert.equal(await page.locator('#bookingQuantityWrap [name="unitPrice"]').inputValue(),'');
+ page.once('dialog',d=>d.accept()); // Explicitly discard changed booking choices.
  await page.locator('#cancelDialog').click();
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#addWallet').click();
