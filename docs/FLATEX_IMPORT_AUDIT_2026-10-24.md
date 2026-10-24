@@ -45,3 +45,34 @@ Nach der Übernahme verbleiben mangels vollständiger Flatex-Abrechnungen der Ko
 
 ## Veröffentlichung
 Dieser Stand bleibt ein Draft-PR. Tests beweisen keine steuerliche Korrektheit und keine reale Flatex-Formatabdeckung; daher kein Merge in `main` und keine Behauptung einer live veröffentlichten Flatex-Integration.
+
+## Ergänzung: Kontoumsatzgruppen und prüfbare Quellen (Fortsetzungsrunde)
+
+Die reine `flatex-cash-audit.js`-Auswertung bewahrt jede aus dem CSV
+stammende Kontoreferenz als **eigene Gruppe** auf. Bei ausdrücklich
+bestätigter EUR-Währung werden pro Gruppe nur die exakten Summen der
+positiven und negativen CSV-Kontobeträge angezeigt.
+
+Die Kontoreferenz muss **nicht** das eigene Flatex-Verrechnungskonto
+sein: Felder wie `Zahlungspfl.` können einen Kontrahenten bezeichnen.
+Eine automatische Zuordnung zu einer vorhandenen Kontoposition oder die
+Umwandlung von Kontozeilen in externe Portfolio-Cashflows ist daher
+ausgeschlossen. Nutzer erhalten stattdessen eine verständliche Diagnose
+und erkennen fehlende Kontoreferenzen.
+
+Der Importassistent kann wiederholt hochgeladene Depotauszüge auf die
+ursprüngliche **Datei + Zeile** zurückführen, ohne die interne stabile
+Buchungsidentität oder den allgemeinen CSV-Import zu verändern.
+
+Neue synthetische Prüfungen in `tests/flatex-cash-audit.test.mjs`
+und `tests/flatex-import.test.mjs` decken die strikte
+Kontogruppierung, EUR-Bestätigung, fehlende Angaben und Mehrdatei-
+Provenienz ab. Der mobile Browsertest prüft die sichtbaren Beträge und
+die Herkunftsangaben.
+
+**Fachliche Grenze:** Ein exakter Netto-Cashbetrag aus hochgeladenen
+Kontoumsatzzeilen ist **weder** ein bewiesener Anfangs-/Endkontostand
+**noch** eine externe Einzahlung in das Gesamtportfolio. Für eine
+spätere automatische Kontobuchung sind bestätigte eigene Kontonummer,
+Buchungs-/Valutadatum, sämtliche Zwischenbuchungen und ein gesicherter
+Anfangssaldo erforderlich.
