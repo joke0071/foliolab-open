@@ -86,7 +86,7 @@ test('WH01 validators reject impossible signs, metadata and UTC dates',()=>{
 test('WH01 provider request/page: bounded cursor, AbortSignal, windows, no calls',()=>{
  const request={provider:'fixture',network:'ethereum',chainId:'1',accountId:'a',filterKey:'token-v1',schemaVersion:1,cursor:null,pageSize:2,maxPages:3,page:0,from:NOW,to:NOW,signal:new AbortController().signal};
  assert.doesNotThrow(()=>validateHistoryRequest(request));
- const cursor={provider:'fixture',filterKey:'token-v1',schemaVersion:1,network:'ethereum',chainId:'1',accountId:'a',value:'next'};
+ const cursor={provider:'fixture',filterKey:'token-v1',schemaVersion:1,network:'ethereum',chainId:'1',accountId:'a',from:NOW,to:NOW,value:'next'};
  const page={events:[event()],nextCursor:cursor,coverage:'partial',oldestReached:false};
  assert.doesNotThrow(()=>validateHistoryPage(page,request));
  for(const patch of [{cursor:{...cursor,accountId:'other'}},{pageSize:0},{maxPages:0},{page:3},{from:'2026-10-25T00:00:00.000Z'},{signal:{}},{cursor:{...cursor,schemaVersion:2}}])assert.throws(()=>validateHistoryRequest({...request,...patch}));
@@ -98,4 +98,22 @@ test('WH01 provider request/page: bounded cursor, AbortSignal, windows, no calls
 test('WH01 pure APIs leave caller data untouched',()=>{
  const data={events:[event()],streams:[stream()]},before=structuredClone(data);
  replayWalletHistory(data);assert.deepEqual(data,before);
+});
+
+test('WH01 ownership ambiguity, negative holdings and inconsistent tips are errors',()=>{
+ const s=stream({accountId:'b'});
+ const r=replay([event(),event({accountId:'b'})],[stream(),s]);
+ assert.equal(r.totals[0].quantityBaseUnits,null);
+ assert.ok(r.balances.every(b=>b.reasons.includes('ambiguous-wallet-owner')));
+ assert.equal(replay([event({type:'outgoing',quantityBaseUnits:'-1'})]).balances[0].coverage,'error');
+ assert.equal(replay([event({blockHash:'other'})]).balances[0].quantityBaseUnits,null);
+ const mixed=replay([event({decimals:18}),event({txid:'tx-2',type:'unknown',quantityBaseUnits:null})]);
+ assert.equal(mixed.balances[0].coverage,'error','unsupported must not mask an error');
+ assert.throws(()=>replay([],[stream({opening:{quantityBaseUnits:'-1',beforeBlock:'0',source:'fixture'}})]));
+});
+test('WH01 numeric ordering and block hashes take priority over equal timestamps',()=>{
+ const events=['10','2','1'].map(index=>event({locator:{kind:'log',index,subindex:'0'}}));
+ assert.deepEqual(sortHistoryEvents(events).map(e=>e.locator.index),['1','2','10']);
+ const r=replay([event({blockHeight:'9',blockHash:'a'}),event({txid:'tx-2',blockHeight:'9',blockHash:'b'})]);
+ assert.ok(r.balances[0].reasons.includes('inconsistent-block-hash'));
 });
