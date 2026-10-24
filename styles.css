@@ -705,3 +705,9 @@
 /* Compact editor validation feedback, shared across all native editor forms. */
 .edit-dialog .dialog-error:not(.hidden){flex:0 0 auto;margin:0;padding:9px 24px;color:#893e34;background:#fff8f6;border-top:1px solid #eed8d3;font-size:12px;line-height:1.5;max-height:20dvh;overflow:auto}
 @media(max-width:720px){.edit-dialog .dialog-error:not(.hidden){padding:9px 16px}}
+
+/* The local wizard error follows its control instead of relying on a distant footer. */
+.asset-wizard-dialog .wizard-field-feedback{display:block;color:#8e3f34;font-size:12px;font-weight:600;line-height:1.5;padding-top:2px}
+.asset-wizard-dialog [aria-invalid="true"]{border-color:#ac4c42;box-shadow:0 0 0 1px #ac4c42}
+.edit-dialog .dialog-error:focus{outline:none}
+.edit-dialog .dialog-head h2:focus{outline:none}

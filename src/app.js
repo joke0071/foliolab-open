@@ -391,6 +391,7 @@ function showDialog(title,kicker,html,onSave){
  $('saveDialog').textContent=dialogSaveLabel(title);
  $('saveDialog').disabled=false;
  $('editDialog').showModal();
+ $('dialogTitle').focus({preventScroll:true});
 }
 function closeDialog({force=false}={}){return editorDiscardGuard.requestClose({force});}
 function providerMatchMarkup(query){
@@ -1279,7 +1280,14 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   const f=new FormData(e.currentTarget),v=Object.fromEntries(f.entries());
   $('dialogError').textContent='';$('dialogError').classList.add('hidden');
   try{await editor.onSave(v);closeDialog({force:true});}
-  catch(err){$('dialogError').textContent='Änderung nicht gespeichert: '+String(err.message||err);$('dialogError').classList.remove('hidden');}
+  catch(err){
+   const feedback=$('dialogError');
+   feedback.textContent='Änderung nicht gespeichert: '+String(err.message||err);
+   feedback.classList.remove('hidden');
+   feedback.tabIndex=-1;
+   feedback.focus({preventScroll:true});
+   feedback.scrollIntoView({block:'nearest'});
+  }
   finally{editorSubmitting=false;button.disabled=false;}
  });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});

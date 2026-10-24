@@ -43,7 +43,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
 
  const updateValue=(key,val)=>{state[key]=val;};
  const shell=(fields,title)=>{
-  dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
+  dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle" tabindex="-1">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
   
   '<div id="wizardFields">'+fields+'</div><div class="wizard-feedback" id="wizardError" role="alert" aria-live="polite"></div>'+
    '<div class="dialog-footer"><button class="btn light" type="button" id="wizardPrev">Abbrechen</button><button class="btn primary" type="button" id="wizardNext"'+(state.saved?' hidden':'')+'>Position speichern</button></div></div>';
@@ -247,7 +247,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   }
 
   if(state.kind==='crypto'){updateResults();loadCoins();}
-  if(!state.providerId)$('wizardProvider').focus();
+  // Re-renders preserve control focus in render(); do not focus an unrelated select.
  };
  const externalSearch=async()=>{
   const q=state.query.trim(),kind=state.kind;
@@ -279,16 +279,58 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   $('wizardPortfolio').addEventListener('click',close);
   $('wizardPortfolio').focus();
  };
- const error=message=>{const target=$('wizardError');if(target){target.textContent=String(message);target.classList.add('visible');}};
+ const clearError=()=>{
+  const target=$('wizardError');
+  if(target){target.textContent='';target.classList.remove('visible');}
+  dialog.querySelectorAll('.wizard-field-feedback').forEach(x=>x.remove());
+  dialog.querySelectorAll('[aria-invalid="true"]').forEach(x=>{
+   x.removeAttribute('aria-invalid');
+   x.removeAttribute('aria-describedby');
+  });
+ };
+ // Keep validation beside the related control, with a screenreader relationship.
+ // On explicitly requested validation, focus the invalid control rather than opening
+ // the software keyboard automatically on initial dialog display.
+ const error=(message,fieldId='')=>{
+  clearError();
+  const messageText=String(message);
+  const target=$('wizardError');
+  if(target){target.textContent=messageText;target.classList.add('visible');}
+  const field=fieldId?$(fieldId):null;
+  if(field){
+   field.setAttribute('aria-invalid','true');
+   const label=field.closest('label.field');
+   if(label){
+    const hint=document.createElement('small');
+    hint.className='wizard-field-feedback';
+    hint.id=fieldId+'-feedback';
+    hint.textContent=messageText;
+    label.append(hint);
+    field.setAttribute('aria-describedby',hint.id);
+   }
+   field.focus({preventScroll:true});
+   field.scrollIntoView({block:'nearest'});
+  }else if(target){
+   target.tabIndex=-1;
+   target.focus({preventScroll:true});
+   target.scrollIntoView({block:'nearest'});
+  }
+ };
+ dialog.addEventListener('input',ev=>{if(ev.target.getAttribute('aria-invalid')==='true')clearError();});
+ dialog.addEventListener('change',ev=>{if(ev.target.getAttribute('aria-invalid')==='true')clearError();});
  const advance=async ()=>{
   if(state.busy||state.saved)return;
-  if(!state.name.trim())return error('Bitte eine Anlage auswählen oder benennen.');
-  if(state.kind!=='crypto'&&!state.currency)return error('Bitte die Währung auswählen.');
-  if(['etf','fund','stock'].includes(state.kind)&&!state.isin&&!state.symbol)return error('Bitte ISIN oder Ticker angeben.');
-  if(!state.providerId)return error('Bitte einen Anbieter auswählen.');
-  if(state.providerId==='__new__'&&!state.providerName.trim())return error('Bitte den Anbieter benennen.');
-  if(!state.accountId)return error('Bitte ein Konto oder Depot auswählen.');
-  if(state.accountId==='__new__'&&!state.accountName.trim())return error('Bitte das Konto benennen.');
+  if(!state.name.trim())return error('Bitte eine Anlage auswählen oder benennen.','wizardName');
+  if(state.kind!=='crypto'&&!state.currency)return error('Bitte die Währung auswählen.','wizardCurrency');
+  if(['etf','fund','stock'].includes(state.kind)&&!state.isin&&!state.symbol)return error('Bitte ISIN oder Ticker angeben.','wizardSymbol');
+  if(!state.providerId)return error('Bitte einen Anbieter auswählen.','wizardProvider');
+  if(state.providerId==='__new__'&&!state.providerName.trim())return error('Bitte den Anbieter benennen.','wizardProviderName');
+  if(!state.accountId)return error('Bitte ein Konto oder Depot auswählen.','wizardAccount');
+  if(state.accountId==='__new__'&&!state.accountName.trim())return error('Bitte das Konto benennen.','wizardAccountName');
+  if(!String(state.quantity).trim())return error('Bitte eine Stückzahl oder einen Betrag eingeben.','wizardQuantity');
+  if(state.mode==='buy'&&!String(state.unitPrice).trim())return error('Bitte den Kaufpreis je Stück eingeben.','wizardUnitPrice');
+  if(state.kind!=='crypto'&&state.currency!=='EUR'&&!String(state.fxRate).trim())return error('Bitte den Wechselkurs in EUR eingeben.','wizardFX');
+  clearError();
   state.busy=true;$('wizardNext').disabled=true;$('wizardNext').textContent='Speichere …';
   try{
    const output=buildAssetWizardDraft(getModel(),state);
@@ -301,11 +343,16 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(state.saved)return renderSuccess();
   // A native details 'toggle' event can arrive after the following form re-render.
   // Read the actual expanded state synchronously before replacing the fields.
+  const active=dialog.contains(document.activeElement)?document.activeElement:null;
+  const focusedId=active?.id||'';
+  const focusedMode=active?.name==='wizardMode'?active.value:'';
   const advanced=$('wizardAdvanced'),economic=$('wizardEconomic'),wallet=$('wizardWalletAdvanced');
   if(advanced)state.advancedOpen=advanced.open;
   if(economic)state.economicOpen=economic.open;
   if(wallet&&!resetWalletDisclosure)state.walletOpen=wallet.open;
   renderOne();
+  const matching=focusedMode?dialog.querySelector('[name="wizardMode"][value="'+focusedMode+'"]'):null;
+  (matching||(focusedId?$(focusedId):null)||$('wizardTitle'))?.focus({preventScroll:true});
  };
  const close=()=>{if(guard.requestClose())sequence++;};
  return {open(){opener=document.activeElement;state=fresh();dirty=false;dialog.replaceChildren();funds=loadFundCatalog();sequence++;
@@ -314,7 +361,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    // Only an explicitly remembered account may preselect an existing provider.
    state.providerId=provider?.id||(m.providers.length?'':'__new__');
    state.accountId=state.providerId==='__new__'?'__new__':provider?preferred.id:'';
-   dialog.showModal();render();
+   dialog.showModal();render();$('wizardTitle').focus({preventScroll:true});
    void loadSecurityDirectories().then(list=>{
     if(!dialog.open)return;
     directories=list;

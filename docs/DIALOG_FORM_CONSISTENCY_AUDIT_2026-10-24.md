@@ -51,3 +51,13 @@ Diese Runde ist **kein abgeschlossener Voll-Audit** aller dynamischen Felder ode
 | Entwurf schließen | Eingaben verwerfen | Bestätigung nur nach Bearbeitungen |
 
 Weitere offene Arbeit: vollständiges Wording-Screening aller dynamischen Fehlerpfade, manuelle Screenreader- und Android-Tastaturprüfung, pixelbasierte visuelle Regression mit freigegebenen Baselines und detaillierte Prüfung selten genutzter DeFi- und Backup-Varianten.
+
+## Korrekturrunde 3: Eingabefehler und Mobil-/Tastaturergonomie
+
+- Validierungsfehler des Anlage-Assistenten erhalten eindeutige Zuordnungen (`aria-invalid`, `aria-describedby`) und einen direkt beim Feld platzierten Hilfetext. Die globale Fehlerrückmeldung bleibt erhalten.
+- Bei einem gezielten Speicherversuch gelangt der Fokus zum fehlerhaften Feld, bei einem allgemeinen Speicherproblem zur Dialogmeldung; gespeicherte Eingaben bleiben unangetastet.
+- Ein neu geöffneter Editor und Anlage-Assistent fokussieren zunächst eine beschreibende Überschrift, nicht ein Eingabefeld. Das vermeidet unnötige initiale Software-Tastaturaktivierung.
+- Nach dem kontextbedingten Neuaufbau einer Anlageklasse bleibt der Fokus nach Möglichkeit am bisherigen Bedienelement.
+- Browser-Test `browser-dialog-a11y-mobile.mjs` ergänzt Eingabe-/Fehlerzustände, Touch-Emulation, verkleinerte Viewports (320×360 bis 1440×800), axe-basierte Dialogprüfung und einen simulierten Fehler der lokalen Speicherung.
+
+**Prüfgrenzen:** Playwright-`isMobile`/Touch und reduzierte Viewporthöhe sind eine Browseremulation, **kein** Nachweis einer tatsächlich eingeblendeten Android-Tastatur oder einer realen TalkBack-Sitzung. Nach wie vor offen: händische Prüfung auf realen Android-Geräten, vollständige Screenreader-Navigation und fest referenzierte Pixelvergleichs-Baselines.
