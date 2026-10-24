@@ -66,10 +66,10 @@ try{
  assert.equal(await page.locator('#backupChangeToggle').isVisible(),true);
  assert.equal(await page.locator('#backupOldPasswordField').isVisible(),false);
  await page.locator('#backupChangeToggle').click();
- assert.equal(await page.locator('#backupPasswordForm').isVisible(),true);
+ await page.locator('#backupPasswordForm').waitFor({state:'visible'});
  assert.equal(await page.locator('#backupOldPasswordField').isVisible(),true,'Old password only appears in change mode');
  await page.locator('#backupChangeToggle').click();
- assert.equal(await page.locator('#backupPasswordForm').isVisible(),false,'Cancel returns to compact mode');
+ await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
  const encryptedDownloadPromise=page.waitForEvent('download',{timeout:5000});
  await page.locator('#exportEncryptedBackup').click();
  let encDl;
