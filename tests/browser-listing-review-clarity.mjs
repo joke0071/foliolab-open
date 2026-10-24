@@ -33,6 +33,7 @@ try{
  assert.match(intro,/53 nur ohne ISIN \(optional\)/);
  assert.match(intro,/nicht automatisch Fehler/);
  assert.equal(await page.locator('#positionList .position-entry').count(),56,'Original positions still visible');
+ const beforeFilters=await page.locator('#positionFilters').innerText();
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  await trigger.click();
  assert.equal(await trigger.getAttribute('aria-expanded'),'true');
@@ -47,7 +48,7 @@ try{
  assert.match(await panel.locator('.listing-review-item').first().innerText(),/Ticker\/Symbol/);
  assert.equal(await panel.getByText('Gamma Vollständig').count(),0);
  assert.equal(await panel.getByText('Delta Bitcoin').count(),0);
- assert.equal(await page.locator('#positionFilters [data-filter="__review"]').count(),1,'Course-quality review is a separate filter');
+ assert.equal(await page.locator('#positionFilters').innerText(),beforeFilters,'Metadata review must not change course-quality/provider filters');
  await panel.locator('[data-action="more-listing-review"]').click();
  assert.equal(await panel.locator('.listing-review-item').count(),54);
  assert.equal(await panel.locator('.listing-review-optional').count(),53);
