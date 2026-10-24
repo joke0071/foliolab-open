@@ -403,7 +403,7 @@ function openProvider(p){
  matches.addEventListener('click',e=>{
   const btn=e.target.closest('[data-provider-preset]');if(!btn)return;
   const item=providerExact(btn.dataset.providerPreset);if(!item)return;
-  name.value=item.name;type.value=item.type;matches.classList.add('hidden');name.focus();
+  name.value=item.name;type.value=item.type;if(editor)editor.dirty=true;matches.classList.add('hidden');name.focus();
  });
 }
 function accountMatchMarkup(providerId,query){
@@ -458,14 +458,14 @@ function openAccount(a,defaultProviderId){
  const align=()=>{const p=model.providers.find(x=>x.id===providerSelect.value),exact=accountExact(name.value,p?.type||'other');if(exact)type.value=exact[1];};
  providerSelect.addEventListener('change',()=>{
   const p=model.providers.find(x=>x.id===providerSelect.value),next=suggestedAccountForProvider(p?.type||'other');
-  if(!a||!name.dataset.userEdited){name.value=next[0];type.value=next[1];}
+  if(!a&&!name.dataset.userEdited){name.value=next[0];type.value=next[1];}
   show();
  });
  name.addEventListener('input',()=>{name.dataset.userEdited='true';align();show();});
  name.addEventListener('change',align);
  area.addEventListener('click',e=>{
   const btn=e.target.closest('[data-account-preset]');if(!btn)return;
-  name.value=btn.dataset.accountPreset;name.dataset.userEdited='true';align();area.classList.add('hidden');name.focus();
+  name.value=btn.dataset.accountPreset;name.dataset.userEdited='true';if(editor)editor.dirty=true;align();area.classList.add('hidden');name.focus();
  });
 }
 function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Anbieter und Konto über die Suchfelder auswählen. Für ETFs, Aktien und Fonds können die Wertpapierdaten mit einem bestätigten Suchtreffer vorgeschlagen werden. Stückzahl und Kurs bleiben deine Eingaben.</p>
