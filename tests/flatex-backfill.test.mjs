@@ -97,3 +97,20 @@ test('invalidates stale model baseline at commit, leaving original unmodified',(
  assert.throws(()=>importCSV(m,check.preview),/seit der CSV-Vorschau verändert/);
  assert.equal(JSON.stringify(m),before);
 });
+
+test('previously documented opening acquisition cost cannot be erased by backfill',()=>{
+ const {m,a,p}=portfolio();
+ m.openingPositions.push({positionId:p.id,quantityExact:'7',costBasisExact:'900',realizedPnLExact:null,asOf:null});
+ const prepared=prepareFlatexImport(file([buy,sell]));
+ const result=prepareFlatexBackfillPreview(m,prepared,a.id);
+ assert.equal(result.eligible,false);
+ assert.match(result.reason,/Anschaffungskosten/);
+});
+test('an earlier observed positive holding in snapshot prevents inconsistent historical rewrite',()=>{
+ const {m,a,p}=portfolio();
+ m.snapshots.push({id:'snapshot-1',date:'2026-09-01',total:840,valuationStatus:'observed',byPosition:{[p.id]:'840'}});
+ const prepared=prepareFlatexImport(file([buy,sell]));
+ const result=prepareFlatexBackfillPreview(m,prepared,a.id);
+ assert.equal(result.eligible,false);
+ assert.match(result.reason,/älterer Stichtag/);
+});
