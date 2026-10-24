@@ -13,9 +13,9 @@ try{
     quantity:2,price:100,providerId:provider.id,accountId:account.id},m);
   m.positions.push(p);
   m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',
-   points:[{date:dates[0],total:50},{date:dates[1],total:80},{date:dates[2],total:100}]};
+   points:[{date:dates[0],total:50},{date:dates[1],total:80},{date:dates[2],total:95},{date:dates[3],total:100}]};
   persist(m);
- },[day(2200),day(1650),day(2)]);
+ },[day(2200),day(1650),day(5),day(2)]);
  await page.reload();
  const provider=page.locator('#providerOverview .provider-accordion').first();
  await provider.locator(':scope > summary').click();
@@ -37,12 +37,12 @@ try{
  await holding.locator('.position-period-popover [data-position-range="1826"]').click();
  await holding.locator('.position-history-chart .chart-plot').waitFor();
  assert.match(await holding.innerText(),/Tatsächlich verfügbare Kurse/);
- assert.equal(JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points')).length,2);
+ assert.equal(JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points')).length,3);
  await holding.locator('.position-period-more > summary').click();
  await holding.locator('.position-period-popover [data-position-range="max"]').click();
  await holding.locator('.position-history-chart .chart-plot').waitFor();
- assert.equal(JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points')).length,3);
+ assert.equal(JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points')).length,4);
  assert.match(await holding.innerText(),/Fehlende frühere Kurse werden nicht ergänzt/);
- assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['long-price'].points.length),3);
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['long-price'].points.length),4);
  console.log('EXTENDED CHART PERIODS: local 5Y/Max coverage, mobile menu, 320-1440px, no portfolio mutations PASS');
 }finally{await browser.close();}
