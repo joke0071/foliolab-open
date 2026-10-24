@@ -22,6 +22,8 @@ try{
  await page.locator('[name="binplorerKey"]').fill('TEST_BSC_KEY');
  await page.locator('[name="etherscanKey"]').fill('TEST_ETH_KEY');
  await page.locator('#publicSearchSetup button[type="submit"]').click();
+ // Shared settings are committed asynchronously under the portfolio Web Lock.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  let settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
  assert.equal(settings.eodhdKey,'TEST_MARKET_KEY');
  assert.equal(settings.binplorerKey,'TEST_BSC_KEY');
@@ -33,6 +35,8 @@ try{
  assert.equal(await page.locator('[name="publicInstrumentEndpoint"]').inputValue(),'https://test-worker.workers.dev');
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();
+ // Confirm that credential revocation and legacy purge finished before assertions.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
  assert.equal(settings.binplorerKey,'','Credential removal must clear blockchain keys');
  assert.equal(settings.eodhdKey,'','Credential removal must clear market data keys');
