@@ -90,6 +90,12 @@ const cashHint=details=>{
 const stableKey=({type,reference,account,isin,date,details,units,rate})=>
  JSON.stringify([type,reference,account,isin,date,canonical(details),units,rate]);
 const issue=(file,line,code,message,extra={})=>({file,line,code,message,...extra});
+// Stable compact non-sensitive fingerprint, independent of the source filename.
+const shortIdentity=s=>{
+ let h=14695981039346656037n;
+ for(let i=0;i<s.length;i++)h=((h^BigInt(s.charCodeAt(i)))*1099511628211n)&0xffffffffffffffffn;
+ return h.toString(16).padStart(16,'0');
+};
 
 /**
  * @param {Array<{name:string,text:string}>} files
@@ -149,9 +155,7 @@ export function prepareFlatexImport(files){
     keys.set(key,{file:name,line});
     // Keep broker reference in the external ID. Where none exists, use a
     // content-derived identity only after the ambiguity checks above.
-    const externalId=ref?
-      'flatex-at:'+kind+':'+ref+':'+isin+':'+account:
-      'flatex-at:no-ref:'+key;
+    const externalId='flatex-at:'+shortIdentity(key);
     rows.push(record({
      date,type:kind,position:isin,quantity,unitPrice,
      feeEUR:'0',taxEUR:'0',fxRate:'',cashPosition:'',notes:details.slice(0,180),
