@@ -66,6 +66,7 @@ jobs:
           node tests/browser-allocation.mjs
           node tests/browser-avalanche-valuation.mjs
           node tests/browser-staking-coverage.mjs
+          node tests/browser-staking-dialog-scope.mjs
           node tests/browser-modal-clarity.mjs
           node tests/browser-dialog-consistency.mjs
           node tests/browser-dialog-visual.mjs
