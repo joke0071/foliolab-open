@@ -1,4 +1,4 @@
-import {marketHistoryCapability,fetchPositionMarketHistory} from './position-history.js';
+import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeriods} from './position-history.js';
 import {renderChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
@@ -56,8 +56,15 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   isSecurity?'<p class="position-csv-help">TradingView benötigt einen bestätigten Handelsplatz (z. B. Xetra) oder ein TradingView-Börsenkürzel.</p>':'';
  const nativeAvailable=Boolean(marketHistoryCapability(p,model.settings));
  const needsOwnChart=nativeAvailable||Boolean(imported);
+ const periods=availablePositionPeriods(p,model);
+ const standard=periods.filter(x=>typeof x==='number'&&x<=365),long=periods.filter(x=>x===1826||x==='max');
+ const extra=long.length>1?
+  '<span class="position-period-long">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</span>'+
+  '<details class="position-period-more"><summary aria-label="Weitere Zeiträume auswählen" title="Weitere Zeiträume">Mehr</summary>'+
+  '<div class="position-period-popover">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</div></details>':
+  renderChartPeriodButtons('market','data-position-range',days,long);
  const controls=needsOwnChart?'<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
-   renderChartPeriodButtons('market','data-position-range',days)+'</div>':'';
+  renderChartPeriodButtons('market','data-position-range',days,standard)+extra+'</div>':'';
  const hasMarketKey=Boolean(model.settings?.eodhdKey||model.settings?.fmpKey||model.settings?.twelveKey);
  const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
    hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.',
@@ -100,7 +107,8 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
   }).format(x):undefined;
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
-   '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>';
+   '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>'+
+   (days===1826||days==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(points[0].date))+' bis '+esc(dateLabel(points.at(-1).date))+'. Fehlende frühere Kurse werden nicht ergänzt.</p>':'');
   mount.querySelector('.position-period')?.classList.remove('hidden');
   attachChartInteractions(target);
   if(source.startsWith('CoinPaprika')){
@@ -125,8 +133,11 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
    target.querySelector('.position-history-compact')?.append(link);
   }
  };
+ if(!availablePositionPeriods(position,model).includes(days)){
+  target.innerHTML=collapsedHistory('Dieser Zeitraum wird von den verfügbaren Kursquellen nicht unterstützt.');return;
+ }
  const imported=importedHistoryForPeriod(model,position,days);
- const capability=marketHistoryCapability(position,model.settings);
+ const capability=days==='max'?null:marketHistoryCapability(position,model.settings);
  if(capability){
   try{
    // Prefer a real, provider-backed market chart over locally imported CSV.

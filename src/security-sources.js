@@ -111,7 +111,12 @@ function parseBars(input,currency,expectedSymbol=null){
 }
 async function twelveBars(p,settings,days,fetcher){
  const l=listingInfo(p),url=new URL('https://api.twelvedata.com/time_series');
- for(const [key,val] of Object.entries({symbol:l.symbol,exchange:p.exchange||'',mic_code:p.mic||'',interval:'1day',outputsize:String(Math.min(500,days+12)),apikey:settings.twelveKey}))if(val)url.searchParams.set(key,val);
+ const params={symbol:l.symbol,exchange:p.exchange||'',mic_code:p.mic||'',interval:'1day',apikey:settings.twelveKey};
+ if(days>365){
+  params.start_date=new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10);
+  params.end_date=new Date().toISOString().slice(0,10);
+ }else params.outputsize=String(Math.min(500,days+12));
+ for(const [key,val] of Object.entries(params))if(val)url.searchParams.set(key,val);
  const data=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
  if(data?.status==='error'||data?.code)throw Error(String(data.message||'Twelve Data nicht verfügbar.'));
  const meta=data?.meta||{};
@@ -124,6 +129,7 @@ async function twelveBars(p,settings,days,fetcher){
  return {points,source:'Twelve Data · verifizierte Notierung',quality:'verified-listing'};
 }
 export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalThis.fetch){
+ if(![7,30,90,365,1826].includes(days))throw Error('Ungültiger Börsenkurszeitraum.');
  const providers=marketSourceOptions(p,settings);
  if(!providers.length)throw Error('Keine konfigurierte historische Kurs-API. Öffentlicher TradingView-Chart oder CSV verfügbar.');
  const failures=[];

@@ -73,3 +73,11 @@ test('Local CSV selection does not fill nonexistent dates or extend beyond selec
  assert.equal(importedHistoryForPeriod(m,p,90).points.length,3);
  assert.throws(()=>importedHistoryForPeriod(m,p,999),/Diagrammzeitraum/);
 });
+
+test('five-year CSV selects actual historic points while max shows complete imported history',()=>{
+ const {m,p}=fixture(),today=Date.now();
+ const d=n=>new Date(today-n*864e5).toISOString().slice(0,10);
+ m.priceHistories[p.id]=parseHistoricalPriceCSV('Date,Close\n'+d(2200)+',50\n'+d(1650)+',60\n'+d(2)+',100',p);
+ assert.deepEqual(importedHistoryForPeriod(m,p,1826,today).points.map(x=>x.total),[60,100]);
+ assert.deepEqual(importedHistoryForPeriod(m,p,'max',today).points.map(x=>x.total),[50,60,100]);
+});

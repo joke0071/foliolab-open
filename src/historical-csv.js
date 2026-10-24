@@ -1,5 +1,5 @@
 /** Strict, offline historical closing-price CSV import; never reads or changes holdings. */
-const MAX_BYTES=1500000,MAX_POINTS=1600;
+const MAX_BYTES=1500000,MAX_POINTS=6500;
 const ISO=/^\d{4}-\d{2}-\d{2}$/;
 const dateOK=d=>ISO.test(d)&&!Number.isNaN(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d&&d<=new Date().toISOString().slice(0,10);
 const header=x=>String(x??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -97,8 +97,8 @@ export function importedHistoryForPeriod(model,position,days=30,now=Date.now()){
  const data=model.priceHistories?.[position.id];
  if(!data)return null;
  const valid=validateImportedPriceHistory(data,position);
- if(![7,30,90,365].includes(days))throw Error('Unbekannter Diagrammzeitraum.');
- const start=new Date(now-(days-1)*86400000).toISOString().slice(0,10),end=new Date(now).toISOString().slice(0,10);
+ if(![7,30,90,365,1826,'max'].includes(days))throw Error('Unbekannter Diagrammzeitraum.');
+ const start=days==='max'?'0000-01-01':new Date(now-(days-1)*86400000).toISOString().slice(0,10),end=new Date(now).toISOString().slice(0,10);
  return {kind:'market',source:'CSV (selbst geprüft)',currency:valid.currency,
   points:valid.points.filter(p=>p.date>=start&&p.date<=end)};
 }

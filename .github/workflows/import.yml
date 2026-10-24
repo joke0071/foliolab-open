@@ -100,6 +100,7 @@ jobs:
           node tests/browser-booking-filters.mjs
           node tests/browser-dashboard-periods.mjs
           node tests/browser-chart-period-consistency.mjs
+          node tests/browser-extended-chart-periods.mjs
           node tests/browser-provider-accordion.mjs
           node tests/browser-legacy-quotes-chevrons.mjs
           node tests/browser-public-instruments.mjs

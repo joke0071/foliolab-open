@@ -4,7 +4,7 @@ import {CHART_PERIODS,chartPeriodDays,renderChartPeriodButtons,filterChartPeriod
 
 test('wealth and market charts share labels, ordering and a coherent preset contract',()=>{
  assert.deepEqual(CHART_PERIODS.wealth.map(x=>x.label),['1 M','3 M','1 J','Alles']);
- assert.deepEqual(CHART_PERIODS.market.map(x=>x.label),['7 T','1 M','3 M','1 J']);
+ assert.deepEqual(CHART_PERIODS.market.map(x=>x.label),['7 T','1 M','3 M','1 J','5 J','Max']);
  assert.equal(chartPeriodDays('wealth','quarter'),90);
  assert.equal(chartPeriodDays('market','30'),30);
  assert.equal(chartPeriodDays('wealth','all'),null);
@@ -34,4 +34,13 @@ test('period filtering is rolling, inclusive, and leaves the source untouched',(
 test('DOM selection gracefully ignores missing or unsupported containers',()=>{
  assert.doesNotThrow(()=>syncChartPeriodButtons(null,'data-range','month'));
  assert.doesNotThrow(()=>syncChartPeriodButtons({},'onmouseover','month'));
+});
+
+test('extended market presets require explicit opt-in and max is not a remote default',()=>{
+ assert.equal(chartPeriodDays('market',1826),1826);
+ assert.equal(chartPeriodDays('market','max'),null);
+ assert.equal(renderChartPeriodButtons('market','data-position-range',30).includes('5 J'),false);
+ const extended=renderChartPeriodButtons('market','data-position-range',1826,[1826,'max']);
+ assert.match(extended,/data-position-range="1826" aria-pressed="true" class="selected">5 J/);
+ assert.match(extended,/data-position-range="max" aria-pressed="false">Max/);
 });

@@ -32,7 +32,7 @@ export async function handleMarketRequest(request,env={},fetcher=globalThis.fetc
  }catch{return json({schemaVersion:1,status:'invalid_request'},400);}
  const symbol=String(payload?.symbol||'').toUpperCase(),from=payload?.from,to=payload?.to;
  if(!SYMBOL.test(symbol)||!validDay(from)||!validDay(to)||from>to||
-    Date.parse(to+'T00:00:00Z')-Date.parse(from+'T00:00:00Z')>410*864e5||
+    Date.parse(to+'T00:00:00Z')-Date.parse(from+'T00:00:00Z')>1900*864e5||
     to>new Date(Date.now()+864e5).toISOString().slice(0,10))
   return json({schemaVersion:1,status:'invalid_request'},400);
  const upstream=new URL('https://eodhd.com/api/eod/'+encodeURIComponent(symbol));
@@ -56,7 +56,7 @@ export async function handleMarketRequest(request,env={},fetcher=globalThis.fetc
    if(seen.has(value.date)&&seen.get(value.date)!==close)return json({schemaVersion:1,status:'invalid_upstream'},502);
    seen.set(value.date,close);
   }
-  if(!seen.size||seen.size>420)return json({schemaVersion:1,status:'no_prices'},502);
+  if(!seen.size||seen.size>1800)return json({schemaVersion:1,status:'no_prices'},502);
   const points=[...seen].sort(([a],[b])=>a.localeCompare(b)).map(([date,close])=>({date,close}));
   return json({schemaVersion:1,status:'ok',symbol,source:'EODHD',points});
  }catch{return json({schemaVersion:1,status:'temporarily_unavailable'},503);}

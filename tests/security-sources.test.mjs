@@ -144,3 +144,23 @@ test('No worker secrets can escape an unencrypted portfolio backup',()=>{
  m.settings.eodhdWorkerAccessToken='SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012';
  assert.doesNotMatch(backup(m),/my-worker|SYNTHETIC_WORKER/);
 });
+
+test('five year Twelve Data requests explicit dates instead of truncated outputsize',async()=>{
+ const p=position(),calls=[];
+ const data={meta:{symbol:'VWCE',currency:'EUR',exchange:'Xetra',mic_code:'XETR'},
+  values:[{datetime:older,close:'103'},{datetime:yday,close:'104'}]};
+ const mock=async url=>{calls.push(new URL(url));return ok(data);};
+ const result=await fetchSecurityHistory(p,{securitySource:'twelve',twelveKey:'test'},1826,mock);
+ assert.equal(result.points.length,2);
+ assert.equal(calls[0].searchParams.get('outputsize'),null);
+ assert.match(calls[0].searchParams.get('start_date'),/^\d{4}-\d{2}-\d{2}$/);
+ assert.ok(calls[0].searchParams.get('end_date'));
+});
+test('five year EODHD chart extends real upstream date boundaries without inventing observations',async()=>{
+ const p=position(),calls=[];
+ const mock=async url=>{calls.push(new URL(url));return ok([{date:older,close:102},{date:yday,close:105}]);};
+ const result=await fetchSecurityHistory(p,{eodhdKey:'test'},1826,mock);
+ assert.equal(result.points.length,2);
+ assert.ok(Date.parse(calls[0].searchParams.get('from'))<Date.now()-1700*864e5);
+ assert.equal(result.points[0].date,older);
+});

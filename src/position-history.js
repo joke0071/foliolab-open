@@ -5,7 +5,25 @@ import {units,exact,preciseValue} from './decimal.js';
 import {valueSign} from './defi.js';
 
 export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[365,'1 J']]);
-const allowed=new Set(POSITION_PERIODS.map(([days])=>days));
+const LONG_PERIOD=1826;
+const allowed=new Set([...POSITION_PERIODS.map(([days])=>days),LONG_PERIOD,'max']);
+const normalPeriods=Object.freeze([7,30,90,365]);
+/** Restrict long presets to configured providers or sufficiently old CSV observations. */
+export function availablePositionPeriods(position,model,now=Date.now()){
+ const result=[...normalPeriods];
+ if(position?.kind==='crypto')return result;
+ if(!['etf','stock','fund'].includes(position?.kind))return result;
+ let providers=[];
+ try{providers=marketSourceOptions(position,model?.settings||{});}catch{}
+ const longProvider=providers.some(x=>['eodhd','fmp','twelve'].includes(x));
+ const points=model?.priceHistories?.[position.id]?.points;
+ const first=Array.isArray(points)&&points.length>=2?String(points[0]?.date||''):'';
+ const last=Array.isArray(points)&&points.length>=2?String(points.at(-1)?.date||''):'';
+ const csv=/^\d{4}-\d{2}-\d{2}$/.test(first)&&/^\d{4}-\d{2}-\d{2}$/.test(last)&&first<last;
+ if(longProvider||(csv&&first<=isoFromMs(now-1800*864e5)))result.push(LONG_PERIOD);
+ if(csv&&first<isoFromMs(now-365*864e5))result.push('max');
+ return result;
+}
 const isoFromMs=ms=>new Date(ms).toISOString().slice(0,10);
 const finitePositive=n=>Number.isFinite(n)&&n>0;
 /**
@@ -67,7 +85,7 @@ export function currentPositionValues(model){
 }
 export function recordedPositionHistory(model,positionId,days=30,now=Date.now()){
  if(!allowed.has(days))throw Error('Ungültiger Zeitraum.');
- const from=isoFromMs(now-(days-1)*864e5);
+ const from=days==='max'?'0000-01-01':isoFromMs(now-(days-1)*864e5);
  return model.snapshots.filter(s=>s.date>=from&&s.date<=isoFromMs(now)&&s.source==='current'&&s.byPosition&&Object.hasOwn(s.byPosition,positionId))
    .map(s=>({date:s.date,total:Number(s.byPosition[positionId])}))
    .filter(p=>Number.isFinite(p.total)).sort((a,b)=>a.date.localeCompare(b.date));
@@ -83,7 +101,9 @@ export function marketHistoryCapability(p,settings={}){
 }
 export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=globalThis.fetch){
  if(!allowed.has(days))throw Error('Ungültiger Kurszeitraum.');
+ if(days==='max')throw Error('Max wird nur für lokal importierte CSV-Kurshistorien unterstützt.');
  const capability=marketHistoryCapability(p,settings);
+ if(p.kind==='crypto'&&days>365)throw Error('Kostenlose Krypto-Kursquellen bieten höchstens 1 Jahr Historie.');
  if(!capability)throw Error('Keine bestätigte historische Kursquelle eingerichtet.');
  if(capability.kind==='security')return fetchSecurityHistory(p,settings,days,fetcher);
  let rows=[],currency='EUR',source='';
@@ -148,6 +168,6 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
 }
 export function filterHistoryByDays(points,days,now=Date.now()){
  if(!allowed.has(days))throw Error('Ungültiger Zeitraum.');
- const from=isoFromMs(now-(days-1)*864e5),today=isoFromMs(now);
+ const from=days==='max'?'0000-01-01':isoFromMs(now-(days-1)*864e5),today=isoFromMs(now);
  return points.filter(p=>p.date>=from&&p.date<=today).sort((a,b)=>a.date.localeCompare(b.date));
 }
