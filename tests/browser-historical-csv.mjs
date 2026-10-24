@@ -59,6 +59,7 @@ try{
  await row.getByText('Weitere Kursoptionen',{exact:true}).click();
  page.once('dialog',d=>d.accept());
  await page.locator('[data-action="remove-price-history"]').click();
+ await page.waitForFunction(()=>!JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['etf-csv']);
  assert.equal((await getModel()).priceHistories['etf-csv'],undefined);
  await page.locator('.position-history-compact').waitFor({state:'attached'});
  assert.equal(await page.locator('.position-history-compact').getAttribute('open'),null,'Unavailable chart should default to collapsed');
