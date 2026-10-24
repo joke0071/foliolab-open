@@ -934,3 +934,32 @@
 .history-insights .history-capital-comparison .csv-skip{margin:0 0 5px;display:flex;align-items:flex-start;gap:9px;min-width:0;line-height:1.5}
 .history-insights .history-capital-comparison input{margin-top:2px;flex:0 0 auto}
 .history-insights .history-capital-comparison .small-help{margin:0;color:#688071;line-height:1.5}
+
+/* More settings: short forms up front, long setup and privacy on demand. */
+.data-source-panel .more-panel-intro{line-height:1.5;margin-top:12px;margin-bottom:10px;color:#546f5b}
+.data-source-panel .source-detail > .field{margin-top:10px;margin-bottom:3px;min-width:0}
+.data-source-panel .source-detail > .field > span{line-height:1.4}
+.data-source-panel .more-field-hint{margin-top:0;margin-bottom:4px;color:#738574;font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.data-source-panel .source-detail > .source-actions{margin-top:12px;margin-bottom:10px}
+.data-source-panel .more-panel-help{margin:12px 16px 14px;min-width:0;border-top:1px solid #e5eee7;padding-top:10px}
+.data-source-panel .more-panel-help > summary{font-size:12px;color:#3c6b50;font-weight:720;cursor:pointer;line-height:1.5;padding:4px 0;overflow-wrap:anywhere}
+.data-source-panel .more-panel-help > summary:focus-visible{outline:2px solid #327f52;outline-offset:3px;border-radius:4px}
+.data-source-panel .more-panel-help ol{margin:8px 0 10px;padding-left:19px;color:#536e5b;font-size:12px;line-height:1.6}
+.data-source-panel .more-panel-help li{margin-bottom:6px;overflow-wrap:anywhere}
+.data-source-panel .more-panel-help p{line-height:1.6;margin:8px 0;color:#576d5c;overflow-wrap:anywhere}
+.data-source-panel .more-panel-help code{overflow-wrap:anywhere;white-space:normal}
+.data-source-panel .more-panel-help .btn{margin:6px 0 8px}
+.data-source-panel .more-subdetail{margin-top:10px;margin-bottom:4px;min-width:0}
+.data-source-panel .more-subdetail > summary{font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.data-source-panel .more-subdetail > p,.data-source-panel .more-subdetail > .field,.data-source-panel .more-subdetail > .button-row{margin-left:12px;margin-right:12px}
+.data-source-panel .more-subdetail > .more-panel-help{margin-left:12px;margin-right:12px}
+.data-source-panel .more-panel-status{margin:5px 16px 8px;line-height:1.5}
+.data-source-panel .more-privacy-notes{padding:10px 16px 15px;display:grid;gap:10px}
+.data-source-panel .more-privacy-notes section{min-width:0}
+.data-source-panel .more-privacy-notes h3{margin:5px 0 2px;font-size:12px;color:#355f47;font-weight:750;line-height:1.4}
+.data-source-panel .more-privacy-notes .small-help{margin:0;line-height:1.65;overflow-wrap:anywhere}
+@media(max-width:420px){
+ .data-source-panel .more-panel-help{margin-left:12px;margin-right:12px}
+ .data-source-panel .more-subdetail > p,.data-source-panel .more-subdetail > .field,.data-source-panel .more-subdetail > .button-row{margin-left:10px;margin-right:10px}
+ .data-source-panel .more-privacy-notes{padding-left:12px;padding-right:12px}
+}
