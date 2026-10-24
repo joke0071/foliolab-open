@@ -105,3 +105,30 @@ Offen: manuelle TalkBack-/Android-Tastaturtests, Pixel-basierte visuelle Referen
 - Das bestehende CI-Screenshot-Artefakt enthält zusätzlich die Zustände **manueller Scanner nicht verfügbar** und **teilweise unterstützter Netzwerk-Scan** bei 390 und 1440 Pixel.
 
 Die Scannerlogik, Staking-Bewertung, Portfolio-Cashflows, lokale Datenpersistenz und API-Aufrufwege wurden **nicht verändert**. Pixelgenaue visuelle Baselines und reale Android-/TalkBack-Prüfungen bleiben offen.
+
+
+## Abschluss – Automatisierter Dialog- und Formularaudit, 24.10.2026
+
+**Status: AUTOMATISIERTER AUDIT ABGESCHLOSSEN** (vorbehaltlich grüner CI dieses Abschluss-Commits).
+Abdeckungsumfang: Dialogdarstellung und Responsive (320–1440 px), Tastaturfokus,
+Schließen/Verwerfen, Pflichtfeldfehler und `aria`-Hinweise, Anbieter-/Kontoidentität,
+Wallet-/Staking-Auswahl, CSV-Prüfliste, DeFi-Rollen, kritische Screenreader-Regeln (axe-core),
+Chromium sowie Firefox/WebKit, Persistenzintegrität beim Abbrechen.
+
+**Visuelle Regression:** 20 genehmigte Screenshot-Zustände aus dem unveränderten CI-Artefakt
+[Run 40078908906](https://github.com/joke0071/foliolab-open/actions/runs/40078908906)
+werden mit den Bilddimensionen und mit je 256 ortsgebundenen RGB565-Farbpixeln
+(`tests/dialog-visual-pixel-baselines.json`) verglichen. Ein Bild darf maximal 12
+deutlich veränderte Samples (>42 RGB-Einheiten Kanaldifferenz) aufweisen. Das ist
+eine **räumlich stichprobenbasierte Pixel-Regression**, keine pixelgenaue Vollbildgleichheit.
+Die ursprünglichen PNGs bleiben als [GitHub Actions-Artefakt](https://github.com/joke0071/foliolab-open/actions/runs/40078908906/artifacts/12554173269)
+nachvollziehbar, bis GitHub die Artefaktaufbewahrungsfrist erreicht. Baselines dürfen nur
+nach bewusster visueller Freigabe neu erstellt werden und werden in CI niemals automatisch aktualisiert.
+
+**Grenze:** Eine echte Android-TalkBack-, Android-PWA- und Software-Tastatur-Abnahme
+ist ohne ein reales Gerät nicht nachgewiesen. Sie ist ausdrücklich als **externe,
+offene Hardware-Verifikation** in `docs/DIALOG_AUDIT_ANDROID_TALKBACK_CHECKLIST.md`
+dokumentiert und kein behaupteter automatischer Testerfolg.
+
+Keine Änderungen an Portfolio-Finanzlogik, Wallet-Scanner, Kursquellen oder Backupformat
+in der Abschlussrunde. Neue Feature-Vorschläge/Redesigns sind nicht Teil dieses Audits.
