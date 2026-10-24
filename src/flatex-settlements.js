@@ -26,9 +26,12 @@ export function pairFlatexSettlements(prepared,{maxDays=7}={}){
     trade.reference.trim()===movement.reference.trim());
    const isin=Boolean(trade.isin&&reportedIsins.includes(trade.isin.toUpperCase()));
    if(!reference&&!isin)continue;
-   matches.push({cashIndex:j,evidence:reference&&isin?'Referenz und ISIN':reference?'Transaktionsreferenz':'ISIN im Buchungstext'});
+   matches.push({cashIndex:j,evidence:reference&&isin?'Referenz und ISIN':reference?'Transaktionsreferenz':'ISIN im Buchungstext',reference});
   }
-  return {tradeIndex:i,matches};
+  // If a real booking reference agrees, it takes precedence over coincidental
+  // ISIN mentions in other account movements. Never invent a best guess.
+  const referenced=matches.filter(m=>m.reference);
+  return {tradeIndex:i,matches:referenced.length?referenced:matches};
  });
  const incomingCounts=new Map();
  for(const x of candidates)for(const m of x.matches)incomingCounts.set(m.cashIndex,(incomingCounts.get(m.cashIndex)||0)+1);
