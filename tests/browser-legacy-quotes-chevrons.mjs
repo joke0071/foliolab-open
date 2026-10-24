@@ -53,7 +53,7 @@ try{
   assert.equal(arrows.provider[property],arrows.source[property],'Chevron '+property+' should match');
  assert.equal(arrows.provider.content,'""','Chevron must be shape, not a Unicode glyph');
  await provider.locator('summary').click();
- await market.locator('summary').click();
+ await market.locator(':scope > summary').click();
  // CSS transitions animate over 150 ms. Assert the final shared shape,
  // not two different intermediate animation frames.
  await page.waitForTimeout(220);
@@ -62,7 +62,7 @@ try{
  assert.notEqual(arrows.provider.transform,'none');
 
  const audit=page.locator('#legacyQuoteAudit');
- await audit.locator('summary').click();
+ await audit.locator(':scope > summary').click();
  assert.equal(await audit.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),0);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  const requestsBefore=externalRequests;
@@ -98,7 +98,7 @@ try{
  assert.equal(state.positions.find(x=>x.name==='Ethereum veralteter Kurs').priceExact,'80');
  assert.equal(state.snapshots.length,1);
  await page.reload();await page.locator('#mobileNav [data-page="more"]').click();
- await page.locator('#legacyQuoteAudit summary').click();
+ await page.locator('#legacyQuoteAudit > summary').click();
  await page.locator('#runLegacyQuoteAudit').click();
  assert.equal(await page.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),1,
   'Audited repairs survive reload, stale quote remains reviewable');
