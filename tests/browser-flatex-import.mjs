@@ -41,7 +41,7 @@ try{
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereit'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
  await page.locator('#saveDialog').click();
- await page.waitForFunction(()=>!document.querySelector('#saveDialog')||document.querySelector('#saveDialog').closest('dialog')?.open===false);
+ await page.waitForFunction(id=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1')||'{}');return m.positions?.find(x=>x.id===id)?.quantityExact==='2';},ids.p);
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(x=>x.id===ids.p).quantityExact,'2');
  assert.equal(m.positions.find(x=>x.id===ids.q).quantityExact,'0');
