@@ -36,6 +36,7 @@ import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-impor
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
 import {pairFlatexSettlements} from './flatex-settlements.js';
 import {auditFlatexSettlementAmounts} from './flatex-settlement-audit.js';
+import {auditFlatexCashStatements,flatexCashAccountChoices} from './flatex-cash-audit.js';
 import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
@@ -851,6 +852,8 @@ function openCSVImport(){
     else{
      const amounts=auditFlatexSettlementAmounts(brokerImport,model,accountId,{accountAmountsEUR:bankEURConfirmed});
      const sum=amounts.counts;
+     const cashStatement=auditFlatexCashStatements(brokerImport,{accountAmountsEUR:bankEURConfirmed});
+     const availableCash=flatexCashAccountChoices(model,accountId);
      const warn=amounts.distinctAccountIdentifiers.length>1?
       '<p class="small-help">Mehrere Kontoreferenzen im Export erkannt: '+amounts.distinctAccountIdentifiers.length+'. Kontoumsätze bleiben strikt voneinander getrennt.</p>':'';
      $('csvBrokerSettlement').innerHTML='<details class="advanced-apis"><summary>Abrechnungsbeträge vergleichen ('+amounts.entries.length+' mögliche Paare)</summary>'+
@@ -861,7 +864,17 @@ function openCSVImport(){
         ' · '+esc(entry.evidence)+
         (entry.grossExact!==null?' · Brutto '+esc(entry.grossExact)+' EUR · Kontoumsatz '+esc(entry.cashExact)+' EUR · Differenz '+esc(entry.differenceExact)+' EUR':'')+
         '<p class="small-help">'+esc(entry.message)+'</p></div>').join('')+
-      (amounts.entries.length>40?'<p class="small-help">Weitere Buchungen separat prüfen.</p>':'')+'</details>';
+      (amounts.entries.length>40?'<p class="small-help">Weitere Buchungen separat prüfen.</p>':'')+'</details>'+
+      '<details class="advanced-apis"><summary>Kontoumsätze nach CSV-Kontoreferenz ('+cashStatement.groups.length+' Gruppen)</summary>'+
+      '<p class="small-help">'+esc(cashStatement.note)+'</p>'+
+      '<p class="small-help">'+availableCash.length+' mögliche manuelle EUR-Guthabenposition(en) desselben Flatex-Anbieters vorhanden. Eine Kontoreferenz im Export wird keinem FolioLab-Guthaben automatisch zugeordnet.</p>'+
+      (cashStatement.issues.length?'<p class="small-help">'+cashStatement.issues.length+' Kontozeilen nicht eindeutig auswertbar.</p>':'')+
+      cashStatement.groups.slice(0,25).map(g=>
+       '<div class="history-sub">'+esc(g.reference)+' · '+g.count+' Zeilen · '+esc(g.earliest)+' bis '+esc(g.latest)+
+       (g.netExact==null?' · EUR-Währung noch nicht bestätigt':
+        ' · Zuflüsse '+esc(g.inflowsExact)+' EUR · Abflüsse '+esc(g.outflowsExact)+' EUR · Netto '+esc(g.netExact)+' EUR')+
+       '<p class="small-help">'+Object.entries(g.kinds).map(([k,n])=>esc(k)+': '+n).join(' · ')+'</p></div>').join('')+
+      (cashStatement.groups.length>25?'<p class="small-help">Weitere CSV-Kontoreferenzen getrennt prüfen.</p>':'')+'</details>';
     }
    }
    if(brokerImport&&$('csvBrokerReconcile')){
@@ -952,7 +965,7 @@ function openCSVImport(){
     const accountChoices=brokerAccounts.map(a=>[a.id,(model.providers.find(p=>p.id===a.providerId)?.name||'Flatex')+' · '+a.name]);
     $('csvMapping').innerHTML='<label class="field"><span>Welches Flatex-Depot?</span><select id="csvBrokerAccount">'+options([['','Depot auswählen'],...accountChoices],'')+'</select></label>'+
       (!accountChoices.length?'<p class="small-help">Bitte zuerst unter „Mehr“ einen Flatex-Anbieter und ein Wertpapierdepot anlegen.</p>':'')+
-      (brokerImport.cashItems.length?'<label class="csv-skip"><input id="csvBrokerAmountsEUR" type="checkbox"> Die Beträge im hochgeladenen Kontoumsatz-Export sind in EUR ausgewiesen (laut Auszug geprüft).</label><div id="csvBrokerSettlement" role="status"></div>':'')+
+      (brokerImport.cashItems.length?'<label class="csv-skip"><input id="csvBrokerAmountsEUR" type="checkbox"> Die Beträge im hochgeladenen Kontoumsatz-Export sind in EUR ausgewiesen (laut Auszug geprüft).</label><div id="csvBrokerSettlement" role="group" aria-label="Flatex-Abrechnungsabgleich"></div>':'')+
       '<div id="csvBrokerReconcile" role="status"></div>'+
       '<p class="small-help">Wertpapiere werden nur innerhalb des ausgewählten Depots über ihre ISIN zugeordnet. Andere Broker und Depots bleiben geschützt.</p>';
     $('csvBrokerAccount').addEventListener('change',()=>{positionOverrides={};backfillRequested=false;review();});
