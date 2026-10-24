@@ -18,7 +18,7 @@ try{
  await page.reload();
  await page.locator('#sidebarNav [data-page="bookings"]').click();
  await page.locator('#openCSVImport').click();
- await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5')});
+ await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr;Steuer\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5;0')});
  await page.locator('#csvCashPosition').evaluate(el=>el.closest('details').open=true);
  await page.locator('#csvCashPosition').selectOption(ids.cash);
  await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereit'));
@@ -30,7 +30,7 @@ try{
  assert.equal(state.journalEntries.length,1);
  assert.equal(state.bookings[0].importFingerprint!=null,true);
  await page.locator('#openCSVImport').click();
- await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5')});
+ await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr;Steuer\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5;0')});
  await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereits vorhanden'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),true);
  page.once('dialog',d=>d.accept()); // Discard the staged duplicate CSV preview.

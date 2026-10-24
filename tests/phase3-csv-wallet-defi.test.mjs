@@ -22,7 +22,7 @@ test('RFC4180-style CSV, quoted fields, BOM, semicolon and European decimal',()=
 });
 test('CSV previews and commits balanced journal only after confirmation; reimport dedupes',()=>{
  const {m,etf,cash}=fixture(),original=JSON.stringify(m);
- const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5');
+ const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs;Gebühr;Steuer\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5;0');
  const options={defaultPositionId:etf.id,cashPositionId:cash.id};
  const p=previewCSV(m,csv,inferMapping(csv.headers),options);
  assert.equal(p.ready,1);assert.equal(p.issues.length,0);assert.equal(JSON.stringify(m),original);
@@ -37,7 +37,7 @@ test('CSV previews and commits balanced journal only after confirmation; reimpor
 });
 test('CSV invalid input does not partly modify portfolio',()=>{
  const {m,etf,cash}=fixture();
- const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs\n2026-10-21;Kauf;IE00BK5BQT80;1;100\n2026-10-21;Kauf;IE00BK5BQT80;100;100');
+ const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs;Gebühr;Steuer\n2026-10-21;Kauf;IE00BK5BQT80;1;100;0;0\n2026-10-21;Kauf;IE00BK5BQT80;100;100;0;0');
  const preview=previewCSV(m,csv,inferMapping(csv.headers),{defaultPositionId:etf.id,cashPositionId:cash.id});
  assert.equal(preview.ready,1);assert.equal(preview.issues.length,1);
  const old=JSON.stringify(m);assert.throws(()=>importCSV(m,preview),/fehlerhafte/);assert.equal(JSON.stringify(m),old);
@@ -158,7 +158,7 @@ test('A checksummed extended key with out-of-range secp256k1 X coordinate is rej
 
 test('Two identical broker CSV rows are distinct if both occur in one file, but repeat imports dedupe',()=>{
  const {m,etf,cash}=fixture();
- const file='Datum;Typ;ISIN;Menge;Kurs\n2026-10-21;Kauf;IE00BK5BQT80;1;100\n2026-10-21;Kauf;IE00BK5BQT80;1;100';
+ const file='Datum;Typ;ISIN;Menge;Kurs;Gebühr;Steuer\n2026-10-21;Kauf;IE00BK5BQT80;1;100;0;0\n2026-10-21;Kauf;IE00BK5BQT80;1;100;0;0';
  const csv=parseCSV(file),mapping=inferMapping(csv.headers),options={defaultPositionId:etf.id,cashPositionId:cash.id};
  const first=previewCSV(m,csv,mapping,options);
  assert.equal(first.ready,2);assert.equal(first.duplicates,0);
