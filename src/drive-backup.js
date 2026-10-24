@@ -10,6 +10,7 @@ const PREF_KEY='foliolab-open-drive-backup-settings-v1';
 const KEY_DB='foliolab-open-drive-recovery-keys-v1';
 const FOLDER='FolioLab Backups';
 const LABEL='foliolab-open-v1';
+const NEW_BACKUP_LABEL='foliolab-open-v2';
 const FORMATS=['foliolab-drive-encrypted-v1'];
 const get=id=>document.getElementById(id);
 const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',recoverySaved:false,folderId:'',folderName:'',cleanupPending:false};
@@ -409,10 +410,13 @@ async function reloadFolders(){
 }
 async function filesInFolder(id){
  if(!id)return [];
- const q="'"+id.replace(/[^A-Za-z0-9_-]/g,'')+"' in parents and trashed = false and appProperties has { key='foliolabBackup' and value='"+LABEL+"' }";
- const items=await listQuery(q,'id,name,createdTime,size');
- return items.filter(f=>/^FolioLab-\d{4}-\d{2}-\d{2}T[\d-]+Z\.encrypted\.json$/.test(f.name||'')).sort((a,b)=>String(b.createdTime||'').localeCompare(String(a.createdTime||'')));
+ const folderId=id.replace(/[^A-Za-z0-9_-]/g,'');
+ const q="'"+folderId+"' in parents and trashed = false and (appProperties has { key='foliolabBackup' and value='"+LABEL+"' } or appProperties has { key='foliolabBackup' and value='"+NEW_BACKUP_LABEL+"' })";
+ const items=await listQuery(q,'id,name,createdTime,size,appProperties');
+ return items.filter(f=>/^FolioLab-\d{4}-\d{2}-\d{2}T[\d-]+Z\.encrypted\.json$/.test(f.name||''))
+  .sort((a,b)=>String(b.createdTime||'').localeCompare(String(a.createdTime||'')));
 }
+const isCurrentBackup=file=>file.appProperties?.foliolabBackup===NEW_BACKUP_LABEL;
 async function refreshList(){
  if(!hasToken())return;
  try{
@@ -436,7 +440,7 @@ async function refreshList(){
 async function createFile(parent,encrypted){
  const stamp=iso().replace(/[:.]/g,'-');
  const name='FolioLab-'+stamp+'.encrypted.json';
- const metadata={name,mimeType:'application/json',parents:[parent],appProperties:{foliolabBackup:LABEL}};
+ const metadata={name,mimeType:'application/json',parents:[parent],appProperties:{foliolabBackup:NEW_BACKUP_LABEL}};
  const boundary='foliolab'+Math.random().toString(36).slice(2);
  const body=new Blob(['--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n',JSON.stringify(metadata),
   '\r\n--'+boundary+'\r\nContent-Type: application/json\r\n\r\n',encrypted,'\r\n--'+boundary+'--'],
@@ -466,7 +470,7 @@ async function backup(automatic=false){
    const saved=await filesInFolder(dir);
    if(!saved.some(f=>f.id===uploaded.id))throw Error('Hochgeladenes Backup fehlt in der Dateiliste; ältere Dateien bleiben erhalten.');
    verified=true;
-   for(const old of saved.slice(prefs.retention)){
+   for(const old of saved.filter(isCurrentBackup).slice(prefs.retention)){
     await api('drive/v3/files/'+encodeURIComponent(old.id),{method:'DELETE'});
     removed++;
    }
@@ -549,7 +553,7 @@ async function trimExisting(){
   if(!dir){prefs.cleanupPending=false;savePrefs();status('Noch keine Drive-Backups vorhanden.');return}
   const items=await filesInFolder(dir);
   let removed=0;
-  for(const item of items.slice(prefs.retention)){
+  for(const item of items.filter(isCurrentBackup).slice(prefs.retention)){
    await api('drive/v3/files/'+encodeURIComponent(item.id),{method:'DELETE'});
    removed++;
   }
