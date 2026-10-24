@@ -711,3 +711,8 @@
 .asset-wizard-dialog [aria-invalid="true"]{border-color:#ac4c42;box-shadow:0 0 0 1px #ac4c42}
 .edit-dialog .dialog-error:focus{outline:none}
 .edit-dialog .dialog-head h2:focus{outline:none}
+
+/* Dialog-only touch ergonomics, preserving native disclosure markers. */
+.edit-dialog .icon-close{min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:10px;flex:0 0 auto}
+.edit-dialog .dialog-footer .btn{min-height:44px}
+.edit-dialog .advanced-apis>summary{min-height:44px}

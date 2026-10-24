@@ -622,7 +622,7 @@ function openWalletImport(){
     '<label class="field"><span>Staking-Asset</span><select id="scanAsset">'+options([['','Keine Vorauswahl'],...STAKING_ASSETS.map(a=>[a.id,a.name+' ('+a.ticker+') · '+STAKING_MODES[a.mode]])],'')+'</select></label>'+
     '<p id="scanAssetInfo" class="small-help" role="status">Einige Staking-Formen sind nur manuell erfassbar.</p></details>'+
   '<div class="wallet-scan-action"><button class="btn primary" type="button" id="scanWalletButton">Coins suchen</button><p id="scanWalletStatus" class="small-help" role="status">Noch keine Suche gestartet.</p></div>'+
-  '<div id="walletScanResults" class="wallet-scan-results" aria-live="polite"></div>'+
+  '<div id="walletScanResults" class="wallet-scan-results"></div>'+
   '<section id="scanSaveSettings" class="wallet-save-settings hidden"><h3>Wo möchtest du die Coins speichern?</h3>'+
     '<p class="small-help">Die gefundenen Coins werden unter dieser Wallet in FolioLab abgelegt. Du kannst auch einen vorhandenen Anbieter verwenden.</p>'+
     '<label class="field"><span>Wallet / Anbieter</span><select name="providerId" id="scanProvider">'+providers+'</select></label>'+
