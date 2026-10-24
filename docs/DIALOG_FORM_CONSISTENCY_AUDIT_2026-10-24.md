@@ -73,3 +73,13 @@ Weitere offene Arbeit: vollständiges Wording-Screening aller dynamischen Fehler
 - Browser-Test `browser-dialog-financial-choices.mjs` ergänzt mehrere Wallet-Anbieter und -Konten, expliziten Anbieterwechsel, erhaltene eigene Kontonamen, Fokus, Touch-Ziele, Abbruch ohne Persistenz und acht Viewports. Referenz-Screenshots umfassen künftig auch Wallet-Dialoge bei 390 und 1440 px.
 
 Nicht vollständig nachgewiesen: automatische Erkennung sämtlicher externen Wallet-Anbieter im Offline-Fall, vollständige Datenzuordnungs-Regression für alle seltenen DeFi-/Staking-Zweige, echte TalkBack-/Android-Tastaturbedienung und pixelbasierte Screenshot-Baselines.
+
+## Korrekturrunde 5 – CSV-Vorschau und übernommene Vorschläge
+
+- Der CSV-Prüfbereich ist keine vollständig vorlesende Live-Region mehr: Nur Anzahl bereiter, doppelter, offener und übersprungener Zeilen wird für Screenreader als `role=status` bekanntgegeben.
+- Mehrdeutige Zuordnungen und Skip-Checkboxen erhalten verständliche zeilenspezifische Bezeichnungen. Nach einer Neuberechnung kehrt der Tastaturfokus zu einer erhaltenen Checkbox zurück; ist die gerade bearbeitete Zeile erfolgreich zugeordnet und verschwindet, springt er auf die fokussierbare Überschrift der Prüfliste.
+- Die Auswahl eines CoinGecko-Katalog-Treffers oder einer bestätigten Wertpapier-Börsennotierung wird auch dann als ungespeicherte Änderung erkannt, wenn der Browser kein natives `input`-Event auslöst. Ein anschließender Abbruch nutzt die bestehende Verwerfbestätigung.
+- Zusätzlicher Chromium-Browser-Test `browser-csv-review-a11y.mjs` mit mehreren unklaren CSV-Zeilen, Nachzuordnung, Skip/Unskip, Fokus, Bestätigungsabbruch und unveränderten Portfoliodaten.
+- Unverändert: all-or-nothing CSV-Transaktionssimulation, Dublettenlogik, manuelle Gegenkonto-Zuordnung, DeFi-Validierung und Rückverfolgbarkeit von Buchungen.
+
+Offen bleiben reale Android-/TalkBack-Tests, vollständige Pixel-Regressionen und seltene DeFi-Zweige.
