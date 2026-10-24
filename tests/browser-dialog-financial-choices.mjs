@@ -40,6 +40,9 @@ try{
  assert.equal(await page.locator('#scanProvider option[value=""]').innerText(),'Wallet-Anbieter auswählen');
  assert.equal(await page.locator('#scanWalletStatus').getAttribute('role'),'status','Only concise scan status is announced');
  assert.equal(await page.locator('#walletScanResults').getAttribute('aria-live'),null,'Results list must not announce 150 rows');
+ // Expose the post-scan storage controls without making external wallet/network requests.
+ // The scanner's separate result-validation and wallet-save gate remain unchanged.
+ await page.locator('#scanSaveSettings').evaluate(el=>el.classList.remove('hidden'));
  await page.locator('#scanProvider').selectOption(ids.p1);
  assert.equal(await page.locator('#scanAccount').inputValue(),'','Multiple wallet accounts require explicit choice');
  assert.equal(await page.locator('#scanAccount option[value=""]').innerText(),'Wallet-Konto auswählen');
