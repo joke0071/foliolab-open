@@ -58,7 +58,7 @@ onCheckpoint returns a structured-cloned public in-memory session. No persistenc
 | No persistent financial change | Browser checks model/backup representation, localStorage and IndexedDB unchanged |
 | Browser/PWA/cross-engine | Dedicated adapter gate wired into Chromium and Firefox/WebKit CI; existing journal/backup/multitab/PWA gates |
 
-`tests/ethereum-history.test.mjs`: 17 top-level tests with parameterized cases. Initial fixture failures were fixed (mismatch value after default decimals change, shared mutable fixture token array); no existing tests removed or weakened. Same-budget resume regression drove revalidation/continuation correction. Full Node/syntax and final CI evidence are recorded in the PR.
+`tests/ethereum-history.test.mjs`: 17 top-level tests with parameterized cases. Initial fixture failures were fixed (mismatch value after default decimals change, shared mutable fixture token array); no existing tests removed or weakened. Same-budget resume regression drove revalidation/continuation correction. A strict timeout-code regression then exposed the timer/AbortController race (timeout mislabeled as user abort); rejection order was corrected and both fetch/body timeout codes re-tested. Full Node/syntax and final CI evidence are recorded in the PR.
 
 ## Informational public checks (not deterministic acceptance)
 

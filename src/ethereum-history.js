@@ -102,7 +102,7 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
    abort(signal);const controller=new AbortController(),listener=()=>controller.abort();let timer;
    signal?.addEventListener('abort',listener,{once:true});
    try{
-    const expired=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('timeout'));},timeoutMs);controller.signal.addEventListener('abort',()=>reject(Error('aborted')),{once:true});});
+    const expired=new Promise((_,reject)=>{timer=setTimeout(()=>{reject(Error('timeout'));controller.abort();},timeoutMs);controller.signal.addEventListener('abort',()=>reject(Error('aborted')),{once:true});});
     const r=await Promise.race([fetcher(url,{method:body?'POST':'GET',...(body?{headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{}),signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error'}),expired]);
     if(!r.ok){const e=Error('http-'+r.status);e.retryable=r.status===429||r.status>=500;e.delay=r.headers?.get('Retry-After');throw e;}
     const d=await Promise.race([r.json(),expired]);if(d?.error)throw Error('rpc-error');return d;

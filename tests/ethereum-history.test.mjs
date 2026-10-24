@@ -36,7 +36,7 @@ test('page budget, safe replay resume and scope binding',async()=>{
 });
 test('HTTP errors, recovery, CORS and fetch/body timeout never yield zero',async()=>{
  for(const status of [403,429,500]){const p=provider({status}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});assert.equal(Boolean(r.replay),status!==403);if(status===403)assert.deepEqual(r.issues,['http-403']);}
- for(const fetcher of [async()=>{throw TypeError('CORS');},()=>new Promise(()=>{}),async()=>({ok:true,json:()=>new Promise(()=>{})})]){const r=await fetchEthereumHistory({...options,fetcher,timeoutMs:10});assert.equal(r.replay,null);assert.equal(r.coverage,'partial');}
+ for(const [i,fetcher] of [async()=>{throw TypeError('CORS');},()=>new Promise(()=>{}),async()=>({ok:true,json:()=>new Promise(()=>{})})].entries()){const r=await fetchEthereumHistory({...options,fetcher,timeoutMs:10});assert.equal(r.replay,null);assert.equal(r.coverage,'partial');if(i>0)assert.deepEqual(r.issues,['timeout']);}
 });
 test('AbortSignal, provider internals failure, scanner mismatch and unfinalized/reorg quality',async()=>{
  const c=new AbortController();c.abort();const a=await fetchEthereumHistory({...options,signal:c.signal,fetcher:provider().fetcher});assert.deepEqual(a.issues,['aborted']);
