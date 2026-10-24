@@ -60,6 +60,8 @@ try{
   assert.equal(await page.locator('#historyPage #addWallet').count(),0,'History must not have a wallet action');
   assert.equal((await page.locator('#historyCalendarDisclosure > summary').textContent()).trim(),'','Calendar trigger must stay icon-only');
   assert.ok((await page.locator('#pageDescription').textContent())?.includes('Stichtagen'),'History needs a descriptive subtitle');
+  assert.equal(await page.locator('#historyPage .history-panel > .panel-head').count(),0,'History chart must not duplicate the page heading');
+  assert.equal(await page.locator('#historyPage .history-panel[role="region"]').count(),1,'History chart needs an accessible region name');
   assert.equal((await page.locator('#addSnapshot .history-add-label').textContent()).trim(),'Stichtag','Desktop snapshot text must stay short');
   const calendarStroke=await page.locator('#historyCalendarDisclosure > summary svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
   assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
