@@ -738,12 +738,12 @@ function flatexWouldDoubleCount(current,prepared,accountId){
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
  if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
- let parsed=null,positionOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false;
+ let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
  const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
  const selectedBrokerAccount=()=>brokerImport?($('csvBrokerAccount')?.value||''):'';
- const previewOptions=()=>({positionOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||'',allowedAccountId:selectedBrokerAccount()});
+ const previewOptions=()=>({positionOverrides,fxRateOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||'',allowedAccountId:selectedBrokerAccount()});
  showDialog('CSV importieren','BUCHUNGEN',
   '<p class="dialog-intro">Wähle allgemeine Buchungen oder Flatex-Exporte. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
   '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option></select></label>'+ 
@@ -786,10 +786,12 @@ function openCSVImport(){
    const errors=result.rows.filter(x=>x.status==='error');
    const detail=errors.map(x=>{
     const unmatched=needsMatch(x.message);
+    const fxMissing=/Historischer Wechselkurs fehlt/.test(x.message);
+    const fxField=fxMissing?'<label class="field"><span>Abgerechneter EUR-Wechselkurs (Handelswährung × Kurs)</span><input type="text" inputmode="decimal" data-csv-fx="'+x.line+'" value="'+esc(fxRateOverrides[x.line]||'')+'" placeholder="z. B. 0,92"></label>':'';
     const select=unmatched?'<label class="field"><span>Passende Anlage</span><select data-csv-assign="'+x.line+'">'+
       options([['','Bitte auswählen'],...positions.filter(p=>!brokerImport||p.accountId===selectedBrokerAccount()).map(p=>[p.id,p.name+(p.isin?' · '+p.isin:p.symbol?' · '+p.symbol:'')])],positionOverrides[x.line]||'')+
       '</select></label>':'';
-    return '<div class="csv-review-row"><strong>Zeile '+x.line+'</strong><p>'+esc(x.message)+'</p>'+select+
+    return '<div class="csv-review-row"><strong>Zeile '+x.line+'</strong><p>'+esc(x.message)+'</p>'+select+fxField+
       '<label class="csv-skip"><input type="checkbox" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
    }).join('');
    const examples=result.rows.filter(x=>x.status==='ready').slice(0,5).map(x=>
@@ -803,6 +805,7 @@ function openCSVImport(){
     if(el.value)positionOverrides[Number(el.dataset.csvAssign)]=el.value;else delete positionOverrides[Number(el.dataset.csvAssign)];
     review();
    }));
+   $('csvReview').querySelectorAll('[data-csv-fx]').forEach(el=>el.addEventListener('change',()=>{fxRateOverrides[Number(el.dataset.csvFx)]=el.value.trim();review();}));
    $('csvReview').querySelectorAll('[data-csv-skip]').forEach(el=>el.addEventListener('change',()=>{
     const line=Number(el.dataset.csvSkip);
     if(el.checked){if(!skippedLines.includes(line))skippedLines.push(line);}
@@ -822,7 +825,7 @@ function openCSVImport(){
  };
  async function chooseCSV(){
   const files=[...($('csvFile').files||[])];
-  parsed=null;brokerImport=null;brokerAccepted=false;positionOverrides={};skippedLines=[];
+  parsed=null;brokerImport=null;brokerAccepted=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
