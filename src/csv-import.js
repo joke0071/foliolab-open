@@ -49,15 +49,15 @@ export function normalizeCSVNumber(input,{optional=false}={}){
 }
 function typeOf(value){const t=String(value??'').toLowerCase().trim();return ({kauf:'buy',buy:'buy',verkauf:'sell',sell:'sell',einzahlung:'deposit',deposit:'deposit',auszahlung:'withdraw',withdraw:'withdraw',dividende:'dividend',dividend:'dividend',zinsen:'interest',interest:'interest',gebühr:'fee',gebuehr:'fee',fee:'fee',steuer:'tax',tax:'tax',reward:'reward',airdrop:'airdrop',transfer:'transfer'})[t]||null;}
 const fingerprint=r=>JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId||'']);
-function resolvePosition(model,key,defaultId){
+function resolvePosition(model,key,defaultId,allowedAccountId=''){
  const needle=String(key||'').trim().toLowerCase();
  if(!needle){const p=model.positions.find(p=>p.id===defaultId);if(!p)throw Error('Anlage fehlt – bitte diese Buchung ausdrücklich zuordnen.');return p;}
- const hits=model.positions.filter(p=>[p.id,p.name,p.isin,p.symbol].some(s=>s&&String(s).toLowerCase()===needle));
+ const hits=model.positions.filter(p=>(!allowedAccountId||p.accountId===allowedAccountId)&&[p.id,p.name,p.isin,p.symbol].some(s=>s&&String(s).toLowerCase()===needle));
  if(hits.length!==1)throw Error('Anlage nicht eindeutig erkannt: '+needle.slice(0,42)+'. Bitte zuordnen.');
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[]}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={}}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
@@ -66,12 +66,15 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
   if(ignored.has(item.index)){list.push({line:item.index,status:'skipped'});continue;}
   try{
    const d=item.data,type=typeOf(d[mapping.type]);if(!type)throw Error('Buchungstyp unbekannt.');
-   const pos=resolvePosition(draft,positionOverrides[item.index]||d[mapping.position],defaultPositionId);
+   const pos=resolvePosition(draft,positionOverrides[item.index]||d[mapping.position],defaultPositionId,allowedAccountId);
+   if(allowedAccountId&&pos.accountId!==allowedAccountId)throw Error('Anlage gehört nicht zum gewählten Depot. Bitte Flatex-Depot und ISIN prüfen.');
    const qty=normalizeCSVNumber(d[mapping.quantity]);
    const price=normalizeCSVNumber(d[mapping.unitPrice]||pos.price,{optional:true});
    const fee=normalizeCSVNumber(d[mapping.feeEUR],{optional:true});
    const tax=normalizeCSVNumber(d[mapping.taxEUR],{optional:true});
-   const fx=normalizeCSVNumber(d[mapping.fxRate]|| (pos.currency==='EUR'?'1':''),{optional:pos.currency==='EUR'});
+   const providedFx=Object.hasOwn(fxRateOverrides,item.index)?fxRateOverrides[item.index]:(d[mapping.fxRate]||(pos.currency==='EUR'?'1':''));
+   if(pos.currency!=='EUR'&&!String(providedFx).trim())throw Error('Historischer Wechselkurs fehlt. Bitte den tatsächlichen Brokerkurs in EUR je Handelswährung eingeben.');
+   const fx=normalizeCSVNumber(providedFx,{optional:pos.currency==='EUR'});
    const ref=String(d[mapping.externalId]||'').trim().slice(0,100);
    const linked=String(d[mapping.cashPosition]||'').trim();
    const c=linked?resolvePosition(draft,linked,'').id:(['buy','sell'].includes(type)?cashPositionId||'':'');
