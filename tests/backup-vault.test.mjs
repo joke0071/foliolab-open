@@ -1,12 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {webcrypto} from 'node:crypto';
 import {
  BACKUP_V2,hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,
  decryptPasswordBackup,isPasswordBackup,adoptBackupPassword
 } from '../src/backup-vault.js';
 
-const originalCrypto=globalThis.crypto,originalDb=globalThis.indexedDB;
+const originalDb=globalThis.indexedDB;
 function dbMock(){
  const map=new Map();
  const database={
@@ -29,11 +28,10 @@ function dbMock(){
 }
 function setup(){
  const mock=dbMock();
- globalThis.crypto=webcrypto;
  globalThis.indexedDB=mock.indexedDB;
  return mock;
 }
-test.after(()=>{globalThis.crypto=originalCrypto;globalThis.indexedDB=originalDb});
+test.after(()=>{globalThis.indexedDB=originalDb});
 
 test('single password allows automatic local/Drive encryption and cross-device recovery',async()=>{
  const db=setup(),plain=JSON.stringify({version:3,positions:[{name:'Private holdings',value:12345}],snapshots:[]});
