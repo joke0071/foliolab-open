@@ -59,6 +59,7 @@ jobs:
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-flatex-import.mjs
           node tests/browser-flatex-backfill.mjs
+          node tests/browser-defi-dialog-guidance.mjs
           node tests/browser-audit.mjs
           node tests/browser-dashboard-polish.mjs
           node tests/browser-responsive-actions.mjs

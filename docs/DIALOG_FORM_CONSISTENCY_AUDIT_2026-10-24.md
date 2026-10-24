@@ -83,3 +83,14 @@ Nicht vollständig nachgewiesen: automatische Erkennung sämtlicher externen Wal
 - Unverändert: all-or-nothing CSV-Transaktionssimulation, Dublettenlogik, manuelle Gegenkonto-Zuordnung, DeFi-Validierung und Rückverfolgbarkeit von Buchungen.
 
 Offen bleiben reale Android-/TalkBack-Tests, vollständige Pixel-Regressionen und seltene DeFi-Zweige.
+
+## Korrekturrunde 6 – DeFi- und Staking-Zuordnung
+
+- Positionseditor und Anlage-Assistent verwenden eine gemeinsame reine Informationslogik für die wirtschaftliche Rolle, den Vermögenssummen-Modus und die Referenzposition.
+- Bei `Nicht anrechnen` ist eine bewusst ausgewählte Referenz erforderlich; das Eingabefeld wird als erforderlich und mit `aria-required` ausgezeichnet. Eine fehlende Referenz wird im Assistenten direkt am Feld angezeigt, bevor die atomare Speicherung beginnt.
+- `Als Verbindlichkeit abziehen` warnt, solange die wirtschaftliche Funktion nicht `Geliehene Assets / Verbindlichkeit` ist. Es erfolgen ausdrücklich **keine** automatischen Umbuchungen oder Auswahländerungen.
+- Referenzen auf bereits ausgeschlossene oder als Verbindlichkeit gewertete Positionen erzeugen einen Hinweis zur wirtschaftlichen Prüfung, ohne bestehende Finanzdaten zu migrieren oder historische Backups zu entwerten.
+- Ergänzte Unit-Tests und Browser-Regression: verpflichtende Referenz, Rolle/Modus-Widerspruch, expliziter Ablehnungsweg ohne Mutation, Fokus, Abbruch und mobile/desktop Viewports.
+- Unverändert: `validateEconomicPosition`, `valueSign`, Portfoliobewertung, Transaktionen und Snapshot-/Backupformate.
+
+Offen: manuelle TalkBack-/Android-Tastaturtests, Pixel-basierte visuelle Referenzregression und vollständige seltene Staking-Scanner-Varianten.
