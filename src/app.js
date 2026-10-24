@@ -2,6 +2,7 @@ import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
 import {installCredentialVisibility} from './credential-visibility.js';
+import {createDialogDiscardGuard} from './dialog-discard.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
@@ -43,7 +44,7 @@ const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['
 const PAGE_DESCRIPTIONS={history:'Vermögensstände nach Zeitraum und Stichtagen ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.'};
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
-const accountTypes={securities:'Wertpapierdepot',checking:'Giro- / Verrechnungskonto',savings:'Tages- / Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
+const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
 const providerPresets=providerDirectory.map(p=>p.name);
 function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-unbacked-changes')||0);}catch{return 0;}}
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
@@ -345,7 +346,16 @@ function renderBackupStatus(){
   ?'Zuletzt für einen Download erstellt: '+date.toLocaleDateString('de-AT')+' · '+date.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})+'. Prüfe, ob du die Datei sicher abgelegt hast.'
   :'Noch kein Backup erstellt. Sichere deine lokalen Daten regelmäßig.';
 }
-let dialogOpener=null;
+let dialogOpener=null,editorSubmitting=false;
+const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
+ isDirty:()=>Boolean(editor?.dirty),
+ isBusy:()=>editorSubmitting,
+ onClose:()=>{
+  editor=null;
+  const opener=dialogOpener;dialogOpener=null;
+  if(opener?.isConnected)opener.focus({preventScroll:true});
+ }
+});
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
  :title.startsWith('Konto')?'Konto speichern'
  :title.startsWith('Position')?'Position speichern'
@@ -355,7 +365,7 @@ const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
  :title.startsWith('CSV')?'Buchungen importieren':'Speichern';
 function showDialog(title,kicker,html,onSave){
  dialogOpener=document.activeElement;
- editor={onSave};
+ editor={onSave,dirty:false};
  $('dialogTitle').textContent=title;
  $('dialogKicker').textContent=kicker;
  $('dialogFields').innerHTML=html;
@@ -365,7 +375,7 @@ function showDialog(title,kicker,html,onSave){
  $('saveDialog').disabled=false;
  $('editDialog').showModal();
 }
-function closeDialog(){if($('editDialog').open)$('editDialog').close();}
+function closeDialog({force=false}={}){return editorDiscardGuard.requestClose({force});}
 function providerMatchMarkup(query){
  const found=providerSuggestions(query,6);
  return found.length?found.map(x=>'<button type="button" class="onboarding-suggestion" data-provider-preset="'+esc(x.name)+'"><strong>'+esc(x.name)+'</strong><span>'+esc(types[x.type])+'</span></button>').join(''):'<p class="small-help">Kein Vorschlag? Eigene Anbieterbezeichnung und Typ frei eintragen.</p>';
@@ -960,7 +970,7 @@ async function confirmDeletePosition(id,{fromDialog=false}={}){
   deletePosition(model,id);
   snapshot(model);
   await save();
-  if(fromDialog)closeDialog();
+  if(fromDialog)closeDialog({force:true});
   notify('Position gelöscht. Historische Stichtage wurden nicht gelöscht.');
  }catch(error){notify(String(error.message||error),true);}
 }
@@ -1153,19 +1163,20 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
- $('editDialog').addEventListener('close',()=>{
-  editor=null;
-  const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});
- });
+ const markEditorDirty=event=>{
+  if(editor&&event.target.matches('input, select, textarea'))editor.dirty=true;
+ };
+ $('dialogFields').addEventListener('input',markEditorDirty);
+ $('dialogFields').addEventListener('change',markEditorDirty);
  $('editorForm').addEventListener('submit',async e=>{
-  e.preventDefault();if(!editor||saving)return;
+  e.preventDefault();if(!editor||saving||editorSubmitting)return;
+  editorSubmitting=true;
   const button=$('saveDialog');button.disabled=true;
   const f=new FormData(e.currentTarget),v=Object.fromEntries(f.entries());
   $('dialogError').textContent='';$('dialogError').classList.add('hidden');
-  try{await editor.onSave(v);closeDialog();}
+  try{await editor.onSave(v);closeDialog({force:true});}
   catch(err){$('dialogError').textContent='Änderung nicht gespeichert: '+String(err.message||err);$('dialogError').classList.remove('hidden');}
-  finally{button.disabled=false;}
+  finally{editorSubmitting=false;button.disabled=false;}
  });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
@@ -1324,7 +1335,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  onCommit:async ({draft})=>{
   model=draft;
   await save();
-  notify('Anlage sicher gespeichert.');
+  notify('Position gespeichert.');
  },
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results

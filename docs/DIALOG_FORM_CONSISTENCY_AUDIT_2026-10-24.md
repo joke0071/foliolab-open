@@ -25,3 +25,29 @@ Basis: main 891900d (Service Worker v103). Ziel: gezielte, risikoarme Konsolidie
 `tests/browser-dialog-consistency.mjs` prüft eindeutige Speichertasten, fehlende automatische Mehrfachanbieter-Zuordnung, Rückgabe des Fokus beim Schließen, Abbruch ohne Persistenz sowie 320–1440 px. Bestehende Regressionen bleiben Bestandteil von `import.yml`.
 
 Diese Runde ist **kein abgeschlossener Voll-Audit** aller dynamischen Felder oder manueller WCAG-2.2-AA-Nachweis. Weitere Arbeit: verworfene ungespeicherte Entwürfe, systematisches Wording-/Screenreader-Audit und vollständige visuelle Screenshots sämtlicher Dialoge.
+
+## Korrekturrunde 2: Entwurfsschutz und Sprachstandard
+
+- Ein gemeinsamer `createDialogDiscardGuard` schützt Editor und Anlage-Assistent beim Abbrechen, Schließen und bei Escape; Ablehnen der Bestätigung behält Eingaben und Fokus im Dialog. Nach erfolgreich gespeichertem Zustand wird ohne zusätzliche Nachfrage geschlossen.
+- Während eines asynchronen Speichervorgangs wird das Verlassen gesperrt; ein Speicherfehler lässt den Entwurf sichtbar.
+- Begriffe wurden vereinheitlicht: Giro- oder Verrechnungskonto, Tagesgeld oder Festgeld, Konto oder Depot, Position gespeichert.
+- Die neue Browserprüfung deckt Ablehnen/Akzeptieren des Verwerfens, Tastatur-Escape, Fokus und unveränderte persistierte Daten ab.
+- `tests/browser-dialog-visual.mjs` erstellt reproduzierbare mobile und Desktop-Screenshots von Kontoeditor, Anlage-Assistent (auch erweitert) und Buchung. Die CI archiviert diese Bilder als Artifact; sie sind **Sichtprüfbelege**, keine pixelbasierten visuellen Regressionstests.
+
+### UX-Wording-Glossar
+
+| Konzept | Verbindlicher Begriff | Abgrenzung |
+|---|---|---|
+| Anlageklasse / Instrument | Anlage | ETF, Aktie, Fonds oder Kryptowährung |
+| Konkreter Bestand | Position | Gehört genau einem Konto/Depot und Anbieter |
+| Verwahrstelle | Anbieter | Bank, Broker oder Wallet-Anbieter |
+| Untergliederung beim Anbieter | Konto oder Depot | Getrennte Einheiten, auch mehrere Konten beim selben Anbieter |
+| Öffentliche Blockchain-Adresse | Wallet | Kein Zugriff auf geheime Schlüssel |
+| Transaktion / Geldbewegung | Buchung | Kauf, Verkauf, Transfer, Einzahlung usw. |
+| Historischer Portfoliowert | Stichtag | Keine implizite historische Rendite |
+| Zusätzliche normale Angaben | Weitere Angaben | Im aktuellen Dialog aufklappen |
+| Fachspezifische Konfiguration | Erweiterte Einstellungen | Nur wo für technisch anspruchsvolle Aufgaben nötig |
+| Fehlgeschlagenes Speichern | Änderung nicht gespeichert | Im Dialog, Einträge erhalten; konkrete Abhilfe |
+| Entwurf schließen | Eingaben verwerfen | Bestätigung nur nach Bearbeitungen |
+
+Weitere offene Arbeit: vollständiges Wording-Screening aller dynamischen Fehlerpfade, manuelle Screenreader- und Android-Tastaturprüfung, pixelbasierte visuelle Regression mit freigegebenen Baselines und detaillierte Prüfung selten genutzter DeFi- und Backup-Varianten.

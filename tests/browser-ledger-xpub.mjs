@@ -29,6 +29,7 @@ try{
  assert.equal(await page.locator('#scanHdField').isVisible(),true);
  assert.equal(await page.locator('#hdPrivacyHint').isVisible(),true);
  await page.locator('#scanHdType').selectOption('p2wpkh');
+ page.once('dialog',d=>d.accept()); // Discard changed Wallet import settings.
  await page.locator('#closeDialog').click();
  let calls=0;
  await page.route('https://blockstream.info/api/address/**',route=>{

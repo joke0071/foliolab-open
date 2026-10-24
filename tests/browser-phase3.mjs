@@ -33,6 +33,7 @@ try{
  await page.locator('#csvFile').setInputFiles({name:'historie.csv',mimeType:'text/csv',buffer:Buffer.from('Datum;Typ;ISIN;Menge;Kurs;Gebühr\n2026-10-21;Kauf;IE00BK5BQT80;10;100;5')});
  await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereits vorhanden'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),true);
+ page.once('dialog',d=>d.accept()); // Discard the staged duplicate CSV preview.
  await page.locator('#cancelDialog').click();
  await page.locator('#sidebarNav [data-page="positions"]').click();
  await page.locator('[data-action="edit-position"][data-id="'+ids.staking+'"]').click();

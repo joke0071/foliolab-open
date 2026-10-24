@@ -19,14 +19,24 @@ try{
  assert.equal(await page.locator('#accountProvider').inputValue(),'','No arbitrary provider when multiple exist');
  assert.equal(await page.locator('#accountProvider').evaluate(el=>el.checkValidity()),false);
  await page.locator('#accountName').fill('Noch nicht zugeordnet');
+ page.once('dialog',d=>d.dismiss());
+ await page.locator('#cancelDialog').click();
+ assert.equal(await page.locator('#editDialog').isVisible(),true,'A rejected discard preserves the editor');
+ assert.equal(await page.locator('#accountName').inputValue(),'Noch nicht zugeordnet','Draft survives');
+ page.once('dialog',d=>d.accept());
  await page.locator('#cancelDialog').click();
  assert.equal(await page.locator('#editDialog').isVisible(),false);
  assert.equal(await addAccount.evaluate(el=>document.activeElement===el),true,'Focus restored after cancel');
  let m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.accounts.length,0,'Cancel cannot create account');
  await addAccount.click();
+ await page.locator('#accountName').fill('Tastaturentwurf');
+ page.once('dialog',d=>d.dismiss());
  await page.keyboard.press('Escape');
- assert.equal(await page.locator('#editDialog').isVisible(),false,'Escape closes editor');
+ assert.equal(await page.locator('#editDialog').isVisible(),true,'Escape cannot discard edited fields without confirmation');
+ page.once('dialog',d=>d.accept());
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('#editDialog').isVisible(),false,'Escape closes after confirmation');
  assert.equal(await addAccount.evaluate(el=>document.activeElement===el),true,'Focus restored after Escape');
  await page.locator('#mobileNav [data-page="positions"]').click();
  const addWizard=page.locator('#addWizard');
@@ -35,6 +45,11 @@ try{
  assert.equal(await page.locator('#wizardAccount').count(),0,'Account stays hidden until provider is chosen');
  await page.locator('#wizardProvider').selectOption('__new__');
  await page.locator('#wizardProviderName').fill('Temporärer Anbieter');
+ page.once('dialog',d=>d.dismiss());
+ await page.locator('#wizardPrev').click();
+ assert.equal(await page.locator('#wizardDialog').isVisible(),true,'Wizard retains unsaved edits on rejected discard');
+ assert.equal(await page.locator('#wizardProviderName').inputValue(),'Temporärer Anbieter');
+ page.once('dialog',d=>d.accept());
  await page.locator('#wizardPrev').click();
  assert.equal(await page.locator('#wizardDialog').isVisible(),false);
  assert.equal(await addWizard.evaluate(el=>document.activeElement===el),true,'Wizard restores opener focus');
@@ -53,5 +68,5 @@ try{
   assert.ok(geometry.scrollWidth<=width+1,'Page overflows at '+width);
   await page.locator('#cancelDialog').click();
  }
- console.log('DIALOG CONSISTENCY: labels, explicit account/provider choice, cancel/Escape focus, draft isolation, responsive widths PASS');
+ console.log('DIALOG CONSISTENCY: explicit choice, guarded cancel/Escape, draft retention, focus, responsive widths PASS');
 }finally{await browser.close();}

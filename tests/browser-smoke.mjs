@@ -49,6 +49,7 @@ try{
  await page.locator('#scanAddress').fill('xprvNotAPublicAddress');
  await page.locator('#scanWalletButton').click();
  await page.waitForFunction(()=>document.querySelector('#scanWalletStatus').textContent.includes('Suche fehlgeschlagen'));
+ page.once('dialog',dialog=>dialog.accept()); // Explicitly discard invalid wallet draft.
  await page.locator('#closeDialog').click();
  await page.locator('#sidebarNav [data-page="more"]').click();
  const [dl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportBackup').click()]);

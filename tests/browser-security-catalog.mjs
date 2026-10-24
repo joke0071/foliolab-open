@@ -44,6 +44,7 @@ try{
  await page.locator('#wizardMatches [data-wizard-pick="0"]').click();
  assert.equal(await page.locator('#wizardCurrency').inputValue(),'EUR');
  assert.equal(await page.locator('#wizardSymbol').inputValue(),'ST1234');
+ page.once('dialog',d=>d.accept()); // Discard unsaved selected listing.
  await page.locator('#wizardClose').click();
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
@@ -61,6 +62,7 @@ try{
  assert.match(await page.locator('#wizardMatches').innerText(),/Apple Inc/);
  await page.locator('#wizardMatches [data-wizard-pick="0"]').click();
  assert.equal(await page.locator('#wizardCurrency').inputValue(),'','No imaginary currency from Nasdaq directory');
+ page.once('dialog',d=>d.accept()); // Discard unsaved selected listing.
  await page.locator('#wizardClose').click();
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
