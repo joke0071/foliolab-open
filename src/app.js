@@ -32,6 +32,7 @@ import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.j
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
 import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-import.js';
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
+import {pairFlatexSettlements} from './flatex-settlements.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
 import {openingCashInput} from './account-opening.js';
@@ -835,8 +836,10 @@ function openCSVImport(){
     const other=brokerImport.issues.filter(x=>x.code==='unsupported');
     const critical=brokerImport.issues.filter(x=>x.code!=='unsupported');
     const report=brokerImport.reports.map(x=>esc(x.name)+' · '+(x.type==='depot'?'Depot':'Konto')+' ('+esc(x.variant)+')').join('<br>');
+    const settlementPairs=pairFlatexSettlements(brokerImport);
     $('csvBrokerStatus').innerHTML='<div class="csv-import-review"><h3>Flatex-Export erkannt</h3><p class="small-help">'+report+'</p>'+
      '<p>'+parsed.rows.length+' Käufe/Verkäufe · '+brokerImport.duplicates+' doppelte Referenzen · '+brokerImport.cashItems.length+' Kontoumsätze nur zur Prüfung · '+other.length+' weitere Depotvorgänge · '+critical.length+' problematische Zeilen</p>'+
+     (brokerImport.cashItems.length?'<p class="small-help">Mögliche Depot-/Kontoumsatz-Paare: '+settlementPairs.paired.length+' · '+settlementPairs.uncertain.length+' mehrdeutig · '+settlementPairs.unmatched.length+' ohne passenden Kontobeleg. Noch keine Cash-Verbuchung.</p>':'')+
      (critical.length?'<details open><summary>Zeilen mit Fehlern</summary>'+critical.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
      (other.length?'<details><summary>Sonstige Depotvorgänge</summary>'+other.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
      (brokerImport.cashItems.length?'<details><summary>Kontoumsätze (noch nicht verbucht)</summary>'+brokerImport.cashItems.slice(0,30).map(x=>'<p>'+esc(x.date+' · '+x.kind+' · '+x.amount+' · '+x.details)+'</p>').join('')+'</details>':'')+
