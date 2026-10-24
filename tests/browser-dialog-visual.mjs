@@ -48,5 +48,13 @@ try{
   assert.equal(await page.locator('#bookingPosition').evaluate(el=>el.checkValidity()),true,'Single position can be preselected');
   await page.locator('#cancelDialog').click();
  }
- console.log('DIALOG VISUAL: 4 widths, editor/wizard/expanded states and booking screenshots PASS');
+ for(const width of [390,1440]){
+  await page.setViewportSize({width,height:820});
+  const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
+  await page.locator(nav+' [data-page="positions"]').click();
+  await page.locator('#addWallet').click();
+  await page.locator('#editDialog').screenshot({path:'artifacts/dialog-visual/wallet-'+width+'.png'});
+  await page.locator('#cancelDialog').click();
+ }
+ console.log('DIALOG VISUAL: 4 widths, editor/wizard/expanded, bookings and wallet screenshots PASS');
 }finally{await browser.close();}
