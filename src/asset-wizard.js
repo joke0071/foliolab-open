@@ -1,4 +1,4 @@
-import {escapeHTML,defaultSettings} from './model.js';
+import {escapeHTML} from './model.js';
 import {cryptoChoices,loadTopCrypto,loadAllCrypto,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog} from './instrument-catalog.js';
 import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
@@ -6,7 +6,10 @@ const e=escapeHTML;
 const kinds=[['etf','ETF'],['stock','Aktie'],['fund','Fonds'],['crypto','Kryptowährung'],['cash','Guthaben'],['other','Sonstiges']];
 const providerKinds=[['broker','Broker'],['bank','Bank'],['wallet','Wallet-Anbieter'],['other','Sonstiges']];
 const accountKinds=[['securities','Wertpapierdepot'],['checking','Giro- / Verrechnungskonto'],['savings','Tages- / Festgeld'],['exchange','Kryptobörsenkonto'],['wallet','Kryptowallet'],['other','Sonstiges']];
-const currencies=['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'];
+const currencies=['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK','DKK','PLN','CZK','HUF','NZD','SGD'];
+const walletChains=[['btc','Bitcoin'],['btc-hd','Bitcoin HD (xpub / ypub / zpub)'],['xrp','XRP Ledger'],['xrp-token','XRP Token'],['evm','EVM Coin'],['erc20','ERC-20 Token'],['sol','Solana'],['spl','SPL Token'],['sol-stake','Solana Staking'],['sonic-stake','Sonic Staking'],['cosmos','Cosmos'],['cosmos-stake','Cosmos Staking'],['cosmos-unbonding','Cosmos Unbonding'],['hedera','Hedera'],['near','NEAR'],['near-locked','NEAR Locked']];
+const roleChoices=[['standard','Normal'],['collateral','Sicherheit / Collateral'],['liquid-staking','Liquid Staking'],['vault','Vault'],['liquidity-pool','Liquidity Pool'],['lending','Lending'],['borrowed','Geliehene Assets / Verbindlichkeit'],['wrapped','Wrapped Token']];
+const valuationChoices=[['included','Im Vermögen anrechnen'],['excluded','Nicht anrechnen (bereits anders erfasst)'],['liability','Als Verbindlichkeit abziehen']];
 const today=()=>new Date().toISOString().slice(0,10);
 const opts=(items,selected,placeholder='Bitte wählen')=>'<option value="">'+e(placeholder)+'</option>'+items.map(([id,label])=>'<option value="'+e(id)+'"'+(selected===id?' selected':'')+'>'+e(label)+'</option>').join('');
 const input=(id,label,value='',attrs='')=>'<label class="field"><span>'+e(label)+'</span><input id="'+id+'" value="'+e(value)+'" '+attrs+'></label>';
@@ -14,12 +17,12 @@ const defaultAcc=kind=>kind==='crypto'?['Kryptowallet','wallet']:kind==='cash'?[
 const defaultProviderType=kind=>kind==='crypto'?'wallet':kind==='cash'?'bank':'broker';
 const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:'',currency:'EUR',exchange:'',mic:'',eodhdSymbol:'',fmpSymbol:'',tradingViewSymbol:'',
  providerId:'',accountId:'',providerName:'',providerType:'broker',accountName:'Wertpapierdepot',accountType:'securities',accountCurrency:'EUR',
- mode:'opening',quantity:'',date:today(),currentPrice:'',unitPrice:'',feeEUR:'',fxRate:'',results:[],status:'',busy:false,saved:false});
+ mode:'opening',quantity:'',date:today(),currentPrice:'',unitPrice:'',feeEUR:'',fxRate:'',advancedOpen:false,economicOpen:false,walletOpen:false,notes:'',costBasisEUR:'',economicRole:'standard',valuationMode:'included',representedByPositionId:'',walletEnabled:false,walletChain:'btc',walletAddress:'',walletContract:'',walletDecimals:'18',walletChainId:'1',walletHdType:'auto',results:[],status:'',busy:false,saved:false});
 /**
  * Native modal wizard. Provider/account drafts remain transient until final,
  * atomic model validation and one onCommit call.
  */
-export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify,openAdvanced}){
+export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify}){
  let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),directories=[],cryptoLoading=false,coinFullLoading=false;
  const $=id=>dialog.querySelector('#'+id);
  const directorySummary=()=>{
@@ -34,17 +37,11 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   dialog.innerHTML='<div class="wizard-shell"><div class="dialog-head"><div><div class="panel-kicker">ANLAGE HINZUFÜGEN</div><h2 id="wizardTitle">'+e(title)+'</h2></div><button type="button" id="wizardClose" class="icon-close" aria-label="Abbrechen oder schließen">×</button></div>'+
   
   '<div id="wizardFields">'+fields+'</div><div class="wizard-feedback" id="wizardError" role="alert" aria-live="polite"></div>'+
-   (!state.saved?'<div class="wizard-alternative"><button type="button" id="wizardAdvanced" class="wizard-advanced-link" title="Zusätzliche Wallet- und DeFi-Einstellungen">Weitere Einstellungen für Wallets und DeFi →</button></div>':'')+
-  '<div class="dialog-footer"><button class="btn light" type="button" id="wizardPrev">Abbrechen</button><button class="btn primary" type="button" id="wizardNext"'+(state.saved?' hidden':'')+'>Position speichern</button></div></div>';
+   '<div class="dialog-footer"><button class="btn light" type="button" id="wizardPrev">Abbrechen</button><button class="btn primary" type="button" id="wizardNext"'+(state.saved?' hidden':'')+'>Position speichern</button></div></div>';
   $('wizardClose').addEventListener('click',close);
   $('wizardPrev').addEventListener('click',close);
   $('wizardNext')?.addEventListener('click',advance);
-   $('wizardAdvanced')?.addEventListener('click',()=>{
-    if(state.query.trim()||state.name.trim()||state.symbol.trim()||state.isin.trim()){
-     if(!confirm('Zur erweiterten Eingabe wechseln? Die bisherigen Eingaben aus dem Assistenten werden nicht übernommen.'))return;
-    }
-    close();openAdvanced?.();
-   });
+   
  };
  const resultsMarkup=()=>{
   const query=state.query.trim(),list=state.results||[];
