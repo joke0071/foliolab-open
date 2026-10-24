@@ -35,6 +35,7 @@ import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-impor
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
 import {pairFlatexSettlements} from './flatex-settlements.js';
 import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
+import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
 import {openingCashInput} from './account-opening.js';
@@ -780,7 +781,7 @@ function openCSVImport(){
   return prepareFlatexBackfillPreview(model,brokerImport,accountId,previewOptions());
  };
  const finalPreview=()=>{
-  if(!backfillRequested)return previewCSV(model,parsed,currentMapping(),previewOptions());
+  if(!backfillRequested){const preview=previewCSV(model,parsed,currentMapping(),previewOptions());return brokerImport?invalidateUnverifiedFlatexBasis(preview):preview;}
   const checked=backfillCheck();
   if(!checked?.eligible)throw Error('Historische Rekonstruktion nicht zulässig: '+(checked?.reason||'Bestandsvergleich fehlt.'));
   return checked.preview;
@@ -892,7 +893,7 @@ function openCSVImport(){
      (other.length?'<details><summary>Sonstige Depotvorgänge</summary>'+other.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
      (brokerImport.cashItems.length?'<details><summary>Kontoumsätze (noch nicht verbucht)</summary>'+brokerImport.cashItems.slice(0,30).map(x=>'<p>'+esc(x.date+' · '+x.kind+' · '+x.amount+' · '+x.details)+'</p>').join('')+'</details>':'')+
      ((other.length||brokerImport.cashItems.length)?'<label class="csv-skip"><input id="csvBrokerConfirm" type="checkbox"> Ich verstehe, dass Kontoumsätze und sonstige Depotvorgänge nicht übernommen werden.</label>':'')+
-     '<p class="small-help">Es werden keine Gebühren, Steuern oder fehlenden Anschaffungswerte hinzuerfunden. Noch kein vollständiger Depotabgleich.</p></div>';
+     '<p class="small-help">Depotumsätze enthalten nicht zwingend alle Spesen und Steuerabzüge. Einstandswerte und realisierte Gewinne bleiben deshalb nach der Übernahme ausdrücklich unbekannt, bis vollständige Abrechnungen vorliegen. Noch kein vollständiger Depotabgleich.</p></div>';
     $('csvBrokerConfirm')?.addEventListener('change',e=>{brokerAccepted=e.target.checked;review();});
     const brokerAccounts=flatexCustodyAccounts(model);
     const accountChoices=brokerAccounts.map(a=>[a.id,(model.providers.find(p=>p.id===a.providerId)?.name||'Flatex')+' · '+a.name]);
