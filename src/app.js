@@ -817,7 +817,7 @@ function flatexWouldDoubleCount(current,prepared,accountId){
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
  if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
- let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,backfillRequested=false,bankEURConfirmed=false;
+ let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
  const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
@@ -846,7 +846,8 @@ function openCSVImport(){
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
     if(brokerImport){
      if(brokerImport.issues.some(x=>x.code==='invalid'||x.code==='ambiguous-duplicate'))throw Error('Flatex: fehlerhafte oder nicht eindeutig identifizierbare Vorgänge prüfen.');
-     if((brokerImport.cashItems.length||brokerImport.issues.length)&&!brokerAccepted)throw Error('Bitte nicht übernommene Konto- und Depotvorgänge bestätigen.');
+     if(!brokerAccepted)throw Error('Bitte den vorläufigen Flatex-Import und die nicht unterstützten Vorgänge ausdrücklich bestätigen.');
+     if(!brokerBackupDownloaded)throw Error('Vor dem Flatex-Import bitte ein lokales Backup herunterladen.');
      if(!selectedBrokerAccount())throw Error('Bitte ein bestehendes Flatex-Depot zuordnen.');
      if(brokerImport.depotIdentifiers.length>1)throw Error('Mehrere Flatex-Depotnummern in derselben Auswahl: bitte pro Depot getrennt importieren.');
      if(flatexWouldDoubleCount(model,brokerImport,selectedBrokerAccount())&&!backfillRequested)throw Error('Historische Käufe und bestehende Anfangsbestände müssen vor dem Import abgeglichen werden.');
@@ -945,7 +946,7 @@ function openCSVImport(){
     (field||$('csvReviewHeading')).focus({preventScroll:true});
    }
    const invalid=brokerImport?.issues.some(x=>x.code==='invalid'||x.code==='ambiguous-duplicate');
-    const missingAcknowledgement=brokerImport&&(brokerImport.cashItems.length||brokerImport.issues.length)&&!brokerAccepted;
+    const missingAcknowledgement=brokerImport&&(!brokerAccepted||!brokerBackupDownloaded);
     const accountId=selectedBrokerAccount();
     const wouldDoubleCount=brokerImport&&flatexWouldDoubleCount(model,brokerImport,accountId)&&!backfillRequested;
     const multipleDepots=brokerImport&&brokerImport.depotIdentifiers.length>1;
@@ -957,7 +958,7 @@ function openCSVImport(){
  };
  async function chooseCSV(){
   const files=[...($('csvFile').files||[])];
-  parsed=null;brokerImport=null;brokerAccepted=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
+  parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';$('csvReviewStatus').textContent='Bitte CSV-Datei auswählen.';return;}
@@ -980,7 +981,7 @@ function openCSVImport(){
      (critical.length?'<details open><summary>Zeilen mit Fehlern</summary>'+critical.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
      (other.length?'<details><summary>Sonstige Depotvorgänge</summary>'+other.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
      (brokerImport.cashItems.length?'<details><summary>Kontoumsätze (noch nicht verbucht)</summary>'+brokerImport.cashItems.slice(0,30).map(x=>'<p>'+esc(x.date+' · '+x.kind+' · '+x.amount+' · '+x.details)+'</p>').join('')+'</details>':'')+
-     ((other.length||brokerImport.cashItems.length)?'<label class="csv-skip"><input id="csvBrokerConfirm" type="checkbox"> Ich verstehe, dass Kontoumsätze und sonstige Depotvorgänge nicht übernommen werden.</label>':'')+
+     '<label class="csv-skip"><input id="csvBrokerConfirm" type="checkbox"> Flatex-Import (Beta): Ich habe die Kauf-/Verkaufsdaten anhand meiner Abrechnungen geprüft. Kontoumsätze, Steuer- und Sondervorgänge werden nicht automatisch übernommen.</label>'+
      '<p class="small-help">Depotumsätze enthalten nicht zwingend alle Spesen und Steuerabzüge. Einstandswerte und realisierte Gewinne bleiben deshalb nach der Übernahme ausdrücklich unbekannt, bis vollständige Abrechnungen vorliegen. Noch kein vollständiger Depotabgleich.</p></div>';
     $('csvBrokerConfirm')?.addEventListener('change',e=>{brokerAccepted=e.target.checked;review();});
     const brokerAccounts=flatexCustodyAccounts(model);
@@ -988,8 +989,19 @@ function openCSVImport(){
     $('csvMapping').innerHTML='<label class="field"><span>Welches Flatex-Depot?</span><select id="csvBrokerAccount">'+options([['','Depot auswählen'],...accountChoices],'')+'</select></label>'+
       (!accountChoices.length?'<p class="small-help">Bitte zuerst unter „Mehr“ einen Flatex-Anbieter und ein Wertpapierdepot anlegen.</p>':'')+
       (brokerImport.cashItems.length?'<label class="csv-skip"><input id="csvBrokerAmountsEUR" type="checkbox"> Die Beträge im hochgeladenen Kontoumsatz-Export sind in EUR ausgewiesen (laut Auszug geprüft).</label><div id="csvBrokerSettlement" role="group" aria-label="Flatex-Abrechnungsabgleich"></div>':'')+
+      '<button type="button" class="btn outline" id="csvBackupNow">Backup vor Flatex-Import herunterladen</button><p id="csvBackupStatus" class="small-help">Vor der Übernahme ist eine lokale Sicherung erforderlich.</p>'+ 
       '<div id="csvBrokerReconcile" role="status"></div>'+
       '<p class="small-help">Wertpapiere werden nur innerhalb des ausgewählten Depots über ihre ISIN zugeordnet. Andere Broker und Depots bleiben geschützt.</p>';
+    $('csvBackupNow').addEventListener('click',()=>{
+     const json=backup(model),blob=new Blob([json],{type:'application/json'});
+     const href=URL.createObjectURL(blob),a=document.createElement('a');
+     a.href=href;a.download='FolioLab-Backup-vor-Flatex-'+new Date().toISOString().slice(0,10)+'.json';
+     document.body.append(a);a.click();a.remove();
+     setTimeout(()=>URL.revokeObjectURL(href),500);
+     brokerBackupDownloaded=true;
+     $('csvBackupStatus').textContent='Backup-Download gestartet. Die Datei lokal aufbewahren.';
+     review();
+    });
     $('csvBrokerAccount').addEventListener('change',()=>{positionOverrides={};backfillRequested=false;review();});
     $('csvBrokerAmountsEUR')?.addEventListener('change',e=>{bankEURConfirmed=e.target.checked;review();});
    }else{
