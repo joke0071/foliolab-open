@@ -128,8 +128,12 @@ try{
    assert.equal(history.calendarStyle.width,expectedSide,'History calendar must equal other mobile action size at '+width);
    assert.equal(history.calendarStyle.height,expectedSide,'History calendar must equal other mobile action height at '+width);
    assert.equal(history.borderRadius,history.calendarStyle.borderRadius,'Calendar and plus corner radii must match');
-   assert.equal(history.background,history.calendarStyle.background,'Calendar and plus background must match');
-   assert.equal(history.color,history.calendarStyle.color,'Calendar and plus icon color must match');
+   // Kalender ist sekundär (weiß), der Stichtag ein grüner Primär-CTA.
+   // Geometrie muss übereinstimmen, der Farbkontrast bewusst nicht.
+   assert.equal(history.background,'rgb(38, 86, 61)','Primary Stichtag background must remain green at '+width);
+   assert.equal(history.color,'rgb(255, 255, 255)','Primary Stichtag icon must remain white at '+width);
+   assert.equal(history.calendarStyle.background,'rgb(255, 255, 255)','Secondary calendar button must remain white at '+width);
+   assert.notEqual(history.color,history.calendarStyle.color,'Primary and secondary actions need distinct visual hierarchy at '+width);
    assert.equal(history.plusIconSize.width,history.calendarStyle.svgWidth,'Calendar and plus icon sizes must match');
    assert.equal(history.plusIconSize.height,history.calendarStyle.svgHeight,'Calendar and plus icon heights must match');
    assert.ok(Math.abs(history.addRight-history.controlsRight)<=2,'History buttons should sit at right edge on '+width+': '+JSON.stringify(history));
