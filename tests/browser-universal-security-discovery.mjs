@@ -28,8 +28,13 @@ try{
  await page.locator('#mobileNav [data-page="positions"]').click();
  const review=page.locator('#resolveListings');
  await review.waitFor({state:'visible'});
- assert.match(await review.innerText(),/Zuordnungen prüfen \(2\)/);
+ assert.match(await review.innerText(),/Positionen ansehen \(2\)/);
  await review.click();
+ assert.equal(await page.locator('#editDialog').isVisible(),false,'Review opens overview instead of an arbitrary editor');
+ await page.locator('#listingReviewPanel [data-action="edit-position"][data-id="etf-new"]').click();
+ await page.locator('#securityGroup > summary').click();
+ await page.locator('#securityQuery').fill('GLBL');
+ await page.locator('#securitySearch').click();
  await page.locator('#securityResults [data-security]').first().waitFor();
  const choices=page.locator('#securityResults [data-security]');
  assert.equal(await choices.count(),3);
@@ -50,7 +55,8 @@ try{
  assert.equal(m.positions.find(p=>p.id==='etf-new').quoteSource,null);
  assert.match(m.positions.find(p=>p.id==='etf-new').priceStatus,/Kurs prüfen/);
  assert.equal(m.snapshots.some(s=>s.date==='2026-10-21'&&s.totalEURExact==='9999'),true);
- assert.match(await review.innerText(),/Zuordnungen prüfen \(1\)/);
+ assert.match(await page.locator('#listingReviewIntro').innerText(),/1 Wertpapierposition mit fehlenden Angaben/);
+ assert.match(await review.innerText(),/Übersicht schließen|Positionen ansehen \(1\)/);
  for(const width of [320,360,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);

@@ -142,3 +142,11 @@ Der bestehende Positionseditor blieb nach dem technischen Audit funktional korre
 - `Handelsplatz und technische Börsenkürzel` sowie `Öffentliche Wallet-Verknüpfung` sind getrennt aufklappbar; eine bereits aktiv verknüpfte Wallet wird beim Bearbeiten automatisch aufgeklappt. DeFi- und Einstandswertoptionen bleiben eigenständige Details-Bereiche.
 - Die originalen Formular-Controls werden im DOM umsortiert, nicht dupliziert. Event-Handler, Feldnamen, Buchungs- und Bewertungscode sowie die Sicherheitsregeln bleiben unverändert.
 - Neue Chromium-Regression testet Provider-Suche ohne ungewollte Neuzuordnung, Bestandsdaten, aufklappbare Optionen, Abbruch mit/ohne Bestätigung, Speichern, Typwechsel und acht Viewport-Breiten.
+
+## UX-Nachtrag – Wertpapierdaten statt „Zuordnungen prüfen“
+
+- Vage Schaltfläche und direkter Sprung in das erste Formular entfernt. Die Karte erklärt nun, **wie viele Wertpapierpositionen unvollständige Stammdaten** haben und dass dies nicht automatisch fehlerhafte Bestände oder Kurse bedeutet.
+- **Für die Kurszuordnung möglicherweise relevante Felder** (Ticker/Symbol, Kurswährung, fehlender Handelsplatz *und* MIC) werden getrennt von der **optionalen ISIN** angezeigt. Eine fehlende ISIN allein ist kein Warnzustand.
+- Ein Klick auf `Positionen ansehen (N)` öffnet eine zugängliche Liste der betroffenen Positionen. Jeder Eintrag nennt den konkreten Grund und kann gezielt bearbeitet werden; es wird weder ein zufälliges Wertpapier geöffnet noch eine automatische Online-Suche gestartet.
+- Die Übersicht ist unabhängig vom separaten Kursqualitätsfilter `Zu prüfen` und ändert weder bestehende Positionen noch deren Bewertung. Maximal 50 Einträge zuerst, zusätzliche Einträge bei Bedarf nachladen.
+- Regressionstest `browser-listing-review-clarity.mjs` deckt 54 unvollständige Datensätze, optionale Stammdaten, 7 Viewports, gezieltes Bearbeiten, Beibehalten von Kurs/Bestand und fehlende Persistenz durch reines Anzeigen ab.
