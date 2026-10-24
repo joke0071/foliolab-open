@@ -38,6 +38,14 @@ try{
  await page.locator('#csvFile').setInputFiles(files);
  await page.locator('#csvBrokerAccount').waitFor();
  await page.locator('#csvBrokerAccount').selectOption(ids.fdep);
+ await page.locator('#csvBrokerSettlement details').waitFor();
+ const beforeEUR=await page.locator('#csvBrokerSettlement').textContent();
+ assert.match(beforeEUR,/Währung der Kontoumsätze/);
+ assert.doesNotMatch(beforeEUR,/Differenz -1 EUR/);
+ await page.locator('#csvBrokerAmountsEUR').check();
+ const confirmed=await page.locator('#csvBrokerSettlement').textContent();
+ assert.match(confirmed,/Differenz -1 EUR/);
+ assert.match(confirmed,/nicht aufteilbar/);
  await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereit'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
