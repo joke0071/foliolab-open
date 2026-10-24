@@ -173,7 +173,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   shell(fields,'Position hinzufügen');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
-  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render();if(state.kind==='crypto')loadCoins();});
+  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render();if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);
   $('wizardQuery').addEventListener('input',x=>{state.query=x.target.value;updateResults();if(state.kind==='crypto'&&state.query.trim().length>=2)loadCoins({all:true});});
   $('wizardMatches').addEventListener('click',x=>{
@@ -201,6 +201,27 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    }catch(ex){error('Verzeichnisimport: '+String(ex.message||ex).slice(0,220));}
   });
   $('wizardExternalSearch')?.addEventListener('click',externalSearch);
+  $('wizardAdvanced')?.addEventListener('toggle',event=>{state.advancedOpen=event.target.open;});
+  $('wizardEconomic')?.addEventListener('toggle',event=>{state.economicOpen=event.target.open;});
+  $('wizardWalletAdvanced')?.addEventListener('toggle',event=>{state.walletOpen=event.target.open;});
+  for(const [id,key] of Object.entries({wizardCostBasis:'costBasisEUR',wizardNotes:'notes',wizardEconomicRole:'economicRole',wizardValuationMode:'valuationMode',wizardRepresented:'representedByPositionId',wizardWalletAddress:'walletAddress',wizardWalletContract:'walletContract',wizardWalletDecimals:'walletDecimals',wizardWalletChainId:'walletChainId',wizardWalletHdType:'walletHdType'})){
+   $(id)?.addEventListener('input',event=>state[key]=event.target.value);
+   $(id)?.addEventListener('change',event=>state[key]=event.target.value);
+  }
+  const updateWalletFields=()=>{
+   if(!$('wizardWalletChain'))return;
+   const chain=$('wizardWalletChain').value;
+   $('wizardWalletContractWrap').classList.toggle('hidden',!['erc20','spl','xrp-token','sol-stake','sonic-stake','cosmos-stake','cosmos-unbonding'].includes(chain));
+   $('wizardWalletDecimalsWrap').classList.toggle('hidden',!['erc20','spl','xrp-token'].includes(chain));
+   $('wizardWalletChainIdWrap').classList.toggle('hidden',!['evm','erc20'].includes(chain));
+   $('wizardWalletHdWrap').classList.toggle('hidden',chain!=='btc-hd');
+  };
+  $('wizardWalletEnabled')?.addEventListener('change',event=>{
+   state.walletEnabled=event.target.checked;
+   $('wizardWalletFields').classList.toggle('hidden',!state.walletEnabled);
+  });
+  $('wizardWalletChain')?.addEventListener('change',event=>{state.walletChain=event.target.value;updateWalletFields();});
+  updateWalletFields();
   $('wizardProvider').addEventListener('change',event=>{
    state.providerId=event.target.value;state.accountId=state.providerId==='__new__'?'__new__':'';
    state.providerName='';state.accountName=defaultAcc(state.kind)[0];
