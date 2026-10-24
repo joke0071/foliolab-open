@@ -3,13 +3,11 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, "p0/**"]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: foliolab-open-pages-${{ github.event_name == 'pull_request' && github.sha || github.ref }}
@@ -41,8 +39,11 @@ jobs:
           echo "PWA cache revision changed: $previous -> $current"
       - name: Verify standalone application
         run: |
-          npm test
-          npm run check
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          git rev-parse HEAD > artifacts/gates/tested-sha.txt
+          npm test 2>&1 | tee artifacts/gates/unit.log
+          npm run check 2>&1 | tee artifacts/gates/syntax.log
       - name: Install browser test tools
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
@@ -118,6 +119,13 @@ jobs:
           node tests/browser-portfolio-scale.mjs
           node tests/browser-offline-mobile.mjs
           node tests/browser-pwa-updates.mjs
+      - name: Preserve test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gates-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
       - name: Preserve representative dialog screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -145,7 +153,11 @@ jobs:
           node tests/browser-cross-engine.mjs
           node tests/browser-atomic-storage-cross-engine.mjs
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     needs: [test, cross-engine]
     runs-on: ubuntu-latest
     environment:
