@@ -40,7 +40,8 @@ try{
   page.evaluate(()=>navigator.serviceWorker.dispatchEvent(new Event('controllerchange')))
  ]);
  assert.equal(await page.evaluate(()=>localStorage.getItem('pwa-version-test')),'preserved');
- assert.match(await page.locator('#historyPage h2').innerText(),/Entwicklung nach Stichtagen/);
+ assert.match(await page.locator('#pageTitle').innerText(),/Vermögensentwicklung/);
+ assert.equal(await page.locator('#historyPage .history-panel > .panel-head').count(),0,'No redundant title in the chart card');
  assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
 
  console.log('PWA UPDATE: idle pages reload, active editor is protected and browser data survives PASS');

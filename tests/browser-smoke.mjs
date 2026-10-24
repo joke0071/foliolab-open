@@ -22,6 +22,7 @@ try{
  }
  await page.setViewportSize({width:1440,height:900});
  await page.locator('#sidebarNav [data-page="more"]').click();
+ assert.match(await page.locator('#pageDescription').textContent(),/Konten, Datenquellen und Backups/,'More page needs a concise explanation');
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill('Test-Broker');
  await page.locator('#editorForm [name="type"]').selectOption('broker');
