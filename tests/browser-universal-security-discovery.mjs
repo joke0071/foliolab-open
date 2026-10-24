@@ -42,7 +42,7 @@ try{
  assert.equal(await page.locator('#editorForm [name="isin"]').inputValue(),'IE00A1234567');
  assert.equal(await page.locator('#editorForm [name="eodhdSymbol"]').inputValue(),'GLBL.XETRA');
  assert.equal(await page.locator('#editorForm [name="tradingViewSymbol"]').inputValue(),'XETR:GLBL');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(p=>p.id==='etf-new').quantityExact,'123.456789');
  assert.equal(m.positions.find(p=>p.id==='etf-new').priceExact,'99');

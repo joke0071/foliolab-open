@@ -25,10 +25,10 @@ try{
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill('Test-Broker');
  await page.locator('#editorForm [name="type"]').selectOption('broker');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#addAccount').click();
  await page.locator('#editorForm [name="name"]').fill('Testdepot');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.match(await page.locator('#providerSettings').innerText(),/Test-Broker/);
  await page.locator('#providerSettings details summary').first().click();
  assert.match(await page.locator('#providerSettings').innerText(),/Testdepot/);
@@ -93,7 +93,7 @@ try{
  await page.locator('#sidebarNav [data-page="more"]').click();
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill('Darf nicht gespeichert werden');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),'{corrupted');
  console.log('Browser smoke: six viewports, accounts, positions, wallet validation, backup, v1 migration, corrupt-storage protection PASS');
 } finally {await browser.close();}

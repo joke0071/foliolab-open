@@ -8,7 +8,7 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill('Audit Depot');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#apiSettings').evaluate(el=>el.closest('details').open=true);
  await page.locator('[name="eodhdKey"]').fill('SYNTHETIC_SECRET_FOR_TEST');
  await page.locator('#apiSettings button[type="submit"]').click();

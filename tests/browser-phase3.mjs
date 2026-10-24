@@ -23,7 +23,7 @@ try{
  await page.locator('#csvCashPosition').selectOption(ids.cash);
  await page.waitForFunction(()=>document.querySelector('#csvReview').textContent.includes('1 bereit'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.find(p=>p.id===ids.etf).quantityExact,'10');
  assert.equal(state.positions.find(p=>p.id===ids.cash).quantityExact,'1995');
@@ -41,7 +41,7 @@ try{
  await page.locator('#editorForm [name="economicRole"]').selectOption('liquid-staking');
  await page.locator('#editorForm [name="valuationMode"]').selectOption('excluded');
  await page.locator('#editorForm [name="representedByPositionId"]').selectOption(ids.etf);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(after.positions.find(p=>p.id===ids.staking).valuationMode,'excluded');
  assert.equal(after.positions.find(p=>p.id===ids.staking).representedByPositionId,ids.etf);

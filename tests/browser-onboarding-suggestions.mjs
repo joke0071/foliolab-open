@@ -13,16 +13,16 @@ try{
  await page.locator('#providerMatches [data-provider-preset="Flatex"]').click();
  assert.equal(await page.locator('#providerName').inputValue(),'Flatex');
  assert.equal(await page.locator('#providerType').inputValue(),'broker');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#addAccount').click();
  assert.equal(await page.locator('#accountName').inputValue(),'Wertpapierdepot');
  assert.equal(await page.locator('#accountType').inputValue(),'securities');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#addProvider').click();
  await page.locator('#providerName').fill('n2');
  await page.locator('#providerMatches [data-provider-preset="N26"]').click();
  assert.equal(await page.locator('#providerType').inputValue(),'bank');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#addAccount').click();
  const providerSelect=page.locator('#accountProvider');
  const n26Value=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).providers.find(p=>p.name==='N26').id);
@@ -32,7 +32,7 @@ try{
  await page.locator('#accountName').fill('Tagesgeldkonto');
  await page.locator('#accountMatches [data-account-preset="Tagesgeldkonto"]').click();
  assert.equal(await page.locator('#accountType').inputValue(),'savings');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(noApiCalls.length,0,'Onboarding suggestions are fully offline');
  await page.evaluate(()=>{
   const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));
@@ -83,7 +83,7 @@ try{
  await page.locator('#positionProviderSearch').fill('n2');
  assert.equal(await page.locator('#positionProvider option').count(),1);
  assert.equal(await page.locator('#positionProvider').inputValue(),'','Filter must not select another provider');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(await page.locator('#editDialog').isVisible(),true,'Cannot silently save an unconfirmed match');
  await page.locator('#positionProviderSearch').fill('');
  assert.equal(await page.locator('#positionProvider option').count(),2);
