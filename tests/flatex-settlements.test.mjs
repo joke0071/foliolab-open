@@ -40,3 +40,14 @@ test('ISIN can suggest a link without shared reference but cannot prove executio
  assert.equal(result.paired[0].evidence,'ISIN im Buchungstext');
  assert.equal(result.paired[0].accountMovement.amount,'-201');
 });
+
+test('a matching booking reference cannot override a conflicting ISIN in the bank statement',()=>{
+ const input={sourceTrades:[trade],cashItems:[{...cash,details:'ORDER Kauf IE00BK5BQT81'}]};
+ const result=pairFlatexSettlements(input);
+ assert.equal(result.paired.length,0);
+ assert.equal(result.unmatched.length,1);
+ assert.equal(result.unmatchedCash.length,1);
+});
+test('only a bounded matching date horizon is accepted',()=>{
+ assert.throws(()=>pairFlatexSettlements({sourceTrades:[],cashItems:[]},{maxDays:1000}),/Ungültiger Zeitraum/);
+});
