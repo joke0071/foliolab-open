@@ -781,7 +781,7 @@ function openCSVImport(){
   return prepareFlatexBackfillPreview(model,brokerImport,accountId,previewOptions());
  };
  const finalPreview=()=>{
-  if(!backfillRequested){const preview=previewCSV(model,parsed,currentMapping(),previewOptions());return brokerImport?invalidateUnverifiedFlatexBasis(preview):preview;}
+  if(!backfillRequested){const preview=previewCSV(model,parsed,currentMapping(),previewOptions());return brokerImport?invalidateUnverifiedFlatexBasis(preview,model):preview;}
   const checked=backfillCheck();
   if(!checked?.eligible)throw Error('Historische Rekonstruktion nicht zulässig: '+(checked?.reason||'Bestandsvergleich fehlt.'));
   return checked.preview;
