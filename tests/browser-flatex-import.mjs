@@ -45,6 +45,7 @@ try{
  await page.waitForFunction(id=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1')||'{}');return m.positions?.find(x=>x.id===id)?.quantityExact==='2';},ids.p);
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(x=>x.id===ids.p).quantityExact,'2');
+ assert.equal(m.positions.find(x=>x.id===ids.p).costBasisExact,null,'Missing documented charges cannot yield a trusted tax basis');
  assert.equal(m.positions.find(x=>x.id===ids.q).quantityExact,'0');
  assert.equal(m.bookings.length,1);
  assert.equal(m.externalCashFlows.length,0);
