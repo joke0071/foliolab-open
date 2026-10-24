@@ -51,7 +51,7 @@ const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null;
 let otherTabChangedPortfolio=false;
-let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100;
+let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const PAGE_DESCRIPTIONS={history:'Vermögensstände nach Zeitraum und Stichtagen ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.'};
@@ -207,8 +207,36 @@ function renderPositions(){
   review:'Kursstatus unklar',
   outdated:'Kurs älter als 7 Tage'
  })[type]]));
- $('resolveListings').classList.toggle('hidden',unresolved.length===0);
- $('resolveListings').textContent='Zuordnungen prüfen'+(unresolved.length?' ('+unresolved.length+')':'');
+ const reviewAction=$('listingReviewAction'),reviewPanel=$('listingReviewPanel'),reviewButton=$('resolveListings');
+ if(!unresolved.length)listingReviewOpen=false;
+ reviewAction.classList.toggle('hidden',unresolved.length===0);
+ const relevant=unresolved.filter(p=>listingReviewGaps(p).relevant.length),optionalOnly=unresolved.length-relevant.length;
+ $('listingReviewIntro').textContent=unresolved.length+
+  ' Wertpapierposition'+(unresolved.length===1?'':'en')+' mit fehlenden Angaben. '+
+  (relevant.length?relevant.length+' mit möglicherweise kursrelevanten Kennungen. ':'')+
+  (optionalOnly?optionalOnly+' nur ohne ISIN (optional). ':'')+
+  'Das sind nicht automatisch Fehler.';
+ reviewButton.textContent=listingReviewOpen?'Übersicht schließen':'Positionen ansehen ('+unresolved.length+')';
+ reviewButton.setAttribute('aria-expanded',String(listingReviewOpen));
+ reviewPanel.classList.toggle('hidden',!listingReviewOpen||!unresolved.length);
+ if(listingReviewOpen&&unresolved.length){
+  const ordered=unresolved.slice().sort((a,b)=>Number(Boolean(listingReviewGaps(b).relevant.length))-Number(Boolean(listingReviewGaps(a).relevant.length))||a.name.localeCompare(b.name,'de'));
+  const items=ordered.slice(0,listingReviewLimit).map(p=>{
+   const gaps=listingReviewGaps(p);
+   const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(x=>x.id===p.accountId);
+   return '<div class="listing-review-item"><div class="listing-review-main"><strong>'+esc(p.name)+'</strong>'+
+    '<small>'+esc([provider?.name,account?.name].filter(Boolean).join(' · '))+'</small>'+
+    (gaps.relevant.length?'<span class="listing-review-relevant">Für die Kurszuordnung prüfen: '+esc(gaps.relevant.join(', '))+'</span>':'')+
+    (gaps.optional.length?'<span class="listing-review-optional">Optional: '+esc(gaps.optional.join(', '))+'</span>':'')+
+    '</div><button class="btn outline" type="button" data-action="edit-position" data-id="'+esc(p.id)+
+    '" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button></div>';
+  });
+  reviewPanel.innerHTML='<h3 id="listingReviewHeading" tabindex="-1">Betroffene Wertpapierpositionen ('+unresolved.length+')</h3>'+
+   '<p class="small-help">Fehlende Kennungen können die automatische Kurszuordnung erschweren; sie bedeuten nicht zwangsläufig falsche Bestände oder Kurse. Eine ISIN ist optional. Die Kursqualität wird separat angezeigt.</p>'+
+   '<div class="listing-review-items">'+items.join('')+'</div>'+
+   (ordered.length>listingReviewLimit?'<button type="button" class="btn outline listing-review-more" data-action="more-listing-review">Weitere '+
+    Math.min(50,ordered.length-listingReviewLimit)+' Positionen anzeigen</button>':'');
+ }else reviewPanel.replaceChildren();
  const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
  $('positionFilters').innerHTML=[['all','Alle'],...(reviewItems.length?[['__review','Zu prüfen ('+reviewItems.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
@@ -667,19 +695,26 @@ async function lookupSecurity(){
   area.innerHTML=empty('Wertpapiersuche: '+String(e.message||e).slice(0,350));
  }
 }
+function listingReviewGaps(p){
+ if(!['etf','stock','fund'].includes(p.kind))return {relevant:[],optional:[]};
+ const relevant=[];
+ if(!String(p.symbol||'').trim())relevant.push('Ticker/Symbol');
+ if(!String(p.currency||'').trim())relevant.push('Kurswährung');
+ if(!String(p.mic||'').trim()&&!String(p.exchange||'').trim())relevant.push('Handelsplatz oder MIC');
+ const optional=!String(p.isin||'').trim()?['ISIN (optional)']:[];
+ return {relevant,optional};
+}
 function unresolvedListings(){
- return model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&(!p.symbol||!p.currency||(!p.mic&&!p.exchange)||!p.isin));
+ return model.positions.filter(p=>{
+  const gap=listingReviewGaps(p);
+  return gap.relevant.length||gap.optional.length;
+ });
 }
 function openListingReview(){
- const outstanding=unresolvedListings();
- if(!outstanding.length)return notify('Alle Wertpapierpositionen haben bereits die grundlegenden Kennungen.');
- const p=outstanding[0];
- openPosition(p);
- if(!$('securityQuery'))return;
- $('securityGroup').open=true;
- $('securityQuery').value=p.isin||p.symbol||p.name;
- if(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey)void lookupSecurity();
- else notify(outstanding.length+' unvollständige Wertpapierzuordnungen. Für die automatische Suche erst einen API-Schlüssel unter „Mehr“ eintragen.');
+ if(!unresolvedListings().length)return;
+ listingReviewOpen=!listingReviewOpen;
+ listingReviewLimit=50;
+ renderPositions();
 }
 // Wallet-import is deliberately separate from manual asset creation. The user
 // reviews all discovered assets before anything is persisted.
@@ -1423,7 +1458,7 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
@@ -1481,7 +1516,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   if(!confirm('Backup mit '+imported.positions.length+' Positionen und '+imported.providers.length+' Anbietern wiederherstellen? Deine aktuellen Daten werden ersetzt. API-Schlüssel auf diesem Gerät bleiben erhalten.'))return;
   imported.settings={...defaultSettings(),...model.settings};
   if(loadFailure&&!portfolioStore.isIndexedDB)loadFailure=null;
-  model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' '+unresolvedListings().length+' Wertpapier-Zuordnungen unter „Positionen“ prüfen.':''));}catch(err){notify(err.message,true);}});
+  model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));}catch(err){notify(err.message,true);}});
   $('deleteAll').addEventListener('click',async ()=>{
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
