@@ -848,3 +848,9 @@
 #backupPasswordSetup{min-width:0;max-width:100%}
 #backupPasswordSetup .button-row .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
 #backupPasswordSetup .field,#backupPasswordSetup .field input{min-width:0;max-width:100%}
+
+/* Full backup configuration stays readable and within 320px. */
+.full-backup-option{min-width:0;max-width:100%}
+.full-backup-option>span{display:flex;align-items:flex-start;gap:9px;min-width:0;max-width:100%;line-height:1.5}
+.full-backup-option strong{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px}
+.full-backup-option input{flex:0 0 auto;width:auto;margin-top:3px}
