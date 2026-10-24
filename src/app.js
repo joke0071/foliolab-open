@@ -345,8 +345,27 @@ function renderBackupStatus(){
   ?'Zuletzt für einen Download erstellt: '+date.toLocaleDateString('de-AT')+' · '+date.toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'})+'. Prüfe, ob du die Datei sicher abgelegt hast.'
   :'Noch kein Backup erstellt. Sichere deine lokalen Daten regelmäßig.';
 }
-function showDialog(title,kicker,html,onSave){editor={onSave};$('dialogTitle').textContent=title;$('dialogKicker').textContent=kicker;$('dialogFields').innerHTML=html;$('saveDialog').textContent='Speichern';$('saveDialog').disabled=false;$('editDialog').showModal();}
-function closeDialog(){$('editDialog').close();editor=null;}
+let dialogOpener=null;
+const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
+ :title.startsWith('Konto')?'Konto speichern'
+ :title.startsWith('Position')?'Position speichern'
+ :title.startsWith('Buchung')?'Buchung speichern'
+ :title.startsWith('Stichtag')?'Stichtag speichern'
+ :title.startsWith('Wallet')?'Coins hinzufügen'
+ :title.startsWith('CSV')?'Buchungen importieren':'Speichern';
+function showDialog(title,kicker,html,onSave){
+ dialogOpener=document.activeElement;
+ editor={onSave};
+ $('dialogTitle').textContent=title;
+ $('dialogKicker').textContent=kicker;
+ $('dialogFields').innerHTML=html;
+ $('dialogError').textContent='';
+ $('dialogError').classList.add('hidden');
+ $('saveDialog').textContent=dialogSaveLabel(title);
+ $('saveDialog').disabled=false;
+ $('editDialog').showModal();
+}
+function closeDialog(){if($('editDialog').open)$('editDialog').close();}
 function providerMatchMarkup(query){
  const found=providerSuggestions(query,6);
  return found.length?found.map(x=>'<button type="button" class="onboarding-suggestion" data-provider-preset="'+esc(x.name)+'"><strong>'+esc(x.name)+'</strong><span>'+esc(types[x.type])+'</span></button>').join(''):'<p class="small-help">Kein Vorschlag? Eigene Anbieterbezeichnung und Typ frei eintragen.</p>';
@@ -383,11 +402,11 @@ function accountMatchMarkup(providerId,query){
 }
 function openAccount(a,defaultProviderId){
  if(!model.providers.length){openProvider();notify('Bitte zuerst einen Anbieter anlegen.');return;}
- const providerId=a?.providerId||defaultProviderId||model.providers[0].id;
+ const providerId=a?.providerId||defaultProviderId||model.accounts.find(x=>x.id===model.settings?.lastAccountId)?.providerId||(model.providers.length===1?model.providers[0].id:'');
  const provider=model.providers.find(p=>p.id===providerId),suggestion=suggestedAccountForProvider(provider?.type||'other');
  showDialog(a?'Konto bearbeiten':'Konto hinzufügen','KONTEN UND DEPOTS',
  '<p class="dialog-intro">Anbieter auswählen und einen Kontonamen eintippen. Passende Kontotypen werden vorgeschlagen; Name und Typ bleiben frei bearbeitbar.</p>'+
- '<label class="field"><span>Anbieter</span><select id="accountProvider" name="providerId">'+options(model.providers.map(p=>[p.id,p.name]),providerId)+'</select></label>'+
+ '<label class="field"><span>Anbieter</span><select id="accountProvider" name="providerId" required><option value="">Anbieter auswählen</option>'+options(model.providers.map(p=>[p.id,p.name]),providerId)+'</select></label>'+
  '<label class="field"><span>Kontoname</span><input name="name" id="accountName" type="text" required maxlength="100" autocomplete="off" value="'+esc(a?.name||suggestion[0])+'" placeholder="Girokonto, Wertpapierdepot …"></label>'+
  '<div class="onboarding-suggestions" id="accountMatches" role="region" aria-label="Kontovorschläge"></div>'+
  '<div class="field-row"><label class="field"><span>Kontotyp</span><select name="type" id="accountType">'+options(Object.entries(accountTypes),a?.type||suggestion[1])+'</select></label>'+
@@ -794,13 +813,14 @@ function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
  if(!list.length)return notify('Lege zuerst eine manuell verwaltete Position oder ein Guthaben an.',true);
  const today=new Date().toISOString().slice(0,10);
- const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||list.find(p=>p.kind!=='cash')||list[0];
+ // Only an explicit previous choice or a single available position can be preselected.
+ const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||(list.length===1?list[0]:null);
  const commonTypes=['buy','sell','deposit','withdraw','dividend','interest','reward','fee','tax','transfer'];
- const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred.kind==='cash'?'deposit':'buy')+'</optgroup>'+
+ const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred?.kind==='cash'?'deposit':'buy')+'</optgroup>'+
    '<optgroup label="Weitere Vorgänge & Kapitalmaßnahmen">'+options(Object.entries(TX_TYPES).filter(([k])=>!commonTypes.includes(k)),null)+'</optgroup>';
  showDialog('Buchung hinzufügen','BUCHUNGEN',
   '<p class="dialog-intro">Wähle die Anlage und den Vorgang. FolioLab zeigt nur die dafür benötigten Angaben.</p>'+
-  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),preferred.id)+'</select></label>'+
+  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition" required>'+(preferred?'':'<option value="">Anlage oder Konto auswählen</option>')+options(list.map(p=>[p.id,p.name]),preferred?.id)+'</select></label>'+
   '<div class="field-row"><label class="field"><span>Was ist passiert?</span><select name="type" id="bookingType">'+typeOptions+'</select></label>'+
     field('Datum','date',today,'date','required max="'+today+'"')+'</div>'+
   '<div id="bookingQuantityWrap" class="field-row">'+
@@ -808,7 +828,7 @@ function openBooking(){
     '<label class="field" id="bookingPriceWrap"><span id="bookingPriceLabel">Kauf-/Verkaufskurs je Stück</span><input name="unitPrice" type="text" inputmode="decimal" placeholder="Tatsächlicher Ausführungskurs"></label></div>'+
   '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
     '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
-  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list.find(p=>p.id!==preferred.id)?.id||preferred.id)+'</select></label>'+
+  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget"><option value="">Zielposition auswählen</option>'+options(list.map(p=>[p.id,p.name]),'')+'</select></label>'+
     field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
     '<p class="small-help">Ein Barausgleich oder eine Barabfindung wird nicht automatisch verbucht. Bitte mit der Brokerabrechnung abgleichen.</p></div>'+
   '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile','ratioNumerator','2','text','inputmode="decimal"')+
@@ -851,6 +871,7 @@ function openBooking(){
   const needsQuantity=!meta&&!ratio&&!correct;
   $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
   $('bookingTargetWrap').classList.toggle('hidden',!target);
+  $('bookingTarget').required=target;
   $('bookingRatioWrap').classList.toggle('hidden',!ratio);
   $('bookingCorrectWrap').classList.toggle('hidden',!correct);
   $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(actual));
@@ -872,7 +893,7 @@ function openBooking(){
   if(trade&&!lastType)advanced.open=false;
   fee.disabled=!trade;tax.disabled=!trade;
   if(!trade){fee.value='0';tax.value='0';}
-  const foreign=position?.currency!=='EUR';
+  const foreign=Boolean(position&&position.currency!=='EUR');
   $('bookingFxWrap').classList.toggle('hidden',!foreign);
   $('bookingFxCurrency').textContent=position?.currency||'Fremdwährung';
   fx.required=Boolean(foreign);
@@ -1131,7 +1152,21 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
-function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});$('editorForm').addEventListener('submit',async e=>{e.preventDefault();if(!editor||saving)return;const button=$('saveDialog');button.disabled=true;const f=new FormData(e.currentTarget);const v=Object.fromEntries(f.entries());try{await editor.onSave(v);closeDialog();}catch(err){notify('Änderung nicht gespeichert: '+String(err.message||err),true);}finally{button.disabled=false;}});document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
+function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
+ $('editDialog').addEventListener('close',()=>{
+  editor=null;
+  const opener=dialogOpener;dialogOpener=null;
+  if(opener?.isConnected)opener.focus({preventScroll:true});
+ });
+ $('editorForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!editor||saving)return;
+  const button=$('saveDialog');button.disabled=true;
+  const f=new FormData(e.currentTarget),v=Object.fromEntries(f.entries());
+  $('dialogError').textContent='';$('dialogError').classList.add('hidden');
+  try{await editor.onSave(v);closeDialog();}
+  catch(err){$('dialogError').textContent='Änderung nicht gespeichert: '+String(err.message||err);$('dialogError').classList.remove('hidden');}
+  finally{button.disabled=false;}
+ });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;positionLimit=100;renderPositions();}});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));

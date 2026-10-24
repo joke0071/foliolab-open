@@ -173,7 +173,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   shell(fields,'Position hinzufügen');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
-  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render();if(state.kind==='crypto')loadCoins();});
+  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render({resetWalletDisclosure:true});if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);
   $('wizardQuery').addEventListener('input',x=>{state.query=x.target.value;updateResults();if(state.kind==='crypto'&&state.query.trim().length>=2)loadCoins({all:true});});
   $('wizardMatches').addEventListener('click',x=>{
@@ -266,7 +266,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  const renderSuccess=()=>{
   shell('<div class="wizard-success"><strong>Position gespeichert</strong><p>Bestand und Zuordnung wurden übernommen. Die Kursbewertung bleibt überprüfbar und verwendet keine erfundenen Kurse.</p><div class="toolbar-buttons"><button id="wizardMore" type="button" class="btn outline">Weitere Position hinzufügen</button><button id="wizardPortfolio" type="button" class="btn primary">Zum Portfolio</button></div></div>','Anlage hinzugefügt');
   $('wizardPrev').classList.add('hidden');
-  $('wizardMore').addEventListener('click',()=>{state=fresh();sequence++;const m=getModel();state.providerId=m.providers[0]?.id||'__new__';state.accountId=m.accounts.find(a=>a.providerId===state.providerId)?.id||'__new__';render();});
+  $('wizardMore').addEventListener('click',()=>{state=fresh();sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';render();});
   $('wizardPortfolio').addEventListener('click',close);
   $('wizardPortfolio').focus();
  };
@@ -287,19 +287,26 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    state.saved=true;renderSuccess();
   }catch(ex){state.busy=false;error(ex.message||String(ex));$('wizardNext').disabled=false;$('wizardNext').textContent='Position speichern';}
  };
- const render=()=>{if(!dialog.open)return;
+ const render=({resetWalletDisclosure=false}={})=>{
+  if(!dialog.open)return;
   if(state.saved)return renderSuccess();
+  // A native details 'toggle' event can arrive after the following form re-render.
+  // Read the actual expanded state synchronously before replacing the fields.
+  const advanced=$('wizardAdvanced'),economic=$('wizardEconomic'),wallet=$('wizardWalletAdvanced');
+  if(advanced)state.advancedOpen=advanced.open;
+  if(economic)state.economicOpen=economic.open;
+  if(wallet&&!resetWalletDisclosure)state.walletOpen=wallet.open;
   renderOne();
  };
  const close=()=>{sequence++;if(dialog.open)dialog.close();opener?.focus?.();};
  dialog.addEventListener('cancel',ev=>{if(state.busy){ev.preventDefault();return;}sequence++;});
  dialog.addEventListener('close',()=>opener?.focus?.());
- return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;
+ return {open(){opener=document.activeElement;state=fresh();dialog.replaceChildren();funds=loadFundCatalog();sequence++;
    const m=getModel(),preferred=m.accounts.find(a=>a.id===m.settings?.lastAccountId);
-   const provider=m.providers.find(x=>x.id===preferred?.providerId)||m.providers[0];
-   state.providerId=provider?.id||'__new__';
-   const account=m.accounts.find(a=>a.id===preferred?.id&&a.providerId===provider?.id)||m.accounts.find(a=>a.providerId===provider?.id);
-   state.accountId=provider?account?.id||'__new__':'__new__';
+   const provider=m.providers.find(x=>x.id===preferred?.providerId);
+   // Only an explicitly remembered account may preselect an existing provider.
+   state.providerId=provider?.id||(m.providers.length?'':'__new__');
+   state.accountId=state.providerId==='__new__'?'__new__':provider?preferred.id:'';
    dialog.showModal();render();
    void loadSecurityDirectories().then(list=>{
     if(!dialog.open)return;

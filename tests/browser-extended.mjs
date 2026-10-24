@@ -23,8 +23,10 @@ try{
  assert.match(await page.locator('#totalValue').innerText(),/1.500/);
  await page.locator('#sidebarNav [data-page="bookings"]').click();
  await page.locator('#addBooking').click();
- const options=await page.locator('#bookingPosition option').evaluateAll(xs=>xs.map(x=>({value:x.value,label:x.textContent})));
+ const options=await page.locator('#bookingPosition option').evaluateAll(xs=>xs.filter(x=>x.value).map(x=>({value:x.value,label:x.textContent})));
  assert.equal(options.length,2);
+ assert.equal(await page.locator('#bookingPosition').inputValue(),'','No arbitrary source account');
+ await page.locator('#bookingPosition').selectOption(options[0].value);
  await page.locator('#bookingType').selectOption('transfer');
  await page.locator('#bookingQuantityWrap [name="quantity"]').fill('150');
  await page.locator('#bookingTarget').selectOption(options[1].value);
@@ -33,6 +35,7 @@ try{
  assert.deepEqual(afterTransfer.positions.map(x=>x.quantity).sort((a,b)=>a-b),[650,850]);
  assert.equal(afterTransfer.externalCashFlows.length,0,'internal transfers cannot be external flows');
  await page.locator('#addBooking').click();
+ await page.locator('#bookingPosition').selectOption(options[0].value);
  await page.locator('#bookingType').selectOption('deposit');
  await page.locator('#bookingQuantityWrap [name="quantity"]').fill('100');
  await page.locator('#saveDialog').click();
