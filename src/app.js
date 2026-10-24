@@ -524,7 +524,7 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
  $('positionProviderSearch').addEventListener('input',refreshPositionProviders);
  $('positionAccountSearch').addEventListener('input',refreshPositionAccounts);
  refreshPositionAccounts();refreshPosForm();$('coinQuery').addEventListener('input',showCoinResults);$('coinCatalogLoad').addEventListener('click',loadCoins);$('securitySearch').addEventListener('click',lookupSecurity);$('securityQuery').addEventListener('input',()=>{clearTimeout(securityDebounce);const q=$('securityQuery').value.trim();if(q.length>=3&&(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey))securityDebounce=setTimeout(lookupSecurity,650);});$('securityQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupSecurity();}});if(p)$('deletePosition').addEventListener('click',()=>confirmDeletePosition(p.id,{fromDialog:true}));}
-function showCoinResults(){const area=$('coinResults');const term=$('coinQuery').value;const results=searchCatalog(catalog,term);area.classList.remove('hidden');area.innerHTML=results.length?results.map(c=>`<button class="result-item" data-coin="${esc(c.id)}" data-symbol="${esc(c.symbol)}" data-name="${esc(c.name)}" type="button"><span><strong>${esc(c.symbol)}</strong> · ${esc(c.name)}</span><small>${esc(c.id)}</small></button>`).join(''):empty('Kein Treffer. CoinGecko-ID kann auch manuell eingetragen werden.');area.querySelectorAll('[data-coin]').forEach(b=>b.addEventListener('click',()=>{const form=$('editorForm');form.elements.coinId.value=b.dataset.coin;if(!form.elements.name.value)form.elements.name.value=b.dataset.name;form.elements.symbol.value=b.dataset.symbol;form.elements.currency.value='EUR';refreshPosForm();area.classList.add('hidden');}));}
+function showCoinResults(){const area=$('coinResults');const term=$('coinQuery').value;const results=searchCatalog(catalog,term);area.classList.remove('hidden');area.innerHTML=results.length?results.map(c=>`<button class="result-item" data-coin="${esc(c.id)}" data-symbol="${esc(c.symbol)}" data-name="${esc(c.name)}" type="button"><span><strong>${esc(c.symbol)}</strong> · ${esc(c.name)}</span><small>${esc(c.id)}</small></button>`).join(''):empty('Kein Treffer. CoinGecko-ID kann auch manuell eingetragen werden.');area.querySelectorAll('[data-coin]').forEach(b=>b.addEventListener('click',()=>{const form=$('editorForm');form.elements.coinId.value=b.dataset.coin;if(!form.elements.name.value)form.elements.name.value=b.dataset.name;form.elements.symbol.value=b.dataset.symbol;form.elements.currency.value='EUR';if(editor)editor.dirty=true;refreshPosForm();area.classList.add('hidden');}));}
 async function loadCoins(){const button=$('coinCatalogLoad');button.disabled=true;button.textContent='Lade Katalog …';try{catalog=await coinCatalog(model.settings.coinGeckoKey);fullCatalog=true;notify(`${catalog.length} Kryptowährungen verfügbar.`);showCoinResults();}catch(e){notify(`Katalog nicht erreichbar: ${e.message}`,true);}finally{button.disabled=false;button.textContent=fullCatalog?'Katalog aktualisieren':'Alle Coins laden';}}
 const securityCache=new Map();let lookupSequence=0,securityDebounce=null;
 async function lookupSecurity(){
@@ -574,6 +574,7 @@ async function lookupSecurity(){
     f.currency.value=entry.currency;
     if(entry.currency!=='EUR'){f.fxRate.value='';notify('Kurswährung prüfen und EUR-Wechselkurs eingeben.',true);}
    }
+   if(editor)editor.dirty=true;
    refreshPosForm();area.classList.add('hidden');
   }));
  }catch(e){
@@ -767,7 +768,8 @@ function openCSVImport(){
  showDialog('CSV importieren','BUCHUNGEN',
   '<p class="dialog-intro">Wähle deine Buchungsdatei. Vor dem Import kannst du die Spalten und jede unklare Zuordnung prüfen. Die Datei bleibt auf deinem Gerät.</p>'+
   '<label class="field"><span>CSV-Datei (maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain"></label>'+
-  '<div id="csvMapping"></div><div id="csvReview" role="status" aria-live="polite"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
+  '<div id="csvMapping"></div><p id="csvReviewStatus" class="visually-hidden" role="status" aria-live="polite">Nach der Dateiauswahl werden die Buchungen geprüft.</p>'+
+  '<div id="csvReview"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
    const result=previewCSV(model,parsed,currentMapping(),previewOptions());
@@ -777,45 +779,52 @@ function openCSVImport(){
    notify(imported.imported+' Buchungen importiert · '+imported.duplicates+' Dubletten übersprungen'+(result.skipped?' · '+result.skipped+' bewusst ausgelassen':'')+'.');
   });
  $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';
- const review=()=>{
+ const review=(returnTo=null)=>{
   if(!parsed)return;
   try{
    const result=previewCSV(model,parsed,currentMapping(),previewOptions());
    const needsMatch=m=>/^Anlage fehlt|^Anlage nicht eindeutig/.test(m);
    const status='<div class="csv-import-summary"><strong>'+result.ready+' bereit · '+result.duplicates+' bereits vorhanden · '+result.issues.length+' zu prüfen'+(result.skipped?' · '+result.skipped+' übersprungen':'')+'</strong></div>';
+   $('csvReviewStatus').textContent=result.ready+' bereit, '+result.duplicates+' bereits vorhanden, '+result.issues.length+' zu prüfen'+(result.skipped?', '+result.skipped+' übersprungen':'')+'.';
    const errors=result.rows.filter(x=>x.status==='error');
    const detail=errors.map(x=>{
     const unmatched=needsMatch(x.message);
-    const select=unmatched?'<label class="field"><span>Passende Anlage</span><select data-csv-assign="'+x.line+'">'+
+    const select=unmatched?'<label class="field"><span>Passende Anlage</span><select aria-label="Zeile '+x.line+': passende Anlage" data-csv-assign="'+x.line+'">'+
       options([['','Bitte auswählen'],...positions.map(p=>[p.id,p.name+(p.isin?' · '+p.isin:p.symbol?' · '+p.symbol:'')])],positionOverrides[x.line]||'')+
       '</select></label>':'';
     return '<div class="csv-review-row"><strong>Zeile '+x.line+'</strong><p>'+esc(x.message)+'</p>'+select+
-      '<label class="csv-skip"><input type="checkbox" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
+      '<label class="csv-skip"><input type="checkbox" aria-label="Zeile '+x.line+' überspringen" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
    }).join('');
    const examples=result.rows.filter(x=>x.status==='ready').slice(0,5).map(x=>
      '<div class="history-sub">Zeile '+x.line+' · '+esc(x.row.date+' · '+x.row.type+' · '+x.row.quantity)+'</div>').join('');
    const skipped=result.rows.filter(x=>x.status==='skipped').map(x=>
-    '<div class="csv-review-row"><strong>Zeile '+x.line+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
-   $('csvReview').innerHTML='<div class="csv-import-review"><h3>Buchungen prüfen</h3>'+status+
+    '<div class="csv-review-row"><strong>Zeile '+x.line+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" aria-label="Zeile '+x.line+' weiterhin auslassen" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
+   $('csvReview').innerHTML='<div class="csv-import-review"><h3 id="csvReviewHeading" tabindex="-1">Buchungen prüfen</h3>'+status+
     (errors.length?'<p class="small-help">Unklare Anlagen werden niemals automatisch einer anderen Position zugeordnet.</p>'+detail:'<p class="small-help">Alle übrigen Buchungen sind zugeordnet.</p>')+skipped+
     (examples?'<details class="advanced-apis"><summary>Beispielbuchungen ansehen</summary>'+examples+'</details>':'')+'</div>';
    $('csvReview').querySelectorAll('[data-csv-assign]').forEach(el=>el.addEventListener('change',()=>{
     if(el.value)positionOverrides[Number(el.dataset.csvAssign)]=el.value;else delete positionOverrides[Number(el.dataset.csvAssign)];
-    review();
+    review({kind:'assign',line:Number(el.dataset.csvAssign)});
    }));
    $('csvReview').querySelectorAll('[data-csv-skip]').forEach(el=>el.addEventListener('change',()=>{
     const line=Number(el.dataset.csvSkip);
     if(el.checked){if(!skippedLines.includes(line))skippedLines.push(line);}
     else skippedLines=skippedLines.filter(x=>x!==line);
-    review();
+    review({kind:'skip',line});
    }));
+   // The previously focused control was destroyed by innerHTML replacement.
+   // Restore it when still meaningful, otherwise focus the review heading.
+   if(returnTo){
+    const field=$('csvReview').querySelector('[data-csv-'+returnTo.kind+'="'+returnTo.line+'"]');
+    (field||$('csvReviewHeading')).focus({preventScroll:true});
+   }
    $('saveDialog').disabled=Boolean(result.issues.length)||result.ready===0;
    $('saveDialog').textContent=result.ready?result.ready+' Buchung'+(result.ready===1?'':'en')+' importieren':'Buchungen importieren';
-  }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('saveDialog').disabled=true;}
+  }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('csvReviewStatus').textContent='Importprüfung fehlgeschlagen.';$('saveDialog').disabled=true;}
  };
  $('csvFile').addEventListener('change',async event=>{
   const file=event.target.files?.[0];parsed=null;positionOverrides={};skippedLines=[];$('saveDialog').disabled=true;
-  if(!file){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
+  if(!file){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';$('csvReviewStatus').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
    if(file.size>2_000_000)throw Error('CSV-Datei zu groß (maximal 2 MB).');
    parsed=parseCSV(await file.text());
@@ -828,7 +837,7 @@ function openCSVImport(){
     '</div>';
    $('csvMapping').querySelectorAll('select').forEach(el=>el.addEventListener('change',review));
    review();
-  }catch(error){$('csvMapping').innerHTML='';$('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;}
+  }catch(error){$('csvMapping').innerHTML='';$('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;$('csvReviewStatus').textContent='CSV konnte nicht gelesen werden.';}
  });
 }
 function openBooking(){
