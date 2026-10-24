@@ -75,7 +75,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   return '<div class="history-row"><div><strong>'+esc(date)+' · '+esc(eventLabels[e.type]||e.type)+'</strong>'+
    '<p class="position-detail-note">'+qty+source+role+(e.note?' · '+esc(e.note):'')+'</p></div></div>';
  }).join('');
- const bookingHistory='<details class="position-chart-options"><summary>Gebuchte Vorgänge ('+timeline.total+')</summary>'+
+ const bookingHistory='<details class="position-booking-history"><summary>Gebuchte Vorgänge ('+timeline.total+')</summary>'+
   '<div class="position-chart-options-body">'+
   (timeline.total?events+(timeline.hasMore?'<p class="position-detail-note">Weitere Vorgänge unter „Buchungen“ anzeigen.</p>':''):
    '<p class="position-detail-note">Für diese Position sind noch keine zugeordneten Buchungen erfasst.</p>')+
