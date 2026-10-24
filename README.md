@@ -62,27 +62,35 @@ Anschließend prüft **„Verbindung & Staking prüfen“** ohne Nutzer-Walletda
 
 Die URL einschließlich enthaltenem Anbieter-Schlüssel ist ein Zugangstoken und sollte nicht weitergegeben werden; der Browser speichert diese Konfiguration lokal im Klartext. Niemals Seed-Phrase oder private Wallet-Schlüssel einfügen. Ein selbst konfigurierter RPC wird nicht ungefragt an öffentliche Fallback-Provider weitergeleitet.
 
-## Google Drive Backup mit eigenem OAuth (freiwillig)
+## Einheitliche Backup-Verschlüsselung und Google Drive (freiwillig)
 
-FolioLab Open unterstützt **verschlüsselte Google-Drive-Sicherungen ohne FolioLab-Server und ohne zentral bereitgestellte Zugangsdaten**. Der Nutzer bestimmt selbst, welche Google-OAuth-App und welches Google-Konto verwendet werden. Die regulären lokalen JSON-Backups bleiben jederzeit unabhängig von Google verfügbar.
+Lokale und Google-Drive-Backups verwenden **dasselbe vom Nutzer gewählte Backup-Passwort**. Die Integration benötigt weder einen FolioLab-Server noch eine vom Betreiber bereitgestellte OAuth-App.
 
-**Einrichtung:** Unter **Mehr → Deine Daten → Google Drive Backup**:
-1. In der [Google Cloud Console](https://console.cloud.google.com/apis/credentials) ein eigenes Projekt erstellen, die **Google Drive API** aktivieren und die OAuth-Zustimmung einrichten. Für einen nicht veröffentlichten Testmodus das eigene Konto als Testnutzer hinterlegen.
-2. Einen OAuth-Client vom Typ **Webanwendung** erstellen. Unter **Autorisierte JavaScript-Quellen** die exakte Herkunft deiner FolioLab-Seite eintragen: etwa `https://joke0071.github.io` für GitHub Pages (ohne Repository-Pfad) oder die tatsächlich genutzte Cloudflare-Pages-Domain. Ein separates Redirect-URI ist für den verwendeten GIS-Popup-Token-Client nicht nötig.
-3. Nur die **Client-ID** (`…apps.googleusercontent.com`) in FolioLab einfügen. **Kein API-Key, kein Client-Secret und keine OAuth-Tokens in das Feld eintragen.** Die Client-ID wird ausschließlich in diesem Browser gespeichert.
-4. Google Drive verbinden. FolioLab fordert erst nach dem Klick den begrenzten Scope `https://www.googleapis.com/auth/drive.file` an. Ordner können in der App erstellt/aus den durch diese OAuth-App verwalteten FolioLab-Ordnern ausgewählt werden; beliebige fremde Drive-Ordner lassen sich mit dem eingeschränkten Scope nicht durchsuchen.
-5. In **Wiederherstellungsschlüssel** einen lokalen AES-GCM-Schlüssel erzeugen, ihn getrennt von Drive herunterladen bzw. im Passwortmanager ablegen und die sichere Aufbewahrung bestätigen. Erst danach sind Cloud-Sicherungen erlaubt.
+### Verschlüsselung einrichten
 
-**Funktionen:** Backup sofort erstellen; automatische Sicherung bei App-Nutzung (Start, täglich, wöchentlich, monatlich); alte Sicherungen auf 1–30 Einträge begrenzen (Standard: 3); Backup-Dateien prüfen und mit Bestätigung wiederherstellen. Die Dateiliste wird vor einer Bereinigung gegen den erfolgreich hochgeladenen Eintrag abgeglichen. Fehlschläge beim Aufräumen löschen keinen frisch hochgeladenen Stand.
+Unter **Mehr → Deine Daten → Backup-Verschlüsselung** ein Passwort mit mindestens zehn Zeichen eingeben und bestätigen. Danach sind lokale verschlüsselte Backups und – bei eigener Google-Anmeldung – Drive-Backups verfügbar.
 
-**Sicherheitsmodell und Grenzen:**
-- Die Portfoliodaten werden vor dem Upload im Browser mit **AES-256-GCM** verschlüsselt. Der Wiederherstellungsschlüssel bleibt lokal in IndexedDB, die separate Schlüsseldatei muss sicher aufbewahrt werden. Ohne sie sind die Sicherungen nach Browser-/Geräteverlust nicht lesbar. Nur die verschlüsselte Datei gelangt zu Google.
-- Im Speicher abgelegte API-/RPC-Schlüssel werden vor dem Backup durch das bestehende `backup(model)`-Format entfernt. OAuth-Zugriffstokens bleiben nur im Arbeitsspeicher und werden nicht in lokalen Einstellungen oder Backups gespeichert.
-- Neue eigene Client-ID pro Nutzer: Der Betreiber von FolioLab verfügt über **keinen zentralen OAuth-Zugang**. Eine Client-ID ist ein öffentlicher Anwendungsbezeichner, kein geheimer Schlüssel. Bei Änderung der Client-ID muss die Google-Verbindung erneut hergestellt werden.
-- Ein rein browserbasiertes OAuth-Token läuft ab; dann muss manuell erneut verbunden werden. **Bei vollständig geschlossener PWA finden keine Backups statt.** Es gibt keine serverseitigen Jobs, keine Garantie für tägliche Ausführung und keine automatische Wiederanmeldung über Refresh-Tokens.
-- Die Wiederherstellung verwendet dieselbe strenge Datenvalidierung wie der lokale JSON-Import. Vor dem Überschreiben bietet FolioLab den aktuellen Datenstand als lokale Sicherungsdatei an. Die erfolgreiche Wiederherstellung ersetzt Portfolio-Bestände, aber keine vorhandenen lokalen API-Schlüssel.
-- Eine OAuth-App im Google-Testmodus kann zusätzliche Nutzerbeschränkungen/erneute Autorisierungen haben. Für Apps unter fremden Domains muss die jeweilige Origin in den eigenen Google-Zugangsdaten eingetragen werden.
-- Vollständig ausgereifte Sicherheit benötigt eine unveränderte, vertrauenswürdige FolioLab-Installation sowie einen geschützten Browser. Ein eigener OAuth-Client verhindert keinen bösartigen JavaScript-Code in einer kompromittierten Website.
+Die Anwendung erzeugt einen zufälligen 256-Bit-Datenschlüssel, schützt eine Kopie mit einem über **PBKDF2-HMAC-SHA-256 (310.000 Iterationen)** vom Passwort abgeleiteten Schlüssel und verschlüsselt damit jede Sicherung mit **AES-256-GCM**. Jede neue Datei enthält die passwortgeschützte Kopie des Datenschlüssels, nicht das Passwort. Auf diesem Gerät liegt zusätzlich ein **nicht exportierbarer CryptoKey** in IndexedDB, damit FolioLab während der Nutzung ohne erneute Passworteingabe sichern kann. Auf einem neuen Gerät genügt das Passwort zum Entschlüsseln. Dies schützt Dateien auf Google Drive, aber nicht gegen manipuliertes JavaScript oder unberechtigten Zugriff auf das offene Gerät.
+
+Ein vergessenes Passwort macht die Sicherungsdateien auf anderen Geräten unlesbar, sofern das Passwort nicht sicher verwahrt ist. Bei einer Passwortänderung bleiben ältere Backups an ihr bisheriges Passwort gebunden; FolioLab ändert oder löscht sie nicht automatisch. Ohne eingerichtetes Passwort bleibt der unverschlüsselte lokale JSON-Export möglich.
+
+### Persönlichen Google-Drive-OAuth-Zugang einrichten
+
+1. In der [Google Cloud Console](https://console.cloud.google.com/apis/credentials) ein eigenes Projekt erstellen, **Google Drive API** aktivieren und den OAuth-Zustimmungsdialog konfigurieren. Bei Testmodus das eigene Google-Konto als Testnutzer hinzufügen.
+2. Einen OAuth-Client vom Typ **Webanwendung** erstellen und die tatsächliche FolioLab-Origin als **autorisierte JavaScript-Quelle** eintragen (bei GitHub Pages z. B. `https://joke0071.github.io`, ohne Unterpfad).
+3. Die öffentliche Client-ID (`…apps.googleusercontent.com`) unter **Mehr → Deine Daten → Google Drive Backup** einfügen und Google verbinden. **Kein API-Key, Client-Secret oder Refresh-Token** erforderlich. Die OAuth-Client-ID verbleibt in den lokalen Einstellungen, der kurzlebige Access-Token nur im Arbeitsspeicher.
+4. Optionalen FolioLab-Ordner auswählen/erstellen, manuell sichern oder einen automatischen Rhythmus wählen. Standard sind drei Versionen; einstellbar sind 1–30.
+
+Die Google-Berechtigung `drive.file` ist auf von dieser OAuth-App angelegte bzw. für sie freigegebene Dateien beschränkt. Eine freie Navigation durch alle fremden Drive-Ordner ist nicht möglich. Uploads erfolgen direkt aus dem Browser an Google; der FolioLab-Betreiber erhält weder Zugangsdaten noch Portfolio-Dateien. **Automatische Sicherungen laufen nur bei geöffneter App und gültiger Google-Autorisierung.**
+
+### Wiederherstellung und ältere Backupformate
+
+- Neu: Lokale Dateien und Google-Drive-Dateien im Format `foliolab-open-encrypted-v2` erfordern **nur das gemeinsame Passwort**. FolioLab validiert den Inhalt vor dem Import und bietet vor dem Überschreiben eine lokale Rollback-Kopie an.
+- Bestehende lokal verschlüsselte Sicherungen im Format `foliolab-open-encrypted-v1` bleiben mit ihrem damaligen Passwort über den Dateiimport lesbar.
+- Bestehende Google-Drive-Sicherungen im Format `foliolab-drive-encrypted-v1` bleiben mit dem alten `FLBK1-`-Schlüssel oder bei vorhandenem lokalen Legacy-Schlüssel wiederherstellbar. Neue Backups benötigen keinen separaten FLBK1-Schlüssel mehr.
+- Bei erfolgreicher Wiederherstellung auf einem neuen Browser kann FolioLab den passwortgeschützten Datenschlüssel für weitere Backups übernehmen. Ein bereits eingerichteter anderer Datenschlüssel wird nicht ungefragt überschrieben.
+
+**Wichtig:** Automatische Backups sind kein Echtzeit-Synchronisationssystem. OAuth-Ablauf, Offline-Nutzung, Speicherlimits und geschlossene Browser können geplante Sicherungen verhindern. Der Nutzer bleibt für die sichere Verwahrung seines Backup-Passworts verantwortlich.
 
 ## Datenschutz und Sicherheitsmodell
 
