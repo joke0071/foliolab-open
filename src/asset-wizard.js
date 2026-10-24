@@ -128,6 +128,31 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     (!cash?input('wizardCurrentPrice','Aktueller Kurs (optional)',state.currentPrice,'inputmode="decimal"'):'')+
     (state.currency!=='EUR'?input('wizardFX','EUR je Einheit '+state.currency,state.fxRate,'inputmode="decimal" required'):'')+
     '<p class="small-help">'+(buy?'Kaufpreis und aktueller Marktpreis werden getrennt erfasst.':'Der Anfangsbestand ist keine historische Kaufbuchung. Unbekannte Kaufpreise bleiben unbekannt.')+'</p></section>';
+  const linkedPositions=m.positions.map(p=>[p.id,p.name+(p.symbol?' · '+p.symbol:'')]);
+  const crypto=state.kind==='crypto';
+  const advanced='<section class="wizard-group wizard-extra-group"><details class="advanced-apis wizard-extra" id="wizardAdvanced"'+(state.advancedOpen?' open':'')+'>'+
+   '<summary>Weitere Angaben (optional)</summary>'+
+   '<p class="small-help">Nur bei Bedarf ausfüllen. Diese Angaben können später bearbeitet werden.</p>'+
+   (state.mode==='opening'&&!cash?input('wizardCostBasis','Bekannter Einstandswert gesamt (EUR)',state.costBasisEUR,'inputmode="decimal" placeholder="Unbekannt – leer lassen"'):'')+
+   input('wizardNotes','Notiz',state.notes,'maxlength="300" placeholder="Optional"')+
+   '<details class="advanced-apis wizard-extra-nested" id="wizardEconomic"'+(state.economicOpen?' open':'')+'>'+
+    '<summary>Wirtschaftliche Zuordnung / DeFi</summary>'+
+    '<p class="small-help">Für Sicherheiten, Staking, Wrapped Tokens oder Verbindlichkeiten. Verhindere Doppelzählungen durch bewusste Zuordnung.</p>'+
+    '<label class="field"><span>Wirtschaftliche Funktion</span><select id="wizardEconomicRole">'+opts(roleChoices,state.economicRole).replace('<option value="">Bitte wählen</option>','')+'</select></label>'+
+    '<label class="field"><span>In der Vermögenssumme</span><select id="wizardValuationMode">'+opts(valuationChoices,state.valuationMode).replace('<option value="">Bitte wählen</option>','')+'</select></label>'+
+    '<label class="field"><span>Wird repräsentiert durch (optional)</span><select id="wizardRepresented">'+opts(linkedPositions,state.representedByPositionId,'Keine Zuordnung')+'</select></label></details>'+
+   (crypto?'<details class="advanced-apis wizard-extra-nested" id="wizardWalletAdvanced"'+(state.walletOpen?' open':'')+'>'+
+    '<summary>Öffentliche Wallet verknüpfen</summary>'+
+    '<p class="small-help">Für die automatische Wallet-Suche nutze den separaten Button „Wallet hinzufügen“ unter Positionen. Hier kannst du einzelne Positionen manuell einer öffentlichen Adresse zuordnen. Keine privaten Schlüssel eingeben.</p>'+
+    '<label class="checkbox-line"><input type="checkbox" id="wizardWalletEnabled"'+(state.walletEnabled?' checked':'')+'> Öffentliche Wallet für diese Position hinterlegen</label>'+
+    '<div id="wizardWalletFields"'+(state.walletEnabled?'':' class="hidden"')+'>'+
+     '<label class="field"><span>Netzwerk</span><select id="wizardWalletChain">'+opts(walletChains,state.walletChain).replace('<option value="">Bitte wählen</option>','')+'</select></label>'+
+     input('wizardWalletAddress','Öffentliche Wallet-Adresse',state.walletAddress,'maxlength="180" autocomplete="off" spellcheck="false"')+
+     '<div id="wizardWalletContractWrap">'+input('wizardWalletContract','Token-Contract, Mint oder Validator-ID',state.walletContract,'maxlength="120"')+'</div>'+
+     '<div id="wizardWalletDecimalsWrap">'+input('wizardWalletDecimals','Token-Dezimalstellen',state.walletDecimals,'type="number" min="0" max="30" step="1"')+'</div>'+
+     '<div id="wizardWalletChainIdWrap">'+input('wizardWalletChainId','EVM Chain-ID',state.walletChainId,'type="number" min="1" step="1"')+'</div>'+
+     '<div id="wizardWalletHdWrap"><label class="field"><span>Bitcoin-HD-Adresstyp</span><select id="wizardWalletHdType">'+opts([['auto','Automatisch erkennen'],['p2wpkh','Native SegWit (bc1q)'],['p2sh-p2wpkh','Nested SegWit (3)'],['p2pkh','Legacy (1)']],state.walletHdType).replace('<option value="">Bitte wählen</option>','')+'</select></label></div>'+
+    '</div></details>':'')+'</details></section>';
   const fields=storage+'<section class="wizard-group"><h3>Anlage auswählen</h3>'+
     '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
     '<label class="field"><span>Anlage suchen (optional)</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN oder Ticker"></label>'+
@@ -144,7 +169,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
     input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+
     input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+
-    input('wizardTV','TradingView-Symbol',state.tradingViewSymbol,'maxlength="48"')+'</details></div>'+catalogTools+'</section>'+holdings;
+    input('wizardTV','TradingView-Symbol',state.tradingViewSymbol,'maxlength="48"')+'</details></div>'+catalogTools+'</section>'+holdings+advanced;
   shell(fields,'Position hinzufügen');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
