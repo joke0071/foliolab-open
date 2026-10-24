@@ -2,6 +2,8 @@
 
 Start: `98b35c155a847a9216f3843f755dd5f509953090` (main, 24.10.2026). Baseline: 436 Node-Tests bestanden; vorhandene CI [40108182449](https://github.com/joke0071/foliolab-open/actions/runs/40108182449) grün. PLUS-Priorisierung und PLUS01 sowie WP01/02/04/05 vollständig gelesen. Kein neuer Audit der bereits funktionierenden UI; keine Storage-Änderung.
 
+Während der Arbeit wurde Backup-PR #110 in main integriert. PLUS01 wurde auf `354faa12feca1e048dd0b07f205a152f01826229` aktualisiert; der Service-Worker-Konflikt wurde unter Erhalt sämtlicher neuer Backup-Assets aufgelöst. Die Zielbasis enthält dadurch die aktuelle Passwort-Backup-Funktion.
+
 ## Reproduzierbare Befunde und Korrekturen
 
 | Priorität | Reproduktion am Ausgangsstand | Korrektur / Nachweis |
@@ -30,7 +32,7 @@ Lokaler Node-Gesamtlauf: 456 bestanden, 0 fehlgeschlagen; `npm run check` bestan
 
 ## Abgrenzung und Integration
 
-PRs #103–#106 enthalten ältere, teilweise überlappende Vorarbeit. PLUS01 nutzt gezielt deren Finanz-/Herkunftskorrekturen auf aktuellem main; die alten Finanz-/Import-PRs nicht zusätzlich blind mergen. Kein PR wurde automatisch geschlossen. #110 (Backup-Passwort) bleibt separat und muss nach Integration erneut auf Konflikte geprüft werden.
+PRs #103–#106 enthalten ältere, teilweise überlappende Vorarbeit. PLUS01 nutzt gezielt deren Finanz-/Herkunftskorrekturen auf aktuellem main; die alten Finanz-/Import-PRs nicht zusätzlich blind mergen. Kein PR wurde automatisch geschlossen. #110 (Backup-Passwort) ist inzwischen in der aktualisierten Basis enthalten; seine bestehenden Tests bleiben Teil der Gesamtsuite.
 
 Issue #44 / PLUS02: gleichzeitige localStorage-Schreibvorgänge sind weiterhin nicht atomar. PLUS01 ändert die Speicherung nicht. IndexedDB-CAS ist vorhanden und wird für konkurrierende Importe geprüft. Der separate Storage-PR #105 ist eine überprüfbare Vorarbeit für PLUS02, kein bereits integrierter Fix. Android-Realgerät nicht geprüft. PLUS02 soll diese vorhandene Arbeit gegen den dann aktuellen main prüfen, ohne Neuimplementierung.
 
