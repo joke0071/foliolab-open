@@ -53,6 +53,7 @@ try{
  await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereits vorhanden'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),true);
+ page.once('dialog',dialog=>dialog.accept());
  await page.locator('#cancelDialog').click();
  console.log('Flatex mobile browser: custody scope, statement quarantine, atomic import, repeated import PASS');
 }finally{await browser.close();}
