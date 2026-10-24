@@ -813,13 +813,14 @@ function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
  if(!list.length)return notify('Lege zuerst eine manuell verwaltete Position oder ein Guthaben an.',true);
  const today=new Date().toISOString().slice(0,10);
- const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||list.find(p=>p.kind!=='cash')||list[0];
+ // Only an explicit previous choice or a single available position can be preselected.
+ const preferred=list.find(p=>p.id===model.settings?.lastPositionId)||(list.length===1?list[0]:null);
  const commonTypes=['buy','sell','deposit','withdraw','dividend','interest','reward','fee','tax','transfer'];
- const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred.kind==='cash'?'deposit':'buy')+'</optgroup>'+
+ const typeOptions='<optgroup label="Häufige Buchungen">'+options(commonTypes.map(k=>[k,TX_TYPES[k]]),preferred?.kind==='cash'?'deposit':'buy')+'</optgroup>'+
    '<optgroup label="Weitere Vorgänge & Kapitalmaßnahmen">'+options(Object.entries(TX_TYPES).filter(([k])=>!commonTypes.includes(k)),null)+'</optgroup>';
  showDialog('Buchung hinzufügen','BUCHUNGEN',
   '<p class="dialog-intro">Wähle die Anlage und den Vorgang. FolioLab zeigt nur die dafür benötigten Angaben.</p>'+
-  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition">'+options(list.map(p=>[p.id,p.name]),preferred.id)+'</select></label>'+
+  '<label class="field"><span>Anlage oder Konto</span><select name="positionId" id="bookingPosition" required>'+(preferred?'':'<option value="">Anlage oder Konto auswählen</option>')+options(list.map(p=>[p.id,p.name]),preferred?.id)+'</select></label>'+
   '<div class="field-row"><label class="field"><span>Was ist passiert?</span><select name="type" id="bookingType">'+typeOptions+'</select></label>'+
     field('Datum','date',today,'date','required max="'+today+'"')+'</div>'+
   '<div id="bookingQuantityWrap" class="field-row">'+
@@ -827,7 +828,7 @@ function openBooking(){
     '<label class="field" id="bookingPriceWrap"><span id="bookingPriceLabel">Kauf-/Verkaufskurs je Stück</span><input name="unitPrice" type="text" inputmode="decimal" placeholder="Tatsächlicher Ausführungskurs"></label></div>'+
   '<div id="bookingCashWrap" class="hidden"><label class="field"><span>Bezahlung über dieses Konto (optional)</span><select name="cashPositionId" id="bookingCash"></select></label>'+
     '<p class="small-help">Nur auswählen, wenn der Kauf oder Verkauf wirklich über dieses Konto abgerechnet wurde. Sonst bleibt der Zahlungsweg offen.</p></div>'+
-  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget">'+options(list.map(p=>[p.id,p.name]),list.find(p=>p.id!==preferred.id)?.id||preferred.id)+'</select></label>'+
+  '<div id="bookingTargetWrap" class="hidden"><label class="field"><span>Zielposition</span><select name="targetPositionId" id="bookingTarget"><option value="">Zielposition auswählen</option>'+options(list.map(p=>[p.id,p.name]),'')+'</select></label>'+
     field('Erhaltene Menge bei Umtausch','targetQuantity','1','text','inputmode="decimal"')+
     '<p class="small-help">Ein Barausgleich oder eine Barabfindung wird nicht automatisch verbucht. Bitte mit der Brokerabrechnung abgleichen.</p></div>'+
   '<div id="bookingRatioWrap" class="hidden"><div class="field-row">'+field('Neue Anteile','ratioNumerator','2','text','inputmode="decimal"')+
@@ -870,6 +871,7 @@ function openBooking(){
   const needsQuantity=!meta&&!ratio&&!correct;
   $('bookingQuantityWrap').classList.toggle('hidden',!needsQuantity);
   $('bookingTargetWrap').classList.toggle('hidden',!target);
+  $('bookingTarget').required=target;
   $('bookingRatioWrap').classList.toggle('hidden',!ratio);
   $('bookingCorrectWrap').classList.toggle('hidden',!correct);
   $('bookingMetadataWrap').classList.toggle('hidden',!['ticker_change','isin_change'].includes(actual));
@@ -891,7 +893,7 @@ function openBooking(){
   if(trade&&!lastType)advanced.open=false;
   fee.disabled=!trade;tax.disabled=!trade;
   if(!trade){fee.value='0';tax.value='0';}
-  const foreign=position?.currency!=='EUR';
+  const foreign=Boolean(position&&position.currency!=='EUR');
   $('bookingFxWrap').classList.toggle('hidden',!foreign);
   $('bookingFxCurrency').textContent=position?.currency||'Fremdwährung';
   fx.required=Boolean(foreign);

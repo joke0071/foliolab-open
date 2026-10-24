@@ -23,12 +23,17 @@ try{
  assert.match(await page.locator('#dialogTitle').innerText(),/Buchung hinzufügen/);
  assert.equal(await page.locator('#bookingFxWrap').isVisible(),false,'EUR hides reference rate inputs');
  assert.equal(await page.locator('#bookingCash').inputValue(),'','No arbitrary clearing account');
+ assert.equal(await page.locator('#bookingPosition').inputValue(),'','Multiple positions require explicit choice');
+ assert.equal(await page.locator('#bookingPosition').evaluate(el=>el.checkValidity()),false,'A source position is required');
  assert.equal(await page.locator('#bookingQuantityWrap [name="unitPrice"]').inputValue(),'','No invented trade execution price');
  assert.equal(await page.locator('#bookingQuantityWrap [name="unitPrice"]').getAttribute('required'),'','Trade price required');
  assert.equal(await page.locator('#bookingAdvanced').isVisible(),true,'Trade fees remain reachable');
  await page.locator('#bookingPosition').selectOption(ids.usd);
  assert.equal(await page.locator('#bookingFxWrap').isVisible(),true,'Foreign currency exposes conversion');
  assert.equal(await page.locator('[name="fxRate"]').inputValue(),'','Historical rate must not be guessed');
+ await page.locator('#bookingType').selectOption('transfer');
+ assert.equal(await page.locator('#bookingTarget').inputValue(),'','Transfer target must not be guessed');
+ assert.equal(await page.locator('#bookingTarget').evaluate(el=>el.checkValidity()),false);
  await page.locator('#bookingType').selectOption('split');
  assert.equal(await page.locator('#bookingQuantityWrap').isVisible(),false,'Split hides purchase quantity');
  assert.equal(await page.locator('[name="quantity"]').inputValue(),'0','Metadata events have neutral quantity');
