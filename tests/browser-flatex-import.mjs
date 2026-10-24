@@ -38,7 +38,7 @@ try{
  await page.locator('#csvFile').setInputFiles(files);
  await page.locator('#csvBrokerAccount').waitFor();
  await page.locator('#csvBrokerAccount').selectOption(ids.fdep);
- await page.locator('#csvBrokerSettlement details').waitFor();
+ await page.locator('#csvBrokerSettlement details').first().waitFor();
  const beforeEUR=await page.locator('#csvBrokerSettlement').textContent();
  assert.match(beforeEUR,/Währung der Kontoumsätze/);
  assert.doesNotMatch(beforeEUR,/Differenz -1 EUR/);
