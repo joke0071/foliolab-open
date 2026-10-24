@@ -1612,6 +1612,8 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
       readBackupConfiguration(){
         return includeBackupConfiguration()?{settings:model.settings,drive:readDriveConfig()}:null;
       },
+      buildCompleteBackup:createCompleteBackup,
+      unpackCompleteBackup,
       validateData(data){return safeImport(data);},
       hasPasswordVault:hasBackupPassword,
       encryptPasswordBackup:encryptWithBackupPassword,
