@@ -46,6 +46,10 @@ try{
  const confirmed=await page.locator('#csvBrokerSettlement').textContent();
  assert.match(confirmed,/Differenz -1 EUR/);
  assert.match(confirmed,/nicht aufteilbar/);
+ assert.match(confirmed,/Kontoumsätze nach CSV-Kontoreferenz/);
+ assert.match(confirmed,/AT123/);
+ assert.match(confirmed,/Abflüsse 201.5 EUR/);
+ assert.match(confirmed,/wird keinem FolioLab-Guthaben automatisch zugeordnet/);
  await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereit'));
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
