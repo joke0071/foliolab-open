@@ -57,6 +57,11 @@ try{
  assert.match(confirmed,/wird keinem FolioLab-Guthaben automatisch zugeordnet/);
  await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereit'));
+ assert.equal(await page.locator('#saveDialog').isDisabled(),true,'Flatex Beta requires a local backup before save');
+ const backupDownload=page.waitForEvent('download');
+ await page.locator('#csvBackupNow').click();
+ const backupFile=await backupDownload;
+ assert.match(backupFile.suggestedFilename(),/^FolioLab-Backup-vor-Flatex-\d{4}-\d{2}-\d{2}\.json$/);
  assert.match(await page.locator('#csvReview').textContent(),/depot\.csv, Zeile 2/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
  await page.locator('#saveDialog').click();
