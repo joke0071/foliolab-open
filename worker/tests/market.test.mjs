@@ -61,7 +61,7 @@ test('Rejects arbitrary hosts, invalid dates, excessive ranges and malformed pay
   {...fields,symbol:'http://127.0.0.1/'},
   {...fields,symbol:'VWCE.XETRA?api_token=evil'},
   {...fields,to:'2026-02-30'},
-  {...fields,from:'2022-01-01'},
+  {...fields,from:'2020-01-01'},
   {...fields,from:'2026-10-23'},
   {...fields,to:'2999-01-01'}
  ]){
@@ -76,4 +76,12 @@ test('Upstream denial and limits are sanitized, secrets never echoed',async()=>{
   assert.equal(result.status,want);
   assert.doesNotMatch(await result.text(),/SYNTHETIC_TEST/);
  }
+});
+
+test('A valid five-year read is allowed but excessive history is still rejected',async()=>{
+ const long={...fields,from:'2021-11-01'};
+ const r=await handleMarketRequest(make(long),env,async()=>reply([{date:'2021-11-01',close:100},{date:'2026-10-21',close:150}]));
+ assert.equal(r.status,200);
+ assert.equal((await r.json()).points.length,2);
+ assert.equal((await handleMarketRequest(make({...fields,from:'2019-01-01'}),env,async()=>reply([]))).status,400);
 });

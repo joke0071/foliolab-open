@@ -35,3 +35,12 @@ test('DOM selection gracefully ignores missing or unsupported containers',()=>{
  assert.doesNotThrow(()=>syncChartPeriodButtons(null,'data-range','month'));
  assert.doesNotThrow(()=>syncChartPeriodButtons({},'onmouseover','month'));
 });
+
+test('extended market presets require explicit opt-in and max is not a remote default',()=>{
+ assert.equal(chartPeriodDays('market',1826),1826);
+ assert.equal(chartPeriodDays('market','max'),null);
+ assert.equal(renderChartPeriodButtons('market','data-position-range',30).includes('5 J'),false);
+ const extended=renderChartPeriodButtons('market','data-position-range',1826,[1826,'max']);
+ assert.match(extended,/data-position-range="1826" aria-pressed="true" class="selected">5 J/);
+ assert.match(extended,/data-position-range="max" aria-pressed="false">Max/);
+});

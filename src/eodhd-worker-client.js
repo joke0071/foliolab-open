@@ -27,7 +27,7 @@ export async function fetchWorkerEodhdBars(symbol,from,to,settings={},fetcher=gl
   body:JSON.stringify({symbol:normalized,from,to}),ttlMs:TTL.history,attempts:1,timeoutMs:14000
  });
  if(data?.schemaVersion!==1||data?.status!=='ok'||data?.symbol!==normalized||!Array.isArray(data?.points)||
-  data.points.length>420)throw Error('Worker lieferte keinen bestätigten EODHD-Kursverlauf.');
+  data.points.length>1800)throw Error('Worker lieferte keinen bestätigten EODHD-Kursverlauf.');
  return data.points.map(p=>{
   if(!p||typeof p.date!=='string'||!datePattern.test(p.date)||p.date<from||p.date>to||
    !Number.isFinite(p.close)||p.close<=0||p.close>1e9)throw Error('Worker lieferte ungültige Schlusskurse.');

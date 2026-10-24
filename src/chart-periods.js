@@ -1,5 +1,4 @@
-/** Unified chart time-range presets. Wealth can show every saved snapshot;
- * provider-backed market charts intentionally stop at one year. */
+/** Shared chart periods; longer market options are shown only where supported. */
 export const CHART_PERIODS = Object.freeze({
  wealth:Object.freeze([
   Object.freeze({value:'month',label:'1 M',days:30}),
@@ -11,7 +10,9 @@ export const CHART_PERIODS = Object.freeze({
   Object.freeze({value:7,label:'7 T',days:7}),
   Object.freeze({value:30,label:'1 M',days:30}),
   Object.freeze({value:90,label:'3 M',days:90}),
-  Object.freeze({value:365,label:'1 J',days:365})
+  Object.freeze({value:365,label:'1 J',days:365}),
+  Object.freeze({value:1826,label:'5 J',days:1826}),
+  Object.freeze({value:'max',label:'Max',days:null})
  ])
 });
 const ATTRIBUTES=new Set(['data-mini-range','data-range','data-position-range']);
@@ -25,9 +26,11 @@ export function chartPeriodDays(kind,value){
  if(!choice)throw Error('Ungültiger Diagrammzeitraum.');
  return choice.days;
 }
-export function renderChartPeriodButtons(kind,attribute,selected){
+export function renderChartPeriodButtons(kind,attribute,selected,values=null){
  if(!ATTRIBUTES.has(attribute))throw Error('Ungültiges Zeitraum-Attribut.');
- return periods(kind).map(({value,label})=>{
+ const allowed=values==null&&kind==='market'?new Set(['7','30','90','365']):
+  values==null?null:new Set(values.map(String));
+ return periods(kind).filter(({value})=>allowed==null||allowed.has(String(value))).map(({value,label})=>{
   const active=String(selected)===String(value);
   return '<button type="button" '+attribute+'="'+value+'" aria-pressed="'+active+'"'+
    (active?' class="selected"':'')+'>'+label+'</button>';
