@@ -63,6 +63,7 @@ try{
  assert.ok(corrected.revisions.length>=1);
  page.once('dialog',dialog=>dialog.accept());
  await list.last().locator('[data-action="delete-snapshot"]').click();
+ await page.waitForFunction(()=>document.querySelectorAll('#snapshotList .history-row').length===1);
  assert.equal(await list.count(),1);
  await page.locator('#mobileNav [data-page="positions"]').click();
  const remaining=page.locator('.position-entry').first();
@@ -70,6 +71,7 @@ try{
  assert.equal(await remaining.locator('[data-action="delete-position"]').count(),1);
  page.once('dialog',dialog=>dialog.accept());
  await remaining.locator('[data-action="delete-position"]').click();
+ await page.waitForFunction(()=>document.querySelectorAll('.position-entry').length===0);
  assert.equal(await page.locator('.position-entry').count(),0);
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(finalModel.positions.length,0);
