@@ -37,6 +37,7 @@ import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconcili
 import {pairFlatexSettlements} from './flatex-settlements.js';
 import {auditFlatexSettlementAmounts} from './flatex-settlement-audit.js';
 import {auditFlatexCashStatements,flatexCashAccountChoices} from './flatex-cash-audit.js';
+import {exportFlatexAuditCSV} from './flatex-review-export.js';
 import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
@@ -839,6 +840,7 @@ function openCSVImport(){
   '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option></select></label>'+ 
    '<label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label>'+ 
    '<div id="csvBrokerStatus" role="status"></div>'+
+   '<button type="button" id="csvDownloadAudit" class="btn outline hidden">Flatex-Prüfbericht als CSV</button>'+
   '<div id="csvMapping"></div><p id="csvReviewStatus" class="visually-hidden" role="status" aria-live="polite">Nach der Dateiauswahl werden die Buchungen geprüft.</p><div id="csvReview"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
@@ -956,6 +958,7 @@ function openCSVImport(){
  async function chooseCSV(){
   const files=[...($('csvFile').files||[])];
   parsed=null;brokerImport=null;brokerAccepted=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
+  $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';$('csvReviewStatus').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
@@ -966,6 +969,7 @@ function openCSVImport(){
    const flatex=source==='flatex'||(source==='auto'&&Boolean(detectFlatexCSV(probe)));
    if(flatex){
     brokerImport=prepareFlatexImport(inputs);parsed=brokerImport.parsed;
+    $('csvDownloadAudit').classList.remove('hidden');
     const other=brokerImport.issues.filter(x=>x.code==='unsupported');
     const critical=brokerImport.issues.filter(x=>x.code!=='unsupported');
     const report=brokerImport.reports.map(x=>esc(x.name)+' · '+(x.type==='depot'?'Depot':'Konto')+' ('+esc(x.variant)+')').join('<br>');
@@ -1009,6 +1013,14 @@ function openCSVImport(){
  }
  $('csvFile').addEventListener('change',chooseCSV);
  $('csvSource').addEventListener('change',chooseCSV);
+ $('csvDownloadAudit').addEventListener('click',()=>{
+  if(!brokerImport)return;
+  const report=exportFlatexAuditCSV(brokerImport);
+  const href=URL.createObjectURL(new Blob([report],{type:'text/csv;charset=utf-8'}));
+  const link=document.createElement('a');link.href=href;link.download='FolioLab-Flatex-Pruefbericht.csv';
+  document.body.append(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(href),500);
+ });
 }
 function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
