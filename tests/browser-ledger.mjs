@@ -22,7 +22,7 @@ try {
  await page.locator('#bookingCash').selectOption(setup.cash);
  await page.locator('#bookingAdvanced').evaluate(el=>el.open=true);
  await page.locator('#bookingAdvanced [name="feeEUR"]').fill('5');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  const etf=state.positions.find(p=>p.id===setup.asset),cash=state.positions.find(p=>p.id===setup.cash);
  assert.equal(state.version,3);

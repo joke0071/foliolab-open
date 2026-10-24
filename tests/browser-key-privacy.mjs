@@ -8,10 +8,13 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#addProvider').click();
  await page.locator('#editorForm [name="name"]').fill('Audit Depot');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#apiSettings').evaluate(el=>el.closest('details').open=true);
  await page.locator('[name="eodhdKey"]').fill('SYNTHETIC_SECRET_FOR_TEST');
  await page.locator('#apiSettings button[type="submit"]').click();
+ // The storage controller saves under an asynchronous Web Lock.
+ // A click completion does not mean credentials are durably written.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  const before=await page.evaluate(()=>{
   localStorage.setItem('foliolab-open-v1-premigration-v1','LEGACY_SECRET');
   localStorage.setItem('foliolab-open-v1-premigration-v2','LEGACY_SECRET');
@@ -45,6 +48,8 @@ try{
   localStorage.setItem('foliolab-open-last-auto-refresh','100');
  });
  await page.locator('#deleteAll').click();
+ // Deletion also runs under the lock; assert only after its completion signal.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  const final=await page.evaluate(()=>({
   keys:Object.keys(localStorage),
   unrelated:localStorage.getItem('other-app-settings')
