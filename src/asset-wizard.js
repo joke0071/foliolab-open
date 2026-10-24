@@ -3,6 +3,7 @@ import {cryptoChoices,loadTopCrypto,loadAllCrypto,loadFundCatalog,loadFundCatalo
 import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
+import {economicFormGuidance} from './economic-form-ui.js';
 const e=escapeHTML;
 const kinds=[['etf','ETF'],['stock','Aktie'],['fund','Fonds'],['crypto','Kryptowährung'],['cash','Guthaben'],['other','Sonstiges']];
 const providerKinds=[['broker','Broker'],['bank','Bank'],['wallet','Wallet-Anbieter'],['other','Sonstiges']];
@@ -149,7 +150,8 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     '<p class="small-help">Für Sicherheiten, Staking, Wrapped Tokens oder Verbindlichkeiten. Verhindere Doppelzählungen durch bewusste Zuordnung.</p>'+
     '<label class="field"><span>Wirtschaftliche Funktion</span><select id="wizardEconomicRole">'+opts(roleChoices,state.economicRole).replace('<option value="">Bitte wählen</option>','')+'</select></label>'+
     '<label class="field"><span>In der Vermögenssumme</span><select id="wizardValuationMode">'+opts(valuationChoices,state.valuationMode).replace('<option value="">Bitte wählen</option>','')+'</select></label>'+
-    '<label class="field"><span>Wird repräsentiert durch (optional)</span><select id="wizardRepresented">'+opts(linkedPositions,state.representedByPositionId,'Keine Zuordnung')+'</select></label></details>'+
+    '<label class="field"><span>Wird repräsentiert durch</span><select id="wizardRepresented" aria-describedby="wizardEconomicGuidance">'+opts(linkedPositions,state.representedByPositionId,'Keine Zuordnung')+'</select></label>'+
+    '<p id="wizardEconomicGuidance" class="economic-guidance" role="status" aria-live="polite"></p></details>'+
    (crypto?'<details class="advanced-apis wizard-extra-nested" id="wizardWalletAdvanced"'+(state.walletOpen?' open':'')+'>'+
     '<summary>Öffentliche Wallet verknüpfen</summary>'+
     '<p class="small-help">Für die automatische Wallet-Suche nutze den separaten Button „Wallet hinzufügen“ unter Positionen. Hier kannst du einzelne Positionen manuell einer öffentlichen Adresse zuordnen. Keine privaten Schlüssel eingeben.</p>'+
@@ -217,6 +219,19 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    $(id)?.addEventListener('input',event=>state[key]=event.target.value);
    $(id)?.addEventListener('change',event=>state[key]=event.target.value);
   }
+  const updateEconomicFields=()=>{
+   const role=$('wizardEconomicRole'),mode=$('wizardValuationMode'),linked=$('wizardRepresented'),hint=$('wizardEconomicGuidance');
+   if(!role||!mode||!linked||!hint)return;
+   const related=getModel().positions.find(p=>p.id===linked.value);
+   const guidance=economicFormGuidance(role.value,mode.value,linked.value,related?.valuationMode||'included');
+   linked.required=guidance.targetRequired;
+   linked.setAttribute('aria-required',String(guidance.targetRequired));
+   role.setAttribute('aria-invalid',String(guidance.roleInvalid));
+   hint.textContent=guidance.message;
+   hint.classList.toggle('economic-guidance-warning',guidance.warning);
+  };
+  ['wizardEconomicRole','wizardValuationMode','wizardRepresented'].forEach(id=>$(id)?.addEventListener('change',updateEconomicFields));
+  updateEconomicFields();
   const updateWalletFields=()=>{
    if(!$('wizardWalletChain'))return;
    const chain=$('wizardWalletChain').value;
@@ -330,6 +345,8 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(!String(state.quantity).trim())return error('Bitte eine Stückzahl oder einen Betrag eingeben.','wizardQuantity');
   if(state.mode==='buy'&&!String(state.unitPrice).trim())return error('Bitte den Kaufpreis je Stück eingeben.','wizardUnitPrice');
   if(state.kind!=='crypto'&&state.currency!=='EUR'&&!String(state.fxRate).trim())return error('Bitte den Wechselkurs in EUR eingeben.','wizardFX');
+  if(state.valuationMode==='excluded'&&!state.representedByPositionId)return error('Bitte die bereits angerechnete Position auswählen.','wizardRepresented');
+  if(state.valuationMode==='liability'&&state.economicRole!=='borrowed')return error('Für Verbindlichkeiten bitte die wirtschaftliche Funktion „Geliehene Assets / Verbindlichkeit“ auswählen.','wizardEconomicRole');
   clearError();
   state.busy=true;$('wizardNext').disabled=true;$('wizardNext').textContent='Speichere …';
   try{
