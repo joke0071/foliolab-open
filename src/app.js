@@ -34,6 +34,7 @@ import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-impor
 import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-import.js';
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
 import {pairFlatexSettlements} from './flatex-settlements.js';
+import {auditFlatexSettlementAmounts} from './flatex-settlement-audit.js';
 import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
@@ -781,7 +782,7 @@ function flatexWouldDoubleCount(current,prepared,accountId){
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
  if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
- let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,backfillRequested=false;
+ let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
  const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
@@ -827,6 +828,25 @@ function openCSVImport(){
    const needsMatch=m=>/^Anlage fehlt|^Anlage nicht eindeutig/.test(m);
    const status='<div class="csv-import-summary"><strong>'+result.ready+' bereit · '+result.duplicates+' bereits vorhanden · '+result.issues.length+' zu prüfen'+(result.skipped?' · '+result.skipped+' übersprungen':'')+'</strong></div>';
    const backfill=backfillCheck();
+   if(brokerImport&&$('csvBrokerSettlement')){
+    const accountId=selectedBrokerAccount();
+    if(!accountId)$('csvBrokerSettlement').textContent='Abrechnungsabgleich: bitte zuerst das Flatex-Depot wählen.';
+    else{
+     const amounts=auditFlatexSettlementAmounts(brokerImport,model,accountId,{accountAmountsEUR:bankEURConfirmed});
+     const sum=amounts.counts;
+     const warn=amounts.distinctAccountIdentifiers.length>1?
+      '<p class="small-help">Mehrere Kontoreferenzen im Export erkannt: '+amounts.distinctAccountIdentifiers.length+'. Kontoumsätze bleiben strikt voneinander getrennt.</p>':'';
+     $('csvBrokerSettlement').innerHTML='<details class="advanced-apis"><summary>Abrechnungsbeträge vergleichen ('+amounts.entries.length+' mögliche Paare)</summary>'+
+      '<p class="small-help">'+esc(amounts.note)+'</p>'+
+      '<p>'+sum.equal+' brutto gleich · '+sum.unexplained+' ungeklärte Differenz · '+sum.pending+' ohne EUR-Abgleich · '+sum.ambiguous+' mehrdeutig · '+sum.unpairedCash+' weitere nicht zugeordnete Kontoumsätze.</p>'+warn+
+      amounts.entries.slice(0,40).map(entry=>
+        '<div class="history-sub">'+esc(entry.date+' · '+entry.isin+' · '+entry.kind)+
+        ' · '+esc(entry.evidence)+
+        (entry.grossExact!==null?' · Brutto '+esc(entry.grossExact)+' EUR · Kontoumsatz '+esc(entry.cashExact)+' EUR · Differenz '+esc(entry.differenceExact)+' EUR':'')+
+        '<p class="small-help">'+esc(entry.message)+'</p></div>').join('')+
+      (amounts.entries.length>40?'<p class="small-help">Weitere Buchungen separat prüfen.</p>':'')+'</details>';
+    }
+   }
    if(brokerImport&&$('csvBrokerReconcile')){
     const accountId=selectedBrokerAccount();
     if(!accountId)$('csvBrokerReconcile').textContent='Wähle das passende Flatex-Depot, um den rechnerischen Bestandsabgleich anzuzeigen.';
@@ -883,7 +903,7 @@ function openCSVImport(){
  };
  async function chooseCSV(){
   const files=[...($('csvFile').files||[])];
-  parsed=null;brokerImport=null;brokerAccepted=false;backfillRequested=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
+  parsed=null;brokerImport=null;brokerAccepted=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
@@ -911,9 +931,11 @@ function openCSVImport(){
     const accountChoices=brokerAccounts.map(a=>[a.id,(model.providers.find(p=>p.id===a.providerId)?.name||'Flatex')+' · '+a.name]);
     $('csvMapping').innerHTML='<label class="field"><span>Welches Flatex-Depot?</span><select id="csvBrokerAccount">'+options([['','Depot auswählen'],...accountChoices],'')+'</select></label>'+
       (!accountChoices.length?'<p class="small-help">Bitte zuerst unter „Mehr“ einen Flatex-Anbieter und ein Wertpapierdepot anlegen.</p>':'')+
+      (brokerImport.cashItems.length?'<label class="csv-skip"><input id="csvBrokerAmountsEUR" type="checkbox"> Die Beträge im hochgeladenen Kontoumsatz-Export sind in EUR ausgewiesen (laut Auszug geprüft).</label><div id="csvBrokerSettlement" role="status"></div>':'')+
       '<div id="csvBrokerReconcile" role="status"></div>'+
       '<p class="small-help">Wertpapiere werden nur innerhalb des ausgewählten Depots über ihre ISIN zugeordnet. Andere Broker und Depots bleiben geschützt.</p>';
     $('csvBrokerAccount').addEventListener('change',()=>{positionOverrides={};backfillRequested=false;review();});
+    $('csvBrokerAmountsEUR')?.addEventListener('change',e=>{bankEURConfirmed=e.target.checked;review();});
    }else{
     if(files.length>1)throw Error('Mehrere Dateien sind derzeit nur für Flatex-Exporte erlaubt.');
     parsed=probe;
