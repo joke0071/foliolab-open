@@ -47,7 +47,8 @@ try{
  // axe runs against open native dialog and expanded content, including semantic error state.
  await page.setViewportSize({width:390,height:680});
  await page.locator('#wizardNext').click();
- await page.addScriptTag({content:axeSource});
+ await page.route('**/__dialog_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeSource}));
+ await page.addScriptTag({url:'http://127.0.0.1:4173/__dialog_axe.js'});
  const wizardReport=await page.evaluate(async()=>window.axe.run(document.getElementById('wizardDialog'),{
   runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}
  }));
