@@ -24,6 +24,7 @@ try{
  // can interrupt an unsaved entry. After closing it, the user may reload.
  assert.equal(await page.locator('#pwaUpdateNotice').count(),1);
  assert.equal(await page.locator('#editorForm [name="note"]').inputValue(),'Nicht gespeichert');
+ page.once('dialog',d=>d.accept()); // Explicitly discard the unsaved snapshot before PWA update.
  await page.locator('#cancelDialog').click();
  await Promise.all([
   page.waitForEvent('load',{timeout:15000}),
