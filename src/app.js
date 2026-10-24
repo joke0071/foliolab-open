@@ -1377,14 +1377,18 @@ async function refreshAll(){
  finally{busy=false;$('refreshAll').disabled=false;}
 }
 function downloadBackup(){const file=new Blob([backup(model)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Backup ohne API-Schlüssel erstellt.');}
+async function exportEncryptedFile(){
+ const json=await encryptWithBackupPassword(backup(model));
+ const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+ const a=document.createElement('a');a.href=url;a.download=`foliolab-verschluesselt-${new Date().toISOString().slice(0,10)}.json`;
+ document.body.append(a);
+ try{a.click()}finally{a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+ backupDone();
+}
 async function downloadEncryptedBackup(){
  try{
-  const json=await encryptWithBackupPassword(backup(model));
-  const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
-  const a=document.createElement('a');a.href=url;a.download=`foliolab-verschluesselt-${new Date().toISOString().slice(0,10)}.json`;
-  document.body.append(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-  backupDone();notify('Verschlüsseltes Backup heruntergeladen. Zur Wiederherstellung genügt dein Backup-Passwort.');
+  await exportEncryptedFile();
+  notify('Verschlüsseltes Backup heruntergeladen. Zur Wiederherstellung genügt dein Backup-Passwort.');
  }catch(e){notify(e.message,true)}
 }
 async function refreshBackupPasswordStatus(){
@@ -1576,8 +1580,16 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
           await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
           location.reload();return;
         }
-        // Before replacing financial records, offer a local rollback copy.
-        downloadBackup();
+        // Before overwriting meaningful local data, offer a rollback backup.
+        // On a fresh device with no holdings yet, no rollback is required.
+        if(model.providers.length||model.positions.length||model.snapshots.length){
+          if(await hasBackupPassword())await exportEncryptedFile();
+          else{
+            if(!confirm('Auf diesem Gerät ist noch kein Backup-Passwort eingerichtet. Die Rückfallsicherung wird deshalb als unverschlüsselte JSON-Datei angeboten. Fortfahren?'))
+              throw Error('Wiederherstellung abgebrochen, bis eine lokale Rückfallsicherung möglich ist.');
+            downloadBackup();
+          }
+        }
         imported.settings={...defaultSettings(),...model.settings};
         const previous=model;
         model=imported;filter='all';
