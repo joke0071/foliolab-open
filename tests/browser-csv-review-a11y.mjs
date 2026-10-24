@@ -23,6 +23,8 @@ try{
  assert.equal(await page.locator('#csvReviewStatus').getAttribute('role'),'status');
  const csv='Datum;Typ;ISIN;Menge;Kurs\n2026-10-20;Kauf;UNBEKANNT;1;100\n2026-10-21;Kauf;AAA;1;100\n2026-10-22;Kauf;FEHLT;1;50';
  await page.locator('#csvFile').setInputFiles({name:'beispiel.csv',mimeType:'text/csv',buffer:Buffer.from(csv)});
+ // Parsing uses file.text() asynchronously: wait for the processed preview, not its initial placeholder.
+ await page.waitForFunction(()=>document.getElementById('csvReviewStatus')?.textContent.includes('1 bereit, 0 bereits vorhanden, 2 zu prüfen'));
  assert.match(await page.locator('#csvReviewStatus').innerText(),/1 bereit, 0 bereits vorhanden, 2 zu prüfen/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),true,'Unresolved rows block import');
  const first=page.locator('[data-csv-assign="2"]');
