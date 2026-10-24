@@ -34,7 +34,7 @@ try{
  assert.equal(await row.locator('.tradingview-slot script').count(),0,'No third-party JS in portfolio origin');
  assert.equal(await row.locator('.tradingview-slot a').getAttribute('rel'),'noopener noreferrer');
  await page.locator('#mobileNav [data-page="more"]').click();
- await page.locator('.advanced-apis').filter({has:page.locator('#apiSettings')}).locator('summary').click();
+ await page.locator('#marketSettings > summary').click();
  await page.locator('[name="eodhdKey"]').fill('TESTONLY');
  await page.locator('[name="securitySource"]').selectOption('eodhd');
  await page.locator('#apiSettings button[type="submit"]').click();
