@@ -52,3 +52,8 @@ test('Unknown CSV costs stay null, cannot fabricate basis or debit real cash',()
  assert.equal(blocked.ready,0);assert.match(blocked.issues[0].message,/Gebühren oder Steuern fehlen/);
  const restored=safeImport(JSON.parse(backup(m)));assert.equal(restored.bookings[0].feeEUR,null);
 });
+test('Identical contents in differently named no-ID files require review',()=>{
+ const m=fixture(),first=csv('');first.sourceName='january-a.csv';importCSV(m,preview(m,first));
+ const second=csv('');second.sourceName='january-b.csv';const p=preview(m,second);
+ assert.equal(p.duplicates,0);assert.equal(p.issues.length,1);
+});

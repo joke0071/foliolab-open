@@ -1053,7 +1053,7 @@ function openCSVImport(){
    if(files.length>20)throw Error('Maximal 20 Dateien je Import.');
    if(files.some(f=>f.size>2_000_000))throw Error('Je Datei sind höchstens 2 MB erlaubt.');
    const inputs=await Promise.all(files.map(async f=>({name:f.name,text:await f.text()})));
-   const probe=parseCSV(inputs[0].text),source=$('csvSource').value;
+   const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name}),source=$('csvSource').value;
    const flatex=source==='flatex'||(source==='auto'&&Boolean(detectFlatexCSV(probe)));
    if(flatex){
     brokerImport=prepareFlatexImport(inputs);parsed=brokerImport.parsed;

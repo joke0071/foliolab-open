@@ -3,7 +3,7 @@ import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
 import {safeImport,backup} from './model.js';
 /** Client-only CSV parser; never uploads the original document to a remote service. */
-export function parseCSV(input,{delimiter}={}){
+export function parseCSV(input,{delimiter,sourceName=''}={}){
  const raw=String(input||'').replace(/^\uFEFF/,'');
  if(!raw.trim()||raw.length>2_000_000)throw Error('CSV leer oder größer als 2 MB.');
  const head=raw.slice(0,1200),separators=delimiter?[delimiter]:[';',',','\t'];
@@ -35,7 +35,7 @@ export function parseCSV(input,{delimiter}={}){
  const headers=rows.shift().map(h=>h.trim().slice(0,120));
  if(headers.some(x=>!x)||new Set(headers.map(x=>x.toLowerCase())).size!==headers.length)throw Error('Leere oder doppelte CSV-Spalten.');
  if(rows.some(x=>x.length!==headers.length))throw Error('CSV enthält Zeilen mit abweichender Spaltenanzahl.');
- return {delimiter:sep,headers,rows:rows.map(values=>Object.fromEntries(headers.map((h,i)=>[h,values[i].trim()])))};
+ return {delimiter:sep,sourceName:String(sourceName),headers,rows:rows.map(values=>Object.fromEntries(headers.map((h,i)=>[h,values[i].trim()])))};
 }
 export const CSV_FIELDS=['date','type','position','quantity','unitPrice','feeEUR','taxEUR','fxRate','cashPosition','notes','externalId'];
 const auto={date:/^(datum|date|trade.?date|buchungsdatum)$/i,type:/^(typ|type|transaktion|vorgang)$/i,position:/^(isin|symbol|ticker|position|wertpapier|asset)$/i,quantity:/^(menge|quantity|stueck|stück|anzahl|shares)$/i,unitPrice:/^(kurs|price|unit.?price|preis)$/i,feeEUR:/^(gebuehr|gebühr|fee|fees)$/i,taxEUR:/^(tax|steuer|steuern)$/i,fxRate:/^(fx|wechselkurs|fxrate)$/i,cashPosition:/^(verrechnungskonto|cashposition|cash.?account)$/i,notes:/^(notiz|notes|comment|beschreibung)$/i,externalId:/^(id|trade.?id|referenz|external.?id)$/i};
@@ -62,7 +62,7 @@ function resolvePosition(model,key,defaultId,allowedAccountId=''){
 export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={},sourceId='generic-csv',sourceIdentities={}}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),claimedIds=new Set();
- const fileDigest=sourceDigest(JSON.stringify([parsed.headers,parsed.rows]));
+ const fileDigest=sourceDigest(JSON.stringify([parsed.sourceName||'',parsed.headers,parsed.rows]));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
  for(const item of mapped){
