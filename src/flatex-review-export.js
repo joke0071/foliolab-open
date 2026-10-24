@@ -33,6 +33,7 @@ export function exportFlatexAuditCSV(prepared){
    '','','',issue.code,'','','',issue.message));
  }
  out.push(line('HINWEIS','','','',
-  'Keine Steuererklärung. Kontoreferenzen können Zahlungspartner bezeichnen. Kein Cashflow oder geprüfter Saldo.'));
+  'Keine Steuererklärung. Kontoreferenzen können Zahlungspartner bezeichnen. Kein Cashflow oder geprüfter Saldo.',
+  '','','','','','','',''));
  return '\uFEFF'+out.join('\r\n')+'\r\n';
 }
