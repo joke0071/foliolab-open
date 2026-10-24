@@ -94,3 +94,11 @@ test('cash exports never increase external cash flows implicitly',()=>{
  assert.equal(r.parsed.rows.length,0);
  assert.equal(r.cashItems[0].kind,'unknown');
 });
+
+test('Flatex treats lone German dot-grouped amounts as thousands',()=>{
+ const r=prepareFlatexImport([upload(classicDepot([
+  '20.10.2026;21.10.2026;'+B+';ETF;1.234;ORDER Kauf;TX-1;1.234;A'
+ ]))]);
+ assert.equal(r.parsed.rows[0].quantity,'1234');
+ assert.equal(r.parsed.rows[0].unitPrice,'1234');
+});
