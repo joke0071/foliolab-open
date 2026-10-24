@@ -24,3 +24,12 @@ test('duplicate-only Flatex import never rewrites existing previously verified b
 test('bad preview structure is refused rather than silently treated as valid',()=>{
  assert.throws(()=>invalidateUnverifiedFlatexBasis(null),/Vorschau fehlt/);
 });
+
+test('verified prior acquisition values block implicit loss during new Flatex imports',()=>{
+ const existing={positions:[{id:'existing',costBasisExact:'500',costBasisEUR:500,realizedPnLExact:null,realizedPnLEUR:null}]};
+ const preview={rows:[{status:'ready',row:{positionId:'existing'}}],simulated:structuredClone(existing)};
+ const before=JSON.stringify(existing);
+ assert.throws(()=>invalidateUnverifiedFlatexBasis(preview,existing),/Anschaffungskosten/);
+ assert.equal(JSON.stringify(existing),before);
+ assert.equal(preview.simulated.positions[0].costBasisExact,'500');
+});
