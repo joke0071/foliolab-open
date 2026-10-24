@@ -83,14 +83,24 @@ Ein vergessenes Passwort macht die Sicherungsdateien auf anderen Geräten unlesb
 
 Die Google-Berechtigung `drive.file` ist auf von dieser OAuth-App angelegte bzw. für sie freigegebene Dateien beschränkt. Eine freie Navigation durch alle fremden Drive-Ordner ist nicht möglich. Uploads erfolgen direkt aus dem Browser an Google; der FolioLab-Betreiber erhält weder Zugangsdaten noch Portfolio-Dateien. **Automatische Sicherungen laufen nur bei geöffneter App und gültiger Google-Autorisierung.**
 
-### Wiederherstellung und ältere Backupformate
+### Vollständiges Backup – optional auch alle Zugangsdaten
 
-- Neu: Lokale Dateien und Google-Drive-Dateien im Format `foliolab-open-encrypted-v2` erfordern **nur das gemeinsame Passwort**. FolioLab validiert den Inhalt vor dem Import und bietet vor dem Überschreiben eine lokale Rollback-Kopie an.
-- Bestehende lokal verschlüsselte Sicherungen im Format `foliolab-open-encrypted-v1` bleiben mit ihrem damaligen Passwort über den Dateiimport lesbar.
-- Bestehende Google-Drive-Sicherungen im Format `foliolab-drive-encrypted-v1` bleiben mit dem alten `FLBK1-`-Schlüssel oder bei vorhandenem lokalen Legacy-Schlüssel wiederherstellbar. Neue Backups benötigen keinen separaten FLBK1-Schlüssel mehr.
-- Bei erfolgreicher Wiederherstellung auf einem neuen Browser kann FolioLab den passwortgeschützten Datenschlüssel für weitere Backups übernehmen. Ein bereits eingerichteter anderer Datenschlüssel wird nicht ungefragt überschrieben.
+Die Option **„Vollständiges Backup – inklusive Einstellungen und API-Schlüsseln“** ist bewusst standardmäßig ausgeschaltet. Bei Aktivierung wird sie lokal für künftige Sicherungen gespeichert. Sie gilt gleichzeitig für manuelle lokale verschlüsselte Dateien und Google-Drive-Backups (inklusive automatischer Backups bei aktiver Autorisierung).
 
-**Wichtig:** Automatische Backups sind kein Echtzeit-Synchronisationssystem. OAuth-Ablauf, Offline-Nutzung, Speicherlimits und geschlossene Browser können geplante Sicherungen verhindern. Der Nutzer bleibt für die sichere Verwahrung seines Backup-Passworts verantwortlich.
+**Enthalten:** Anbieter, Konten, Positionen, Buchungen, Journal, Stichtage, Verlauf und gespeicherte Kursdaten; außerdem bei aktivierter Option alle vom Portfolio-Modell unterstützten Einstellungen einschließlich benutzerdefinierter API-Schlüssel und RPC-URLs sowie Drive-OAuth-Client-ID, Intervall und Aufbewahrungslimit. Dadurch lassen sich diese Einstellungen nach einem Gerätewechsel zurückholen. Die Daten werden mit dem **einzigen Backup-Passwort** verschlüsselt, bevor FolioLab sie lokal speichert oder direkt an Google Drive hochlädt. Das Passwort selbst wird nicht gespeichert.
+
+**Bewusst ausgeschlossen:** OAuth-Access-/Refresh-Tokens, private Geräteschlüssel, Sitzungscaches, Google-Ordner-IDs und flüchtige Diagnosedaten. Diese können aus Sicherheitsgründen nicht sinnvoll übertragen werden. Nach Wiederherstellung ist eine erneute Google-Anmeldung erforderlich, die Client-ID und übrigen Einstellungen sind aber vorhanden. Es werden keine Hardware-Wallet-Private-Keys oder Seed-Phrasen gesichert; FolioLab speichert solche Geheimnisse nicht.
+
+Der **normale unverschlüsselte JSON-Export** enthält ausdrücklich keine Zugangsdaten. Vor dem Wiederherstellen eines vollständigen verschlüsselten Backups wird getrennt gefragt, ob die darin enthaltenen Einstellungen und Zugangsdaten die aktuell gespeicherten ersetzen sollen. Eine Ablehnung stellt nur das Portfolio wieder her.
+
+### Wiederherstellen
+
+- Neue lokale und Google-Drive-Backups verwenden einheitlich das Format `foliolab-open-encrypted-v2` mit dem Payload `FolioLabCompleteBackup`. Ein Passwort genügt zum Entschlüsseln.
+- Alte FLBK1-Drive-Backups und frühere verschlüsselte lokale Formate sind **nicht mehr über die Oberfläche wiederherstellbar**. Bereits in Drive vorhandene alte Dateien werden nicht automatisch gelöscht.
+- Vor dem Überschreiben werden Format, Verschlüsselung und Finanzdaten validiert. Eine Sicherung des vorherigen Standes wird angeboten. Der Import ersetzt Portfoliodaten nur nach Bestätigung.
+- Eine erfolgreiche Wiederherstellung auf einem neuen Gerät kann den passwortgeschützten Datenschlüssel für weitere Backups lokal einrichten. Bestehende lokale Backup-Schlüssel werden nicht ohne Zustimmung überschrieben.
+
+**Grenzen:** Wer das Passwort verliert, kann verschlüsselte Dateien auf einem anderen Gerät nicht entschlüsseln. Automatische Drive-Backups funktionieren nur bei offener App und gültigem OAuth-Zugriff; sie sind kein Hintergrunddienst. Ein kompromittierter Browser oder manipulierte Website kann Zugriff auf lokale Daten einschließlich gespeicherter API-Schlüssel erhalten. Deshalb vollständige Backups nur bei tatsächlich benötigter Wiederherstellbarkeit der Zugangsdaten aktivieren.
 
 ## Datenschutz und Sicherheitsmodell
 
