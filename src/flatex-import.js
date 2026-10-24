@@ -110,7 +110,7 @@ const shortIdentity=s=>{
  */
 export function prepareFlatexImport(files){
  if(!Array.isArray(files)||!files.length||files.length>20)throw Error('Bitte 1 bis 20 Flatex-CSV-Dateien auswählen.');
- const reports=[],issues=[],cashItems=[],rows=[],sourceTrades=[],keys=new Map(),depotIdentifiers=new Set();
+ const reports=[],issues=[],cashItems=[],rows=[],sourceTrades=[],keys=new Map(),referenced=new Map(),depotIdentifiers=new Set();
  let duplicates=0,total=0;
  for(const [fileIndex,file] of files.entries()){
   const name=String(file?.name??'').slice(0,140)||'Datei '+(fileIndex+1);
@@ -132,6 +132,13 @@ export function prepareFlatexImport(files){
     if(type==='account'){
      const amount=singleAmount(value(row,'accountAmount',heads));
      const hint=cashHint(details);
+     const refKey=ref?JSON.stringify(['account',account,date,ref]):'';
+     const signature=JSON.stringify([hint,amount,canonical(details)]);
+     if(refKey&&referenced.has(refKey)&&referenced.get(refKey).signature!==signature){
+      const prior=referenced.get(refKey);
+      issues.push(issue(name,line,'ambiguous-duplicate','Dieselbe Konto-Transaktionsreferenz enthält widersprüchliche Beträge oder Buchungsinformationen (zuerst in '+prior.file+', Zeile '+prior.line+').'));
+      report.review++;continue;
+     }
      const key=stableKey({type:'cash:'+hint,reference:ref,account,isin:'',date,details,units:'',rate:amount});
      if(keys.has(key)){
       const first=keys.get(key);
@@ -140,6 +147,7 @@ export function prepareFlatexImport(files){
       report.review++;continue;
      }
      keys.set(key,{file:name,line});
+     if(refKey)referenced.set(refKey,{signature,file:name,line});
      cashItems.push({file:name,line,date,account,reference:ref,amount,kind:hint,details:details.slice(0,200)});
      report.cashRows++;continue;
     }
@@ -153,6 +161,13 @@ export function prepareFlatexImport(files){
     const quantity=absAmount(value(row,'units',heads));
     const unitPrice=singleAmount(value(row,'rate',heads));
     if(Number(unitPrice)<=0)throw Error('Ausführungskurs fehlt oder ist nicht positiv.');
+    const refKey=ref?JSON.stringify(['depot',account,date,ref,isin,kind]):'';
+    const signature=JSON.stringify([quantity,unitPrice,canonical(details)]);
+    if(refKey&&referenced.has(refKey)&&referenced.get(refKey).signature!==signature){
+     const prior=referenced.get(refKey);
+     issues.push(issue(name,line,'ambiguous-duplicate','Dieselbe Depot-Transaktionsreferenz enthält abweichende Stückzahlen, Kurse oder Angaben (zuerst in '+prior.file+', Zeile '+prior.line+').'));
+     report.review++;continue;
+    }
     const key=stableKey({type:kind,reference:ref,account,isin,date,details,units:quantity,rate:unitPrice});
     if(keys.has(key)){
      const previous=keys.get(key);
@@ -166,6 +181,7 @@ export function prepareFlatexImport(files){
      report.review++;continue;
     }
     keys.set(key,{file:name,line});
+    if(refKey)referenced.set(refKey,{signature,file:name,line});
     // Keep broker reference in the external ID. Where none exists, use a
     // content-derived identity only after the ambiguity checks above.
     const externalId='flatex-at:'+shortIdentity(key);
