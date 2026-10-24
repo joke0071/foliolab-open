@@ -854,3 +854,57 @@
 .full-backup-option>span{display:flex;align-items:flex-start;gap:9px;min-width:0;max-width:100%;line-height:1.5}
 .full-backup-option strong{flex:1;min-width:0;overflow-wrap:anywhere;font-size:13px}
 .full-backup-option input{flex:0 0 auto;width:auto;margin-top:3px}
+
+/* Google Drive: progressive disclosure and compact, responsive controls. */
+#googleDriveBackupSetup{min-width:0;max-width:100%}
+#googleDriveBackupSetup > summary{font-weight:750}
+#googleDriveBackupSetup .drive-backup-intro{margin:7px 0 12px;line-height:1.5}
+#googleDriveBackupSetup .drive-status-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:10px 0 12px;border-bottom:1px solid #e6eee7;font-size:12px;min-width:0}
+#googleDriveBackupSetup .drive-connection-state{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:999px;background:#f2f4f1;color:#5b7062;font-size:11px;font-weight:730}
+#googleDriveBackupSetup .drive-connection-state::before{content:"";width:6px;height:6px;border-radius:50%;background:#84988a}
+#googleDriveBackupSetup .drive-connection-state[data-connected="true"]{background:#e9f4e9;color:#2d6545}
+#googleDriveBackupSetup .drive-connection-state[data-connected="true"]::before{background:#328653}
+#googleDriveBackupSetup .drive-last-backup{color:#64786a;min-width:0;overflow-wrap:anywhere}
+#googleDriveBackupSetup .drive-setup{padding:9px 0 4px}
+#googleDriveBackupSetup .drive-setup .field{margin:6px 0 3px}
+#googleDriveBackupSetup .drive-field-help{margin:3px 0 8px}
+#googleDriveBackupSetup .drive-setup-help{margin:0 0 12px}
+#googleDriveBackupSetup .drive-setup-help > summary,
+#googleDriveBackupSetup .drive-management > summary,
+#googleDriveBackupSetup .drive-folder-options > summary{cursor:pointer;font-weight:700;color:#3d6a4e;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+#googleDriveBackupSetup .drive-setup-help > summary{display:inline-block;padding:3px 0}
+#googleDriveBackupSetup .drive-setup-help ol{margin:10px 0 8px;padding-left:20px;color:#526b59;line-height:1.6;font-size:12px}
+#googleDriveBackupSetup .drive-setup-help li{margin-bottom:7px}
+#googleDriveBackupSetup .drive-setup-help code{overflow-wrap:anywhere;white-space:normal}
+#googleDriveBackupSetup .drive-connect-actions,
+#googleDriveBackupSetup .drive-restore-actions,
+#googleDriveBackupSetup .drive-folder-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;min-width:0}
+#googleDriveBackupSetup :is(.drive-connect-actions,.drive-restore-actions,.drive-folder-actions) .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.35;text-align:center}
+#googleDriveBackupSetup #driveDisconnect[hidden],
+#googleDriveBackupSetup #driveBackupStatus[hidden]{display:none!important}
+#googleDriveBackupSetup .drive-action-status{margin:9px 0 6px;padding:9px 10px;border-radius:9px;background:#f5f8f5;line-height:1.5;overflow-wrap:anywhere}
+#googleDriveBackupSetup .drive-action-status.backup-error{background:#fff3ef;color:#8e422f}
+#googleDriveBackupSetup .drive-backup-actions{border-top:1px solid #e6eee7;margin-top:9px;padding-top:14px}
+#googleDriveBackupSetup .drive-backup-actions .btn{max-width:100%;white-space:normal}
+#googleDriveBackupSetup .drive-backup-actions p{margin:7px 0 0}
+#googleDriveBackupSetup .drive-options{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(100px,.65fr);gap:12px;margin-top:12px;min-width:0}
+#googleDriveBackupSetup .drive-options .field{margin:0;min-width:0}
+#googleDriveBackupSetup .drive-options :is(select,input){min-width:0;max-width:100%}
+#googleDriveBackupSetup .drive-management{border-top:1px solid #e6eee7;margin-top:16px;padding-top:13px;min-width:0}
+#googleDriveBackupSetup .drive-management > summary{font-size:13px}
+#googleDriveBackupSetup .drive-management-body{padding:6px 0 4px}
+#googleDriveBackupSetup .drive-management-body .field{min-width:0}
+#googleDriveBackupSetup .drive-folder-options{border-top:1px solid #edf1ed;margin:14px 0 0;padding-top:12px}
+#googleDriveBackupSetup .drive-folder-options > summary{padding:4px 0}
+#googleDriveBackupSetup .drive-footer-note{font-size:11px;line-height:1.5;color:#728276;margin:14px 0 0}
+@media(max-width:540px){
+ #googleDriveBackupSetup .drive-options{grid-template-columns:minmax(0,1fr)}
+ #googleDriveBackupSetup .drive-restore-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #googleDriveBackupSetup .drive-restore-actions #driveRestore{grid-column:1/-1}
+ #googleDriveBackupSetup .drive-connect-actions .btn{flex:1 1 auto}
+ #googleDriveBackupSetup .drive-status-row{gap:6px 9px}
+}
+@media(max-width:360px){
+ #googleDriveBackupSetup .drive-connect-actions .btn{flex-basis:100%}
+ #googleDriveBackupSetup .drive-folder-actions .btn{flex:1 1 100%}
+}

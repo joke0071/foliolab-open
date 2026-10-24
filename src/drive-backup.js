@@ -21,12 +21,13 @@ const day=value=>value.toLocaleDateString('sv-SE');
 function updateBackupOverview(){
  const el=get('driveBackupOverview');if(!el)return;
  const d=asDate(prefs.lastBackupAt);
- el.textContent='Letzte erfolgreiche Sicherung: '+(d?d.toLocaleString('de-AT'):'noch keine')
-  +' · Drive-Backups: '+(lastKnownBackupCount===null?'nicht abgefragt':lastKnownBackupCount);
+ const last=d?'Letzte Sicherung: '+d.toLocaleString('de-AT'):'Noch keine Sicherung';
+ const count=lastKnownBackupCount===null?'':' · '+lastKnownBackupCount+' Backup'+(lastKnownBackupCount===1?'':'s');
+ el.textContent=last+count;
 }
 function status(message,error=false){
  const el=get('driveBackupStatus');
- if(el){el.textContent=message;el.classList.toggle('backup-error',error)}
+ if(el){el.textContent=message;el.hidden=!message;el.classList.toggle('backup-error',error)}
  updateBackupOverview();
 }
 function loadPrefs(){
@@ -49,6 +50,8 @@ function updateUi(){
  const connected=hasToken();
  const connectionBadge=get('driveConnectionBadge');
  if(connectionBadge){connectionBadge.textContent=connected?'Verbunden':'Nicht verbunden';connectionBadge.dataset.connected=String(connected)}
+ const disconnectButton=get('driveDisconnect');
+ if(disconnectButton)disconnectButton.hidden=!connected;
  const save=get('driveSaveNow');
  if(save)save.disabled=!connected||busy||!vaultConfigured;
  const connect=get('driveConnect');
@@ -57,7 +60,7 @@ function updateUi(){
  if(folderButton)folderButton.disabled=!connected||busy;
  const folderName=get('driveFolderCurrentName');
  if(folderName)folderName.textContent=prefs.folderName||FOLDER;
- for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate']){const el=get(id);if(el)el.disabled=!connected||busy;}
+ for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate','confirmDriveFolder']){const el=get(id);if(el)el.disabled=!connected||busy;}
 }
 function due(){
  if(prefs.mode==='off')return false;
@@ -70,12 +73,12 @@ function due(){
 }
 function updateDueStatus(){
  if(!clientConfigLoaded){status('Google-Drive-Konfiguration wird geladen …');return}
- if(!googleClientId){status(clientConfigError||'Google Drive ist noch nicht eingerichtet. FolioLab funktioniert weiterhin lokal.',!!clientConfigError);return}
+ if(!googleClientId){status(clientConfigError||'',!!clientConfigError);return}
  if(!vaultConfigured){status('Bitte zuerst ein Backup-Passwort unter „Backup-Verschlüsselung“ einrichten.');return}
  if(prefs.mode!=='off'&&due()&&!hasToken()){status('Automatisches Backup fällig. Bitte Google Drive verbinden.');return}
  if(prefs.cleanupPending){status('Letztes Backup gespeichert · ältere Sicherungen werden bei nächster Verbindung bereinigt.');return}
  if(prefs.lastBackupAt){const d=asDate(prefs.lastBackupAt);status('Letzte Drive-Sicherung: '+(d?d.toLocaleString('de-AT'):'unbekannt')+'.');return}
- status('Bereit für die erste verschlüsselte Drive-Sicherung.');
+ status('');
 }
 async function loadGoogle(){
  if(window.google?.accounts?.oauth2)return;
@@ -289,8 +292,7 @@ async function refreshList(){
    select.add(new Option((d?d.toLocaleString('de-AT'):file.name)+' · '+file.name,file.id));
   }
   lastKnownBackupCount=list.length;
-  const message=list.length+' verschlüsselte Backups in „'+(prefs.folderName||FOLDER)+'“.';
-  status(message);
+  status('');
   updateUi();
   return list;
  }catch(e){status('Drive-Liste: '+e.message,true);return [];}
