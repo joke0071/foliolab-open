@@ -8,7 +8,7 @@ const SCOPE='https://www.googleapis.com/auth/drive.file';
 const PREF_KEY='foliolab-open-drive-backup-settings-v1';
 const FOLDER='FolioLab Backups';
 const LABEL='foliolab-open-v1';
-const NEW_BACKUP_LABEL='foliolab-open-v2';
+const NEW_BACKUP_LABEL='foliolab-open-v3';
 const get=id=>document.getElementById(id);
 const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',folderId:'',folderName:'',cleanupPending:false};
 let prefs={...DEFAULT},accessToken='',tokenExpires=0,tokenClient=null,scriptPromise=null;
