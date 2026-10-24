@@ -501,14 +501,16 @@ async function inspectSelectedDriveBackup(){
  const res=await api('drive/v3/files/'+encodeURIComponent(id)+'?alt=media');
  const text=await res.text();
  if(text.length>15000000)throw Error('Backup zu groß.');
- const envelope=JSON.parse(text),secret=get('driveRecoveryInput').value.trim();
+ const envelope=JSON.parse(text);
+ const enteredSecret=get('driveRecoveryInput').value;
+ const secret=envelope.format==='foliolab-open-encrypted-v2'?enteredSecret:enteredSecret.trim();
  let payload,legacy=false;
  if(envelope.format==='foliolab-open-encrypted-v2'){
   if(secret.length<10)throw Error('Bitte das Backup-Passwort eingeben.');
   payload=JSON.parse(await backend.decryptPasswordBackup(envelope,secret));
  }else if(FORMATS.includes(envelope.format)){
   legacy=true;
-  if(secret&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(secret.replace(/\\s/g,'')))throw Error('Für ältere Backups ist der FLBK1-Schlüssel erforderlich.');
+  if(secret&&!/^FLBK1-[a-fA-F0-9]{64}$/.test(secret.replace(/\s/g,'')))throw Error('Für ältere Backups ist der FLBK1-Schlüssel erforderlich.');
   payload=await decrypt(envelope,secret||null);
  }else throw Error('Unbekanntes Drive-Backupformat.');
  if(payload.kind!=='FolioLab'||!payload.data)throw Error('Backupinhalt ungültig.');
