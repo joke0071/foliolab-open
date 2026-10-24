@@ -66,6 +66,7 @@ jobs:
           node tests/browser-dialog-consistency.mjs
           node tests/browser-dialog-visual.mjs
           node tests/browser-dialog-a11y-mobile.mjs
+          node tests/browser-dialog-financial-choices.mjs
           node tests/browser-ledger-xpub.mjs
           node tests/browser-position-drilldown.mjs
           node tests/browser-historical-csv.mjs

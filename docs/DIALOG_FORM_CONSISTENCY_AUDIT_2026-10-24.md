@@ -61,3 +61,15 @@ Weitere offene Arbeit: vollständiges Wording-Screening aller dynamischen Fehler
 - Browser-Test `browser-dialog-a11y-mobile.mjs` ergänzt Eingabe-/Fehlerzustände, Touch-Emulation, verkleinerte Viewports (320×360 bis 1440×800), axe-basierte Dialogprüfung und einen simulierten Fehler der lokalen Speicherung.
 
 **Prüfgrenzen:** Playwright-`isMobile`/Touch und reduzierte Viewporthöhe sind eine Browseremulation, **kein** Nachweis einer tatsächlich eingeblendeten Android-Tastatur oder einer realen TalkBack-Sitzung. Nach wie vor offen: händische Prüfung auf realen Android-Geräten, vollständige Screenreader-Navigation und fest referenzierte Pixelvergleichs-Baselines.
+
+## Korrekturrunde 4: Mehrdeutige Wallet-Zuordnungen und Formulardatenverlust
+
+- P1 behoben: Bei einer Konto-Neuanlage wird ein bereits benutzerdefinierter Name durch einen späteren Wechsel des Anbieters nicht mehr überschrieben. Bei einer bestehenden Konto-Bearbeitung bleiben Name/Typ bei Anbieterwechsel erhalten.
+- P1 behoben: Die Wallet-Importmaske wählt bei mehreren verfügbaren Wallet-Anbietern oder mehreren Wallet-Konten **keinen ersten Datensatz** mehr automatisch. Sie fordert eine bewusste Zuordnung. Für einen einzigen gültigen Wallet-Anbieter/ein einziges Wallet-Konto bleibt die praktische Vorauswahl erhalten.
+- P1 behoben: Bereits vor dem ersten Model-Mutieren werden Anbieter- und Wallet-Kontowahl beim Speichern validiert; unvollständige Zuordnungen blockieren den Speichern-Button auch nach erfolgreichem Scan.
+- Das programmgesteuerte Übernehmen von Anbieter- und Kontovorschlägen markiert einen noch nicht gespeicherten Entwurf zuverlässig als geändert.
+- A11y: Die umfangreiche Wallet-Ergebnisliste kündigt nicht mehr bis zu 150 Einträge über `aria-live` an; der kurze Scanstatus bleibt als `role=status` zugänglich.
+- Dialog-Schließen, primäre/sekundäre Footer-Aktionen und native Aufklappfelder erhalten mindestens 44 px große Touch-Ziele, ohne native Ausklapp-Pfeile zu ersetzen.
+- Browser-Test `browser-dialog-financial-choices.mjs` ergänzt mehrere Wallet-Anbieter und -Konten, expliziten Anbieterwechsel, erhaltene eigene Kontonamen, Fokus, Touch-Ziele, Abbruch ohne Persistenz und acht Viewports. Referenz-Screenshots umfassen künftig auch Wallet-Dialoge bei 390 und 1440 px.
+
+Nicht vollständig nachgewiesen: automatische Erkennung sämtlicher externen Wallet-Anbieter im Offline-Fall, vollständige Datenzuordnungs-Regression für alle seltenen DeFi-/Staking-Zweige, echte TalkBack-/Android-Tastaturbedienung und pixelbasierte Screenshot-Baselines.
