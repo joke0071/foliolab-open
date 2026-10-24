@@ -18,7 +18,8 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  assert.match(html,/id="addSnapshot" aria-label="Stichtag speichern"/);
  assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary>Stichtage verwalten<\/summary>/);
  assert.doesNotMatch(html,/<details class="snapshot-manager" id="snapshotManager" open/);
- assert.match(html,/Entwicklung nach Stichtagen/);
+ assert.doesNotMatch(html,/Entwicklung nach Stichtagen/);
+ assert.match(html,/class="panel history-panel" role="region" aria-label="Vermögensstände im Zeitverlauf"/);
  assert.match(app,/next==='history'\?'Vermögensentwicklung':title/);
  assert.match(css,/@media\(max-width:380px\)/);
 });
