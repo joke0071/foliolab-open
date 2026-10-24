@@ -132,6 +132,14 @@ export function prepareFlatexImport(files){
     if(type==='account'){
      const amount=singleAmount(value(row,'accountAmount',heads));
      const hint=cashHint(details);
+     const key=stableKey({type:'cash:'+hint,reference:ref,account,isin:'',date,details,units:'',rate:amount});
+     if(keys.has(key)){
+      const first=keys.get(key);
+      if(ref){report.duplicates++;duplicates++;continue;}
+      issues.push(issue(name,line,'ambiguous-duplicate','Gleicher Kontoumsatz ohne Transaktionsreferenz (zuerst in '+first.file+', Zeile '+first.line+').'));
+      report.review++;continue;
+     }
+     keys.set(key,{file:name,line});
      cashItems.push({file:name,line,date,account,reference:ref,amount,kind:hint,details:details.slice(0,200)});
      report.cashRows++;continue;
     }
