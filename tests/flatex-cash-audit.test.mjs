@@ -30,7 +30,7 @@ test('requires explicit EUR confirmation before statement totals are displayed',
  assert.equal(r.groups.length,2);
  assert.equal(r.groups[0].count,2);
  assert.equal(r.groups[0].netExact,null);
- assert.match(r.note,/keine/);
+ assert.match(r.note,/Weder Kontovollständigkeit/);
 });
 test('separates all account references and exact signed totals without classifying external flows',()=>{
  const {prepared}=fixture(),original=JSON.stringify(prepared);
@@ -45,7 +45,7 @@ test('separates all account references and exact signed totals without classifyi
  assert.equal(r.groups[0].kinds.deposit,1);
  assert.equal(JSON.stringify(prepared),original);
 });
-test('never assumes counterpart IBAN is the user's account; only same-provider manual EUR cash options',()=>{
+test("never assumes counterpart IBAN is the user's account; only same-provider manual EUR cash options",()=>{
  const {model}=fixture(),before=JSON.stringify(model);
  const choices=flatexCashAccountChoices(model,'dep');
  assert.deepEqual(choices,[{
