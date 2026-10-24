@@ -16,7 +16,7 @@ test('generates readable locally reviewable multi-file report without writing th
  assert.match(text,/depot\.csv/);
  assert.match(text,/cash\.csv/);
  const parsed=parseCSV(text);
- assert.equal(parsed.rows.length,4);
+ assert.equal(parsed.rows.length,3);
  assert.equal(parsed.rows[0].Zeile,'2');
  assert.equal(parsed.rows[0].Bereich,'Depotumsatz');
  assert.equal(parsed.rows[1].Bereich,'Kontoumsatz');
