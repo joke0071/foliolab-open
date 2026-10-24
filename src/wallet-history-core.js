@@ -3,7 +3,8 @@
  * All public amounts/heights are canonical integer strings. BigInt stays local.
  * accountId is the canonical custody owner; walletId identifies a scan view.
  * Adapters must resolve HD/address overlap to the same accountId before replay.
- * Fees are separate negative `fee` events; transfer deltas MUST exclude that fee.
+ * Fees are separate negative `fee` facts. includedInEventId proves an already
+ * included fee; otherwise the fee is an additional balance delta.
  * No network, storage, model, prices, current clock or implicit zero opening.
  */
 export const HISTORY_COVERAGE=Object.freeze(['verified','partial','missing','unsupported','unconfirmed','error']);
@@ -50,6 +51,8 @@ export function validateHistoryEvent(value){
  if((value.status==='unconfirmed')!==(value.finality==='unconfirmed')||(value.status==='orphaned')!==(value.finality==='orphaned'))fail('inconsistent finality');
  if(value.status==='failed'&&value.type!=='fee')fail('failed transaction can only charge a fee');
  if((value.type==='fee')!==(loc.kind==='fee')||(loc.kind==='fee'&&(loc.index!=='0'||loc.subindex!=='0')))fail('fee must have one canonical locator');
+ const includedInEventId=value.includedInEventId??null;
+ if(includedInEventId!==null&&(value.type!=='fee'||typeof includedInEventId!=='string'||!includedInEventId||includedInEventId.length>16384))fail('invalid fee inclusion reference');
  const amount=value.quantityBaseUnits===null&&value.type==='unknown'?null:integer(value.quantityBaseUnits,true);
  if(amount!==null){
   const n=BigInt(amount);
@@ -58,7 +61,7 @@ export function validateHistoryEvent(value){
  const event={...i,walletId:text(value.walletId,'walletId'),txid:text(value.txid,'txid'),locator,
   blockHeight:value.blockHeight===null?null:integer(value.blockHeight),blockHash:optionalText(value.blockHash,'blockHash'),
   txIndex:value.txIndex==null?null:integer(value.txIndex),timestamp:value.timestamp===null?null:utc(value.timestamp),
-  decimals:decimals(value.decimals),quantityBaseUnits:amount,type:value.type,source:optionalText(value.source,'source'),
+  decimals:decimals(value.decimals),quantityBaseUnits:amount,includedInEventId,type:value.type,source:optionalText(value.source,'source'),
   status:value.status,finality:value.finality,observedAt:utc(value.observedAt),coverage:coverage(value.coverage),qualityCode:text(value.qualityCode,'qualityCode')};
  const id=eventKey(event);
  if(value.id!=null&&value.id!==id)fail('event ID does not match identity');
@@ -142,6 +145,12 @@ export function replayWalletHistory({events,streams}){
     if(e.blockHeight===s.throughBlock&&c?.tipHash&&e.blockHash!==c.tipHash)mark('tip-hash-mismatch','error');
    }
    if(e.quantityBaseUnits===null||e.type==='unknown'){mark('unknown-quantity-effect','unsupported');continue;}
+   if(e.type==='fee'&&e.includedInEventId!==null){
+    const debit=relevant.find(candidate=>candidate.id===e.includedInEventId);
+    if(e.status==='failed'||!debit||!['outgoing','internal_transfer','swap'].includes(debit.type)||debit.quantityBaseUnits===null||BigInt(debit.quantityBaseUnits)>=0n||BigInt(debit.quantityBaseUnits)>BigInt(e.quantityBaseUnits)||debit.txid!==e.txid||debit.blockHeight!==e.blockHeight||debit.blockHash!==e.blockHash||debit.decimals!==e.decimals||debit.status!=='confirmed')mark('invalid-fee-inclusion','error');
+    // The raw debit already carries this fee; retain its separate fact only.
+    continue;
+   }
    if(e.decimals===s.decimals)delta+=BigInt(e.quantityBaseUnits);
   }
   const quantity=state==='verified'?BigInt(o.quantityBaseUnits)+delta:null;

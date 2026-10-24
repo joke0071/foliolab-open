@@ -117,3 +117,21 @@ test('WH01 numeric ordering and block hashes take priority over equal timestamps
  const r=replay([event({blockHeight:'9',blockHash:'a'}),event({txid:'tx-2',blockHeight:'9',blockHash:'b'})]);
  assert.ok(r.balances[0].reasons.includes('inconsistent-block-hash'));
 });
+test('WH01 raw BTC inputs retain exact prevout amounts; included fee is not charged again',()=>{
+ const input=event({type:'outgoing',quantityBaseUnits:'-100',locator:{kind:'vin',index:'0',subindex:'0'}});
+ const change=event({quantityBaseUnits:'39',locator:{kind:'vout',index:'1',subindex:'0'}});
+ const fee=event({type:'fee',quantityBaseUnits:'-1',locator:{kind:'fee',index:'0',subindex:'0'},includedInEventId:historyEventId(input)});
+ const s=stream({opening:{quantityBaseUnits:'100',beforeBlock:'0',source:'fixture'}});
+ const result=replay([input,change,fee,fee],[s]);
+ assert.equal(result.balances[0].quantityBaseUnits,'39');
+ assert.equal(result.events.find(e=>e.locator.kind==='vin').quantityBaseUnits,'-100');
+ assert.equal(replay([change,fee],[s]).balances[0].quantityBaseUnits,null,'missing fee inclusion evidence');
+ assert.equal(replay([input,change,{...fee,includedInEventId:historyEventId(change)}],[s]).balances[0].quantityBaseUnits,null,'fee cannot be included in incoming movement');
+});
+test('WH01 fee inclusion cannot cross tx/account/block or mask failed fee-only transactions',()=>{
+ const input=event({type:'outgoing',quantityBaseUnits:'-100'});
+ const fee=event({type:'fee',quantityBaseUnits:'-1',locator:{kind:'fee',index:'0',subindex:'0'},includedInEventId:historyEventId(input)});
+ const s=stream({opening:{quantityBaseUnits:'100',beforeBlock:'0',source:'fixture'}});
+ for(const patch of [{txid:'different'},{blockHeight:'9',blockHash:'block-9'},{status:'failed'}])assert.equal(replay([input,{...fee,...patch}],[s]).balances[0].quantityBaseUnits,null);
+ assert.throws(()=>validateHistoryEvent(event({includedInEventId:historyEventId(input)})));
+});

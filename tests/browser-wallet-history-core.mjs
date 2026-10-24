@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
-import {replayWalletHistory,reconcileWalletHistory} from '../src/wallet-history-core.js';
+import {replayWalletHistory,reconcileWalletHistory,historyEventId} from '../src/wallet-history-core.js';
 import {event,stream} from './wallet-history-fixtures.mjs';
 const huge='12345678901234567890123456789012345678901234567890';
 const fee=event({type:'fee',quantityBaseUnits:'-1',locator:{kind:'fee',index:'0',subindex:'0'}});
+const btcInput=event({type:'outgoing',quantityBaseUnits:'-100',locator:{kind:'vin',index:'0',subindex:'0'}});
 const cases=[
+ {events:[btcInput,event({quantityBaseUnits:'39',locator:{kind:'vout',index:'1',subindex:'0'}}),{...fee,includedInEventId:historyEventId(btcInput)}],streams:[stream({opening:{quantityBaseUnits:'100',beforeBlock:'0',source:'fixture'}})]},
  {events:[event({quantityBaseUnits:huge}),fee,fee],streams:[stream()]},
  {events:[event(),event({locator:{kind:'log',index:'1',subindex:'0'}})],streams:[stream()]},
  {events:[event(),event({walletId:'HD-alias'})],streams:[stream()]},
@@ -47,6 +49,6 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   assert.deepEqual(actual.results,expected);
   const b=expected[0].balances[0];
   assert.deepEqual(actual.reconciliation,reconcileWalletHistory(expected[0],[{...b,blockHeight:b.throughBlock,source:'browser-fixture'}]));
-  console.log('WH01 '+name+': 8 exact replay fixtures match Node; JSON, reconciliation, no network/storage/model changes PASS');
+  console.log('WH01 '+name+': 9 exact replay fixtures match Node; JSON, reconciliation, no network/storage/model changes PASS');
  }finally{await browser.close();}
 }
