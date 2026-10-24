@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
+import {provider as bitcoinProvider,tx,A} from './bitcoin-history-fixtures.mjs';
+import {provider as ethereumProvider,A as ETH} from './ethereum-history-fixtures.mjs';
+for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
+ const browser=await ({chromium,firefox,webkit}[engine]).launch({headless:true});
+ try{
+  const page=await browser.newPage({viewport:{width:390,height:844},serviceWorkers:'block'});let slow=false;const btc=bitcoinProvider([tx(1)]),eth=ethereumProvider();
+  await page.context().route('https://blockstream.info/**',async route=>{if(slow)await new Promise(r=>setTimeout(r,700));const r=await btc.fetcher(route.request().url(),{method:'GET'});let data;try{data=await r.json();}catch{}await route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'},status:r.status,contentType:typeof data==='string'?'text/plain':'application/json',body:typeof data==='string'?data:JSON.stringify(data)});});
+  for(const host of ['eth.blockscout.com','ethereum-rpc.publicnode.com'])await page.context().route('https://'+host+'/**',async route=>{if(route.request().method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'}});return;}const req=route.request(),r=await eth.fetcher(req.url(),{method:req.method(),body:req.postData()});await route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'},status:r.status,contentType:'application/json',body:JSON.stringify(await r.json())});});
+  await page.goto('http://127.0.0.1:4173/tests/');
+  await page.evaluate(async({A,ETH})=>{
+   const {blankModel,createProvider,createAccount,createPosition,STORE_KEY}=await import('/src/model.js');const m=blankModel(),p=createProvider({name:'Wallet',type:'wallet'});m.providers.push(p);const a=createAccount({providerId:p.id,name:'Wallet',type:'wallet'},m);m.accounts.push(a);
+   for(const [name,chain,address] of [['History BTC','btc',A],['History ETH','evm',ETH]])m.positions.push(createPosition({id:chain,providerId:p.id,accountId:a.id,name,kind:'crypto',quantity:'1',price:'1',wallet:{enabled:true,chain,address,chainId:1,decimals:18}},m));localStorage.setItem(STORE_KEY,JSON.stringify(m));
+  },{A,ETH});
+  await page.goto('http://127.0.0.1:4173/?page=positions');await page.locator('[data-action="wallet-history"][data-id="btc"]').click();
+  const d=page.locator('#walletHistoryDialog');await d.locator('[data-history="start"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory?.sessions?.length??0),0);
+  await page.addScriptTag({url:'http://127.0.0.1:4173/node_modules/axe-core/axe.min.js'});const violations=await page.evaluate(async()=> (await axe.run(document.getElementById('walletHistoryDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations);assert.deepEqual(violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);
+
+  await d.locator('[data-history="discard"]').click();assert.equal(await d.locator('[data-history="accept"]').isVisible(),false);
+  await d.locator('[data-history="start"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});
+  for(const width of [320,390,430,768,1440]){await page.setViewportSize({width,height:900});const overflow=await d.evaluate(el=>el.getBoundingClientRect().right>innerWidth+1);assert.equal(overflow,false,'overflow '+width);}
+  await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory?.sessions.length===1);
+  const finance=await page.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));return [m.journalEntries.length,m.snapshots.length,m.positions.map(p=>p.quantity)];});assert.deepEqual(finance,[0,0,[1,1]]);
+  await d.locator('[data-history="wallet"]').selectOption('evm');await d.locator('[data-history="start"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});assert.match(await d.innerText(),/Teilweise|unbekannt/);
+  await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions.length===2);
+  await d.locator('[data-history="wallet"]').selectOption('btc');slow=true;await d.locator('[data-history="start"]').click();await d.locator('[data-history="cancel"]').click();await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Abgebrochen'));slow=false;
+  await d.locator('[data-history="resume"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});await d.locator('[data-history="discard"]').click();
+  await d.locator('[data-history="close"]').click();await page.reload();await page.locator('[data-action="wallet-history"][data-id="btc"]').click();assert.match(await page.locator('#walletHistoryDialog').innerText(),/Gespeicherte Historie/);
+  console.log('HISTORY UI '+engine+': BTC/ETH fetch, preview/discard/accept, persistence, untouched finances, 320–1440 PASS');
+ }finally{await browser.close();}
+}
