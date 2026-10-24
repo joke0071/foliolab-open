@@ -57,7 +57,7 @@ function resolvePosition(model,key,defaultId,allowedAccountId=''){
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId=''}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={}}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
@@ -72,7 +72,9 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const price=normalizeCSVNumber(d[mapping.unitPrice]||pos.price,{optional:true});
    const fee=normalizeCSVNumber(d[mapping.feeEUR],{optional:true});
    const tax=normalizeCSVNumber(d[mapping.taxEUR],{optional:true});
-   const fx=normalizeCSVNumber(d[mapping.fxRate]|| (pos.currency==='EUR'?'1':''),{optional:pos.currency==='EUR'});
+   const providedFx=Object.hasOwn(fxRateOverrides,item.index)?fxRateOverrides[item.index]:(d[mapping.fxRate]||(pos.currency==='EUR'?'1':''));
+   if(pos.currency!=='EUR'&&!String(providedFx).trim())throw Error('Historischer Wechselkurs fehlt. Bitte den tatsächlichen Brokerkurs in EUR je Handelswährung eingeben.');
+   const fx=normalizeCSVNumber(providedFx,{optional:pos.currency==='EUR'});
    const ref=String(d[mapping.externalId]||'').trim().slice(0,100);
    const linked=String(d[mapping.cashPosition]||'').trim();
    const c=linked?resolvePosition(draft,linked,'').id:(['buy','sell'].includes(type)?cashPositionId||'':'');
