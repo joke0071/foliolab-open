@@ -28,6 +28,7 @@ import {legacyQuoteDiscrepancies,verifiedCurrentQuote,applyVerifiedQuoteRepair} 
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
+import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-import.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {encryptBackup,decryptBackup,isEncryptedBackup} from './crypto-backup.js';
 import {openingCashInput} from './account-opening.js';
@@ -714,21 +715,32 @@ async function scanWalletNow(){
   }catch(e){if(scanGeneration===walletScanGeneration){status.textContent='Suche fehlgeschlagen: '+e.message;area.innerHTML=empty('Bitte Netzwerk und Adresse prüfen. Du kannst die Position auch manuell hinzufügen.');}}
   finally{if(scanGeneration===walletScanGeneration)button.disabled=false;}
 }
+// Guard against doubling existing manual opening holdings with historical trades.
+function flatexWouldDoubleCount(current,prepared){
+ return prepared.parsed.rows.some(row=>current.positions.some(p=>String(p.isin||'').toUpperCase()===row.position&&Number(p.quantityExact??p.quantity)>0&&!(current.journalEntries||[]).some(entry=>entry.postings?.some(post=>post.positionId===p.id))));
+}
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
  if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
- let parsed=null,positionOverrides={},skippedLines=[];
+ let parsed=null,positionOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
- const currentMapping=()=>Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
+ const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
  const previewOptions=()=>({positionOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||''});
  showDialog('CSV importieren','BUCHUNGEN',
-  '<p class="dialog-intro">Wähle deine Buchungsdatei. Vor dem Import kannst du die Spalten und jede unklare Zuordnung prüfen. Die Datei bleibt auf deinem Gerät.</p>'+
-  '<label class="field"><span>CSV-Datei (maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain"></label>'+
+  '<p class="dialog-intro">Wähle allgemeine Buchungen oder Flatex-Exporte. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option></select></label>'+ 
+   '<label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label>'+ 
+   '<div id="csvBrokerStatus" role="status"></div>'+
   '<div id="csvMapping"></div><div id="csvReview" role="status" aria-live="polite"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
+    if(brokerImport){
+     if(brokerImport.issues.some(x=>x.code==='invalid'||x.code==='ambiguous-duplicate'))throw Error('Flatex: fehlerhafte oder nicht eindeutig identifizierbare Vorgänge prüfen.');
+     if((brokerImport.cashItems.length||brokerImport.issues.length)&&!brokerAccepted)throw Error('Bitte nicht übernommene Konto- und Depotvorgänge bestätigen.');
+     if(flatexWouldDoubleCount(model,brokerImport))throw Error('Bestehende Anfangsbestände müssen vor dem historischen Import abgeglichen werden.');
+    }
    const result=previewCSV(model,parsed,currentMapping(),previewOptions());
    if(result.issues.length)throw Error('Bitte die '+result.issues.length+' noch ungeklärten Buchungen prüfen oder ausdrücklich überspringen.');
    if(!result.ready)throw Error('Keine neuen Buchungen zum Import vorhanden.');
@@ -768,7 +780,11 @@ function openCSVImport(){
     else skippedLines=skippedLines.filter(x=>x!==line);
     review();
    }));
-   $('saveDialog').disabled=Boolean(result.issues.length)||result.ready===0;
+   const invalid=brokerImport?.issues.some(x=>x.code==='invalid'||x.code==='ambiguous-duplicate');
+    const missingAcknowledgement=brokerImport&&(brokerImport.cashItems.length||brokerImport.issues.length)&&!brokerAccepted;
+    const wouldDoubleCount=brokerImport&&flatexWouldDoubleCount(model,brokerImport);
+    $('saveDialog').disabled=Boolean(result.issues.length)||result.ready===0||Boolean(invalid)||Boolean(missingAcknowledgement)||Boolean(wouldDoubleCount);
+    if(wouldDoubleCount)$('csvReview').insertAdjacentHTML('beforeend','<p class="small-help">Vorhandener Anfangsbestand: Historische Käufe würden möglicherweise doppelt gezählt. Die Übernahme bleibt bis zum Bestandsabgleich gesperrt.</p>');
    $('saveDialog').textContent=result.ready?result.ready+' Buchung'+(result.ready===1?'':'en')+' importieren':'Buchungen importieren';
   }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('saveDialog').disabled=true;}
  };
