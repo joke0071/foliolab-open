@@ -1,5 +1,7 @@
+import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest} from './import-identity.js';
 import {units,exact} from './decimal.js';
-import {executeTransaction} from './transactions.js';
+import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
+import {safeImport,backup} from './model.js';
 /** Client-only CSV parser; never uploads the original document to a remote service. */
 export function parseCSV(input,{delimiter}={}){
  const raw=String(input||'').replace(/^\uFEFF/,'');
@@ -57,9 +59,10 @@ function resolvePosition(model,key,defaultId,allowedAccountId=''){
  return hits[0];
 }
 /** Preview never changes original portfolio; transaction engine validates clone only. */
-export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={}}={}){
+export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={},sourceId='generic-csv',sourceIdentities={}}={}){
  const baseline=JSON.stringify(model);
- const draft=structuredClone(model),seen=new Set((model.bookings||[]).map(x=>x.importFingerprint).filter(Boolean));
+ const draft=structuredClone(model),claimedIds=new Set();
+ const fileDigest=sourceDigest(JSON.stringify([parsed.headers,parsed.rows]));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
  for(const item of mapped){
@@ -69,26 +72,81 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const pos=resolvePosition(draft,positionOverrides[item.index]||d[mapping.position],defaultPositionId,allowedAccountId);
    if(allowedAccountId&&pos.accountId!==allowedAccountId)throw Error('Anlage gehört nicht zum gewählten Depot. Bitte Flatex-Depot und ISIN prüfen.');
    const qty=normalizeCSVNumber(d[mapping.quantity]);
+   if(['buy','sell'].includes(type)&&!String(d[mapping.unitPrice]??'').trim())throw Error('Historischer Ausführungskurs fehlt. Aktueller Kurs wird nicht eingesetzt.');
    const price=normalizeCSVNumber(d[mapping.unitPrice]||pos.price,{optional:true});
    const fee=normalizeCSVNumber(d[mapping.feeEUR],{optional:true});
    const tax=normalizeCSVNumber(d[mapping.taxEUR],{optional:true});
    const providedFx=Object.hasOwn(fxRateOverrides,item.index)?fxRateOverrides[item.index]:(d[mapping.fxRate]||(pos.currency==='EUR'?'1':''));
    if(pos.currency!=='EUR'&&!String(providedFx).trim())throw Error('Historischer Wechselkurs fehlt. Bitte den tatsächlichen Brokerkurs in EUR je Handelswährung eingeben.');
    const fx=normalizeCSVNumber(providedFx,{optional:pos.currency==='EUR'});
-   const ref=String(d[mapping.externalId]||'').trim().slice(0,100);
+   const ref=String(d[mapping.externalId]||'').trim();
+   if(ref.length>200)throw Error('Buchungs-ID ist zu lang.');
    const linked=String(d[mapping.cashPosition]||'').trim();
    const c=linked?resolvePosition(draft,linked,'').id:(['buy','sell'].includes(type)?cashPositionId||'':'');
    const row={type,date:item.date,positionId:pos.id,quantity:qty,unitPrice:price,feeEUR:fee,taxEUR:tax,fxRate:fx,cashPositionId:c,notes:String(d[mapping.notes]||'').slice(0,180),externalId:ref};
+   const origin=sourceIdentities[item.index]||parsed.sourceIdentities?.[item.index];
+   const trade=['buy','sell'].includes(type);
+   const feeKnown=!!String(d[mapping.feeEUR]??'').trim()&&origin?.costsVerified!==false;
+   const taxKnown=!!String(d[mapping.taxEUR]??'').trim()&&origin?.costsVerified!==false;
+   const costsKnown=!trade||(feeKnown&&taxKnown);
+   if(trade){if(!feeKnown)row.feeEUR=null;if(!taxKnown)row.taxEUR=null;}
+   const source={version:1,sourceId:origin?.sourceId||sourceId,accountId:pos.accountId,
+    externalId:origin?origin.externalId:ref,sourcePayload:JSON.stringify(row),fileId:fileDigest+':'+item.index,occurrence:1,ownership:'imported',ownedSnapshot:''};
+   // An omitted settlement selection on repeat import cannot erase the
+   // previously confirmed link; an explicitly changed selection conflicts.
+   const samePayload=prior=>{
+    const previous=JSON.parse(prior.sourcePayload),current={...row};
+    if(!current.cashPositionId&&!linked&&!cashPositionId)current.cashPositionId=previous.cashPositionId;
+    return JSON.stringify(previous)===JSON.stringify(current);
+   };
+   const key=importSourceKey(source);
+   const matches=key?draft.bookings.filter(b=>importSourceKey(b.importSource)===key):[];
+   if(matches.length){
+    if(matches.length!==1||!samePayload(matches[0].importSource))
+     throw Error('Quellkonflikt: dieselbe Buchungs-ID enthält abweichende Angaben. Bitte prüfen.');
+    if(!sourceUnmodified(draft,matches[0]))throw Error('Manuell geänderte Buchung bleibt geschützt. Bitte Importkonflikt prüfen.');
+    duplicates++;list.push({line:item.index,status:'duplicate',row});continue;
+   }
    const base=fingerprint(row);
    const count=ref?1:(occurrences.get(base)||0)+1;
    if(!ref)occurrences.set(base,count);
    // Identical rows in one file may be distinct transactions. Keep a stable
    // occurrence number, while explicit broker transaction IDs stay unique.
    const id=count===1?base:base+'#'+count;
-   if(seen.has(id)){duplicates++;list.push({line:item.index,status:'duplicate',row});continue;}
+   source.occurrence=count;
+   const fileMatches=draft.bookings.filter(b=>b.importSource?.sourceId===source.sourceId&&
+    b.importSource.accountId===source.accountId&&b.importSource.fileId===source.fileId);
+   if(fileMatches.length){
+    const prior=fileMatches[0];
+    if(fileMatches.length!==1||claimedIds.has(prior.id)||!samePayload(prior.importSource)||!sourceUnmodified(draft,prior))
+     throw Error('Dateikonflikt oder manuell geänderte Buchung. Bitte prüfen.');
+    claimedIds.add(prior.id);duplicates++;list.push({line:item.index,status:'duplicate',row});continue;
+   }
+   // Legacy fingerprints do not prove a source/file identity. Matching values
+   // in another document are only review candidates, never automatic skips.
+   const legacy=model.bookings.some(b=>!b.importSource&&b.importFingerprint&&(b.importFingerprint===id||
+    (b.positionId===row.positionId&&b.date===row.date&&b.type===row.type)));
+   const economic=r=>JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.cashPositionId||'']);
+   const candidate=!source.externalId&&model.bookings.some(b=>{
+    if(b.importSource?.accountId!==source.accountId)return false;
+    try{return economic(JSON.parse(b.importSource.sourcePayload))===economic(row);}catch{return false;}
+   });
+   if(legacy||candidate)throw Error('Mögliche bereits vorhandene Buchung aus einer anderen oder älteren Datei. Bitte ausdrücklich prüfen; keine automatische Übernahme.');
+   if(!costsKnown){
+    if(c)throw Error('Gebühren oder Steuern fehlen. Für eine Geldbuchung bitte belegte Werte (auch 0) in der CSV angeben; sonst ohne Verrechnungskonto nur Stückzahlen übernehmen.');
+    if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)
+     throw Error('Unbekannte Nebenkosten: vorhandene bestätigte Anschaffungskosten bleiben geschützt. Bitte Abrechnung ergänzen.');
+   }
    const event=executeTransaction(draft,row);const booking=draft.bookings.find(b=>b.id===event.id);
+   if(!costsKnown){
+    const changed=draft.positions.find(p=>p.id===pos.id);
+    changed.costBasisExact=null;changed.costBasisEUR=null;changed.realizedPnLExact=null;changed.realizedPnLEUR=null;
+    if(!feeKnown)booking.feeEUR=null;if(!taxKnown)booking.taxEUR=null;
+    booking.costsVerified=false;
+   }
    booking.importFingerprint=id;draft.journalEntries.find(j=>j.id===booking.journalEntryId).source='csv';
-   seen.add(id);list.push({line:item.index,status:'ready',row});
+   source.occurrence=count;source.ownedSnapshot=bookingOwnership(draft,booking);booking.importSource=source;
+   list.push({line:item.index,status:'ready',row});
   }catch(e){issues.push({line:item.index,message:String(e.message).slice(0,200)});list.push({line:item.index,status:'error',message:String(e.message).slice(0,200)});}
  }
  return {rows:list,issues,duplicates,skipped:list.filter(r=>r.status==='skipped').length,ready:list.filter(r=>r.status==='ready').length,simulated:draft,baseline};
@@ -99,6 +157,10 @@ export function importCSV(model,preview){
  if(preview.issues.length)throw Error('CSV enthält fehlerhafte Zeilen – vor Import korrigieren.');
  if(!preview.ready)return {imported:0,duplicates:preview.duplicates};
  const next=structuredClone(preview.simulated);
- if(next.bookings.length>(model.bookings||[]).length+preview.ready||next.version!==model.version)throw Error('CSV-Vorschau stimmt nicht zum Datenmodell.');
+ if(next.bookings.length!==(model.bookings||[]).length+preview.ready||next.version!==model.version||
+    model.bookings.some(b=>!next.bookings.some(n=>n.id===b.id&&JSON.stringify(n)===JSON.stringify(b)))||
+    model.journalEntries.some(e=>!next.journalEntries.some(n=>n.id===e.id&&JSON.stringify(n)===JSON.stringify(e))))throw Error('CSV-Vorschau stimmt nicht zum Datenmodell.');
+ safeImport(JSON.parse(backup(next)));
+ if(!ledgerQuantityAudit(next).ok)throw Error('CSV-Journal und Bestände widersprechen sich. Nichts übernommen.');
  Object.assign(model,next);return {imported:preview.ready,duplicates:preview.duplicates};
 }
