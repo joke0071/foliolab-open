@@ -49,3 +49,20 @@ test('without custody scope existing universal CSV behavior remains deliberately
  assert.equal(result.issues.length,1);
  assert.match(result.issues[0].message,/nicht eindeutig/);
 });
+
+test('foreign currency trades require a user-provided historical rate, never implicit FX',()=>{
+ const m=blankModel(),provider=createProvider({name:'Flatex Österreich'});m.providers.push(provider);
+ const dep=createAccount({providerId:provider.id,name:'Aktien USD',type:'securities'},m);m.accounts.push(dep);
+ const p=createPosition({providerId:provider.id,accountId:dep.id,kind:'stock',
+  name:'US-Aktie',isin:'US0378331005',quantity:0,price:150,currency:'USD'},m);m.positions.push(p);
+ const csv=parseCSV('Datum;Typ;ISIN;Menge;Kurs\n2026-10-20;Kauf;US0378331005;2;150');
+ const missing=previewCSV(m,csv,inferMapping(csv.headers),{allowedAccountId:dep.id});
+ assert.equal(missing.ready,0);
+ assert.match(missing.issues[0].message,/Historischer Wechselkurs fehlt/);
+ const complete=previewCSV(m,csv,inferMapping(csv.headers),{
+  allowedAccountId:dep.id,fxRateOverrides:{2:'0,92'}
+ });
+ assert.equal(complete.ready,1);
+ assert.equal(complete.rows[0].row.fxRate,'0.92');
+ assert.equal(m.positions[0].quantityExact,'0');
+});
