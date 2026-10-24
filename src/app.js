@@ -22,6 +22,7 @@ import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {bookedIncomeSummary} from './booking-insights.js';
 import {portfolioXirr,portfolioTwr,performanceIssues,modifiedDietz} from './performance.js';
+import {capitalReferenceSeries} from './capital-flows.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
 import {updateScannedWalletPosition} from './wallet-scan-update.js';
@@ -130,7 +131,7 @@ function showPositionDetail(id){
   void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
 }
 function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
-function drawChart(samples){return drawInteractiveChart(samples,{money,esc,dateLabel});}
+function drawChart(samples,comparison=null){return drawInteractiveChart(samples,{money,esc,dateLabel,comparison});}
 
 let calendarMonth=null,calendarSelection=[];
 function calendarDayKey(year,zeroBasedMonth,day){return year+'-'+String(zeroBasedMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
@@ -176,7 +177,11 @@ function renderHistory(){
   'Für eine zeitgewichtete Rendite fehlen noch bewertete Zeitpunkte vor und nach externen Geldflüssen.':
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
- const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);}else if(range==='calendar'&&calendarSelection.length===2){const [from,to]=calendarSelection;data=data.filter(x=>x.date>=from&&x.date<=to);} $('historyChart').innerHTML=drawChart(data);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>{const active=btn.dataset.range===range;btn.classList.toggle('selected',active);btn.setAttribute('aria-pressed',String(active));});$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
+ const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);}else if(range==='calendar'&&calendarSelection.length===2){const [from,to]=calendarSelection;data=data.filter(x=>x.date>=from&&x.date<=to);} const reference=capitalReferenceSeries(model,data),comparisonToggle=$('compareCapital');
+ comparisonToggle.disabled=!reference;
+ if(!reference)comparisonToggle.checked=false;
+ $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
+ $('historyChart').innerHTML=drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>{const active=btn.dataset.range===range;btn.classList.toggle('selected',active);btn.setAttribute('aria-pressed',String(active));});$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
 function renderPositions(){
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' prüfen':'Kurse: Noch keine Bewertungen';
@@ -1187,6 +1192,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
  $('historyCalendarReset').addEventListener('click',()=>{calendarSelection=[];range='all';$('historyCalendarDisclosure').open=false;renderHistory();});
+ $('compareCapital').addEventListener('change',renderHistory);
  $('historyCalendarGrid').addEventListener('click',e=>{
   const day=e.target.closest('[data-calendar-day]')?.dataset.calendarDay;if(!day)return;
   if(calendarSelection.length!==1)calendarSelection=[day];
