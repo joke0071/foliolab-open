@@ -716,3 +716,7 @@
 .edit-dialog .icon-close{min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:10px;flex:0 0 auto}
 .edit-dialog .dialog-footer .btn{min-height:44px}
 .edit-dialog .advanced-apis>summary{min-height:44px}
+
+/* Only concise CSV result counts are live-announced, never the entire review list. */
+.visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+#csvReviewHeading:focus{outline:none}
