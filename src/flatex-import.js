@@ -50,7 +50,11 @@ const exactDate=input=>{
 };
 const isinOk=s=>/^[A-Z]{2}[A-Z0-9]{10}$/.test(s);
 const singleAmount=s=>{
- const v=normalizeCSVNumber(s);
+ const raw=String(s??'').trim();
+ // Flatex exports use German notation: a lone dot grouping three digits is
+ // a thousands separator, not a decimal point.
+ const german=/^[+-]?\d{1,3}(?:\.\d{3})+$/.test(raw)?raw.replaceAll('.',''):raw;
+ const v=normalizeCSVNumber(german);
  if(!/^\d+(?:\.\d+)?$/.test(v)&&! /^-\d+(?:\.\d+)?$/.test(v))throw Error('Ungültiger Betrag.');
  return v;
 };
