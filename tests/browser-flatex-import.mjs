@@ -64,7 +64,7 @@ try{
  assert.match(backupFile.suggestedFilename(),/^FolioLab-Backup-vor-Flatex-\d{4}-\d{2}-\d{2}\.json$/);
  assert.match(await page.locator('#csvReview').textContent(),/depot\.csv, Zeile 2/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.waitForFunction(id=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1')||'{}');return m.positions?.find(x=>x.id===id)?.quantityExact==='2';},ids.p);
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(x=>x.id===ids.p).quantityExact,'2');

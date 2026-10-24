@@ -40,7 +40,7 @@ try{
  const backupFile=await backupDownload;
  assert.match(backupFile.suggestedFilename(),/^FolioLab-Backup-vor-Flatex-\d{4}-\d{2}-\d{2}\.json$/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.waitForFunction(id=>{
   const model=JSON.parse(localStorage.getItem('foliolab-open-v1')||'{}');
   return model.bookings?.length===2&&model.openingPositions?.find(p=>p.positionId===id)?.quantityExact==='0';
