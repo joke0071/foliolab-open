@@ -73,8 +73,12 @@ try{
    inspectPlus(page.locator('#addWizard .action-icon svg')),
    inspectPlus(page.locator('#addBooking .action-icon svg'))
   ]);
-  assert.deepEqual(historyPlus,positionPlus,'History and Positionen must render the exact same plus SVG at '+width);
-  assert.deepEqual(historyPlus,bookingPlus,'History and Buchungen must render the exact same plus SVG at '+width);
+  // The primary green history action intentionally has a white icon on phones;
+  // its shape, size and stroke must still match the shared plus geometry.
+  const geometry=({color,...rest})=>rest;
+  assert.deepEqual(geometry(historyPlus),geometry(positionPlus),'History and Positionen must share plus SVG geometry at '+width);
+  assert.deepEqual(geometry(historyPlus),geometry(bookingPlus),'History and Buchungen must share plus SVG geometry at '+width);
+  assert.equal(historyPlus.color,'rgb(255, 255, 255)','Primary Stichtag icon stays legible on green at '+width);
   assert.equal(historyPlus.strokeWidth,'2.2px','Plus icons must share the thick action stroke at '+width);
   assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
   const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{

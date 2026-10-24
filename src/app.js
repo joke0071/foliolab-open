@@ -5,6 +5,7 @@ import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+import {renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
 import {parseHistoricalPriceCSV} from './historical-csv.js';
@@ -120,16 +121,11 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=model.snapshots;
-  const days={month:31,quarter:92,year:366}[miniRange];
-  const cutoff=days?new Date(Date.now()-days*864e5).toISOString().slice(0,10):null;
-  const visible=days?shots.filter(x=>x.date>=cutoff):shots;
+  const visible=filterChartPeriod(shots,'wealth',miniRange);
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
-  $('miniChartPeriods').querySelectorAll('[data-mini-range]').forEach(btn=>{
-   const period={month:31,quarter:92,year:366}[btn.dataset.miniRange];
-   const available=period?shots.filter(x=>x.date>=new Date(Date.now()-period*864e5).toISOString().slice(0,10)).length:shots.length;
-   btn.disabled=available<2;btn.classList.toggle('selected',btn.dataset.miniRange===miniRange);
-  });
+  syncChartPeriodButtons($('miniChartPeriods'),'data-mini-range',miniRange,
+   period=>period==='all'||filterChartPeriod(shots,'wealth',period).length>=2);
 }
 function showPositionDetail(id){
   const p=model.positions.find(x=>x.id===id);
@@ -186,11 +182,18 @@ function renderHistory(){
   'Für eine zeitgewichtete Rendite fehlen noch bewertete Zeitpunkte vor und nach externen Geldflüssen.':
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
- const now=new Date();let data=model.snapshots;const days={month:31,quarter:92,year:366}[range];if(days){const cut=new Date(now.getTime()-days*864e5).toISOString().slice(0,10);data=data.filter(x=>x.date>=cut);}else if(range==='calendar'&&calendarSelection.length===2){const [from,to]=calendarSelection;data=data.filter(x=>x.date>=from&&x.date<=to);} const reference=capitalReferenceSeries(model,data),comparisonToggle=$('compareCapital');
+ let data=model.snapshots;
+ if(range==='calendar'&&calendarSelection.length===2){
+  const [from,to]=calendarSelection;
+  data=data.filter(x=>x.date>=from&&x.date<=to);
+ }else if(range!=='calendar'){
+  data=filterChartPeriod(data,'wealth',range);
+ }
+ const reference=capitalReferenceSeries(model,data),comparisonToggle=$('compareCapital');
  comparisonToggle.disabled=!reference;
  if(!reference)comparisonToggle.checked=false;
  $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
- $('historyChart').innerHTML=drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));document.querySelectorAll('[data-range]').forEach(btn=>{const active=btn.dataset.range===range;btn.classList.toggle('selected',active);btn.setAttribute('aria-pressed',String(active));});$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
+ $('historyChart').innerHTML=drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(model.snapshots,'wealth',period).length>=2);$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
 function renderPositions(){
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' prüfen':'Kurse: Noch keine Bewertungen';
@@ -1563,6 +1566,8 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
+$('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
+$('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
 initNav();initEvents();installCredentialVisibility();
 $('portfolioStorageState').textContent=portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);

@@ -1,4 +1,5 @@
-import {POSITION_PERIODS,marketHistoryCapability,fetchPositionMarketHistory} from './position-history.js';
+import {marketHistoryCapability,fetchPositionMarketHistory} from './position-history.js';
+import {renderChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {tradingViewIdentifier} from './security-sources.js';
@@ -55,8 +56,8 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   isSecurity?'<p class="position-csv-help">TradingView benötigt einen bestätigten Handelsplatz (z. B. Xetra) oder ein TradingView-Börsenkürzel.</p>':'';
  const nativeAvailable=Boolean(marketHistoryCapability(p,model.settings));
  const needsOwnChart=nativeAvailable||Boolean(imported);
- const controls=needsOwnChart?'<div class="position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
-   POSITION_PERIODS.map(([n,label])=>'<button type="button" data-position-range="'+n+'" aria-pressed="'+(days===n)+'" class="'+(days===n?'selected':'')+'">'+label+'</button>').join('')+'</div>':'';
+ const controls=needsOwnChart?'<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+
+   renderChartPeriodButtons('market','data-position-range',days)+'</div>':'';
  const hasMarketKey=Boolean(model.settings?.eodhdKey||model.settings?.fmpKey||model.settings?.twelveKey);
  const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
    hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.',
@@ -111,7 +112,9 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  };
  const fallback=(message)=>{
   if(!isCurrent())return;
-  mount.querySelector('.position-period')?.classList.add('hidden');
+  // Short histories can be solved with a longer range; provider failures cannot.
+  if(!/längeren Zeitraum|weniger als zwei|nicht genug historische Kurse/i.test(message))
+   mount.querySelector('.position-period')?.classList.add('hidden');
   target.innerHTML=collapsedHistory(message,{esc,id:position.id,retry:true});
   if(position.kind==='crypto'&&/^[a-z0-9-]{2,100}$/.test(position.coinId||'')){
    const link=document.createElement('a');
