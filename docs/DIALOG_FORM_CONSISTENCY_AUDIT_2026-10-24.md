@@ -132,3 +132,13 @@ dokumentiert und kein behaupteter automatischer Testerfolg.
 
 Keine Änderungen an Portfolio-Finanzlogik, Wallet-Scanner, Kursquellen oder Backupformat
 in der Abschlussrunde. Neue Feature-Vorschläge/Redesigns sind nicht Teil dieses Audits.
+
+## UX-Nachtrag – Positionseditor vereinfachen
+
+Der bestehende Positionseditor blieb nach dem technischen Audit funktional korrekt, war jedoch gegenüber dem Anlage-Assistenten visuell zu umfangreich. Er wird ohne Datenmigration übersichtlicher:
+- Die Auswahllisten für **Anbieter** und **Konto/Depot** stehen direkt oben; die bisherigen Filter-Suchfelder bleiben unter `Anbieter oder Konto suchen` erreichbar.
+- Direkt danach folgen **Anlageklasse, Name, Ticker, ISIN, Stückzahl, Kurs und Währung**. Das stellt bewertungsrelevante Daten in den Vordergrund.
+- `Wertpapier suchen und zuordnen` ist ein standardmäßig geschlossener optionaler Bereich ohne irreführende Schritt-Nummer. Stammdatenvorschläge bleiben unverändert und überschreiben keine Stückzahlen oder Kurse.
+- `Handelsplatz und technische Börsenkürzel` sowie `Öffentliche Wallet-Verknüpfung` sind getrennt aufklappbar; eine bereits aktiv verknüpfte Wallet wird beim Bearbeiten automatisch aufgeklappt. DeFi- und Einstandswertoptionen bleiben eigenständige Details-Bereiche.
+- Die originalen Formular-Controls werden im DOM umsortiert, nicht dupliziert. Event-Handler, Feldnamen, Buchungs- und Bewertungscode sowie die Sicherheitsregeln bleiben unverändert.
+- Neue Chromium-Regression testet Provider-Suche ohne ungewollte Neuzuordnung, Bestandsdaten, aufklappbare Optionen, Abbruch mit/ohne Bestätigung, Speichern, Typwechsel und acht Viewport-Breiten.
