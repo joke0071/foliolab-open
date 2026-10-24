@@ -10,11 +10,11 @@ import {normalizeLegacyCoinId} from './coin-identity.js';
 import {validateNativeStakingAddress} from './native-staking-networks.js';
 export const STORE_KEY='foliolab-open-v1';
 /** Remove only app-owned keys; other apps sharing this origin remain untouched. */
-export function purgeLocalAppData(storage=globalThis.localStorage){
+export function purgeLocalAppData(storage=globalThis.localStorage,{preserveStorageMode=false}={}){
  const keys=[];
  for(let i=0;i<storage.length;i++){
   const key=storage.key(i);
-  if(typeof key==='string'&&key.startsWith('foliolab-open-'))keys.push(key);
+  if(typeof key==='string'&&key.startsWith('foliolab-open-')&&!(preserveStorageMode&&key==='foliolab-open-storage-mode'))keys.push(key);
  }
  for(const key of keys)storage.removeItem(key);
  observedStorage.set(storage,null);
