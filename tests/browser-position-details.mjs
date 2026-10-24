@@ -47,7 +47,7 @@ try{
  await list.first().locator('[data-action="edit-snapshot"]').click();
  assert.equal(await page.locator('#dialogTitle').innerText(),'Stichtag bearbeiten');
  await page.locator('#editorForm [name="note"]').fill('Korrigierte Notiz');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.match(await list.first().innerText(),/Korrigierte Notiz/);
  const afterNote=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots.at(-1));
  assert.equal(afterNote.source,'current','Changing only the note keeps original valuation provenance');
@@ -55,7 +55,7 @@ try{
  await list.last().locator('[data-action="edit-snapshot"]').click();
  await page.locator('#editorForm [name="manualTotalEUR"]').fill('142,75');
  page.once('dialog',dialog=>dialog.accept());
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const corrected=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots[0]);
  assert.equal(corrected.totalEURExact,'142.75');
  assert.equal(corrected.valuationStatus,'manual');
@@ -63,6 +63,7 @@ try{
  assert.ok(corrected.revisions.length>=1);
  page.once('dialog',dialog=>dialog.accept());
  await list.last().locator('[data-action="delete-snapshot"]').click();
+ await page.waitForFunction(()=>document.querySelectorAll('#snapshotList .history-row').length===1);
  assert.equal(await list.count(),1);
  await page.locator('#mobileNav [data-page="positions"]').click();
  const remaining=page.locator('.position-entry').first();
@@ -70,6 +71,7 @@ try{
  assert.equal(await remaining.locator('[data-action="delete-position"]').count(),1);
  page.once('dialog',dialog=>dialog.accept());
  await remaining.locator('[data-action="delete-position"]').click();
+ await page.waitForFunction(()=>document.querySelectorAll('.position-entry').length===0);
  assert.equal(await page.locator('.position-entry').count(),0);
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(finalModel.positions.length,0);
