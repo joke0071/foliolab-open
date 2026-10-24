@@ -461,6 +461,7 @@ async function backup(automatic=false){
   const dir=await folder(true);
   const uploaded=await createFile(dir,encrypted);
   prefs.lastBackupAt=iso();savePrefs();
+  backend.onBackedUp?.();
   if(prefs.mode==='start')initialAutoDone=true;
   let removed=0,cleanupError='',verified=false;
   try{
