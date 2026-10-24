@@ -2,6 +2,7 @@ import {escapeHTML} from './model.js';
 import {cryptoChoices,loadTopCrypto,loadAllCrypto,loadFundCatalog,loadFundCatalogPersistent,searchFundCatalog} from './instrument-catalog.js';
 import {DIRECTORY_PAGE_LINKS,MAX_DIRECTORY_BYTES,parseSecurityDirectory,saveSecurityDirectory,loadSecurityDirectories,searchSecurityDirectories,directoryAge} from './security-catalog.js';
 import {buildAssetWizardDraft} from './asset-wizard-core.js';
+import {createDialogDiscardGuard} from './dialog-discard.js';
 const e=escapeHTML;
 const kinds=[['etf','ETF'],['stock','Aktie'],['fund','Fonds'],['crypto','Kryptowährung'],['cash','Guthaben'],['other','Sonstiges']];
 const providerKinds=[['broker','Broker'],['bank','Bank'],['wallet','Wallet-Anbieter'],['other','Sonstiges']];
@@ -23,7 +24,15 @@ const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:''
  * atomic model validation and one onCommit call.
  */
 export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,lookupPublic,notify}){
- let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),directories=[],cryptoLoading=false,coinFullLoading=false;
+ let state=fresh(),sequence=0,opener=null,leaders=[],allCoins=[],funds=loadFundCatalog(),directories=[],cryptoLoading=false,coinFullLoading=false,dirty=false;
+ const guard=createDialogDiscardGuard(dialog,{
+  isDirty:()=>dirty&&!state.saved,
+  isBusy:()=>state.busy&&!state.saved,
+  onClose:()=>{opener?.focus?.({preventScroll:true});opener=null;}
+ });
+ const markDirty=event=>{if(event.target.matches('input, select, textarea'))dirty=true;};
+ dialog.addEventListener('input',markDirty);
+ dialog.addEventListener('change',markDirty);
  const $=id=>dialog.querySelector('#'+id);
  const directorySummary=()=>{
   if(!directories.length)return 'Noch keine Wertpapierliste importiert. Dateiverarbeitung nur in diesem Browser.';
@@ -182,7 +191,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    state.name=item.name;state.symbol=item.symbol||'';state.isin=item.isin||'';state.coinId=item.coinId||'';
    state.exchange=item.exchange||'';state.mic=item.mic||'';
    state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';state.tradingViewSymbol=item.tradingViewSymbol||'';
-   state.currency=item.currency||'';state.query='';render();
+   state.currency=item.currency||'';state.query='';dirty=true;render();
   });
   $('wizardDirectoryImport')?.addEventListener('click',()=>$('wizardDirectoryFile')?.click());
   $('wizardDirectoryFile')?.addEventListener('change',async event=>{
@@ -266,7 +275,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  const renderSuccess=()=>{
   shell('<div class="wizard-success"><strong>Position gespeichert</strong><p>Bestand und Zuordnung wurden übernommen. Die Kursbewertung bleibt überprüfbar und verwendet keine erfundenen Kurse.</p><div class="toolbar-buttons"><button id="wizardMore" type="button" class="btn outline">Weitere Position hinzufügen</button><button id="wizardPortfolio" type="button" class="btn primary">Zum Portfolio</button></div></div>','Anlage hinzugefügt');
   $('wizardPrev').classList.add('hidden');
-  $('wizardMore').addEventListener('click',()=>{state=fresh();sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';render();});
+  $('wizardMore').addEventListener('click',()=>{state=fresh();dirty=false;sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';render();});
   $('wizardPortfolio').addEventListener('click',close);
   $('wizardPortfolio').focus();
  };
@@ -284,7 +293,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   try{
    const output=buildAssetWizardDraft(getModel(),state);
    await onCommit(output);
-   state.saved=true;renderSuccess();
+   state.saved=true;state.busy=false;dirty=false;renderSuccess();
   }catch(ex){state.busy=false;error(ex.message||String(ex));$('wizardNext').disabled=false;$('wizardNext').textContent='Position speichern';}
  };
  const render=({resetWalletDisclosure=false}={})=>{
@@ -298,10 +307,8 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(wallet&&!resetWalletDisclosure)state.walletOpen=wallet.open;
   renderOne();
  };
- const close=()=>{sequence++;if(dialog.open)dialog.close();opener?.focus?.();};
- dialog.addEventListener('cancel',ev=>{if(state.busy){ev.preventDefault();return;}sequence++;});
- dialog.addEventListener('close',()=>opener?.focus?.());
- return {open(){opener=document.activeElement;state=fresh();dialog.replaceChildren();funds=loadFundCatalog();sequence++;
+ const close=()=>{if(guard.requestClose())sequence++;};
+ return {open(){opener=document.activeElement;state=fresh();dirty=false;dialog.replaceChildren();funds=loadFundCatalog();sequence++;
    const m=getModel(),preferred=m.accounts.find(a=>a.id===m.settings?.lastAccountId);
    const provider=m.providers.find(x=>x.id===preferred?.providerId);
    // Only an explicitly remembered account may preselect an existing provider.
