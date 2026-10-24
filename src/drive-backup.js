@@ -182,10 +182,8 @@ async function exportRecovery(){
   const key=await recoveryString(true);
   const exported=await downloadFile('FolioLab-Wiederherstellungsschluessel.txt',
    'FolioLab · Wiederherstellungsschlüssel\n\n'+key+'\n\nSicher getrennt von Google Drive aufbewahren. Nicht veröffentlichen.\n');
-  prefs.recoverySaved=true;savePrefs();
-  get('recoveryKeyConfirmed').checked=true;
-  updateUi();updateDueStatus();
-  recoveryMessage(exported.native?'Schlüsseldatei gespeichert. Bitte sicher und getrennt von den Backups aufbewahren.':'Schlüsseldatei-Download gestartet. Bitte Ablage prüfen und sicher aufbewahren.');
+  // A download trigger is not proof that the browser saved the key: require the user's explicit confirmation.
+  recoveryMessage('Schlüsseldatei-Download gestartet. Bitte Ablage prüfen und anschließend die sichere Aufbewahrung bestätigen.');
  }catch(e){recoveryMessage('Schlüsseldatei fehlgeschlagen: '+e.message)}
 }
 async function importRecovery(secret){
@@ -578,7 +576,8 @@ async function init(app){
    const id=idInput.value.trim();
    if(id&&!validClientId(id)){status('Ungültige Client-ID. Kopiere die vollständige OAuth-Client-ID aus Google Cloud.',true);return}
    if(id===prefs.clientId)return;
-   prefs.clientId=id;savePrefs();googleClientId=id;tokenClient=null;accessToken='';tokenExpires=0;
+   prefs.clientId=id;prefs.folderId='';prefs.folderName='';prefs.lastBackupAt='';prefs.cleanupPending=false;lastKnownBackupCount=null;
+   savePrefs();googleClientId=id;tokenClient=null;accessToken='';tokenExpires=0;
    if(id)void loadGoogle().catch(()=>{});
    updateUi();updateDueStatus();
   };
