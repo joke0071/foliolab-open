@@ -54,6 +54,7 @@ try{
  await page.locator('#wizardName').fill('Generic Global ETF');
  await page.locator('#wizardSymbol').fill('GLBL');
  await page.locator('#wizardIsin').fill('IE00A1234567');
+ await page.locator('.wizard-manual details').evaluate(el=>el.open=true);
  await page.locator('#wizardExchange').fill('Xetra');
  await page.locator('#wizardMic').fill('XETR');
  await page.locator('#wizardQuantity').fill('7.5');
