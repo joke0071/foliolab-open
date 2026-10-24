@@ -66,7 +66,7 @@ test('the backup code requires cryptographic restore material and scopes its Dri
  assert.match(source,/appProperties:\{foliolabBackup:LABEL\}/);
  assert.match(source,/if\(!saved\.some\(f=>f\.id===uploaded\.id\)\)/);
  assert.match(source,/slice\(prefs\.retention\)/);
- assert.match(source,/Keine Positionen vorhanden/);
+ assert.match(source,/Portfolio ist leer/);
  assert.match(source,/function trimExisting\(\)/);
  assert.match(source,/function maybeAuto\(\)/);
  assert.doesNotMatch(source,/api\\/public-config/);
