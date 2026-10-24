@@ -11,7 +11,7 @@ try{
   await addProvider.click();
   assert.equal(await page.locator('#saveDialog').innerText(),'Anbieter speichern');
   await page.locator('#providerName').fill(name);
-  await page.locator('#saveDialog').click();
+  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
   await page.locator('#editDialog').waitFor({state:'hidden'});
  }
  await addAccount.click();

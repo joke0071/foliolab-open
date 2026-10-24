@@ -36,7 +36,7 @@ try{
  await target.selectOption(ids.eth);
  assert.match(await hint.innerText(),/nicht zum Gesamtvermögen addiert/);
  assert.equal(await target.evaluate(el=>el.checkValidity()),true);
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#editDialog').waitFor({state:'hidden'});
  let m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(p=>p.id===ids.st).valuationMode,'excluded');
@@ -48,13 +48,13 @@ try{
  assert.equal(await page.locator('#defiRole').getAttribute('aria-invalid'),'true');
  assert.match(await page.locator('#defiGuidance').innerText(),/Geliehene Assets/);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  assert.equal(await page.locator('#editDialog').isVisible(),true);
  assert.match(await page.locator('#dialogError').innerText(),/Schuldposition erfordert/);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before);
  await page.locator('#defiRole').selectOption('borrowed');
  assert.equal(await page.locator('#defiRole').getAttribute('aria-invalid'),'false');
- await page.locator('#saveDialog').click();
+ await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#editDialog').waitFor({state:'hidden'});
  m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(p=>p.id===ids.st).valuationMode,'liability');

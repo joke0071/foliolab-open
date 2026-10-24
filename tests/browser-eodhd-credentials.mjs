@@ -33,6 +33,8 @@ try{
  assert.match(await page.locator('#blockchainSettings').innerText(),/Binplorer/);
  assert.match(await page.locator('#solanaRpcSetup').innerText(),/Helius/);
  await page.locator('#apiSettings button[type="submit"]').click();
+ // A click is not the completion of an asynchronous locked storage write.
+ await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
