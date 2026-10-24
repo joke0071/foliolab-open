@@ -80,7 +80,7 @@ test('rejects sales occurring before ownership, even if final quantity agrees',(
  const {m,a}=portfolio({quantity:7});
  const prepared=prepareFlatexImport(file([sell,buy]));
  // The prepared rows have actual dates: convert the sale to an earlier date
- prepared.parsed.rows[1].date='2026-01-01';
+ prepared.parsed.rows[0].date='2026-01-01';
  assert.equal(prepareFlatexBackfillPreview(m,prepared,a.id).eligible,false);
 });
 test('refuses skipped bookings and unexplained corporate actions',()=>{
