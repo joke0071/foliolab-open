@@ -19,5 +19,5 @@ test('breaks out booked income and deductions without counting sales or deposits
 test('rejects missing and invalid EUR amounts instead of constructing false data',()=>{
  const result=bookedIncomeSummary([{type:'dividend',amountEUR:null},{type:'tax',amountEUR:-3},{type:'fee',amountEUR:Infinity}]);
  assert.equal(result.net,0);
- assert.equal(result.unavailable,2);
+ assert.equal(result.unavailable,3);
 });
