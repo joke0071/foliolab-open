@@ -32,7 +32,13 @@ try{
  await page.locator('#csvBackfill').waitFor();
  assert.equal(await page.locator('#saveDialog').isDisabled(),true,'Existing manual holdings may not be doubled');
  await page.locator('#csvBackfill').check();
+ await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('2 bereit'));
+ assert.equal(await page.locator('#saveDialog').isDisabled(),true,'Flatex Beta requires a local backup before save');
+ const backupDownload=page.waitForEvent('download');
+ await page.locator('#csvBackupNow').click();
+ const backupFile=await backupDownload;
+ assert.match(backupFile.suggestedFilename(),/^FolioLab-Backup-vor-Flatex-\d{4}-\d{2}-\d{2}\.json$/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
  await page.locator('#saveDialog').click();
  await page.waitForFunction(id=>{
