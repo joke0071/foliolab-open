@@ -61,7 +61,7 @@ try{
  await page.locator('#backupPassword').fill('unverwechselbares-testpasswort');
  await page.locator('#backupPasswordConfirm').fill('unverwechselbares-testpasswort');
  await page.locator('#saveBackupPassword').click();
- await page.waitForFunction(()=>document.querySelector('#backupPasswordStatus').textContent.includes('eingerichtet'));
+ await page.waitForFunction(()=>document.querySelector('#backupPasswordStatus').textContent.startsWith('Backup-Passwort eingerichtet'));
  const encryptedDownloadPromise=page.waitForEvent('download',{timeout:5000});
  await page.locator('#exportEncryptedBackup').click();
  let encDl;
