@@ -32,8 +32,19 @@ export function valueHistoryRows(rows,quotes){
 function matches(row,p){const w=p.wallet;
  return row.network==='bitcoin'&&['btc','btc-hd'].includes(w.chain)||row.network==='ethereum'&&Number(w.chainId||1)===1&&(row.contract?w.chain==='erc20'&&w.contract?.toLowerCase()===row.contract:w.chain==='evm')||row.network==='solana'&&(row.mint?w.chain==='spl'&&w.contract===row.mint:w.chain==='sol');
 }
+function cancellable(promise,signal){
+ if(!signal)return promise;
+ return new Promise((resolve,reject)=>{
+  const abort=()=>{const e=Error('Kursvorschau abgebrochen.');e.name='AbortError';reject(e);};
+  if(signal.aborted)abort();else signal.addEventListener('abort',abort,{once:true});
+  // Keep the existing global provider coordinator, cache and transport timeouts.
+  // An already-sent price request may finish, but its result cannot replace a cancelled preview.
+  promise.then(resolve,reject).finally(()=>signal.removeEventListener('abort',abort));
+ });
+}
 /** Explicit CSV binding or existing native CoinGecko/CoinPaprika EUR history path. */
-export async function loadHistoryQuotes(session,position,model,{confirmLocal=false,fetcher=globalThis.fetch}={}){
+export async function loadHistoryQuotes(session,position,model,{confirmLocal=false,fetcher=globalThis.fetch,signal}={}){
+ if(signal?.aborted){const e=Error('Kursvorschau abgebrochen.');e.name='AbortError';throw e;}
  const assets=[...new Map(session.streams.filter(s=>matches(s,position)).map(s=>[historyAssetKey(s),s])).values()];
  if(!assets.length)throw Error('Asset und Wallet-Historie stimmen nicht überein.');
  const local=model.priceHistories?.[position.id];let history,binding;
@@ -42,7 +53,7 @@ export async function loadHistoryQuotes(session,position,model,{confirmLocal=fal
   if(assets.some(a=>a.contract||a.mint))throw Error('Tokenkurse benötigen lokale EUR-Kurse mit ausdrücklich bestätigter Contract-/Mint-Zuordnung.');
   const coinId=assets[0].network==='bitcoin'?'bitcoin':assets[0].network==='ethereum'?'ethereum':'solana';
   const {fetchPositionMarketHistory}=await import('./position-history.js');
-  history=await fetchPositionMarketHistory({...position,kind:'crypto',coinId},model.settings,365,fetcher);binding='native-network';
+  history=await cancellable(fetchPositionMarketHistory({...position,kind:'crypto',coinId},model.settings,365,fetcher),signal);binding='native-network';
  }
  if(history.currency!=='EUR')throw Error('Keine datierten EUR-Kurse verfügbar.');
  const quotes=assets.flatMap(asset=>history.points.map(p=>({...asset,date:p.date,currency:'EUR',priceExact:exact(units(String(p.total))),source:history.source,binding})));

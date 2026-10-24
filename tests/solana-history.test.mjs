@@ -36,3 +36,23 @@ test('WH06 archive gap persists across resume and altered signature cursor is re
  const resumed=await fetchSolanaHistory({...opts,pageSize:1,fetcher:p.fetcher,resume:first.resume});assert.ok(resumed.issues.includes('archive-gap'));assert.ok(resumed.replay.balances.every(b=>b.quantityBaseUnits===null));
  const good=await fetchSolanaHistory({...opts,pageSize:1,maxPages:1,fetcher:provider().fetcher});good.resume.queue[0].seen[0]=SIG(3);const invalid=await fetchSolanaHistory({...opts,pageSize:1,fetcher:provider().fetcher,resume:good.resume});assert.equal(invalid.replay,null);
 });
+test('WH06 finalized tip advances during pagination without losing the observed snapshot',async()=>{
+ const later=transaction(2);later.slot=12;const p=provider({transactions:[transaction(),later]});let slots=0;
+ const fetcher=async(url,options)=>{const q=JSON.parse(options.body),r=await p.fetcher(url,options),body=await r.json();
+  if(q.method==='getSlot')body.result=slots++?13:10;
+  if(q.method==='getBalance')body.result={context:{slot:11},value:85};
+  return {...r,json:async()=>body};
+ };
+ const r=await fetchSolanaHistory({...opts,fetcher});assert.ok(r.replay,JSON.stringify(r.issues));assert.equal(r.coverage,'verified');assert.equal(r.tip.slot,11);assert.equal(r.replay.balances[0].quantityBaseUnits,'85');assert.equal(r.events.some(e=>e.txid===SIG(2)),false);
+});
+test('WH06 changed canonical snapshot rejects; advancing resume never mislabels newer scanner observations',async()=>{
+ const p=provider();let blocks=0;const changed=async(url,options)=>{const q=JSON.parse(options.body),r=await p.fetcher(url,options),body=await r.json();if(q.method==='getBlock'&&++blocks>=3)body.result.blockhash=B;return {...r,json:async()=>body};};
+ const bad=await fetchSolanaHistory({...opts,fetcher:changed});assert.equal(bad.replay,null);assert.ok(bad.issues.includes('sol-reorg-or-tip-changed'));
+ const first=await fetchSolanaHistory({...opts,pageSize:1,maxPages:1,fetcher:p.fetcher});
+ const advanced=async(url,options)=>{const q=JSON.parse(options.body),r=await p.fetcher(url,options),body=await r.json();if(q.method==='getSlot')body.result=20;if(q.method==='getBalance')body.result={context:{slot:20},value:500};return {...r,json:async()=>body};};
+ const resumed=await fetchSolanaHistory({...opts,pageSize:1,resume:first.resume,fetcher:advanced});assert.ok(resumed.replay,JSON.stringify(resumed.issues));assert.equal(resumed.coverage,'partial');assert.ok(resumed.issues.includes('sol-scanner-slot-mismatch'));assert.equal(resumed.replay.balances[0].quantityBaseUnits,null);
+});
+test('WH06 missing transaction outcome and conflicting failed token changes cannot verify',()=>{
+ const t=transaction();delete t.meta.err;assert.throws(()=>solanaHistoryEvents([t],wallets));
+ const failed=transaction(1,{failed:true,tokens:true});const r=solanaHistoryEvents([failed],wallets);assert.ok(r.issues.includes('failed-token-state-conflict'));assert.equal(r.events.filter(e=>e.type!=='fee').length,0);
+});

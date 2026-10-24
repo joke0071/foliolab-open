@@ -15,7 +15,7 @@ export function solanaHistoryEvents(transactions,wallets,{source='solana-rpc',ob
  const ordered=[...bySignature.values()].sort((a,b)=>Number(integer(a.slot)-integer(b.slot))||(a.txIndex??0)-(b.txIndex??0));
  for(const tx of ordered){
   const sig=signature(tx.transaction?.signatures?.[0]),meta=tx.meta,message=tx.transaction?.message;
-  if(!meta||!Array.isArray(message?.accountKeys)||!Array.isArray(meta.preBalances)||!Array.isArray(meta.postBalances))throw Error('missing-transaction-meta');
+  if(!meta||!Object.hasOwn(meta,'err')||!Array.isArray(message?.accountKeys)||!Array.isArray(meta.preBalances)||!Array.isArray(meta.postBalances))throw Error('missing-transaction-meta');
   const keys=[...message.accountKeys.map(k=>typeof k==='string'?k:k.pubkey),...(meta.loadedAddresses?.writable??[]),...(meta.loadedAddresses?.readonly??[])];
   if(keys.length!==meta.preBalances.length||keys.length!==meta.postBalances.length)throw Error('loaded-address-mismatch');
   const failed=meta.err!==null;
@@ -29,7 +29,7 @@ export function solanaHistoryEvents(transactions,wallets,{source='solana-rpc',ob
    else{const movement=delta+fee;if(movement!==0n)events.push(validateHistoryEvent({...base,...ident(accountId),walletId:accountId,type:movement>0n?'incoming':'outgoing',quantityBaseUnits:movement.toString(),locator:{kind:'subindex',index:String(index),subindex:'0'}}));}
    if(fee!==0n)events.push(validateHistoryEvent({...base,...ident(accountId),walletId:accountId,type:'fee',quantityBaseUnits:(-fee).toString(),locator:{kind:'fee',index:'0',subindex:'0'}}));
   });
-  if(failed)continue;
+  if(failed){if(JSON.stringify(meta.preTokenBalances??[])!==JSON.stringify(meta.postTokenBalances??[]))issues.add('failed-token-state-conflict');continue;}
   const pre=new Map((meta.preTokenBalances??[]).map(b=>[b.accountIndex,b])),post=new Map((meta.postTokenBalances??[]).map(b=>[b.accountIndex,b]));
   for(const index of new Set([...pre.keys(),...post.keys()])){
    if(!Number.isSafeInteger(index)||index<0||index>=keys.length)throw Error('invalid-token-account-index');
@@ -59,7 +59,13 @@ export async function fetchSolanaHistory({wallets,configured=DEFAULT_SOL_RPC,fet
  const read=async(method,params)=>(await solanaRpcRead(configured,method,params,fetcher,{history:true,signal,timeoutMs,retries})).result;
  try{
   if(await read('getGenesisHash',[])!==SOL_MAINNET_GENESIS)throw Error('wrong-solana-network');
-  const slot=Number(integer(await read('getSlot',[{commitment:'finalized'}]))),tip=await read('getBlock',[slot,{commitment:'finalized',transactionDetails:'signatures',maxSupportedTransactionVersion:0}]);
+  const headSlot=integer(await read('getSlot',[{commitment:'finalized'}]));
+  // Capture an actual finalized scanner observation BEFORE a long pagination run.
+  // getBalance has minContextSlot, not a historical exact-slot selector.
+  const scanned=new Map();for(const w of wallets)scanned.set(w.accountId,await read('getBalance',[w.address,{commitment:'finalized',minContextSlot:Number(headSlot)}]));
+  const slot=Number(integer(state.tip?.slot??scanned.get(wallets[0].accountId)?.context?.slot));
+  if(!Number.isSafeInteger(slot)||state.tip&&headSlot<BigInt(slot))throw Error('invalid-finalized-snapshot');
+  const tip=await read('getBlock',[slot,{commitment:'finalized',transactionDetails:'signatures',maxSupportedTransactionVersion:0}]);
   if(!tip?.blockhash)throw Error('archive-tip-missing');
   if(state.tip&&state.tip.blockhash!==tip.blockhash)throw Error('sol-tip-changed-restart-required');state.tip={slot,blockhash:tip.blockhash};
   {
@@ -107,7 +113,8 @@ export async function fetchSolanaHistory({wallets,configured=DEFAULT_SOL_RPC,fet
      const tx=await read('getTransaction',[row.signature,{encoding:'json',commitment:'finalized',maxSupportedTransactionVersion:0}]);
      if(!tx){issues.add('archive-gap');continue;}
      if(tx.version!==undefined&&tx.version!=='legacy'&&tx.version!==0){issues.add('unsupported-tx-version');continue;}
-     if(tx.transaction?.signatures?.[0]!==row.signature||integer(tx.slot)>BigInt(slot)||row.confirmationStatus&&row.confirmationStatus!=='finalized'){issues.add('unfinalized-or-conflicting-transaction');continue;}
+     if(integer(tx.slot)>BigInt(slot))continue; // after the fixed, observed snapshot, not a historical gap
+     if(tx.transaction?.signatures?.[0]!==row.signature||row.confirmationStatus&&row.confirmationStatus!=='finalized'){issues.add('unfinalized-or-conflicting-transaction');continue;}
      const txSlot=Number(integer(tx.slot));if(!blocks.has(txSlot))blocks.set(txSlot,await read('getBlock',[txSlot,{commitment:'finalized',transactionDetails:'signatures',maxSupportedTransactionVersion:0}]));
      const block=blocks.get(txSlot);if(!block?.blockhash||!Array.isArray(block.signatures)||!block.signatures.includes(row.signature)){issues.add('archive-block-gap');continue;}
      const full={...tx,blockhash:block.blockhash,txIndex:block.signatures.indexOf(row.signature)};transactions.set(row.signature,full);
@@ -121,14 +128,14 @@ export async function fetchSolanaHistory({wallets,configured=DEFAULT_SOL_RPC,fet
   const normalized=solanaHistoryEvents([...transactions.values()],wallets,{source:new URL(endpoint).hostname,observedAt});normalized.issues.forEach(i=>issues.add(i));
   const streams=[],observations=[];
   for(const accountId of normalized.accounts){
-   const owner=wallets.find(w=>w.accountId===accountId),balance=await read('getBalance',[owner.address,{commitment:'finalized',minContextSlot:slot}]);
+   const balance=scanned.get(accountId);
    if(balance?.context?.slot!==slot)issues.add('sol-scanner-slot-mismatch');
    const opening=normalized.openings.find(o=>o.accountId===accountId);
    streams.push({...ident(accountId),throughBlock:String(slot),opening:opening?{quantityBaseUnits:opening.quantityBaseUnits,beforeBlock:opening.beforeBlock,source:opening.source}:null,coverage:{status:issues.size?'partial':'verified',fromBlock:opening?.beforeBlock??'0',toBlock:String(slot),tipHash:tip.blockhash,source:new URL(endpoint).hostname}});
-   observations.push({...ident(accountId),quantityBaseUnits:integer(balance.value).toString(),blockHeight:String(slot),blockHash:tip.blockhash,source:new URL(endpoint).hostname});
+   if(balance.context.slot===slot)observations.push({...ident(accountId),quantityBaseUnits:integer(balance.value).toString(),blockHeight:String(slot),blockHash:tip.blockhash,source:new URL(endpoint).hostname});
    for(const token of normalized.tokens)streams.push({...ident(accountId,token.mint,token.decimals),throughBlock:String(slot),opening:null,coverage:{status:'partial',fromBlock:'0',toBlock:String(slot),tipHash:tip.blockhash,source:new URL(endpoint).hostname}});
   }
-  if(Number(integer(await read('getSlot',[{commitment:'finalized'}])))!==slot||(await read('getBlock',[slot,{commitment:'finalized',transactionDetails:'signatures',maxSupportedTransactionVersion:0}]))?.blockhash!==tip.blockhash)throw Error('sol-reorg-or-tip-changed');
+  if(integer(await read('getSlot',[{commitment:'finalized'}]))<BigInt(slot)||(await read('getBlock',[slot,{commitment:'finalized',transactionDetails:'signatures',maxSupportedTransactionVersion:0}]))?.blockhash!==tip.blockhash)throw Error('sol-reorg-or-tip-changed');
   let replay=replayWalletHistory({events:normalized.events,streams}),reconciliation=reconcileWalletHistory(replay,observations);
   if(reconciliation.some(r=>r.status!=='verified')){issues.add('sol-reconciliation-partial');for(const s of streams)s.coverage.status='partial';replay=replayWalletHistory({events:normalized.events,streams});}
   return {...normalized,replay,reconciliation,issues:[...issues].sort(),coverage:issues.size?'partial':'verified',resume:null,tip:state.tip,oldestReached:true};

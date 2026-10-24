@@ -46,8 +46,8 @@ export function createWalletHistoryUI({getModel,commit}){
   if(series.length){quotes.querySelector('[data-history="eur-chart"]').innerHTML=drawInteractiveChart(series,{money:n=>Number(n).toLocaleString('de-AT',{style:'currency',currency:'EUR'}),esc,dateLabel:d=>d});quotes.querySelector('.chart-plot')?.setAttribute('aria-label','Historischer Wallet-Wert in EUR (Schätzung). Pfeiltasten zeigen Datenpunkte.');attachChartInteractions(quotes);}
   else quotes.querySelector('[data-history="eur-chart"]').textContent='Kein lückenlos belegtes EUR-Diagramm verfügbar. Einzelwerte stehen in der Tabelle.';
   quotes.querySelector('[data-history="quotes"]').onclick=async()=>{
-   if(running)return;const binding=quotes.querySelector('[data-history="bind-csv"]').checked;busy(true);setStatus('Datierte EUR-Kurse werden geprüft.');
-   try{const loaded=await loadHistoryQuotes(session,selected,model(),{confirmLocal:binding});preview={...session,quotes:loaded,acceptedAt:new Date().toISOString()};if(await show(preview,true))setStatus('EUR-Vorschau bereit. Erst Übernehmen speichert Kurse und Zuordnung.');else setStatus('Berechnung abgebrochen.');}catch(e){setStatus('EUR-Wert bleibt unbekannt: '+e.message);}finally{busy(false);}
+   if(running)return;controller=new AbortController();const binding=quotes.querySelector('[data-history="bind-csv"]').checked;busy(true);setStatus('Datierte EUR-Kurse werden geprüft.');
+   try{const loaded=await loadHistoryQuotes(session,selected,model(),{confirmLocal:binding,signal:controller.signal});if(controller.signal.aborted)throw Error('Kursvorschau abgebrochen.');preview={...session,quotes:loaded,acceptedAt:new Date().toISOString()};if(await show(preview,true))setStatus('EUR-Vorschau bereit. Erst Übernehmen speichert Kurse und Zuordnung.');else setStatus('Berechnung abgebrochen.');}catch(e){setStatus('EUR-Wert bleibt unbekannt: '+e.message);}finally{busy(false);}
   };
   el('output').querySelector('[data-history="more"]')?.addEventListener('click',()=>{limit+=100;show(session,isPreview);});
   el('accept').hidden=!isPreview;busy(running);return true;

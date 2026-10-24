@@ -16,3 +16,10 @@ test('WH07 local CSV needs explicit asset binding; no token ticker guessing',asy
  const p={id:'token',wallet:{chain:'erc20',chainId:1,contract:asset.contract}},session={streams:[asset]},model={priceHistories:{token:{currency:'EUR',source:'CSV',points:[{date:row.date,total:2.5}]}},settings:{}};
  await assert.rejects(loadHistoryQuotes(session,p,model));const q=await loadHistoryQuotes(session,p,model,{confirmLocal:true});assert.equal(q[0].contract,asset.contract);assert.equal(q[0].binding,'user-confirmed-asset');model.priceHistories.token.currency='USD';await assert.rejects(loadHistoryQuotes(session,p,model,{confirmLocal:true}));
 });
+test('WH07 cancelled quote lookup cannot replace a preview; existing provider coordinator remains intact',async()=>{
+ const c=new AbortController();c.abort();await assert.rejects(loadHistoryQuotes({streams:[asset]},{wallet:{}},{},{signal:c.signal}),{name:'AbortError'});
+ const {stream}=await import('./wallet-history-fixtures.mjs');const native=stream({network:'bitcoin',chainId:'mainnet',assetId:'bitcoin',contract:null,mint:null,decimals:8});
+ const active=new AbortController();let release,started;const requestStarted=new Promise(r=>started=r),response=new Promise(r=>release=r);
+ const pending=loadHistoryQuotes({streams:[native]},{id:'btc',kind:'crypto',wallet:{chain:'btc'}},{settings:{}},{signal:active.signal,fetcher:async()=>{started();return response;}});
+ const rejected=assert.rejects(pending,{name:'AbortError'});await requestStarted;active.abort();await rejected;release({ok:true,status:200,json:async()=>({prices:[[Date.UTC(2026,9,23),2.5]]})});
+});
