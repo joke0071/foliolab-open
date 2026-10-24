@@ -23,7 +23,7 @@ Dann http://localhost:4173 öffnen. Für die Offline-PWA ist HTTPS erforderlich.
 - **Wallet hinzufügen** in Positionen: öffentliche Adresse eingeben, Netzwerk wählen, entdeckte Guthaben prüfen und mehrere Coins ohne API-Key übernehmen. Unterstützt Bitcoin-Einzeladressen und Bitcoin-HD-Account-Keys (xpub/ypub/zpub), Ethereum, Base, Arbitrum, Optimism, Polygon, Avalanche C-Chain (inklusive BENQI sAVAX), Sonic Mainnet (S, ausgewählte ERC-20 und SFC-Delegationen) sowie Solana (SOL, SPL, Token-2022 und native Stake-Accounts). EVM nutzt öffentliche Explorer bzw. offizielle read-only RPCs; Solana den konfigurierten RPC (ohne Schlüssel). Endpunkte sind nicht garantiert jederzeit erreichbar.
 - Tägliche Fremdwährungskurse ohne API-Schlüssel über Frankfurter; optionale ETF-/Aktienkurse über **Twelve Data** mit dem Schlüssel des Nutzers. Ohne Key funktioniert die manuelle Kurspflege. Ein Ticker kann von Börse zu Börse unterschiedlich sein; falls nötig das korrekte Symbol samt Börsen-Suffix eintragen.
 - Optionaler automatischer Kurs- und Wallet-Abruf beim Öffnen (maximal alle 30 Minuten, in „Mehr“ abschaltbar).
-- Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**.
+- Responsive Darstellung und PWA. Export/Import als JSON **ohne API-Schlüssel**. Optional: AES-GCM-verschlüsselte Google-Drive-Backups mit eigener OAuth-Client-ID je Nutzer.
 
 ## Staking-Scanner: 50 Asset-Einträge (Stand Oktober 2026)
 
@@ -62,6 +62,28 @@ Anschließend prüft **„Verbindung & Staking prüfen“** ohne Nutzer-Walletda
 
 Die URL einschließlich enthaltenem Anbieter-Schlüssel ist ein Zugangstoken und sollte nicht weitergegeben werden; der Browser speichert diese Konfiguration lokal im Klartext. Niemals Seed-Phrase oder private Wallet-Schlüssel einfügen. Ein selbst konfigurierter RPC wird nicht ungefragt an öffentliche Fallback-Provider weitergeleitet.
 
+## Google Drive Backup mit eigenem OAuth (freiwillig)
+
+FolioLab Open unterstützt **verschlüsselte Google-Drive-Sicherungen ohne FolioLab-Server und ohne zentral bereitgestellte Zugangsdaten**. Der Nutzer bestimmt selbst, welche Google-OAuth-App und welches Google-Konto verwendet werden. Die regulären lokalen JSON-Backups bleiben jederzeit unabhängig von Google verfügbar.
+
+**Einrichtung:** Unter **Mehr → Deine Daten → Google Drive Backup**:
+1. In der [Google Cloud Console](https://console.cloud.google.com/apis/credentials) ein eigenes Projekt erstellen, die **Google Drive API** aktivieren und die OAuth-Zustimmung einrichten. Für einen nicht veröffentlichten Testmodus das eigene Konto als Testnutzer hinterlegen.
+2. Einen OAuth-Client vom Typ **Webanwendung** erstellen. Unter **Autorisierte JavaScript-Quellen** die exakte Herkunft deiner FolioLab-Seite eintragen: etwa `https://joke0071.github.io` für GitHub Pages (ohne Repository-Pfad) oder die tatsächlich genutzte Cloudflare-Pages-Domain. Ein separates Redirect-URI ist für den verwendeten GIS-Popup-Token-Client nicht nötig.
+3. Nur die **Client-ID** (`…apps.googleusercontent.com`) in FolioLab einfügen. **Kein API-Key, kein Client-Secret und keine OAuth-Tokens in das Feld eintragen.** Die Client-ID wird ausschließlich in diesem Browser gespeichert.
+4. Google Drive verbinden. FolioLab fordert erst nach dem Klick den begrenzten Scope `https://www.googleapis.com/auth/drive.file` an. Ordner können in der App erstellt/aus den durch diese OAuth-App verwalteten FolioLab-Ordnern ausgewählt werden; beliebige fremde Drive-Ordner lassen sich mit dem eingeschränkten Scope nicht durchsuchen.
+5. In **Wiederherstellungsschlüssel** einen lokalen AES-GCM-Schlüssel erzeugen, ihn getrennt von Drive herunterladen bzw. im Passwortmanager ablegen und die sichere Aufbewahrung bestätigen. Erst danach sind Cloud-Sicherungen erlaubt.
+
+**Funktionen:** Backup sofort erstellen; automatische Sicherung bei App-Nutzung (Start, täglich, wöchentlich, monatlich); alte Sicherungen auf 1–30 Einträge begrenzen (Standard: 3); Backup-Dateien prüfen und mit Bestätigung wiederherstellen. Die Dateiliste wird vor einer Bereinigung gegen den erfolgreich hochgeladenen Eintrag abgeglichen. Fehlschläge beim Aufräumen löschen keinen frisch hochgeladenen Stand.
+
+**Sicherheitsmodell und Grenzen:**
+- Die Portfoliodaten werden vor dem Upload im Browser mit **AES-256-GCM** verschlüsselt. Der Wiederherstellungsschlüssel bleibt lokal in IndexedDB, die separate Schlüsseldatei muss sicher aufbewahrt werden. Ohne sie sind die Sicherungen nach Browser-/Geräteverlust nicht lesbar. Nur die verschlüsselte Datei gelangt zu Google.
+- Im Speicher abgelegte API-/RPC-Schlüssel werden vor dem Backup durch das bestehende `backup(model)`-Format entfernt. OAuth-Zugriffstokens bleiben nur im Arbeitsspeicher und werden nicht in lokalen Einstellungen oder Backups gespeichert.
+- Neue eigene Client-ID pro Nutzer: Der Betreiber von FolioLab verfügt über **keinen zentralen OAuth-Zugang**. Eine Client-ID ist ein öffentlicher Anwendungsbezeichner, kein geheimer Schlüssel. Bei Änderung der Client-ID muss die Google-Verbindung erneut hergestellt werden.
+- Ein rein browserbasiertes OAuth-Token läuft ab; dann muss manuell erneut verbunden werden. **Bei vollständig geschlossener PWA finden keine Backups statt.** Es gibt keine serverseitigen Jobs, keine Garantie für tägliche Ausführung und keine automatische Wiederanmeldung über Refresh-Tokens.
+- Die Wiederherstellung verwendet dieselbe strenge Datenvalidierung wie der lokale JSON-Import. Vor dem Überschreiben bietet FolioLab den aktuellen Datenstand als lokale Sicherungsdatei an. Die erfolgreiche Wiederherstellung ersetzt Portfolio-Bestände, aber keine vorhandenen lokalen API-Schlüssel.
+- Eine OAuth-App im Google-Testmodus kann zusätzliche Nutzerbeschränkungen/erneute Autorisierungen haben. Für Apps unter fremden Domains muss die jeweilige Origin in den eigenen Google-Zugangsdaten eingetragen werden.
+- Vollständig ausgereifte Sicherheit benötigt eine unveränderte, vertrauenswürdige FolioLab-Installation sowie einen geschützten Browser. Ein eigener OAuth-Client verhindert keinen bösartigen JavaScript-Code in einer kompromittierten Website.
+
 ## Datenschutz und Sicherheitsmodell
 
 Das Portfolio wird ausschließlich in `localStorage` gespeichert (unverschlüsselt, gerätegebunden). Für jedes Gerät / Browserprofil gibt es einen eigenen Datensatz. Keine zentrale Nutzerverwaltung, keine Serverdatenbank, keine Tracker. API-Schlüssel werden lokal, **nicht verschlüsselt** gespeichert und über HTTPS an die jeweiligen Dienste gesendet, wenn deren Funktionen benutzt werden. Eine Website und ihre Skripte sind keine Hochsicherheitsumgebung: nur eigene, ggf. eingeschränkte API-Schlüssel verwenden. Im Backup sind keine API-Schlüssel enthalten. Es werden keine privaten Wallet-Schlüssel oder Seed-Phrases angefordert.
@@ -74,7 +96,7 @@ Die bisherige private Foliolab-App wird **nicht** eingebunden und dieses Reposit
 
 - Kein Broker-, Depot- oder Bankenlogin; keine automatisierten Handelsaktionen.
 - Kein KI-/Screenshotimport oder OpenAI-Aufruf.
-- Kein Google Drive Backup, kein Cloudkonto, kein gemeinsames Hosting von Portfoliodaten.
+- Kein zentral von FolioLab verwaltetes Cloudkonto und kein serverseitiges Hosting von Portfoliodaten. Google-Drive-Backups sind freiwillig und erfordern eine eigene OAuth-Client-ID jedes Nutzers.
 - Bitcoin-HD-Watch-only ist auf **öffentliche Account-xpub/ypub/zpub** (BIP44/49/84) begrenzt; keine Seed-Phrases oder privaten Schlüssel. Keine Wallet-Erkennung für alle Blockchains. Der Import umfasst nur die angeführten Netze; unklare, seltene oder wertlose Token werden möglicherweise ohne Kurs übernommen. Solana-RPC liefert bei SPL-Token die Mint-Adresse, nicht zuverlässig die lesbare Coin-Bezeichnung. Token aus unbekannten Contracts müssen vom Nutzer geprüft werden.
 - Kurse sind ohne eigene Anbieter-Schlüssel insbesondere für CoinGecko (im Rahmen des öffentlichen Kontingents) und unterstützte Wallets abrufbar. Der öffentliche Blockchain-Import kann durch Ratenlimits, CORS oder veränderte APIs scheitern; im Browser-Livebetrieb ist das je nach Dienst zu prüfen. Nicht unterstützte oder fehlerhafte API-Antworten werden angezeigt, ohne Bestände auf null zu überschreiben.
 - Die Verlaufskurve ist ein Gesamtvermögensverlauf inklusive Mittelbewegungen, **keine** zeitgewichtete Performance.
