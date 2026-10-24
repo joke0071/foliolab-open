@@ -37,6 +37,11 @@ try{
  await page.locator('#openCSVImport').click();
  await page.locator('#csvFile').setInputFiles(files);
  await page.locator('#csvBrokerAccount').waitFor();
+ await page.locator('#csvDownloadAudit').waitFor({state:'visible'});
+ const downloadAwait=page.waitForEvent('download');
+ await page.locator('#csvDownloadAudit').click();
+ const auditFile=await downloadAwait;
+ assert.equal(auditFile.suggestedFilename(),'FolioLab-Flatex-Pruefbericht.csv');
  await page.locator('#csvBrokerAccount').selectOption(ids.fdep);
  await page.locator('#csvBrokerSettlement details').first().waitFor();
  const beforeEUR=await page.locator('#csvBrokerSettlement').textContent();
