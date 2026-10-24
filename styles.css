@@ -843,3 +843,8 @@
 .listing-review-item>.btn{flex:0 0 auto}
 .listing-review-more{margin-top:12px}
 @media(max-width:420px){.position-review-action{padding:14px}.position-review-action .btn{width:100%}.listing-review-item{align-items:flex-start}.listing-review-item>.btn{padding:10px 9px}}
+
+/* Shared backup password controls must wrap safely at 320px. */
+#backupPasswordSetup{min-width:0;max-width:100%}
+#backupPasswordSetup .button-row .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center}
+#backupPasswordSetup .field,#backupPasswordSetup .field input{min-width:0;max-width:100%}
