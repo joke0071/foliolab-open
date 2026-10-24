@@ -48,3 +48,40 @@ test('Reject future dates, empty names and unsafe cash purchases',()=>{
  assert.throws(()=>buildAssetWizardDraft(init(),{...required,name:''}),/Anlagenbezeichnung/);
  assert.throws(()=>buildAssetWizardDraft(init(),{...required,kind:'cash',mode:'buy',currency:'EUR'}),/Guthaben/);
 });
+
+
+test('Optional opening basis, notes and DeFi relationship are saved atomically',()=>{
+ const model=init(),provider=createProvider({name:'Walletprovider',type:'wallet'});model.providers.push(provider);
+ const account=createAccount({providerId:provider.id,name:'Wallet',type:'wallet'},model);model.accounts.push(account);
+ const original=createPosition({providerId:provider.id,accountId:account.id,kind:'crypto',name:'ETH',symbol:'ETH',coinId:'ethereum',quantity:'2',price:100},model);
+ model.positions.push(original);
+ const before=JSON.stringify(model);
+ const result=buildAssetWizardDraft(model,{kind:'crypto',name:'stETH',symbol:'stETH',coinId:'staked-ether',quantity:'1',
+  date:'2026-10-21',mode:'opening',currentPrice:'90',providerId:provider.id,accountId:account.id,
+  costBasisEUR:'88.75',notes:'Liquid Staking',economicRole:'liquid-staking',valuationMode:'excluded',representedByPositionId:original.id});
+ const created=result.draft.positions.at(-1);
+ assert.equal(created.costBasisExact,'88.75');
+ assert.equal(created.notes,'Liquid Staking');
+ assert.equal(created.economicRole,'liquid-staking');
+ assert.equal(created.valuationMode,'excluded');
+ assert.equal(created.representedByPositionId,original.id);
+ assert.equal(JSON.stringify(model),before);
+});
+test('An excluded position requires a real representation reference',()=>{
+ const input={...base,providerId:'__new__',providerName:'Broker',accountId:'__new__',accountName:'Depot',
+  economicRole:'wrapped',valuationMode:'excluded'};
+ assert.throws(()=>buildAssetWizardDraft(init(),input),/Referenz|angerechneten/);
+});
+test('Optional watch-only wallet is validated and not silently converted to a purchase',()=>{
+ const baseWallet={kind:'crypto',name:'Ethereum',symbol:'ETH',coinId:'ethereum',currency:'EUR',quantity:'1',date:'2026-10-21',
+  providerId:'__new__',providerName:'Walletprovider',providerType:'wallet',accountId:'__new__',accountName:'Wallet',accountType:'wallet',
+  walletEnabled:true,walletChain:'evm',walletAddress:'0x1234567890123456789012345678901234567890',walletChainId:'1'};
+ const original=init();
+ const result=buildAssetWizardDraft(original,{...baseWallet,mode:'opening'});
+ assert.equal(result.draft.positions[0].wallet.enabled,true);
+ assert.equal(result.draft.positions[0].wallet.chain,'evm');
+ assert.equal(result.draft.bookings.length,0);
+ assert.equal(original.positions.length,0);
+ assert.throws(()=>buildAssetWizardDraft(init(),{...baseWallet,mode:'buy',unitPrice:'100'}),/Wallet-Bestände/);
+ assert.throws(()=>buildAssetWizardDraft(init(),{...baseWallet,walletAddress:'xprv-secret'}),/Wallet-Adresse|privaten/);
+});
