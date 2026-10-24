@@ -59,6 +59,7 @@ jobs:
           node tests/browser-phase3.mjs
           node tests/browser-wallet-history-core.mjs
           node tests/browser-bitcoin-history.mjs
+          node tests/browser-ethereum-history.mjs
           node tests/browser-p0-import.mjs
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-flatex-import.mjs
@@ -158,6 +159,7 @@ jobs:
           node tests/browser-atomic-storage-cross-engine.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     permissions:
