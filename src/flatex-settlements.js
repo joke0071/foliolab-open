@@ -6,6 +6,7 @@
  * a permission to change the journal. Uniqueness is enforced on both sides.
  */
 export function pairFlatexSettlements(prepared,{maxDays=7}={}){
+ if(!Number.isInteger(maxDays)||maxDays<0||maxDays>30)throw Error('Ungültiger Zeitraum für den Abrechnungsabgleich.');
  const trades=(prepared?.sourceTrades||[]).filter(x=>['buy','sell'].includes(x.type));
  const cash=(prepared?.cashItems||[]).filter(x=>x.kind==='settlement');
  const day=s=>Date.parse(String(s)+'T12:00:00Z');
@@ -18,9 +19,12 @@ export function pairFlatexSettlements(prepared,{maxDays=7}={}){
    const amount=Number(movement.amount);
    if(!Number.isFinite(amount)||amount===0)continue;
    if(trade.type==='buy'&&amount>=0||trade.type==='sell'&&amount<=0)continue;
+   const reportedIsins=String(movement.details||'').toUpperCase().match(/\b[A-Z]{2}[A-Z0-9]{10}\b/g)||[];
+   // Matching references do NOT override an explicit conflicting security ID.
+   if(reportedIsins.length&&!reportedIsins.includes(String(trade.isin||'').toUpperCase()))continue;
    const reference=Boolean(trade.reference&&movement.reference&&
     trade.reference.trim()===movement.reference.trim());
-   const isin=Boolean(trade.isin&&String(movement.details).toUpperCase().includes(trade.isin.toUpperCase()));
+   const isin=Boolean(trade.isin&&reportedIsins.includes(trade.isin.toUpperCase()));
    if(!reference&&!isin)continue;
    matches.push({cashIndex:j,evidence:reference&&isin?'Referenz und ISIN':reference?'Transaktionsreferenz':'ISIN im Buchungstext'});
   }
