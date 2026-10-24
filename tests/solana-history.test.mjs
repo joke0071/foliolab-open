@@ -56,3 +56,10 @@ test('WH06 missing transaction outcome and conflicting failed token changes cann
  const t=transaction();delete t.meta.err;assert.throws(()=>solanaHistoryEvents([t],wallets));
  const failed=transaction(1,{failed:true,tokens:true});const r=solanaHistoryEvents([failed],wallets);assert.ok(r.issues.includes('failed-token-state-conflict'));assert.equal(r.events.filter(e=>e.type!=='fee').length,0);
 });
+test('WH06/07 SPL gaps do not suppress independently proven SOL, and never acquire a token valuation',async()=>{
+ const r=await fetchSolanaHistory({...opts,fetcher:provider({transactions:[transaction(1,{tokens:true,version0:true})]}).fetcher});
+ assert.equal(r.coverage,'partial');const native=r.replay.balances.find(b=>!b.mint),token=r.replay.balances.find(b=>b.mint);assert.equal(native.coverage,'verified');assert.equal(native.quantityBaseUnits,'85');assert.equal(token.coverage,'missing');assert.equal(token.quantityBaseUnits,null);
+ const {historyPreview}=await import('../src/wallet-history-state.js'),{historyDays}=await import('../src/wallet-history-days.js'),{valueHistoryRows}=await import('../src/wallet-history-valuation.js');
+ const s=historyPreview(r,{id:'sol-eur-quality',chain:'sol',walletKey:'sol',acceptedAt:opts.observedAt}),rows=historyDays(s),date=rows[0].date;
+ const valued=valueHistoryRows(rows,[{...native,date,priceExact:'20',currency:'EUR',source:'fixture',binding:'native-network'}]);assert.equal(valued.find(b=>!b.mint).eurExact,'0.0000017');assert.equal(valued.find(b=>b.mint).eurExact,null);
+});

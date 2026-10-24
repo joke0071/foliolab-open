@@ -1,6 +1,7 @@
 import {solanaRpcRead,solanaRpcEndpoints,DEFAULT_SOL_RPC} from './solana-rpc.js';
 import {validateHistoryEvent,dedupeHistoryEvents,replayWalletHistory,reconcileWalletHistory} from './wallet-history-core.js';
 export const SOL_MAINNET_GENESIS='5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d';
+const TOKEN_ONLY_ISSUES=new Set(['unknown-token-owner','closed-token-accounts-may-be-missing','token-program-or-extension-unknown','token-account-open-close-unknown','token-metadata-conflict','token-account-owner-unverified']);
 const TOKEN='TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',TOKEN2022='TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb';
 const address=v=>{if(typeof v!=='string'||! /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(v))throw Error('invalid-sol-address');return v;};
 const signature=v=>{if(typeof v!=='string'||! /^[1-9A-HJ-NP-Za-km-z]{64,88}$/.test(v))throw Error('invalid-signature');return v;};
@@ -131,7 +132,7 @@ export async function fetchSolanaHistory({wallets,configured=DEFAULT_SOL_RPC,fet
    const balance=scanned.get(accountId);
    if(balance?.context?.slot!==slot)issues.add('sol-scanner-slot-mismatch');
    const opening=normalized.openings.find(o=>o.accountId===accountId);
-   streams.push({...ident(accountId),throughBlock:String(slot),opening:opening?{quantityBaseUnits:opening.quantityBaseUnits,beforeBlock:opening.beforeBlock,source:opening.source}:null,coverage:{status:issues.size?'partial':'verified',fromBlock:opening?.beforeBlock??'0',toBlock:String(slot),tipHash:tip.blockhash,source:new URL(endpoint).hostname}});
+   streams.push({...ident(accountId),throughBlock:String(slot),opening:opening?{quantityBaseUnits:opening.quantityBaseUnits,beforeBlock:opening.beforeBlock,source:opening.source}:null,coverage:{status:[...issues].some(i=>!TOKEN_ONLY_ISSUES.has(i))?'partial':'verified',fromBlock:opening?.beforeBlock??'0',toBlock:String(slot),tipHash:tip.blockhash,source:new URL(endpoint).hostname}});
    if(balance.context.slot===slot)observations.push({...ident(accountId),quantityBaseUnits:integer(balance.value).toString(),blockHeight:String(slot),blockHash:tip.blockhash,source:new URL(endpoint).hostname});
    for(const token of normalized.tokens)streams.push({...ident(accountId,token.mint,token.decimals),throughBlock:String(slot),opening:null,coverage:{status:'partial',fromBlock:'0',toBlock:String(slot),tipHash:tip.blockhash,source:new URL(endpoint).hostname}});
   }
