@@ -603,8 +603,10 @@ function openWalletImport(){
  const networks=NETWORKS.filter(n=>n.mode!=='manual').map(n=>[n.id,n.name+' · '+n.note]);
  const walletProviders=model.providers.filter(p=>p.type==='wallet');
  const otherProviders=model.providers.filter(p=>p.type!=='wallet');
- const selectedProvider=walletProviders[0]?.id||'__new__';
- const providers='<option value="__new__"'+(selectedProvider==='__new__'?' selected':'')+'>+ Neue Wallet anlegen</option>'+
+ // Never attach a scan to the first of several existing wallet providers.
+ const selectedProvider=walletProviders.length===1?walletProviders[0].id:walletProviders.length?'':'__new__';
+ const providers=(walletProviders.length>1?'<option value="">Wallet-Anbieter auswählen</option>':'')+
+  '<option value="__new__"'+(selectedProvider==='__new__'?' selected':'')+'>+ Neue Wallet anlegen</option>'+
   (walletProviders.length?'<optgroup label="Wallet-Anbieter">'+options(walletProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'')+
   (otherProviders.length?'<optgroup label="Andere Anbieter">'+options(otherProviders.map(p=>[p.id,p.name]),selectedProvider)+'</optgroup>':'');
  showDialog('Wallet hinzufügen','NUR ÖFFENTLICHE DATEN',
@@ -633,6 +635,9 @@ function openWalletImport(){
    if(!scannedWalletAssets.length||scannedWalletKey!==walletScanIdentity(v.network,String(v.address).trim(),v.hdAddressType))throw Error('Bitte die aktuelle Adresse erneut scannen.');
    const chosen=[...$('walletScanResults').querySelectorAll('input[data-wallet-asset]:checked')].map(c=>scannedWalletAssets[Number(c.dataset.walletAsset)]).filter(Boolean);
    if(!chosen.length)throw Error('Bitte mindestens einen gefundenen Coin auswählen.');
+   // Fail before changing the model if an ambiguous storage choice remains.
+   if(!v.providerId||(v.providerId!=='__new__'&&!model.providers.some(p=>p.id===v.providerId)))throw Error('Bitte den Wallet-Anbieter auswählen.');
+   if(!v.accountId||(v.accountId!=='__new__'&&!model.accounts.some(a=>a.id===v.accountId&&a.providerId===v.providerId)))throw Error('Bitte das Wallet-Konto auswählen.');
    let providerId=v.providerId;
    if(providerId==='__new__'){
     const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
@@ -658,15 +663,21 @@ function openWalletImport(){
  $('saveDialog').textContent='Coins speichern';
  const updateSave=()=>{
   const count=$('walletScanResults').querySelectorAll('[data-wallet-asset]:checked').length;
-  $('saveDialog').disabled=!count||!scannedWalletKey;
+  const providerId=$('scanProvider').value,accountId=$('scanAccount').value;
+  const validProvider=providerId==='__new__'||model.providers.some(p=>p.id===providerId);
+  const validAccount=accountId==='__new__'||model.accounts.some(a=>a.id===accountId&&a.providerId===providerId);
+  $('saveDialog').disabled=!count||!scannedWalletKey||!validProvider||!validAccount;
   $('saveDialog').textContent=count?count+' Coin'+(count===1?'':'s')+' speichern':'Coins speichern';
  };
  const toggleNew=()=>{
   $('scanProviderName').parentElement.classList.toggle('hidden',$('scanProvider').value!=='__new__');
   const wallets=model.accounts.filter(a=>a.providerId===$('scanProvider').value&&a.type==='wallet');
-  $('scanAccount').innerHTML=options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],wallets[0]?.id||'__new__');
+  const selectedAccount=wallets.length===1?wallets[0].id:wallets.length?'':'__new__';
+  $('scanAccount').innerHTML=(wallets.length>1?'<option value="">Wallet-Konto auswählen</option>':'')+
+   options([...wallets.map(a=>[a.id,a.name]),['__new__','+ Neues Wallet-Konto']],selectedAccount);
+  updateSave();
  };
- $('scanProvider').addEventListener('change',toggleNew);toggleNew();
+ $('scanProvider').addEventListener('change',toggleNew);$('scanAccount').addEventListener('change',updateSave);toggleNew();
  const updateHdHint=()=>{
   const network=$('scanNetwork').value,hd=network==='btc-hd';
   $('hdPrivacyHint').classList.toggle('hidden',!hd);
