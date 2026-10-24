@@ -59,10 +59,13 @@ try{
  // Password-protected backups are never plain-text JSON holdings.
  await page.locator('.advanced-apis').filter({has:page.locator('#backupPassword')}).evaluate(el=>el.open=true);
  await page.locator('#backupPassword').fill('unverwechselbares-testpasswort');
+ await page.locator('#backupPasswordConfirm').fill('unverwechselbares-testpasswort');
+ await page.locator('#saveBackupPassword').click();
+ await page.waitForFunction(()=>document.querySelector('#backupPasswordStatus').textContent.includes('eingerichtet'));
  const [encDl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportEncryptedBackup').click()]);
  const encrypted=await fs.readFile(await encDl.path(),'utf8');
  const envelope=JSON.parse(encrypted);
- assert.equal(envelope.format,'foliolab-open-encrypted-v1');
+ assert.equal(envelope.format,'foliolab-open-encrypted-v2');
  assert.ok(!encrypted.includes('ETF-Test'));
  const dialogHandler=async dialog=>{if(dialog.type()==='prompt')await dialog.accept('unverwechselbares-testpasswort');else await dialog.accept();};
  page.on('dialog',dialogHandler);
