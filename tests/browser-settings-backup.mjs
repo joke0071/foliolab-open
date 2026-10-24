@@ -5,6 +5,31 @@ const page=await browser.newPage({viewport:{width:320,height:590},acceptDownload
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="more"]').click();
+ // Google Drive stays compact even when expanded with the setup instructions and restore controls.
+ const drive=page.locator('#googleDriveBackupSetup');
+ assert.equal(await drive.getAttribute('open'),null,'Drive settings must be collapsed initially');
+ await drive.evaluate(el=>el.open=true);
+ assert.equal(await page.locator('#driveDisconnect').isVisible(),false);
+ assert.equal(await page.locator('#driveOAuthHelp').getAttribute('open'),null);
+ assert.equal(await page.locator('#driveRestoreSection').getAttribute('open'),null);
+ await page.locator('#driveOAuthHelp').evaluate(el=>el.open=true);
+ await page.locator('#driveRestoreSection').evaluate(el=>el.open=true);
+ await page.locator('.drive-folder-options').evaluate(el=>el.open=true);
+ for(const width of [320,390,430,540,768,1024]){
+  await page.setViewportSize({width,height:760});
+  const layout=await page.evaluate(()=>{
+   const panel=document.getElementById('googleDriveBackupSetup');
+   const sections=[...panel.querySelectorAll('.btn,.field input,.field select')]
+    .filter(el=>getComputedStyle(el).display!=='none'&&el.getBoundingClientRect().width>0);
+   return {viewport:innerWidth,page:document.documentElement.scrollWidth,
+    panel:Math.round(panel.getBoundingClientRect().right),
+    offenders:sections.filter(el=>el.getBoundingClientRect().right>innerWidth+1).map(el=>el.id||el.textContent.slice(0,35))};
+  });
+  assert.ok(layout.page<=layout.viewport+1,'Drive layout horizontal overflow at '+width+': '+JSON.stringify(layout));
+  assert.deepEqual(layout.offenders,[],'Drive controls leave viewport at '+width);
+ }
+ await page.setViewportSize({width:320,height:590});
+ await drive.evaluate(el=>el.open=false);
  assert.match(await page.locator('#backupStatus').innerText(),/Noch kein Backup/);
  const downloadPromise=page.waitForEvent('download');
  await page.locator('#exportBackup').click();
