@@ -788,23 +788,51 @@ function openCSVImport(){
    $('saveDialog').textContent=result.ready?result.ready+' Buchung'+(result.ready===1?'':'en')+' importieren':'Buchungen importieren';
   }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('saveDialog').disabled=true;}
  };
- $('csvFile').addEventListener('change',async event=>{
-  const file=event.target.files?.[0];parsed=null;positionOverrides={};skippedLines=[];$('saveDialog').disabled=true;
-  if(!file){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
+ async function chooseCSV(){
+  const files=[...($('csvFile').files||[])];
+  parsed=null;brokerImport=null;brokerAccepted=false;positionOverrides={};skippedLines=[];
+  $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
+  if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
-   if(file.size>2_000_000)throw Error('CSV-Datei zu groß (maximal 2 MB).');
-   parsed=parseCSV(await file.text());
-   const inferred=inferMapping(parsed.headers);
-   const mappingControl=key=>'<label class="field"><span>'+esc(labels[key])+'</span><select id="csvMap-'+key+'">'+options([['','Nicht vorhanden'],...parsed.headers.map(head=>[head,head])],inferred[key])+'</select></label>';
-   $('csvMapping').innerHTML='<div class="csv-import-mapping"><h3>Spalten zuordnen</h3><p class="small-help">Prüfe, ob FolioLab die Spalten richtig erkannt hat.</p>'+
-    '<div class="field-row">'+necessary.map(mappingControl).join('')+'</div>'+
-    '<details class="advanced-apis"><summary>Weitere Spalten (optional)</summary><div class="field-row">'+CSV_FIELDS.filter(x=>!necessary.includes(x)).map(mappingControl).join('')+'</div></details>'+
-    (positions.some(p=>p.kind==='cash')&&parsed.rows.some(row=>/^(kauf|verkauf|buy|sell)$/i.test(String(row[inferred.type]||'').trim()))?'<details class="advanced-apis"><summary>Verrechnungskonto zuordnen (optional)</summary><p class="small-help">Nur auswählen, wenn Käufe und Verkäufe tatsächlich über dieses Konto abgerechnet wurden. Ohne Zuordnung wird keine Geldbewegung erfunden.</p><label class="field"><span>Gegenkonto für Buchungen ohne eigene Kontoangabe</span><select id="csvCashPosition">'+options([['','Ohne Gegenkonto'],...positions.filter(p=>p.kind==='cash').map(p=>[p.id,p.name])],'')+'</select></label></details>':'')+
-    '</div>';
-   $('csvMapping').querySelectorAll('select').forEach(el=>el.addEventListener('change',review));
+   if(files.length>20)throw Error('Maximal 20 Dateien je Import.');
+   if(files.some(f=>f.size>2_000_000))throw Error('Je Datei sind höchstens 2 MB erlaubt.');
+   const inputs=await Promise.all(files.map(async f=>({name:f.name,text:await f.text()})));
+   const probe=parseCSV(inputs[0].text),source=$('csvSource').value;
+   const flatex=source==='flatex'||(source==='auto'&&Boolean(detectFlatexCSV(probe)));
+   if(flatex){
+    brokerImport=prepareFlatexImport(inputs);parsed=brokerImport.parsed;
+    const other=brokerImport.issues.filter(x=>x.code==='unsupported');
+    const critical=brokerImport.issues.filter(x=>x.code!=='unsupported');
+    const report=brokerImport.reports.map(x=>esc(x.name)+' · '+(x.type==='depot'?'Depot':'Konto')+' ('+esc(x.variant)+')').join('<br>');
+    $('csvBrokerStatus').innerHTML='<div class="csv-import-review"><h3>Flatex-Export erkannt</h3><p class="small-help">'+report+'</p>'+
+     '<p>'+parsed.rows.length+' Käufe/Verkäufe · '+brokerImport.duplicates+' doppelte Referenzen · '+brokerImport.cashItems.length+' Kontoumsätze nur zur Prüfung · '+other.length+' weitere Depotvorgänge · '+critical.length+' problematische Zeilen</p>'+
+     (critical.length?'<details open><summary>Zeilen mit Fehlern</summary>'+critical.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
+     (other.length?'<details><summary>Sonstige Depotvorgänge</summary>'+other.slice(0,30).map(x=>'<p>'+esc(x.file)+', Zeile '+x.line+': '+esc(x.message)+'</p>').join('')+'</details>':'')+
+     (brokerImport.cashItems.length?'<details><summary>Kontoumsätze (noch nicht verbucht)</summary>'+brokerImport.cashItems.slice(0,30).map(x=>'<p>'+esc(x.date+' · '+x.kind+' · '+x.amount+' · '+x.details)+'</p>').join('')+'</details>':'')+
+     ((other.length||brokerImport.cashItems.length)?'<label class="csv-skip"><input id="csvBrokerConfirm" type="checkbox"> Ich verstehe, dass Kontoumsätze und sonstige Depotvorgänge nicht übernommen werden.</label>':'')+
+     '<p class="small-help">Es werden keine Gebühren, Steuern oder fehlenden Anschaffungswerte hinzuerfunden. Noch kein vollständiger Depotabgleich.</p></div>';
+    $('csvBrokerConfirm')?.addEventListener('change',e=>{brokerAccepted=e.target.checked;review();});
+    $('csvMapping').innerHTML='<p class="small-help">Spalten automatisch erkannt. Bereits angelegte Wertpapiere werden eindeutig per ISIN zugeordnet; Unklarheiten erscheinen in der Vorschau.</p>';
+   }else{
+    if(files.length>1)throw Error('Mehrere Dateien sind derzeit nur für Flatex-Exporte erlaubt.');
+    parsed=probe;
+    const inferred=inferMapping(parsed.headers);
+    const mappingControl=key=>'<label class="field"><span>'+esc(labels[key])+'</span><select id="csvMap-'+key+'">'+options([['','Nicht vorhanden'],...parsed.headers.map(head=>[head,head])],inferred[key])+'</select></label>';
+    $('csvMapping').innerHTML='<div class="csv-import-mapping"><h3>Spalten zuordnen</h3><p class="small-help">Prüfe die automatische Spaltenzuordnung.</p>'+
+     '<div class="field-row">'+necessary.map(mappingControl).join('')+'</div>'+
+     '<details class="advanced-apis"><summary>Weitere Spalten (optional)</summary><div class="field-row">'+CSV_FIELDS.filter(x=>!necessary.includes(x)).map(mappingControl).join('')+'</div></details>'+
+     (positions.some(p=>p.kind==='cash')&&parsed.rows.some(row=>/^(kauf|verkauf|buy|sell)$/i.test(String(row[inferred.type]||'').trim()))?'<details class="advanced-apis"><summary>Verrechnungskonto zuordnen (optional)</summary><p class="small-help">Nur auswählen, wenn dieses Konto tatsächlich zur Abrechnung verwendet wurde. Ohne Zuordnung keine erfundene Geldbewegung.</p><label class="field"><span>Gegenkonto</span><select id="csvCashPosition">'+options([['','Ohne Gegenkonto'],...positions.filter(p=>p.kind==='cash').map(p=>[p.id,p.name])],'')+'</select></label></details>':'')+
+     '</div>';
+    $('csvMapping').querySelectorAll('select').forEach(el=>el.addEventListener('change',review));
+   }
    review();
-  }catch(error){$('csvMapping').innerHTML='';$('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;}
- });
+  }catch(error){
+   parsed=null;brokerImport=null;$('csvBrokerStatus').innerHTML='';$('csvMapping').innerHTML='';
+   $('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;
+  }
+ }
+ $('csvFile').addEventListener('change',chooseCSV);
+ $('csvSource').addEventListener('change',chooseCSV);
 }
 function openBooking(){
  const list=model.positions.filter(p=>!p.wallet?.enabled);
