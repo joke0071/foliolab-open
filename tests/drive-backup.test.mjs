@@ -140,8 +140,11 @@ test('encrypted local backups round-trip with AES-GCM and reject a wrong recover
  assert.equal(elements.recoveryKeyDisplay.value,'');
  assert.equal(elements.recoveryKeyDisplay.type,'password');
  await elements.driveRecoveryExport.onclick();
- assert.equal(elements.recoveryKeyConfirmed.checked,true);
+ assert.equal(elements.recoveryKeyConfirmed.checked,false,'Downloading the key is not equivalent to confirmed custody');
  assert.equal(downloaded.length,1);
+ elements.recoveryKeyConfirmed.checked=true;
+ await elements.recoveryKeyConfirmed.onchange({target:elements.recoveryKeyConfirmed});
+ assert.equal(elements.recoveryKeyConfirmed.checked,true);
  const recoveryText=await downloaded[0].text();
  const key=recoveryText.match(/FLBK1-[0-9a-f]{64}/)?.[0];
  assert.ok(key,'recovery key was exported');
