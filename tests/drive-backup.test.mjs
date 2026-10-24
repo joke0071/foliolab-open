@@ -69,7 +69,7 @@ test('Drive upload encrypts only the sanitized portfolio through the shared pass
  await t.window.FolioDriveBackup.init(t.backend);
  assert.equal(t.elements.driveConnect.disabled,false);
  await t.elements.driveConnect.onclick();
- assert.equal(t.elements.driveSaveNow.disabled,false);
+ assert.equal(t.elements.driveSaveNow.disabled,false,t.elements.driveBackupStatus.textContent);
  await t.elements.driveSaveNow.onclick();
  assert.equal(t.written.length,1);
  assert.equal(t.written[0].kind,'FolioLab');
