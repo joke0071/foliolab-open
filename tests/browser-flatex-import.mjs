@@ -32,7 +32,8 @@ try{
   return {fdep:fdep.id,p:p.id,q:q.id};
  });
  await page.reload();
- await page.locator('#sidebarNav [data-page="bookings"]').click();
+ const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
+ await page.locator(nav+' [data-page="bookings"]').click();
  await page.locator('#openCSVImport').click();
  await page.locator('#csvFile').setInputFiles(files);
  await page.locator('#csvBrokerAccount').waitFor();
