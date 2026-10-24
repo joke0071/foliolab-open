@@ -1517,6 +1517,38 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   imported.settings={...defaultSettings(),...model.settings};
   if(loadFailure&&!portfolioStore.isIndexedDB)loadFailure=null;
   model=imported;filter='all';await save();loadFailure=null;notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));}catch(err){notify(err.message,true);}});
+  // The Google Drive adapter is optional. All API credentials remain local; the
+  // sanitized backup() payload deliberately excludes keys and wallet provider secrets.
+  if(window.FolioDriveBackup){
+    const driveBackend={
+      readData(){
+        if(loadFailure)throw Error('Lokaler Speicher beschädigt. Zuerst die Originaldaten sichern.');
+        if(saving||otherTabChangedPortfolio)throw Error('Änderungen in einem anderen Tab oder laufende Speicherung: bitte neu laden beziehungsweise Vorgang abschließen.');
+        return JSON.parse(backup(model));
+      },
+      validateData(data){return safeImport(data);},
+      async restoreData(data){
+        if(saving||otherTabChangedPortfolio)throw Error('Speicherung aktiv oder Daten durch anderen Tab verändert. Bitte zuerst neu laden.');
+        const imported=safeImport(data);
+        if(loadFailure){
+          if(!portfolioStore.isIndexedDB||!recoveryDownloaded)throw Error('Beschädigte Originaldaten zuerst unter „Daten retten“ exportieren, danach Wiederherstellung erneut starten.');
+          imported.settings=defaultSettings();
+          await portfolioStore.recoverFromBackup(imported,recoveryOriginal);
+          location.reload();return;
+        }
+        // Before replacing financial records, offer a local rollback copy.
+        downloadBackup();
+        imported.settings={...defaultSettings(),...model.settings};
+        const previous=model;
+        model=imported;filter='all';
+        try{await save()}catch(error){model=previous;throw error}
+        backupDone();
+        notify('Google-Drive-Backup erfolgreich wiederhergestellt.');
+      },
+      onBackedUp(){backupDone();}
+    };
+    void window.FolioDriveBackup.init(driveBackend).catch(error=>notify('Google-Drive-Modul: '+String(error?.message||error),true));
+  }
   $('deleteAll').addEventListener('click',async ()=>{
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
