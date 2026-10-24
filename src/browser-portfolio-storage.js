@@ -3,7 +3,7 @@
  * No background migration. Keys remain on this device, and downloaded backups
  * always exclude credentials. Switching modes requires explicit user consent.
  */
-import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY} from './model.js';
+import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData} from './model.js';
 import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
@@ -69,7 +69,7 @@ export class PortfolioStorage {
   return restored(record);
  }
  async reload(){
-  if(!this.isIndexedDB)return load(this.storage);
+  if(!this.isIndexedDB){const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;}
   const current=await readPortfolioRecord(this.db);
   if(!current)throw Error('Der aktive IndexedDB-Datensatz fehlt.');
   this.revision=current.revision;
@@ -77,9 +77,14 @@ export class PortfolioStorage {
  }
  async save(model){
   if(!this.isIndexedDB){
-   persist(model,this.storage);
-   this.legacyRaw=this.storage.getItem(STORE_KEY);
-   return;
+   const draft=clone(model);
+   return this.withLocalLock(()=>{
+    if(this.storage.getItem(MODE_KEY)===MODE_VALUE)throw Error('Speichermodus wurde in einem anderen Tab geändert. Bitte neu laden.');
+    if(this.legacyRaw===undefined||this.storage.getItem(STORE_KEY)!==this.legacyRaw)
+     throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte Daten neu laden.');
+    persist(draft,this.storage);
+    this.legacyRaw=this.storage.getItem(STORE_KEY);
+   });
   }
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
   const draft=clone(model);
@@ -88,7 +93,13 @@ export class PortfolioStorage {
   });
   this.revision=current.revision; // only after tx.oncomplete
  }
- async migrate(model){
+ async withLocalLock(action){
+  if(typeof window!=='undefined'&&globalThis.navigator?.locks)return navigator.locks.request('foliolab-portfolio-write',action);
+  if(typeof window!=='undefined')throw Error('Sicheres Speichern benötigt Web Locks. Bitte einen aktuellen Browser verwenden.');
+  return action(); // synchronous in-memory adapters in Node tests
+ }
+ async migrate(model){return this.withLocalLock(()=>this.migrateLocked(model));}
+ async migrateLocked(model){
   if(this.isIndexedDB)throw Error('IndexedDB ist bereits aktiv.');
   const original=this.storage.getItem(STORE_KEY);
   if(this.legacyRaw!==undefined&&original!==this.legacyRaw)
@@ -134,7 +145,8 @@ export class PortfolioStorage {
   this.revision=recovered.revision;
   return recovered;
  }
- async removeAll(){
+ async removeAll(){return this.withLocalLock(()=>this.removeAllLocked());}
+ async removeAllLocked(){
   if(this.isIndexedDB){
    // A failed older rollback may have left a recovery intent. Never allow an
    // intentional delete-all tombstone to accidentally match that old intent.
@@ -144,11 +156,15 @@ export class PortfolioStorage {
     throw Error('Alter Rückwechsel-Marker konnte nicht entfernt werden. Löschung abgebrochen.');
    const record=await commitPortfolioRecord(this.db,{expectedRevision:this.revision,raw:null,settings:null});
    this.revision=record.revision;
-   return;
+  }else{
+   if(this.storage.getItem(MODE_KEY)===MODE_VALUE||this.storage.getItem(STORE_KEY)!==this.legacyRaw)
+    throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte neu laden.');
   }
-  // localStorage only: the caller will purge owned keys.
+  purgeLocalAppData(this.storage,{preserveStorageMode:this.isIndexedDB});
+  this.legacyRaw=null;
  }
- async revert(model){
+ async revert(model){return this.withLocalLock(()=>this.revertLocked(model));}
+ async revertLocked(model){
   if(!this.isIndexedDB)throw Error('Es ist bereits lokale Speicherung aktiv.');
   const current=await readPortfolioRecord(this.db);
   if(current?.revision!==this.revision)throw Error('Ein anderer Tab hat den IndexedDB-Datensatz geändert. Zuerst neu laden.');

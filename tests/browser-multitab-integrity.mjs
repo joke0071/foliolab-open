@@ -31,6 +31,7 @@ try{
  await second.locator('#addProvider').click();
  await second.locator('#editorForm [name="name"]').fill('Provider Tab B');
  await second.locator('#saveDialog').click();
+ await second.locator('#editDialog').waitFor({state:'hidden'});
  recorded=await first.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.deepEqual(recorded.providers.map(x=>x.name).sort(),['Provider Tab A','Provider Tab B']);
  await first.locator('#notice').waitFor({state:'visible'});

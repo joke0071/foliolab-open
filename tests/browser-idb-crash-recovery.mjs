@@ -57,7 +57,10 @@ try{
   const store=new PortfolioStorage();await store.migrate(model);
   // An obsolete pending revert intent must not override an intentional reset.
   localStorage.setItem(REVERT_INTENT_KEY,JSON.stringify({revision:2,fingerprint:'irrelevant'}));
+  const stale=localStorage.getItem(STORE_KEY);
   await store.removeAll();store.close();
+  if(localStorage.getItem(STORE_KEY)!==null)throw Error('Delete must purge the legacy copy');
+  localStorage.setItem(STORE_KEY,stale); // simulate stale legacy data returning after deletion
   const restored=new PortfolioStorage();
   const m=await restored.initialize();
   const result={idb:restored.isIndexedDB,providers:m.providers.length,

@@ -45,6 +45,7 @@ try{
   };
  });
  await page.locator('#autoRefresh').click(); // A failed save must immediately restore checked state.
+ await page.waitForFunction(()=>document.getElementById('toast').textContent.includes('Änderung nicht gespeichert'));
  assert.match(await page.locator('#toast').innerText(),/Änderung nicht gespeichert/);
  assert.equal(await page.locator('#autoRefresh').isChecked(),true,'Failed save must restore visible committed settings');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh),true,'Quota must not modify saved data');
@@ -53,6 +54,7 @@ try{
   delete window.__originalSetItem;
  });
  await page.locator('#autoRefresh').uncheck();
+ await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh===false);
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.autoRefresh),false,'Saving must recover after storage becomes writable');
  console.log('BACKUPS / SETTINGS / MODAL: downloaded status, persistence, RPC accordion and mobile footer PASS');
 }finally{await browser.close();}
