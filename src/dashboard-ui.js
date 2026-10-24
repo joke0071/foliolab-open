@@ -64,13 +64,17 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
   }).join('');
 }
 
-export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount}){
+export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Speichere einen weiteren Stichtag für den Verlauf.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const step=Math.max(1,Math.ceil(samples.length/140));
  const sampled=samples.filter((_,i)=>i===0||i===samples.length-1||i%step===0);
  const values=sampled.map(s=>Number(s.totalEURExact??s.total));
  if(values.some(x=>!Number.isFinite(x)))return '<p class="chart-zero">Diagrammwerte nicht verfügbar.</p>';
- const lo=Math.min(...values),hi=Math.max(...values);
+ const compared=comparison?new Map(comparison.map(x=>[x.date,Number(x.total)])):null;
+ const second=compared&&sampled.every(s=>Number.isFinite(compared.get(s.date)))?
+  sampled.map(s=>compared.get(s.date)):null;
+ const bounds=second?[...values,...second]:values;
+ const lo=Math.min(...bounds),hi=Math.max(...bounds);
  const magnitude=Math.max(Math.abs(hi),Math.abs(lo));
  const span=Math.max(hi-lo,magnitude*.055,magnitude?Number.MIN_VALUE:1);
  const yMin=lo-span*.30,yMax=hi+span*.20,range=yMax-yMin;
@@ -81,6 +85,8 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
    value:money(values[i]),date:dateLabel(s.date)
  }));
  const path=points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
+ const comparePath=second?points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+(pad+(yMax-second[i])/range*(height-pad*2)).toFixed(2)).join(' '):'';
+ if(second)points.forEach((p,i)=>{p.compareValue='Kapitalreferenz: '+money(second[i]);});
  const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+pad+' '+height+' Z';
  const series=esc(JSON.stringify(points));
  const labels=[yMax,(yMax+yMin)/2,yMin].map(v=>'<span>'+esc(axisFormat(v))+'</span>').join('');
@@ -90,8 +96,10 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" stroke-dasharray="4 6"/>').join('')+
  '<path d="'+fill+'" fill="#e8f2ea"/><path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
+ (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
  '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
- '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+'</div>';
+ '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+
+ (comparePath?'<p class="small-help">Gestrichelt: Startvermögen zuzüglich erfasster externer Nettozuflüsse. Keine Rendite und kein vollständiger Einstandswert.</p>':'')+'</div>';
 }
 
 export function attachChartInteractions(container) {
@@ -111,6 +119,7 @@ export function attachChartInteractions(container) {
    const date=document.createElement('span'),value=document.createElement('strong');
    date.textContent=point.date;value.textContent=point.value;
    tip.append(date,value);
+   if(point.compareValue){const extra=document.createElement('span');extra.textContent=point.compareValue;tip.append(extra);}
    cursor.classList.remove('hidden');tip.classList.remove('hidden');
  }
  function nearest(event) {
