@@ -31,6 +31,7 @@ try{
  await page.locator('#wizardNext').click();
  assert.equal(await page.evaluate(()=>document.activeElement?.id),'wizardQuantity','Missing quantity marked');
  await page.locator('#wizardQuantity').fill('3');
+ await page.locator('#wizardKind').focus(); // Simulate real keyboard/user focus before selection.
  await page.locator('#wizardKind').selectOption('stock');
  assert.equal(await page.evaluate(()=>document.activeElement?.id),'wizardKind','Changing kind retains keyboard focus');
  assert.equal(await page.locator('#wizardName').inputValue(),'','Identity resets intentionally with a changed asset class');
