@@ -1,3 +1,4 @@
+import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
 import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit} from './transactions.js';
@@ -140,6 +141,7 @@ const validCalendarDate=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!
 // Reject contradictory financial representations before restoring a portfolio.
 // Both fields originate from the same 18-decimal fixed-point value; comparing their\n// numeric representations catches even a one-wei discrepancy.
 const exactMatchesDisplay=(display,precise)=>{
+ if(!['number','string'].includes(typeof display)||String(display).trim()===''||!Number.isFinite(Number(display)))return false;
  if(precise==null)return true;
  try{
   const shown=Number(display),expected=Number(exact(units(precise)));
@@ -200,7 +202,7 @@ export function safeImport(raw){
   uniqueIds(m.openingPositions.map(x=>({id:x.positionId})),'Eröffnungsbeständen');
   m.bookings=(raw.bookings||[]).map(x=>{
     if(!x||typeof x!=='object'||!x.id||!x.positionId||!validCalendarDate(x.date)||!Number.isFinite(number(x.quantity))||!exactMatchesDisplay(x.quantity,x.quantityExact))throw Error('Ungültige Buchung oder widersprüchliche Menge im Backup.');
-    return {...x,notes:cleanString(x.notes,180)};
+    return {...x,notes:cleanString(x.notes,180),...(x.importSource==null?{}:{importSource:validateImportSource(x.importSource,x.accountId)})};
   });uniqueIds(m.bookings,'Buchungen');
   const journalById=new Map(m.journalEntries.map(x=>[x.id,x]));
   for(const booking of m.bookings){

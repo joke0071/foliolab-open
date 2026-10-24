@@ -200,6 +200,6 @@ export function prepareFlatexImport(files){
  }
  if(rows.length===0&&!cashItems.length&&!issues.length)
   throw Error('Keine Flatex-Buchungen erkannt.');
- return {parsed:{headers:first,rows},mapping:{...FLATEX_MAPPING},reports,issues,cashItems,sourceTrades,duplicates,
+ return {parsed:{headers:first,rows,sourceName:files.map(f=>f.name||'').join('|'),sourceIdentities:Object.fromEntries(sourceTrades.map((t,i)=>[i+2,{sourceId:'flatex-at',externalId:t.reference||'',costsVerified:false}]))},mapping:{...FLATEX_MAPPING},reports,issues,cashItems,sourceTrades,duplicates,
   sourceRows,depotIdentifiers:[...depotIdentifiers],requiresCashReview:cashItems.length>0};
 }
