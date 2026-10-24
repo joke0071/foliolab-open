@@ -70,6 +70,7 @@ jobs:
           node tests/browser-modal-clarity.mjs
           node tests/browser-dialog-consistency.mjs
           node tests/browser-position-editor-ux.mjs
+          node tests/browser-listing-review-clarity.mjs
           node tests/browser-dialog-visual.mjs
           node tests/browser-dialog-visual-regression.mjs
           node tests/browser-dialog-a11y-mobile.mjs
