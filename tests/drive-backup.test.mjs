@@ -48,7 +48,7 @@ function fixture({vault=false,clientId='',withGoogle=false}={}){
   return response({files:[]});
  }
  function response(value){return {ok:true,status:200,json:async()=>value,text:async()=>JSON.stringify(value)}}
- runInNewContext(source,{window,document,localStorage:storage,fetch,Option:class{
+ runInNewContext(source,{window,document,google:window.google,localStorage:storage,fetch,Option:class{
   constructor(text,value){this.text=text;this.value=value}},
   Date,Math,JSON,URL,URLSearchParams,Blob,Error,Number,setTimeout,clearTimeout,
   confirm:()=>true},{filename:'drive-backup.js'});
