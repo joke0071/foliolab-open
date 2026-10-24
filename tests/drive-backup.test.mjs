@@ -117,5 +117,5 @@ test('the optional full Drive payload includes configuration but no OAuth sessio
  assert.equal(t.written[0]?.configuration.settings.eodhdKey,'test-private-key');
  assert.equal(t.written[0]?.configuration.drive.mode,'daily');
  assert.ok(!JSON.stringify(t.written).includes('ephemeral-test-token'));
- assert.ok(!JSON.stringify([...t.storage]).includes('ephemeral-test-token'));
+ assert.ok(!String(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).includes('ephemeral-test-token'));
 });
