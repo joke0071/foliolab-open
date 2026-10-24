@@ -16,10 +16,15 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
    IDBObjectStore.prototype.put=function(){throw new DOMException('fixture quota','QuotaExceededError');};
    try{await a.save(ma);}catch{quota=true;}finally{IDBObjectStore.prototype.put=put;}
    if(before!==JSON.stringify((await a.reload()).walletHistory))throw Error('quota changed committed history');
+   const {openPortfolioDB}=await import('/src/atomic-storage.js');let blocked=false,closed=false;
+   const req={result:{close(){closed=true;}}};
+   const opening=openPortfolioDB({open(){queueMicrotask(()=>req.onblocked());return req;}});
+   try{await opening;}catch(e){blocked=/blockiert/.test(e.message);}req.onsuccess();
+   if(!blocked||!closed||before!==JSON.stringify((await a.reload()).walletHistory))throw Error('blocked upgrade did not fail closed');
    const restored=safeImport(JSON.parse(backup(await a.reload(),{includeHistory:true})));
    return {stale,quota,sessions:restored.walletHistory.sessions.length,pending:restored.walletHistory.pending[0].status,plainLeaks:backup(restored).includes('walletHistory'),financialUnchanged:restored.journalEntries.length===0&&restored.snapshots.length===0};
   });
   assert.deepEqual(r,{stale:true,quota:true,sessions:1,pending:'re-fetch-needed',plainLeaks:false,financialUnchanged:true});
-  console.log('HISTORY STORAGE '+name+': local/IDB persistence, restore, stale CAS, quota rollback, refetch checkpoint, credential-free export PASS');
+  console.log('HISTORY STORAGE '+name+': local/IDB persistence, restore, stale CAS, quota rollback, injected blocked upgrade, refetch checkpoint, credential-free export PASS');
  }finally{await browser.close();}
 }

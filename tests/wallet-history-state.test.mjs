@@ -28,3 +28,7 @@ test('WH04 reorg invalidation retains accepted facts but cannot retain verified 
  assert.equal(m.walletHistory.sessions[0].streams[0].coverage.status,'verified');assert.equal(changed.walletHistory.sessions[0].streams[0].coverage.status,'partial');
  assert.deepEqual(changed.walletHistory.sessions[0].events,m.walletHistory.sessions[0].events);assert.equal(changed.walletHistory.sessions[0].decision,'accepted');
 });
+test('WH04/07 duplicate accepted facts normalize and contradictory revisions reject',()=>{
+ const p=preview();p.events.push(structuredClone(p.events[0]));assert.equal(acceptHistory(blankModel(),p).walletHistory.sessions[0].events.length,1);
+ p.events.push({...p.events[0],quantityBaseUnits:'9'});assert.throws(()=>acceptHistory(blankModel(),p));
+});

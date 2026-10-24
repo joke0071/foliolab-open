@@ -1,5 +1,6 @@
+import {validateHistoryQuotes} from './wallet-history-valuation.js';
 /** Accepted read-only history is part of the existing revisioned portfolio record. */
-import {validateHistoryEvent,replayWalletHistory,HISTORY_COVERAGE} from './wallet-history-core.js';
+import {validateHistoryEvent,replayWalletHistory,HISTORY_COVERAGE,dedupeHistoryEvents} from './wallet-history-core.js';
 const label=(v,n=200)=>{if(typeof v!=='string'||!v||v.length>n||/[\u0000-\u001f]/.test(v))throw Error('Ungültige Historienkennung.');return v;};
 const integer=v=>{if(typeof v!=='string'||! /^(0|-?[1-9]\d{0,99})$/.test(v))throw Error('Ungültige historische Rohmenge.');return v;};
 const utc=v=>{if(typeof v!=='string'||new Date(v).toISOString()!==v)throw Error('Ungültiger Historienzeitpunkt.');return v;};
@@ -10,24 +11,27 @@ function stream(v){
 }
 export function validateHistorySession(v){
  if(!v||!['btc','eth','sol'].includes(v.chain)||!Array.isArray(v.events)||v.events.length>50000||!Array.isArray(v.streams)||v.streams.length>1000)throw Error('Historie ist ungültig oder zu groß.');
- const events=v.events.map(e=>validateHistoryEvent({...e,source:e.source?source(e.source):null})),streams=v.streams.map(stream);
- replayWalletHistory({events,streams}); // validates identity, duplicates, opening ranges and exact raw amounts
- return {id:label(v.id),chain:v.chain,walletKey:label(v.walletKey,300),acceptedAt:utc(v.acceptedAt),events,streams,issues:(v.issues||[]).slice(0,100).map(x=>label(x)),decision:'accepted',providerCache:'re-fetch-needed'};
+ const projected=v.events.map(e=>validateHistoryEvent({...e,source:e.source?source(e.source):null})),streams=v.streams.map(stream);
+ const canonical=dedupeHistoryEvents(projected);if(canonical.conflicts.length)throw Error('Widersprüchliche Ereignisse können nicht bestätigt werden.');
+ const events=canonical.events,checked=replayWalletHistory({events,streams});
+ for(let i=0;i<streams.length;i++){const s=streams[i],b=checked.balances.find(b=>b.network===s.network&&b.chainId===s.chainId&&b.accountId===s.accountId&&b.assetId===s.assetId&&b.contract===s.contract&&b.mint===s.mint);s.coverage.status=b.coverage;} // validates identity, duplicates, opening ranges and exact raw amounts
+ const quotes=validateHistoryQuotes(v.quotes??[],streams);
+ return {quotes,id:label(v.id),chain:v.chain,walletKey:label(v.walletKey,300),acceptedAt:utc(v.acceptedAt),events,streams,issues:(v.issues||[]).slice(0,100).map(x=>label(x)),decision:'accepted',providerCache:'re-fetch-needed'};
 }
 export function validateWalletHistory(value){
  if(!value||value.schema!==1||!Array.isArray(value.sessions)||value.sessions.length>100||!Array.isArray(value.pending)||value.pending.length>100)throw Error('Unbekanntes Historienformat.');
  const sessions=value.sessions.map(validateHistorySession),ids=new Set();let count=0;
  for(const s of sessions){if(ids.has(s.id))throw Error('Doppelte Historien-ID.');ids.add(s.id);count+=s.events.length;}
  if(count>50000)throw Error('Zu viele gespeicherte Historienereignisse.');
- const pending=value.pending.map(v=>({id:label(v.id),chain:label(v.chain),walletKey:label(v.walletKey,300),provider:source(v.provider),filter:label(v.filter),tip:v.tip==null?null:label(v.tip),status:'re-fetch-needed',updatedAt:utc(v.updatedAt)}));
- return {schema:1,sessions,pending};
+ const pending=value.pending.map(v=>({id:label(v.id),chain:label(v.chain),walletKey:label(v.walletKey,300),provider:source(v.provider),filter:label(v.filter),tip:v.tip==null?null:label(v.tip),scope:v.scope==null?null:(/^[0-9a-f]{64}$/.test(v.scope)?v.scope:(()=>{throw Error('Ungültiger Cursor-Konfigurationsbezug.');})()),status:'re-fetch-needed',updatedAt:utc(v.updatedAt)}));
+ const result={schema:1,sessions,pending};if(new TextEncoder().encode(JSON.stringify(result)).length>8e6)throw Error('Historie überschreitet das sichere Speicher-/Backuplimit.');return result;
 }
 export const emptyWalletHistory=()=>({schema:1,sessions:[],pending:[]});
 /** Return a draft only. Caller commits via existing PortfolioStorage and CAS/WebLocks. */
 export function acceptHistory(model,session){
  const state=validateWalletHistory(model.walletHistory??emptyWalletHistory()),record=validateHistorySession(session);
  state.sessions=state.sessions.filter(s=>s.id!==record.id);state.sessions.push(record);state.pending=state.pending.filter(p=>p.id!==record.id);
- return {...model,walletHistory:validateWalletHistory(state)};
+ const draft={...model,walletHistory:validateWalletHistory(state)};if(new TextEncoder().encode(JSON.stringify(draft)).length>10e6)throw Error('Portfolio mit Historie überschreitet das sichere Vollbackuplimit.');return draft;
 }
 export function checkpointHistory(model,metadata){
  const state=validateWalletHistory(model.walletHistory??emptyWalletHistory());
