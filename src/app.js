@@ -1417,15 +1417,28 @@ async function downloadEncryptedBackup(){
   notify('Verschlüsseltes Backup heruntergeladen'+(includeBackupConfiguration()?' – inklusive Einstellungen und API-Schlüsseln.':'.'));
  }catch(e){notify(e.message,true)}
 }
+let backupPasswordEditing=false;
 async function refreshBackupPasswordStatus(){
  const label=$('backupPasswordStatus');
  if(!label)return;
  try{
   const available=await hasBackupPassword();
-  label.textContent=available
-    ?'Backup-Passwort eingerichtet · Lokale und Google-Drive-Backups verwenden dieselbe Verschlüsselung. Passwort wird nicht gespeichert.'
-    :'Noch kein gemeinsames Backup-Passwort eingerichtet.';
- }catch(e){label.textContent='Backup-Verschlüsselung nicht verfügbar: '+String(e.message||e)}
+  label.textContent=available?'Backup-Passwort eingerichtet':'Noch kein Backup-Passwort eingerichtet';
+  const form=$('backupPasswordForm'),oldField=$('backupOldPasswordField'),change=$('backupChangeToggle'),exportButton=$('exportEncryptedBackup');
+  if(form)form.hidden=available&&!backupPasswordEditing;
+  if(oldField)oldField.hidden=!available;
+  if(change){
+   change.hidden=!available;
+   change.textContent=backupPasswordEditing?'Abbrechen':'Passwort ändern';
+   change.setAttribute('aria-expanded',String(backupPasswordEditing));
+   change.setAttribute('aria-controls','backupPasswordForm');
+  }
+  if(exportButton)exportButton.disabled=!available;
+  $('saveBackupPassword').textContent=available?'Neues Passwort speichern':'Passwort festlegen';
+ }catch(e){
+  label.textContent='Backup-Passwort nicht verfügbar: '+String(e.message||e);
+  $('exportEncryptedBackup').disabled=true;
+ }
 }
 $('providerOverview').addEventListener('toggle',event=>{
  const node=event.target;
@@ -1542,12 +1555,19 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
  document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;popup.querySelector('summary')?.focus();}});
 
   $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);
+  $('backupChangeToggle').addEventListener('click',async()=>{
+    backupPasswordEditing=!backupPasswordEditing;
+    for(const id of ['backupPassword','backupPasswordConfirm','backupOldPassword'])$(id).value='';
+    await refreshBackupPasswordStatus();
+    if(backupPasswordEditing)$('backupPassword').focus();
+  });
   $('saveBackupPassword').addEventListener('click',async()=>{
     const input=$('backupPassword'),confirmInput=$('backupPasswordConfirm'),old=$('backupOldPassword'),button=$('saveBackupPassword');
     button.disabled=true;
     try{
       const result=await configureBackupPassword(input.value,confirmInput.value,old.value);
-      notify(result.changed?'Passwort geändert. Bereits vorhandene Backups benötigen gegebenenfalls weiterhin das alte Passwort.':'Gemeinsames Backup-Passwort eingerichtet.');
+      backupPasswordEditing=false;
+      notify(result.changed?'Passwort geändert. Ältere Backups benötigen weiterhin das bisherige Passwort.':'Backup-Passwort eingerichtet.');
       await refreshBackupPasswordStatus();
       await window.FolioDriveBackup?.refreshVaultStatus?.();
     }catch(error){notify(String(error.message||error),true)}
