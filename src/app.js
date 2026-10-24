@@ -1286,7 +1286,6 @@ $('apiSettings').addEventListener('submit',async e=>{
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
- openAdvanced:()=>openPosition(),
  onCommit:async ({draft})=>{
   model=draft;
   await save();
