@@ -18,7 +18,7 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  const setup=page.locator('#solanaRpcSetup');
- await setup.locator('summary').click();
+ await setup.locator(':scope > summary').click();
  assert.match(await setup.innerText(),/Helius/);
  assert.match(await setup.innerText(),/Mainnet-HTTPS-RPC-Adresse/);
  assert.match(await setup.innerText(),/nativ gestakte SOL/);
