@@ -51,3 +51,13 @@ test('a matching booking reference cannot override a conflicting ISIN in the ban
 test('only a bounded matching date horizon is accepted',()=>{
  assert.throws(()=>pairFlatexSettlements({sourceTrades:[],cashItems:[]},{maxDays:1000}),/Ungültiger Zeitraum/);
 });
+
+test('exact references distinguish same-ISIN trades and two separate bank accounts',()=>{
+ const entries={sourceTrades:[trade,{...trade,reference:'T-2',date:'2026-10-23',externalId:'other'}],
+ cashItems:[cash,{...cash,reference:'T-2',date:'2026-10-24',account:'AT2000'}]};
+ const paired=pairFlatexSettlements(entries);
+ assert.equal(paired.paired.length,2);
+ assert.equal(paired.uncertain.length,0);
+ assert.deepEqual(paired.paired.map(x=>x.accountMovement.account),['AT00','AT2000']);
+ assert.ok(paired.paired.every(x=>x.evidence==='Referenz und ISIN'));
+});
