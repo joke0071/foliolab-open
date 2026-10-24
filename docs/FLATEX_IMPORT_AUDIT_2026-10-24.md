@@ -1,6 +1,6 @@
 # FolioLab Open – Flatex-Import: Umsetzungs- und Sicherheitsstatus
 
-Stand: 24. Oktober 2026. Entwicklungsbranch `feature/flatex-on-current-main`, PR #89.
+Stand: 24. Oktober 2026. Entwicklungsbranch `feature/flatex-on-current-main`, PR #97.
 
 ## Architektur
 - Lokale CSV-Verarbeitung über `src/flatex-import.js`; keine Broker-Anmeldung, keine externen Kontozugriffe und kein Versand privater Auszüge.
@@ -76,3 +76,57 @@ Kontoumsatzzeilen ist **weder** ein bewiesener Anfangs-/Endkontostand
 spätere automatische Kontobuchung sind bestätigte eigene Kontonummer,
 Buchungs-/Valutadatum, sämtliche Zwischenbuchungen und ein gesicherter
 Anfangssaldo erforderlich.
+
+## Abnahmeumfang: Flatex-CSV-Beta und Nutzerkontrollen
+
+Die Auslieferung des Flatex-CSV-Profils ist ausschließlich als **Beta mit
+abgesicherter Vorschau** vorgesehen. Vor jeder Änderung des Finanzjournals
+muss der Nutzer:
+1. Die tatsächlich betroffene Flatex-Depotposition auswählen und
+   erkannte Kauf-/Verkaufsvorgänge gegen die Originalbelege prüfen.
+2. Einen lokal erzeugten **vollständigen FolioLab-Backup-JSON-Download**
+   auslösen.
+3. Die Beta- und Nichtübernahmehinweise ausdrücklich bestätigen.
+4. Bei bestehenden Mengen die streng geprüfte historische
+   Eröffnungsbestands-Ersetzung separat aktivieren, sofern zulässig.
+
+Optional steht ein **lokal herunterladbarer CSV-Prüfbericht** bereit mit
+Originaldatei, CSV-Zeilennummer, Konto-/Depotreferenz, Einträgen und offenen
+Prüfhinweisen. Seine Inhalte werden auf Tabellenformel-Injektionen geprüft;
+die Datei wird nicht an einen Anbieter übertragen.
+
+Jede Position zeigt ausschließlich die ihr tatsächlich zugeordneten
+Journalvorgänge in einer chronologischen Transaktionsliste. Gleiche ISINs in
+anderen Depots werden strikt getrennt. Nicht belegte Dividendeneingänge auf
+einem separaten Verrechnungskonto sind **keine** dieser Position nachgewiesenen
+Erträge.
+
+Die Beta **unterstützt nicht**: den automatischen vollständigen Import aller
+Kontoumsätze; die Errechnung österreichischer Fondssteuern/KESt aus
+Depotbewegungen; automatische Umdeutung der Brutto-/Netto-Differenz zu
+Spesen oder Steuern; vollständige Corporate Actions; zuverlässige
+Benchmarkrenditen ohne entsprechende Kurshistorien; automatische
+Steuer-/ETF-Länder-Lookthrough-Auswertungen.
+
+Solche Vorgänge bleiben ausdrücklich als unbestätigte Prüfpositionen
+sichtbar. Ein sauberer Import wird nur für eindeutig zuordenbare
+Wertpapierkäufe/-verkäufe angeboten. Für ältere Historien müssen bei Bedarf
+mehrere Zeiträume aus Flatex Classic bzw. Next exportiert werden;
+Unvollständigkeit ist kein Grund, fehlende Trades zu erfinden.
+
+## Abschlusskriterien
+
+- [x] Lokal, ohne Bankzugang oder API-Schlüssel
+- [x] Depotzuordnung, Referenz-/Duplikatkontrolle, CSV-Prüfung
+- [x] Strenger Mengenaudit, bestehende Kostenbasis/Snapshots geschützt
+- [x] Klar begrenzte Cash-Vorschau ohne erfundene externen Flüsse
+- [x] Backup-Download und ausdrückliche Beta-Bestätigung als Import-Gate
+- [x] CSV-Prüfbericht und positionseigene Buchungsereignisse
+- [ ] Reale anonymisierte Flatex-Belege einschließlich Gebühren und
+      Kapitalmaßnahmen als unabhängige Integrationstest-Fixutres
+- [ ] Fachliche Steuer- und Cashkonto-Automatisierung – **bewusst außerhalb
+      des Beta-Umfangs**, keine falsche Vollständigkeitsbehauptung
+
+Eine grüne CI bestätigt den definierten technischen Beta-Umfang, **nicht**
+die steuerliche oder brokerseitige Vollständigkeit. Unvollständige Formate
+werden mit nachvollziehbarem Hinweis zur manuellen Prüfung zurückgewiesen.
