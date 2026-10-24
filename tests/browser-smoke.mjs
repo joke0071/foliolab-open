@@ -62,7 +62,14 @@ try{
  await page.locator('#backupPasswordConfirm').fill('unverwechselbares-testpasswort');
  await page.locator('#saveBackupPassword').click();
  await page.waitForFunction(()=>document.querySelector('#backupPasswordStatus').textContent.includes('eingerichtet'));
- const [encDl]=await Promise.all([page.waitForEvent('download'),page.locator('#exportEncryptedBackup').click()]);
+ const encryptedDownloadPromise=page.waitForEvent('download',{timeout:5000});
+ await page.locator('#exportEncryptedBackup').click();
+ let encDl;
+ try{encDl=await encryptedDownloadPromise}catch(e){
+   throw Error('Encrypted download failed: toast='+JSON.stringify(await page.locator('#toast').innerText())+
+     ' vaultStatus='+JSON.stringify(await page.locator('#backupPasswordStatus').innerText())+
+     ' browserErrors='+JSON.stringify(await page.evaluate(()=>window.__foliolabTestErrors||[])),{cause:e});
+ }
  const encrypted=await fs.readFile(await encDl.path(),'utf8');
  const envelope=JSON.parse(encrypted);
  assert.equal(envelope.format,'foliolab-open-encrypted-v2');
