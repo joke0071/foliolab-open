@@ -64,7 +64,9 @@ test('Drive remains voluntary and cannot upload without a configured password',a
  assert.equal(t.elements.driveAutoMode.value,'off');
  assert.equal(t.elements.driveRetention.value,'3');
  assert.equal(t.elements.driveSaveNow.disabled,true);
- assert.match(t.elements.driveBackupStatus.textContent,/Passwort|nicht eingerichtet/);
+ assert.equal(t.elements.driveBackupStatus.textContent,'');
+ assert.equal(t.elements.driveBackupStatus.hidden,true,'Neutral setup information does not duplicate the connection badge');
+ assert.equal(t.elements.driveDisconnect.hidden,true,'Disconnect is hidden until connected');
  assert.equal(t.storage.getItem('foliolab-open-drive-backup-settings-v1'),null);
 });
 test('Drive upload encrypts only the sanitized portfolio through the shared password backend',async()=>{
@@ -73,6 +75,7 @@ test('Drive upload encrypts only the sanitized portfolio through the shared pass
  assert.equal(t.elements.driveConnect.disabled,false);
  await t.elements.driveConnect.onclick();
  assert.equal(t.elements.driveSaveNow.disabled,false,t.elements.driveBackupStatus.textContent);
+ assert.equal(t.elements.driveDisconnect.hidden,false,'Disconnect appears after connection');
  await t.elements.driveSaveNow.onclick();
  assert.equal(t.written.length,1);
  assert.equal(t.written[0].kind,'FolioLabCompleteBackup');
@@ -118,4 +121,20 @@ test('the optional full Drive payload includes configuration but no OAuth sessio
  assert.equal(t.written[0]?.configuration.drive.mode,'daily');
  assert.ok(!JSON.stringify(t.written).includes('ephemeral-test-token'));
  assert.ok(!String(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).includes('ephemeral-test-token'));
+});
+
+test('compact Drive UI preserves all controls but hides help and advanced actions by default',()=>{
+ assert.match(html,/class="advanced-apis drive-backup-panel" id="googleDriveBackupSetup"/);
+ assert.match(html,/class="drive-setup-help" id="driveOAuthHelp"/);
+ assert.match(html,/class="drive-management" id="driveRestoreSection"/);
+ assert.match(html,/class="drive-folder-options"/);
+ assert.match(html,/class="drive-status-row"/);
+ assert.match(html,/class="drive-restore-actions"/);
+ assert.match(html,/id="driveDisconnect" hidden/);
+ assert.ok(html.includes('Jetzt sichern'));
+ assert.equal((html.match(/id="driveConnectionBadge"/g)||[]).length,1);
+ for(const item of ['driveClientId','driveConnect','driveDisconnect','driveAutoMode','driveRetention','driveSaveNow','driveBackupSelect','driveCheck','driveRestore','driveFolderSelect']){
+  assert.match(html,new RegExp('id="'+item+'"'));
+ }
+ assert.doesNotMatch(html,/OAuth-Zustimmungsbildschirm konfigurieren\\. 2\\./,'No unstructured wall of instructions');
 });
