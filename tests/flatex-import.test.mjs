@@ -145,3 +145,19 @@ test('same cash booking reference with altered amount is always quarantined',()=
  assert.equal(r.issues[0].code,'ambiguous-duplicate');
  assert.match(r.issues[0].message,/widersprüchliche Beträge/);
 });
+
+test('multi-file preview preserves original filename and physical row per accepted trade',()=>{
+ const buy='20.10.2026;21.10.2026;'+B+';ETF;2;ORDER Kauf;SOUR-1;100,25;Depot-A';
+ const sell='21.10.2026;22.10.2026;'+B+';ETF;1;ORDER Verkauf;SOUR-2;101,00;Depot-A';
+ const result=prepareFlatexImport([
+  upload(classicDepot([buy]),'depot-first.csv'),
+  upload(classicDepot(['22.10.2026;22.10.2026;'+B+';ETF;2;Split 1:2;OTHER;0;Depot-A',sell]),'depot-second.csv')
+ ]);
+ assert.equal(result.parsed.rows.length,2);
+ assert.deepEqual(result.sourceRows,[
+  {file:'depot-first.csv',line:2},
+  {file:'depot-second.csv',line:3}
+ ]);
+ assert.equal(result.issues[0].line,2);
+ assert.equal(result.issues[0].file,'depot-second.csv');
+});
