@@ -89,7 +89,7 @@ export class PortfolioStorage {
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
-   expectedRevision:this.revision,raw:backup(draft),settings:draft.settings
+   expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings
   });
   this.revision=current.revision; // only after tx.oncomplete
  }
@@ -108,7 +108,7 @@ export class PortfolioStorage {
   const db=await openPortfolioDB();
   try{
    const existing=await readPortfolioRecord(db);
-   const portable=backup(model),preferences=clone(model.settings);
+   const portable=backup(model,{includeHistory:true}),preferences=clone(model.settings);
    let record;
    if(existing?.deleted&&existing.raw===null){
     // A deliberate prior rollback/reset leaves an IDB tombstone. Only a NEW,
@@ -141,7 +141,7 @@ export class PortfolioStorage {
  }
  async recoverFromBackup(model,expected){
   if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
-  const recovered=await restoreDamagedRecord(this.db,{expected,raw:backup(model),settings:clone(model.settings)});
+  const recovered=await restoreDamagedRecord(this.db,{expected,raw:backup(model,{includeHistory:true}),settings:clone(model.settings)});
   this.revision=recovered.revision;
   return recovered;
  }

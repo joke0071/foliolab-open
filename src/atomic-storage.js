@@ -49,7 +49,7 @@ function portablePortfolio(raw) {
   if (typeof raw !== 'string') throw new TypeError('Ein Portfolio muss als JSON-Text vorliegen.');
   // Validation happens before opening a readwrite transaction. Never transfer
   // locally configured API credentials or user-specific private RPC endpoints.
-  return backup(safeImport(JSON.parse(raw)));
+  return backup(safeImport(JSON.parse(raw)),{includeHistory:true});
 }
 
 function assertRecord(record) {

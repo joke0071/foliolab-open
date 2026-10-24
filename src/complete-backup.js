@@ -1,3 +1,4 @@
+import {portableWalletHistory} from './wallet-history-state.js';
 /**
  * A portable, encrypted FolioLab backup contains all financial data and,
  * strictly opt-in, app preferences + user-supplied API/RPC credentials.
@@ -39,7 +40,7 @@ export function portableDrivePreferences(input){
  // to a specific session / Google account. Folder may be reselected manually.
  return {clientId:id,mode,retention};
 }
-export function createCompleteBackup(data,configuration=null){
+export function createCompleteBackup(data,configuration=null,history=null){
  if(!plain(data)||data.version!==3||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
  const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data};
  if(configuration!==null){
@@ -49,6 +50,7 @@ export function createCompleteBackup(data,configuration=null){
    drive:portableDrivePreferences(configuration.drive)
   };
  }
+ if(history!==null)copy.walletHistory=portableWalletHistory(history);
  return copy;
 }
 export function unpackCompleteBackup(raw){
@@ -60,7 +62,7 @@ export function unpackCompleteBackup(raw){
   if(!plain(configuration))throw Error('Backup-Konfiguration beschädigt.');
   validated={settings:portableSettings(configuration.settings),drive:portableDrivePreferences(configuration.drive)};
  }
- return {data:raw.data,configuration:validated};
+ return {data:raw.walletHistory?{...raw.data,walletHistory:portableWalletHistory(raw.walletHistory)}:raw.data,configuration:validated};
 }
 /** Local unencrypted JSON exports remain intentionally credential-free. */
 export function hasPortableCredentials(config){

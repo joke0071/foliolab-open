@@ -1384,7 +1384,7 @@ function readDriveConfig(){
 }
 function fullBackupPayload(data=JSON.parse(backup(model))){
  const included=includeBackupConfiguration();
- return createCompleteBackup(data,included?{settings:model.settings,drive:readDriveConfig()}:null);
+ return createCompleteBackup(data,included?{settings:model.settings,drive:readDriveConfig()}:null,$('fullBackupIncludeHistory')?.checked?model.walletHistory??null:null);
 }
 function decideImportedConfiguration(config){
  if(!config)return null;
@@ -1632,7 +1632,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
       readBackupConfiguration(){
         return includeBackupConfiguration()?{settings:model.settings,drive:readDriveConfig()}:null;
       },
-      buildCompleteBackup:createCompleteBackup,
+      buildCompleteBackup:(data,config)=>createCompleteBackup(data,config,$('fullBackupIncludeHistory')?.checked?model.walletHistory??null:null),
       unpackCompleteBackup,
       validateData(data){return safeImport(data);},
       hasPasswordVault:hasBackupPassword,
