@@ -20,6 +20,9 @@ try{
  });
  assert.equal(before.providers.length,1);
  assert.equal(before.settings.eodhdKey,'SYNTHETIC_SECRET_FOR_TEST');
+ const removeKeysHelp=page.locator('#marketSettings > .more-panel-help');
+ assert.equal(await removeKeysHelp.evaluate(el=>el.open),false,'Destructive key removal is collapsed by default');
+ await removeKeysHelp.evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();
  const after=await page.evaluate(()=>({
   data:JSON.parse(localStorage.getItem('foliolab-open-v1')),
