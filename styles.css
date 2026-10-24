@@ -701,3 +701,7 @@
  .asset-wizard-dialog .wizard-extra>summary{padding:13px 14px}
  .asset-wizard-dialog .wizard-extra>p,.asset-wizard-dialog .wizard-extra>.field,.asset-wizard-dialog .wizard-extra>.wizard-extra-nested{margin-left:12px;margin-right:12px}
 }
+
+/* Compact editor validation feedback, shared across all native editor forms. */
+.edit-dialog .dialog-error:not(.hidden){flex:0 0 auto;margin:0;padding:9px 24px;color:#893e34;background:#fff8f6;border-top:1px solid #eed8d3;font-size:12px;line-height:1.5;max-height:20dvh;overflow:auto}
+@media(max-width:720px){.edit-dialog .dialog-error:not(.hidden){padding:9px 16px}}

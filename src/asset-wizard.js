@@ -266,7 +266,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  const renderSuccess=()=>{
   shell('<div class="wizard-success"><strong>Position gespeichert</strong><p>Bestand und Zuordnung wurden übernommen. Die Kursbewertung bleibt überprüfbar und verwendet keine erfundenen Kurse.</p><div class="toolbar-buttons"><button id="wizardMore" type="button" class="btn outline">Weitere Position hinzufügen</button><button id="wizardPortfolio" type="button" class="btn primary">Zum Portfolio</button></div></div>','Anlage hinzugefügt');
   $('wizardPrev').classList.add('hidden');
-  $('wizardMore').addEventListener('click',()=>{state=fresh();sequence++;const m=getModel();state.providerId=m.providers[0]?.id||'__new__';state.accountId=m.accounts.find(a=>a.providerId===state.providerId)?.id||'__new__';render();});
+  $('wizardMore').addEventListener('click',()=>{state=fresh();sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';render();});
   $('wizardPortfolio').addEventListener('click',close);
   $('wizardPortfolio').focus();
  };
@@ -296,10 +296,10 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  dialog.addEventListener('close',()=>opener?.focus?.());
  return {open(){opener=document.activeElement;state=fresh();funds=loadFundCatalog();sequence++;
    const m=getModel(),preferred=m.accounts.find(a=>a.id===m.settings?.lastAccountId);
-   const provider=m.providers.find(x=>x.id===preferred?.providerId)||m.providers[0];
-   state.providerId=provider?.id||'__new__';
-   const account=m.accounts.find(a=>a.id===preferred?.id&&a.providerId===provider?.id)||m.accounts.find(a=>a.providerId===provider?.id);
-   state.accountId=provider?account?.id||'__new__':'__new__';
+   const provider=m.providers.find(x=>x.id===preferred?.providerId);
+   // Only an explicitly remembered account may preselect an existing provider.
+   state.providerId=provider?.id||(m.providers.length?'':'__new__');
+   state.accountId=state.providerId==='__new__'?'__new__':provider?preferred.id:'';
    dialog.showModal();render();
    void loadSecurityDirectories().then(list=>{
     if(!dialog.open)return;
