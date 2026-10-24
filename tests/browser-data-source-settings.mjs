@@ -17,13 +17,15 @@ try{
  for(const id of ['marketSettings','publicSearchSetup','blockchainSettings']){
   await page.locator('#'+id).evaluate(el=>el.open=true);
  }
- for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit','dataPrivacyNotes']){
+ for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit']){
   const group=page.locator('#'+id);
   await group.evaluate(el=>el.open=true);
   const tips=group.locator('.more-panel-help');
   assert.ok(await tips.count()>0,id+' must keep optional technical help');
   for(let i=0;i<await tips.count();i++)assert.equal(await tips.nth(i).evaluate(el=>el.open),false,'Help initially collapsed in '+id);
  }
+ await page.locator('#dataPrivacyNotes').evaluate(el=>el.open=true);
+ assert.equal(await page.locator('#dataPrivacyNotes .more-privacy-notes section').count(),3,'Privacy guidance uses three short, readable sections');
  assert.equal(await page.locator('#legacyQuoteAuditStatus').innerText(),'Noch nicht geprüft.');
  assert.ok((await page.locator('#dataPrivacyNotes').innerText()).includes('verschlüsselte Vollbackups'));
  assert.doesNotMatch(await page.locator('#dataPrivacyNotes').innerText(),/Backups enthalten keine API-Schlüssel/);
@@ -48,10 +50,11 @@ try{
  assert.equal(settings.binplorerKey,'','Credential removal must clear blockchain keys');
  assert.equal(settings.eodhdKey,'','Credential removal must clear market data keys');
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev','Non-secret endpoint can remain configured');
- for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit','dataPrivacyNotes']){
+ for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit']){
   await page.locator('#'+id).evaluate(el=>el.open=true);
   await page.locator('#'+id+' .more-panel-help').first().evaluate(el=>el.open=true);
  }
+ await page.locator('#dataPrivacyNotes').evaluate(el=>el.open=true);
  await page.locator('#solanaRpcSetup').evaluate(el=>el.open=true);
  for(const width of [320,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:800});
