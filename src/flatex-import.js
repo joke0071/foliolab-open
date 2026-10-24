@@ -144,7 +144,7 @@ export function prepareFlatexImport(files){
     if(!isinOk(isin))throw Error('ISIN fehlt oder ist ungültig.');
     const quantity=absAmount(value(row,'units',heads));
     const unitPrice=singleAmount(value(row,'rate',heads));
-    if(Number(unitPrice)<0)throw Error('Negativer Ausführungskurs.');
+    if(Number(unitPrice)<=0)throw Error('Ausführungskurs fehlt oder ist nicht positiv.');
     const key=stableKey({type:kind,reference:ref,account,isin,date,details,units:quantity,rate:unitPrice});
     if(keys.has(key)){
      const previous=keys.get(key);
