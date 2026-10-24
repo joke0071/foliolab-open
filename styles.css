@@ -431,6 +431,12 @@
 .position-chart-options[open]>summary::after{transform:rotate(180deg)}
 .position-chart-options>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
 .position-chart-options-body{min-width:0;padding:4px 0 8px}
+.position-booking-history{margin-top:16px;border-top:1px solid #e4ece5;padding-top:10px;min-width:0}
+.position-booking-history>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:650;color:#53715c;padding:5px 2px}
+.position-booking-history>summary::-webkit-details-marker{display:none}
+.position-booking-history>summary::after{content:'⌄';font-size:18px;font-weight:500;line-height:1}
+.position-booking-history[open]>summary::after{transform:rotate(180deg)}
+.position-booking-history>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
 .position-chart-options-body .public-chart{margin-top:12px}
 
 /* Native price history: missing data occupies one quiet, closed disclosure. */

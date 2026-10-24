@@ -2,6 +2,7 @@ import {POSITION_PERIODS,marketHistoryCapability,fetchPositionMarketHistory} fro
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {tradingViewIdentifier} from './security-sources.js';
+import {positionBookingTimeline} from './position-bookings.js';
 
 /** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
  * Always display a complete, credential-safe explanation rather than a raw
@@ -61,8 +62,27 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
    hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.',
    {esc}):'';
  const extraTools=isSecurity?'<details class="position-chart-options"><summary>Weitere Kursoptionen</summary><div class="position-chart-options-body">'+csvTool+publicChart+'</div></details>':'';
+ const timeline=positionBookingTimeline(model,p.id);
+ const eventLabels={buy:'Kauf',sell:'Verkauf',deliver_in:'Einlieferung',deliver_out:'Auslieferung',
+  split:'Split',swap:'Tausch',merger:'Fusion',isin_change:'ISIN geändert',ticker_change:'Ticker geändert',
+  dividend:'Dividende',interest:'Zinsen',reward:'Staking-Reward',airdrop:'Airdrop',
+  transfer:'Transfer',adjust:'Bestandszugang',correction:'Korrektur',fee:'Gebühr',tax:'Steuer'};
+ const events=timeline.events.map(e=>{
+  const date=/^\d{4}-\d{2}-\d{2}$/.test(e.date)?e.date:'Unbekanntes Datum';
+  const qty=e.quantityExact!=null?' · '+esc(e.quantityExact)+' '+esc(p.symbol||'Stk.'):'';
+  const source=e.source==='csv'?' · CSV-Import':'';
+  const role=e.isTarget?' · Zielposition':'';
+  return '<div class="history-row"><div><strong>'+esc(date)+' · '+esc(eventLabels[e.type]||e.type)+'</strong>'+
+   '<p class="position-detail-note">'+qty+source+role+(e.note?' · '+esc(e.note):'')+'</p></div></div>';
+ }).join('');
+ const bookingHistory='<details class="position-booking-history"><summary>Gebuchte Vorgänge ('+timeline.total+')</summary>'+
+  '<div class="position-chart-options-body">'+
+  (timeline.total?events+(timeline.hasMore?'<p class="position-detail-note">Weitere Vorgänge unter „Buchungen“ anzeigen.</p>':''):
+   '<p class="position-detail-note">Für diese Position sind noch keine zugeordneten Buchungen erfasst.</p>')+
+  '<p class="position-detail-note">Nur dieser Position zugeordnete Buchungen. Ausführungskurse sind kein belegter Nettogewinn. Cash-Dividenden ohne eindeutige Anlagenzuordnung werden nicht hinzugefügt.</p>'+
+  '</div></details>';
  return meta+allocation+economic+'<p class="position-detail-source">Kursquelle: '+quote+date+'</p>'+
-   quoteCredit+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+extraTools;
+   quoteCredit+controls+(needsOwnChart?'<div class="position-history-plot" role="status">Historische Daten werden geprüft …</div>':noMarketChart)+bookingHistory+extraTools;
 }
 export async function loadPositionDetail(position,model,mount,{days=30,fetcher=globalThis.fetch,esc,money,quant,valueEUR,dateLabel}){
  const target=mount.querySelector('.position-history-plot');
