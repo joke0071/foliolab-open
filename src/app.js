@@ -803,6 +803,7 @@ function openCSVImport(){
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
  const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
+ const sourceLineLabel=line=>{const row=brokerImport?.sourceRows?.[line-2];return row?row.file+', Zeile '+row.line:'Zeile '+line;};
  const selectedBrokerAccount=()=>brokerImport?($('csvBrokerAccount')?.value||''):'';
  const previewOptions=()=>({positionOverrides,fxRateOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||'',allowedAccountId:selectedBrokerAccount()});
  const backfillCheck=()=>{
@@ -895,17 +896,17 @@ function openCSVImport(){
    const detail=errors.map(x=>{
     const unmatched=needsMatch(x.message);
     const fxMissing=/Historischer Wechselkurs fehlt/.test(x.message);
-    const fxField=fxMissing?'<label class="field"><span>Abgerechneter EUR-Wechselkurs (Handelswährung × Kurs)</span><input type="text" inputmode="decimal" aria-label="Zeile '+x.line+': historischer Wechselkurs" data-csv-fx="'+x.line+'" value="'+esc(fxRateOverrides[x.line]||'')+'" placeholder="z. B. 0,92"></label>':'';
-    const select=unmatched?'<label class="field"><span>Passende Anlage</span><select aria-label="Zeile '+x.line+': passende Anlage" data-csv-assign="'+x.line+'">'+
+    const fxField=fxMissing?'<label class="field"><span>Abgerechneter EUR-Wechselkurs (Handelswährung × Kurs)</span><input type="text" inputmode="decimal" aria-label="'+esc(sourceLineLabel(x.line))+': historischer Wechselkurs" data-csv-fx="'+x.line+'" value="'+esc(fxRateOverrides[x.line]||'')+'" placeholder="z. B. 0,92"></label>':'';
+    const select=unmatched?'<label class="field"><span>Passende Anlage</span><select aria-label="'+esc(sourceLineLabel(x.line))+': passende Anlage" data-csv-assign="'+x.line+'">'+
       options([['','Bitte auswählen'],...positions.filter(p=>!brokerImport||p.accountId===selectedBrokerAccount()).map(p=>[p.id,p.name+(p.isin?' · '+p.isin:p.symbol?' · '+p.symbol:'')])],positionOverrides[x.line]||'')+
       '</select></label>':'';
-    return '<div class="csv-review-row"><strong>Zeile '+x.line+'</strong><p>'+esc(x.message)+'</p>'+select+fxField+
-      '<label class="csv-skip"><input type="checkbox" aria-label="Zeile '+x.line+' überspringen" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
+    return '<div class="csv-review-row"><strong>'+esc(sourceLineLabel(x.line))+'</strong><p>'+esc(x.message)+'</p>'+select+fxField+
+      '<label class="csv-skip"><input type="checkbox" aria-label="'+esc(sourceLineLabel(x.line))+' überspringen" data-csv-skip="'+x.line+'"'+(skippedLines.includes(x.line)?' checked':'')+'> Diese Buchung überspringen</label></div>';
    }).join('');
    const examples=result.rows.filter(x=>x.status==='ready').slice(0,5).map(x=>
-     '<div class="history-sub">Zeile '+x.line+' · '+esc(x.row.date+' · '+x.row.type+' · '+x.row.quantity)+'</div>').join('');
+     '<div class="history-sub">'+esc(sourceLineLabel(x.line))+' · '+esc(x.row.date+' · '+x.row.type+' · '+x.row.quantity)+'</div>').join('');
    const skipped=result.rows.filter(x=>x.status==='skipped').map(x=>
-    '<div class="csv-review-row"><strong>Zeile '+x.line+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" aria-label="Zeile '+x.line+' weiterhin auslassen" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
+    '<div class="csv-review-row"><strong>'+esc(sourceLineLabel(x.line))+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" aria-label="'+esc(sourceLineLabel(x.line))+' weiterhin auslassen" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
    $('csvReview').innerHTML='<div class="csv-import-review"><h3 id="csvReviewHeading" tabindex="-1">Buchungen prüfen</h3>'+status+
     (errors.length?'<p class="small-help">Unklare Anlagen werden niemals automatisch einer anderen Position zugeordnet.</p>'+detail:'<p class="small-help">Alle übrigen Buchungen sind zugeordnet.</p>')+skipped+
     (examples?'<details class="advanced-apis"><summary>Beispielbuchungen ansehen</summary>'+examples+'</details>':'')+'</div>';
