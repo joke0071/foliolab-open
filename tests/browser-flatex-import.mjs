@@ -52,6 +52,7 @@ try{
  assert.match(confirmed,/wird keinem FolioLab-Guthaben automatisch zugeordnet/);
  await page.locator('#csvBrokerConfirm').check();
  await page.waitForFunction(()=>document.querySelector('#csvReview')?.textContent.includes('1 bereit'));
+ assert.match(await page.locator('#csvReview').textContent(),/depot\.csv, Zeile 2/);
  assert.equal(await page.locator('#saveDialog').isDisabled(),false);
  await page.locator('#saveDialog').click();
  await page.waitForFunction(id=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1')||'{}');return m.positions?.find(x=>x.id===id)?.quantityExact==='2';},ids.p);
