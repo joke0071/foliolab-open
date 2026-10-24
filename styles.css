@@ -908,3 +908,29 @@
  #googleDriveBackupSetup .drive-connect-actions .btn{flex-basis:100%}
  #googleDriveBackupSetup .drive-folder-actions .btn{flex:1 1 100%}
 }
+
+/* Backup password: first-time setup is two fields; change and details only on demand. */
+#backupPasswordSetup[open]{min-width:0}
+#backupPasswordSetup [hidden]{display:none!important}
+#backupPasswordSetup .backup-password-intro{margin:8px 0 9px;line-height:1.5}
+#backupPasswordSetup .backup-password-state{margin:7px 0 12px;color:#3d6a4e;font-size:12px;font-weight:700;line-height:1.5}
+#backupPasswordSetup .backup-password-form{display:grid;gap:9px;min-width:0}
+#backupPasswordSetup .backup-password-form .field{margin:0;min-width:0}
+#backupPasswordSetup .backup-password-form .field input{max-width:100%;min-width:0}
+#backupPasswordSetup .backup-password-form #saveBackupPassword{justify-self:start;margin-top:3px;min-width:0;max-width:100%;white-space:normal}
+#backupPasswordSetup .backup-password-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;min-width:0}
+#backupPasswordSetup .backup-password-actions .btn{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.4}
+#backupPasswordSetup .full-backup-option{margin:15px 0 0}
+#backupPasswordSetup .backup-full-hint{margin:4px 0 0;line-height:1.5}
+#backupPasswordSetup .backup-password-help{margin-top:12px;padding-top:10px;border-top:1px solid #e6eee7}
+#backupPasswordSetup .backup-password-help>summary{cursor:pointer;color:#4c7459;font-size:12px;font-weight:720;line-height:1.5}
+#backupPasswordSetup .backup-password-help .small-help{margin:8px 0;line-height:1.55}
+@media(max-width:430px){
+ #backupPasswordSetup .backup-password-actions{display:grid;grid-template-columns:minmax(0,1fr)}
+ #backupPasswordSetup .backup-password-actions .btn{width:100%}
+}
+/* Capital comparison belongs to return analysis; keep history chart uncluttered. */
+.history-insights .history-capital-comparison{padding:6px 0 12px;margin-bottom:11px;border-bottom:1px solid #e6eee7;min-width:0}
+.history-insights .history-capital-comparison .csv-skip{margin:0 0 5px;display:flex;align-items:flex-start;gap:9px;min-width:0;line-height:1.5}
+.history-insights .history-capital-comparison input{margin-top:2px;flex:0 0 auto}
+.history-insights .history-capital-comparison .small-help{margin:0;color:#688071;line-height:1.5}

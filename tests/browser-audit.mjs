@@ -26,8 +26,20 @@ try{
   const nav=(await page.locator('#mobileNav').isVisible())?'#mobileNav':'#sidebarNav';
   for(const section of ['positions','dashboard','history','more']){
    await page.locator(nav+' [data-page="'+section+'"]').click();
+   if(section==='history'){
+    const comparison=await page.evaluate(()=>{
+     const details=document.getElementById('performanceDetails');
+     const toggle=document.getElementById('compareCapital'),hint=document.getElementById('capitalCompareHelp');
+     return {nested:details.contains(toggle)&&details.contains(hint),title:details.querySelector('summary span')?.textContent,closed:!details.open};
+    });
+    assert.equal(comparison.nested,true,'Capital comparison must be inside return details');
+    assert.match(comparison.title,/Rendite & Einzahlungen/);
+    if(width===320)assert.equal(comparison.closed,true,'Performance section should remain collapsed by default');
+    await page.locator('#performanceDetails').evaluate(el=>el.open=true);
+   }
    const dimensions=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:innerWidth}));
    assert.ok(dimensions.scroll<=dimensions.width+1,section+' horizontal overflow at '+width+': '+JSON.stringify(dimensions));
+   if(section==='history')await page.locator('#performanceDetails').evaluate(el=>el.open=false);
   }
  }
  assert.equal(await page.evaluate(()=>window.__auditXss),undefined,'HTML injection in asset name');

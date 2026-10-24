@@ -62,6 +62,14 @@ try{
  await page.locator('#backupPasswordConfirm').fill('unverwechselbares-testpasswort');
  await page.locator('#saveBackupPassword').click();
  await page.waitForFunction(()=>document.querySelector('#backupPasswordStatus').textContent.startsWith('Backup-Passwort eingerichtet'));
+ assert.equal(await page.locator('#backupPasswordForm').isVisible(),false,'Password form is collapsed once configured');
+ assert.equal(await page.locator('#backupChangeToggle').isVisible(),true);
+ assert.equal(await page.locator('#backupOldPasswordField').isVisible(),false);
+ await page.locator('#backupChangeToggle').click();
+ await page.locator('#backupPasswordForm').waitFor({state:'visible'});
+ assert.equal(await page.locator('#backupOldPasswordField').isVisible(),true,'Old password only appears in change mode');
+ await page.locator('#backupChangeToggle').click();
+ await page.locator('#backupPasswordForm').waitFor({state:'hidden'});
  const encryptedDownloadPromise=page.waitForEvent('download',{timeout:5000});
  await page.locator('#exportEncryptedBackup').click();
  let encDl;
