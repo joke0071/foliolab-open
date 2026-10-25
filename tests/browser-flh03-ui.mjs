@@ -2,12 +2,15 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_UI_BASE||'http://127.0.0.1:4173/',engines={chromium,firefox,webkit},live=base.startsWith('https:'),proxy=live&&process.env.HTTPS_PROXY;
+const previousDoc=new URL(live?'/':'/tests/storage-origin.html',base);if(!live)previousDoc.hostname=previousDoc.hostname==='127.0.0.1'?'localhost':'127.0.0.1';
 const axeSource=readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8');
 for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
  const browser=await engines[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
  const ctx=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true,ignoreHTTPSErrors:live});
- await ctx.addInitScript({content:axeSource});await ctx.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
- const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await ctx.addInitScript({content:axeSource});// Intercept external traffic only: routing app requests can stall Firefox
+ // after a native beforeunload rejection (Playwright #38731).
+ await ctx.route(url=>![new URL(base).origin,previousDoc.origin].includes(url.origin),r=>r.abort());
+ let p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
  const nav=async name=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+name+'"]').click();
  const scan=async label=>{assert.deepEqual(await p.evaluate(async()=> (await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))),[],label);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' overflow');};
  const read=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
@@ -79,11 +82,20 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   await nav('bookings');await p.locator('#openCSVImport').click();await p.locator('#csvFile').setInputFiles({name:'draft.csv',mimeType:'text/csv',buffer:Buffer.from('date;type;position;quantity;price;id\n2023-01-04;deposit;A;1;1;draft')});await p.waitForFunction(()=>document.getElementById('csvReviewStatus').textContent.includes('1 bereit'));
   await refuseReload('CSV preview',p.locator('#csvFile'),await p.locator('#csvFile').inputValue());assert.ok(await p.locator('#editDialog').isVisible());
   p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.equal(await unloadSignal(),false);assert.deepEqual(await read(),provenRestored,'Discarded drafts never modify portfolio');
-  // Real browser Back to a preceding, public same-origin document.
-  await p.goto(base+'manifest.webmanifest');await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
-  let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
+  // Test accept and reject as independent native traversal cases. Firefox's
+  // cancelled session-history traversal cannot reliably be retried by automation.
+  const openBackDraft=async()=>{
+   const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
+   await p.goto(previousDoc.href);await p.evaluate(()=>{document.body.innerHTML='<button id=previousDocument>Previous synthetic document</button>';});await p.locator('#previousDocument').click();assert.equal(p.url(),previousDoc.href);
+   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
+  };
+  await openBackDraft();let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};
+  p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
   assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
-  p.once('dialog',d=>d.accept());await Promise.all([p.waitForURL('**/manifest.webmanifest'),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(p.url().includes('manifest.webmanifest'),'Confirmed discard can navigate');
+  p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
+  await openBackDraft();let acceptedBack=false;
+  p.once('dialog',async d=>{assert.equal(d.type(),'beforeunload');acceptedBack=true;await d.accept();});
+  await Promise.all([p.waitForURL(previousDoc.href),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(acceptedBack);assert.equal(p.url(),previousDoc.href,'Confirmed discard can navigate');
   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic saved');await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);assert.equal(await unloadSignal(),false,'Successful save clears unload protection');
   let cleanWarnings=0;const countClean=async d=>{cleanWarnings++;await d.accept();};p.on('dialog',countClean);await p.reload();p.off('dialog',countClean);assert.equal(cleanWarnings,0);
   console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
