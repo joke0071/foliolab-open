@@ -1,3 +1,4 @@
+import {cashTermsAccountHint} from './cash-terms-ui.js';
 /** Presentation-only dashboard helpers. Never imply performance when only wealth history exists. */
 const compactAmount = value => {
   const n = Number(value);
@@ -52,7 +53,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
           '<span class="provider-holding-right"><strong>'+esc(money(valueEUR(p)))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
       }).join('');
-      return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small></div><strong>'+esc(money(sum))+'</strong><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+
+      return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small>'+cashTermsAccountHint(account,esc)+'</div><strong>'+esc(money(sum))+'</strong><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+
         (holdings?'<div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
     }).join('');
     const open=expanded.has(provider.id)?' open':'';

@@ -1,4 +1,6 @@
 import {compareCurrentCashBalance} from './cash-reconciliation.js';
+import {cashTermsFromForm} from './cash-terms.js';
+import {cashTermsFormMarkup,bindCashTermsForm,cashTermsAccountHint,renderCashTermsOverview} from './cash-terms-ui.js';
 import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
@@ -123,7 +125,8 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   attachAllocationInteractions($('dashboardPage'),{slices:alloc.slices,money,netTotal:total,initialIndex:pie.activeIndex});
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
-  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
+  const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
+  $('providerOverview').innerHTML=renderCashTermsOverview(model,esc,{open:cashOverviewOpen})+renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=model.snapshots;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
@@ -315,7 +318,7 @@ function renderSettings(){
  const expanded=new Set([...settings.querySelectorAll('details[open][data-provider-settings]')].map(x=>x.dataset.providerSettings));
  settings.innerHTML=model.providers.length?model.providers.map(p=>{
   const accounts=model.accounts.filter(a=>a.providerId===p.id);
-  const children=accounts.map(a=>'<div class="account-entry"><span>'+esc(a.name)+' <small>· '+esc(accountTypes[a.type]||accountTypes.other)+'</small></span>'+
+  const children=accounts.map(a=>'<div class="account-entry"><span>'+esc(a.name)+' <small>· '+esc(accountTypes[a.type]||accountTypes.other)+'</small>'+cashTermsAccountHint(a,esc)+'</span>'+
    '<button type="button" class="row-btn" data-action="edit-account" data-id="'+esc(a.id)+'" aria-label="Konto bearbeiten">'+svg('pencil',15)+'</button>'+
    '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>').join('');
   return '<div class="setting-provider provider-settings-row">'+
@@ -514,14 +517,14 @@ function openAccount(a,defaultProviderId){
  '<label class="field"><span>Kontoname</span><input name="name" id="accountName" type="text" required maxlength="100" autocomplete="off" value="'+esc(a?.name||suggestion[0])+'" placeholder="Girokonto, Wertpapierdepot …"></label>'+
  '<div class="onboarding-suggestions" id="accountMatches" role="region" aria-label="Kontovorschläge"></div>'+
  '<div class="field-row"><label class="field"><span>Kontotyp</span><select name="type" id="accountType">'+options(Object.entries(accountTypes),a?.type||suggestion[1])+'</select></label>'+
- '<label class="field"><span>Kontowährung</span><select id="accountCurrency" name="currency">'+options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK'].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
+ '<label class="field"><span>Kontowährung</span><select id="accountCurrency" name="currency">'+options([...new Set(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK',a?.currency].filter(Boolean))].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
  (a?'':('<label class="field"><span id="accountOpeningLabel">Startguthaben (EUR) · optional</span><input id="accountOpeningAmount" name="initialBalance" type="text" inputmode="decimal" placeholder="z. B. 2500"></label>'+
  '<label class="field hidden" id="accountOpeningFxWrap"><span>EUR je Einheit Kontowährung (manueller Umrechnungskurs)</span><input name="openingFxRate" id="accountOpeningFx" type="number" min="0.00000001" step="any" placeholder="z. B. 0.92"><small>Nur bei einem Startguthaben in Fremdwährung erforderlich; keine automatische Schätzung.</small></label>'+
- '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>')),
+ '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>'))+cashTermsFormMarkup(a?.cashTerms,esc,options),
  async v=>{
   if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
   // Validate account and opening valuation before mutating either collection.
-  const next=createAccount({...v,id:a?.id},model);
+  const next=createAccount({...v,id:a?.id,cashTerms:cashTermsFromForm(v,a?.cashTerms)},model);
   const opening=a?null:openingCashInput({amount:v.initialBalance,currency:next.currency,fxRate:v.openingFxRate});
   const openingDate=String(v.initialBalanceDate||'').trim();
   if(opening&&(!/^\d{4}-\d{2}-\d{2}$/.test(openingDate)||Number.isNaN(Date.parse(openingDate))||new Date(openingDate+'T12:00:00Z').toISOString().slice(0,10)!==openingDate||openingDate>new Date().toISOString().slice(0,10)))throw Error('Bitte ein gültiges Anfangsbestandsdatum bis heute angeben.');
@@ -530,6 +533,7 @@ function openAccount(a,defaultProviderId){
   if(firstPosition)model.positions.push(firstPosition);
   model.settings.lastAccountId=next.id;await save();notify('Konto gespeichert.');
  });
+ bindCashTermsForm($('editorForm'));
  const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
  if(!a){
   const currency=$('accountCurrency'),amount=$('accountOpeningAmount'),wrap=$('accountOpeningFxWrap'),fx=$('accountOpeningFx');
