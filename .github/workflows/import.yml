@@ -99,6 +99,8 @@ jobs:
           node tests/browser-multitab-integrity.mjs
           node tests/browser-p0-storage.mjs
           node tests/browser-atomic-storage.mjs
+          node tests/browser-idb-new-install.mjs
+          node tests/browser-idb-migration-acceptance.mjs
           node tests/browser-idb-cutover.mjs
           node tests/browser-idb-migration-resilience.mjs
           node tests/browser-idb-crash-recovery.mjs
@@ -164,6 +166,8 @@ jobs:
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
           node tests/browser-atomic-storage-cross-engine.mjs
+          IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
+          IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs

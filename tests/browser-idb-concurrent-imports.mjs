@@ -21,7 +21,7 @@ try{
   };
   return [make('Import tab A'),make('Import tab B')];
  });
- await Promise.all([first.reload(),second.goto('http://127.0.0.1:4173/tests/storage-origin.html')]);
+ await Promise.all([first.goto('http://127.0.0.1:4173/'),second.goto('http://127.0.0.1:4173/')]);
  await Promise.all([first.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv')),
   second.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv'))]);
  first.on('dialog',async d=>d.accept());second.on('dialog',async d=>d.accept());

@@ -1,8 +1,9 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync} from 'node:fs';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:820}});
+const page=await legacyPage(browser,{viewport:{width:390,height:820}});
 mkdirSync('artifacts/dialog-visual',{recursive:true});
 try{
  await page.goto('http://127.0.0.1:4173/');

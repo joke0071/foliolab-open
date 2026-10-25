@@ -1,8 +1,9 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:850},acceptDownloads:true});
+const page=await legacyPage(browser,{viewport:{width:390,height:850},acceptDownloads:true});
 page.on('dialog',dialog=>dialog.accept());
 const now=Math.floor(Date.now()/1000),today=new Date().toISOString().slice(0,10);
 let externalRequests=0;

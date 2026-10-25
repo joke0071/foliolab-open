@@ -1,4 +1,7 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const expectedCache=readFileSync('sw.js','utf8').match(/const CACHE='([^']+)'/)[1];
 import {chromium,firefox,webkit} from 'playwright';
 import {spawn} from 'node:child_process';
 import {once} from 'node:events';
@@ -20,7 +23,7 @@ class Handler(SimpleHTTPRequestHandler):
    Handler.upgraded=True
    self.send_response(200);self.end_headers();self.wfile.write(b'updated');return
   if self.path.startswith('/sw.js') and not Handler.upgraded:
-   source=open('sw.js').read().replace('foliolab-open-v150','foliolab-open-v149').replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'')
+   source=open('sw.js').read().replace('${expectedCache}','foliolab-open-v149').replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'')
    self.send_response(200);self.send_header('Content-Type','application/javascript');self.end_headers();self.wfile.write(source.encode());return
   super().do_GET()
 HTTPServer(('127.0.0.1',4188),Handler).serve_forever()`;
@@ -31,7 +34,7 @@ HTTPServer(('127.0.0.1',4188),Handler).serve_forever()`;
 for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
  console.log('CASH TERMS '+name+': starting');
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
+ const context=await legacyContext(browser,{viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));let server;
  try{
   server=await start();await page.addInitScript({content:axe});await page.goto(base);
@@ -52,7 +55,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
    assert.ok((await page.evaluate(()=>caches.keys())).includes('foliolab-open-v149'));
    await fetch(base+'/__release/update');
    await Promise.all([page.waitForEvent('load'),page.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();})]);
-   await page.waitForFunction(async()=>{const keys=await caches.keys();return keys.includes('foliolab-open-v150')&&!keys.includes('foliolab-open-v149');});
+   await page.waitForFunction(async expected=>{const keys=await caches.keys();return keys.includes(expected)&&!keys.includes('foliolab-open-v149');},expectedCache);
    assert.equal(await financial(),before,'real worker activation preserves financial data');
   }
   const compare=async()=>{

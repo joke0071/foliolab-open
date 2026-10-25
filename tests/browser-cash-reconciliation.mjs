@@ -1,3 +1,4 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {createRequire} from 'node:module';
@@ -27,7 +28,7 @@ deadline.unref();
 for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
  console.log('CASH RECONCILIATION '+name+': starting');
  const browser=await engines[name].launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
+ const context=await legacyContext(browser,{viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  let server;
  try{

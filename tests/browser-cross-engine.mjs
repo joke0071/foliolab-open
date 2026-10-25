@@ -1,3 +1,4 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {firefox,webkit} from 'playwright';
 
@@ -5,7 +6,7 @@ import {firefox,webkit} from 'playwright';
 // Nothing here uses a real API key, network wallet or the user's portfolio.
 for(const [name,engine] of [['Firefox',firefox],['WebKit',webkit]]){
  const browser=await engine.launch({headless:true});
- const context=await browser.newContext({viewport:{width:390,height:844},acceptDownloads:true});
+ const context=await legacyContext(browser,{viewport:{width:390,height:844},acceptDownloads:true});
  const page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(String(e.message||e)));
  try{

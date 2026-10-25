@@ -10,3 +10,7 @@ export async function legacyContext(browser,options){
  },{key:STORE_KEY,raw:JSON.stringify(blankModel())});
  return context;
 }
+export async function legacyPage(browser,options){
+ const context=await legacyContext(browser,options);
+ return context.newPage();
+}

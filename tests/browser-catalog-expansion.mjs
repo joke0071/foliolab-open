@@ -1,7 +1,8 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:850}});
+const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 try{
  await page.route('https://api.coingecko.com/api/v3/coins/markets**',route=>{
   const coins=Array.from({length:100},(_,i)=>({id:'synthetic-'+i,symbol:'SC'+i,name:'Synthetic Coin '+i,market_cap_rank:i+1}));

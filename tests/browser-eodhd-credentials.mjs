@@ -1,7 +1,8 @@
+import {legacyContext,legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:844}});
+const page=await legacyPage(browser,{viewport:{width:390,height:844}});
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.locator('#mobileNav [data-page="more"]').click();
@@ -79,7 +80,7 @@ try{
   assert.ok(scrollWidth<=innerWidth+1,'No horizontal overflow at '+width);
  }
  // Real touch emulation: tapping the visibility eye must not leave a green hover tile.
- const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ const touchContext=await legacyContext(browser,{viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  try{
   const touch=await touchContext.newPage();
   await touch.goto('http://127.0.0.1:4173/');

@@ -1,8 +1,9 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const context=await browser.newContext({viewport:{width:390,height:844}});
+const context=await legacyContext(browser,{viewport:{width:390,height:844}});
 const first=await context.newPage(),second=await context.newPage();
 try{
  await Promise.all([first.goto('http://127.0.0.1:4173/'),second.goto('http://127.0.0.1:4173/')]);

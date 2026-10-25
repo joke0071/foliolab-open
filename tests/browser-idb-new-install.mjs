@@ -71,5 +71,16 @@ for(const name of (process.env.IDB_ENGINES||'chromium').split(',')){
    console.log(name+': new-store '+fault+' fail-closed/retry PASS');
   }finally{await ctx.close();}
  }
+ // The real app (not only the controller) starts in IDB and awaits UI commits.
+ const uiContext=await browser.newContext({viewport:{width:390,height:844}}),ui=await uiContext.newPage();
+ try{
+  await ui.goto('http://127.0.0.1:4173/');await ui.locator('#mobileNav [data-page="more"]').click();
+  assert.match(await ui.locator('#portfolioStorageState').textContent(),/IndexedDB aktiv/);
+  await ui.locator('#addProvider').click();await ui.locator('#providerName').fill('Fresh IDB Bank');await ui.locator('#saveDialog').click();await ui.locator('#editDialog').waitFor({state:'hidden'});
+  await ui.reload();await ui.locator('#mobileNav [data-page="more"]').click();
+  assert.match(await ui.locator('#providerSettings').textContent(),/Fresh IDB Bank/);
+  assert.equal(await ui.evaluate(()=>localStorage.getItem('foliolab-open-v1')),null);
+  console.log(name+': real new-install UI save/reload without local portfolio PASS');
+ }finally{await uiContext.close();}
  await browser.close();
 }

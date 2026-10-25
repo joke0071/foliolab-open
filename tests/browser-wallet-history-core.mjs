@@ -1,3 +1,4 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {replayWalletHistory,reconcileWalletHistory,historyEventId} from '../src/wallet-history-core.js';
@@ -21,7 +22,7 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  const engine={chromium,firefox,webkit}[name];assert.ok(engine,'unknown engine');
  const browser=await engine.launch({headless:true});
  try{
-  const page=await browser.newPage();
+  const page=await legacyPage(browser);
   await page.route('**/*',route=>new URL(route.request().url()).hostname==='127.0.0.1'?route.continue():route.abort());
   await page.goto('http://127.0.0.1:4173/tests/');
   const actual=await page.evaluate(async cases=>{

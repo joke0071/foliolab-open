@@ -1,7 +1,8 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage();
+const page=await legacyPage(browser);
 try{
  await page.route('https://api.twelvedata.com/quote**',async route=>{
   const symbol=new URL(route.request().url()).searchParams.get('symbol');

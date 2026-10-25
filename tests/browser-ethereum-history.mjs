@@ -1,8 +1,9 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
 for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true});
  try{
-  const page=await browser.newPage();await page.goto('http://127.0.0.1:4173/tests/');
+  const page=await legacyPage(browser);await page.goto('http://127.0.0.1:4173/tests/');
   const r=await page.evaluate(async()=>{
    const {fetchEthereumHistory}=await import('/src/ethereum-history.js');
    const {wallets,tokens,openings,provider,now}=await import('/tests/ethereum-history-fixtures.mjs');
