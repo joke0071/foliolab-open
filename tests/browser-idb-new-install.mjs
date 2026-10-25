@@ -32,22 +32,22 @@ for(const name of (process.env.IDB_ENGINES||'chromium').split(',')){
   console.log(name+': fresh IDB, simultaneous CAS, last-tab-close restart, no local mirror PASS');
  }finally{await context.close();}
  // New-store failure and interruption gates use isolated browser profiles.
- for(const fault of ['unavailable','quota','marker','orphan','changed-settings']){
+ for(const fault of ['unavailable','quota','marker','orphan','changed-settings','invalid-settings']){
   const ctx=await browser.newContext(),p=await ctx.newPage();
   try{
    await p.goto(origin);
    const result=await p.evaluate(async fault=>{
     const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
     const {blankModel,backup}=await import('/src/model.js');
-    const {openPortfolioDB,commitPortfolioRecord,readPortfolioRecord}=await import('/src/atomic-storage.js');
+    const {openPortfolioDB,commitPortfolioRecord,readPortfolioRecord,readUnverifiedRecord}=await import('/src/atomic-storage.js');
     const originalPut=IDBObjectStore.prototype.put,originalOpen=indexedDB.open;
     if(fault==='orphan'){
      const db=await openPortfolioDB(),m=blankModel();m.settings.eodhdKey='SYNTHETIC_UNCONFIRMED';
      await commitPortfolioRecord(db,{expectedRevision:null,raw:backup(m),settings:m.settings});db.close();
     }
     if(fault==='quota')IDBObjectStore.prototype.put=function(){throw new DOMException('simulated quota','QuotaExceededError');};
-    if(fault==='changed-settings')IDBObjectStore.prototype.put=function(record,key){
-     return originalPut.call(this,{...record,settings:{...record.settings,eodhdKey:'SYNTHETIC_CHANGED'}},key);
+    if(['changed-settings','invalid-settings'].includes(fault))IDBObjectStore.prototype.put=function(record,key){
+     return originalPut.call(this,{...record,settings:{...record.settings,eodhdKey:fault==='invalid-settings'?42:'SYNTHETIC_CHANGED'}},key);
     };
     if(fault==='unavailable')indexedDB.open=()=>{throw Error('simulated unavailable IndexedDB');};
     const storage={getItem:k=>localStorage.getItem(k),removeItem:k=>localStorage.removeItem(k),setItem:(k,v)=>{
@@ -61,9 +61,11 @@ for(const name of (process.env.IDB_ENGINES||'chromium').split(',')){
     if(fault==='marker'){
      const retry=new PortfolioStorage();await retry.initialize();resumed={idb:retry.isIndexedDB,revision:retry.revision};retry.close();
     }
-    const db=await openPortfolioDB(),record=await readPortfolioRecord(db);db.close();
-    return {failed,saveBlocked,legacy:localStorage.getItem('foliolab-open-v1'),mode:localStorage.getItem(MODE_KEY),resumed,record:record===null?null:record.revision};
+    const db=await openPortfolioDB(),record=await readUnverifiedRecord(db);let invalidRejected=false;
+    try{await readPortfolioRecord(db);}catch{invalidRejected=true;}db.close();
+    return {invalidRejected,failed,saveBlocked,legacy:localStorage.getItem('foliolab-open-v1'),mode:localStorage.getItem(MODE_KEY),resumed,record:record===null?null:record.revision};
    },fault);
+   if(fault==='invalid-settings')assert.equal(result.invalidRejected,true);
    assert.equal(result.failed,true,fault);assert.equal(result.saveBlocked,true,fault);assert.equal(result.legacy,null,fault);
    if(fault==='marker')assert.deepEqual(result.resumed,{idb:true,revision:1});
    else assert.equal(result.mode,null,fault);

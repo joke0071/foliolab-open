@@ -38,3 +38,15 @@ Bei Wiederaufnahme zuerst letzten PR-/Issue-Checkpoint und Remote-SHA lesen. Kei
 - v1/v2/v3-Übernahme erhält optionale Schlüssel. Manipuliertes IDB-Rücklesen (Portfolio und Settings) sowie während Commit veränderte Legacy-Quelle verhindern den Cutover. Ein abweichender IDB-Restrecord wird bei Retry nicht überschrieben.
 - Vollständige lokale Chromium-Suite: 79 Skripte ausgeführt, 76 zunächst grün. Die drei Fehler (Legacy-Ausgangslage für Quota-A11y, doppelter Testimport, Zeitpunkt der neuen Retry-Assertion) wurden korrigiert und alle drei gezielt erneut grün ausgeführt. 20 Pixelreferenzen unverändert bestanden. Der anschließende exakte Gesamtstand muss vollständig in CI bestehen; frühere rote Läufe sind keine Abnahme.
 - Erster PR-CI-Lauf `40178455511` rot wegen Legacy-Fixture-/Testintegration; keine Produktivfreigabe. Vollständige Wiederholung einschließlich Firefox/WebKit folgt auf diesem Commit.
+
+## Checkpoint 5 – Recovery ohne Marker und vollständige Historienfortsetzung
+
+Stand `7b7a96d` bestand die vollständige CI `40178770450`: 557 Unit-Tests, vollständiges Chromium, Firefox/WebKit und Wallet-Checks; Deployment übersprungen.
+
+Anschließender gezielter Befund: Ein beschädigter/unbestätigter IDB-Record ohne Modusmarker wurde korrekt gesperrt, ließ sich aber nicht durch die vorhandene UI sichern/wiederherstellen. Der Originaldownload darf jetzt die IDB-Verbindung explizit erneut öffnen. Gewöhnliche Saves prüfen weiterhin den kanonischen Modusmarker. Ausschließlich die bestehende, bestätigte Recovery mit Originalrecord-CAS und vollständigem Rücklesevergleich darf danach den Marker setzen. Keine automatische Adoption.
+
+Neue Chromium-Abnahme für diesen Fall: Originaldownload samt synthetischem Key, verweigerter normaler Save, bestätigter Backup-Restore, Revision 7→8, kein lokaler Portfolio-Mirror bestanden. Bestehende Recovery-/Cutover-/Crash-/Import-/Neuinstallationsregressionen erneut bestanden.
+
+Die Migrationssicherung trägt die vollständige validierte Wallet-Historie im normalen v3-Datenpayload. Dadurch bleiben auch sichere `re-fetch-needed`-Checkpoints erhalten; die separate portable Historienprojektion darf diesen Migrationssnapshot nicht ersetzen. Klartext- und verschlüsselte Datei einschließlich tatsächlichem UI-Restore mit akzeptierten Sessions UND ausstehenden Checkpoints erneut byteinhaltlich/fachlich geprüft. Keine Änderungen an der Backupengine oder dem Format. Typwidrige gespeicherte Settings werden separat fail-closed getestet.
+
+Nach diesem Commit vollständige CI erneut ausführen. Bis zu deren Erfolg WIP; kein Merge/Deployment. Reale Geräte/Drive/Eviction bleiben getrennte manuelle Gates in #44.

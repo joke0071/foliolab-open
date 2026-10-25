@@ -9,7 +9,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
    await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
    const expected=await page.evaluate(async()=>{
     const {blankModel,createProvider,createAccount,createPosition,addBooking,snapshot,persist,backup,STORE_KEY}=await import('/src/model.js');
-    const {acceptHistory,historyPreview}=await import('/src/wallet-history-state.js');
+    const {acceptHistory,historyPreview,checkpointHistory}=await import('/src/wallet-history-state.js');
     const {replayWalletHistory}=await import('/src/wallet-history-core.js');
     const {event,stream,NOW}=await import('/tests/wallet-history-fixtures.mjs');
     let m=blankModel();m.settings.autoRefresh=false;m.settings.eodhdKey='SYNTHETIC_MIGRATION_KEY';
@@ -19,6 +19,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     const p=createPosition({providerId:provider.id,accountId:a.id,name:'Manual ETF',kind:'etf',quantity:4,price:100},m);m.positions.push(p);
     addBooking(m,{positionId:p.id,date:'2026-10-20',type:'buy',quantity:2,unitPrice:110,feeEUR:2});snapshot(m,'2026-10-20','Confirmed',{manualTotalEUR:'612.34'});
     m=acceptHistory(m,historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream()]}),issues:[]},{id:'migration-history',chain:'eth',walletKey:'public-wallet',acceptedAt:NOW}));
+    m=checkpointHistory(m,{id:'migration-pending',chain:'eth',walletKey:'public-wallet',provider:'rpc.test',filter:'all',tip:'10',updatedAt:NOW});
     persist(m);
     return {raw:localStorage.getItem(STORE_KEY),portable:JSON.parse(backup(m,{includeHistory:true})),settings:m.settings};
    });
@@ -54,7 +55,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     assert.ok(!bytes.includes('SYNTHETIC_MIGRATION_KEY'));
     decoded=await page.evaluate(async envelope=>{const {decryptPasswordBackup}=await import('/src/backup-vault.js');return JSON.parse(await decryptPasswordBackup(envelope,'migration-test-password'));},decoded);
     assert.equal(decoded.configuration.settings.eodhdKey,expected.settings.eodhdKey);
-    assert.deepEqual(decoded.walletHistory,expected.portable.walletHistory);
+    assert.deepEqual(decoded.data.walletHistory,expected.portable.walletHistory);
     assert.deepEqual(decoded.data,expected.portable);
    }else{
     assert.ok(!bytes.includes('SYNTHETIC_MIGRATION_KEY'));assert.ok(!bytes.includes('SYNTHETIC_PRIVATE_RPC'));

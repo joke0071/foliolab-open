@@ -130,6 +130,7 @@ export class PortfolioStorage {
    });
   }
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
+  if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
    expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings
@@ -179,14 +180,33 @@ export class PortfolioStorage {
   }catch(error){db.close();throw error;}
  }
  async unverifiedBackup(){
-  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht geöffnet.');
+  if(!this.isIndexedDB)throw Error('IndexedDB ist nicht geöffnet.');
+  // Failed new-install verification may have closed the connection. Original
+  // records must still be downloadable for the existing explicit recovery UI.
+  if(!this.db)this.db=await openPortfolioDB();
   return readUnverifiedRecord(this.db);
  }
  async recoverFromBackup(model,expected){
-  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
-  const recovered=await restoreDamagedRecord(this.db,{expected,raw:backup(model,{includeHistory:true}),settings:clone(model.settings)});
-  this.revision=recovered.revision;
-  return recovered;
+  return this.withLocalLock(async()=>{
+   if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
+   const mode=this.storage.getItem(MODE_KEY),legacy=this.storage.getItem(STORE_KEY);
+   if(mode!==MODE_VALUE&&(mode!==null||legacy!==null))
+    throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+   const raw=backup(model,{includeHistory:true}),settings=clone(model.settings);
+   const recovered=await restoreDamagedRecord(this.db,{expected,raw,settings});
+   const check=await readPortfolioRecord(this.db);
+   if(check?.revision!==recovered.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))
+    throw Error('Wiederherstellung konnte nicht vollständig überprüft werden.');
+   if(mode===null){
+    // Explicit recovery of a record without a cutover marker; never adopt it
+    // automatically or overwrite a concurrently created legacy portfolio.
+    if(this.storage.getItem(MODE_KEY)!==null||this.storage.getItem(STORE_KEY)!==null)
+     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+    this.storage.setItem(MODE_KEY,MODE_VALUE);
+   }
+   this.revision=recovered.revision;
+   return recovered;
+  });
  }
  async removeAll(){return this.withLocalLock(()=>this.removeAllLocked());}
  async removeAllLocked(){

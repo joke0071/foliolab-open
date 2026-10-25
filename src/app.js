@@ -1782,7 +1782,7 @@ async function downloadMigrationBackup(draft){
  const data=JSON.parse(backup(draft,{includeHistory:true}));
  const withConfiguration=includeBackupConfiguration();
  const payload=withConfiguration
-  ?await encryptWithBackupPassword(JSON.stringify(createCompleteBackup(data,{settings:draft.settings,drive:readDriveConfig()},draft.walletHistory??null)))
+  ?await encryptWithBackupPassword(JSON.stringify(createCompleteBackup(data,{settings:draft.settings,drive:readDriveConfig()})))
   :JSON.stringify(data,null,2);
  const url=URL.createObjectURL(new Blob([payload],{type:'application/json'}));
  const link=document.createElement('a');link.href=url;
