@@ -49,7 +49,7 @@ export function positionHistory(model,positionId){
   try{if(entry){validateJournalEntry(entry);const posts=entry.postings.filter(p=>p.positionId===positionId&&p.quantityDeltaExact!=null);if(posts.length)delta=posts.reduce((n,p)=>n+units(p.quantityDeltaExact),0n);}
    else delta=decimal(b.targetQuantityExact??(b.type==='transfer'?b.quantityExact??b.quantity:null));
   }catch{}
-  return {...b,isTarget:true,deltaExact:delta===null?null:exact(delta)};
+  return {...b,isTarget:true,positionName:position.name,accountId:position.accountId,deltaExact:delta===null?null:exact(delta)};
  });
  let gross=0n,unknownBuys=0;
  for(const b of events)if(b.type==='buy'&&!b.isTarget){if(b.tradeExactEUR===null)unknownBuys++;else gross+=units(b.tradeExactEUR);}

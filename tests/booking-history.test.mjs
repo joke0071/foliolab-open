@@ -4,6 +4,7 @@ import {historyFixture} from './booking-history-fixture.mjs';
 import {bookingHistoryRows,positionHistory,historyAction} from '../src/booking-history.js';
 import {bookingRowMarkup} from '../src/booking-history-ui.js';
 import {safeImport,backup} from '../src/model.js';
+import {executeTransaction} from '../src/transactions.js';
 const {model,ids,accountB}=historyFixture();
 test('245 trades + four corrections: signed journal deltas and exact gross volume without writes',()=>{
  const before=JSON.stringify(model),rows=bookingHistoryRows(model);
@@ -50,4 +51,13 @@ test('details escape notes and IDs; correction has no trade value',()=>{
  const row=bookingHistoryRows(model).find(b=>b.id==='trade-0'),html=bookingRowMarkup(row,model);
  assert.match(html,/&lt;script&gt;/);assert.doesNotMatch(html,/<script>/);assert.match(html,/<details/);
  const technical=bookingRowMarkup(bookingHistoryRows(model)[0],model);assert.match(technical,/Kein Handel/);assert.match(technical,/\+2/);
+});
+test('sales and reverse corrections keep signed deltas out of gross purchases',()=>{
+ const m=structuredClone(model);
+ executeTransaction(m,{id:'sale',type:'sell',date:'2026-02-01',positionId:ids[0],quantity:'3',unitPrice:'120'});
+ executeTransaction(m,{id:'reduce',type:'correction',date:'2026-02-02',positionId:ids[0],targetQuantity:'60'});
+ const h=positionHistory(m,ids[0]);
+ assert.equal(h.events.find(b=>b.id==='sale').deltaExact,'-3');
+ assert.equal(h.events.find(b=>b.id==='reduce').deltaExact,'-1');
+ assert.equal(h.grossBuysExactEUR,'6200');assert.equal(h.events[0].balanceExact,'60');
 });
