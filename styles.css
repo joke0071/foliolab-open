@@ -1002,3 +1002,10 @@
  .position-entry .holding-mark svg{width:18px;height:18px}
  .position-entry .holding-l{gap:8px}
 }
+
+/* FLH01: keep long evidence out of the compact transaction row. */
+.history-row.booking-compact{display:block;min-width:0}
+.booking-main{display:grid;grid-template-columns:7em minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.2fr);gap:10px;align-items:start;width:100%;font-size:12px}
+.booking-main>*{min-width:0;overflow-wrap:anywhere}.booking-main>strong:last-child{text-align:right}
+.booking-meta{margin-top:8px;font-size:12px}.booking-meta summary{cursor:pointer;min-height:28px;display:list-item}.booking-meta dd{overflow-wrap:anywhere}
+@media(max-width:767px){.booking-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-main>time{grid-column:1}.booking-main>strong:last-child{text-align:left;grid-column:1/-1}}
