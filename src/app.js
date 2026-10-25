@@ -46,6 +46,7 @@ import {legacyQuoteDiscrepancies,verifiedCurrentQuote,applyVerifiedQuoteRepair} 
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
 import {parseCSV,inferMapping,previewCSV,importCSV,CSV_FIELDS} from './csv-import.js';
+import {prepareCSVBatch,csvPreviewSummary,csvUndoReceipt,canUndoCSV,undoCSV} from './csv-batch.js';
 import {detectFlatexCSV,prepareFlatexImport,FLATEX_MAPPING} from './flatex-import.js';
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
 import {pairFlatexSettlements} from './flatex-settlements.js';
@@ -62,7 +63,7 @@ import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPos
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
-let saving=false,recoveryDownloaded=false,recoveryOriginal=null;
+let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
@@ -316,6 +317,7 @@ function renderPositions(){
    filter==='__review'?'Keine Positionen zu diesem Prüffilter.':'Keine Positionen bei diesem Anbieter.');
 }
 function renderBookings(){
+ $('undoCSVImport').classList.toggle('hidden',!canUndoCSV(model,csvReceipt));
  $('bookingIncome').innerHTML=annualOverviewMarkup(model,{year:incomeYear,accountId:incomeAccount},incomeLimit);
  const query=$('bookingSearch').value.trim().toLocaleLowerCase('de'),type=$('bookingFilterType').value;
  const historyRows=bookingHistoryRows(model);
@@ -971,11 +973,11 @@ function flatexWouldDoubleCount(current,prepared,accountId){
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
  if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
- let parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
+ let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
  const currentMapping=()=>brokerImport?FLATEX_MAPPING:Object.fromEntries(CSV_FIELDS.map(key=>[key,$('csvMap-'+key)?.value||'']));
- const sourceLineLabel=line=>{const row=brokerImport?.sourceRows?.[line-2];return row?row.file+', Zeile '+row.line:'Zeile '+line;};
+ const sourceLineLabel=line=>{const row=(brokerImport||(batch?.reports.length>1?batch:null))?.sourceRows?.[line-2];return row?row.file+', Zeile '+row.line:'Zeile '+line;};
  const selectedBrokerAccount=()=>brokerImport?($('csvBrokerAccount')?.value||''):'';
  const previewOptions=()=>({positionOverrides,fxRateOverrides,skippedLines,cashPositionId:$('csvCashPosition')?.value||'',allowedAccountId:selectedBrokerAccount()});
  const backfillCheck=()=>{
@@ -1010,14 +1012,18 @@ function openCSVImport(){
    if(result.issues.length)throw Error('Bitte die '+result.issues.length+' noch ungeklärten Buchungen prüfen oder ausdrücklich überspringen.');
    if(!result.ready)throw Error('Keine neuen Buchungen zum Import vorhanden.');
    const imported=importCSV(model,result);snapshot(model);await save();
+   csvReceipt=csvUndoReceipt(result.baseline,model);renderBookings();
    notify(imported.imported+' Buchungen importiert · '+imported.duplicates+' Dubletten übersprungen'+(result.skipped?' · '+result.skipped+' bewusst ausgelassen':'')+'.');
   });
+ const importEditor=editor;
  $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';
  const review=(returnTo=null)=>{
   if(!parsed)return;
   try{
    const result=finalPreview();
    const needsMatch=m=>/^Anlage fehlt|^Anlage nicht eindeutig/.test(m);
+   const summary=csvPreviewSummary(model,result);
+   const impact='<details class="advanced-apis"><summary>Auswirkung und Datenabdeckung prüfen</summary><p class="small-help">'+summary.conflicts+' Konflikte · '+summary.unresolved+' ungeklärt · '+(summary.coverage.from?esc(summary.coverage.from+' bis '+summary.coverage.to):'Keine neuen Ereignisdaten')+'</p><p class="small-help">'+esc(summary.historyNote)+'</p>'+summary.impacts.map(p=>'<div class="history-sub">'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto')+': '+esc(p.beforeExact)+' → '+esc(p.afterExact)+(p.kind==='cash'?' '+esc(p.currency):' Stück')+'</div>').join('')+'</details>';
    const status='<div class="csv-import-summary"><strong>'+result.ready+' bereit · '+result.duplicates+' bereits vorhanden · '+result.issues.length+' zu prüfen'+(result.skipped?' · '+result.skipped+' übersprungen':'')+'</strong></div>';
    const backfill=backfillCheck();
    $('csvReviewStatus').textContent=result.ready+' bereit, '+result.duplicates+' bereits vorhanden, '+result.issues.length+' zu prüfen'+(result.skipped?', '+result.skipped+' übersprungen':'')+'.';
@@ -1081,7 +1087,7 @@ function openCSVImport(){
      '<div class="history-sub">'+esc(sourceLineLabel(x.line))+' · '+esc(x.row.date+' · '+x.row.type+' · '+x.row.quantity)+'</div>').join('');
    const skipped=result.rows.filter(x=>x.status==='skipped').map(x=>
     '<div class="csv-review-row"><strong>'+esc(sourceLineLabel(x.line))+' wird übersprungen</strong><label class="csv-skip"><input type="checkbox" aria-label="'+esc(sourceLineLabel(x.line))+' weiterhin auslassen" data-csv-skip="'+x.line+'" checked> Weiterhin auslassen</label></div>').join('');
-   $('csvReview').innerHTML='<div class="csv-import-review"><h3 id="csvReviewHeading" tabindex="-1">Buchungen prüfen</h3>'+status+
+   $('csvReview').innerHTML='<div class="csv-import-review"><h3 id="csvReviewHeading" tabindex="-1">Buchungen prüfen</h3>'+status+impact+
     (errors.length?'<p class="small-help">Unklare Anlagen werden niemals automatisch einer anderen Position zugeordnet.</p>'+detail:'<p class="small-help">Alle übrigen Buchungen sind zugeordnet.</p>')+skipped+
     (examples?'<details class="advanced-apis"><summary>Beispielbuchungen ansehen</summary>'+examples+'</details>':'')+'</div>';
    $('csvReview').querySelectorAll('[data-csv-assign]').forEach(el=>el.addEventListener('change',()=>{
@@ -1111,8 +1117,9 @@ function openCSVImport(){
   }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('csvReviewStatus').textContent='Importprüfung fehlgeschlagen.';$('saveDialog').disabled=true;}
  };
  async function chooseCSV(){
+  const generation=++selectionGeneration;
   const files=[...($('csvFile').files||[])];
-  parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
+  batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';$('csvReviewStatus').textContent='Bitte CSV-Datei auswählen.';return;}
@@ -1120,6 +1127,7 @@ function openCSVImport(){
    if(files.length>20)throw Error('Maximal 20 Dateien je Import.');
    if(files.some(f=>f.size>2_000_000))throw Error('Je Datei sind höchstens 2 MB erlaubt.');
    const inputs=await Promise.all(files.map(async f=>({name:f.name,text:await f.text()})));
+   if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
    const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name}),source=$('csvSource').value;
    const flatex=source==='flatex'||(source==='auto'&&Boolean(detectFlatexCSV(probe)));
    if(flatex){
@@ -1159,8 +1167,9 @@ function openCSVImport(){
     $('csvBrokerAccount').addEventListener('change',()=>{positionOverrides={};backfillRequested=false;review();});
     $('csvBrokerAmountsEUR')?.addEventListener('change',e=>{bankEURConfirmed=e.target.checked;review();});
    }else{
-    if(files.length>1)throw Error('Mehrere Dateien sind derzeit nur für Flatex-Exporte erlaubt.');
-    parsed=probe;
+    if(inputs.some(f=>detectFlatexCSV(parseCSV(f.text))))throw Error('Flatex-Exporte bitte im Flatex-Import mit Depotzuordnung prüfen.');
+    batch=prepareCSVBatch(inputs);parsed=batch.parsed;
+    $('csvBrokerStatus').textContent=batch.reports.length+' Datei(en) · '+parsed.rows.length+' Zeilen · nur neue, eindeutig geprüfte Buchungen übernehmen.';
     const inferred=inferMapping(parsed.headers);
     const mappingControl=key=>'<label class="field"><span>'+esc(labels[key])+'</span><select id="csvMap-'+key+'">'+options([['','Nicht vorhanden'],...parsed.headers.map(head=>[head,head])],inferred[key])+'</select></label>';
     $('csvMapping').innerHTML='<div class="csv-import-mapping"><h3>Spalten zuordnen</h3><p class="small-help">Prüfe die automatische Spaltenzuordnung.</p>'+
@@ -1172,7 +1181,8 @@ function openCSVImport(){
    }
    review();
   }catch(error){
-   parsed=null;brokerImport=null;$('csvBrokerStatus').innerHTML='';$('csvMapping').innerHTML='';
+   if(generation!==selectionGeneration||editor!==importEditor)return;
+   batch=null;parsed=null;brokerImport=null;$('csvBrokerStatus').innerHTML='';$('csvMapping').innerHTML='';
    $('csvReview').textContent='CSV konnte nicht gelesen werden: '+error.message;
    $('csvReviewStatus').textContent='CSV konnte nicht gelesen werden.';
   }
@@ -1585,7 +1595,11 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
-function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
+function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('undoCSVImport').addEventListener('click',()=>{
+ showDialog('CSV-Import rückgängig machen','BUCHUNGEN','<p class="dialog-intro">Den letzten CSV-Import dieser Sitzung einschließlich seines automatisch erzeugten Stichtags zurücknehmen? Dies ist nur möglich, solange seitdem nichts geändert wurde.</p>',async()=>{
+  await portfolioStore.assertCurrent();undoCSV(model,csvReceipt);await save();csvReceipt=null;renderBookings();notify('CSV-Import rückgängig gemacht.');
+ });
+});$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
  const markEditorDirty=event=>{
   if(editor&&!editor.readOnly&&!event.target.closest('[data-interest-preview]')&&event.target.matches('input, select, textarea'))editor.dirty=true;
  };
