@@ -4,8 +4,8 @@ Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integ
 
 | Paket | Status | Nächster Schritt |
 | --- | --- | --- |
-| FLH01 | TEILWEISE: Implementierung, 604 Unit-Tests und Syntaxprüfung bestanden | CI/Browsernachweise prüfen, korrigieren, Review, dann integrieren |
-| IndexedDB B | NICHT BEGONNEN | Erst nach FLH01-Merge |
+| FLH01 | ABGESCHLOSSEN: #137, Merge 91f83909e6453de40ef7a4be21477eb7864e01e5 | CI 40189609001 vollständig grün, 604/604 + Chromium/Firefox/WebKit |
+| IndexedDB B | TEILWEISE: Risikovertrag und UI-Delta implementiert | Tests/CI, dann sichere Integration |
 | AT03-B | NICHT BEGONNEN | Nach Phase B |
 | AT05-A | NICHT BEGONNEN | Nach AT03-B |
 | AT01 | NICHT BEGONNEN | Nach AT05-A |
@@ -21,9 +21,9 @@ Absolute Bestände nur bei vollständiger Journalzuordnung und erfolgreichem bes
 Walletmodell/Coverage/Preview/Persistenz/Resume unverändert; Aktionen nur für vorhandene BTC/HD, ETH-Mainnet, SOL/SPL-Implementierungen. Gespeicherte Historie heißt „Historie anzeigen“. Kein neuer Wallet-/Speicher-/Backup-/Journal-Schreibpfad.
 
 ## Nachweise / Grenzen
-Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden. 245 synthetische Käufe + vier technische Korrekturen, Kontentrennung, fehlende Mengen/Kosten, orphan Journal, HTML-Escaping und portable Restore geprüft. Browsergates mit 320/390/430/768/1440px, Axe, Dialogfokus/Escape und Nullmutationen für Chromium/Firefox/WebKit in CI ergänzt. Lokale Chromium-Abnahme inzwischen bestanden (Playwright 1.56.1, Headless Chromium 141): fünf Breiten, 245+4, Axe 0 Verstöße, Tastatur/Fokusrückgabe, belegter EUR-Wert und keine Portfolio-Schreibvorgänge. Screenshots visuell geprüft. Erster Cross-Engine-Lauf fand fehlenden Korrekturfilter (behoben); zweiter Lauf fand CSP-inkompatible Axe-Injektion der neuen Testhilfe (auf bestehendes addInitScript-Verfahren umgestellt, produktive CSP unverändert). Beide roten Zwischenläufe gelten nicht als Abnahme. Browser-/CI-Abnahme und Merge noch offen.
+Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden. 245 synthetische Käufe + vier technische Korrekturen, Kontentrennung, fehlende Mengen/Kosten, orphan Journal, HTML-Escaping und portable Restore geprüft. Browsergates mit 320/390/430/768/1440px, Axe, Dialogfokus/Escape und Nullmutationen für Chromium/Firefox/WebKit in CI ergänzt. Lokale Chromium-Abnahme inzwischen bestanden (Playwright 1.56.1, Headless Chromium 141): fünf Breiten, 245+4, Axe 0 Verstöße, Tastatur/Fokusrückgabe, belegter EUR-Wert und keine Portfolio-Schreibvorgänge. Screenshots visuell geprüft. Erster Cross-Engine-Lauf fand fehlenden Korrekturfilter (behoben); zweiter Lauf fand CSP-inkompatible Axe-Injektion der neuen Testhilfe (auf bestehendes addInitScript-Verfahren umgestellt, produktive CSP unverändert). Beide roten Zwischenläufe gelten nicht als Abnahme. Finale CI 40189609001 vollständig bestanden; #137 integriert (91f8390).
 
 Keine echten Nutzerbackups verwendet. Android/Safari-Hardware, Drive-Neugerät, Crash/Eviction bleiben reale Gates #44. AT03-C/AT05-B/#52 weiterhin durch Realbelege blockiert.
 
 ## Exakt nächste Aktion
-Draft-PR feature/flh01-unified-history auf aktuellem main prüfen; vollständige CI abwarten. Nur reproduzierte Fehler korrigieren, keine Assertions abschwächen. Erst bei erfolgreicher Abnahme mergen; danach Phase B auf frischem main beginnen.
+FLH01 ist vollständig abgenommen und als #137 gemergt (91f83909e6453de40ef7a4be21477eb7864e01e5). Phase B in #138 auf diesem main: Risikovertrag erstellt, normale Speicherwahl/Rückwechsel-UI entfernt, notwendige technische Migration/Recovery unverändert. 604/604 und gezielte lokale Chromium-Speicher-/Restore-/FLH01-Gates bestanden. Vollständige CI auf dem letzten Codecheckpoint prüfen, nur konkrete Fehler korrigieren; dann nach Abnahme mergen. Erst danach AT03-B beginnen. Kein Gesamtabschluss/Final-Deployment behauptet.

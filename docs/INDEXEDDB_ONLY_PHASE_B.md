@@ -30,3 +30,15 @@ Die aus dem Produkt entfernte Rückwechselaktion bedeutet ausdrücklich **keine*
 Bestehende Neuinstallation, v1/v2/v3-Migration, Download/Abbruch/Geheimnisse, beschädigte/unmarkierte Records, Quota, CAS, Mehrtab, Tombstones, alte Rückwechselintents und Restore unverändert prüfen. Den entfallenen UI-Rückwechsel im Cutover-Test durch einen ausdrücklichen technischen Controller-Aufruf ersetzen; sämtliche Daten-/Revisions-/Secret-/Tombstone-Assertions erhalten. Neue UI-Assertions beweisen: keine normale Speicherwahl, kein Rückwechselbutton, nur einmalige Legacy-Übernahme, nach Cutover unsichtbar. Migration-Axe auf sichtbarem Datenbereich prüfen. Vollständige Unit/Syntax/Chromium/Firefox/WebKit-CI vor Merge.
 
 Status: Risikovertrag erstellt; Implementierung und Abnahme folgen. Exakt nächster Schritt: begrenzte UI-Bereinigung, Regressionen, kleine Commits/Remote-Checkpoints; keine technischen Schutzpfade entfernen.
+
+## Nicht-Portfolio-localStorage-Pfade
+
+Die vollständige Quellsuche umfasst auch `app.js`-Backupzähler/-Datum und Auto-Refresh-Zeitstempel, freiwillige Historien-/Konfigurations-Backupoptionen, `drive-backup.js`-Präferenzen sowie `instrument-catalog.js`-Stammdaten/Fallback. Diese enthalten keinen aktiven Portfolio-Mirror und bleiben ihrem bestehenden Vertrag entsprechend erhalten. Vault-Passwortmaterial liegt in eigener IndexedDB, OAuth-Tokens sind flüchtig; keine neue Secret-Portierung. `atomic-storage.js`-Legacy-Staging ist lesende Altkompatibilität. Settings/API-Keys des aktiven Portfolios bleiben zusammen mit dem IDB-Record getrennt vom geheimnisfreien portablen JSON-Snapshot gespeichert.
+
+## Lokaler Codecheckpoint
+
+UI-Rückwechselbutton und Handler entfernt. Einmaliger Bereich nur bei gesunder Legacy-Installation; nach Migration/Neuinstallation unsichtbar, diagnostischer Text bleibt für interne Statusprüfung im verborgenen Bereich. Bestehende Engines unverändert.
+
+604/604 Unit-Tests, Syntax und lokale Chromium-Gates bestanden: Cutover inklusive ausschließlich IDB-Schreiben/Freshness, technischer Rückwechsel/erneute bestätigte Migration/Tombstone-Reset; beide echten Migrationsdateien (Klartext/verschlüsselte freiwillige Konfiguration) samt UI-Restore und vollständigem Finanz-/Settings-/Walletvergleich/Axe; Neuinstallation/CAS/Quota/Fehler/Retry; unterbrochener Rückwechsel; v1/v2/v3 und manipuliertes Rücklesen/Quelle; beschädigte/unmarkierte Recovery; konkurrierende Importe; FLH01-Regressionssuite. Keine vorhandene Schutzassertion oder Pixelreferenz abgeschwächt. Entfallene Rückwechsel-UI wird nicht mehr als Nutzerablauf getestet, ihr technischer Sicherheitszweck bleibt mit denselben Inhaltsassertions geprüft.
+
+Nächster Schritt: exakten Code-Tree remote sichern, vollständige CI mit Chromium/Firefox/WebKit abwarten; dann erst Abnahme und Integration. Reale Hardwaregates bleiben offen, keine endgültige technische Legacy-Pfadlöschung behauptet.

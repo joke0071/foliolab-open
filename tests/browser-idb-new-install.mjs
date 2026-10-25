@@ -78,6 +78,8 @@ for(const name of (process.env.IDB_ENGINES||'chromium').split(',')){
  try{
   await ui.goto('http://127.0.0.1:4173/');await ui.locator('#mobileNav [data-page="more"]').click();
   assert.match(await ui.locator('#portfolioStorageState').textContent(),/IndexedDB aktiv/);
+  assert.equal(await ui.locator('#storageMigrationSetup').isVisible(),false);
+  assert.equal(await ui.locator('#revertFromIDB').count(),0);
   await ui.locator('#addProvider').click();await ui.locator('#providerName').fill('Fresh IDB Bank');await ui.locator('#saveDialog').click();await ui.locator('#editDialog').waitFor({state:'hidden'});
   await ui.reload();await ui.locator('#mobileNav [data-page="more"]').click();
   assert.match(await ui.locator('#providerSettings').textContent(),/Fresh IDB Bank/);

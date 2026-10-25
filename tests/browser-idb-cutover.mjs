@@ -30,7 +30,9 @@ try{
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#storageMigrationSetup').evaluate(el=>el.open=true);
- assert.match(await page.locator('#portfolioStorageState').innerText(),/IndexedDB aktiv/);
+ assert.match(await page.locator('#portfolioStorageState').textContent(),/IndexedDB aktiv/);
+ assert.equal(await page.locator('#storageMigrationSetup').isVisible(),false);
+ assert.equal(await page.locator('#revertFromIDB').count(),0);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),oldRaw,'legacy bytes must be preserved');
  const first=await page.evaluate(async()=>{
   const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
@@ -81,8 +83,10 @@ try{
  assert.equal(afterConflict.revision,3);
  assert.equal(JSON.parse(afterConflict.raw).providers.some(p=>p.name==='Stale Tab B'),false);
  await other.close();
- // An explicit fallback writes the current IDB version to the legacy key.
- await Promise.all([page.waitForEvent('download'),page.locator('#revertFromIDB').click()]);
+ // The old regular UI is gone. Exercise the deliberately retained technical
+ // compatibility path directly; keep every data/revision/tombstone assertion.
+ assert.equal(await page.locator('#revertFromIDB').count(),0);
+ await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const store=new PortfolioStorage();const m=await store.initialize();await store.revert(m);store.close();});
  await page.waitForFunction(()=>localStorage.getItem('foliolab-open-storage-mode')===null);
  await page.reload();
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).providers.some(p=>p.name==='Tab A')),true);
@@ -119,6 +123,6 @@ try{
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  await page.locator('#totalValue').waitFor();
  assert.match(await page.locator('#totalValue').innerText(),/0,00/);
- assert.equal(dialogLabels.length,7);
+ assert.equal(dialogLabels.length,5);
  console.log('IDB-CUTOVER: opt-in, predownload, IDB-only writes, stale CAS rejection, rollback, re-migration, durable delete PASS');
 }finally{await context.close();await browser.close();}

@@ -1816,17 +1816,6 @@ $('migrateToIDB').addEventListener('click',async()=>{
  }catch(error){notify('Speicherumstellung abgebrochen: '+String(error.message||error).slice(0,170),true);}
  finally{saving=false;button.disabled=false;}
 });
-$('revertFromIDB').addEventListener('click',async()=>{
- const button=$('revertFromIDB');
- if(button.disabled||saving||loadFailure)return;
- if(!confirm('Andere Tabs schließen. Zuerst aktuelles Backup herunterladen; danach wird der neue Datenstand nach localStorage übertragen. Fortfahren?'))return;
- downloadBackup();
- if(!confirm('Ist das Backup sicher gespeichert? IndexedDB deaktivieren und aktuellen Stand in localStorage übernehmen?'))return;
- saving=true;button.disabled=true;
- try{await portfolioStore.revert(model);location.reload();}
- catch(error){notify('Rückwechsel abgebrochen: '+String(error.message||error).slice(0,170),true);}
- finally{saving=false;button.disabled=false;}
-});
 $('runLegacyQuoteAudit').addEventListener('click',()=>{
  legacyAuditPerformed=true;renderLegacyQuoteAudit();
 });
@@ -1898,7 +1887,9 @@ $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range
 initNav();initEvents();installCredentialVisibility();
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
-$('revertFromIDB').classList.toggle('hidden',!portfolioStore.isIndexedDB);
+// Existing pre-cutover installations alone get a one-time, consented handover.
+// Technical rollback/recovery remains in PortfolioStorage, never a regular UI choice.
+$('storageMigrationSetup').classList.toggle('hidden',portfolioStore.isIndexedDB||Boolean(loadFailure));
 // Keep a user's draft visible, but block stale writes until an explicit reload.
 // localStorage compare-before-set alone is not an atomic multi-tab lock.
 window.addEventListener('storage',event=>{
