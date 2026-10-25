@@ -16,7 +16,7 @@ npx wrangler deploy
 
 Wrangler kann bei der ersten Verwendung zur Installation und Autorisierung auffordern. `worker/wrangler.toml` legt Namen und Einstiegsdatei fest.
 
-4. Die HTTPS-URL aus der Ausgabe kopieren (Beispiel: `https://foliolab-open-instruments.DEIN-SUBDOMAIN.workers.dev`). Über `https://DEINE-URL.workers.dev/api/instruments/search?q=world%20etf` prüfen, ob der Dienst eine JSON-Antwort liefert. Ein leeres Ergebnis ist kein Zeichen dafür, dass der Dienst kaputt ist.
+4. Die HTTPS-URL aus der Ausgabe kopieren (Beispiel: `https://foliolab-open-instruments.DEIN-SUBDOMAIN.workers.dev`). **Hinweis:** Ein direkter Test von `/api/instruments/search` in der Browser-Adresszeile kann absichtlich mit `403` antworten, weil dabei der erforderliche `Origin`-Header fehlt. Prüfe den Dienst nach dem Speichern der Basisadresse aus FolioLab heraus oder über den CORS-Live-Test des GitHub-Workflows. Ein leeres Suchergebnis ist kein Zeichen dafür, dass der Dienst kaputt ist.
 5. In FolioLab Open **Mehr → Datenquellen & Aktualisierung → Erweiterte Wertpapiersuche** öffnen. Nur die **HTTPS-Basisadresse**, ohne `/api/...`, ohne Abfrageparameter und ohne Zugangsdaten, einfügen und auf **Suchdienst speichern** tippen. Anschließend im Anlage-Assistenten nach Name oder ISIN suchen. Ergebnisse auf tatsächliche Börse, Ticker und Währung prüfen.
 
 **Wichtig:** `https://dein-worker.workers.dev` ist nur ein Platzhalter, keine öffentlich erreichbare FolioLab-API. GitHub Pages stellt diesen Worker nicht bereit; ein Worker wird separat bei Cloudflare betrieben. Wenn du keinen Worker betreiben möchtest, kannst du das Feld leer lassen.
@@ -53,6 +53,10 @@ Direkte EODHD-Abfragen von GitHub Pages können durch Browser-CORS blockiert wer
 - Der EODHD-Schlüssel bleibt als Cloudflare Secret serverseitig; der Worker-Zugriffsschlüssel wird lokal im Browser gespeichert und ausschließlich an den **explizit gewählten** Worker übertragen. Er wird nicht in Backups exportiert, nicht in URLs eingebettet und nicht an OpenFIGI weitergegeben. Verwende nur deinen eigenen, vertrauenswürdigen Worker.
 - Antworten enthalten keine Zugangsdaten. Keine Kursanfragen zwischenspeichern, wenn dadurch fremde Nutzer Zugriff erhalten könnten. Endpunkte sind `no-store`; Kursabdeckung und API-Limits richten sich nach deinem EODHD-Tarif.
 - Bei Verlust oder öffentlicher Weitergabe eines Schlüssels diesen bei Cloudflare bzw. EODHD erneuern.
+
+## Alternative: kontrolliertes GitHub-Actions-Deployment
+
+Für eine reproduzierbare Veröffentlichung ohne lokales Terminal gibt es einen **manuell auslösbaren** Cloudflare-Workflow mit Syntax-/Unit-Tests und Live-CORS-Gate. Er benötigt die Repository-Secrets `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN`, veröffentlicht nicht automatisch auf jedem Commit und verändert die GitHub-Pages-PWA nicht. Die EODHD-Secrets gehören weiterhin ausschließlich in Cloudflare. Siehe [vollständige Anleitung](../docs/CLOUDFLARE_WORKER_DEPLOYMENT.md).
 
 ## Technik und Sicherheit
 
