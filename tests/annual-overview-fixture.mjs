@@ -1,0 +1,7 @@
+import {blankModel,createProvider,createAccount,createPosition} from '../src/model.js';import {executeTransaction} from '../src/transactions.js';
+export function annualFixture(){const m=blankModel();m.settings.autoRefresh=false;const provider=createProvider({name:'Synthetic Annual Broker',type:'broker'});m.providers.push(provider);
+ const custody=createAccount({providerId:provider.id,name:'Depot',type:'securities'},m),cash=createAccount({providerId:provider.id,name:'Verrechnung',type:'checking'},m);m.accounts.push(custody,cash);
+ const etf=createPosition({providerId:provider.id,accountId:custody.id,name:'Synthetic ETF',kind:'etf',quantity:0,price:100},m),money=createPosition({providerId:provider.id,accountId:cash.id,name:'EUR Cash',kind:'cash',quantity:1000,price:1},m);m.positions.push(etf,money);
+ executeTransaction(m,{id:'trade',type:'buy',date:'2025-12-31',positionId:etf.id,cashPositionId:money.id,quantity:2,unitPrice:100,feeEUR:5,taxEUR:2,notes:'Kaufbeleg SYN-TRADE'});
+ for(const [id,type,date,quantity] of [['income','interest','2026-01-01',10],['fee','fee','2026-01-02',3],['div','dividend','2026-01-03',20],['tax','tax','2026-01-04',4]])executeTransaction(m,{id,type,date,quantity,positionId:money.id,notes:'Beleg '+id});
+ executeTransaction(m,{id:'sale',type:'sell',date:'2026-01-04',positionId:etf.id,cashPositionId:money.id,quantity:1,unitPrice:110,feeEUR:1,taxEUR:0});return {model:m,custody,cash,etf,money};}
