@@ -43,6 +43,17 @@ export function validatePurchaseEvidence(value){
   if(v.action==='link'&&(!events.length||new Set(events.map(e=>e.id)).size!==events.length))fail();
   return {action:v.action,walletKey:text(v.walletKey),sessionId:text(v.sessionId),at:utc(v.at),receiptIds:[...v.receiptIds],events};
  });
+ const active=new Map();
+ for(const d of decisions){
+  if(d.action==='link'){
+   if(d.receiptIds.some(id=>active.has(id))||[...active.values()].some(old=>old.events.some(e=>d.events.some(ref=>ref.id===e.id))))fail();
+   for(const id of d.receiptIds)active.set(id,d);
+  }else{
+   const old=active.get(d.receiptIds[0]);
+   if(!old||d.events.length||old.sessionId!==d.sessionId||old.walletKey!==d.walletKey||JSON.stringify([...old.receiptIds].sort())!==JSON.stringify([...d.receiptIds].sort()))fail();
+   for(const id of d.receiptIds)active.delete(id);
+  }
+ }
  const result={schema:1,receipts,decisions};if(new TextEncoder().encode(JSON.stringify(result)).length>3e6)throw Error('Kaufbelege überschreiten das sichere Speicherlimit.');return result;
 }
 const fingerprint=e=>sourceDigest(JSON.stringify([e.id,e.blockHash,e.blockHeight,e.timestamp,e.quantityBaseUnits,e.status,e.finality,e.type,e.coverage]));
@@ -70,7 +81,7 @@ export function previewPurchaseEvidence(model,receipts,session,accountId){
    candidates=events.filter(e=>BigInt(e.quantityBaseUnits)===needed&&rs.every(r=>Math.abs(Date.parse(e.timestamp)-Date.parse(r.timestamp))<=7*864e5));
    status=candidates.length===1?'proposal':candidates.length>1?'ambiguous':'unmatched';
   }
-  return {txid,receipts:rs,status,events:candidates,netBTC:exact(needed*10n**10n),fiatEUR:exact(rs.reduce((n,r)=>n+units(r.fiatEUR),0n))};
+  return {txid,receipts:rs,status,linkedReceiptIds:rs.filter(r=>links.has(r.id)).map(r=>r.id),events:candidates,netBTC:exact(needed*10n**10n),fiatEUR:exact(rs.reduce((n,r)=>n+units(r.fiatEUR),0n))};
  });
 }
 /** Explicit confirmation; caller uses existing canonical revision/CAS commit. No storage here. */

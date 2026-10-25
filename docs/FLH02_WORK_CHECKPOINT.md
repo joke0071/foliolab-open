@@ -6,7 +6,7 @@ Specification: Library folder `FolioLab Open - Work-Auftraege`, exact FLH02 file
 
 - Verified main: `fccbcc39fdc5bd8ff92e3475ac21df813e2a3473` (PWA v169).
 - Work branch: `feature/flh02-bittr-wallet-evidence`.
-- Current commit: this checkpoint's containing commit (resolve branch HEAD); PR follows after remote checkpoint.
+- Current commit: this checkpoint's containing commit (resolve branch HEAD); Draft PR #143: https://github.com/joke0071/foliolab-open/pull/143. First remote commit `cb7457371e2fab36d6d85c721bae2e4ebce7320f`.
 - No merge or productive deployment performed. v170 in this branch is a candidate only.
 
 ## Package status
@@ -27,7 +27,7 @@ Specification: Library folder `FolioLab Open - Work-Auftraege`, exact FLH02 file
 - `npm run check` passed after initial core implementation; rerun after UI integration.
 - Six synthetic purchase-evidence unit cases passed: exact amount invariants, 1:N/N:1/N:M, duplicate/reused txids, proposal/ambiguity, confirmation/undo/reorg, no mutation, encrypted/ordinary backup roundtrip and invalid input.
 - Private Bittr parser totals checked locally against the specification; raw CSV, private quantities/sums, identifiers and fixtures are NOT committed. Wallet reference matching not yet verified.
-- Full npm suite rerun in progress; no full-suite success claimed yet. Browser engines are being installed; none claimed passed.
+- Full npm suite passed: 639/639. New Chromium E2E passed: preview/confirm/undo/reload, IDB, encrypted full restore, six widths, axe, private-field/XSS exclusion and multitab CAS. Firefox/WebKit local execution is not yet verified (system dependencies unavailable; package install failed). CI must verify both engines. Browser test is wired into both existing CI jobs. Initial PR workflow 40212788892 in progress at last check.
 - Additive `purchaseEvidence` is validated by safeImport and kept by existing backup model. No journal, position, snapshot or performance writes. Existing storage/CAS used via wallet dialog commit.
 - Conservative matching requires verified stored Bitcoin incoming vout events; unknown opening/partial scans do not become verified acquisitions. Group UI currently offers at most 1000 incoming outputs for manual selection. Exact duplicate normalized receipts cannot establish separate identical purchases without a distinct external identity.
 - Git HTTPS push lacks shell credentials; authenticated GitHub connector is used for remote tree/commit/ref checkpoints.
