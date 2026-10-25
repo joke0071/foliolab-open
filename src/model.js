@@ -1,6 +1,7 @@
 import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
 import {validateWalletHistory} from './wallet-history-state.js';
+import {validatePurchaseEvidence} from './purchase-evidence.js';
 import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
@@ -161,6 +162,7 @@ export function safeImport(raw){
   if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
   const m=blankModel();
   if(raw.walletHistory!==undefined)m.walletHistory=validateWalletHistory(raw.walletHistory);
+  if(raw.purchaseEvidence!==undefined)m.purchaseEvidence=validatePurchaseEvidence(raw.purchaseEvidence);
   m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
