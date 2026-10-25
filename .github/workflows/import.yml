@@ -50,6 +50,7 @@ jobs:
           npx playwright install chromium --only-shell
       - name: Browser smoke tests (320–1440 px)
         run: |
+          set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
           node tests/browser-smoke.mjs
@@ -115,6 +116,7 @@ jobs:
           node tests/browser-position-search.mjs
           node tests/browser-position-details.mjs
           node tests/browser-asset-wizard.mjs
+          node tests/browser-ui07-audit.mjs
           node tests/browser-quality-review.mjs
           node tests/browser-annual-overview.mjs
           node tests/browser-transfer-matching.mjs
@@ -166,8 +168,10 @@ jobs:
           npx playwright install --with-deps firefox webkit
       - name: Test portfolio workflows on Firefox and WebKit
         run: |
+          set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
           QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
           ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
           TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
