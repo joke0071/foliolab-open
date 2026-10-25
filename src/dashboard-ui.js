@@ -33,7 +33,7 @@ export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealt
   const usable=['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2;
   const previous=usable?(wealth.basis==='observed'?comparable.at(-2):comparable[0]):null,latest=usable?comparable.at(-1):null;
   const delta=usable?exact(units(latest.totalEURExact??latest.total)-units(previous.totalEURExact??previous.total)):null;
-  const foot=delta!==null?'Seit '+dateLabel(previous.date)+' · inkl. Geldflüsse · keine Rendite':
+  const foot=delta!==null?dateLabel(previous.date)+' – '+dateLabel(latest.date)+' · inkl. Geldflüsse · keine Rendite':
     wealth.basis==='partial'?'Teilportfolio: vollständige Bestands-, Kurs- oder FX-Nachweise fehlen.':
     samples.length?'Ein weiterer vergleichbar belegter Zeitpunkt fehlt.':wealth.reason;
   tiles.push(['Veränderung',delta===null?'–':(units(delta)>0n?'+':'')+money(Number(delta)),foot]);
