@@ -29,7 +29,7 @@ Die Metadaten halten den aktuellen Vertragsausgang fest, keine vollständige Ver
 
 Bestehender Kontodialog → eingeklappter Bereich „Liquidität und Festgeld · optional“. Alte Konten erhalten keine neuen Pflichtfelder. Bestehende Kontokarten und Kontenverwaltung zeigen Statushinweise für ergänzte Konten. In „Meine Konten“ ergänzt eine standardmäßig eingeklappte Übersicht Liquidität und Fälligkeiten, mit direkten Bearbeitungsaktionen, fälligen Terminen zuerst und weiteren Konten bei größerem Umfang ebenfalls eingeklappt. Kein neuer Hauptreiter.
 
-Die Übersicht zählt Konten nach Status und zeigt vorhandene Guthaben ausschließlich nominal in ihrer Kontowährung. Kein zusätzlicher EUR-Gesamtwert, keine FX-Schätzung, keine doppelte Vermögenssummierung. Unterschiedliche oder nicht eindeutig zuordenbare Guthaben bleiben als Betrag unbekannt. Das bestehende Portfoliovermögen wird nicht neu interpretiert.
+Die Übersicht zählt Konten nach Status und zeigt vorhandene Guthaben ausschließlich nominal in ihrer Kontowährung. Kein zusätzlicher EUR-Gesamtwert, keine FX-Schätzung, keine doppelte Vermögenssummierung. Unterschiedliche oder nicht eindeutig zuordenbare Guthaben bleiben als Betrag unbekannt. Das bestehende Portfoliovermögen wird nicht neu interpretiert. Bereits vorhandene Kontowährungen außerhalb der Standardauswahl (z. B. PLN) bleiben beim Bearbeiten auswählbar und erhalten; keine stillschweigende Änderung auf EUR.
 
 ## Sicherheit und Kompatibilität
 

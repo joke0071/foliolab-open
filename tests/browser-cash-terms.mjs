@@ -23,7 +23,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   await page.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
    const m=blankModel(),provider=createProvider({id:'bank',name:'Testbank',type:'bank'});m.providers.push(provider);m.settings.autoRefresh=false;
-   for(const [id,currency,quantity] of [['term-one','EUR','100'],['term-two','EUR','250'],['usd','USD','20']]){
+   for(const [id,currency,quantity] of [['term-one','EUR','100'],['term-two','EUR','250'],['usd','USD','20'],['pln','PLN','30']]){
     const account=createAccount({id,providerId:'bank',name:id,currency,type:'savings'},m);m.accounts.push(account);
     m.positions.push(createPosition({id:id+'-cash',accountId:id,providerId:'bank',name:id,kind:'cash',quantity,price:1,currency,fxRate:0.9},m));
    }
@@ -71,6 +71,12 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   await page.locator('[data-provider-id="bank"]').evaluate(e=>e.open=true);
   for(const width of [320,390,430,768,1440]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' account cards overflow '+width);}
   await page.setViewportSize({width:390,height:844});
+  const pln=page.locator('[data-cash-account="pln"]');await pln.locator('button').click();
+  assert.equal(await page.locator('#accountCurrency').inputValue(),'PLN','Existing currency outside standard dropdown must remain selected');
+  await page.locator('#cashTermsDisclosure').evaluate(e=>e.open=true);await page.locator('#cashTermsEnabled').check();await page.locator('#liquidityStatus').selectOption('bound');
+  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.querySelector('#editDialog').open);
+  assert.match(await pln.innerText(),/30 PLN/);assert.equal(await financial(),before);
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).accounts.find(a=>a.id==='pln').currency),'PLN');
   const overviewViolations=await page.evaluate(async()=>(await axe.run(document.querySelector('#cashTermsOverview'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));assert.deepEqual(overviewViolations,[]);
   // Current complete encrypted backup engine, without copying any test credentials into data.
   await page.evaluate(async()=>{
