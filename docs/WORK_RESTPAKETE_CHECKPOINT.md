@@ -8,9 +8,9 @@ Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integ
 | IndexedDB B | ABGESCHLOSSEN: #138, Merge c422dbd8e532127f738b24e07a9e5092fd865d84 | CI 40190283807 vollständig grün, 604/604 + alle Engines; technische Recovery erhalten |
 | AT03-B | ABGESCHLOSSEN: #139, Merge 26a2460f7640464b323de8a031599f76c17bd680 | CI 40191726918 vollständig grün, 617/617 + alle Engines; C bleibt separat blockiert |
 | AT05-A | ABGESCHLOSSEN: #140, Merge ad1d966ec98dff9eafba00dc262af0f5ad7ee894 | CI 40194079825 vollständig grün, 627/627 + alle Engines; Stufe B separat blockiert |
-| AT01 | TEILWEISE: #141, abgeleitete Prüfsicht/Filter/Aktionen | 633/633 und lokale Browsergates bestanden; vollständige CI abwarten |
-| AT04 | NICHT BEGONNEN | Nach AT01 |
-| UI07 | NICHT BEGONNEN | Kombinierten Endstand prüfen |
+| AT01 | ABGESCHLOSSEN: #141, Merge 8348a42c9d3bbd147a255b4730d7fe28e02fb476 | CI 40195398684 vollständig grün, 633/633 + alle Engines |
+| AT04 | ABGESCHLOSSEN: No-Code-Audit, #128 | 133 fokussierte Unit-Tests, acht Browser-Suites, bestehende Capability-Matrix bestätigt; [Nachweis](https://github.com/joke0071/foliolab-open/issues/128#issuecomment-6398005023) |
+| UI07 | TEILWEISE: #142, PWA v169 vorbereitet | Lokal 633/633, 66 Chromium-Scans ohne Befund; finale Remote-CI inkl. Firefox/WebKit vor Merge |
 | FINAL-GATE | NICHT BEGONNEN | Kein Gesamtrelease behauptet |
 
 ## FLH01 Fachvertrag
@@ -26,4 +26,4 @@ Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden
 Keine echten Nutzerbackups verwendet. Android/Safari-Hardware, Drive-Neugerät, Crash/Eviction bleiben reale Gates #44. AT03-C/AT05-B/#52 weiterhin durch Realbelege blockiert.
 
 ## Exakt nächste Aktion
-FLH01 (#137/91f8390), sichere IndexedDB-Phase B (#138/c422dbd), AT03-B (#139/26a2460) und AT05-A (#140/ad1d966) sind vollständig getestet integriert. AT01 in #141: reine abgeleitete positionsbezogene Prüfsicht mit Kurs-/Historien-/Fortsetzungsaktionen, Dedupe und Filterreset implementiert; 633/633 und lokale Chromium-/Axe-/Fokus-/CSV-/Nullmutationsgates bestanden. Vollständige CI am letzten Remote-Checkpoint prüfen, konkrete Fehler korrigieren und nach Abnahme integrieren. Erst danach AT04. Kein Gesamtabschluss/Final-Deployment behauptet.
+Pakete 1–6 sind abgenommen; keine Wiederholung. UI07 #142: konkrete Kontrast-, ARIA- und Leertextkorrekturen lokal umgesetzt. 633/633, Syntax, 66 Chromium-Scans ohne Befund, Finanz-/CSV-/Dialog-/PWA-/Offline-Gates und 20 unveränderte Pixelreferenzen bestanden. Korrekturen mit aktualisiertem Checkpoint veröffentlichen, vollständige CI inkl. Firefox/WebKit abwarten und erst bei Grün integrieren. Anschließend FINAL-GATE auf finalem main: vollständige CI/Deployment, unabhängiger Live-Smoke ausschließlich synthetisch, Assetabgleich und Abschlussartefakt. Keine Gesamtrelease-Erfolgsmeldung vor Nachweis.
