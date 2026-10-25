@@ -4,7 +4,7 @@ import {validateWalletHistory} from './wallet-history-state.js';
 import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
-import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit} from './transactions.js';
+import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
@@ -224,6 +224,7 @@ export function safeImport(raw){
         throw Error('Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich.');
     }
   }
+  validateTransferMatches(m);
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),

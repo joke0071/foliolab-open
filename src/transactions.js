@@ -1,5 +1,6 @@
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
+import {bookingOwnership,sourceDigest} from './import-identity.js';
 
 /** @typedef {'buy'|'sell'|'deposit'|'withdraw'|'deliver_in'|'deliver_out'|'transfer'|'dividend'|'interest'|'reward'|'airdrop'|'fee'|'tax'|'adjust'|'correction'|'split'|'swap'|'merger'|'ticker_change'|'isin_change'|'delist'} TransactionType */
 /** @typedef {{id:string,type:TransactionType,date:string,positionId:string,quantity:number,feeEUR:number,taxEUR:number,notes:string}} Transaction */
@@ -245,4 +246,98 @@ export function executeTransaction(model,input){
  copy.positions=copy.positions.map(p=>{const original=originals.get(p.id);if(!original)return p;Object.assign(original,p);return original;});
  Object.assign(model,copy);
  return entry;
+}
+
+// Explicit classification of existing cash movements. This never replays a
+// transfer or changes numerical postings, positions, openings or snapshots.
+function transferEvidence(model,b,matched=false){
+ if(!b||!['withdraw','deposit'].includes(b.type))throw Error('Ein- und Ausgang müssen vorhandene Geldbewegungen sein.');
+ const p=model.positions.find(p=>p.id===b.positionId);
+ if(!p||p.kind!=='cash'||p.wallet?.enabled||!p.accountId||b.accountId!==p.accountId||!model.accounts.some(a=>a.id===p.accountId&&a.providerId===p.providerId))throw Error('Eigenes Geldkonto nicht eindeutig belegt.');
+ if(!matched&&b.transferMatch)throw Error('Bewegung ist bereits zugeordnet.');
+ if(!matched&&b.external!==true)throw Error('Externe Ausgangsklassifikation nicht eindeutig belegt.');
+ if(b.feeEUR==null||b.taxEUR==null||units(b.feeEUR)!==0n||units(b.taxEUR)!==0n)throw Error('Gebühren oder Abzüge unbekannt oder nicht separat belegt. Zuerst prüfen.');
+ const entry=model.journalEntries?.find(e=>e.id===b.journalEntryId);
+ if(!entry||entry.type!==b.type||entry.date!==b.date||entry.postings.length!==2)throw Error('Eindeutiger Journalbeleg fehlt.');
+ validateJournalEntry(entry);
+ const cash=entry.postings.find(x=>x.role==='cash'&&x.positionId===p.id),clearing=entry.postings.find(x=>x.role===(matched?'transfer-clearing':'external-clearing')&&x.positionId==null);
+ const quantity=units(b.quantityExact??b.quantity),sign=b.type==='withdraw'?-1n:1n;
+ if(quantity<=0n||!cash||!clearing||units(cash.quantityDeltaExact)!==quantity*sign||units(cash.amountBookEURExact)!==sign*units(b.amountExactEUR??b.amountEUR))throw Error('Buchung und Journalbetrag widersprechen sich.');
+ const flows=matched?[b.transferMatch?.originalFlow]:(model.externalCashFlows||[]).filter(f=>f.id===b.id);
+ if(flows.length!==1||!flows[0]||flows[0].id!==b.id||flows[0].date!==b.date||!Number.isFinite(flows[0].amountEUR)||Number(exact(units(flows[0].amountExactEUR??flows[0].amountEUR)))!==flows[0].amountEUR||units(flows[0].amountExactEUR??flows[0].amountEUR)!==units(cash.amountBookEURExact))throw Error('Passender externer Geldfluss fehlt oder widerspricht dem Beleg.');
+ return {booking:b,position:p,entry,clearing,quantity,flow:flows[0]};
+}
+export function previewTransferMatch(model,outgoingId,incomingIds){
+ const reasons=[];let out=null,ins=[];
+ try{
+  if(!Array.isArray(incomingIds)||incomingIds.length<1||incomingIds.length>12||new Set(incomingIds).size!==incomingIds.length||incomingIds.includes(outgoingId))throw Error('Einen Ausgang und bis zu zwölf unterschiedliche Eingänge auswählen.');
+  out=transferEvidence(model,model.bookings.find(b=>b.id===outgoingId));
+  if(out.booking.type!=='withdraw')throw Error('Ausgang muss eine Auszahlung sein.');
+  ins=incomingIds.map(id=>transferEvidence(model,model.bookings.find(b=>b.id===id)));
+  for(const x of ins){
+   if(x.booking.type!=='deposit'||x.position.accountId===out.position.accountId)throw Error('Eingang muss auf einem anderen eigenen Konto liegen.');
+   if(x.position.currency!==out.position.currency)throw Error('Währungswechsel benötigt zusätzliche FX-Belege; keine automatische Zuordnung.');
+   if(Math.abs(Date.parse(x.booking.date)-Date.parse(out.booking.date))>7*864e5)throw Error('Buchungsdaten liegen mehr als sieben Tage auseinander. Valuta/Belege separat prüfen.');
+  }
+  if(ins.reduce((n,x)=>n+x.quantity,0n)!==out.quantity)throw Error('Gesamtmenge stimmt nicht überein. Fehlenden Teilbetrag oder Gebühren prüfen.');
+  if(!ledgerQuantityAudit(model).ok)throw Error('Journal und Bestände widersprechen sich.');
+ }catch(e){reasons.push(e.message);}
+ const selected=[out,...ins].filter(Boolean);
+ const fingerprint=sourceDigest(JSON.stringify(selected.map(x=>[bookingOwnership(model,x.booking),x.position.accountId,x.position.currency,x.flow])));
+ return {ready:reasons.length===0,reasons,fingerprint,outgoingId,incomingIds:Array.isArray(incomingIds)?[...incomingIds]:[],currency:out?.position.currency??null,
+  quantityExact:out?exact(out.quantity):null,incomingQuantityExact:ins.length?exact(ins.reduce((n,x)=>n+x.quantity,0n)):null};
+}
+export function confirmTransferMatch(model,{outgoingId,incomingIds,reference,confirmed,fingerprint}){
+ const ref=words(reference,180);if(!confirmed||!ref)throw Error('Belegreferenz und ausdrückliche Bestätigung beider eigenen Konten fehlen.');
+ const existing=model.bookings.find(b=>b.id===outgoingId)?.transferMatch;
+ if(existing&&existing.reference===ref&&JSON.stringify(existing.incomingIds)===JSON.stringify(incomingIds)){validateTransferMatches(model);return {changed:false,id:existing.id};}
+ const preview=previewTransferMatch(model,outgoingId,incomingIds);
+ if(!preview.ready)throw Error(preview.reasons.join(' '));
+ if(preview.fingerprint!==fingerprint)throw Error('Bewegungen seit der Vorschau geändert. Neu prüfen.');
+ const draft=structuredClone(model),ids=[outgoingId,...incomingIds],matchId='tm-'+sourceDigest(JSON.stringify([outgoingId,incomingIds,ref]));
+ for(const bid of ids){
+  const b=draft.bookings.find(b=>b.id===bid),e=transferEvidence(draft,b);
+  b.transferMatch={version:1,id:matchId,outgoingId,incomingIds:[...incomingIds],reference:ref,confirmedAt:new Date().toISOString(),originalFlow:{id:e.flow.id,date:e.flow.date,amountEUR:e.flow.amountEUR,amountExactEUR:e.flow.amountExactEUR??exact(units(e.flow.amountEUR))},originalFlowIndex:draft.externalCashFlows.findIndex(f=>f.id===bid),originalStatus:e.entry.status,originalOwnership:b.importSource?.ownership??null};
+  e.clearing.role='transfer-clearing';e.entry.status='matched-internal-transfer';b.external=false;
+  if(b.importSource)b.importSource.ownership='manual'; // preserve source identity and protect explicit user decision on reimport
+  b.transferMatch.matchedOwnership=bookingOwnership(draft,b);
+ }
+ draft.externalCashFlows=draft.externalCashFlows.filter(f=>!ids.includes(f.id));
+ validateTransferMatches(draft);Object.assign(model,draft);return {changed:true,id:matchId};
+}
+export function validateTransferMatches(model){
+ const linked=new Set();
+ for(const b of model.bookings||[]){
+  const t=b.transferMatch;if(t==null)continue;
+  if(!t||t.version!==1||typeof t.id!=='string'||t.id.length>100||!/^tm-[a-f0-9]{64}$/.test(t.id)||typeof t.reference!=='string'||!t.reference.trim()||t.reference.length>180||typeof t.confirmedAt!=='string'||!Number.isFinite(Date.parse(t.confirmedAt))||!Array.isArray(t.incomingIds)||t.incomingIds.length<1||t.incomingIds.length>12||new Set(t.incomingIds).size!==t.incomingIds.length||t.incomingIds.includes(t.outgoingId)||typeof t.matchedOwnership!=='string'||t.matchedOwnership.length>20000||!['imported','manual',null].includes(t.originalOwnership)||typeof t.originalStatus!=='string'||t.originalStatus.length>120)throw Error('Transferzuordnung im Backup ungültig.');
+  const ids=[t.outgoingId,...t.incomingIds];if(!ids.includes(b.id)||!Number.isInteger(t.originalFlowIndex)||t.originalFlowIndex<0||t.originalFlowIndex>25000)throw Error('Transferzuordnung referenziert falsche Bewegung.');
+  const evidence=transferEvidence(model,b,true);linked.add(evidence.entry.id);
+  if(b.external!==false||evidence.entry.status!=='matched-internal-transfer'||model.externalCashFlows.some(f=>f.id===b.id))throw Error('Transferzuordnung widerspricht externer Geldfluss-Klassifikation.');
+  for(const bid of ids){const other=model.bookings.find(x=>x.id===bid),o=other?.transferMatch;
+   if(!o||o.id!==t.id||o.outgoingId!==t.outgoingId||JSON.stringify(o.incomingIds)!==JSON.stringify(t.incomingIds)||o.reference!==t.reference)throw Error('Transfergegenbuchung fehlt oder widerspricht der Zuordnung.');
+   if((bid===t.outgoingId?'withdraw':'deposit')!==other.type)throw Error('Transfer-Richtung widersprüchlich.');
+  }
+  const out=transferEvidence(model,model.bookings.find(x=>x.id===t.outgoingId),true),ins=t.incomingIds.map(id=>transferEvidence(model,model.bookings.find(x=>x.id===id),true));
+  if(ins.reduce((n,x)=>n+x.quantity,0n)!==out.quantity||ins.some(x=>x.position.accountId===out.position.accountId||x.position.currency!==out.position.currency||Math.abs(Date.parse(x.booking.date)-Date.parse(out.booking.date))>7*864e5))throw Error('Transferkonten, Beträge oder Zeitraum widersprüchlich.');
+ }
+ for(const e of model.journalEntries||[])if(e.status==='matched-internal-transfer'&&!linked.has(e.id))throw Error('Transferjournal ohne vollständige Zuordnung.');
+ return model;
+}
+export function undoTransferMatch(model,matchId){
+ validateTransferMatches(model);const selected=model.bookings.filter(b=>b.transferMatch?.id===matchId);if(!selected.length)return {changed:false};
+ for(const b of selected)if(bookingOwnership(model,b)!==b.transferMatch.matchedOwnership)throw Error('Zugeordnete Bewegung nachträglich geändert. Aufheben zuerst fachlich prüfen.');
+ const draft=structuredClone(model);
+ for(const original of selected.sort((a,b)=>a.transferMatch.originalFlowIndex-b.transferMatch.originalFlowIndex)){const b=draft.bookings.find(x=>x.id===original.id),t=b.transferMatch,e=transferEvidence(draft,b,true);
+  draft.externalCashFlows.splice(t.originalFlowIndex,0,structuredClone(t.originalFlow));e.clearing.role='external-clearing';e.entry.status=t.originalStatus;b.external=true;
+  if(b.importSource)b.importSource.ownership=t.originalOwnership;delete b.transferMatch;
+ }
+ if(!ledgerQuantityAudit(draft).ok)throw Error('Journal und Bestände widersprechen sich.');
+ Object.assign(model,draft);return {changed:true};
+}
+/** A snapshot taken while cash is in transit cannot prove portfolio returns. */
+export function transferValuationIssue(model,snapshots=[]){
+ try{validateTransferMatches(model);}catch{return 'Interne Transferzuordnung unvollständig oder widersprüchlich';}
+ const groups=new Map();for(const b of model.bookings||[])if(b.transferMatch){const dates=groups.get(b.transferMatch.id)||[];dates.push(b.date);groups.set(b.transferMatch.id,dates);}
+ for(const dates of groups.values()){dates.sort();if(snapshots.some(s=>s.date>=dates[0]&&s.date<dates.at(-1)))return 'Interner Transfer am Bewertungsstichtag noch nicht abgeschlossen';}
+ return null;
 }

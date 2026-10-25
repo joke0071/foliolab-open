@@ -1,3 +1,4 @@
+import {transferValuationIssue} from './transactions.js';
 /**
  * Capital-only reference line, not investment performance.
  * Anchors the first *verified* snapshot and adds recorded external net flows.
@@ -9,6 +10,7 @@ export function capitalReferenceSeries(model,snapshots){
     !model?.performanceFlowTrackingSince||!Array.isArray(model.externalCashFlows))return null;
  const shots=[...snapshots].sort((a,b)=>a.date.localeCompare(b.date));
  const first=shots[0],last=shots.at(-1);
+ if(transferValuationIssue(model,shots))return null;
  if(first.date<model.performanceFlowTrackingSince)return null;
  if(shots.some(x=>!['observed','manual'].includes(x.valuationStatus)))return null;
  if(shots.some((x,i)=>i>0&&shots[i-1].date===x.date))return null;
@@ -19,7 +21,7 @@ export function capitalReferenceSeries(model,snapshots){
     !Number.isFinite(Number(f.amountExactEUR??f.amountEUR))))return null;
  const ids=new Set(model.externalCashFlows.map(x=>x.id));
  if((model.bookings||[]).some(b=>b.date>first.date&&b.date<=last.date&&
-    ['deposit','withdraw'].includes(b.type)&&!ids.has(b.id)))return null;
+    ['deposit','withdraw'].includes(b.type)&&!b.transferMatch&&!ids.has(b.id)))return null;
  const ordered=[...flows].sort((a,b)=>a.date.localeCompare(b.date));
  let cursor=0,cumulative=0;
  return shots.map(s=>{
