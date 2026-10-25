@@ -91,6 +91,7 @@ jobs:
           node tests/browser-universal-security-discovery.mjs
           node tests/browser-onboarding-suggestions.mjs
           node tests/browser-account-opening.mjs
+          node tests/browser-cash-reconciliation.mjs
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
           node tests/browser-corrupt-backup-restore.mjs
@@ -159,6 +160,7 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
           node tests/browser-cross-engine.mjs
+          CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           node tests/browser-atomic-storage-cross-engine.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
