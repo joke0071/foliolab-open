@@ -537,8 +537,9 @@ function openAccount(a,defaultProviderId){
   model.settings.lastAccountId=next.id;await save();notify('Konto gespeichert.');
  });
  bindCashTermsForm($('editorForm'));
- bindInterestForm($('editorForm'),{onEdit:()=>{if(editor)editor.dirty=true;},calculate:parameters=>{
+ bindInterestForm($('editorForm'),{onEdit:()=>{if(editor)editor.dirty=true;},calculate:async parameters=>{
   if(loadFailure||otherTabChangedPortfolio)throw Error('Der Datenstand ist nicht aktuell. Bitte diesen Tab neu laden.');
+  await portfolioStore.assertCurrent();
   if($('accountCurrency').value!==a.currency)throw Error('Kontowährung wurde geändert. Bitte zuerst speichern und Kontozuordnung prüfen.');
   if($('cashTermsEnabled').checked&&$('fixedTerm').checked)throw Error('Diese Prognose gilt für Tagesgeld, nicht für Festgeld.');
   return forecastAccountInterest(model,{...parameters,accountId:a.id,asOf:interestAsOf});

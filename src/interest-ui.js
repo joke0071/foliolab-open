@@ -46,7 +46,8 @@ export function renderInterestForecast(result,esc){
 }
 export function bindInterestForm(root,{calculate,onEdit=()=>{}}={}){
  const get=id=>root.querySelector('#'+id),rates=get('interestRates'),result=get('interestResult');
- const clear=()=>{result?.replaceChildren();get('interestEditorStatus').textContent='';};
+ let generation=0;
+ const clear=()=>{generation++;result?.replaceChildren();get('interestEditorStatus').textContent='';};
  const summary=()=>{
   const today=localToday();
   const latest=[...rates.querySelectorAll('.interest-rate-row')].map(row=>({date:row.querySelector('[name="interestFrom"]').value,rate:row.querySelector('[name="interestRate"]').value}))
@@ -73,12 +74,15 @@ export function bindInterestForm(root,{calculate,onEdit=()=>{}}={}){
   const row=button.closest('.interest-rate-row'),next=row.nextElementSibling||row.previousElementSibling;row.remove();
   if(!rates.children.length)rates.insertAdjacentHTML('beforeend',rateRow({},0,esc));renumber();clear();clearValidation();summary();onEdit();(next||rates.firstElementChild).querySelector('input').focus();
  });
- get('interestCalculate')?.addEventListener('click',()=>{
-  clear();try{
-   const output=calculate({terms:interestTermsFromForm(root),startDate:get('interestStart').value,endDate:get('interestEnd').value,allowScenario:get('interestAllowScenario').checked});
+ get('interestCalculate')?.addEventListener('click',async()=>{
+  clear();const request=generation,button=get('interestCalculate'),enabled=get('interestEnabled');button.disabled=true;
+  try{
+   const output=await calculate({terms:interestTermsFromForm(root),startDate:get('interestStart').value,endDate:get('interestEnd').value,allowScenario:get('interestAllowScenario').checked});
+   if(request!==generation||!result.isConnected)return;
    result.innerHTML=renderInterestForecast(output,esc);
-  }catch(error){result.textContent='Prognose nicht möglich: '+String(error.message||error);}
-  result.focus({preventScroll:true});
+  }catch(error){if(request===generation&&result.isConnected)result.textContent='Prognose nicht möglich: '+String(error.message||error);}
+  finally{if(button.isConnected)button.disabled=!enabled.checked;}
+  if(request===generation&&result.isConnected)result.focus({preventScroll:true});
  });
  sync();
 }

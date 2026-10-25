@@ -43,7 +43,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
    assert.equal(await page.locator('#interestDisclosure').getAttribute('open'),null);
    await page.locator('#interestDisclosure').evaluate(e=>e.open=true);
   };
-  const preview=async()=>{await page.locator('[data-interest-preview]').evaluate(e=>e.open=true);await page.locator('#interestCalculate').click();};
+  const preview=async()=>{await page.locator('[data-interest-preview]').evaluate(e=>e.open=true);await page.locator('#interestCalculate').click();await page.waitForFunction(()=>!document.querySelector('#interestCalculate').disabled);};
   const closeSaved=async()=>{await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.querySelector('#editDialog').open);};
   await open('one');assert.equal(await page.locator('#interestEnabled').isChecked(),false);
   await page.locator('#interestEnabled').check();await page.locator('[name="interestRate"]').fill('2,5');
@@ -69,6 +69,8 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   await open('one');assert.equal(await page.locator('.interest-rate-row').count(),2);assert.match(await page.locator('#interestCurrentRate').innerText(),/2\.5/);
   const unchanged=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),priorDialogs=dialogs;
   await page.locator('[data-interest-preview]').evaluate(e=>e.open=true);await page.locator('#interestAllowScenario').check();await preview();
+  await page.evaluate(end=>{document.querySelector('#interestCalculate').click();const input=document.querySelector('#interestEnd');input.value=end;input.dispatchEvent(new Event('input',{bubbles:true}));},dates.change);
+  await page.waitForFunction(()=>!document.querySelector('#interestCalculate').disabled);assert.equal(await page.locator('#interestResult').innerText(),'','an edit during the async freshness read invalidates the old request');
   await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#editDialog').open);assert.equal(dialogs,priorDialogs,'only preview controls do not dirty account metadata');
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),unchanged);
   await open('two');await page.locator('#interestEnabled').check();await page.locator('#interestMethod').selectOption('ACT/360');await page.locator('[name="interestRate"]').fill('2');
@@ -100,6 +102,16 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   await page.waitForFunction(()=>document.querySelector('#interestResult').textContent.includes('Datenstand'));await preview();assert.match(await page.locator('#interestResult').innerText(),/neu laden/);
   await page.locator('[name="interestRate"]').first().fill('9');await page.locator('#saveDialog').click();assert.match(await page.locator('#dialogError').innerText(),/anderen Tab/);assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),raw);await peer.close();
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const store=new PortfolioStorage(),m=await store.initialize(),accounts=JSON.stringify(m.accounts);await store.migrate(m);await store.save(m);if(JSON.stringify((await store.reload()).accounts)!==accounts)throw Error('Interest metadata lost in IndexedDB');});
-  assert.deepEqual(errors,[]);console.log('INTEREST SCENARIO '+name+': exact/method/future-gates/two accounts/FX/isolation/A+B/AT03/backup UI/old restore/IDB/offline/multitab/mobile/Axe PASS');
+  // IDB writes do not emit the legacy storage event: a read-only forecast must
+  // verify the committed revision without adopting it for later stale writes.
+  await page.reload();await open('one');await page.locator('#interestAllowScenario').evaluate(e=>e.checked=true);await preview();assert.match(await page.locator('#interestResult').innerText(),/202,16 EUR/);
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();window.__interestObserver=s;window.__interestObservedRevision=s.revision;});
+  const idbPeer=await context.newPage();await idbPeer.goto(base);
+  const idbRaw=await idbPeer.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.accounts.find(a=>a.id==='one').interestTerms.rates[0].annualRateExact='4';await s.save(m);const {readPortfolioRecord}=await import('./src/atomic-storage.js');return (await readPortfolioRecord(s.db)).raw;});
+  await preview();assert.match(await page.locator('#interestResult').innerText(),/anderen Tab|nicht aktuell/,'IDB peer commit blocks read-only forecast');
+  assert.equal(await page.evaluate(async()=>{let blocked=false;try{await window.__interestObserver.assertCurrent();}catch{blocked=true;}return blocked&&window.__interestObserver.revision===window.__interestObservedRevision;}),true,'read guard rejects without adopting peer revision');
+  await page.locator('[name="interestRate"]').first().fill('8');await page.locator('#saveDialog').click();await page.locator('#dialogError').waitFor({state:'visible'});assert.match(await page.locator('#dialogError').innerText(),/Revision|Konflikt|geändert/);
+  assert.equal(await idbPeer.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const {readPortfolioRecord}=await import('./src/atomic-storage.js');const s=new PortfolioStorage();await s.initialize();return (await readPortfolioRecord(s.db)).raw;}),idbRaw,'read check cannot rebase a stale writer');await idbPeer.close();
+  assert.deepEqual(errors,[]);console.log('INTEREST SCENARIO '+name+': exact/method/future-gates/two accounts/FX/isolation/A+B/AT03/backup UI/old restore/IDB/offline/local+IDB-multitab/mobile/Axe PASS');
  }finally{await stop(server);await context.close();await browser.close();}
 }

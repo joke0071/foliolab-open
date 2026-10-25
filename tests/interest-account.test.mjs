@@ -61,3 +61,14 @@ test('optional rate metadata roundtrips open/current complete data and legacy en
   const bad=JSON.parse(raw);bad.accounts[0].interestTerms=invalid;assert.throws(()=>safeImport(bad));assert.equal(backup(m),unchanged);
  }
 });
+
+test('read-only storage freshness check never changes bytes or adopts a peer revision',async()=>{
+ const {PortfolioStorage}=await import('../src/browser-portfolio-storage.js');
+ const data=new Map(),storage={getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,String(value)),removeItem:key=>data.delete(key)};
+ const first=new PortfolioStorage(storage),m=await first.initialize();
+ await first.assertCurrent();assert.equal(data.size,0);assert.equal(first.legacyRaw,null);
+ const peer=new PortfolioStorage(storage),other=await peer.initialize();other.providers.push(createProvider({name:'Peer',type:'bank'}));await peer.save(other);
+ const committed=JSON.stringify([...data]);await assert.rejects(first.assertCurrent(),/anderen Tab/);
+ assert.equal(first.legacyRaw,null);assert.equal(first.revision,null);assert.equal(JSON.stringify([...data]),committed);
+ await assert.rejects(first.save(m),/anderen Tab/);assert.equal(JSON.stringify([...data]),committed);
+});
