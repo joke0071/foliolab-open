@@ -1,3 +1,26 @@
+# CURRENT STATUS — 00/01 LIVE v177; A–E NOT MERGED / WEBKIT GATE BLOCKED
+
+**Authoritative handoff after this run:** 00/01 is complete/live through #150, main `c23519bd1c473e602aa08e8753019de3537b9a6b`, production `foliolab-open-v177`. Its CI/deployment/live evidence and remaining 02–16 audit are below. Do NOT repeat FLH02 or 00/01.
+
+**UI work is safely retained in Draft PR #151**, branch `feature/flh03-ui-a-e`. Last tested source/harness head: `7494082cc9874f45c73f69d061c7f783cee71731` (this final handoff adds documentation only). No UI merge/deployment/v178 live acceptance is claimed. Last full gate [40231353403](https://github.com/joke0071/foliolab-open/actions/runs/40231353403): cross-engine FAILED; wallet [40231353464](https://github.com/joke0071/foliolab-open/actions/runs/40231353464) SUCCESS. Earlier failures remain visible. Tests are not disabled or relaxed.
+
+| Fix / PR #151 | Verified result | Remaining task |
+|---|---|---|
+| A, source 3e7058f + be8270a | Startup recovery/original-byte-preserving download/controlled restore passes Chromium/Firefox/WebKit. Runtime failed-save/read modal exit and writer protection passes Chromium/Firefox; WebKit runtime case is after the current blocking D step | Complete downstream WebKit runtime case, final full CI, then live acceptance |
+| B, 2709385 + f8b5282 | 999→1059/60 EUR, partial/missing/gap handling, exact start/end comparison dates, no return claim; Node and Chromium/Firefox/WebKit observed-state checks passed | Final combined CI/live acceptance |
+| C, 2709385 + 71761e9 | Seven contrast helpers pass expanded full Axe in all three engines. Strict 320px WebKit geometry now passes via the established bounded native-select style; first button-wrap hypothesis was removed | Final combined CI/live acceptance |
+| D, 2709385; harness 704cd29/7494082 | Dirty native Reload, provider/wizard/CSV retained drafts; clean/saved/closed lifecycle; Escape/cancel/focus pass Chromium/Firefox. WebKit progressed through dirty Reload cases, but fails **native Browser Back dialog delivery** | BLOCKED: actual WebKit Back produced no `beforeunload` dialog for both `history.back()` and direct `page.goBack()`. Last error `page.waitForEvent` timeout at strict native Back warning. Do not convert this into an unsupported-feature pass merely to merge |
+| E, 2709385 + be8270a | Compact truthful empty state/actions and retained independent calendar, no fake curve, proven controls preserved; Chromium/Firefox pass | WebKit E is downstream of failed D and therefore NOT claimed passed; then final CI/live |
+
+**Known boundary, not an unproven diagnosis:** This proves the behavior in the pinned Linux WebKit/Playwright runner; it does not prove all real Safari/iOS builds behave identically. Real Safari/keyboard/AT/OAuth hardware/account checks were unavailable. Standard `beforeunload` has documented browser limits. No sensitive draft is persisted, no hidden history trap is added, and no storage/journal/CAS protection is changed.
+
+**Exact next safe action:** Read #148, #149, #151/latest HEAD and this section; recheck actual main/open PRs. Independently isolate WebKit Back/unload delivery (including a real Safari reproduction when available) and decide a small, explicitly reviewed transient dialog-navigation guard only if necessary and safe. Preserve the strict rejected-navigation draft-retention and confirmed-navigation checks, clean/save behavior, existing URL/history semantics and no-draft-persistence rule. Then run the targeted WebKit case through E/runtime recovery, the complete Chromium/Firefox/WebKit + finance/storage/import/backup/offline gates on the final head. Merge #151 only when those gates genuinely pass; await main test/cross-engine/deploy success, run actual v178 hash/core/batch/A–E live checks and append exact evidence to #148/#151/#149. No other provider/migration/delete feature in this increment.
+
+Copyable resume:
+> Setze FolioLab Open ab Draft-PR #151 und docs/FLH03_WORK_CHECKPOINT.md fort. 00/01 ist als v177 vollständig live abgenommen; nicht wiederholen. Prüfe main, den aktuellen PR-HEAD und den dokumentierten WebKit-Back-Blocker aus Run 40231353403. Behebe oder verifiziere die tatsächliche Browser-/Treiberursache mit unverändert strengen Entwurfs-/Navigationsgates; keine Warnassertion abschwächen, keine sensiblen Entwürfe persistieren. Schließe anschließend WebKit E/Runtime-Recovery und sämtliche finalen Regressionen ab. Erst bei vollständig grünen Gates #151 kontrolliert mergen, deployen und v178 produktiv abnehmen. A–E-Design sowie bestehende Finanz-/IndexedDB-/Recovery-/CAS-Schutzregeln erhalten; keine Folgeadapter aktivieren.
+
+---
+
 # Current handoff: UI corrections A–E after accepted 00/01
 
 00/01 CLOSED and live v177 via #150, main `c23519bd1c473e602aa08e8753019de3537b9a6b`, main CI/deploy [40227044608](https://github.com/joke0071/foliolab-open/actions/runs/40227044608) ALL SUCCESS. Actual live: 104 exact asset hashes, active v177, 18 Axe scans, core create/edit, plain/encrypted fresh-profile restore and offline save/reload PASS; new multi-file/undo/replay/CAS at six widths PASS. Machine evidence: `docs/release-evidence/flh03-v177-live.json`. Final closure: #148 comment 6402346637. Historical pre-release notes below are superseded by this section.
