@@ -1,3 +1,4 @@
+import {historicalWealthView} from './historical-portfolio-value.js';
 import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
@@ -68,10 +69,10 @@ let otherTabChangedPortfolio=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const transferMatchingUI=createTransferMatchingUI({getModel:()=>model,assertCurrent:()=>portfolioStore.assertCurrent(),commit:async draft=>{model=draft;await save();}});
-const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model});
+const bookingHistoryUI=createBookingHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
 const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
-const PAGE_DESCRIPTIONS={history:'Vermögensstände nach Zeitraum und Stichtagen ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
+const PAGE_DESCRIPTIONS={history:'Historische Werte und ihre Datenabdeckung ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
 const types={broker:'Broker',bank:'Bank',wallet:'Wallet-Anbieter',other:'Sonstiges'};
 const accountTypes={securities:'Wertpapierdepot',checking:'Giro- oder Verrechnungskonto',savings:'Tagesgeld oder Festgeld',exchange:'Kryptobörsenkonto',wallet:'Kryptowallet',other:'Sonstiges'};
@@ -100,7 +101,7 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
-function render(){switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}}
+function render(){if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}}
 function showValuationIssues(){
  reviewKind='quote';reviewAccount='';
  filter='__review';
@@ -140,7 +141,8 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
   $('providerOverview').innerHTML=renderCashTermsOverview(model,esc,{open:cashOverviewOpen})+renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
   for(const id of expandedPositions)showPositionDetail(id);
-  const shots=model.snapshots;
+  const wealth=wealthView(),shots=wealth.samples;
+  $('miniHistoryStatus').textContent=wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
@@ -156,7 +158,10 @@ function showPositionDetail(id){
   void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
 }
 function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
-function drawChart(samples,comparison=null){return drawInteractiveChart(samples,{money,esc,dateLabel,comparison});}
+let wealthBasis='auto',wealthKey='',wealthCached;
+function wealthView(){const key=JSON.stringify([wealthBasis,model.positions,model.accounts,model.openingPositions,model.journalEntries,model.bookings,model.walletHistory,model.priceHistories,model.snapshots]);if(key!==wealthKey){wealthCached=historicalWealthView(model,wealthBasis);wealthKey=key;}return wealthCached;}
+function drawChart(samples,comparison=null){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
+
 
 let calendarMonth=null,calendarSelection=[];
 function calendarDayKey(year,zeroBasedMonth,day){return year+'-'+String(zeroBasedMonth+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');}
@@ -191,7 +196,7 @@ function renderHistory(){
  const twr=start&&end&&start!==end?portfolioTwr(model,start,end):null;
  const issues=start&&end&&start!==end?performanceIssues(model,start,end):[];
  const percent=v=>new Intl.NumberFormat('de-AT',{style:'percent',maximumFractionDigits:2}).format(v);
- summary.textContent=rate==null&&twr==null?'Noch keine verlässliche Rendite berechenbar':
+ summary.textContent=rate==null&&twr==null?'':
   [rate==null?null:'XIRR '+percent(rate),twr==null?null:'TWR '+percent(twr)].filter(Boolean).join(' · ');
  const issueText=issues.length?' Fehlende Angaben: '+issues.slice(0,4).join('; ')+'.':'';
  info.innerHTML='<p><strong>XIRR:</strong> '+(rate==null?
@@ -202,18 +207,23 @@ function renderHistory(){
   'Für eine zeitgewichtete Rendite fehlen noch bewertete Zeitpunkte vor und nach externen Geldflüssen.':
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
- let data=model.snapshots;
+ const wealth=wealthView();let data=wealth.samples;
+ $('historySourceStatus').textContent=wealth.label;
+ if(page==='history')$('pageDescription').textContent=wealth.label;
+ const basis=$('historyBasis');basis.parentElement.hidden=!(wealth.projection.observations.length&&wealth.projection.days.some(d=>d.partialEURExact!==null));
+ const missing=[...new Set(wealth.projection.days.flatMap(d=>d.missing).map(m=>m.reason))];
+ $('historyCoverageBody').innerHTML='<p>'+esc(wealth.reason)+'</p>'+(missing.length?'<ul>'+missing.slice(0,8).map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>':'')+wealth.projection.reconciliation.filter(r=>r.status==='review').slice(-30).map(r=>'<p>'+esc(r.date)+' · Kontrollpunkt '+money(Number(r.observedEURExact))+' · Rekonstruiert '+money(Number(r.reconstructedEURExact))+' · Differenz '+money(Number(r.differenceEURExact))+'</p>').join('');
  if(range==='calendar'&&calendarSelection.length===2){
   const [from,to]=calendarSelection;
   data=data.filter(x=>x.date>=from&&x.date<=to);
  }else if(range!=='calendar'){
   data=filterChartPeriod(data,'wealth',range);
  }
- const reference=capitalReferenceSeries(model,data),comparisonToggle=$('compareCapital');
+ const reference=wealth.basis==='observed'?capitalReferenceSeries(model,data):null,comparisonToggle=$('compareCapital');
  comparisonToggle.disabled=!reference;
  if(!reference)comparisonToggle.checked=false;
  $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
- $('historyChart').innerHTML=drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(model.snapshots,'wealth',period).length>=2);$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
+ $('historyChart').innerHTML=drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
 function renderPositions(){
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' nicht bestätigt':'Kurse: Noch keine Bewertungen';
@@ -222,6 +232,7 @@ function renderPositions(){
  const unresolved=unresolvedListings(),allReview=positionQualityReview(model),reviewItems=filterQualityReview(allReview,{kind:reviewKind,accountId:reviewAccount}),reviewIds=new Set(reviewItems.map(x=>x.id));
  const reviewReasons=new Map(allReview.map(g=>[g.id,g.issues.map(i=>i.label).join(' · ')]));
  const reviewById=new Map(allReview.map(g=>[g.id,g]));
+ $('legacyQuoteAudit').hidden=legacyQuoteDiscrepancies(model).length===0&&!legacyAuditPerformed;
  const tools=$('qualityReviewTools');tools.classList.toggle('hidden',filter!=='__review');
  $('qualityReviewKind').value=reviewKind;
  $('qualityReviewAccount').innerHTML='<option value="">Alle Konten</option>'+model.accounts.map(a=>'<option value="'+esc(a.id)+'"'+(reviewAccount===a.id?' selected':'')+'>'+esc(a.name+' · '+(model.providers.find(p=>p.id===a.providerId)?.name||'Anbieter unbekannt'))+'</option>').join('');
@@ -1568,7 +1579,7 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
@@ -1601,7 +1612,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
  $('historyCalendarReset').addEventListener('click',()=>{calendarSelection=[];range='all';$('historyCalendarDisclosure').open=false;renderHistory();});
- $('compareCapital').addEventListener('change',renderHistory);
+ $('historyBasis').addEventListener('change',e=>{wealthBasis=e.target.value;renderDashboard();renderHistory();});$('compareCapital').addEventListener('change',renderHistory);
  $('historyCalendarGrid').addEventListener('click',e=>{
   const day=e.target.closest('[data-calendar-day]')?.dataset.calendarDay;if(!day)return;
   if(calendarSelection.length!==1)calendarSelection=[day];
@@ -1872,6 +1883,7 @@ $('apiSettings').addEventListener('submit',async e=>{
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
  $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
+ const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').classList.remove('hidden');});$('installButton').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();installPrompt=null;$('installButton').classList.add('hidden');});
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{

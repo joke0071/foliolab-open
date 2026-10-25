@@ -15,8 +15,8 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  assert.match(app,/renderChartPeriodButtons\('wealth','data-range',range\)/);
  assert.match(html,/id="historyCalendarDisclosure"/);
  assert.match(html,/id="historyCalendarGrid"/);
- assert.match(html,/id="addSnapshot" aria-label="Stichtag speichern"/);
- assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary>Stichtage verwalten<\/summary>/);
+ assert.match(html,/id="addSnapshot" aria-label="Stichtag hinzufügen"/);
+ assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary>Kontrollpunkte &amp; manuelle Werte<\/summary>/);
  assert.doesNotMatch(html,/<details class="snapshot-manager" id="snapshotManager" open/);
  assert.doesNotMatch(html,/Entwicklung nach Stichtagen/);
  assert.match(html,/class="panel history-panel" role="region" aria-label="Vermögensstände im Zeitverlauf"/);

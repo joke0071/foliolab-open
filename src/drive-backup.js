@@ -75,7 +75,7 @@ function updateDueStatus(){
  if(!clientConfigLoaded){status('Google-Drive-Konfiguration wird geladen …');return}
  if(!googleClientId){status(clientConfigError||'',!!clientConfigError);return}
  if(!vaultConfigured){status('Bitte zuerst ein Backup-Passwort unter „Backup-Verschlüsselung“ einrichten.');return}
- if(prefs.mode!=='off'&&due()&&!hasToken()){status('Automatisches Backup fällig. Bitte Google Drive verbinden.');return}
+ if(prefs.mode!=='off'&&due()&&!hasToken()){status('Sicherung fällig. Drive verbinden; sie erfolgt nur bei geöffneter App und aktiver Verbindung.');return}
  if(prefs.cleanupPending){status('Letztes Backup gespeichert · ältere Sicherungen werden bei nächster Verbindung bereinigt.');return}
  if(prefs.lastBackupAt){const d=asDate(prefs.lastBackupAt);status('Letzte Drive-Sicherung: '+(d?d.toLocaleString('de-AT'):'unbekannt')+'.');return}
  status('');
@@ -137,8 +137,8 @@ async function connect(){
   await refreshFolders();
   await refreshList();
   if((prefs.mode!=='off'&&due())||prefs.cleanupPending)await maybeAuto();
-  else updateDueStatus();
- }catch(e){status(e.message,true);updateUi()}
+  else{status(vaultConfigured?'Verbunden. Jetzt sichern erstellt deine verschlüsselte vollständige Sicherung.':'Verbunden. Zuerst ein Backup-Passwort einrichten, danach Jetzt sichern.');const save=get('driveSaveNow');if(save&&!save.disabled)save.focus?.();}
+ }catch(e){status(e.message+' Bitte erneut verbinden.',true);updateUi()}
 }
 async function api(path,options={}){
  if(!hasToken()){accessToken='';updateUi();throw Error('Google-Anmeldung abgelaufen. Bitte erneut verbinden.')}
@@ -341,7 +341,7 @@ async function backup(automatic=false){
   prefs.cleanupPending=Boolean(cleanupError&&verified);
   savePrefs();
   await refreshList();
-  status((automatic?'Automatische Sicherung':'Backup')+' erfolgreich · '+new Date(prefs.lastBackupAt).toLocaleString('de-AT')+
+  status((automatic?'Sitzungssicherung':'Backup')+' erfolgreich · '+new Date(prefs.lastBackupAt).toLocaleString('de-AT')+
     (removed?' · '+removed+' alte gelöscht':'')+
     (cleanupError?(verified?' · Weitere alte Backups werden später bereinigt':' · Bereinigung zur Sicherheit ausgesetzt'):''),
     false);

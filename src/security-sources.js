@@ -18,7 +18,7 @@ function dateString(value){
  if(typeof value==='number'&&Number.isFinite(value)){const ms=value<1e12?value*1000:value;return new Date(ms).toISOString().slice(0,10);}
  const text=String(value||'');
  const valueDate=/^\d{4}-\d{2}-\d{2}/.test(text)?text.slice(0,10):null;
- return valueDate&&dayPattern.test(valueDate)&&!Number.isNaN(Date.parse(valueDate))?valueDate:null;
+ return valueDate&&dayPattern.test(valueDate)&&!Number.isNaN(Date.parse(valueDate))&&new Date(valueDate+'T12:00:00Z').toISOString().slice(0,10)===valueDate?valueDate:null;
 }
 function verifiedDate(value,now=Date.now()){
  const date=dateString(value);
@@ -54,8 +54,8 @@ function configuredFmp(p){
 export function marketSourceOptions(p,settings={}){
  const l=listingInfo(p),list=[];
  if((settings.eodhdKey||configuredMarketWorker(settings))&&configuredEodhd(p))list.push('eodhd');
- if(settings.fmpKey&&configuredFmp(p))list.push('fmp');
  if(settings.twelveKey)list.push('twelve');
+ if(settings.fmpKey&&configuredFmp(p))list.push('fmp');
  const preferred=String(settings.securitySource||'auto');
  if(preferred==='auto')return list;
  if(!['eodhd','fmp','twelve'].includes(preferred))throw Error('Ungültige Wertpapier-Datenquelle.');
@@ -88,12 +88,12 @@ async function eodhdBars(p,settings,days,fetcher){
 async function fmpBars(p,settings,days,fetcher){
  const l=listingInfo(p),sym=configuredFmp(p);
  if(!sym)throw Error('Bitte den FMP-Börsenticker in der Position ausdrücklich zuordnen.');
- const url=new URL('https://financialmodelingprep.com/stable/historical-price-eod/full');
+ const url=new URL('https://financialmodelingprep.com/stable/historical-price-eod/non-split-adjusted');
  url.searchParams.set('symbol',sym);url.searchParams.set('from',new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10));url.searchParams.set('to',new Date().toISOString().slice(0,10));url.searchParams.set('apikey',settings.fmpKey);
  const data=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history,attempts:1});
  if(!Array.isArray(data)||!data.length)throw Error(String(data?.['Error Message']||'FMP liefert keine historischen Kurse.'));
  const points=parseBars(data,p.currency,sym);
- return {points,source:'Financial Modeling Prep · EOD',verifiedSymbol:sym,quality:'configured-listing'};
+ return {points,source:'Financial Modeling Prep · unadjusted EOD',verifiedSymbol:sym,quality:'configured-listing'};
 }
 function parseBars(input,currency,expectedSymbol=null){
  const dates=new Map();
@@ -111,7 +111,7 @@ function parseBars(input,currency,expectedSymbol=null){
 }
 async function twelveBars(p,settings,days,fetcher){
  const l=listingInfo(p),url=new URL('https://api.twelvedata.com/time_series');
- const params={symbol:l.symbol,exchange:p.exchange||'',mic_code:p.mic||'',interval:'1day',apikey:settings.twelveKey};
+ const params={symbol:l.symbol,exchange:p.exchange||'',mic_code:p.mic||'',interval:'1day',adjust:'none',apikey:settings.twelveKey};
  if(days>365){
   params.start_date=new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10);
   params.end_date=new Date().toISOString().slice(0,10);
@@ -129,7 +129,7 @@ async function twelveBars(p,settings,days,fetcher){
  return {points,source:'Twelve Data · verifizierte Notierung',quality:'verified-listing'};
 }
 export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalThis.fetch){
- if(![7,30,90,365,1826].includes(days))throw Error('Ungültiger Börsenkurszeitraum.');
+ if(![7,30,90,180,365,1096,1826].includes(days))throw Error('Ungültiger Börsenkurszeitraum.');
  const providers=marketSourceOptions(p,settings);
  if(!providers.length)throw Error('Keine konfigurierte historische Kurs-API. Öffentlicher TradingView-Chart oder CSV verfügbar.');
  const failures=[];
@@ -142,7 +142,7 @@ export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalT
    const from=new Date(Date.now()-(days+5)*864e5).toISOString().slice(0,10);
    const points=r.points.filter(item=>item.date>=from&&item.date<=new Date().toISOString().slice(0,10));
    if(points.length<2)throw Error('Zu wenige historische Kursdaten.');
-   return {...r,kind:'market',currency:p.currency,points};
+   return {...r,kind:'market',currency:p.currency,priceType:'close',points,coverage:{from:points[0].date,to:points.at(-1).date,requestedDays:days}};
   }catch(e){failures.push(source+': '+String(e.message).slice(0,100));}
  }
  throw Error('Historische Börsenkurse nicht abrufbar: '+failures.join(' · '));

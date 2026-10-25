@@ -64,6 +64,8 @@ jobs:
           node tests/browser-history-storage.mjs
           node tests/browser-history-ui.mjs
           node tests/browser-purchase-evidence.mjs
+          node tests/browser-historical-position-value.mjs
+          node tests/browser-flh02-release.mjs
           node tests/browser-history-worker.mjs
           node tests/browser-p0-import.mjs
           node tests/browser-csv-review-a11y.mjs
@@ -191,6 +193,8 @@ jobs:
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
+          FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
       - name: Preserve cross-engine evidence
         if: always()

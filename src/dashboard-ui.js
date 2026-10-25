@@ -65,10 +65,10 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
   }).join('');
 }
 
-export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null}){
+export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Speichere einen weiteren Stichtag für den Verlauf.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const step=Math.max(1,Math.ceil(samples.length/140));
- const sampled=samples.filter((_,i)=>i===0||i===samples.length-1||i%step===0);
+ const sampled=samples.filter((s,i)=>i===0||i===samples.length-1||i%step===0||disjoint&&(s.breakBefore||samples[i+1]?.breakBefore));
  const values=sampled.map(s=>Number(s.totalEURExact??s.total));
  if(values.some(x=>!Number.isFinite(x)))return '<p class="chart-zero">Diagrammwerte nicht verfügbar.</p>';
  const compared=comparison?new Map(comparison.map(x=>[x.date,Number(x.total)])):null;
@@ -83,9 +83,9 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  const points=sampled.map((s,i)=>({
    x:pad+i*(width-pad*2)/(sampled.length-1),
    y:pad+(yMax-values[i])/range*(height-pad*2),
-   value:money(values[i]),date:dateLabel(s.date)
+   value:money(values[i]),date:dateLabel(s.date),...(s.detail?{detail:String(s.detail)}:{})
  }));
- const path=points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
+ const path=points.map((p,i)=>(i&&!(disjoint&&sampled[i].breakBefore)?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
  const comparePath=second?points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+(pad+(yMax-second[i])/range*(height-pad*2)).toFixed(2)).join(' '):'';
  if(second)points.forEach((p,i)=>{p.compareValue='Kapitalreferenz: '+money(second[i]);});
  const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+pad+' '+height+' Z';
@@ -96,7 +96,8 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  '<div class="chart-plot" role="group" tabindex="0" aria-label="Interaktiver Vermögensverlauf. Pfeiltasten links und rechts zeigen Stichtage." data-chart-points="'+series+'">'+
  '<svg viewBox="0 0 '+width+' '+height+'" preserveAspectRatio="none" aria-hidden="true" focusable="false">'+
  [5,90,175].map(y=>'<line x1="0" x2="'+width+'" y1="'+y+'" y2="'+y+'" stroke="#e5eee6" stroke-dasharray="4 6"/>').join('')+
- '<path d="'+fill+'" fill="#e8f2ea"/><path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
+ (disjoint?'':'<path d="'+fill+'" fill="#e8f2ea"/>')+'<path d="'+path+'" fill="none" stroke="#3b8659" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
+ (disjoint?points.map(p=>'<circle cx="'+p.x+'" cy="'+p.y+'" r="2" fill="#3b8659" vector-effect="non-scaling-stroke"/>').join(''):'')+
  (comparePath?'<path d="'+comparePath+'" fill="none" stroke="#708c9a" stroke-dasharray="7 5" stroke-width="2.5" vector-effect="non-scaling-stroke"/>':'')+
  '<circle cx="'+points.at(-1).x+'" cy="'+points.at(-1).y+'" r="4.5" fill="#3b8659" stroke="white" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'+
  '<span class="chart-cursor hidden" aria-hidden="true"></span><div class="chart-tooltip hidden" role="status"></div></div>'+axis+
@@ -120,6 +121,7 @@ export function attachChartInteractions(container) {
    const date=document.createElement('span'),value=document.createElement('strong');
    date.textContent=point.date;value.textContent=point.value;
    tip.append(date,value);
+   if(point.detail){const extra=document.createElement('span');extra.textContent=point.detail;tip.append(extra);}
    if(point.compareValue){const extra=document.createElement('span');extra.textContent=point.compareValue;tip.append(extra);}
    cursor.classList.remove('hidden');tip.classList.remove('hidden');
  }

@@ -1,43 +1,47 @@
-# FLH02 work checkpoint
+# FLH02 work checkpoint — completion candidate
 
-Specification: Library folder `FolioLab Open - Work-Auftraege`, exact FLH02 filename, version 11, read 2026-10-25. Do not use earlier copies. No other open PR found at initial audit.
+Specification: exact Library FLH02 document, version 11. Existing accepted A / FLH01 / IndexedDB work is not repeated.
 
-## Repository identity
+- Verified main: `8e12ae1ad1a0b517eab3404a2dacbe9b31ab61db`, A released/accepted as v171.
+- Branch: `feature/flh02-position-value-foundation`, PR https://github.com/joke0071/foliolab-open/pull/144.
+- Previous remote checkpoint: `7bb3ebf32d029b1941a569102407ce802a3009de`. Current commit: this checkpoint's containing commit; resolve branch HEAD.
+- Candidate shell: v175. NOT merged/released yet.
 
-- Verified main: `fccbcc39fdc5bd8ff92e3475ac21df813e2a3473` (PWA v169).
-- Work branch: `feature/flh02-bittr-wallet-evidence`.
-- Current commit: this checkpoint's containing commit (resolve branch HEAD); Draft PR #143: https://github.com/joke0071/foliolab-open/pull/143. First remote commit `cb7457371e2fab36d6d85c721bae2e4ebce7320f`.
-- No merge or productive deployment performed. v170 in this branch is a candidate only.
-
-## Package status
-
-| Package | Status |
+| Package | Implementation / acceptance |
 |---|---|
-| A | IN PROGRESS: strict local allowlist Bittr adapter, exact satoshi/fee validation, stable receipt fingerprints, additive canonical provenance, confirmed own-output group matching, explicit manual selection and undo, reorg revalidation, wallet dialog preview implemented. Core tests pass; browser/CI gates pending. |
-| B | NOT STARTED |
-| C1 | NOT STARTED |
-| C2 | NOT STARTED |
-| C3 | NOT STARTED |
-| D | NOT STARTED |
-| E | NOT STARTED (including 7.14 optional connections consolidation) |
-| Google Drive | NOT STARTED |
+| A | DONE, merged/live v171. Private rendered wallet text lacks output identities; no fabricated real matching counts. |
+| B | Implemented candidate: EOD journal/chain quantities, exact close/FX projection, EUR default and value/price/quantity/transaction views, shared mini-card projection, disjoint segments, 6M/3J/5J/Max presets, explicit rights-confirmed retention in existing priceHistories with source/identity conflicts blocked. |
+| C1 | Implemented candidate: cash/journal/chain aggregation; sold positions retained under existing deletion guard; excluded economic representations not counted twice, liabilities signed, overlapping wallets and unresolved cash clearing block full claims. No present holdings backfilled. |
+| C2 | Implemented candidate: overview/history share one pure projection; observations stay separate, explicit partial portfolio label, manual controls secondary. |
+| C3 | Implemented candidate: read-only coverage and snapshot discrepancies, no correcting writes; synthetic integrated browser checks. |
+| D | Implemented candidate: legacy migration disclosure is conditional global recovery entry, existing safety retained; precision audit appears only in relevant data-quality review. |
+| E | Implemented candidate: main history has no optional green plus, secondary disclosures, dynamic source status; optional services consolidated with one shared save and unchanged fields/validation. |
+| Drive | Implemented candidate: OAuth in manual mode explicitly offers enabled encrypted backup; session-only schedule wording, no closed-app promise; password/full restore retained. |
 
-## Evidence and limitations
+## Actually executed
 
-- `npm run check` passed after initial core implementation; rerun after UI integration.
-- Six synthetic purchase-evidence unit cases passed: exact amount invariants, 1:N/N:1/N:M, duplicate/reused txids, proposal/ambiguity, confirmation/undo/reorg, no mutation, encrypted/ordinary backup roundtrip and invalid input.
-- Private Bittr parser totals checked locally against the specification; raw CSV, private quantities/sums, identifiers and fixtures are NOT committed. Wallet reference matching not yet verified.
-- Full npm suite passed: 639/639. New Chromium E2E passed: preview/confirm/undo/reload, IDB, encrypted full restore, six widths, axe, private-field/XSS exclusion and multitab CAS. Firefox/WebKit local execution is not yet verified (system dependencies unavailable; package install failed). CI must verify both engines. Browser test is wired into both existing CI jobs. Initial PR workflow 40212788892 in progress at last check.
-- Additive `purchaseEvidence` is validated by safeImport and kept by existing backup model. No journal, position, snapshot or performance writes. Existing storage/CAS used via wallet dialog commit.
-- Conservative matching requires verified stored Bitcoin incoming vout events; unknown opening/partial scans do not become verified acquisitions. Group UI currently offers at most 1000 incoming outputs for manual selection. Exact duplicate normalized receipts cannot establish separate identical purchases without a distinct external identity.
-- Git HTTPS push lacks shell credentials; authenticated GitHub connector is used for remote tree/commit/ref checkpoints.
+- Syntax check passed. Latest complete unit run: 657/657, zero skipped/failing.
+- New Chromium FLH02 integration passed: 999/1059 total with no snapshots, observed/partial separation, six widths, axe, preserved optional endpoints/token and zero financial writes.
+- Updated BTC/ETH/SOL/SPL history UI suite passed, including encrypted restore, exact raw-token display, multitab and backup preference persistence. Purchase matching implementation untouched.
+- Existing Chromium suites passed from smoke through CSV/Flatex/dialog/position/history suites. Continued full local run still needs completion; remaining failures found were superseded UI contracts (manual button priority, period count, precision-review location); original financial/safety assertions retained.
+- Full replacement PR CI including Firefox/WebKit REQUIRED. Local WebKit lacks libraries and local Firefox page creation hangs; CI is the supported cross-engine gate here. No unexecuted tests claimed.
+- Previous v171 live evidence remains in docs/FLH02_A_RELEASE_AND_LIVE_ACCEPTANCE.md. No combined FLH02 live release claimed yet.
 
-## Next safe actions
+## Financial/provider boundaries
 
-1. Finish A browser tests (preview/confirmation/undo/reload, revision conflicts, IDB/full encrypted restore, 320/390/430/768/1024/1440 and Chromium/Firefox/WebKit); strengthen any uncovered invariants. Verify private wallet reference locally without publishing raw data.
-2. Finish A CI; integrate only after appropriate gates. Implement B using existing historical quote/chart components, then C1/C2/C3, D/E/Drive in specified sequence, with small remote checkpoints.
-3. Final all-engine regression, main CI, Pages deployment and real live acceptance. No final release is claimed by this checkpoint.
+- Unknown/undated opening balances, bank histories or unsupported chain/staking facts remain explicit gaps. Only actual journal interest credits count as cash; forecasts are not actual historical wealth. No new tax/performance release.
+- Chain evidence uses the existing validated replay/day engine and explicit account/asset scope. Overlap/reorg/partial coverage never becomes a verified full total. Very large calculations fail with a clear bounded-calculation message rather than locking UI or inventing zeros.
+- API entitlements/CORS without a real test account remain unverified; 401/403/429/offline retain local evidence. Keys and CSV stay local. Provider cache requires explicit storage-right confirmation; no cross-provider silent merge. Existing priceHistories/backup/quota contract, no parallel persistent store.
+- Twelve requests explicitly use adjust=none; FMP uses the documented non-split-adjusted endpoint. CoinGecko midnight UTC observations map to the preceding EOD for valuation; unaligned intraday observations remain usable price observations but do not become EOD values. No provider-free multi-year promise.
 
-## Exact resumption instruction
+## First remaining actions
 
-> Continue FolioLab Open FLH02 from `docs/FLH02_WORK_CHECKPOINT.md` on branch `feature/flh02-bittr-wallet-evidence`. Read the current Library specification version 11, inspect current main and open PRs, preserve existing work, and begin with the first incomplete A test/invariant. Do not repeat FLH01/IndexedDB Phase B or claim B/C/D/E/Drive complete. Use synthetic repository tests only; private reference data stays local. Checkpoint each safe increment remotely. Merge and deploy only fully tested conflict-free changes under the existing explicit user authorization, then verify the actual Pages version/service worker and live E2E.
+1. Local Chromium workflow suites passed in sequential segments through PWA/offline/scale, including precision repair and configured worker compatibility. Full current CI (replacement of run 40216424171) remains authoritative; fix genuine errors and adapt old navigation contracts without weakening their financial/security assertions.
+2. Verify full current PR CI, including new FLH02 suite on Firefox/WebKit; inspect failed job logs and fix reproducible defects.
+3. Update release report, integrate only green conflict-free PR #144 on current main, verify main CI/Pages and actual production assets/SW + synthetic live tests.
+
+## Exact resumption
+
+> Continue FLH02 PR #144 on feature/flh02-position-value-foundation from this checkpoint and specification v11. A is already v171/live. B/C1/C2/C3/D/E/Drive code is a completion candidate, not yet accepted. Finish remaining Chromium and all-engine CI gates, address failures, then merge under existing explicit authorization, verify main deployment and actual live acceptance. Never replay accepted A/FLH01/IndexedDB work or replace unknown financial values with zero. Keep every next safe increment remote and update this checkpoint.
+
+Latest fixes after initial candidate: precision discrepancies now create a data-quality review entry; exact decimals beyond supported scale remain explicit gaps, economic representation needs dated same-scope proof; partial-series scope changes break the line; FX retains actual reference date; price-only view remains usable without holdings; async quote retention is identity/revision bound. Unit suite 657/657; affected Chromium suites passed.

@@ -16,25 +16,25 @@ try{
  const ownership=await page.locator('[name="binplorerKey"]').evaluate(el=>el.form?.id);
  assert.equal(ownership,'apiSettings','External BNB key must belong to the shared settings form');
  for(const id of ['marketSettings','publicSearchSetup','blockchainSettings']){
-  await page.locator('#'+id).evaluate(el=>el.open=true);
+  await page.locator('#'+id).evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
  }
- for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit']){
+ for(const id of ['optionalConnections','blockchainSettings']){
   const group=page.locator('#'+id);
-  await group.evaluate(el=>el.open=true);
+  await group.evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   const tips=group.locator('.more-panel-help');
   assert.ok(await tips.count()>0,id+' must keep optional technical help');
   for(let i=0;i<await tips.count();i++)assert.equal(await tips.nth(i).evaluate(el=>el.open),false,'Help initially collapsed in '+id);
  }
  await page.locator('#dataPrivacyNotes').evaluate(el=>el.open=true);
  assert.equal(await page.locator('#dataPrivacyNotes .more-privacy-notes section').count(),3,'Privacy guidance uses three short, readable sections');
- assert.equal(await page.locator('#legacyQuoteAuditStatus').innerText(),'Noch nicht geprüft.');
+ assert.equal(await page.locator('#legacyQuoteAudit').isVisible(),false,'No everyday precision card without concrete discrepancies');
  assert.ok((await page.locator('#dataPrivacyNotes').innerText()).includes('verschlüsselte Vollbackups'));
  assert.doesNotMatch(await page.locator('#dataPrivacyNotes').innerText(),/Backups enthalten keine API-Schlüssel/);
  await page.locator('[name="eodhdKey"]').fill('TEST_MARKET_KEY');
  await page.locator('[name="publicInstrumentEndpoint"]').fill('https://test-worker.workers.dev');
  await page.locator('[name="binplorerKey"]').fill('TEST_BSC_KEY');
  await page.locator('[name="etherscanKey"]').fill('TEST_ETH_KEY');
- await page.locator('#publicSearchSetup button[type="submit"]').click();
+ await page.locator('#optionalConnections > button[type="submit"]').click();
  // Shared settings are committed asynchronously under the portfolio Web Lock.
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  let settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
@@ -44,7 +44,7 @@ try{
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev');
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
- await page.locator('#publicSearchSetup').evaluate(el=>el.open=true);
+ await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#publicSearchSetup').evaluate(el=>el.open=true);
  assert.equal(await page.locator('[name="publicInstrumentEndpoint"]').inputValue(),'https://test-worker.workers.dev');
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('#marketSettings > .more-panel-help').evaluate(el=>el.open=true);
@@ -54,8 +54,8 @@ try{
  assert.equal(settings.binplorerKey,'','Credential removal must clear blockchain keys');
  assert.equal(settings.eodhdKey,'','Credential removal must clear market data keys');
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev','Non-secret endpoint can remain configured');
- for(const id of ['publicSearchSetup','marketWorkerSetup','blockchainSettings','legacyQuoteAudit']){
-  await page.locator('#'+id).evaluate(el=>el.open=true);
+ for(const id of ['optionalConnections','blockchainSettings']){
+  await page.locator('#'+id).evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
   await page.locator('#'+id+' .more-panel-help').first().evaluate(el=>el.open=true);
  }
  await page.locator('#dataPrivacyNotes').evaluate(el=>el.open=true);

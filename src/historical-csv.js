@@ -1,3 +1,4 @@
+import {historyIdentity} from './history-evidence-cache.js';
 /** Strict, offline historical closing-price CSV import; never reads or changes holdings. */
 const MAX_BYTES=1500000,MAX_POINTS=6500;
 const ISO=/^\d{4}-\d{2}-\d{2}$/;
@@ -59,10 +60,11 @@ export function parseHistoricalPriceCSV(text,position){
  if(rows.length<3)throw Error('Mindestens zwei Kursdaten und eine Kopfzeile erforderlich.');
  const h=rows[0].map(header);
  const date=matchColumn(h,['datum','date','datetime','tradingdate','handelsdatum','zeitstempel','timestamp']);
- const price=matchColumn(h,['schlusskurs','schluss','close','closingprice','schlusskursbereinigt','kurs','price','last','wert','adjclose','adjustedclose']);
+ const price=matchColumn(h,['schlusskurs','schluss','close','closingprice','kurs','price','last','wert']);
  const curr=matchColumn(h,['currency','wahrung','kurswahrung','waehrung']);
  const symbol=matchColumn(h,['ticker','symbol','borsenkurzel','boersenkurzel']);
  const isin=matchColumn(h,['isin']);
+ if(price<0&&h.some(x=>['adjclose','adjustedclose','schlusskursbereinigt'].includes(x)))throw Error('Bereinigte Kurse sind keine damaligen Depotwerte. Bitte rohe Schlusskurse (Close) importieren.');
  if(date<0||price<0||date===price)throw Error('Spalten „Datum/Date“ und „Schlusskurs/Close“ fehlen.');
  const requestedCurrency=String(position.currency||'EUR').toUpperCase();
  const points=new Map();
@@ -80,25 +82,31 @@ export function parseHistoricalPriceCSV(text,position){
  return validateImportedPriceHistory({currency:requestedCurrency,source:'CSV (selbst geprüft)',points:ordered},position);
 }
 export function validateImportedPriceHistory(history,position){
- if(!history||typeof history!=='object'||Array.isArray(history)||history.source!=='CSV (selbst geprüft)')throw Error('Ungültige CSV-Kurshistorie.');
+ const retained=history?.provenance;
+ if(!history||typeof history!=='object'||Array.isArray(history)||history.source!=='CSV (selbst geprüft)'&&!retained)throw Error('Ungültige CSV-Kurshistorie.');
  const currency=String(history.currency||'').toUpperCase();
- if(!/^[A-Z]{3}$/.test(currency)||(position&&currency!==String(position.currency||'EUR').toUpperCase()))throw Error('Kurshistorie und Position haben unterschiedliche Währungen.');
+ if(!/^[A-Z]{3}$/.test(currency)||(position&&currency!==String(position.currency||'EUR').toUpperCase()&&!(retained&&position.kind==='crypto'&&currency==='EUR')))throw Error('Kurshistorie und Position haben unterschiedliche Währungen.');
  if(!Array.isArray(history.points)||history.points.length<2||history.points.length>MAX_POINTS)throw Error('Historische Kurse überschreiten die Datenlimits.');
  let last='';
  const points=history.points.map(row=>{
   const d=String(row?.date||''),n=Number(row?.total);
   if(!dateOK(d)||d<=last||!Number.isFinite(n)||n<=0||n>1000000000)throw Error('Beschädigte oder unsortierte historische Kurse.');
   last=d;
-  return {date:d,total:n};
+  if(retained&&Object.hasOwn(row,'valuationDate')){if(row.valuationDate!==null&&!dateOK(row.valuationDate))throw Error('Krypto-Bewertungszeitpunkt ungültig.');return {date:d,total:n,valuationDate:row.valuationDate};}return {date:d,total:n};
  });
- return {currency,source:'CSV (selbst geprüft)',points};
+ if(!retained)return {currency,source:'CSV (selbst geprüft)',points};
+ const names={eodhd:/^EODHD/,twelve:/^Twelve Data/,fmp:/^Financial Modeling Prep/,coingecko:/^CoinGecko/,coinpaprika:/^CoinPaprika/};
+ if(retained.schema!==1||retained.retention!=='user-confirmed'||!names[retained.provider]?.test(history.source)||history.source.length>180||/[\u0000-\u001f]/.test(history.source)||!position||retained.identity!==historyIdentity(position)||history.priceType!==(position.kind==='crypto'?'crypto-daily':'close'))throw Error('Kursquelle, Kursart oder Positionsbindung nicht bestätigt.');
+ const fxPoints=(history.fxPoints||[]).map(r=>{if(!dateOK(r.date)||r.currency!==currency||r.source!=='Frankfurter'||!(Number(r.rate)>0)||!Number.isFinite(Number(r.rate)))throw Error('Historische FX-Daten beschädigt.');if(r.referenceDate&&(!dateOK(r.referenceDate)||r.referenceDate>r.date||(Date.parse(r.date)-Date.parse(r.referenceDate))/864e5>7))throw Error('Historischer FX-Zeitbezug ungültig.');return {date:r.date,currency,rate:String(r.rate),source:'Frankfurter',...(r.referenceDate?{referenceDate:r.referenceDate}:{})};});
+ if(fxPoints.length>6500||new Set(fxPoints.map(r=>r.date)).size!==fxPoints.length)throw Error('FX-Datenlimit oder doppelte Tage.');
+ return {currency,source:history.source,points,priceType:history.priceType,fxPoints,provenance:{schema:1,provider:retained.provider,identity:retained.identity,retention:'user-confirmed'}};
 }
 export function importedHistoryForPeriod(model,position,days=30,now=Date.now()){
  const data=model.priceHistories?.[position.id];
  if(!data)return null;
  const valid=validateImportedPriceHistory(data,position);
- if(![7,30,90,365,1826,'max'].includes(days))throw Error('Unbekannter Diagrammzeitraum.');
+ if(![7,30,90,180,365,1096,1826,'max'].includes(days))throw Error('Unbekannter Diagrammzeitraum.');
  const start=days==='max'?'0000-01-01':new Date(now-(days-1)*86400000).toISOString().slice(0,10),end=new Date(now).toISOString().slice(0,10);
- return {kind:'market',source:'CSV (selbst geprüft)',currency:valid.currency,
+ return {kind:'market',source:valid.source,currency:valid.currency,
   points:valid.points.filter(p=>p.date>=start&&p.date<=end)};
 }

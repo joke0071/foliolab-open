@@ -3,14 +3,19 @@ export const CHART_PERIODS = Object.freeze({
  wealth:Object.freeze([
   Object.freeze({value:'month',label:'1 M',days:30}),
   Object.freeze({value:'quarter',label:'3 M',days:90}),
+  Object.freeze({value:'halfyear',label:'6 M',days:180}),
   Object.freeze({value:'year',label:'1 J',days:365}),
-  Object.freeze({value:'all',label:'Alles',days:null})
+  Object.freeze({value:'threeYears',label:'3 J',days:1096}),
+  Object.freeze({value:'fiveYears',label:'5 J',days:1826}),
+  Object.freeze({value:'all',label:'Max',days:null})
  ]),
  market:Object.freeze([
   Object.freeze({value:7,label:'7 T',days:7}),
   Object.freeze({value:30,label:'1 M',days:30}),
   Object.freeze({value:90,label:'3 M',days:90}),
+  Object.freeze({value:180,label:'6 M',days:180}),
   Object.freeze({value:365,label:'1 J',days:365}),
+  Object.freeze({value:1096,label:'3 J',days:1096}),
   Object.freeze({value:1826,label:'5 J',days:1826}),
   Object.freeze({value:'max',label:'Max',days:null})
  ])
@@ -28,7 +33,7 @@ export function chartPeriodDays(kind,value){
 }
 export function renderChartPeriodButtons(kind,attribute,selected,values=null){
  if(!ATTRIBUTES.has(attribute))throw Error('Ungültiges Zeitraum-Attribut.');
- const allowed=values==null&&kind==='market'?new Set(['7','30','90','365']):
+ const allowed=values==null&&kind==='market'?new Set(['7','30','90','180','365']):
   values==null?null:new Set(values.map(String));
  return periods(kind).filter(({value})=>allowed==null||allowed.has(String(value))).map(({value,label})=>{
   const active=String(selected)===String(value);

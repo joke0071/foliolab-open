@@ -60,94 +60,22 @@ try{
   await page.locator(nav+' [data-page="history"]').click();
   assert.equal(await page.locator('#historyPage #addWallet').count(),0,'History must not have a wallet action');
   assert.equal((await page.locator('#historyCalendarDisclosure > summary').textContent()).trim(),'','Calendar trigger must stay icon-only');
-  assert.ok((await page.locator('#pageDescription').textContent())?.includes('Stichtagen'),'History needs a descriptive subtitle');
+  assert.ok((await page.locator('#pageDescription').textContent())?.length>15,'History needs a descriptive subtitle');
   assert.equal(await page.locator('#historyPage .history-panel > .panel-head').count(),0,'History chart must not duplicate the page heading');
   assert.equal(await page.locator('#historyPage .history-panel[role="region"]').count(),1,'History chart needs an accessible region name');
-  assert.equal((await page.locator('#addSnapshot .history-add-label').textContent()).trim(),'Stichtag','Desktop snapshot text must stay short');
+  assert.equal((await page.locator('#addSnapshot .manual-snapshot-label').textContent()).trim(),'Stichtag hinzufügen','Desktop snapshot text must stay short');
   const calendarStroke=await page.locator('#historyCalendarDisclosure > summary svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
   assert.ok(calendarStroke>=2.1,'Calendar icon stroke should match the other actions');
-  const inspectPlus=locator=>locator.evaluate(el=>{
-   const s=getComputedStyle(el);
-   return {markup:el.outerHTML,viewBox:el.getAttribute('viewBox'),paths:[...el.querySelectorAll('path')].map(p=>p.getAttribute('d')),
-    width:s.width,height:s.height,strokeWidth:s.strokeWidth,linecap:s.strokeLinecap,linejoin:s.strokeLinejoin,color:s.color};
-  });
-  const [historyPlus,positionPlus,bookingPlus]=await Promise.all([
-   inspectPlus(page.locator('#addSnapshot .action-icon svg')),
-   inspectPlus(page.locator('#addWizard .action-icon svg')),
-   inspectPlus(page.locator('#addBooking .action-icon svg'))
-  ]);
-  // The primary green history action intentionally has a white icon on phones;
-  // its shape, size and stroke must still match the shared plus geometry.
-  const geometry=({color,...rest})=>rest;
-  assert.deepEqual(geometry(historyPlus),geometry(positionPlus),'History and Positionen must share plus SVG geometry at '+width);
-  assert.deepEqual(geometry(historyPlus),geometry(bookingPlus),'History and Buchungen must share plus SVG geometry at '+width);
-  assert.equal(historyPlus.color,'rgb(255, 255, 255)','Primary Stichtag icon stays legible on green at '+width);
-  assert.equal(historyPlus.strokeWidth,'2.2px','Plus icons must share the thick action stroke at '+width);
-  assert.equal(await page.locator('#historyPage .history-insights > details').count(),2,'Shared history area must contain exactly two disclosures');
-  const insightStyle=await page.locator('#historyPage .history-insights').evaluate(el=>{
-   const container=getComputedStyle(el);
-   const separator=getComputedStyle(el.querySelector('#snapshotManager'));
-   const performance=getComputedStyle(el.querySelector('#performanceDetails'));
-   return {
-    border:container.borderTopWidth,
-    background:container.backgroundColor,
-    separator:separator.borderTopWidth,
-    separatorStyle:separator.borderTopStyle,
-    performanceBorder:performance.borderTopWidth,
-    performanceBackground:performance.backgroundColor
-   };
-  });
-  assert.equal(insightStyle.border,'0px','History disclosures must have no enclosing border');
-  assert.equal(insightStyle.background,'rgba(0, 0, 0, 0)','History disclosures must have no card background');
-  assert.equal(insightStyle.separator,'1px','History rows must be separated by a single thin line');
-  assert.equal(insightStyle.separatorStyle,'solid','Separator should be a continuous thin line');
-  assert.equal(insightStyle.performanceBorder,'0px','Renditeauswertung must not have its own border');
-  assert.equal(insightStyle.performanceBackground,'rgba(0, 0, 0, 0)','Renditeauswertung must not have a card surface');
-  assert.equal(await page.locator('#historyPage .history-insights > details[open]').count(),0,'Both disclosures must start collapsed');
-  assert.equal(await page.locator('.side-caption, .mobile-label').count(),0,'Remove redundant portfolio header labels');
-  const add=page.locator('#addSnapshot');
-  const history=await add.evaluate(el=>{
-   const r=el.getBoundingClientRect(),parent=el.closest('.panel').getBoundingClientRect();
-   const controls=el.closest('.history-controls').getBoundingClientRect();
-   const calendar=el.closest('.history-controls').querySelector('#historyCalendarDisclosure').getBoundingClientRect();
-   const label=el.querySelector('.history-add-label').getBoundingClientRect();
-   const style=getComputedStyle(el);
-   return {w:r.width,h:r.height,within:r.left>=parent.left-1&&r.right<=parent.right+1,
-    label:getComputedStyle(el.querySelector('.history-add-label')).display,scroll:document.documentElement.scrollWidth,
-    background:style.backgroundColor,display:style.display,nowrap:style.whiteSpace,
-    controlsRight:controls.right,addRight:r.right,calendarRight:calendar.right,addLeft:r.left,
-    labelCenter:label.top+label.height/2,buttonCenter:r.top+r.height/2,
-    calendarStyle: (()=>{const calendarEl=el.closest('.history-controls').querySelector('#historyCalendarDisclosure > summary');const r=calendarEl.getBoundingClientRect(),c=getComputedStyle(calendarEl),svg=calendarEl.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height,borderRadius:c.borderRadius,color:c.color,background:c.backgroundColor,svgWidth:svg.width,svgHeight:svg.height}})(),
-    plusIconSize:(()=>{const r=el.querySelector('svg').getBoundingClientRect();return {width:r.width,height:r.height}})(),
-    borderRadius:style.borderRadius,color:style.color};
-  });
-  assert.equal(history.label==='none',mobile,'Stichtag label breakpoint '+width);
-  assert.ok(history.within,'History add button escapes card at '+width);
-  assert.ok(history.scroll<=width+1,'History horizontal overflow at '+width);
-  if(mobile){
-   const expectedSide=width<=360?38:40;
-   assert.equal(history.w,expectedSide,'History plus must equal other mobile action size at '+width);
-   assert.equal(history.h,expectedSide,'History plus must equal other mobile action height at '+width);
-   assert.equal(history.calendarStyle.width,expectedSide,'History calendar must equal other mobile action size at '+width);
-   assert.equal(history.calendarStyle.height,expectedSide,'History calendar must equal other mobile action height at '+width);
-   assert.equal(history.borderRadius,history.calendarStyle.borderRadius,'Calendar and plus corner radii must match');
-   // Kalender ist sekundär (weiß), der Stichtag ein grüner Primär-CTA.
-   // Geometrie muss übereinstimmen, der Farbkontrast bewusst nicht.
-   assert.equal(history.background,'rgb(38, 86, 61)','Primary Stichtag background must remain green at '+width);
-   assert.equal(history.color,'rgb(255, 255, 255)','Primary Stichtag icon must remain white at '+width);
-   assert.equal(history.calendarStyle.background,'rgb(255, 255, 255)','Secondary calendar button must remain white at '+width);
-   assert.notEqual(history.color,history.calendarStyle.color,'Primary and secondary actions need distinct visual hierarchy at '+width);
-   assert.equal(history.plusIconSize.width,history.calendarStyle.svgWidth,'Calendar and plus icon sizes must match');
-   assert.equal(history.plusIconSize.height,history.calendarStyle.svgHeight,'Calendar and plus icon heights must match');
-   assert.ok(Math.abs(history.addRight-history.controlsRight)<=2,'History buttons should sit at right edge on '+width+': '+JSON.stringify(history));
-   assert.ok(history.addLeft-history.calendarRight>=3,'Mobile calendar and plus must remain separate on '+width);
-  }else{
-   assert.ok(history.w>70,'History add action must have room for desktop Stichtag text at '+width);
-   assert.ok(['flex','inline-flex'].includes(history.display),'Desktop plus and Stichtag text must use flex layout at '+width);
-   assert.equal(history.nowrap,'nowrap','Desktop plus label must not wrap at '+width);
-   assert.ok(Math.abs(history.labelCenter-history.buttonCenter)<=2,'Desktop Stichtag label must be vertically centered at '+width);
-   assert.equal(history.background,'rgb(38, 86, 61)','Desktop plus action must be green like other primary actions at '+width);
-  }
+  assert.equal(await page.locator('.history-controls #addSnapshot').count(),0,'Manual action must not dominate the chart toolbar');
+  assert.equal(await page.locator('#snapshotManager').evaluate(el=>el.open),false,'Manual controls start closed');
+  await page.locator('#snapshotManager > summary').click();
+  const manual=page.locator('#addSnapshot');assert.equal(await manual.isVisible(),true);
+  assert.equal(await manual.getAttribute('aria-label'),'Stichtag hinzufügen');
+  assert.ok(!(await manual.getAttribute('class')).includes('primary'),'Manual checkpoint is secondary');
+  const size=await manual.evaluate(el=>({h:el.getBoundingClientRect().height,right:el.getBoundingClientRect().right,scroll:document.documentElement.scrollWidth}));
+  assert.ok(size.h>=38&&size.right<=width+1&&size.scroll<=width+1,'Manual action remains usable at '+width);
+  assert.equal(await page.locator('#historyCalendarDisclosure > summary').isVisible(),true,'Date selection retained');
+  await page.locator('#snapshotManager > summary').click();
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="dashboard"]').click();

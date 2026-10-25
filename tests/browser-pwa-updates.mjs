@@ -14,7 +14,7 @@ try{
  await page.evaluate(()=>localStorage.setItem('pwa-version-test','preserved'));
 
  // Do not reload while a modal editor contains unsaved input.
- await page.locator('#addSnapshot').click();
+ await page.locator('#snapshotManager > summary').click();await page.locator('#addSnapshot').click();
  await page.locator('#editorForm [name="note"]').fill('Nicht gespeichert');
  await page.evaluate(()=>navigator.serviceWorker.dispatchEvent(new Event('controllerchange')));
  await page.locator('#pwaUpdateNotice').waitFor();

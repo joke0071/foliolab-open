@@ -62,7 +62,7 @@ try{
  assert.equal(arrows.provider.transform,arrows.source.transform,'Both disclosure arrows rotate identically on open');
  assert.notEqual(arrows.provider.transform,'none');
 
- const audit=page.locator('#legacyQuoteAudit');
+ await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();const audit=page.locator('#legacyQuoteAudit');
  await audit.locator(':scope > summary').click();
  assert.equal(await audit.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),0);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
@@ -98,7 +98,7 @@ try{
  assert.equal(state.positions.find(x=>x.name==='USD ETF').fxSource,'Frankfurter');
  assert.equal(state.positions.find(x=>x.name==='Ethereum veralteter Kurs').priceExact,'80');
  assert.equal(state.snapshots.length,1);
- await page.reload();await page.locator('#mobileNav [data-page="more"]').click();
+ await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();
  await page.locator('#legacyQuoteAudit > summary').click();
  await page.locator('#runLegacyQuoteAudit').click();
  assert.equal(await page.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),1,

@@ -37,8 +37,8 @@ try{
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.equal(await page.locator('#marketWorkerSetup').evaluate(el=>el.open),false);
- assert.equal(await page.locator('#marketWorkerSetup').innerText().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
- await page.locator('#marketWorkerSetup').evaluate(el=>el.open=true);
+ assert.equal(await page.locator('#marketWorkerSetup').textContent().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
+ await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#marketWorkerSetup').evaluate(el=>el.open=true);
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('[name="securitySource"]').selectOption('eodhd');
  await page.locator('[name="eodhdWorkerEndpoint"]').fill('https://my-owned-worker.workers.dev');
@@ -48,10 +48,10 @@ try{
  await page.locator('#marketWorkerSetup .credential-toggle').click();
  assert.equal(await page.locator('[name="eodhdWorkerAccessToken"]').getAttribute('type'),'password');
  await page.locator('[name="eodhdWorkerAccessToken"]').fill('short');
- await page.locator('#marketWorkerSetup button[type="submit"]').click();
+ await page.locator('#optionalConnections > button[type="submit"]').click();
  assert.match(await page.locator('#toast').innerText(),/24 bis 128 Zeichen/);
  await page.locator('[name="eodhdWorkerAccessToken"]').fill(token);
- await page.locator('#marketWorkerSetup button[type="submit"]').click();
+ await page.locator('#optionalConnections > button[type="submit"]').click();
  // Wait for the successful settings write before inspecting stored worker access.
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdKey),'','Never require local EODHD token');
@@ -74,16 +74,14 @@ try{
  await page.locator('#mobileNav [data-page="history"]').click();
  const perf=page.locator('#performanceDetails');
  assert.equal(await perf.getAttribute('open'),null,'Returns are quiet and collapsed by default');
- assert.equal(await page.locator('#performanceSummary').isVisible(),true);
+ assert.equal(await page.locator('#performanceSummary').textContent(),'','Unavailable return is explained only on opening');
  await perf.locator('summary').click();
  assert.match(await page.locator('#performanceInfo').innerText(),/XIRR/);
  assert.equal(await page.locator('#startPerformance').isVisible(),true);
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#blockchainSettings').evaluate(el=>el.open=true);
  assert.doesNotMatch(await page.locator('#blockchainSettings').innerText(),/Entwicklungszugang gelten enge Limits\. Binplorer/);
- await page.locator('#legacyQuoteAudit').evaluate(el=>el.open=true);
- const margin=await page.locator('#legacyQuoteAuditStatus').evaluate(el=>getComputedStyle(el).marginLeft);
- assert.notEqual(margin,'0px','Audit status needs matching internal padding');
+ assert.equal(await page.locator('#dataSourcesPanel #legacyQuoteAudit').count(),0,'Precision diagnosis belongs in concrete data-quality review');
  for(const width of [320,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);

@@ -30,7 +30,7 @@ try{
   const choices=holding.locator('.position-period button:visible');
   const labels=await choices.allTextContents();
   assert.ok(labels.includes('7 T')&&labels.includes('1 J'));
-  assert.ok(width<=767?labels.length<=4:labels.includes('5 J')&&labels.includes('Max'));
+  assert.ok(width<=767?labels.length<=5:labels.includes('5 J')&&labels.includes('Max'));
   if(width<=767)assert.equal(await holding.locator('.position-period-more > summary').isVisible(),true);
  }
  await page.setViewportSize({width:390,height:850});

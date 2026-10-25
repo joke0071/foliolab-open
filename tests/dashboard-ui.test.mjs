@@ -46,3 +46,8 @@ test('Tiny positive crypto prices use a tight, nonnegative axis rather than a on
  assert.match(axis,/€ 0\.005/);
  assert.doesNotMatch(axis,/-€ /);
 });
+test('disjoint historical segments do not bridge missing intervals',()=>{
+ const html=drawInteractiveChart([{date:'2023-01-02',total:100},{date:'2023-01-03',total:110},{date:'2023-02-01',total:120,breakBefore:true},{date:'2023-02-02',total:130}],{money,esc:escapeHTML,dateLabel:labels,disjoint:true});
+ const path=html.match(/<path d="([^"]+)" fill="none" stroke="#3b8659"/)[1];
+ assert.equal((path.match(/M/g)||[]).length,2);assert.equal((path.match(/L/g)||[]).length,2);assert.ok(!html.includes('fill="#e8f2ea"'));
+});

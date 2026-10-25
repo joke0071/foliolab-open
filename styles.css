@@ -1030,3 +1030,16 @@
 #dashboardPage .chart-y-labels,#dashboardPage .chart-x-labels,#historyPage .chart-y-labels,#historyPage .chart-x-labels{color:#405549}
 #dashboardPage .alloc-legend-copy small,#positionFilters .filter:not(.active),#positionList .tag.neutral,#positionList .holding-facts dt,.booking-meta .holding-facts dt{color:#4d6756}
 #positionList .tag.warn{color:#795517}
+/* FLH02: optional services share existing disclosures without primary cards. */
+.optional-connections{border-top:1px solid var(--border,#e3e9e4);padding:.7rem 0;margin-top:.6rem;min-width:0}
+.optional-connections>summary{cursor:pointer;font-size:.9rem;min-height:44px;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+.optional-connections>summary small{color:var(--muted,#647267);font-weight:400}
+.optional-connection{padding:.5rem 0;min-width:0}.optional-connection>summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.optional-connections input{max-width:100%;min-width:0}#historyCoverage{margin:1rem 0}#historyCoverage>summary{min-height:44px;cursor:pointer}
+#historyBasis{max-width:100%}#snapshotManager #addSnapshot{margin:.8rem 0}#storageMigrationSetup{margin:1rem;padding:1rem}
+.optional-connections>summary,.optional-connection>summary,#historyCoverage>summary{list-style:none;gap:10px}
+.optional-connections>summary::-webkit-details-marker,.optional-connection>summary::-webkit-details-marker,#historyCoverage>summary::-webkit-details-marker{display:none}
+.optional-connections>summary::after,.optional-connection>summary::after,#historyCoverage>summary::after{content:'';display:block;flex:0 0 8px;width:8px;height:8px;border-right:1.8px solid #6b8c73;border-bottom:1.8px solid #6b8c73;transform:rotate(45deg);margin-left:auto;margin-right:5px;transition:transform .15s ease}
+.optional-connections[open]>summary::after,.optional-connection[open]>summary::after,#historyCoverage[open]>summary::after{transform:rotate(225deg)}
+#historyCoverage>summary{display:flex;align-items:center}
+@media(prefers-reduced-motion:reduce){.optional-connections>summary::after,.optional-connection>summary::after,#historyCoverage>summary::after{transition:none}}
