@@ -1,4 +1,4 @@
-import {retainedHistoryDraft} from './history-evidence-cache.js';
+import {retainedHistoryDraft,historyIdentity} from './history-evidence-cache.js';
 import {historicalExchangeRates} from './market.js';
 import {projectHistoricalPosition,localHistoricalPrices} from './historical-position-value.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
@@ -27,21 +27,21 @@ export function createBookingHistoryUI({getModel,commit}){
   const rows=events.slice(0,limit);
   if(view==='events')el('output').innerHTML=rows.map(b=>bookingRowMarkup(b,model)).join('')||'<p>Keine Vorgänge in diesem Zeitraum.</p>';
   else{
-   const key=JSON.stringify([positionId,model.settings,model.priceHistories?.[positionId]]);
+   const key=JSON.stringify([positionId,historyIdentity(p),model.settings,model.priceHistories?.[positionId]]);
    const marketHistory=localHistoricalPrices(model,p)??loaded.get(key)??null;
    const projection=projectHistoricalPosition(model,p.id,{marketHistory});
    const rows=filterChartPeriod(projection.rows,'wealth',el('period').value);
-   const points=rows.filter(r=>view==='balances'?r.quantityExact!==null:view==='price'?r.priceExact!==null:r.valueEURExact!==null);
+   const points=view==='price'&&marketHistory?marketHistory.points.map(point=>({date:point.date,priceExact:String(point.total),quantityExact:null,fxExact:null,fxDate:null,valueEURExact:null,source:marketHistory.source})):rows.filter(r=>view==='balances'?r.quantityExact!==null:view==='price'?r.priceExact!==null:r.valueEURExact!==null);
    const segmentByDate=new Map(projection.segments.flatMap((segment,index)=>segment.map(r=>[r.date,index])));
-   const samples=points.map((r,index)=>({date:r.date,detail:'Bestand '+(r.quantityExact??'unbekannt')+' · Kurs '+(r.priceExact??'fehlt')+' '+p.currency+' · EUR-Faktor '+(r.fxExact??'fehlt')+' · '+r.source,total:Number(view==='balances'?r.quantityExact:view==='price'?r.priceExact:r.valueEURExact),breakBefore:index>0&&(rows.indexOf(r)!==rows.indexOf(points[index-1])+1||segmentByDate.get(r.date)!==segmentByDate.get(points[index-1].date))}));
-   const unitsLabel=view==='balances'?'Bestand':view==='price'?'Kurs ('+p.currency+')':'Positionswert (€)';
-   const hasGaps=rows.some(r=>view==='balances'?r.quantityExact===null:view==='price'?r.priceExact===null:r.valueEURExact===null)||projection.segments.length>1;
-   const fmt=view==='balances'?v=>String(v):view==='price'?v=>new Intl.NumberFormat('de-AT',{style:'currency',currency:p.currency}).format(v):money;
+   const samples=points.map((r,index)=>({date:r.date,detail:'Bestand '+(r.quantityExact??'unbekannt')+' · Kurs '+(r.priceExact??'fehlt')+' '+(marketHistory?.currency||p.currency)+' · EUR-Faktor '+(r.fxExact??'fehlt')+' vom '+(r.fxDate??'unbekannt')+' · '+r.source,total:Number(view==='balances'?r.quantityExact:view==='price'?r.priceExact:r.valueEURExact),breakBefore:index>0&&(view==='price'?(Date.parse(r.date)-Date.parse(points[index-1].date))/864e5>(p.kind==='crypto'?1:4):(rows.indexOf(r)!==rows.indexOf(points[index-1])+1||segmentByDate.get(r.date)!==segmentByDate.get(points[index-1].date)))}));
+   const unitsLabel=view==='balances'?'Bestand':view==='price'?'Kurs ('+(marketHistory?.currency||p.currency)+')':'Positionswert (€)';
+   const hasGaps=view==='price'?points.some((r,i)=>i&&(Date.parse(r.date)-Date.parse(points[i-1].date))/864e5>(p.kind==='crypto'?1:4)):rows.some(r=>view==='balances'?r.quantityExact===null:view==='price'?r.priceExact===null:r.valueEURExact===null)||projection.segments.length>1;
+   const fmt=view==='balances'?v=>String(v):view==='price'?v=>new Intl.NumberFormat('de-AT',{style:'currency',currency:marketHistory?.currency||p.currency}).format(v):money;
    // Until the shared chart renders disjoint segments, keep unknown intervals
    // as explicit tabular observations instead of joining them with a false line.
    el('output').innerHTML='<h3>'+esc(p.name)+' · '+esc(unitsLabel)+'</h3>'+
     (samples.length>=2?drawInteractiveChart(samples,{money:fmt,esc,dateLabel:d=>d,disjoint:hasGaps}):'<p>'+esc(hasGaps?'Teilweise verfügbar. Unbekannte Abschnitte werden nicht verbunden. '+projection.reason:projection.reason||'Weniger als zwei belegte Punkte in diesem Zeitraum. Anderen Zeitraum wählen.')+'</p>')+
-    (hasGaps?'<p class="small-help">Teilweise verfügbar · Lücken werden nicht verbunden.</p>':'')+'<p class="small-help">'+esc(marketHistory?.source||'Lokale Nachweise')+' · damaliger EOD-Bestand × damaliger Schlusskurs × historischer EUR-Faktor. Keine Rendite.</p>'+
+    (hasGaps?'<p class="small-help">Teilweise verfügbar · Lücken werden nicht verbunden.</p>':'')+'<p class="small-help">'+esc(marketHistory?.source||'Lokale Nachweise')+(view==='price'?' · Datierte Kursbeobachtungen. Keine Positionsbewertung.':' · damaliger EOD-Bestand × damaliger Schlusskurs × historischer EUR-Faktor. Keine Rendite.')+'</p>'+
     '<div class="wallet-history-table"><table><thead><tr><th scope="col">Datum</th><th scope="col">Bestand</th><th scope="col">Kurs</th><th scope="col">EUR-Faktor</th><th scope="col">Positionswert</th></tr></thead><tbody>'+rows.slice(-limit).reverse().map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.quantityExact??'Unbekannt')+'</td><td>'+esc(r.priceExact??'Fehlt')+'</td><td>'+esc(r.fxExact??'Fehlt')+'</td><td>'+esc(r.valueEURExact===null?'Unbekannt':money(Number(r.valueEURExact)))+'</td></tr>').join('')+'</tbody></table></div>';
    attachChartInteractions(el('output'));
   }
@@ -55,9 +55,9 @@ export function createBookingHistoryUI({getModel,commit}){
   el('close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
   for(const k of ['period','view'])el(k).onchange=()=>{limit=100;render();};
   el('load').onclick=async()=>{
-   const m=getModel(),p=m.positions.find(p=>p.id===positionId),key=JSON.stringify([positionId,m.settings,m.priceHistories?.[positionId]]),requestedId=positionId;
+   const m=getModel(),p=m.positions.find(p=>p.id===positionId),key=JSON.stringify([positionId,historyIdentity(p),m.settings,m.priceHistories?.[positionId]]),requestedId=positionId,baseline=JSON.stringify(m);
    el('load').disabled=true;el('load-status').textContent='Historische Kurse werden geladen …';
-   try{const period=CHART_PERIODS.wealth.find(x=>x.value===el('period').value),days=period?.days&&period.days<=1826?period.days:365;const h=await fetchPositionMarketHistory(p,m.settings,days);if(h.currency!=='EUR'&&h.points.length){try{h.fxPoints=await historicalExchangeRates(h.currency,h.points[0].date,h.points.at(-1).date);}catch{h.fxPoints=[];}}lastLoaded={positionId:requestedId,history:h,baseline:JSON.stringify(m)};el('retain').hidden=!commit;loaded.set(key,{...h,priceType:p.kind==='crypto'?'crypto-daily':'close'});if(loaded.size>20)loaded.delete(loaded.keys().next().value);if(positionId===requestedId&&getModel()===m){render();el('load-status').textContent='Geladene Quelle: '+h.source+'. Tatsächliche Abdeckung wird angezeigt.';}}catch(error){if(positionId===requestedId)el('load-status').textContent=(/429|Limit|quota/i.test(error.message)?'Anbieterlimit erreicht. ':/401|403|Tarif/i.test(error.message)?'Anbieterzugriff verweigert. ':'')+'Kurse nicht verfügbar. API-Schlüssel, Tarif und Börsennotierung prüfen oder lokale Kurs-CSV importieren. Vorhandene Daten bleiben erhalten.';}finally{el('load').disabled=false;}
+   try{const period=CHART_PERIODS.wealth.find(x=>x.value===el('period').value),days=period?.days&&period.days<=1826?period.days:365;const h=await fetchPositionMarketHistory(p,m.settings,days);if(h.currency!=='EUR'&&h.points.length){try{h.fxPoints=await historicalExchangeRates(h.currency,h.points[0].date,h.points.at(-1).date);}catch{h.fxPoints=[];}}lastLoaded={positionId:requestedId,history:h,baseline};el('retain').hidden=!commit;loaded.set(key,{...h,priceType:p.kind==='crypto'?'crypto-daily':'close'});if(loaded.size>20)loaded.delete(loaded.keys().next().value);if(positionId===requestedId&&getModel()===m){render();el('load-status').textContent='Geladene Quelle: '+h.source+'. Tatsächliche Abdeckung wird angezeigt.';}}catch(error){if(positionId===requestedId)el('load-status').textContent=(/429|Limit|quota/i.test(error.message)?'Anbieterlimit erreicht. ':/401|403|Tarif/i.test(error.message)?'Anbieterzugriff verweigert. ':'')+'Kurse nicht verfügbar. API-Schlüssel, Tarif und Börsennotierung prüfen oder lokale Kurs-CSV importieren. Vorhandene Daten bleiben erhalten.';}finally{el('load').disabled=false;}
   };
   el('save-prices').onclick=async()=>{if(!lastLoaded||!commit)return;try{if(JSON.stringify(getModel())!==lastLoaded.baseline||lastLoaded.positionId!==positionId)throw Error('Portfolio geändert. Kurse erneut laden.');const draft=retainedHistoryDraft(getModel(),positionId,lastLoaded.history,{rightsConfirmed:el('rights').checked,replace:el('replace').checked});await commit(draft);lastLoaded=null;el('retain').hidden=true;render();el('load-status').textContent='Kursdaten lokal gespeichert. Buchungen und Bestände unverändert.';}catch(error){el('load-status').textContent='Nicht gespeichert: '+error.message;}};
   el('more').onclick=()=>{limit+=100;render();};

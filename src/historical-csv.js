@@ -85,7 +85,7 @@ export function validateImportedPriceHistory(history,position){
  const retained=history?.provenance;
  if(!history||typeof history!=='object'||Array.isArray(history)||history.source!=='CSV (selbst geprüft)'&&!retained)throw Error('Ungültige CSV-Kurshistorie.');
  const currency=String(history.currency||'').toUpperCase();
- if(!/^[A-Z]{3}$/.test(currency)||(position&&currency!==String(position.currency||'EUR').toUpperCase()))throw Error('Kurshistorie und Position haben unterschiedliche Währungen.');
+ if(!/^[A-Z]{3}$/.test(currency)||(position&&currency!==String(position.currency||'EUR').toUpperCase()&&!(retained&&position.kind==='crypto'&&currency==='EUR')))throw Error('Kurshistorie und Position haben unterschiedliche Währungen.');
  if(!Array.isArray(history.points)||history.points.length<2||history.points.length>MAX_POINTS)throw Error('Historische Kurse überschreiten die Datenlimits.');
  let last='';
  const points=history.points.map(row=>{
@@ -97,7 +97,7 @@ export function validateImportedPriceHistory(history,position){
  if(!retained)return {currency,source:'CSV (selbst geprüft)',points};
  const names={eodhd:/^EODHD/,twelve:/^Twelve Data/,fmp:/^Financial Modeling Prep/,coingecko:/^CoinGecko/,coinpaprika:/^CoinPaprika/};
  if(retained.schema!==1||retained.retention!=='user-confirmed'||!names[retained.provider]?.test(history.source)||history.source.length>180||/[\u0000-\u001f]/.test(history.source)||!position||retained.identity!==historyIdentity(position)||history.priceType!==(position.kind==='crypto'?'crypto-daily':'close'))throw Error('Kursquelle, Kursart oder Positionsbindung nicht bestätigt.');
- const fxPoints=(history.fxPoints||[]).map(r=>{if(!dateOK(r.date)||r.currency!==currency||r.source!=='Frankfurter'||!(Number(r.rate)>0)||!Number.isFinite(Number(r.rate)))throw Error('Historische FX-Daten beschädigt.');return {date:r.date,currency,rate:String(r.rate),source:'Frankfurter'};});
+ const fxPoints=(history.fxPoints||[]).map(r=>{if(!dateOK(r.date)||r.currency!==currency||r.source!=='Frankfurter'||!(Number(r.rate)>0)||!Number.isFinite(Number(r.rate)))throw Error('Historische FX-Daten beschädigt.');if(r.referenceDate&&(!dateOK(r.referenceDate)||r.referenceDate>r.date||(Date.parse(r.date)-Date.parse(r.referenceDate))/864e5>7))throw Error('Historischer FX-Zeitbezug ungültig.');return {date:r.date,currency,rate:String(r.rate),source:'Frankfurter',...(r.referenceDate?{referenceDate:r.referenceDate}:{})};});
  if(fxPoints.length>6500||new Set(fxPoints.map(r=>r.date)).size!==fxPoints.length)throw Error('FX-Datenlimit oder doppelte Tage.');
  return {currency,source:history.source,points,priceType:history.priceType,fxPoints,provenance:{schema:1,provider:retained.provider,identity:retained.identity,retention:'user-confirmed'}};
 }

@@ -37,7 +37,7 @@ try{
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.equal(await page.locator('#marketWorkerSetup').evaluate(el=>el.open),false);
- assert.equal(await page.locator('#marketWorkerSetup').innerText().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
+ assert.equal(await page.locator('#marketWorkerSetup').textContent().then(x=>x.includes('Eigener EODHD-Kursdienst')),true);
  await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#marketWorkerSetup').evaluate(el=>el.open=true);
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  await page.locator('[name="securitySource"]').selectOption('eodhd');

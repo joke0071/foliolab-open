@@ -407,6 +407,6 @@ export async function historicalExchangeRates(from,start,end,fetcher=globalThis.
  const first=new Date(Date.parse(start)-7*864e5).toISOString().slice(0,10),url=new URL('https://api.frankfurter.dev/v1/'+first+'..'+end);url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
  const data=await json(url.toString(),{ttlMs:TTL.history},fetcher);if(data.base!==from||!data.rates||typeof data.rates!=='object')throw Error('Historische FX-Quelle nicht bestätigt.');
  const rows=Object.entries(data.rates).filter(([d,r])=>d>=first&&d<=end&&/^\d{4}-\d\d-\d\d$/.test(d)&&Number.isFinite(Number(r.EUR))&&Number(r.EUR)>0).sort(([a],[b])=>a.localeCompare(b));
- const result=[];let i=0;for(let t=Date.parse(start);t<=Date.parse(end);t+=864e5){const date=new Date(t).toISOString().slice(0,10);while(i+1<rows.length&&rows[i+1][0]<=date)i++;const row=rows[i];if(row&&row[0]<=date&&(t-Date.parse(row[0]))/864e5<=7)result.push({date,currency:from,rate:String(row[1].EUR),source:'Frankfurter'});}
+ const result=[];let i=0;for(let t=Date.parse(start);t<=Date.parse(end);t+=864e5){const date=new Date(t).toISOString().slice(0,10);while(i+1<rows.length&&rows[i+1][0]<=date)i++;const row=rows[i];if(row&&row[0]<=date&&(t-Date.parse(row[0]))/864e5<=7)result.push({date,currency:from,rate:String(row[1].EUR),source:'Frankfurter',referenceDate:row[0]});}
  return result;
 }

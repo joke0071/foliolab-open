@@ -5,7 +5,7 @@ Specification: exact Library FLH02 document, version 11. Existing accepted A / F
 - Verified main: `8e12ae1ad1a0b517eab3404a2dacbe9b31ab61db`, A released/accepted as v171.
 - Branch: `feature/flh02-position-value-foundation`, PR https://github.com/joke0071/foliolab-open/pull/144.
 - Previous remote checkpoint: `7bb3ebf32d029b1941a569102407ce802a3009de`. Current commit: this checkpoint's containing commit; resolve branch HEAD.
-- Candidate shell: v174. NOT merged/released yet.
+- Candidate shell: v175. NOT merged/released yet.
 
 | Package | Implementation / acceptance |
 |---|---|
@@ -20,10 +20,10 @@ Specification: exact Library FLH02 document, version 11. Existing accepted A / F
 
 ## Actually executed
 
-- Syntax check passed. Latest complete unit run: 655/655, zero skipped/failing.
+- Syntax check passed. Latest complete unit run: 657/657, zero skipped/failing.
 - New Chromium FLH02 integration passed: 999/1059 total with no snapshots, observed/partial separation, six widths, axe, preserved optional endpoints/token and zero financial writes.
 - Updated BTC/ETH/SOL/SPL history UI suite passed, including encrypted restore, exact raw-token display, multitab and backup preference persistence. Purchase matching implementation untouched.
-- Existing Chromium suites passed from smoke through CSV/Flatex/dialog/position/history suites. Continued full local run still needs completion; remaining failures so far were superseded UI contracts (manual button priority, period count, precision-review location); original financial/safety assertions retained.
+- Existing Chromium suites passed from smoke through CSV/Flatex/dialog/position/history suites. Continued full local run still needs completion; remaining failures found were superseded UI contracts (manual button priority, period count, precision-review location); original financial/safety assertions retained.
 - Full replacement PR CI including Firefox/WebKit REQUIRED. Local WebKit lacks libraries and local Firefox page creation hangs; CI is the supported cross-engine gate here. No unexecuted tests claimed.
 - Previous v171 live evidence remains in docs/FLH02_A_RELEASE_AND_LIVE_ACCEPTANCE.md. No combined FLH02 live release claimed yet.
 
@@ -36,10 +36,12 @@ Specification: exact Library FLH02 document, version 11. Existing accepted A / F
 
 ## First remaining actions
 
-1. Finish local Chromium workflow suites from browser-extended-chart-periods onwards; fix genuine errors and adapt old navigation contracts without weakening their financial/security assertions.
+1. Local Chromium workflow suites passed in sequential segments through PWA/offline/scale, including precision repair and configured worker compatibility. Full current CI (replacement of run 40216424171) remains authoritative; fix genuine errors and adapt old navigation contracts without weakening their financial/security assertions.
 2. Verify full current PR CI, including new FLH02 suite on Firefox/WebKit; inspect failed job logs and fix reproducible defects.
 3. Update release report, integrate only green conflict-free PR #144 on current main, verify main CI/Pages and actual production assets/SW + synthetic live tests.
 
 ## Exact resumption
 
 > Continue FLH02 PR #144 on feature/flh02-position-value-foundation from this checkpoint and specification v11. A is already v171/live. B/C1/C2/C3/D/E/Drive code is a completion candidate, not yet accepted. Finish remaining Chromium and all-engine CI gates, address failures, then merge under existing explicit authorization, verify main deployment and actual live acceptance. Never replay accepted A/FLH01/IndexedDB work or replace unknown financial values with zero. Keep every next safe increment remote and update this checkpoint.
+
+Latest fixes after initial candidate: precision discrepancies now create a data-quality review entry; exact decimals beyond supported scale remain explicit gaps, economic representation needs dated same-scope proof; partial-series scope changes break the line; FX retains actual reference date; price-only view remains usable without holdings; async quote retention is identity/revision bound. Unit suite 657/657; affected Chromium suites passed.

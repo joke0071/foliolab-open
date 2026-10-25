@@ -54,8 +54,8 @@ function configuredFmp(p){
 export function marketSourceOptions(p,settings={}){
  const l=listingInfo(p),list=[];
  if((settings.eodhdKey||configuredMarketWorker(settings))&&configuredEodhd(p))list.push('eodhd');
- if(settings.fmpKey&&configuredFmp(p))list.push('fmp');
  if(settings.twelveKey)list.push('twelve');
+ if(settings.fmpKey&&configuredFmp(p))list.push('fmp');
  const preferred=String(settings.securitySource||'auto');
  if(preferred==='auto')return list;
  if(!['eodhd','fmp','twelve'].includes(preferred))throw Error('Ungültige Wertpapier-Datenquelle.');
