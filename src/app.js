@@ -1379,6 +1379,7 @@ async function refreshAll(){
  finally{busy=false;$('refreshAll').disabled=false;}
 }
 const FULL_BACKUP_OPTION='foliolab-open-backup-include-configuration-v1';
+const HISTORY_BACKUP_OPTION='foliolab-open-backup-include-history-v1';
 function includeBackupConfiguration(){return $('fullBackupIncludeSettings')?.checked===true;}
 function readDriveConfig(){
  let prefs={};try{prefs=JSON.parse(localStorage.getItem('foliolab-open-drive-backup-settings-v1')||'{}')}catch{}
@@ -1576,6 +1577,17 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
     finally{input.value='';confirmInput.value='';old.value='';button.disabled=false;}
   });
   const fullOption=$('fullBackupIncludeSettings');
+  const historyOption=$('fullBackupIncludeHistory');
+  historyOption.checked=localStorage.getItem(HISTORY_BACKUP_OPTION)==='true';
+  historyOption.addEventListener('change',()=>{
+    try{
+      localStorage.setItem(HISTORY_BACKUP_OPTION,historyOption.checked?'true':'false');
+      notify(historyOption.checked?'Bestätigte Wallet-Historien werden künftig in verschlüsselten Backups mitgesichert.':'Wallet-Historien werden aus neuen verschlüsselten Backups ausgeschlossen.');
+    }catch{
+      historyOption.checked=!historyOption.checked;
+      notify('Backup-Auswahl konnte nicht gespeichert werden. Die bisherige Auswahl bleibt bestehen.',true);
+    }
+  });
   fullOption.checked=localStorage.getItem(FULL_BACKUP_OPTION)==='true';
   fullOption.addEventListener('change',()=>{
     localStorage.setItem(FULL_BACKUP_OPTION,fullOption.checked?'true':'false');

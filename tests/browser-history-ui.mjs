@@ -1,5 +1,6 @@
 import {provider as solanaProvider,transaction as solTransaction,A as SOL,M as SOLMINT} from './solana-history-fixtures.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
+import {readFile} from 'node:fs/promises';
 import {provider as bitcoinProvider,tx,A,H as BH} from './bitcoin-history-fixtures.mjs';
 import {provider as ethereumProvider,A as ETH} from './ethereum-history-fixtures.mjs';
 for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
@@ -38,6 +39,30 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await page.waitForFunction(()=>document.getElementById('notice').textContent.includes('neu laden'));
   await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Nicht gespeichert'));
   const latest=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));assert.equal(latest.providers[0].name,'Other tab history');assert.equal(latest.walletHistory.sessions.find(s=>s.chain==='btc').quotes.length,2);await other.close();
-  console.log('HISTORY UI '+engine+': BTC/ETH/SOL/SPL fetch and encrypted roundtrip, preview/discard/accept, persistence, untouched finances, 320–1440 PASS');
+  // The user's history opt-in must survive reload before automatic Drive/local backups.
+  await page.goto('http://127.0.0.1:4173/?page=more');
+  const historyOption=page.locator('#fullBackupIncludeHistory');
+  await historyOption.evaluate(el=>el.closest('details').open=true);
+  assert.equal(await historyOption.isChecked(),false);
+  await historyOption.check();await page.reload();
+  await historyOption.evaluate(el=>el.closest('details').open=true);
+  assert.equal(await historyOption.isChecked(),true,'History backup consent must survive reload');
+  await page.locator('#fullBackupIncludeSettings').check();
+  const download=page.waitForEvent('download');await page.locator('#exportEncryptedBackup').click();
+  const envelope=JSON.parse(await readFile(await (await download).path(),'utf8'));
+  const recovered=await page.evaluate(async envelope=>{
+   const {decryptPasswordBackup}=await import('/src/backup-vault.js'),{unpackCompleteBackup}=await import('/src/complete-backup.js'),{safeImport}=await import('/src/model.js');
+   const full=unpackCompleteBackup(JSON.parse(await decryptPasswordBackup(envelope,'cross-chain-test-password'))),isolated=safeImport(full.data);
+   return {chains:isolated.walletHistory.sessions.map(s=>s.chain).sort(),provider:isolated.providers[0].name,settings:!!full.configuration?.settings};
+  },envelope);
+  assert.deepEqual(recovered,{chains:['btc','eth','sol'],provider:'Other tab history',settings:true});
+  await historyOption.uncheck();await page.reload();
+  await historyOption.evaluate(el=>el.closest('details').open=true);
+  assert.equal(await historyOption.isChecked(),false,'History opt-out must also survive reload');
+  await page.evaluate(()=>{window.originalPreferenceWrite=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='foliolab-open-backup-include-history-v1')throw new DOMException('fixture quota','QuotaExceededError');return window.originalPreferenceWrite.call(this,k,v);};});
+  await historyOption.click();assert.equal(await historyOption.isChecked(),false,'Failed preference write must restore saved consent');
+  assert.match(await page.locator('#toast').innerText(),/Auswahl konnte nicht gespeichert/);
+  await page.evaluate(()=>{Storage.prototype.setItem=window.originalPreferenceWrite;delete window.originalPreferenceWrite;});
+  console.log('HISTORY UI '+engine+': BTC/ETH/SOL/SPL fetch and encrypted roundtrip, preview/discard/accept, persistence, untouched finances, 320–1440 PASS; backup consent reload/opt-out/quota and actual encrypted UI download restore PASS');
  }finally{await browser.close();}
 }
