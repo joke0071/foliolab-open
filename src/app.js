@@ -452,6 +452,7 @@ function openCashBalanceCheck(positionId){
   '<label class="csv-skip"><input type="checkbox" name="currentReference" id="cashReferenceCurrent"> Ich verwende den aktuellen Kontostand für genau diese Guthabenposition.</label>'+
   '<div id="cashComparisonResult" class="cash-comparison-result" role="status" aria-live="polite" tabindex="-1"></div>',
   values=>{
+   $('cashComparisonResult').replaceChildren();
    if(loadFailure||otherTabChangedPortfolio)throw Error('Der Datenstand ist nicht aktuell. Bitte diesen Tab neu laden und erneut prüfen.');
    if(!values.currentReference)throw Error('Bitte bestätigen, dass der Kontostand aktuell ist und zu dieser Guthabenposition gehört.');
    const result=compareCurrentCashBalance(model,{positionId,referenceAmount:values.referenceAmount,currency});
@@ -1870,6 +1871,8 @@ $('revertFromIDB').classList.toggle('hidden',!portfolioStore.isIndexedDB);
 window.addEventListener('storage',event=>{
  if(event.storageArea!==localStorage||!['foliolab-open-v1',MODE_KEY].includes(event.key)||event.oldValue===event.newValue||loadFailure)return;
  otherTabChangedPortfolio=true;
+ const cashResult=$('cashComparisonResult');
+ if(cashResult)cashResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
  const notice=$('notice');
  notice.textContent='Portfolio in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst. Ungespeicherte Eingaben vorher sichern.';
  notice.setAttribute('role','alert');

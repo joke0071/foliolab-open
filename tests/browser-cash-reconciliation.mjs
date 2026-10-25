@@ -5,6 +5,9 @@ import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url);
 const axeScript=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const engines={chromium,firefox,webkit};
+// Bound even unresolved service-worker/platform promises; never hang a CI job.
+const deadline=setTimeout(()=>{console.error('Cash comparison browser deadline exceeded');process.exit(1);},180000);
+deadline.unref();
 for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
  console.log('CASH RECONCILIATION '+name+': starting');
  const browser=await engines[name].launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
@@ -39,6 +42,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   // Changing the reference invalidates the previous result.
   await page.locator('#cashReference').fill('100');assert.equal(await page.locator('#cashComparisonResult').innerText(),'');
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
+  if(process.env.CASH_SCREENSHOT&&name==='chromium')await page.screenshot({path:process.env.CASH_SCREENSHOT});
   for(const width of [320,390,430,768,1440]){
    await page.setViewportSize({width,height:900});
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' overflow at '+width);
@@ -62,16 +66,24 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   await page.locator('#mobileNav [data-page="more"]').click();await page.locator('#addProvider').click();
   assert.equal(await page.locator('#cancelDialog').innerText(),'Abbrechen');assert.equal(await page.locator('#saveDialog').innerText(),'Anbieter speichern');
   await page.locator('#closeDialog').click();
-  // Full offline reload proves the new module is included in the PWA cache.
-  await page.evaluate(async()=>{await navigator.serviceWorker.ready;});
+  // Block all network requests; the complete cached app shell must still reload.
+  await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Service worker not ready')),15000))]);});
   await page.waitForFunction(()=>navigator.serviceWorker.controller);
-  await context.setOffline(true);await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();
+  await context.route('**/*',route=>route.abort('internetdisconnected'));await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
   const offline=page.locator('[data-action="check-cash-balance"][data-id="second-cash"]');
   for(const details of await offline.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   await offline.click();await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before);
+  // An actual second-tab write invalidates the visible result and blocks stale checks.
+  const peer=await context.newPage();await peer.goto('http://127.0.0.1:4173/');
+  const peerRaw=await peer.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));m.providers[0].name='Updated Testbank';const raw=JSON.stringify(m);localStorage.setItem('foliolab-open-v1',raw);return raw;});
+  await page.waitForFunction(()=>document.querySelector('#cashComparisonResult').textContent.includes('Datenstand'));
+  await page.locator('#saveDialog').click();
+  assert.match(await page.locator('#dialogError').innerText(),/neu laden/);
+  assert.equal(await page.locator('#cashComparisonResult').innerText(),'');
+  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),peerRaw);await peer.close();
   assert.deepEqual(errors,[]);
   console.log('CASH RECONCILIATION '+name+': exact/read-only/account/FX/dialog/mobile/offline PASS');
- }finally{await browser.close();}
+ }finally{await context.setOffline(false).catch(()=>{});await context.close();await browser.close();}
 }
