@@ -268,6 +268,7 @@ function transferEvidence(model,b,matched=false){
  return {booking:b,position:p,entry,clearing,quantity,flow:flows[0]};
 }
 export function previewTransferMatch(model,outgoingId,incomingIds){
+ if(Array.isArray(incomingIds))incomingIds=[...incomingIds].sort();
  const reasons=[];let out=null,ins=[];
  try{
   if(!Array.isArray(incomingIds)||incomingIds.length<1||incomingIds.length>12||new Set(incomingIds).size!==incomingIds.length||incomingIds.includes(outgoingId))throw Error('Einen Ausgang und bis zu zwölf unterschiedliche Eingänge auswählen.');
@@ -288,9 +289,10 @@ export function previewTransferMatch(model,outgoingId,incomingIds){
   quantityExact:out?exact(out.quantity):null,incomingQuantityExact:ins.length?exact(ins.reduce((n,x)=>n+x.quantity,0n)):null};
 }
 export function confirmTransferMatch(model,{outgoingId,incomingIds,reference,confirmed,fingerprint}){
+ if(Array.isArray(incomingIds))incomingIds=[...incomingIds].sort();
  const ref=words(reference,180);if(!confirmed||!ref)throw Error('Belegreferenz und ausdrückliche Bestätigung beider eigenen Konten fehlen.');
  const existing=model.bookings.find(b=>b.id===outgoingId)?.transferMatch;
- if(existing&&existing.reference===ref&&JSON.stringify(existing.incomingIds)===JSON.stringify(incomingIds)){validateTransferMatches(model);return {changed:false,id:existing.id};}
+ if(existing&&existing.reference===ref&&JSON.stringify([...existing.incomingIds].sort())===JSON.stringify(incomingIds)){validateTransferMatches(model);return {changed:false,id:existing.id};}
  const preview=previewTransferMatch(model,outgoingId,incomingIds);
  if(!preview.ready)throw Error(preview.reasons.join(' '));
  if(preview.fingerprint!==fingerprint)throw Error('Bewegungen seit der Vorschau geändert. Neu prüfen.');
@@ -311,6 +313,7 @@ export function validateTransferMatches(model){
   const t=b.transferMatch;if(t==null)continue;
   if(!t||t.version!==1||typeof t.id!=='string'||t.id.length>100||!/^tm-[a-f0-9]{64}$/.test(t.id)||typeof t.reference!=='string'||!t.reference.trim()||t.reference.length>180||typeof t.confirmedAt!=='string'||!Number.isFinite(Date.parse(t.confirmedAt))||!Array.isArray(t.incomingIds)||t.incomingIds.length<1||t.incomingIds.length>12||new Set(t.incomingIds).size!==t.incomingIds.length||t.incomingIds.includes(t.outgoingId)||typeof t.matchedOwnership!=='string'||t.matchedOwnership.length>20000||!['imported','manual',null].includes(t.originalOwnership)||typeof t.originalStatus!=='string'||t.originalStatus.length>120)throw Error('Transferzuordnung im Backup ungültig.');
   const ids=[t.outgoingId,...t.incomingIds];if(!ids.includes(b.id)||!Number.isInteger(t.originalFlowIndex)||t.originalFlowIndex<0||t.originalFlowIndex>25000)throw Error('Transferzuordnung referenziert falsche Bewegung.');
+  if((b.importSource?!['imported','manual'].includes(t.originalOwnership):t.originalOwnership!==null)||!t.originalStatus||t.originalStatus==='matched-internal-transfer')throw Error('Ursprüngliche Transferherkunft oder Journalstatus ungültig.');
   const evidence=transferEvidence(model,b,true);linked.add(evidence.entry.id);
   if(b.external!==false||evidence.entry.status!=='matched-internal-transfer'||model.externalCashFlows.some(f=>f.id===b.id))throw Error('Transferzuordnung widerspricht externer Geldfluss-Klassifikation.');
   for(const bid of ids){const other=model.bookings.find(x=>x.id===bid),o=other?.transferMatch;

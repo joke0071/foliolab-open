@@ -19,7 +19,7 @@ test('no explicit consent/reference or stale user edits: zero mutation',()=>{
 });
 test('idempotent same confirmation and exact explicit undo',()=>{
  const m=transferFixture(),before=structuredClone(m),p=preview(m),result=accept(m,p),matched=JSON.stringify(m);
- assert.equal(accept(m,p).changed,false);assert.equal(JSON.stringify(m),matched);
+ assert.equal(accept(m,p).changed,false);assert.equal(accept(m,{...p,incomingIds:[...p.incomingIds].reverse()}).changed,false);assert.equal(JSON.stringify(m),matched);
  undoTransferMatch(m,result.id);assert.deepEqual(m,before);assert.equal(undoTransferMatch(m,result.id).changed,false);
 });
 test('missing counterpart and quantity differences remain blocked',()=>{
@@ -46,6 +46,7 @@ test('same account, missing journal or inconsistent external flow is blocked',()
 test('matched portable v3 backup roundtrips; partial or forged group fails closed',()=>{
  const m=transferFixture();accept(m);const restored=safeImport(JSON.parse(backup(m)));assert.deepEqual(restored.bookings,m.bookings);assert.equal(restored.externalCashFlows.length,0);
  const bad=JSON.parse(backup(m));delete bad.bookings[0].transferMatch;assert.throws(()=>safeImport(bad),/Transfer/);
+ const badStatus=JSON.parse(backup(m));badStatus.bookings[0].transferMatch.originalStatus='matched-internal-transfer';assert.throws(()=>safeImport(badStatus),/Journalstatus/);
  const forged=JSON.parse(backup(m));forged.bookings[0].transferMatch.originalFlow.amountEUR=123;assert.throws(()=>safeImport(forged),/Geldfluss/);
 });
 test('preserved import identity becomes user-owned; undo restores provenance; later edits block undo',()=>{
