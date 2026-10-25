@@ -69,6 +69,7 @@ jobs:
           node tests/browser-history-worker.mjs
           node tests/browser-p0-import.mjs
           node tests/browser-csv-review-a11y.mjs
+          node tests/browser-csv-batch.mjs
           node tests/browser-flatex-import.mjs
           node tests/browser-flatex-backfill.mjs
           node tests/browser-defi-dialog-guidance.mjs
@@ -180,6 +181,7 @@ jobs:
           TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
           FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
           node tests/browser-cross-engine.mjs
+          FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
           INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs

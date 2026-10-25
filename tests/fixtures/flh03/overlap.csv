@@ -1,0 +1,3 @@
+date;type;position;quantity;price;id
+2025-01-01;deposit;A;100;1;deposit-1
+2025-02-01;deposit;A;0.123456789012345678;1;deposit-2
