@@ -184,6 +184,13 @@ jobs:
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
+      - name: Preserve cross-engine evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-engine-gates-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: ignore
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     permissions:
