@@ -10,8 +10,8 @@ Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integ
 | AT05-A | ABGESCHLOSSEN: #140, Merge ad1d966ec98dff9eafba00dc262af0f5ad7ee894 | CI 40194079825 vollständig grün, 627/627 + alle Engines; Stufe B separat blockiert |
 | AT01 | ABGESCHLOSSEN: #141, Merge 8348a42c9d3bbd147a255b4730d7fe28e02fb476 | CI 40195398684 vollständig grün, 633/633 + alle Engines |
 | AT04 | ABGESCHLOSSEN: No-Code-Audit, #128 | 133 fokussierte Unit-Tests, acht Browser-Suites, bestehende Capability-Matrix bestätigt; [Nachweis](https://github.com/joke0071/foliolab-open/issues/128#issuecomment-6398005023) |
-| UI07 | TEILWEISE: #142, PWA v169 vorbereitet | Lokal 633/633, 66 Chromium-Scans ohne Befund; finale Remote-CI inkl. Firefox/WebKit vor Merge |
-| FINAL-GATE | NICHT BEGONNEN | Kein Gesamtrelease behauptet |
+| UI07 | ABGESCHLOSSEN: #142, Merge 839b51e37b234cc4a7fe202eeb68118a786e0b78 | CI40197890130 und main40198408959 vollständig grün; 66 Scans je Engine, keine Befunde |
+| FINAL-GATE | ABGESCHLOSSEN für Anwendungsrelease v169 / 839b51e37b234cc4a7fe202eeb68118a786e0b78 | main-CI/Deployment40198408959 erfolgreich; unabhängiger Live-Smoke, 98 Dateihashes, 18 Axe-Scans, beide UI-Restore-Formate und Offline bestanden |
 
 ## FLH01 Fachvertrag
 Read-only-Projektion vorhandener Buchungen/Journalpostings. Tatsächliche Journal-Deltas haben Vorrang; eine Korrektur-Zielmenge ist niemals Handelsvolumen. Technische Journalvorgänge ohne separate Buchung bleiben sichtbar. Positions-ID statt ISIN-Vermutung trennt Depots. Brutto-Kaufvolumen enthält nur Käufe, keine Korrekturen. Fehlende Beträge werden separat ausgewiesen, keine Rendite/XIRR/TWR oder Steuerbasis erfunden.
@@ -26,4 +26,4 @@ Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden
 Keine echten Nutzerbackups verwendet. Android/Safari-Hardware, Drive-Neugerät, Crash/Eviction bleiben reale Gates #44. AT03-C/AT05-B/#52 weiterhin durch Realbelege blockiert.
 
 ## Exakt nächste Aktion
-Pakete 1–6 sind abgenommen; keine Wiederholung. UI07 #142: konkrete Kontrast-, ARIA- und Leertextkorrekturen lokal umgesetzt. 633/633, Syntax, 66 Chromium-Scans ohne Befund, Finanz-/CSV-/Dialog-/PWA-/Offline-Gates und 20 unveränderte Pixelreferenzen bestanden. Korrekturen mit aktualisiertem Checkpoint veröffentlichen, vollständige CI inkl. Firefox/WebKit abwarten und erst bei Grün integrieren. Anschließend FINAL-GATE auf finalem main: vollständige CI/Deployment, unabhängiger Live-Smoke ausschließlich synthetisch, Assetabgleich und Abschlussartefakt. Keine Gesamtrelease-Erfolgsmeldung vor Nachweis.
+Alle sieben beauftragten Pakete und der Anwendungsrelease sind abgenommen; keine Wiederholung. [Finaler Releasebericht](FINAL_RELEASE_AND_LIVE_ACCEPTANCE.md), [unabhängiger Live-Nachweis](release-evidence/v169-live-acceptance.json). Anwendung auf main `839b51e37b234cc4a7fe202eeb68118a786e0b78`, PWA v169, keine offenen PRs. Nachfolgender Commit enthält ausschließlich Dokumentation, synthetische Nachweise und die manuelle Live-Testhilfe, keine ausgelieferten App-Dateien. Seine main-CI/Deployment ebenfalls vollständig abwarten und die identischen Live-Assets erneut prüfen; Abschlussquittung mit endgültigem Repository-HEAD/Run in #124. Externe #44/AT03-C/AT05-B/#52 bleiben ehrlich offen und sind kein neuer Auftrag zur Implementierung.
