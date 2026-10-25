@@ -53,3 +53,8 @@ User specification: Library `FLH03_Broker_Exchange_Import_Historien_Rekonstrukti
 ## Resume / exact next safe action
 
 Read this checkpoint, #148, this feature PR and latest remote HEAD/CI; check current main/open PRs before changing shared files. Finish new Firefox/WebKit and existing CSV/flatex/storage/backup/PWA/financial regressions, review boundary/failure paths separately, push evidence. Merge only after all required checks pass on current main and review is clear. Then verify deployment and actual live v177 imports/undo/core app. Record exact commits/runs/results in the final PR/issue checkpoint. Continue 02 with evidence gates only after 00/01 release acceptance; do not restart FLH02 or touch 08–17 in this run.
+
+
+## Release evidence handoff
+
+Final exact tested/merged main, CI/deployment URLs, live version/hash/core-function results and next stage are appended to canonical issue #148 and the release PR #150 after actual execution. Those post-release records supersede the pre-release pending status above; consult them before resuming. This avoids a self-referential documentation-only release loop.

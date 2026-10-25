@@ -2,16 +2,16 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_BASE_URL||'http://127.0.0.1:4173/';
-const live=base.startsWith('https:');
+const live=base.startsWith('https:'),useProxy=live&&Boolean(process.env.HTTPS_PROXY);
 const engines={chromium,firefox,webkit};
 for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
- const browser=await engines[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
+ const browser=await engines[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(useProxy?['--ignore-certificate-errors']:[])]:[],...(useProxy?{proxy:{server:process.env.HTTPS_PROXY,bypass:'127.0.0.1,localhost'}}:{})});
  const ctx=await browser.newContext({viewport:{width:390,height:844},ignoreHTTPSErrors:live}),p=await ctx.newPage();
  const errors=[];p.on('pageerror',e=>errors.push(e.message));
  // No real financial/account data or external market services in this test.
  await ctx.route('**/*',route=>route.request().url().startsWith(base)||route.request().url().startsWith('blob:')?route.continue():route.abort());
  try{
-  await p.goto(base+'tests/storage-origin.html').catch(()=>{});
+  if(!live)await p.goto(base+'tests/storage-origin.html');
   await p.goto(base);
   await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   await p.evaluate(async()=>{
