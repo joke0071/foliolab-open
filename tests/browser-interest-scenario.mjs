@@ -61,7 +61,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   await page.locator('#interestAddRate').click();const duplicate=page.locator('.interest-rate-row').nth(2);
   await duplicate.locator('[name="interestFrom"]').fill(dates.change);await duplicate.locator('[name="interestRate"]').fill('9');
   await page.locator('#saveDialog').click();assert.match(await page.locator('#dialogError').innerText(),/doppelt/);assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),original);
-  await duplicate.locator('button').click();await preview();
+  await duplicate.locator('button').click();assert.equal(await page.locator('#dialogError').isVisible(),false,'changed conditions clear obsolete duplicate feedback');await preview();
   for(const width of [320,390,430,768,1440]){await page.setViewportSize({width,height:900});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' page overflow '+width);assert.ok(await page.locator('#editDialog').evaluate(e=>e.scrollWidth<=e.clientWidth+1),name+' dialog overflow '+width);}
   const violations=await page.evaluate(async()=>(await axe.run(document.querySelector('#editDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})));assert.deepEqual(violations,[]);
   if(process.env.INTEREST_SCREENSHOT&&name==='chromium')await page.screenshot({path:process.env.INTEREST_SCREENSHOT});

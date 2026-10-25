@@ -59,18 +59,19 @@ export function bindInterestForm(root,{calculate,onEdit=()=>{}}={}){
   summary();clear();
  };
  get('interestEnabled').addEventListener('change',sync);
- const section=get('interestDisclosure'),changed=()=>{clear();summary();};
+ const clearValidation=()=>root.querySelector('#dialogError')?.classList.add('hidden');
+ const section=get('interestDisclosure'),changed=event=>{clear();summary();if(section.contains(event.target)&&!event.target.closest('[data-interest-preview]'))clearValidation();};
  section.addEventListener('input',changed);section.addEventListener('change',changed);
  for(const input of root.querySelectorAll('input,select,textarea'))if(!section.contains(input)){input.addEventListener('input',changed);input.addEventListener('change',changed);}
  const esc=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const renumber=()=>{[...rates.children].forEach((row,i)=>{row.querySelector('legend').textContent='Zinssatz '+(i+1);row.querySelector('[data-interest-remove]').setAttribute('aria-label','Zinssatz '+(i+1)+' entfernen');});};
  get('interestAddRate').addEventListener('click',()=>{
   if(rates.children.length>=60){get('interestEditorStatus').textContent='Höchstens 60 Zinsabschnitte pro Konto.';return;}
-  rates.insertAdjacentHTML('beforeend',rateRow({},rates.children.length,esc));clear();onEdit();rates.lastElementChild.querySelector('input').focus();
+  rates.insertAdjacentHTML('beforeend',rateRow({},rates.children.length,esc));clear();clearValidation();onEdit();rates.lastElementChild.querySelector('input').focus();
  });
  rates.addEventListener('click',e=>{const button=e.target.closest('[data-interest-remove]');if(!button)return;
   const row=button.closest('.interest-rate-row'),next=row.nextElementSibling||row.previousElementSibling;row.remove();
-  if(!rates.children.length)rates.insertAdjacentHTML('beforeend',rateRow({},0,esc));renumber();clear();summary();onEdit();(next||rates.firstElementChild).querySelector('input').focus();
+  if(!rates.children.length)rates.insertAdjacentHTML('beforeend',rateRow({},0,esc));renumber();clear();clearValidation();summary();onEdit();(next||rates.firstElementChild).querySelector('input').focus();
  });
  get('interestCalculate')?.addEventListener('click',()=>{
   clear();try{
