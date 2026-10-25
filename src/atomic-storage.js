@@ -1,7 +1,6 @@
 import {backup, safeImport, STORE_KEY,defaultSettings} from './model.js';
 
-// Opt-in transactional storage foundation. Not wired to the live app until the
-// async save, restore and reset flows have been migrated and regression-tested.
+// Transactional canonical portfolio storage; legacy staging remains explicit.
 export const PORTFOLIO_DB = 'foliolab-open-portfolio';
 export const PORTFOLIO_DB_VERSION = 1;
 const STORE = 'records';
@@ -62,6 +61,7 @@ function assertRecord(record) {
   }
   // A structurally plausible but invalid portfolio must not be silently
   // accepted or overwritten. Preserve its original IndexedDB bytes.
+  if(record.settings!==undefined&&record.settings!==null)portableSettings(record.settings);
   if(record.raw !== null){
     try{safeImport(JSON.parse(record.raw));}
     catch{throw Error('Gespeicherte Portfolio-Daten sind beschädigt. Keine Änderungen vorgenommen.');}

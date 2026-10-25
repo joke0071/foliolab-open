@@ -5,7 +5,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 async function testStaleSource(){
  const context=await browser.newContext(),page=await context.newPage();
  try{
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   const result=await page.evaluate(async()=>{
    const {blankModel,createProvider,persist,load,STORE_KEY}=await import('/src/model.js');
    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
@@ -44,7 +44,7 @@ async function testStaleSource(){
 async function testInterruptedMarker(){
  const context=await browser.newContext(),page=await context.newPage();
  try{
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   const result=await page.evaluate(async()=>{
    const {blankModel,createProvider,persist,STORE_KEY}=await import('/src/model.js');
    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
@@ -78,7 +78,7 @@ async function testInterruptedMarker(){
 async function testQuotaBeforeCommit(){
  const context=await browser.newContext(),page=await context.newPage();
  try{
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   const result=await page.evaluate(async()=>{
    const {blankModel,createProvider,persist,STORE_KEY}=await import('/src/model.js');
    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
@@ -100,7 +100,7 @@ async function testLegacyFormats(){
  for(const version of [1,2]){
   const context=await browser.newContext(),page=await context.newPage();
   try{
-   await page.goto('http://127.0.0.1:4173/');
+   await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
    const result=await page.evaluate(async version=>{
     const {blankModel,createProvider,STORE_KEY}=await import('/src/model.js');
     const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');

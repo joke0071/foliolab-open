@@ -6,7 +6,7 @@ for(const [name,engine] of [['Firefox',firefox],['WebKit',webkit]]){
  const a=await context.newPage(),b=await context.newPage();
  const run=async(page,fn,args={})=>page.evaluate(fn,args);
  try{
-  await Promise.all([a.goto('http://127.0.0.1:4173/'),b.goto('http://127.0.0.1:4173/')]);
+  await Promise.all([a.goto('http://127.0.0.1:4173/tests/storage-origin.html'),b.goto('http://127.0.0.1:4173/tests/storage-origin.html')]);
   const initial=await run(a,async()=>{
    const {openPortfolioDB,commitPortfolioRecord}=await import('/src/atomic-storage.js');
    const {blankModel,backup}=await import('/src/model.js');
@@ -27,7 +27,7 @@ for(const [name,engine] of [['Firefox',firefox],['WebKit',webkit]]){
   assert.equal(contenders.filter(x=>x.status==='fulfilled').length,1,name+' must serialize concurrent transactions');
   assert.equal(contenders.filter(x=>x.status==='rejected').length,1);
   await a.close();await b.close();
-  const third=await context.newPage();await third.goto('http://127.0.0.1:4173/');
+  const third=await context.newPage();await third.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   let record=await run(third,async()=>{
    const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
    const db=await openPortfolioDB();

@@ -5,7 +5,7 @@ const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const context=await browser.newContext({viewport:{width:390,height:844}});
 const first=await context.newPage(),second=await context.newPage();
 try{
- await first.goto('http://127.0.0.1:4173/');
+ await first.goto('http://127.0.0.1:4173/tests/storage-origin.html');
  const backups=await first.evaluate(async()=>{
   const {blankModel,createProvider,persist,backup}=await import('/src/model.js');
   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
@@ -21,7 +21,7 @@ try{
   };
   return [make('Import tab A'),make('Import tab B')];
  });
- await Promise.all([first.reload(),second.goto('http://127.0.0.1:4173/')]);
+ await Promise.all([first.reload(),second.goto('http://127.0.0.1:4173/tests/storage-origin.html')]);
  await Promise.all([first.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv')),
   second.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent?.includes('IndexedDB aktiv'))]);
  first.on('dialog',async d=>d.accept());second.on('dialog',async d=>d.accept());
