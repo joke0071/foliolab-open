@@ -1,49 +1,49 @@
-# FLH02 work checkpoint — merged, production gate pending
+# FLH02 work checkpoint — v175 released and live accepted
 
-Specification: exact Library FLH02 document, version 11. Existing accepted A / FLH01 / IndexedDB work is not repeated.
+Specification: exact Library FLH02 document version 11, including A–E and 7.11–7.14. No accepted FLH01 or IndexedDB work was reimplemented.
 
-- Verified main: `8e12ae1ad1a0b517eab3404a2dacbe9b31ab61db`, A released/accepted as v171.
-- Branch: `feature/flh02-position-value-foundation`, PR https://github.com/joke0071/foliolab-open/pull/144.
-- Previous remote checkpoint: `7bb3ebf32d029b1941a569102407ce802a3009de`. Current commit: this checkpoint's containing commit; resolve branch HEAD.
-- PR #144 merged at `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`; all PR gates passed: https://github.com/joke0071/foliolab-open/actions/runs/40217442188.
-- Main gate/deployment: https://github.com/joke0071/foliolab-open/actions/runs/40217903807, in progress. Candidate shell v175; not yet live-accepted.
-- Documentation/acceptance branch: `docs/flh02-v175-release`; PR to be linked after creation.
+## Identity and remote state
 
-| Package | Implementation / acceptance |
+- Implementation branch: `feature/flh02-position-value-foundation`, [PR #144](https://github.com/joke0071/foliolab-open/pull/144), merged as `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`.
+- Pre-live checkpoint and manual live test: [PR #145](https://github.com/joke0071/foliolab-open/pull/145), merged as `eb737df8979c7708d678de8045bd2b48db9e8e2f`.
+- Actually tested/deployed/live-accepted main SHA: `eb737df8979c7708d678de8045bd2b48db9e8e2f`. App implementation bytes are unchanged by the documentation closeout.
+- Current closeout branch: `docs/flh02-v175-acceptance`; commit is this file's containing commit. Its PR is documentation/evidence only; final PR/main CI links are recorded in its GitHub description. Resolve final main with `git ls-remote origin refs/heads/main`.
+- Production: [FolioLab Open](https://joke0071.github.io/foliolab-open/), active `foliolab-open-v175`.
+
+| Package | Final status |
 |---|---|
-| A | DONE, merged/live v171. Private rendered wallet text lacks output identities; no fabricated real matching counts. |
-| B | Implemented/merged; final live gate pending: EOD journal/chain quantities, exact close/FX projection, EUR default and value/price/quantity/transaction views, shared mini-card projection, disjoint segments, 6M/3J/5J/Max presets, explicit rights-confirmed retention in existing priceHistories with source/identity conflicts blocked. |
-| C1 | Implemented/merged; final live gate pending: cash/journal/chain aggregation; sold positions retained under existing deletion guard; excluded economic representations not counted twice, liabilities signed, overlapping wallets and unresolved cash clearing block full claims. No present holdings backfilled. |
-| C2 | Implemented/merged; final live gate pending: overview/history share one pure projection; observations stay separate, explicit partial portfolio label, manual controls secondary. |
-| C3 | Implemented/merged; final live gate pending: read-only coverage and snapshot discrepancies, no correcting writes; synthetic integrated browser checks. |
-| D | Implemented/merged; final live gate pending: legacy migration disclosure is conditional global recovery entry, existing safety retained; precision audit appears only in relevant data-quality review. |
-| E | Implemented/merged; final live gate pending: main history has no optional green plus, secondary disclosures, dynamic source status; optional services consolidated with one shared save and unchanged fields/validation. |
-| Drive | Implemented/merged; final live gate pending: OAuth in manual mode explicitly offers enabled encrypted backup; session-only schedule wording, no closed-app promise; password/full restore retained. |
+| A | DONE: accepted v171, preserved; actual v175 Bittr UI/IDB/backup/multitab regression PASS. No duplicate stock/cash/cost basis. |
+| B | DONE: evidenced EOD quantities × raw close × historical FX, EUR default, price/holdings/transactions, shared miniature charts, gaps/provenance, 6M/3J/5J/Max within actual data coverage; explicit rights-confirmed retention in existing history store. |
+| C1 | DONE: read-only journal/cash/chain aggregation, actual booked interest and signed liabilities; missing ownership, opening facts, clearing and wallet overlap block full-total claims. |
+| C2 | DONE: dashboard/history share the projection; actual 999/1059 EUR synthetic live result without snapshots. Separate observation/partial bases and optional control points. |
+| C3 | DONE: coverage, explicit gaps, independent snapshot differences, no automatic corrections; integrated unit/all-engine/browser/live gates. |
+| D | DONE: contextual precision review and conditional recovery/migration entry, existing migration and backup safety retained. |
+| E | DONE: secondary control-point/raw-record disclosures; consistent periods/charts; one closed optional connections entry, independent preserved endpoints/tokens, one save, primary API-key setup. |
+| Drive | DONE: manual OAuth connection offers encrypted backup or password setup immediately; honest open-session scheduling; existing full encrypted backup/restore retained. Real account authorization remains account-specific, untested without supplied test account. |
 
-## Actually executed
+## Actually passed
 
-- Syntax check passed. Latest complete unit run: 657/657, zero skipped/failing.
-- New Chromium FLH02 integration passed: 999/1059 total with no snapshots, observed/partial separation, six widths, axe, preserved optional endpoints/token and zero financial writes.
-- Updated BTC/ETH/SOL/SPL history UI suite passed, including encrypted restore, exact raw-token display, multitab and backup preference persistence. Purchase matching implementation untouched.
-- Existing Chromium suites passed from smoke through CSV/Flatex/dialog/position/history suites. Continued full local run still needs completion; remaining failures found were superseded UI contracts (manual button priority, period count, precision-review location); original financial/safety assertions retained.
-- Replacement PR CI 40217442188 PASSED Chromium, Firefox and WebKit. Full main CI/deployment 40217903807 is in progress. Local WebKit lacks libraries and local Firefox page creation hangs; CI is the supported cross-engine gate here. No unexecuted tests claimed.
-- Previous v171 live evidence remains in docs/FLH02_A_RELEASE_AND_LIVE_ACCEPTANCE.md. No combined FLH02 live release claimed yet.
+- `npm run check`; `npm test`: 657/657, zero skipped/failing.
+- [PR #144 gate 40217442188](https://github.com/joke0071/foliolab-open/actions/runs/40217442188): Chromium and Firefox/WebKit PASS, wallet checks and informational wallet audit also successful.
+- [PR #145 gate 40218196233](https://github.com/joke0071/foliolab-open/actions/runs/40218196233): Chromium and Firefox/WebKit PASS.
+- [Main release/deployment 40218777354](https://github.com/joke0071/foliolab-open/actions/runs/40218777354): test, cross-engine and Pages deploy ALL PASS. Earlier main run 40217903807 was cancelled after a runner stalled during browser-dependency installation; no gate was weakened or bypassed.
+- Relevant executed suites include financial invariants, CSV/Bittr/transfers, historical quantities/raw prices/FX/aggregation, BTC/ETH/SOL/SPL histories, exact tiny-token display, IndexedDB migration/crash/recovery/concurrent/multitab, encrypted full backup/restore, privacy/security, PWA update/offline and scale. Existing visual dialog references passed. Six required widths: 320/390/430/768/1024/1440.
+- Actual production acceptance: 103/103 exact SHA-256 file matches including SW, actual loaded app/CSS match, active SW v175, 18 general axe scans with zero findings, actual UI creation/edit/reload, plain/encrypted downloads and fresh-profile restore, offline save/reload, zero page errors.
+- Additional actual production tests: purchase evidence preview/confirm/undo/reload, encrypted restore, multitab, six-width axe and private-field/XSS checks PASS; total-value/partial/observed/settings six-width axe E2E PASS with zero financial writes.
+- Machine evidence: [general live report](release-evidence/flh02-v175-live.json), [extended live report](release-evidence/flh02-v175-extended.json). Detailed behavior and user workflow: [final release report](FLH02_FINAL_RELEASE_AND_LIVE_ACCEPTANCE.md).
 
-## Financial/provider boundaries
+## Known evidence boundaries
 
-- Unknown/undated opening balances, bank histories or unsupported chain/staking facts remain explicit gaps. Only actual journal interest credits count as cash; forecasts are not actual historical wealth. No new tax/performance release.
-- Chain evidence uses the existing validated replay/day engine and explicit account/asset scope. Overlap/reorg/partial coverage never becomes a verified full total. Very large calculations fail with a clear bounded-calculation message rather than locking UI or inventing zeros.
-- API entitlements/CORS without a real test account remain unverified; 401/403/429/offline retain local evidence. Keys and CSV stay local. Provider cache requires explicit storage-right confirmation; no cross-provider silent merge. Existing priceHistories/backup/quota contract, no parallel persistent store.
-- Twelve requests explicitly use adjust=none; FMP uses the documented non-split-adjusted endpoint. CoinGecko midnight UTC observations map to the preceding EOD for valuation; unaligned intraday observations remain usable price observations but do not become EOD values. No provider-free multi-year promise.
+Unknown/undated openings, unsupported chain/staking ownership, unproven economic representations, reorg/overlap/clearing and excessive precision remain explicit gaps. Actual interest credits count; forecasts do not. No invented totals, returns, tax lots or historical ownership. No new backend, database, worker or mandatory proxy.
 
-## First remaining actions
+Paid-provider live entitlements/CORS and real Drive OAuth were not asserted without supplied test accounts/keys. Synthetic API/authorization contracts and real local UI/backup flows were tested. No free multi-year promise, silent provider mixing or closed-app backup promise. Existing optional workers/settings remain compatible. The HTTPS inspection certificate exception used by the local browser runtime is recorded in machine evidence; certificate validation is not claimed.
 
-1. PR #144 is merged with all gates green. Local Chromium workflow suites passed in sequential segments through PWA/offline/scale, including precision repair and configured worker compatibility. Full current CI (replacement of run 40216424171) remains authoritative; fix genuine errors and adapt old navigation contracts without weakening their financial/security assertions.
-2. Verify main workflow 40217903807 including Pages deployment; run browser-live-acceptance.mjs, browser-live-purchase-evidence.mjs and browser-live-flh02.mjs against actual production v175.
-3. Record actual production evidence, finalize documentation PR, merge only after its green gates; verify final main and deployment. Application bytes must remain unchanged for documentation closeout.
+Private reference files stay local; only synthetic fixtures and public app hashes enter git. Accepted A's private wallet text lacks output identities; no fabricated real matching counts.
 
-## Exact resumption
+## Remaining safe closeout
 
-> Continue FLH02 specification v11 from docs/flh02-v175-release. PR #144 is merged as cb2e6d1d23b2fcac29b609306c0bf8954679bb86; PR CI 40217442188 passed all engines. A was v171/live. Verify main CI/deployment 40217903807 and actual v175 live acceptance, then finalize and merge release documentation under existing authorization. Never replay accepted A/FLH01/IndexedDB work or replace unknown financial values with zero. Keep every next safe increment remote and update this checkpoint.
+Only merge this documentation/evidence PR after its required CI is green, then verify final main CI/deployment and unchanged production v175. No FLH02 feature work remains. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
 
-Latest fixes after initial candidate: precision discrepancies now create a data-quality review entry; exact decimals beyond supported scale remain explicit gaps, economic representation needs dated same-scope proof; partial-series scope changes break the line; FX retains actual reference date; price-only view remains usable without holdings; async quote retention is identity/revision bound. Unit suite 657/657; affected Chromium suites passed.
+## Exact resumption if interrupted during documentation closeout
+
+> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive implementations are merged and v175 is live accepted at eb737df8979c7708d678de8045bd2b48db9e8e2f, main workflow 40218777354 green. Only finish the docs/flh02-v175-acceptance documentation PR: check its current CI, merge green/conflict-free under existing authorization, verify final main CI/deployment and unchanged v175 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and CI/PR links.
