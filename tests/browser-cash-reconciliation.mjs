@@ -17,6 +17,8 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   // Inject the test helper before navigation; no routed script request crosses the app's Service Worker.
   await page.addInitScript({content:axeScript});
   await page.goto('http://127.0.0.1:4173/');
+  // Finish initial shell installation before navigating to the synthetic portfolio.
+  await page.evaluate(async()=>{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Initial service worker not ready')),30000))]);});
   await page.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
    const m=blankModel(),provider=createProvider({name:'Testbank',type:'bank'});m.providers.push(provider);m.settings.autoRefresh=false;
