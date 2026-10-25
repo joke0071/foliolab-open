@@ -176,6 +176,7 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          FLH03_UI_ENGINES=firefox,webkit node tests/browser-flh03-ui.mjs
           UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
           QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
           ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
@@ -183,7 +184,6 @@ jobs:
           FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
           node tests/browser-cross-engine.mjs
           FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
-          FLH03_UI_ENGINES=firefox,webkit node tests/browser-flh03-ui.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
           INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
