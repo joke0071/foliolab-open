@@ -37,7 +37,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   server=await start();await page.addInitScript({content:axe});await page.goto(base);
   await page.evaluate(async()=>{await navigator.serviceWorker.register('./sw.js');await navigator.serviceWorker.ready;});
   await page.evaluate(async()=>{
-   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
+   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('./src/model.js');
    const m=blankModel(),provider=createProvider({id:'bank',name:'Testbank',type:'bank'});m.providers.push(provider);m.settings.autoRefresh=false;
    for(const [id,currency,quantity] of [['term-one','EUR','100'],['term-two','EUR','250'],['usd','USD','20'],['pln','PLN','30']]){
     const account=createAccount({id,providerId:'bank',name:id,currency,type:'savings'},m);m.accounts.push(account);
@@ -116,10 +116,10 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   const overviewViolations=await page.evaluate(async()=>(await axe.run(document.querySelector('#cashTermsOverview'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}})).violations.map(v=>v.id));assert.deepEqual(overviewViolations,[]);
   // Current complete encrypted backup engine, without copying any test credentials into data.
   await page.evaluate(async()=>{
-   const {load,backup,safeImport}=await import('/src/model.js');
-   const {createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js');
-   const {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup}=await import('/src/backup-vault.js');
-   const {compareCurrentCashBalance}=await import('/src/cash-reconciliation.js');
+   const {load,backup,safeImport}=await import('./src/model.js');
+   const {createCompleteBackup,unpackCompleteBackup}=await import('./src/complete-backup.js');
+   const {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup}=await import('./src/backup-vault.js');
+   const {compareCurrentCashBalance}=await import('./src/cash-reconciliation.js');
    const m=load(),pkg=createCompleteBackup(JSON.parse(backup(m)));
    await configureBackupPassword('test-password-only','test-password-only');
    const encrypted=await encryptWithBackupPassword(JSON.stringify(pkg));
@@ -142,7 +142,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),peerRaw);await peer.close();
   // Existing transactional storage must preserve the same optional metadata.
   await page.evaluate(async()=>{
-   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+   const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');
    const store=new PortfolioStorage(),m=await store.initialize(),accounts=JSON.stringify(m.accounts);
    await store.migrate(m);await store.save(m);const restored=await store.reload();
    if(JSON.stringify(restored.accounts)!==accounts)throw Error('Metadata lost in transactional storage');
