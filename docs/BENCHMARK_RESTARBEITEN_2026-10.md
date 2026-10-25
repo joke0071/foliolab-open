@@ -111,6 +111,8 @@ Evidenz: `blockchain-adapters.js NETWORKS/getCapabilities`, `market.js`, `stakin
 - [BMF Kryptowährungen](https://www.bmf.gv.at/themen/steuern/sparen-veranlagen/steuerliche-behandlung-von-kryptowaehrungen.html): Alt-/Neuvermögen und klassisches Validierungsstaking versus Kapitalüberlassung unterscheiden. Reward-Label allein ist kein steuerlicher Vorgang; keine allgemeine Steuerableitung aus Wallet-Deltas.
 - [OeKB Steuerdaten](https://www.oekb.at/kapitalmarkt-services/unser-datenangebot/fonds/steuerdaten.html): Meldungen öffentlich in my.oekb, elektronische Datenlieferung gegebenenfalls kostenpflichtig. ISIN, Meldungsart, Zeitraum/Datum und belegte Anschaffungskostenanpassung benötigt. Kein neuer Vollkatalogdownload oder ungesicherter Crawler.
 
+Zusätzliche geprüfte Fachgrenze: [BMF realisierte Wertsteigerungen](https://www.bmf.gv.at/themen/steuern/sparen-veranlagen/substanzgewinne-bzw-einkuenfte-aus-realisierten-wertsteigerungen.html) unterscheidet die steuerliche Behandlung von Anschaffungsnebenkosten bei Wertpapieren von einer wirtschaftlichen Portfolio-Kostenrechnung. Die vorhandene gebühreninklusive Journalbasis darf nicht als österreichische Steuerbasis ausgegeben werden; keine bestehenden Portfolio-Daten pauschal umstellen. [BMF Verlustausgleich](https://www.bmf.gv.at/themen/steuern/sparen-veranlagen/verluste-aus-veraeusserung-von-kapitalvermoegen-und-derivaten.html) begrenzt zulässige Verrechnung und beschreibt das Steuerreporting für Einkünfte ab 2025. Tatsächliche Brokerreports sind geeignete Belegquellen, keine Aufforderung zur eigenen automatischen Steuerrechnung. Ein öffentlicher OeKB-Einzeldatensatz war per Textextraktion nicht vollständig zugänglich; deshalb keine numerischen Fondsmeldungs-Sollwerte als verifiziert behauptet.
+
 Eine dokumentierende Jahresübersicht ist vor automatischer Steuerengine priorisiert. Brokerabzug, exakte eigene Rechnung, Schätzung und unbekannt sind getrennte Nachweisqualitäten. Für produktive Steuer-/Brokerregeln fehlen freigegebene Belege und unabhängige Fachvalidierung; offizielle allgemeine Quellen ersetzen diese nicht.
 
 ## Erneute Benchmarkentscheidung und Lizenzen
@@ -147,7 +149,7 @@ Sequenz: AT03-A → unabhängiges AT02-A → AT03-B nach Fachvertrag. AT03-C ers
 3. Dokumentationsbranch `docs/benchmark-restarbeiten-2026-10` und zugehörigen Draft-PR prüfen.
 4. Featurebranch `feature/at03-current-cash-reconciliation` und zugehörigen PR prüfen; letzten Remote-Commit/Tests/offene Schritte lesen.
 5. main vergleichen. Bereits bestätigte BENCH-Analyse nicht neu beginnen, nur Änderungen seit Basis gezielt bewerten.
-6. Nächster sicherer Schritt bei diesem ersten Dokumentationscheckpoint: AT03-A mit reproduzierbaren Referenztests starten. Keine produktiven Brokerregeln, kein Merge/Deployment.
+6. AT03-A ist inzwischen in [Feature-Draft-PR #131](https://github.com/joke0071/foliolab-open/pull/131) implementiert und in kleinen Remote-Commits gesichert. Letzter Code-/Testcheckpoint: `98c6c033dc209f6958d66626eab64bb7554fc3b3`. Vollsuite 541 Tests und lokale Chromium-Regressionen bestanden; finale Cross-Engine-/CI-Ergebnisse und exakter Wiedereinstieg stehen im Master/PR. Erst diese prüfen, keine neue Implementierung beginnen. Keine produktiven Brokerregeln, kein Merge/Deployment.
 
 Nach jeder fachlichen Scheibe prüfen/testen/committen/pushen und Issue/PR aktualisieren. WIP ist erlaubt, muss klar unvollständig heißen. Dokumentations- und Featurebranches bleiben getrennt; beide basieren auf geeignetem main. Der Feature-PR braucht keinen Merge des Dokumentations-PRs.
 
