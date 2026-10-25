@@ -29,7 +29,12 @@ export function bookedAnnualOverview(model,{year='',accountId=''}={}){
  const records=[],journalIds=new Set((model.journalEntries||[]).map(e=>e.id)),byJournal=new Map(),seen=new Set();
  for(const b of model.bookings||[]){const key=b.journalEntryId||b.id;if(!journalIds.has(key))continue;const list=byJournal.get(key)||[];list.push(b);byJournal.set(key,list);}
  function accountFor(entry,bookings){
-  const ids=new Set();for(const b of bookings){const p=model.positions.find(p=>p.id===b.positionId);if(p&&(b.accountId==null||b.accountId===p.accountId))ids.add(p.accountId);else return null;}
+  const ids=new Set();for(const b of bookings){
+   // Journal account is historical evidence; a position may have moved since.
+   const historical=new Set(entry.postings.filter(p=>p.positionId===b.positionId&&p.accountId).map(p=>p.accountId));
+   if(historical.size!==1)return null;const account=[...historical][0];
+   if(b.accountId!=null&&b.accountId!==account)return null;ids.add(account);
+  }
   if(ids.size===1)return [...ids][0];if(ids.size>1)return null;
   const assets=entry.postings.filter(p=>p.role==='asset'&&p.accountId),cash=entry.postings.filter(p=>p.role==='cash'&&p.accountId),own=new Set((assets.length?assets:cash).map(p=>p.accountId));return own.size===1?[...own][0]:null;
  }
