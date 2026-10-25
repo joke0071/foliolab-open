@@ -1,3 +1,4 @@
+import {transferValuationIssue} from './transactions.js';
 import {units,exact,mul,div} from './decimal.js';
 /** Investor cashflow sign convention: deposits are negative, withdrawals positive. */
 export function xirr(flows){
@@ -44,7 +45,7 @@ export function portfolioXirr(model,startDate,endDate){
    ['deliver_in','deliver_out','adjust','correction'].includes(b.type)||
    (['buy','sell'].includes(b.type)&&!b.journalEntryId)
   )))return null;
- if(model.bookings.some(x=>x.date>startDate&&x.date<=endDate&&['deposit','withdraw'].includes(x.type)&&!model.externalCashFlows.some(f=>f.id===x.id)))return null;
+ if(model.bookings.some(x=>x.date>startDate&&x.date<=endDate&&['deposit','withdraw'].includes(x.type)&&!x.transferMatch&&!model.externalCashFlows.some(f=>f.id===x.id)))return null;
  const first=snapshots[0],last=snapshots.at(-1);
  const flows=[{date:first.date,amount:-first.total},...model.externalCashFlows.filter(x=>x.date>first.date&&x.date<=last.date).map(x=>({date:x.date,amount:-x.amountEUR})),{date:last.date,amount:last.total}];
  return xirr(flows);
@@ -74,12 +75,13 @@ export function performanceIssues(model,startDate,endDate){
  const knownAmount=x=>['number','string'].includes(typeof x)&&String(x).trim()!==''&&Number.isFinite(Number(x));
  if(!Array.isArray(model.externalCashFlows)||(model.externalCashFlows||[]).some(f=>f.date>startDate&&f.date<=endDate&&!knownAmount(f.amountEUR)))problems.push('Externe Cashflow-Beträge fehlen');
  const shots=(model.snapshots||[]).filter(s=>s.date>=startDate&&s.date<=endDate).sort((a,b)=>a.date.localeCompare(b.date));
+ const transferIssue=transferValuationIssue(model,shots);if(transferIssue)problems.push(transferIssue);
  if(shots.length<2||shots[0].date!==startDate||shots.at(-1).date!==endDate)problems.push('Start- oder Endbewertung fehlt');
  if(shots.some(s=>!knownAmount(s.total)))problems.push('Bewertungsbetrag fehlt');
  if(shots.some(s=>!['observed','manual'].includes(s.valuationStatus)))problems.push('Ungeprüfte oder unvollständige Stichtage');
  if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&e.status==='unresolved-clearing'))problems.push('Kauf oder Verkauf ohne geklärtes Verrechnungskonto');
  if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&(['deliver_in','deliver_out','adjust','correction'].includes(b.type)||(['buy','sell'].includes(b.type)&&!b.journalEntryId))))problems.push('Unbewertete Einlieferung, Korrektur oder historische Buchung');
- if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&['deposit','withdraw'].includes(b.type)&&!(model.externalCashFlows||[]).some(f=>f.id===b.id)))problems.push('Externe Cashflows unvollständig');
+ if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&['deposit','withdraw'].includes(b.type)&&!b.transferMatch&&!(model.externalCashFlows||[]).some(f=>f.id===b.id)))problems.push('Externe Cashflows unvollständig');
  return [...new Set(problems)];
 }
 /**

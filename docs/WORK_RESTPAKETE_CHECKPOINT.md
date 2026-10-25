@@ -5,8 +5,8 @@ Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integ
 | Paket | Status | Nächster Schritt |
 | --- | --- | --- |
 | FLH01 | ABGESCHLOSSEN: #137, Merge 91f83909e6453de40ef7a4be21477eb7864e01e5 | CI 40189609001 vollständig grün, 604/604 + Chromium/Firefox/WebKit |
-| IndexedDB B | TEILWEISE: Risikovertrag und UI-Delta implementiert | Tests/CI, dann sichere Integration |
-| AT03-B | NICHT BEGONNEN | Nach Phase B |
+| IndexedDB B | ABGESCHLOSSEN: #138, Merge c422dbd8e532127f738b24e07a9e5092fd865d84 | CI 40190283807 vollständig grün, 604/604 + alle Engines; technische Recovery erhalten |
+| AT03-B | TEILWEISE: #139, Vorschau/Kern/UI und lokale Gates implementiert | Vollständige CI, Review, dann Integration |
 | AT05-A | NICHT BEGONNEN | Nach AT03-B |
 | AT01 | NICHT BEGONNEN | Nach AT05-A |
 | AT04 | NICHT BEGONNEN | Nach AT01 |
@@ -26,4 +26,4 @@ Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden
 Keine echten Nutzerbackups verwendet. Android/Safari-Hardware, Drive-Neugerät, Crash/Eviction bleiben reale Gates #44. AT03-C/AT05-B/#52 weiterhin durch Realbelege blockiert.
 
 ## Exakt nächste Aktion
-FLH01 ist vollständig abgenommen und als #137 gemergt (91f83909e6453de40ef7a4be21477eb7864e01e5). Phase B in #138 auf diesem main: Risikovertrag erstellt, normale Speicherwahl/Rückwechsel-UI entfernt, notwendige technische Migration/Recovery unverändert. 604/604 und gezielte lokale Chromium-Speicher-/Restore-/FLH01-Gates bestanden. Vollständige CI auf dem letzten Codecheckpoint prüfen, nur konkrete Fehler korrigieren; dann nach Abnahme mergen. Erst danach AT03-B beginnen. Kein Gesamtabschluss/Final-Deployment behauptet.
+FLH01 (#137/91f8390) und sichere IndexedDB-Phase B (#138/c422dbd) sind vollständig getestet integriert. AT03-B in #139: Fachvertrag, bestehender Transaktionskern, optionale validierte Buchungsmetadaten, Vorschau/Bestätigung/Undo/Ownership/Renditegrenzen implementiert. 617/617 sowie lokale Chromium-UI-/Backup-/CAS-/Finanzregressionen bestanden. Vollständige CI am letzten Remote-Checkpoint prüfen, konkrete Fehler korrigieren und nach Abnahme integrieren. Erst danach AT05-A. Kein Gesamtabschluss/Final-Deployment behauptet.
