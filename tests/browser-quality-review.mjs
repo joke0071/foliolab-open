@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';import {readFile,mkdir} from 'node:fs/promises';import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
+for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
+ const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true}),context=await browser.newContext(),page=await context.newPage();
+ try{
+  await page.addInitScript({content:axe});await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
+  const setup=await page.evaluate(async()=>{
+   const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const {acceptHistory,historyPreview,checkpointHistory}=await import('/src/wallet-history-state.js');const {replayWalletHistory}=await import('/src/wallet-history-core.js');const {event,stream,NOW}=await import('/tests/wallet-history-fixtures.mjs');
+   let m=blankModel();m.settings.autoRefresh=false;const provider=createProvider({name:'Synthetic Review Provider'});m.providers.push(provider);const a=createAccount({providerId:provider.id,name:'Wallet account',type:'wallet'},m),b=createAccount({providerId:provider.id,name:'Other custody',type:'securities'},m);m.accounts.push(a,b);
+   const w=createPosition({providerId:provider.id,accountId:a.id,name:'Synthetic ETH',kind:'crypto',symbol:'ETH',coinId:'ethereum',quantity:5,price:0,wallet:{enabled:true,chain:'evm',chainId:1,address:'0x1111111111111111111111111111111111111111'}},m),old=createPosition({providerId:provider.id,accountId:b.id,name:'Old ETF',kind:'etf',quantity:1,price:100,quoteAsOf:'2026-01-01'},m),manual=createPosition({providerId:provider.id,accountId:b.id,name:'Intentional manual price',kind:'etf',quantity:1,price:100},m);old.quoteAsOf='2026-01-01';m.positions.push(w,old,manual);
+   m=acceptHistory(m,historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream({coverage:{status:'partial',fromBlock:'0',toBlock:'10',tipHash:'block-10',source:'fixture'}})]}),issues:['archive-gap']},{id:'wallet-history:'+w.id,chain:'eth',walletKey:w.id,acceptedAt:NOW}));m=checkpointHistory(m,{id:'wallet-history:'+w.id,chain:'eth',walletKey:w.id,provider:'fixture.test',filter:'all',updatedAt:NOW});
+   const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();return {wallet:w.id,other:b.id};
+  });
+  await page.goto('http://127.0.0.1:4173/');const state=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}}),before=await state();
+  for(const width of [320,390,430,768,1440]){
+   await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();
+   assert.match(await page.locator('[data-filter="__review"]').innerText(),/\(2\)/);assert.equal(await page.locator('#positionList .position-entry').count(),2);
+   await page.locator('#qualityReviewKind').selectOption('history');assert.equal(await page.locator('#positionList .position-entry').count(),1);
+   await page.locator('#qualityReviewAccount').selectOption(setup.other);assert.equal(await page.locator('#positionList .position-entry').count(),0);
+   await page.locator('[data-action="reset-quality-review"]').click();assert.equal(await page.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await page.locator('#qualityReviewAccount').inputValue(),'');assert.equal(await page.locator('#positionList .position-entry').count(),2);
+   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#qualityReviewTools',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mkdir('artifacts/gates/quality',{recursive:true});await page.screenshot({path:'artifacts/gates/quality/'+engine+'-'+width+'.png'});
+   const action=page.locator('#positionList [data-action="wallet-history"]');assert.equal(await action.count(),1);await action.click();await page.locator('#walletHistoryDialog').waitFor({state:'visible'});await page.keyboard.press('Escape');await page.locator('#walletHistoryDialog').waitFor({state:'hidden'});assert.ok(await action.evaluate(el=>document.activeElement===el));
+  }
+  assert.deepEqual(await state(),before,'review/filter/history viewing must not change portfolio or revision');
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();for(const p of m.positions){p.price=100;p.priceExact='100';p.quoteAsOf=new Date().toISOString().slice(0,10);}m.walletHistory.pending=[];for(const session of m.walletHistory.sessions){session.issues=[];session.streams.forEach(s=>{s.opening={quantityBaseUnits:'0',beforeBlock:'0',source:'synthetic-verified-genesis'};s.coverage.status='verified';});}await s.save(m);s.close();});
+  await page.reload();await page.locator('#sidebarNav [data-page="positions"]').click();assert.equal(await page.locator('[data-filter="__review"]').count(),0,JSON.stringify(await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const {positionQualityReview}=await import('/src/position-quality-review.js');const s=new PortfolioStorage(),m=await s.initialize();s.close();return {issues:positionQualityReview(m),history:m.walletHistory};})));
+  console.log('QUALITY '+engine+': per-position dedupe, category/account/reset, 5 widths/Axe/history action/focus, no writes, repair disappearance PASS');
+ }finally{await context.close();await browser.close();}
+}

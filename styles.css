@@ -1023,3 +1023,6 @@
 /* Keep the native select interaction while bounding WebKit's anonymous text box. */
 #bookingIncome select{-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#4d6756 50%),linear-gradient(135deg,#4d6756 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
 @media(forced-colors:active){#bookingIncome select{-webkit-appearance:menulist;appearance:auto;background-image:none}}
+
+#qualityReviewTools select{min-width:0;max-width:100%;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#4d6756 50%),linear-gradient(135deg,#4d6756 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}#qualityReviewTools .field{min-width:0}.quality-review-actions{margin:8px 0;gap:7px}.quality-review-actions .btn{white-space:normal}#qualityReviewTools p{overflow-wrap:anywhere}
+@media(forced-colors:active){#qualityReviewTools select{-webkit-appearance:menulist;appearance:auto;background-image:none}}
