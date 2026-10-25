@@ -90,12 +90,12 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
    await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
   };
   await openBackDraft();let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};
-  p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
+  p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});if(engine==='webkit')await p.goBack({timeout:2500}).catch(()=>{});else await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
   assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
   p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
   await openBackDraft();let acceptedBack=false;
   p.once('dialog',async d=>{assert.equal(d.type(),'beforeunload');acceptedBack=true;await d.accept();});
-  await Promise.all([p.waitForURL(previousDoc.href),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(acceptedBack);assert.equal(p.url(),previousDoc.href,'Confirmed discard can navigate');
+  await Promise.all([p.waitForURL(previousDoc.href),engine==='webkit'?p.goBack():p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(acceptedBack);assert.equal(p.url(),previousDoc.href,'Confirmed discard can navigate');
   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic saved');await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);assert.equal(await unloadSignal(),false,'Successful save clears unload protection');
   let cleanWarnings=0;const countClean=async d=>{cleanWarnings++;await d.accept();};p.on('dialog',countClean);await p.reload();p.off('dialog',countClean);assert.equal(cleanWarnings,0);
   console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
