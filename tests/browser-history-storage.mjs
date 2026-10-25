@@ -1,8 +1,9 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
 for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true});
  try{
-  const page=await browser.newPage();await page.goto('http://127.0.0.1:4173/tests/');
+  const page=await legacyPage(browser);await page.goto('http://127.0.0.1:4173/tests/');
   const r=await page.evaluate(async()=>{
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const {blankModel,backup,safeImport}=await import('/src/model.js');
    const {acceptHistory,historyPreview,checkpointHistory}=await import('/src/wallet-history-state.js');const {replayWalletHistory}=await import('/src/wallet-history-core.js');const {event,stream,NOW}=await import('/tests/wallet-history-fixtures.mjs');

@@ -1885,7 +1885,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
 $('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
 $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
 initNav();initEvents();installCredentialVisibility();
-$('portfolioStorageState').textContent=portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
+$('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
 $('revertFromIDB').classList.toggle('hidden',!portfolioStore.isIndexedDB);
 // Keep a user's draft visible, but block stale writes until an explicit reload.

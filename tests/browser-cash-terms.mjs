@@ -1,6 +1,5 @@
 import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
 const expectedCache=readFileSync('sw.js','utf8').match(/const CACHE='([^']+)'/)[1];
 import {chromium,firefox,webkit} from 'playwright';
 import {spawn} from 'node:child_process';

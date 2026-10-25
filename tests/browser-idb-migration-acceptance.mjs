@@ -48,6 +48,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
    page.on('dialog',async d=>d.type()==='prompt'?d.accept('migration-test-password'):d.accept());
    const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#migrateToIDB').click()]);
    const bytes=await readFile(await download.path(),'utf8');
+   await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
    let decoded=JSON.parse(bytes);
    if(encrypted){
     assert.ok(!bytes.includes('SYNTHETIC_MIGRATION_KEY'));
@@ -59,7 +60,6 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     assert.ok(!bytes.includes('SYNTHETIC_MIGRATION_KEY'));assert.ok(!bytes.includes('SYNTHETIC_PRIVATE_RPC'));
     assert.deepEqual(decoded,expected.portable);
    }
-   await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
    const actual=await page.evaluate(async()=>{
     const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
     const {backup}=await import('/src/model.js');

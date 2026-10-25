@@ -1,3 +1,4 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {createRequire} from 'node:module';
@@ -6,7 +7,7 @@ import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url);
 const axeSource=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const ctx=await browser.newContext({viewport:{width:390,height:680},isMobile:true,hasTouch:true,deviceScaleFactor:2});
+const ctx=await legacyContext(browser,{viewport:{width:390,height:680},isMobile:true,hasTouch:true,deviceScaleFactor:2});
 const page=await ctx.newPage();
 try{
  await page.goto('http://127.0.0.1:4173/');

@@ -13,3 +13,19 @@ test('Unavailable active IndexedDB never silently writes an old localStorage por
  assert.equal(writes,0,'No legacy write or silent fallback is permitted');
  assert.equal(values.get(MODE_KEY),MODE_VALUE);
 });
+
+test('New installation requires IndexedDB; unavailable startup never writes a local portfolio',async()=>{
+ const values=new Map(),writes=[];
+ const storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>{writes.push(k);values.set(k,v);},removeItem:k=>values.delete(k)};
+ const controller=new PortfolioStorage(storage);
+ await assert.rejects(()=>controller.initialize(),/IndexedDB/);
+ assert.equal(controller.isIndexedDB,true);
+ await assert.rejects(()=>controller.save(blankModel()),/IndexedDB/);
+ assert.deepEqual(writes,[]);assert.equal(values.size,0);
+});
+test('Unknown storage markers fail closed without normalizing or rewriting legacy bytes',async()=>{
+ const raw=JSON.stringify(blankModel()),values=new Map([[MODE_KEY,'future-version'],['foliolab-open-v1',raw]]);
+ const storage={getItem:k=>values.get(k)??null,setItem:()=>assert.fail('unexpected write'),removeItem:()=>assert.fail('unexpected removal')};
+ await assert.rejects(()=>new PortfolioStorage(storage).initialize(),/Unbekannter Speichermodus/);
+ assert.equal(values.get('foliolab-open-v1'),raw);assert.equal(values.get(MODE_KEY),'future-version');
+});

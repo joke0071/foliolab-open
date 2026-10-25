@@ -12,8 +12,9 @@ test('Stale local writer cannot overwrite a confirmed save; reload renews compar
 });
 test('Stale local mode cannot write after another tab migrates to IndexedDB',async()=>{
  const storage=memory(),controller=new PortfolioStorage(storage),m=await controller.initialize();
+ const before=storage.getItem(STORE_KEY);
  storage.setItem(MODE_KEY,MODE_VALUE);
- await assert.rejects(()=>controller.save(m),/Speichermodus|geändert/);assert.equal(JSON.parse(storage.getItem(STORE_KEY)).version,3);
+ await assert.rejects(()=>controller.save(m),/Speichermodus|geändert/);assert.equal(storage.getItem(STORE_KEY),before);
 });
 test('Quota failure preserves old bytes and leaves retry possible',async()=>{
  const storage=memory(),controller=new PortfolioStorage(storage),m=await controller.initialize();await controller.save(m);

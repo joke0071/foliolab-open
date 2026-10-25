@@ -97,7 +97,7 @@ async function testQuotaBeforeCommit(){
  }finally{await context.close();}
 }
 async function testLegacyFormats(){
- for(const version of [1,2]){
+ for(const version of [1,2,3]){
   const context=await browser.newContext(),page=await context.newPage();
   try{
    await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
@@ -106,7 +106,7 @@ async function testLegacyFormats(){
     const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
     const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
     const old=blankModel();
-    old.version=version;old.providers.push(createProvider({name:'Legacy v'+version}));
+    old.version=version;old.settings.eodhdKey='SYNTHETIC_V'+version;old.providers.push(createProvider({name:'Legacy v'+version}));
     if(version===1)delete old.accounts;
     localStorage.setItem(STORE_KEY,JSON.stringify(old));
     const raw=localStorage.getItem(STORE_KEY);
@@ -117,21 +117,53 @@ async function testLegacyFormats(){
     const record=await readPortfolioRecord(db);
     db.close();service.close();
     return {mode:localStorage.getItem(MODE_KEY),bytesPreserved:localStorage.getItem(STORE_KEY)===raw,
-     revision:record.revision,version:JSON.parse(record.raw).version,
+     revision:record.revision,version:JSON.parse(record.raw).version,key:record.settings.eodhdKey,
      accounts:JSON.parse(record.raw).accounts.length,name:JSON.parse(record.raw).providers[0].name};
    },version);
    assert.equal(result.mode,'idb-v1');
    assert.equal(result.bytesPreserved,true);
    assert.equal(result.revision,1);
    assert.equal(result.version,3);
+   assert.equal(result.key,'SYNTHETIC_V'+version);
    assert.ok(result.accounts>=0);
    assert.equal(result.name,'Legacy v'+version);
    if(version===1)assert.ok(result.accounts>=1);
   }finally{await context.close();}
  }
 }
+async function testVerifiedCutover(){
+ for(const fault of ['portfolio','settings','source-during-commit']){
+  const context=await browser.newContext(),page=await context.newPage();
+  try{
+   await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
+   const r=await page.evaluate(async fault=>{
+    const {blankModel,createProvider,persist,STORE_KEY}=await import('/src/model.js');
+    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
+    const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+    const m=blankModel();m.providers.push(createProvider({name:'Confirmed source'}));m.settings.autoRefresh=false;persist(m);
+    const source=localStorage.getItem(STORE_KEY),s=new PortfolioStorage(),loaded=await s.initialize();
+    const put=IDBObjectStore.prototype.put;
+    IDBObjectStore.prototype.put=function(record,key){
+     if(fault==='portfolio'){const data=JSON.parse(record.raw);data.providers[0].name='Altered';record={...record,raw:JSON.stringify(data)};}
+     if(fault==='settings')record={...record,settings:{...record.settings,eodhdKey:'SYNTHETIC_ALTERED'}};
+     if(fault==='source-during-commit')localStorage.setItem(STORE_KEY,source+' ');
+     return put.call(this,record,key);
+    };
+    let rejected=false;try{await s.migrate(loaded);}catch{rejected=true;}finally{IDBObjectStore.prototype.put=put;s.close();}
+    const db=await openPortfolioDB(),before=await readPortfolioRecord(db);db.close();
+    const modeBeforeRetry=localStorage.getItem(MODE_KEY);
+    const retry=new PortfolioStorage(),fresh=await retry.initialize();let retryRejected=false;
+    try{await retry.migrate(fresh);}catch{retryRejected=true;}finally{retry.close();}
+    const check=await openPortfolioDB(),after=await readPortfolioRecord(check);check.close();
+    return {rejected,mode:modeBeforeRetry,source:localStorage.getItem(STORE_KEY)===source+(fault==='source-during-commit'?' ':''),retryRejected,unchanged:JSON.stringify(before)===JSON.stringify(after)};
+   },fault);
+   assert.equal(r.rejected,true,fault);assert.equal(r.mode,null,fault);assert.equal(r.source,true,fault);
+   if(fault!=='source-during-commit'){assert.equal(r.retryRejected,true,fault);assert.equal(r.unchanged,true,fault);}
+  }finally{await context.close();}
+ }
+}
 try{
  await testStaleSource();await testInterruptedMarker();await testQuotaBeforeCommit();
- await testLegacyFormats();
- console.log('IDB MIGRATION RESILIENCE: stale bytes, interrupted marker retry, quota rollback, v1/v2 normalization PASS');
+ await testLegacyFormats();await testVerifiedCutover();
+ console.log('IDB MIGRATION RESILIENCE: stale bytes, interrupted marker retry, quota rollback, v1/v2/v3 keys, full readback/source cutover verification PASS');
 }finally{await browser.close();}

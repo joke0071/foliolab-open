@@ -1,7 +1,8 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const context=await browser.newContext(),a=await context.newPage(),b=await context.newPage();
+const context=await legacyContext(browser),a=await context.newPage(),b=await context.newPage();
 try{
  await a.goto('http://127.0.0.1:4173/');
  await a.evaluate(async()=>{
