@@ -80,7 +80,9 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false,'overflow '+width);
    }
    await page.addScriptTag({url:'http://127.0.0.1:4173/node_modules/axe-core/axe.min.js'});
-   assert.deepEqual(await page.evaluate(async()=> (await axe.run(document.getElementById('storageMigrationSetup'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);
+   assert.deepEqual(await page.evaluate(async()=> (await axe.run(document.getElementById('backupStatus').closest('.panel'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);
+   assert.equal(await page.locator('#storageMigrationSetup').isVisible(),false);
+   assert.equal(await page.locator('#revertFromIDB').count(),0);
    console.log(engine+': migration '+(encrypted?'encrypted opt-in':'plain secret-free')+' download/cancel/content/financial/history/settings/mobile/A11y PASS');
   }finally{await context.close();}
  }
