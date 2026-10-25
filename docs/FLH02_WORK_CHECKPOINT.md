@@ -7,7 +7,7 @@ Binding specification: Library FLH02 version 11, including A–E and sections 7.
 - A: PR #143, accepted v171. Main FLH02: [PR #144](https://github.com/joke0071/foliolab-open/pull/144), merge `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`.
 - Pre-live checkpoint: [PR #145](https://github.com/joke0071/foliolab-open/pull/145), merge `eb737df8979c7708d678de8045bd2b48db9e8e2f`, v175 accepted.
 - Final FX correction: [PR #146](https://github.com/joke0071/foliolab-open/pull/146), merge **`25f5dcade24b54caf567e05db698c013c777a637`**, actual tested/deployed/live-accepted v176 main.
-- Current documentation branch: `docs/flh02-v176-acceptance`, commit is this file's containing commit; corresponding PR and final exact main/run links are in its GitHub description. It changes only documentation and evidence; accepted app bytes remain identical.
+- Current documentation branch: `docs/flh02-v176-acceptance`, [PR #147](https://github.com/joke0071/foliolab-open/pull/147), commit is this file's containing commit; corresponding PR and final exact main/run links are in its GitHub description. It changes only documentation and evidence; accepted app bytes remain identical.
 - Live: https://joke0071.github.io/foliolab-open/ , active `foliolab-open-v176`.
 
 | Package | Final status |
@@ -43,4 +43,4 @@ At creation, only this documentation/evidence PR CI/merge and the subsequent fin
 
 ## Exact resumption if interrupted during closeout
 
-> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive work is merged and v176 is live accepted at 25f5dcade24b54caf567e05db698c013c777a637, workflow 40220923062 green. Only finish the docs/flh02-v176-acceptance documentation PR: if already merged with subsequent main CI/Pages green, closure is complete; otherwise check current CI, merge green/conflict-free under existing authorization, then verify final main CI/Pages and unchanged v176 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and PR/CI links.
+> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive work is merged and v176 is live accepted at 25f5dcade24b54caf567e05db698c013c777a637, workflow 40220923062 green. Only finish PR #147 (docs/flh02-v176-acceptance): if already merged with subsequent main CI/Pages green, closure is complete; otherwise check current CI, merge green/conflict-free under existing authorization, then verify final main CI/Pages and unchanged v176 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and PR/CI links.

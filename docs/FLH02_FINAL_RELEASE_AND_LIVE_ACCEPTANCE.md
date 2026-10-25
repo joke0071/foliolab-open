@@ -9,7 +9,7 @@ FLH02 specification version 11, including A–E and 7.11–7.14, is implemented,
 - Resumable pre-live checkpoint [PR #145](https://github.com/joke0071/foliolab-open/pull/145), merge `eb737df8979c7708d678de8045bd2b48db9e8e2f`, v175 live accepted.
 - Final keyless foreign-currency CSV/retained-history FX and mini-chart correction [PR #146](https://github.com/joke0071/foliolab-open/pull/146), merge `25f5dcade24b54caf567e05db698c013c777a637`.
 - Actual v176 tested/deployed/live-accepted main SHA: `25f5dcade24b54caf567e05db698c013c777a637`. [Main workflow 40220923062](https://github.com/joke0071/foliolab-open/actions/runs/40220923062): test, cross-engine and Pages deployment ALL PASS.
-- Final documentation branch `docs/flh02-v176-acceptance` changes only this report, checkpoint and public-hash/synthetic evidence. Its merge/main CI must be green; final exact main SHA/run are recorded in its PR description. Application bytes remain the accepted v176 bytes.
+- Final documentation [PR #147](https://github.com/joke0071/foliolab-open/pull/147), branch `docs/flh02-v176-acceptance`, changes only this report, checkpoint and public-hash/synthetic evidence. Its merge/main CI must be green; final exact main SHA/run are recorded in its PR description. Application bytes remain the accepted v176 bytes.
 
 ## Delivered behavior
 
