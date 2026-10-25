@@ -102,6 +102,7 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
+function recoveryControlAllowed(control){return control.matches('[data-page],.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  document.body.classList.toggle('portfolio-unavailable',unavailable);
@@ -121,8 +122,8 @@ function syncPortfolioState(){
    }
   }
   showRecoveryNotice();
-  document.querySelectorAll('.page button,.page input,.page select,.page textarea').forEach(control=>{
-   if(control.id!=='backupFile'&&!control.disabled){control.dataset.recoveryDisabled='true';control.disabled=true;}
+  document.querySelectorAll('.page button,.page input,.page select,.page textarea,dialog[open] button,dialog[open] input,dialog[open] select,dialog[open] textarea').forEach(control=>{
+   if(!recoveryControlAllowed(control)&&!control.disabled){control.dataset.recoveryDisabled='true';control.disabled=true;}
   });
  }else{
   $('totalValue').textContent=money(totalEUR(model));
@@ -242,7 +243,7 @@ function renderHistory(){
  if(page==='history')$('pageDescription').textContent=PAGE_DESCRIPTIONS.history;
  const emptyHistory=!wealth.samples.length;
  $('historySourceStatus').hidden=emptyHistory;
- $('historyPage').querySelector('.history-controls').classList.toggle('hidden',emptyHistory);
+ $('chartPeriods').classList.toggle('hidden',emptyHistory);
  $('historyChart').classList.toggle('is-empty',emptyHistory);
  const basis=$('historyBasis');basis.parentElement.hidden=!(wealth.projection.observations.length&&wealth.projection.days.some(d=>d.partialEURExact!==null));
  const missing=[...new Set(wealth.projection.days.flatMap(d=>d.missing).map(m=>m.reason))];
@@ -1656,7 +1657,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
    feedback.focus({preventScroll:true});
    feedback.scrollIntoView({block:'nearest'});
   }
-  finally{editorSubmitting=false;button.disabled=false;}
+  finally{editorSubmitting=false;button.disabled=Boolean(loadFailure);}
  });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;positionLimit=100;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;positionLimit=100;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
@@ -1951,7 +1952,7 @@ $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
  if(!loadFailure)return;
  const control=event.target.closest('button,input,select,textarea,form');
- if(!control||control.matches('[data-page]')||['downloadRaw','recoverBackup','backupFile','installButton'].includes(control.id))return;
+ if(!control||recoveryControlAllowed(control))return;
  event.preventDefault();event.stopImmediatePropagation();
 },true);
 initNav();initEvents();installCredentialVisibility();

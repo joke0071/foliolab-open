@@ -89,13 +89,20 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
   // E: valid empty versus existing positions with missing evidence, never zero curves.
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{blankModel}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;await s.save(m);s.close();},base);
-  await p.reload();await nav('history');assert.equal(await p.locator('#historyChart .chart-plot').count(),0);assert.equal(await p.locator('.history-controls').isVisible(),false);assert.equal((await p.locator('#historyPage').innerText()).split('Historische Werte noch nicht belegbar').length-1,0);
+  await p.reload();await nav('history');assert.equal(await p.locator('#historyChart .chart-plot').count(),0);assert.equal(await p.locator('#chartPeriods').isVisible(),false);assert.equal(await p.locator('#historyCalendarDisclosure > summary').isVisible(),true);assert.equal((await p.locator('#historyPage').innerText()).split('Historische Werte noch nicht belegbar').length-1,0);
   await p.locator('#historyChart [data-action="start-wizard"]').click();assert.ok(await p.locator('#wizardDialog').isVisible());await p.keyboard.press('Escape');
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{blankModel,createProvider,createPosition}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'Synthetic'}));m.positions.push(createPosition({providerId:'p',name:'Unproven ETF',symbol:'UNK',kind:'etf',quantity:2,price:100},m));await s.save(m);s.close();},base);
   await p.reload();await nav('history');assert.match(await p.locator('#historyChart').innerText(),/Bestandsnachweise, Tageskurse und EUR-Wechselkurse/);
   for(const [width,height] of [[320,360],[390,844],[768,500],[1440,900]]){await p.setViewportSize({width,height});await scan('empty history '+width);}
   await p.locator('#historyChart [data-action="history-positions"]').click();assert.ok(await p.locator('#positionsPage').isVisible());
   console.log(engine+': E contextual empty/missing-history actions, compact layout/no fake curves/full axe PASS');
+  // A runtime read failure must not trap an already-open dirty modal over rescue.
+  await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Must not overwrite');
+  await p.evaluate(async base=>{const {openPortfolioDB}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();await new Promise((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put({schemaVersion:1,revision:99,raw:'{runtime-unreadable',settings:{},deleted:false,updatedAt:'2026-10-25'},'portfolio');tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);});db.close();},base);
+  const runtimeOriginal=await read();await p.locator('#saveDialog').click();await p.locator('#downloadRaw').waitFor({state:'attached'});
+  assert.ok(await p.locator('#saveDialog').isDisabled());assert.ok(await p.locator('#cancelDialog').isEnabled());
+  p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.ok(await p.locator('#downloadRaw').isVisible());assert.deepEqual(await read(),runtimeOriginal);assert.equal(await unloadSignal(),false);
+  console.log(engine+': A runtime failed save/read retains bytes, blocks writer and preserves modal escape/rescue PASS');
   assert.deepEqual(errors,[]);
  }finally{await ctx.close();await browser.close();}
 }
