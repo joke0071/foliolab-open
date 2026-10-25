@@ -93,6 +93,7 @@ jobs:
           node tests/browser-account-opening.mjs
           node tests/browser-cash-reconciliation.mjs
           node tests/browser-cash-terms.mjs
+          node tests/browser-interest-scenario.mjs
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
           node tests/browser-corrupt-backup-restore.mjs
@@ -166,6 +167,7 @@ jobs:
           node tests/browser-cross-engine.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
+          INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
           node tests/browser-atomic-storage-cross-engine.mjs
           IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
           IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
