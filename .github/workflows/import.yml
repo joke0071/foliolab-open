@@ -115,6 +115,7 @@ jobs:
           node tests/browser-position-search.mjs
           node tests/browser-position-details.mjs
           node tests/browser-asset-wizard.mjs
+          node tests/browser-annual-overview.mjs
           node tests/browser-transfer-matching.mjs
           node tests/browser-booking-history.mjs
           node tests/browser-booking-filters.mjs
@@ -166,6 +167,7 @@ jobs:
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
           TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
           FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
           node tests/browser-cross-engine.mjs

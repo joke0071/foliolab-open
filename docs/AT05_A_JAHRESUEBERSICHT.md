@@ -17,3 +17,11 @@ Vorhandenes Einklappelement, Filter Jahr/Konto, vier Betragssummen und aufklappb
 Tests: Jahresrand, mehrere Konten, Dividende/Zinsen/Trade- und separate Kosten, gemeinsame Posting-Identität, unbekannte Werte, Fremdwährung nur bei tatsächlich erfasstem EUR-Buchwert, alte Backups/Restore, portable Secret-Canaries und verschlüsselter Restore. Alle Betrachtungen ohne Portfolioänderung. Browser: fünf Breiten, Filter/Reset, Detailbelege, Axe und Nullmutationen; vollständige CI vor Integration.
 
 Status: Vertrag erstellt. Nächster Schritt: exakte lesende Projektion in booking-insights.js, Referenztests, dann kleine UI-Erweiterung.
+
+## Lokaler Codecheckpoint
+
+Lesende exakte Projektion und vorhandenes Einklappelement mit Jahr-/Kontofilter, Reset, vier Summen, sichtbaren Betragslücken und paginierten aufklappbaren Einzelbelegen implementiert. Kein zusätzlicher Export oder Persistenzpfad. Aktuelle Fremdwährungskurse werden nicht auf historische Erträge angewendet. Eingehende Überweisungen/Verkäufe/Rewards/Korrekturen werden nicht zu Dividenden/Zinsen umgedeutet.
+
+626/626 Unit-Tests und Syntax bestanden, darunter neun neue Finanzreferenzen: Jahresrand/Konten, Trade- und separate Kosten, mehrfache Sicht desselben Postings, kein Dedupe unterschiedlicher Belege anhand gleicher Beträge, unbekannte Kosten/EUR-Werte, unklare Konten, widersprüchliche Datierung, historische FX-Buchwerte, alte portable Backups und Secret-Canary. Lokales Chromium: fünf Breiten, Filter/Reset/Belegdetails, Axe 0, keine Änderung selbst der IDB-Revision und verschlüsselter kompletter Restore inkl. freiwilligem synthetischem API-Key. Bestehende Buchungsfilter-/Transferregressionen bestanden. Ein tatsächlicher Kontrastfehler der wiederverwendeten kleinen Detailbezeichnungen wurde ausschließlich in den neuen Jahresbelegen auf die vorhandene dunklere Textfarbe korrigiert. Keine globale Styleänderung oder abgeschwächte A11y-Prüfung.
+
+Exakt nächster Schritt: geprüften Code-Tree remote sichern; vollständige Chromium-/Firefox-/WebKit-CI vor Integration. Kein steuerlicher Abnahmeanspruch, Stufe B und #52 weiter blockiert.

@@ -1011,3 +1011,6 @@
 @media(max-width:767px){.booking-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-main>time{grid-column:1}.booking-main>strong:last-child{text-align:left;grid-column:1/-1}}
 
 .transfer-candidate{align-items:flex-start;margin:12px 0;min-height:32px}.transfer-candidate span{min-width:0;overflow-wrap:anywhere}.transfer-candidate input{flex-shrink:0}.transfer-candidate + .transfer-candidate{border-top:1px solid #e8efe8;padding-top:12px}
+
+.annual-record{padding:8px 0;border-bottom:1px solid #e8efe8}.annual-record summary{min-height:36px;padding:8px 0;cursor:pointer;overflow-wrap:anywhere}.annual-record dd{overflow-wrap:anywhere}
+.annual-record .holding-facts dt{color:#4d6756;font-size:12px}
