@@ -1,3 +1,5 @@
+> Historical v171/A release record. For the later combined FLH02 release, see [FLH02_FINAL_RELEASE_AND_LIVE_ACCEPTANCE.md](FLH02_FINAL_RELEASE_AND_LIVE_ACCEPTANCE.md) and [FLH02_WORK_CHECKPOINT.md](FLH02_WORK_CHECKPOINT.md). Status statements below describe the A release date only.
+
 # FLH02-A production acceptance — partial FLH02 delivery
 
 **Only A is released. FLH02 as a whole is NOT complete.** B/C1 are draft foundations; C2/C3/D/E/Drive remain open. Follow the current foundation-branch checkpoint, not the older main checkpoint.
