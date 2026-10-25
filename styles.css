@@ -1018,3 +1018,5 @@
 #bookingIncome select{min-width:0;max-width:100%;width:100%}
 .annual-record summary{white-space:normal;word-break:break-word}
 .annual-record .holding-facts>div,.annual-record dd{min-width:0;max-width:100%;word-break:break-word}
+/* Native WebKit selects can paint a long selected label beyond their box. */
+#bookingIncome select{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
