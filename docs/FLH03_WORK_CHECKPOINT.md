@@ -44,10 +44,11 @@ User specification: Library `FLH03_Broker_Exchange_Import_Historien_Rekonstrukti
 
 ## Actual verification so far
 
-- Baseline regression after implementation: `npm test` **667/667 pass**, including nine new independent-reference batch tests. `npm run check` passed before final event identity guard; final syntax re-run required.
-- New Chromium browser test: actual fresh IndexedDB initialization, 3 events + 1 overlap, exact `90.123456789012345678`, pure preview, one revision commit, undo cancellation, exact undo including snapshot, reimport/reload and competing CAS (one winner); all six widths and axe excluding color contrast passed. Existing palette unchanged; no claim of new contrast audit.
+- Baseline regression after implementation: `npm test` **668/668 pass**, including ten new independent-reference batch tests. `npm run check` passed again with the final event identity guard.
+- New Chromium browser test: actual fresh IndexedDB initialization, 3 events + 1 overlap, exact `90.123456789012345678`, pure preview, one revision commit, undo cancellation, exact undo including snapshot, reimport/reload and competing CAS (one winner); all six widths and full axe including contrast passed; existing palette unchanged.
 - First local browser launch used incompatible preinstalled Playwright; installed CI-pinned 1.56.1. First server attempt was unavailable across tool sessions; corrected with server/test in same shell. First axe injection hit CSP; corrected by evaluating test code through automation without changing app CSP. These were test setup failures, not waived gates.
-- Firefox/WebKit, existing regressions, PR CI, review, merge/deployment and actual live checks: PENDING at this initial checkpoint. No release success inferred.
+- Existing Chromium CSV review/focus, p0 import quota/abort/CAS/restore, flatex custody/atomic replay/backfill, concurrent backup import, settings backup and PWA update regressions passed. Ten new unit tests include independent 999/1058 EUR FLH02 projection reference values and encrypted full-backup identity/secret-opt-in restore. A new test initially omitted required empty Drive preferences; the fixture was corrected without application changes.
+- Local Firefox launch did not complete in this environment; no local Firefox/WebKit pass claimed. The dedicated Firefox/WebKit PR CI is the engine gate. PR [#150](https://github.com/joke0071/foliolab-open/pull/150), initial head `99c26e1d0879068323ca09924db4709f24efca76`, [CI 40226240637](https://github.com/joke0071/foliolab-open/actions/runs/40226240637). Final-head CI/review/merge/deployment and live checks still pending. No release success inferred.
 
 ## Resume / exact next safe action
 

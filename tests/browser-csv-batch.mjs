@@ -36,11 +36,13 @@ for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
   await p.evaluate(readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')); 
   for(const width of [320,390,430,768,1024,1440]){
    await p.setViewportSize({width,height:900});
-   const violations=await p.evaluate(async()=> (await axe.run(document.querySelector('#editDialog'),{rules:{'color-contrast':{enabled:false}}})).violations);
+   const violations=await p.evaluate(async()=> (await axe.run(document.querySelector('#editDialog'))).violations);
    assert.deepEqual(violations,[],width+' axe');
    assert.ok(await p.evaluate(()=>document.querySelector('#editDialog').scrollWidth<=document.querySelector('#editDialog').clientWidth+1),width+' dialog overflow');
   }
-  await p.setViewportSize({width:390,height:844});await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);
+  await p.setViewportSize({width:390,height:844});
+  if(process.env.FLH03_SCREENSHOT)await p.screenshot({path:process.env.FLH03_SCREENSHOT,fullPage:true});
+  await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);
   const committed=await read();assert.equal(committed.revision,before.revision+1);assert.equal(committed.m.bookings.length,3);assert.equal(committed.m.positions[0].quantityExact,'90.123456789012345678');
   await p.locator('#undoCSVImport').click();await p.locator('#cancelDialog').click();assert.deepEqual(await read(),committed,'Cancel rollback changes nothing');
   await p.locator('#undoCSVImport').click();await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);

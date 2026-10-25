@@ -11,6 +11,7 @@ export function prepareCSVBatch(files){
  let headers;
  for(const [index,file] of files.entries()){
   if(typeof file?.text!=='string')throw Error('CSV-Dateiinhalt fehlt.');
+  if(new TextEncoder().encode(file.text).length>2_000_000)throw Error('Je Datei sind höchstens 2 MB erlaubt.');
   const name=String(file.name||'Datei '+(index+1));
   const parsed=parseCSV(file.text,{sourceName:name});
   if(!headers)headers=parsed.headers;
