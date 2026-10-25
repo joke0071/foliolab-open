@@ -49,7 +49,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const economic=p.valuationMode==='excluded'?'<p class="position-detail-note">Nicht doppelt mitgezählt: Diese Position wird bereits durch eine andere Position repräsentiert.</p>':p.valuationMode==='liability'?'<p class="position-detail-note">Verbindlichkeit: Dieser Betrag wird vom Gesamtvermögen abgezogen.</p>':'';
  const isSecurity=['etf','stock','fund'].includes(p.kind);
  const imported=model.priceHistories?.[p.id];
- const csvTool=isSecurity?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
+ const csvTool=(isSecurity||p.kind==='crypto')?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
   (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'" aria-label="Importierten Kursverlauf entfernen">Entfernen</button>':'')+
   '</div><p class="position-csv-help">Ohne API-Schlüssel · lokal gespeichert. Benötigt Datum und Schlusskurs in der Handelswährung dieser Position.</p>':'';
  const tvSymbol=isSecurity?tradingViewIdentifier(p):null;
@@ -144,6 +144,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  }
  const imported=importedHistoryForPeriod(model,position,days);
  const capability=days==='max'?null:marketHistoryCapability(position,model.settings);
+ if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
  if(capability){
   try{
    // Prefer a real, provider-backed market chart over locally imported CSV.

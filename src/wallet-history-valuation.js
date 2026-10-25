@@ -56,7 +56,7 @@ export async function loadHistoryQuotes(session,position,model,{confirmLocal=fal
   history=await cancellable(fetchPositionMarketHistory({...position,kind:'crypto',coinId},model.settings,365,fetcher),signal);binding='native-network';
  }
  if(history.currency!=='EUR')throw Error('Keine datierten EUR-Kurse verfügbar.');
- const quotes=assets.flatMap(asset=>history.points.map(p=>({...asset,date:p.date,currency:'EUR',priceExact:exact(units(String(p.total))),source:history.source,binding})));
+ const quotes=assets.flatMap(asset=>history.points.filter(p=>!Object.hasOwn(p,'valuationDate')||p.valuationDate!==null).map(p=>({...asset,date:p.valuationDate??p.date,currency:'EUR',priceExact:exact(units(String(p.total))),source:history.source,binding})));
  return validateHistoryQuotes(quotes,session.streams);
 }
 /** Chart only a single asset with no missing calendar day or value. No bridging gaps. */

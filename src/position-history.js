@@ -4,14 +4,14 @@ import {coinPaprikaHistoricalQuote,coinPaprikaMapping} from './crypto-fallbacks.
 import {units,exact,preciseValue} from './decimal.js';
 import {valueSign} from './defi.js';
 
-export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[365,'1 J']]);
+export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[180,'6 M'],[365,'1 J']]);
 const LONG_PERIOD=1826;
-const allowed=new Set([...POSITION_PERIODS.map(([days])=>days),LONG_PERIOD,'max']);
-const normalPeriods=Object.freeze([7,30,90,365]);
+const allowed=new Set([...POSITION_PERIODS.map(([days])=>days),1096,LONG_PERIOD,'max']);
+const normalPeriods=Object.freeze([7,30,90,180,365]);
 /** Restrict long presets to configured providers or sufficiently old CSV observations. */
 export function availablePositionPeriods(position,model,now=Date.now()){
  const result=[...normalPeriods];
- if(position?.kind==='crypto')return result;
+ if(position?.kind==='crypto'){const h=model?.priceHistories?.[position.id];if(h?.points?.length>=2&&h.points[0].date<isoFromMs(now-365*864e5)){result.push('max');if(h.points[0].date<isoFromMs(now-1800*864e5))result.splice(result.length-1,0,1096,LONG_PERIOD);}return result;}
  if(!['etf','stock','fund'].includes(position?.kind))return result;
  let providers=[];
  try{providers=marketSourceOptions(position,model?.settings||{});}catch{}
@@ -20,7 +20,7 @@ export function availablePositionPeriods(position,model,now=Date.now()){
  const first=Array.isArray(points)&&points.length>=2?String(points[0]?.date||''):'';
  const last=Array.isArray(points)&&points.length>=2?String(points.at(-1)?.date||''):'';
  const csv=/^\d{4}-\d{2}-\d{2}$/.test(first)&&/^\d{4}-\d{2}-\d{2}$/.test(last)&&first<last;
- if(longProvider||(csv&&first<=isoFromMs(now-1800*864e5)))result.push(LONG_PERIOD);
+ if(longProvider||(csv&&first<=isoFromMs(now-1800*864e5)))result.push(1096,LONG_PERIOD);
  if(csv&&first<isoFromMs(now-365*864e5))result.push('max');
  return result;
 }
@@ -138,7 +138,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   url.searchParams.set('symbol',capability.symbol);
   if(capability.exchange)url.searchParams.set('exchange',capability.exchange);
   if(capability.mic)url.searchParams.set('mic_code',capability.mic);
-  url.searchParams.set('interval','1day');
+  url.searchParams.set('interval','1day');url.searchParams.set('adjust','none');
   url.searchParams.set('outputsize',String(Math.min(500,days+12)));
   url.searchParams.set('apikey',settings.twelveKey);
   const data=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history});
@@ -160,9 +160,9 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
   if(!Number.isFinite(row.timestamp)||!finitePositive(row.price))continue;
   const date=isoFromMs(row.timestamp);
   if(date<from||date>today)continue;
-  byDay.set(date,row.price);
+  byDay.set(date,capability.kind==='crypto'?{price:row.price,valuationDate:row.timestamp%864e5===0?isoFromMs(row.timestamp-1):null}:row.price);
  }
- const points=[...byDay].sort(([a],[b])=>a.localeCompare(b)).map(([date,total])=>({date,total}));
+ const points=[...byDay].sort(([a],[b])=>a.localeCompare(b)).map(([date,value])=>typeof value==='object'?{date,total:value.price,valuationDate:value.valuationDate}:{date,total:value});
  if(points.length<2)throw Error('Nicht genügend verifizierte Kursdaten im gewählten Zeitraum.');
  return {points,currency,source,kind:'market'};
 }

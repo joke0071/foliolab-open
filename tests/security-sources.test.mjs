@@ -54,7 +54,7 @@ test('FMP validated explicitly mapped ticker and actual exchange, rejects identi
 });
 test('FMP historical endpoint uses stable slash path and validates symbol, dates, currency',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'});
- const mock=async url=>{assert.match(url,/historical-price-eod\/full/);return ok([{symbol:'VWCE.DE',date:yday,close:102},{symbol:'VWCE.DE',date:older,close:101}]);};
+ const mock=async url=>{assert.match(url,/historical-price-eod\/non-split-adjusted/);return ok([{symbol:'VWCE.DE',date:yday,close:102},{symbol:'VWCE.DE',date:older,close:101}]);};
  const chart=await fetchSecurityHistory(p,{fmpKey:'k'},30,mock);
  assert.deepEqual(chart.points.map(x=>x.total),[101,102]);
  await assert.rejects(()=>fetchSecurityHistory(p,{fmpKey:'k'},30,async()=>ok([{symbol:'OTHER.DE',date:yday,close:102},{symbol:'OTHER.DE',date:older,close:103}])),/Symbol|abrufbar/);

@@ -150,3 +150,5 @@ test('compact Drive UI preserves all controls but hides help and advanced action
  }
  assert.doesNotMatch(html,/OAuth-Zustimmungsbildschirm konfigurieren\\. 2\\./,'No unstructured wall of instructions');
 });
+
+test('Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise',async()=>{const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true});await t.window.FolioDriveBackup.init(t.backend);await t.elements.driveConnect.onclick();assert.match(t.elements.driveBackupStatus.textContent,/Verbunden.*Jetzt sichern/);assert.equal(t.written.length,0);assert.equal(t.elements.driveSaveNow.disabled,false);await t.elements.driveSaveNow.onclick();assert.equal(t.written.length,1);assert.match(html,/Bei geschlossener App erfolgt keine Sicherung/);});

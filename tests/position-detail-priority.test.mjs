@@ -39,15 +39,14 @@ test('Configured EODHD key with missing exchange explains the listing problem',(
  assert.match(html,/Handelsplatz/);
  assert.doesNotMatch(html,/position-history-plot/);
 });
-test('EODHD market history outranks a valid imported CSV; CSV remains a fallback',async()=>{
+test('Confirmed local history precedes remote providers without unnecessary requests',async()=>{
  const p=position(),m=model(p);m.settings.eodhdKey='SYNTHETIC_KEY';m.priceHistories[p.id]=csvData();
  const {mount,target}=fakeMount();
  let calls=0;
  const fetcher=async()=>{calls++;return {ok:true,status:200,headers:{get:()=>null},json:async()=>[{date:daysAgo(2),close:99},{date:daysAgo(1),close:103}]};};
  await loadPositionDetail(p,m,mount,{...config,fetcher});
- assert.ok(calls>0);
- assert.match(target.innerHTML,/EODHD/);
- assert.doesNotMatch(target.innerHTML,/CSV-Daten vom Nutzer/);
+ assert.equal(calls,0);
+ assert.match(target.innerHTML,/CSV-Daten vom Nutzer/);
  const failMount=fakeMount();
  await loadPositionDetail(p,m,failMount.mount,{...config,fetcher:async()=>({ok:false,status:401,headers:{get:()=>null}})});
  assert.match(failMount.target.innerHTML,/CSV-Daten vom Nutzer/);

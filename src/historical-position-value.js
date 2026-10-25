@@ -1,3 +1,5 @@
+import {historyDays,rawQuantity} from './wallet-history-days.js';
+import {validateHistorySession} from './wallet-history-state.js';
 /** Read-only EOD projection. Journal dates are trade dates, not settlement or UTC guesses. */
 import {units,exact,mul} from './decimal.js';
 import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
@@ -40,25 +42,54 @@ export function historicalQuantityRows(model,positionId,dates){
   return {date,positionId,accountId:p?.accountId??null,quantityExact:valid?exact(q):null,coverage:valid?'verified':'unknown',reason:valid?'':reason,quantitySource:'journal-trade-day-EOD'};
  });
 }
+
+export function walletStreamMatches(stream,p){
+ const w=p.wallet;if(!w||stream.accountId!==p.accountId)return false;
+ return ['btc','btc-hd'].includes(w.chain)?stream.network==='bitcoin'&&stream.assetId==='bitcoin'&&!stream.contract&&!stream.mint:
+ ['evm','erc20'].includes(w.chain)?stream.network==='ethereum'&&String(w.chainId||1)===stream.chainId&&(w.chain==='erc20'?stream.contract?.toLowerCase()===w.contract?.toLowerCase():!stream.contract):
+ ['sol','spl'].includes(w.chain)?stream.network==='solana'&&(w.chain==='spl'?stream.mint===w.contract:!stream.mint):false;
+}
+export function positionWalletSession(model,p){
+ const candidates=(model.walletHistory?.sessions||[]).filter(s=>s.streams.some(t=>walletStreamMatches(t,p)));
+ const exact=candidates.filter(s=>s.walletKey===p.id);if(exact.length===1)return exact[0];
+ return candidates.length===1?candidates[0]:null;
+}
+function walletQuantities(model,p,dates,cache){
+ const session=positionWalletSession(model,p),unknown=reason=>dates.map(date=>({date,positionId:p.id,accountId:p.accountId,quantityExact:null,coverage:'unknown',reason,quantitySource:'blockchain-UTC-EOD'}));
+ if(!session)return unknown('Wallet-Historie fehlt oder mehrere Wallet-Ansichten widersprechen sich. Historie rekonstruieren.');
+ const span=(Date.parse(session.events.filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10)).sort().at(-1))-Date.parse(session.events.filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10)).sort()[0]))/864e5;
+ if(session.events.length*Math.max(1,span)>2000000)return unknown('Große Wallet-Historie: Tagesberechnung im Wallet-Dialog eingrenzen.');
+ let days=cache.get(session);if(!days){const checked=validateHistorySession(session);days=historyDays(checked,{limit:6500});cache.set(session,days);}
+ const rows=days.filter(r=>walletStreamMatches(r,p)),byDate=new Map();
+ for(const r of rows){if(byDate.has(r.date))return unknown('Mehrere Blockchain-Streams für dieselbe Position. Kontozuordnung prüfen.');byDate.set(r.date,r);}
+ return dates.map(date=>{const r=byDate.get(date),known=r?.coverage==='verified'&&r.quantityBaseUnits!==null;return {date,positionId:p.id,accountId:p.accountId,quantityExact:known?rawQuantity(r.quantityBaseUnits,r.decimals):null,coverage:known?'verified':'unknown',reason:known?'':'Wallet-Bestand an diesem UTC-Tagesende nicht vollständig belegt.',quantitySource:'blockchain-UTC-EOD'};});
+}
+
 export function localHistoricalPrices(model,p){
- const h=model.priceHistories?.[p.id];return h?{...validateImportedPriceHistory(h,p),priceType:'close'}:null;
+ const h=model.priceHistories?.[p.id];return h?{...validateImportedPriceHistory(h,p),priceType:h.priceType??'close'}:null;
 }
 /** marketHistory must describe one compatible series; no automatic provider fusion. */
-export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=[],dates=null}={}){
+export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=null,dates=null,walletDaysCache=new Map()}={}){
  const p=model.positions.find(p=>p.id===positionId);if(!p)return {rows:[],segments:[],reason:'Positionsidentität fehlt.'};
- const history=marketHistory??localHistoricalPrices(model,p);
+ let history=marketHistory??localHistoricalPrices(model,p);
+ const session=p.wallet?.enabled?positionWalletSession(model,p):null;
+ if(!history&&session){const qs=session.quotes.filter(q=>walletStreamMatches({...q,accountId:p.accountId},p));if(qs.length)history={source:qs[0].source,currency:'EUR',priceType:'crypto-daily',points:qs.map(q=>({date:q.date,total:q.priceExact}))};}
+ const valuationCurrency=history?.currency??p.currency;
  const quotes=new Map();
  if(history){
-  if(history.currency!==p.currency||!['close','crypto-daily'].includes(history.priceType??'close'))throw Error('Kurswährung oder Kursart nicht mit der Position vereinbar.');
+  if(history.currency!==p.currency&&!(p.wallet?.enabled&&history.currency==='EUR')||!['close','crypto-daily'].includes(history.priceType??'close'))throw Error('Kurswährung oder Kursart nicht mit der Position vereinbar.');
   for(const point of history.points??[]){
-   if(!validDate(point.date)||units(point.total)<=0n)throw Error('Historischer Kurs ungültig.');
-   if(quotes.has(point.date)&&quotes.get(point.date)!==exact(units(point.total)))throw Error('Widersprüchliche Tageskurse.');quotes.set(point.date,exact(units(point.total)));
+   if(Object.hasOwn(point,'valuationDate')&&point.valuationDate===null)continue;
+   const valuationDate=point.valuationDate??point.date;
+   if(!validDate(valuationDate)||units(point.total)<=0n)throw Error('Historischer Kurs ungültig.');
+   if(quotes.has(valuationDate)&&quotes.get(valuationDate)!==exact(units(point.total)))throw Error('Widersprüchliche Tageskurse.');quotes.set(valuationDate,exact(units(point.total)));
   }
  }
- const quantities=historicalQuantityRows(model,positionId,dates??[...new Set([...quotes.keys(),...(model.journalEntries||[]).filter(e=>e.postings.some(x=>x.positionId===positionId)).map(e=>e.date)])]);
- const fx=new Map();for(const point of fxPoints){if(!validDate(point.date)||point.currency!==p.currency||point.source!=='Frankfurter'||units(point.rate)<=0n)throw Error('Historischer FX-Nachweis ungültig.');if(fx.has(point.date)&&fx.get(point.date)!==exact(units(point.rate)))throw Error('Widersprüchlicher FX.');fx.set(point.date,exact(units(point.rate)));}
+ const calendar=[...new Set(dates??[...quotes.keys(),...(model.journalEntries||[]).filter(e=>e.postings.some(x=>x.positionId===positionId)).map(e=>e.date),...(session?.events||[]).filter(e=>e.timestamp).map(e=>e.timestamp.slice(0,10))])].sort();
+ const quantities=p.wallet?.enabled?walletQuantities(model,p,calendar,walletDaysCache):historicalQuantityRows(model,positionId,calendar);
+ const fx=new Map();for(const point of fxPoints??history?.fxPoints??[]){if(!validDate(point.date)||point.currency!==p.currency||point.source!=='Frankfurter'||units(point.rate)<=0n)throw Error('Historischer FX-Nachweis ungültig.');if(fx.has(point.date)&&fx.get(point.date)!==exact(units(point.rate)))throw Error('Widersprüchlicher FX.');fx.set(point.date,exact(units(point.rate)));}
  const rows=quantities.map(row=>{
-  const price=p.kind==='cash'?'1':quotes.get(row.date)??null,fxExact=p.currency==='EUR'?'1':fx.get(row.date)??null;
+  const price=p.kind==='cash'?'1':quotes.get(row.date)??null,fxExact=valuationCurrency==='EUR'?'1':fx.get(row.date)??null;
   let reason=row.reason;if(row.quantityExact!==null&&row.quantityExact!=='0'&&price===null)reason='Historischer Schlusskurs fehlt – Kurs-CSV importieren oder bestätigte API-Quelle laden.';
   if(row.quantityExact!==null&&row.quantityExact!=='0'&&price!==null&&fxExact===null)reason='Historischer EUR-Wechselkurs fehlt – datierten FX-Nachweis laden.';
   const valueEURExact=row.quantityExact==='0'?'0':row.quantityExact!==null&&price!==null&&fxExact!==null?exact(mul(mul(units(row.quantityExact),units(price)),units(fxExact))):null;
