@@ -43,7 +43,7 @@ export function accountLiquidity(account,asOf=localToday()){
  if(t.outcome==='paid-out')return {status:t.status,reason:'paid-out',maturityDate:null};
  if(!renewed&&t.startDate&&t.startDate>asOf)return {status:'unknown',reason:'not-started',maturityDate};
  if(maturityDate&&maturityDate<=asOf)return {status:'unknown',reason:'maturity-review',maturityDate};
- return {status:t.status,reason:renewed?'renewed':maturityDate?'fixed-term':'missing-maturity',maturityDate};
+ return {status:t.status,reason:renewed?(maturityDate?'renewed':'renewed-missing-maturity'):maturityDate?'fixed-term':'missing-maturity',maturityDate};
 }
 /** Nominal cash only; no FX, asset prices or added portfolio totals. */
 export function accountCashNominal(model,account){
