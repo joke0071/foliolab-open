@@ -7,7 +7,7 @@ Specification: exact Library FLH02 document version 11, including A–E and 7.11
 - Implementation branch: `feature/flh02-position-value-foundation`, [PR #144](https://github.com/joke0071/foliolab-open/pull/144), merged as `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`.
 - Pre-live checkpoint and manual live test: [PR #145](https://github.com/joke0071/foliolab-open/pull/145), merged as `eb737df8979c7708d678de8045bd2b48db9e8e2f`.
 - Actually tested/deployed/live-accepted main SHA: `eb737df8979c7708d678de8045bd2b48db9e8e2f`. App implementation bytes are unchanged by the documentation closeout.
-- Current closeout branch: `docs/flh02-v175-acceptance`; commit is this file's containing commit. Its PR is documentation/evidence only; final PR/main CI links are recorded in its GitHub description. Resolve final main with `git ls-remote origin refs/heads/main`.
+- Current closeout branch: `docs/flh02-v175-acceptance`, [PR #146](https://github.com/joke0071/foliolab-open/pull/146); commit is this file's containing commit. Its PR is documentation/evidence only; final PR/main CI links are recorded in its GitHub description. Resolve final main with `git ls-remote origin refs/heads/main`.
 - Production: [FolioLab Open](https://joke0071.github.io/foliolab-open/), active `foliolab-open-v175`.
 
 | Package | Final status |
@@ -42,8 +42,8 @@ Private reference files stay local; only synthetic fixtures and public app hashe
 
 ## Remaining safe closeout
 
-Only merge this documentation/evidence PR after its required CI is green, then verify final main CI/deployment and unchanged production v175. No FLH02 feature work remains. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
+At creation, only PR #146 CI/merge and final main CI/deployment confirmation remained. Once #146 is merged and the subsequent main workflow is green, this closeout is complete: no FLH02 work remains. Verify unchanged production v175; do not create another documentation-only loop to record a self-referential commit SHA. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
 
 ## Exact resumption if interrupted during documentation closeout
 
-> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive implementations are merged and v175 is live accepted at eb737df8979c7708d678de8045bd2b48db9e8e2f, main workflow 40218777354 green. Only finish the docs/flh02-v175-acceptance documentation PR: check its current CI, merge green/conflict-free under existing authorization, verify final main CI/deployment and unchanged v175 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and CI/PR links.
+> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive implementations are merged and v175 is live accepted at eb737df8979c7708d678de8045bd2b48db9e8e2f, main workflow 40218777354 green. Only finish PR #146 (docs/flh02-v175-acceptance): if already merged with subsequent main CI/deployment green, closeout is complete and no work should be repeated. Otherwise check its current CI, merge green/conflict-free under existing authorization, and verify final main CI/deployment and unchanged v175 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and CI/PR links.
