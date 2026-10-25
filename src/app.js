@@ -5,6 +5,7 @@ import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
+import {positionIconName} from './position-icons.js';
 import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
@@ -255,7 +256,7 @@ function renderPositions(){
   const source=p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Zuletzt gespeicherter Wert':'');
   // Quote date takes precedence: do not print an unrelated position-edit timestamp beside it.
   const caption=[provider?.name||'Unbekannt',account?.name||'',source,quoteDate].filter(Boolean).map(esc).join(' · ');
-  const tags='<span class="tag">'+esc(TYPES[p.kind])+'</span>'+
+  const tags='<span class="tag">'+esc(p.kind==='cash'&&account?.cashTerms?.fixedTerm===true?'Festgeld':TYPES[p.kind])+'</span>'+
    (p.symbol?'<span class="tag neutral">'+esc(p.symbol)+'</span>':'')+
    (p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':'')+
    (p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':'')+
@@ -277,7 +278,7 @@ function renderPositions(){
   ];
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   return '<div class="position-entry"><div class="holding-row">'+
-   '<div class="holding-l"><div class="holding-mark">'+svg(p.wallet?.enabled?'wallet':'positions',21)+'</div>'+
+   '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
    (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
