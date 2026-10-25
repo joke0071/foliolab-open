@@ -30,15 +30,16 @@ export function createBookingHistoryUI({getModel}){
    const projection=projectHistoricalPosition(model,p.id,{marketHistory});
    const rows=filterChartPeriod(projection.rows,'wealth',el('period').value);
    const points=rows.filter(r=>view==='balances'?r.quantityExact!==null:view==='price'?r.priceExact!==null:r.valueEURExact!==null);
-   const samples=points.map(r=>({date:r.date,total:Number(view==='balances'?r.quantityExact:view==='price'?r.priceExact:r.valueEURExact)}));
+   const segmentByDate=new Map(projection.segments.flatMap((segment,index)=>segment.map(r=>[r.date,index])));
+   const samples=points.map((r,index)=>({date:r.date,detail:'Bestand '+(r.quantityExact??'unbekannt')+' · Kurs '+(r.priceExact??'fehlt')+' '+p.currency+' · EUR-Faktor '+(r.fxExact??'fehlt')+' · '+r.source,total:Number(view==='balances'?r.quantityExact:view==='price'?r.priceExact:r.valueEURExact),breakBefore:index>0&&(rows.indexOf(r)!==rows.indexOf(points[index-1])+1||segmentByDate.get(r.date)!==segmentByDate.get(points[index-1].date))}));
    const unitsLabel=view==='balances'?'Bestand':view==='price'?'Kurs ('+p.currency+')':'Positionswert (€)';
    const hasGaps=rows.some(r=>view==='balances'?r.quantityExact===null:view==='price'?r.priceExact===null:r.valueEURExact===null)||projection.segments.length>1;
    const fmt=view==='balances'?v=>String(v):view==='price'?v=>new Intl.NumberFormat('de-AT',{style:'currency',currency:p.currency}).format(v):money;
    // Until the shared chart renders disjoint segments, keep unknown intervals
    // as explicit tabular observations instead of joining them with a false line.
    el('output').innerHTML='<h3>'+esc(p.name)+' · '+esc(unitsLabel)+'</h3>'+
-    (samples.length>=2&&!hasGaps?drawInteractiveChart(samples,{money:fmt,esc,dateLabel:d=>d}):'<p>'+esc(hasGaps?'Teilweise verfügbar. Unbekannte Abschnitte werden nicht verbunden. '+projection.reason:projection.reason||'Weniger als zwei belegte Punkte in diesem Zeitraum. Anderen Zeitraum wählen.')+'</p>')+
-    '<p class="small-help">'+esc(marketHistory?.source||'Lokale Nachweise')+' · damaliger EOD-Bestand × damaliger Schlusskurs × historischer EUR-Faktor. Keine Rendite.</p>'+
+    (samples.length>=2?drawInteractiveChart(samples,{money:fmt,esc,dateLabel:d=>d,disjoint:hasGaps}):'<p>'+esc(hasGaps?'Teilweise verfügbar. Unbekannte Abschnitte werden nicht verbunden. '+projection.reason:projection.reason||'Weniger als zwei belegte Punkte in diesem Zeitraum. Anderen Zeitraum wählen.')+'</p>')+
+    (hasGaps?'<p class="small-help">Teilweise verfügbar · Lücken werden nicht verbunden.</p>':'')+'<p class="small-help">'+esc(marketHistory?.source||'Lokale Nachweise')+' · damaliger EOD-Bestand × damaliger Schlusskurs × historischer EUR-Faktor. Keine Rendite.</p>'+
     '<div class="wallet-history-table"><table><thead><tr><th scope="col">Datum</th><th scope="col">Bestand</th><th scope="col">Kurs</th><th scope="col">EUR-Faktor</th><th scope="col">Positionswert</th></tr></thead><tbody>'+rows.slice(-limit).reverse().map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.quantityExact??'Unbekannt')+'</td><td>'+esc(r.priceExact??'Fehlt')+'</td><td>'+esc(r.fxExact??'Fehlt')+'</td><td>'+esc(r.valueEURExact===null?'Unbekannt':money(Number(r.valueEURExact)))+'</td></tr>').join('')+'</tbody></table></div>';
    attachChartInteractions(el('output'));
   }

@@ -3,10 +3,11 @@ import {projectHistoricalPosition} from './historical-position-value.js';
 import {units,exact} from './decimal.js';
 import {valueSign} from './defi.js';
 export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCurrency={}}={}){
- const calendar=dates??[...new Set([
+ const calendarInput=dates??[...new Set([
   ...Object.values(model.priceHistories??{}).flatMap(h=>(h.points??[]).map(p=>p.date)),
   ...(model.journalEntries??[]).map(e=>e.date),...(model.snapshots??[]).map(s=>s.date)
  ])].sort();
+ const calendar=[...new Set(calendarInput)].sort();
  if(calendar.length>15000)throw Error('Bewertungszeitraum zu groß.');
  const positions=new Map(model.positions.map(p=>[p.id,p])),orphaned=new Set();
  for(const e of model.journalEntries??[])for(const p of e.postings)if(p.positionId&&!positions.has(p.positionId))orphaned.add(p.positionId);
@@ -20,7 +21,7 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
    const row=projections.get(p.id)[index];
    // Wallet facts and staking/LST accounting need their explicit ownership
    // contract before inclusion. Do not fall back to a second journal balance.
-   if(p.wallet?.enabled||p.economicPosition){missing.push({positionId:p.id,reason:'Blockchain-/Staking-Abdeckung muss explizit mit der Kontostruktur abgeglichen werden.'});continue;}
+   if(p.wallet?.enabled||p.economicRole&&p.economicRole!=='standard'){missing.push({positionId:p.id,reason:'Blockchain-/Staking-Abdeckung muss explizit mit der Kontostruktur abgeglichen werden.'});continue;}
    if(row?.valueEURExact===null||!row){missing.push({positionId:p.id,reason:row?.reason||'Historische Bewertung fehlt.'});continue;}
    const signed=units(row.valueEURExact)*BigInt(valueSign(p));sum+=signed;components.push({...row,valueEURExact:exact(signed)});
   }

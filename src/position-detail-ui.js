@@ -1,3 +1,4 @@
+import {projectHistoricalPosition} from './historical-position-value.js';
 import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeriods} from './position-history.js';
 import {renderChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
@@ -100,14 +101,19 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  const isCurrent=()=>mount.isConnected&&target.isConnected&&mount.dataset.loadSequence===token;
  const render=(points,kind,currency='EUR',source='')=>{
   if(!isCurrent())return;
+  if(kind==='market'){
+   const projection=projectHistoricalPosition(model,position.id,{marketHistory:{points,currency,source,priceType:position.kind==='crypto'?'crypto-daily':'close'}});
+   const valued=projection.rows.filter(r=>r.valueEURExact!==null);
+   if(valued.length>=2&&!projection.partial){points=valued.map(r=>({date:r.date,totalEURExact:r.valueEURExact,detail:'Bestand '+r.quantityExact+' · Kurs '+r.priceExact+' '+position.currency+' · EUR-Faktor '+r.fxExact+' · '+r.source}));kind='historical-value';currency='EUR';}
+  }
   const fmt=kind==='market'?x=>quoteCurrency(x,currency):money;
   const axisFormat=kind==='market'?x=>new Intl.NumberFormat('de-AT',{
    style:'currency',currency,notation:Math.abs(x)>=1000?'compact':'standard',
    maximumFractionDigits:Math.abs(x)<0.0001?8:Math.abs(x)<1?6:1
   }).format(x):undefined;
-  target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':'Gespeicherter Positionswert')+'</div>'+
+  target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':kind==='historical-value'?'Historischer Positionswert (€)':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
-   '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>'+
+   '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):kind==='historical-value'?source+' · damaliger Bestand × damaliger Kurs. Keine Rendite.':'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>'+
    (days===1826||days==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(points[0].date))+' bis '+esc(dateLabel(points.at(-1).date))+'. Fehlende frühere Kurse werden nicht ergänzt.</p>':'');
   mount.querySelector('.position-period')?.classList.remove('hidden');
   attachChartInteractions(target);
