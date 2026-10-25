@@ -1,7 +1,8 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:850}});
+const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 const today=new Date().toISOString().slice(0,10);
 try{
  await page.goto('http://127.0.0.1:4173/');

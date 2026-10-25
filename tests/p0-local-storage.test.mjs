@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from '../src/browser-portfolio-storage.js';
 import {blankModel,STORE_KEY,createProvider} from '../src/model.js';
-const memory=()=>{const data=new Map();return {get length(){return data.size;},key:i=>[...data.keys()][i],getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};};
+const memory=()=>{const data=new Map();data.set(STORE_KEY,JSON.stringify(blankModel()));return {get length(){return data.size;},key:i=>[...data.keys()][i],getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)};};
 test('Stale local writer cannot overwrite a confirmed save; reload renews comparison',async()=>{
  const storage=memory(),a=new PortfolioStorage(storage),b=new PortfolioStorage(storage);
  const x=await a.initialize(),y=await b.initialize();x.providers.push(createProvider({name:'Confirmed'}));await a.save(x);
@@ -12,8 +12,9 @@ test('Stale local writer cannot overwrite a confirmed save; reload renews compar
 });
 test('Stale local mode cannot write after another tab migrates to IndexedDB',async()=>{
  const storage=memory(),controller=new PortfolioStorage(storage),m=await controller.initialize();
+ const before=storage.getItem(STORE_KEY);
  storage.setItem(MODE_KEY,MODE_VALUE);
- await assert.rejects(()=>controller.save(m),/Speichermodus|geändert/);assert.equal(storage.getItem(STORE_KEY),null);
+ await assert.rejects(()=>controller.save(m),/Speichermodus|geändert/);assert.equal(storage.getItem(STORE_KEY),before);
 });
 test('Quota failure preserves old bytes and leaves retry possible',async()=>{
  const storage=memory(),controller=new PortfolioStorage(storage),m=await controller.initialize();await controller.save(m);

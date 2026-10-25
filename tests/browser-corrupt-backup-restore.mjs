@@ -1,3 +1,4 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {blankModel,createProvider,createAccount,createPosition,backup,STORE_KEY} from '../src/model.js';
@@ -20,7 +21,7 @@ const invalid=structuredClone(valid);
 invalid.bookings[0].positionId='orphan-id';
 
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:844}});
+const page=await legacyPage(browser,{viewport:{width:390,height:844}});
 page.on('dialog',dialog=>dialog.accept());
 try{
  await page.goto('http://127.0.0.1:4173/');

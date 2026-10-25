@@ -1,7 +1,8 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:850}});
+const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 const day=n=>new Date(Date.now()-n*86400000).toISOString().slice(0,10);
 const getModel=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
 async function chooseCSV(csv,accept=true){

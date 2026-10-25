@@ -1,6 +1,6 @@
 /**
- * Opt-in canonical IndexedDB portfolio storage with a legacy recovery copy.
- * No background migration. Opt-in storage switching retains local credentials.
+ * Canonical IndexedDB for new installations; consented legacy migration.
+ * No background legacy migration. Storage switching retains local credentials.
  * Encrypted complete backups may optionally include user-approved credentials.
  */
 import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData} from './model.js';
@@ -36,6 +36,8 @@ export class PortfolioStorage {
  get isIndexedDB(){return this.mode==='idb';}
  async initialize(){
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE){
+   if(this.storage.getItem(MODE_KEY)!==null)throw Error('Unbekannter Speichermodus. Keine Daten automatisch übernommen.');
+   if(this.storage.getItem(STORE_KEY)===null)return this.initializeNew();
    const m=load(this.storage);
    this.legacyRaw=this.storage.getItem(STORE_KEY);
    return m;
@@ -68,6 +70,36 @@ export class PortfolioStorage {
   }
   return restored(record);
  }
+ /** New installations never write a portfolio to localStorage. The marker is
+  * last; an interrupted identical blank commit can be resumed, not overwritten. */
+ async initializeNew(){
+  this.mode='idb'; // unavailable/quota/marker failures must never permit local saves
+  return this.withLocalLock(async()=>{
+   // Another tab may have initialized or created a legacy portfolio while waiting.
+   const mode=this.storage.getItem(MODE_KEY);
+   if(mode===MODE_VALUE)return this.initialize();
+   if(mode!==null||this.storage.getItem(STORE_KEY)!==null)
+    throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+   const db=await openPortfolioDB();
+   try{
+    const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=clone(model.settings);
+    const existing=await readPortfolioRecord(db);
+    let record=existing;
+    if(existing){
+     if(existing.raw!==raw||JSON.stringify(existing.settings)!==JSON.stringify(settings))
+      throw Error('IndexedDB enthält einen unbestätigten Datenstand. Keine automatische Überschreibung.');
+    }else record=await commitPortfolioRecord(db,{expectedRevision:null,raw,settings});
+    const check=await readPortfolioRecord(db);
+    if(check?.revision!==record.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))
+     throw Error('IndexedDB konnte nicht vollständig überprüft werden.');
+    if(this.storage.getItem(MODE_KEY)!==null||this.storage.getItem(STORE_KEY)!==null)
+     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+    this.storage.setItem(MODE_KEY,MODE_VALUE);
+    this.db=db;this.revision=check.revision;
+    return restored(check);
+   }catch(error){db.close();throw error;}
+  });
+ }
  async reload(){
   if(!this.isIndexedDB){const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;}
   const current=await readPortfolioRecord(this.db);
@@ -98,6 +130,7 @@ export class PortfolioStorage {
    });
   }
   if(!this.db)throw Error('IndexedDB-Verbindung geschlossen. Seite neu laden.');
+  if(this.storage.getItem(MODE_KEY)!==MODE_VALUE)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
   const draft=clone(model);
   const current=await commitPortfolioRecord(this.db,{
    expectedRevision:this.revision,raw:backup(draft,{includeHistory:true}),settings:draft.settings
@@ -137,7 +170,7 @@ export class PortfolioStorage {
     expectedRevision:null,raw:portable,settings:preferences
    });
    const check=await readPortfolioRecord(db);
-   if(check?.revision!==record.revision||!check.settings||!check.raw)
+   if(check?.revision!==record.revision||check.raw!==portable||JSON.stringify(check.settings)!==JSON.stringify(preferences))
     throw Error('IndexedDB-Migration konnte nicht vollständig überprüft werden.');
    if(this.storage.getItem(STORE_KEY)!==original)
     throw Error('Das lokale Portfolio wurde während der Migration geändert. Wechsel abgebrochen; Originaldaten bleiben erhalten.');
@@ -147,14 +180,33 @@ export class PortfolioStorage {
   }catch(error){db.close();throw error;}
  }
  async unverifiedBackup(){
-  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht geöffnet.');
+  if(!this.isIndexedDB)throw Error('IndexedDB ist nicht geöffnet.');
+  // Failed new-install verification may have closed the connection. Original
+  // records must still be downloadable for the existing explicit recovery UI.
+  if(!this.db)this.db=await openPortfolioDB();
   return readUnverifiedRecord(this.db);
  }
  async recoverFromBackup(model,expected){
-  if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
-  const recovered=await restoreDamagedRecord(this.db,{expected,raw:backup(model,{includeHistory:true}),settings:clone(model.settings)});
-  this.revision=recovered.revision;
-  return recovered;
+  return this.withLocalLock(async()=>{
+   if(!this.isIndexedDB||!this.db)throw Error('IndexedDB ist nicht verfügbar.');
+   const mode=this.storage.getItem(MODE_KEY),legacy=this.storage.getItem(STORE_KEY);
+   if(mode!==MODE_VALUE&&(mode!==null||legacy!==null))
+    throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+   const raw=backup(model,{includeHistory:true}),settings=clone(model.settings);
+   const recovered=await restoreDamagedRecord(this.db,{expected,raw,settings});
+   const check=await readPortfolioRecord(this.db);
+   if(check?.revision!==recovered.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))
+    throw Error('Wiederherstellung konnte nicht vollständig überprüft werden.');
+   if(mode===null){
+    // Explicit recovery of a record without a cutover marker; never adopt it
+    // automatically or overwrite a concurrently created legacy portfolio.
+    if(this.storage.getItem(MODE_KEY)!==null||this.storage.getItem(STORE_KEY)!==null)
+     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+    this.storage.setItem(MODE_KEY,MODE_VALUE);
+   }
+   this.revision=recovered.revision;
+   return recovered;
+  });
  }
  async removeAll(){return this.withLocalLock(()=>this.removeAllLocked());}
  async removeAllLocked(){

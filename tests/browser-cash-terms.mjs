@@ -1,3 +1,4 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {spawn} from 'node:child_process';
@@ -34,7 +35,7 @@ HTTPServer(('127.0.0.1',4188),Handler).serve_forever()`;
 for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
  console.log('CASH TERMS '+name+': starting');
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
+ const context=await legacyContext(browser,{viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));let server;
  try{
   server=await start();await page.addInitScript({content:axe});await page.goto(base);

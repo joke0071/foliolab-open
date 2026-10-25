@@ -1,10 +1,11 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 
 // Synthetic, throttled-browser proxy for a slower mobile device; this is NOT
 // a measurement on physical Android/iOS hardware.
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const context=await browser.newContext({viewport:{width:360,height:780}});
+const context=await legacyContext(browser,{viewport:{width:360,height:780}});
 const page=await context.newPage();
 try{
  await page.goto('http://127.0.0.1:4173/');

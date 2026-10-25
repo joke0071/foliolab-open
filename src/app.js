@@ -1787,15 +1787,33 @@ $('checkMarketSources').addEventListener('click',async()=>{
   status.textContent='Diagnose nicht möglich. Keine Portfoliodaten verändert.';
  }finally{button.disabled=false;}
 });
+// Migration always includes wallet history. Credentials follow the existing,
+// explicit encrypted-full-backup opt-in; never put them in a plain export.
+async function downloadMigrationBackup(draft){
+ const data=JSON.parse(backup(draft,{includeHistory:true}));
+ const withConfiguration=includeBackupConfiguration();
+ const payload=withConfiguration
+  ?await encryptWithBackupPassword(JSON.stringify(createCompleteBackup(data,{settings:draft.settings,drive:readDriveConfig()})))
+  :JSON.stringify(data,null,2);
+ const url=URL.createObjectURL(new Blob([payload],{type:'application/json'}));
+ const link=document.createElement('a');link.href=url;
+ link.download=`foliolab-migration-${withConfiguration?'verschluesselt-':''}${new Date().toISOString().slice(0,10)}.json`;
+ document.body.append(link);
+ try{link.click();}finally{link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+}
 $('migrateToIDB').addEventListener('click',async()=>{
  const button=$('migrateToIDB');
  if(button.disabled||saving||loadFailure)return;
- if(!confirm('Andere FolioLab-Tabs schließen. Jetzt wird ein Backup ohne API-Schlüssel zum Download angeboten. Deine bisherige Kopie bleibt als Rückfall erhalten. Fortfahren?'))return;
- downloadBackup();
- if(!confirm('Backup sicher gespeichert? Zugangsdaten bleiben im neuen IndexedDB-Speicher lokal und unverschlüsselt. Jetzt umstellen?'))return;
+ if(!confirm('Andere FolioLab-Tabs schließen. Zuerst wird eine Sicherung aller Portfoliodaten einschließlich Wallet-Historie heruntergeladen. Einstellungen und API-Schlüssel sind nur enthalten, wenn du ihre Mitnahme im verschlüsselten Vollbackup aktiviert hast. Fortfahren?'))return;
  button.disabled=true;saving=true;
- try{await portfolioStore.migrate(model);location.reload();}
- catch(error){notify('Speicherumstellung abgebrochen: '+String(error.message||error).slice(0,170),true);}
+ try{
+  await portfolioStore.assertCurrent();
+  const draft=structuredClone(model);
+  await downloadMigrationBackup(draft); // failure/cancellation must never cut over
+  if(!confirm('Ist die Migrationssicherung sicher gespeichert? Der Browser kann den gespeicherten Download nicht selbst bestätigen. Zugangsdaten bleiben lokal und unverschlüsselt in IndexedDB. Die bisherige Kopie bleibt eingefrorenes Rückfallmaterial. Jetzt ausdrücklich umstellen?'))return;
+  await portfolioStore.assertCurrent();
+  await portfolioStore.migrate(draft);location.reload();
+ }catch(error){notify('Speicherumstellung abgebrochen: '+String(error.message||error).slice(0,170),true);}
  finally{saving=false;button.disabled=false;}
 });
 $('revertFromIDB').addEventListener('click',async()=>{
@@ -1878,7 +1896,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
 $('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
 $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
 initNav();initEvents();installCredentialVisibility();
-$('portfolioStorageState').textContent=portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
+$('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
 $('revertFromIDB').classList.toggle('hidden',!portfolioStore.isIndexedDB);
 // Keep a user's draft visible, but block stale writes until an explicit reload.

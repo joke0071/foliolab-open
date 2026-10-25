@@ -1,10 +1,11 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const X='xpub6CatWdiZiodmUeTDp8LT5or8nmbKNcuyvz7WyksVFkKB4RHwCD3XyuvPEbvqAQY3rAPshWcMLoP2fMFMKHPJ4ZeZXYVUhLv1VMrjPC7PW6V';
 const FIRST='bc1qcr8te4kr609gcawutmrza0j4xv80jy8z306fyu';
 const empty={chain_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0},mempool_stats:{funded_txo_count:0,funded_txo_sum:0,spent_txo_sum:0}};
-const page=await browser.newPage({viewport:{width:390,height:850}});
+const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 try{
  await page.goto('http://127.0.0.1:4173/');
  await page.evaluate(x=>{

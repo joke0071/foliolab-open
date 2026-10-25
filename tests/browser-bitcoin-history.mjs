@@ -1,9 +1,10 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true});
  try{
-  const page=await browser.newPage();await page.goto('http://127.0.0.1:4173/tests/');
+  const page=await legacyPage(browser);await page.goto('http://127.0.0.1:4173/tests/');
   const result=await page.evaluate(async()=>{
    const {fetchBitcoinHistory}=await import('/src/bitcoin-history.js');
    const {tx,provider,wallets}=await import('/tests/bitcoin-history-fixtures.mjs');

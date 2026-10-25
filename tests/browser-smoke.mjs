@@ -1,8 +1,9 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const context=await browser.newContext({acceptDownloads:true});
+const context=await legacyContext(browser,{acceptDownloads:true});
 const page=await context.newPage();
 const url='http://127.0.0.1:4173/';
 try{

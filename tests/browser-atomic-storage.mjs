@@ -5,7 +5,7 @@ const browser = await chromium.launch({headless: true, args: ['--no-sandbox']});
 const context = await browser.newContext();
 const a = await context.newPage();
 const b = await context.newPage();
-const url = 'http://127.0.0.1:4173/';
+const url = 'http://127.0.0.1:4173/tests/storage-origin.html';
 const modulePath = '/src/atomic-storage.js';
 
 async function write(page, expectedRevision, name) {

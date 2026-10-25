@@ -4,7 +4,7 @@ import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const visit=async fn=>{
  const context=await browser.newContext(),page=await context.newPage();
- try{await page.goto('http://127.0.0.1:4173/');return await page.evaluate(fn);}
+ try{await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');return await page.evaluate(fn);}
  finally{await context.close();}
 };
 try{

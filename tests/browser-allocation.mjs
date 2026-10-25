@@ -1,7 +1,8 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const context=await browser.newContext({viewport:{width:390,height:850}});
+const context=await legacyContext(browser,{viewport:{width:390,height:850}});
 const page=await context.newPage();
 try{
  await page.goto('http://127.0.0.1:4173/');
@@ -52,7 +53,7 @@ try{
   assert.ok(rect.legendLeft>=rect.panelLeft-1&&rect.legendRight<=rect.panelRight+1,'Legend escapes card at '+width);
  }
  // Mobile touch should pin selection without depending on hover.
- const mobile=await browser.newContext({viewport:{width:390,height:850},isMobile:true,hasTouch:true});
+ const mobile=await legacyContext(browser,{viewport:{width:390,height:850},isMobile:true,hasTouch:true});
  try{
   const touch=await mobile.newPage();await touch.goto('http://127.0.0.1:4173/');
   await touch.evaluate(value=>localStorage.setItem('foliolab-open-v1',value),saved);await touch.reload();

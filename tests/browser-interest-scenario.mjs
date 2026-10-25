@@ -1,3 +1,4 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {spawn} from 'node:child_process';
@@ -15,7 +16,7 @@ async function start(){
 for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
  console.log('INTEREST SCENARIO '+name+': starting');
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];let server,dialogs=0;
+ const context=await legacyContext(browser,{viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];let server,dialogs=0;
  page.on('pageerror',e=>errors.push(e.message));page.on('dialog',async d=>{dialogs++;await d.accept(d.type()==='prompt'?'test-password-only':undefined);});
  try{
   server=await start();await page.addInitScript({content:axe});await page.goto(base);

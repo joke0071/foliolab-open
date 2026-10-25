@@ -64,11 +64,14 @@ test('optional rate metadata roundtrips open/current complete data and legacy en
 
 test('read-only storage freshness check never changes bytes or adopts a peer revision',async()=>{
  const {PortfolioStorage}=await import('../src/browser-portfolio-storage.js');
- const data=new Map(),storage={getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,String(value)),removeItem:key=>data.delete(key)};
+ const {STORE_KEY}=await import('../src/model.js');
+ // Explicit existing v3 installation: node unit tests have no browser IndexedDB.
+ // The unchanged active legacy bytes must be read-only, with no adoption of peer writes.
+ const original=JSON.stringify(blankModel()),data=new Map([[STORE_KEY,original]]),storage={getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,String(value)),removeItem:key=>data.delete(key)};
  const first=new PortfolioStorage(storage),m=await first.initialize();
- await first.assertCurrent();assert.equal(data.size,0);assert.equal(first.legacyRaw,null);
+ await first.assertCurrent();assert.equal(data.size,1);assert.equal(data.get(STORE_KEY),original);assert.equal(first.legacyRaw,original);
  const peer=new PortfolioStorage(storage),other=await peer.initialize();other.providers.push(createProvider({name:'Peer',type:'bank'}));await peer.save(other);
  const committed=JSON.stringify([...data]);await assert.rejects(first.assertCurrent(),/anderen Tab/);
- assert.equal(first.legacyRaw,null);assert.equal(first.revision,null);assert.equal(JSON.stringify([...data]),committed);
+ assert.equal(first.legacyRaw,original);assert.equal(first.revision,null);assert.equal(JSON.stringify([...data]),committed);
  await assert.rejects(first.save(m),/anderen Tab/);assert.equal(JSON.stringify([...data]),committed);
 });

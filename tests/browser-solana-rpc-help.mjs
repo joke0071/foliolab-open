@@ -1,7 +1,8 @@
+import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const page=await browser.newPage({viewport:{width:390,height:844}});
+const page=await legacyPage(browser,{viewport:{width:390,height:844}});
 const calls=[];
 await page.route(/https:\/\/rpc-(ok|limited)\.example\.test\//,async route=>{
  const url=route.request().url(),req=JSON.parse(route.request().postData()||'{}');

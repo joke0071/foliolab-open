@@ -1,7 +1,8 @@
+import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
-const ctx=await browser.newContext({acceptDownloads:true});
+const ctx=await legacyContext(browser,{acceptDownloads:true});
 const page=await ctx.newPage();
 const providerName='Bank <img src=x onerror=window.__xss=1>';
 try{
