@@ -1,3 +1,4 @@
+import {compareCurrentCashBalance} from './cash-reconciliation.js';
 import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
@@ -280,7 +281,7 @@ function renderPositions(){
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
    '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button></div></div></div>'+
-   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details>'+ (p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1)?'<button type="button" class="btn outline" data-action="wallet-history" data-id="'+esc(p.id)+'">Historie rekonstruieren</button>':'')+'</div>';
+   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details>'+(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+ (p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1)?'<button type="button" class="btn outline" data-action="wallet-history" data-id="'+esc(p.id)+'">Historie rekonstruieren</button>':'')+'</div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -419,15 +420,16 @@ const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
  :title.startsWith('Stichtag')?'Stichtag speichern'
  :title.startsWith('Wallet')?'Coins hinzufügen'
  :title.startsWith('CSV')?'Buchungen importieren':'Speichern';
-function showDialog(title,kicker,html,onSave){
+function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  dialogOpener=document.activeElement;
- editor={onSave,dirty:false};
+ editor={onSave,dirty:false,readOnly};
  $('dialogTitle').textContent=title;
  $('dialogKicker').textContent=kicker;
  $('dialogFields').innerHTML=html;
  $('dialogError').textContent='';
  $('dialogError').classList.add('hidden');
- $('saveDialog').textContent=dialogSaveLabel(title);
+ $('saveDialog').textContent=readOnly?'Prüfen':dialogSaveLabel(title);
+ $('cancelDialog').textContent=readOnly?'Schließen':'Abbrechen';
  $('saveDialog').disabled=false;
  $('editDialog').showModal();
  $('dialogTitle').focus({preventScroll:true});
@@ -436,6 +438,40 @@ function closeDialog({force=false}={}){return editorDiscardGuard.requestClose({f
 function providerMatchMarkup(query){
  const found=providerSuggestions(query,6);
  return found.length?found.map(x=>'<button type="button" class="onboarding-suggestion" data-provider-preset="'+esc(x.name)+'"><strong>'+esc(x.name)+'</strong><span>'+esc(types[x.type])+'</span></button>').join(''):'<p class="small-help">Kein Vorschlag? Eigene Anbieterbezeichnung und Typ frei eintragen.</p>';
+}
+function openCashBalanceCheck(positionId){
+ const position=model.positions.find(p=>p.id===positionId&&p.kind==='cash');
+ if(!position)return;
+ const account=model.accounts.find(a=>a.id===position.accountId),provider=model.providers.find(p=>p.id===position.providerId);
+ const currency=position.currency;
+ showDialog('Kontostand prüfen','AKTUELLER VERGLEICH',
+  '<p class="dialog-intro">'+esc(provider?.name||'Anbieter')+' · '+esc(account?.name||'Konto')+' · '+esc(position.name)+' · '+esc(currency)+'</p>'+
+  '<p class="small-help">Vergleiche den aktuellen Bank-Kontostand mit dieser Guthabenposition. Ältere Kontoauszüge eignen sich dafür nicht. Eine Differenz bleibt ein Prüfhinweis; deine Daten bleiben unverändert.</p>'+
+  '<label class="field"><span>Aktueller Bank-Kontostand ('+esc(currency)+')</span><input id="cashReference" name="referenceAmount" inputmode="decimal" autocomplete="off" maxlength="55" aria-describedby="cashReferenceHelp"></label>'+
+  '<p id="cashReferenceHelp" class="small-help">Betrag in der Kontowährung, z. B. 100,50. Auch 0 oder ein negativer Saldo sind möglich.</p>'+
+  '<label class="csv-skip"><input type="checkbox" name="currentReference" id="cashReferenceCurrent"> Ich verwende den aktuellen Kontostand für genau diese Guthabenposition.</label>'+
+  '<div id="cashComparisonResult" class="cash-comparison-result" role="status" aria-live="polite" tabindex="-1"></div>',
+  values=>{
+   if(loadFailure||otherTabChangedPortfolio)throw Error('Der Datenstand ist nicht aktuell. Bitte diesen Tab neu laden und erneut prüfen.');
+   if(!values.currentReference)throw Error('Bitte bestätigen, dass der Kontostand aktuell ist und zu dieser Guthabenposition gehört.');
+   const result=compareCurrentCashBalance(model,{positionId,referenceAmount:values.referenceAmount,currency});
+   const amount=value=>value.replace('.',',')+' '+currency;
+   const output=$('cashComparisonResult');
+   output.replaceChildren();
+   const heading=document.createElement('h3');heading.textContent=result.status==='matched'?'Kontostände stimmen rechnerisch überein':'Differenz prüfen';
+   const detail=document.createElement('p');detail.textContent='In FolioLab: '+amount(result.recordedExact)+' · Bank: '+amount(result.referenceExact)+' · Differenz (Bank minus FolioLab): '+amount(result.differenceExact);
+   const basis=document.createElement('p');basis.className='small-help';basis.textContent=result.basis==='opening-and-journal'
+    ?'Der erfasste Bestand ist mit Anfangsbestand und Finanzjournal rechnerisch konsistent. Das bestätigt keine vollständige Bankhistorie.'
+    :'Vergleich mit dem erfassten Bestand. Ohne Journalbewegungen ist keine Bankhistorie rekonstruiert.';
+   const help=document.createElement('p');help.className='small-help';help.textContent=result.status==='matched'
+    ?'Diese Prüfung speichert keinen Beleg und verändert keine Buchung.'
+    :'Prüfe Kontozuordnung, fehlende oder doppelte Buchungen, Gebühren und Buchungszeitpunkte. Eine Differenz ist keine automatische Einzahlung.';
+   output.append(heading,detail,basis,help);output.focus({preventScroll:true});
+   return false;
+  },{readOnly:true});
+ const clear=()=>{$('cashComparisonResult').replaceChildren();$('dialogError').classList.add('hidden');};
+ $('cashReference').addEventListener('input',clear);
+ $('cashReferenceCurrent').addEventListener('change',clear);
 }
 function openProvider(p){
  showDialog(p?'Anbieter bearbeiten':'Anbieter hinzufügen','FREIE ANBIETERWAHL',
@@ -1514,7 +1550,7 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'check-cash-balance':openCashBalanceCheck(id);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
@@ -1522,7 +1558,7 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
 }}}
 function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
  const markEditorDirty=event=>{
-  if(editor&&event.target.matches('input, select, textarea'))editor.dirty=true;
+  if(editor&&!editor.readOnly&&event.target.matches('input, select, textarea'))editor.dirty=true;
  };
  $('dialogFields').addEventListener('input',markEditorDirty);
  $('dialogFields').addEventListener('change',markEditorDirty);
@@ -1532,10 +1568,10 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
   const button=$('saveDialog');button.disabled=true;
   const f=new FormData(e.currentTarget),v=Object.fromEntries(f.entries());
   $('dialogError').textContent='';$('dialogError').classList.add('hidden');
-  try{await editor.onSave(v);closeDialog({force:true});}
+  try{const result=await editor.onSave(v);if(result!==false)closeDialog({force:true});}
   catch(err){
    const feedback=$('dialogError');
-   feedback.textContent='Änderung nicht gespeichert: '+String(err.message||err);
+   feedback.textContent=(editor?.readOnly?'Prüfung nicht möglich: ':'Änderung nicht gespeichert: ')+String(err.message||err);
    feedback.classList.remove('hidden');
    feedback.tabIndex=-1;
    feedback.focus({preventScroll:true});
