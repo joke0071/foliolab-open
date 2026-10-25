@@ -1,3 +1,4 @@
+import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
 import {validateWalletHistory} from './wallet-history-state.js';
 import {validateImportSource} from './import-identity.js';
@@ -46,8 +47,8 @@ export function createAccount(v,model){
   const type=['securities','checking','savings','exchange','wallet','other'].includes(v.type)?v.type:'other';
   const currency=cleanString(v.currency||'EUR',3).toUpperCase();
   if(!/^[A-Z]{3}$/.test(currency))throw Error('Ungültige Kontowährung.');
-  const cashTerms=normalizeCashTerms(v.cashTerms);
-  return {id:v.id||uid(),providerId:v.providerId,name,type,currency,...(cashTerms?{cashTerms}:{})};
+  const cashTerms=normalizeCashTerms(v.cashTerms),interestTerms=normalizeInterestTerms(v.interestTerms);
+  return {id:v.id||uid(),providerId:v.providerId,name,type,currency,...(cashTerms?{cashTerms}:{}),...(interestTerms?{interestTerms}:{})};
 }
 export const suggestedAccountType=kind=>({etf:'securities',stock:'securities',fund:'securities',crypto:'wallet',cash:'savings'})[kind]||'other';
 function defaultAccount(model,providerId){
