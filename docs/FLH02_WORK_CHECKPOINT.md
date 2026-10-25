@@ -44,7 +44,7 @@ Private reference files stay local; only synthetic fixtures and public app hashe
 
 ## Remaining safe closeout
 
-First finish PR #146 v176: current unit suite 658/658 and affected Chromium history/mini/FX + portfolio integration passed. Required current all-engine CI remains pending. Merge only green/conflict-free; verify full main CI/deployment and actual v176 live acceptance including USD CSV FX and mini values. Then record final v176 evidence and merge the documentation closeout. Do not claim v175 proves the new v176 action. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
+First finish PR #146 v176: current unit suite 658/658 and affected Chromium history/mini/FX + portfolio integration passed. Actual-app canonical USD CSV FX save/reload and dashboard value passed locally too. Histories with CSV/dated opening are reachable without purchase bookings. This case is included in both Chromium and Firefox/WebKit CI. Required current all-engine CI remains pending. Merge only green/conflict-free; verify full main CI/deployment and actual v176 live acceptance including USD CSV FX and mini values. Then record final v176 evidence and merge the documentation closeout. Do not claim v175 proves the new v176 action. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
 
 ## Exact resumption if interrupted during documentation closeout
 
