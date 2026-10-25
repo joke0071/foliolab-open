@@ -46,7 +46,7 @@ Baseline main: 535 Tests. Neuer lokaler Gesamtstand: 549 Node-Tests bestanden. V
 
 Neue Browserprüfung `browser-cash-terms.mjs`: Konto bearbeiten, Bindung erfassen, überfälligen Status prüfen, Wiederanlage/Belegbestätigung und Auszahlung erfassen, mehrere Konten, Fremdwährung, unveränderte Positionen/Journal/Cashflows/Stichtage, Axe, 320/390/430/768/1440 und Kontokarten, verschlüsselter vollständiger Backup-Roundtrip, tatsächlicher Ausfall eines eigenen Testservers mit vollständigem Offline-Neustart und konkurrierender Zweittab-Änderung. In vorhandene Chromium-/Firefox-/WebKit-CI integriert. Finale SHA-/CI-Nachweise stehen im PR und Issue; WIP-Checkpoints sind keine Abnahme.
 
-Erster Chromium-Axe-Lauf fand einen Kontrastfehler in einem neuen Hilfstext; gezielt innerhalb der optionalen Sektion korrigiert und gleiche Assertion erneut geprüft. Keine bestehenden Assertions abgeschwächt.
+Erster Chromium-Axe-Lauf fand einen Kontrastfehler in einem neuen Hilfstext; gezielt innerhalb der optionalen Sektion korrigiert und gleiche Assertion erneut geprüft. Keine bestehenden Assertions abgeschwächt. Der bestehende Pixeltest meldete die beabsichtigte zusätzliche eingeklappte Sektion im Kontodialog: zwei Desktop-/Tablet-Referenzen jetzt 640×732 statt 640×658. Ausschließlich diese zwei Bilder wurden anhand des unveränderlichen Actions-Artefakts 12589111187 aus Run 40168505825 visuell geprüft und als neue Sollreferenz übernommen. Alle anderen 18 Referenzen, exakte Größenprüfung und Pixelgrenzen bleiben unverändert; keine automatische Baseline-Regeneration aus einem Testlauf.
 
 ## Wiederaufnahme und Grenzen
 

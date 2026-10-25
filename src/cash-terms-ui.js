@@ -39,7 +39,7 @@ export function cashTermsFormMarkup(terms,esc,options){
  const t=terms||{status:'unknown',fixedTerm:false,outcome:'unconfirmed'};
  return '<details class="advanced-apis" id="cashTermsDisclosure"><summary>Liquidität und Festgeld · optional</summary>'+
   '<label class="csv-skip"><input type="checkbox" name="cashTermsEnabled" id="cashTermsEnabled"'+(terms?' checked':'')+'> Liquiditätsinformationen ergänzen</label>'+
-  '<div id="cashTermsFields"><label class="field"><span>Verfügbarkeit des Guthabens</span><select name="liquidityStatus" id="liquidityStatus">'+options(Object.entries(LIQUIDITY_LABELS),t.status)+'</select></label>'+
+  '<div id="cashTermsFields"><label class="field"><span>Verfügbarkeit laut deiner Angabe</span><select name="liquidityStatus" id="liquidityStatus">'+options(Object.entries(LIQUIDITY_LABELS),t.status)+'</select></label>'+
   '<label class="csv-skip"><input type="checkbox" name="fixedTerm" id="fixedTerm"'+(t.fixedTerm?' checked':'')+'> Festgeld mit Vertragslaufzeit</label>'+
   '<div id="fixedTermFields"><div class="field-row"><label class="field"><span>Vertragsbeginn · optional</span><input type="date" name="termStartDate" id="termStartDate" value="'+esc(t.startDate||'')+'"></label>'+
   '<label class="field"><span>Vereinbarte Fälligkeit · optional</span><input type="date" name="termMaturityDate" id="termMaturityDate" value="'+esc(t.maturityDate||'')+'"></label></div>'+
