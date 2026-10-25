@@ -23,7 +23,7 @@ class Handler(SimpleHTTPRequestHandler):
    self.send_response(200);self.end_headers();self.wfile.write(b'updated');return
   if self.path.startswith('/sw.js') and not Handler.upgraded:
    source=open('sw.js').read()
-    source=source.replace(source.splitlines()[0], "const CACHE='foliolab-open-v149';").replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'')
+   source=source.replace(source.splitlines()[0], "const CACHE='foliolab-open-v149';").replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'')
    self.send_response(200);self.send_header('Content-Type','application/javascript');self.end_headers();self.wfile.write(source.encode());return
   super().do_GET()
 HTTPServer(('127.0.0.1',4188),Handler).serve_forever()`;
