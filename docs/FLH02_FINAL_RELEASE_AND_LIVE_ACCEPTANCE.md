@@ -1,3 +1,5 @@
+> Historical v175 acceptance record. The final targeted v176 FX action/mini-chart correction is tracked in PR #146 and the current work checkpoint; v175 does not prove that subsequent action.
+
 # FLH02 final release and live acceptance
 
 Specification: Library document FLH02 version 11, including A–E and 7.11–7.14. A was accepted separately as v171 in PR #143. PR #144 completes B/C1, C2/C3, D/E and Drive UX using the existing local data model, journal, wallet replay, provider transports and backup contracts.

@@ -1,19 +1,21 @@
-# FLH02 work checkpoint — v175 released and live accepted
+# FLH02 work checkpoint — v175 accepted; v176 FX completion candidate
 
 Specification: exact Library FLH02 document version 11, including A–E and 7.11–7.14. No accepted FLH01 or IndexedDB work was reimplemented.
+
+A final audit identified that local foreign-currency CSV had no direct keyless FX-loading action and mini charts discarded retained FX. Candidate v176 fixes this safely before final closeout. All earlier v175 evidence below remains historical and valid.
 
 ## Identity and remote state
 
 - Implementation branch: `feature/flh02-position-value-foundation`, [PR #144](https://github.com/joke0071/foliolab-open/pull/144), merged as `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`.
 - Pre-live checkpoint and manual live test: [PR #145](https://github.com/joke0071/foliolab-open/pull/145), merged as `eb737df8979c7708d678de8045bd2b48db9e8e2f`.
 - Actually tested/deployed/live-accepted main SHA: `eb737df8979c7708d678de8045bd2b48db9e8e2f`. App implementation bytes are unchanged by the documentation closeout.
-- Current closeout branch: `docs/flh02-v175-acceptance`, [PR #146](https://github.com/joke0071/foliolab-open/pull/146); commit is this file's containing commit. Its PR is documentation/evidence only; final PR/main CI links are recorded in its GitHub description. Resolve final main with `git ls-remote origin refs/heads/main`.
+- Current closeout branch: `docs/flh02-v175-acceptance`, [PR #146](https://github.com/joke0071/foliolab-open/pull/146); commit is this file's containing commit. Its PR now also contains the targeted v176 FX fix; final PR/main CI links are recorded in its GitHub description. Resolve final main with `git ls-remote origin refs/heads/main`.
 - Production: [FolioLab Open](https://joke0071.github.io/foliolab-open/), active `foliolab-open-v175`.
 
 | Package | Final status |
 |---|---|
 | A | DONE: accepted v171, preserved; actual v175 Bittr UI/IDB/backup/multitab regression PASS. No duplicate stock/cash/cost basis. |
-| B | DONE: evidenced EOD quantities × raw close × historical FX, EUR default, price/holdings/transactions, shared miniature charts, gaps/provenance, 6M/3J/5J/Max within actual data coverage; explicit rights-confirmed retention in existing history store. |
+| B | v176 candidate, not yet released: local non-EUR CSV/provider histories can load and keep dated historical FX without a security API key; mini charts retain FX. Existing v175 scope: evidenced EOD quantities × raw close × historical FX, EUR default, price/holdings/transactions, shared miniature charts, gaps/provenance, 6M/3J/5J/Max within actual data coverage; explicit rights-confirmed retention in existing history store. |
 | C1 | DONE: read-only journal/cash/chain aggregation, actual booked interest and signed liabilities; missing ownership, opening facts, clearing and wallet overlap block full-total claims. |
 | C2 | DONE: dashboard/history share the projection; actual 999/1059 EUR synthetic live result without snapshots. Separate observation/partial bases and optional control points. |
 | C3 | DONE: coverage, explicit gaps, independent snapshot differences, no automatic corrections; integrated unit/all-engine/browser/live gates. |
@@ -23,7 +25,7 @@ Specification: exact Library FLH02 document version 11, including A–E and 7.11
 
 ## Actually passed
 
-- `npm run check`; `npm test`: 657/657, zero skipped/failing.
+- `npm run check`; `npm test`: latest 658/658, zero skipped/failing.
 - [PR #144 gate 40217442188](https://github.com/joke0071/foliolab-open/actions/runs/40217442188): Chromium and Firefox/WebKit PASS, wallet checks and informational wallet audit also successful.
 - [PR #145 gate 40218196233](https://github.com/joke0071/foliolab-open/actions/runs/40218196233): Chromium and Firefox/WebKit PASS.
 - [Main release/deployment 40218777354](https://github.com/joke0071/foliolab-open/actions/runs/40218777354): test, cross-engine and Pages deploy ALL PASS. Earlier main run 40217903807 was cancelled after a runner stalled during browser-dependency installation; no gate was weakened or bypassed.
@@ -42,8 +44,8 @@ Private reference files stay local; only synthetic fixtures and public app hashe
 
 ## Remaining safe closeout
 
-At creation, only PR #146 CI/merge and final main CI/deployment confirmation remained. Once #146 is merged and the subsequent main workflow is green, this closeout is complete: no FLH02 work remains. Verify unchanged production v175; do not create another documentation-only loop to record a self-referential commit SHA. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
+First finish PR #146 v176: current unit suite 658/658 and affected Chromium history/mini/FX + portfolio integration passed. Required current all-engine CI remains pending. Merge only green/conflict-free; verify full main CI/deployment and actual v176 live acceptance including USD CSV FX and mini values. Then record final v176 evidence and merge the documentation closeout. Do not claim v175 proves the new v176 action. Preserve the live evidence; do not repeat accepted A/FLH01/IndexedDB implementation or a full audit.
 
 ## Exact resumption if interrupted during documentation closeout
 
-> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md. All A/B/C1/C2/C3/D/E/Drive implementations are merged and v175 is live accepted at eb737df8979c7708d678de8045bd2b48db9e8e2f, main workflow 40218777354 green. Only finish PR #146 (docs/flh02-v175-acceptance): if already merged with subsequent main CI/deployment green, closeout is complete and no work should be repeated. Otherwise check its current CI, merge green/conflict-free under existing authorization, and verify final main CI/deployment and unchanged v175 production bytes/SW. Do not reimplement or repeat completed feature audits. Report final main SHA and CI/PR links.
+> Continue FLH02 v11 from docs/FLH02_WORK_CHECKPOINT.md and PR #146 on docs/flh02-v175-acceptance. Existing A/B/C1/C2/C3/D/E/Drive v175 release is live accepted at eb737df8979c7708d678de8045bd2b48db9e8e2f, workflow 40218777354 green. A final B fix in v176 adds keyless dated FX loading/retention for foreign-currency local histories and preserves FX in mini charts. Local check, 658 unit tests and affected Chromium suites pass; finish current all-engine PR CI, merge under existing authorization, verify main deployment and v176 live including FX, then finalize evidence. Do not repeat prior feature audits.

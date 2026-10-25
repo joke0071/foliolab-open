@@ -99,10 +99,10 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  const token=String(Number(mount.dataset.loadSequence||0)+1);
  mount.dataset.loadSequence=token;
  const isCurrent=()=>mount.isConnected&&target.isConnected&&mount.dataset.loadSequence===token;
- const render=(points,kind,currency='EUR',source='')=>{
+ const render=(points,kind,currency='EUR',source='',fxPoints=null)=>{
   if(!isCurrent())return;
   if(kind==='market'){
-   const projection=projectHistoricalPosition(model,position.id,{marketHistory:{points,currency,source,priceType:position.kind==='crypto'?'crypto-daily':'close'}});
+   const projection=projectHistoricalPosition(model,position.id,{marketHistory:{points,currency,source,fxPoints,priceType:position.kind==='crypto'?'crypto-daily':'close'}});
    const valued=projection.rows.filter(r=>r.valueEURExact!==null);
    if(valued.length>=2&&!projection.partial){points=valued.map(r=>({date:r.date,totalEURExact:r.valueEURExact,detail:'Bestand '+r.quantityExact+' · Kurs '+r.priceExact+' '+position.currency+' · EUR-Faktor '+r.fxExact+' · '+r.source}));kind='historical-value';currency='EUR';}
   }
@@ -144,19 +144,19 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
  }
  const imported=importedHistoryForPeriod(model,position,days);
  const capability=days==='max'?null:marketHistoryCapability(position,model.settings);
- if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
+ if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
  if(capability){
   try{
    // Prefer a real, provider-backed market chart over locally imported CSV.
    const history=await fetchPositionMarketHistory(position,model.settings,days,fetcher);
-   render(history.points,history.kind,history.currency,history.source);
+   render(history.points,history.kind,history.currency,history.source,history.fxPoints);
    return;
   }catch(error){
-   if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
+   if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
    fallback(safeHistoryError(error,{security:['etf','stock','fund'].includes(position.kind)}));
    return;
   }
  }
- if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source);return;}
+ if(imported?.points.length>=2){render(imported.points,'market',imported.currency,imported.source,imported.fxPoints);return;}
  fallback(imported?'Für diesen Zeitraum liegen weniger als zwei CSV-Kurstage vor. Bitte einen längeren Zeitraum wählen.':'Keine bestätigte Kursquelle eingerichtet.');
 }
