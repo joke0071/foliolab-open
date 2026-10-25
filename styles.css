@@ -980,3 +980,18 @@
 #cashTermsFields[hidden],#fixedTermFields[hidden],#termConfirmationFields[hidden],#termRenewalWrap[hidden]{display:none}
 @media(max-width:430px){.cash-term-row{align-items:flex-start}.cash-term-row .link-button{flex-shrink:0;min-height:44px}.provider-account-head .liquidity-note{max-width:190px}}
 #cashTermsDisclosure .field small{color:#506b59;font-size:12px;line-height:1.5}
+
+/* Optional AT02-B editor; forecast amounts never enter portfolio totals. */
+#interestFields[hidden]{display:none!important}
+#interestDisclosure .small-help{color:#506b59}
+.interest-rate-row{border:1px solid #dce8df;border-radius:10px;padding:12px;margin:12px 0;min-width:0}
+.interest-rate-row legend{font-size:13px;font-weight:700;color:#294d38;padding:0 4px}
+.interest-result{min-width:0;overflow-wrap:anywhere}
+.interest-result:empty{display:none}
+.interest-gross{font-size:18px;font-variant-numeric:tabular-nums}
+.interest-periods{max-width:100%;overflow-x:auto;margin:12px 0}
+.interest-periods table{border-collapse:collapse;width:100%;font-size:12px}
+.interest-periods caption{text-align:left;color:#506b59;padding:8px 0}
+.interest-periods th,.interest-periods td{text-align:left;padding:8px;border-bottom:1px solid #dce8df;vertical-align:top}
+#interestDisclosure .link-button{min-height:44px}
+@media(max-width:430px){.interest-rate-row{padding:10px}#interestCalculate,#interestAddRate{width:100%}}
