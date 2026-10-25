@@ -1050,3 +1050,5 @@
 .mobile-header .portfolio-status{font-size:11px;color:#4d6756;margin-left:auto;text-align:right;max-width:50%}
 
 #historyChart.is-empty{height:auto;min-height:0}
+/* Long safety actions in expanded settings stay inside the existing card. */
+.data-source-panel .more-panel-help .btn{max-width:100%;white-space:normal;overflow-wrap:anywhere}
