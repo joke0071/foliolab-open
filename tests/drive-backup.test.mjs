@@ -2,6 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
+import {blankModel,backup,safeImport,createProvider} from '../src/model.js';
+import {createCompleteBackup,unpackCompleteBackup} from '../src/complete-backup.js';
+import {acceptHistory,historyPreview} from '../src/wallet-history-state.js';
+import {replayWalletHistory} from '../src/wallet-history-core.js';
+import {event,stream,NOW} from './wallet-history-fixtures.mjs';
 const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf8');
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
@@ -111,14 +116,21 @@ test('public UI offers full encrypted backup without any recovery-code workflow'
  assert.doesNotMatch(source,/api\/public-config|client_secret|refresh_token|FolioLabNativeGoogleAuth/);
 });
 
-test('the optional full Drive payload includes configuration but no OAuth session token',async()=>{
+test('the optional full Drive payload includes validated history and configuration but no OAuth session token',async()=>{
  const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,includeConfig:true});
+ const preview=historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream()]}),issues:[]},{id:'drive-history',chain:'eth',walletKey:'public-wallet',acceptedAt:NOW});
+ const m=acceptHistory(blankModel(),preview);m.providers.push(createProvider({name:'Wallet history backup',type:'wallet'}));
+ t.backend.readData=()=>JSON.parse(backup(m));
+ t.backend.buildCompleteBackup=(data,config)=>createCompleteBackup(data,config,m.walletHistory);
  await t.window.FolioDriveBackup.init(t.backend);
  await t.elements.driveConnect.onclick();
  await t.elements.driveSaveNow.onclick();
- assert.equal(t.written[0]?.kind,'FolioLabCompleteBackup');
+ assert.equal(t.written[0]?.kind,'FolioLabCompleteBackup',t.elements.driveBackupStatus.textContent);
  assert.equal(t.written[0]?.configuration.settings.eodhdKey,'test-private-key');
  assert.equal(t.written[0]?.configuration.drive.mode,'daily');
+ assert.deepEqual(safeImport(unpackCompleteBackup(t.written[0]).data).walletHistory,m.walletHistory);
+ assert.equal(t.written[0].walletHistory.pending.length,0);
+ assert.ok(t.requests.some(x=>x.url.includes('upload/drive/v3/files')&&x.method==='POST'));
  assert.ok(!JSON.stringify(t.written).includes('ephemeral-test-token'));
  assert.ok(!String(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).includes('ephemeral-test-token'));
 });

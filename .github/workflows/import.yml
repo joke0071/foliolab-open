@@ -60,6 +60,9 @@ jobs:
           node tests/browser-wallet-history-core.mjs
           node tests/browser-bitcoin-history.mjs
           node tests/browser-ethereum-history.mjs
+          node tests/browser-history-storage.mjs
+          node tests/browser-history-ui.mjs
+          node tests/browser-history-worker.mjs
           node tests/browser-p0-import.mjs
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-flatex-import.mjs
@@ -149,7 +152,7 @@ jobs:
           node-version: '22'
       - name: Install Firefox and WebKit for cross-engine regression
         run: |
-          npm install --no-save playwright@1.56.1
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
           npx playwright install --with-deps firefox webkit
       - name: Test portfolio workflows on Firefox and WebKit
         run: |
@@ -160,6 +163,9 @@ jobs:
           HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
+          HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
   deploy:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     permissions:

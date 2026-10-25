@@ -1,3 +1,4 @@
+import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
 import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg} from './format.js';
@@ -54,6 +55,7 @@ let saving=false,recoveryDownloaded=false,recoveryOriginal=null;
 let otherTabChangedPortfolio=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
+const walletHistoryUI=createWalletHistoryUI({getModel:()=>model,commit:async draft=>{model=draft;await save();}});
 const PAGES=[['dashboard','Übersicht','dashboard','DEIN VERMÖGEN IM BLICK'],['history','Verlauf','history','VERMÖGEN IM ZEITVERLAUF'],['positions','Positionen','positions','DEINE ANLAGEN'],['bookings','Buchungen','bookings','MANUELL ERFASSEN'],['more','Mehr','more','EINSTELLUNGEN UND DATEN']];
 const PAGE_DESCRIPTIONS={history:'Vermögensstände nach Zeitraum und Stichtagen ansehen.',positions:'Anlagen erfassen, Kurse aktualisieren und Wallets ergänzen.',bookings:'Käufe, Verkäufe, Einzahlungen und Rewards erfassen.',more:'Verwalte Konten, Datenquellen und Backups an einem Ort.'};
 const colors={etf:'#4f8662',stock:'#7da996',fund:'#b6cdb2',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
@@ -278,7 +280,7 @@ function renderPositions(){
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
    '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button></div></div></div>'+
-   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details></div>';
+   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details>'+ (p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1)?'<button type="button" class="btn outline" data-action="wallet-history" data-id="'+esc(p.id)+'">Historie rekonstruieren</button>':'')+'</div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -1377,6 +1379,7 @@ async function refreshAll(){
  finally{busy=false;$('refreshAll').disabled=false;}
 }
 const FULL_BACKUP_OPTION='foliolab-open-backup-include-configuration-v1';
+const HISTORY_BACKUP_OPTION='foliolab-open-backup-include-history-v1';
 function includeBackupConfiguration(){return $('fullBackupIncludeSettings')?.checked===true;}
 function readDriveConfig(){
  let prefs={};try{prefs=JSON.parse(localStorage.getItem('foliolab-open-drive-backup-settings-v1')||'{}')}catch{}
@@ -1384,7 +1387,7 @@ function readDriveConfig(){
 }
 function fullBackupPayload(data=JSON.parse(backup(model))){
  const included=includeBackupConfiguration();
- return createCompleteBackup(data,included?{settings:model.settings,drive:readDriveConfig()}:null);
+ return createCompleteBackup(data,included?{settings:model.settings,drive:readDriveConfig()}:null,$('fullBackupIncludeHistory')?.checked?model.walletHistory??null:null);
 }
 function decideImportedConfiguration(config){
  if(!config)return null;
@@ -1511,7 +1514,7 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
@@ -1574,6 +1577,17 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
     finally{input.value='';confirmInput.value='';old.value='';button.disabled=false;}
   });
   const fullOption=$('fullBackupIncludeSettings');
+  const historyOption=$('fullBackupIncludeHistory');
+  historyOption.checked=localStorage.getItem(HISTORY_BACKUP_OPTION)==='true';
+  historyOption.addEventListener('change',()=>{
+    try{
+      localStorage.setItem(HISTORY_BACKUP_OPTION,historyOption.checked?'true':'false');
+      notify(historyOption.checked?'Bestätigte Wallet-Historien werden künftig in verschlüsselten Backups mitgesichert.':'Wallet-Historien werden aus neuen verschlüsselten Backups ausgeschlossen.');
+    }catch{
+      historyOption.checked=!historyOption.checked;
+      notify('Backup-Auswahl konnte nicht gespeichert werden. Die bisherige Auswahl bleibt bestehen.',true);
+    }
+  });
   fullOption.checked=localStorage.getItem(FULL_BACKUP_OPTION)==='true';
   fullOption.addEventListener('change',()=>{
     localStorage.setItem(FULL_BACKUP_OPTION,fullOption.checked?'true':'false');
@@ -1632,7 +1646,7 @@ function initEvents(){$('resolveListings').addEventListener('click',openListingR
       readBackupConfiguration(){
         return includeBackupConfiguration()?{settings:model.settings,drive:readDriveConfig()}:null;
       },
-      buildCompleteBackup:createCompleteBackup,
+      buildCompleteBackup:(data,config)=>createCompleteBackup(data,config,$('fullBackupIncludeHistory')?.checked?model.walletHistory??null:null),
       unpackCompleteBackup,
       validateData(data){return safeImport(data);},
       hasPasswordVault:hasBackupPassword,

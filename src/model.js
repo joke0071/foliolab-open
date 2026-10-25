@@ -1,3 +1,4 @@
+import {validateWalletHistory} from './wallet-history-state.js';
 import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
@@ -156,6 +157,7 @@ export function safeImport(raw){
   if(raw.version>=2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
   if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
   const m=blankModel();
+  if(raw.walletHistory!==undefined)m.walletHistory=validateWalletHistory(raw.walletHistory);
   m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
@@ -248,7 +250,7 @@ export function safeImport(raw){
   }
   return m;
 }
-export function backup(model){const copy=structuredClone(model);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -274,7 +276,7 @@ export function persist(model,storage=globalThis.localStorage){
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
- const serialized=JSON.stringify(model);
+ const serialized=JSON.stringify(model.walletHistory?{...model,walletHistory:validateWalletHistory(model.walletHistory)}:model);
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);
 }
