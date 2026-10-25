@@ -117,7 +117,7 @@ Eine dokumentierende Jahresübersicht ist vor automatischer Steuerengine prioris
 
 ## Erneute Benchmarkentscheidung und Lizenzen
 
-Benchmark-HEADs erneut abgerufen: rotki `6cd6a9e029830b2495218dd7f69da4ec502e9cf5`, Sure `09df1b14f14389a02c3939f98410a6cbff64fef9` (unverändert zur historischen Analyse). Erneut gelesen: rotki `history/data_issues/manager.py`, Sure `account/provider_import_adapter.rb` und `account/reconciliation_manager.rb`, beide AGPL-v3-Lizenzen.
+Benchmark-HEADs erneut abgerufen: rotki `6cd6a9e029830b2495218dd7f69da4ec502e9cf5`, Sure `bc02ce5594fcff21641aa752c50047f6f36091ab`. rotki ist unverändert zur historischen Analyse; die beiden geprüften Sure-Module und LICENSE sind am neuen HEAD byteidentisch mit der historischen Referenz `09df1b14f14389a02c3939f98410a6cbff64fef9`. Erneut gelesen: rotki `history/data_issues/manager.py`, Sure `account/provider_import_adapter.rb` und `account/reconciliation_manager.rb`, beide AGPL-v3-Lizenzen.
 
 Sinnvolle Konzepte: Quellen-/Kontoidentität und Nutzerkorrekturschutz (bereits umgesetzt), expliziter Abgleich statt ungefragter Cashflow, objektbezogene handlungsfähige Hinweise. Nicht übernehmen: rotkis SQL-Issue-Persistenz/Full-DeFi-Decoder, Sures Rails-/Server-/Queuearchitektur oder heuristisches automatisches Claimen von Betragsmatches. Keine Codeschnipsel übernommen; FolioLab-Änderung eigenständig auf bestehenden JS-Modulen. Vollständige Benchmarkanwendungen nicht neu ausgeführt.
 
@@ -149,7 +149,7 @@ Sequenz: AT03-A → unabhängiges AT02-A → AT03-B nach Fachvertrag. AT03-C ers
 3. Dokumentationsbranch `docs/benchmark-restarbeiten-2026-10` und zugehörigen Draft-PR prüfen.
 4. Featurebranch `feature/at03-current-cash-reconciliation` und zugehörigen PR prüfen; letzten Remote-Commit/Tests/offene Schritte lesen.
 5. main vergleichen. Bereits bestätigte BENCH-Analyse nicht neu beginnen, nur Änderungen seit Basis gezielt bewerten.
-6. AT03-A ist inzwischen in [Feature-Draft-PR #131](https://github.com/joke0071/foliolab-open/pull/131) implementiert und in kleinen Remote-Commits gesichert. Letzter Code-/Testcheckpoint: `98c6c033dc209f6958d66626eab64bb7554fc3b3`. Vollsuite 541 Tests und lokale Chromium-Regressionen bestanden; finale Cross-Engine-/CI-Ergebnisse und exakter Wiedereinstieg stehen im Master/PR. Erst diese prüfen, keine neue Implementierung beginnen. Keine produktiven Brokerregeln, kein Merge/Deployment.
+6. AT03-A ist inzwischen in [Feature-Draft-PR #131](https://github.com/joke0071/foliolab-open/pull/131) implementiert und in kleinen Remote-Commits gesichert. Letzter Code-/Testcheckpoint: `66590eb4e9533f02c744085b8661a1a42eb616c0`. Vollsuite 541 Tests und lokale Chromium-Regressionen bestanden; finale Cross-Engine-/CI-Ergebnisse und exakter Wiedereinstieg stehen im Master/PR. Erst diese prüfen, keine neue Implementierung beginnen. Keine produktiven Brokerregeln, kein Merge/Deployment.
 
 Nach jeder fachlichen Scheibe prüfen/testen/committen/pushen und Issue/PR aktualisieren. WIP ist erlaubt, muss klar unvollständig heißen. Dokumentations- und Featurebranches bleiben getrennt; beide basieren auf geeignetem main. Der Feature-PR braucht keinen Merge des Dokumentations-PRs.
 
