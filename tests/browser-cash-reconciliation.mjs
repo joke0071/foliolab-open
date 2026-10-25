@@ -14,7 +14,8 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
  const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  try{
-  await page.route('**/__cash_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
+  // Inject the test helper before navigation; no routed script request crosses the app's Service Worker.
+  await page.addInitScript({content:axeScript});
   await page.goto('http://127.0.0.1:4173/');
   await page.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
@@ -48,7 +49,6 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' overflow at '+width);
    assert.ok(await page.locator('#editDialog').evaluate(e=>e.scrollWidth<=e.clientWidth+1),name+' dialog overflow at '+width);
   }
-  await page.addScriptTag({url:'http://127.0.0.1:4173/__cash_axe.js'});
   const violations=await page.evaluate(async()=>(await window.axe.run(document.querySelector('#editDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,impact:v.impact})));
   assert.deepEqual(violations,[],name+' cash dialog WCAG rules');
   let confirms=0;page.on('dialog',async d=>{confirms++;await d.dismiss();});
