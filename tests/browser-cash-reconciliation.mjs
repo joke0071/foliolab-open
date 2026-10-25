@@ -2,9 +2,25 @@ import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {createRequire} from 'node:module';
 import {readFileSync} from 'node:fs';
+import {spawn} from 'node:child_process';
+import {once} from 'node:events';
 const require=createRequire(import.meta.url);
 const axeScript=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
 const engines={chromium,firefox,webkit};
+const base='http://127.0.0.1:4187';
+async function stopServer(server){
+ if(server&&server.exitCode===null){const exited=once(server,'exit');server.kill('SIGTERM');await exited;}
+ return null;
+}
+async function startServer(){
+ const server=spawn('python3',['-m','http.server','4187','--bind','127.0.0.1'],{stdio:'ignore'});
+ for(let attempt=0;attempt<40;attempt++){
+  try{const response=await fetch(base);if(response.ok)return server;}catch{}
+  await new Promise(resolve=>setTimeout(resolve,100));
+ }
+ await stopServer(server);throw Error('Isolated cash comparison HTTP server did not start');
+}
+
 // Bound even unresolved service-worker/platform promises; never hang a CI job.
 const deadline=setTimeout(()=>{console.error('Cash comparison browser deadline exceeded');process.exit(1);},180000);
 deadline.unref();
@@ -13,10 +29,12 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
  const browser=await engines[name].launch({headless:true,args:name==='chromium'?['--no-sandbox']:[]});
  const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
+ let server;
  try{
+  server=await startServer();
   // Inject the test helper before navigation; no routed script request crosses the app's Service Worker.
   await page.addInitScript({content:axeScript});
-  await page.goto('http://127.0.0.1:4173/');
+  await page.goto(base);
   // Finish initial shell installation before navigating to the synthetic portfolio.
   await page.evaluate(async()=>{await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Initial service worker not ready')),30000))]);});
   await page.evaluate(async()=>{
@@ -68,17 +86,17 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   await page.locator('#mobileNav [data-page="more"]').click();await page.locator('#addProvider').click();
   assert.equal(await page.locator('#cancelDialog').innerText(),'Abbrechen');assert.equal(await page.locator('#saveDialog').innerText(),'Anbieter speichern');
   await page.locator('#closeDialog').click();
-  // Block all network requests; the complete cached app shell must still reload.
+  // Stop the real origin server: no browser interception may bypass Service Worker navigation.
   await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Service worker not ready')),15000))]);});
   await page.waitForFunction(()=>navigator.serviceWorker.controller);
-  await context.route('**/*',route=>route.abort('internetdisconnected'));await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
+  server=await stopServer(server);await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
   const offline=page.locator('[data-action="check-cash-balance"][data-id="second-cash"]');
   for(const details of await offline.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   await offline.click();await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before);
   // An actual second-tab write invalidates the visible result and blocks stale checks.
-  const peer=await context.newPage();await peer.goto('http://127.0.0.1:4173/');
+  const peer=await context.newPage();await peer.goto(base);
   const peerRaw=await peer.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));m.providers[0].name='Updated Testbank';const raw=JSON.stringify(m);localStorage.setItem('foliolab-open-v1',raw);return raw;});
   await page.waitForFunction(()=>document.querySelector('#cashComparisonResult').textContent.includes('Datenstand'));
   await page.locator('#saveDialog').click();
@@ -87,5 +105,5 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),peerRaw);await peer.close();
   assert.deepEqual(errors,[]);
   console.log('CASH RECONCILIATION '+name+': exact/read-only/account/FX/dialog/mobile/offline PASS');
- }finally{await context.setOffline(false).catch(()=>{});await context.close();await browser.close();}
+ }finally{await stopServer(server);await context.close();await browser.close();}
 }
