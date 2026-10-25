@@ -2,7 +2,20 @@
 
 Der vorbereitete Worker kann FolioLab Open mit öffentlichen **Wertpapier-Stammdaten** von OpenFIGI v3 verbinden und **optional historische EODHD-Schlusskurse** abrufen. Der EODHD-API-Schlüssel bleibt dabei ausschließlich als Secret im eigenen Cloudflare-Konto. Der Worker erhält keine Depotbestände oder Wallet-Adressen. Die Einrichtung ist nur für Nutzer gedacht, die eine zusätzliche Onlinesuche möchten. **Der Worker wird nicht automatisch veröffentlicht.** Ohne ihn funktionieren weiterhin lokale Suche, manuelle Anlage und CSV-Import.
 
-## Einrichten in fünf Schritten
+## Für alle Nutzer: eigener Worker per Deploy to Cloudflare
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/joke0071/foliolab-open/tree/main/worker)
+
+**Jeder Nutzer** kann damit die Worker-Vorlage aus genau diesem Ordner im **eigenen Cloudflare-Konto** installieren. Ein gemeinsamer FolioLab-Worker ist nicht vorgesehen. Es werden **keine zentralen GitHub-Secrets, Cloudflare-Zugangsdaten oder EODHD-API-Schlüssel** benötigt.
+
+1. Auf **Deploy to Cloudflare** klicken, mit dem eigenen Cloudflare-Konto anmelden und den GitHub-Import für das **eigene** Konto autorisieren.
+2. Den aus `worker/` übernommenen Worker dort selbst veröffentlichen. Anschließend die individuelle HTTPS-Adresse aus Cloudflare kopieren.
+3. In FolioLab Open unter **Mehr → Datenquellen & Aktualisierung → Erweiterte Wertpapiersuche** die eigene Worker-Basisadresse speichern. Für die OpenFIGI-Suche ist **kein** EODHD-Key notwendig.
+4. Falls EODHD-Kurse gewünscht sind, den eigenen `EODHD_TOKEN` sowie einen separat erzeugten `MARKET_ACCESS_TOKEN` als **Secrets im eigenen Cloudflare-Konto** hinterlegen (Details weiter unten) und in FolioLab nur die Worker-Basisadresse und den Zugriffstoken eintragen.
+
+Der Deploy-Button verwendet das von Cloudflare dokumentierte URL-Format für einen eigenständigen Worker-Unterordner. **Der vollständige End-to-End-Import über das Cloudflare-Konto ist noch nicht live verifiziert.** Falls Cloudflares GitHub-Import nicht funktioniert, die folgende Terminal-Alternative verwenden. Die GitHub-Pages-PWA wird nicht zu Cloudflare migriert. [Ausführliche nutzerunabhängige Anleitung](../docs/CLOUDFLARE_WORKER_DEPLOYMENT.md).
+
+## Alternative: lokal mit Wrangler in fünf Schritten
 
 1. [Cloudflare-Konto](https://dash.cloudflare.com/sign-up) anlegen oder anmelden. Auf einem vertrauenswürdigen Computer [Node.js](https://nodejs.org/) ab Version 20 installieren.
 2. Das [FolioLab Open Repository](https://github.com/joke0071/foliolab-open) herunterladen bzw. klonen und ein Terminal im heruntergeladenen Projektordner öffnen.
@@ -16,7 +29,7 @@ npx wrangler deploy
 
 Wrangler kann bei der ersten Verwendung zur Installation und Autorisierung auffordern. `worker/wrangler.toml` legt Namen und Einstiegsdatei fest.
 
-4. Die HTTPS-URL aus der Ausgabe kopieren (Beispiel: `https://foliolab-open-instruments.DEIN-SUBDOMAIN.workers.dev`). **Hinweis:** Ein direkter Test von `/api/instruments/search` in der Browser-Adresszeile kann absichtlich mit `403` antworten, weil dabei der erforderliche `Origin`-Header fehlt. Prüfe den Dienst nach dem Speichern der Basisadresse aus FolioLab heraus oder über den CORS-Live-Test des GitHub-Workflows. Ein leeres Suchergebnis ist kein Zeichen dafür, dass der Dienst kaputt ist.
+4. Die HTTPS-URL aus der Ausgabe kopieren (Beispiel: `https://foliolab-open-instruments.DEIN-SUBDOMAIN.workers.dev`). **Hinweis:** Ein direkter Test von `/api/instruments/search` in der Browser-Adresszeile kann absichtlich mit `403` antworten, weil dabei der erforderliche `Origin`-Header fehlt. Prüfe den Dienst nach dem Speichern der Basisadresse direkt aus FolioLab heraus. Ein leeres Suchergebnis ist kein Zeichen dafür, dass der Dienst kaputt ist.
 5. In FolioLab Open **Mehr → Datenquellen & Aktualisierung → Erweiterte Wertpapiersuche** öffnen. Nur die **HTTPS-Basisadresse**, ohne `/api/...`, ohne Abfrageparameter und ohne Zugangsdaten, einfügen und auf **Suchdienst speichern** tippen. Anschließend im Anlage-Assistenten nach Name oder ISIN suchen. Ergebnisse auf tatsächliche Börse, Ticker und Währung prüfen.
 
 **Wichtig:** `https://dein-worker.workers.dev` ist nur ein Platzhalter, keine öffentlich erreichbare FolioLab-API. GitHub Pages stellt diesen Worker nicht bereit; ein Worker wird separat bei Cloudflare betrieben. Wenn du keinen Worker betreiben möchtest, kannst du das Feld leer lassen.
@@ -54,9 +67,11 @@ Direkte EODHD-Abfragen von GitHub Pages können durch Browser-CORS blockiert wer
 - Antworten enthalten keine Zugangsdaten. Keine Kursanfragen zwischenspeichern, wenn dadurch fremde Nutzer Zugriff erhalten könnten. Endpunkte sind `no-store`; Kursabdeckung und API-Limits richten sich nach deinem EODHD-Tarif.
 - Bei Verlust oder öffentlicher Weitergabe eines Schlüssels diesen bei Cloudflare bzw. EODHD erneuern.
 
-## Alternative: kontrolliertes GitHub-Actions-Deployment
+## Keine zentralen Secrets oder Deployments
 
-Für eine reproduzierbare Veröffentlichung ohne lokales Terminal gibt es einen **manuell auslösbaren** Cloudflare-Workflow mit Syntax-/Unit-Tests und Live-CORS-Gate. Er benötigt die Repository-Secrets `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN`, veröffentlicht nicht automatisch auf jedem Commit und verändert die GitHub-Pages-PWA nicht. Die EODHD-Secrets gehören weiterhin ausschließlich in Cloudflare. Siehe [vollständige Anleitung](../docs/CLOUDFLARE_WORKER_DEPLOYMENT.md).
+Der FolioLab-Open-Betreiber legt **keine** Cloudflare- oder EODHD-Secrets in GitHub ab und stellt diesen Worker **nicht** für alle Nutzer zentral bereit. Der gesamte Ordner `worker/` ist eine wiederverwendbare Open-Source-Vorlage. Jeder Nutzer deployt, aktualisiert, überwacht und gegebenenfalls löscht **seine eigene** Instanz. Die vorhandenen CI-Tests im FolioLab-Repository prüfen nur den Code, sie veröffentlichen keinen Worker.
+
+Für eine ausführliche Anleitung inklusive optionalem EODHD-Secret-Setup siehe [Cloudflare-Worker-Einrichtung für alle](../docs/CLOUDFLARE_WORKER_DEPLOYMENT.md).
 
 ## Technik und Sicherheit
 
