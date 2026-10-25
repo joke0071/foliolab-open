@@ -5,6 +5,7 @@ import {once} from 'node:events';
 import {createRequire} from 'node:module';
 import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url),axe=readFileSync(require.resolve('axe-core/axe.min.js'),'utf8');
+const currentCache=readFileSync('sw.js','utf8').match(/^const CACHE='([^']+)'/)[1];
 const live=process.env.RELEASE_LIVE_BASE;
 const base=live||'http://127.0.0.1:4188',deadline=setTimeout(()=>{console.error('Cash terms browser deadline exceeded');process.exit(1);},240000);deadline.unref();
 async function stop(server){if(server&&server.exitCode===null){const done=once(server,'exit');server.kill();await done;}return null;}
@@ -20,7 +21,7 @@ class Handler(SimpleHTTPRequestHandler):
    Handler.upgraded=True
    self.send_response(200);self.end_headers();self.wfile.write(b'updated');return
   if self.path.startswith('/sw.js') and not Handler.upgraded:
-   source=open('sw.js').read().replace('foliolab-open-v150','foliolab-open-v149').replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'')
+   source=open('sw.js').read().replace('${currentCache}','foliolab-open-v149').replace("'./src/cash-terms.js',",'').replace("'./src/cash-terms-ui.js',",'').replace("'./src/interest-ui.js',",'').replace("'./src/interest-account.js',",'').replace("'./src/interest-scenario.js',",'')
    self.send_response(200);self.send_header('Content-Type','application/javascript');self.end_headers();self.wfile.write(source.encode());return
   super().do_GET()
 HTTPServer(('127.0.0.1',4188),Handler).serve_forever()`;
@@ -48,11 +49,11 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   const financial=()=>page.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));return JSON.stringify({positions:m.positions,bookings:m.bookings,journal:m.journalEntries,flows:m.externalCashFlows,snapshots:m.snapshots});});
   const before=await financial();
   if(!live){
-   // Upgrade the actual installed worker, keeping the synthetic portfolio.
+   // Upgrade the actual installed worker to the shipped revision, preserving the synthetic portfolio.
    assert.ok((await page.evaluate(()=>caches.keys())).includes('foliolab-open-v149'));
    await fetch(base+'/__release/update');
    await Promise.all([page.waitForEvent('load'),page.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();})]);
-   await page.waitForFunction(async()=>{const keys=await caches.keys();return keys.includes('foliolab-open-v150')&&!keys.includes('foliolab-open-v149');});
+   await page.waitForFunction(async expected=>{const keys=await caches.keys();return keys.includes(expected)&&!keys.includes('foliolab-open-v149');},currentCache);
    assert.equal(await financial(),before,'real worker activation preserves financial data');
   }
   const compare=async()=>{

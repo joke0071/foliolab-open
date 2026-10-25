@@ -1,5 +1,7 @@
+import {forecastAccountInterest} from './interest-account.js';
+import {interestFormMarkup,interestTermsFromForm,bindInterestForm} from './interest-ui.js';
 import {compareCurrentCashBalance} from './cash-reconciliation.js';
-import {cashTermsFromForm} from './cash-terms.js';
+import {cashTermsFromForm,localToday} from './cash-terms.js';
 import {cashTermsFormMarkup,bindCashTermsForm,cashTermsAccountHint,renderCashTermsOverview} from './cash-terms-ui.js';
 import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
@@ -508,6 +510,7 @@ function accountMatchMarkup(providerId,query){
  return list.length?list.map(([name,type])=>'<button type="button" class="onboarding-suggestion" data-account-preset="'+esc(name)+'"><strong>'+esc(name)+'</strong><span>'+esc(accountTypes[type])+'</span></button>').join(''):'<p class="small-help">Eigene Kontobezeichnung möglich.</p>';
 }
 function openAccount(a,defaultProviderId){
+ const interestAsOf=localToday();
  if(!model.providers.length){openProvider();notify('Bitte zuerst einen Anbieter anlegen.');return;}
  const providerId=a?.providerId||defaultProviderId||model.accounts.find(x=>x.id===model.settings?.lastAccountId)?.providerId||(model.providers.length===1?model.providers[0].id:'');
  const provider=model.providers.find(p=>p.id===providerId),suggestion=suggestedAccountForProvider(provider?.type||'other');
@@ -520,11 +523,11 @@ function openAccount(a,defaultProviderId){
  '<label class="field"><span>Kontowährung</span><select id="accountCurrency" name="currency">'+options([...new Set(['EUR','USD','CHF','GBP','CAD','AUD','JPY','SEK','NOK',a?.currency].filter(Boolean))].map(c=>[c,c]),a?.currency||'EUR')+'</select></label></div>'+
  (a?'':('<label class="field"><span id="accountOpeningLabel">Startguthaben (EUR) · optional</span><input id="accountOpeningAmount" name="initialBalance" type="text" inputmode="decimal" placeholder="z. B. 2500"></label>'+
  '<label class="field hidden" id="accountOpeningFxWrap"><span>EUR je Einheit Kontowährung (manueller Umrechnungskurs)</span><input name="openingFxRate" id="accountOpeningFx" type="number" min="0.00000001" step="any" placeholder="z. B. 0.92"><small>Nur bei einem Startguthaben in Fremdwährung erforderlich; keine automatische Schätzung.</small></label>'+
- '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>'))+cashTermsFormMarkup(a?.cashTerms,esc,options),
+ '<label class="field"><span>Datum des Anfangsbestands (dokumentarisch)</span><input name="initialBalanceDate" type="date" max="'+new Date().toISOString().slice(0,10)+'" value="'+new Date().toISOString().slice(0,10)+'"></label><p class="small-help">Das Datum dokumentiert den Anfangsbestand; es erzeugt keinen rückdatierten Vermögensstichtag.</p>'))+cashTermsFormMarkup(a?.cashTerms,esc,options)+interestFormMarkup(a?.interestTerms,esc,options,{canForecast:Boolean(a),asOf:interestAsOf}),
  async v=>{
   if(a&&a.providerId!==v.providerId&&model.positions.some(p=>p.accountId===a.id))throw Error('Konto mit Positionen kann nicht zu einem anderen Anbieter verschoben werden.');
   // Validate account and opening valuation before mutating either collection.
-  const next=createAccount({...v,id:a?.id,cashTerms:cashTermsFromForm(v,a?.cashTerms)},model);
+  const next=createAccount({...v,id:a?.id,cashTerms:cashTermsFromForm(v,a?.cashTerms),interestTerms:interestTermsFromForm($('editorForm'))},model);
   const opening=a?null:openingCashInput({amount:v.initialBalance,currency:next.currency,fxRate:v.openingFxRate});
   const openingDate=String(v.initialBalanceDate||'').trim();
   if(opening&&(!/^\d{4}-\d{2}-\d{2}$/.test(openingDate)||Number.isNaN(Date.parse(openingDate))||new Date(openingDate+'T12:00:00Z').toISOString().slice(0,10)!==openingDate||openingDate>new Date().toISOString().slice(0,10)))throw Error('Bitte ein gültiges Anfangsbestandsdatum bis heute angeben.');
@@ -534,6 +537,13 @@ function openAccount(a,defaultProviderId){
   model.settings.lastAccountId=next.id;await save();notify('Konto gespeichert.');
  });
  bindCashTermsForm($('editorForm'));
+ bindInterestForm($('editorForm'),{onEdit:()=>{if(editor)editor.dirty=true;},calculate:async parameters=>{
+  if(loadFailure||otherTabChangedPortfolio)throw Error('Der Datenstand ist nicht aktuell. Bitte diesen Tab neu laden.');
+  await portfolioStore.assertCurrent();
+  if($('accountCurrency').value!==a.currency)throw Error('Kontowährung wurde geändert. Bitte zuerst speichern und Kontozuordnung prüfen.');
+  if($('cashTermsEnabled').checked&&$('fixedTerm').checked)throw Error('Diese Prognose gilt für Tagesgeld, nicht für Festgeld.');
+  return forecastAccountInterest(model,{...parameters,accountId:a.id,asOf:interestAsOf});
+ }});
  const providerSelect=$('accountProvider'),name=$('accountName'),type=$('accountType'),area=$('accountMatches');
  if(!a){
   const currency=$('accountCurrency'),amount=$('accountOpeningAmount'),wrap=$('accountOpeningFxWrap'),fx=$('accountOpeningFx');
@@ -1563,7 +1573,7 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
 }}}
 function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
  const markEditorDirty=event=>{
-  if(editor&&!editor.readOnly&&event.target.matches('input, select, textarea'))editor.dirty=true;
+  if(editor&&!editor.readOnly&&!event.target.closest('[data-interest-preview]')&&event.target.matches('input, select, textarea'))editor.dirty=true;
  };
  $('dialogFields').addEventListener('input',markEditorDirty);
  $('dialogFields').addEventListener('change',markEditorDirty);
@@ -1877,6 +1887,7 @@ window.addEventListener('storage',event=>{
  otherTabChangedPortfolio=true;
  const cashResult=$('cashComparisonResult');
  if(cashResult)cashResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
+ const interestResult=$('interestResult');if(interestResult)interestResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
  const notice=$('notice');
  notice.textContent='Portfolio in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst. Ungespeicherte Eingaben vorher sichern.';
  notice.setAttribute('role','alert');
