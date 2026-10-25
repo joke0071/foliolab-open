@@ -1,0 +1,36 @@
+{
+  "releaseSHA": "eb737df8979c7708d678de8045bd2b48db9e8e2f",
+  "appImplementationMerge": "cb2e6d1d23b2fcac29b609306c0bf8954679bb86",
+  "version": "v175",
+  "base": "https://joke0071.github.io/foliolab-open/",
+  "result": "PASS",
+  "engine": "chromium",
+  "completedAt": "2026-10-25T18:06:19.835746+00:00",
+  "commands": [
+    {
+      "command": "node tests/browser-live-purchase-evidence.mjs",
+      "result": "PASS",
+      "checks": [
+        "preview/confirm/undo/reload",
+        "IndexedDB",
+        "encrypted complete restore",
+        "six widths and axe",
+        "private-field/XSS exclusion",
+        "multitab"
+      ]
+    },
+    {
+      "command": "node tests/browser-live-flh02.mjs",
+      "result": "PASS",
+      "checks": [
+        "actual reconstructed 999/1059 EUR without snapshots",
+        "partial/observed separation",
+        "six-width axe",
+        "optional controls and retained settings/tokens",
+        "zero financial writes"
+      ]
+    }
+  ],
+  "realAccountEntitlements": "not tested; no real API keys or Drive OAuth account supplied",
+  "externalMarketTraffic": "blocked; synthetic data only"
+}

@@ -35,7 +35,7 @@ export function historyAction(model,p){
   const exists=model.walletHistory?.sessions?.some(s=>s.id==='wallet-history:'+p.id);
   return {action:'wallet-history',label:exists?'Historie anzeigen':'Historie rekonstruieren'};
  }
- return (model.bookings||[]).some(b=>b.positionId===p.id||b.targetPositionId===p.id)||
+ return Boolean(model.priceHistories?.[p.id]?.points?.length>=2||model.openingPositions?.some(o=>o.positionId===p.id&&o.asOf))||(model.bookings||[]).some(b=>b.positionId===p.id||b.targetPositionId===p.id)||
   (model.journalEntries||[]).some(e=>['correction','adjust'].includes(e.type)&&e.postings.some(x=>x.positionId===p.id))?{action:'booking-history',label:'Historie anzeigen'}:null;
 }
 /** Account/position identity only. No inferred ISIN attribution or price fetch. */

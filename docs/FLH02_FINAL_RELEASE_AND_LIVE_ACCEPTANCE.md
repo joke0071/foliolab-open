@@ -1,10 +1,12 @@
+> Historical v175 acceptance record. The final targeted v176 FX action/mini-chart correction is tracked in PR #146 and the current work checkpoint; v175 does not prove that subsequent action.
+
 # FLH02 final release and live acceptance
 
 Specification: Library document FLH02 version 11, including A–E and 7.11–7.14. A was accepted separately as v171 in PR #143. PR #144 completes B/C1, C2/C3, D/E and Drive UX using the existing local data model, journal, wallet replay, provider transports and backup contracts.
 
 ## Release identity
 
-PR #144 merged at `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`. Main CI/deployment [40217903807](https://github.com/joke0071/foliolab-open/actions/runs/40217903807) and live gate pending. Candidate v175, tested source head `7e1bb914bc66c3783e447b4cb34d2f8b2c7a4948`; verified base main `8e12ae1ad1a0b517eab3404a2dacbe9b31ab61db`.
+Production v175 is released and live accepted. Implementation [PR #144](https://github.com/joke0071/foliolab-open/pull/144) merged at `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`; checkpoint [PR #145](https://github.com/joke0071/foliolab-open/pull/145) merged at `eb737df8979c7708d678de8045bd2b48db9e8e2f`, the actual tested/deployed/live-accepted main SHA. [Main CI and Pages deployment 40218777354](https://github.com/joke0071/foliolab-open/actions/runs/40218777354): all jobs PASS. [Live URL](https://joke0071.github.io/foliolab-open/), active `foliolab-open-v175`. Later documentation closeout commits do not change application bytes.
 
 ## Delivered behavior
 
@@ -24,7 +26,15 @@ PR #144 merged at `cb2e6d1d23b2fcac29b609306c0bf8954679bb86`. Main CI/deployment
 - Latest affected Chromium rerun: quality review; historical position default/alternates and miniature values; integrated 999/1059 total without snapshots, partial/observed separation, six-width axe, retained endpoints/tokens and zero financial mutation: PASS.
 - BTC/ETH/SOL/SPL history UI, encrypted restore, exact tiny-token display, multitab and backup preference persistence: PASS.
 - Earlier candidate run [40216424171](https://github.com/joke0071/foliolab-open/actions/runs/40216424171): Firefox/WebKit PASS; Chromium failed on the then-missing precision-review entry. That defect is fixed and replacement CI is required.
-- Current release gate: [40217442188](https://github.com/joke0071/foliolab-open/actions/runs/40217442188), PASS: Chromium and Firefox/WebKit. Main CI/deployment and live acceptance remain pending at this checkpoint.
+- Current release gate: [40217442188](https://github.com/joke0071/foliolab-open/actions/runs/40217442188), PASS: Chromium and Firefox/WebKit. Main CI/deployment and independent actual production acceptance also PASS (see below).
+
+## Independent actual production evidence
+
+On 2026-10-25, `RELEASE_SHA=eb737df8979c7708d678de8045bd2b48db9e8e2f node tests/browser-live-acceptance.mjs` passed against actual Pages: 103 exact SHA-256 app/SW matches, actual loaded app/CSS matches, 18 axe scans with zero violations, real UI creation/edit/reload, plain and encrypted backup download/fresh-profile restore, SW control/cache and offline save/reload; zero page errors. [Machine report](release-evidence/flh02-v175-live.json).
+
+`node tests/browser-live-purchase-evidence.mjs` passed actual production Bittr preview/confirmation/undo/reload, IDB, complete encrypted restore, multitab, six widths/axe and private-field/XSS checks. `node tests/browser-live-flh02.mjs` passed actual 999/1059 EUR reconstructed total without snapshots, partial/observed basis separation, six-width axe, optional settings/token preservation and zero financial writes. [Extended evidence](release-evidence/flh02-v175-extended.json). Production live browser was Chromium; Firefox/WebKit were fully exercised in CI on the identical application sources, not falsely claimed as live-browser runs.
+
+The earlier main runner stalled during browser-dependency installation and was cancelled by a new main run after green checkpoint PR #145. No test gate was skipped or weakened. Documentation-only closeout requires green PR/main CI and unchanged v175 deployment; its exact final main/run links are in the closeout PR description.
 
 ## User workflow
 

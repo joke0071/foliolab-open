@@ -94,11 +94,12 @@ export function validateImportedPriceHistory(history,position){
   last=d;
   if(retained&&Object.hasOwn(row,'valuationDate')){if(row.valuationDate!==null&&!dateOK(row.valuationDate))throw Error('Krypto-Bewertungszeitpunkt ungültig.');return {date:d,total:n,valuationDate:row.valuationDate};}return {date:d,total:n};
  });
- if(!retained)return {currency,source:'CSV (selbst geprüft)',points};
- const names={eodhd:/^EODHD/,twelve:/^Twelve Data/,fmp:/^Financial Modeling Prep/,coingecko:/^CoinGecko/,coinpaprika:/^CoinPaprika/};
- if(retained.schema!==1||retained.retention!=='user-confirmed'||!names[retained.provider]?.test(history.source)||history.source.length>180||/[\u0000-\u001f]/.test(history.source)||!position||retained.identity!==historyIdentity(position)||history.priceType!==(position.kind==='crypto'?'crypto-daily':'close'))throw Error('Kursquelle, Kursart oder Positionsbindung nicht bestätigt.');
  const fxPoints=(history.fxPoints||[]).map(r=>{if(!dateOK(r.date)||r.currency!==currency||r.source!=='Frankfurter'||!(Number(r.rate)>0)||!Number.isFinite(Number(r.rate)))throw Error('Historische FX-Daten beschädigt.');if(r.referenceDate&&(!dateOK(r.referenceDate)||r.referenceDate>r.date||(Date.parse(r.date)-Date.parse(r.referenceDate))/864e5>7))throw Error('Historischer FX-Zeitbezug ungültig.');return {date:r.date,currency,rate:String(r.rate),source:'Frankfurter',...(r.referenceDate?{referenceDate:r.referenceDate}:{})};});
  if(fxPoints.length>6500||new Set(fxPoints.map(r=>r.date)).size!==fxPoints.length)throw Error('FX-Datenlimit oder doppelte Tage.');
+ if(!retained)return {currency,source:'CSV (selbst geprüft)',points,...(fxPoints.length?{fxPoints}:{})};
+ const names={eodhd:/^EODHD/,twelve:/^Twelve Data/,fmp:/^Financial Modeling Prep/,coingecko:/^CoinGecko/,coinpaprika:/^CoinPaprika/};
+ if(retained.schema!==1||retained.retention!=='user-confirmed'||!names[retained.provider]?.test(history.source)||history.source.length>180||/[\u0000-\u001f]/.test(history.source)||!position||retained.identity!==historyIdentity(position)||history.priceType!==(position.kind==='crypto'?'crypto-daily':'close'))throw Error('Kursquelle, Kursart oder Positionsbindung nicht bestätigt.');
+
  return {currency,source:history.source,points,priceType:history.priceType,fxPoints,provenance:{schema:1,provider:retained.provider,identity:retained.identity,retention:'user-confirmed'}};
 }
 export function importedHistoryForPeriod(model,position,days=30,now=Date.now()){
@@ -107,6 +108,6 @@ export function importedHistoryForPeriod(model,position,days=30,now=Date.now()){
  const valid=validateImportedPriceHistory(data,position);
  if(![7,30,90,180,365,1096,1826,'max'].includes(days))throw Error('Unbekannter Diagrammzeitraum.');
  const start=days==='max'?'0000-01-01':new Date(now-(days-1)*86400000).toISOString().slice(0,10),end=new Date(now).toISOString().slice(0,10);
- return {kind:'market',source:valid.source,currency:valid.currency,
+ return {kind:'market',source:valid.source,currency:valid.currency,...(valid.fxPoints?{fxPoints:valid.fxPoints}:{}),
   points:valid.points.filter(p=>p.date>=start&&p.date<=end)};
 }
