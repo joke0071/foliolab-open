@@ -1,7 +1,7 @@
 # IndexedDB-only – Phase A (#44)
 
 Basis: main `01a681960c0823010efe7e3599eb1d8512383673` / v150.
-Branch: `feature/indexeddb-only-phase-a`. Status: WIP, keine Produktivfreigabe.
+Branch: `feature/indexeddb-only-phase-a`. Status: technisch abgenommen; keine Produktivfreigabe, kein Merge/Deployment. Historische WIP-Checkpoints unten dokumentieren den Arbeitsverlauf.
 PRs #133/#134 bleiben unverändert; spätere Integration muss deren Stand berücksichtigen.
 
 ## Vertrag
@@ -50,3 +50,32 @@ Neue Chromium-Abnahme für diesen Fall: Originaldownload samt synthetischem Key,
 Die Migrationssicherung trägt die vollständige validierte Wallet-Historie im normalen v3-Datenpayload. Dadurch bleiben auch sichere `re-fetch-needed`-Checkpoints erhalten; die separate portable Historienprojektion darf diesen Migrationssnapshot nicht ersetzen. Klartext- und verschlüsselte Datei einschließlich tatsächlichem UI-Restore mit akzeptierten Sessions UND ausstehenden Checkpoints erneut byteinhaltlich/fachlich geprüft. Keine Änderungen an der Backupengine oder dem Format. Typwidrige gespeicherte Settings werden separat fail-closed getestet.
 
 Nach diesem Commit vollständige CI erneut ausführen. Bis zu deren Erfolg WIP; kein Merge/Deployment. Reale Geräte/Drive/Eviction bleiben getrennte manuelle Gates in #44.
+
+
+## Technische Schlussabnahme – 25.10.2026
+
+Code-SHA: `488e08347b61242bac74bee23a4de40b556f0aef`.
+Baum: `b8bc1214c72bbe81e2af8b68c8f4e98f385dad92`.
+Draft-PR: https://github.com/joke0071/foliolab-open/pull/135
+Referenz/fortlaufende Checkpoints: https://github.com/joke0071/foliolab-open/issues/44
+
+- Vollständige CI erfolgreich: https://github.com/joke0071/foliolab-open/actions/runs/40180355440
+- Unit/Syntax/Chromium: Job `121129898521`, 557 Tests ohne Fail/Skip; gesamte bestehende Browser-Suite plus Neuinstallation/Migrationsartefakte/unmarkierte Recovery.
+- Firefox/WebKit: Job `121129898273`, gesamte konfigurierte Cross-Engine-Suite einschließlich aller drei neuen Abnahme-Suites erfolgreich.
+- Wallet-CI erfolgreich: https://github.com/joke0071/foliolab-open/actions/runs/40180355459
+- Bestehende 20 Pixelreferenzen unverändert; 11 Accessibility-Scans ohne Verletzung; neue Migrations-Axe-/320–1440-px-Tests, PWA-Update, Offline-Neustart/CPU-Drosselung und Finanz-/Journal-/Backup-/Mehrtab-Regressionen erfolgreich.
+- Reale externe Providerproben können 403/429/CORS-Ausfälle melden; deren Verfügbarkeit ist kein Storage-Nachweis und wird nicht als bestanden behauptet.
+
+Neuinstallation, bestätigte v1/v2/v3-Übernahme, genau ein kanonischer Portfolio-Speicher, vollständige Portfolio-/Settings-/Key-Erhaltung, CAS/Tombstones/Quota/Abbruch/Neustart sowie bestehender Rückwechsel sind technisch nachgewiesen. Der Browser kann die tatsächliche Ablage eines Downloads nicht feststellen; diese bleibt ausdrücklich vom Nutzer zu bestätigen. API/RPC-Konfiguration bleibt lokal unverschlüsselt und in Downloads ausschließlich nach freiwilliger verschlüsselter Mitnahme. OAuth-Tokens und Vault-Schlüssel bleiben ausgeschlossen.
+
+Der Abschluss-Commit ändert ausschließlich dieses Dokument; Anwendung und Tests bleiben identisch zum abgenommenen Code-SHA. Sein eigener CI-Status ist im PR einzusehen. Alle früheren roten Läufe und Korrekturen bleiben nachvollziehbar; keine Schutzassertions oder visuellen Grenzwerte abgeschwächt.
+
+### Präziser Wiedereinstieg / nächste Phase
+
+1. Letzten Abschlusskommentar in #44/#135 und endgültigen Remote-HEAD lesen; Code-SHA und aktuelle CI vergleichen. Kein erneuter Gesamtaudit.
+2. Vor einer separat autorisierten Integration aktuelles main und #133/#134 vergleichen. Gemeinsame App-/Storage-/Worker-/Workflow-Dateien additiv behandeln; identischen `assertCurrent()`-Guard nur einmal behalten. Cache muss höher als die dann veröffentlichte Version sein und alle aktuellen Assets enthalten.
+3. Nach tatsächlichen Integrationsänderungen betroffene/gesamte CI erneut durchführen. Erst danach gesonderte Freigabe für Integration/Release; dieser Auftrag autorisiert weder Merge noch Deployment.
+4. Migrations-/Rückwechsel-/Recovery-Kompatibilität bleibt erhalten. UI-/Altpfad-Entfernung gehört in eine spätere Phase und benötigt die nachgewiesene sichere Übernahme.
+5. Manuelle Gates in #44 bleiben offen: autorisierter realer verschlüsselter Drive-Neugerät-Restore, Android/Safari-Hardware, OS-Crash/Eviction/physische Recovery sowie alte bereits offene App-Versionen. Automatisierte Browsertests ersetzen diese Nachweise nicht.
+
+main bleibt `01a681960c0823010efe7e3599eb1d8512383673` (v150); #133/#134 wurden nicht verändert. Es gibt keinen ungesicherten Implementierungsstand.
