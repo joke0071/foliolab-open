@@ -1,3 +1,21 @@
+# Current handoff: UI corrections A–E after accepted 00/01
+
+00/01 CLOSED and live v177 via #150, main `c23519bd1c473e602aa08e8753019de3537b9a6b`, main CI/deploy [40227044608](https://github.com/joke0071/foliolab-open/actions/runs/40227044608) ALL SUCCESS. Actual live: 104 exact asset hashes, active v177, 18 Axe scans, core create/edit, plain/encrypted fresh-profile restore and offline save/reload PASS; new multi-file/undo/replay/CAS at six widths PASS. Machine evidence: `docs/release-evidence/flh03-v177-live.json`. Final closure: #148 comment 6402346637. Historical pre-release notes below are superseded by this section.
+
+User explicitly expanded implementation/merge/deploy authorization to A–E from #149, handoff #148 comment 6402194376. No restart or foreign branch edit. Current branch `feature/flh03-ui-a-e` starts at the accepted main above. Only these five UI fixes are in this increment; 02–16 stay outside release scope.
+
+| Fix | Status / actual evidence | Next safe action |
+|---|---|---|
+| A Recovery/status | IMPLEMENTED locally: failed read never renders zero/onboarding/data lists; only safe rescue/restore and navigation reachable; global/mobile status follows saving/read failure/conflict. Existing storage/CAS/recovery engine unchanged. Chromium new seven-geometry full-axe/byte-preservation/original-download/controlled-restore PASS, existing marked/unmarked IDB recovery and stale-tab regressions PASS | Remote checkpoint then full combined engine gates |
+| B Historical change tile | OPEN; reuse `wealthView()`/FLH02 with 999→1059 reference, no fabricated return | Implement after A checkpoint |
+| C Expanded settings contrast | OPEN; two scoped rules affect seven evidenced help nodes | Existing dark secondary tone only, expanded full-axe tests |
+| D Dirty navigation | OPEN; shared dialog guard exists, reload/back hook missing | Temporary beforeunload for dirty open dialogs only, provider/wizard/import tests, record browser limits |
+| E Empty history | OPEN; duplicated header/status and no contextual action | One truthful empty state, existing add/positions action; no real-chart change |
+
+Next: complete B–E in order on this branch, extend `tests/browser-flh03-ui.mjs`, run actual financial/storage/backup/offline and full three-engine CI, review, then merge only if green and perform actual v178 live acceptance. No new provider, migration, archival or deletion feature. Real hardware/OAuth remain outside supplied resources.
+
+---
+
 # FLH03 work checkpoint — 00/01
 
 ## Authority and start gate

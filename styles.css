@@ -1043,3 +1043,8 @@
 .optional-connections[open]>summary::after,.optional-connection[open]>summary::after,#historyCoverage[open]>summary::after{transform:rotate(225deg)}
 #historyCoverage>summary{display:flex;align-items:center}
 @media(prefers-reduced-motion:reduce){.optional-connections>summary::after,.optional-connection>summary::after,#historyCoverage>summary::after{transition:none}}
+
+/* Recovery exposes safe rescue actions, never a valid empty portfolio. */
+.portfolio-unavailable .page:not(#morePage)>:not(.portfolio-unavailable-message){display:none}
+.portfolio-unavailable .local-dot,.portfolio-conflict .local-dot{background:#9f4840}
+.mobile-header .portfolio-status{font-size:11px;color:#4d6756;margin-left:auto;text-align:right;max-width:50%}

@@ -82,7 +82,7 @@ function backupCounter(){try{return Number(localStorage.getItem('foliolab-open-u
 function backupDone(){try{localStorage.setItem('foliolab-open-last-backup-at',new Date().toISOString());localStorage.setItem('foliolab-open-unbacked-changes','0');}catch{}renderBackupStatus();}
 async function save(){
  if(saving)throw Error('Ein Speichervorgang läuft bereits.');
- saving=true;
+ saving=true;syncPortfolioState();
  try{
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
@@ -94,7 +94,7 @@ async function save(){
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }finally{saving=false;}
+ }finally{saving=false;syncPortfolioState();}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -102,7 +102,34 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
-function render(){if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}}
+function syncPortfolioState(){
+ const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
+ document.body.classList.toggle('portfolio-unavailable',unavailable);
+ document.body.classList.toggle('portfolio-conflict',conflict);
+ const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Portfolio lokal gespeichert';
+ $('localPortfolioStatus').textContent=status;
+ $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Lokal gespeichert';
+ $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
+ if(unavailable){
+  $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';
+  $('onboarding').classList.add('hidden');$('onboarding').replaceChildren();
+  $('providerSettings').textContent='Anbieter und Konten derzeit nicht verfügbar.';
+  for(const id of ['dashboardPage','historyPage','positionsPage','bookingsPage']){
+   const pageNode=$(id);if(!pageNode.querySelector('.portfolio-unavailable-message')){
+    const message=document.createElement('p');message.className='empty portfolio-unavailable-message';
+    message.textContent='Portfolio derzeit nicht lesbar. Sichere zuerst die Originaldaten und verwende dann die kontrollierte Wiederherstellung oben.';pageNode.prepend(message);
+   }
+  }
+  showRecoveryNotice();
+  document.querySelectorAll('.page button,.page input,.page select,.page textarea').forEach(control=>{
+   if(control.id!=='backupFile'&&!control.disabled){control.dataset.recoveryDisabled='true';control.disabled=true;}
+  });
+ }else{
+  document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
+  document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
+ }
+}
+function render(){syncPortfolioState();if(loadFailure)return;if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
 function showValuationIssues(){
  reviewKind='quote';reviewAccount='';
  filter='__review';
@@ -442,6 +469,7 @@ const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
  :title.startsWith('Wallet')?'Coins hinzufügen'
  :title.startsWith('CSV')?'Buchungen importieren':'Speichern';
 function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
+ if(loadFailure&&!readOnly){notify('Portfolio nicht lesbar. Bitte zuerst Originaldaten sichern und wiederherstellen.',true);return;}
  dialogOpener=document.activeElement;
  editor={onSave,dirty:false,readOnly};
  $('dialogTitle').textContent=title;
@@ -1912,6 +1940,12 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
 });
 $('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
 $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
+for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
+ if(!loadFailure)return;
+ const control=event.target.closest('button,input,select,textarea,form');
+ if(!control||control.matches('[data-page]')||['downloadRaw','recoverBackup','backupFile','installButton'].includes(control.id))return;
+ event.preventDefault();event.stopImmediatePropagation();
+},true);
 initNav();initEvents();installCredentialVisibility();
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
@@ -1922,7 +1956,7 @@ $('storageMigrationSetup').classList.toggle('hidden',portfolioStore.isIndexedDB|
 // localStorage compare-before-set alone is not an atomic multi-tab lock.
 window.addEventListener('storage',event=>{
  if(event.storageArea!==localStorage||!['foliolab-open-v1',MODE_KEY].includes(event.key)||event.oldValue===event.newValue||loadFailure)return;
- otherTabChangedPortfolio=true;
+ otherTabChangedPortfolio=true;syncPortfolioState();
  const cashResult=$('cashComparisonResult');
  if(cashResult)cashResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
  const interestResult=$('interestResult');if(interestResult)interestResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
@@ -1931,9 +1965,10 @@ window.addEventListener('storage',event=>{
  notice.setAttribute('role','alert');
  notice.classList.remove('hidden');
 });
-if(loadFailure){
- const notice=$('notice');notice.classList.remove('hidden');
- notice.innerHTML='<strong>Gespeicherter Datenstand beschädigt oder nicht lesbar.</strong> Änderungen sind gesperrt. '+
+function showRecoveryNotice(){
+ if($('downloadRaw'))return;
+ const notice=$('notice');notice.setAttribute('role','alert');notice.classList.remove('hidden');
+ notice.innerHTML='<strong>Gespeicherter Datenstand nicht lesbar.</strong> Änderungen sind gesperrt. '+
   'Zuerst Originaldaten sichern, dann ein geprüftes Backup wiederherstellen. '+
   (portfolioStore.isIndexedDB?'<strong>Hinweis: Die IDB-Originaldatei kann lokale API-Schlüssel enthalten!</strong> ':'')+
   '<button class="btn outline" type="button" id="downloadRaw">Originaldaten sichern</button> '+
