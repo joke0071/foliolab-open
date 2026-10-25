@@ -1,4 +1,6 @@
 import {cashTermsAccountHint} from './cash-terms-ui.js';
+import {historicalWealthView} from './historical-portfolio-value.js';
+import {units,exact} from './decimal.js';
 /** Presentation-only dashboard helpers. Never imply performance when only wealth history exists. */
 const compactAmount = value => {
   const n = Number(value);
@@ -10,7 +12,7 @@ const compactAmount = value => {
 };
 export {compactAmount};
 
-export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel) {
+export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealth=historicalWealthView(model)) {
   const data = model.positions;
   const partitions = [
     {title:'Wertpapiere',items:data.filter(p=>['etf','stock','fund','other'].includes(p.kind)),unit:'Positionen'},
@@ -22,11 +24,19 @@ export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel) {
     const note = section.items.length+' '+section.unit;
     return [section.title,money(total),note];
   });
-  const shots=model.snapshots;
-  const previous=shots.at(-2), latest=shots.at(-1);
-  const delta=previous&&latest?Number(latest.totalEURExact??latest.total)-Number(previous.totalEURExact??previous.total):null;
-  tiles.push(['Veränderung',delta==null?'–':(delta>0?'+':'')+money(delta),
-    delta==null?'Mindestens 2 Stichtage nötig':'Seit '+dateLabel(previous.date)+' · inkl. Geldflüsse']);
+  const samples=wealth.samples;
+  let comparable=samples;
+  if(wealth.basis==='reconstructed'){
+    const boundary=samples.findLastIndex((s,i)=>i>0&&s.breakBefore);
+    if(boundary>=0)comparable=samples.slice(boundary);
+  }
+  const usable=['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2;
+  const previous=usable?(wealth.basis==='observed'?comparable.at(-2):comparable[0]):null,latest=usable?comparable.at(-1):null;
+  const delta=usable?exact(units(latest.totalEURExact??latest.total)-units(previous.totalEURExact??previous.total)):null;
+  const foot=delta!==null?'Seit '+dateLabel(previous.date)+' · inkl. Geldflüsse · keine Rendite':
+    wealth.basis==='partial'?'Teilportfolio: vollständige Bestands-, Kurs- oder FX-Nachweise fehlen.':
+    samples.length?'Ein weiterer vergleichbar belegter Zeitpunkt fehlt.':wealth.reason;
+  tiles.push(['Veränderung',delta===null?'–':(units(delta)>0n?'+':'')+money(Number(delta)),foot]);
   return tiles.map(([label,value,foot]) =>
     '<div class="stat"><div class="stat-label">'+esc(label)+'</div><div class="stat-value">'+esc(value)+'</div><div class="stat-hint">'+esc(foot)+'</div></div>'
   ).join('');
@@ -66,7 +76,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
 }
 
 export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false}){
- if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Speichere einen weiteren Stichtag für den Verlauf.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
+ if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Ein weiterer belegter Zeitpunkt für den Verlauf fehlt.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const step=Math.max(1,Math.ceil(samples.length/140));
  const sampled=samples.filter((s,i)=>i===0||i===samples.length-1||i%step===0||disjoint&&(s.breakBefore||samples[i+1]?.breakBefore));
  const values=sampled.map(s=>Number(s.totalEURExact??s.total));

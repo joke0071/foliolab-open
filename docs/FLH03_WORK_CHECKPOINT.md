@@ -7,12 +7,12 @@ User explicitly expanded implementation/merge/deploy authorization to A–E from
 | Fix | Status / actual evidence | Next safe action |
 |---|---|---|
 | A Recovery/status | IMPLEMENTED locally: failed read never renders zero/onboarding/data lists; only safe rescue/restore and navigation reachable; global/mobile status follows saving/read failure/conflict. Existing storage/CAS/recovery engine unchanged. Chromium new seven-geometry full-axe/byte-preservation/original-download/controlled-restore PASS, existing marked/unmarked IDB recovery and stale-tab regressions PASS | Remote checkpoint then full combined engine gates |
-| B Historical change tile | OPEN; reuse `wealthView()`/FLH02 with 999→1059 reference, no fabricated return | Implement after A checkpoint |
-| C Expanded settings contrast | OPEN; two scoped rules affect seven evidenced help nodes | Existing dark secondary tone only, expanded full-axe tests |
-| D Dirty navigation | OPEN; shared dialog guard exists, reload/back hook missing | Temporary beforeunload for dirty open dialogs only, provider/wizard/import tests, record browser limits |
-| E Empty history | OPEN; duplicated header/status and no contextual action | One truthful empty state, existing add/positions action; no real-chart change |
+| B Historical change tile | IMPLEMENTED: same `wealthView()` passed to chart/tile; exact difference from contiguous comparable proven samples, explicit inclusive cashflows/no return; partial/missing/gap values stay unknown. Unit + actual Chromium 999→1059/60 EUR and partial state pass | Full combined engine/release gate |
+| C Expanded settings contrast | IMPLEMENTED: only `.source-detail .field small` and Drive footer use existing #4d6756. Seven visible nodes checked; all related nested disclosures expanded in full Chromium Axe at mobile/desktop/small heights pass | Full combined engine/release gate |
+| D Dirty navigation | IMPLEMENTED: shared guard temporarily registers beforeunload for dirty open dialogs; no draft persistence/history trap. Actual Chromium denied reload retains provider/wizard/CSV preview; Back denied/accepted, clean/saved no warning, Escape/cancel/focus pass. First wizard test exposed listener-order microtask timing; fixed by syncing after dirty listeners in window bubble phase | Full combined engine/release gate |
+| E Empty history | IMPLEMENTED: stable page description, one compact contextual missing-history message; existing add-asset or positions action, no zero curve, proven charts/periods preserved. Chromium empty/existing-unproven states + actions/geometry/Axe pass | Full combined engine/release gate |
 
-Next: complete B–E in order on this branch, extend `tests/browser-flh03-ui.mjs`, run actual financial/storage/backup/offline and full three-engine CI, review, then merge only if green and perform actual v178 live acceptance. No new provider, migration, archival or deletion feature. Real hardware/OAuth remain outside supplied resources.
+A checkpoint: `3e7058f5aee085aa44fa418ed91b0764cf1f09c6`, PR #151. Local 671/671 unit tests and syntax pass. B–E are now implemented/tested locally; next remote checkpoint captures them. Next: run actual financial/storage/backup/offline and full three-engine CI, review, then merge only if green and perform actual v178 live acceptance. No new provider, migration, archival or deletion feature. Real hardware/OAuth remain outside supplied resources.
 
 ---
 
@@ -76,3 +76,9 @@ Read this checkpoint, #148, this feature PR and latest remote HEAD/CI; check cur
 ## Release evidence handoff
 
 Final exact tested/merged main, CI/deployment URLs, live version/hash/core-function results and next stage are appended to canonical issue #148 and the release PR #150 after actual execution. Those post-release records supersede the pre-release pending status above; consult them before resuming. This avoids a self-referential documentation-only release loop.
+
+## Navigation boundary
+
+The native beforeunload guard protects browser Reload/Back/document departure while an edited dialog is open and the browser honors a prior user gesture. It is removed on clean/closed/successfully saved flows; no new persisted draft, custom browser-history entry, unload telemetry or automatic secret saving. Native text is browser-owned. Mobile app-manager/process kill, browser suppression, unsupported embedded browsers and same-document navigation that does not unload cannot be guaranteed by this hook. FolioLab currently replaces its tab URL, not a new modal routing/history stack. Actual browser behavior is tested per engine below; no hardware claim. Reference checked 2026-10-25: https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event.
+
+Final post-merge UI deployment/live evidence and exact next action are appended to #148/#151 (as with the completed v177 checkpoint). Do not repeat earlier packages based on historical pending notes.

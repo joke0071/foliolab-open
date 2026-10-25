@@ -390,7 +390,7 @@
 .source-detail>p,.source-detail>form,.source-detail>.field,.source-detail>.source-actions,.source-detail>#solanaRpcSetup{margin-left:16px;margin-right:16px}
 .source-detail>p:first-of-type{margin-top:15px}
 .source-detail>p:last-child{margin-bottom:17px}
-.source-detail .field small{display:block;padding-left:0;margin-top:4px;line-height:1.5;font-size:11px;color:#718575}
+.source-detail .field small{display:block;padding-left:0;margin-top:4px;line-height:1.5;font-size:11px;color:#4d6756}
 .source-detail .field a,.source-detail .small-help a{color:#2c6347;text-underline-offset:2px}
 .source-detail .small-help{line-height:1.75}
 .source-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px;margin-bottom:16px}
@@ -896,7 +896,7 @@
 #googleDriveBackupSetup .drive-management-body .field{min-width:0}
 #googleDriveBackupSetup .drive-folder-options{border-top:1px solid #edf1ed;margin:14px 0 0;padding-top:12px}
 #googleDriveBackupSetup .drive-folder-options > summary{padding:4px 0}
-#googleDriveBackupSetup .drive-footer-note{font-size:11px;line-height:1.5;color:#728276;margin:14px 0 0}
+#googleDriveBackupSetup .drive-footer-note{font-size:11px;line-height:1.5;color:#4d6756;margin:14px 0 0}
 @media(max-width:540px){
  #googleDriveBackupSetup .drive-options{grid-template-columns:minmax(0,1fr)}
  #googleDriveBackupSetup .drive-restore-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -1048,3 +1048,5 @@
 .portfolio-unavailable .page:not(#morePage)>:not(.portfolio-unavailable-message){display:none}
 .portfolio-unavailable .local-dot,.portfolio-conflict .local-dot{background:#9f4840}
 .mobile-header .portfolio-status{font-size:11px;color:#4d6756;margin-left:auto;text-align:right;max-width:50%}
+
+#historyChart.is-empty{height:auto;min-height:0}

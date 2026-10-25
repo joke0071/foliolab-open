@@ -38,6 +38,63 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   assert.match(await p.locator('#localPortfolioStatus').textContent(),/lokal gespeichert/);await nav('more');assert.ok(await p.locator('#addProvider').isEnabled());
   assert.equal(JSON.parse((await read()).raw).providers[0].name,'Synthetic recovered');
   console.log(engine+': A recovery/empty distinction, safe actions, 7 geometries/full axe, unchanged original download and controlled restore PASS');
+  // B: independent source fixture, no observations, one existing FLH02 projection.
+  await p.evaluate(async base=>{
+   const {blankModel,createProvider,createPosition}=await import(new URL('src/model.js',base)),{executeTransaction}=await import(new URL('src/transactions.js',base)),{PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));
+   const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'provider',name:'Synthetic'}));
+   m.positions.push(createPosition({id:'cash',providerId:'provider',name:'Cash',symbol:'A',kind:'cash',quantity:1000,price:1},m),createPosition({id:'etf',providerId:'provider',name:'ETF',symbol:'ETF',kind:'etf',quantity:0,price:100},m));
+   executeTransaction(m,{positionId:'etf',cashPositionId:'cash',date:'2023-01-02',type:'buy',quantity:6,unitPrice:100,feeEUR:1,taxEUR:0});m.openingPositions.find(p=>p.positionId==='cash').asOf='2023-01-01';m.priceHistories.etf={currency:'EUR',source:'CSV (selbst geprüft)',points:[{date:'2023-01-02',total:100},{date:'2023-01-03',total:110}]};
+   const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
+  },base);
+  await p.reload();await nav('dashboard');const proven=await read();
+  assert.match(await p.locator('#summaryStats .stat').last().innerText(),/60,00/);assert.match(await p.locator('#summaryStats .stat').last().innerText(),/inkl. Geldflüsse · keine Rendite/);
+  assert.ok(!(await p.locator('#summaryStats').innerText()).includes('Stichtage nötig'));assert.deepEqual(await read(),proven);
+  await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const s=new PortfolioStorage(),m=await s.initialize();m.openingPositions.find(p=>p.positionId==='cash').asOf=null;await s.save(m);s.close();},base);
+  await p.reload();await nav('dashboard');assert.match(await p.locator('#summaryStats .stat').last().innerText(),/Teilportfolio/);assert.equal(await p.locator('#summaryStats .stat-value').last().innerText(),'–');
+  await p.evaluate(async ({base,record})=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{safeImport}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=safeImport(JSON.parse(record.raw));m.settings=record.settings;await s.save(m);s.close();},{base,record:proven});
+  await p.reload();await nav('dashboard');const provenRestored=await read();
+  // C: all relevant nested disclosures actually open, including seven reported nodes.
+  await nav('more');await p.evaluate(()=>{for(const id of ['marketSettings','blockchainSettings','googleDriveBackupSetup','backupPasswordSetup']){const root=document.getElementById(id);root.open=true;root.querySelectorAll('details').forEach(d=>d.open=true);}});
+  const help=await p.locator('.source-detail .field small,.drive-footer-note').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().height).map(n=>({color:getComputedStyle(n).color,text:n.textContent})));
+  assert.ok(help.length>=7,'The reported help nodes are expanded');assert.ok(help.every(n=>n.color==='rgb(77, 103, 86)'));
+  for(const [width,height] of [[320,360],[390,844],[768,500],[1440,900]]){await p.setViewportSize({width,height});await scan('expanded settings '+width);}
+  assert.deepEqual(await read(),provenRestored,'Disclosure/summary changes are read-only');
+  console.log(engine+': B proven 999→1059 change/no return and C expanded settings/7 help nodes/full axe PASS');
+  // D: native reload/back confirmation plus the shared handler's exact dirty lifecycle.
+  await p.setViewportSize({width:390,height:844});
+  const unloadSignal=()=>p.evaluate(()=>{const event=new Event('beforeunload',{cancelable:true});window.dispatchEvent(event);return event.defaultPrevented;});
+  const refuseReload=async(label,field,expected)=>{
+   assert.equal(await unloadSignal(),true,label+' dirty handler');let dialogs=0;
+   const dismiss=async d=>{if(d.type()==='beforeunload'){dialogs++;await d.dismiss();}else await d.accept();};p.on('dialog',dismiss);
+   await p.reload({timeout:2500}).catch(()=>{});p.off('dialog',dismiss);
+   assert.ok(dialogs>0,label+' actual reload warning');assert.equal(await field.inputValue(),expected,label+' rejected reload retains draft');
+  };
+  await p.locator('#addProvider').click();assert.equal(await unloadSignal(),false,'Clean provider has no unload guard');
+  await p.locator('#providerName').fill('Synthetic dirty provider');
+  for(const [width,height] of [[320,360],[667,320],[1440,900]]){await p.setViewportSize({width,height});await scan('dirty provider '+width);}await p.setViewportSize({width:390,height:844});await refuseReload('provider',p.locator('#providerName'),'Synthetic dirty provider');
+  p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);assert.equal(await p.evaluate(()=>document.activeElement.id),'addProvider');
+  await nav('positions');await p.locator('#addWizard').click();await p.locator('#wizardName').fill('Synthetic dirty asset');await refuseReload('wizard',p.locator('#wizardName'),'Synthetic dirty asset');
+  p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
+  await nav('bookings');await p.locator('#openCSVImport').click();await p.locator('#csvFile').setInputFiles({name:'draft.csv',mimeType:'text/csv',buffer:Buffer.from('date;type;position;quantity;price;id\n2023-01-04;deposit;A;1;1;draft')});await p.waitForFunction(()=>document.getElementById('csvReviewStatus').textContent.includes('1 bereit'));
+  assert.equal(await unloadSignal(),true,'CSV file preview arms dirty guard');let csvWarnings=0;const csvDismiss=async d=>{csvWarnings++;await d.dismiss();};p.on('dialog',csvDismiss);await p.reload({timeout:2500}).catch(()=>{});p.off('dialog',csvDismiss);assert.ok(csvWarnings>0);assert.ok(await p.locator('#editDialog').isVisible());
+  p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.equal(await unloadSignal(),false);assert.deepEqual(await read(),provenRestored,'Discarded drafts never modify portfolio');
+  // Real browser Back to a preceding, public same-origin document.
+  await p.goto(base+'manifest.webmanifest');await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
+  let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};p.on('dialog',rejectBack);await p.goBack({timeout:2500}).catch(()=>{});p.off('dialog',rejectBack);
+  assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
+  p.once('dialog',d=>d.accept());await p.goBack();assert.ok(p.url().includes('manifest.webmanifest'),'Confirmed discard can navigate');
+  await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic saved');await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);assert.equal(await unloadSignal(),false,'Successful save clears unload protection');
+  let cleanWarnings=0;const countClean=async d=>{cleanWarnings++;await d.accept();};p.on('dialog',countClean);await p.reload();p.off('dialog',countClean);assert.equal(cleanWarnings,0);
+  console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
+  // E: valid empty versus existing positions with missing evidence, never zero curves.
+  await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{blankModel}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;await s.save(m);s.close();},base);
+  await p.reload();await nav('history');assert.equal(await p.locator('#historyChart .chart-plot').count(),0);assert.equal(await p.locator('.history-controls').isVisible(),false);assert.equal((await p.locator('#historyPage').innerText()).split('Historische Werte noch nicht belegbar').length-1,0);
+  await p.locator('#historyChart [data-action="start-wizard"]').click();assert.ok(await p.locator('#wizardDialog').isVisible());await p.keyboard.press('Escape');
+  await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{blankModel,createProvider,createPosition}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'Synthetic'}));m.positions.push(createPosition({providerId:'p',name:'Unproven ETF',symbol:'UNK',kind:'etf',quantity:2,price:100},m));await s.save(m);s.close();},base);
+  await p.reload();await nav('history');assert.match(await p.locator('#historyChart').innerText(),/Bestandsnachweise, Tageskurse und EUR-Wechselkurse/);
+  for(const [width,height] of [[320,360],[390,844],[768,500],[1440,900]]){await p.setViewportSize({width,height});await scan('empty history '+width);}
+  await p.locator('#historyChart [data-action="history-positions"]').click();assert.ok(await p.locator('#positionsPage').isVisible());
+  console.log(engine+': E contextual empty/missing-history actions, compact layout/no fake curves/full axe PASS');
   assert.deepEqual(errors,[]);
  }finally{await ctx.close();await browser.close();}
 }
