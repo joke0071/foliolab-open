@@ -4,7 +4,7 @@ Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integ
 
 | Paket | Status | Nächster Schritt |
 | --- | --- | --- |
-| FLH01 | TEILWEISE: Implementierung, 603 Unit-Tests und Syntaxprüfung bestanden | CI/Browsernachweise prüfen, korrigieren, Review, dann integrieren |
+| FLH01 | TEILWEISE: Implementierung, 604 Unit-Tests und Syntaxprüfung bestanden | CI/Browsernachweise prüfen, korrigieren, Review, dann integrieren |
 | IndexedDB B | NICHT BEGONNEN | Erst nach FLH01-Merge |
 | AT03-B | NICHT BEGONNEN | Nach Phase B |
 | AT05-A | NICHT BEGONNEN | Nach AT03-B |
@@ -21,7 +21,7 @@ Absolute Bestände nur bei vollständiger Journalzuordnung und erfolgreichem bes
 Walletmodell/Coverage/Preview/Persistenz/Resume unverändert; Aktionen nur für vorhandene BTC/HD, ETH-Mainnet, SOL/SPL-Implementierungen. Gespeicherte Historie heißt „Historie anzeigen“. Kein neuer Wallet-/Speicher-/Backup-/Journal-Schreibpfad.
 
 ## Nachweise / Grenzen
-Baseline 595/595; jetzt 603/603 Node-Tests, 0 Fail/Skip; npm run check bestanden. 245 synthetische Käufe + vier technische Korrekturen, Kontentrennung, fehlende Mengen/Kosten, orphan Journal, HTML-Escaping und portable Restore geprüft. Browsergates mit 320/390/430/768/1440px, Axe, Dialogfokus/Escape und Nullmutationen für Chromium/Firefox/WebKit in CI ergänzt. Lokaler Browserdownload lieferte ungültiges ZIP; kein lokaler Browserpass. Browser-/CI-Abnahme und Merge noch offen.
+Baseline 595/595; jetzt 604/604 Node-Tests, 0 Fail/Skip; npm run check bestanden. 245 synthetische Käufe + vier technische Korrekturen, Kontentrennung, fehlende Mengen/Kosten, orphan Journal, HTML-Escaping und portable Restore geprüft. Browsergates mit 320/390/430/768/1440px, Axe, Dialogfokus/Escape und Nullmutationen für Chromium/Firefox/WebKit in CI ergänzt. Lokale Chromium-Abnahme inzwischen bestanden (Playwright 1.56.1, Headless Chromium 141): fünf Breiten, 245+4, Axe 0 Verstöße, Tastatur/Fokusrückgabe, belegter EUR-Wert und keine Portfolio-Schreibvorgänge. Screenshots visuell geprüft. Erster Cross-Engine-Lauf fand fehlenden Korrekturfilter (behoben); zweiter Lauf fand CSP-inkompatible Axe-Injektion der neuen Testhilfe (auf bestehendes addInitScript-Verfahren umgestellt, produktive CSP unverändert). Beide roten Zwischenläufe gelten nicht als Abnahme. Browser-/CI-Abnahme und Merge noch offen.
 
 Keine echten Nutzerbackups verwendet. Android/Safari-Hardware, Drive-Neugerät, Crash/Eviction bleiben reale Gates #44. AT03-C/AT05-B/#52 weiterhin durch Realbelege blockiert.
 

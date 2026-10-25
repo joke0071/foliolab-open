@@ -3,15 +3,17 @@ import {chromium,firefox,webkit} from 'playwright';
 import {legacyContext} from './legacy-browser-fixture.mjs';
 import {historyFixture} from './booking-history-fixture.mjs';
 import {createRequire} from 'node:module';
-import {mkdir} from 'node:fs/promises';
-const require=createRequire(import.meta.url),axe=require.resolve('axe-core/axe.min.js');
+import {mkdir,readFile} from 'node:fs/promises';
+const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
 for(const engine of (process.env.FLH_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true});
  const context=await legacyContext(browser);const page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  try{
+  await page.addInitScript({content:axe});
   await page.goto('http://127.0.0.1:4173/');
   const {model,ids}=historyFixture();
+  model.priceHistories[ids[0]]={currency:'EUR',source:'CSV (selbst geprüft)',points:[{date:'2025-01-01',total:100},{date:'2026-01-01',total:200}]};
   await page.evaluate(async m=>{const {persist}=await import('/src/model.js');persist(m);},model);
   await page.reload();
   const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
@@ -35,8 +37,8 @@ for(const engine of (process.env.FLH_ENGINES||'chromium').split(',')){
    assert.equal(await d.locator('tbody tr').first().locator('td').last().innerText(),'64');
    await d.locator('[data-booking-history="view"]').selectOption('eur');
    assert.match(await d.locator('tbody').innerText(),/Unbekannt/);
+   assert.match(await d.locator('tbody tr').first().locator('td').last().innerText(),/12.800/);
    await page.keyboard.press('Tab');assert.ok(await d.evaluate(el=>el.contains(document.activeElement)));
-   await page.addScriptTag({path:axe});
    const result=await page.evaluate(async()=>axe.run('#bookingHistoryDialog',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}}));
    assert.deepEqual(result.violations,[]);
    assert.ok(await d.evaluate(el=>el.scrollWidth<=el.clientWidth+1));
