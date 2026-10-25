@@ -27,3 +27,5 @@ Lesende exakte Projektion und vorhandenes Einklappelement mit Jahr-/Kontofilter,
 Exakt nächster Schritt: geprüften Code-Tree remote sichern; vollständige Chromium-/Firefox-/WebKit-CI vor Integration. Kein steuerlicher Abnahmeanspruch, Stufe B und #52 weiter blockiert.
 
 Zusätzlicher Reviewbefund: Historische Nebenkosten bleiben dem tatsächlich belegten Journal-Konto zugeordnet, auch wenn die Position später umgezogen ist oder die alte Buchungsansicht kein Konto enthält. Keine Rückprojektion des heutigen Positionskontos; eigener Referenztest.
+
+Cross-Engine-Zwischenlauf 40192928432: Firefox-Jahresgates bestanden; WebKit meldete realen Overflow innerhalb der geöffneten Übersicht. Vor finaler Abnahme werden nur die Breiten-/Umbruchgrenzen der neuen Übersicht korrigiert und dieselben Assertions erneut ausgeführt. Keine Lockerung von Pixel-/Overflow-/A11y-Schwellen. Lokaler Chromiumlauf nach Korrektur grün; WebKit-Nachweis folgt aus CI (lokal fehlen native Laufzeitbibliotheken).

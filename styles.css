@@ -1014,3 +1014,7 @@
 
 .annual-record{padding:8px 0;border-bottom:1px solid #e8efe8}.annual-record summary{min-height:36px;padding:8px 0;cursor:pointer;overflow-wrap:anywhere}.annual-record dd{overflow-wrap:anywhere}
 .annual-record .holding-facts dt{color:#4d6756;font-size:12px}
+#bookingIncome,#incomeRecords,.annual-record,.annual-record .holding-facts{min-width:0;max-width:100%}
+#bookingIncome select{min-width:0;max-width:100%;width:100%}
+.annual-record summary{white-space:normal;word-break:break-word}
+.annual-record .holding-facts>div,.annual-record dd{min-width:0;max-width:100%;word-break:break-word}

@@ -12,7 +12,8 @@ for(const engine of (process.env.ANNUAL_ENGINES||'chromium').split(',')){
    await page.locator('#incomeYear').selectOption('2025');await page.locator('#incomeAccount').selectOption(custody.id);
    assert.match(await page.locator('#bookingIncome').innerText(),/-\s*€\s*7,00/);assert.match(await page.locator('#incomeRecords summary').first().innerText(),/\(2\)/);
    await page.locator('#incomeRecords').evaluate(el=>el.open=true);await page.locator('.annual-record summary').first().click();assert.match(await page.locator('#incomeRecords').innerText(),/Kaufbeleg SYN-TRADE/);
-   assert.ok(await page.locator('#bookingIncome').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+   const overflow=await page.locator('#bookingIncome').evaluate(el=>({width:el.clientWidth,scroll:el.scrollWidth,children:[...el.querySelectorAll('*')].filter(x=>x.getBoundingClientRect().right>el.getBoundingClientRect().right+1).slice(0,10).map(x=>({tag:x.tagName,id:x.id,cls:x.className,width:x.getBoundingClientRect().width,text:x.textContent.slice(0,70)}))}));
+   assert.ok(overflow.scroll<=overflow.width+1,engine+' width '+width+': '+JSON.stringify(overflow));
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#bookingIncome',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))),[]);
    await mkdir('artifacts/gates/annual',{recursive:true});await page.screenshot({path:'artifacts/gates/annual/'+engine+'-'+width+'.png'});
    await page.locator('[data-action="reset-income-filters"]').click();assert.equal(await page.locator('#incomeYear').inputValue(),'');assert.equal(await page.locator('#incomeAccount').inputValue(),'');assert.match(await page.locator('#bookingIncome').innerText(),/15,00/);
