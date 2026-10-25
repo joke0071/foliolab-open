@@ -54,7 +54,11 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
    // Upgrade the actual installed worker, keeping the synthetic portfolio.
    assert.ok((await page.evaluate(()=>caches.keys())).includes('foliolab-open-v149'));
    await fetch(base+'/__release/update');
-   await Promise.all([page.waitForEvent('load'),page.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();})]);
+   // Activation may reload the page before an awaited page.evaluate returns.
+   // Schedule the upgrade after evaluate completes and observe the resulting navigation.
+   const reloaded=page.waitForEvent('load',{timeout:20000});
+   await page.evaluate(()=>{setTimeout(()=>{navigator.serviceWorker.ready.then(registration=>registration.update());},0);});
+   await reloaded;
    await page.waitForFunction(async cacheName=>{const keys=await caches.keys();return keys.includes(cacheName)&&!keys.includes('foliolab-open-v149');},currentCache);
    assert.equal(await financial(),before,'real worker activation preserves financial data');
   }
