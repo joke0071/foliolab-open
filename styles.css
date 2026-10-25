@@ -995,3 +995,10 @@
 .interest-periods th,.interest-periods td{text-align:left;padding:8px;border-bottom:1px solid #dce8df;vertical-align:top}
 #interestDisclosure .link-button{min-height:44px}
 @media(max-width:430px){.interest-rate-row{padding:10px}#interestCalculate,#interestAddRate{width:100%}}
+
+/* Keep investment class glyphs visible in compact position rows; preserve provider marks. */
+@media(max-width:390px){
+ .position-entry .holding-mark{display:grid;width:30px;height:30px;border-radius:9px}
+ .position-entry .holding-mark svg{width:18px;height:18px}
+ .position-entry .holding-l{gap:8px}
+}
