@@ -1,0 +1,484 @@
+[
+  {
+    "name": "constant",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "250.00",
+    "expectedRational": {
+      "numerator": "250",
+      "denominator": "1"
+    }
+  },
+  {
+    "name": "mid-month change",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2026-02-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      },
+      {
+        "fromDate": "2026-01-16",
+        "annualRateExact": "2",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 31,
+    "expectedGrossExact": "19.04",
+    "expectedRational": {
+      "numerator": "1390",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "year boundary",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2025-12-31",
+    "startDate": "2025-12-31",
+    "endDate": "2026-01-02",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2025-12-31",
+        "annualRateExact": "2",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 2,
+    "expectedGrossExact": "1.10",
+    "expectedRational": {
+      "numerator": "80",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "leap day fixed denominator",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2024-02-28",
+    "startDate": "2024-02-28",
+    "endDate": "2024-03-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2024-02-28",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 2,
+    "expectedGrossExact": "1.37",
+    "expectedRational": {
+      "numerator": "100",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "leap day 360",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2024-02-28",
+    "startDate": "2024-02-28",
+    "endDate": "2024-03-01",
+    "dayCount": "ACT/360",
+    "rates": [
+      {
+        "fromDate": "2024-02-28",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 2,
+    "expectedGrossExact": "1.39",
+    "expectedRational": {
+      "numerator": "25",
+      "denominator": "18"
+    }
+  },
+  {
+    "name": "whole leap year fixed",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2024-01-01",
+    "startDate": "2024-01-01",
+    "endDate": "2025-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2024-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 366,
+    "expectedGrossExact": "250.68",
+    "expectedRational": {
+      "numerator": "18300",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "month 360",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2026-02-01",
+    "dayCount": "ACT/360",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 31,
+    "expectedGrossExact": "21.53",
+    "expectedRational": {
+      "numerator": "775",
+      "denominator": "36"
+    }
+  },
+  {
+    "name": "month 365",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2026-02-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 31,
+    "expectedGrossExact": "21.23",
+    "expectedRational": {
+      "numerator": "1550",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "zero rate",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "0",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.00",
+    "expectedRational": {
+      "numerator": "0",
+      "denominator": "1"
+    }
+  },
+  {
+    "name": "zero principal",
+    "principal": "0",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.00",
+    "expectedRational": {
+      "numerator": "0",
+      "denominator": "1"
+    }
+  },
+  {
+    "name": "tiny principal",
+    "principal": "0.01",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2026-01-02",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "1",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 1,
+    "expectedGrossExact": "0.00",
+    "expectedRational": {
+      "numerator": "1",
+      "denominator": "3650000"
+    }
+  },
+  {
+    "name": "large exact principal",
+    "principal": "123456789012345678901234567890.12",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "3.45",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "4259259220925925922092592592.21",
+    "expectedRational": {
+      "numerator": "212962961046296296104629629610457",
+      "denominator": "50000"
+    }
+  },
+  {
+    "name": "USD no FX",
+    "principal": "10000",
+    "currency": "USD",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "250.00",
+    "expectedRational": {
+      "numerator": "250",
+      "denominator": "1"
+    }
+  },
+  {
+    "name": "JPY zero digits",
+    "principal": "10001",
+    "currency": "JPY",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "250",
+    "expectedRational": {
+      "numerator": "10001",
+      "denominator": "40"
+    }
+  },
+  {
+    "name": "KWD three digits",
+    "principal": "1",
+    "currency": "KWD",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "0.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.005",
+    "expectedRational": {
+      "numerator": "1",
+      "denominator": "200"
+    }
+  },
+  {
+    "name": "half cent away from zero",
+    "principal": "1",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "0.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.01",
+    "expectedRational": {
+      "numerator": "1",
+      "denominator": "200"
+    }
+  },
+  {
+    "name": "below half cent",
+    "principal": "0.999999999999999999",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "0.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.00",
+    "expectedRational": {
+      "numerator": "999999999999999999",
+      "denominator": "200000000000000000000"
+    }
+  },
+  {
+    "name": "negative rate half cent",
+    "principal": "1",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "-0.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "-0.01",
+    "expectedRational": {
+      "numerator": "-1",
+      "denominator": "200"
+    }
+  },
+  {
+    "name": "no intermediate rounding",
+    "principal": "1",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2027-01-01",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "0.5",
+        "knownThrough": null
+      },
+      {
+        "fromDate": "2026-07-02",
+        "annualRateExact": "0.5",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 365,
+    "expectedGrossExact": "0.01",
+    "expectedRational": {
+      "numerator": "1",
+      "denominator": "200"
+    }
+  },
+  {
+    "name": "change at exclusive end ignored",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-01",
+    "startDate": "2026-01-01",
+    "endDate": "2026-01-02",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "2.5",
+        "knownThrough": null
+      },
+      {
+        "fromDate": "2026-01-02",
+        "annualRateExact": "100",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 1,
+    "expectedGrossExact": "0.68",
+    "expectedRational": {
+      "numerator": "50",
+      "denominator": "73"
+    }
+  },
+  {
+    "name": "change at inclusive start",
+    "principal": "10000",
+    "currency": "EUR",
+    "asOf": "2026-01-02",
+    "startDate": "2026-01-02",
+    "endDate": "2026-01-03",
+    "dayCount": "ACT/365F",
+    "rates": [
+      {
+        "fromDate": "2026-01-01",
+        "annualRateExact": "100",
+        "knownThrough": null
+      },
+      {
+        "fromDate": "2026-01-02",
+        "annualRateExact": "0",
+        "knownThrough": null
+      }
+    ],
+    "expectedDays": 1,
+    "expectedGrossExact": "0.00",
+    "expectedRational": {
+      "numerator": "0",
+      "denominator": "1"
+    }
+  }
+]

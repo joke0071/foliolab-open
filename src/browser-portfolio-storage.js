@@ -75,6 +75,17 @@ export class PortfolioStorage {
   this.revision=current.revision;
   return restored(current);
  }
+ /** Read-only freshness check; never adopts a newer revision for stale writes. */
+ async assertCurrent(){
+  const mode=this.storage.getItem(MODE_KEY);
+  if(this.isIndexedDB){
+   if(mode!==MODE_VALUE||!this.db)throw Error('Speichermodus wurde geändert. Bitte neu laden.');
+   const current=await readPortfolioRecord(this.db);
+   if(!current||current.revision!==this.revision)throw Error('Datenstand in einem anderen Tab geändert. Bitte neu laden.');
+  }else if(mode===MODE_VALUE||this.legacyRaw===undefined||this.storage.getItem(STORE_KEY)!==this.legacyRaw){
+   throw Error('Datenstand in einem anderen Tab geändert. Bitte neu laden.');
+  }
+ }
  async save(model){
   if(!this.isIndexedDB){
    const draft=clone(model);
