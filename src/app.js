@@ -125,6 +125,7 @@ function syncPortfolioState(){
    if(control.id!=='backupFile'&&!control.disabled){control.dataset.recoveryDisabled='true';control.disabled=true;}
   });
  }else{
+  $('totalValue').textContent=money(totalEUR(model));
   document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
   document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
  }

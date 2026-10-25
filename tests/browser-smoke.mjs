@@ -111,9 +111,12 @@ try{
  await page.reload();
  assert.equal(await page.locator('#notice').isVisible(),true);
  await page.locator('#sidebarNav [data-page="more"]').click();
- await page.locator('#addProvider').click();
- await page.locator('#editorForm [name="name"]').fill('Darf nicht gespeichert werden');
- await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
+ // Recovery now blocks entry to the write form itself (AUD-01), before Save.
+ assert.equal(await page.locator('#addProvider').isDisabled(),true);
+ await page.locator('#addProvider').dispatchEvent('click');
+ assert.equal(await page.locator('#editDialog').isVisible(),false);
+ assert.equal(await page.locator('#onboarding').isVisible(),false);
+ assert.match(await page.locator('#localPortfolioStatus').textContent(),/nicht verfügbar/);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),'{corrupted');
  console.log('Browser smoke: six viewports, accounts, positions, wallet validation, backup, v1 migration, corrupt-storage protection PASS');
 } finally {await browser.close();}

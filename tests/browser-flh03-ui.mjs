@@ -66,7 +66,8 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   const refuseReload=async(label,field,expected)=>{
    assert.equal(await unloadSignal(),true,label+' dirty handler');let dialogs=0;
    const dismiss=async d=>{if(d.type()==='beforeunload'){dialogs++;await d.dismiss();}else await d.accept();};p.on('dialog',dismiss);
-   await p.reload({timeout:2500}).catch(()=>{});p.off('dialog',dismiss);
+   const warning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});
+   await p.evaluate(()=>{setTimeout(()=>location.reload(),0);});await warning;p.off('dialog',dismiss);
    assert.ok(dialogs>0,label+' actual reload warning');assert.equal(await field.inputValue(),expected,label+' rejected reload retains draft');
   };
   await p.locator('#addProvider').click();assert.equal(await unloadSignal(),false,'Clean provider has no unload guard');
@@ -76,13 +77,13 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   await nav('positions');await p.locator('#addWizard').click();await p.locator('#wizardName').fill('Synthetic dirty asset');await refuseReload('wizard',p.locator('#wizardName'),'Synthetic dirty asset');
   p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
   await nav('bookings');await p.locator('#openCSVImport').click();await p.locator('#csvFile').setInputFiles({name:'draft.csv',mimeType:'text/csv',buffer:Buffer.from('date;type;position;quantity;price;id\n2023-01-04;deposit;A;1;1;draft')});await p.waitForFunction(()=>document.getElementById('csvReviewStatus').textContent.includes('1 bereit'));
-  assert.equal(await unloadSignal(),true,'CSV file preview arms dirty guard');let csvWarnings=0;const csvDismiss=async d=>{csvWarnings++;await d.dismiss();};p.on('dialog',csvDismiss);await p.reload({timeout:2500}).catch(()=>{});p.off('dialog',csvDismiss);assert.ok(csvWarnings>0);assert.ok(await p.locator('#editDialog').isVisible());
+  await refuseReload('CSV preview',p.locator('#csvFile'),await p.locator('#csvFile').inputValue());assert.ok(await p.locator('#editDialog').isVisible());
   p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.equal(await unloadSignal(),false);assert.deepEqual(await read(),provenRestored,'Discarded drafts never modify portfolio');
   // Real browser Back to a preceding, public same-origin document.
   await p.goto(base+'manifest.webmanifest');await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
-  let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};p.on('dialog',rejectBack);await p.goBack({timeout:2500}).catch(()=>{});p.off('dialog',rejectBack);
+  let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
   assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
-  p.once('dialog',d=>d.accept());await p.goBack();assert.ok(p.url().includes('manifest.webmanifest'),'Confirmed discard can navigate');
+  p.once('dialog',d=>d.accept());await Promise.all([p.waitForURL('**/manifest.webmanifest'),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(p.url().includes('manifest.webmanifest'),'Confirmed discard can navigate');
   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic saved');await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);assert.equal(await unloadSignal(),false,'Successful save clears unload protection');
   let cleanWarnings=0;const countClean=async d=>{cleanWarnings++;await d.accept();};p.on('dialog',countClean);await p.reload();p.off('dialog',countClean);assert.equal(cleanWarnings,0);
   console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
