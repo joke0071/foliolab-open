@@ -1,0 +1,73 @@
+/** Read-only EOD projection. Journal dates are trade dates, not settlement or UTC guesses. */
+import {units,exact,mul} from './decimal.js';
+import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
+import {validateImportedPriceHistory} from './historical-csv.js';
+const validDate=d=>typeof d==='string'&&/^\d{4}-\d\d-\d\d$/.test(d)&&Number.isFinite(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+const daysBetween=(a,b)=>(Date.parse(b)-Date.parse(a))/864e5;
+/** Pure capability. Unknown entitlements/CORS are not a positive live capability. */
+export function historicalProviderCapability({provider,currency,listingConfirmed=false,browserTransport=false,licenseState='unknown',quotaStatus='unknown',rangeDays=365,availableDays=365,symbolAllowed=false}={}){
+ const reasons=[];
+ if(!['csv','eodhd','twelve','fmp','coingecko','coinpaprika'].includes(provider))reasons.push('Quelle nicht freigegeben');
+ if(!/^[A-Z]{3}$/.test(currency||''))reasons.push('Kurswährung fehlt');
+ if(provider!=='csv'){
+  if(!browserTransport)reasons.push('Browserzugriff nicht bestätigt');
+  if(!symbolAllowed||!listingConfirmed)reasons.push('Instrument oder Börsennotierung nicht bestätigt');
+  if(licenseState!=='confirmed')reasons.push('Nutzungsrecht nicht bestätigt');
+  if(quotaStatus!=='available')reasons.push('Anbieterlimit nicht bestätigt');
+  if(rangeDays>availableDays)reasons.push('Zeitraum außerhalb verfügbarer Historie');
+ }
+ return {canFetchSymbol:!reasons.length,canFetchRange:!reasons.length,hasBrowserTransportOrUserWorker:provider==='csv'||browserTransport,currency,coverage:reasons.length?'unconfirmed':'available',licenseState,quotaStatus,reasons};
+}
+export function historicalQuantityRows(model,positionId,dates){
+ const p=model.positions.find(p=>p.id===positionId),opening=model.openingPositions?.find(o=>o.positionId===positionId);
+ let reason='Datierter Anfangsbestand fehlt – Eröffnung oder Transfers prüfen.';
+ const journals=(model.journalEntries||[]).filter(e=>e.postings.some(x=>x.positionId===positionId&&x.quantityDeltaExact!=null)).sort((a,b)=>a.date.localeCompare(b.date)||(a.sequence||0)-(b.sequence||0)||a.id.localeCompare(b.id));
+ let known=Boolean(p&&opening);try{known&&=ledgerQuantityAudit(model).ok;for(const e of journals)validateJournalEntry(e);}catch{known=false;reason='Journal widersprüchlich – Buchungen prüfen.';}
+ if((model.bookings||[]).some(b=>(b.positionId===positionId||b.targetPositionId===positionId)&&!journals.some(e=>e.id===(b.journalEntryId??b.id)))){known=false;reason='Journalhistorie unvollständig – Buchungen prüfen.';}
+ // An undated non-zero baseline is never back-extrapolated. A zero baseline
+ // starts only at the first evidenced journal movement, never before it.
+ const start=opening?.asOf||(opening&&units(opening.quantityExact)===0n?journals[0]?.date:null);
+ if(!validDate(start))known=false;
+ let q=opening?units(opening.quantityExact):0n,index=0;
+ if(opening?.asOf&&journals.some(e=>e.date<opening.asOf)){known=false;reason='Eröffnungsdatum und Journal widersprechen sich.';}
+ const ordered=[...new Set(dates)].sort();
+ return ordered.map(date=>{
+  if(!validDate(date))throw Error('Ungültiger Bewertungstag.');
+  while(index<journals.length&&journals[index].date<=date){
+   const e=journals[index++];for(const x of e.postings)if(x.positionId===positionId&&x.quantityDeltaExact!=null)q+=units(x.quantityDeltaExact);
+  }
+  const valid=known&&date>=start&&q>=0n;
+  return {date,positionId,accountId:p?.accountId??null,quantityExact:valid?exact(q):null,coverage:valid?'verified':'unknown',reason:valid?'':reason,quantitySource:'journal-trade-day-EOD'};
+ });
+}
+export function localHistoricalPrices(model,p){
+ const h=model.priceHistories?.[p.id];return h?{...validateImportedPriceHistory(h,p),priceType:'close'}:null;
+}
+/** marketHistory must describe one compatible series; no automatic provider fusion. */
+export function projectHistoricalPosition(model,positionId,{marketHistory=null,fxPoints=[],dates=null}={}){
+ const p=model.positions.find(p=>p.id===positionId);if(!p)return {rows:[],segments:[],reason:'Positionsidentität fehlt.'};
+ const history=marketHistory??localHistoricalPrices(model,p);
+ const quotes=new Map();
+ if(history){
+  if(history.currency!==p.currency||!['close','crypto-daily'].includes(history.priceType??'close'))throw Error('Kurswährung oder Kursart nicht mit der Position vereinbar.');
+  for(const point of history.points??[]){
+   if(!validDate(point.date)||units(point.total)<=0n)throw Error('Historischer Kurs ungültig.');
+   if(quotes.has(point.date)&&quotes.get(point.date)!==exact(units(point.total)))throw Error('Widersprüchliche Tageskurse.');quotes.set(point.date,exact(units(point.total)));
+  }
+ }
+ const quantities=historicalQuantityRows(model,positionId,dates??[...new Set([...quotes.keys(),...(model.journalEntries||[]).filter(e=>e.postings.some(x=>x.positionId===positionId)).map(e=>e.date)])]);
+ const fx=new Map();for(const point of fxPoints){if(!validDate(point.date)||point.currency!==p.currency||point.source!=='Frankfurter'||units(point.rate)<=0n)throw Error('Historischer FX-Nachweis ungültig.');if(fx.has(point.date)&&fx.get(point.date)!==exact(units(point.rate)))throw Error('Widersprüchlicher FX.');fx.set(point.date,exact(units(point.rate)));}
+ const rows=quantities.map(row=>{
+  const price=p.kind==='cash'?'1':quotes.get(row.date)??null,fxExact=p.currency==='EUR'?'1':fx.get(row.date)??null;
+  let reason=row.reason;if(row.quantityExact!==null&&row.quantityExact!=='0'&&price===null)reason='Historischer Schlusskurs fehlt – Kurs-CSV importieren oder bestätigte API-Quelle laden.';
+  if(row.quantityExact!==null&&row.quantityExact!=='0'&&price!==null&&fxExact===null)reason='Historischer EUR-Wechselkurs fehlt – datierten FX-Nachweis laden.';
+  const valueEURExact=row.quantityExact==='0'?'0':row.quantityExact!==null&&price!==null&&fxExact!==null?exact(mul(mul(units(row.quantityExact),units(price)),units(fxExact))):null;
+  return {...row,priceExact:price,priceDate:price===null?null:row.date,fxExact,valueEURExact,source:history?.source??(p.kind==='cash'?'Journal':'Keine Kursquelle'),priceType:history?.priceType??'close',coverage:valueEURExact===null?'unknown':'verified',reason};
+ });
+ const segments=[];let segment=[];for(const row of rows){
+  if(row.valueEURExact===null){if(segment.length)segments.push(segment);segment=[];continue;}
+  if(segment.length&&daysBetween(segment.at(-1).date,row.date)>(p.kind==='crypto'?1:4)){segments.push(segment);segment=[];}
+  segment.push(row);
+ }if(segment.length)segments.push(segment);
+ return {rows,segments,reason:rows.find(r=>r.reason)?.reason??(!rows.length?'Historische Kurse fehlen – Kurs-CSV importieren oder API-Schlüssel unter Mehr → Datenquellen eintragen.':''),source:history?.source??'Journal',partial:rows.some(r=>r.valueEURExact===null)||segments.length>1};
+}

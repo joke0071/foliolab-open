@@ -32,9 +32,9 @@ for(const engine of (process.env.FLH_ENGINES||'chromium').split(',')){
    await page.locator(nav+' [data-page="positions"]').click();
    const button=page.locator('[data-action="booking-history"][data-id="'+ids[0]+'"]');
    await button.click();const d=page.locator('#bookingHistoryDialog');await d.waitFor({state:'visible'});
-   assert.match(await d.innerText(),/6.200/);
+   assert.equal(await d.locator('[data-booking-history="view"]').inputValue(),'eur');assert.match(await d.innerText(),/6.200/);
    await d.locator('[data-booking-history="view"]').selectOption('balances');
-   assert.equal(await d.locator('tbody tr').first().locator('td').last().innerText(),'64');
+   assert.equal(await d.locator('tbody tr').first().locator('td').nth(1).innerText(),'64');
    await d.locator('[data-booking-history="view"]').selectOption('eur');
    assert.match(await d.locator('tbody').innerText(),/Unbekannt/);
    assert.match(await d.locator('tbody tr').first().locator('td').last().innerText(),/12.800/);

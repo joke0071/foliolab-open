@@ -186,7 +186,7 @@ export function safeImport(raw){
   uniqueIds(m.externalCashFlows,'externen Geldflüssen');
   m.openingPositions=raw.version===3&&Array.isArray(raw.openingPositions)?raw.openingPositions.map(x=>{
     if(!x||!x.positionId||!m.positions.some(p=>p.id===x.positionId))throw Error('Ungültiger Eröffnungsbestand.');
-    return {positionId:cleanString(x.positionId,120),quantityExact:exact(units(x.quantityExact)),costBasisExact:x.costBasisExact==null?null:exact(units(x.costBasisExact)),realizedPnLExact:x.realizedPnLExact==null?null:exact(units(x.realizedPnLExact)),source:'observed-opening',asOf:null};
+    return {positionId:cleanString(x.positionId,120),quantityExact:exact(units(x.quantityExact)),costBasisExact:x.costBasisExact==null?null:exact(units(x.costBasisExact)),realizedPnLExact:x.realizedPnLExact==null?null:exact(units(x.realizedPnLExact)),source:'observed-opening',asOf:x.asOf==null?null:(validCalendarDate(x.asOf)?x.asOf:(()=>{throw Error('Ungültiges Eröffnungsdatum.');})())};
   }):[];
   if(raw.version<3)captureOpenings(m);
   if(raw.version===3){

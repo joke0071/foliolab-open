@@ -59,10 +59,11 @@ export function parseHistoricalPriceCSV(text,position){
  if(rows.length<3)throw Error('Mindestens zwei Kursdaten und eine Kopfzeile erforderlich.');
  const h=rows[0].map(header);
  const date=matchColumn(h,['datum','date','datetime','tradingdate','handelsdatum','zeitstempel','timestamp']);
- const price=matchColumn(h,['schlusskurs','schluss','close','closingprice','schlusskursbereinigt','kurs','price','last','wert','adjclose','adjustedclose']);
+ const price=matchColumn(h,['schlusskurs','schluss','close','closingprice','kurs','price','last','wert']);
  const curr=matchColumn(h,['currency','wahrung','kurswahrung','waehrung']);
  const symbol=matchColumn(h,['ticker','symbol','borsenkurzel','boersenkurzel']);
  const isin=matchColumn(h,['isin']);
+ if(price<0&&h.some(x=>['adjclose','adjustedclose','schlusskursbereinigt'].includes(x)))throw Error('Bereinigte Kurse sind keine damaligen Depotwerte. Bitte rohe Schlusskurse (Close) importieren.');
  if(date<0||price<0||date===price)throw Error('Spalten „Datum/Date“ und „Schlusskurs/Close“ fehlen.');
  const requestedCurrency=String(position.currency||'EUR').toUpperCase();
  const points=new Map();
