@@ -13,7 +13,7 @@ test('navigation protection follows the existing dirty predicate and is absent o
  globalThis.window=win;globalThis.MutationObserver=class{constructor(callback){observed=callback;}observe(){}};
  class Dialog extends EventTarget{open=false;contains(target){return target===this;}close(){this.open=false;this.dispatchEvent(new Event('close'));}}
  const dialog=new Dialog();
- const fire=()=>{const event=new Event('beforeunload',{cancelable:true});win.dispatchEvent(event);return event.defaultPrevented;};
+ const fire=()=>{const event=new Event('beforeunload',{cancelable:true});Object.defineProperty(event,'returnValue',{value:'',writable:true});win.dispatchEvent(event);return event.defaultPrevented;};
  const sync=async()=>{observed();await Promise.resolve();};
  try{
   const guard=createDialogDiscardGuard(dialog,{isDirty:()=>dirty,isBusy:()=>busy,onClose:()=>closed++});

@@ -18,10 +18,19 @@ for(const engine of (process.env.DIALOG_NATIVE_ENGINES||'chromium').split(',')){
  const nav=async name=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+name+'"]').click();
  const record=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
  const nativeReload=async accept=>{
-  const event=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload'});
-  await p.evaluate(()=>{setTimeout(()=>location.reload(),0);});
-  const d=await event;assert.equal(d.type(),'beforeunload');
-  if(accept){try{await Promise.all([p.waitForEvent('load'),d.accept()]);await ready();}catch(error){console.log(engine+': ACCEPTED RELOAD DIAGNOSTIC '+JSON.stringify(await p.evaluate(()=>({href:location.href,state:document.readyState,timeOrigin:performance.timeOrigin,dialogs:[...document.querySelectorAll('dialog')].map(d=>({id:d.id,open:d.open})),navigation:performance.getEntriesByType('navigation').map(n=>({type:n.type,domComplete:n.domComplete,load:n.loadEventEnd}))}))));throw error;}}else await d.dismiss();
+  const dialogs=[];
+  let resolveHandled,rejectHandled;
+  const handled=new Promise((resolve,reject)=>{resolveHandled=resolve;rejectHandled=reject;});
+  const handler=async d=>{try{dialogs.push(d.type());assert.equal(d.type(),'beforeunload');await d[accept?'accept':'dismiss']();resolveHandled();}catch(error){rejectHandled(error);}};
+  p.on('dialog',handler);
+  // Install the load observer before the action, and retain the real dialog
+  // handler throughout navigation as required by Playwright's dialog contract.
+  const loaded=accept?p.waitForEvent('load'):null;
+  try{
+   await p.evaluate(()=>{setTimeout(()=>location.reload(),0);});
+   if(accept){await Promise.all([handled,loaded]);await ready();}else await Promise.race([handled,new Promise((_,reject)=>setTimeout(()=>reject(Error('Native reload warning missing')),5000))]);
+   assert.deepEqual(dialogs,['beforeunload']);
+  }finally{p.off('dialog',handler);}
  };
  const cleanReload=async()=>{
   const unexpected=[];const handler=async d=>{unexpected.push(d.type());await d.accept();};p.on('dialog',handler);

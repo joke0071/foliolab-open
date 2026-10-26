@@ -17,3 +17,7 @@ Die ursprüngliche universelle Cross-Origin-Back-Garantie wurde vom Nutzer ausdr
 Es wird kein nicht unterstützter Cross-Origin-Warnfall als erfolgreich etikettiert. Der neue klar benannte Pflichtvertrag ist unabhängig von der historischen strengeren Diagnose. Alle bisherigen CI-Gates bleiben und der neue Test wird zusätzlich in Chromium sowie Firefox/WebKit ausgeführt. Native Safari/physische Android-Tastatur/Assistenztechnik und echtes OAuth bleiben externe Nachweise #44.
 
 Status: Implementierung und Testvertrag erstellt; tatsächliche Testergebnisse, finaler HEAD/CI und Live-Abnahme folgen im Checkpoint. Noch kein v180-Merge/Deployment oder bestandener Test behauptet.
+
+## Tatsächlicher Schlussstand dieses Inkrements
+
+Check und690Units sowie Chromium/WebKit mit je18vollständigenAxe-Prüfungen/allen3Formen bestanden. Firefox157/PW1.64.1 scheitert weiterhin am tatsächlichen bestätigtenReload nach vorherigemVerweigern. Ein isolierterMinimal-HTTP-Versuch ohne App/Storage/SW/Interception reproduziert den Unterschied first-accept versus reject-then-accept; keine Rootcause aus dieser Beobachtung ableiten. Die Warnung selbst erscheint, aber ein bestätigtesVerlassen ist damit nicht vollständig abgenommen. Vollständige Evidenz im Maschinenbericht; keinMerge/Deployment. D=P2 wird geparkt, keine identischen weiterenDiagnoseläufe ohne neueHypothese; unabhängige14/16/Formatarbeit geht weiter. Der Node22-Fixturefehler wird separat ohne Produkt-/Assertionänderung korrigiert.

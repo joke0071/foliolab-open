@@ -1,3 +1,15 @@
+# AKTUELL — D/P2 sicher zurückgestellt; v179 produktiv, Audit integriert
+
+PhaseA v179/L179 abgeschlossen. PhaseB vollständiger separater Dokumentationscheckpoint #156/6eaf5b0, dessen finale CI40367359667 und Wallet40367359740 SUCCESS. Erst NACH abgeschlossenem Audit wurde #156 als reiner Dokumentationsmerge23af6d5800b06b6d08a52bf730ecd685387af7dd integriert; App/SW/Assets bleiben byteidentisch zum akzeptierten5397ca7/v179. NeuesMain-/Pages-Ergebnis separat prüfen, keine neueFunktionsveröffentlichung behaupten. Vollmatrix/Roadmap jetzt in main; untenstehende156-notmerged-Angaben historisch.
+
+D-P2 #157 / feature/flh03-d-native-guard wird dokumentiert GEPAKT, nicht gemergt. Finaler lokalerStand: check/690Units PASS; tatsächliche neue strenge nativeReload/IDB/Escape/Fokus/18Axe-Suite in Chromium und WebKit27.2 PASS. Firefox157 bleibt beim bestätigtenReload nach vorherigemVerweigern rot. Unabhängiger Minimal-HTTP-Nachweis ohne FolioLab/Storage/SW/Interception: FIRST accept lädt neuesDokument; reject-then-accept behält alte timeOrigin undDraft. WebKit besteht beide. Kein Rootcause als Browser- oderProduktfehler erfunden. Keine weitere identischeDiagnoserunde; D blockiert anderePakete nicht. Maschinenbeleg docs/release-evidence/flh03-d-p2-blocked.json; strenge Produktassertions unverändert, ursprüngliche151-CrossOrigin-Tests/Logs ebenfalls unangetastet. Keine History-Trap/Entwurfspersistenz/Finanzänderung, keine180-Veröffentlichung.
+
+Erste CI40368324455 Node22 scheiterte ausschließlich am neuen Node-Event-Testdouble: dort returnValue getter-only, im Browser BeforeUnloadEvent beschreibbar. Fixture erhält eigenes beschreibbaresFeld, alleDirty/Listener/Close-Assertions unverändert; Produktcode unverändert. Finale neueCI nach diesem Commit auswerten; trotz möglicherUnitkorrektur bleibt Firefoxproduktgate offen und keinMerge zulässig. Der boundedD-Releasevertrag/konkreteFreigabe bleiben für spätere tatsächlicheEntblockung erhalten.
+
+Nächster EINZIGER aktiver funktionaler Strang nach Sicherung dieses geparktenD-Stands: FLH03-14 Archivieren als kleinesmain-basiertesPaket gemäßRoadmap, zuerst Modell-/Reimport-/Bewertungsvertrag, dann echteTests/PR. Keine14-Releasefreigabe erfinden; erst vollständigreviewbarenPR sichern. Danach16/Formatbelege/18/FLH04 sequenziell. Aktueller Gesamtauftrag PARTIAL; externe Format-/Fach-/Geräte-/OAuth-/neueReleasegates bleiben in konsolidierterMatrix ausdrücklich offen.
+
+---
+
 # AKTUELL — Phase C: begrenzter D-P2-Schritt implementiert, finale Gates offen
 
 Basis produktiv akzeptiert v179/main5397ca73d3ce8281920973a9916c9fadbd65596d. PhaseB separat remote abgeschlossen: Audit-PR #156 / Commit6eaf5b0c28d192ef624651b66d3a91f81e25d0a4 enthält vollständige konsolidierte Matrix/Roadmap. Keine funktionale Änderung/Deployment während dieses Audits. Diese Dokumente dort lesen, nicht alte AT01/02/03-B/05-A/FLH02/00/01/ABCE/08-Arbeiten wiederholen.
