@@ -270,3 +270,73 @@ jobs:
           echo 'Live deployment not verified: homepage or service-worker revision differs.' >&2
           exit 1
 
+
+  live-acceptance:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: [deploy]
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      TRANSFER_STATE_BASE: https://foliolab.unperfekt.at/
+      RELEASE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install existing Chromium acceptance tools
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0 2>&1 | tee artifacts/gates/live-browser-install.log
+          npx playwright install chromium --only-shell 2>&1 | tee -a artifacts/gates/live-browser-install.log
+      - name: Verify published bytes, core flows and targeted UI in Chromium
+        env:
+          UI_QUALITY_SCREENSHOTS: '1'
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
+          echo "LIVE_QA_SHA $RELEASE_SHA"
+          node tests/browser-live-acceptance.mjs 2>&1 | tee artifacts/gates/production-core.log
+          node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-chromium.log
+          cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-chromium.json
+          node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-chromium.log
+          cp artifacts/gates/transfer-states.json artifacts/gates/production-transfers-chromium.json
+      - name: Install Firefox and WebKit for cross-engine regression
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          # Keep Ubuntu signatures/TLS verification; avoid the observed stalling Azure mirror.
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
+      - name: Verify targeted production UI in Firefox and WebKit
+        env:
+          UI_QUALITY_ENGINES: firefox,webkit
+          TRANSFER_STATE_ENGINES: firefox,webkit
+        run: |
+          set -euo pipefail
+          node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
+          cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-cross.json
+          node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-cross.log
+          cp artifacts/gates/transfer-states.json artifacts/gates/production-transfers-cross.json
+      - name: Preserve actual production acceptance evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-live-acceptance-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+          retention-days: 7
