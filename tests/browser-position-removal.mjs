@@ -2,9 +2,10 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_08_BASE||'http://127.0.0.1:4173/';
+const live=base.startsWith('https:'),useProxy=live&&Boolean(process.env.HTTPS_PROXY);
 for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
- const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({acceptDownloads:true}),page=await context.newPage(),errors=[];
+ const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(useProxy?['--ignore-certificate-errors']:[])]:[],...(useProxy?{proxy:{server:process.env.HTTPS_PROXY,bypass:'127.0.0.1,localhost'}}:{})});
+ const context=await browser.newContext({acceptDownloads:true,ignoreHTTPSErrors:live}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const button=action=>page.locator('[data-action="'+action+'"]');
@@ -61,6 +62,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   }
   page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
   await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();
+  await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await context.setOffline(true);
   await page.evaluate(()=>{const original=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(...args){document.getElementById('refreshAll').click();return original.apply(this,args);};window.finalRemovalPut=original;});
   await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
   await page.evaluate(()=>{IDBObjectStore.prototype.put=window.finalRemovalPut;});assert.equal(await page.locator('#priceInfo').evaluate(e=>e.classList.contains('hidden')),true,'Refresh cannot start inside destructive commit');
@@ -69,7 +71,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   assert.deepEqual(m.snapshots,JSON.parse(before.raw).snapshots);assert.deepEqual(m.bookings,JSON.parse(before.raw).bookings);assert.deepEqual(m.accounts,JSON.parse(before.raw).accounts);
   assert.equal(await page.locator('[data-position-select]').count(),0);assert.equal(await button('select-positions').evaluate(e=>e===document.activeElement),true);
   await page.reload();await ready();assert.deepEqual(await record(),after,'Confirmed delete survives reload');
-  await page.locator('#sidebarNav [data-page=dashboard]').click();assert.match(await page.locator('#totalValue').innerText(),/4.000/);
+  await page.locator('#sidebarNav [data-page=dashboard]').click();assert.match(await page.locator('#totalValue').innerText(),/4.000/);await context.setOffline(false);
   // Exact preimage + CAS refuse a preview after a genuine competing writer.
   await page.locator('#sidebarNav [data-page=positions]').click();await button('select-positions').click();
   await page.locator('#positionSearch').fill('Other 3');await page.locator('[data-position-select="p-3"]').check();
@@ -83,7 +85,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   const password='synthetic-only-password';
   const encrypted=await page.evaluate(async raw=>{const {configureBackupPassword,encryptWithBackupPassword}=await import('/src/backup-vault.js');const {createCompleteBackup}=await import('/src/complete-backup.js');await configureBackupPassword('synthetic-only-password','synthetic-only-password');return encryptWithBackupPassword(JSON.stringify(createCompleteBackup(JSON.parse(raw))));},after.raw);
   for(const [bytes,count,deleted] of [[JSON.stringify(backup),401,false],[encrypted,400,true]]){
-   const rc=await browser.newContext(),rp=await rc.newPage();
+   const rc=await browser.newContext({ignoreHTTPSErrors:live}),rp=await rc.newPage();
    try{await rp.goto(base);await rp.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
     rp.on('dialog',d=>d.accept(d.type()==='prompt'?password:undefined));
     await rp.locator('#backupFile').setInputFiles({name:'synthetic-removal.json',mimeType:'application/json',buffer:Buffer.from(bytes)});
@@ -93,6 +95,6 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
     assert.equal(restored.positions.length,count);assert.equal(restored.positions.some(p=>p.id==='p-1'),!deleted);assert.deepEqual(restored.snapshots,m.snapshots);assert.deepEqual(restored.bookings,m.bookings);
    }finally{await rc.close();}
   }
-  assert.deepEqual(errors,[]);console.log(engine+': FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision delete/reload PASS');
+  assert.deepEqual(errors,[]);console.log(engine+': FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS');
  }finally{await context.close();await browser.close();}
 }
