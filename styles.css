@@ -1065,3 +1065,34 @@
 
 .position-removal-dialog .dialog-footer{flex-wrap:wrap}
 .position-removal-dialog .dialog-footer .btn{flex:1 1 140px;min-width:0;white-space:normal}
+
+/* Local hierarchy and spacing corrections; preserve the existing palette/layout. */
+.position-actions{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0;padding-bottom:14px;min-width:0}
+.position-actions .btn{min-height:44px;white-space:normal;text-align:center}
+.position-entry .holding-expand{margin-bottom:6px}
+.position-entry .holding-expand>summary{min-height:44px}
+.cash-terms-overview{margin:14px 0 0;padding:0 2px;border:0;border-top:1px solid #e4ece5;border-radius:0;background:transparent}
+.cash-terms-overview>summary{font-size:12px;line-height:1.5;padding:12px 2px}
+.cash-terms-overview>summary>small{font-weight:450}
+#historyCoverage>summary{padding:12px 2px}
+.wallet-history-body{font-size:13px;line-height:1.6}
+.wallet-history-body h3{font-size:14px;font-weight:750;line-height:1.45;margin:12px 0 8px}
+.wallet-history-body>p{margin:8px 0}
+.wallet-history-table table{font-family:inherit;font-size:12px;line-height:1.5;font-variant-numeric:tabular-nums}
+.booking-value-table td:focus-visible{outline:2px solid #2d6946;outline-offset:-2px;border-radius:4px}
+.income-totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px;margin:14px 0}
+.income-totals>div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px;min-width:0}
+.income-totals dt{font-size:12px;line-height:1.5;color:#4d6756}
+.income-totals dd{font-size:13px;font-weight:750;line-height:1.5;margin:0;font-variant-numeric:tabular-nums}
+.income-totals>div:last-child{grid-column:1/-1;border-top:1px solid #e4ece5;padding-top:8px}
+@media(max-width:720px){
+ .income-totals{grid-template-columns:minmax(0,1fr)}
+ .booking-value-table table,.booking-value-table tbody{display:block;width:100%}
+ .booking-value-table thead{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+ .booking-value-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px;padding:12px 0;border-bottom:1px solid #e4ece5}
+ .booking-value-table tr:last-child{border-bottom:0}
+ .booking-value-table td{display:block;max-width:none;min-width:0;padding:0;border:0;overflow-wrap:normal;font-variant-numeric:tabular-nums}
+ .booking-value-table td::before{content:attr(data-label);display:block;font-size:11px;color:#4d6756;margin-bottom:2px}
+ .booking-value-table td:first-child,.booking-value-table td:last-child{grid-column:1/-1}
+}
+.booking-value-table td[title]:focus::after{content:attr(title);display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#4d6756;overflow-wrap:anywhere}

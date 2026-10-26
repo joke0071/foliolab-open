@@ -31,7 +31,7 @@ export function renderCashTermsOverview(model,esc,{asOf=localToday(),open=false}
    '<small>'+esc(amount==null?'Guthaben nicht eindeutig erfasst':amount.replace('.',',')+' '+account.currency+' erfasst')+'</small></div>'+
    '<button type="button" class="link-button" data-action="edit-account" data-id="'+esc(account.id)+'" aria-label="Liquidität von '+esc(account.name)+' bearbeiten">Bearbeiten</button></div>';
  });
- return '<details id="cashTermsOverview" class="cash-terms-overview"'+(open?' open':'')+'><summary>Liquidität und Fälligkeiten · '+accounts.length+' Konten</summary>'+
+ return '<details id="cashTermsOverview" class="cash-terms-overview performance-details"'+(open?' open':'')+'><summary><span>Liquidität und Fälligkeiten</span><small>'+accounts.length+' Konten</small></summary>'+
   '<p class="small-help">'+counts.free+' frei verfügbar · '+counts.bound+' gebunden · '+counts.unknown+' nicht bestätigt. Guthaben in Kontowährung; keine zusätzlichen Vermögenswerte.</p>'+
   markup.slice(0,5).join('')+(markup.length>5?'<details class="advanced-apis"><summary>Weitere '+(markup.length-5)+' Konten</summary>'+markup.slice(5).join('')+'</details>':'')+'</details>';
 }

@@ -173,7 +173,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
   const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
-  $('providerOverview').innerHTML=renderCashTermsOverview(model,esc,{open:cashOverviewOpen})+renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions);
+  $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions)+renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=wealth.samples;
   $('miniHistoryStatus').textContent=wealth.label;
@@ -351,7 +351,7 @@ function renderPositions(){
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
    '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button></div></div></div>'+
-   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl><div class="settings-actions"><button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+(p.archived?'Wieder einblenden':'Archivieren')+'</button></div></details>'+(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+ (()=>{const h=historyAction(model,p);return h&&!(filter==='__review'&&reviewById.get(p.id)?.issues.some(i=>i.action===h.action))?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'';})()+'</div>';
+   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details><div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'"><button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+(p.archived?'Wieder einblenden':'Archivieren')+'</button>'+(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+ (()=>{const h=historyAction(model,p);return h&&!(filter==='__review'&&reviewById.get(p.id)?.issues.some(i=>i.action===h.action))?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'';})()+'</div></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
