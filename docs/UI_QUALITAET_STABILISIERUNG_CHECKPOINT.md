@@ -1,3 +1,26 @@
+# Regulärer Statusabgleich nach tatsächlicher v181-Abnahme
+
+B1 und Beta162 sind über164 produktiv abgenommen (mainb61d1c1,CI40408383066/MainPages40409856045,701Tests,105Livehashes,3Engine-ZielUI). Keine Wiederholung. Die nachstehende ursprünglicheEinstiegsmatrix bleibt als Historie erhalten; dieser aktuelle Abgleich hat Vorrang.
+
+| Zusatzauftrag26.10. | Aktueller Status | Tatsächlicher Rest / nächster Schritt |
+|---|---|---|
+|3 Typografie | PARTIAL | Historienbody/Tabelle/h3 undIncome lokal konsistent. Übrige konkreteApp-/Datums-/Dialogabweichungen nur gezielt reproduzieren, kein Redesign. |
+|4 Aktionen/Trennlinien | DONE im Positions-B1-Umfang | Eine sichtbareGruppe,44px inkl.Edit/Delete,Abstand/Focus/Overlap in3Engines und live geprüft; nicht erneut bauen. |
+|5 Archivauffindbarkeit | DONE im B1-Umfang | BestehendeAktion direkt,Einblenden/Filter/401Auswahl/CAS/Finanzen geprüft; keine zweiteArchitektur. |
+|6 Buchungsverwaltung | OPEN #165 | EigenerkritischerPR,belegteZulässigkeit/Undo/CAS und eigeneProduktionsentscheidung. |
+|7 Diagramme | PARTIAL | VorhandeneEngine und Segmente wiederverwenden; Punkt-/Linienursache gezielt an belegten/observed/lückigen Daten prüfen. Kein Fehler derFinanzprojektion bisher belegt. |
+|8 MobileHistorie | PARTIAL | MobileRecords/Desktoptabelle/lesbareZahlen/exakterFokus/Typo/kurzeHöhe DONE; verbleibende konkreteHinweis-/Formatdeltas prüfen. |
+|9 Transfers | IN PROGRESS C1 | Sourcebefund bestätigt: keinAusgang aber volleForm. NurLeer-/Auswahlzustände/Erklärung/Einstiegsaktion, keineFinanzengineänderung. |
+|10 Liquidität | DONE v181 | UnterAnbieter/Konten,geschlossen,einheitlichesAkkordeon,Formeln unverändert; livegeprüft,überspringen. |
+|11 Erträge | DONE im B1-Umfang | KompaktesRaster,490/400Fixture=90EURbelegt+400offen;Axeausgeklappt/Filter/Einzelposten erhalten. Keine0-Erfindung. |
+|12 Akkordeons/Status | PARTIAL | Coverage/Liquidität bestehendesPattern,identischerDuplikathinweis entfernt; nurrestlichebelegteAbweichungen ergänzen. |
+|14 BegrenzterAbschlusscheck | OPEN, bewusstnachgelagert | ErstnachStabilisierung produktiv;5Bereiche+Dialoge/realeInteraktionen, maximal10wesentlichebestätigteRestbefunde, keinArchitekturkomplettaudit. |
+|FLH04 | OPEN, nachUI | Bestehendes#160/#161 nutzen;E2E/Offline/IDB/Drive/Recovery/Parallelwriter separat;ausdrücklicheReleasefreigabe fehlt. |
+
+StatusNOT REPRODUCIBLE nur nach tatsächlichemGegenbeleg verwenden, keine unbelegten Android-Screenshotannahmen. RealeSystemschrift/Hardware/Assistenztechnik/OAuth bleiben separat offen.
+
+---
+
 # UI-/UX-Qualität und funktionale Stabilisierung — fortsetzbarer Vertrag
 
 Aktualisierung B1: Draft164 enthält lokal in3Engines geprüfte erste Präsentationskorrekturen für3/4/5/8/10/11/12; noch keineProduktivabnahme, weitereDeltas bleiben offen.701Units/0Fail/0Skip und tatsächlicheBildprüfung bestanden; finalerRemote-HEAD und kombinierte162-Gates ausstehend.
