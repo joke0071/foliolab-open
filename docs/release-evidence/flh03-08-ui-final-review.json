@@ -1,0 +1,68 @@
+{
+  "previousHead": "66d197fc995de590643a8ca484c91dd8fa69693e",
+  "previousCI": 40318988622,
+  "previousResult": {
+    "chromium": "SUCCESS",
+    "crossEngine": "FAILED: WebKit full Axe transient4.2:1 addWizard label at768px",
+    "deploy": "SKIPPED"
+  },
+  "corrections": [
+    "Global button color transitions last130ms; wait finite actual animations before every full Axe scan; retain all assertions",
+    "Destructive button removes primary, uses outline red on white, has no color crossfade",
+    "Map dependency categories into plain German labels while retaining raw machine references",
+    "Only removal dialog footer wraps; direct cancel/confirm rectangles must fit actual dialog at every width/height"
+  ],
+  "actual320pxGeometry": [
+    "{",
+    "  dialog: { width: 296, scroll: 296 },",
+    "  buttons: [",
+    "    { id: 'cancelDialog', left: 28, right: 292 },",
+    "    { id: 'saveDialog', left: 28, right: 292 }",
+    "  ]",
+    "}",
+    "{",
+    "  classes: 'btn outline selection-danger',",
+    "  foreground: 'rgb(107, 33, 28)',",
+    "  background: 'rgb(255, 255, 255)',",
+    "  transition: '0s'",
+    "}"
+  ],
+  "localResult": {
+    "syntax": "PASS",
+    "threeEngineFullTargetedUI": "PASS",
+    "all36FullAxeScans": "PASS",
+    "additionalButtonsInsideDialogAssertions": "PASS",
+    "offlineDeleteAndReload": "PASS all3",
+    "realQuotaAbortCASRestore": "PASS all3",
+    "output": [
+      "chromium: selection/preview width 320",
+      "chromium: selection/preview width 390",
+      "chromium: selection/preview width 430",
+      "chromium: selection/preview width 768",
+      "chromium: selection/preview width 1024",
+      "chromium: selection/preview width 1440",
+      "chromium: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS",
+      "firefox: selection/preview width 320",
+      "firefox: selection/preview width 390",
+      "firefox: selection/preview width 430",
+      "firefox: selection/preview width 768",
+      "firefox: selection/preview width 1024",
+      "firefox: selection/preview width 1440",
+      "firefox: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS",
+      "webkit: selection/preview width 320",
+      "webkit: selection/preview width 390",
+      "webkit: selection/preview width 430",
+      "webkit: selection/preview width 768",
+      "webkit: selection/preview width 1024",
+      "webkit: selection/preview width 1440",
+      "webkit: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS"
+    ]
+  },
+  "unchangedFinanceStorage": "No financial/storage/selection/removal primitive changes after f2ba896; complete local broad regressions recorded in flh03-08-full-regressions.json",
+  "finalRemoteCI": "REQUIRED on new head; not inferred",
+  "fileSHA256": {
+    "src/app.js": "4da145436f7acf08086e8f27643de4d6c46dad7b1683c8c587369ff8ec151c25",
+    "styles.css": "b2f37b13dff804705f4bfd99ce11d12217a7eaeb89232fc30cdf746ec0a05a50",
+    "tests/browser-position-removal.mjs": "3b027b62e774226cd2c07b6a89348d151fcae89682c34fec45d86f4f3b72d7b2"
+  }
+}

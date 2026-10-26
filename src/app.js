@@ -370,10 +370,11 @@ function openPositionRemoval(){
  if(loadFailure||saving||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte neu laden.');
  const selection=[...selectedPositionIds],expectedModel=JSON.stringify(model),preview=previewPositionRemoval(model,selection);
  const allowed=preview.items.filter(p=>p.classification==='unreferenced').map(p=>p.id);
+ const referenceLabels={snapshots:'Historische Stichtage',bookings:'Buchungen',journalEntries:'Journalbuchungen',positions:'Verknüpfte Positionen',externalCashFlows:'Ein- und Auszahlungen',walletHistory:'Wallet-Verlauf',purchaseEvidence:'Kaufnachweise',accounts:'Kontozuordnung',providers:'Anbieterzuordnung',transferMatches:'Gemeinsame Transfers',openingPositions:'Eröffnungsbestände',priceHistories:'Kursnachweise','opaque-data':'Nicht eindeutig prüfbare Nachweise'};
  const names=preview.items.map(p=>{
   const account=model.accounts.find(a=>a.id===p.accountId),provider=model.providers.find(a=>a.id===p.providerId);
   const blocked=p.classification==='blocked';
-  return '<li><strong>'+esc(p.name)+'</strong> · '+esc([provider?.name,account?.name].filter(Boolean).join(' / '))+' — '+(blocked?'Gesperrt: '+esc([...p.blockers,...new Set(p.references.map(r=>r.category))].join('; ')):'Wird gelöscht'+(p.cleanup.length?' · eigene Eröffnungs-/Kursnachweise werden entfernt':''))+'</li>';
+  return '<li><strong>'+esc(p.name)+'</strong> · '+esc([provider?.name,account?.name].filter(Boolean).join(' / '))+' — '+(blocked?'Gesperrt: '+esc([...p.blockers,...new Set(p.references.map(r=>referenceLabels[r.category]||'Weitere gespeicherte Verknüpfungen'))].join('; ')):'Wird gelöscht'+(p.cleanup.length?' · eigene Eröffnungs-/Kursnachweise werden entfernt':''))+'</li>';
  }).join('');
  showDialog('Ausgewählte Positionen löschen','POSITIONSVERWALTUNG',
   '<p class="dialog-intro">'+preview.selectedCount+' ausgewählt: '+allowed.length+' unverbundene Positionen löschbar, '+preview.blockedCount+' gesperrt. Gesperrte Positionen bleiben unverändert erhalten. Zum Korrigieren abbrechen und Auswahl ändern.</p>'+
@@ -391,8 +392,9 @@ function openPositionRemoval(){
    try{await save();}catch(error){if(model===candidate)model=previous;throw error;}
    selectedPositionIds=[];positionSelecting=false;render();notify(allowed.length+' Positionen gespeichert gelöscht; '+preview.blockedCount+' gesperrte Positionen erhalten.');
   });
+ $('editDialog').classList.add('position-removal-dialog');
  $('saveDialog').textContent=allowed.length+' Positionen endgültig löschen';
- $('saveDialog').disabled=!allowed.length;$('saveDialog').classList.add('selection-danger');
+ $('saveDialog').disabled=!allowed.length;$('saveDialog').classList.remove('primary');$('saveDialog').classList.add('outline','selection-danger');
  $('removalBackup').addEventListener('click',()=>{
   if(JSON.stringify(model)!==expectedModel)return notify('Vorschau veraltet. Bitte erneut öffnen.',true);
   const file=new Blob([backup(model,{includeHistory:true})],{type:'application/json'}),href=URL.createObjectURL(file),link=document.createElement('a');
@@ -536,7 +538,8 @@ function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  $('dialogError').classList.add('hidden');
  $('saveDialog').textContent=readOnly?'Prüfen':dialogSaveLabel(title);
  $('cancelDialog').textContent=readOnly?'Schließen':'Abbrechen';
- $('saveDialog').disabled=false;$('saveDialog').classList.remove('selection-danger');
+ $('editDialog').classList.remove('position-removal-dialog');
+ $('saveDialog').disabled=false;$('saveDialog').classList.remove('outline','selection-danger');$('saveDialog').classList.add('primary');
  $('editDialog').showModal();
  $('dialogTitle').focus({preventScroll:true});
 }

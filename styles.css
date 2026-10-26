@@ -1058,7 +1058,10 @@
 /* FLH03-08: controls appear only in the explicit selection mode. */
 .selection-check{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px;overflow-wrap:anywhere}
 .selection-check input{width:20px;height:20px;flex-shrink:0}
-.btn.selection-danger{color:#6b211c;border-color:#6b211c;background:#fff}
+.btn.selection-danger{color:#6b211c;border-color:#6b211c;background:#fff;transition:none}
 .btn.selection-danger:hover{background:#fff0ed}
 #positionSelectionTools{flex-wrap:wrap;margin:12px 0}
 #positionSelectionTools .btn{white-space:normal}
+
+.position-removal-dialog .dialog-footer{flex-wrap:wrap}
+.position-removal-dialog .dialog-footer .btn{flex:1 1 140px;min-width:0;white-space:normal}
