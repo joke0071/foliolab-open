@@ -82,23 +82,9 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   await nav('bookings');await p.locator('#openCSVImport').click();await p.locator('#csvFile').setInputFiles({name:'draft.csv',mimeType:'text/csv',buffer:Buffer.from('date;type;position;quantity;price;id\n2023-01-04;deposit;A;1;1;draft')});await p.waitForFunction(()=>document.getElementById('csvReviewStatus').textContent.includes('1 bereit'));
   await refuseReload('CSV preview',p.locator('#csvFile'),await p.locator('#csvFile').inputValue());assert.ok(await p.locator('#editDialog').isVisible());
   p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.equal(await unloadSignal(),false);assert.deepEqual(await read(),provenRestored,'Discarded drafts never modify portfolio');
-  // Test accept and reject as independent native traversal cases. Firefox's
-  // cancelled session-history traversal cannot reliably be retried by automation.
-  const openBackDraft=async()=>{
-   const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
-   await p.goto(previousDoc.href);await p.evaluate(()=>{document.body.innerHTML='<button id=previousDocument>Previous synthetic document</button>';});await p.locator('#previousDocument').click();assert.equal(p.url(),previousDoc.href);
-   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
-  };
-  await openBackDraft();let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};
-  p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});if(engine==='webkit')await p.goBack({timeout:2500}).catch(()=>{});else await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
-  assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
-  p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
-  await openBackDraft();let acceptedBack=false;
-  p.once('dialog',async d=>{assert.equal(d.type(),'beforeunload');acceptedBack=true;await d.accept();});
-  await Promise.all([p.waitForURL(previousDoc.href),engine==='webkit'?p.goBack():p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(acceptedBack);assert.equal(p.url(),previousDoc.href,'Confirmed discard can navigate');
   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic saved');await p.locator('#saveDialog').click();await p.waitForFunction(()=>!document.getElementById('editDialog').open);assert.equal(await unloadSignal(),false,'Successful save clears unload protection');
   let cleanWarnings=0;const countClean=async d=>{cleanWarnings++;await d.accept();};p.on('dialog',countClean);await p.reload();p.off('dialog',countClean);assert.equal(cleanWarnings,0);
-  console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and Back, confirmed navigation, focus PASS');
+  console.log(engine+': D clean/dirty/saved provider/wizard/import, native denied reload and focus PASS; Back still pending');
   // E: valid empty versus existing positions with missing evidence, never zero curves.
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{blankModel}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;await s.save(m);s.close();},base);
   await p.reload();await nav('history');assert.equal(await p.locator('#historyChart .chart-plot').count(),0);assert.equal(await p.locator('#chartPeriods').isVisible(),false);assert.equal(await p.locator('#historyCalendarDisclosure > summary').isVisible(),true);assert.equal((await p.locator('#historyPage').innerText()).split('Historische Werte noch nicht belegbar').length-1,0);
@@ -115,6 +101,29 @@ for(const engine of (process.env.FLH03_UI_ENGINES||'chromium').split(',')){
   assert.ok(await p.locator('#saveDialog').isDisabled());assert.ok(await p.locator('#cancelDialog').isEnabled());
   p.once('dialog',d=>d.accept());await p.locator('#cancelDialog').click();assert.ok(await p.locator('#downloadRaw').isVisible());assert.deepEqual(await read(),runtimeOriginal);assert.equal(await unloadSignal(),false);
   console.log(engine+': A runtime failed save/read retains bytes, blocks writer and preserves modal escape/rescue PASS');
+  // Complete independent E/runtime-recovery coverage before the unresolved Back gate.
+  // Restore only through the same original-download + explicit UI restore path.
+  const runtimeDownload=p.waitForEvent('download');await p.locator('#downloadRaw').click();
+  const runtimeSaved=await runtimeDownload;
+  assert.equal(JSON.parse(readFileSync(await runtimeSaved.path(),'utf8')).raw,runtimeOriginal.raw);
+  p.once('dialog',d=>d.accept());await p.locator('#backupFile').setInputFiles({name:'synthetic-runtime-restore.json',mimeType:'application/json',buffer:Buffer.from(recovery)});
+  await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  await nav('more');assert.ok(await p.locator('#addProvider').isEnabled());
+  // Test accept and reject as independent native traversal cases. Firefox's
+  // cancelled session-history traversal cannot reliably be retried by automation.
+  const openBackDraft=async()=>{
+   const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
+   await p.goto(previousDoc.href);await p.evaluate(()=>{document.body.innerHTML='<button id=previousDocument>Previous synthetic document</button>';});await p.locator('#previousDocument').click();assert.equal(p.url(),previousDoc.href);
+   await p.goto(base);await nav('more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('Synthetic back draft');
+  };
+  await openBackDraft();let backWarnings=0;const rejectBack=async d=>{if(d.type()==='beforeunload'){backWarnings++;await d.dismiss();}else await d.accept();};
+  p.on('dialog',rejectBack);const backWarning=p.waitForEvent('dialog',{predicate:d=>d.type()==='beforeunload',timeout:5000});if(engine==='webkit')await p.goBack({timeout:2500}).catch(()=>{});else await p.evaluate(()=>{setTimeout(()=>history.back(),0);});await backWarning;p.off('dialog',rejectBack);
+  assert.ok(backWarnings>0,'Actual browser Back warning');assert.equal(await p.locator('#providerName').inputValue(),'Synthetic back draft');
+  p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');assert.equal(await unloadSignal(),false);
+  await openBackDraft();let acceptedBack=false;
+  p.once('dialog',async d=>{assert.equal(d.type(),'beforeunload');acceptedBack=true;await d.accept();});
+  await Promise.all([p.waitForURL(previousDoc.href),engine==='webkit'?p.goBack():p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.ok(acceptedBack);assert.equal(p.url(),previousDoc.href,'Confirmed discard can navigate');
+  console.log(engine+': D native denied Back retains draft and confirmed discard reaches exact preceding document PASS');
   assert.deepEqual(errors,[]);
  }finally{await ctx.close();await browser.close();}
 }

@@ -1,0 +1,321 @@
+{
+  "results": [
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:34659/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:34659/previous",
+        "draft": ""
+      }
+    }
+  ],
+  "failures": 4
+}

@@ -1,4 +1,40 @@
-# CURRENT STATUS — 00/01 LIVE v177; A–E NOT MERGED / WEBKIT GATE BLOCKED
+# CURRENT STATUS — 2026-10-26: PR #151 blocked; WebKit origin boundary isolated
+
+Continuation starts at `a539d1178e84cb08243b6ea7ca8adb267c99c202`, not a restart. Current main remains `c23519bd1c473e602aa08e8753019de3537b9a6b`; only open PR is draft #151 (`feature/flh03-ui-a-e`). Latest original-head run [40231894605](https://github.com/joke0071/foliolab-open/actions/runs/40231894605): test SUCCESS, cross-engine FAILURE, deployment SKIPPED; wallet 40231894669 SUCCESS. Current Library specification reread: content Version 4 / file revision 3, 63,276 bytes, 00–17. No competing implementation found. No product source, storage, financial calculation, recovery/CAS, history semantics or design changes in this continuation.
+
+## New result and release decision
+
+The failed WebKit Back gate is now independently reproduced **without any FolioLab bootstrap, IndexedDB, modal dialog, service worker, routing interception or framework**. On pinned Playwright 1.56.1 / WebKit 26.0, same-origin Back asks and preserves rejected drafts; cross-origin Back (`127.0.0.1` → `localhost`) leaves without the required dialog. Both `history.back()` and `page.goBack()` show the boundary, including real hyperlink entry into the form. An additional current Playwright 1.64.1 / WebKit 27.2 experiment shows the same boundary. This isolates the browser/automation stack; it does **not** yet distinguish WebKit engine versus Playwright embedding or prove behavior on physical Safari/iOS. An upstream report about Linux close-page warnings (#43285 in microsoft/playwright) concerns a different operation and is NOT treated as the cause of this case.
+
+**No merge, deployment, v178 acceptance or follow-up provider implementation.** The user requires a reliable passing WebKit gate; the strict gate remains failed. A page cannot safely guarantee cancellation when the browser omits its unload protection. No history trap, secret draft persistence, suppressing warning, excluded origin or browser-specific pass was introduced. A test-tool upgrade alone did not fix the observed boundary; the CI pin was not changed.
+
+## A–E actual continuation evidence
+
+| Fix | New actual local result | Release status / next action |
+|---|---|---|
+| A | Chromium/Firefox/WebKit startup recovery and now **WebKit runtime failed-save/read**, exact raw preservation, safe writer/modal escape, original download and controlled UI restore PASS | UI release remains blocked by D; final CI/live still required |
+| B | Chromium/Firefox/WebKit shared FLH02 999→1059 / 60 EUR, actual comparison dates, partial/unknown/no-return checks PASS | No calculation or product change; final CI/live |
+| C | Chromium/Firefox/WebKit seven explicitly expanded help nodes, full Axe and 320px/small-height geometry PASS | Existing source retained; final CI/live |
+| D | Chromium/Firefox entire native Reload/Back reject+accept, provider/wizard/CSV, clean/saved, Escape/focus suite PASS. WebKit Reload and lifecycle PASS; independent native same-origin Back reject+accept PASS, **cross-origin Back FAIL** | Mandatory cross-origin warning + preserved rejected draft gate remains strict and blocking |
+| E | **WebKit now PASS**, as well as Chromium/Firefox: valid empty and missing evidence, existing actions/calendar, no fake curve, mobile/desktop/small-height full Axe | Previously downstream-unexecuted gap closed locally; final CI/live |
+
+`npm run check` PASS, `npm test` **671/671 PASS**, `git diff --check` and both changed browser script syntax checks PASS. Test-only change moves the unchanged mandatory Back assertions after independent E/runtime checks and adds another real original-download + controlled UI restore. Chromium/Firefox rerun of the complete reordered A–E suite PASS. WebKit reordered suite executes E/runtime/restore successfully and then fails the original Back warning assertion. No assertion is removed or relaxed.
+
+Independent diagnostic: `tests/browser-beforeunload-origin.mjs` starts its own local HTTP server and requires native warnings, rejected-draft preservation and exact confirmed destination for both origins, both script/driver methods and both consent outcomes. It records **all** cases, then exits nonzero on any failure. Explicit click inside the loaded form ensures Firefox receives a real activation; a preliminary helper without that click was discarded after it falsely diagnosed Firefox. The committed helper has explicit loaded-URL and activation checks. The CI invokes it as an additional strict gate; full existing cross-engine regressions now run before the known blocked UI suite, so unrelated finance/storage checks are no longer hidden behind D. Evidence upload runs even on failure.
+
+Machine evidence: `docs/release-evidence/flh03-navigation-20261026-pinned.json` (Firefox/WebKit; Chromium original matrix separately passed), `flh03-navigation-20261026-current.json` (additional current-WebKit experiment). These contain only synthetic fields and loopback URLs. Linux local WebKit dependencies were downloaded into an isolated runtime; Playwright's system dependency preflight was bypassed only because those local libraries are absent from the system registry. Actual browser launch and every behavioral assertion ran. CI uses the ordinary `install --with-deps` path, with no such bypass. Physical Android/iOS, system keyboard/AT and OAuth/account tests remain unavailable.
+
+## All packages 00–17 / next safe action
+
+00/01 remain DONE/live via #150/v177. 02 OPEN (approved regional TR original-format evidence absent); 03 OPEN (Kraken concrete dialect/IDs gate); 04 BLOCKED (Bitpanda original header); 05 PARTIAL (existing flatex Beta, AT depot+cash/tax/FX evidence #127); 06 BLOCKED (real browser CORS/read-only/secret gates); 07 PARTIAL (existing FLH02 projection, provider input/account reconciliation pending); 08 OPEN (safe bulk selection/deletion); 09 OPEN (P-Chain ownership/stake evidence); 10 PARTIAL (Sonic withdrawal proof); 11 OPEN/evidence-gated (price providers); 12 BLOCKED (approved corporate/AT/OeKB cases and independent finance validation); 13 PARTIAL (existing synthetic storage/restore passes, real Drive/device #44 absent); 14 OPEN (archive compatibility); 15 existing icon/backup/history deltas DONE, archive part awaits 14; 16 PARTIAL (existing quality/coverage, account summary pending); 17 PARTIAL (A–E implemented, D release gate failed, remaining UI17 findings retained in #149). Detailed code/evidence matrix below remains applicable. No 02–17 productive approval is inferred from #151's authorization.
+
+**Next:** inspect continuation final-head CI and the independent origin JSON; reproduce the minimal cross-origin case in native Safari/WebKit or an upstream-fixed supported Playwright build. A verified safe fix must keep real reject/retain and accept/exact-navigation assertions for both origins; no conversion to an unsupported-feature pass. Then rerun the complete matrix on final PR HEAD and obtain independent security review before any #151 merge. Only after successful main deployment and actual new-domain asset/SW/core/A–E acceptance proceed to the first evidence-supported separate 02–17 PR. Also repair the **live test fixture** before that future acceptance: on new root domain, previousDoc='/' currently equals base and cannot serve as an independent preceding document; retain a truly distinct out-of-SW synthetic document with exact target assertions. This is a harness limitation, not a production change. Other packages stay on hold while #151 is blocked, per the ordered user instruction.
+
+Continuation CI links and exact remote source commit are appended below once returned. This section supersedes historical claims that WebKit E/runtime were not run.
+
+---
+
+# HISTORICAL HANDOFF (2026-10-25) — superseded by the 2026-10-26 continuation above
 
 **Authoritative handoff after this run:** 00/01 is complete/live through #150, main `c23519bd1c473e602aa08e8753019de3537b9a6b`, production `foliolab-open-v177`. Its CI/deployment/live evidence and remaining 02–16 audit are below. Do NOT repeat FLH02 or 00/01.
 

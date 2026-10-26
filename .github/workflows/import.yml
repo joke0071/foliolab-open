@@ -144,6 +144,7 @@ jobs:
           node tests/browser-portfolio-scale.mjs
           node tests/browser-offline-mobile.mjs
           node tests/browser-pwa-updates.mjs
+          node tests/browser-beforeunload-origin.mjs
       - name: Preserve test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -176,7 +177,6 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-          FLH03_UI_ENGINES=firefox,webkit node tests/browser-flh03-ui.mjs
           UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
           QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
           ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
@@ -200,6 +200,10 @@ jobs:
           HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
           FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
           HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
+          FLH03_UI_ENGINES=firefox,webkit node tests/browser-flh03-ui.mjs
+      - name: Independently isolate native Back consent across origins
+        if: always()
+        run: UNLOAD_ENGINES=firefox,webkit node tests/browser-beforeunload-origin.mjs
       - name: Preserve cross-engine evidence
         if: always()
         uses: actions/upload-artifact@v4
