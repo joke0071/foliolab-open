@@ -1,0 +1,28 @@
+{
+  "release": "v179",
+  "production": "https://foliolab.unperfekt.at/",
+  "commit": "5397ca73d3ce8281920973a9916c9fadbd65596d",
+  "mainCI": "https://github.com/joke0071/foliolab-open/actions/runs/40362303355",
+  "prCI": "https://github.com/joke0071/foliolab-open/actions/runs/40361231324",
+  "coreReport": "flh03-v179-live.json",
+  "results": {
+    "core": {
+      "sha256": "786e2c9b31902e1f7eb7cba1375de490747f0949ac21fbbb5d2ee22769b5941a",
+      "stdout": "Asset hashes verified: 25/105\nAsset hashes verified: 50/105\nAsset hashes verified: 75/105\nAsset hashes verified: 100/105\nLIVE published bytes: 105 exact SHA-256 matches, foliolab-open-v179\nLIVE acceptance PASS: 6 groups, 18 Axe scans, 105 asset matches\n"
+    },
+    "ui": {
+      "sha256": "c42f2f7692a85d7de479ed961b39bba3a001169fc8560c8124c95be0f35d3f6e",
+      "stdout": "chromium: UI fixture active worker/controller before quota/abort {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nchromium: selection/preview width 320\nchromium: selection/preview width 390\nchromium: selection/preview width 430\nchromium: selection/preview width 768\nchromium: selection/preview width 1024\nchromium: selection/preview width 1440\nchromium: UI before-offline controller {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nchromium: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS\n"
+    },
+    "cross-ui": {
+      "sha256": "ed389a155c74137ea08afbe9b7a76cd0a9b11e4e3cf3e876f769a80aaac20a72",
+      "stdout": "firefox: UI fixture active worker/controller before quota/abort {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nfirefox: selection/preview width 320\nfirefox: selection/preview width 390\nfirefox: selection/preview width 430\nfirefox: selection/preview width 768\nfirefox: selection/preview width 1024\nfirefox: selection/preview width 1440\nfirefox: UI before-offline controller {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nfirefox: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS\nwebkit: UI fixture active worker/controller before quota/abort {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nwebkit: selection/preview width 320\nwebkit: selection/preview width 390\nwebkit: selection/preview width 430\nwebkit: selection/preview width 768\nwebkit: selection/preview width 1024\nwebkit: selection/preview width 1440\nwebkit: UI before-offline controller {\"controller\":\"https://foliolab.unperfekt.at/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v179\"]}\nwebkit: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS\n"
+    }
+  },
+  "limits": [
+    "Synthetic isolated profiles only",
+    "Browser engines, not native Safari or physical Android",
+    "No physical assistive technology or real OAuth/Drive account acceptance",
+    "Runner HTTPS inspection certificate exception; no certificate-validation claim"
+  ]
+}
