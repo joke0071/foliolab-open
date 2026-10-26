@@ -124,6 +124,7 @@ export function previewPositionRemoval(model,selectedIds,{maxNodes=200000,maxByt
   const p=positions.get(id),reasons=blockers.get(id);
   try{assertPositionDeletable(model,id);}catch(error){reasons.push(String(error.message));}
   if(p.managementSource&&p.managementSource!=='manual')reasons.push('Automatisch verwaltete Position: Import-/Discovery-Zuordnung zuerst auflösen.');
+  if(p.representedByPositionId||(p.economicRole&&p.economicRole!=='standard')||(p.valuationMode&&p.valuationMode!=='included'))reasons.push('Wirtschaftliche/DeFi-Zuordnung zuerst prüfen und auflösen.');
   if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-Position: Eigentum, Discovery und Wiederimport zuerst prüfen.');
   const refs=[...references.get(id).values()];
   return {id,name:p.name,providerId:p.providerId,accountId:p.accountId,quantityExact:p.quantityExact??String(p.quantity),

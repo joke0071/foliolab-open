@@ -9,7 +9,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const button=action=>page.locator('[data-action="'+action+'"]');
  const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- const axe=async()=>{await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
+ const axe=async()=>{await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary,html:n.html,checks:n.any}))})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
  try{
   await page.goto(base);await ready();
   await page.evaluate(async()=>{
@@ -47,11 +47,18 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await button('preview-removal').click();
   const downloadPromise=page.waitForEvent('download');await page.locator('#removalBackup').click();const dl=await downloadPromise;
   const backup=JSON.parse(readFileSync(await dl.path(),'utf8'));assert.equal(backup.positions.length,401);assert.equal(backup.settings.eodhdKey,'');
-  // Inject a real save rejection into the shared store; candidate must never escape to IDB.
-  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');window.originalRemovalSave=PortfolioStorage.prototype.save;PortfolioStorage.prototype.save=async()=>{throw new DOMException('synthetic quota','QuotaExceededError');};});
-  await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();
-  await page.locator('#dialogError:not(.hidden)').waitFor();assert.deepEqual(await record(),before,'Quota failure retains exact committed data');
-  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');PortfolioStorage.prototype.save=window.originalRemovalSave;});
+  // Exercise the real readwrite transaction: quota before put AND abort after put.
+  await page.evaluate(()=>{window.originalRemovalPut=IDBObjectStore.prototype.put;});
+  await page.locator('[name=confirmRemoval]').check();
+  for(const mode of ['quota','abort']){
+   await page.evaluate(mode=>{IDBObjectStore.prototype.put=function(...args){
+    if(mode==='quota')throw new DOMException('synthetic quota','QuotaExceededError');
+    const request=window.originalRemovalPut.apply(this,args);this.transaction.abort();return request;
+   };},mode);
+   await page.locator('#saveDialog').click();await page.locator('#dialogError:not(.hidden)').waitFor();
+   assert.deepEqual(await record(),before,mode+' transaction failure retains exact committed data');
+   await page.evaluate(()=>{IDBObjectStore.prototype.put=window.originalRemovalPut;});
+  }
   page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
   await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
   const after=await record(),m=JSON.parse(after.raw);assert.equal(after.revision,before.revision+1);
@@ -60,6 +67,29 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   assert.equal(await page.locator('[data-position-select]').count(),0);assert.equal(await button('select-positions').evaluate(e=>e===document.activeElement),true);
   await page.reload();await ready();assert.deepEqual(await record(),after,'Confirmed delete survives reload');
   await page.locator('#sidebarNav [data-page=dashboard]').click();assert.match(await page.locator('#totalValue').innerText(),/4.000/);
-  assert.deepEqual(errors,[]);console.log(engine+': FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota rollback, backup and one CAS revision safe-subset delete/reload PASS');
+  // Exact preimage + CAS refuse a preview after a genuine competing writer.
+  await page.locator('#sidebarNav [data-page=positions]').click();await button('select-positions').click();
+  await page.locator('#positionSearch').fill('Other 3');await page.locator('[data-position-select="p-3"]').check();
+  await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();
+  const second=await context.newPage();await second.goto(base);await second.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  await second.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();const m=await s.initialize();m.positions.find(p=>p.id==='p-4').notes='competing tab';await s.save(m);s.close();});
+  const winner=await record();await page.locator('#saveDialog').click();await page.locator('#dialogError:not(.hidden)').waitFor();
+  assert.deepEqual(await record(),winner,'Stale destructive preview never overwrites competing writer');await second.close();
+  page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
+  // Real file input restores both the offered pre-delete backup and encrypted post-delete data.
+  const password='synthetic-only-password';
+  const encrypted=await page.evaluate(async raw=>{const {configureBackupPassword,encryptWithBackupPassword}=await import('/src/backup-vault.js');const {createCompleteBackup}=await import('/src/complete-backup.js');await configureBackupPassword('synthetic-only-password','synthetic-only-password');return encryptWithBackupPassword(JSON.stringify(createCompleteBackup(JSON.parse(raw))));},after.raw);
+  for(const [bytes,count,deleted] of [[JSON.stringify(backup),401,false],[encrypted,400,true]]){
+   const rc=await browser.newContext(),rp=await rc.newPage();
+   try{await rp.goto(base);await rp.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+    rp.on('dialog',d=>d.accept(d.type()==='prompt'?password:undefined));
+    await rp.locator('#backupFile').setInputFiles({name:'synthetic-removal.json',mimeType:'application/json',buffer:Buffer.from(bytes)});
+    try{await rp.waitForFunction(()=>document.getElementById('toast').textContent.includes('Backup wiederhergestellt'));}catch(error){console.error(engine+': restore '+(deleted?'encrypted-post':'plain-pre')+' '+await rp.locator('#toast').innerText());throw error;}
+    await rp.reload();await rp.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+    const restored=await rp.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();try{return await s.initialize();}finally{s.close();}});
+    assert.equal(restored.positions.length,count);assert.equal(restored.positions.some(p=>p.id==='p-1'),!deleted);assert.deepEqual(restored.snapshots,m.snapshots);assert.deepEqual(restored.bookings,m.bookings);
+   }finally{await rc.close();}
+  }
+  assert.deepEqual(errors,[]);console.log(engine+': FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision delete/reload PASS');
  }finally{await context.close();await browser.close();}
 }

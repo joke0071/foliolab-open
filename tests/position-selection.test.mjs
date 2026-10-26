@@ -104,7 +104,7 @@ test('Serialized provenance and unknown future references are inspected conserva
 });
 test('A reference from another selected position stays blocked; selection is not cascade consent',()=>{
  const m=fixture();m.positions[1].representedByPositionId='p-0';const preview=previewPositionRemoval(freeze(m),['p-0','p-1']);
- assert.equal(preview.items[0].classification,'blocked');assert.equal(preview.items[1].classification,'unreferenced');
+ assert.equal(preview.items[0].classification,'blocked');assert.equal(preview.items[1].classification,'blocked','Outgoing economic links also require explicit resolution');
  assert.equal(preview.writeEnabled,false);assert.equal(m.positions.length,3);
 });
 test('Malformed opaque JSON, unsupported objects, cycles and limits never yield partial clearance',()=>{
@@ -136,4 +136,14 @@ test('Safe-subset batch is detached, exact-preimage bound, blocks snapshot links
 test('Automatically managed/disabled-address wallet positions cannot reappear through deletion',()=>{
  const m=fixture();m.positions[0].managementSource='transactions';m.positions[1].wallet={enabled:false,address:'synthetic-address'};
  const p=previewPositionRemoval(m,['p-0','p-1']);assert.equal(p.blockedCount,2);
+});
+
+test('Safe-subset removal does not let CSV or automatic sources silently recreate deleted identities',async()=>{
+ const {parseCSV,inferMapping,previewCSV,importCSV}=await import('../src/csv-import.js');
+ const m=fixture(3);m.positions[1].symbol='DELETEONLY';
+ const {candidate}=preparePositionRemoval(m,['p-1'],{expectedModel:JSON.stringify(m),confirmedIds:['p-1']});
+ const parsed=parseCSV('date;type;position;quantity;price\n2025-01-01;buy;DELETEONLY;1;10');
+ const before=JSON.stringify(candidate),preview=previewCSV(candidate,parsed,inferMapping(parsed.headers));
+ assert.equal(preview.ready,0);assert.ok(preview.issues.length);assert.throws(()=>importCSV(candidate,preview));assert.equal(JSON.stringify(candidate),before);
+ m.positions[0].representedByPositionId='p-2';assert.equal(previewPositionRemoval(m,['p-0']).blockedCount,1);
 });

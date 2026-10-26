@@ -171,7 +171,7 @@ jobs:
           node-version: '22'
       - name: Install Firefox and WebKit for cross-engine regression
         run: |
-          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
           npx playwright install --with-deps firefox webkit
       - name: Test portfolio workflows on Firefox and WebKit
         run: |
