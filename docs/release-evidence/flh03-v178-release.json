@@ -1,0 +1,35 @@
+{
+  "merge": "fafe97d3d85de5ab7282f15842da6c85f77981e8",
+  "pr": 153,
+  "finalPRHead": "1a29cfa2670d0e7ab7efbcbe1181440dde776e61",
+  "prCI": 40282878038,
+  "walletCI": 40282878181,
+  "mainCI": 40283585457,
+  "mainJobs": {
+    "test": "success",
+    "cross-engine": "success",
+    "deploy": "success"
+  },
+  "production": "https://foliolab.unperfekt.at/",
+  "cache": "foliolab-open-v178",
+  "coreResult": "PASS",
+  "coreAssetHashes": 104,
+  "coreAxeScans": 18,
+  "abceResult": "PASS",
+  "abceAxeScans": 15,
+  "csvBatch": {
+    "result": "PASS",
+    "command": "FLH03_BASE_URL=https://foliolab.unperfekt.at/ node tests/browser-csv-batch.mjs",
+    "output": "chromium: FLH03 batch preview/6 widths/a11y/atomic commit/cancel/undo/reload/replay/CAS PASS (actual Pages; TLS inspection exception enabled)"
+  },
+  "deferredD": {
+    "pr": 151,
+    "head": "6611a425d7868050ef4227443fd07b964eae9a7e",
+    "status": "BLOCKED/NOT RELEASED"
+  },
+  "limitations": [
+    "Synthetic profiles only",
+    "TLS inspection certificate exception in runner",
+    "No physical Safari/Android/AT or real OAuth/account acceptance"
+  ]
+}
