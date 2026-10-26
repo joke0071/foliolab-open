@@ -1,0 +1,414 @@
+{
+  "date": "2026-10-26",
+  "head": "18f4fbd1e2a8d401f74a97a8f4e8846377e06915",
+  "testedMerge": "0477b5fb9a918c43b84311f53eff7190415eebb7",
+  "run": 40273051080,
+  "url": "https://github.com/joke0071/foliolab-open/actions/runs/40273051080",
+  "wallet": {
+    "run": 40273051106,
+    "conclusion": "success"
+  },
+  "jobs": {
+    "test": "success",
+    "crossEngine": "failure",
+    "deploy": "skipped"
+  },
+  "unitTests": 671,
+  "strictFailureSites": [
+    "tests/browser-flh03-ui.mjs:120 (native cross-origin Back warning)",
+    "tests/browser-beforeunload-origin.mjs:63 (4 missing cross-origin WebKit consent cases)"
+  ],
+  "markers": [
+    "QUALITY firefox: per-position dedupe, category/account/reset, 5 widths/Axe/history action/focus, no writes, repair disappearance PASS",
+    "QUALITY webkit: per-position dedupe, category/account/reset, 5 widths/Axe/history action/focus, no writes, repair disappearance PASS",
+    "ANNUAL firefox: year/account/detail/reset/5 widths/Axe/zero writes/encrypted restore PASS",
+    "ANNUAL webkit: year/account/detail/reset/5 widths/Axe/zero writes/encrypted restore PASS",
+    "TRANSFER firefox: split preview/consent/5 widths/Axe/focus/IDB/undo/encrypted restore/stale CAS PASS",
+    "TRANSFER webkit: split preview/consent/5 widths/Axe/focus/IDB/undo/encrypted restore/stale CAS PASS",
+    "FLH01 firefox: 245+4, 5 widths, quantity/EUR quality, axe, keyboard/focus and zero writes PASS",
+    "FLH01 webkit: 245+4, 5 widths, quantity/EUR quality, axe, keyboard/focus and zero writes PASS",
+    "CROSS-ENGINE Firefox mobile/desktop, dialog, asset entry, persistence, backup PASS",
+    "CROSS-ENGINE WebKit mobile/desktop, dialog, asset entry, persistence, backup PASS",
+    "firefox: FLH03 batch preview/6 widths/a11y/atomic commit/cancel/undo/reload/replay/CAS PASS",
+    "webkit: FLH03 batch preview/6 widths/a11y/atomic commit/cancel/undo/reload/replay/CAS PASS",
+    "CASH RECONCILIATION firefox: exact/read-only/account/FX/dialog/mobile/offline PASS",
+    "CASH RECONCILIATION webkit: exact/read-only/account/FX/dialog/mobile/offline PASS",
+    "CASH TERMS firefox: combined comparison/worker-upgrade/maturity/renewal/payout/multi-account/nominalFX/unchanged finances/encrypted backup/offline/stale tab/Axe PASS",
+    "CASH TERMS webkit: combined comparison/worker-upgrade/maturity/renewal/payout/multi-account/nominalFX/unchanged finances/encrypted backup/offline/stale tab/Axe PASS",
+    "INTEREST SCENARIO firefox: exact/method/future-gates/two accounts/FX/isolation/A+B/AT03/backup UI/old restore/IDB/offline/local+IDB-multitab/mobile/Axe PASS",
+    "INTEREST SCENARIO webkit: exact/method/future-gates/two accounts/FX/isolation/A+B/AT03/backup UI/old restore/IDB/offline/local+IDB-multitab/mobile/Axe PASS",
+    "ATOMIC STORAGE Firefox: concurrent CAS, restart persistence, corruption read/write guards PASS",
+    "ATOMIC STORAGE WebKit: concurrent CAS, restart persistence, corruption read/write guards PASS",
+    "firefox: fresh IDB, simultaneous CAS, last-tab-close restart, no local mirror PASS",
+    "firefox: new-store unavailable fail-closed/retry PASS",
+    "firefox: new-store quota fail-closed/retry PASS",
+    "firefox: new-store marker fail-closed/retry PASS",
+    "firefox: new-store orphan fail-closed/retry PASS",
+    "firefox: new-store changed-settings fail-closed/retry PASS",
+    "firefox: new-store invalid-settings fail-closed/retry PASS",
+    "firefox: real new-install UI save/reload without local portfolio PASS",
+    "webkit: fresh IDB, simultaneous CAS, last-tab-close restart, no local mirror PASS",
+    "webkit: new-store unavailable fail-closed/retry PASS",
+    "webkit: new-store quota fail-closed/retry PASS",
+    "webkit: new-store marker fail-closed/retry PASS",
+    "webkit: new-store orphan fail-closed/retry PASS",
+    "webkit: new-store changed-settings fail-closed/retry PASS",
+    "webkit: new-store invalid-settings fail-closed/retry PASS",
+    "webkit: real new-install UI save/reload without local portfolio PASS",
+    "firefox: migration plain secret-free download/cancel/content/financial/history/settings/mobile/A11y PASS",
+    "firefox: migration encrypted opt-in download/cancel/content/financial/history/settings/mobile/A11y PASS",
+    "webkit: migration plain secret-free download/cancel/content/financial/history/settings/mobile/A11y PASS",
+    "webkit: migration encrypted opt-in download/cancel/content/financial/history/settings/mobile/A11y PASS",
+    "firefox: unmarked damaged record fail-closed, original download, ordinary saves denied, consented recovery/cutover PASS",
+    "webkit: unmarked damaged record fail-closed, original download, ordinary saves denied, consented recovery/cutover PASS",
+    "WH01 firefox: 9 exact replay fixtures match Node; JSON, reconciliation, no network/storage/model changes PASS",
+    "WH01 webkit: 9 exact replay fixtures match Node; JSON, reconciliation, no network/storage/model changes PASS",
+    "BITCOIN HISTORY firefox: pagination, resume, exact scanner/replay, reorg, abort, HTTP errors and untouched portfolio/storage PASS",
+    "BITCOIN HISTORY webkit: pagination, resume, exact scanner/replay, reorg, abort, HTTP errors and untouched portfolio/storage PASS",
+    "ETHEREUM HISTORY firefox: receipt-backed ETH/ERC20, real cursor, safe resume, exact reconciliation, reorg/abort, unchanged portfolio/backup/storage PASS",
+    "ETHEREUM HISTORY webkit: receipt-backed ETH/ERC20, real cursor, safe resume, exact reconciliation, reorg/abort, unchanged portfolio/backup/storage PASS",
+    "HISTORY STORAGE firefox: local/IDB persistence, restore, stale CAS, quota rollback, injected blocked upgrade, refetch checkpoint, credential-free export PASS",
+    "HISTORY STORAGE webkit: local/IDB persistence, restore, stale CAS, quota rollback, injected blocked upgrade, refetch checkpoint, credential-free export PASS",
+    "HISTORY UI firefox: BTC/ETH/SOL/SPL fetch and encrypted roundtrip, preview/discard/accept, persistence, untouched finances, 320–1440 PASS; backup consent reload/opt-out/quota and actual encrypted UI download restore PASS",
+    "HISTORY UI webkit: BTC/ETH/SOL/SPL fetch and encrypted roundtrip, preview/discard/accept, persistence, untouched finances, 320–1440 PASS; backup consent reload/opt-out/quota and actual encrypted UI download restore PASS",
+    "PURCHASE EVIDENCE firefox: preview/confirm/undo/reload, IDB, encrypted complete restore, six widths, axe, private-field/XSS exclusion, multitab PASS",
+    "PURCHASE EVIDENCE webkit: preview/confirm/undo/reload, IDB, encrypted complete restore, six widths, axe, private-field/XSS exclusion, multitab PASS",
+    "HISTORICAL POSITION firefox: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS",
+    "HISTORICAL POSITION webkit: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS",
+    "FLH02 firefox: real total 999/1059 without snapshots, partial/observed separation, six-width axe, optional controls, retained services, canonical USD CSV FX persistence/reload and zero financial writes PASS",
+    "FLH02 webkit: real total 999/1059 without snapshots, partial/observed separation, six-width axe, optional controls, retained services, canonical USD CSV FX persistence/reload and zero financial writes PASS",
+    "HISTORY WORKER firefox: 1000-event computation leaves UI responsive, cancellation, exact worker replay and real Service Worker offline computation PASS 31ms heartbeat",
+    "HISTORY WORKER webkit: 1000-event computation leaves UI responsive, cancellation, exact worker replay and real Service Worker offline computation PASS 35ms heartbeat",
+    "firefox: A recovery/empty distinction, safe actions, 7 geometries/full axe, unchanged original download and controlled restore PASS",
+    "firefox: B proven 999→1059 change/no return and C expanded settings/7 help nodes/full axe PASS",
+    "firefox: D clean/dirty/saved provider/wizard/import, native denied reload and focus PASS; Back still pending",
+    "firefox: E contextual empty/missing-history actions, compact layout/no fake curves/full axe PASS",
+    "firefox: A runtime failed save/read retains bytes, blocks writer and preserves modal escape/rescue PASS",
+    "firefox: D native denied Back retains draft and confirmed discard reaches exact preceding document PASS",
+    "webkit: A recovery/empty distinction, safe actions, 7 geometries/full axe, unchanged original download and controlled restore PASS",
+    "webkit: B proven 999→1059 change/no return and C expanded settings/7 help nodes/full axe PASS",
+    "webkit: D clean/dirty/saved provider/wizard/import, native denied reload and focus PASS; Back still pending",
+    "webkit: E contextual empty/missing-history actions, compact layout/no fake curves/full axe PASS",
+    "webkit: A runtime failed save/read retains bytes, blocks writer and preserves modal escape/rescue PASS"
+  ],
+  "cases": [
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "same",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "142.0.1",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 2,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/form",
+        "draft": "Synthetic unsaved input"
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "same",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [
+        "beforeunload"
+      ],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "PASS",
+      "after": {
+        "href": "http://127.0.0.1:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "script",
+      "consent": "reject",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "script",
+      "consent": "accept",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "reject",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "origin": "cross",
+      "method": "driver",
+      "consent": "accept",
+      "dialogs": [],
+      "before": {
+        "href": "http://127.0.0.1:43817/form",
+        "historyLength": 3,
+        "active": true
+      },
+      "status": "FAIL",
+      "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+      "after": {
+        "href": "http://localhost:43817/previous",
+        "draft": ""
+      }
+    }
+  ],
+  "hardware": "Physical Safari/iOS/Android, system keyboard/AT and real OAuth not tested",
+  "productChangedSinceCheckpoint": false
+}
