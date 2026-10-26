@@ -16,6 +16,8 @@ try{
  await second.locator('#notice').waitFor({state:'visible'});
  assert.match(await second.locator('#notice').innerText(),/anderen Tab geändert/);
  assert.equal(await second.locator('#notice').getAttribute('role'),'alert');
+ assert.match(await second.locator('#localPortfolioStatus').textContent(),/veraltet/);
+ assert.match(await second.locator('#mobilePortfolioStatus').textContent(),/veraltet/);
  await second.locator('#addProvider').click();
  await second.locator('#editorForm [name="name"]').fill('Provider Tab B');
  await second.locator('#saveDialog').click();await second.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
@@ -29,6 +31,7 @@ try{
  assert.deepEqual(recorded.providers.map(x=>x.name),['Provider Tab A']);
  await second.reload();
  await more(second).click();
+ assert.match(await second.locator('#localPortfolioStatus').textContent(),/lokal gespeichert/);
  await second.locator('#addProvider').click();
  await second.locator('#editorForm [name="name"]').fill('Provider Tab B');
  await second.locator('#saveDialog').click();await second.waitForFunction(()=>!document.getElementById('saveDialog').disabled);

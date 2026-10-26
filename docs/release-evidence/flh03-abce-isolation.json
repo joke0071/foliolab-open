@@ -1,0 +1,17 @@
+{
+  "baseline": "c23519bd1c473e602aa08e8753019de3537b9a6b",
+  "criticalModules": {
+    "src/dialog-discard.js": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030",
+    "src/asset-wizard.js": "0386f37c529cf6766a7865f2d3c816dcd402e5b44f39b6b32670eee23e8ea6cb",
+    "src/model.js": "c16891f5674b3108f7960079bff9f02be1980431d86b9a3996c8fd1701537ea6",
+    "src/atomic-storage.js": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd",
+    "src/browser-portfolio-storage.js": "a8edf1ca1401e972ac9869fc71014290c75ade98b40f0a79669802ce01b34f01",
+    "src/csv-import.js": "517fefebb443f32bb0729c227a2ac23bbdc0159dd9efeda4d273795f6a331bb1",
+    "src/transactions.js": "e827cc703ff5286994e82e2313c62d6ae5ecb38a928d2d9ad3e6d2ae190e961a",
+    "src/complete-backup.js": "642bba5a86fd8d3c0fa035be15bf616b9254070f05a067eef406a636fe364681"
+  },
+  "navigationFunctions": {
+    "go": "exactly unchanged",
+    "initNav": "exactly unchanged"
+  }
+}
