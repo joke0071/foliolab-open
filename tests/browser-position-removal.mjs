@@ -21,7 +21,13 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
    m.snapshots.push({id:'retained',date:'2023-01-01',source:'current',total:10,totalEURExact:'10',byPosition:{'p-0':'10'}});
    const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
   });
-  await page.reload();await ready();await page.locator('#sidebarNav [data-page=positions]').click();
+  await page.reload();await ready();
+  // Establish the actual offline prerequisite BEFORE deliberate storage fault injections.
+  // Readiness alone does not prove that this document has an active controller.
+  await page.waitForFunction(async()=>{const registration=await navigator.serviceWorker.getRegistration();return registration?.active?.state==='activated';});
+  await page.reload();await ready();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+  console.log(engine+': UI fixture active worker/controller before quota/abort '+JSON.stringify(await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,active:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys()}))));
+  await page.locator('#sidebarNav [data-page=positions]').click();
   const before=await record();assert.equal(await page.locator('[data-position-select]').count(),0);
   await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
   assert.equal(await page.locator('[data-position-select]').count(),100);await button('select-filtered').click();
@@ -65,6 +71,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   }
   page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
   await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();
+  console.log(engine+': UI before-offline controller '+JSON.stringify(await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,active:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys()}))));
   await page.waitForFunction(()=>!!navigator.serviceWorker.controller);await context.setOffline(true);
   await page.evaluate(()=>{const original=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(...args){document.getElementById('refreshAll').click();return original.apply(this,args);};window.finalRemovalPut=original;});
   await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
