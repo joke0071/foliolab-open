@@ -1,3 +1,13 @@
+# C2-Fixturekorrektur nach tatsächlichem ersten CI-Fehler
+
+Erster C2-HEAD11bfcc6/CI40422717936 ist fehlgeschlagen; nicht als bestanden umdeklariert. Der neue Partial-Test versuchte eine persistierte Kurshistorie mit nur einer Kurszeile zu speichern. Bestehender validateImportedPriceHistory verlangt mindestens zwei Zeilen und hat dies korrekt mit „Historische Kurse überschreiten die Datenlimits“ abgewiesen. Kein Produktfehler und kein Anlass, Datenvalidierung zu lockern.
+
+Nur die neue Fixture wird korrigiert: zwei gültige datierte Kurse, davon einer vor dem belegten Anfangsbestand und einer nach Kauf. Zusätzlich bleibt der Kaufstag ohne Kurs. Dadurch tatsächlich genau ein bewertbarer Tag, ein unbekannter früher Bestand und ein fehlender Tageskurs; alle Unbekannt-Werte und Ursachen werden ausdrücklich geprüft. Der Missing-Fall ohne Preisquelle prüft weiterhin konkret den fehlenden Schlusskurs; Gap-/Continuous-Linien und Nullmutations-Assertions bleiben vollständig. Keine bisherige Assertion oder Produktvalidierung entfernt/übersprungen; zusätzliche PASS-Zeilen machen die tatsächlich abgeschlossenen drei Zustände sichtbar.
+
+Neue finale HEAD-CI bleibt Pflicht. Kein Merge/Deployment bis vollständigem Grün; Produktion akzeptiertes v182. Laufenden alten Cross-Engine-Lauf erst sicher beenden lassen, nicht für einen Push abbrechen.
+
+---
+
 # Aktueller Checkpoint: v182 live DONE; C2 als nächster begrenzter Darstellungsdelta
 
 PR #166 ist gemergt und **v182 tatsächlich produktiv abgenommen**. Merge/main `85f5899dca0d0d773a06dedc2b2029e206bec004`, Tree `585e05bfc4ca56967e0dbaaf850d879a09a60c6a`, finaler PR-HEAD `046cebf5a4a27727b024d6053d9f5103bf5cebb7`. Finale PR-CI [40419694524](https://github.com/joke0071/foliolab-open/actions/runs/40419694524) und Wallet40419694536 SUCCESS. [Main/Pages/Live40421074616](https://github.com/joke0071/foliolab-open/actions/runs/40421074616) vollständig SUCCESS: test121915369725, cross121915369334, deploy121918137993, live-acceptance121918249308. 709/709/0Fail/0Skip. Live105 exakte Assethashes, aktiver foliolab-open-v182,6 Kerngruppen/18 Axe; B1-/C1-ZielUI in Chromium/Firefox157/WebKit27.2 PASS. Beide synthetischen390px-Transferbilder tatsächlich angesehen, korrekte kompakte Zustände/Aktionen. Evidenz: release-evidence/ui-quality-v182-release.json; vollständige Logs/Reports im CI-Artefakt. Keine Hardware-/nativeSafari-/OAuth-Abnahme behauptet.
