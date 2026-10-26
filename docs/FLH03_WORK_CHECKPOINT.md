@@ -1,3 +1,35 @@
+# CURRENT INFRASTRUCTURE FIX — official Ubuntu HTTPS mirrors, gates unchanged
+
+Correction PR#155 / dd53520 CI40359264272: Chromium SUCCESS, wallet40359264517 SUCCESS, cross-engine FAILED in INSTALL, deployment SKIPPED. The new8-minute bound yielded concrete logs121699963223/artifact12667764444: apt needed117MB, repeated large downloads from http://azure.archive.ubuntu.com were ignored/retried and still only at package31 when time expired. NO Firefox/WebKit product tests executed in that failed job. This is an evidenced package-download stall, not a new application/driver defect.
+
+Only the ephemeral Ubuntu runner's existing mirrorlist files now select official https://archive.ubuntu.com/ubuntu/ and https://security.ubuntu.com/ubuntu/. Distribution/suites, Ubuntu signing keys/signature checks, TLS verification, browser/Playwright1.64.1, every test/assertion, pipefail, install timeout and diagnostic artifacts stay unchanged. No insecure flags, arbitrary mirror, ignored failure or product-file modification. Reachability probe of the exact3.5MB font package that stalled: official archive HTTP200,3513360bytes,5.874seconds locally; this is NOT a claim of remote CI speed/success. Actual new final CI still required.
+
+PhaseA continues only: test-ready bootstrap correction remains locally passed in3engines with late offline assertions retained. main515417c remains merged08 but failed Pages40324527596; fresh productive sw.js fetch confirmsv178. After full corrected PR/main gates, finish actualv179 live acceptance. Then and only then PhaseB consolidated documentation audit, followed by scoped safe implementation/new approvals. Do not start functional D/Ledger/Sync or repeat completed08 code while release is pending. All proof/00–17 states and new user phase order below remain valid.
+
+---
+
+# ADDITIONAL CURRENT AUTHORITY — consolidated completion phases
+
+Latest user instruction carries this run forward without restarting. PhaseA must first finish actualv179 release/live acceptance. PhaseB then requires a SEPARATE DOCUMENTATION-ONLY checkpoint consolidating FLH03v4/#148, benchmark#124/docs/BENCHMARK_RESTARBEITEN_2026-10.md, UI#149, #44/#52/#125–129, prior WP/PLUS/BENCH/AT01–06, FLH01/02 acceptances and subsequent decisions. Required outputs: docs/KONSOLIDIERTER_RESTARBEITEN_AUDIT.md and docs/KONSOLIDIERTE_ROADMAP.md, with original IDs/sources, DONE/PARTIAL/OPEN/BLOCKED/SUPERSEDED, concrete code/test/release evidence, gaps, priorities, dependencies, reuse, smallest increments and acceptance criteria. No functional change/deployment during that audit. Only AFTER actualv179 and this audit proceed to safe evidence-backed packages in roadmap order.
+
+Additional planned scopes: FLH03-18 native LedgerLive CSV, using the accessible private reference only locally with no published wallet/transaction data; FLH04 separate issue/branch/checkpoint for optional E2E encrypted Drive synchronization, canonical localIDB/offline, existing crypto, revision/conflict safety, no central data/Secrets/Worker and no closed-PWA sync promises. No format, economic pairing, tax data, OAuth/operator permissions or release approval is to be invented. Existing specific08 and limitedD P2 authority remains; new unapproved scopes/migrations need their required concrete release decision. FunctionD is P2 and cannot block development; its old#151 strict cross-origin failures stay immutable, guarantee consciously narrowed. No further functional D work before the consolidated audit in this new sequence. Integration before expansion, data integrity first.
+
+Current safe atomic action remains the tested SW-ready fixture correction below, on main515417c, before any PhaseB work. Original productive acceptance v178; v179 code merged but mainPages40324527596 failed and skipped deployment. No later phase starts until realv179 acceptance.
+
+---
+
+# CURRENT — #154 merged, Pages held by new fixture gate; SW-ready correction branch
+
+PR#154 final HEADb03de570 / CI40323324393 and wallet40323324446 actually SUCCESS; main/conflict/safety checks completed, controlled merge **515417c6d61b5e3514a9ae769c9c8feebb3f1189**. Exact merge treeb2bbd2b57c42856ac740c5d32594fdabc7a0aa6e equals tested PR tree. No untested source was merged.
+
+Subsequent main/Pages CI **40324527596**: Chromium SUCCESS, cross-engine FAILED, deploy SKIPPED. New concrete failure: Firefox08 UI test timed out at line68 waiting for serviceWorker.controller after deliberate storage fault tests. Same run passed both strict fresh offline-module tests first, then all Firefox UI/Axe widths. This is not the earlier WebKit offline bug and not D. There is no productivev179 acceptance yet; last accepted livev178. Failed logs/job121577694812 retained. No force deployment/retry without a new hypothesis.
+
+Only active new branch **feature/flh03-08-sw-ready**, directly from current main515417c, contains a TEST-ONLY deterministic bootstrap precondition: wait for actual worker activation, reload the real document, require the actual controller before capturing baseline or injecting quota/transaction faults. Log both this precondition and the unchanged late controller/cache check before offline. The prior UI fixture unlike the module fixture had no early activation handshake. No late/offline/immutable-record/revision assertion is removed, no alternative registration or request interception, no app/SW/storage/financial change. Root cause is qualified as bootstrap/fault-stage isolation; no unproven driver/product diagnosis asserted.
+
+Actual local corrected fixture PASS in Chromium/Firefox157/WebKit27.2: real active worker/controller before AND after faults, all36fullAxe/6widths/560px, precise cancel/confirm geometry, true quota/post-put abort rollback, CAS competing tab, one atomic delete revision, backup/current encrypted-v2 restore, actual offline delete+reload and focus/refresh guard. Evidence: docs/release-evidence/flh03-08-sw-ready.json. Syntax checked. The separate small correction PR/full final CI must pass, then controlled merge under existing08 authority, successful main/Pages and actual new-domain live acceptance. Do not repeat completed implementation, waive a controller assertion, publish a failed pipeline or start D code before this release completes. D remainsP2, old#151 reference intact; other packages remain evidence-gated and not blanket-approved. All00–17 statuses below unchanged,08implemented/mergedbutNOTLIVEACCEPTED.
+
+---
+
 # CURRENT CI OBSERVABILITY — product27e1182 frozen; install-only timeout/logging added
 
 Final product/UI source27e11822e3946cf1cebb0ff912b5f341f47d209d: CI40321409175 Chromium SUCCESS with actual logs confirming689/689, strengthened08/offline deletion, A11y, mobile offline/PWA; wallet40321409074 SUCCESS. Cross-engine121566982814 remained IN_PROGRESS in INSTALL since12:17:41UTC through12:31UTC; no test execution yet. Repeated completed-job log access is not a substitute for actual failure logs. No running job was cancelled; no install root cause assumed. main staysfafe97d/v178; no merge/deploy.
