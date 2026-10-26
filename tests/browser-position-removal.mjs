@@ -9,7 +9,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const button=action=>page.locator('[data-action="'+action+'"]');
  const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- const axe=async()=>{await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary,html:n.html,checks:n.any}))})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
+ const axe=async()=>{await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));if(r.violations.length)console.error(engine+': contrast CSS '+JSON.stringify(await page.evaluate(()=>['saveDialog','addWizard'].map(id=>{const e=document.getElementById(id),s=getComputedStyle(e);return {id,disabled:e.disabled,colour:s.color,bg:s.backgroundColor,opacity:s.opacity,dialog:document.getElementById('editDialog').open};}))));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary,html:n.html,checks:n.any}))})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
  try{
   await page.goto(base);await ready();
   await page.evaluate(async()=>{
@@ -60,7 +60,10 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
    await page.evaluate(()=>{IDBObjectStore.prototype.put=window.originalRemovalPut;});
   }
   page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
-  await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
+  await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();
+  await page.evaluate(()=>{const original=IDBObjectStore.prototype.put;IDBObjectStore.prototype.put=function(...args){document.getElementById('refreshAll').click();return original.apply(this,args);};window.finalRemovalPut=original;});
+  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
+  await page.evaluate(()=>{IDBObjectStore.prototype.put=window.finalRemovalPut;});assert.equal(await page.locator('#priceInfo').evaluate(e=>e.classList.contains('hidden')),true,'Refresh cannot start inside destructive commit');
   const after=await record(),m=JSON.parse(after.raw);assert.equal(after.revision,before.revision+1);
   assert.equal(m.positions.length,400);assert.ok(m.positions.some(p=>p.id==='p-0'));assert.ok(!m.positions.some(p=>p.id==='p-1'));
   assert.deepEqual(m.snapshots,JSON.parse(before.raw).snapshots);assert.deepEqual(m.bookings,JSON.parse(before.raw).bookings);assert.deepEqual(m.accounts,JSON.parse(before.raw).accounts);

@@ -1445,7 +1445,7 @@ async function startPerformanceTracking(){
  model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');await save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
 }
 async function refreshAll(){
- if(busy)return;
+ if(busy||saving||editorSubmitting||loadFailure||otherTabChangedPortfolio)return;
  busy=true;$('refreshAll').disabled=true;$('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';
  const errors=[];let successes=0;const now=new Date().toISOString();
  try{
