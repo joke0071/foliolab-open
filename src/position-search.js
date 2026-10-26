@@ -17,3 +17,8 @@ export function searchAndSortPositions(positions,model,query='',order='value',va
  };
  return matched.slice().sort(compare);
 }
+
+/** Only the primary list is scoped. Never use this for valuation or import identity. */
+export function positionListScope(positions,{includeArchived=false}={}){
+ return positions.filter(p=>includeArchived||p.archived!==true);
+}
