@@ -28,6 +28,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    for(const row of geometry)for(const [i,b] of row.buttons.entries()){assert.ok(b.height>=44);assert.ok(b.x>=0&&b.right<=width);assert.ok(row.bottom-b.bottom>=8,'button/focus clear of separator');for(const c of row.buttons.slice(i+1))assert.ok(b.right<=c.x||c.right<=b.x||b.bottom<=c.y||c.bottom<=b.y,'no action overlaps');}
    await p.locator('[data-action=booking-history][data-id=etf]').click();const d=p.locator('#bookingHistoryDialog');await d.waitFor();await scan('history dialog '+width);assert.equal(await d.evaluate(e=>e.scrollWidth<=e.clientWidth+1),true);
    assert.equal(await d.locator('.booking-value-table tr').last().locator('td').count(),5);assert.equal(await d.locator('.booking-value-table tr').last().evaluate(e=>getComputedStyle(e).display),width<=720?'grid':'table-row');
+   assert.deepEqual(await d.locator('.chart-x-labels span').allTextContents(),['02.01.2023','04.01.2023'],'chart dates match labeled history records');
+   const continuous=await d.locator('.chart-plot svg path[stroke="#3b8659"]').getAttribute('d');assert.equal((continuous.match(/M/g)||[]).length,1);assert.equal((continuous.match(/L/g)||[]).length,2,'three consecutive proven days form one line');
    const cell=d.locator('td[data-label="Bestand"]').first();await cell.focus();assert.match(await cell.innerText(),/2,1234568/);assert.match(await cell.getAttribute('title'),/Exakter Wert: 2\.123456789/);assert.match(await cell.evaluate(e=>getComputedStyle(e,'::after').content),/Exakter Wert: 2\.123456789/);
    if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&width===390)await p.screenshot({path:'artifacts/gates/ui-history-records-390.png'});
    assert.equal(await d.locator('h3').evaluate(e=>getComputedStyle(e).fontSize),'14px');
@@ -36,7 +38,19 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   }
   // Targeted enlarged-text stress test, not a claim of physical Android OS testing.
   await p.setViewportSize({width:320,height:360});await nav('positions');await p.evaluate(()=>{const els=[...document.querySelectorAll('#positionsPage *')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const [e,size]of els)e.style.fontSize=size*1.5+'px';});await scan('150percent synthetic text scale,320x360');
-  assert.deepEqual(await record(),before,'presentation and navigation make zero portfolio writes');assert.deepEqual(errors,[]);
+  assert.deepEqual(await record(),before,'presentation and navigation make zero portfolio writes');
+  // Explicit synthetic evidence states; only fixture setup writes, then exact record equality.
+  for(const state of ['partial','gap','missing']){
+   await p.evaluate(async state=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const storage=new PortfolioStorage();const model=await storage.initialize();if(state==='missing')delete model.priceHistories.etf;else model.priceHistories.etf={currency:'EUR',source:'CSV (selbst geprüft)',points:state==='partial'?[{date:'2023-01-04',total:110}]:[{date:'2023-01-02',total:100},{date:'2023-01-10',total:120}]};await storage.save(model);storage.close();},state);
+   await p.reload();await ready();const fixtureBefore=await record();await p.setViewportSize({width:390,height:560});await nav('positions');await p.locator('[data-action=booking-history][data-id=etf]').click();const d=p.locator('#bookingHistoryDialog'),out=d.locator('[data-booking-history=output]');await scan('history '+state+'390px');
+   assert.equal(((await out.innerText()).match(/Teilweise verfügbar/g)||[]).length,1,'one partial notice; concrete missing evidence retained: '+state);
+   assert.equal(await out.locator('td[data-label="Bestand"]').filter({hasText:'2,1234568'}).count(),state==='gap'?2:state==='partial'?2:1,'known quantities retained');
+   if(state==='gap'){const path=await out.locator('.chart-plot svg path[stroke="#3b8659"]').getAttribute('d');assert.equal((path.match(/M/g)||[]).length,2,'two proven but separated observations');assert.equal((path.match(/L/g)||[]).length,0,'no false line across unknown days');assert.deepEqual(await out.locator('.chart-x-labels span').allTextContents(),['02.01.2023','10.01.2023']);}
+   else{assert.match(await out.innerText(),/Historischer Schlusskurs fehlt/,'concrete missing price explanation');assert.equal(await out.locator('.chart-plot').count(),0,'zero or one known value does not invent a trend');assert.equal(await out.locator('td[data-label="Positionswert"]').filter({hasText:'Unbekannt'}).count(),1,'unknown never rendered as zero');}
+   if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&state==='partial')await p.screenshot({path:'artifacts/gates/ui-history-partial-390.png'});
+   await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.dataset.action),'booking-history');assert.deepEqual(await record(),fixtureBefore,'history '+state+' makes zero writes');
+  }
+  assert.deepEqual(errors,[]);
   report.engines.push({engine,status:'PASS',scans,textScale:'synthetic 150% computed-text stress,320x360; not physical Android',checks:['all five pages','archive visible without detail disclosure','44px actions,separator and focus clearance,no overlaps','liquidity below providers and closed','mobile labeled history records/desktop table','focused exact decimal disclosure','Escape/focus return','zero exact IndexedDB record mutations']});console.log(engine+': UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS');
  }finally{writeFileSync('artifacts/gates/ui-quality.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}
 }
