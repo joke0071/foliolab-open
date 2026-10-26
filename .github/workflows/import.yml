@@ -71,6 +71,7 @@ jobs:
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-csv-batch.mjs
           node tests/browser-flh03-abce.mjs
+          node tests/browser-dialog-native-navigation.mjs
           node tests/browser-position-selection.mjs
           node tests/browser-position-removal.mjs
           node tests/browser-flatex-import.mjs
@@ -196,6 +197,7 @@ jobs:
           node tests/browser-cross-engine.mjs
           FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
           FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
+          DIALOG_NATIVE_ENGINES=firefox,webkit node tests/browser-dialog-native-navigation.mjs
           FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
           FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
