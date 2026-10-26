@@ -28,6 +28,8 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
    m.priceHistories.asset={currency:'EUR',source:'CSV (selbst geprüft)',points:[{date:'2023-01-02',total:100},{date:'2023-01-03',total:110}]};
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   },base);await p.reload();await ready();await nav('positions');
+  // ready may resolve while the selected active worker is still activating.
+  await p.evaluate(async()=>{const r=await navigator.serviceWorker.ready,w=r.active;if(!w)throw new Error('No active service worker');if(w.state!=='activated')await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(new Error('Service worker did not activate')),60000);const changed=()=>{if(w.state==='activated'){clearTimeout(timer);w.removeEventListener('statechange',changed);resolve();}else if(w.state==='redundant'){clearTimeout(timer);w.removeEventListener('statechange',changed);reject(new Error('Service worker became redundant'));}};w.addEventListener('statechange',changed);changed();});});
   assert.equal(await p.evaluate(async()=>{const r=await navigator.serviceWorker.ready;return r.active?.state;}),'activated');await p.reload();await ready();await nav('positions');await p.waitForFunction(()=>!!navigator.serviceWorker.controller);
   const before=await record(),financialBefore=await value();await open('asset');assert.equal(await p.locator('#cancelDialog').evaluate(e=>e===document.activeElement),true);
   const scans=[];

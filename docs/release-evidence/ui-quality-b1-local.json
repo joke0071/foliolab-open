@@ -1,0 +1,48 @@
+{
+  "scope": "B1 presentation only; no product release yet",
+  "base": "0ed3f874aaa23ccc47ef032eb39bc27da57df047",
+  "unit": {
+    "passed": 701,
+    "failed": 0,
+    "skipped": 0
+  },
+  "targetedEngines": [
+    "Chromium141.0.7390.37",
+    "Firefox157.0",
+    "WebKit27.2"
+  ],
+  "logs": {
+    "precision-check": "npm warn Unknown env config \"http-proxy\". This will stop working in the next major version of npm.\n\n> foliolab-open@1.3.3 check\n> for f in src/*.js worker/src/*.js; do node --check \"$f\" || exit 1; done\n\n",
+    "precision-unit": "✔ A valid five-year read is allowed but excessive history is still rejected (0.8123ms)\nℹ tests 701\nℹ suites 0\nℹ pass 701\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 16089.01298",
+    "final-chromium": "chromium: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n",
+    "final-cross": "firefox: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\nwebkit: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n",
+    "archive-chromium": "chromium: restore begins plain\nchromium: restore result plain {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: restore begins encrypted\nchromium: restore result encrypted {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS\n",
+    "archive-cross": "firefox: restore begins plain\nfirefox: restore result plain {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nfirefox: restore begins encrypted\nfirefox: restore result encrypted {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nfirefox: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS\nwebkit: restore begins plain\nwebkit: restore result plain {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nwebkit: restore begins encrypted\nwebkit: restore result encrypted {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nwebkit: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS\n",
+    "history-chromium": "HISTORICAL POSITION chromium: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS\n",
+    "history-cross": "HISTORICAL POSITION firefox: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS\nHISTORICAL POSITION webkit: EUR default, historical quantity valuation, alternate views, six widths, no mutation and axe PASS\n"
+  },
+  "criticalModulesUnchangedFromV180": {
+    "src/model.js": "40905b0032292008b88aef8829ea2a10a707f27084776d439a46777ea39556b8",
+    "src/decimal.js": "ee4e87eb5b98028a755b7f73d7105cddcb2b6749f4b75f23bb7dbcec992aed6a",
+    "src/transactions.js": "e827cc703ff5286994e82e2313c62d6ae5ecb38a928d2d9ad3e6d2ae190e961a",
+    "src/csv-import.js": "517fefebb443f32bb0729c227a2ac23bbdc0159dd9efeda4d273795f6a331bb1",
+    "src/atomic-storage.js": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd",
+    "src/browser-portfolio-storage.js": "a8edf1ca1401e972ac9869fc71014290c75ade98b40f0a79669802ce01b34f01",
+    "src/portfolio-edit-actions.js": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04",
+    "src/historical-portfolio-value.js": "9e6c13f9d2c37662ffbd9b5efd19954227c221bf5b658c343b5946309ccb9897",
+    "src/historical-position-value.js": "3370d285ca217b4826dad82771e0f2a78a8bb54c1b4fe24962c526430c753fef",
+    "src/backup-vault.js": "62c92a88d1dfb74351b56e45a4a95521e98ab87be931cf0a4f408d9848912f39",
+    "src/complete-backup.js": "642bba5a86fd8d3c0fa035be15bf616b9254070f05a067eef406a636fe364681",
+    "src/cash-terms.js": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0",
+    "src/booking-insights.js": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c"
+  },
+  "visualReview": [
+    "actual synthetic positions390/1440 images inspected",
+    "actual mobile history records390 with exact focus inspected"
+  ],
+  "limitations": [
+    "150% computed text scaling of positions is synthetic, not real Android OS font testing",
+    "No hardware/nativeSafari/assistivetech/realOAuth acceptance",
+    "Full final remote and combined162 CI/release gates pending"
+  ]
+}

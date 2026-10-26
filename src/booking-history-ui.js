@@ -10,7 +10,7 @@ import {CHART_PERIODS,filterChartPeriod} from './chart-periods.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
 import {units,exact,mul} from './decimal.js';
 // Display rounding only; exact stored quantities remain available on focus/hover.
-const historicalNumber=value=>new Intl.NumberFormat('de-AT',{maximumSignificantDigits:8,notation:Number(value)!==0&&Math.abs(Number(value))<0.000001?'scientific':'standard'}).format(value);
+export const historicalNumber=value=>new Intl.NumberFormat('de-AT',{maximumSignificantDigits:8,notation:Number(value)!==0&&Math.abs(Number(value))<0.000001?'scientific':'standard'}).format(value);
 const historicalCell=(label,value,fallback)=>'<td data-label="'+esc(label)+'"'+(value==null?'':' tabindex="0" title="Exakter Wert: '+esc(value)+'" aria-label="'+esc(label+': '+historicalNumber(value)+'. Exakter Wert: '+value)+'"')+'>'+esc(value==null?fallback:historicalNumber(value))+'</td>';
 const signed=q=>q===null?'Änderung unbekannt':(units(q)>0n?'+':'')+q;
 export function bookingRowMarkup(b,model){
