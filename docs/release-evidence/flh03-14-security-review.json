@@ -1,0 +1,42 @@
+{
+  "base": "23af6d5800b06b6d08a52bf730ecd685387af7dd",
+  "scope": "separate final diff/contract review; no independent human or hardware claim",
+  "unchangedCriticalModules": [
+    "src/transactions.js",
+    "src/atomic-storage.js",
+    "src/browser-portfolio-storage.js",
+    "src/complete-backup.js",
+    "src/backup-vault.js",
+    "src/crypto-backup.js",
+    "src/dialog-discard.js",
+    "src/historical-portfolio-value.js",
+    "src/historical-position-value.js",
+    "src/csv-import.js",
+    "src/import-identity.js",
+    "src/wallet-scan-update.js",
+    "src/position-selection.js"
+  ],
+  "observations": [
+    "Archive flag changes only normal list membership; valuation never calls positionListScope",
+    "One existing IDB/CAS write after exact preimage and fresh storage check; no schema/financial migration",
+    "All retained history/journal/wallet/import references survive; no delete rights gained",
+    "All-values selection explicitly includes archives, filtered selection uses canonical full visible query",
+    "Existing editor preserves flag and dashboard quote drilldown explicitly includes archived affected holdings",
+    "Excluded economic representations and liabilities retain their previous signed valuation; copy corrected, no calculation changed",
+    "No new remote endpoint, dependency, persisted draft, third-party script, mandatory Worker or secret storage"
+  ],
+  "tests": "699 unit tests including independent 7EUR included/excluded/liability reference; actual three-engine quota/abort/CAS/offline/plain+encrypted restore suite",
+  "openGates": [
+    "Full CI on final reviewed head",
+    "Concrete user release decision for14",
+    "Physical Android/native Safari/assistive technology and real OAuth remain external44 gates"
+  ],
+  "sourceSha256": {
+    "src/app.js": "12964ef145ae343d4f85c1250f1bec57e5b3dcf081c835171afd95fb0c7e6738",
+    "src/model.js": "40905b0032292008b88aef8829ea2a10a707f27084776d439a46777ea39556b8",
+    "src/portfolio-edit-actions.js": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04",
+    "src/position-search.js": "cb22a4943142fa035d488d4934ff87c6ca24ba29cda8e8f71ab94319bfcc04ce",
+    "tests/position-archive.test.mjs": "520ab8b7ecb22d21b75bddf5806a61f422d3280d88eecb2a9651b4c2b20c786b",
+    "tests/browser-position-archive.mjs": "75472c2f888cdbda67eddac119bd378566541670ed98f499709f555a76fa62d6"
+  }
+}

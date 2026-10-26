@@ -265,7 +265,7 @@ function renderHistory(){
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
   '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
 function renderPositions(){
- const archiveToggle=$('positionArchiveToggle');archiveToggle.setAttribute('aria-pressed',String(includeArchived));archiveToggle.textContent=includeArchived?'Archivierte ausblenden':'Archivierte anzeigen';$('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Bestände zählen weiterhin zu Vermögen, Konten und Verlauf.':'';
+ const archiveToggle=$('positionArchiveToggle');archiveToggle.setAttribute('aria-pressed',String(includeArchived));archiveToggle.textContent=includeArchived?'Archivierte ausblenden':'Archivierte anzeigen';$('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' nicht bestätigt':'Kurse: Noch keine Bewertungen';
  const breakdown=[q.stale&&q.stale+' älter als 7 Tage',q.derived&&q.derived+' aus Stichtagen',q.missing&&q.missing+' ohne Kurs',q.review&&q.review+' mit Prüfhinweis',q.undated&&q.undated+' ohne Kursdatum',q.unverified&&q.unverified+' ohne bestätigte Quelle'].filter(Boolean);
@@ -321,7 +321,7 @@ function renderPositions(){
   const source=p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Zuletzt gespeicherter Wert':'');
   // Quote date takes precedence: do not print an unrelated position-edit timestamp beside it.
   const caption=[provider?.name||'Unbekannt',account?.name||'',source,quoteDate].filter(Boolean).map(esc).join(' · ');
-  const tags=(p.archived?'<span class="tag neutral">Archiviert · weiterhin bewertet</span>':'')+'<span class="tag">'+esc(p.kind==='cash'&&account?.cashTerms?.fixedTerm===true?'Festgeld':TYPES[p.kind])+'</span>'+
+  const tags=(p.archived?'<span class="tag neutral">Archiviert · Bewertung unverändert</span>':'')+'<span class="tag">'+esc(p.kind==='cash'&&account?.cashTerms?.fixedTerm===true?'Festgeld':TYPES[p.kind])+'</span>'+
    (p.symbol?'<span class="tag neutral">'+esc(p.symbol)+'</span>':'')+
    (p.valuationMode==='excluded'?'<span class="tag warn">Nicht doppelt summiert</span>':p.valuationMode==='liability'?'<span class="tag warn">Verbindlichkeit</span>':'')+
    (p.wallet?.enabled?'<span class="tag">Wallet verbunden</span>':p.managementSource==='transactions'?'<span class="tag neutral">Transaktionsbasiert</span>':'')+
@@ -374,13 +374,13 @@ function openPositionArchive(id){
  const p=model.positions.find(p=>p.id===id);if(!p)throw Error('Position nicht mehr vorhanden.');
  const archived=!p.archived,expected=JSON.stringify(model);
  showDialog(archived?'Position archivieren':'Position wieder einblenden','POSITIONEN',
-  '<p>'+esc(p.name)+'</p><p>Archivieren blendet nur die Position aus der normalen Liste aus. Bestand und Wert zählen weiterhin zu Vermögen und Konten; Buchungen, Verknüpfungen und Historie bleiben erhalten.</p>',async()=>{
+  '<p>'+esc(p.name)+'</p><p>Archivieren blendet nur die Position aus der normalen Liste aus. Bestände und ihre Bewertungsregeln in Vermögen und Konten bleiben unverändert; Buchungen, Verknüpfungen und Historie bleiben erhalten.</p>',async()=>{
    if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
    await portfolioStore.assertCurrent();
    if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
    const candidate=structuredClone(model);setPositionArchived(candidate,id,archived);
    const previous=model;model=candidate;try{await save();}catch(error){if(model===candidate)model=previous;throw error;}
-   notify(archived?'Position archiviert. Bestand bleibt bewertet.':'Position wieder eingeblendet.');
+   notify(archived?'Position archiviert. Bewertung bleibt unverändert.':'Position wieder eingeblendet.');
   });
  $('saveDialog').textContent=archived?'Archivieren':'Wieder einblenden';$('cancelDialog').focus({preventScroll:true});
 }

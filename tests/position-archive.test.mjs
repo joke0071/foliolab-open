@@ -69,3 +69,13 @@ test('undo of a later import retains the existing archive and prior financial st
  importCSV(m,p);const receipt=csvUndoReceipt(JSON.stringify(before),m);assert.equal(canUndoCSV(m,receipt),true);undoCSV(m,receipt);
  assert.equal(m.positions[0].archived,true);assert.equal(m.positions[0].quantityExact,'0');assert.deepEqual(m.bookings,before.bookings);assert.deepEqual(m.journalEntries,before.journalEntries);
 });
+
+test('archiving preserves excluded representations and liabilities without double counting',()=>{
+ const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic economic scope'}));
+ for(const v of [{id:'included',name:'Counted holding',quantity:10},{id:'excluded',name:'Representation',quantity:10,valuationMode:'excluded',representedByPositionId:'included',economicRole:'wrapped'},{id:'debt',name:'Liability',quantity:3,valuationMode:'liability',economicRole:'borrowed'}])m.positions.push(createPosition({providerId:'p',kind:'other',price:1,...v},m));
+ assert.equal(totalExactEUR(m),'7');const before=JSON.stringify(m);
+ for(const p of m.positions)setPositionArchived(m,p.id,true);
+ assert.equal(totalExactEUR(m),'7');assert.equal(totalExactEUR(safeImport(JSON.parse(backup(m)))),'7');
+ for(const p of m.positions)setPositionArchived(m,p.id,false);
+ assert.equal(JSON.stringify(m),before);
+});
