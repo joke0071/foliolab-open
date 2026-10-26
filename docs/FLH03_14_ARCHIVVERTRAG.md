@@ -1,0 +1,15 @@
+# FLH03-14 — Archivvertrag vor Implementierung
+
+Basis: main23af6d5, identische App zu live akzeptiertem v179. Konsolidierter Audit/Roadmap #156 ist abgeschlossen und integriert. D ist in #157 geparkt, keine parallele aktive D-Implementierung. Dieser Branch ist der einzige aktive funktionale Hauptstrang. Keine Merge-/Deploymentfreigabe für14 vorhanden; Änderungen zunächst als geprüften eigenständigen PR sichern.
+
+Ein einziges optionales boolesches Positionsfeld `archived` kennzeichnet ausschließlich die Sichtbarkeit in der normalen Positionsliste. Fehlendes Feld bedeutet aktiv. Kein neues Portfolio-/Archivmodell, keine Datenbankmigration, keine zusätzliche Journal-/Löschengine. Unbekannte Feldtypen müssen beim Import scheitern. Wieder einblenden entfernt die Markierung. ID/Anbieter/Konto/Wallet und sämtliche Beträge/Bestände bleiben erhalten.
+
+Archivierte offene Bestände zählen unverändert zu Vermögen, Allokation, Konten, Bestands-/Finanzhistorie und Rendite. Sie werden weiterhin normal aktualisiert und in Journal-/Importzuordnungen gefunden. Die UI erklärt diesen Umfang ausdrücklich. Standardliste zeigt aktive Positionen; „Archivierte anzeigen“ ergänzt archivierte Positionen, statt bestehende Bestände aus Berechnungen zu entfernen. Markierung und Wieder-einblenden sind ausdrückliche bestehende Dialog-/Saveaktionen mit exakter Vorschaufrische, aktueller Storageprüfung und einem CAS-Commit. Kein Snapshot und keine Transaktion als Nebenwirkung.
+
+Alle gefilterten Positionen wählen weiterhin die vollständige tatsächlich angezeigte Filtermenge vor Pagination; „alle Positionen“ bleibt eine gesondert bestätigte Gesamtmenge einschließlich Archiv. Verdeckte markierte IDs bleiben sichtbar gezählt und die Löschvorschau zeigt sie; Archivierung berechtigt nicht zum Löschen referenzierter Daten. Alte Lösch-/Recovery-/CAS-Gates bleiben unverändert.
+
+Manuelle Bearbeitung, CSV-Reimport, Flatex-Backfill und Wallet-Refresh dürfen nicht entarchivieren oder eine zweite aktive Identität erzeugen. Klartext-/verschlüsselte Vollbackups erhalten das Feld durch den bestehenden Modellvertrag; alte Backups bleiben lesbar. Kein automatisches Archivieren oder private neue Entwurfsspeicherung.
+
+Abnahme: sold/zero und Restbestand, gleiche ISIN in zwei Konten, explizites Aus-/Einblenden, Filter-/Pagination-/Mehrfachauswahl, abgebrochener Dialog/Escape/Fokus, stale-preview/CAS/Quota/Abbruch, exakt unveränderte Finanz-/Historydaten und Summen, CSV-/Wallet-Replay, alte und verschlüsselte tatsächliche UI-Restores, Offline/Reload, Chromium/Firefox/WebKit, sechs Breiten/kleine Höhe und vollständiges Axe. Finale CI und unabhängige Sicherheitsprüfung müssen vor einer späteren konkreten Produktionsentscheidung erfolgreich sein.
+
+Status: Fachvertrag erstellt; Implementierung/Tests folgen. Noch kein Paketabschluss oder Release behauptet.
