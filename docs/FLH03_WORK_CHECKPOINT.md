@@ -1,3 +1,13 @@
+# CURRENT INFRASTRUCTURE FIX — official Ubuntu HTTPS mirrors, gates unchanged
+
+Correction PR#155 / dd53520 CI40359264272: Chromium SUCCESS, wallet40359264517 SUCCESS, cross-engine FAILED in INSTALL, deployment SKIPPED. The new8-minute bound yielded concrete logs121699963223/artifact12667764444: apt needed117MB, repeated large downloads from http://azure.archive.ubuntu.com were ignored/retried and still only at package31 when time expired. NO Firefox/WebKit product tests executed in that failed job. This is an evidenced package-download stall, not a new application/driver defect.
+
+Only the ephemeral Ubuntu runner's existing mirrorlist files now select official https://archive.ubuntu.com/ubuntu/ and https://security.ubuntu.com/ubuntu/. Distribution/suites, Ubuntu signing keys/signature checks, TLS verification, browser/Playwright1.64.1, every test/assertion, pipefail, install timeout and diagnostic artifacts stay unchanged. No insecure flags, arbitrary mirror, ignored failure or product-file modification. Reachability probe of the exact3.5MB font package that stalled: official archive HTTP200,3513360bytes,5.874seconds locally; this is NOT a claim of remote CI speed/success. Actual new final CI still required.
+
+PhaseA continues only: test-ready bootstrap correction remains locally passed in3engines with late offline assertions retained. main515417c remains merged08 but failed Pages40324527596; fresh productive sw.js fetch confirmsv178. After full corrected PR/main gates, finish actualv179 live acceptance. Then and only then PhaseB consolidated documentation audit, followed by scoped safe implementation/new approvals. Do not start functional D/Ledger/Sync or repeat completed08 code while release is pending. All proof/00–17 states and new user phase order below remain valid.
+
+---
+
 # ADDITIONAL CURRENT AUTHORITY — consolidated completion phases
 
 Latest user instruction carries this run forward without restarting. PhaseA must first finish actualv179 release/live acceptance. PhaseB then requires a SEPARATE DOCUMENTATION-ONLY checkpoint consolidating FLH03v4/#148, benchmark#124/docs/BENCHMARK_RESTARBEITEN_2026-10.md, UI#149, #44/#52/#125–129, prior WP/PLUS/BENCH/AT01–06, FLH01/02 acceptances and subsequent decisions. Required outputs: docs/KONSOLIDIERTER_RESTARBEITEN_AUDIT.md and docs/KONSOLIDIERTE_ROADMAP.md, with original IDs/sources, DONE/PARTIAL/OPEN/BLOCKED/SUPERSEDED, concrete code/test/release evidence, gaps, priorities, dependencies, reuse, smallest increments and acceptance criteria. No functional change/deployment during that audit. Only AFTER actualv179 and this audit proceed to safe evidence-backed packages in roadmap order.
