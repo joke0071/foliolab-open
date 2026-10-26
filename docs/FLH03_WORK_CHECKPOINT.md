@@ -1,3 +1,51 @@
+# FLH03 A/B/C/E release split — D remains blocked in PR #151
+
+**Authority:** the user's explicit 2026-10-26 split instruction authorizes a separate independently verified A/B/C/E release, with D kept open and its complete tests/diagnosis preserved in #151. Earlier statements that all progress must await #151 are superseded only by this explicit scope split. Existing merge/deployment authorization for completed A–E covers this completed subset after all applicable gates pass. No 02–17 follow-up merge/deployment approval is inferred.
+
+Base/current main: `c23519bd1c473e602aa08e8753019de3537b9a6b`, accepted v177 / FLH03-00/01. Fresh branch **feature/flh03-ui-abce-release** was created from that main. The original #151 branch remains untouched at `6611a425d7868050ef4227443fd07b964eae9a7e`; it remains draft and D remains FAILED/BLOCKED. Its strict tests, Linux/macOS diagnostics, cases, commits and full checkpoint are retained there, not rewritten or marked green. There was no competing open UI PR at the split.
+
+## Exact release contract and dependency review
+
+| Scope | Included change | Evidence / remaining gate |
+|---|---|---|
+| A | Unknown/read failure never displayed as valid zero/onboarding, safe writer gating, truthful desktop/mobile save/conflict state, safe original export and controlled restore | Original A byte-preservation/restore and runtime failure cases reused; multi-tab status assertions added; full final CI/live required |
+| B | Existing FLH02 wealth projection drives change tile, exact comparable dates and decimal difference, partial/gap unknown, includes cashflows and explicitly no return claim | Three pure reference tests including 999→1059 / 60 EUR; browser reconstructed/partial cases; full CI/live |
+| C | Seven reported expanded settings helper colors use existing dark secondary tone; established bounded native-select style for 320px WebKit | Expanded Axe plus actual geometry in every engine; no global palette/typography change |
+| E | Single contextual compact empty history, existing add/positions actions, independent calendar retained, no fabricated curve | Valid-empty and missing-evidence states, full Axe and small heights in every engine |
+| D | **EXCLUDED; still blocked in #151**. No new native beforeunload guard, navigation listener/history stack or persisted draft | `src/dialog-discard.js` and `src/asset-wizard.js` exactly equal accepted main; original D failures remain meaningful and unchanged on #151 |
+
+`src/app.js` delta was reviewed hunk by hunk: save/render/status and recovery controls are A, existing wealth input is B, history empty state/actions are E; none adds native unload/back behavior. Both `go()` and `initNav()` functions are byte-identical to v177. Eight critical modules (dialog guard, wizard, model, atomic/browser storage, generic import, transactions, complete backup) independently compared byte-for-byte to v177. Finance/storage/CAS algorithms and schema are unchanged. Scope hashes are recorded in release evidence. SW cache advances to **v178** for these actual shipped assets; this is not the unmerged D release. Future D integration must rebase and choose a fresh cache revision after v178.
+
+No current-main gate is removed: workflow change only **adds** `browser-flh03-abce.mjs` to Chromium and Firefox/WebKit. D diagnostic files/workflows exist only on #151, not on main, and are not imported into this scope. This is an explicitly different release contract, not a claim that D passed. Existing local dirty Escape/cancel/confirmation/focus is preserved; dirty native Reload/Back remains the known v177 limitation and is not advertised as fixed. New independent tests exercise provider/wizard/CSV local rejected discard with zero writes and saved clean Reload/Back/Forward with exact retained IndexedDB bytes. Their synthetic preceding document is fulfilled outside production SW scope, so root-domain live tests cannot accidentally target the app as their predecessor.
+
+Local syntax and **671/671 unit tests PASS**. Full targeted Chromium A/B/C/E plus independent local-discard/saved-native-navigation suite PASS. An initial test fixture lacked a manual position after recovery and correctly could not open CSV import; the test now explicitly reinstates the same valid B fixture before CSV assertions, without changing product behavior or dropping the check. Firefox/WebKit and full regression CI are not yet claimed. Hardware/native Safari/Android keyboards/AT and real OAuth remain unavailable and separate.
+
+## Package states 00–17 and next step
+
+| Package | Current state / next evidence |
+|---|---|
+| 00/01 | DONE/live v177 via #150; do not repeat |
+| 02 | OPEN / format gate: no explicitly approved anonymized regional TR original export supplied; candidate headers are not sufficient proof |
+| 03 | OPEN; concrete Kraken cross-file dialect/reference evidence required |
+| 04 | BLOCKED on confirmed Bitpanda CSV header; no supported-adapter claim |
+| 05 | PARTIAL existing flatex Beta; AT depot/cash/fees/tax/FX original reconciliation #127 |
+| 06 | BLOCKED optional browser-CORS/read-only/secret gates; no Worker workaround |
+| 07 | PARTIAL existing FLH02 projection reused; provider inputs/account reconciliation pending |
+| 08 | OPEN, independent safe next candidate if provider evidence is absent; selection/impact and atomic safe subset, no unsafe linked-data cascade |
+| 09 | OPEN P-Chain ownership/stake/transfer evidence |
+| 10 | PARTIAL Sonic delegation exists, withdrawal event proof missing |
+| 11 | OPEN/evidence-gated optional price providers, preserve existing sources |
+| 12 | BLOCKED original corporate/AT/OeKB evidence + independent financial validation |
+| 13 | PARTIAL synthetic IDB/full restore passes; real Drive/device #44 still external |
+| 14 | OPEN archive/model/import/valuation compatibility |
+| 15 | Existing icon/full-backup/history deltas DONE; archive portion awaits 14 |
+| 16 | PARTIAL existing quality/coverage; account completeness summary open |
+| 17 | A/B/C/E isolated for this release; D remains BLOCKED in #151; other UI17 items remain #149 |
+
+**Next safe action:** inspect new A/B/C/E PR full final-head CI. Only green scope gates plus independent isolation review permit merge and actual v178 deployment/live acceptance on https://foliolab.unperfekt.at/ . Check exact published asset hashes/SW/core, synthetic A/B/C/E and batch/undo/CAS; document real results. Then evaluate 02's original-format gate and implement the next evidence-independent safe package in a separate PR, without productive approval for that follow-up. Do not rerun identical D diagnostics. Keep #151 as blocked reference and record source/PR/CI/live IDs here as they become available.
+
+---
+
 # FLH03 work checkpoint — 00/01
 
 ## Authority and start gate
