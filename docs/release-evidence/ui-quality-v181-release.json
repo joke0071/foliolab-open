@@ -1,0 +1,524 @@
+{
+  "release": "v181",
+  "main": "b61d1c1cf70de7b76af50249dcc3b2beca995af1",
+  "tree": "2408d71d5d1ff65744111248cdd1adc14ffc4dfb",
+  "prs": [
+    164,
+    162
+  ],
+  "finalPRHead": "f997745b60fca68574333b4dafb2a4ba8faf2bbc",
+  "prCI": "https://github.com/joke0071/foliolab-open/actions/runs/40408383066",
+  "mainPagesCI": "https://github.com/joke0071/foliolab-open/actions/runs/40409856045",
+  "deploymentJob": 121880294770,
+  "ciStatus": "SUCCESS",
+  "coreLive": "PASS:105 exact hashes,SW181,6groups,18Axe",
+  "targetedUILive": {
+    "chromium": {
+      "base": "https://foliolab.unperfekt.at/",
+      "engines": [
+        {
+          "engine": "chromium",
+          "status": "PASS",
+          "scans": [
+            {
+              "page": "dashboard",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 1440,
+              "height": 560
+            }
+          ],
+          "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+          "checks": [
+            "all five pages",
+            "archive visible without detail disclosure",
+            "44px actions,separator and focus clearance,no overlaps",
+            "liquidity below providers and closed",
+            "mobile labeled history records/desktop table",
+            "focused exact decimal disclosure",
+            "Escape/focus return",
+            "zero exact IndexedDB record mutations"
+          ]
+        }
+      ],
+      "stdout": "chromium: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n"
+    },
+    "firefox": {
+      "base": "https://foliolab.unperfekt.at/",
+      "engines": [
+        {
+          "engine": "firefox",
+          "status": "PASS",
+          "scans": [
+            {
+              "page": "dashboard",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 1440,
+              "height": 560
+            }
+          ],
+          "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+          "checks": [
+            "all five pages",
+            "archive visible without detail disclosure",
+            "44px actions,separator and focus clearance,no overlaps",
+            "liquidity below providers and closed",
+            "mobile labeled history records/desktop table",
+            "focused exact decimal disclosure",
+            "Escape/focus return",
+            "zero exact IndexedDB record mutations"
+          ]
+        }
+      ],
+      "stdout": "firefox: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n"
+    },
+    "webkit": {
+      "base": "https://foliolab.unperfekt.at/",
+      "engines": [
+        {
+          "engine": "webkit",
+          "status": "PASS",
+          "scans": [
+            {
+              "page": "dashboard",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 320,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 390,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 430,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 768,
+              "height": 560
+            },
+            {
+              "page": "dashboard",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "history",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "positions",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "bookings",
+              "width": 1440,
+              "height": 560
+            },
+            {
+              "page": "more",
+              "width": 1440,
+              "height": 560
+            }
+          ],
+          "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+          "checks": [
+            "all five pages",
+            "archive visible without detail disclosure",
+            "44px actions,separator and focus clearance,no overlaps",
+            "liquidity below providers and closed",
+            "mobile labeled history records/desktop table",
+            "focused exact decimal disclosure",
+            "Escape/focus return",
+            "zero exact IndexedDB record mutations"
+          ]
+        }
+      ],
+      "stdout": "webkit: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n"
+    }
+  },
+  "archiveLive": {
+    "base": "https://foliolab.unperfekt.at/",
+    "scope": "FLH03-14",
+    "engines": [
+      {
+        "engine": "chromium",
+        "status": "PASS",
+        "scans": [
+          {
+            "width": 320,
+            "height": 560,
+            "status": "PASS"
+          },
+          {
+            "width": 390,
+            "height": 560,
+            "status": "PASS"
+          },
+          {
+            "width": 430,
+            "height": 560,
+            "status": "PASS"
+          },
+          {
+            "width": 768,
+            "height": 560,
+            "status": "PASS"
+          },
+          {
+            "width": 1024,
+            "height": 560,
+            "status": "PASS"
+          },
+          {
+            "width": 1440,
+            "height": 560,
+            "status": "PASS"
+          }
+        ],
+        "checks": [
+          "linked positive holding visibility only/exact history and totals",
+          "cancel/Escape/focus",
+          "same ISIN separate accounts",
+          "edit retains archive",
+          "one revision archive/unarchive",
+          "actual quota and post-put transaction abort rollback",
+          "401 archive-aware UI selection before pagination",
+          "dashboard quality drilldown includes archived valued holdings",
+          "peer CAS conflict",
+          "offline archive/reload",
+          "fresh plain/encrypted UI restore"
+        ]
+      }
+    ]
+  },
+  "archiveLiveStdout": "chromium: restore begins plain\nchromium: restore result plain {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: restore begins encrypted\nchromium: restore result encrypted {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS\n",
+  "scopeLimits": [
+    "full archive/financial/storage/import/backup/offline regressions pass all3engines in finalPR+mainCI; targeted archive mutation liveChromium here",
+    "150percent textstress is synthetic,not physicalAndroid OS-font testing",
+    "No physical hardware/nativeSafari/assistivetech/realOAuth acceptance",
+    "No new booking/transfer financial mutation,D,provider,Ledger orsyncrelease"
+  ],
+  "result": "PASS"
+}

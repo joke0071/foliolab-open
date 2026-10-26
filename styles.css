@@ -1103,3 +1103,10 @@
 .logo-beta{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;padding:3px 6px 2px;border:1px solid #d7e4d9;border-radius:6px;background:#edf5ee;color:#466951;font-size:9px;font-weight:800;line-height:1;letter-spacing:.08em;white-space:nowrap}
 @media(max-width:720px){.mobile-header .logo{gap:7px;white-space:nowrap}}
 @media(max-width:360px){.mobile-header .logo{gap:6px}.mobile-header .logo-beta{font-size:8px;padding:3px 4px}}
+/* Transfer empty/choice states reuse the existing dialog and controls. */
+#transferMatchingDialog.transfer-is-empty{width:min(560px,calc(100vw - 24px))}
+#transferMatchingDialog .transfer-empty-actions{margin:12px 0 0}
+#transferMatchingDialog .btn,#transferMatchingDialog .icon-close{min-height:44px}
+#transferMatchingDialog .icon-close{min-width:44px}
+#transferMatchingDialog .transfer-candidate{min-height:44px}
+#transferMatchingDialog [data-transfer=out-summary],#transferMatchingDialog [data-transfer=status]{overflow-wrap:anywhere}

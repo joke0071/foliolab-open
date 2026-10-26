@@ -1,0 +1,38 @@
+{
+  "base": "3ea537424ab2a47e6feba19d2c18891547f31af9",
+  "production": "b61d1c1cf70de7b76af50249dcc3b2beca995af1",
+  "productionVersion": "foliolab-open-v181",
+  "sourceRecovery": "Known literal code/test edits reconstructed from recorded tool operations on exact GitHub base after execution environment became unavailable. No claim of byte equality against inaccessible scratch files.",
+  "observedBeforeLoss": {
+    "unit": {
+      "passed": 709,
+      "failed": 0,
+      "skipped": 0
+    },
+    "newTransferStateSuite": [
+      "chromium PASS",
+      "firefox PASS",
+      "webkit PASS"
+    ],
+    "unchangedTransferRegressionSuite": [
+      "chromium PASS",
+      "firefox PASS",
+      "webkit PASS"
+    ],
+    "visualReview": "Two synthetic390px empty-state images actually viewed; missing-group copy issue found and corrected"
+  },
+  "finalLocalCopyDelta": {
+    "change": "Show below-confirmed-groups reference only if groups actually exist; add corresponding negative assertion",
+    "status": "STARTED_NOT_VERIFIABLE_AFTER_ENVIRONMENT_LOSS"
+  },
+  "environmentError": "No usable execution environment is available. Wait for an environment to become available before using this tool.",
+  "preservedContracts": [
+    "Existing UI save/confirm/undo handlers byte-checked unchanged while reconstructing",
+    "Financial/journal/model/storage/import/history/backup core files inherited unchanged from known base",
+    "Existing workflow gates retained; add new C1 browser suite in Chromium and Firefox/WebKit",
+    "No sensitive drafts,history traps,migration,new financial or sync engine"
+  ],
+  "remoteCI": "PENDING: inspect actual final PR-head run; never relabel earlier local results as final remote success",
+  "release": "NOT MERGED,NOT DEPLOYED; keep stable v181 until final gates and actual live acceptance can be completed",
+  "next": "Inspect PR CI; restore an execution environment,checkout exact remote HEAD,finish missing targeted verification and independent review before approved UI merge/deploy/live. Financial booking changes and FLH04 need separate explicit release decisions."
+}
