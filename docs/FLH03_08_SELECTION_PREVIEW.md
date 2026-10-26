@@ -1,3 +1,9 @@
+# Current implementation stage / authority update
+
+The newer user decision authorizes complete08 release after full final gates. The original read-only-only foundation below is historical: selection UI, exact-preimage-bound detached safe-subset candidate, shared deletePositions collection operation and one existing CAS save are now implemented in #154. The candidate is not persisted until explicit accessible preview/checkbox confirmation. Wallet/automatic/import-managed and externally referenced holdings remain blocked, with full named impacts; no cascade or reappearance blacklist. Optional history-inclusive backup uses the existing key-free model serializer. Local check/688 tests and Chromium UI/12 Axe scans pass; remaining cross-engine, restore/abort/multi-tab/reimport/final security gates are open. Original strict offline gate retained and instrumented, not waived. See current checkpoint for exact results and authority. D P2 product scope is separately updated; #151 original failures preserved.
+
+---
+
 # FLH03-08a — transient selection and read-only dependency preview
 
 This is an independently tested foundation, **not the complete bulk-delete feature**. No new UI action, database write, schema, cascade, archive, persisted draft or selection is introduced. No apply/delete/commit API exists. The existing single-delete engine is unchanged. Production remains accepted v178 from #153; this follow-up has no merge/deployment approval.

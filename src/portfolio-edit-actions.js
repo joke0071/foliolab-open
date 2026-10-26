@@ -65,10 +65,13 @@ export function assertPositionDeletable(model,id){
   throw Error('Position wird von einer DeFi-Verknüpfung referenziert und kann nicht gelöscht werden. Bitte zuerst die Verknüpfung lösen.');
  return item;
 }
-export function deletePosition(model,id){
- const item=assertPositionDeletable(model,id);
- model.positions=model.positions.filter(x=>x.id!==id);
- model.openingPositions=model.openingPositions.filter(x=>x.positionId!==id);
- if(model.priceHistories)delete model.priceHistories[id];
- return item;
+/** One shared removal operation; validate every ID before touching any collection. */
+export function deletePositions(model,ids){
+ if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length)throw Error('Ungültige Löschmenge.');
+ const items=ids.map(id=>assertPositionDeletable(model,id)),selected=new Set(ids);
+ model.positions=model.positions.filter(x=>!selected.has(x.id));
+ model.openingPositions=model.openingPositions.filter(x=>!selected.has(x.positionId));
+ if(model.priceHistories)for(const id of selected)delete model.priceHistories[id];
+ return items;
 }
+export function deletePosition(model,id){return deletePositions(model,[id])[0];}

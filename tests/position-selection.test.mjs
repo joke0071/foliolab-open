@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {blankModel,createProvider,createAccount,createPosition,valueEUR} from '../src/model.js';
 import {searchAndSortPositions} from '../src/position-search.js';
-import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval} from '../src/position-selection.js';
+import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from '../src/position-selection.js';
 
 function fixture(count=3){
  const m=blankModel();m.providers.push(createProvider({id:'provider',name:'Synthetic broker'}));
@@ -119,4 +119,21 @@ test('Any later model change, including an unselected quote, invalidates the pre
  const m=fixture(),first=previewPositionRemoval(m,['p-0']);m.positions[2].priceExact='101';
  assert.notEqual(previewPositionRemoval(m,['p-0']).modelDigest,first.modelDigest);
  assert.equal(first.writeEnabled,false);assert.equal(m.positions.length,3);
+});
+
+test('Safe-subset batch is detached, exact-preimage bound, blocks snapshot links and shares single removal engine',()=>{
+ const m=fixture(4);m.snapshots.push({id:'historic',date:'2023-01-01',total:125,source:'current',byPosition:{'p-0':'125'}});
+ m.openingPositions.push({positionId:'p-1',date:'2023-01-01',quantityExact:'1.25'});
+ const before=JSON.stringify(m),frozen=freeze(structuredClone(m));
+ const result=preparePositionRemoval(frozen,['p-0','p-1','p-3'],{expectedModel:before,confirmedIds:['p-1','p-3']});
+ assert.deepEqual(result.removedIds,['p-1','p-3']);assert.deepEqual(result.blockedIds,['p-0']);
+ assert.deepEqual(result.candidate.positions.map(p=>p.id),['p-0','p-2']);assert.deepEqual(result.candidate.snapshots,m.snapshots);
+ assert.equal(result.candidate.openingPositions.length,0);assert.equal(JSON.stringify(m),before);
+ assert.throws(()=>preparePositionRemoval(m,['p-0','p-1'],{expectedModel:before,confirmedIds:['p-0','p-1']}),/bestätigt/);
+ assert.throws(()=>preparePositionRemoval(m,['p-1','p-3'],{expectedModel:before,confirmedIds:['p-1']}),/bestätigt/);
+ m.positions[2].price=9;assert.throws(()=>preparePositionRemoval(m,['p-1'],{expectedModel:before,confirmedIds:['p-1']}),/veraltet/);
+});
+test('Automatically managed/disabled-address wallet positions cannot reappear through deletion',()=>{
+ const m=fixture();m.positions[0].managementSource='transactions';m.positions[1].wallet={enabled:false,address:'synthetic-address'};
+ const p=previewPositionRemoval(m,['p-0','p-1']);assert.equal(p.blockedCount,2);
 });

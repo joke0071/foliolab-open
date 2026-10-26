@@ -1054,3 +1054,11 @@
 /* Reuse the existing bounded native-select treatment for expanded settings. */
 :is(.data-source-panel,#googleDriveBackupSetup) select{min-width:0;max-width:100%;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;-webkit-appearance:none;appearance:none;padding-right:32px;background-image:linear-gradient(45deg,transparent 50%,#4d6756 50%),linear-gradient(135deg,#4d6756 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
 @media(forced-colors:active){:is(.data-source-panel,#googleDriveBackupSetup) select{-webkit-appearance:menulist;appearance:auto;background-image:none}}
+
+/* FLH03-08: controls appear only in the explicit selection mode. */
+.selection-check{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px;overflow-wrap:anywhere}
+.selection-check input{width:20px;height:20px;flex-shrink:0}
+.btn.selection-danger{color:#8b302b;border-color:#8b302b;background:#fff}
+.btn.selection-danger:hover{background:#fff0ed}
+#positionSelectionTools{flex-wrap:wrap;margin:12px 0}
+#positionSelectionTools .btn{white-space:normal}

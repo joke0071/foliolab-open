@@ -1,0 +1,65 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {chromium,firefox,webkit} from 'playwright';
+const base=process.env.FLH03_08_BASE||'http://127.0.0.1:4173/';
+for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
+ const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
+ const context=await browser.newContext({acceptDownloads:true}),page=await context.newPage(),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
+ const button=action=>page.locator('[data-action="'+action+'"]');
+ const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ const axe=async()=>{await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
+ try{
+  await page.goto(base);await ready();
+  await page.evaluate(async()=>{
+   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
+   const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'broker',name:'Synthetic broker'}));
+   for(const id of ['a','b'])m.accounts.push(createAccount({id,providerId:'broker',name:'Depot '+id,type:'securities'},m));
+   for(let i=0;i<401;i++)m.positions.push(createPosition({id:'p-'+i,providerId:'broker',accountId:i%2?'b':'a',name:(i%2?'Other ':'Wanted ')+i,isin:'IE00B4L5Y983',symbol:'SAME',kind:'etf',quantity:1,price:10},m));
+   m.snapshots.push({id:'retained',date:'2023-01-01',source:'current',total:10,totalEURExact:'10',byPosition:{'p-0':'10'}});
+   const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
+  });
+  await page.reload();await ready();await page.locator('#sidebarNav [data-page=positions]').click();
+  const before=await record();assert.equal(await page.locator('[data-position-select]').count(),0);
+  await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
+  assert.equal(await page.locator('[data-position-select]').count(),100);await button('select-filtered').click();
+  assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 201/);
+  await page.locator('#positionSearch').fill('Other');assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 0.*201 ausgeblendet/);
+  await button('preview-removal').click();assert.equal(await page.locator('#dialogFields li').count(),201);assert.match(await page.locator('#dialogFields').innerText(),/Wanted 400/);
+  assert.equal(await page.locator('#cancelDialog').evaluate(e=>e===document.activeElement),true);
+  await page.keyboard.press('Escape');assert.equal(await page.locator('#editDialog').evaluate(e=>e.open),false);
+  assert.equal(await button('preview-removal').evaluate(e=>e===document.activeElement),true);
+  assert.deepEqual(await record(),before,'selection and preview write nothing');
+  await page.locator('#positionSearch').fill('no-match');assert.equal(await button('select-filtered').isDisabled(),true);
+  await page.locator('#positionSearch').fill('');await button('select-all').click({trial:true});
+  page.once('dialog',d=>d.dismiss());await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt/);
+  page.once('dialog',d=>d.accept());await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/401 ausgewählt/);
+  await button('clear-selection').click();assert.equal(await button('preview-removal').isDisabled(),true);
+  // Same security in two accounts remains independently selectable by position ID.
+  await page.locator('#positionSearch').fill('Wanted 0');await page.locator('[data-position-select="p-0"]').check();
+  await page.locator('#positionSearch').fill('Other 1');await page.locator('[data-position-select="p-1"]').check();await page.locator('#positionSearch').fill('');
+  for(const width of [320,390,430,768,1024,1440]){
+   console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await axe();await button('preview-removal').click();await axe();
+   assert.match(await page.locator('#dialogFields').innerText(),/1 unverbundene Positionen löschbar, 1 gesperrt/);
+   assert.match(await page.locator('#dialogFields').innerText(),/snapshots/);await page.locator('#cancelDialog').click();
+  }
+  await button('preview-removal').click();
+  const downloadPromise=page.waitForEvent('download');await page.locator('#removalBackup').click();const dl=await downloadPromise;
+  const backup=JSON.parse(readFileSync(await dl.path(),'utf8'));assert.equal(backup.positions.length,401);assert.equal(backup.settings.eodhdKey,'');
+  // Inject a real save rejection into the shared store; candidate must never escape to IDB.
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');window.originalRemovalSave=PortfolioStorage.prototype.save;PortfolioStorage.prototype.save=async()=>{throw new DOMException('synthetic quota','QuotaExceededError');};});
+  await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();
+  await page.locator('#dialogError:not(.hidden)').waitFor();assert.deepEqual(await record(),before,'Quota failure retains exact committed data');
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');PortfolioStorage.prototype.save=window.originalRemovalSave;});
+  page.once('dialog',d=>d.accept());await page.locator('#cancelDialog').click();
+  await button('preview-removal').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('editDialog').open);
+  const after=await record(),m=JSON.parse(after.raw);assert.equal(after.revision,before.revision+1);
+  assert.equal(m.positions.length,400);assert.ok(m.positions.some(p=>p.id==='p-0'));assert.ok(!m.positions.some(p=>p.id==='p-1'));
+  assert.deepEqual(m.snapshots,JSON.parse(before.raw).snapshots);assert.deepEqual(m.bookings,JSON.parse(before.raw).bookings);assert.deepEqual(m.accounts,JSON.parse(before.raw).accounts);
+  assert.equal(await page.locator('[data-position-select]').count(),0);assert.equal(await button('select-positions').evaluate(e=>e===document.activeElement),true);
+  await page.reload();await ready();assert.deepEqual(await record(),after,'Confirmed delete survives reload');
+  await page.locator('#sidebarNav [data-page=dashboard]').click();assert.match(await page.locator('#totalValue').innerText(),/4.000/);
+  assert.deepEqual(errors,[]);console.log(engine+': FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota rollback, backup and one CAS revision safe-subset delete/reload PASS');
+ }finally{await context.close();await browser.close();}
+}

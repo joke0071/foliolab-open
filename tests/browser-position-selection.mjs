@@ -5,7 +5,9 @@ import {chromium,firefox,webkit} from 'playwright';
 const base='http://127.0.0.1:4173/';
 for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext(),page=await context.newPage(),errors=[];
+ const context=await browser.newContext(),page=await context.newPage(),errors=[],navigation=[];
+ page.on('requestfailed',r=>navigation.push({url:r.url(),error:r.failure()?.errorText}));
+ page.on('framenavigated',f=>{if(f===page.mainFrame())navigation.push({document:f.url()});});
  page.on('pageerror',error=>errors.push(error.message));
  // Do not install request interception: this test needs actual SW-controlled Firefox reloads.
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
@@ -38,9 +40,11 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await page.waitForFunction(async()=>{const registration=await navigator.serviceWorker.getRegistration();return registration?.active?.state==='activated';});
   await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
   await page.evaluate(()=>{window.__flh03SelectionRealm='old-document';});
+  console.log(engine+': PRE-OFFLINE '+JSON.stringify(await page.evaluate(async()=>({url:location.href,controller:navigator.serviceWorker.controller?.scriptURL,registration:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys(),shells:await Promise.all((await caches.keys()).map(async k=>[k,!!(await (await caches.open(k)).match(new URL('/index.html',location.href).href))]))}))));
   await context.setOffline(true);
   // Exercise native document reload; WebKit's offline driver reload can fail internally.
-  await Promise.all([page.waitForEvent('domcontentloaded'),page.evaluate(()=>{setTimeout(()=>location.reload(),0);})]);
+  try{await Promise.all([page.waitForEvent('domcontentloaded'),page.evaluate(()=>{setTimeout(()=>location.reload(),0);})]);}
+  catch(error){console.error(engine+': OFFLINE FAILURE '+JSON.stringify({url:page.url(),navigation}));throw error;}
   await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   assert.equal(await page.evaluate(()=>window.__flh03SelectionRealm),undefined,'Actual new document, not warmed module-map reuse');
   assert.deepEqual(await exercise(),expected,'Fresh offline module realm uses precached code/dependencies');

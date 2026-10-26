@@ -1,5 +1,7 @@
 /** FLH03-08a: transient selection and read-only dependency review. No write/delete API. */
-import {assertPositionDeletable} from './portfolio-edit-actions.js';
+import {safeImport} from './model.js';
+import {rebuildAssets} from './assets.js';
+import {assertPositionDeletable,deletePositions} from './portfolio-edit-actions.js';
 import {sourceDigest} from './import-identity.js';
 
 const fail=message=>{throw Error(message);};
@@ -121,7 +123,8 @@ export function previewPositionRemoval(model,selectedIds,{maxNodes=200000,maxByt
  const items=selected.map(id=>{
   const p=positions.get(id),reasons=blockers.get(id);
   try{assertPositionDeletable(model,id);}catch(error){reasons.push(String(error.message));}
-  if(p.wallet?.enabled)reasons.push('Wallet-Position: Eigentum, Discovery und Wiederimport zuerst prüfen.');
+  if(p.managementSource&&p.managementSource!=='manual')reasons.push('Automatisch verwaltete Position: Import-/Discovery-Zuordnung zuerst auflösen.');
+  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-Position: Eigentum, Discovery und Wiederimport zuerst prüfen.');
   const refs=[...references.get(id).values()];
   return {id,name:p.name,providerId:p.providerId,accountId:p.accountId,quantityExact:p.quantityExact??String(p.quantity),
    classification:reasons.length||refs.length?'blocked':'unreferenced',blockers:reasons,references:refs,cleanup:cleanup.get(id)};
@@ -130,4 +133,21 @@ export function previewPositionRemoval(model,selectedIds,{maxNodes=200000,maxByt
  return {kind:'position-removal-preview',version:1,selectedIds:[...selected],modelDigest:sourceDigest(raw),
   selectedCount:items.length,blockedCount:items.filter(x=>x.classification==='blocked').length,
   unreferencedCount:items.filter(x=>x.classification==='unreferenced').length,writeEnabled:false,items};
+}
+
+/** Build a detached safe-subset candidate; caller must obtain consent and CAS-save ONCE.
+ * Exact preimage (not a noncryptographic digest) binds this destructive operation.
+ * No original collection is mutated, even on validation/serialization failure.
+ */
+export function preparePositionRemoval(model,selectedIds,{expectedModel,confirmedIds}={}){
+ if(typeof expectedModel!=='string'||JSON.stringify(model)!==expectedModel)fail('Löschvorschau veraltet. Bitte erneut prüfen.');
+ const preview=previewPositionRemoval(model,selectedIds);
+ const allowed=preview.items.filter(p=>p.classification==='unreferenced').map(p=>p.id);
+ const confirmed=ids(confirmedIds);
+ if(!allowed.length||confirmed.length!==allowed.length||allowed.some(id=>!confirmed.includes(id)))
+  fail('Die vollständige sichere Löschmenge muss ausdrücklich bestätigt werden.');
+ const candidate=structuredClone(model);
+ deletePositions(candidate,allowed);rebuildAssets(candidate);
+ safeImport(candidate); // validate without adopting normalized/default settings
+ return {candidate,removedIds:allowed,blockedIds:preview.items.filter(p=>p.classification==='blocked').map(p=>p.id)};
 }
