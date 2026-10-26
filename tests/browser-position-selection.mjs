@@ -37,7 +37,12 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   const before=await record();assert.deepEqual(await exercise(),expected);assert.deepEqual(await record(),before);
   await page.waitForFunction(async()=>{const registration=await navigator.serviceWorker.getRegistration();return registration?.active?.state==='activated';});
   await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
-  await context.setOffline(true);await page.reload();
+  await page.evaluate(()=>{window.__flh03SelectionRealm='old-document';});
+  await context.setOffline(true);
+  // Exercise native document reload; WebKit's offline driver reload can fail internally.
+  await Promise.all([page.waitForEvent('domcontentloaded'),page.evaluate(()=>{setTimeout(()=>location.reload(),0);})]);
+  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  assert.equal(await page.evaluate(()=>window.__flh03SelectionRealm),undefined,'Actual new document, not warmed module-map reuse');
   assert.deepEqual(await exercise(),expected,'Fresh offline module realm uses precached code/dependencies');
   assert.deepEqual(await record(),before,'No IDB revision, draft or financial write');assert.deepEqual(errors,[]);
   console.log(engine+': FLH03-08a full-model 201/401 selection, hidden IDs, snapshot blocker, zero model/IDB writes and fresh offline import PASS');

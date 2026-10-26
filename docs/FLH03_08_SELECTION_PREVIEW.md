@@ -20,6 +20,8 @@ The model digest uses the existing source hash implementation and returns no raw
 
 `npm run check`, the complete **686-test** suite and targeted native Chromium/Firefox module tests pass locally. Browser checks preserve the exact IDB record and model, use a fresh offline realm to import the precached module/dependencies, and assert the same 201/401 membership and snapshot blocker. Synthetic setup disables background refresh before the no-write baseline. The first intercepted Firefox fixture did not obtain service-worker control; the final fixture uses ordinary unintercepted SW traffic, as the existing history-worker tests do. No controller/offline/data assertion was waived. The isolated local Firefox runner needs `MOZ_DISABLE_CONTENT_SANDBOX=1`; CI uses its normal environment.
 
+First remote CI 40286348945 completed the Chromium/686-test job and the Firefox module/offline case successfully; WebKit reported an internal driver error on offline page.reload. The corrected native location.reload fixture adds a fresh-realm marker assertion, retains actual SW control/offline/IDB requirements and does not accept an unexecuted pass. Final corrected-head outcome remains on the PR.
+
 All prior CI commands remain. The additional module test is added to Chromium and Firefox/WebKit; actual final CI outcomes are recorded in #148/the draft PR. This does not claim UI/keyboard/confirmation/physical-device or actual bulk-delete acceptance. Cache v179 is reserved only on this unmerged branch so the new module can be tested offline; production is v178.
 
 ## Exact remaining 08 stage
