@@ -1,3 +1,17 @@
+# AKTUELL — Phase A abgeschlossen: v179 produktiv abgenommen; Phase B Dokumentationsaudit läuft
+
+Stand 2026-10-26. Aktueller produktiver main **5397ca73d3ce8281920973a9916c9fadbd65596d**, PR #154 und Korrektur #155 gemergt. Finaler PR155-HEAD f693ceced9e220e844c15d6ce0b98708b222c2fc / CI40361231324 + Wallet40361231093 erfolgreich. Main/Pages **40362303355**: test, cross-engine und deploy tatsächlich SUCCESS. Frühere rote Läufe bleiben unten unverändert erhalten.
+
+**Tatsächliche Live-Abnahme https://foliolab.unperfekt.at/ PASS:** aktiver foliolab-open-v179; 105 exakte veröffentlichte SHA256-Dateihashes, geladene App/CSS identisch. Kern6Gruppen/18Axe plus neue08-UI in Chromium, Firefox157 und WebKit27.2: weitere36Axe bei6Breiten/kleinerHöhe,201/401Positionen, Filter/Pagination/ausgeblendete Auswahl, sichere Bestätigung/Abbruch/Escape/Fokus, echte Quota/post-put-Abbruch-Rollbacks, konkurrierender CAS, eine atomare Revision, Klartext-/verschlüsselter-v2-UI-Restore und tatsächliches Offline-Löschen/Reload. Evidenz docs/release-evidence/flh03-v179-{live,release}.json. Synthetische isolierte Profile, keine realen Kontodaten. Hardware/Assistenztechnik/echtes OAuth bleiben #44; Proxy-Zertifikatsausnahme dokumentiert.
+
+**FLH03-08 DONE im ausdrücklich erlaubten sicheren MVP-Umfang:** universelle Cascade-Löschung ist nicht implementiert und nicht zugesagt; verwobene Journal-/Wallet-/Snapshot-/Transferreferenzen bleiben sichtbar blockiert. FLH02,00/01,ABCE und08 nicht neu bauen. D=P2; alte strenge Fehlnachweise im geschlossenen ungemergten151 unverändert. Keine Garantie browserseitig unterdrückter Cross-Origin-Warnungen, keine History-Traps/persistierten sensiblen Entwürfe.
+
+**Einziger aktiver neuer Strang: feature/consolidated-rest-audit-v179**, von5397ca7. PhaseB: ausschließlich Dokumentation/Evidenz; keine Funktionsänderung/Deployment. Vollständige konsolidierte Matrix und Roadmap gemäß neuem Auftrag vorbereiten und separat remote sichern, erst danach PhaseC. 02–07/09–17 sowie18/FLH04 im Audit neu gegen Code/Nachweise einordnen, erledigte AT01/02/03-B/05-A und FLH01/02 nicht wiederholen. Aktuelle Freigaben:08abgeschlossen, später begrenztesD nach eigenen Gates; neue andere Releaseumfänge/Migrationen ohne konkrete Freigabe nicht veröffentlichen.
+
+Nächste sichere Aktion: aktuelle Quellen #124/#148/#149 samt Kommentaren, #44/#52/#125–129, vollständige Libraryv4 und Repository-Evidenz konsolidieren; docs/KONSOLIDIERTER_RESTARBEITEN_AUDIT.md und docs/KONSOLIDIERTE_ROADMAP.md erstellen. Audit nicht vor vollständiger Abdeckung als abgeschlossen bezeichnen. Frühere CURRENT/OPEN-Überschriften unten sind historische Checkpoints und durch diesen Einstieg überholt.
+
+---
+
 # CURRENT INFRASTRUCTURE FIX — official Ubuntu HTTPS mirrors, gates unchanged
 
 Correction PR#155 / dd53520 CI40359264272: Chromium SUCCESS, wallet40359264517 SUCCESS, cross-engine FAILED in INSTALL, deployment SKIPPED. The new8-minute bound yielded concrete logs121699963223/artifact12667764444: apt needed117MB, repeated large downloads from http://azure.archive.ubuntu.com were ignored/retried and still only at package31 when time expired. NO Firefox/WebKit product tests executed in that failed job. This is an evidenced package-download stall, not a new application/driver defect.
