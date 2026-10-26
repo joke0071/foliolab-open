@@ -1,3 +1,15 @@
+# FINALER INTEGRATIONSKANDIDAT — UI-B1 und ursprüngliches Beta162 gemeinsam; noch nicht produktiv
+
+Draft164 / feature/ui-quality-b1 ist der einzige aktive funktionaleStrang. Produktiv weiterhin v180, bestätigtermain0ed3f874aaa23ccc47ef032eb39bc27da57df047 (163 reineTest-/Dokumentationsintegration). B1 behebt gezielt Präsentation/Auffindbarkeit; Buchungs-/Transfer-/Historienberechnungen und13kritischeKernmodule unverändert. Bearbeiten/Löschen jetzt ebenfalls44px; Coverage zeigt identischenHinweis nicht zweimal, alleNachweise bleiben erhalten.
+
+**Finales162-Integrationsgate eröffnet:** komplette ursprünglicheBetaÄnderung aus beidenOriginalcommits ca6c6cd1c5431d3d43444d08d13944840341e544 undc9ff3fecffa606e06af60a1ad9d7940f45443869 vonBasis23af6d5 konfliktfrei in164 aufgenommen. Der neueGit-Integrationscommit führt c9ff3fec als zusätzlichenParent, erhält damit Originalgeschichte statt zweiterBetaImplementierung; fremder162Branch wird nicht überschrieben. ExaktzweiOriginalLogoBadges/OriginalCSS, passende gemeinsameSW181. NeueTests prüfen genauzweiBadgeNodes, jenachBreakpoint ein sichtbaresBadge, mobilenLogo-/Speicherstatusabstand und volleAxe. Früherer vorBeta lokalgelaufener B1-Test wurde nicht als kombinierterBetaTest umdeklariert.
+
+**KeineReleaseerfolgsmeldung:** vollständige finaleCI am neuen kombiniertenHEAD, tatsächliche3Engine-Lokalprüfung einschließlich neuer320×360Historien-Schließbarkeit, aktuellemain-/Diff-/Reviewgates noch auswerten. VorherigeB1-Präzisions-/Layoutprüfung in3Engines,701Units/0Skip,13Kernmodulebytegleich undBildprüfung sind belegt; finaleRemoteErgebnisse nach Abschluss alsPR-Kommentar ergänzen, keine selbstreferenziellenDoc-Commitloops. Nur bei tatsächlichem vollständigemGrün den konkret beauftragten Präsentationsumfang und ausdrücklichBeta162 gemeinsam kontrolliertmergen/Pages/v181/HTTPSLiveabnahme. Keine neue Finanzmutation freigegeben. WeitereAbschnitte/Buchungsverwalten/Diagrammdiagnose/Transferleerzustand/16/Provider/Ledger/Sync/Hardware bleiben separat offen wie unten.
+
+NächsteAktion: neuenkombinierten164-HEAD undCI prüfen, keine weiterenFunktionsänderungen währendfinalerGates. BeiFehlern konkreteLogs undkleinsteKorrektur, keineGateschwächung. NachRelease genaueVersion/SW/veröffentlichteAssetbytes/Kern/Archiv/B1/Beta synthetischlive prüfen; dann nächstenkleinen UI-/Funktionsschnitt fortsetzen, Buchungsfinanzmutationen eigenerkritischerPR/eigenekonkreteReleaseentscheidung. D/P2geparkt und151Fehlerreferenz unverändert.
+
+---
+
 # AKTUELL — v180 abgeschlossen; UI-Qualität B1 in Draft164, noch nicht veröffentlicht
 
 v180/158 inklusive tatsächlicher3Engine-Liveabnahme DONE. Abschlusscheckpoint163 nach finalerCI40404752929+Wallet40404752778 SUCCESS (699/699/0Skip) gemergt als main **0ed3f874aaa23ccc47ef032eb39bc27da57df047**. Nur Testbootstrap/Dokumentation, produktive App/SW180 unverändert. Keine Wiederholung abgeschlossener FLH02/00/01/ABCE/08/14-Arbeiten.

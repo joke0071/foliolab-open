@@ -249,7 +249,7 @@ function renderHistory(){
  $('chartPeriods').classList.toggle('hidden',emptyHistory);
  $('historyChart').classList.toggle('is-empty',emptyHistory);
  const basis=$('historyBasis');basis.parentElement.hidden=!(wealth.projection.observations.length&&wealth.projection.days.some(d=>d.partialEURExact!==null));
- const missing=[...new Set(wealth.projection.days.flatMap(d=>d.missing).map(m=>m.reason))];
+ const missing=[...new Set(wealth.projection.days.flatMap(d=>d.missing).map(m=>m.reason))].filter(reason=>reason!==wealth.reason);
  $('historyCoverageBody').innerHTML='<p>'+esc(wealth.reason)+'</p>'+(missing.length?'<ul>'+missing.slice(0,8).map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>':'')+wealth.projection.reconciliation.filter(r=>r.status==='review').slice(-30).map(r=>'<p>'+esc(r.date)+' · Kontrollpunkt '+money(Number(r.observedEURExact))+' · Rekonstruiert '+money(Number(r.reconstructedEURExact))+' · Differenz '+money(Number(r.differenceEURExact))+'</p>').join('');
  if(range==='calendar'&&calendarSelection.length===2){
   const [from,to]=calendarSelection;

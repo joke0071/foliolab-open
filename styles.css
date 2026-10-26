@@ -1096,3 +1096,10 @@
  .booking-value-table td:first-child,.booking-value-table td:last-child{grid-column:1/-1}
 }
 .booking-value-table td[title]:focus::after{content:attr(title);display:block;margin-top:4px;font-size:11px;line-height:1.5;color:#4d6756;overflow-wrap:anywhere}
+.position-entry .position-row-actions .row-btn{width:44px;height:44px;flex-basis:44px}
+
+
+/* Small, quiet beta marker for the shared desktop/mobile brand. */
+.logo-beta{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;padding:3px 6px 2px;border:1px solid #d7e4d9;border-radius:6px;background:#edf5ee;color:#466951;font-size:9px;font-weight:800;line-height:1;letter-spacing:.08em;white-space:nowrap}
+@media(max-width:720px){.mobile-header .logo{gap:7px;white-space:nowrap}}
+@media(max-width:360px){.mobile-header .logo{gap:6px}.mobile-header .logo-beta{font-size:8px;padding:3px 4px}}
