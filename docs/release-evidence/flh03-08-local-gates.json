@@ -1,0 +1,63 @@
+{
+  "scope": "FLH03-08 safe MVP local acceptance; final-head remote WebKit/full gates pending",
+  "unit": {
+    "passed": 689,
+    "failed": 0,
+    "syntax": "PASS"
+  },
+  "browserDriver": "playwright1.56.1 local Chromium and Firefox",
+  "engines": [
+    "chromium",
+    "firefox"
+  ],
+  "widths": [
+    320,
+    390,
+    430,
+    768,
+    1024,
+    1440
+  ],
+  "height": 560,
+  "axeScansPerEngine": 12,
+  "checks": [
+    "201/401 full model query before100-row pagination",
+    "explicit all accept/reject and hidden/empty filter membership",
+    "same ISIN across two accounts by stable ID",
+    "Escape/cancel/focus and no selection writes",
+    "put quota AND actual post-put transaction abort preserve exact IDB record",
+    "exactly one revision for safe-subset delete; referenced snapshot retained",
+    "concurrent real second-tab write rejects stale deletion",
+    "pre-delete plain backup and post-delete encrypted-v2 complete UI restore into fresh profiles",
+    "confirmed deletion reload and current wealth recalculation",
+    "refresh action during actual write cannot start"
+  ],
+  "outputs": [
+    "chromium: selection/preview width 320",
+    "chromium: selection/preview width 390",
+    "chromium: selection/preview width 430",
+    "chromium: selection/preview width 768",
+    "chromium: selection/preview width 1024",
+    "chromium: selection/preview width 1440",
+    "chromium: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision delete/reload PASS",
+    "firefox: selection/preview width 320",
+    "firefox: selection/preview width 390",
+    "firefox: selection/preview width 430",
+    "firefox: selection/preview width 768",
+    "firefox: selection/preview width 1024",
+    "firefox: selection/preview width 1440",
+    "firefox: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision delete/reload PASS"
+  ],
+  "fileSHA256": {
+    "src/app.js": "56228b31b921f9787ebf15239eb4eda3f2d10ea8970d8d99d358af1d8d09ca46",
+    "src/position-selection.js": "07489ce710869774b3958a41d3160cdc510acf9b283af509c7a561b5c2fe7f58",
+    "src/portfolio-edit-actions.js": "677fa7fab27e692d754b30cd88642daff6d5ed87d38cedb200697239995c6c3c",
+    "tests/browser-position-removal.mjs": "e9051d8829e10529d45f52701414c4fb403cb7d0220484aaa68b22844e8d5878",
+    "tests/position-selection.test.mjs": "302bf3c9a12dc0eb35c21dba56d02468df2aba67514710b265abd6c733f5d342"
+  },
+  "limits": [
+    "not native Safari/physical hardware/AT/OAuth",
+    "no final remote WebKit/full CI success claim",
+    "no08 merge/deployment yet"
+  ]
+}

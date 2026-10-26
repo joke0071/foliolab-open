@@ -1,3 +1,4 @@
+import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI} from './transfer-matching-ui.js';
@@ -67,6 +68,7 @@ let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
+let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[];
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const transferMatchingUI=createTransferMatchingUI({getModel:()=>model,assertCurrent:()=>portfolioStore.assertCurrent(),commit:async draft=>{model=draft;await save();}});
@@ -309,6 +311,7 @@ function renderPositions(){
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
  const filtered=model.positions.filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
+ positionMatchingIds=visible.map(p=>p.id);renderPositionSelection();
  const list=visible.slice(0,positionLimit).map(p=>{
   const provider=model.providers.find(x=>x.id===p.providerId),account=model.accounts.find(a=>a.id===p.accountId),stale=oldProviderQuote(p),quality=priceQuality(p);
   const quoteDate=p.quoteAsOf?dateLabel(p.quoteAsOf.slice(0,10)):null;
@@ -337,7 +340,7 @@ function renderPositions(){
    ...(p.wallet?.enabled?[['Netzwerk',p.wallet.chain],['Öffentliche Wallet-Adresse',p.wallet.address]]:[])
   ];
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
-  return '<div class="position-entry"><div class="holding-row">'+
+  return '<div class="position-entry">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
@@ -351,6 +354,53 @@ function renderPositions(){
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
   empty(filter==='all'?'Noch keine Positionen. Erstelle zuerst unter „Mehr“ einen Anbieter und füge deine Anlage hinzu.':
    filter==='__review'?'Keine Positionen zu diesem Prüffilter.':'Keine Positionen bei diesem Anbieter.');
+}
+function renderPositionSelection(){
+ const tools=$('positionSelectionTools'),status=$('positionSelectionStatus');
+ if(!positionSelecting){tools.innerHTML='<button type="button" class="btn outline" data-action="select-positions" '+(!model.positions.length?'disabled':'')+'>Auswählen</button>';status.textContent='';return;}
+ const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds);
+ tools.innerHTML='<button type="button" class="btn outline" data-action="select-filtered" '+(!positionMatchingIds.length?'disabled':'')+'>Alle gefilterten auswählen ('+positionMatchingIds.length+')</button>'+
+  '<button type="button" class="btn outline" data-action="select-all">Alle Positionen auswählen ('+model.positions.length+')</button>'+
+  '<button type="button" class="btn outline" data-action="clear-selection">Auswahl aufheben</button>'+
+  '<button type="button" class="btn outline" data-action="cancel-selection">Abbrechen</button>'+
+  '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio?'disabled':'')+'>'+summary.currentCount+' Positionen löschen</button>';
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte aufheben und neu prüfen.':'');
+}
+function openPositionRemoval(){
+ if(loadFailure||saving||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte neu laden.');
+ const selection=[...selectedPositionIds],expectedModel=JSON.stringify(model),preview=previewPositionRemoval(model,selection);
+ const allowed=preview.items.filter(p=>p.classification==='unreferenced').map(p=>p.id);
+ const referenceLabels={snapshots:'Historische Stichtage',bookings:'Buchungen',journalEntries:'Journalbuchungen',positions:'Verknüpfte Positionen',externalCashFlows:'Ein- und Auszahlungen',walletHistory:'Wallet-Verlauf',purchaseEvidence:'Kaufnachweise',accounts:'Kontozuordnung',providers:'Anbieterzuordnung',transferMatches:'Gemeinsame Transfers',openingPositions:'Eröffnungsbestände',priceHistories:'Kursnachweise','opaque-data':'Nicht eindeutig prüfbare Nachweise'};
+ const names=preview.items.map(p=>{
+  const account=model.accounts.find(a=>a.id===p.accountId),provider=model.providers.find(a=>a.id===p.providerId);
+  const blocked=p.classification==='blocked';
+  return '<li><strong>'+esc(p.name)+'</strong> · '+esc([provider?.name,account?.name].filter(Boolean).join(' / '))+' — '+(blocked?'Gesperrt: '+esc([...p.blockers,...new Set(p.references.map(r=>referenceLabels[r.category]||'Weitere gespeicherte Verknüpfungen'))].join('; ')):'Wird gelöscht'+(p.cleanup.length?' · eigene Eröffnungs-/Kursnachweise werden entfernt':''))+'</li>';
+ }).join('');
+ showDialog('Ausgewählte Positionen löschen','POSITIONSVERWALTUNG',
+  '<p class="dialog-intro">'+preview.selectedCount+' ausgewählt: '+allowed.length+' unverbundene Positionen löschbar, '+preview.blockedCount+' gesperrt. Gesperrte Positionen bleiben unverändert erhalten. Zum Korrigieren abbrechen und Auswahl ändern.</p>'+
+  '<details open><summary>Alle ausgewählten Positionen und Auswirkungen</summary><ul>'+names+'</ul></details>'+
+  '<p class="small-help">Buchungen, gemeinsame Transfers, Wallets und referenzierte Historien werden nicht kaskadierend gelöscht. Unverbundene Positionen und ihre oben genannten eigenen Nachweise gehen verloren. Keine Rückgängig-Funktion; Wiederherstellung über Backup. CSV-Import und neue Walletübernahme erfolgen nur nach eigener Bestätigung.</p>'+
+  '<button type="button" class="btn outline" id="removalBackup">Backup vor dem Löschen herunterladen</button>'+
+  '<label class="selection-check"><input type="checkbox" name="confirmRemoval" required '+(!allowed.length?'disabled':'')+'>Ich bestätige das endgültige Löschen der '+allowed.length+' als löschbar angezeigten Positionen.</label>',
+  async values=>{
+   if(values.confirmRemoval!=='on')throw Error('Bitte Löschmenge ausdrücklich bestätigen.');
+   if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert oder Abruf läuft. Vorschau erneut öffnen.');
+   await portfolioStore.assertCurrent();
+   if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert. Vorschau erneut öffnen.');
+   const {candidate}=preparePositionRemoval(model,selection,{expectedModel,confirmedIds:allowed});
+   const previous=model;model=candidate;
+   try{await save();}catch(error){if(model===candidate)model=previous;throw error;}
+   selectedPositionIds=[];positionSelecting=false;render();notify(allowed.length+' Positionen gespeichert gelöscht; '+preview.blockedCount+' gesperrte Positionen erhalten.');
+  });
+ $('editDialog').classList.add('position-removal-dialog');
+ $('saveDialog').textContent=allowed.length+' Positionen endgültig löschen';
+ $('saveDialog').disabled=!allowed.length;$('saveDialog').classList.remove('primary');$('saveDialog').classList.add('outline','selection-danger');
+ $('removalBackup').addEventListener('click',()=>{
+  if(JSON.stringify(model)!==expectedModel)return notify('Vorschau veraltet. Bitte erneut öffnen.',true);
+  const file=new Blob([backup(model,{includeHistory:true})],{type:'application/json'}),href=URL.createObjectURL(file),link=document.createElement('a');
+  link.href=href;link.download='foliolab-vor-positionsloeschung.json';link.click();setTimeout(()=>URL.revokeObjectURL(href),1000);
+ });
+ $('cancelDialog').focus({preventScroll:true});
 }
 function renderBookings(){
  $('undoCSVImport').classList.toggle('hidden',!canUndoCSV(model,csvReceipt));
@@ -467,7 +517,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')$('positionSelectionTools').querySelector('button')?.focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -488,7 +538,8 @@ function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  $('dialogError').classList.add('hidden');
  $('saveDialog').textContent=readOnly?'Prüfen':dialogSaveLabel(title);
  $('cancelDialog').textContent=readOnly?'Schließen':'Abbrechen';
- $('saveDialog').disabled=false;
+ $('editDialog').classList.remove('position-removal-dialog');
+ $('saveDialog').disabled=false;$('saveDialog').classList.remove('outline','selection-danger');$('saveDialog').classList.add('primary');
  $('editDialog').showModal();
  $('dialogTitle').focus({preventScroll:true});
 }
@@ -1397,7 +1448,7 @@ async function startPerformanceTracking(){
  model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');await save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
 }
 async function refreshAll(){
- if(busy)return;
+ if(busy||saving||editorSubmitting||loadFailure||otherTabChangedPortfolio)return;
  busy=true;$('refreshAll').disabled=true;$('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';
  const errors=[];let successes=0;const now=new Date().toISOString();
  try{
@@ -1626,13 +1677,18 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'select-positions':positionSelecting=true;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'select-filtered':selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'filtered',matchingIds:positionMatchingIds});renderPositions();$('positionSelectionTools').querySelector('[data-action=select-filtered]').focus();break;case 'select-all':if(confirm('Ausdrücklich alle '+model.positions.length+' Positionen auswählen, auch außerhalb des aktuellen Filters?')){selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'all',confirmed:true});renderPositions();$('positionSelectionTools').querySelector('[data-action=select-all]').focus();}break;case 'clear-selection':selectedPositionIds=[];renderPositions();$('positionSelectionTools').querySelector('[data-action=clear-selection]').focus();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
-function initEvents(){$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('undoCSVImport').addEventListener('click',()=>{
+function initEvents(){
+ $('positionList').addEventListener('change',event=>{
+  const input=event.target.closest('[data-position-select]');if(!input||!positionSelecting)return;
+  try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'toggle',id:input.dataset.positionSelect});renderPositionSelection();}catch(error){input.checked=false;notify(error.message,true);}
+ });
+$('resolveListings').addEventListener('click',openListingReview);$('addProvider').addEventListener('click',()=>openProvider());$('addAccount').addEventListener('click',()=>openAccount());$('addWizard').addEventListener('click',()=>assetWizard.open());$('addWallet').addEventListener('click',openWalletImport);$('addBooking').addEventListener('click',openBooking);$('openCSVImport').addEventListener('click',openCSVImport);$('undoCSVImport').addEventListener('click',()=>{
  showDialog('CSV-Import rückgängig machen','BUCHUNGEN','<p class="dialog-intro">Den letzten CSV-Import dieser Sitzung einschließlich seines automatisch erzeugten Stichtags zurücknehmen? Dies ist nur möglich, solange seitdem nichts geändert wurde.</p>',async()=>{
   await portfolioStore.assertCurrent();undoCSV(model,csvReceipt);await save();csvReceipt=null;renderBookings();notify('CSV-Import rückgängig gemacht.');
  });

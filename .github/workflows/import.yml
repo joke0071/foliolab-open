@@ -71,6 +71,8 @@ jobs:
           node tests/browser-csv-review-a11y.mjs
           node tests/browser-csv-batch.mjs
           node tests/browser-flh03-abce.mjs
+          node tests/browser-position-selection.mjs
+          node tests/browser-position-removal.mjs
           node tests/browser-flatex-import.mjs
           node tests/browser-flatex-backfill.mjs
           node tests/browser-defi-dialog-guidance.mjs
@@ -168,9 +170,12 @@ jobs:
         with:
           node-version: '22'
       - name: Install Firefox and WebKit for cross-engine regression
+        timeout-minutes: 8
         run: |
-          npm install --no-save playwright@1.56.1 axe-core@4.10.3
-          npx playwright install --with-deps firefox webkit
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
       - name: Test portfolio workflows on Firefox and WebKit
         run: |
           set -euo pipefail
@@ -184,6 +189,8 @@ jobs:
           node tests/browser-cross-engine.mjs
           FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
           FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
+          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
+          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
           INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
