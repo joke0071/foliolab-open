@@ -42,6 +42,8 @@ Local syntax and **671/671 unit tests PASS**. Full targeted Chromium A/B/C/E plu
 | 16 | PARTIAL existing quality/coverage; account completeness summary open |
 | 17 | A/B/C/E isolated for this release; D remains BLOCKED in #151; other UI17 items remain #149 |
 
+**Remote checkpoint:** PR #153, initial source f412804e35770a5940f81d54f42ee07947239df3; CI 40281290677 completed test/Chromium SUCCESS, cross-engine FAILURE, deploy SKIPPED; wallet 40281290681 SUCCESS. Firefox A/B/C/E and runtime recovery passed, then the new synthetic predecessor navigation helper chose the desktop selector before the asynchronously initialized mobile app was ready. The test now waits for actual IndexedDB-ready status and built mobile navigation after entry; every warning/local-discard/persistence/target assertion is unchanged. Product code is unchanged; this is a startup-order fixture correction, not a waived gate. Both new main status assertions in the existing multi-tab suite passed locally.
+
 **Next safe action:** inspect new A/B/C/E PR full final-head CI. Only green scope gates plus independent isolation review permit merge and actual v178 deployment/live acceptance on https://foliolab.unperfekt.at/ . Check exact published asset hashes/SW/core, synthetic A/B/C/E and batch/undo/CAS; document real results. Then evaluate 02's original-format gate and implement the next evidence-independent safe package in a separate PR, without productive approval for that follow-up. Do not rerun identical D diagnostics. Keep #151 as blocked reference and record source/PR/CI/live IDs here as they become available.
 
 ---

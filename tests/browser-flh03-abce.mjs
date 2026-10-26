@@ -114,7 +114,9 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   // Fulfilled synthetic document is outside production SW scope even at a root domain.
   await ctx.route(previous,r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html lang="en"><title>Synthetic predecessor</title><a id="enter" href="'+base+'">Open app</a></html>'}));
   const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
-  await p.goto(previous);await p.locator('#enter').click();await nav('more');
+  await p.goto(previous);await p.locator('#enter').click();
+  await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')&&document.querySelector('#mobileNav [data-page]'));
+  await nav('more');
   await p.locator('#addProvider').click();await p.locator('#providerName').fill('ABCE navigation saved');await p.locator('#saveDialog').click();
   await p.waitForFunction(()=>!document.getElementById('editDialog').open);const savedRecord=await read();
   assert.ok(JSON.parse(savedRecord.raw).providers.some(x=>x.name==='ABCE navigation saved'));
