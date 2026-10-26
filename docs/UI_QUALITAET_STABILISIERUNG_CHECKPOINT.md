@@ -1,5 +1,7 @@
 # UI-/UX-Qualität und funktionale Stabilisierung — fortsetzbarer Vertrag
 
+Aktualisierung B1: Draft164 enthält lokal in3Engines geprüfte erste Präsentationskorrekturen für3/4/5/8/10/11/12; noch keineProduktivabnahme, weitereDeltas bleiben offen.701Units/0Fail/0Skip und tatsächlicheBildprüfung bestanden; finalerRemote-HEAD und kombinierte162-Gates ausstehend.
+
 Stand26.10.2026; neuer Nutzerauftrag ergänzt den bestehenden FLH03-Lauf. Kein Neubau abgeschlossener14-/08-/FLH02-Funktionen. Produktbasis v180/main52022dc; tatsächliche Live-Evidenz in release-evidence/flh03-v180-{core-live,release}.json. Während PhaseA keine parallele funktionale Implementierung. Ab PhaseB ein aktiver Hauptstrang, separate kleine PRs. Originaldesign, Farben, Icons, Navigation und lokale IDB-Architektur bleiben verbindlich.
 
 | Nutzerabschnitt | Status am Einstieg | Reproduzierbarer Befund / kleinster Schnitt / Abnahme |

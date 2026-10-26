@@ -12,7 +12,7 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
  const nav=async page=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+page+'"]').click();
  const record=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
  const showArchive=async()=>{if(await p.locator('#positionArchiveToggle').getAttribute('aria-pressed')==='false')await p.locator('#positionArchiveToggle').click();};
- const open=async id=>{const b=p.locator('[data-action="archive-position"][data-id="'+id+'"]');await b.locator('xpath=ancestor::details').locator('summary').click();await b.click();await p.locator('#editDialog[open]').waitFor();};
+ const open=async id=>{const b=p.locator('[data-action="archive-position"][data-id="'+id+'"]');assert.equal(await b.isVisible(),true,'archive is available without opening details');await b.click();await p.locator('#editDialog[open]').waitFor();};
  const commit=async()=>{await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});};
  const value=()=>p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{totalExactEUR}=await import(new URL('src/model.js',base)),{historicalWealthView}=await import(new URL('src/historical-portfolio-value.js',base));const s=new PortfolioStorage();const m=await s.initialize();s.close();return {total:totalExactEUR(m),history:historicalWealthView(m)};},base);
  const strip=(raw,id)=>{const m=JSON.parse(raw);delete m.positions.find(p=>p.id===id).archived;return m;};
@@ -38,8 +38,6 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
    const v=await p.evaluate(async()=> (await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)})));assert.deepEqual(v,[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));scans.push({width,height:560,status:'PASS'});
   }
   await p.keyboard.press('Escape');assert.deepEqual(await record(),before);assert.equal(await p.evaluate(()=>document.activeElement.dataset.action),'archive-position');
-  // Details remains expanded after cancellation; close before using the helper.
-  await p.locator('[data-action=archive-position][data-id=asset]').locator('xpath=ancestor::details').locator('summary').click();
   await open('asset');await commit();const archived=await record();assert.equal(archived.revision,before.revision+1);assert.deepEqual(strip(archived.raw,'asset'),JSON.parse(before.raw));assert.deepEqual(archived.settings,before.settings);assert.deepEqual(await value(),financialBefore);
   assert.equal(await p.locator('[data-action=archive-position][data-id=asset]').count(),0);await showArchive();assert.match(await p.locator('#positionArchiveHint').innerText(),/weiterhin/);
   // Existing editor must preserve the archive flag rather than reactivate identity.

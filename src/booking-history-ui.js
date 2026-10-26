@@ -9,6 +9,9 @@ import {TX_TYPES} from './transactions.js';
 import {CHART_PERIODS,filterChartPeriod} from './chart-periods.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
 import {units,exact,mul} from './decimal.js';
+// Display rounding only; exact stored quantities remain available on focus/hover.
+export const historicalNumber=value=>new Intl.NumberFormat('de-AT',{maximumSignificantDigits:8,notation:Number(value)!==0&&Math.abs(Number(value))<0.000001?'scientific':'standard'}).format(value);
+const historicalCell=(label,value,fallback)=>'<td data-label="'+esc(label)+'"'+(value==null?'':' tabindex="0" title="Exakter Wert: '+esc(value)+'" aria-label="'+esc(label+': '+historicalNumber(value)+'. Exakter Wert: '+value)+'"')+'>'+esc(value==null?fallback:historicalNumber(value))+'</td>';
 const signed=q=>q===null?'Änderung unbekannt':(units(q)>0n?'+':'')+q;
 export function bookingRowMarkup(b,model){
  const name=b.positionName||model.positions.find(p=>p.id===b.positionId)?.name||'Historische Position';
@@ -43,7 +46,7 @@ export function createBookingHistoryUI({getModel,commit}){
    el('output').innerHTML='<h3>'+esc(p.name)+' · '+esc(unitsLabel)+'</h3>'+
     (samples.length>=2?drawInteractiveChart(samples,{money:fmt,esc,dateLabel:d=>d,disjoint:hasGaps}):'<p>'+esc(hasGaps?'Teilweise verfügbar. Unbekannte Abschnitte werden nicht verbunden. '+projection.reason:projection.reason||'Weniger als zwei belegte Punkte in diesem Zeitraum. Anderen Zeitraum wählen.')+'</p>')+
     (hasGaps?'<p class="small-help">Teilweise verfügbar · Lücken werden nicht verbunden.</p>':'')+'<p class="small-help">'+esc(marketHistory?.source||'Lokale Nachweise')+(view==='price'?' · Datierte Kursbeobachtungen. Keine Positionsbewertung.':' · damaliger EOD-Bestand × damaliger Schlusskurs × historischer EUR-Faktor. Keine Rendite.')+'</p>'+
-    '<div class="wallet-history-table"><table><thead><tr><th scope="col">Datum</th><th scope="col">Bestand</th><th scope="col">Kurs</th><th scope="col">EUR-Faktor</th><th scope="col">Positionswert</th></tr></thead><tbody>'+rows.slice(-limit).reverse().map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.quantityExact??'Unbekannt')+'</td><td>'+esc(r.priceExact??'Fehlt')+'</td><td>'+esc(r.fxExact??'Fehlt')+'</td><td>'+esc(r.valueEURExact===null?'Unbekannt':money(Number(r.valueEURExact)))+'</td></tr>').join('')+'</tbody></table></div>';
+    '<p class="small-help historical-number-note">Anzeige gerundet · exakte Mengen, Kurse und EUR-Faktoren durch Antippen oder Tastaturfokus auf die Zahl.</p><div class="wallet-history-table booking-value-table"><table role="table" aria-label="Historische Positionswerte"><thead><tr><th scope="col">Datum</th><th scope="col">Bestand</th><th scope="col">Kurs</th><th scope="col">EUR-Faktor</th><th scope="col">Positionswert</th></tr></thead><tbody>'+rows.slice(-limit).reverse().map(r=>'<tr><td data-label="Datum"><time datetime="'+esc(r.date)+'">'+esc(r.date.split('-').reverse().join('.'))+'</time></td>'+historicalCell('Bestand',r.quantityExact,'Unbekannt')+historicalCell('Kurs',r.priceExact,'Fehlt')+historicalCell('EUR-Faktor',r.fxExact,'Fehlt')+'<td data-label="Positionswert">'+esc(r.valueEURExact===null?'Unbekannt':money(Number(r.valueEURExact)))+'</td></tr>').join('')+'</tbody></table></div>';
    attachChartInteractions(el('output'));
   }
   el('more').hidden=view!=='events'||events.length<=limit;

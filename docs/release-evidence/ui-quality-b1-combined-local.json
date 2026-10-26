@@ -1,0 +1,26 @@
+{
+  "applicationSource": "afedf67a36ec58a867eed57d4d452e9c22ccbf39",
+  "originalBetaParent": "c9ff3fecffa606e06af60a1ad9d7940f45443869",
+  "scope": "Unchanged B1/Beta application; strengthen final test coverage for actually expanded affected disclosures",
+  "testSha256": "d222213574209838611272dff5d1589be371b895f6bba20bc37a795b7bfb102f",
+  "actualLocalLogs": {
+    "chromium": "chromium: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n",
+    "cross": "firefox: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\nwebkit: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS\n"
+  },
+  "checks": [
+    "All5pages at320/390/430/768/1440,560px",
+    "Actually expanded liquidity,coverage,income during full Axe/overflow scans",
+    "Compact5metric rows fit when expanded",
+    "One visible originalBeta logo/no storage status overlap",
+    "All position action targets44px and clear separators",
+    "Mobile historical records/desktoptable/exactfocus",
+    "History close hit target reachable320x360",
+    "Synthetic150percent positions textstress320x360",
+    "Exact IndexedDB record unchanged"
+  ],
+  "notClaimed": [
+    "PhysicalAndroid OS font settings",
+    "NativeSafari/hardware/assistivetechnology/realOAuth",
+    "Final new-head remote CI or release/live success"
+  ]
+}
