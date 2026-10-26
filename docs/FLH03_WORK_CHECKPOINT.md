@@ -1,3 +1,13 @@
+# CURRENT CI OBSERVABILITY — product27e1182 frozen; install-only timeout/logging added
+
+Final product/UI source27e11822e3946cf1cebb0ff912b5f341f47d209d: CI40321409175 Chromium SUCCESS with actual logs confirming689/689, strengthened08/offline deletion, A11y, mobile offline/PWA; wallet40321409074 SUCCESS. Cross-engine121566982814 remained IN_PROGRESS in INSTALL since12:17:41UTC through12:31UTC; no test execution yet. Repeated completed-job log access is not a substitute for actual failure logs. No running job was cancelled; no install root cause assumed. main staysfafe97d/v178; no merge/deploy.
+
+To obtain a concrete outcome instead of waiting the default long job limit, only FUTURE Firefox/WebKit INSTALL step now has an8-minute bound, pipefail, installer-debug logging to artifacts/gates/flh03-browser-install.log and existing always-upload evidence. npm/Playwright versions, browser versions, every test command/assertion and mandatory failures remain unchanged. Test execution itself has no new timeout/skip/continue-on-error. This is a new infrastructure-observability hypothesis, not an identical D/WebKit rerun. It cannot make a failed install green. Existing jobs continue unchanged.
+
+Next: inspect new final-head CI. If install times out/fails, inspect captured exact command/download/apt output and fix only that evidenced infrastructure issue, preserving corrected1.64.1 and all gates. If it completes, inspect every actual test result; only full green/safety/main checks permit approved08 ready/merge/deploy/new-domain v179 acceptance. No additional product-code edits or repeat of completed implementation are needed unless new evidence requires them. D remains P2, old#151 untouched, other follow-ups lack blanket release authority. Latest complete local product/UI evidence and00–17 states are below.
+
+---
+
 # CURRENT FINAL UI CORRECTION — all targeted engines pass; new full CI required
 
 Last head66d197fc995de590643a8ca484c91dd8fa69693e / CI40318988622 completed: Chromium SUCCESS, wallet40318988488 SUCCESS, cross-engine FAILED, deploy SKIPPED. The original strict WebKit offline gate DID pass in that actual CI, as did Firefox full08; WebKit then failed full-document Axe at768px on addWizard label (4.2:1). Remaining commands after the failure did not execute. Computed end-state colors were normal; existing global button color/background transitions take130ms, so two frames were insufficient. Original failure logs preserved. This supersedes the previous pending-install notes below; those are historical, not a current root-cause claim.

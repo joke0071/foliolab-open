@@ -170,9 +170,12 @@ jobs:
         with:
           node-version: '22'
       - name: Install Firefox and WebKit for cross-engine regression
+        timeout-minutes: 8
         run: |
-          npm install --no-save playwright@1.64.1 axe-core@4.10.3
-          npx playwright install --with-deps firefox webkit
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/flh03-browser-install.log
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit 2>&1 | tee -a artifacts/gates/flh03-browser-install.log
       - name: Test portfolio workflows on Firefox and WebKit
         run: |
           set -euo pipefail
