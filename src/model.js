@@ -82,7 +82,7 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(chain==='btc-hd'&&!['auto','p2wpkh','p2sh-p2wpkh','p2pkh'].includes(addressType))throw Error('Unbekannter Bitcoin-HD-Adresstyp.');
   return {enabled:true,chain,address,contract,decimals,chainId,addressType};
 }
-export function createPosition(v,model){const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
+export function createPosition(v,model){if(v.archived!==undefined&&typeof v.archived!=='boolean')throw Error('Ungültige Archivmarkierung.');const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const mic=cleanString(v.mic,8).toUpperCase();
   if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
@@ -95,7 +95,7 @@ export function createPosition(v,model){const name=cleanString(v.name,110);if(!n
   if(realizedPnLEUR!=null&&!Number.isFinite(realizedPnLEUR))throw Error('Ungültiger realisierter Gewinn.');
   const priceExact=v.priceExact==null?exact(units(price)):exact(units(v.priceExact));
   const identity=normalizeLegacyCoinId({kind,name,symbol:v.symbol,coinId:v.coinId,coinIdMigration:v.coinIdMigration});
-  return {id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
+  return {...(typeof v.archived==='boolean'?{archived:v.archived}:{}),id:v.id||uid(),providerId:v.providerId,accountId:account.id,managementSource,costBasisEUR,costBasisExact,realizedPnLEUR,realizedPnLExact,priceExact,priceStatus:cleanString(v.priceStatus,120)||null,fxUpdatedAt:cleanString(v.fxUpdatedAt,40)||null,assetId:cleanString(v.assetId,220)||null,kind,name,mic,listingId:cleanString(v.listingId,400)||null,
     economicRole:cleanString(v.economicRole,30)||'standard',valuationMode:cleanString(v.valuationMode,20)||'included',representedByPositionId:cleanString(v.representedByPositionId,120)||null,
     quoteSource:cleanString(v.quoteSource,70)||null,quoteAsOf:cleanString(v.quoteAsOf,45)||null,
     quoteFetchedAt:cleanString(v.quoteFetchedAt,45)||null,quoteQuality:cleanString(v.quoteQuality,45)||null,

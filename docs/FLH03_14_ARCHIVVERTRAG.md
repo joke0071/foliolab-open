@@ -13,3 +13,9 @@ Manuelle Bearbeitung, CSV-Reimport, Flatex-Backfill und Wallet-Refresh dürfen n
 Abnahme: sold/zero und Restbestand, gleiche ISIN in zwei Konten, explizites Aus-/Einblenden, Filter-/Pagination-/Mehrfachauswahl, abgebrochener Dialog/Escape/Fokus, stale-preview/CAS/Quota/Abbruch, exakt unveränderte Finanz-/Historydaten und Summen, CSV-/Wallet-Replay, alte und verschlüsselte tatsächliche UI-Restores, Offline/Reload, Chromium/Firefox/WebKit, sechs Breiten/kleine Höhe und vollständiges Axe. Finale CI und unabhängige Sicherheitsprüfung müssen vor einer späteren konkreten Produktionsentscheidung erfolgreich sein.
 
 Status: Fachvertrag erstellt; Implementierung/Tests folgen. Noch kein Paketabschluss oder Release behauptet.
+
+## Implementierungscheckpoint
+
+Optionales Archivfeld/Validierung, bestehende Editoperation, UI-Listenfilter und expliziterArchiv-/Wiedereinblenddialog implementiert. EinCAS-Commit nachexakterModell-/Storagefrischeprüfung; keineFinanz-/Historymutation. Editor/CSV/Wallet behaltenIdentität/Archiv, gefilterteAuswahlvorderPagination berücksichtigtSichtbarkeitsfilter; allePositionen bleibtGesamtmenge. ZusätzlicheDashboard-Prüfaktion zeigtarchivierteweiterbewerteteProblempositionenexplizit, verstecktePrüfhinweise werdenbenannt. NeueBackupsmitArchivmarkierungmitdieseroderneuererAppversionöffnen; alteAppskennenneueDarstellungsmetadatennicht, Finanzdatenformatbleibtv3.
+
+GezielteUnit- undBrowserbelegeimCheckpoint, vollefinaleCI undProduktionsentscheidungnoch offen. Vertrags-CI amVorcode-CommitistkeinImplementierungsnachweis.

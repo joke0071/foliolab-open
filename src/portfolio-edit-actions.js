@@ -75,3 +75,12 @@ export function deletePositions(model,ids){
  return items;
 }
 export function deletePosition(model,id){return deletePositions(model,[id])[0];}
+
+/** Visibility only: retains all economic quantities, links, journal and history. */
+export function setPositionArchived(model,id,archived){
+ if(typeof archived!=='boolean')throw Error('Ungültige Archivmarkierung.');
+ const matches=model.positions.filter(p=>p.id===id);
+ if(matches.length!==1)throw Error('Position nicht eindeutig vorhanden.');
+ if(archived)matches[0].archived=true;else delete matches[0].archived;
+ return matches[0];
+}
