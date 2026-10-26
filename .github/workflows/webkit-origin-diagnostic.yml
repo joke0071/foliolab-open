@@ -1,0 +1,43 @@
+name: WebKit cross-origin consent investigation
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/webkit-origin-diagnostic.yml
+      - tests/browser-beforeunload-origin.mjs
+permissions:
+  contents: read
+jobs:
+  macos-webkit:
+    name: macOS WebKit / Playwright ${{ matrix.playwright }}
+    runs-on: macos-15
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        playwright: ['1.56.1', '1.64.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Record host and native Safari inventory (not a Safari test)
+        run: |
+          sw_vers
+          /usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' /Applications/Safari.app/Contents/Info.plist
+          /usr/bin/safaridriver --version
+      - name: Install the explicitly pinned diagnostic WebKit
+        run: |
+          npm install --no-save playwright@${{ matrix.playwright }}
+          npx playwright install webkit
+      - name: Require every native consent and destination assertion
+        env:
+          UNLOAD_ENGINES: webkit
+        run: node tests/browser-beforeunload-origin.mjs
+      - name: Preserve all origin and consent outcomes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-webkit-origin-${{ matrix.playwright }}-${{ github.sha }}
+          path: artifacts/gates/beforeunload-origin.json
+          if-no-files-found: warn
