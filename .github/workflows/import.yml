@@ -332,6 +332,22 @@ jobs:
           cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-cross.json
           node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-cross.log
           cp artifacts/gates/transfer-states.json artifacts/gates/production-transfers-cross.json
+      - name: Expose bounded synthetic screenshots for visual review
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const files=[['c1-no-cash','artifacts/gates/c1-no-cash-account.png'],['c1-cash-no-out','artifacts/gates/c1-cash-without-outgoing.png']];
+          for(const [id,path]of files){
+            const bytes=readFileSync(path);
+            if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');
+            const data=bytes.toString('base64');
+            console.log('LIVE_IMAGE_BEGIN '+JSON.stringify({id,path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex'),release:process.env.RELEASE_SHA}));
+            for(let offset=0;offset<data.length;offset+=4000)console.log('LIVE_IMAGE_CHUNK '+id+' '+offset/4000+' '+data.slice(offset,offset+4000));
+            console.log('LIVE_IMAGE_END '+id);
+          }
+          JS
       - name: Preserve actual production acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4

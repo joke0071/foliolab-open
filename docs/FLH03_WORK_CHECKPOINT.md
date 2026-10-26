@@ -1,3 +1,11 @@
+# Ergänzte Sichtkontrolle im gleichen read-only Live-Gate
+
+Die vorhandenen C1-Tests erzeugen bereits zwei rein synthetische390px-Leerzustandsbilder. Der Live-Runner macht genau diese festen Dateien zusätzlich als größenbegrenzte, gehashte Bildbelege in den Joblogs lesbar; keine zusätzlichen Tests, Nutzerprofile, externen Konten oder neuen Bibliotheken. Damit kann die tatsächlich gerenderteProduktionsansicht nach grünemLive-Gate trotz fehlendemWork-Dateisystem konkret angesehen werden. Nur feste synthetischeDateipfade,contents:read bleibt unverändert; dieselben Bilder bleiben zusätzlich im CI-Artefakt.
+
+Vorheriger Workflow-HEADf3358d5: PR-CI40417795412 und Wallet40417795656 tatsächlichSUCCESS,709/709/3Engines; Produktcode seit7db2802 unverändert. Dieser minimale CI-/Evidenzzusatz benötigt seine eigenen finalenPR-Gates. Danach bestehendeUI-Releasefreigabe nurbei tatsächlichemGrün/Review nutzen, gesamtenMainlauf inklusiveLivejob abwarten und Bildbelege tatsächlich ansehen. Weiter keinC1-Releaseerfolg vorweggenommen; Produktionbis dahin v181.
+
+---
+
 # Aktuelle Entblockung: vorhandene Live-Prüfungen auf schreibgeschütztem GitHub-Runner
 
 C1-HEAD7db2802937490d0ae58f865ca7b47a29a4ceeeb9 ist tatsächlich vollständig remote geprüft: **CI40415428772 und Wallet40415428738 SUCCESS**,709/709/0Fail/0Skip, Chromium121896446194 und Firefox/WebKit121896446025. Logs bestätigen neueTransferzustände, unveränderteTransfer-/Undo-/CAS-/encryptedRestore-, FLH02-999→1059-, Offline-/PWA- und übrigeRegressionen. Das zuvor lokal nicht überprüfbare letzteHinweistextdelta ist damit am kanonischenRemoteHEAD tatsächlich getestet, kein alterFehllauf wurde umdeklariert.
