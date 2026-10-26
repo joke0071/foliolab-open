@@ -129,6 +129,7 @@ jobs:
           node tests/browser-quality-review.mjs
           node tests/browser-annual-overview.mjs
           node tests/browser-transfer-matching.mjs
+          node tests/browser-transfer-states.mjs
           node tests/browser-booking-history.mjs
           node tests/browser-booking-filters.mjs
           node tests/browser-dashboard-periods.mjs
@@ -194,6 +195,7 @@ jobs:
           QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
           ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
           TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
+          TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs
           FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
           node tests/browser-cross-engine.mjs
           FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
