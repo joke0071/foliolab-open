@@ -1,0 +1,39 @@
+{
+  "sourceHead": "32289f03498308ee5514ac597696c5044f681322",
+  "testedMerge": "444c5b883dd34acfd3be1353d6eefca074249538",
+  "run": "https://github.com/joke0071/foliolab-open/actions/runs/40372666186",
+  "walletRun": "https://github.com/joke0071/foliolab-open/actions/runs/40372666074",
+  "status": "SUCCESS",
+  "jobs": [
+    {
+      "id": 121747233809,
+      "name": "test",
+      "conclusion": "success"
+    },
+    {
+      "id": 121747234214,
+      "name": "cross-engine",
+      "conclusion": "success"
+    },
+    {
+      "id": 121752050690,
+      "name": "deploy",
+      "conclusion": "skipped"
+    }
+  ],
+  "unitEvidence": [
+    "2026-10-26T17:52:49.9574034Z # tests 699",
+    "2026-10-26T17:52:49.9574203Z # pass 699",
+    "2026-10-26T17:52:49.9574289Z # fail 0",
+    "2026-10-26T17:52:49.9574463Z # skipped 0",
+    "2026-10-26T17:54:19.9228791Z chromium: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS"
+  ],
+  "crossEvidence": [
+    "2026-10-26T17:58:17.5807443Z firefox: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS",
+    "2026-10-26T17:58:26.2362800Z webkit: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS"
+  ],
+  "release": "NOT MERGED/NOT DEPLOYED; concrete user decision for14 required",
+  "limits": [
+    "No physical Android/native Safari/assistive technology/OAuth claim"
+  ]
+}
