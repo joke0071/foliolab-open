@@ -113,17 +113,25 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   const previous='https://abce-navigation.invalid/previous';
   // Fulfilled synthetic document is outside production SW scope even at a root domain.
   await ctx.route(previous,r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html lang="en"><title>Synthetic predecessor</title><a id="enter" href="'+base+'">Open app</a></html>'}));
-  const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
-  await p.goto(previous);await p.locator('#enter').click();
-  await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')&&document.querySelector('#mobileNav [data-page]'));
-  await nav('more');
+  const openSavedNavigation=async()=>{
+   const old=p;p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));await old.close();
+   await p.goto(previous);await p.locator('#enter').click();
+   await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')&&document.querySelector('#mobileNav [data-page]'));
+   await nav('more');
+  };
+  await openSavedNavigation();
   await p.locator('#addProvider').click();await p.locator('#providerName').fill('ABCE navigation saved');await p.locator('#saveDialog').click();
   await p.waitForFunction(()=>!document.getElementById('editDialog').open);const savedRecord=await read();
   assert.ok(JSON.parse(savedRecord.raw).providers.some(x=>x.name==='ABCE navigation saved'));
   const unexpected=[];p.on('dialog',async d=>{unexpected.push(d.type());await d.accept();});
-  await p.reload();assert.deepEqual(await read(),savedRecord,'Saved state survives reload');
-  await Promise.all([p.waitForURL(previous),p.goBack()]);assert.equal(p.url(),previous);
-  await p.goForward();await p.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
+  await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')&&document.querySelector('#mobileNav [data-page]'));assert.deepEqual(await read(),savedRecord,'Saved state survives reload');
+  // Firefox's automation reload adds a history entry here (3 -> 4); test Back
+  // independently in a fresh actual predecessor/app history, keeping both checks.
+  assert.deepEqual(unexpected,[],'Clean saved reload needs no warning');
+  await openSavedNavigation();assert.deepEqual(await read(),savedRecord);
+  p.on('dialog',async d=>{unexpected.push(d.type());await d.accept();});
+  await Promise.all([p.waitForURL(previous),p.evaluate(()=>{setTimeout(()=>history.back(),0);})]);assert.equal(p.url(),previous);
+  await Promise.all([p.waitForURL(url=>url.origin===new URL(base).origin),p.evaluate(()=>{setTimeout(()=>history.forward(),0);})]);await p.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
   assert.deepEqual(await read(),savedRecord,'Saved state survives native Back/Forward');assert.deepEqual(unexpected,[],'Clean saved navigation needs no discard warning');
   console.log(engine+': baseline dirty local Escape/cancel/focus, zero draft writes, saved Reload/Back/Forward persistence PASS');
   report.engines.push({engine,status:'PASS',checks:['A startup/runtime rescue+restore','B proven/partial history','C expanded contrast','E empty history','baseline local discard+saved navigation']});
