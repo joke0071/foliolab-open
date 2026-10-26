@@ -1,0 +1,337 @@
+{
+  "run": 40279325943,
+  "head": "bb9d5b46fb262f4f2629b1a59171a541b680ea0e",
+  "nativeSafariTested": false,
+  "runs": [
+    {
+      "job": 121428876823,
+      "playwright": "1.56.1",
+      "os": "macOS 15.7.9",
+      "nativeSafariInventoryOnly": "26.6.1 (20624.5.1.18.3)",
+      "status": "failure",
+      "cases": [
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "same",
+          "method": "script",
+          "consent": "reject",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49178/form",
+            "draft": "Synthetic unsaved input"
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "same",
+          "method": "script",
+          "consent": "accept",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49178/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "same",
+          "method": "driver",
+          "consent": "reject",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49178/form",
+            "draft": "Synthetic unsaved input"
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "same",
+          "method": "driver",
+          "consent": "accept",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49178/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "cross",
+          "method": "script",
+          "consent": "reject",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49178/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "cross",
+          "method": "script",
+          "consent": "accept",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49178/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "cross",
+          "method": "driver",
+          "consent": "reject",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49178/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "26.0",
+          "origin": "cross",
+          "method": "driver",
+          "consent": "accept",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49178/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49178/previous",
+            "draft": ""
+          }
+        }
+      ]
+    },
+    {
+      "job": 121428876682,
+      "playwright": "1.64.1",
+      "os": "macOS 15.7.9",
+      "nativeSafariInventoryOnly": "26.6.1 (20624.5.1.18.3)",
+      "status": "failure",
+      "cases": [
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "same",
+          "method": "script",
+          "consent": "reject",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49174/form",
+            "draft": "Synthetic unsaved input"
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "same",
+          "method": "script",
+          "consent": "accept",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49174/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "same",
+          "method": "driver",
+          "consent": "reject",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49174/form",
+            "draft": "Synthetic unsaved input"
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "same",
+          "method": "driver",
+          "consent": "accept",
+          "dialogs": [
+            "beforeunload"
+          ],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "PASS",
+          "after": {
+            "href": "http://127.0.0.1:49174/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "cross",
+          "method": "script",
+          "consent": "reject",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49174/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "cross",
+          "method": "script",
+          "consent": "accept",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49174/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "cross",
+          "method": "driver",
+          "consent": "reject",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49174/previous",
+            "draft": ""
+          }
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "origin": "cross",
+          "method": "driver",
+          "consent": "accept",
+          "dialogs": [],
+          "before": {
+            "href": "http://127.0.0.1:49174/form",
+            "historyLength": 3,
+            "active": true
+          },
+          "status": "FAIL",
+          "error": "Native Back must ask before discarding\n+ actual - expected\n\n+ 'rejected'\n- 'fulfilled'\n",
+          "after": {
+            "href": "http://localhost:49174/previous",
+            "draft": ""
+          }
+        }
+      ]
+    }
+  ]
+}
