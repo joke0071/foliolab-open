@@ -1,3 +1,11 @@
+# AKTUELLES ABSCHLUSSGATE — ausgeklappte geänderte Bereiche tatsächlich geprüft
+
+Anwendungsstand afedf67a36ec58a867eed57d4d452e9c22ccbf39 ist eingefroren, keine weitere Produktänderung. Nur zusätzliche Testabdeckung: Liquidität, Datenabdeckung und Ertragskennzahlen werden während der5Seiten/5Breiten/Axe-/Overflowprüfungen ausdrücklich ausgeklappt;5Kennzahlen müssen tatsächlich passen. Gesamte so verstärkte Suite lokal vollständig in Chromium/Firefox/WebKit PASS, einschließlich Beta,44pxZeilenaktionen,320×360Dialogschließen,150%PositionsTextstress und exaktem unverändertemIDBRecord. Neue Evidenz ui-quality-b1-combined-local.json. Eigene finale CI dieses Test-/Evidenzcommits vor Merge vollständig auswerten. Kein neuer App-/SW-/Finanzdiff und keine Wiederholung wegen unveränderter Funktion; konkrete Abdeckungslücke der vorherigen geschlossenen Zustände geschlossen.
+
+Neuer nicht unterbrechender Nutzerergänzungsauftrag erfasst: laufendeGates unverändert abschließen; Statusabgleich seinerPunkte erst beim regulärenPaketwechsel, DONEüberspringen/INPROGRESSfortsetzen/PARTIALnurDelta/OPENgezielt/NOTREPRODUCIBLEkeineSpekulation. Begrenzter unabhängiger5Bereiche-/Ablaufcheck mit maximal10bestätigtenRestbefunden ausdrücklich erst NACH produktiverAbnahme desStabilisierungspakets, kein vorgezogenerKomplettaudit. Buchungsfinanzmutationen separat inIssue165 erfasst, nochkeineImplementierung oderProduktionsfreigabe.
+
+---
+
 # FINALER INTEGRATIONSKANDIDAT — UI-B1 und ursprüngliches Beta162 gemeinsam; noch nicht produktiv
 
 Draft164 / feature/ui-quality-b1 ist der einzige aktive funktionaleStrang. Produktiv weiterhin v180, bestätigtermain0ed3f874aaa23ccc47ef032eb39bc27da57df047 (163 reineTest-/Dokumentationsintegration). B1 behebt gezielt Präsentation/Auffindbarkeit; Buchungs-/Transfer-/Historienberechnungen und13kritischeKernmodule unverändert. Bearbeiten/Löschen jetzt ebenfalls44px; Coverage zeigt identischenHinweis nicht zweimal, alleNachweise bleiben erhalten.
