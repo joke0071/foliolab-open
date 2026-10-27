@@ -3,8 +3,7 @@
   "date": "2026-10-27",
   "issue": 159,
   "pr": 178,
-  "releaseVersionCandidate": 190,
-  "status": "PR_GATES_PASS_RELEASE_PENDING",
+  "status": "LIVE_ACCEPTED",
   "applicationCommit": "7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5",
   "applicationTree": "eb11131cbf0e64b2ec6492796180cccd536480f1",
   "featureHead": "9b91ff72d826db0cb2ef3627da79d0c988a109bd",
@@ -82,10 +81,61 @@
   ],
   "mainPagesLive": {
     "run": 40577138273,
-    "status": "IN_PROGRESS"
+    "status": "SUCCESS",
+    "unitTests": 757,
+    "failed": 0,
+    "skipped": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "assetHashes": 109,
+    "cache": "foliolab-open-v190",
+    "coreGroups": 6,
+    "axeScans": 18
   },
   "targetedProductionQA": {
-    "status": "NOT_STARTED"
+    "run": 40578647542,
+    "job": 122451794685,
+    "commit": "6fcb4274543666a3629d5de2f498dde6fc6c0b25",
+    "branch": "qa/v190-ledger-live",
+    "status": "SUCCESS",
+    "publishedApplicationHashes": 12,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "unchangedReleaseAppAndOriginalAssertions": true,
+    "networkInterception": false,
+    "setup": "fresh production context; synthetic fixture before baseline; original test-only setup navigation replaced by actual production origin",
+    "realOfflineReload": true,
+    "zeroPreviewPersistence": true,
+    "artifact": {
+      "id": 12767644636,
+      "sha256": "4e7168605d9e4b3f476e29987041609858c37a919d636caebfbe03366eaede97"
+    },
+    "visualReview": {
+      "status": "PASS",
+      "screenshots": [
+        "chromium-320",
+        "chromium-390",
+        "chromium-430",
+        "chromium-1440",
+        "firefox-320",
+        "firefox-1440",
+        "webkit-320",
+        "webkit-1440"
+      ]
+    }
   },
   "fullLedgerPosting": "PARTIAL_BLOCKED_PENDING_PROVEN_LOCATOR_FEE_OWNERSHIP_TRANSFER_CONTRACT_AND_CRITICAL_RELEASE",
   "originalValidation": "Prior local schema/Bittr evidence reused; no new complete original-file economic reconciliation claimed",
@@ -93,5 +143,6 @@
   "privateOriginalsPublished": false,
   "next": "existing UI149/165 consolidated booking row controls/archive contract then remaining executable predecessor work",
   "FLH05A": "DEFERRED",
-  "PERF01": "NOT_STARTED"
+  "PERF01": "NOT_STARTED",
+  "applicationVersion": 190
 }
