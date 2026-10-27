@@ -1146,3 +1146,6 @@
 
 /* Account evidence reuses the existing settings disclosure and action pattern. */
 .account-evidence{min-width:0;margin:0 0 12px}.account-evidence summary{min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}.account-evidence-body{padding:0 12px 12px;overflow-wrap:anywhere}.account-evidence-body ul{padding-left:20px}.account-evidence .settings-actions{flex-wrap:wrap}.account-evidence .btn{min-width:44px;min-height:44px;white-space:normal}
+
+.account-evidence>summary::after{transform:rotate(45deg)}.account-evidence[open]>summary::after{transform:rotate(225deg)}
+.provider-settings-accounts .account-entry small{color:#4d6756}

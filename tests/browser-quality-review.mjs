@@ -1,4 +1,4 @@
-import {clickDisclosed} from './browser-disclosures.mjs';
+import {clickDisclosed,revealAction} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';import {readFile,mkdir} from 'node:fs/promises';import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
 for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
@@ -26,9 +26,11 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
   for(const width of [320,390,430,768,1440]){
    await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="more"]').click();
    const details=page.locator('[data-account-evidence="'+setup.walletAccount+'"]');
-   if(!await details.evaluate(el=>el.open))await clickDisclosed(details.locator(':scope > summary'));
+   await revealAction(details);if(!await details.evaluate(el=>el.open))await details.locator(':scope > summary').click();
+   assert.equal(await details.evaluate(el=>el.open),true,'account evidence must really be open before reading');
    assert.match(await details.innerText(),/1 Positionen/);assert.match(await details.innerText(),/1 Positionen mit Kursprüfbedarf/);assert.match(await details.innerText(),/1 Positionen mit gemeldetem Historienprüfbedarf/);assert.match(await details.innerText(),/Kein vollständiger Bank- oder Walletabgleich bestätigt/);
    for(const target of [details.locator(':scope > summary'),details.locator('[data-action="view-account"]')]){const box=await target.boundingBox();assert.ok(box.width>=44&&box.height>=44,'account evidence targets >=44px');}
+   await page.screenshot({path:'artifacts/gates/quality/'+engine+'-account-open-'+width+'.png'});
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#providerSettings',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:'artifacts/gates/quality/'+engine+'-account-'+width+'.png'});
    const action=details.locator('[data-action="view-account"]');await action.click();assert.equal(await page.locator('#positionList .position-entry').count(),1);assert.match(await page.locator('#positionList').innerText(),/Synthetic ETH/);
