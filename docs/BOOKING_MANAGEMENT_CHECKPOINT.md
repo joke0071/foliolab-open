@@ -62,3 +62,18 @@ Fokusvertrag ergänzt: nach Commit/Undo ersetzt der Render die auslösenden Verw
 Bildprüfung: Kontoeffekte in320/390/1440 tatsächlich angesehen. Anschließend Belegreferenz und aufklappbare Einzelübersicht jeder ausgewählten Buchung (ID, Typ, Position, Datum/Betrag/Notiz vorher/nachher) ergänzt, damit Bestätigung nicht nur Kontosummen zeigt. Browser prüft die tatsächlich geöffneten Vorher/Nachher-Felder; unveränderte Fachassertions bleiben. Neue finale CI erforderlich.
 
 Abschließender Referenzreview: unbekannte Buchungs-/Journal-/Postingfelder sowie unbekannte Referenzen sperren auch Notizänderungen. Eigene validierte Auditnachweise werden nicht fälschlich als fremde wirtschaftliche Verknüpfung behandelt; die jüngste eindeutige Sequenz muss mit dem aktuellen Vorgang übereinstimmen. Nachherbelege sind eigenständige tiefe Kopien statt Objektaliase. Neue Referenzfälle prüfen mehrfache Korrektur/Notiz/Rücknahme, unbekannte Metadatenreferenzen, abweichende/doppelte Auditketten und Manipulation. Lokale733Tests bestehen; finale Remote-Abnahme dieses Heads offen.
+
+
+## Gemeinsamer UI-Nachtrag: Positionen und Buchungen
+
+Vorheriger fachlicher Checkpoint `9daa130d514a928179ed1018883a40f2dde28393`: CI [40524779982](https://github.com/joke0071/foliolab-open/actions/runs/40524779982) vollständig erfolgreich mit733 Unit-Tests und allen drei Browsern. Keine Veröffentlichung.
+
+Im selben PR-Strang integriert, kein paralleles Paket: bestehende stabile Auswahlengine erhält eine gemeinsame `cycle`-Aktion. Sie ergänzt zuerst die aktuell dargestellte Seite (bestehendes „Weitere anzeigen“ erweitert diese), dann den gesamten Filterbereich und setzt danach vollständig zurück. Bereits vollständige Bereiche überspringen wirkungslose Stufen. Filter, Sortierung und Pagination selbst verändern keine IDs. Einzelauswahl bleibt erhalten. Ohne Positionsfilter umfasst der explizit beschriftete Gesamtbereich auch archivierte Positionen. Ohne Buchungsfilter sämtliche vorhandenen Buchungszeilen. Abbrechen beendet den Modus. Keine Auswahlmenüs mehr.
+
+Positionen: dieselben drei Einzelicons stehen im oberen Kartenbereich, Checkbox links, Icons rechts mit Umbruch und44px-Zielen. Oben „Alle löschen“ (bestehende Vorschau) und „Alle archivieren“. Neue Sammelarchivierung setzt ausschließlich vorhandene Archivflags für die explizite Auswahl; bereits archivierte Zeilen bleiben unverändert. Bestätigung, genaue Liste/Konten und Auswirkungen, exakter Modellvorstand und IndexedDB-CAS vor einem atomaren Save. Wiederherstellung über vorhandene Einzelaktion. Keine neue Finanz-/Importengine.
+
+Buchungen: Zulässigkeit derselben vorhandenen Auswirkungenprüfung bestimmt die aktivierten Aktionen; konkrete Sperrgründe stehen direkt unter der Leiste. Keine Archivierung, keine Umgehung der Vorschau/Bestätigung/atomaren Fachprüfung. Notiz und Betrag/Datum weiterhin nur einzeln, gemeinsame Rücknahme nur bei vollständig belegter Zulässigkeit und innerhalb der bestehenden Grenzen.
+
+Automatisierte Referenzen ergänzen Checkbox-Zyklus, Teil-/Einzelauswahl, leere/einseitige Filter, Pagination, Abbrechen, versteckte IDs und deaktivierte Herkunftsfälle. Bestehende wirtschaftliche und Speicherfehlerassertionen bleiben erhalten. Neue Sammelarchivierung prüft tatsächliche Quota-/post-put-Abbrüche, exakt einen Commit und unveränderte wirtschaftliche Daten. Geometrie und Axe für320/390/430px sowie Desktop. Lokale735 Unit-Tests erfolgreich; neue Browserabnahme nach diesem UI-Head noch ausstehend.
+
+**Release-Gate bleibt geschlossen:** neue Buchungsmutationen und neue Sammelaktionen erst nach eigener konkreter Nutzerfreigabe mergen und produktiv schalten. Kandidat SW188 bleibt unveröffentlicht.

@@ -351,14 +351,14 @@ function renderPositions(){
   const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
   const reviewButtons=reviewActions.map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
   const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="holding-row">'+
+  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div>'+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
    (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
-   '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div></div></div>'+
+   '</div></div>'+
    '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
@@ -366,34 +366,50 @@ function renderPositions(){
   empty(filter==='all'?(model.positions.length?'Keine aktiven Treffer. Bei Bedarf archivierte Positionen anzeigen oder Filter zurücksetzen.':'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
    filter==='__review'?'Keine Positionen zu diesem Prüffilter.':'Keine Positionen bei diesem Anbieter.');
 }
+function selectionCoverage(selected,pageIds,scopeIds){
+ const set=new Set(selected),complete=scopeIds.length>0&&scopeIds.every(id=>set.has(id)),pageComplete=pageIds.length>0&&pageIds.every(id=>set.has(id));
+ return {checked:complete||pageComplete,partial:!complete&&!pageComplete&&scopeIds.some(id=>set.has(id)),next:complete?'Auswahl zurücksetzen':pageComplete||!pageIds.length?'Alle '+scopeIds.length+' im Auswahlbereich auswählen':'Aktuelle Seite auswählen ('+pageIds.length+')'};
+}
+function positionSelectionScope(){
+ return filter==='all'&&!$('positionSearch').value.trim()?model.positions.map(p=>p.id):positionMatchingIds;
+}
+function selectionMaster(id,coverage,disabled){
+ return '<label class="selection-master" title="'+coverage.next+'"><input id="'+id+'" type="checkbox" aria-label="'+coverage.next+'" '+(disabled?'disabled':'')+'><span>'+coverage.next+'</span></label>';
+}
 function renderPositionSelection(){
  const tools=$('positionSelectionTools'),status=$('positionSelectionStatus');
  if(!model.positions.length){positionSelecting=false;selectedPositionIds=[];tools.innerHTML='';status.textContent='';return;}
  if(!positionSelecting){tools.innerHTML='<button type="button" class="btn outline" data-action="select-positions">Auswählen</button>';status.textContent='';return;}
- const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds);
+ const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds),scope=positionSelectionScope();
+ const coverage=selectionCoverage(selectedPositionIds,positionMatchingIds.slice(0,positionLimit),scope);
  const archived=model.positions.filter(p=>p.archived),archivedSelected=archived.filter(p=>selectedPositionIds.includes(p.id)).length;
- tools.innerHTML='<div class="selection-picker"><label class="selection-master" title="Gefilterte Positionen auswählen oder abwählen"><input id="positionSelectFiltered" type="checkbox" aria-label="Alle gefilterten Positionen auswählen oder abwählen" '+(!positionMatchingIds.length?'disabled':'')+'></label><details id="positionSelectionMenu"><summary aria-label="Auswahloptionen"></summary><div class="selection-options">'+
-  '<button type="button" class="btn outline" data-action="select-filtered" '+(!positionMatchingIds.length?'disabled':'')+'>Alle gefilterten auswählen ('+positionMatchingIds.length+')</button>'+
-  '<button type="button" class="btn outline" data-action="select-all">Alle Positionen auswählen ('+model.positions.length+'), einschließlich ausgeblendeter und archivierter</button>'+
-  '<button type="button" class="btn outline" data-action="clear-selection">Auswahl aufheben</button>'+
-  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+'</div></details></div>'+
+ const disabled=!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio;
+ tools.innerHTML=selectionMaster('positionSelectFiltered',coverage,!scope.length)+
+  '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(disabled?'disabled':'')+'>Alle löschen</button>'+
+  '<button type="button" class="btn outline" data-action="archive-selected" '+(disabled?'disabled':'')+'>Alle archivieren</button>'+
   '<button type="button" class="btn outline" data-action="cancel-selection">Abbrechen</button>'+
-  '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio?'disabled':'')+'>'+summary.currentCount+' Positionen löschen</button>';
- $('positionSelectionMenu').addEventListener('toggle',fitPositionSelectionMenu);
- const checkbox=$('positionSelectFiltered');checkbox.checked=summary.matchingCount>0&&summary.inFilterCount===summary.matchingCount;checkbox.indeterminate=summary.inFilterCount>0&&summary.inFilterCount<summary.matchingCount;
- status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte aufheben und neu prüfen.':'');
+  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'');
+ const checkbox=$('positionSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte abbrechen und neu prüfen.':'');
 }
-function fitPositionSelectionMenu(){
- const menu=$('positionSelectionMenu');if(!menu?.open)return;
- const panel=menu.querySelector('.selection-options'),anchor=menu.parentElement.getBoundingClientRect(),nav=$('mobileNav').getBoundingClientRect();
- const bottom=innerHeight-(nav.height?nav.height:0)-12;
- panel.style.position='fixed';panel.style.bottom='auto';panel.style.maxHeight=Math.max(44,bottom-12)+'px';
- const height=panel.getBoundingClientRect().height,below=bottom-anchor.bottom;
- const desired=below<height&&anchor.top>height?anchor.top-height-4:anchor.bottom+4;
- panel.style.top=Math.max(12,Math.min(desired,bottom-height))+'px';
- panel.style.left=Math.max(12,Math.min(anchor.left,innerWidth-panel.getBoundingClientRect().width-12))+'px';
+function focusPositionSelection(){($('positionSelectFiltered')||$('positionSelectionTools').querySelector('button'))?.focus();}
+function openSelectedPositionArchive(){
+ if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte erneut prüfen.');
+ const ids=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds).currentIds,expected=JSON.stringify(model);
+ if(!ids.length||ids.length!==selectedPositionIds.length)throw Error('Auswahl fehlt oder ist veraltet.');
+ const items=ids.map(id=>model.positions.find(p=>p.id===id)),active=items.filter(p=>!p.archived);
+ showDialog('Ausgewählte Positionen archivieren','POSITIONEN',
+  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung über das vorhandene Archivsymbol.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
+   if(values.confirmArchive!=='on')throw Error('Archivierung ausdrücklich bestätigen.');
+   if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
+   await portfolioStore.assertCurrent();
+   if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
+   const previous=model,candidate=structuredClone(model);for(const p of active)setPositionArchived(candidate,p.id,true);
+   model=candidate;try{await save();}catch(error){if(model===candidate)model=previous;throw error;}
+   selectedPositionIds=[];positionSelecting=false;render();notify(active.length+' Positionen archiviert. Bewertung bleibt unverändert.');
+  });
+ $('saveDialog').textContent='Auswahl archivieren';$('saveDialog').disabled=!active.length;$('cancelDialog').focus({preventScroll:true});
 }
-function focusSelectionMenu(){const menu=$('positionSelectionMenu');if(menu){menu.open=true;menu.querySelector('summary').focus();}}
 function openPositionArchive(id){
  if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte erneut prüfen.');
  const p=model.positions.find(p=>p.id===id);if(!p)throw Error('Position nicht mehr vorhanden.');
@@ -475,7 +491,20 @@ function renderBookingManagement(){
  if(!bookingSelecting)root.innerHTML=button('select','Auswählen',!rows.length);
  else{
   const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;
-  root.innerHTML='<div class="settings-actions">'+button('filtered','Gefilterte auswählen ('+bookingMatchingIds.length+')',!bookingMatchingIds.length)+button('all','Alle Buchungen auswählen ('+rows.length+')')+button('clear','Auswahl aufheben')+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+summary.hiddenCount+' ausgeblendet'+(summary.requiresRefresh?' · Auswahl veraltet':'')+'</p><div class="settings-actions">'+button('notes','Notiz korrigieren',blocked||summary.currentCount!==1)+button('edit','Betrag / Datum korrigieren',blocked||summary.currentCount!==1)+button('remove','Rücknahme prüfen',blocked)+'</div>';
+  const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds);
+  const checks={};for(const action of ['notes','edit','remove']){
+   if(blocked)checks[action]='Zuerst eine aktuelle Auswahl treffen; Datenstand muss schreibbar sein.';
+   else if(action!=='remove'&&summary.currentCount!==1)checks[action]='Für diese Korrektur genau eine Buchung auswählen.';
+   else try{
+    const b=model.bookings.find(b=>b.id===selectedBookingIds[0]);
+    const preview=previewBookingChange(model,{ids:selectedBookingIds,action,reason:'Zulässigkeitsprüfung',changes:action==='remove'?undefined:action==='notes'?{notes:b?.notes||''}:{quantity:b?.quantityExact,date:b?.date,notes:b?.notes||''}});
+    checks[action]=preview.ready?'':preview.blocks.map(b=>b.reason).filter((r,i,a)=>a.indexOf(r)===i).join(' ');
+   }catch(error){checks[action]=error.message;}
+  }
+  root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('notes','Notiz korrigieren',!!checks.notes)+button('edit','Betrag / Datum korrigieren',!!checks.edit)+button('remove','Rücknahme prüfen',!!checks.remove)+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+summary.hiddenCount+' ausgeblendet · Auswahlbereich: '+($('bookingSearch').value.trim()||$('bookingFilterType').value?'gefilterte Buchungen':'alle Buchungen')+' ('+bookingMatchingIds.length+')</p>'+
+   Object.entries(checks).filter(([,reason])=>reason&&summary.selectedCount).map(([action,reason])=>'<p class="small-help" id="bookingBlocked-'+action+'">'+({notes:'Notiz',edit:'Korrektur',remove:'Rücknahme'})[action]+' gesperrt: '+esc(reason)+'</p>').join('');
+  for(const [action,reason] of Object.entries(checks))if(reason){const b=root.querySelector('[data-booking-manage="'+action+'"]');b.title=reason;if(summary.selectedCount)b.setAttribute('aria-describedby','bookingBlocked-'+action);}
+  const checkbox=$('bookingSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
  }
  if(canUndoBookingChange(model,bookingChangeReceipt))root.innerHTML+='<div class="settings-actions">'+button('undo','Letzte Buchungsänderung rückgängig',!bookingWritable())+'</div>';
  const logs=model.journalEntries.filter(e=>e.type==='booking-management-audit'&&e.managementAudit);
@@ -1781,7 +1810,7 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusSelectionMenu();break;case 'select-positions':positionSelecting=true;renderPositions();($('positionSelectFiltered').disabled?$('positionSelectionMenu').querySelector('summary'):$('positionSelectFiltered')).focus();break;case 'select-filtered':selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'filtered',matchingIds:positionMatchingIds});renderPositions();focusSelectionMenu();break;case 'select-all':if(confirm('Ausdrücklich alle '+model.positions.length+' Positionen auswählen, einschließlich ausgeblendeter und archivierter Positionen?')){selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'all',confirmed:true});renderPositions();focusSelectionMenu();}break;case 'clear-selection':selectedPositionIds=[];renderPositions();focusSelectionMenu();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusPositionSelection();break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
@@ -1789,26 +1818,20 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
 }}}
 function initEvents(){
  $('bookingList').addEventListener('change',e=>{const input=e.target.closest('[data-booking-select]');if(!input||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'toggle',id:input.dataset.bookingSelect});renderBookingManagement();}catch(error){notify(error.message,true);}});
+ $('bookingManagementTools').addEventListener('change',e=>{if(e.target.id!=='bookingSelectFiltered'||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'cycle',pageIds:bookingMatchingIds.slice(0,bookingLimit),matchingIds:bookingMatchingIds});renderBookings();$('bookingSelectFiltered').focus();}catch(error){notify(error.message,true);}});
  $('bookingManagementTools').addEventListener('click',e=>{const b=e.target.closest('[data-booking-manage]');if(!b)return;try{
   const action=b.dataset.bookingManage;
   if(action==='undo'){openBookingUndo();return;}
   if(['notes','edit','remove'].includes(action)){openBookingChange(action);return;}
   if(action==='select')bookingSelecting=true;
   if(action==='cancel'){bookingSelecting=false;selectedBookingIds=[];}
-  if(action==='clear')selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'clear'});
-  if(action==='filtered')selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'filtered',matchingIds:bookingMatchingIds});
-  if(action==='all'&&confirm('Ausdrücklich alle Buchungen auswählen, einschließlich ausgeblendeter Vorgänge?'))selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'all',confirmed:true});
-  renderBookings();$('bookingManagementTools').querySelector('button')?.focus();
+   renderBookings();($('bookingSelectFiltered')||$('bookingManagementTools').querySelector('button'))?.focus();
  }catch(error){notify(error.message,true);}});
 
- window.addEventListener('resize',fitPositionSelectionMenu);
- window.addEventListener('scroll',fitPositionSelectionMenu,{passive:true});
  $('positionSelectionTools').addEventListener('change',event=>{
   if(event.target.id!=='positionSelectFiltered'||!positionSelecting)return;
-  try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:event.target.checked?'filtered':'unselect-filtered',matchingIds:positionMatchingIds});renderPositions();$('positionSelectFiltered').focus();}catch(error){notify(error.message,true);renderPositionSelection();}
+  try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'cycle',pageIds:positionMatchingIds.slice(0,positionLimit),matchingIds:positionSelectionScope()});renderPositions();focusPositionSelection();}catch(error){notify(error.message,true);renderPositionSelection();}
  });
- document.addEventListener('keydown',event=>{const menu=$('positionSelectionMenu');if(event.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary').focus();}});
- document.addEventListener('click',event=>{const menu=$('positionSelectionMenu');if(menu?.open&&!event.composedPath().some(node=>node?.id==='positionSelectionMenu'))menu.open=false;});
  $('positionList').addEventListener('change',event=>{
   const input=event.target.closest('[data-position-select]');if(!input||!positionSelecting)return;
   try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'toggle',id:input.dataset.positionSelect});renderPositionSelection();}catch(error){input.checked=false;notify(error.message,true);}
