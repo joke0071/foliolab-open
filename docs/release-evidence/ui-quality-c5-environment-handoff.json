@@ -1,0 +1,53 @@
+{
+  "baseSHA": "3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5",
+  "branch": "feature/ui-quality-c5-secondary-actions",
+  "environment": "unavailable during final no-cash hint/Recovery/viewport diagnostic",
+  "lastVerifiedLocal": {
+    "check": "PASS",
+    "units": {
+      "tests": 712,
+      "pass": 712,
+      "fail": 0,
+      "skip": 0
+    },
+    "chromiumUI": "PASS, five widths/short/text stress, expanded settings Axe, native disclosures, exact zero writes",
+    "chromiumRegressions": [
+      "archive/unarchive quota/CAS/offline/plain+encrypted fresh restore",
+      "split transfer/consent/undo/encrypted restore/stale CAS",
+      "transfer empty/choice/missing/Recovery",
+      "cash reconciliation/account/FX/offline",
+      "booking history245+4",
+      "BTC/ETH/SOL/SPL accepted history+encrypted roundtrip",
+      "EODHD worker config/auth/privacy",
+      "data-source settings persistence/keys",
+      "quality review/filter/repair/focus/zero writes"
+    ],
+    "imagesViewed": [
+      "positions320",
+      "positions1440",
+      "bookings390",
+      "optional connections320"
+    ]
+  },
+  "unverifiedLastStep": [
+    "precise no-cash-position hint",
+    "new no-cash/Recovery checks",
+    "normal viewport/long screenshot diagnostic"
+  ],
+  "sourceRecovery": {
+    "method": "Replay recorded changes on exact GitHub base; inherit all other tree entries.",
+    "localByteEqualityClaimed": false,
+    "archiveRecoveryGuardsByteEqualToBase": true,
+    "settingsFinancialHandlersTailByteEqualToBase": true,
+    "configurationControlTagsByteEqualToBase": true,
+    "lateRecoveryCheck": "Renderer returns early on load failure and hides normal sections: verify hidden section plus existing recovery message; do not change guards."
+  },
+  "canonicalVerification": "Mandatory final HEAD CI/3 engines and bounded read-only synthetic PR image preview, then unchanged strict production live gate.",
+  "status": "CANONICAL_SOURCE_PENDING_CI_NOT_RELEASED",
+  "notClaimed": [
+    "Last local run completion",
+    "Exact inaccessible scratch bytes",
+    "Final CI success",
+    "C5 merge/deployment/live acceptance"
+  ]
+}

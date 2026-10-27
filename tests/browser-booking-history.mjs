@@ -1,3 +1,4 @@
+import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {legacyContext} from './legacy-browser-fixture.mjs';
@@ -31,7 +32,7 @@ for(const engine of (process.env.FLH_ENGINES||'chromium').split(',')){
    assert.equal(await page.locator('#bookingList .history-row').count(),249);
    await page.locator(nav+' [data-page="positions"]').click();
    const button=page.locator('[data-action="booking-history"][data-id="'+ids[0]+'"]');
-   await button.click();const d=page.locator('#bookingHistoryDialog');await d.waitFor({state:'visible'});
+   await clickDisclosed(button);const d=page.locator('#bookingHistoryDialog');await d.waitFor({state:'visible'});
    assert.equal(await d.locator('[data-booking-history="view"]').inputValue(),'eur');assert.match(await d.innerText(),/6.200/);
    await d.locator('[data-booking-history="view"]').selectOption('balances');
    assert.equal(await d.locator('tbody tr').first().locator('td').nth(1).innerText(),'64');

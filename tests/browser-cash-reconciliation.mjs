@@ -1,3 +1,4 @@
+import {clickDisclosed} from './browser-disclosures.mjs';
 import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
@@ -52,7 +53,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   const button=page.locator('[data-action="check-cash-balance"][data-id="first-cash"]');
   for(const details of await button.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
-  await button.click();assert.match(await page.locator('#dialogFields').innerText(),/Testbank.*first.*EUR/s);
+  await clickDisclosed(button);assert.match(await page.locator('#dialogFields').innerText(),/Testbank.*first.*EUR/s);
   assert.equal(await page.locator('#saveDialog').innerText(),'Prüfen');
   await page.locator('#saveDialog').click();assert.match(await page.locator('#dialogError').innerText(),/bestätigen/);
   await page.locator('#cashReferenceCurrent').check();await page.locator('#saveDialog').click();
@@ -81,7 +82,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   await page.setViewportSize({width:390,height:844});
   const usd=page.locator('[data-action="check-cash-balance"][data-id="usd-cash"]');
   for(const details of await usd.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
-  await usd.click();await page.locator('#cashReference').fill('-1');await page.locator('#cashReferenceCurrent').check();
+  await clickDisclosed(usd);await page.locator('#cashReference').fill('-1');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/-21,1 USD/);
   await page.locator('#cancelDialog').click();
   await page.locator('#mobileNav [data-page="more"]').click();await page.locator('#addProvider').click();
@@ -93,7 +94,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   server=await stopServer(server);await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
   const offline=page.locator('[data-action="check-cash-balance"][data-id="second-cash"]');
   for(const details of await offline.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
-  await offline.click();await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
+  await clickDisclosed(offline);await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before);
   // An actual second-tab write invalidates the visible result and blocks stale checks.

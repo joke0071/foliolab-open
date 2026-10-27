@@ -1,3 +1,37 @@
+# Aktuell: v185 live DONE; C5 kanonisch gesichert, finale CI offen
+
+**C4/#169 vollständig produktiv abgenommen:** main `3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5`, Tree9776aad4, finaler HEAD7316fa5. [PR-CI40461463933](https://github.com/joke0071/foliolab-open/actions/runs/40461463933)+Wallet40461464114 und [Main/Pages/Live40462563364](https://github.com/joke0071/foliolab-open/actions/runs/40462563364) vollständig SUCCESS.712/712/0Fail/0Skip,105 exakte Livehashes,SW185,6 Kerngruppen/18 Axe, B1–C4 live in3 Engines. Mengen-/USD-Bilder tatsächlich angesehen, v184-Einheitenbefund geschlossen. Beleg release-evidence/ui-quality-v185-release.json. Diese Arbeiten nicht wiederholen.
+
+## C5 – neueste Nutzerentscheidungen
+
+Einziger aktiver Strang: **feature/ui-quality-c5-secondary-actions** von exakt diesem main. Historie/Rekonstruktion/Kontoprüfung im vorhandenen Bestand/Kursdetails-Akkordeon, auch relevante Prüffilteraktionen ohne Duplikate. Edit/Delete direkt; Archiv/Wieder-Einblenden als kleines Icon mit gleichem Stil,44px-Touchziel und vollständiger Beschriftung. Keine große dauerhafte Archivschaltfläche oder neue Mehrfacharchivierung. B1-Platzierungsentscheidung für sichtbare Sekundäraktionen ist durch neueste Nutzerentscheidung SUPERSEDED; Archivengine bleibt DONE und unverändert.
+
+Transferprüfung in eigenem geschlossenen Nachbar-Akkordeon zu Erträge/Abzüge, gemeinsamer performance-details-Stil, vorgegebener Untertitel, kurze richtige Info. Vorhandenes transferDialogChoices wiederverwenden, keine zweite Matchingengine. Prüfung/Bestätigung/Undo unverändert. Ohne Undo-Receipt keine leere Aktionszeile. Fehlende Guthabenposition ist nicht gleich fehlendes Konto.
+
+Weitere Verbindungen/erweiterte Suche/EODHD-Dienst verwenden vorhandene source-detail-/settings-summary-/more-subdetail-Hierarchie: Experten geschlossen, gleiche Schrift/Pfeile, Speichern ausgerichtet. Sämtliche Feld-/Formattribute unverändert, API-Key bevorzugt und Worker optional. Aufgeklapptes Axe bestätigte4 kontrastarme Hinweis-/Codeziele: gezielt bestehenden Ton #4d6756 verwenden. Keine globale Farb-/Typografieänderung.
+
+Archiv-/Recovery-/Renderguards und gesamter App-Code ab renderSettings sind bytegleich zur Basis. Keine Finanz-/Projektions-/IDB-/Import-/Backupänderung.
+
+## Tatsächliche Tests und erneuter Laufzeitausfall
+
+Vor letztem Hinweisdelta tatsächlich lokal bestanden: check,712/712/0Fail/0Skip, gezielte Chromium-UI mit320/390/430/768/1440, kleiner Höhe,150%-Textstress, geöffneten Einstellungen/Axe, echtem Summary-Klick und exakten Nullmutationen. Zusätzlich Archiv/Quota/CAS/Offline/plain+encryptedRestore, Transfer/Undo/staleCAS, Cashabgleich/FX/offline,245+4 Buchungen, BTC/ETH/SOL/SPL/verschlüsselteHistorie, EODHD-Worker, Settings/Keys und Qualitätsreview PASS. Bilder320/390/1440 tatsächlich angesehen; drei Icons passen bei320px.
+
+Navigationstests öffnen jetzt ausdrücklich die vorhandene native Disclosure, bevor sie dieselbe Aktion klicken. Keine finanziellen Assertions entfernt oder deaktiviert. Chevronvergleich wartet das tatsächliche Animationsende statt einen Zwischenframe; harte Gleichheitsprüfung bleibt. Kontrastfehler werden korrigiert, nicht ausgeblendet.
+
+**Work-Laufzeit erneut unavailable** während finalem No-Cash-Hinweis/Recovery-/Viewport-Diagnoselauf. Ergebnis nicht überprüfbar. Hängender Orchestrierungsaufruf beendet; kein Browserprozess per Signal abgebrochen und kein letzter Erfolg behauptet. Bekannte Änderungen aus protokollierten Operationen auf exakt GitHub-Basis rekonstruiert; keine Bytegleichheit gegen unerreichbaren Scratch behauptet. Beleg release-evidence/ui-quality-c5-environment-handoff.json.
+
+Zusätzliche neue Recovery-Prüfung muss den bestehenden frühen Render-Abbruch respektieren: normale Sektion unsichtbar plus vorhandene „nicht lesbar“-Nachricht prüfen. Original-Disable-/Programmatic-bypass-/Recordassertions bleiben. Keine Änderung an Recovery/CAS. Das ersetzt eine unbestätigte neue Hinttext-Annahme durch den tatsächlichen stärkeren Schutzvertrag.
+
+Lange Element-Screenshots zeigten feste Navigation/Skiplink über dem Ausschnitt. Keine spekulative Produktänderung: normale Viewportbilder/Geometrie zusätzlich erfassen. Im vorhandenen Testjob read-only Bildnachweis fester synthetischer C5-Dateien mit256k-Limit/Hashes. Gleiche Runner/Bibliotheken, kein neues Framework/Secret/Produktdienst. Damit kanonische PR-Ansicht vor Merge tatsächlich prüfen. Alle alten Tests/Artefakte bleiben; Screenshotflag aktiviert. Main-Livejob unverändert streng, Bildliste auf neue C5-Ansichten begrenzt.
+
+## Nächste sichere Aktion
+
+Finale tatsächliche C5-HEAD-CI/Wallet und PR-Bilder auswerten; Checkout-SHA/Tree gegen finalen HEAD prüfen. Bei Fehlern konkrete Logs, keine Abschwächung. Getrennter Quelldiff-/Sicherheitsdurchgang und aktueller main-Abgleich. Nur bei vollständigem Grün vorhandene UI-Freigabe nutzen; anschließend ganzer Mainlauf/Livejob/105Assets/SW186/Kernfunktionen/3Engine-ZielUI und aktuelle C5-Bilder tatsächlich prüfen. **Noch kein C5-Merge/Deployment/Liveerfolg; SW186 nur Kandidat.**
+
+Gesamtstabilisierung PARTIAL. Begrenzter unabhängiger5-Bereiche-/Nutzerablaufcheck/max10 bestätigte Befunde erst nach Stabilisierung/Liveabnahme. #165 Buchungsverwaltung eigener finanzkritischer PR und eigene Produktionsentscheidung. FLH04 #160/#161 nach UI, bestehendes E2E-/Drive-/Backup-/Passwort-/Offline-/Konfliktdesign nutzen, keine Sync-Releasefreigabe. D/P2 #157 geparkt, #151 Fehlnachweise erhalten. Originalformate/externe Belege/Hardware/OAuth bleiben differenziert offen. Historische Checkpoints darunter erhalten; aktueller Abschnitt hat Vorrang.
+
+---
+
 # Aktueller Checkpoint: v184 deployed; C4 Einheiten-/Tooltip-Hotfix vor visueller Abnahme
 
 C3/#168 ist als main `37e1b881f038cb3e0465a570e746e4b31d9ce3d7`, Tree `5b587f27693926e62a3408495ef75c2730f3cb14` deployed. Finale PR-CI40427864606/Wallet40427864643 und Main/Pages/Live40428656423 vollständig SUCCESS. Main709/709/0Fail/0Skip; live105 exakte Assethashes, SW184,6 Kerngruppen/18 Axe, B1/C1/C2/C3 in3 Engines tatsächlich PASS. Gerendertes Bestandsbild bestätigt die korrigierte Linie. **Visueller Abschluss dennoch offen:** Bild zeigt Eurozeichen auf der Mengenachse. Dieser vorbestehende Format-Default wurde nun konkret erkannt, nicht als fehlerfreie Live-Abnahme umdeklariert. Evidenz: release-evidence/ui-quality-v184-release.json.

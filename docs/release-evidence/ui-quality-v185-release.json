@@ -1,0 +1,56 @@
+{
+  "release": "v185",
+  "status": "LIVE_ACCEPTED",
+  "PR": 169,
+  "finalPRHead": "7316fa50d219054396cb1184db6a5d30869081d6",
+  "sourceSHA": "3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5",
+  "treeSHA": "9776aad4c4e526429c506896781fd03150d6d577",
+  "PRCI": 40461463933,
+  "walletCI": 40461464114,
+  "mainCI": 40462563364,
+  "jobs": {
+    "test": 122050334026,
+    "crossEngine": 122050334381,
+    "deploy": 122052765291,
+    "liveAcceptance": 122052868184
+  },
+  "actual": {
+    "tests": 712,
+    "pass": 712,
+    "fail": 0,
+    "skip": 0,
+    "liveAssetsSHA256": 105,
+    "cache": "foliolab-open-v185",
+    "coreGroups": 6,
+    "axeScans": 18,
+    "UIEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "quantityUnits": "no currency",
+    "priceUnits": "actual USD, tiny prices nonzero",
+    "historicalTooltip": "bounded, readable",
+    "exactZeroWrites": "PASS"
+  },
+  "images": [
+    {
+      "id": "c3-history-quantity",
+      "sha256": "b62676a9cbd52133f1d8547ae07a1f5b133f78414df33deda7dcfab2d5343ed9",
+      "bytes": 43219
+    },
+    {
+      "id": "c4-price-usd",
+      "sha256": "9fb2c1b08a66ae67bc1749f970d6ba9140eef76dcbaad994938cbbc068eca7ba",
+      "bytes": 57943
+    }
+  ],
+  "visualReviewPerformed": true,
+  "closedFinding": "v184 EUR unit on quantity axis; original visual failure retained",
+  "limits": [
+    "No physical Android/native Safari/OS-font/OAuth acceptance.",
+    "Local Firefox/WebKit native install denied; actual cross tests used regular GitHub runner.",
+    "Overall UI stabilization partial; C5/final bounded check remain.",
+    "No booking mutation or FLH04 production authorization."
+  ]
+}
