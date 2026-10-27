@@ -1062,7 +1062,7 @@
 .btn.selection-danger{color:#6b211c;border-color:#6b211c;background:#fff;transition:none}
 .btn.selection-danger:hover{background:#fff0ed}
 #positionSelectionTools{flex-wrap:wrap;margin:12px 0}
-#positionSelectionTools .btn{white-space:normal}
+#positionSelectionTools .btn{white-space:normal;min-width:44px;min-height:44px}
 
 .position-removal-dialog .dialog-footer{flex-wrap:wrap}
 .position-removal-dialog .dialog-footer .btn{flex:1 1 140px;min-width:0;white-space:normal}
