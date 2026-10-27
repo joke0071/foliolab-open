@@ -10,7 +10,7 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
    let m=blankModel();m.settings.autoRefresh=false;const provider=createProvider({name:'Synthetic Review Provider'});m.providers.push(provider);const a=createAccount({providerId:provider.id,name:'Wallet account',type:'wallet'},m),b=createAccount({providerId:provider.id,name:'Other custody',type:'securities'},m);m.accounts.push(a,b);
    const w=createPosition({providerId:provider.id,accountId:a.id,name:'Synthetic ETH',kind:'crypto',symbol:'ETH',coinId:'ethereum',quantity:5,price:0,wallet:{enabled:true,chain:'evm',chainId:1,address:'0x1111111111111111111111111111111111111111'}},m),old=createPosition({providerId:provider.id,accountId:b.id,name:'Old ETF',kind:'etf',quantity:1,price:100,quoteAsOf:'2026-01-01'},m),manual=createPosition({providerId:provider.id,accountId:b.id,name:'Intentional manual price',kind:'etf',quantity:1,price:100},m);old.quoteAsOf='2026-01-01';m.positions.push(w,old,manual);
    m=acceptHistory(m,historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream({coverage:{status:'partial',fromBlock:'0',toBlock:'10',tipHash:'block-10',source:'fixture'}})]}),issues:['archive-gap']},{id:'wallet-history:'+w.id,chain:'eth',walletKey:w.id,acceptedAt:NOW}));m=checkpointHistory(m,{id:'wallet-history:'+w.id,chain:'eth',walletKey:w.id,provider:'fixture.test',filter:'all',updatedAt:NOW});
-   const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();return {wallet:w.id,other:b.id};
+   const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();return {wallet:w.id,other:b.id,walletAccount:a.id};
   });
   await page.goto('http://127.0.0.1:4173/');const state=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}}),before=await state();
   for(const width of [320,390,430,768,1440]){
@@ -22,6 +22,18 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#qualityReviewTools',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mkdir('artifacts/gates/quality',{recursive:true});await page.screenshot({path:'artifacts/gates/quality/'+engine+'-'+width+'.png'});
    const action=page.locator('#positionList [data-action="wallet-history"]');assert.equal(await action.count(),1);await clickDisclosed(action);await page.locator('#walletHistoryDialog').waitFor({state:'visible'});await page.keyboard.press('Escape');await page.locator('#walletHistoryDialog').waitFor({state:'hidden'});assert.ok(await action.evaluate(el=>document.activeElement===el));
+  }
+  for(const width of [320,390,430,768,1440]){
+   await page.setViewportSize({width,height:900});await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="more"]').click();
+   const details=page.locator('[data-account-evidence="'+setup.walletAccount+'"]');
+   if(!await details.evaluate(el=>el.open))await clickDisclosed(details.locator(':scope > summary'));
+   assert.match(await details.innerText(),/1 Positionen/);assert.match(await details.innerText(),/1 Positionen mit Kursprüfbedarf/);assert.match(await details.innerText(),/1 Positionen mit gemeldetem Historienprüfbedarf/);assert.match(await details.innerText(),/Kein vollständiger Bank- oder Walletabgleich bestätigt/);
+   for(const target of [details.locator(':scope > summary'),details.locator('[data-action="view-account"]')]){const box=await target.boundingBox();assert.ok(box.width>=44&&box.height>=44,'account evidence targets >=44px');}
+   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#providerSettings',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:'artifacts/gates/quality/'+engine+'-account-'+width+'.png'});
+   const action=details.locator('[data-action="view-account"]');await action.click();assert.equal(await page.locator('#positionList .position-entry').count(),1);assert.match(await page.locator('#positionList').innerText(),/Synthetic ETH/);
+   await page.locator((width<720?'#mobileNav':'#sidebarNav')+' [data-page="more"]').click();assert.equal(await details.evaluate(el=>el.open),true,'evidence disclosure survives navigation');
+   const summary=details.locator(':scope > summary');await summary.focus();await page.keyboard.press('Enter');assert.equal(await details.evaluate(el=>el.open),false);await page.keyboard.press('Enter');assert.equal(await details.evaluate(el=>el.open),true);
   }
   assert.deepEqual(await state(),before,'review/filter/history viewing must not change portfolio or revision');
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();for(const p of m.positions){p.price=100;p.priceExact='100';p.quoteAsOf=new Date().toISOString().slice(0,10);}m.walletHistory.pending=[];for(const session of m.walletHistory.sessions){session.issues=[];session.streams.forEach(s=>{s.opening={quantityBaseUnits:'0',beforeBlock:'0',source:'synthetic-verified-genesis'};s.coverage.status='verified';});}await s.save(m);s.close();});

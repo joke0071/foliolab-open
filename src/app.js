@@ -1,3 +1,4 @@
+import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
@@ -548,15 +549,22 @@ function openBookingUndo(){
   model=prepareBookingUndo(model,receipt);await save();bookingChangeReceipt=null;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung rückgängig gemacht.');
  });
 }
+function renderAccountEvidence(row,account,expanded){
+ if(!row)return '';
+ const facts=[row.positions+' Positionen (davon '+row.archived+' archiviert)',row.cash+' Geldpositionen',row.quoteReview+' Positionen mit Kursprüfbedarf',row.historyReview+' Positionen mit gemeldetem Historienprüfbedarf',row.openingAbsent+' Positionen ohne gespeicherte Eröffnung',row.openingUndated+' Eröffnungen ohne eigenes Datum',row.tradeCostsUnknown+' Käufe/Verkäufe mit unbekannten Nebenkosten',row.imported+' Buchungen mit Importherkunft',row.unmatchedCashMovements+' Ein-/Auszahlungen ohne interne Transferzuordnung'];
+ return '<details class="account-evidence advanced-apis" data-account-evidence="'+esc(account.id)+'"'+(expanded?' open':'')+'><summary>Datenstand · '+esc(account.name)+'</summary><div class="account-evidence-body"><ul>'+facts.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul><p class="small-help">Kein vollständiger Bank- oder Walletabgleich bestätigt. Eröffnungsdatum, historische Kurse, Wechselkurse und Anschaffungswerte müssen für den jeweiligen Zeitraum belegt sein. Importherkunft allein belegt keine vollständige Historie. Nicht zugeordnete Ein-/Auszahlungen können externe Geldflüsse sein.</p><div class="settings-actions"><button type="button" class="btn outline" data-action="view-account" data-id="'+esc(account.id)+'">Positionen prüfen</button>'+(row.unmatchedCashMovements?'<button type="button" class="btn outline" data-action="transfer-matching">Transferzuordnung prüfen</button>':'')+'</div></div></details>';
+}
 function renderSettings(){
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
+ const evidence=new Map(accountEvidenceRows(model).map(row=>[row.accountId,row]));
+ const expandedAccounts=new Set([...settings.querySelectorAll('details[open][data-account-evidence]')].map(x=>x.dataset.accountEvidence));
  const expanded=new Set([...settings.querySelectorAll('details[open][data-provider-settings]')].map(x=>x.dataset.providerSettings));
  settings.innerHTML=model.providers.length?model.providers.map(p=>{
   const accounts=model.accounts.filter(a=>a.providerId===p.id);
   const children=accounts.map(a=>'<div class="account-entry"><span>'+esc(a.name)+' <small>· '+esc(accountTypes[a.type]||accountTypes.other)+'</small>'+cashTermsAccountHint(a,esc)+'</span>'+
    '<button type="button" class="row-btn" data-action="edit-account" data-id="'+esc(a.id)+'" aria-label="Konto bearbeiten">'+svg('pencil',15)+'</button>'+
-   '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>').join('');
+   '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>'+renderAccountEvidence(evidence.get(a.id),a,expandedAccounts.has(a.id))).join('');
   return '<div class="setting-provider provider-settings-row">'+
    '<details class="provider-settings-group" data-provider-settings="'+esc(p.id)+'"'+(expanded.has(p.id)?' open':'')+'>'+
    '<summary><strong>'+esc(p.name)+'</strong><small>'+esc(types[p.type]||types.other)+' · '+accounts.length+' Konto/Konten</small></summary>'+
