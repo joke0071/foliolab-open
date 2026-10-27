@@ -1,3 +1,15 @@
+# Fortsetzung 27.10.2026: C6 als UI-Kandidat, keine Veröffentlichung
+
+Basis main `2744d2be01c834738cf2a2cc1f207dce3254e9db` nach PR171. GitHub Actions 40478456941 completed/success; PR-Workflow 40477156978 ebenfalls success. Ältere C5-Statusangaben darunter sind historisch. Offene PRs beim Einstieg nur157 (geparkt) und161 (Sync-Dokumentation).
+
+C6 implementiert: Abstand zur Willkommenskarte, obere Trennlinie vor Rendite, Kalender ohne historische Einträge verborgen, Archivtoggle ausschließlich im Auswahl-Dropdown bei vorhandenen Archiven. Native Checkbox/Details statt großer Auswahlbuttons, bestehende Selectionengine und IDs, gefiltertes Abwählen erhält ausdrücklich gewählte verdeckte IDs. Globale Auswahl benennt Archive; Status und Löschvorschau zeigen verdeckte/archivierte Mengen. Escape/Fokus/Touchziele; keine zweite Auswahlpersistenz, keine Finanz-/CAS-Änderung. SW187 ist nur Kandidat.
+
+Lokal: 713 Unit-Tests bestanden, keine übersprungen. Zusätzlich neue gefilterte Abwahlprüfung. Browserprüfungen um native Menüinteraktionen und Checkbox/Mischzustand/Touch/Escape ergänzt, ursprüngliche Finance/CAS/Backup-Assertions erhalten. Lokale Browserausführung BLOCKED: Browserbinary fehlt und Playwright-Download liefert ungültiges ZIP. Keine lokale visuelle oder Drei-Engine-Abnahme behauptet. Vollständige unveränderte GitHub-Gates, Bilder, Review und Liveabnahme stehen aus; kein Merge vor erfolgreicher Abnahme.
+
+Nächster Schritt: C6-PR-CI auswerten, konkrete Fehler beheben, insbesondere Archiv-only/Leerzustand, neue Auswahl und fünf Breiten visuell prüfen. Danach erst freigegebenes UI-Release; begrenzter Fünf-Bereiche-Abschlusscheck. #165, Importe und #160/#161 bleiben offen mit separaten fachlichen/externen Gates. CI-Optimierung ausdrücklich zuletzt und separater PR; bisher keine Optimierung oder Zeitersparnis behauptet.
+
+---
+
 # Aktuell: v185 DONE; C5 gesichert, finale Gates offen
 
 C4/#169/main3f9da89 tatsächlich live abgenommen:712Tests, CI40461463933/MainPagesLive40462563364 SUCCESS,105Livehashes/SW185/6Kerngruppen18Axe/3EngineUI, korrigierte Bilder angesehen. Nicht wiederholen.

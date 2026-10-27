@@ -74,7 +74,7 @@ try{
   assert.ok(!(await manual.getAttribute('class')).includes('primary'),'Manual checkpoint is secondary');
   const size=await manual.evaluate(el=>({h:el.getBoundingClientRect().height,right:el.getBoundingClientRect().right,scroll:document.documentElement.scrollWidth}));
   assert.ok(size.h>=38&&size.right<=width+1&&size.scroll<=width+1,'Manual action remains usable at '+width);
-  assert.equal(await page.locator('#historyCalendarDisclosure > summary').isVisible(),true,'Date selection retained');
+  assert.equal(await page.locator('#historyCalendarDisclosure > summary').isVisible(),false,'Empty history has no date-selection action');
   await page.locator('#snapshotManager > summary').click();
  }
  await page.setViewportSize({width:390,height:850});
