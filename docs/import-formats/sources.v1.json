@@ -1,0 +1,674 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "scope": "Read primary source implementations and licenses, not a claim that their test suites ran or that formats are valid in FolioLab",
+  "sources": [
+    {
+      "id": "Poveroh/transaction-parser",
+      "revision": "7b16e2ae55656a6dc331130c9054a1b741271de6",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "f8339e2e98b5ed2ee64c8ab9ec57e80356b8b708e9865aae62470b5f2e01edaf",
+          "url": "https://github.com/Poveroh/transaction-parser/blob/7b16e2ae55656a6dc331130c9054a1b741271de6/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "93bad645874ae7463c1a0775146f5bbf1e8fe8ce8dee3a7adfa54ac83e8d07c2",
+          "url": "https://github.com/Poveroh/transaction-parser/blob/7b16e2ae55656a6dc331130c9054a1b741271de6/README.md"
+        },
+        {
+          "path": "TransactionParser.ts",
+          "sha256": "2cdb35a5a5c278dff78f0b62682e492de2d7fc2769fcf3af555daccf3f40516a",
+          "url": "https://github.com/Poveroh/transaction-parser/blob/7b16e2ae55656a6dc331130c9054a1b741271de6/TransactionParser.ts"
+        },
+        {
+          "path": "types.ts",
+          "sha256": "0731283dbd4f9fc78cdf88e370406b19a0c3beef0498c359e49b36c2098b45fc",
+          "url": "https://github.com/Poveroh/transaction-parser/blob/7b16e2ae55656a6dc331130c9054a1b741271de6/types.ts"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "actualbudget/actual",
+      "revision": "fd08b56eef24d953e619877dee5990c560f8468e",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "MIT",
+      "licensePath": "LICENSE.txt",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "71e4b3053e4622e1f5fc5d8aa5336350de32ead39247924c596d659b89b47b6f",
+          "url": "https://github.com/actualbudget/actual/blob/fd08b56eef24d953e619877dee5990c560f8468e/LICENSE.txt"
+        },
+        {
+          "path": "packages/desktop-client/src/components/modals/ImportTransactionsModal/utils.ts",
+          "sha256": "fba1908a04fe623ae0944275c368452151679f66137593b3018d7a068f7150f8",
+          "url": "https://github.com/actualbudget/actual/blob/fd08b56eef24d953e619877dee5990c560f8468e/packages/desktop-client/src/components/modals/ImportTransactionsModal/utils.ts"
+        },
+        {
+          "path": "packages/docs/docs/transactions/importing.md",
+          "sha256": "079cf555cdbaca45f5ca97a4f75dfe4a5613accab4f42cefe7b9f17344f20a4d",
+          "url": "https://github.com/actualbudget/actual/blob/fd08b56eef24d953e619877dee5990c560f8468e/packages/docs/docs/transactions/importing.md"
+        },
+        {
+          "path": "packages/loot-core/src/server/transactions/import/parse-file.ts",
+          "sha256": "d42416f6611d5c210096fa1e48e21163c5847f9b8c6bbff672369a6e0d81c5a9",
+          "url": "https://github.com/actualbudget/actual/blob/fd08b56eef24d953e619877dee5990c560f8468e/packages/loot-core/src/server/transactions/import/parse-file.ts"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "alan-turing-institute/CleverCSV",
+      "revision": "e80acaa5c324889416a5727ad9929d5b2f8bccb6",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "75f73b69f440f6d030dd1765845bddab10ffc44985fe325fa5e2746dce158f6c",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "3e9f7a0f243addcadef4887f6b774211a4b590075e5ed6a253d1b3f9dee0db87",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/README.md"
+        },
+        {
+          "path": "clevercsv/consistency.py",
+          "sha256": "e406372f1f539c41e6996809b6d068a3075e350de0ae68c3815edb0011720b1c",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/clevercsv/consistency.py"
+        },
+        {
+          "path": "clevercsv/detect.py",
+          "sha256": "53586e40e5790e4fd694dddb7db273a8996c920d1ae69629191de40f146fc6e4",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/clevercsv/detect.py"
+        },
+        {
+          "path": "clevercsv/encoding.py",
+          "sha256": "f8caf570161c8d5fc39f223b36403c8ca94146e7c27dfabec10a79abb4af5a8b",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/clevercsv/encoding.py"
+        },
+        {
+          "path": "tests/test_integration/test_dialect_detection.py",
+          "sha256": "206ababe4053318284346a46d6db01461c4d41d1d2976dacb24fb69938ee8e5e",
+          "url": "https://github.com/alan-turing-institute/CleverCSV/blob/e80acaa5c324889416a5727ad9929d5b2f8bccb6/tests/test_integration/test_dialect_detection.py"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "beancount/beangulp",
+      "revision": "81972f0e2ad14f24140598cb292bedbb20fe6a83",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "GPL-2.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+          "url": "https://github.com/beancount/beangulp/blob/81972f0e2ad14f24140598cb292bedbb20fe6a83/LICENSE"
+        },
+        {
+          "path": "beangulp/identify.py",
+          "sha256": "1079069804cdedfc105af276e3b6047e3148dcd5dc031ce6f6b4f827483ce843",
+          "url": "https://github.com/beancount/beangulp/blob/81972f0e2ad14f24140598cb292bedbb20fe6a83/beangulp/identify.py"
+        },
+        {
+          "path": "beangulp/importer.py",
+          "sha256": "9be3df1b8980cc28501659675f51d79d3b9e8a511233be95af7a3a4266241e6b",
+          "url": "https://github.com/beancount/beangulp/blob/81972f0e2ad14f24140598cb292bedbb20fe6a83/beangulp/importer.py"
+        },
+        {
+          "path": "beangulp/importers/csvbase.py",
+          "sha256": "73b02228d0e562a657d20175999511adb60c655d9dc5895cbde02c81b2b9d3db",
+          "url": "https://github.com/beancount/beangulp/blob/81972f0e2ad14f24140598cb292bedbb20fe6a83/beangulp/importers/csvbase.py"
+        },
+        {
+          "path": "beangulp/similar.py",
+          "sha256": "eb906258d1b64533628421d33cadd9eade6dc2b35741e74bee26d0257b25ff74",
+          "url": "https://github.com/beancount/beangulp/blob/81972f0e2ad14f24140598cb292bedbb20fe6a83/beangulp/similar.py"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "eprbell/dali-rp2",
+      "revision": "a17f269ca8156abec23c1342230bf17b510f6ace",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "Apache-2.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "eacb48d377d20d690f15c275999c655b4d9c51665d8881b00b4d4fecef776ac0",
+          "url": "https://github.com/eprbell/dali-rp2/blob/a17f269ca8156abec23c1342230bf17b510f6ace/LICENSE"
+        },
+        {
+          "path": "src/dali/plugin/input/csv/ledger.py",
+          "sha256": "7c36638f81f4630b2c32a37e20e0b2afb01f0b30254781e5a2a3b440c0ed5e06",
+          "url": "https://github.com/eprbell/dali-rp2/blob/a17f269ca8156abec23c1342230bf17b510f6ace/src/dali/plugin/input/csv/ledger.py"
+        },
+        {
+          "path": "src/dali/plugin/pair_converter/csv/kraken.py",
+          "sha256": "847c9de0ab2c4582031b7fbb2240b85f8044d4df4ff6deb2a29140ae33cf4727",
+          "url": "https://github.com/eprbell/dali-rp2/blob/a17f269ca8156abec23c1342230bf17b510f6ace/src/dali/plugin/pair_converter/csv/kraken.py"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "ghostfolio/ghostfolio",
+      "revision": "db930bbab938c6a1c4dbbfea6afb9bb1001155db",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "AGPL-3.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "85276abb93d6782a9bd09bd1c792cf309c0ed4a6dee363a0f9f3b961c4be0128",
+          "url": "https://github.com/ghostfolio/ghostfolio/blob/db930bbab938c6a1c4dbbfea6afb9bb1001155db/LICENSE"
+        },
+        {
+          "path": "apps/api/src/services/import/import-data.dto.ts",
+          "sha256": "67eec0603243cb097cd53327e54a4e65837e82ec35ddc4156c6c97efdb4a1068",
+          "url": "https://github.com/ghostfolio/ghostfolio/blob/db930bbab938c6a1c4dbbfea6afb9bb1001155db/apps/api/src/services/import/import-data.dto.ts"
+        },
+        {
+          "path": "apps/api/src/services/import/import.service.ts",
+          "sha256": "0896f6edf8dcaec4041ede9ef4aaeb3fdbc3aeab0e500ba2f956ab03e5f2b67a",
+          "url": "https://github.com/ghostfolio/ghostfolio/blob/db930bbab938c6a1c4dbbfea6afb9bb1001155db/apps/api/src/services/import/import.service.ts"
+        },
+        {
+          "path": "apps/client/src/app/services/import-activities.service.ts",
+          "sha256": "75b005576e6584cd20df924aaa943eb4e4f185b9069b0275f0228edc56d680e2",
+          "url": "https://github.com/ghostfolio/ghostfolio/blob/db930bbab938c6a1c4dbbfea6afb9bb1001155db/apps/client/src/app/services/import-activities.service.ts"
+        },
+        {
+          "path": "test/import/ok/sample.csv",
+          "sha256": "eaac11ee00a979febfdd1429c3718b8653128c80cb4b2484ca0b43ce141847cb",
+          "url": "https://github.com/ghostfolio/ghostfolio/blob/db930bbab938c6a1c4dbbfea6afb9bb1001155db/test/import/ok/sample.csv"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "jhigatzberger/flatex-analyzer",
+      "revision": "ffbe895ecc763bf8769c35e2faa98470e3057d3c",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "AGPL-3.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "64d3bceed384a08e3c39e8b31ff1c527bc49d248fe3bb534a70797a06d0945f5",
+          "url": "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "7cb3a49e7f5cac3cd18bb030c8617b3a304033c47d42adde4d776373b39621cc",
+          "url": "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/README.md"
+        },
+        {
+          "path": "src/features/dashboard/components/csv-upload.tsx",
+          "sha256": "9fbcf5f38bde1bc308ffac51e94d417962893a3c23775de1e804461ca3d8d64e",
+          "url": "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/src/features/dashboard/components/csv-upload.tsx"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "lnsp/wealth",
+      "revision": "54af4dd2b1f2e55043827c23685fd59e819c541e",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "MIT",
+      "licensePath": "LICENSE.md",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE.md",
+          "sha256": "963ca96ce8eb1af440c3219d1fd336ff66d9472c296558148cc1b10ebd61e9cb",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/LICENSE.md"
+        },
+        {
+          "path": "docs/scalable-capital-csv.md",
+          "sha256": "ace7f2d714cc4dd4b1635a91f20334f5d7475eea9c85654688fdc0bfc84c5cf9",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/docs/scalable-capital-csv.md"
+        },
+        {
+          "path": "internal/parser/ing.go",
+          "sha256": "9d1ea903770e1c05b6216652cbe25a7d6cb0bd545206e1cba21067675b4841f3",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/ing.go"
+        },
+        {
+          "path": "internal/parser/revolut.go",
+          "sha256": "a896ac000248a5442634cf75f22aeffb4fbf79bcb2c1933039ffbeb54f8e8b2b",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/revolut.go"
+        },
+        {
+          "path": "internal/parser/scalable.go",
+          "sha256": "01e70239beb6e71038789679f7defd1a4f86b6184402fdbd8bca8c13e2a58e99",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/scalable.go"
+        },
+        {
+          "path": "internal/parser/scalable_test.go",
+          "sha256": "66b595943be0931711435116bc059a764c55497201cbafa9e0b710434f9ef199",
+          "url": "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/scalable_test.go"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "matthesvoss/Scalable-Capital-Transactions-Exporter",
+      "revision": "a99117f60bf5ec4e1c7512744055f0a596d894b7",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "MIT",
+      "licensePath": null,
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "mholt/PapaParse",
+      "revision": "1fcb83c64acf61ae636b556b0eadeebaca0aea33",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "99aa68e4b42758b09828a46515f70369e5463458ab7a990189f641af2b8d9b4e",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "4350af8813373400b8240ab3960084ea448d0c61f8d4e0f33081232b8d874f39",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/README.md"
+        },
+        {
+          "path": "package.json",
+          "sha256": "91ef186375bc26eb5717c78beeb69dc20f49194c7a97a1ada82b55517497dc88",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/package.json"
+        },
+        {
+          "path": "papaparse.js",
+          "sha256": "e0214bc097afa2a963611f43190b0f720d5f23ae51474e8dbfb063ecc54e1435",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/papaparse.js"
+        },
+        {
+          "path": "tests/node-tests.js",
+          "sha256": "161a166563b021e208e9ca2ef4481eefe59b5220245d8fe1d6d9c80bf368bfc2",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/tests/node-tests.js"
+        },
+        {
+          "path": "tests/test-cases.js",
+          "sha256": "e53da9cc35c0ef7654e183a2debd3ac1190f82a9aadac4db3fb5407ec250926e",
+          "url": "https://github.com/mholt/PapaParse/blob/1fcb83c64acf61ae636b556b0eadeebaca0aea33/tests/test-cases.js"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "mozilla/pdf.js",
+      "revision": "2a1b2415ed2aeeb515222c9358d1b958dfd2af11",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "Apache-2.0",
+      "licensePath": null,
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "nicolettas-muggelbude/RechnungsFee",
+      "revision": "cd2a4903031349c3f4c667f993ff6b22956d6f82",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "NOASSERTION",
+      "licensePath": "LICENSE",
+      "licenseNote": "AGPL-3.0-or-later text read; GitHub metadata NOASSERTION",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "dfc7889191e947a32e6f025465bd74d0d2d2438f26ed3ac5166162f4d536cab6",
+          "url": "https://github.com/nicolettas-muggelbude/RechnungsFee/blob/cd2a4903031349c3f4c667f993ff6b22956d6f82/LICENSE"
+        },
+        {
+          "path": "src/backend/database/seed.py",
+          "sha256": "28529a4e43d2150d467519ca8db70ab54f243986846e7e4768453ca245e611a8",
+          "url": "https://github.com/nicolettas-muggelbude/RechnungsFee/blob/cd2a4903031349c3f4c667f993ff6b22956d6f82/src/backend/database/seed.py"
+        },
+        {
+          "path": "vorlagen/bank-csv/README.md",
+          "sha256": "572c06c214a78ad85e70f5258368c2aca119706dc81c6048f28dbf189f42fa2d",
+          "url": "https://github.com/nicolettas-muggelbude/RechnungsFee/blob/cd2a4903031349c3f4c667f993ff6b22956d6f82/vorlagen/bank-csv/README.md"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "portfolio-performance/portfolio",
+      "revision": "2a0ef52a93882c0845596b2c6b834e54f592b7ec",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "EPL-1.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "22e0ff3e946377a65cede42300b894ab228488194b1474412bb305a68327b4f0",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/LICENSE"
+        },
+        {
+          "path": "name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/csv/CSVConfig.java",
+          "sha256": "fd96092e81f4bcc4e808085b6e1ec8be6eb7875b66d2b08740505a99e7420590",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/csv/CSVConfig.java"
+        },
+        {
+          "path": "name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/csv/CSVImporter.java",
+          "sha256": "bc2b657c4684fb83b0099d27af43896341712a56c833b71005e9bf563071c6b6",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/csv/CSVImporter.java"
+        },
+        {
+          "path": "name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/traderepublic/CashDividendCorrectionMatcher.java",
+          "sha256": "566a8a2b308a88417383273c7944669cbafa4d531464057459ad59a39a65d42d",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/traderepublic/CashDividendCorrectionMatcher.java"
+        },
+        {
+          "path": "name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/traderepublic/TradeRepublicCSVExtractor.java",
+          "sha256": "d86ba61e04b2e9c75cb9f6a077001e14dad65d12f22cff5aebe0fa0ed9dae1d9",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/traderepublic/TradeRepublicCSVExtractor.java"
+        },
+        {
+          "path": "name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport01.csv",
+          "sha256": "4a5a73c5e90cbb8964eeb91a759d80ce533d0bb2b97c7db39aee58fb5a0aa8d9",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport01.csv"
+        },
+        {
+          "path": "name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport06.csv",
+          "sha256": "b380b9ab4bb37ddee0fda62bbd136bb81dff2114ce23ec3f43b854a4de859456",
+          "url": "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport06.csv"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "provinzio/CoinTaxman",
+      "revision": "9c72666b989094a24c89220446825d90706da655",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "AGPL-3.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "749932ee059eadb4b253325c6b61ff9cac049bea71b5ad347ed2fe70b3bd6567",
+          "url": "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/LICENSE"
+        },
+        {
+          "path": "src/book.py",
+          "sha256": "f3eeecfa5dc93d5e874c6db5cec000b81fa7c9a030c4e9014f39abac0feee240",
+          "url": "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/book.py"
+        },
+        {
+          "path": "src/core.py",
+          "sha256": "934abbb817cf057105f5d2c2a9a65509d1ba066b483d2515ec7884463bd77f2e",
+          "url": "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/core.py"
+        },
+        {
+          "path": "src/transaction.py",
+          "sha256": "8a19c2a15ab75f047cd0baef37ed1268fcddcd980f5b1a1c2658b630e35d21db",
+          "url": "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/transaction.py"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "rotki/rotki",
+      "revision": "87fbd063936fe41656f2b8816cf474d638f703e4",
+      "checkedAt": "2026-10-27",
+      "branch": "develop",
+      "license": "AGPL-3.0",
+      "licensePath": "LICENSE.md",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE.md",
+          "sha256": "eb6f58a98d8bdb6d3c8fee3817543589f3cd0921d14748fa0630edff2d4c08b0",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/LICENSE.md"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/binance.py",
+          "sha256": "e74de6cd2f6c0f6c31e57d1df4fbd21babadd10fd8a607305ae96aa9df678cc4",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/binance.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/bitstamp.py",
+          "sha256": "4cfcb00172e27e1101efcef7b19bfa09ab2544700f8907307dd5473a257e1ad7",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/bitstamp.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/coinbasepro.py",
+          "sha256": "f18a62e23d3845cd3af667683627482dbe225a85b359dc3ca1512818fe3a2f9e",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/coinbasepro.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/cryptocom.py",
+          "sha256": "b9412d935bbf2ac0dc5bc24f9c2bdad40e5caa092c5c890bb58771927ebb6cd8",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/cryptocom.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/rotki_events.py",
+          "sha256": "cddc12eea4c642e156860af89a859e27cb3e0ea85db687948ee03daf29b2cfa1",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/rotki_events.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/importers/rotki_trades.py",
+          "sha256": "6fdc76a3ff56af8ebdd49554f66f2888acc944611d0f4d5be6cb38014d0f5596",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/rotki_trades.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/manager.py",
+          "sha256": "32c35dae606db60c7a485bc5ab265ea7443bd7ac4ee4f7c2a02b7bb993935370",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/manager.py"
+        },
+        {
+          "path": "rotkehlchen/data_import/utils.py",
+          "sha256": "b63cc7b26b442af098de4df18b00fd7b30551efdbe5345d6c5501581f23dd2fc",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/utils.py"
+        },
+        {
+          "path": "rotkehlchen/tests/data/binance_history.csv",
+          "sha256": "d1acac980d9c58dea5dd486ec863f8bdeb95272baabd3c2b62a9b7c9b36cdf75",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/binance_history.csv"
+        },
+        {
+          "path": "rotkehlchen/tests/data/bitstamp.csv",
+          "sha256": "95d62c2f4318c11a2ea1d2cce407c02eb08a762401522e43007c03a5a3b8b5f7",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/bitstamp.csv"
+        },
+        {
+          "path": "rotkehlchen/tests/data/coinbasepro.csv",
+          "sha256": "ec1818219b1cf28996e9242fb7ca385f1a0f5633e48f7367c9ef165e4527f318",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/coinbasepro.csv"
+        },
+        {
+          "path": "rotkehlchen/tests/data/cryptocom_trades_list.csv",
+          "sha256": "e248722e1ca9c89001029c7459a24ae609660b0ed7122f7915e0de60c6abbaae",
+          "url": "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/cryptocom_trades_list.csv"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "shuisman/degiro-importer",
+      "revision": "4a53b30ebb8ea16bc25877a247b2c69ec06e96d9",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "MIT",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "14e040c7c16be2fa90d79a1cd7642a2045722d03b61f6b8ea861f6ada6c3e3f2",
+          "url": "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/LICENSE"
+        },
+        {
+          "path": "README.md",
+          "sha256": "788ecdf7453d688781633e0fe11e1207851e390cdfae086c17dec1c1c44bc700",
+          "url": "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/README.md"
+        },
+        {
+          "path": "src/parser/csv.ts",
+          "sha256": "c3b5b766a798c1f070b31c18b0175e3a727bb19b2173bacc7e191aaa57768ac7",
+          "url": "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/src/parser/csv.ts"
+        },
+        {
+          "path": "src/parser/mapper.ts",
+          "sha256": "760e747b1fc68220ae8aa279d7ba2ca7136f94ad07496d53c9321aad76b94ae1",
+          "url": "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/src/parser/mapper.ts"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "simonmichael/hledger",
+      "revision": "ac8100cba0e970f2fffefeb51b0b011bee580723",
+      "checkedAt": "2026-10-27",
+      "branch": "main",
+      "license": "GPL-3.0",
+      "licensePath": "LICENSE",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "url": "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/LICENSE"
+        },
+        {
+          "path": "bin/krakencsv",
+          "sha256": "579f663d74a1ecfecdcb1e4e211f2f133524f2846b36aaab4e7c7cf0447806b1",
+          "url": "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/bin/krakencsv"
+        },
+        {
+          "path": "examples/csv/ccexchanges/kraken.rules",
+          "sha256": "132c673d0c4fae17de41518f2480bb8760835b469f5cdaba3d3e2cea2b88d868",
+          "url": "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/examples/csv/ccexchanges/kraken.rules"
+        },
+        {
+          "path": "hledger-lib/Hledger/Read/CsvReader.hs",
+          "sha256": "e56849657a19fc9334bc0e66992331a95b1059304c53db66b9cc52fea6ca675d",
+          "url": "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/hledger-lib/Hledger/Read/CsvReader.hs"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "tarioch/beancounttools",
+      "revision": "f71b3cb2a47c78ad3e04790c90404e45dd5a1fb1",
+      "checkedAt": "2026-10-27",
+      "branch": "master",
+      "license": "MIT",
+      "licensePath": "LICENSE.txt",
+      "licenseNote": "Current repository SPDX metadata plus downloaded license where available; component terms still govern reuse",
+      "filesRead": [
+        {
+          "path": "LICENSE.txt",
+          "sha256": "551da1933de9f52c388525dced2e6265339719e57887e8bc00efead33126b641",
+          "url": "https://github.com/tarioch/beancounttools/blob/f71b3cb2a47c78ad3e04790c90404e45dd5a1fb1/LICENSE.txt"
+        },
+        {
+          "path": "src/tariochbctools/importers/general/deduplication.py",
+          "sha256": "fb65eea984e6192c8abdad09df1cb987ccf04ddd9d808410fa0619377c13ece0",
+          "url": "https://github.com/tarioch/beancounttools/blob/f71b3cb2a47c78ad3e04790c90404e45dd5a1fb1/src/tariochbctools/importers/general/deduplication.py"
+        },
+        {
+          "path": "src/tariochbctools/importers/revolut/importer.py",
+          "sha256": "146149f4c42fe8cd7dadf19a92e5698f0e36c3ce53bbce876f87f56d95e73252",
+          "url": "https://github.com/tarioch/beancounttools/blob/f71b3cb2a47c78ad3e04790c90404e45dd5a1fb1/src/tariochbctools/importers/revolut/importer.py"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    },
+    {
+      "id": "LedgerHQ/ledger-live",
+      "revision": "c7947b848a87b175c8d7d4a81ed255ca26ab800e",
+      "checkedAt": "2026-10-27",
+      "branch": "previously pinned develop snapshot",
+      "license": "MIT",
+      "licensePath": null,
+      "filesRead": [
+        {
+          "path": "libs/ledger-live-common/src/csvExport.ts",
+          "url": "https://github.com/LedgerHQ/ledger-live/blob/c7947b848a87b175c8d7d4a81ed255ca26ab800e/libs/ledger-live-common/src/csvExport.ts"
+        }
+      ],
+      "upstreamTestsExecuted": false,
+      "codeCopied": false,
+      "fixturesCopied": false
+    }
+  ]
+}

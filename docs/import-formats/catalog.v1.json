@@ -1,0 +1,1491 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026-10-27.1",
+  "status": "RESEARCH_IN_PROGRESS",
+  "productionBase": "v188/ca1fa8fd46b3060d10a13095400bc3d33b0f3c42",
+  "warning": "Format facts and planned adapters, NOT a claim of implemented/validated provider support. No private originals/rows/hashes are embedded.",
+  "providers": [
+    {
+      "providerId": "flatex-at",
+      "name": "flatex Österreich",
+      "priority": "A",
+      "region": "Austria; classic/new variants separately",
+      "formats": [
+        {
+          "formatId": "flatex-at-depot-classic-oss",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Nummer",
+            "Buchtag",
+            "Valuta",
+            "ISIN",
+            "Bezeichnung",
+            "Nominal",
+            "",
+            "Buchungsinformationen",
+            "TA-Nr.",
+            "Kurs",
+            "",
+            "Depot"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "source-specific, preserve blank columns positionally",
+          "numbers": "German decimal comma/thousands dot",
+          "datesAndTimezone": "Buchtag and Valuta DD.MM.YYYY; date-only, no execution timezone inferred",
+          "transactionTypes": [
+            "Kauf",
+            "Verkauf",
+            "other descriptions need proof"
+          ],
+          "notes": [
+            "Raw blank columns are not literal _1 header names. _1 is a parser-generated alias in the inspected third-party schema.",
+            "New Nominal (Stk.)/Buchungstag/Buchungsinformation/TA.-Nr. aliases are different variants, not silently identical contracts."
+          ],
+          "schemaFingerprint": "cde89c5406699c490d7f2522605631c61ca65ed6d957c2f6b9916818dbe5a51a"
+        },
+        {
+          "formatId": "flatex-at-cash-classic-oss",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Buchtag",
+            "Valuta",
+            "BIC / BLZ",
+            "IBAN / Kontonummer",
+            "Buchungsinformationen",
+            "TA-Nr.",
+            "Betrag",
+            "",
+            "Auftraggeberkonto",
+            "Konto"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "German decimal comma/thousands dot",
+          "datesAndTimezone": "Buchtag and Valuta distinct",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "d61021733d642a1bc6a171fb92311eabbaa9e72dcc1ca8c5c274106b557f43d4"
+        }
+      ],
+      "sources": [
+        "https://www.flatex.at/service/faqs/detail/rund-um-konto-und-depot/allgemein-zu-rund-um-konto-und-depot/wo-finde-ich-meine-konto-und-depotumsaetze/",
+        "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/src/features/dashboard/logic/transaction-parsing.ts",
+        "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/src/features/dashboard/types/depot-transaction.ts",
+        "https://github.com/jhigatzberger/flatex-analyzer/blob/ffbe895ecc763bf8769c35e2faa98470e3057d3c/src/features/dashboard/types/account-transaction.ts",
+        "../../src/flatex-import.js"
+      ],
+      "expectedRules": [
+        "Depot trades + matching cash statements + opening/closing positions/cash required.",
+        "TA references scoped to provider/account/type; not a global row dedupe key.",
+        "Retain existing beta settlement/cost-basis guards. Do not adopt invalid-number-to-zero fallback or market-price reconstruction.",
+        "Fees/taxes/FX only from matching original cash/settlement evidence."
+      ],
+      "validationGates": [
+        "Native AT depot and cash export pair, complete settlements, balances and fees/FX/tax evidence. Derived extraETF data is not this native proof."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "bittr",
+      "name": "Bittr",
+      "priority": "A",
+      "region": "EUR/BTC purchase-receipt dialect previously locally checked",
+      "formats": [
+        {
+          "formatId": "bittr-purchase-evidence-v1",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "IBAN",
+            "From",
+            "Currency",
+            "Fiat Amount",
+            "Bittr Fee",
+            "Bitcoin Purchased",
+            "Mining Fee",
+            "Bitcoin Amount",
+            "Current Value",
+            "Exchange Rate",
+            "Deposit Code",
+            "Bitcoin Transaction ID",
+            "Timestamp"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC Timestamp; source can use space before time with terminal Z",
+          "transactionTypes": [
+            "purchase receipts"
+          ],
+          "notes": [
+            "Known accounting inputs: fiat EUR, service fee EUR, gross BTC, mining fee BTC, net BTC.",
+            "IBAN/From/Deposit Code are not business identity; do not retain or share unnecessary personal fields.",
+            "Current Value/Exchange Rate are not proof of a tax basis or historical closing price."
+          ],
+          "schemaFingerprint": "49cb6f2e9579d43671422577090e9fab617f17a55c011aa897191ba03049d0b3"
+        }
+      ],
+      "sources": [
+        "../../src/purchase-evidence.js",
+        "https://github.com/joke0071/foliolab-open/issues/159#issuecomment-6444820409"
+      ],
+      "expectedRules": [
+        "Reuse existing receipt validation and whole-transaction N:M grouping; multiple receipts may belong to one blockchain transaction.",
+        "Link only against own confirmed Bitcoin wallet history and exact aggregate satoshi sums. Do not create a second deposit/buy from the same receipt."
+      ],
+      "validationGates": [
+        "Full portfolio boundary reconciliation and universal-profile original roundtrip still separate. Public normative Bittr schema not located; local original/schema evidence is explicit."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "partial",
+          "scope": "Previously validated local original schema only; no new universal-profile or full-history validation claimed."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "ledger-live",
+      "name": "Ledger Live",
+      "priority": "A",
+      "region": "Native LedgerHQ export, chain not inferred from ticker",
+      "formats": [
+        {
+          "formatId": "ledger-live-native-12",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Operation Date",
+            "Status",
+            "Currency Ticker",
+            "Operation Type",
+            "Operation Amount",
+            "Operation Fees",
+            "Operation Hash",
+            "Account Name",
+            "Account xpub",
+            "Countervalue Ticker",
+            "Countervalue at Operation Date",
+            "Countervalue at CSV Export"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Operation Date is op.date.toISOString(): UTC ISO with Z",
+          "transactionTypes": [
+            "IN",
+            "OUT",
+            "FEES",
+            "DELEGATE",
+            "UNDELEGATE",
+            "WITHDRAW_UNBONDED",
+            "other types unresolved"
+          ],
+          "notes": [
+            "Failed/Confirmed is hasFailed, not economic-classification evidence.",
+            "Operation Fees may be blank for token accounts. Account xpub may be an xpub or a fresh address.",
+            "Countervalues derive from market observations, not acquisitions/tax basis. Native CSV lacks a complete chain/event-locator contract."
+          ],
+          "schemaFingerprint": "0510e40ae23c084e388400758330db9b407a2b838e46056407d455e51bd2e81c"
+        }
+      ],
+      "sources": [
+        "https://github.com/LedgerHQ/ledger-live/blob/c7947b848a87b175c8d7d4a81ed255ca26ab800e/libs/ledger-live-common/src/csvExport.ts",
+        "https://support.ledger.com/article/360014094879-zd",
+        "https://github.com/joke0071/foliolab-open/issues/159"
+      ],
+      "expectedRules": [
+        "Explicit account/chain/asset mapping; same hash may have multiple account/token/native operations.",
+        "Do not infer OUT fee inclusion, ownership of IN fees, failed value transfer, internal transfer, swap or staking balance from a row alone.",
+        "Wallet event identity/replay and existing Bittr proof remain canonical; no duplicate stock/balance writes."
+      ],
+      "validationGates": [
+        "Exact on-chain locator/ownership/fees and opening-to-closing reconciliation per supported protocol. Prior local schema validation is not a complete economic importer."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "partial",
+          "scope": "Previously validated local original schema only; no new universal-profile or full-history validation claimed."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "kraken",
+      "name": "Kraken",
+      "priority": "A",
+      "region": "Spot, margin/futures/Earn must remain distinguished",
+      "formats": [
+        {
+          "formatId": "kraken-ledgers-legacy-9",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "txid",
+            "refid",
+            "time",
+            "type",
+            "aclass",
+            "asset",
+            "amount",
+            "fee",
+            "balance"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC per official ledger explanation; keep raw precision and timestamp",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "f53d2349b919158d3af2dc245b8392895549b7aea238b97cb44011fd4b7d3542"
+        },
+        {
+          "formatId": "kraken-ledgers-10",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "txid",
+            "refid",
+            "time",
+            "type",
+            "subtype",
+            "aclass",
+            "asset",
+            "amount",
+            "fee",
+            "balance"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC per official ledger explanation",
+          "transactionTypes": [
+            "trade",
+            "deposit",
+            "withdrawal",
+            "transfer",
+            "adjustment",
+            "spend",
+            "receive",
+            "staking",
+            "reward"
+          ],
+          "notes": [],
+          "schemaFingerprint": "d713845cdb3517dd32e934767dbdfd344335bd8e3e5d771839c3ac263fc58385"
+        },
+        {
+          "formatId": "kraken-ledgers-enriched-columns",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "txid",
+            "refid",
+            "time",
+            "type",
+            "subtype",
+            "aclass",
+            "subclass",
+            "asset",
+            "wallet",
+            "amount",
+            "fee",
+            "balance"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC; exact current native optional column set still verify",
+          "transactionTypes": [],
+          "notes": [
+            "hledger rules show subclass/wallet plus separately enriched USD/netamount/price columns. Those generated columns are NOT a claim of native Kraken export fields."
+          ],
+          "schemaFingerprint": "f17620714bfc74e5a1c61580b3772c07066f8339082a2826fd2a8a098e2321ac"
+        },
+        {
+          "formatId": "kraken-trades",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "txid",
+            "ordertxid",
+            "pair",
+            "time",
+            "type",
+            "ordertype",
+            "price",
+            "cost",
+            "fee",
+            "vol",
+            "margin",
+            "misc",
+            "ledgers"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC; source can contain fractional seconds",
+          "transactionTypes": [
+            "buy",
+            "sell"
+          ],
+          "notes": [],
+          "schemaFingerprint": "2868d9f43540fb35d7f7224cfe15be6122021ff8b67febfb81b49af72aaa3b73"
+        },
+        {
+          "formatId": "kraken-balances",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [
+            "Official balance snapshot export exists; exact native header not treated as proven here. A balance row is not a deposit."
+          ],
+          "schemaFingerprint": null
+        }
+      ],
+      "sources": [
+        "https://support.kraken.com/articles/360001169383-how-to-interpret-ledger-history-fields",
+        "https://support.kraken.com/articles/360001184886-how-to-interpret-trades-history-fields",
+        "https://support.kraken.com/articles/208267878-how-to-export-your-account-history",
+        "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/book.py",
+        "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/bin/krakencsv",
+        "https://github.com/simonmichael/hledger/blob/ac8100cba0e970f2fffefeb51b0b011bee580723/examples/csv/ccexchanges/kraken.rules"
+      ],
+      "expectedRules": [
+        "Trades describes execution, Ledgers balance changes, Balances anchors a point in time. Join explicit ledgers/refid/order/trade keys; never book both as separate movements.",
+        "Ledger txid/refid are internal references, not blockchain hashes. Alias .S/.M/Earn and asset/pair codes require explicit mapping, not universal prefix stripping.",
+        "Preserve partial fills and separate fee currency. Earn allocation/deallocation/migration are internal states, not invented investor inflows."
+      ],
+      "validationGates": [
+        "All-fields Trades + Ledgers over identical interval and opening/closing Balances; deposits/withdrawal chain refs separately. Optional current columns and regional tax scope need originals."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "bitpanda",
+      "name": "Bitpanda",
+      "priority": "A",
+      "region": "Retail crypto/fiat vs Pro/derivatives/stocks are separate",
+      "formats": [
+        {
+          "formatId": "bitpanda-retail-16",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Transaction ID",
+            "Timestamp",
+            "Transaction Type",
+            "In/Out",
+            "Amount Fiat",
+            "Fiat",
+            "Amount Asset",
+            "Asset",
+            "Asset market price",
+            "Asset market price currency",
+            "Asset class",
+            "Product ID",
+            "Fee",
+            "Fee asset",
+            "Spread",
+            "Spread Currency"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "variable disclaimer/account metadata preamble; locate complete header",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "ISO8601 with UTC offset in observed schema; do not drop offset",
+          "transactionTypes": [
+            "buy",
+            "sell",
+            "deposit",
+            "withdrawal",
+            "transfer",
+            "transfer(stake) unresolved"
+          ],
+          "notes": [
+            "Asset class and Product ID matter; derivatives cannot be silently treated as ordinary securities.",
+            "BEST fee asset, spread and separate fee currency may affect economic interpretation. Unknown transfer/stake pairing stays blocked."
+          ],
+          "schemaFingerprint": "5f1912fa1dd0427cdda62393129c23de8b66af5ec5502aecfd7f2b3b9da3dcfa"
+        },
+        {
+          "formatId": "bitpanda-pro-history",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "different Pro title/preamble and trade schema; no alias to retail",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": null
+        }
+      ],
+      "sources": [
+        "https://support.bitpanda.com/hc/en-us/articles/360000122759-How-can-I-download-the-history-of-my-Bitpanda-account",
+        "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/book.py",
+        "https://github.com/provinzio/CoinTaxman/issues/155"
+      ],
+      "expectedRules": [
+        "Transaction ID is provider/business identity; preserve In/Out independently from original signed amounts.",
+        "Keep gross/net/fee/spread/currencies explicit; market-price field is not automatically trade price or taxable cost basis.",
+        "Pro, historical derivatives and current real securities require distinct supported contracts; German tax rules from external projects are not AT semantics."
+      ],
+      "validationGates": [
+        "Retail original all-history CSV, exports for fee-token/swaps/staking and overlapping intervals; Pro only if relevant."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "trade-republic",
+      "name": "Trade Republic",
+      "priority": "A",
+      "region": "Current OSS-observed transaction exports; region/vendor origin still verify",
+      "formats": [
+        {
+          "formatId": "trade-republic-semicolon-value-date",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "datetime",
+            "date",
+            "account_type",
+            "category",
+            "type",
+            "asset_class",
+            "name",
+            "symbol",
+            "shares",
+            "price",
+            "amount",
+            "fee",
+            "tax",
+            "currency",
+            "original_amount",
+            "original_currency",
+            "fx_rate",
+            "description",
+            "transaction_id",
+            "value_date",
+            "counterparty_name",
+            "counterparty_iban",
+            "payment_reference"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "datetime/date/value_date distinct; preserve offset if present, otherwise timezone unresolved",
+          "transactionTypes": [
+            "TRADING: BUY/SELL",
+            "CASH",
+            "CORPORATE_ACTION",
+            "many type codes need explicit support"
+          ],
+          "notes": [],
+          "schemaFingerprint": "83704fc8e47cbcead9acfb909c6a36650bae9a20da5ea18ff67b3a7f2becaf9e"
+        },
+        {
+          "formatId": "trade-republic-comma-mcc",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "datetime",
+            "date",
+            "account_type",
+            "category",
+            "type",
+            "asset_class",
+            "name",
+            "symbol",
+            "shares",
+            "price",
+            "amount",
+            "fee",
+            "tax",
+            "currency",
+            "original_amount",
+            "original_currency",
+            "fx_rate",
+            "description",
+            "transaction_id",
+            "counterparty_name",
+            "counterparty_iban",
+            "payment_reference",
+            "mcc_code"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "datetime/date; absent value_date not invented",
+          "transactionTypes": [
+            "TRADING",
+            "CASH",
+            "CORPORATE_ACTION"
+          ],
+          "notes": [],
+          "schemaFingerprint": "5c346e7ce1d51c6acd919ad4376c9436389e680fdb0bb1f721a2ad8d76f51bbc"
+        }
+      ],
+      "sources": [
+        "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/traderepublic/TradeRepublicCSVExtractor.java",
+        "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport01.csv",
+        "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio.tests/src/name/abuchen/portfolio/datatransfer/traderepublic/TransactionExport06.csv",
+        "https://support.traderepublic.com/"
+      ],
+      "expectedRules": [
+        "Observed required fields datetime/category/type/amount/currency are not alone sufficient authenticity/asset/fee proof.",
+        "Preserve transaction_id, account_type and class, fee/tax signs and FX original currency.",
+        "Inspect signed amount+fee+tax relationship, sell where charges exceed proceeds, dividend correction pairs and corporate actions. Do not import arbitrary case labels as equivalent journal semantics."
+      ],
+      "validationGates": [
+        "Current regional native export + paired original trade/cash/tax evidence; official header contract not located. Public PP CSV is stronger than old no-CSV assumption but not private original validation."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "binance",
+      "name": "Binance",
+      "priority": "B",
+      "region": "Account transaction history vs Spot trades/Futures",
+      "formats": [
+        {
+          "formatId": "binance-account-history",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "User_ID",
+            "UTC_Time",
+            "Account",
+            "Operation",
+            "Coin",
+            "Change",
+            "Remark"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8/BOM supported by pinned consumer",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC_Time YYYY-MM-DD HH:mm:ss, UTC named in field",
+          "transactionTypes": [
+            "multirow operations; explicit codes from source"
+          ],
+          "notes": [],
+          "schemaFingerprint": "0bf0fd9a2ca9cf31b0ec4f796d1af3fd19e7e6fa2eeaf31bb5cc5f4f6f9ce110"
+        }
+      ],
+      "sources": [
+        "https://www.binance.com/en/support/faq/detail/990afa0a0a9341f78e7a9298a9575163",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/binance.py",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/binance_history.csv"
+      ],
+      "expectedRules": [
+        "Signed Change is an asset leg. Account and remark can be material; timestamp alone is insufficient order/trade identity.",
+        "Do not infer a swap/trade from arbitrary simultaneous rows. Separate fee-asset and dust/earn/margin semantics."
+      ],
+      "validationGates": [
+        "Regional account/spot original variants, stable references and complete balances before automatic multi-leg posting."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "coinbase",
+      "name": "Coinbase",
+      "priority": "B",
+      "region": "Retail vs Pro/Advanced separately",
+      "formats": [
+        {
+          "formatId": "coinbase-retail-11",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "ID",
+            "Timestamp",
+            "Transaction Type",
+            "Asset",
+            "Quantity Transacted",
+            "Price Currency",
+            "Price at Transaction",
+            "Subtotal",
+            "Total (inclusive of fees and/or spread)",
+            "Fees and/or Spread",
+            "Notes"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "variable metadata/Transactions title",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Timestamp; UTC/offset must be evidenced for actual variant",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "efdde2ad5e2b6d22ddfc85d50f84e509201de0fd1e7d4223a9d2bc575b70d3ba"
+        },
+        {
+          "formatId": "coinbase-retail-10",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Timestamp",
+            "Transaction Type",
+            "Asset",
+            "Quantity Transacted",
+            "Spot Price Currency",
+            "Spot Price at Transaction",
+            "Subtotal",
+            "Total (inclusive of fees)",
+            "Fees",
+            "Notes"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "variable metadata; fees/spread title variant separately",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "8446ad02368636c0a3a6b977bc632a40401b2e1ba931ea6dffb759272941d358"
+        },
+        {
+          "formatId": "coinbase-pro-account",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Portfolio",
+            "Type",
+            "Timestamp",
+            "Amount",
+            "Balance",
+            "Amount/balance unit",
+            "Transfer id",
+            "Trade id",
+            "Order id"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Timestamp; preserve explicit UTC",
+          "transactionTypes": [
+            "match",
+            "fee",
+            "deposit",
+            "withdrawal"
+          ],
+          "notes": [],
+          "schemaFingerprint": "ed12b16cf0c298489d615c9d1eb6b196dec2ae043e27f9b65a78ddbc2a4787b7"
+        }
+      ],
+      "sources": [
+        "https://help.coinbase.com/en/coinbase/taxes/tools/statements",
+        "https://github.com/provinzio/CoinTaxman/blob/9c72666b989094a24c89220446825d90706da655/src/book.py",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/coinbasepro.py",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/coinbasepro.csv"
+      ],
+      "expectedRules": [
+        "Retail versions have9/10/11 fields and different preambles; newer ID cannot be invented in older files.",
+        "Fee/spread inclusive totals and Pro match/fee legs must not double-charge. Advanced/Pro is not the retail dialect."
+      ],
+      "validationGates": [
+        "Current regional Retail/Advanced originals and fee/reward/conversion cases with balances."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "bitstamp",
+      "name": "Bitstamp",
+      "priority": "B",
+      "region": "Observed legacy account CSV",
+      "formats": [
+        {
+          "formatId": "bitstamp-transactions-8",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Type",
+            "Datetime",
+            "Account",
+            "Amount",
+            "Value",
+            "Rate",
+            "Fee",
+            "Sub Type"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Observed consumer format %b. %d, %Y, %I:%M %p; timezone parameter is an importer assumption unless source confirms",
+          "transactionTypes": [
+            "Market",
+            "Deposit",
+            "Withdrawal"
+          ],
+          "notes": [],
+          "schemaFingerprint": "227ab9bbde8e10b64b386b1e7faeb2d0dc3648b82ed6d4d50b326b23bcbceed3"
+        }
+      ],
+      "sources": [
+        "https://www.bitstamp.net/faq/where-can-i-download-my-transaction-history/",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/bitstamp.py",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/bitstamp.csv"
+      ],
+      "expectedRules": [
+        "Amount/Value/Fee cells include asset/currency tokens; preserve and validate each unit separately.",
+        "Account, side and amount determine a trade; fee currency not globally default EUR."
+      ],
+      "validationGates": [
+        "Current export version, native timezone and original fee/account references."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "crypto-com",
+      "name": "Crypto.com",
+      "priority": "B",
+      "region": "App wallet/card/fiat vs Exchange are distinct",
+      "formats": [
+        {
+          "formatId": "crypto-com-app-wallet",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Timestamp (UTC)",
+            "Transaction Description",
+            "Currency",
+            "Amount",
+            "To Currency",
+            "To Amount",
+            "Native Currency",
+            "Native Amount",
+            "Native Amount (in USD)",
+            "Transaction Kind"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "UTC in field",
+          "transactionTypes": [
+            "Transaction Kind codes from pinned importer; unknown kinds quarantined"
+          ],
+          "notes": [],
+          "schemaFingerprint": "10e319211f1573f57d0ac459f129db22ec82fac04b85fd5235a208d29b9dfda1"
+        },
+        {
+          "formatId": "crypto-com-exchange",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [
+            "Official Exchange wallet/trade/deposit exports and summary files are separate; no App-header assumption."
+          ],
+          "schemaFingerprint": null
+        }
+      ],
+      "sources": [
+        "https://help.crypto.com/en/articles/3438579-how-do-i-export-my-transaction-history-app",
+        "https://help.crypto.com/en/articles/4837927-how-do-i-export-my-transaction-history-exchange",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/data_import/importers/cryptocom.py",
+        "https://github.com/rotki/rotki/blob/87fbd063936fe41656f2b8816cf474d638f703e4/rotkehlchen/tests/data/cryptocom_trades_list.csv"
+      ],
+      "expectedRules": [
+        "Both asset legs and signed amounts preserve trade/transfer/reward differences. Native Amount may be indicative valuation, not acquisition basis.",
+        "App/Card/Cash/Exchange limits and summary completeness differ; no silently truncated history."
+      ],
+      "validationGates": [
+        "Current product-specific originals, transfer/fee/reward cases and complete export intervals."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "scalable-capital",
+      "name": "Scalable Capital",
+      "priority": "B",
+      "region": "Native PRIME+ vs bookmarklet/API/PP conversion",
+      "formats": [
+        {
+          "formatId": "scalable-oss-native-prime",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "date",
+            "isin",
+            "name",
+            "shares",
+            "amount",
+            "currency",
+            "side"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Source documents ISO/German date variants; timezone is not inferred",
+          "transactionTypes": [],
+          "notes": [
+            "Pinned consumer describes name/titel, shares/stück, amount/betrag, currency/währung synonyms; official original header still verify."
+          ],
+          "schemaFingerprint": "91b102858a386396d2824e52c0a3bb51a1e1e4decfb91c952bb6673c1832aaa3"
+        },
+        {
+          "formatId": "scalable-bookmarklet-api",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "date",
+            "status",
+            "type",
+            "sub_type",
+            "side",
+            "isin",
+            "description",
+            "quantity",
+            "amount",
+            "currency",
+            "is_cancellation"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [
+            "Generated/exported API dialect, not the same thing as native broker CSV."
+          ],
+          "schemaFingerprint": "5f132f6efcebdacdcb8de6166befd26796c1dd54daf87feb07ecb7c45b980f79"
+        }
+      ],
+      "sources": [
+        "https://de.scalable.capital/produkt-news/transaktionen-exportieren",
+        "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/docs/scalable-capital-csv.md",
+        "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/scalable.go",
+        "https://github.com/matthesvoss/Scalable-Capital-Transactions-Exporter/blob/a99117f60bf5ec4e1c7512744055f0a596d894b7/scalable-capital-transactions-exporter.user.js"
+      ],
+      "expectedRules": [
+        "Do not adopt tax-to-fee mapping, default missing currency EUR, or net amount/quantity as a price with unknown fees.",
+        "Cancellations need exact original reference/inverse proof, not unconditional type reversal. Baader vs Scalable Bank differs."
+      ],
+      "validationGates": [
+        "Native current export and settlement/tax references; converted PP files distinctly tagged."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "revolut",
+      "name": "Revolut",
+      "priority": "B",
+      "region": "Retail cash vs Business UTC/local vs investment products",
+      "formats": [
+        {
+          "formatId": "revolut-retail-10",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Type",
+            "Product",
+            "Started Date",
+            "Completed Date",
+            "Description",
+            "Amount",
+            "Fee",
+            "Currency",
+            "State",
+            "Balance"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "Started/Completed separate; absent timezone requires profile evidence or user confirmation",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "87aaed2381cbe1e5f6809212c89b55eb2cae1251f908dfba14b6637628b8952c"
+        }
+      ],
+      "sources": [
+        "https://help.revolut.com/en-AT/business/help/managing-my-business/viewing-my-account-statements/finding-my-account-statement/",
+        "https://github.com/tarioch/beancounttools/blob/f71b3cb2a47c78ad3e04790c90404e45dd5a1fb1/src/tariochbctools/importers/revolut/importer.py",
+        "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/revolut.go"
+      ],
+      "expectedRules": [
+        "Pending/reverted/declined states not successful cash movements. Started date is not completed/settled date.",
+        "Business documentation permits local and UTC columns; do not apply that statement to every retail/securities dialect. Fees and account currency stay explicit."
+      ],
+      "validationGates": [
+        "Relevant regional Retail/Business/securities original and timezone/state/fee examples."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "degiro",
+      "name": "DEGIRO",
+      "priority": "B",
+      "region": "Account statement vs transactions vs holdings snapshot",
+      "formats": [
+        {
+          "formatId": "degiro-account-nl-positioned",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Datum",
+            "Tijd",
+            "Valutadatum",
+            "Product",
+            "ISIN",
+            "Omschrijving",
+            "FX",
+            "Mutatie",
+            "",
+            "Saldo",
+            "",
+            "Order Id"
+          ],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "European decimal comma/thousands dot",
+          "datesAndTimezone": "DD-MM-YYYY / HH:mm and separate value date; consumer assumes Europe/Amsterdam, not a normative universal guarantee",
+          "transactionTypes": [],
+          "notes": [
+            "Unlabelled amount columns follow currency labels; preserve position, never overwrite duplicate/blank headings."
+          ],
+          "schemaFingerprint": "04c43bba9691bb0143496b16b7bfe6db9b388962ffa25ace5239d1bf0353e13f"
+        },
+        {
+          "formatId": "degiro-trades-and-holdings",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [],
+          "separator": ",",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [
+            "Official separate export types exist; account headers cannot substitute for their schemas."
+          ],
+          "schemaFingerprint": null
+        }
+      ],
+      "sources": [
+        "https://www.degiro.com/uk/helpdesk/tax/tax-treaties/which-reports-are-there-and-where-can-i-find-them",
+        "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/src/parser/csv.ts",
+        "https://github.com/shuisman/degiro-importer/blob/4a53b30ebb8ea16bc25877a247b2c69ec06e96d9/src/parser/mapper.ts"
+      ],
+      "expectedRules": [
+        "Order id plus account/product/reference must preserve partial fills and separately described fees/taxes/FX.",
+        "A portfolio snapshot is an opening/control anchor, not an invented buy or external flow."
+      ],
+      "validationGates": [
+        "Regional/language-specific account+trades CSVs and opening/closing portfolio/cash, explicit FX direction."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "ing",
+      "name": "ING",
+      "priority": "B",
+      "region": "Evidence here is ING Germany; do not infer Austria/other regions",
+      "formats": [
+        {
+          "formatId": "ing-de-account-observed",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "Buchung",
+            "Wertstellungsdatum",
+            "Auftraggeber/Empfänger",
+            "Buchungstext",
+            "Verwendungszweck",
+            "Betrag",
+            "Währung"
+          ],
+          "separator": ";",
+          "encoding": "Observed ISO-8859-1/Windows-1252 consumer",
+          "headerPosition": "metadata preamble varies; header scan needed",
+          "numbers": "German decimal comma",
+          "datesAndTimezone": "DD.MM.YYYY; value date distinct",
+          "transactionTypes": [],
+          "notes": [],
+          "schemaFingerprint": "fd8260e1ef213e851855863b81fd8e763af56017bc85fcf657f8ca153612cefe"
+        },
+        {
+          "formatId": "ing-de-holdings-positioned",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [
+            "ISIN",
+            "Wertpapiername",
+            "Stück/Nominale",
+            "Einheitskennzeichen",
+            "Einstandskurs",
+            "Währung",
+            "Einstandswert",
+            "Währung",
+            "Bewertungskurs",
+            "Währung",
+            "Zeit",
+            "Handelsplatz",
+            "Kurswert",
+            "Währung",
+            "Gewinn/Verlust",
+            "Währung",
+            "Gewinn/Verlust (%)"
+          ],
+          "separator": ";",
+          "encoding": "UTF-8 as consumed by pinned importer; native encoding still validate",
+          "headerPosition": "first record",
+          "numbers": "decimal point; preserve exact source strings",
+          "datesAndTimezone": "see source; do not infer absent timezone",
+          "transactionTypes": [],
+          "notes": [
+            "Positional repeated currency headers. Snapshot must not synthesize historical buys."
+          ],
+          "schemaFingerprint": "e0256acee7bb65908919eb172bf2ce77c281c9999ed9b7aba4403297b3b0106f"
+        }
+      ],
+      "sources": [
+        "https://www.ing.de/hilfe/banking/",
+        "https://github.com/nicolettas-muggelbude/RechnungsFee/blob/cd2a4903031349c3f4c667f993ff6b22956d6f82/vorlagen/bank-csv/README.md",
+        "https://github.com/nicolettas-muggelbude/RechnungsFee/blob/cd2a4903031349c3f4c667f993ff6b22956d6f82/src/backend/database/seed.py",
+        "https://github.com/lnsp/wealth/blob/54af4dd2b1f2e55043827c23685fd59e819c541e/internal/parser/ing.go"
+      ],
+      "expectedRules": [
+        "Keep cash account, securities transaction and holdings snapshot separate.",
+        "Source parser defaults and synthetic-buy conventions are not FolioLab rules. Header/encoding variants remain versioned."
+      ],
+      "validationGates": [
+        "Actual regional/retail product original, header variants with/without balance and paired stock statements."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "documented",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    },
+    {
+      "providerId": "dadat",
+      "name": "DADAT",
+      "priority": "B",
+      "region": "Austria; public material inspected primarily PDF",
+      "formats": [
+        {
+          "formatId": "dadat-native-csv-unverified",
+          "version": "OSS snapshot 2026-10-27, not an invented vendor version",
+          "headers": [],
+          "separator": null,
+          "encoding": "not verified",
+          "headerPosition": "not verified",
+          "numbers": "not verified for native CSV",
+          "datesAndTimezone": "not verified for native CSV",
+          "transactionTypes": [],
+          "notes": [
+            "No concrete native CSV header contract verified; do not fabricate one from DADAT PDF fields or a community export claim."
+          ],
+          "schemaFingerprint": null
+        }
+      ],
+      "sources": [
+        "https://www.dad.at/",
+        "https://forum.portfolio-performance.info/t/pdf-import-von-dadat/15684?page=3",
+        "https://github.com/portfolio-performance/portfolio/blob/2a0ef52a93882c0845596b2c6b834e54f592b7ec/name.abuchen.portfolio/src/name/abuchen/portfolio/datatransfer/pdf/DADATBankenhausPDFExtractor.java"
+      ],
+      "expectedRules": [
+        "Generic mapping can prepare an unknown structurally suitable file; no automatic DADAT profile until schema evidence exists.",
+        "PDF book/value/withholding fields inform later FLH06 only, not invented CSV column labels."
+      ],
+      "validationGates": [
+        "Native CSV or publicly evidenced header/export documentation. Actual complete cash/depot/settlement originals for economic validation."
+      ],
+      "evidence": [
+        {
+          "level": 1,
+          "status": "partial",
+          "scope": "See official links per provider: an export description does not imply a normative complete header/semantic specification."
+        },
+        {
+          "level": 2,
+          "status": "blocked",
+          "scope": "Specific pinned code/fixtures. Importer assumptions remain separate from provider guarantees."
+        },
+        {
+          "level": 3,
+          "status": "pending",
+          "scope": "Independent FolioLab fixture/recognition/economic tests are distinct; existing tests remain historical evidence for their bounded scope."
+        },
+        {
+          "level": 4,
+          "status": "pending",
+          "scope": "Private original validation not complete for these profiles."
+        },
+        {
+          "level": 5,
+          "status": "pending",
+          "scope": "No provider-wide opening-to-closing portfolio/history reconciliation claimed."
+        }
+      ],
+      "applicationSupport": "Research only; existing main adapters and their documented limits remain authoritative."
+    }
+  ]
+}

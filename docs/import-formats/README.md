@@ -1,6 +1,8 @@
 # FLH05 — Formatbibliothek, Stand 27.10.2026
 
-Status: Recherche IN PROGRESS, keine neue Parser-/Produktionsfreigabe. Zentraler Gesamtstatus: [WORK_RESTPAKETE_CHECKPOINT.md](../WORK_RESTPAKETE_CHECKPOINT.md), Issue174. Aktiver Branch feature/flh05-import-foundation auf v188. Der frühere Ledger-Vorschauversuch ist remote geparkt, kein paralleler Importkern.
+**Einzige verbindliche FLH05-Spezifikation:** [SPECIFICATION.md](SPECIFICATION.md), Phasen A–E. Frühere Einzelgliederungen sind darin vollständig zugeordnet.
+
+Status: Spezifikation konsolidiert; **FLH05-A ZURÜCKGESTELLT** bis zum Abschluss ausführbarer Vorgängerpakete. Bisherige Recherche bleibt ein nicht abgenommener Zwischenstand, keine neue Parser-/Produktionsfreigabe. Zentraler Gesamtstatus: [WORK_RESTPAKETE_CHECKPOINT.md](../WORK_RESTPAKETE_CHECKPOINT.md), Issue174. Aktiver Branch feature/flh05-import-foundation auf v188. Der frühere Ledger-Vorschauversuch ist remote geparkt, kein paralleler Importkern.
 
 Die Bibliothek trennt zwingend:
 
