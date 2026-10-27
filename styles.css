@@ -1145,3 +1145,5 @@
 #bookingManagementTools p{overflow-wrap:anywhere}
 
 #saveDialog[hidden]{display:none!important}
+
+#bookingChangeTransactions{margin:12px 0;overflow-wrap:anywhere}#bookingChangeTransactions>summary{min-height:44px}#bookingChangeTransactions li{margin:10px 0}
