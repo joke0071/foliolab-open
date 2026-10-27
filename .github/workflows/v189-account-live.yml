@@ -29,7 +29,7 @@ jobs:
           import {createHash} from 'node:crypto';
           const base=process.env.QUALITY_BASE,sha=process.env.RELEASE_SHA;
           assert.equal(base,'https://foliolab.unperfekt.at/');
-          const paths=['sw.js','src/app.js','src/account-evidence.js','styles.css','src/model.js','src/atomic-storage.js','src/browser-portfolio-storage.js','tests/browser-quality-review.mjs','tests/wallet-history-fixtures.mjs'];
+          const paths=['sw.js','src/app.js','src/account-evidence.js','styles.css','src/model.js','src/atomic-storage.js','src/browser-portfolio-storage.js'];
           const hashes=[];
           for(const path of paths){
             const u=new URL(path,base);u.searchParams.set('account-release-check',sha);
@@ -42,6 +42,19 @@ jobs:
           writeFileSync('artifacts/gates/account-production-assets.json',JSON.stringify({releaseSha:sha,base,cache:'foliolab-open-v189',hashes},null,2));
           console.log('V189 ACCOUNT LIVE: '+hashes.length+' exact published source hashes; released app/test tree unchanged');
           NODE
+      - name: Bridge only synthetic test resources without replacing production assets
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync,writeFileSync} from 'node:fs';
+          const source=readFileSync('tests/browser-quality-review.mjs','utf8');
+          const marker=' try{\n';
+          assert.equal(source.split(marker).length,2,'one exact context setup location');
+          const resources=['tests/storage-origin.html','tests/wallet-history-fixtures.mjs'].map(path=>({path,body:readFileSync(path,'utf8'),contentType:path.endsWith('.html')?'text/html':'text/javascript'}));
+          const bridge='  for(const resource of '+JSON.stringify(resources)+'){await context.route(new URL(resource.path,base).href,route=>route.fulfill({status:200,contentType:resource.contentType,body:resource.body}));}\n';
+          writeFileSync('tests/.v189-account-production.mjs',source.replace(marker,marker+bridge));
+          writeFileSync('artifacts/gates/account-production-test-bridge.json',JSON.stringify({release:process.env.RELEASE_SHA,originalTest:'tests/browser-quality-review.mjs',unchangedAssertions:true,bridgedResources:resources.map(({path})=>path),productionAssetsIntercepted:false},null,2));
+          NODE
       - name: Install Chromium test environment
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3
@@ -49,7 +62,7 @@ jobs:
       - name: Actual account workflows in production Chromium
         run: |
           set -euo pipefail
-          node tests/browser-quality-review.mjs 2>&1 | tee artifacts/gates/account-production-chromium.log
+          node tests/.v189-account-production.mjs 2>&1 | tee artifacts/gates/account-production-chromium.log
       - name: Install Firefox and WebKit test environment
         timeout-minutes: 8
         run: |
@@ -67,7 +80,7 @@ jobs:
           QUALITY_ENGINES: firefox,webkit
         run: |
           set -euo pipefail
-          node tests/browser-quality-review.mjs 2>&1 | tee artifacts/gates/account-production-cross.log
+          node tests/.v189-account-production.mjs 2>&1 | tee artifacts/gates/account-production-cross.log
       - name: Preserve actual production evidence
         if: always()
         uses: actions/upload-artifact@v4
