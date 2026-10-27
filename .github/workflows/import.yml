@@ -338,7 +338,7 @@ jobs:
           node --input-type=module <<'JS'
           import {readFileSync} from 'node:fs';
           import {createHash} from 'node:crypto';
-          const files=[['c1-no-cash','artifacts/gates/c1-no-cash-account.png'],['c1-cash-no-out','artifacts/gates/c1-cash-without-outgoing.png']];
+          const files=[['c1-no-cash','artifacts/gates/c1-no-cash-account.png'],['c1-cash-no-out','artifacts/gates/c1-cash-without-outgoing.png'],['c2-history-records','artifacts/gates/ui-history-records-390.png'],['c2-history-partial','artifacts/gates/ui-history-partial-390.png']];
           for(const [id,path]of files){
             const bytes=readFileSync(path);
             if(bytes.length>256000)throw Error('Synthetic screenshot exceeds bounded review payload');

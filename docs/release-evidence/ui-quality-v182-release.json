@@ -1,0 +1,65 @@
+{
+  "release": "v182",
+  "sourceSHA": "85f5899dca0d0d773a06dedc2b2029e206bec004",
+  "treeSHA": "585e05bfc4ca56967e0dbaaf850d879a09a60c6a",
+  "PR": 166,
+  "finalPRHead": "046cebf5a4a27727b024d6053d9f5103bf5cebb7",
+  "finalPRCI": "https://github.com/joke0071/foliolab-open/actions/runs/40419694524",
+  "walletCI": "https://github.com/joke0071/foliolab-open/actions/runs/40419694536",
+  "mainCI": "https://github.com/joke0071/foliolab-open/actions/runs/40421074616",
+  "jobs": {
+    "test": 121915369725,
+    "crossEngine": 121915369334,
+    "deploy": 121918137993,
+    "liveAcceptance": 121918249308
+  },
+  "results": {
+    "units": {
+      "tests": 709,
+      "pass": 709,
+      "fail": 0,
+      "skip": 0
+    },
+    "production": {
+      "base": "https://foliolab.unperfekt.at/",
+      "cache": "foliolab-open-v182",
+      "exactSHA256Assets": 105,
+      "coreGroups": 6,
+      "axeScans": 18,
+      "targetedUIPresentation": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "transferStates": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "status": "PASS"
+    }
+  },
+  "visualReview": {
+    "performed": true,
+    "syntheticOnly": true,
+    "images": [
+      {
+        "path": "artifacts/gates/c1-no-cash-account.png",
+        "bytes": 48356,
+        "sha256": "0edc522dbaad5414c64abe68387f252e9362518761fe7e2f27eedf319cb6ec09"
+      },
+      {
+        "path": "artifacts/gates/c1-cash-without-outgoing.png",
+        "bytes": 50628,
+        "sha256": "facca35270af0d54722c5cc9cf3eca2bf3d727aa0d52c0955475dd1268a2b173"
+      }
+    ],
+    "finding": "Compact, correct cause and existing action, no unused form/confirmation or false reference; original styling retained."
+  },
+  "limits": [
+    "Work execution environment unavailable; actual live browser execution used GitHubRunner.",
+    "No native Safari, physical Android, assistive hardware or real OAuth acceptance.",
+    "Overall stabilization remains PARTIAL; final bounded check deliberately later.",
+    "No new financial mutation or FLH04 production authorization."
+  ]
+}

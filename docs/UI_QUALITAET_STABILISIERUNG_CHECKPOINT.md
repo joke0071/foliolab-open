@@ -1,3 +1,13 @@
+# Fortschritt nach tatsächlicher v182-Abnahme
+
+C1/Transferzustände **DONE im vereinbarten UI-Umfang**, #166/main85f5899, CI40419694524/MainPagesLive40421074616 SUCCESS,709 Tests,105 Livehashes, ZielUI live in3 Engines, zwei Bilder tatsächlich angesehen. Keine neue Finanzmutation; vorhandene Bestätigung/Undo/CAS/Recovery erhalten. Ältere IN-PROGRESS-Zeilen darunter sind Historie.
+
+Nächster kleiner Schnitt C2: doppelte Teilverfügbarkeits-Hinweise bei <2 Historienwerten entfernen, Diagramm-/Tabellendatum vereinheitlichen; bestehende Projektion/Segmente unverändert. Neue gezielte Browsernachweise für zusammenhängend/lückig/ein/kein Kurs und exakte Nullmutationen. **Implementiert als Kandidat, finale Tests/Review/Live offen.** Vorhandene Diagrammengine verbindet belegte Folgetage bereits; neue Regression behauptet keinen vollständigen Nachweis des nicht zugänglichen Android-Portfolios.
+
+FLH04 bleibt gemäß neuestem Folgeauftrag nach UI am bestehenden #160/#161; keine neue parallele Umsetzung, keine Produktionsfreigabe. Buchungsmanagement #165 separat, kein pauschaler Journal-Delete. Gesamtstatus PARTIAL; begrenzter Abschlusscheck bewusst später.
+
+---
+
 # Regulärer Statusabgleich nach tatsächlicher v181-Abnahme
 
 B1 und Beta162 sind über164 produktiv abgenommen (mainb61d1c1,CI40408383066/MainPages40409856045,701Tests,105Livehashes,3Engine-ZielUI). Keine Wiederholung. Die nachstehende ursprünglicheEinstiegsmatrix bleibt als Historie erhalten; dieser aktuelle Abgleich hat Vorrang.
