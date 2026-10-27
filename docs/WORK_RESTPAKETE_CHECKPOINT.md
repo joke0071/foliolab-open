@@ -10,9 +10,11 @@ Vorgänger-Gesamtaudit weiterhin DONE nur als Inventar, Gesamtumsetzung PARTIAL.
 
 ---
 
-## Aufgenommener UI-Nachtrag #149/#165 · ohne Unterbrechung der Ledger-CI
+## Konsolidierter UI-Nachtrag #149/#165 aufgenommen · Umsetzung nach Ledgercheckpoint
 
-Nächster passender bestehender UI-Vorgängerschritt nach sicherem Ledgercheckpoint: Buchungs-Auswahl-/Aktionsleiste bezüglich Komponenten, Anordnung, Buttongrößen, Abständen und Farben an Positionen angleichen; mobil dieselbe kompakte Zweispaltenstruktur. Direkte rechte Iconaktionen je Buchungszeile: Notiz, erlaubte Betrag-/Datumskorrektur und Rücknahmeprüfung ohne vorherigen Auswahlmodus. Nicht erlaubte Aktionen ausblenden oder mit verständlichem Grund deaktivieren. Einzel-/Sammelaktionen klar unterscheiden. Bestehende Auswahlengine und #165-Zulässigkeits-/Beleg-/Vorschau-/Bestätigungs-/CAS-/Undo-Verträge wiederverwenden, keine neue Mutationskategorie/Archivierung oder unabhängige UI-Engine.320/390/430/Desktop,44px,Overflow/Axe/Keyboard und direkte Bedienung/Sperren testen. Bereits erledigte Teile überspringen. Dokumentiert: #149Kommentar6452174228, #165Kommentar6452174628. Keine pauschale neue kritische Freigabe; FLH05-A bleibt zurückgestellt.
+Verbindlicher neuester Vertrag in [BOOKING_MANAGEMENT_CHECKPOINT.md](BOOKING_MANAGEMENT_CHECKPOINT.md): direkte rechte Zeilenicons **Bearbeiten/Löschen/Archivieren-Wiederherstellen**, ein kontextabhängiger Bearbeitungsdialog statt separater Hauptaktionen; gleiche Auswahlleiste/Styles/Zweispalten-Mobile wie Positionen. Frühere drei Korrekturbuttons und der frühere Ausschluss von Buchungsarchivierung dadurch ersetzt. Archivieren ist reine reversible Sichtbarkeit mit Archivfilter und unveränderten Finanzwerten; Ignorieren/Berechnungsausschluss ist getrennte belegpflichtige Fachmutation. Breitere Felder/Herkünfte nur nach Zulässigkeitsmatrix, Original-/Source-Replay-/Referenz-/CAS-/Audit-/Restore-/Undo-Vertrag. Keine stille Reaktivierung gelöschter/ausgeschlossener Quellen beim Reimport, keine Teilgruppen oder fiktiven Gegenbuchungen, keine stillen Teilerfolge. Konkrete synthetische Fall-/Mobile-/Axe-/Rollbackgates im verlinkten Vertrag. Neue kritische Funktionen erfordern eigene Releasefreigabe, v188 nicht pauschal erweitert.
+
+#149Kommentar6452285529/#165Kommentar6452285941 sind die konsolidierte Vorgabe; ältere Kommentare6452174228/6452174628 bleiben als Verlauf. Noch keine UI-/Finanz-/Archivierimplementierung. Laufende Ledger-CI bleibt unberührt; Reihenfolge unverändert und FLH05-A weiter zurückgestellt.
 
 ## Letzter vollständig abgenommener Release und Gesamtaudit
 
