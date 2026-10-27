@@ -1,0 +1,77 @@
+name: v189 – targeted account production acceptance
+on:
+  push:
+    branches: [qa/v189-account-live]
+    paths-ignore: ['docs/**']
+permissions:
+  contents: read
+jobs:
+  account-production:
+    runs-on: ubuntu-24.04
+    env:
+      RELEASE_SHA: 8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261
+      QUALITY_BASE: https://foliolab.unperfekt.at/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require exactly released app and test bytes
+        run: |
+          set -euo pipefail
+          git diff --exit-code "$RELEASE_SHA" HEAD -- src styles.css sw.js index.html manifest.webmanifest icons tests package.json
+          mkdir -p artifacts/gates
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const base=process.env.QUALITY_BASE,sha=process.env.RELEASE_SHA;
+          assert.equal(base,'https://foliolab.unperfekt.at/');
+          const paths=['sw.js','src/app.js','src/account-evidence.js','styles.css','src/model.js','src/atomic-storage.js','src/browser-portfolio-storage.js','tests/browser-quality-review.mjs','tests/wallet-history-fixtures.mjs'];
+          const hashes=[];
+          for(const path of paths){
+            const u=new URL(path,base);u.searchParams.set('account-release-check',sha);
+            const response=await fetch(u);assert.equal(response.status,200,path);
+            const actual=Buffer.from(await response.arrayBuffer()),expected=readFileSync(path);
+            assert.ok(actual.equals(expected),'Published source differs: '+path);
+            hashes.push({path,sha256:createHash('sha256').update(actual).digest('hex')});
+          }
+          assert.match(readFileSync('sw.js','utf8'),/const CACHE='foliolab-open-v189'/);
+          writeFileSync('artifacts/gates/account-production-assets.json',JSON.stringify({releaseSha:sha,base,cache:'foliolab-open-v189',hashes},null,2));
+          console.log('V189 ACCOUNT LIVE: '+hashes.length+' exact published source hashes; released app/test tree unchanged');
+          NODE
+      - name: Install Chromium test environment
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npx playwright install chromium --only-shell
+      - name: Actual account workflows in production Chromium
+        run: |
+          set -euo pipefail
+          node tests/browser-quality-review.mjs 2>&1 | tee artifacts/gates/account-production-chromium.log
+      - name: Install Firefox and WebKit test environment
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit
+      - name: Actual account workflows in production Firefox and WebKit
+        env:
+          QUALITY_ENGINES: firefox,webkit
+        run: |
+          set -euo pipefail
+          node tests/browser-quality-review.mjs 2>&1 | tee artifacts/gates/account-production-cross.log
+      - name: Preserve actual production evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v189-account-production-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
