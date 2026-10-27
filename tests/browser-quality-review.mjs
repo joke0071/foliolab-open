@@ -29,8 +29,10 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
    const details=page.locator('[data-account-evidence="'+setup.walletAccount+'"]');
    await revealAction(details);if(!await details.evaluate(el=>el.open))await details.locator(':scope > summary').click();
    assert.equal(await details.evaluate(el=>el.open),true,'account evidence must really be open before reading');
+   await page.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});
+   await page.screenshot({path:'artifacts/gates/quality/'+engine+'-account-geometry-'+width+'.png'});
    const panelBox=await page.locator('#providerSettings').boundingBox(),evidenceBox=await details.boundingBox();assert.ok(evidenceBox.width>=panelBox.width-24,'expanded account evidence must not be squeezed beside provider controls');
-   for(const button of await page.locator('#providerSettings .row-btn').all())if(await button.isVisible()){const box=await button.boundingBox();assert.ok(box.width>=44&&box.height>=44,'visible account/provider icon targets >=44px');}
+   for(const button of await page.locator('#providerSettings .row-btn').all())if(await button.isVisible()){const box=await button.boundingBox();assert.ok(box.width>=44&&box.height>=44,'visible account/provider icon targets >=44px: '+JSON.stringify({engine,width,box,css:await button.evaluate(el=>({action:el.dataset.action,minWidth:getComputedStyle(el).minWidth,minHeight:getComputedStyle(el).minHeight,width:getComputedStyle(el).width,height:getComputedStyle(el).height,transform:getComputedStyle(el).transform}))}));}
    assert.match(await details.innerText(),/Positionen: 1/);assert.match(await details.innerText(),/Positionen mit Kursprüfbedarf: 1/);assert.match(await details.innerText(),/Positionen mit gemeldetem Historienprüfbedarf: 1/);assert.match(await details.innerText(),/Kein vollständiger Bank- oder Walletabgleich bestätigt/);
    for(const target of [details.locator(':scope > summary'),details.locator('[data-action="view-account"]')]){const box=await target.boundingBox();assert.ok(box.width>=44&&box.height>=44,'account evidence targets >=44px');}
    await page.screenshot({path:'artifacts/gates/quality/'+engine+'-account-open-'+width+'.png'});
