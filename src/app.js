@@ -384,8 +384,12 @@ function renderPositionSelection(){
 function fitPositionSelectionMenu(){
  const menu=$('positionSelectionMenu');if(!menu?.open)return;
  const panel=menu.querySelector('.selection-options'),anchor=menu.parentElement.getBoundingClientRect(),nav=$('mobileNav').getBoundingClientRect();
- const below=innerHeight-(nav.height?nav.height:0)-anchor.bottom-12,above=anchor.top-12,up=below<180&&above>below;
- panel.style.top=up?'auto':'100%';panel.style.bottom=up?'100%':'auto';panel.style.maxHeight=Math.max(44,up?above:below)+'px';
+ const bottom=innerHeight-(nav.height?nav.height:0)-12;
+ panel.style.position='fixed';panel.style.bottom='auto';panel.style.maxHeight=Math.max(44,bottom-12)+'px';
+ const height=panel.getBoundingClientRect().height,below=bottom-anchor.bottom;
+ const desired=below<height&&anchor.top>height?anchor.top-height-4:anchor.bottom+4;
+ panel.style.top=Math.max(12,Math.min(desired,bottom-height))+'px';
+ panel.style.left=Math.max(12,Math.min(anchor.left,innerWidth-panel.getBoundingClientRect().width-12))+'px';
 }
 function focusSelectionMenu(){const menu=$('positionSelectionMenu');if(menu){menu.open=true;menu.querySelector('summary').focus();}}
 function openPositionArchive(id){
