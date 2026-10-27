@@ -1,3 +1,15 @@
+# Aktueller sicherer Checkpoint · PR179 / WebKit-Bildbefund · 27.10.2026
+
+HEAD `b6b84d374ca8f034da70462341fe2115916556b0`, Tree `7ef9133af734fa17e8ea96939a1d32b6f98723ff` lokal/remote exakt. PR179 bleibt DRAFT, kein Merge/Deployment. Produktion unverändert v190/main7b7fae7.
+
+Vorstand b0d0f6: CI40587872054 und Wallet40587871906 vollständig SUCCESS,766/766 Units0fail0skip, Chromium+beideFirefox/WebKit-Shards, neue und bestehende Buchungs-/Finanz-/CAS-/Quota-/Abbruch-/Offline-/Restore-/Undo-/Axe-Gates. Nach tatsächlicher Bildprüfung dennoch **WebKit320-Textüberlauf der oberen gemeinsamen Auswahlcheckbox erkannt**. Deshalb keine voreilige visuelle/Releaseabnahme. Minimaler gemeinsamer Grid-Layoutfix statt Flex, zusätzliche Bounding-Prüfung für Text innerhalb des Touchziels in allen fünf Breiten. Aktuell CI40589392451 und Wallet40589392368 laufen; vorher sämtliche Jobs regulär beendet, nichts abgebrochen oder neugestartet.
+
+Neuer niedrig priorisierter CI-Nachtrag nur lesend abgeschlossen und in CI_OPTIMIZATION_CHECKPOINT.md dokumentiert: PR176-Shards/Baseline wiederverwendet; tatsächliche erfolgreiche Job-/Stepzeiten aus40575706366/40587872054, Testausführung größter Anteil; Setup52–76s versus5s Chromium. **Keine Workflowänderung**, weil zusätzlicher Optimierungs-/Validierungsschnitt den aktiven Abschluss verlängern würde. Vollständige CI-Optimierung bleibt abschließend offen; kein zweiter Entwicklungsprozess.
+
+Eigene konkrete Nutzerfreigabe für das neue Opt-in-Modell4/Speicher-/Backup-Vertrag bleibt vor Merge/Deployment erforderlich. Erst alle aktuellen Gates und neue WebKit-Bilder prüfen, dann reviewfähigen Kandidaten zur Releaseentscheidung vorlegen. Vollständige fachliche Grenzen/Nachträge unverändert erhalten. FLH05-A/PERF01 weiterhin nicht vorgezogen.
+
+---
+
 # Aktueller Buchungs-UI-Kandidat · PR179 · 27.10.2026
 
 **PARTIAL / DRAFT / RELEASE GESPERRT:** [PR179](https://github.com/joke0071/foliolab-open/pull/179), HEAD `b0d0f62729c92c9b38f948b7f9fadd2e0ed3f0c2`, Tree `21823d841cd0eeab3a2315b947ec7a498aef531d` lokal/remote exakt. Produktion unverändert v190/main7b7fae7. Einziger aktiver funktionaler Strang gemäß Rang3; FLH05-A/PERF01 weiterhin zurückgestellt.

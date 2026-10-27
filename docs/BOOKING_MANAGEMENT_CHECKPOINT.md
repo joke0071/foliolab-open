@@ -1,3 +1,7 @@
+# Aktueller PR179-Kandidat b6b84d3
+
+CI40589392451/Wallet40589392368 PENDING. Vorheriger vollständiger Lauf40587872054 SUCCESS, aber tatsächlicher WebKit320-Bildbefund erfordert kleinen gemeinsamen Auswahl-Layoutfix plus Textbegrenzungsprüfung. Deshalb noch keine Releaseabnahme. Modell4-Freigabegate und alle fachlichen Grenzen unten bleiben unverändert.
+
 # Aktueller Kandidat PR179
 
 HEAD b0d0f62729c92c9b38f948b7f9fadd2e0ed3f0c2 / Tree21823d841cd0eeab3a2315b947ec7a498aef531d; CI40587872054 und Wallet40587871906 laufen. Kontextdialog jetzt ebenfalls je fünf Breiten mit Axe/Keyboard/Fokus/44px-Prüfung. Noch kein Release. Der folgende Implementierungscheckpoint und vollständige fachliche Nachtrag bleiben verbindlich.
