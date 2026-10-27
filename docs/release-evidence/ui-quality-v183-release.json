@@ -1,0 +1,79 @@
+{
+  "release": "v183",
+  "sourceSHA": "f384593da22888131d1418574de9acf33c30c0e1",
+  "treeSHA": "23d4d7d403d72bb5966cb3841ee7d7b25d5b64e1",
+  "PR": 167,
+  "finalPRHead": "e1bb4dfebb21761dcc76412a2400f6e4d1d885f9",
+  "finalPRCI": "https://github.com/joke0071/foliolab-open/actions/runs/40423288950",
+  "walletCI": "https://github.com/joke0071/foliolab-open/actions/runs/40423288875",
+  "mainCI": "https://github.com/joke0071/foliolab-open/actions/runs/40424425924",
+  "jobs": {
+    "test": 121926531665,
+    "crossEngine": 121926531927,
+    "deploy": 121929979427,
+    "liveAcceptance": 121930106568
+  },
+  "results": {
+    "units": {
+      "tests": 709,
+      "pass": 709,
+      "fail": 0,
+      "skip": 0
+    },
+    "production": {
+      "base": "https://foliolab.unperfekt.at/",
+      "cache": "foliolab-open-v183",
+      "exactSHA256Assets": 105,
+      "coreGroups": 6,
+      "axeScans": 18,
+      "B1C1C2Engines": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "newCases": [
+        "three consecutive proven days/one line",
+        "separated observations/no connecting line",
+        "one valuated day with unknown earlier balance and missing transaction-day price",
+        "no price evidence/unknown value",
+        "single partial notice/concrete cause",
+        "same chart and table dates",
+        "exact IndexedDB record unchanged"
+      ],
+      "status": "PASS"
+    }
+  },
+  "visualReview": {
+    "performed": true,
+    "syntheticOnly": true,
+    "images": [
+      {
+        "id": "c2-history-records",
+        "path": "artifacts/gates/ui-history-records-390.png",
+        "bytes": 40721,
+        "sha256": "8812ced3a95582bf4f71423b921a0ae07afa7c359701f42c03ca318dff1c551c",
+        "release": "f384593da22888131d1418574de9acf33c30c0e1"
+      },
+      {
+        "id": "c2-history-partial",
+        "path": "artifacts/gates/ui-history-partial-390.png",
+        "bytes": 51794,
+        "sha256": "3872a04725b5dcfecba62453666bb30f690aa627999b26fe84210e6e35cbe780",
+        "release": "f384593da22888131d1418574de9acf33c30c0e1"
+      }
+    ],
+    "finding": "Readable mobile records and focused exact quantity; identical chart/table dates; one partial notice and concrete missing balance cause; original styling retained."
+  },
+  "historicalFailure": {
+    "run": 40422717936,
+    "head": "11bfcc6dc40ceb646d8c95375c7c7b1780eee9fa",
+    "cause": "New fixture violated unchanged minimum-two-price-points validation.",
+    "resolution": "Only fixture corrected to two valid quotes with one valuated day. Validation and assertions not weakened."
+  },
+  "limits": [
+    "Work execution environment unavailable; actual execution used GitHubRunner.",
+    "No native Safari, physical Android, assistive hardware or real OAuth acceptance.",
+    "Overall UI stabilization PARTIAL; bounded final check deliberately later.",
+    "Booking mutations #165 and FLH04 #160/#161 excluded, no production authorization."
+  ]
+}
