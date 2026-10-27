@@ -41,10 +41,14 @@ Oberfläche: Auswählen, gefiltert/alle/aufheben, Notiz, Betrag/Datum, Rücknahm
 
 ## Prüfstand / nächster Schritt
 
-Lokal727 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
+Lokal728 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
 
 Nächster Schritt: finale PR173-CI/Bilder auswerten, Fehler beheben, Fach-/Source-Review sichern. Erst danach konkrete Produktionsfreigabe für diesen begrenzten belegten Umfang einholen. Breitere Trade-/Import-/Walletmutationen bleiben explizite Fachblocker, nicht als fertig melden.
 
 ## Gesamtfortsetzung
 
 Originalformatnachweise für Broker/Exchange/Ledger wurden bisher nicht zugänglich gefunden; keine privaten Formate erfinden. #159 bleibt bis tatsächlicher lokaler Originalprobe blockiert. FLH04#160/#161 braucht Operator/OAuth/Remote-Concurrency/Neugerät/Recovery-Nachweise und eigene Freigabe. D157 nur mit neuer Browserhypothese. CI-Optimierung erst nach diesem sicheren Funktionscheckpoint, vorhandene Baseline aus PR172 wiederverwenden.
+
+## Erster neuer Remote-Lauf
+
+CI40517607177 Chromium erreicht neue Buchungsprüfungen nach bestandenen Finanz-/Historien-/Auswahl-/CAS-/Archivregressionen. Neue Axe-Prüfung meldet nach Resize Kontrast an addBooking.action-label. Testflow wartet nun auf tatsächlich laufende endliche Animationen plus zwei Frames (wie bestehende strenge Gates), keine Assertion geändert. Bei erneutem Fehler werden ComputedStyles/Viewport/Animationszustände diagnostiziert. Tatsächlicher Produktkontrastfehler noch nicht ausgeschlossen. Kein Merge/Deployment.
