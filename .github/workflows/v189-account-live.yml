@@ -21,6 +21,7 @@ jobs:
       - name: Require exactly released app and test bytes
         run: |
           set -euo pipefail
+          git fetch --no-tags origin "$RELEASE_SHA" --depth=1
           git diff --exit-code "$RELEASE_SHA" HEAD -- src styles.css sw.js index.html manifest.webmanifest icons tests package.json
           mkdir -p artifacts/gates
           node --input-type=module <<'NODE'
