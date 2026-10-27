@@ -15,7 +15,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
  const row=(action,id=target)=>page.locator('[data-booking-row-action="'+action+'"][data-id="'+id+'"]');
  const tool=action=>page.locator('[data-booking-manage="'+action+'"]');
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
- const close=async()=>{page.once('dialog',d=>d.accept());await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});};
+ const close=async()=>{const accept=d=>d.accept();page.on('dialog',accept);try{await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});}finally{page.off('dialog',accept);}};
  const commitArchive=async()=>{await page.locator('[name=confirmBookingArchive]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});};
  const financial=raw=>{const {bookingPresentation,...rest}=JSON.parse(raw);return {...rest,version:3};};
  try{
@@ -26,7 +26,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   assert.ok(await row('edit',imported.id).isDisabled());assert.ok(await row('remove',imported.id).isDisabled());assert.ok(await row('archive',imported.id).isEnabled());
   // This fixture is an explicitly manual correction with its original booking, so existing safe note edits remain available. Economic fields stay locked.
   assert.ok(await row('remove',technical.id).isDisabled());assert.ok(await row('archive',technical.id).isEnabled());await row('edit',technical.id).click();assert.ok(await page.locator('[name=quantity]').isDisabled());assert.ok(await page.locator('[name=date]').isDisabled());assert.ok(await page.locator('[name=notes]').isEnabled());await close();assert.deepEqual(await record(),before);
-  await row('edit').click();await page.locator('[name=reason]').fill('Synthetic no-op');await page.locator('#saveDialog').click();await page.locator('#dialogError:not(.hidden)').waitFor();assert.match(await page.locator('#dialogError').innerText(),/Keine Änderung/);assert.deepEqual(await record(),before);await close();
+  await row('edit').focus();await page.keyboard.press('Enter');await page.locator('[name=reason]').fill('Synthetic no-op');await page.locator('#saveDialog').click();await page.locator('#dialogError:not(.hidden)').waitFor();assert.match(await page.locator('#dialogError').innerText(),/Keine Änderung/);assert.deepEqual(await record(),before);await close();
   await tool('select').click();const cycle=()=>page.locator('#bookingSelectFiltered').click();await cycle();assert.match(await page.locator('#bookingSelectionStatus').innerText(),/100 ausgewählt/);await cycle();assert.match(await page.locator('#bookingSelectionStatus').innerText(),/249 ausgewählt/);await cycle();assert.match(await page.locator('#bookingSelectionStatus').innerText(),/0 ausgewählt/);assert.equal(await tool('select').count(),0);
   for(const width of [320,390,430,768,1440]){
    await page.setViewportSize({width,height:900});await page.locator('#bookingManagementTools').scrollIntoViewIfNeeded();
