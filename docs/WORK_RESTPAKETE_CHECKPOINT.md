@@ -1,3 +1,15 @@
+# Laufender sicherer Releaseabschluss Ledger-Vorschau / PR178
+
+PR178 nach vollständigen finalen Gates und Scope-/Fach-/Integrationsreview kontrolliert gemergt: main7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5, Treeeb11131cbf0e64b2ec6492796180cccd536480f1 exakt identisch mit bestandenem PR-Merge. VollePR-CI40575706366 und Wallet40575705811 SUCCESS:757/757 Units,0Fail/0Skip,Chromium/Firefox/WebKit; nativePreview/echterOfflinereload/5Breiten/Axe/44px/Footer/Nullmutation/keineexternenRequests3Engines. Finale8synthetischeScreens tatsächlich visuell PASS. Alte Fehlläufe erhalten, keine CI unterbrochen. Beleg: [Ledger-Kandidat](release-evidence/ledger-live-v190-release.json).
+
+**Main/Pages/Live40577138273 läuft noch; v190 ist nicht abschließend produktiv abgenommen.** Danach zwingend gezielte tatsächliche Ledger-Produktion in3Engines und finaleBildprüfung. Bis dahin Produktcode eingefroren, keine paralleleUI-Implementierung. Letzte vollständige Live-Abnahme bleibtv189. Releaseentscheidung betrifft ausschließlich rein lesende lokale Vorschau ohne neue Finanz-/Storage-/Backup-/Syncmutation unter bestehendem Masterauftrag; keine neue kritische Nutzerfreigabe unterstellt. Vollständige nativeVerbuchen-Funktion/#159 bleibtPARTIAL/BLOCKED nach dokumentiertem Locator-/Fee-/Ownership-/Transfervertrag, Original-/Sollwert- und kritischen Freigabegates.
+
+Neuer konsolidierter UI-Nachtrag149/165(Bearbeiten/Löschen/Archivieren-Wiederherstellen; Archiv reinvisuell vs Ignorieren eigenefachlicheAusnahme; Herkunfts-/Feld-/Reimport-/Gruppen-/Rollbackvertrag) in BOOKING_MANAGEMENT_CHECKPOINT.md ab674249 gesichert. Umsetzung erst nach sicherem Ledgerabschluss/-Blockercheckpoint gemäß unveränderterGesamtroadmap. FLH05-A bleibtzurückgestellt,12Vektorenunverändert;PERF01nichtvorgezogen.
+
+---
+
+## Frühere Kandidaten- und Auditcheckpoints (neuester Stand oben)
+
 # Aktiver Vorgängerschritt: Ledger #159 / Draft-PR178 · 27.10.2026
 
 Produktion unverändert vollständig abgenommenesv189/main8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261. Einziger aktiver funktionaler Strang: bestehender Ledger-WIP auf demselben Branch feature/ledger-live-preview mit v189 integriert, HEAD9b91ff72d826db0cb2ef3627da79d0c988a109bd, Treeeb11131cbf0e64b2ec6492796180cccd536480f1. Original-WIP0c292c8 als Commitvorfahr erhalten. Draft-PR178, aktuelle CI40575706366 und Wallet40575705811 laufen; noch keine Releasebereitschaft/kein v190 behauptet.

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "issue": 159,
+  "pr": 178,
+  "releaseVersionCandidate": 190,
+  "status": "PR_GATES_PASS_RELEASE_PENDING",
+  "applicationCommit": "7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5",
+  "applicationTree": "eb11131cbf0e64b2ec6492796180cccd536480f1",
+  "featureHead": "9b91ff72d826db0cb2ef3627da79d0c988a109bd",
+  "testedPRMerge": "b8e124d02feea8c0593128fc1b8453c35f9ca021",
+  "preservedWIP": "0c292c8d94b4f1ce95b1173873d0b713da56549b",
+  "scope": "Native twelve-column local read-only Ledger preview; explicit wallet mapping; existing wallet/Bittr documentary references only; no booking, balance, cashflow, cost-basis, history or other persistence",
+  "prCI": {
+    "run": 40575706366,
+    "walletRun": 40575705811,
+    "status": "SUCCESS",
+    "unitTests": 757,
+    "failed": 0,
+    "skipped": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "nativeChecks": [
+      "auto native recognition",
+      "explicit ownership and asset mapping",
+      "Bittr group reference",
+      "unknown fees/countervalue boundaries",
+      "hostile source escaping",
+      "repeat preview",
+      "mixed-source/generic bypass blocked",
+      "form submit guard",
+      "keyboard focus/Escape/cancel",
+      "real offline reload",
+      "exact unchanged canonical record and revision",
+      "no external requests",
+      "Axe",
+      "44px targets",
+      "footer containment"
+    ]
+  },
+  "visualReview": {
+    "status": "PASS",
+    "screenshots": [
+      "chromium-320",
+      "chromium-390",
+      "chromium-430",
+      "chromium-1440",
+      "firefox-320",
+      "firefox-1440",
+      "webkit-320",
+      "webkit-1440"
+    ],
+    "artifacts": [
+      12766143777,
+      12767697084
+    ]
+  },
+  "preservedFailedRuns": [
+    {
+      "run": 40573650180,
+      "reason": "existing resize nav choice race; native Firefox offline test interception"
+    },
+    {
+      "run": 40574522241,
+      "reason": "Firefox offline delivery still failed under request routing; no pass claimed"
+    }
+  ],
+  "productCorrections": [
+    "No documentary references on mismatched ownership/ticker/token identity",
+    "Callback and disabled control remain blocked after hostile submit",
+    "Short preview caption keeps cancel visible at 320px"
+  ],
+  "mainPagesLive": {
+    "run": 40577138273,
+    "status": "IN_PROGRESS"
+  },
+  "targetedProductionQA": {
+    "status": "NOT_STARTED"
+  },
+  "fullLedgerPosting": "PARTIAL_BLOCKED_PENDING_PROVEN_LOCATOR_FEE_OWNERSHIP_TRANSFER_CONTRACT_AND_CRITICAL_RELEASE",
+  "originalValidation": "Prior local schema/Bittr evidence reused; no new complete original-file economic reconciliation claimed",
+  "physicalDevicesAndOAuth": "NOT_CLAIMED",
+  "privateOriginalsPublished": false,
+  "next": "existing UI149/165 consolidated booking row controls/archive contract then remaining executable predecessor work",
+  "FLH05A": "DEFERRED",
+  "PERF01": "NOT_STARTED"
+}
