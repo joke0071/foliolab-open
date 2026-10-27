@@ -13,7 +13,7 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
  // Keep actual same-origin app and service-worker delivery in this release gate.
  await ctx.route(url=>url.origin!==new URL(base).origin,r=>r.abort());
  let p=await ctx.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));
- const nav=async name=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+name+'"]').click();
+ const nav=async name=>p.locator('#mobileNav [data-page="'+name+'"]:visible,#sidebarNav [data-page="'+name+'"]:visible').click();
  const scan=async label=>{report.scans.push({engine,label,status:'started'});assert.deepEqual(await p.evaluate(async()=> (await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))),[],label);const overflow=await p.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,nodes:[...document.querySelectorAll('body *')].flatMap(el=>{const r=el.getBoundingClientRect();return r.width&&r.right>innerWidth+1?[{tag:el.tagName,id:el.id,className:String(el.className).slice(0,100),right:Math.round(r.right),width:Math.round(r.width),text:el.children.length?'':el.textContent?.slice(0,80)}]:[];}).slice(-25)}));assert.ok(overflow.scroll<=overflow.width+1,label+' overflow '+JSON.stringify(overflow));report.scans.at(-1).status='PASS';};
  const read=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
  try{

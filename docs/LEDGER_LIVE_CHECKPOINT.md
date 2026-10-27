@@ -23,6 +23,10 @@ Der bereits geprüfte Quellen-/Schemaaudit wird wiederverwendet, nicht erneut du
 
 Feld- und Dialogreview schließt unpassende Eigentums-/Assetreferenzverknüpfung und Reaktivierung des gesperrten Übernahmebuttons nach provoziertem Formsubmit. Alle persistierenden Callbackpfade bleiben durch Ledger-Modus gesperrt. HTML wird escaped. Überlange/ungültige Daten nutzen bestehende2MB/5000Zeilen/18Dezimal-Grenzen; >100Scopes gesperrt. 50Zeilen initial sichtbar, weitere50 explizit nachladen. Keine privaten Daten/Walletkennungen/Dateifingerprints in öffentlichen Fixtures oder Artefakten.
 
+## Erster vollständiger Browserlauf und begrenzte Testkorrekturen
+
+CI40573650180 auf6f04f94: Chromium einschließlich neuem Native-Ledger-Gate und757Units SUCCESS; beide Cross-Shards mit erhaltenen Fehlnachweisen beendet. Kein Job abgebrochen. Shard2: bestehender unveränderter ABCE-Navigationshelfer prüfte einmalig isVisible direkt nach Resize und wählte dann eine inzwischen verborgene Desktopnavigation. Korrektur ausschließlich im Test: sichtbare mobile/desktop Zielbuttons als live neu ausgewerteter Playwright-Locator, keine force-Klicks/Assertionentfernung. Shard1: neuer Test fing auch eigene Apprequests ab und erhielt beim Firefox-Offlinereload NS_ERROR_OFFLINE. Analog zum vorhandenen ABCE-Gate werden jetzt ausschließlich fremde Origins geroutet; echte App-/SW-Lieferung bleibt unberührt und vor Offline wird ein wirklicher SW-Controller abgewartet. Offline-Reload/Dateiauswahl/Nullmutation bleiben verpflichtend in allen3Engines. Keine Produktänderung oder geschwächte Offlinebehauptung, neuer kompletter Lauf erforderlich.
+
 ## Nachweise / offene Gates
 
 - Lokal757/757 Unit-Tests,0Fehler/0Skip und Syntax PASS; darunter14native Ledger-Tests (elf bestehende plus drei neue Referenz-/Token-/Hostile-Fälle).

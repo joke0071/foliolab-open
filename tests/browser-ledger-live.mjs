@@ -8,7 +8,7 @@ const base=process.env.FLH03_BASE_URL||'http://127.0.0.1:4173/';
 for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true}),context=await browser.newContext({viewport:{width:390,height:900}}),page=await context.newPage();
  const errors=[],external=[];page.on('pageerror',e=>errors.push(e.message));
- await context.route('**/*',r=>{const u=r.request().url();if(u.startsWith(base)||u.startsWith('blob:'))return r.continue();external.push(u);return r.abort();});
+ await context.route(url=>url.origin!==new URL(base).origin&&url.protocol!=='blob:',r=>{external.push(r.request().url());return r.abort();});
  try{
   await page.addInitScript({content:axe});
   await page.goto(new URL('tests/storage-origin.html',base).href);
@@ -49,7 +49,7 @@ for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
   await page.locator('#csvSource').selectOption('auto');await ready();
   await page.locator('#csvFile').setInputFiles([file(ledgerCSV()),{name:'generic.csv',mimeType:'text/csv',buffer:Buffer.from('date,type,position,quantity,price\n2025-01-01,buy,A,1,1')}]);
   await page.waitForFunction(()=>document.getElementById('csvReview')?.textContent.includes('genau einer Datei'));assert.ok(await page.locator('#saveDialog').isDisabled());assert.deepEqual(await read(),before);
-  await close();await context.setOffline(true);await page.reload();await open();await page.locator('#csvFile').setInputFiles(file(ledgerCSV()));await ready();assert.ok(await page.locator('#saveDialog').isDisabled());await close();assert.deepEqual(await read(),before,'offline preview/cancel leave exact record unchanged');
+  await close();await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));await context.setOffline(true);await page.reload();await open();await page.locator('#csvFile').setInputFiles(file(ledgerCSV()));await ready();assert.ok(await page.locator('#saveDialog').isDisabled());await close();assert.deepEqual(await read(),before,'offline preview/cancel leave exact record unchanged');
   assert.deepEqual(errors,[]);assert.deepEqual(external,[],'no external calls during synthetic native preview');
   console.log('LEDGER LIVE '+engine+': native detection/mapping/Bittr references/5 widths/Axe/44px/replay/hostile input/mixed sources/submit guard/Escape/cancel/offline/exact zero writes PASS');
  }finally{await context.close();await browser.close();}
