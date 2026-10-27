@@ -16,7 +16,7 @@ try{
  assert.equal(await item.getAttribute('open'),null);
  assert.equal(await item.locator('.account-entry').first().isVisible(),false);
  assert.equal(await page.locator('[data-action="edit-provider"]').first().isVisible(),true);
- await item.locator('summary').click();
+ await item.locator(':scope > summary').click();
  assert.equal(await item.locator('.account-entry').count(),2);
  assert.equal(await item.locator('.account-entry').first().isVisible(),true);
  await page.locator('#mobileNav [data-page="dashboard"]').click();
