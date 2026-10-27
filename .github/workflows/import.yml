@@ -74,6 +74,7 @@ jobs:
           node tests/browser-position-selection.mjs
           node tests/browser-position-removal.mjs
           node tests/browser-position-archive.mjs
+          node tests/browser-booking-management.mjs
           UI_QUALITY_SCREENSHOTS=1 node tests/browser-ui-quality.mjs
           node tests/browser-flatex-import.mjs
           node tests/browser-flatex-backfill.mjs
@@ -219,6 +220,7 @@ jobs:
           FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
           FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
           ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs
+          BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
           UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
           CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
           TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs

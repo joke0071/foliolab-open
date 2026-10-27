@@ -1,3 +1,4 @@
+import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
@@ -68,6 +69,7 @@ let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
+let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
 let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],includeArchived=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -349,14 +351,14 @@ function renderPositions(){
   const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
   const reviewButtons=reviewActions.map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
   const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="holding-row">'+
+  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div>'+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
    (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
-   '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div></div></div>'+
+   '</div></div>'+
    '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
@@ -364,34 +366,50 @@ function renderPositions(){
   empty(filter==='all'?(model.positions.length?'Keine aktiven Treffer. Bei Bedarf archivierte Positionen anzeigen oder Filter zurücksetzen.':'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
    filter==='__review'?'Keine Positionen zu diesem Prüffilter.':'Keine Positionen bei diesem Anbieter.');
 }
+function selectionCoverage(selected,pageIds,scopeIds){
+ const set=new Set(selected),complete=scopeIds.length>0&&scopeIds.every(id=>set.has(id)),pageComplete=pageIds.length>0&&pageIds.every(id=>set.has(id));
+ return {checked:complete||pageComplete,partial:!complete&&!pageComplete&&scopeIds.some(id=>set.has(id)),next:complete?'Auswahl zurücksetzen':pageComplete||!pageIds.length?'Alle '+scopeIds.length+' im Auswahlbereich auswählen':'Aktuelle Seite auswählen ('+pageIds.length+')'};
+}
+function positionSelectionScope(){
+ return filter==='all'&&!$('positionSearch').value.trim()?model.positions.map(p=>p.id):positionMatchingIds;
+}
+function selectionMaster(id,coverage,disabled){
+ return '<label class="selection-master" title="'+coverage.next+'"><input id="'+id+'" type="checkbox" aria-label="'+coverage.next+'" '+(disabled?'disabled':'')+'><span>'+coverage.next+'</span></label>';
+}
 function renderPositionSelection(){
  const tools=$('positionSelectionTools'),status=$('positionSelectionStatus');
  if(!model.positions.length){positionSelecting=false;selectedPositionIds=[];tools.innerHTML='';status.textContent='';return;}
  if(!positionSelecting){tools.innerHTML='<button type="button" class="btn outline" data-action="select-positions">Auswählen</button>';status.textContent='';return;}
- const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds);
+ const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds),scope=positionSelectionScope();
+ const coverage=selectionCoverage(selectedPositionIds,positionMatchingIds.slice(0,positionLimit),scope);
  const archived=model.positions.filter(p=>p.archived),archivedSelected=archived.filter(p=>selectedPositionIds.includes(p.id)).length;
- tools.innerHTML='<div class="selection-picker"><label class="selection-master" title="Gefilterte Positionen auswählen oder abwählen"><input id="positionSelectFiltered" type="checkbox" aria-label="Alle gefilterten Positionen auswählen oder abwählen" '+(!positionMatchingIds.length?'disabled':'')+'></label><details id="positionSelectionMenu"><summary aria-label="Auswahloptionen"></summary><div class="selection-options">'+
-  '<button type="button" class="btn outline" data-action="select-filtered" '+(!positionMatchingIds.length?'disabled':'')+'>Alle gefilterten auswählen ('+positionMatchingIds.length+')</button>'+
-  '<button type="button" class="btn outline" data-action="select-all">Alle Positionen auswählen ('+model.positions.length+'), einschließlich ausgeblendeter und archivierter</button>'+
-  '<button type="button" class="btn outline" data-action="clear-selection">Auswahl aufheben</button>'+
-  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+'</div></details></div>'+
+ const disabled=!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio;
+ tools.innerHTML=selectionMaster('positionSelectFiltered',coverage,!scope.length)+
+  '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(disabled?'disabled':'')+'>Alle löschen</button>'+
+  '<button type="button" class="btn outline" data-action="archive-selected" '+(disabled?'disabled':'')+'>Alle archivieren</button>'+
   '<button type="button" class="btn outline" data-action="cancel-selection">Abbrechen</button>'+
-  '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio?'disabled':'')+'>'+summary.currentCount+' Positionen löschen</button>';
- $('positionSelectionMenu').addEventListener('toggle',fitPositionSelectionMenu);
- const checkbox=$('positionSelectFiltered');checkbox.checked=summary.matchingCount>0&&summary.inFilterCount===summary.matchingCount;checkbox.indeterminate=summary.inFilterCount>0&&summary.inFilterCount<summary.matchingCount;
- status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte aufheben und neu prüfen.':'');
+  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'');
+ const checkbox=$('positionSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte abbrechen und neu prüfen.':'');
 }
-function fitPositionSelectionMenu(){
- const menu=$('positionSelectionMenu');if(!menu?.open)return;
- const panel=menu.querySelector('.selection-options'),anchor=menu.parentElement.getBoundingClientRect(),nav=$('mobileNav').getBoundingClientRect();
- const bottom=innerHeight-(nav.height?nav.height:0)-12;
- panel.style.position='fixed';panel.style.bottom='auto';panel.style.maxHeight=Math.max(44,bottom-12)+'px';
- const height=panel.getBoundingClientRect().height,below=bottom-anchor.bottom;
- const desired=below<height&&anchor.top>height?anchor.top-height-4:anchor.bottom+4;
- panel.style.top=Math.max(12,Math.min(desired,bottom-height))+'px';
- panel.style.left=Math.max(12,Math.min(anchor.left,innerWidth-panel.getBoundingClientRect().width-12))+'px';
+function focusPositionSelection(){($('positionSelectFiltered')||$('positionSelectionTools').querySelector('button'))?.focus();}
+function openSelectedPositionArchive(){
+ if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte erneut prüfen.');
+ const ids=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds).currentIds,expected=JSON.stringify(model);
+ if(!ids.length||ids.length!==selectedPositionIds.length)throw Error('Auswahl fehlt oder ist veraltet.');
+ const items=ids.map(id=>model.positions.find(p=>p.id===id)),active=items.filter(p=>!p.archived);
+ showDialog('Ausgewählte Positionen archivieren','POSITIONEN',
+  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung über das vorhandene Archivsymbol.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
+   if(values.confirmArchive!=='on')throw Error('Archivierung ausdrücklich bestätigen.');
+   if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
+   await portfolioStore.assertCurrent();
+   if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
+   const previous=model,candidate=structuredClone(model);for(const p of active)setPositionArchived(candidate,p.id,true);
+   model=candidate;try{await save();}catch(error){if(model===candidate)model=previous;throw error;}
+   selectedPositionIds=[];positionSelecting=false;render();notify(active.length+' Positionen archiviert. Bewertung bleibt unverändert.');
+  });
+ $('saveDialog').textContent='Auswahl archivieren';$('saveDialog').disabled=!active.length;$('cancelDialog').focus({preventScroll:true});
 }
-function focusSelectionMenu(){const menu=$('positionSelectionMenu');if(menu){menu.open=true;menu.querySelector('summary').focus();}}
 function openPositionArchive(id){
  if(busy||saving||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte erneut prüfen.');
  const p=model.positions.find(p=>p.id===id);if(!p)throw Error('Position nicht mehr vorhanden.');
@@ -457,11 +475,78 @@ function renderBookings(){
  const list=historyRows.filter(b=>(!type||b.type===type||(type==='transfer'&&b.transferMatch))&&(!query||
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date]
    .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
+ bookingMatchingIds=list.map(b=>b.id);renderBookingManagement();
  $('bookingList').innerHTML=historyRows.length?(
-  list.length?list.slice(0,bookingLimit).map(b=>bookingRowMarkup(b,model)).join('')+
+  list.length?list.slice(0,bookingLimit).map(b=>'<div class="booking-management-row">'+(bookingSelecting?'<label class="selection-check"><input type="checkbox" data-booking-select="'+esc(b.id)+'" '+(selectedBookingIds.includes(b.id)?'checked':'')+' aria-label="'+esc(b.date+' · '+(b.positionName||b.positionId)+' auswählen')+'">Auswählen</label>':'')+bookingRowMarkup(b,model)+'</div>').join('')+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
    empty('Keine Buchungen zu diesem Filter gefunden.')):
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Neue Buchungen und CSV-Importe erscheinen hier.</p></div>';
+}
+function bookingWritable(){return !busy&&!saving&&!loadFailure&&!otherTabChangedPortfolio;}
+function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand nicht schreibbar. Abruf abwarten oder neu laden.');}
+function renderBookingManagement(){
+ const root=$('bookingManagementTools'),rows=bookingHistoryRows(model);
+ if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){root.innerHTML='';return;}
+ const button=(action,label,disabled=false)=>'<button type="button" class="btn outline" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
+ if(!bookingSelecting)root.innerHTML=button('select','Auswählen',!rows.length);
+ else{
+  const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;
+  const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds);
+  const checks={};for(const action of ['notes','edit','remove']){
+   if(blocked)checks[action]='Zuerst eine aktuelle Auswahl treffen; Datenstand muss schreibbar sein.';
+   else if(action!=='remove'&&summary.currentCount!==1)checks[action]='Für diese Korrektur genau eine Buchung auswählen.';
+   else try{
+    const b=model.bookings.find(b=>b.id===selectedBookingIds[0]);
+    const preview=previewBookingChange(model,{ids:selectedBookingIds,action,reason:'Zulässigkeitsprüfung',changes:action==='remove'?undefined:action==='notes'?{notes:b?.notes||''}:{quantity:b?.quantityExact,date:b?.date,notes:b?.notes||''}});
+    checks[action]=preview.ready?'':preview.blocks.map(b=>b.reason).filter((r,i,a)=>a.indexOf(r)===i).join(' ');
+   }catch(error){checks[action]=error.message;}
+  }
+  root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('notes','Notiz korrigieren',!!checks.notes)+button('edit','Betrag / Datum korrigieren',!!checks.edit)+button('remove','Rücknahme prüfen',!!checks.remove)+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+summary.hiddenCount+' ausgeblendet · Auswahlbereich: '+($('bookingSearch').value.trim()||$('bookingFilterType').value?'gefilterte Buchungen':'alle Buchungen')+' ('+bookingMatchingIds.length+')</p>'+
+   Object.entries(checks).filter(([,reason])=>reason&&summary.selectedCount).map(([action,reason])=>'<p class="small-help" id="bookingBlocked-'+action+'">'+({notes:'Notiz',edit:'Korrektur',remove:'Rücknahme'})[action]+' gesperrt: '+esc(reason)+'</p>').join('');
+  for(const [action,reason] of Object.entries(checks))if(reason){const b=root.querySelector('[data-booking-manage="'+action+'"]');b.title=reason;if(summary.selectedCount)b.setAttribute('aria-describedby','bookingBlocked-'+action);}
+ }
+ if(canUndoBookingChange(model,bookingChangeReceipt))root.innerHTML+='<div class="settings-actions">'+button('undo','Letzte Buchungsänderung rückgängig',!bookingWritable())+'</div>';
+ const logs=model.journalEntries.filter(e=>e.type==='booking-management-audit'&&e.managementAudit);
+ if(logs.length)root.innerHTML+='<details class="performance-details"><summary><span>Änderungsnachweise ('+logs.length+')</span></summary><div class="performance-details-body">'+logs.slice(-20).reverse().map(e=>'<p>'+esc(e.date+' · '+e.managementAudit.action+' · '+e.managementAudit.reason)+' · '+esc(e.managementAudit.originals.map(x=>x.booking.id).join(', '))+'</p>').join('')+'</div></details>';
+ if(bookingSelecting){const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds),checkbox=$('bookingSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;}
+}
+function openBookingChange(action){
+ assertBookingWritable();
+ const ids=[...selectedBookingIds],expectedModel=JSON.stringify(model),b=model.bookings.find(b=>b.id===ids[0]);
+ if(!ids.length)throw Error('Zuerst Buchungen auswählen.');
+ if(action!=='remove'&&(!b||ids.length!==1))throw Error('Genau eine vorhandene Buchung auswählen.');
+ const opener=document.activeElement;
+ showDialog('Buchungsänderung vorbereiten','BUCHUNGEN',
+  '<p>'+ids.length+' ausgewählt. Die Vorschau prüft Herkunft, Referenzen und Auswirkungen vor dem Speichern.</p>'+field('Belegreferenz oder Begründung','reason','','text','required maxlength="180"')+
+  (action==='edit'?field('Betrag in EUR','quantity',b.quantityExact,'text','required inputmode="decimal"')+field('Buchungsdatum','date',b.date,'date','required'):'')+
+  (action!=='remove'?field('Notiz','notes',b.notes||'','text','maxlength="180"'):''),async values=>{
+   assertBookingWritable();if(expectedModel!==JSON.stringify(model))throw Error('Datenstand geändert. Vorschau neu beginnen.');
+   const request={ids,action,reason:values.reason,changes:action==='remove'?undefined:action==='notes'?{notes:values.notes}:{quantity:values.quantity,date:values.date,notes:values.notes}};
+   const preview=previewBookingChange(model,request),summary=bookingSelectionSummary(model,ids,bookingMatchingIds);
+   const effects=preview.effects.map(x=>'<li>'+esc((model.positions.find(p=>p.id===x.positionId)?.name||x.positionId)+' · '+(model.accounts.find(a=>a.id===x.accountId)?.name||x.accountId)+' · '+x.beforeQuantityExact+' → '+x.afterQuantityExact+' '+x.currency)+'<br>'+esc('Änderung: '+x.deltaExact+' · Einstand: '+(x.beforeCostBasisExact??'unbekannt')+' → '+(x.afterCostBasisExact??'unbekannt'))+'<br>'+esc('Gebühren: '+x.feeEUR+' → '+x.afterFeeEUR+' EUR · Steuern: '+x.taxEUR+' → '+x.afterTaxEUR+' EUR')+'<br>'+esc('Externe Geldflüsse: '+x.beforeFlows.map(f=>f.amountExactEUR).join(', ')+' → '+x.afterFlows.map(f=>f.amountExactEUR).join(', '))+'<br>'+esc(x.history)+'</li>').join('');
+   const transactions=ids.map(id=>{
+    const old=model.bookings.find(b=>b.id===id),after=preview.candidate?.bookings.find(b=>b.id===id);
+    if(!old)return '<li>'+esc(id)+' · Technischer oder nicht mehr vorhandener Vorgang.</li>';
+    return '<li><strong>'+esc(TX_TYPES[old.type]||old.type)+'</strong> · '+esc(old.positionName||old.positionId)+'<br>'+esc('ID: '+id)+'<br>'+esc('Datum: '+old.date+' → '+(after?.date||'Rücknahme'))+'<br>'+esc('Betrag / Menge: '+old.quantityExact+' → '+(after?.quantityExact||'Rücknahme'))+'<br>'+esc('Notiz: '+(old.notes||'–')+' → '+(after?.notes||'–'))+'</li>';
+   }).join('');
+   showDialog('Buchungsänderung prüfen','VORSCHAU',
+    '<p>'+ids.length+' ausgewählt · '+summary.hiddenCount+' außerhalb des aktuellen Filters.</p><p>Beleg: '+esc(request.reason)+'</p>'+
+    (preview.ready?'<p>Gesamtvermögen: '+esc(preview.beforeTotalEURExact)+' → '+esc(preview.afterTotalEURExact)+' EUR. Historische Renditen werden aus den vorhandenen Belegen neu berechnet; fehlende Werte bleiben unbekannt.</p><ul>'+effects+'</ul><details class="performance-details" id="bookingChangeTransactions"><summary><span>Einzelne Buchungsänderungen ('+ids.length+')</span></summary><div class="performance-details-body"><ul>'+transactions+'</ul></div></details><p>Originalbelege bleiben im Änderungsnachweis erhalten. Undo ist in dieser Sitzung bis zur nächsten Portfolioänderung möglich; danach Backup verwenden.</p><label class="selection-check"><input type="checkbox" name="confirmBookingChange" required>Ich bestätige genau diese Änderungen.</label>':'<p>Änderung gesperrt:</p><ul>'+preview.blocks.map(x=>'<li>'+esc(x.id+' · '+x.reason)+'</li>').join('')+'</ul>'),async consent=>{
+     if(!preview.ready)throw Error('Diese Änderung ist gesperrt.');
+     assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
+     const {candidate,receipt}=prepareBookingChange(model,request,{expectedModel,confirmed:consent.confirmBookingChange==='on'});
+     model=candidate;await save();bookingChangeReceipt=receipt;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung gespeichert.');
+    },{readOnly:!preview.ready});
+   dialogOpener=opener;$('saveDialog').hidden=!preview.ready;return false;
+  });$('saveDialog').textContent='Auswirkungen prüfen';
+}
+function openBookingUndo(){
+ assertBookingWritable();const expected=JSON.stringify(model),receipt=bookingChangeReceipt;
+ if(!canUndoBookingChange(model,receipt))throw Error('Undo nicht mehr verfügbar.');
+ showDialog('Buchungsänderung rückgängig machen','BUCHUNGEN','<p>Den exakten Portfoliozustand vor der letzten Buchungsänderung wiederherstellen?</p><label class="selection-check"><input type="checkbox" name="confirmUndo" required>Wiederherstellung bestätigen.</label>',async v=>{
+  if(v.confirmUndo!=='on')throw Error('Bestätigung fehlt.');assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();if(JSON.stringify(model)!==expected)throw Error('Datenstand geändert.');
+  model=prepareBookingUndo(model,receipt);await save();bookingChangeReceipt=null;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung rückgängig gemacht.');
+ });
 }
 function renderSettings(){
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
@@ -564,7 +649,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionSelectionTools').querySelector('button')||$('addWizard')).focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionSelectionTools').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='bookings')($('bookingManagementTools').querySelector('button')||$('addBooking')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -583,6 +668,7 @@ function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  $('dialogFields').innerHTML=html;
  $('dialogError').textContent='';
  $('dialogError').classList.add('hidden');
+ $('saveDialog').hidden=false;
  $('saveDialog').textContent=readOnly?'Prüfen':dialogSaveLabel(title);
  $('cancelDialog').textContent=readOnly?'Schließen':'Abbrechen';
  $('editDialog').classList.remove('position-removal-dialog');
@@ -1724,21 +1810,28 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusSelectionMenu();break;case 'select-positions':positionSelecting=true;renderPositions();($('positionSelectFiltered').disabled?$('positionSelectionMenu').querySelector('summary'):$('positionSelectFiltered')).focus();break;case 'select-filtered':selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'filtered',matchingIds:positionMatchingIds});renderPositions();focusSelectionMenu();break;case 'select-all':if(confirm('Ausdrücklich alle '+model.positions.length+' Positionen auswählen, einschließlich ausgeblendeter und archivierter Positionen?')){selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'all',confirmed:true});renderPositions();focusSelectionMenu();}break;case 'clear-selection':selectedPositionIds=[];renderPositions();focusSelectionMenu();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusPositionSelection();break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();$('positionSelectionTools').querySelector('button').focus();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
  const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
  const isStart=model.performanceFlowTrackingSince===shot.date;
  if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
- window.addEventListener('resize',fitPositionSelectionMenu);
- window.addEventListener('scroll',fitPositionSelectionMenu,{passive:true});
+ $('bookingList').addEventListener('change',e=>{const input=e.target.closest('[data-booking-select]');if(!input||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'toggle',id:input.dataset.bookingSelect});renderBookingManagement();}catch(error){notify(error.message,true);}});
+ $('bookingManagementTools').addEventListener('change',e=>{if(e.target.id!=='bookingSelectFiltered'||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'cycle',pageIds:bookingMatchingIds.slice(0,bookingLimit),matchingIds:bookingMatchingIds});renderBookings();$('bookingSelectFiltered').focus();}catch(error){notify(error.message,true);}});
+ $('bookingManagementTools').addEventListener('click',e=>{const b=e.target.closest('[data-booking-manage]');if(!b)return;try{
+  const action=b.dataset.bookingManage;
+  if(action==='undo'){openBookingUndo();return;}
+  if(['notes','edit','remove'].includes(action)){openBookingChange(action);return;}
+  if(action==='select')bookingSelecting=true;
+  if(action==='cancel'){bookingSelecting=false;selectedBookingIds=[];}
+   renderBookings();($('bookingSelectFiltered')||$('bookingManagementTools').querySelector('button'))?.focus();
+ }catch(error){notify(error.message,true);}});
+
  $('positionSelectionTools').addEventListener('change',event=>{
   if(event.target.id!=='positionSelectFiltered'||!positionSelecting)return;
-  try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:event.target.checked?'filtered':'unselect-filtered',matchingIds:positionMatchingIds});renderPositions();$('positionSelectFiltered').focus();}catch(error){notify(error.message,true);renderPositionSelection();}
+  try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'cycle',pageIds:positionMatchingIds.slice(0,positionLimit),matchingIds:positionSelectionScope()});renderPositions();focusPositionSelection();}catch(error){notify(error.message,true);renderPositionSelection();}
  });
- document.addEventListener('keydown',event=>{const menu=$('positionSelectionMenu');if(event.key==='Escape'&&menu?.open){menu.open=false;menu.querySelector('summary').focus();}});
- document.addEventListener('click',event=>{const menu=$('positionSelectionMenu');if(menu?.open&&!event.composedPath().some(node=>node?.id==='positionSelectionMenu'))menu.open=false;});
  $('positionList').addEventListener('change',event=>{
   const input=event.target.closest('[data-position-select]');if(!input||!positionSelecting)return;
   try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:'toggle',id:input.dataset.positionSelect});renderPositionSelection();}catch(error){input.checked=false;notify(error.message,true);}

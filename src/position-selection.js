@@ -38,6 +38,17 @@ export function updatePositionSelection(model,selectedIds,action){
   }
   case 'unselect-filtered':for(const id of current(positions,action.matchingIds))selected.delete(id);break;
   case 'filtered':for(const id of current(positions,action.matchingIds))selected.add(id);break;
+  case 'cycle':{
+   const page=current(positions,action.pageIds),scope=current(positions,action.matchingIds),scopeSet=new Set(scope);
+   if(page.some(id=>!scopeSet.has(id)))fail('Aktuelle Seite liegt außerhalb des Auswahlbereichs.');
+   // Derive the next step from actual coverage, never a remembered click count.
+   // Filters, individual choices and pagination cannot silently widen selection.
+   const covered=values=>values.length>0&&values.every(id=>selected.has(id));
+   if(covered(scope))return [];
+   const next=covered(page)||!page.length?scope:page;
+   for(const id of next)selected.add(id);
+   break;
+  }
   case 'all':
    if(action.confirmed!==true)fail('Alle Positionen müssen ausdrücklich ausgewählt werden.');
    return [...positions.keys()];

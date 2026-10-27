@@ -155,3 +155,24 @@ test('Safe-subset removal does not let CSV or automatic sources silently recreat
   assert.deepEqual(remaining,['p-400']);assert.equal(JSON.stringify(m),before);
   assert.throws(()=>updatePositionSelection(m,remaining,{type:'unselect-filtered',matchingIds:['missing']}));
  });
+
+test('Shared master cycle selects page, full scope, then clears without redundant stages',()=>{
+ const m=freeze(fixture(205)),all=m.positions.map(p=>p.id),page=all.slice(0,100),before=JSON.stringify(m);
+ const click=(selected,pageIds=page,matchingIds=all)=>updatePositionSelection(m,selected,{type:'cycle',pageIds,matchingIds});
+ let selected=click([]);assert.deepEqual(selected,page);selected=click(selected);assert.deepEqual(selected,all);assert.deepEqual(click(selected),[]);
+ assert.deepEqual(click(click([],page,page),page,page),[],'one-page range clears on second click');
+ selected=click(['p-204']);assert.equal(selected.length,101);assert.ok(selected.includes('p-204'));
+ const changed=all.slice(100,110);assert.deepEqual(click(selected,changed,changed),[...selected,...changed].sort((a,b)=>all.indexOf(a)-all.indexOf(b)));
+ assert.deepEqual(click(selected,[],[]),selected,'empty filtered scope does not discard hidden selection');
+ assert.throws(()=>click([],['p-1'],['p-0']),/außerhalb/);assert.throws(()=>click(['stale']),/veraltet/);
+ assert.equal(JSON.stringify(m),before);
+});
+test('Pagination and individual deselection derive the next step from coverage',()=>{
+ const m=fixture(205),all=m.positions.map(p=>p.id),click=(s,page)=>updatePositionSelection(m,s,{type:'cycle',pageIds:page,matchingIds:all});
+ let selected=click([],all.slice(0,100));
+ selected=updatePositionSelection(m,selected,{type:'toggle',id:'p-1'});
+ assert.equal(click(selected,all.slice(0,100)).length,100,'restore only current page first');
+ assert.equal(click(selected,all.slice(0,200)).length,200,'newly visible page needs explicit click');
+ assert.equal(selected.length,99,'scope changes alone have no writes');
+ selected=click(all.slice(0,200),all.slice(0,200));assert.deepEqual(selected,all);assert.deepEqual(click(selected,all),[]);
+});
