@@ -52,11 +52,12 @@ import {sourceDigest} from './import-identity.js';
 const cashTypes=new Set(['deposit','withdraw','dividend','interest','fee','tax']);
 const clone=x=>structuredClone(x);
 const raw=x=>JSON.stringify(x);
-function references(value,ids){
+function references(value,ids,guard={nodes:0},depth=0){
+ if(++guard.nodes>200000||depth>64)throw Error('Referenzprüfung überschreitet das sichere Prüflimit.');
  if(value==null)return false;
  if(typeof value==='string')return ids.some(id=>value===id||value.includes(id));
  if(typeof value!=='object')return false;
- return Object.entries(value).some(([k,v])=>ids.includes(k)||references(v,ids));
+ return Object.entries(value).some(([k,v])=>ids.includes(k)||references(v,ids,guard,depth+1));
 }
 function eligibility(model,b,action){
  const e=model.journalEntries.find(e=>e.id===b?.journalEntryId),p=model.positions.find(p=>p.id===b?.positionId),reasons=[];
@@ -94,6 +95,7 @@ export function previewBookingChange(model,request){
  const ids=request?.ids,action=request?.action;
  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length||!['notes','edit','remove'].includes(action))throw Error('Ungültiger Änderungsauftrag.');
  if(ids.length>200)throw Error('Höchstens 200 Buchungen je Änderung prüfen; Auswahl eingrenzen.');
+ if(raw(model).length>8_000_000)throw Error('Datenumfang überschreitet das sichere Prüflimit.');
  rows(model);safeImport(clone(model));
  if(!ledgerQuantityAudit(model).ok)throw Error('Journal und Bestände stimmen nicht überein.');
  if(action==='notes'&&Object.keys(request.changes||{}).some(k=>k!=='notes'))throw Error('Nur die Notiz ist änderbar.');

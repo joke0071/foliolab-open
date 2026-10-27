@@ -41,7 +41,7 @@ Oberfläche: Auswählen, gefiltert/alle/aufheben, Notiz, Betrag/Datum, Rücknahm
 
 ## Prüfstand / nächster Schritt
 
-Lokal729 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
+Lokal730 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
 
 Nächster Schritt: finale PR173-CI/Bilder auswerten, Fehler beheben, Fach-/Source-Review sichern. Erst danach konkrete Produktionsfreigabe für diesen begrenzten belegten Umfang einholen. Breitere Trade-/Import-/Walletmutationen bleiben explizite Fachblocker, nicht als fertig melden.
 
@@ -54,3 +54,5 @@ Broker-/Exchange-Originaldateien sind hier weiterhin nicht zugänglich. Für Led
 CI40517607177 Chromium erreicht neue Buchungsprüfungen nach bestandenen Finanz-/Historien-/Auswahl-/CAS-/Archivregressionen. Neue Axe-Prüfung meldet nach Resize Kontrast an addBooking.action-label. Testflow wartet nun auf tatsächlich laufende endliche Animationen plus zwei Frames (wie bestehende strenge Gates), keine Assertion geändert. Bei erneutem Fehler werden ComputedStyles/Viewport/Animationszustände diagnostiziert. Tatsächlicher Produktkontrastfehler noch nicht ausgeschlossen. Kein Merge/Deployment.
 
 Weitere Review-Korrektur: nextJournalSequence verwendet die höchste vorhandene Sequenz statt der Journalanzahl, damit Folgegeschäftsvorgänge nach Rücknahmen nicht doppelte/kleinere Nummern erhalten. Regressionsfall Rücknahme + Folgeeinzahlung mit unabhängigem Sollsaldo113 EUR bestanden. Neuer Browserflow ergänzt echte UI-Rücknahme, Notiz/Undo und programmgesteuerten Submit auf gesperrter Importherkunft. Kontenfixtures sind ausdrücklich getrennte Konten.
+
+CI40519556015: neue Chromium-Prüfungen für Korrektur, Rücknahme, Notiz, Undo, Restore/CAS erreichen den zuletzt ergänzten Import-Sperrfall. Tatsächlicher UI-Fehler: hidden-Attribut des saveDialog wurde durch .btn-display überschrieben. Gezielter [hidden]-Style korrigiert die Sichtbarkeit, programmatischer Submit bleibt weiterhin durch preview.ready und Provenienz gesperrt. Testassertionen unverändert. Referenzprüfung zusätzlich auf8MB/200kKnoten/64Ebenen begrenzt; übergroße/ungeklärte Strukturen bleiben unverändert gesperrt. Vollständige letzte CI noch erforderlich.
