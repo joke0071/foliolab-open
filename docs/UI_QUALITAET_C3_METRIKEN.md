@@ -1,3 +1,11 @@
+## Bestätigter Befund und Umsetzungskandidat
+
+CI40426089925 am reinen Test-HEAD1906de8 reproduziert den Fehler tatsächlich in Chromium und Firefox: bekannte drei Tagesmengen werden als3M/0L statt1M/2L gezeichnet. WebKit erreichte wegen des vorherigen Firefox-Abbruchs die neue Assertion noch nicht; keine WebKit-Fehlbehauptung. Produktionscode blieb bis zu dieser Reproduktion unverändert.
+
+Jetzt kleinste reine Ansichtsänderung: unbekannte Menge/fehlender benachbarter Datumsschritt/bestehende1-/4-Tage-Grenze unterbrechen den Bestandsverlauf. Die Segmentzuordnung der EUR-Bewertung bestimmt weiterhin ausschließlich den EUR-Chart. Kurse und EUR-Werte werden nicht ergänzt; Tabelle zeigt den fehlenden Tageskurs weiter. Bestandshinweis beschreibt Mengenbelege. Strenge Sollassertions unverändert; SW184 Kandidat, finale vollständige3Engine-Gates/Review/Live noch offen.
+
+---
+
 # C3: Metrikspezifische Historiensegmente
 
 Status: zunächst Diagnose, keine Produktänderung. Auf v183 bleibt die bestehende Darstellung unverändert, bis tatsächliche Reproduktion vorliegt.

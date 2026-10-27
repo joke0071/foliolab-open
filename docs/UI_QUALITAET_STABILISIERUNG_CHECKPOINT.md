@@ -1,3 +1,13 @@
+# Aktuell: C2/v183 DONE; C3 als belegter Darstellungskandidat
+
+C2/#167/mainf384593 ist tatsächlich live abgenommen (PR-CI40423288950/MainPagesLive40424425924 SUCCESS,709Tests,105Livehashes/SW183/6Kerngruppen18Axe,B1/C1/C2 live3Engines,zwei Historienbilder tatsächlich angesehen). Keine Wiederholung.
+
+C3/#168: neue unveränderte Produktbasis wurde in CI40426089925 streng geprüft. Chromium und Firefox reproduzieren3 belegte Bestandsmengen als3M/0L statt1M/2L. Nur metrikspezifische Segmentierung/Erklärung im vorhandenen Renderer korrigieren; EUR-Lücke und fehlender Kurs bleiben unverändert. Neue strenge Assertions unverändert; finale3Engine-Gates und Live offen, SW184 nur Kandidat. Appweite Restdeltas/beschriebener privater Android-Fall nicht pauschal abgeschlossen. Begrenzter unabhängiger max10-Abschlusscheck erst nach Stabilisierung.
+
+FLH04 nach UI am bestehenden #160/#161, keine Sync-Releasefreigabe. Buchungsverwaltung #165 separat ohne Finanzmutations-Releasefreigabe. Historische Einstiegsmatrix darunter erhalten.
+
+---
+
 # Fortschritt nach tatsächlicher v182-Abnahme
 
 C1/Transferzustände **DONE im vereinbarten UI-Umfang**, #166/main85f5899, CI40419694524/MainPagesLive40421074616 SUCCESS,709 Tests,105 Livehashes, ZielUI live in3 Engines, zwei Bilder tatsächlich angesehen. Keine neue Finanzmutation; vorhandene Bestätigung/Undo/CAS/Recovery erhalten. Ältere IN-PROGRESS-Zeilen darunter sind Historie.

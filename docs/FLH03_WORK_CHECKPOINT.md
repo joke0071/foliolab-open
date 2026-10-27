@@ -1,3 +1,13 @@
+# C3 tatsächlich reproduziert; kleinste UI-Korrektur, finale Gates offen
+
+Diagnose-HEAD1906de8b21578030fca8a17d8abd438a1a8c765c / CI40426089925: neue strenge Chromium-Assertion schlägt tatsächlich fehl. Drei unabhängig geprüfte tägliche Mengen2.123456789 →3.123456789 →3.123456789 ergeben den Pfad `M5.00 141.00 M300.00 27.67 M595.00 27.67`:3M/0L statt1M/2L. EUR-Gap und exakte Mengenassertion davor bestanden; vorhandene C2-Zustände ebenfalls. Fehlnachweis bleibt in Actions und diesem Checkpoint erhalten; keine Umdeklaration als Gesamtgrün. Crosslauf regulär abschließen lassen, vor Push nicht abbrechen.
+
+Konkrete Ursache: Bestandsansicht verwendet Segment-IDs der EUR-Projektion. Fehlender Tageskurs unterbricht dadurch bekannte Mengen und erzeugt einen unzutreffenden Teilhinweis. **Kleinste Korrektur ausschließlich src/booking-history-ui.js:** Menge segmentiert nach ihren eigenen unbekannten Tabellenzeilen und bestehenden1-/4-Tage-Grenzen; EUR bleibt exakt bei bisherigen Projektionssegmenten, Preisansicht unverändert. Bestands-Quellenhinweis nennt datierte Bestandsnachweise statt EUR-Bewertungsformel. Fehlender Tageskurs und unbekannter EUR-Wert bleiben sichtbar. Keine Änderung der Projektion, Journalpostings, Preise, FX, Beträge oder Speicherung; keine Interpolation/zweite Engine.
+
+Neue strenge Tests unverändert. Live-Bildbrücke zusätzlich genau ein festes synthetisches Bestandslinienbild. SW184 ausschließlich Kandidat; **noch kein Releaseerfolg**, aktuelle Produktion vollständig abgenommenes v183. Nächste Aktion: finale vollständige HEAD-CI/Wallet, Quelldiff-/Sicherheitsprüfung und Konfliktabgleich; nur bei tatsächlichem Grün unter bestehender UI-Freigabe integrieren, Main/Pages/Livejob inkl.105Assets/SW184/alle3UI-Engines und tatsächlichem Bild prüfen. Keine Garantie, dass dies jede unbekannte Android-Portfolio-Ursache erklärt.
+
+---
+
 # Aktuell: v183 live DONE; C3-Diagnose ohne Produktänderung
 
 C2/#167 ist tatsächlich produktiv abgenommen: main `f384593da22888131d1418574de9acf33c30c0e1`, Tree23d4d7d403d72bb5966cb3841ee7d7b25d5b64e1, finaler PR-HEAD e1bb4df. [PR-CI40423288950](https://github.com/joke0071/foliolab-open/actions/runs/40423288950) +Wallet40423288875 und [Main/Pages/Live40424425924](https://github.com/joke0071/foliolab-open/actions/runs/40424425924) vollständig SUCCESS.709/709/0Fail/0Skip,105 exakte Live-Dateihashes, foliolab-open-v183,6 Kerngruppen/18 Axe; B1/C1/C2-ZielUI live in allen3 Engines, beide Historienbilder tatsächlich angesehen. Beleg: release-evidence/ui-quality-v183-release.json. Erster falscher Einzelkurs-Test und dessen Fehllauf bleiben darunter dokumentiert. Nicht wiederholen.
