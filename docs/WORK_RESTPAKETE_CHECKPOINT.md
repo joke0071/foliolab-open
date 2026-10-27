@@ -1,3 +1,17 @@
+# Aktiver Vorgängerschritt: Ledger #159 / Draft-PR178 · 27.10.2026
+
+Produktion unverändert vollständig abgenommenesv189/main8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261. Einziger aktiver funktionaler Strang: bestehender Ledger-WIP auf demselben Branch feature/ledger-live-preview mit v189 integriert, HEAD6f04f94b59beac4bc8851be16273df342905cfb7, Tree34c28407d0d7728717fa7671569706c8a1a0b470. Original-WIP0c292c8 als Commitvorfahr erhalten. Draft-PR178, CI40573650180 und Wallet40573649819 laufen; noch keine Releasebereitschaft/kein v190 behauptet.
+
+Begrenzter rein lesender nativer12-Spalten-CSV-Preview: bestehender CSV-/Decimal-/Wallet-/Bittr-Kern, explizite Walletzuordnung, referenzierte vorhandene Beleggruppen. Eigentums-/Ticker-/Tokenwidersprüche hängen keine fremden Wallet-/Bittr-Referenzen mehr an. Ledger-Countervalues bleiben Marktbeobachtungen, keine Kauf-/Steuerbasis. Failed/Delegation/Unbonding/Swaps/Fees ungeklärt sichtbar. Keine native Persistenz/Bestands-/Journal-/Cashflow-/Kostenbasisübernahme. Gemischte Stapel und generische Umgehung gesperrt; Submitguard hält Übernahme auch nach provoziertem Formsubmit deaktiviert.
+
+Lokal757/757 Units,0Fehler/0Skip und Syntax PASS. Neuer Native-Browsergate in bestehendem CSV-Batch-Suitepfad: alle3Engines/5Breiten/Axe/44px/Zuordnung/Bittr/HostileCSV/Reimport/Abbruch/Escape/Offline/exakt unveränderter kanonischer Record. Keine Workflow-/Policyänderung oder alter Test entfernt. Lokale Browserinstallation gescheitert(leere/ungültige Downloadarchive); kein lokaler Browserpass behauptet. Volle PR-CI und visuelle Evidenz ausstehend. Branchcheckpoint docs/LEDGER_LIVE_CHECKPOINT.md mit Fachmatrix und konkreten Grenzen.
+
+Vorgänger-Gesamtaudit weiterhin DONE nur als Inventar, Gesamtumsetzung PARTIAL. #159 bleibt PARTIAL; vollständige native Übernahme braucht belegte Ereignislocators/Fee-/Transfer-/Ownershipsemantik pro unterstütztem Fall, unabhängige Sollwerte und gesonderte kritische Releaseentscheidung. Frühere lokale Originalschema-/Bittr-Belege wiederverwendet, keine privaten Originale/Kennungen/Dateifingerprints publiziert. Nach sicherem Ledgerabschluss/-Blockercheckpoint reale UI-/1W-/weitere Vorgängerdeltas gemäß Roadmap. PERF01 nicht vorgezogen; FLH05-A weiterhin zurückgestellt, Spezifikation/12Vektoren unverändert.
+
+---
+
+## Letzter vollständig abgenommener Release und Gesamtaudit
+
 # Verbindlicher Master-Checkpoint nach v189-Live-Abnahme · 27.10.2026
 
 **Laufender sicherer Teilschritt abgeschlossen: PR175/v189 LIVE_ACCEPTED.** main `8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261`, geprüfter Mergebaum `1101b31800f0237427f090169f586be32675d1c9`. Rein lesende Kontonachweise aus bestehenden Qualitäts-/Historien-/Importquellen; keine neue Finanzengine oder Persistenz. Beleg: [v189-Live-Abnahme](release-evidence/account-evidence-v189-release.json).
