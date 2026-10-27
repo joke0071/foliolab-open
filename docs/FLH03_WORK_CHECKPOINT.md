@@ -1,3 +1,15 @@
+Vorheriger HEAD3ed4167: [CI40426748257](https://github.com/joke0071/foliolab-open/actions/runs/40426748257) und Wallet40426748313 tatsächlich vollständig SUCCESS,709/709/0Fail/0Skip, neue Metrikprüfung in allen3 Engines. Kein Merge: unten beschriebener präziser Quellen-/Grenztestdelta bekommt zwingend neue finale HEAD-Gates.
+
+# Abschließender C3-Reviewdelta: Mengenquelle und echte Mengen-/Zeitlücken
+
+Die erste Produktkorrektur3ed4167 hat im finalen Chromium-Lauf40426748257 bereits709/709 und vollständige Regressionen einschließlich neuer Bestandslinie/EUR-Lücke/nullmutationen bestanden. Crosslauf wird regulär beendet; dessen endgültigen Status separat auswerten, kein Abbruch und kein vorweggenommenes Gesamtgrün.
+
+Beim separaten Quelldiffreview fiel ein letzter präziser Darstellungsdelta auf: Bestandsansicht übernahm weiterhin den Präfix der Preis-CSV. Mengen stammen aus datierten Bestandsnachweisen, nicht aus Kurszeilen. Nur diesen Hinweis für Bestand auf „Datierte Bestandsnachweise · Keine Positionsbewertung.“ begrenzen; EUR-/Kursquellen bleiben unverändert.
+
+Zusätzliche gezielte Regression schützt die tatsächlich betroffenen Grenzen: unbekannter früher Bestand bleibt unbekannt/Teilhinweis; weit getrennte Mengenbeobachtungen bleiben getrennt; fehlender Kurs allein unterbricht bekannte Mengen nicht. Neue ursprüngliche3M→1M-Sollassertion und alle bisherigen Assertions unverändert erhalten. Keine Finanz-/Projektion-/Speicheränderung. Neue finale HEAD-CI ist Pflicht; frühere grüne HEADs sind keine Freigabe des letzten Deltas. V183 bleibt akzeptierte Produktion, SW184 Kandidat.
+
+---
+
 # C3 tatsächlich reproduziert; kleinste UI-Korrektur, finale Gates offen
 
 Diagnose-HEAD1906de8b21578030fca8a17d8abd438a1a8c765c / CI40426089925: neue strenge Chromium-Assertion schlägt tatsächlich fehl. Drei unabhängig geprüfte tägliche Mengen2.123456789 →3.123456789 →3.123456789 ergeben den Pfad `M5.00 141.00 M300.00 27.67 M595.00 27.67`:3M/0L statt1M/2L. EUR-Gap und exakte Mengenassertion davor bestanden; vorhandene C2-Zustände ebenfalls. Fehlnachweis bleibt in Actions und diesem Checkpoint erhalten; keine Umdeklaration als Gesamtgrün. Crosslauf regulär abschließen lassen, vor Push nicht abbrechen.
