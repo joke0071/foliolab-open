@@ -1,3 +1,15 @@
+# Aktuelle Integrationsabnahme nach Vorgänger-Gesamtaudit
+
+Vorgänger-Audit ccd7dd879b720a02ff218f3239f33c579a01a388 auf feature/flh05-import-foundation ist als vollständige Bestandsaufnahme dokumentiert; Masterumsetzung bleibt PARTIAL. CI176 auf main433ab1585e475b8560694959b210b40a250f2cb6 inklusive Main/Pages/Live40563994432 vollständig SUCCESS. Keine neue Performance-/FLH05-Implementierung; verbindliche Gesamtsequenz wieder aufgenommen.
+
+PR175-App-/Style-/SW-/Testdateien unverändert zum vollständig geprüften DD6/Tree2802cc9. CI40558301803+Wallet40558301991 mit741Units/3Engines bestanden. Finale aktuelle Chromium320/390/430/1440-, Closed320-, Firefox320- und WebKit320/1440-Bilder tatsächlich angesehen: volle Inhaltsbreite/48px-Ziele/Pfeile/Lesbarkeit ohne weiteren blockierenden Befund. Umgebungsblocker erledigt.
+
+Dieser reine Dokumentationscheckpoint fordert wegen tatsächlich GEÄNDERTER main-/Workflow-Testgrundlage einen neuen kombinierten Pflichtlauf auf GitHub-Mergebaum an: nun alle bisherigen741 plus2 neue CI-Policytests = erwartete743Units, Chromium und beide PflichtshardsFirefox/WebKit. Keine produktive Datei, kein Gate und keine Assertion geändert. Kein früherer Test wird als neuer kombinierter PASS ausgegeben. Nach vollständigem Grün aktuellenmain/identischenMergebaum prüfen, begrenzten read-onlyRelease kontrolliert durchführen und neue Kontozielabläufe tatsächlich in3Engines gegen Produktion abnehmen. Keine neue Buchungs-/Backup-/Syncmutation freigegeben. Danach Ledger18 gemäß zentralerRoadmap; PERF01-P1 ist kein automatischer Vorrang vor älteren ausführbaren Vorgängern.
+
+---
+
+## Historische Kandidaten-/Fehlnachweise (erhalten)
+
 # FLH03-16 / 07 — lesende Kontovollständigkeit
 
 Basis main/v188 ca1fa8fd46b3060d10a13095400bc3d33b0f3c42. Nächster bestehender P1-Vorgänger laut konsolidierter Roadmap, vor FLH05-A. Einziger aktiver funktionaler Strang: feature/flh03-account-completeness. FLH05-Spezifikation gesichert auf feature/flh05-import-foundation/210763b8f95d965ff880e9fd4d02089b9d3750ab; A bleibt zurückgestellt. #157/#161 unverändert.
