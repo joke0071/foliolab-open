@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "baselineCommit": "ca1fa8fd46b3060d10a13095400bc3d33b0f3c42",
+  "baselineWorkflowBlob": "36e26eaa40f306eb67be3568cfadb76f66859425",
+  "baselineRun": 40534397532,
+  "baselineJobs": {
+    "test": {
+      "id": 122295574983,
+      "seconds": 397
+    },
+    "crossEngine": {
+      "id": 122295575189,
+      "seconds": 666
+    },
+    "requiredRegressionSpanSeconds": 667
+  },
+  "historicalBaseline": "PR172 comment6441822234: setup Chromium5–6s, Firefox/WebKit41–69s; successful cross433/552/623/649s, unlike test states so no direct saving comparison",
+  "commands": [
+    "UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs",
+    "QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs",
+    "ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs",
+    "TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs",
+    "TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs",
+    "FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs",
+    "node tests/browser-cross-engine.mjs",
+    "FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs",
+    "FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs",
+    "FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs",
+    "FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs",
+    "ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs",
+    "BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs",
+    "UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs",
+    "CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs",
+    "TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs",
+    "INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs",
+    "node tests/browser-atomic-storage-cross-engine.mjs",
+    "IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs",
+    "IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs",
+    "IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs",
+    "FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs",
+    "HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs"
+  ],
+  "shards": {
+    "1": [
+      "UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs",
+      "QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs",
+      "ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs",
+      "TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs",
+      "TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs",
+      "FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs",
+      "FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs",
+      "ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs",
+      "BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs",
+      "TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs",
+      "node tests/browser-atomic-storage-cross-engine.mjs",
+      "IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs"
+    ],
+    "2": [
+      "FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs",
+      "node tests/browser-cross-engine.mjs",
+      "FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs",
+      "FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs",
+      "UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs",
+      "CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs",
+      "INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs",
+      "IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs",
+      "IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs",
+      "FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs",
+      "HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs"
+    ]
+  },
+  "measurementStatus": "PENDING_ACTUAL_CANDIDATE_RUN",
+  "policy": "Every existing cross-engine command exactly once, unchanged environment/browser sets and assertions; fail-fast false; deploy requires all shards"
+}

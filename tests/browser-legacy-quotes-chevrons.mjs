@@ -53,7 +53,7 @@ try{
  for(const property of ['content','width','height','borderRight','borderBottom','transform'])
   assert.equal(arrows.provider[property],arrows.source[property],'Chevron '+property+' should match');
  assert.equal(arrows.provider.content,'""','Chevron must be shape, not a Unicode glyph');
- await provider.locator('summary').click();
+ await provider.locator(':scope > summary').click();
  await market.locator(':scope > summary').click();
  // CSS transitions animate over 150 ms. Assert the final shared shape,
  // not two different intermediate animation frames.

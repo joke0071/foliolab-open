@@ -63,25 +63,28 @@ export function previewLedgerLive(model,document,assignments={}){
   else{
    const w=position.wallet,fold=['evm','erc20'].includes(w.chain),source=scope.accountIdentity;
    if(!source||(fold?source.toLowerCase()!==w.address.toLowerCase():source!==w.address))issues.push('Exportidentität und hinterlegte Wallet stimmen nicht exakt überein; Eigentumsbezug ungeklärt.');
+   if(scope.currency!==position.symbol)issues.push('Exportticker und ausgewählte Position widersprechen sich; Assetzuordnung ungeklärt.');
    if(['erc20','spl','xrp-token'].includes(w.chain))issues.push('Ticker allein belegt keine Token-/Contract-Identität.');
    if(!currentSession)issues.push('Keine eindeutig dieser Wallet zugeordnete übernommene Historie.');
   }
+  // Documentary links must not attach foreign or unresolved account/asset evidence.
+  const referenceEligible=position&&currentSession&&issues.length===0;
   const proof=new Map();
-  if(position&&['btc','btc-hd'].includes(position.wallet.chain)&&scope.currency==='BTC'&&currentSession){
+  if(position&&['btc','btc-hd'].includes(position.wallet.chain)&&scope.currency==='BTC'&&referenceEligible){
    const receipts=model.purchaseEvidence?.receipts||[];
    if(receipts.length>1000||currentSession.events.length>10000)issues.push('Kaufbelegabgleich zu groß; vorhandene Kaufbelegansicht verwenden.');
    else for(const group of previewPurchaseEvidence(model,[],currentSession,position.accountId))proof.set(transactionKey(group.txid,position.wallet.chain),{status:group.status,receiptCount:group.receipts.length,netBTC:group.netBTC,fiatEUR:group.fiatEUR});
   }
-  if(position&&currentSession&&!referenceCache.has(position.id)){
+  if(referenceEligible&&!referenceCache.has(position.id)){
    const references=new Map();for(const e of currentSession.events||[])if(walletStreamMatches(e,position)){const key=transactionKey(e.txid,position.wallet.chain);if(!references.has(key))references.set(key,[]);references.get(key).push({id:e.id,type:e.type,status:e.status,quantityBaseUnits:e.quantityBaseUnits});}
    referenceCache.set(position.id,references);
   }
-  mapped.set(scope.id,{position,session:currentSession,issues,proof});
+  mapped.set(scope.id,{position,session:currentSession,referenceEligible,issues,proof});
  }
  const operations=document.operations.map(row=>{
   const map=mapped.get(row.scopeId);if(!map)throw Error('Ledger-Kontobezug fehlt.');
   const position=map.position,key=transactionKey(row.txid,position?.wallet.chain);
-  const references=position&&map.session?referenceCache.get(position.id)?.get(key)||[]:[];
+  const references=map.referenceEligible?referenceCache.get(position.id)?.get(key)||[]:[];
   return {...row,positionId:position?.id||null,network:position?.wallet.chain||null,chainId:position?.wallet.chainId??null,issues:[...row.issues,...map.issues],walletReferences:references,purchaseEvidence:row.type==='IN'&&row.status==='Confirmed'?map.proof.get(key)||null:null};
  });
  return {kind:'ledger-live-preview',writeEnabled:false,ready:false,operations,scopes:document.scopes,assignments:{...assignments},reason:'Nur lokale Vorschau. Keine Buchungen, Bestände, Cashflows, Einstandswerte oder Historien werden übernommen. Gebühren, Gegenbuchungen und native Ereignis-Locators sind zuerst beleggebunden abzugleichen.'};

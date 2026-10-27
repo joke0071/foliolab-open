@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+// The native Ledger read-only preview shares this CSV regression gate in all three engines.
+import './browser-ledger-live.mjs';
 import {readFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_BASE_URL||'http://127.0.0.1:4173/';

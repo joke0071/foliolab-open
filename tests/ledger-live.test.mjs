@@ -1,19 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {blankModel,createProvider,createAccount,createPosition} from '../src/model.js';
 import {parseCSV} from '../src/csv-import.js';
 import {parseLedgerLiveCSV,looksLikeLedgerLiveCSV,previewLedgerLive,LEDGER_LIVE_HEADERS} from '../src/ledger-live.js';
 import {ledgerLiveMarkup} from '../src/ledger-live-ui.js';
-import {validatePurchaseReceipt} from '../src/purchase-evidence.js';
-import {validateHistorySession} from '../src/wallet-history-state.js';
-import {ledgerCSV,nativeHeader,owner,txid,at} from './ledger-live-fixture.mjs';
-function model(){const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic'}));m.accounts.push(createAccount({id:'own',providerId:'p',name:'Wallet account',type:'wallet'},m));m.positions.push(createPosition({id:'wallet',providerId:'p',accountId:'own',name:'Synthetic BTC',kind:'crypto',coinId:'bitcoin',symbol:'BTC',quantity:'0.0248',price:1,wallet:{enabled:true,chain:'btc',address:owner}},m));return m;}
+import {ledgerCSV,nativeHeader,owner,txid,at,ledgerModel as model,ledgerEvidence as addEvidence} from './ledger-live-fixture.mjs';
 function freeze(v){if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;}
-function addEvidence(m){
- const event={network:'bitcoin',chainId:'mainnet',accountId:'own',walletId:'own',assetId:'bitcoin',contract:null,mint:null,txid,locator:{kind:'vout',index:'0',subindex:'0'},blockHeight:'10',blockHash:'b'.repeat(64),txIndex:null,timestamp:at,decimals:8,quantityBaseUnits:'2480000',includedInEventId:null,type:'incoming',source:'synthetic',status:'confirmed',finality:'confirmed',observedAt:at,coverage:'verified',qualityCode:'synthetic'};
- m.walletHistory={schema:1,sessions:[validateHistorySession({id:'wallet-history:wallet',chain:'btc',walletKey:'wallet',acceptedAt:at,events:[event],streams:[{network:'bitcoin',chainId:'mainnet',accountId:'own',assetId:'bitcoin',contract:null,mint:null,decimals:8,throughBlock:'10',opening:{quantityBaseUnits:'0',beforeBlock:'0',source:'synthetic'},coverage:{status:'verified',fromBlock:'0',toBlock:'10',tipHash:'b'.repeat(64),source:'synthetic'}}],quotes:[],issues:[]})],pending:[]};
- m.purchaseEvidence={schema:1,decisions:[],receipts:[0,1].map(i=>validatePurchaseReceipt({provider:'bittr',currency:'EUR',timestamp:i?'2025-01-01T12:01:00.000Z':at,txid,fiatEUR:'500',serviceFeeEUR:'9',grossBTC:'0.0125',miningFeeBTC:'0.0001',netBTC:'0.0124'}))};return m;
-}
 test('Native twelve-column dialect reuses parser, UTF8 BOM, quoted commas and exact decimals',()=>{const d=parseLedgerLiveCSV('\uFEFF'+ledgerCSV([{'Account Name':'Synthetic, wallet','Operation Amount':'0.000000000000000001','Operation Fees':'0'}]));assert.deepEqual(LEDGER_LIVE_HEADERS,nativeHeader.split(','));assert.equal(looksLikeLedgerLiveCSV(parseCSV(ledgerCSV())),true);assert.equal(d.operations[0].accountName,'Synthetic, wallet');assert.equal(d.operations[0].amountExact,'0.000000000000000001');assert.equal(d.operations[0].feeExact,'0');assert.equal(d.writeEnabled,false);});
 test('Incomplete or future schemas stay quarantined instead of generic trade mapping',()=>{assert.equal(looksLikeLedgerLiveCSV({headers:['Operation Date','Operation Hash']}),true);assert.equal(looksLikeLedgerLiveCSV({headers:['date','type','quantity']}),false);assert.throws(()=>parseLedgerLiveCSV(ledgerCSV().replace('Account xpub','Future field')),/12-Spalten/);assert.throws(()=>parseLedgerLiveCSV(ledgerCSV().replace('Operation Date','Operation Date,Extra').replace(at,at+',extra')),/CSV|12-Spalten/);assert.throws(()=>parseLedgerLiveCSV(ledgerCSV().replace('Operation Fees','Operation Amount')),/doppelte/);});
 test('All native statuses/types preserve observations and never become economic movements',()=>{const types=['IN','OUT','FEES','DELEGATE','UNDELEGATE','WITHDRAW_UNBONDED','SWAP'];const d=parseLedgerLiveCSV(ledgerCSV(types.map((type,i)=>({'Operation Type':type,Status:i===0?'Failed':'Confirmed','Operation Amount':'4'}))));const m=freeze(model()),before=JSON.stringify(m),p=previewLedgerLive(m,d);assert.equal(p.ready,false);assert.equal(p.writeEnabled,false);assert.equal(p.operations.length,7);assert.match(p.operations[0].issues.join(' '),/Fehlgeschlagen/);assert.match(p.operations.at(-1).issues.join(' '),/Unbekannter Operationstyp/);assert.equal(JSON.stringify(m),before);});
@@ -25,3 +16,24 @@ test('Explicit mapping never infers from ticker; missing/foreign/stale mappings 
 test('Existing wallet event IDs and N:1 Bittr grouping are reused; no double posting or cost-basis import',()=>{const m=freeze(addEvidence(model())),d=freeze(parseLedgerLiveCSV(ledgerCSV())),before=JSON.stringify(m),p=previewLedgerLive(m,d,{[d.scopes[0].id]:'wallet'}),row=p.operations[0];assert.equal(row.walletReferences.length,1);assert.equal(row.walletReferences[0].quantityBaseUnits,'2480000');assert.deepEqual(row.purchaseEvidence,{status:'exact',receiptCount:2,netBTC:'0.0248',fiatEUR:'1000'});assert.equal(p.writeEnabled,false);assert.equal(JSON.stringify(m),before);const foreign=structuredClone(m);foreign.walletHistory.sessions[0].walletKey='another-wallet';assert.equal(previewLedgerLive(foreign,d,{[d.scopes[0].id]:'wallet'}).operations[0].walletReferences.length,0);});
 test('Preview HTML escapes imported account/hash/type fields and bounds visible rows',()=>{const d=parseLedgerLiveCSV(ledgerCSV(Array.from({length:75},(_,i)=>({'Account Name':'<img src=x onerror=alert(1)>','Operation Hash':'<svg onload=alert(2)>','Operation Type':String(i)})))),p=previewLedgerLive(model(),d),html=ledgerLiveMarkup(model(),p,{limit:50});assert.ok(!html.mapping.includes('<img'));assert.ok(!html.review.includes('<svg'));assert.ok(html.review.includes('&lt;svg'));assert.equal((html.review.match(/class="performance-details"/g)||[]).length,50);assert.match(html.review,/Weitere 25/);assert.throws(()=>ledgerLiveMarkup(model(),p,{limit:0}));});
 test('Source/parser/resource limits fail without touching portfolio data',()=>{const m=model(),before=JSON.stringify(m);assert.throws(()=>parseLedgerLiveCSV('x'.repeat(2_000_001)),/2 MB/);const d=parseLedgerLiveCSV(ledgerCSV());assert.throws(()=>previewLedgerLive(m,{...d,scopes:Array(101).fill(d.scopes[0])}),/Vorschau/);assert.match(parseLedgerLiveCSV(ledgerCSV([{'Account xpub':'x'.repeat(301)}])).operations[0].issues.join(' '),/Kontoidentität ungültig/);assert.equal(JSON.stringify(m),before);});
+test('Foreign ownership or contradictory asset cannot borrow existing wallet or purchase references',()=>{
+ const m=freeze(addEvidence(model()));
+ for(const patch of [{'Account xpub':'another owner'},{'Currency Ticker':'ETH'},{'Account xpub':''}]){
+  const d=parseLedgerLiveCSV(ledgerCSV([patch])),p=previewLedgerLive(m,d,{[d.scopes[0].id]:'wallet'});
+  assert.ok(p.operations[0].issues.length);assert.deepEqual(p.operations[0].walletReferences,[]);assert.equal(p.operations[0].purchaseEvidence,null);
+ }
+ // A valid and a foreign scope may target the same wallet without leaking its cached references.
+ const d=parseLedgerLiveCSV(ledgerCSV([{}, {'Account xpub':'another owner'}]));
+ const p=previewLedgerLive(m,d,Object.fromEntries(d.scopes.map(s=>[s.id,'wallet'])));
+ assert.equal(p.operations[0].walletReferences.length,1);assert.equal(p.operations[1].walletReferences.length,0);assert.equal(p.operations[1].purchaseEvidence,null);
+});
+test('Unsupported token identity stays unresolved even when ticker, account and hash agree',()=>{
+ const m=addEvidence(model());m.positions[0].wallet.chain='erc20';m.positions[0].wallet.chainId=1;m.positions[0].wallet.contract='0x'+'1'.repeat(40);
+ const d=parseLedgerLiveCSV(ledgerCSV()),p=previewLedgerLive(m,d,{[d.scopes[0].id]:'wallet'});
+ assert.match(p.operations[0].issues.join(' '),/Token-/);assert.equal(p.operations[0].walletReferences.length,0);assert.equal(p.operations[0].purchaseEvidence,null);
+});
+test('Imported control characters are blocked, while hostile labels remain inert text',()=>{
+ for(const name of ['with\ttab','with\u0000nul'])assert.match(parseLedgerLiveCSV(ledgerCSV([{'Account Name':name}])).operations[0].issues.join(' '),/Kontoname ungültig/);
+ const d=parseLedgerLiveCSV(ledgerCSV([{'Account Name':'=IMPORTXML("https://invalid.test")'}]));
+ assert.match(ledgerLiveMarkup(model(),previewLedgerLive(model(),d)).mapping,/=IMPORTXML\(&quot;/);
+});

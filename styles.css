@@ -1145,3 +1145,16 @@
 #bookingChangeTransactions{margin:12px 0;overflow-wrap:anywhere}#bookingChangeTransactions>summary{min-height:44px}#bookingChangeTransactions li{margin:10px 0}
 
 .ledger-live-preview{min-width:0}.ledger-live-preview p,.ledger-live-preview li,.ledger-live-preview summary{overflow-wrap:anywhere}.ledger-live-preview select,.ledger-live-preview .btn{min-height:44px;max-width:100%}
+/* Account evidence reuses the existing settings disclosure and action pattern. */
+.account-evidence{min-width:0;margin:0 0 12px}.account-evidence summary{min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}.account-evidence-body{padding:0 12px 12px;overflow-wrap:anywhere}.account-evidence-body ul{padding-left:20px}.account-evidence .settings-actions{flex-wrap:wrap}.account-evidence .btn{min-width:44px;min-height:44px;white-space:normal}
+
+.account-evidence:not([open])>summary::after{transform:rotate(45deg)}.account-evidence[open]>summary::after{transform:rotate(225deg)}
+.provider-settings-accounts .account-entry small{color:#4d6756}
+/* Expanded account evidence uses the full existing provider panel width. */
+.provider-settings-row{display:block;position:relative}
+.provider-settings-row>.settings-provider-actions{position:absolute;top:12px;right:0;padding:0}
+.provider-settings-group>summary{padding-right:124px;min-height:48px;box-sizing:border-box}
+.provider-settings-group>summary::after{right:112px}
+.provider-settings-row .row-btn{min-width:48px;min-height:48px;box-sizing:border-box}
+.account-evidence{width:100%;box-sizing:border-box}
+.account-evidence-body{font-size:13px;line-height:1.65}
