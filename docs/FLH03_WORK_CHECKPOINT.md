@@ -1,3 +1,33 @@
+# Aktueller Checkpoint: v184 deployed; C4 Einheiten-/Tooltip-Hotfix vor visueller Abnahme
+
+C3/#168 ist als main `37e1b881f038cb3e0465a570e746e4b31d9ce3d7`, Tree `5b587f27693926e62a3408495ef75c2730f3cb14` deployed. Finale PR-CI40427864606/Wallet40427864643 und Main/Pages/Live40428656423 vollständig SUCCESS. Main709/709/0Fail/0Skip; live105 exakte Assethashes, SW184,6 Kerngruppen/18 Axe, B1/C1/C2/C3 in3 Engines tatsächlich PASS. Gerendertes Bestandsbild bestätigt die korrigierte Linie. **Visueller Abschluss dennoch offen:** Bild zeigt Eurozeichen auf der Mengenachse. Dieser vorbestehende Format-Default wurde nun konkret erkannt, nicht als fehlerfreie Live-Abnahme umdeklariert. Evidenz: release-evidence/ui-quality-v184-release.json.
+
+Einziger aktiver neuer Strang: **feature/ui-quality-c4-chart-units**, neuer Worktree exakt auf diesem main. Alte Scratch-/D-/Sync-Branches unverändert. Work-Laufzeit tatsächlich wieder verfügbar; reguläres git fetch bestätigte main. Keine Wiederholung abgeschlossener Pakete.
+
+C4 reproduziert lokal streng `quantity axis must not claim a monetary unit`, tatsächliche Labels `€ 3,3 / € 2,6 / € 1,8`. Kleinster Darstellungsfix: metrikspezifische Achsenformatter; Mengen ohne Währung, Kurse in tatsächlicher Währung, ISO im vorhandenen Titel/Tooltip. Kleine Werte wissenschaftlich statt falscher Null, große Werte kompakt. EUR-Wertansicht unverändert. Keine Änderung an Projektion, Preisen, FX, Journal, Beständen oder IndexedDB/CAS.
+
+Tatsächliche Bildprüfung fand außerdem einen abgeschnittenen langen historischen Tooltip. Nur im bestehenden historischen Dialog: Umbruch, begrenzte lesbare Breite und horizontale Platzierung innerhalb des Plots. Andere Diagramme behalten ihre bisherige Platzierung. Preis-Tooltip beschreibt seine tatsächliche Kursbeobachtung statt darin nicht ermittelter Mengen-/FX-Felder; fehlende EUR-Bewertungen bleiben in Tabelle und EUR-Ansicht ausdrücklich unbekannt. Keine Warnungen oder Daten gelöscht.
+
+**Lokal tatsächlich bestanden:** npm run check;712/712 Unit-Tests/0Fail/0Skip; vollständige gezielte B1/C2/C3/C4-Chromium-UI-Suite.320/390/430/768/1440, kurze Höhe,150%-Textstress, Axe auch bei sichtbarem Tooltip, Home/End an beiden Plotenden, Platz-/Breiten-/Datumlesbarkeit, winzige USD-Kurse ohne EUR-Faktor und exakter Nullmutationsnachweis. Mengen- und USD-Bilder tatsächlich angesehen. Quelle/Finite-/Kompakt-/Tiny-Formatfälle zusätzlich Unit-getestet.
+
+Frühere lokale Nicht-Erfolge nicht verschwiegen: erster Server/Test über getrennte Netzwerknamensräume nicht erreichbar; danach Server und Browser im gleichen isolierten Aufruf. Neue USD-Fixture brauchte die bestehende captureOpenings-API, kein Produktvalidator geändert. Lange ISO-Preisticks passten nicht in65px; tatsächliches schmales Währungssymbol plus explizites ISO im vorhandenen Titel/Tooltip, gleiche harte Breitenassertion. Erster Tooltip-Umbruch schrumpfte rechts zu schmal; Bildprüfung fand dies, feste begrenzte Breite plus Mindestlesbarkeit/Datums-/Endpunktassertions ergänzt. Alle endgültigen Assertions bestanden, keine Tests übersprungen.
+
+**Noch offen:** tatsächliche finale PR-HEAD-CI/Wallet, unabhängiger Quelldiff-/Sicherheitsdurchgang, konfliktfreier Main-Abgleich. Nur bei vollständigen grünen Gates vorhandene UI-Releasefreigabe nutzen; danach gesamter Mainlauf inklusive Livejob/105Assets/SW185/Kernabläufen/3Engine-ZielUI sowie beide korrigierten Bilder tatsächlich prüfen. SW185 nur Kandidat, kein Releaseerfolg vorweggenommen. Native Safari/physisches Android/OS-Schriftvergrößerung/OAuth bleiben separat unverifiziert.
+
+## Direkt danach: neuester UI-Folgeauftrag C5
+
+**Neueste Präzisierung hat Vorrang:** Historie anzeigen/rekonstruieren und Kontostand prüfen innerhalb des vorhandenen „Bestand und Kursdetails“-Akkordeons gruppieren; Bearbeiten/Löschen direkt als Icons, Archiv dezent dort oder als zugängliches Icon daneben, keine großen dauerhaften Archivbuttons. Gemeinsame Logik für ETF/Krypto/Cash und sichere Abstände. Interne Transfers als eigenes standardmäßig geschlossenes Akkordeon direkt neben Erträge/Abzüge, Untertitel „Geldbewegungen zwischen eigenen Konten abgleichen“, eigentliche vorhandene Prüfung darin; kurzer korrekter Leerzustand bei fehlenden Kandidaten. Bestehende Transfer-/Archiv-/Finanzlogik vollständig erhalten. Voriger Auftrag zu optionalen Verbindungen bleibt zusätzlich gültig. Erst C4 sicher abschließen; keine parallele Umsetzung.
+
+Den laufenden C4-Schritt nicht unterbrechen. Am regulären Übergang aktuellen main/PRs/Tests abgleichen, erledigte Punkte überspringen.
+
+- Archivieren/Wiederherstellen dezent als zugängliches Icon rechts bei Bearbeiten/Löschen; visuell klein, ausreichendes Touch-Ziel. Wenn drei Icons320px nicht sicher passen, bestehende Auswahl als Alternative prüfen. Keine zusätzliche große Archiv-Schaltfläche unter jeder Position. Historie bleibt eigene Aktion. Bestehende Bestätigung/CAS-/Archivengine und Wiederherstellung unverändert, keine neue Mehrfacharchivierung.
+- Mehr → Weitere Verbindungen: vorhandene Typografie/Akkordeonhierarchie von Kurs-/API- und Blockchain-Verbindungen verwenden. Erweiterte Wertpapiersuche/EODHD-Dienst/Pfeile/Trennlinien/Speichern konsistent, Experten standardmäßig eingeklappt. Alle Konfigurationen erhalten; API-Key bevorzugter einfacher Weg, Worker optional.
+- Tatsächlich gerenderte320/390/430px-Zustände inklusive ausgeklappter Einstellungen/Axe/Keyboard/Fokus prüfen. Keine spekulative Änderung und kein Redesign.
+
+Gesamtstabilisierung bleibt PARTIAL. Begrenzter unabhängiger5-Bereiche-/Nutzerablaufcheck/max10 Befunde erst nach Stabilisierung und produktiver Abnahme. Buchungsverwaltung #165 weiterhin separater finanzkritischer PR/keine Produktionsfreigabe. FLH04 #160/#161 ausdrücklich nach UI; bestehende Backup-/Passwort-/E2E-/Drive-/Offline-/Konfliktarbeit wiederverwenden, keine Sync-Releasefreigabe. D/P2 #157 geparkt/#151 Fehlnachweise unverändert. Alle ursprünglichen FLH03-/Provider-/Hardware-/OAuth-Blocker bleiben differenziert offen.
+
+---
+
 Vorheriger HEAD3ed4167: [CI40426748257](https://github.com/joke0071/foliolab-open/actions/runs/40426748257) und Wallet40426748313 tatsächlich vollständig SUCCESS,709/709/0Fail/0Skip, neue Metrikprüfung in allen3 Engines. Kein Merge: unten beschriebener präziser Quellen-/Grenztestdelta bekommt zwingend neue finale HEAD-Gates.
 
 # Abschließender C3-Reviewdelta: Mengenquelle und echte Mengen-/Zeitlücken

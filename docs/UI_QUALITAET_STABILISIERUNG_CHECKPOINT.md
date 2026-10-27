@@ -1,3 +1,15 @@
+Neueste C5-Ergänzung (erst nach C4): Historie/Rekonstruktion/Kontoprüfung in Bestand/Kursdetails; Edit/Delete direkt, Archiv dezent dort oder Icon. Transferprüfung in eigenes geschlossenes Akkordeon neben Erträge/Abzüge mit korrektem Leerzustand. Einstellungen-Auftrag bleibt erhalten, bestehende Logik/Bestätigungen unverändert.320/390/430/Desktop und tatsächliche Interaktionen prüfen.
+
+# Aktuell: C3 deployed, C4 visuelle Einheitenabnahme; C5 neu vorgemerkt
+
+C3/#168/main37e1b881 ist deployed und sämtliche automatischen finalen/live3Engine-Gates sind erfolgreich. Sichtprüfung bestätigt Bestandslinie, erkennt aber Euro auf Mengenachse. Vollständige visuelle Abnahme nicht behauptet. C4 korrigiert ausschließlich historische Achseneinheiten/Preispräzision/Tooltipdarstellung; lokal712Units und gezielte Chromium-Suite tatsächlich bestanden, finaleCI/3Engines/Live offen.
+
+Neuester Folgeauftrag danach: große Archiv-Schaltfläche durch zugängliches Icon bei Edit/Delete ersetzen (Touch/Fokus erhalten; alternativ bestehender Auswahlmodus bei echter Enge), Historie getrennt, vorhandene Bestätigung/Archivlogik unverändert. Optional-Verbindungen/erweiterteSuche/EODHD-Dienst in vorhandene Akkordeon-/Typografiehierarchie integrieren, Experten geschlossen, Konfigurationen erhalten. Vor jeder Änderung aktuellen Stand prüfen; C4 nicht unterbrechen, keine neue Mehrfacharchivierung.320/390/430 tatsächlich prüfen.
+
+Gesamtstatus PARTIAL, begrenzter Abschlusscheck erst danach. #165 und FLH04 #160/#161 separat ohne Produktionsfreigabe. Historische Statusmatrix darunter bleibt erhalten.
+
+---
+
 # Aktuell: C2/v183 DONE; C3 als belegter Darstellungskandidat
 
 C2/#167/mainf384593 ist tatsächlich live abgenommen (PR-CI40423288950/MainPagesLive40424425924 SUCCESS,709Tests,105Livehashes/SW183/6Kerngruppen18Axe,B1/C1/C2 live3Engines,zwei Historienbilder tatsächlich angesehen). Keine Wiederholung.
