@@ -1,3 +1,15 @@
+# Laufender sicherer Releaseabschluss und bestätigte Gesamtsequenz
+
+Stand 27.10.2026: Vorgänger-Gesamtaudit in Commit ccd7dd879b720a02ff218f3239f33c579a01a388 erneut geprüft. **DONE ausschließlich als Bestandsaufnahme; Gesamtumsetzung PARTIAL.** Verbindliche Detailabdeckung und Reihenfolge stehen in KONSOLIDIERTER_RESTARBEITEN_AUDIT.md, KONSOLIDIERTE_ROADMAP.md und release-evidence/predecessor-audit-v188.json. Dieser aktuelle Checkpoint liegt auf dem bestehenden Dokumentationsbranch feature/flh05-import-foundation; eine Integration in main wird nicht behauptet.
+
+Einziger laufender sicherer Schritt: readonly PR175 nach kombinierten finalen Gates (CI40567910132 und Wallet40567910143 SUCCESS;743/743 Units,0 Fehler,0 übersprungen;Chromium/Firefox/WebKit) gemergt. Aktueller main8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261, exakter geprüfter Mergebaum1101b31800f0237427f090169f586be32675d1c9. Main-/Pages-/Live40569298229 läuft noch. SW189 ist **noch nicht abschließend produktiv abgenommen**. Erst vollständige Main-/Deployment-/Live-Gates, dann gezielte tatsächliche Konto-Liveprüfung in drei Engines und visuelle Evidenz. Keine neue Featureimplementierung währenddessen, keine laufenden Tests unterbrochen.
+
+CI176 ist als begrenzte Ausnahme nach sicherem funktionalem Checkpoint abgeschlossen: Pflichtregressionsspanne667→391s (−4,60min/−41,38%), Runneraufwand1063→1102s (+3,67%), Main/Pages/Live40563994432 SUCCESS. Dies ist keine App-Startmessung und keine allgemeine Vorziehungserlaubnis. PERF01/#177 bleibt vorerst ohne Baseline/Implementierung, gemäß dokumentierter Vorgängerabhängigkeiten. Keine weiteren Workflowoptimierungen.
+
+Nach tatsächlichem Releaseabschluss: bestehenden Ledger18/#159-WIP fortsetzen; danach offene UI17-09/10/1W und übrige ausführbare Vorgängeranteile in der verbindlichen Roadmap. FLH04-Vertrag/Tests, konkreter Drive-Duecheck, Wallet-Semantik und echte P0/P1-Deltas nicht überspringen. Original-, Hardware-, OAuth-, Fachvalidierungs- und eigene kritische Releasegates bleiben explizit offen. **FLH05-A weiterhin zurückgestellt**, konsolidierte Spezifikation mit allen zwölf Testvektoren unverändert erhalten. Keine pauschale neue Finanz-/Backup-/Storage-/Syncfreigabe abgeleitet.
+
+---
+
 # Aktueller verbindlicher Auditabschluss vor weiterer Implementierung
 
 **Vorgänger-Gesamtaudit DONE als Bestandsaufnahme, Gesamtumsetzung PARTIAL.** Vollständiger aktueller Deltaabschluss in [KONSOLIDIERTER_RESTARBEITEN_AUDIT.md](KONSOLIDIERTER_RESTARBEITEN_AUDIT.md), verbindliche Sequenz in [KONSOLIDIERTE_ROADMAP.md](KONSOLIDIERTE_ROADMAP.md), maschinenlesbare Abdeckung in [release-evidence/predecessor-audit-v188.json](release-evidence/predecessor-audit-v188.json). Alle19FLH03-/12UI17-/5AUD-/24BENCH-IDs und FLH04/Drive/AT/R/WP/PLUS/#165/#44/#52/#177 abgedeckt; keine Umsetzung als DONE aus bloßer Planung behauptet.
