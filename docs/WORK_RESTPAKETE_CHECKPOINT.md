@@ -1,3 +1,13 @@
+# Aktueller verbindlicher Auditabschluss vor weiterer Implementierung
+
+**Vorgänger-Gesamtaudit DONE als Bestandsaufnahme, Gesamtumsetzung PARTIAL.** Vollständiger aktueller Deltaabschluss in [KONSOLIDIERTER_RESTARBEITEN_AUDIT.md](KONSOLIDIERTER_RESTARBEITEN_AUDIT.md), verbindliche Sequenz in [KONSOLIDIERTE_ROADMAP.md](KONSOLIDIERTE_ROADMAP.md), maschinenlesbare Abdeckung in [release-evidence/predecessor-audit-v188.json](release-evidence/predecessor-audit-v188.json). Alle19FLH03-/12UI17-/5AUD-/24BENCH-IDs und FLH04/Drive/AT/R/WP/PLUS/#165/#44/#52/#177 abgedeckt; keine Umsetzung als DONE aus bloßer Planung behauptet.
+
+Aktueller main433ab1585e475b8560694959b210b40a250f2cb6, Anwendung weiterhinv188; CI176 einschließlich Main/Pages/Live40563994432 tatsächlich SUCCESS. Begründete CI-Vorziehung abgeschlossen; keine weitere Performance-/CI-Implementierung vor der dokumentierten Gesamtsequenz. PERF01/#177 P1 integriert, noch keine App-Startbaseline/Optimierung/30%-Abnahme. Konkretes bislang offenes Drive-P1: regelmäßige Fälligkeitsprüfung bei durchgehend sichtbarer gültiger Sitzung fehlt; reale OAuth-Gates separat. Nächste sichere Aktion: bestehenden PR175 gegen neue Main-/CI-Basis kombiniert prüfen und live abschließen, danach Ledger18 und echte UI-/weitere Vorgängerdeltas gemäß Roadmap. **FLH05-A weiterhin gesperrt.** Während dieses Auditschritts keine Produkt-/Workflow-/Finanz-/Storageänderung.
+
+---
+
+## Frühere laufende Checkpoints (neuere Auditabnahme oben hat Vorrang)
+
 # Aktiver Master-Checkpoint ab v188 — 27.10.2026
 
 Aktueller main: `433ab1585e475b8560694959b210b40a250f2cb6` (ausschließlich CI). Letzte vollständige Produktionsabnahme: v188/ca1fa8fd46b3060d10a13095400bc3d33b0f3c42; Main/Pages/Live40563994432 auf433ab15 läuft noch. SW188 bleibt unverändert. PR173 nach konkreter Nutzerfreigabe gemergt und vollständig live abgenommen: Main/Pages/Core/UI-CI40534397532 sowie zusätzliche gezielte Drei-Engine-Mutations-Live-CI40536412182 SUCCESS;735 Unit-Tests,106 exakte veröffentlichte Assethashes,6Kerngruppen/18Axe. Keine laufenden Releases oder funktionalen Parallelstränge beim FLH05-Einstieg. Persistenter Releasebeleg: `qa/v188-live-targeted:docs/release-evidence/booking-management-v188-release.json` /6bbe2b7cf52283a3cc133895c554915cdba2cb3d.

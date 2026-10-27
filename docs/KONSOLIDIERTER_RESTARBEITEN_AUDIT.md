@@ -1,3 +1,86 @@
+# Verbindlicher Vorgänger-Gesamtaudit — aktueller Deltaabschluss v188
+
+Stand 27.10.2026. **AUDIT DONE als vollständige Bestandsaufnahme; UMSETZUNG PARTIAL.** Keine Aussage, dass sämtliche Vorgänger fertig seien. Dieser aktuelle Abschnitt übersteuert die unverändert erhaltene historische v179-Vollmatrix darunter. Keine zweite Roadmap; ausführbare Reihenfolge ausschließlich in KONSOLIDIERTE_ROADMAP.md, fortlaufender Gesamtstatus in WORK_RESTPAKETE_CHECKPOINT.md.
+
+## Prüfgrundlage und Grenzen
+
+Aktueller main433ab1585e475b8560694959b210b40a250f2cb6, unveränderte Anwendung/SW188. CI176 vollständig abgeschlossen: PR40562584805+Wallet40562585201 SUCCESS,737Units/0Fail/0Skip, Main/Pages/Live40563994432 SUCCESS (test122400242858, Pflichtshards122400242757/122400242956, deploy122403633337, live122403837871). Kein neuer Anwendungsumfang durch CI. Zuvor tatsächlich abgenommenes v188/PR173 bleibt Finanz-/Auswahlreferenz: ca1fa8f,735Units, Main40534397532 und gezielte tatsächliche Drei-Engine-Live40536412182,106Assethashes/SW188. Bestehende bestandene Gates wurden nicht erneut als neue Analyse entwickelt.
+
+Vollständige frühere FLH03-v4-/R00–15-/WP01–15-/PLUS01–04-/AT01–06-/BENCH001–024-/UI17-Vollzuordnung ist in der historischen Matrix erhalten. Neu abgeglichen: aktueller main/offene PRs/Actions, Issues44/52/119/124/126/127/129/148/149/159/160/165/174, neue177, spätere Nutzer-Nachträge und aktuelle Code-/Releasebelege. Alte Issue-Bodies überwiegen neuere tatsächliche Abnahmen nicht. FLH05-Konsolidierung enthält alle12Testvektoren,5Reconciliationklassen und Negativ-Leitplanken; Blob953f816c648ebabec42476be80cd0bf481fe6a2e unverändert. FLH05-A bleibt ZURÜCKGESTELLT.
+
+Quellen: bestehende Matrix/Roadmap/FLH03-/UI-/Buchungscheckpoints; PR172-Kommentar6441822234 (abgeschlossener begrenzter5Bereiche-UI-Liveaudit); PR173/Issue165-Abschluss; PR175/DD6 und dessen aktuelle Artefakte12759145457/12760565977; PR176 und Messbericht; FLH04-DesignPR161/0d980c2; tatsächliche src-/tests-Dateien. Keine privaten Originalzeilen, Adressen, Hashwerte oder Zugangsschlüssel veröffentlichen. Keine neue Format-/Geräte-/Steuer-Vollvalidierung aus Code oder synthetischen Tests ableiten.
+
+## FLH03 — sämtliche Nummern, ausschließlich tatsächliche Deltas
+
+| Paket | Status / konkreter aktueller Nachweis | Offener Schritt / Abhängigkeit |
+| --- | --- | --- |
+| 00 Bestand / 01 generischer Kern | DONE begrenzter generischer Vertrag, v177/150; csv-import/csv-batch/import-identity | Keine zweite CSV-/Journalengine. Native Providersemantik dadurch nicht automatisch fertig. |
+| 02 Trade Republic | BLOCKED für vollständigen nativen Finanzimport; generisches Mapping vorhanden | Regionaler Originalexport und belegte Trade-/Cash-/Fee-/Taxbeziehungen fehlen. Bereits gesammelte OSS-CSV-Regeln sind keine Originalabnahme. |
+| 03 Kraken | BLOCKED für vollständigen nativen Finanzimport | Trades+Ledgers+Balances desselben Zeitraums und Referenz-/Fee-/Aliasbeweise; API-Adapter nicht als CSV-Importer ausgeben. |
+| 04 Bitpanda | BLOCKED für vollständigen nativen Finanzimport | Relevanter Retail-/Pro-Dialekt, Gebühren/Swaps/Staking/Überlappung und unabhängige Salden. Keine erfundene Formatfreigabe. |
+| 05 flatex AT / AT03-C | PARTIAL, Beta/Settlement-/Cash-/Bestandsprüfungen produktiv | Native Depot+Cash-Exporte gleicher Zeitraum, Anfang/Ende, Valuta/FX/Fees/Steuern fehlen als Vollabgleich. Abgeleitete extraETF-Daten ersetzen keine Bankoriginale. |
+| 06 optionale APIs | OPEN für begrenzten Capability-/Rechte-/CORS-Vertrag; produktiver Zugang teils BLOCKED | Technisch prüfbare Primärquellenarbeit nicht pauschal extern blockieren. Echte minimale Kontorechte/Nonce/Pagination/Browserzugriff separat nachweisen, kein Pflichtproxy. |
+| 07 Gesamtabgleich/Rekonstruktion | PARTIAL, bestehende FLH02-/Cash-/Transfer-/Bewertungsprojektionen produktiv | Vollständige Provider-Eingänge/Anfang-Endreferenzen02–05/18 fehlen; sichere Teilsynthese16 vorhanden als Kandidat. Unbekannt nicht0, keine rückwirkende Rekonstruktion nur aus aktuellem Bestand. |
+| 08 Auswahl / sichere Positionslöschung | DONE erlaubter sicherer Umfang, v179 und vereinheitlicht v188/173/Live40536412182 | Verflochtene Positionen bewusst gesperrt, keine universelle Cascade als stilles Restversprechen. |
+| 09 Avalanche P-Chain | OPEN | Offizieller Eigentums-/C↔P-/Staking-/Gebühren-/Maturity-/Transportvertrag zuerst. Diese belegbare Vorarbeit bleibt ausführbar; fehlende Real-/APIbeweise gesondert, nicht pauschal DONE/BLOCKED. |
+| 10 Sonic | PARTIAL, aktueller SFC-Snapshot vorhanden | Withdrawal-/Unbonding-/claimable-/paid-Zustände und Auszahlungen belegbar ergänzen; offizielle Protokoll-/Eventrecherche offen, keine doppelte Menge oder fiktiven Rewards. |
+| 11 Kursquellen | PARTIAL, vorhandene EODHD/FMP/Twelve/Kryptoquellen erhalten | Yahoo/RapidAPI/CMC u.a. erst mit konkretem Tarif/Lizenz/CORS/Instrumentbeweis. Öffentliche Capabilityprüfung OPEN, echte Berechtigungen ggf.extern BLOCKED. |
+| 12 AT/Kapitalmaßnahmen | BLOCKED für neue fachliche Buchungen; sichere Ablehnung vorhanden | #52/AT05-B: Originalsettlement/OeKB/AT-Fachvalidierung fehlen. Keine spekulative Steuer-/Tax-Lot-Engine. |
+| 13 reale Qualität / #44 | PARTIAL; IDB-only/CAS/Recovery/Restore automatisiert DONE | Echte Android/TalkBack/nativeSafari/OS-Crash/Eviction/Drive-Neugerät/große reale Archive extern offen. Emulation/Mock sind keine Hardwareabnahme. |
+| 14 Archiv | DONE, v180 und Sammelarchivierung/Undo/CAS v188 tatsächlich live | Restbestand/Journal/Historie/Importidentität und plain/encryptedRestore erhalten. Alte Forderung „Archiv erst im Backup prüfen“ durch spätere Nachweise erledigt. |
+| 15 Details/Portabilität | DONE für belegte Icons/FX-/Historieneinstieg/Archiv-Backuproundtrips | Nur neue konkrete Abweichungen bearbeiten; keine zweite Backup-/Historienengine. Original-/Gerätegates bleiben getrennt. |
+| 16 Kontovollständigkeit | PARTIAL, PR175/DD6 vollständig implementiert/CI741Units/3Engines und aktuell visuell geprüft | Noch NICHT veröffentlicht. Nach Audit gegen neuen main-/CI-Stand kombiniert prüfen, erwartete743Units. Danach tatsächliche Konto-Liveabnahme. Vollständiger Provider-Endabgleich weiterhin07/Originale. |
+| 17 UI/UX | DONE für AUD-A/B/C/E, C1–C6 und v188-Auswahl-/Karten-Nachträge | Verbleibende konkrete/bedingte UI17-Punkte siehe unten; keine neue Gesamt-UI-Stabilisierung erfinden. |
+| 18 Ledger Live / #159 | PARTIAL, Originalschema/Bittr-Gruppierung früher tatsächlich lokal geprüft; nativer read-only WIP vorhanden | Bestehender Branch feature/ledger-live-preview/0c292c8:11lokaleUnits, noch kein vollständiger PR-/Browser-/Live-/Commitnachweis. Originale nicht erneut als unzugänglich behaupten. SafePreview/Walletzuordnung/Nullmutation/Reimport/Fees-/Statusgrenzen weiterprüfen; wirtschaftlich ungesicherte Fälle gesperrt. |
+
+## FLH04 und bestehendes Drive-Backup getrennt
+
+FLH04/#160/PR161 ist **OPEN** für reine Revisions-/Geräte-/Portfolio-/Konfliktmodelle und Sicherheitsreferenztests. Vorhandener Sicherheitsentwurf/Backupkryptoanalyse ist Vorbereitung, keine fertige Implementierung. Wiederverwendung bestehender Crypto nur nach Eignungsprüfung; keine unkontrollierten LWW-/Automerge-/Replay-/Rollbackversprechen. Lokal kanonische IDB/Offline bleiben. **Externe Transport-/Produktionsgates:** öffentlicher OAuth-Client/Operator/Origin/Scopes, echte Remote-Parallelwriter-Vorbedingungen, zweites Gerät/Recovery/Widerruf und eigene kritische Freigabe. Fehlende Operatorbeweise blockieren nicht pauschal jede reine lokale Modell-/Testvorarbeit.
+
+Drive-Backup: src/drive-backup.js und tests/drive-backup.test.mjs bestätigen Passwortpflicht, tokenfreie Exporte, manuellen Sofortbackup-Einstieg nach erfolgreicher Autorisierung, vollständigen verschlüsselten Payload und nachvollziehbare Reauth-/401-Behandlung. Reale OAuth-/Neugerätetests bleiben extern. **Konkretes ausführbares P1-Delta:** due()/maybeAuto() werden bei Connect, Konfigurations-/Folder-/Online-/Visibilityereignissen aufgerufen; checkDue wird exportiert, aber sonst nicht aus der App aufgerufen, und es existiert kein periodischer Due-Check einer durchgehend sichtbaren, autorisierten Sitzung. Gewünschte automatische Sicherung bei aktiv geöffneter App ist daher in diesem Zustand nicht vollständig abgedeckt. Kleinster Scope: kontrollierte aktive-Sitzungs-Fälligkeitsprüfung mit token-/busy-/password-/visibility-Gates, keine zusätzliche Autorisierung, kein geschlossene-PWA-Versprechen, keine Mehrfachuploads; Mock-/Fehler-/Timer-/Restoretests und eigene erforderliche Backup-Releaseentscheidung. Noch keine Umsetzung/Abnahme dieses Deltas.
+
+## UI17 / #149 / sämtliche Nachträge
+
+| Zuordnung | Aktueller Status |
+| --- | --- |
+| UI17-01/02/11, AUD01/A | DONE Recovery-/Status-/Aktionskonsistenz in freigegebenem Umfang; #44 reale Ursache/Hardware nicht pauschal erledigt. |
+| UI17-05, AUD02/B | DONE belegte Vermögensänderung vs.Flow/Rendite und Teilabdeckung. |
+| UI17-06, AUD05/E | DONE relevante Leerzustände ohne Fakekurve. |
+| UI17-12, AUD03/C | DONE sieben belegte Kontrasttexte und spätere C1–C6-Korrekturen; reale Gerätegrenzen extern. |
+| UI17-03 | DONE Kartenabstand v187/#172, nicht erneut entwickeln. |
+| UI17-04/07/08 | PARTIAL/bedingt: bestehende Erststart-/Chart-/Importwege vorhanden; kein neuer konkreter blockierender Befund. Nur reale fortbestehende Nutzungs-/Leerzustandsabweichung reproduzieren, kein Redesign. |
+| UI17-09 | OPEN kleiner belegter Copyrest: Welcome sagt Foliolab statt FolioLab. |
+| UI17-10 | OPEN: Kontoanlage ohne Anbieter öffnet Anbieteranlage, setzt nach erfolgreichem Save die angefangene Kontoanlage nicht fort. Bestehenden Dialog-/Escape-/Focus-/Savevertrag verwenden. |
+| AUD04/D, PR157 | BLOCKED/geparkt durch unveränderte Firefox-Evidenz; keine identischen neuen Diagnoserunden ohne neue technische Hypothese. Universelle Cross-Origin-Garantie SUPERSEDED, keine History-Traps/Entwurfspersistenz. |
+| spätere vier UI-Nachträge | DONE v187/#172: Abstand/Trennlinie/Kalender ohne Daten/Archivzugang. Altes Auswahlmenü durch v188-Gmail-Auswahl ausdrücklich SUPERSEDED. |
+| Positionen/Buchungen Gmail-Auswahl/obere Icons | DONE v188/#173, tatsächliche3Engine-Live40536412182; keine zweite Auswahlengine/Archivierung für Buchungen. |
+| 1W Vermögenszeitraum | OPEN: wealth-Perioden beginnen noch month, Markt7T schon vorhanden. Gemeinsamer kleiner Diagramm-UI-Schnitt, keine neue Bewertung. |
+| neue Kontoprüfungsdarstellung | PR175 vollständig technisch/visuell abgenommen als Kandidat; mobile Enge behoben, noch kein produktiver189-Abschluss. |
+
+Der begrenzte5Bereiche/Fünf-Breiten-Abschlusscheck ist in #172-Kommentar6441822234 vollständig belegt und wird nicht erneut ausgeführt. Browseremulation/200%-CSS-Zoom sind keine reale Android-/Safari-/TalkBack-/VoiceOver-/Systemzoomabnahme.
+
+## P0/P1, Benchmark und AT-Vollständigkeit
+
+Keine neue bestätigte P0-Datenkorruption oder Schutzumgehung in diesem Deltaabgleich nachgewiesen; das ist keine allgemeine Fehlerfreiheitserklärung. P0-Gesamtziel07 bleibt wegen fehlender vollständiger Eingänge/Referenzen PARTIAL. #165 ist DONE nur für freigegebene manuelle Notizen/EUR-Cash-Korrektur/-Rücknahme und Auswahl/Audit/CAS/Undo v188; Trade-/Import-/Wallet-/Transfer-/technische/ungeklärte Mutationen bleiben konkret gesperrt bis belegtem inversen Referenz-/Kostenbasisvertrag. Kein Universal-DELETE nachholen.
+
+BENCH001–024/R00–15/WP01–15/PLUS01–04 sind vollständig in der erhaltenen Originalmatrix zugeordnet. Aktuelle Übersteuerungen: BENCH005/014/016 →07/16/Providerstatus;006/020 →#44 reale Gates;008/013 →AT-/Brokeroriginale;012 →D157/Hardware;021 DONE bestehende Secrets-/Backupgrenze, neue Syncgrenze offen;022 fortlaufende verpflichtende Gates, CI176 ohne Verlust optimiert. **BENCH018 ist nicht mehr bloß optionalP3: durch neuen Auftrag FLH-PERF01/#177 P1.** Noch keine Startbaseline, Optimierung oder30%-Appwirkung behauptet. BENCH019/024 bleiben ausdrücklich nutzwert-/privacybedingt, keine eigenmächtige Preset-/Diagnoseplattform. AT01, AT02-A/B, AT03-A/B, AT05-A und AT04-No-Codeabschluss nach späteren tatsächlichen Nachweisen DONE; alte Issue-Bodies mit „B Draft/offen“ sind überholt. AT03-C/AT05-B/#52 und AT06/#44 bleiben wie oben begrenzt offen.
+
+PERF01 ist ein separates App-Start-/Skalierungspaket: erst gültige synthetische Small/Medium/Large-Fixtures innerhalb tatsächlicher Grenzen, getrennte Phasen/Cold-Warm/CPU-/Long-Taskmessung, danach gemessene Optimierung bei unveränderten Finanz-/Fail-Closed-/CAS-/Restoregarantien. Aktuelle Codehinweise (mehrfacher Import desselben Readrecords, volle JSON-Serialisierung für wealthKey, wiederholte Positions-/Journalprüfungen) sind **Profilinghypothesen**, keine bestandenen Benchmarks. CI176s41,38% beziehen sich ausschließlich auf Pflicht-CI-Wartezeit und erfüllen nicht das30%-Appziel. Keine vorgezogene Storage-/Historienimplementierung vor Audit/Baseline; keine größere Migration.
+
+## Begründung der bereits abgeschlossenen CI-Vorziehung
+
+Der Nutzerauftrag erlaubte CI ausdrücklich nach sicherem funktionalem Checkpoint. PR175 war unveränderlich mit741Units/3Engines grün, während die ausgewählte lokale Umgebung die Sichtprüfung vorübergehend blockierte. Der unabhängige CI-Schnitt änderte nur4 CI-/Dokumentations-/Policydateien, keinen App-/Finanz-/Storage-/Backuppfad; keine laufenden Jobs oder parallelen aktiven Workflowänderungen. PR157 blieb geparkt und unverändert. Vor Merge alle30 alten Kommandos/Engines/Assertions, unveränderten übrigen Workflow/Berechtigungen/Trigger/Pins und identischen Test-Mergebaum geprüft. Eigene begrenzte Releaseentscheidung, Main/Pages/Live40563994432 jetzt vollständig SUCCESS. Tatsächlicher v188-Paarvergleich:667→391s Pflichtregression (11,12→6,52min),−276s/−41,38%; Runnersekunden1063→1102 (+3,67%). Kein statistisches SLA, kein App-Startgewinn, keine install-time-Einsparung behauptet.
+
+Dies ist eine **abgeschlossene begründete Ausnahme am sicheren Checkpoint**, keine Erlaubnis, offene Vorgänger durch weitere CI-/Performancearbeit zu verdrängen. Jetzt zurück zur Gesamtsequenz. Keine weiteren CI-Experimente vor priorisierten Vorgängern ohne neuen dokumentierten Grund.
+
+## Audit-Abnahmekriterien
+
+Erfüllt: aktuelle Quellenrangfolge/HEAD/PR/CI geprüft; alle FLH03-00–18, FLH04/Drive, UI17-01–12/AUD01–05/Nachträge, BENCH001–024/R/WP/PLUS/AT und neue177 zugeordnet; DONE-Scope/konkrete Lücken/externe Belege vs.ausführbare Vorarbeit getrennt; P0/P1 und CI-Vorziehung begründet; Reihenfolge in bestehender Roadmap aktualisiert; zentraler Checkpoint und maschinenlesbare Auditabdeckung versioniert. Nicht behauptet: Abschluss der Implementierung oder neuer Release189/Startbenchmark/Original-/Hardware-/Syncabnahme. Vor jeder weiteren Implementierung diesen Deltaabschluss und exakt nächsten Schritt verwenden.
+
+---
+
+## Historischer vollständiger Audit v179 (unverändert erhalten)
+
 # Konsolidierter Restarbeiten-Audit — v179
 
 Stand: 26.10.2026. Geprüfte Anwendungsbasis und Produktion: `5397ca73d3ce8281920973a9916c9fadbd65596d`, Service Worker `foliolab-open-v179`, https://foliolab.unperfekt.at/. Phase A ist tatsächlich abgeschlossen. Dieser separate Phase-B-Checkpoint verändert ausschließlich Dokumentation und synthetische Release-Evidenz; kein funktionaler Diff, Merge oder Deployment durch den Audit.

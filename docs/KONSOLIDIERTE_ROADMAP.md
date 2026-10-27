@@ -1,3 +1,26 @@
+# Aktuelle verbindliche Gesamtsequenz nach Vorgänger-Gesamtaudit v188
+
+Der aktuelle Audit in KONSOLIDIERTER_RESTARBEITEN_AUDIT.md übersteuert die historische Reihenfolge darunter. Audit DONE als Bestandsaufnahme, Gesamtumsetzung PARTIAL. CI176 ist nach erlaubtem sicherem Checkpoint begründet abgeschlossen; weitere CI-/Performancevorziehung ist kein Ersatz für Vorgänger. FLH05-A gesperrt, bis alle ohne echte externe Blocker ausführbaren beauftragten Vorgänger abgeschlossen sind. Nur ein aktiver funktionaler Hauptstrang, kein Redesign.
+
+| Rang | Nächster begrenzter Schritt | Voraussetzung / Abschluss |
+| --- | --- | --- |
+| 1 | PR175 sicher integrieren und tatsächliche Kontoprüfung live abnehmen | DD6-Code/CI741/3Engines und Bilder bereits geprüft; neue Main-CI-Grundlage433ab15 verlangt kombinierten finalen Lauf (erwartet743Units). Kein erneuter Neubau, keine ungesicherte Finanzmutation. |
+| 2 | FLH03-18/#159 bestehenden nativen Ledger-WIP fortsetzen | Branch0c292c8/Checkpoint/11Tests erhalten; originale Schema-/Bittr-Nachweise wiederverwenden. Sichere reine Preview/Walletzuordnung, Nullmutation/Reimport/Abbruch/3Engines, unbekannte Fees/Flows gesperrt; keine zweite Importengine. |
+| 3 | Wirklich offene UI17-09/10 und1W abschließen; bedingte04/07/08 nur bei Reproduktion | Bestehende v187/v188-Nachträge/Fünf-Bereiche-Audit DONE überspringen; kleiner Copy-/Dialog-/SharedPeriod-Schnitt, volle Mobile/Axe/Focus-/Nullmutationsgates. |
+| 4 | FLH03-07/16/statusbezogene Restlücken mit vorhandenen Eingängen;02–05/AT03-C nur belegbereit | Keine Bestands-/Cashhistorie erfinden. Fehlende regionale Originale und Anfang-Endreferenzen konkret extern führen, unabhängige sichere Schritte nicht blockieren. |
+| 5 | FLH03-09/10 Wallet-/Staking-Capability-/Semantiknachweise | Offizielle P-Chain-/Sonic-Belege vor Funktionscode; derzeit ausführbare Vorarbeit OPEN, externe API-/Realbelege getrennt. Vorhandene Scanner/Historyengine erhalten. |
+| 6 | Bestehendes Drive-Backup: aktiver Sitzungs-Duecheck und fehlende reale Gates | Neues belegtes Timerdelta, nicht mit Sync vermischen; Token/Password/Busy/Visibility/keine Doppeluploads/Fehler-/Restoretests. Kritische Backupveröffentlichung braucht eigene konkrete Freigabe; fehlendes echtes OAuth blockiert nicht alle Mock-/Contractarbeiten. |
+| 7 | FLH04/#160 im bestehendenPR161 weiterführen | Erst reiner Sicherheits-/Revisions-/Konfliktvertrag und Tests, keine neue Persistenz/Transportgarantie ohne Beleg. Operator-/Remote-CAS-/Neugerät-/Recovery und produktiver Sync externe/eigene Freigabegates. |
+| 8 | FLH-PERF01/#177 / BENCH018 P1 | Nach obigen ausführbaren Schnitten bzw.deren expliziten externen Checkpoints: tatsächlichen dann aktuellenmain profilieren, gültige synthetische Fixtures/ColdWarm/CPU/LongTasks, erst danach kleinste gemessene Optimierung.30%-Medianziel App, kein CI-Wert. Keine Storage-/Finanzgarantien abschwächen. |
+| 9 | Noch ausführbare beauftragte02–06/11/12/13-/AT-/BENCH-Reste nach Evidenz | Original-/Lizenz-/CORS-/Fach-/Hardwareblocker konkret, keine blanketBLOCKED-Erklärung für noch mögliche Code-/Contractarbeit. Optionalen Komfort ohne belegten Nutzen nicht bauen. |
+| 10 | Erst nach explizitem Vorgängerabschluss/-Blockerabgleich FLH05-A–E | Eine erhaltene konsolidierte Spezifikation mit12Vektoren, keine vorgezogene Parserimplementierung. Originalvalidierung getrennte spätere Abnahme. |
+
+#165 zusätzliche wirtschaftliche Kategorien nur nach eigenem belegtem Fachvertrag; erlaubtes v188-MVP nicht wiederholen. #44 echte Hardware/Crash/Eviction/OAuth und #52/AT05-B Fach-/Originalbelege bleiben externe Gates. PR157/D-P2 nur mit neuer Browser-Evidenz, keine History-Traps; blockiert unabhängige Schritte nicht. Die Reihenfolge darf nur mit konkretem Abhängigkeits-/P0/P1-/externem Gatebeleg aktualisiert werden, niemals stillschweigend.
+
+---
+
+## Historische Roadmap v179 (Nachweise erhalten, aktuelle Reihenfolge oben)
+
 # Konsolidierte Roadmap nach tatsächlich abgenommenem v179
 
 Stand26.10.2026, main `5397ca73d3ce8281920973a9916c9fadbd65596d`, [Produktion](https://foliolab.unperfekt.at/). Fachliche Vollmatrix: [KONSOLIDIERTER_RESTARBEITEN_AUDIT.md](KONSOLIDIERTER_RESTARBEITEN_AUDIT.md). Dieser separate Phase-B-Checkpoint ist ausschließlich Dokumentation. Keine funktionale Änderung/Deployment während des Audits.
