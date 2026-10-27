@@ -147,3 +147,11 @@ test('Safe-subset removal does not let CSV or automatic sources silently recreat
  assert.equal(preview.ready,0);assert.ok(preview.issues.length);assert.throws(()=>importCSV(candidate,preview));assert.equal(JSON.stringify(candidate),before);
  m.positions[0].representedByPositionId='p-2';assert.equal(previewPositionRemoval(m,['p-0']).blockedCount,1);
 });
+
+ test('filtered deselection preserves explicitly selected hidden and archived identities',()=>{
+  const m=fixture(401);m.positions[400].archived=true;const before=JSON.stringify(m);
+  const all=updatePositionSelection(m,[],{type:'all',confirmed:true});
+  const remaining=updatePositionSelection(m,all,{type:'unselect-filtered',matchingIds:m.positions.slice(0,400).map(p=>p.id)});
+  assert.deepEqual(remaining,['p-400']);assert.equal(JSON.stringify(m),before);
+  assert.throws(()=>updatePositionSelection(m,remaining,{type:'unselect-filtered',matchingIds:['missing']}));
+ });

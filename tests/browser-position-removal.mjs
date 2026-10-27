@@ -9,6 +9,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  page.on('pageerror',e=>errors.push(e.message));
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const button=action=>page.locator('[data-action="'+action+'"]');
+ const menu=async()=>{if(!await page.locator('#positionSelectionMenu').evaluate(e=>e.open))await page.locator('#positionSelectionMenu>summary').click();};
  const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const axe=async()=>{await page.evaluate(async()=>{for(let i=0;i<3;i++){const animations=document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)&&a.playState==='running');if(!animations.length)break;await Promise.all(animations.map(a=>a.finished.catch(()=>{})));}await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));if(r.violations.length)console.error(engine+': contrast CSS '+JSON.stringify(await page.evaluate(()=>['saveDialog','addWizard'].map(id=>{const e=document.getElementById(id),s=getComputedStyle(e);return {id,disabled:e.disabled,colour:s.color,bg:s.backgroundColor,opacity:s.opacity,dialog:document.getElementById('editDialog').open};}))));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary,html:n.html,checks:n.any}))})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
  try{
@@ -30,7 +31,11 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await page.locator('#sidebarNav [data-page=positions]').click();
   const before=await record();assert.equal(await page.locator('[data-position-select]').count(),0);
   await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
-  assert.equal(await page.locator('[data-position-select]').count(),100);await button('select-filtered').click();
+  assert.equal(await page.locator('[data-position-select]').count(),100);
+  await page.locator('#positionSelectFiltered').check();assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt/);
+  await page.locator('[data-position-select="p-0"]').uncheck();assert.equal(await page.locator('#positionSelectFiltered').evaluate(e=>e.indeterminate),true);
+  await page.locator('#positionSelectFiltered').check();await page.locator('#positionSelectFiltered').uncheck();assert.match(await page.locator('#positionSelectionStatus').innerText(),/0 ausgewählt/);
+  await menu();await button('select-filtered').click();
   assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 201/);
   await page.locator('#positionSearch').fill('Other');assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 0.*201 ausgeblendet/);
   await button('preview-removal').click();assert.equal(await page.locator('#dialogFields li').count(),201);assert.match(await page.locator('#dialogFields').innerText(),/Wanted 400/);
@@ -39,15 +44,15 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   assert.equal(await button('preview-removal').evaluate(e=>e===document.activeElement),true);
   assert.deepEqual(await record(),before,'selection and preview write nothing');
   await page.locator('#positionSearch').fill('no-match');assert.equal(await button('select-filtered').isDisabled(),true);
-  await page.locator('#positionSearch').fill('');await button('select-all').click({trial:true});
-  page.once('dialog',d=>d.dismiss());await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt/);
-  page.once('dialog',d=>d.accept());await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/401 ausgewählt/);
-  await button('clear-selection').click();assert.equal(await button('preview-removal').isDisabled(),true);
+  await page.locator('#positionSearch').fill('');await menu();await button('select-all').click({trial:true});
+  page.once('dialog',d=>d.dismiss());await menu();await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt/);
+  page.once('dialog',d=>d.accept());await menu();await button('select-all').click();assert.match(await page.locator('#positionSelectionStatus').innerText(),/401 ausgewählt/);
+  await menu();await button('clear-selection').click();assert.equal(await button('preview-removal').isDisabled(),true);
   // Same security in two accounts remains independently selectable by position ID.
   await page.locator('#positionSearch').fill('Wanted 0');await page.locator('[data-position-select="p-0"]').check();
   await page.locator('#positionSearch').fill('Other 1');await page.locator('[data-position-select="p-1"]').check();await page.locator('#positionSearch').fill('');
   for(const width of [320,390,430,768,1024,1440]){
-   console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await axe();await button('preview-removal').click();await axe();
+   console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await menu();await axe();assert.ok(await page.locator('.selection-master').evaluate(e=>e.getBoundingClientRect().width>=44));await page.keyboard.press('Escape');assert.equal(await page.locator('#positionSelectionMenu').evaluate(e=>e.open),false);assert.equal(await page.locator('#positionSelectionMenu>summary').evaluate(e=>e===document.activeElement),true);await axe();await button('preview-removal').click();await axe();
    assert.match(await page.locator('#dialogFields').innerText(),/1 unverbundene Positionen löschbar, 1 gesperrt/);
    assert.equal(await page.locator('#saveDialog').evaluate(e=>e.classList.contains('primary')),false,'Destructive consent must never retain primary green styling');
    assert.equal(await page.locator('#saveDialog').evaluate(e=>getComputedStyle(e).transitionDuration),'0s','Destructive styling must be immediate, without a low-contrast color crossfade');

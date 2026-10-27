@@ -36,6 +36,7 @@ export function updatePositionSelection(model,selectedIds,action){
    if(selected.has(action.id))selected.delete(action.id);else selected.add(action.id);
    break;
   }
+  case 'unselect-filtered':for(const id of current(positions,action.matchingIds))selected.delete(id);break;
   case 'filtered':for(const id of current(positions,action.matchingIds))selected.add(id);break;
   case 'all':
    if(action.confirmed!==true)fail('Alle Positionen müssen ausdrücklich ausgewählt werden.');
