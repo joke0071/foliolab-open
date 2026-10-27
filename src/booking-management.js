@@ -59,15 +59,34 @@ function references(value,ids,guard={nodes:0},depth=0){
  if(typeof value!=='object')return false;
  return Object.entries(value).some(([k,v])=>ids.includes(k)||references(v,ids,guard,depth+1));
 }
+const bookingKeys=new Set('id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus newSymbol newIsin targetQuantityExact ratioNumerator ratioDenominator importSource importFingerprint transferMatch'.split(' '));
+const journalKeys=new Set('id type date recordedAt sequence postings cashPositionId status source'.split(' '));
+const postingKeys=new Set('id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' '));
+function referenceReasons(model,b,e){
+ const reasons=[];
+ if(Object.keys(b).some(k=>!bookingKeys.has(k))||Object.keys(e).some(k=>!journalKeys.has(k))||e.postings.some(p=>Object.keys(p).some(k=>!postingKeys.has(k))))reasons.push('Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.');
+ const history=model.journalEntries.filter(j=>j.type==='booking-management-audit'&&j.managementAudit.originals.some(o=>o.booking.id===b.id));
+ if(history.length){
+  const lastSequence=Math.max(...history.map(j=>j.sequence)),latest=history.filter(j=>j.sequence===lastSequence);
+  const sorted=v=>raw(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)));
+  const last=latest[0],index=last.managementAudit.originals.findIndex(o=>o.booking.id===b.id),after=last.managementAudit.afterBookings[index];
+  if(latest.length!==1||!after||sorted(after)!==sorted(b))reasons.push('Gespeicherte Änderungskette passt nicht zum aktuellen Vorgang.');
+ }
+ const targets=[b.id,e.id,...e.postings.map(p=>p.id)];
+ const rest={...model,bookings:model.bookings.filter(x=>x.id!==b.id),journalEntries:model.journalEntries.filter(x=>x.id!==e.id&&x.type!=='booking-management-audit'),externalCashFlows:model.externalCashFlows.filter(x=>x.id!==b.id)};
+ if(references(rest,targets))reasons.push('Weitere gespeicherte Referenzen verhindern eine isolierte Änderung.');
+ return reasons;
+}
 function eligibility(model,b,action){
  const e=model.journalEntries.find(e=>e.id===b?.journalEntryId),p=model.positions.find(p=>p.id===b?.positionId),reasons=[];
  if(!b||!e||!p)return ['Buchung, Journal oder Position fehlen.'];
  if(e.source!=='manual'||b.importSource||b.importFingerprint)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
- if(b.transferMatch||b.targetPositionId||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
+ if(b.transferMatch||b.targetPositionId||e.status==='matched-internal-transfer'||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
  if(model.bookings.filter(x=>x.journalEntryId===e.id).length!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
  if(p.representedByPositionId||(p.economicRole&&p.economicRole!=='standard')||(p.valuationMode&&p.valuationMode!=='included'))reasons.push('Wirtschaftlich zugeordnete Position: gemeinsame Auswirkungen ungeklärt.');
- if(action==='notes')return reasons;
+ reasons.push(...referenceReasons(model,b,e));
+ if(action==='notes')return [...new Set(reasons)];
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
  if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für belegte manuelle EUR-Geldbuchungen.');
  if(b.cashPositionId||Number(b.feeEUR)!==0||Number(b.taxEUR)!==0)reasons.push('Zusätzliche Gebühren-, Steuer- oder Gegenkontoverknüpfung ist nicht auflösbar.');
@@ -86,9 +105,6 @@ function eligibility(model,b,action){
     reasons.push('Externer Kapitalfluss ist nicht eindeutig belegt.');
  }catch{reasons.push('Exakte Mengen- oder Journalnachweise sind ungültig.');}
  if(model.snapshots.some(s=>s.date>=b.date))reasons.push('Spätere Kontrollpunkte könnten widersprechen; zuerst beleggebunden abgleichen.');
- const targets=[b.id,e.id,...e.postings.map(p=>p.id)];
- const rest={...model,bookings:model.bookings.filter(x=>x.id!==b.id),journalEntries:model.journalEntries.filter(x=>x.id!==e.id),externalCashFlows:model.externalCashFlows.filter(x=>x.id!==b.id)};
- if(references(rest,targets))reasons.push('Weitere gespeicherte Referenzen verhindern eine isolierte Änderung.');
  return [...new Set(reasons)];
 }
 export function previewBookingChange(model,request){
@@ -126,7 +142,7 @@ export function previewBookingChange(model,request){
    executeTransaction(candidate,{...b,id:b.id,quantity:changes.quantity??b.quantityExact,date:changes.date??b.date,notes:changes.notes??b.notes,unitPrice:1,fxRate:1});
   }
  }
- const afterBookings=ids.map(id=>candidate.bookings.find(b=>b.id===id)||null);
+ const afterBookings=ids.map(id=>clone(candidate.bookings.find(b=>b.id===id)||null));
  // An audit-only entry has no financial or quantity postings. Originals remain
  // reviewable after complete business-event removal, including backup/restore.
  const auditId=globalThis.crypto.randomUUID();

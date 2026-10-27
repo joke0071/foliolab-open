@@ -73,7 +73,8 @@ export function validateJournalEntry(entry){
  if(sum!==zero)throw Error('Buchungssätze sind nicht ausgeglichen.');
  if(entry.type==='booking-management-audit'){
   const a=entry.managementAudit;
-  if(!Number.isSafeInteger(entry.sequence)||entry.sequence<1||entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
+  const entryKeys=new Set('id type date recordedAt sequence source postings managementAudit'.split(' ')),auditKeys=new Set('version action reason originals afterBookings'.split(' '));
+  if(Object.keys(entry).some(k=>!entryKeys.has(k))||!a||Object.keys(a).some(k=>!auditKeys.has(k))||!Number.isSafeInteger(entry.sequence)||entry.sequence<1||entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
    !a||a.version!==1||!['notes','edit','remove'].includes(a.action)||typeof a.reason!=='string'||!a.reason.trim()||a.reason.length>180||!Array.isArray(a.originals)||a.originals.length<1||a.originals.length>200||!Array.isArray(a.afterBookings)||a.afterBookings.length!==a.originals.length||JSON.stringify(a).length>512000)
     throw Error('Ungültiger Buchungsänderungsnachweis.');
   const auditIds=new Set();

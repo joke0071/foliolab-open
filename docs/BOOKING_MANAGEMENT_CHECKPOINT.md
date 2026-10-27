@@ -24,7 +24,7 @@ Vorschau gruppiert betroffene Konten/Positionen und zeigt exakte Cashmengen, Geb
 
 EUR-Cash-Rücknahme entfernt die exakt verknüpfte vollständige manuelle Buchung samt ihrem gesamten Journalereignis und belegtem eigenen externen Flow. Sie entfernt niemals einzelne Postings. Die historische Folge wird mit vorhandenen Eröffnungen und verbleibenden Journalbewegungen geprüft; negativ werdende Zwischenbestände blockieren. Ersatzbuchungen laufen durch executeTransaction, einschließlich dessen Chronologie-/Mengenprüfungen.
 
-Originalbuchung, kompletter Originaljournalsatz, eigene Flüsse, Beleggrund und Nachherbezug bleiben in einem validierten audit-only Journalereignis erhalten. Dieses besitzt genau ein Nullwert-Dokumentationsposting ohne Position/Konto/Menge und erzeugt keine Finanzbewegung oder neues künstliches Finanzdatum. Audit-Nachweise überstehen vollständigen Backup/Restore. Weitere wirtschaftliche Änderungen an bereits referenzierten Originalen werden konservativ gesperrt.
+Originalbuchung, kompletter Originaljournalsatz, eigene Flüsse, Beleggrund und Nachherbezug bleiben in einem validierten audit-only Journalereignis erhalten. Dieses besitzt genau ein Nullwert-Dokumentationsposting ohne Position/Konto/Menge und erzeugt keine Finanzbewegung oder neues künstliches Finanzdatum. Audit-Nachweise überstehen vollständigen Backup/Restore. Validierte eigene Nullwert-Auditnachweise werden von fremden wirtschaftlichen Referenzen unterschieden. Die jüngste eindeutige Änderungskette muss exakt zum aktuellen Vorgang passen; andernfalls gesperrt. Dadurch bleiben wiederholte belegte Korrekturen möglich.
 
 Commit berechnet Kandidaten erneut gegen exaktes Vorabbild, benötigt Checkbox und aktuellen IndexedDB-CAS-Stand, prüft Busy/Recovery/Mehrtab vor/nach Await und speichert genau eine Revision. Abbruch und Vorschau schreiben nichts. Undo ist ein sitzungslokaler exakter Vorabbild-Receipt, nur bis zur nächsten beliebigen Portfolioänderung und erneut mit CAS. Nach Reload/weiteren Änderungen bleibt Backup/Änderungsnachweis, keine universelle Undo-Garantie.
 
@@ -41,7 +41,7 @@ Oberfläche: Auswählen, gefiltert/alle/aufheben, Notiz, Betrag/Datum, Rücknahm
 
 ## Prüfstand / nächster Schritt
 
-Lokal730 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
+Lokal733 Unit-Tests /0Fail/0Skip und Syntax bestanden. Neue unabhängige Fachtests sowie ein Browserflow für205 Buchungen/103 gefilterte, fünf Breiten/Axe, Vorschau/Escape, echte Quota/post-put-Abbrüche, konkurrierenden Tab, Offline-CAS, Undo und frischen plain/encryptedRestore vorhanden. Lokale Browserbinary fehlt; neue vollständige GitHub-CI und echte Bildprüfung noch offen. Keine vollständige Phase-A-Abnahme behauptet.
 
 Nächster Schritt: finale PR173-CI/Bilder auswerten, Fehler beheben, Fach-/Source-Review sichern. Erst danach konkrete Produktionsfreigabe für diesen begrenzten belegten Umfang einholen. Breitere Trade-/Import-/Walletmutationen bleiben explizite Fachblocker, nicht als fertig melden.
 
@@ -60,3 +60,5 @@ CI40519556015: neue Chromium-Prüfungen für Korrektur, Rücknahme, Notiz, Undo,
 Fokusvertrag ergänzt: nach Commit/Undo ersetzt der Render die auslösenden Verwaltungsbuttons. Der gemeinsame Dialogguard fokussiert dann die neue Buchungsaktion, analog zur bestehenden Positionsverwaltung; gezielte Browserassertionen prüfen beide Fälle.
 
 Bildprüfung: Kontoeffekte in320/390/1440 tatsächlich angesehen. Anschließend Belegreferenz und aufklappbare Einzelübersicht jeder ausgewählten Buchung (ID, Typ, Position, Datum/Betrag/Notiz vorher/nachher) ergänzt, damit Bestätigung nicht nur Kontosummen zeigt. Browser prüft die tatsächlich geöffneten Vorher/Nachher-Felder; unveränderte Fachassertions bleiben. Neue finale CI erforderlich.
+
+Abschließender Referenzreview: unbekannte Buchungs-/Journal-/Postingfelder sowie unbekannte Referenzen sperren auch Notizänderungen. Eigene validierte Auditnachweise werden nicht fälschlich als fremde wirtschaftliche Verknüpfung behandelt; die jüngste eindeutige Sequenz muss mit dem aktuellen Vorgang übereinstimmen. Nachherbelege sind eigenständige tiefe Kopien statt Objektaliase. Neue Referenzfälle prüfen mehrfache Korrektur/Notiz/Rücknahme, unbekannte Metadatenreferenzen, abweichende/doppelte Auditketten und Manipulation. Lokale733Tests bestehen; finale Remote-Abnahme dieses Heads offen.
