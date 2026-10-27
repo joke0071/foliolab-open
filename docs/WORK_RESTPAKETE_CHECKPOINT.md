@@ -1,3 +1,19 @@
+# Vorgemerkter UI-Nachtrag: schlanke Mehrfachauswahl · 27.10.2026
+
+**OPEN / NUR DOKUMENTIERT / NACHRANGIG.** Zu #149/#165, ausschließlich im bestehenden Masterauftrag. Aktuellen Strang PR179/HEADb6b84d3, CI40589392451/Wallet40589392368 sowie alle laufenden Implementierungen, Audits, Tests, Merges und Deployments unverändert fortsetzen. Kein Pausieren, Neustart, Umpriorisieren, zusätzlicher Branch, Code oder Testlauf aufgrund dieses Nachtrags.
+
+Umsetzung erst beim nächsten regulären, sicheren und konfliktfreien UI-Checkpoint nach dem aktiven Paket. Bereits erledigte Teile überspringen; keine parallele Auswahl-/Verwaltungsengine.
+
+- Neuer schlanker Normalzustand für Positionen und Buchungen: **kein alleinstehender „Auswählen“-Button über der Liste**, keine Checkboxen/Sammelaktionen. Dezente jederzeit erreichbare Aktion **„Mehrfachauswahl“ im jeweiligen Listenkopf** aktiviert den Modus; keine zusätzliche aufklappbare Steuerung. Direkte kleine Zeilenicons Bearbeiten/Löschen/Archivieren bleiben erreichbar.
+- Aktiver Modus: Auswahlleiste dauerhaft offen und unmittelbar sichtbar; Zeilencheckboxen, „Aktuelle Seite auswählen“, „Alle löschen“, „Alle archivieren“, „Abbrechen“. Mobile Zweispaltenanordnung, eindeutige Anzahl und Reichweite beibehalten. Abbrechen/reguläres Beenden kehrt in den schlanken Normalzustand zurück. Bestehender geprüfter Checkboxzyklus sowie Filter-/Pagination-/Einzelauswahlregeln bleiben erhalten.
+- Mobile: unnötigen Leerraum über Namen reduzieren, Icons allenfalls kompakter bei mindestens bestehenden ausreichenden44px-Touchflächen. Kein Überlappen, horizontales Scrollen, schlechtere Lesbarkeit oder Redesign; Farben/Kartenstruktur erhalten.
+- Sicherheit unverändert: explizite Lösch-/Auswirkungsvorschau, Archivieren ungleich Löschen/Ignore, Quellen-/Importidentitäten schützen, atomare nachvollziehbare Sammelaktionen. Reine UI ändert keine Finanzberechnung, Bestände oder Historien.
+- Spätere Abnahme: beide Reiter gemeinsam mit vorhandenen Komponenten, synthetischen Daten und Mobile/Desktop insbesondere320/390/1440px prüfen. Pflichtprüfungen und Release-Gates vollständig erhalten.
+
+Dieser vorgemerkte Bediennachtrag ersetzt **für den nächsten UI-Schritt** die ältere Normalzustandsanforderung „ausschließlich Auswählen“. Der aktuell laufende PR179 bleibt bewusst unverändert und wird dadurch nicht als fehlgeschlagen oder vollständig an den neuen Normalzustand angepasst bezeichnet. Bestehende Freigabegates und verbindliche Gesamtsequenz bleiben erhalten. FLH05-A nicht vorzeitig beginnen.
+
+---
+
 # Aktueller sicherer Checkpoint · PR179 / WebKit-Bildbefund · 27.10.2026
 
 HEAD `b6b84d374ca8f034da70462341fe2115916556b0`, Tree `7ef9133af734fa17e8ea96939a1d32b6f98723ff` lokal/remote exakt. PR179 bleibt DRAFT, kein Merge/Deployment. Produktion unverändert v190/main7b7fae7.
