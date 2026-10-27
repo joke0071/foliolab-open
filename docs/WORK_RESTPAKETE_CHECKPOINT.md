@@ -1,6 +1,24 @@
+# Aktueller Master-Checkpoint · Buchungs-UI PR179 · 27.10.2026
+
+**PARTIAL / DRAFT / NICHT VERÖFFENTLICHT.** HEAD `a438ca52ff87022dddc571df9c137b37883f028b`, Tree `45facfebd47256a54827eed849edfbb49ebf4889` lokal/remote exakt. CI40590627035 läuft; Wallet40590627092 SUCCESS. Produktion bleibt v190/main7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5. SW191 nur Kandidat.
+
+Einziger funktionaler Strang gemäß Rang3. Direkte bestehende Zeilenicons/gemeinsame Toolbar/Auswahlengine, Kontextdialog für bereits sicheren Umfang und reines reversibles Sichtbarkeitsarchiv mit Vorschau/Bestätigung/CAS/Undo. Originale, Journal, Bestände, Geldflüsse und historische Bewertungen bleiben bei Archivierung exakt erhalten; Reimportidentität und komplette verschlüsselte Wiederherstellung geprüft. Kein Finanz-/Journalneuentwurf, kein Ignore, keine breite Import-/Wallet-/Transfermutation.
+
+766/766 Units/check PASS. Vollständiger Vorlauf40587872054 +Wallet40587871906 SUCCESS, trotzdem echter WebKit320-Bildbefund (Auswahlbeschriftung über Touchziel hinaus) vor Release erkannt. Erste Gridkorrektur in40589392451 durch neue Textbegrenzungsassertion zurecht ROT (Chromium/Cross2/Wallet grün, Firefox-Neugate ebenfalls PASS). Aktuelle kleine gemeinsame Blockfluss-Korrektur behält vollständige Bereichsbeschriftung, native Checkbox und44px-Mindestziel; Diagnose/Assertion bleibt erhalten. Noch neue Gates und tatsächliche WebKit-Bilder abwarten. Kein Test abgeschwächt, kein vorheriger Run abgebrochen/neugestartet.
+
+Ältere Fehlnachweise40585032435/40585906272/40586826976 bleiben erhalten: neue technische-Notiz-Testannahme, verbliebener Bestätigungs-Handler und irrtümlicher alter Backup-V1-Testhelfer korrigiert, Finanzsperren unverändert; tatsächlicher aktueller V2-Tresor nun vollständig getestet. Keine Fehlversuche als Performancebaseline oder Abnahme ausweisen.
+
+**Eigenes Releasegate:** Erst bestätigte Archivierung aktiviert portables Modell4 mit streng validiertem bookingPresentation; alte Leser lehnen es vor Metadatenverlust ab. Kein Startupgrade/IndexedDB-Schemawechsel. Konkrete Nutzerfreigabe für diesen neuen Speicher-/Backup-Vertrag vor Merge/Deployment erforderlich; frühere v188-Freigabe nicht erweitert. Erst vollständig geprüften Kandidaten zur Entscheidung vorlegen.
+
+Niedrig priorisierte CI-Zwischenoptimierung nur lesend dokumentiert: bestehende PR176-Shards und Baseline667→391s/−41,38% wiederverwendet, Job-/Stepzeiten erfolgreicher40575706366 und40587872054 erfasst; Testausführung dominiert, Firefox/WebKit-Setup52–76s versus Chromium5s. Keine Workflow-/Cache-/Branch-Protectionänderung oder zusätzlicher Optimierungslauf; Implementierung auf konfliktfreien späteren Checkpoint verschoben, um aktiven Pfad nicht zu verlängern. Vollständiges abschließendes CI-Paket bleibt offen.
+
+Breitere Bearbeitungsfelder, lokale Import-/API-Interpretation, kompatible Sammelbearbeitung und fachlicher Ausschluss bleiben OPEN. Neuer schlanker Normalzustand ausschließlich für später dokumentiert (unten), jetziger PR unverändert. UI09/UI10/1W und andere ausführbare Vorgänger bleiben gemäß bestehender Roadmap offen. FLH05-A/PERF01 nicht vorgezogen; gehärtete FLH05-Spezifikation unverändert, Blob953f816c648ebabec42476be80cd0bf481fe6a2e einschließlich12Testvektoren.
+
+---
+
 # Vorgemerkter UI-Nachtrag: schlanke Mehrfachauswahl · 27.10.2026
 
-**OPEN / NUR DOKUMENTIERT / NACHRANGIG.** Zu #149/#165, ausschließlich im bestehenden Masterauftrag. Aktuellen Strang PR179/HEADb6b84d3, CI40589392451/Wallet40589392368 sowie alle laufenden Implementierungen, Audits, Tests, Merges und Deployments unverändert fortsetzen. Kein Pausieren, Neustart, Umpriorisieren, zusätzlicher Branch, Code oder Testlauf aufgrund dieses Nachtrags.
+**OPEN / NUR DOKUMENTIERT / NACHRANGIG.** Zu #149/#165, ausschließlich im bestehenden Masterauftrag. Aktuellen Strang PR179 und dessen jeweils laufende Pflichtprüfungen sowie alle laufenden Implementierungen, Audits, Tests, Merges und Deployments unverändert fortsetzen. Kein Pausieren, Neustart, Umpriorisieren, zusätzlicher Branch, Code oder Testlauf aufgrund dieses Nachtrags.
 
 Umsetzung erst beim nächsten regulären, sicheren und konfliktfreien UI-Checkpoint nach dem aktiven Paket. Bereits erledigte Teile überspringen; keine parallele Auswahl-/Verwaltungsengine.
 
@@ -11,34 +29,6 @@ Umsetzung erst beim nächsten regulären, sicheren und konfliktfreien UI-Checkpo
 - Spätere Abnahme: beide Reiter gemeinsam mit vorhandenen Komponenten, synthetischen Daten und Mobile/Desktop insbesondere320/390/1440px prüfen. Pflichtprüfungen und Release-Gates vollständig erhalten.
 
 Dieser vorgemerkte Bediennachtrag ersetzt **für den nächsten UI-Schritt** die ältere Normalzustandsanforderung „ausschließlich Auswählen“. Der aktuell laufende PR179 bleibt bewusst unverändert und wird dadurch nicht als fehlgeschlagen oder vollständig an den neuen Normalzustand angepasst bezeichnet. Bestehende Freigabegates und verbindliche Gesamtsequenz bleiben erhalten. FLH05-A nicht vorzeitig beginnen.
-
----
-
-# Aktueller sicherer Checkpoint · PR179 / WebKit-Bildbefund · 27.10.2026
-
-HEAD `b6b84d374ca8f034da70462341fe2115916556b0`, Tree `7ef9133af734fa17e8ea96939a1d32b6f98723ff` lokal/remote exakt. PR179 bleibt DRAFT, kein Merge/Deployment. Produktion unverändert v190/main7b7fae7.
-
-Vorstand b0d0f6: CI40587872054 und Wallet40587871906 vollständig SUCCESS,766/766 Units0fail0skip, Chromium+beideFirefox/WebKit-Shards, neue und bestehende Buchungs-/Finanz-/CAS-/Quota-/Abbruch-/Offline-/Restore-/Undo-/Axe-Gates. Nach tatsächlicher Bildprüfung dennoch **WebKit320-Textüberlauf der oberen gemeinsamen Auswahlcheckbox erkannt**. Deshalb keine voreilige visuelle/Releaseabnahme. Minimaler gemeinsamer Grid-Layoutfix statt Flex, zusätzliche Bounding-Prüfung für Text innerhalb des Touchziels in allen fünf Breiten. Aktuell CI40589392451 und Wallet40589392368 laufen; vorher sämtliche Jobs regulär beendet, nichts abgebrochen oder neugestartet.
-
-Neuer niedrig priorisierter CI-Nachtrag nur lesend abgeschlossen und in CI_OPTIMIZATION_CHECKPOINT.md dokumentiert: PR176-Shards/Baseline wiederverwendet; tatsächliche erfolgreiche Job-/Stepzeiten aus40575706366/40587872054, Testausführung größter Anteil; Setup52–76s versus5s Chromium. **Keine Workflowänderung**, weil zusätzlicher Optimierungs-/Validierungsschnitt den aktiven Abschluss verlängern würde. Vollständige CI-Optimierung bleibt abschließend offen; kein zweiter Entwicklungsprozess.
-
-Eigene konkrete Nutzerfreigabe für das neue Opt-in-Modell4/Speicher-/Backup-Vertrag bleibt vor Merge/Deployment erforderlich. Erst alle aktuellen Gates und neue WebKit-Bilder prüfen, dann reviewfähigen Kandidaten zur Releaseentscheidung vorlegen. Vollständige fachliche Grenzen/Nachträge unverändert erhalten. FLH05-A/PERF01 weiterhin nicht vorgezogen.
-
----
-
-# Aktueller Buchungs-UI-Kandidat · PR179 · 27.10.2026
-
-**PARTIAL / DRAFT / RELEASE GESPERRT:** [PR179](https://github.com/joke0071/foliolab-open/pull/179), HEAD `b0d0f62729c92c9b38f948b7f9fadd2e0ed3f0c2`, Tree `21823d841cd0eeab3a2315b947ec7a498aef531d` lokal/remote exakt. Produktion unverändert v190/main7b7fae7. Einziger aktiver funktionaler Strang gemäß Rang3; FLH05-A/PERF01 weiterhin zurückgestellt.
-
-Lokal766/766 Units/check PASS. Aktueller vollständiger PR-Lauf40587872054 und Wallet40587871906 laufen. **Noch keine vollständige Browser-/visuelle Abnahme und keine Merge-/Deploymentfreigabe behauptet.**
-
-Erste drei Läufe40585032435/40585906272/40586826976 bleiben als Fehlnachweise erhalten: neue Testannahme zu explizit manuellen technischen Notizen präzisiert (wirtschaftliche Felder gesperrt), Handler für unveränderten Dialog korrekt begrenzt, Restore-Test auf den tatsächlichen aktuellen Backup-V2-Tresor umgestellt. Keine Finanz-/Schutzassertions entfernt. Jeweilige unabhängige Cross-Engine-Blöcke2 und Walletchecks bestanden; sämtliche laufenden Jobs vor jedem Branchupdate zu Ende laufen gelassen.
-
-Erste synthetische Chromium-Bilder bei320/390/430/768/1440 tatsächlich angesehen. Dabei nachgewiesenen engen Fünfspaltenumbruch bei768px mit vorhandener Zweispaltenlogik behoben; Betragsausrichtung trotz Herkunftszeile wiederhergestellt. Finale Bilder einschließlich neuem Kontextdialog in fünf Breiten/3Engines noch prüfen. Artefakt des dritten Laufs12771502492, ZIP-SHA2562653bbe2a2c52cb35b0109dcb545dde21cdda566346909f45832673f23a3d48b; kein bestandener Gesamtgate dadurch behauptet.
-
-Umfang: direkte gleiche Zeilenicons/Toolbar/Selektion; vorhandene sichere manuelle Notiz-/EUR-Cash-Korrekturen; Sichtbarkeitsarchiv ohne finanzielle Wirkung, mit Bestätigung/CAS/Undo/Reimportschutz. Breitere Import-/API-Interpretation, weitere Bearbeitungsfelder, Sammelbearbeitung und fachlicher Ausschluss bleiben OPEN.
-
-**Eigenes kritisches Releasegate:** Opt-in Modell4 mit streng validiertem bookingPresentation erst bei bestätigter Archivierung; alte Leser lehnen vor Metadatenverlust ab, kein Startupgrade/IDB-Schemawechsel. Eigene konkrete Nutzerfreigabe für Speicher-/Backup-Vertrag vor Merge/Deployment erforderlich. v188-Freigabe wird nicht erweitert. Dokumentierte Nachträge #149/#165 vollständig erhalten.
 
 ---
 
