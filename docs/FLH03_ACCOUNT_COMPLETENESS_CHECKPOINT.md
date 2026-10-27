@@ -19,3 +19,9 @@ Kandidat SW189 ist keine Veröffentlichung. Noch kein PR-/CI-/Browser-/Live-PASS
 ## Erster Implementierungscheckpoint
 
 Lokale741/741 Unit-Tests,0Fail/0Skip bestanden (sechs neue fachliche Referenzen einschließlich tatsächlichem CSV-ImportSource-Vertrag), vollständiger Syntaxcheck und diff-check bestanden. Keine Finanz-/Storage-/Backup-/Workflowdatei geändert. Bestehendes Drei-Engine-Qualitygate um geöffnete Kontoprüfung, fünf Breiten/Axe/44px/Kontodrilldown/Disclosurezustand/Tastatur und exakte Nullmutation erweitert. Neue Browsergates noch auszuführen; lokale Browserbinary fehlt, deshalb GitHub Actions maßgeblich. Bestehende erfolgreiche v188-Regressionsnachweise nicht als Abnahme des neuen Kandidaten ausgeben.
+
+## Erster CI-Fehlnachweis — nicht abgenommen
+
+CI40553064891 auf dd1e0f7: Wallet40553064753 SUCCESS, Crossjob122361695925 FAILED schon im vorhandenen UI07-Test. Neue Kontotransfer-Einstiege machten den bisherigen global eindeutigen Selektor [data-action=transfer-matching] mehrdeutig (strict mode). Keine Finanzabweichung nachgewiesen. Konto-Einstieg erhält eigenen UI-Aktionsnamen account-transfer-review, delegiert unverändert an dieselbe transferMatchingUI.open-Funktion. Bestehende Testassertion/Selector nicht abgeschwächt. Chromiumjob122361696443 läuft beim Diagnosezeitpunkt weiter und wird nicht abgebrochen; neuer Remote-Codecheckpoint erst nach seinem Abschluss.
+
+Chromiumjob122361696443 inzwischen ebenfalls FAILED am identischen mehrdeutigen UI07-Selektor, nachdem bestehende Finanz-/Import-/History-/CAS-/Quota-/Recovery-/Backup-/Offline-Regressionssuiten tatsächlich bestanden hatten. Gesamtlauf bleibt FAILED, Deployment/Live übersprungen. Kein Job abgebrochen. Neuer vollständiger Lauf nach der gezielten Aktionsnamenkorrektur erforderlich.
