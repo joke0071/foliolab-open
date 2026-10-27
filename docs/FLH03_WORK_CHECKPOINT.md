@@ -1,3 +1,19 @@
+# Aktuell: v183 live DONE; C3-Diagnose ohne Produktänderung
+
+C2/#167 ist tatsächlich produktiv abgenommen: main `f384593da22888131d1418574de9acf33c30c0e1`, Tree23d4d7d403d72bb5966cb3841ee7d7b25d5b64e1, finaler PR-HEAD e1bb4df. [PR-CI40423288950](https://github.com/joke0071/foliolab-open/actions/runs/40423288950) +Wallet40423288875 und [Main/Pages/Live40424425924](https://github.com/joke0071/foliolab-open/actions/runs/40424425924) vollständig SUCCESS.709/709/0Fail/0Skip,105 exakte Live-Dateihashes, foliolab-open-v183,6 Kerngruppen/18 Axe; B1/C1/C2-ZielUI live in allen3 Engines, beide Historienbilder tatsächlich angesehen. Beleg: release-evidence/ui-quality-v183-release.json. Erster falscher Einzelkurs-Test und dessen Fehllauf bleiben darunter dokumentiert. Nicht wiederholen.
+
+Regulärer Paketwechsel: einziger neuer Strang **feature/ui-quality-c3-chart-metric**, exakt von mainf384593. **Zunächst nur Diagnose/Test, keinerlei Produkt-/Workflow-/SW-Änderung.** Konkrete Hypothese im vorhandenen Renderer: Bestandsansicht verwendet dieselbe Segment-ID wie EUR-Bewertungen. Dadurch könnten bekannte Mengen allein wegen fehlender Tageskurse unterbrochen und als teilweise verfügbar bezeichnet werden. Dies ist bis zum tatsächlichen Browsernachweis eine Hypothese, keine behauptete Ursache des ursprünglichen privaten Android-Portfolios.
+
+Neue synthetische Regression: belegte Käufe am02./03.01., Kurse nur02./04.01. Mengen2.123456789 →3.123456789 →3.123456789 müssen eine zusammenhängende Bestandslinie bilden. EUR-Wert muss am03.01. unbekannt und unterbrochen bleiben; Kursansicht darf nur zwei belegte Punkte enthalten. Genau ein fehlender Kurseintrag bleibt in der Tabelle sichtbar. Alle Ansichten müssen exakten IDB-Record unverändert lassen. Quelle/Projektion/Journal/Finanzen werden nicht verändert.
+
+**Nächste Aktion:** tatsächliche C3-HEAD-CI auswerten. Falls die strenge Bestandslinien-Assertion fehlschlägt, konkrete Pfade/Werte aus Logs sichern und ausschließlich die Ansichtssegmentierung im bestehenden UI korrigieren; keine Historienengine, keine interpolierten Werte, keine abgeschwächte Assertion. Erst danach neue vollständige finale Gates/Review und bei Grün vorhandene UI-Releasefreigabe nutzen, Main/Live inklusive Bildprüfung. Bei nicht reproduzierter Hypothese keine spekulative Produktänderung.
+
+Gesamtstabilisierung PARTIAL; App-Typografie-/Hinweisdeltas nur belegt ergänzen, begrenzter unabhängiger Abschlusscheck aller5 Bereiche/max10 Befunde erst nach Stabilisierung. Buchungsverwaltung #165 separat finanzkritisch und ohne Produktionsfreigabe. D/P2 #157 geparkt, #151 historische Fehler unverändert. **FLH04 #160/#161 nach UI**, neuester Folgeauftrag aufgenommen: optionales E2E-Drive, lokale kanonische IDB/voll offline, bestehende Backup-/Passwortkryptografie nur nach Eignungsprüfung; Revisionen, parallele Writer, Konflikte und Recovery separat prüfen. Keine zentrale DB/Worker/Secrets und ausdrücklich keine Sync-Releasefreigabe.
+
+Work-Laufzeit weiterhin unavailable; tatsächliche Browserprüfungen auf GitHubRunner. Kein natives Safari/physisches Android/OS-Systemschrift/OAuth-Erfolg behauptet. Historische Checkpoints darunter bleiben erhalten; dieser aktuelle Abschnitt hat Vorrang.
+
+---
+
 # C2-Fixturekorrektur nach tatsächlichem ersten CI-Fehler
 
 Erster C2-HEAD11bfcc6/CI40422717936 ist fehlgeschlagen; nicht als bestanden umdeklariert. Der neue Partial-Test versuchte eine persistierte Kurshistorie mit nur einer Kurszeile zu speichern. Bestehender validateImportedPriceHistory verlangt mindestens zwei Zeilen und hat dies korrekt mit „Historische Kurse überschreiten die Datenlimits“ abgewiesen. Kein Produktfehler und kein Anlass, Datenvalidierung zu lockern.
