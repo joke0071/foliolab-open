@@ -504,11 +504,11 @@ function renderBookingManagement(){
   root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('notes','Notiz korrigieren',!!checks.notes)+button('edit','Betrag / Datum korrigieren',!!checks.edit)+button('remove','Rücknahme prüfen',!!checks.remove)+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+summary.hiddenCount+' ausgeblendet · Auswahlbereich: '+($('bookingSearch').value.trim()||$('bookingFilterType').value?'gefilterte Buchungen':'alle Buchungen')+' ('+bookingMatchingIds.length+')</p>'+
    Object.entries(checks).filter(([,reason])=>reason&&summary.selectedCount).map(([action,reason])=>'<p class="small-help" id="bookingBlocked-'+action+'">'+({notes:'Notiz',edit:'Korrektur',remove:'Rücknahme'})[action]+' gesperrt: '+esc(reason)+'</p>').join('');
   for(const [action,reason] of Object.entries(checks))if(reason){const b=root.querySelector('[data-booking-manage="'+action+'"]');b.title=reason;if(summary.selectedCount)b.setAttribute('aria-describedby','bookingBlocked-'+action);}
-  const checkbox=$('bookingSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
  }
  if(canUndoBookingChange(model,bookingChangeReceipt))root.innerHTML+='<div class="settings-actions">'+button('undo','Letzte Buchungsänderung rückgängig',!bookingWritable())+'</div>';
  const logs=model.journalEntries.filter(e=>e.type==='booking-management-audit'&&e.managementAudit);
  if(logs.length)root.innerHTML+='<details class="performance-details"><summary><span>Änderungsnachweise ('+logs.length+')</span></summary><div class="performance-details-body">'+logs.slice(-20).reverse().map(e=>'<p>'+esc(e.date+' · '+e.managementAudit.action+' · '+e.managementAudit.reason)+' · '+esc(e.managementAudit.originals.map(x=>x.booking.id).join(', '))+'</p>').join('')+'</div></details>';
+ if(bookingSelecting){const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds),checkbox=$('bookingSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;}
 }
 function openBookingChange(action){
  assertBookingWritable();

@@ -80,3 +80,6 @@ Automatisierte Referenzen ergänzen Checkbox-Zyklus, Teil-/Einzelauswahl, leere/
 
 
 UI-CI40527206898: Positionsauswahl, sechs Breiten, obere Kartenicons/Geometrie, zwölf Axe-Prüfungen und bestehende Quota-/CAS-/Offline-/Restore-Referenzen erfolgreich. Archivtest erwartet nach verändertem Sichtbereich noch sofort die alte globale Auswahl. Test auf die neue belegte Zweistufe erweitert:201 bestehend →250 nach expliziter sichtbarer Seite →401 nach explizitem Gesamtbereich; keine Produktlogik angepasst. Neue Sammelarchivierungs-Vorschau zusätzlich in320/390/430/1440 mit Axe und44px-Footer geprüft. Separate Test-Settings beim Wiederherstellen des synthetischen Fixtures erhalten. Positions-Auswahlbuttons explizit auch am Desktop mindestens44px hoch.
+
+
+Statischer Folgereview: Undo-/Audit-Markup wird nach der Auswahlleiste ergänzt; der finale Checkbox-DOM erhält seinen checked/indeterminate-Status deshalb erst danach. Browserreferenz prüft Teil-, Seiten- und Einzelauswahl ausdrücklich auch nach vorhandener Änderung samt Undo/Audit und unveränderten Speicherbytes. Synthetische Buchungsfixture hat deterministische IDs, damit gleichdatierte Sortierung und die100er-Seite reproduzierbar bleiben; keine Zufallsannahme über UUID-Reihenfolge.
