@@ -1,3 +1,5 @@
+import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './ledger-live.js';
+import {ledgerLiveMarkup} from './ledger-live-ui.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
@@ -1193,7 +1195,8 @@ function flatexWouldDoubleCount(current,prepared,accountId){
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
- if(!positions.length)return notify('Vor dem CSV-Import bitte mindestens eine manuelle Position anlegen.',true);
+
+ let ledgerDocument=null,ledgerAssignments={},ledgerLimit=50,ledgerMode=false;
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1213,13 +1216,14 @@ function openCSVImport(){
   return checked.preview;
  };
  showDialog('CSV importieren','BUCHUNGEN',
-  '<p class="dialog-intro">Wähle allgemeine Buchungen oder Flatex-Exporte. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
-  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option></select></label>'+ 
-   '<label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label>'+ 
+  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex- oder Ledger-Live-Exporte. Ledger Live bleibt zunächst eine lokale Prüfvorschau. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option><option value="ledger">Ledger Live – Vorschau</option></select></label>'+
+   '<label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label>'+
    '<div id="csvBrokerStatus" role="status"></div>'+
    '<button type="button" id="csvDownloadAudit" class="btn outline hidden">Flatex-Prüfbericht als CSV</button>'+
   '<div id="csvMapping"></div><p id="csvReviewStatus" class="visually-hidden" role="status" aria-live="polite">Nach der Dateiauswahl werden die Buchungen geprüft.</p><div id="csvReview"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
+   if(ledgerMode)throw Error('Ledger Live bleibt eine lokale Vorschau. Ohne belegte Ereignis-, Gebühren- und Eigentumszuordnung ist keine Übernahme zulässig.');
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
     if(brokerImport){
      if(brokerImport.issues.some(x=>x.code==='invalid'||x.code==='ambiguous-duplicate'))throw Error('Flatex: fehlerhafte oder nicht eindeutig identifizierbare Vorgänge prüfen.');
@@ -1337,12 +1341,24 @@ function openCSVImport(){
    $('saveDialog').textContent=result.ready?result.ready+' Buchung'+(result.ready===1?'':'en')+' importieren':'Buchungen importieren';
   }catch(error){$('csvReview').textContent='Importprüfung: '+error.message;$('csvReviewStatus').textContent='Importprüfung fehlgeschlagen.';$('saveDialog').disabled=true;}
  };
+ const renderLedger=(focusScope=null)=>{
+  const preview=previewLedgerLive(model,ledgerDocument,ledgerAssignments),markup=ledgerLiveMarkup(model,preview,{limit:ledgerLimit});
+  $('csvBrokerStatus').textContent='Ledger-Live-Export erkannt. Übernahme bleibt gesperrt.';
+  $('csvMapping').innerHTML=markup.mapping;$('csvReview').innerHTML=markup.review;$('csvReviewStatus').textContent=markup.status;
+  $('saveDialog').disabled=true;$('saveDialog').textContent='Ledger-Übernahme gesperrt';
+  $('csvMapping').querySelectorAll('[data-ledger-scope]').forEach(select=>select.addEventListener('change',()=>{
+   try{ledgerAssignments={...ledgerAssignments,[select.dataset.ledgerScope]:select.value};renderLedger(select.dataset.ledgerScope);}catch(error){$('csvReview').textContent='Ledger-Zuordnung nicht prüfbar: '+error.message;$('saveDialog').disabled=true;}
+  }));
+  $('ledgerShowMore')?.addEventListener('click',()=>{ledgerLimit+=50;renderLedger();$('csvReview').querySelectorAll('details')[Math.max(0,ledgerLimit-50)]?.querySelector('summary')?.focus();});
+  if(focusScope)$('csvMapping').querySelector('[data-ledger-scope="'+focusScope+'"]')?.focus({preventScroll:true});
+ };
  async function chooseCSV(){
   const generation=++selectionGeneration;
   const files=[...($('csvFile').files||[])];
+  ledgerDocument=null;ledgerAssignments={};ledgerLimit=50;ledgerMode=false;
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
-  $('saveDialog').disabled=true;$('csvBrokerStatus').innerHTML='';
+  $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
   if(!files.length){$('csvMapping').innerHTML='';$('csvReview').textContent='Bitte CSV-Datei auswählen.';$('csvReviewStatus').textContent='Bitte CSV-Datei auswählen.';return;}
   try{
    if(files.length>20)throw Error('Maximal 20 Dateien je Import.');
@@ -1350,6 +1366,12 @@ function openCSVImport(){
    const inputs=await Promise.all(files.map(async f=>({name:f.name,text:await f.text()})));
    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
    const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name}),source=$('csvSource').value;
+   const ledger=inputs.some(f=>looksLikeLedgerLiveCSV(parseCSV(f.text)));
+   if(source==='ledger'||ledger){
+    if(!['auto','ledger'].includes(source))throw Error('Ledger-Live-Exporte bitte über die native Ledger-Vorschau prüfen, nicht als allgemeine oder Flatex-Buchungen.');
+    if(inputs.length!==1)throw Error('Ledger Live bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
+    ledgerMode=true;ledgerDocument=parseLedgerLiveCSV(inputs[0].text);renderLedger();return;
+   }
    const flatex=source==='flatex'||(source==='auto'&&Boolean(detectFlatexCSV(probe)));
    if(flatex){
     brokerImport=prepareFlatexImport(inputs);parsed=brokerImport.parsed;
@@ -1372,7 +1394,7 @@ function openCSVImport(){
     $('csvMapping').innerHTML='<label class="field"><span>Welches Flatex-Depot?</span><select id="csvBrokerAccount">'+options([['','Depot auswählen'],...accountChoices],'')+'</select></label>'+
       (!accountChoices.length?'<p class="small-help">Bitte zuerst unter „Mehr“ einen Flatex-Anbieter und ein Wertpapierdepot anlegen.</p>':'')+
       (brokerImport.cashItems.length?'<label class="csv-skip"><input id="csvBrokerAmountsEUR" type="checkbox"> Die Beträge im hochgeladenen Kontoumsatz-Export sind in EUR ausgewiesen (laut Auszug geprüft).</label><div id="csvBrokerSettlement" role="group" aria-label="Flatex-Abrechnungsabgleich"></div>':'')+
-      '<button type="button" class="btn outline" id="csvBackupNow">Backup vor Flatex-Import herunterladen</button><p id="csvBackupStatus" class="small-help">Vor der Übernahme ist eine lokale Sicherung erforderlich.</p>'+ 
+      '<button type="button" class="btn outline" id="csvBackupNow">Backup vor Flatex-Import herunterladen</button><p id="csvBackupStatus" class="small-help">Vor der Übernahme ist eine lokale Sicherung erforderlich.</p>'+
       '<div id="csvBrokerReconcile" role="status"></div>'+
       '<p class="small-help">Wertpapiere werden nur innerhalb des ausgewählten Depots über ihre ISIN zugeordnet. Andere Broker und Depots bleiben geschützt.</p>';
     $('csvBackupNow').addEventListener('click',()=>{

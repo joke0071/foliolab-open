@@ -1143,3 +1143,5 @@
 #saveDialog[hidden]{display:none!important}
 
 #bookingChangeTransactions{margin:12px 0;overflow-wrap:anywhere}#bookingChangeTransactions>summary{min-height:44px}#bookingChangeTransactions li{margin:10px 0}
+
+.ledger-live-preview{min-width:0}.ledger-live-preview p,.ledger-live-preview li,.ledger-live-preview summary{overflow-wrap:anywhere}.ledger-live-preview select,.ledger-live-preview .btn{min-height:44px;max-width:100%}
