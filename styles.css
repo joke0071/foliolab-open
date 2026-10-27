@@ -1139,3 +1139,5 @@
 
 #positionSelectionMenu>summary::after{content:"";width:8px;height:8px;border-right:1.8px solid #6b8c73;border-bottom:1.8px solid #6b8c73;transform:rotate(45deg);margin-top:-4px}
 #positionSelectionMenu[open]>summary::after{transform:rotate(225deg);margin-top:4px}
+
+#bookingManagementTools{margin:12px 0;min-width:0}#bookingManagementTools .btn{white-space:normal;min-height:44px}#bookingManagementTools .settings-actions{margin:8px 0}.booking-management-row{min-width:0}.booking-management-row>.selection-check{padding:8px 0;min-height:44px}

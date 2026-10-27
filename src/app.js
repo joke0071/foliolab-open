@@ -1,3 +1,4 @@
+import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
@@ -68,6 +69,7 @@ let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
+let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
 let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],includeArchived=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
@@ -457,11 +459,60 @@ function renderBookings(){
  const list=historyRows.filter(b=>(!type||b.type===type||(type==='transfer'&&b.transferMatch))&&(!query||
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date]
    .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
+ bookingMatchingIds=list.map(b=>b.id);renderBookingManagement();
  $('bookingList').innerHTML=historyRows.length?(
-  list.length?list.slice(0,bookingLimit).map(b=>bookingRowMarkup(b,model)).join('')+
+  list.length?list.slice(0,bookingLimit).map(b=>'<div class="booking-management-row">'+(bookingSelecting?'<label class="selection-check"><input type="checkbox" data-booking-select="'+esc(b.id)+'" '+(selectedBookingIds.includes(b.id)?'checked':'')+' aria-label="'+esc(b.date+' · '+(b.positionName||b.positionId)+' auswählen')+'">Auswählen</label>':'')+bookingRowMarkup(b,model)+'</div>').join('')+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
    empty('Keine Buchungen zu diesem Filter gefunden.')):
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Neue Buchungen und CSV-Importe erscheinen hier.</p></div>';
+}
+function bookingWritable(){return !busy&&!saving&&!loadFailure&&!otherTabChangedPortfolio;}
+function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand nicht schreibbar. Abruf abwarten oder neu laden.');}
+function renderBookingManagement(){
+ const root=$('bookingManagementTools'),rows=bookingHistoryRows(model);
+ if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){root.innerHTML='';return;}
+ const button=(action,label,disabled=false)=>'<button type="button" class="btn outline" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
+ if(!bookingSelecting)root.innerHTML=button('select','Auswählen',!rows.length);
+ else{
+  const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;
+  root.innerHTML='<div class="settings-actions">'+button('filtered','Gefilterte auswählen ('+bookingMatchingIds.length+')',!bookingMatchingIds.length)+button('all','Alle Buchungen auswählen ('+rows.length+')')+button('clear','Auswahl aufheben')+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+summary.hiddenCount+' ausgeblendet'+(summary.requiresRefresh?' · Auswahl veraltet':'')+'</p><div class="settings-actions">'+button('notes','Notiz korrigieren',blocked||summary.currentCount!==1)+button('edit','Betrag / Datum korrigieren',blocked||summary.currentCount!==1)+button('remove','Rücknahme prüfen',blocked)+'</div>';
+ }
+ if(canUndoBookingChange(model,bookingChangeReceipt))root.innerHTML+='<div class="settings-actions">'+button('undo','Letzte Buchungsänderung rückgängig',!bookingWritable())+'</div>';
+ const logs=model.journalEntries.filter(e=>e.type==='booking-management-audit'&&e.managementAudit);
+ if(logs.length)root.innerHTML+='<details class="performance-details"><summary><span>Änderungsnachweise ('+logs.length+')</span></summary><div class="performance-details-body">'+logs.slice(-20).reverse().map(e=>'<p>'+esc(e.date+' · '+e.managementAudit.action+' · '+e.managementAudit.reason)+' · '+esc(e.managementAudit.originals.map(x=>x.booking.id).join(', '))+'</p>').join('')+'</div></details>';
+}
+function openBookingChange(action){
+ assertBookingWritable();
+ const ids=[...selectedBookingIds],expectedModel=JSON.stringify(model),b=model.bookings.find(b=>b.id===ids[0]);
+ if(!ids.length)throw Error('Zuerst Buchungen auswählen.');
+ if(action!=='remove'&&(!b||ids.length!==1))throw Error('Genau eine vorhandene Buchung auswählen.');
+ const opener=document.activeElement;
+ showDialog('Buchungsänderung vorbereiten','BUCHUNGEN',
+  '<p>'+ids.length+' ausgewählt. Die Vorschau prüft Herkunft, Referenzen und Auswirkungen vor dem Speichern.</p>'+field('Belegreferenz oder Begründung','reason','','text','required maxlength="180"')+
+  (action==='edit'?field('Betrag in EUR','quantity',b.quantityExact,'text','required inputmode="decimal"')+field('Buchungsdatum','date',b.date,'date','required'):'')+
+  (action!=='remove'?field('Notiz','notes',b.notes||'','text','maxlength="180"'):''),async values=>{
+   assertBookingWritable();if(expectedModel!==JSON.stringify(model))throw Error('Datenstand geändert. Vorschau neu beginnen.');
+   const request={ids,action,reason:values.reason,changes:action==='remove'?undefined:action==='notes'?{notes:values.notes}:{quantity:values.quantity,date:values.date,notes:values.notes}};
+   const preview=previewBookingChange(model,request),summary=bookingSelectionSummary(model,ids,bookingMatchingIds);
+   const effects=preview.effects.map(x=>'<li>'+esc((model.positions.find(p=>p.id===x.positionId)?.name||x.positionId)+' · '+(model.accounts.find(a=>a.id===x.accountId)?.name||x.accountId)+' · '+x.beforeQuantityExact+' → '+x.afterQuantityExact+' '+x.currency)+'<br>'+esc('Änderung: '+x.deltaExact+' · Einstand: '+(x.beforeCostBasisExact??'unbekannt')+' → '+(x.afterCostBasisExact??'unbekannt'))+'<br>'+esc('Gebühren: '+x.feeEUR+' → '+x.afterFeeEUR+' EUR · Steuern: '+x.taxEUR+' → '+x.afterTaxEUR+' EUR')+'<br>'+esc('Externe Geldflüsse: '+x.beforeFlows.map(f=>f.amountExactEUR).join(', ')+' → '+x.afterFlows.map(f=>f.amountExactEUR).join(', '))+'<br>'+esc(x.history)+'</li>').join('');
+   showDialog('Buchungsänderung prüfen','VORSCHAU',
+    '<p>'+ids.length+' ausgewählt · '+summary.hiddenCount+' außerhalb des aktuellen Filters.</p>'+
+    (preview.ready?'<p>Gesamtvermögen: '+esc(preview.beforeTotalEURExact)+' → '+esc(preview.afterTotalEURExact)+' EUR. Historische Renditen werden aus den vorhandenen Belegen neu berechnet; fehlende Werte bleiben unbekannt.</p><ul>'+effects+'</ul><p>Originalbelege bleiben im Änderungsnachweis erhalten. Undo ist in dieser Sitzung bis zur nächsten Portfolioänderung möglich; danach Backup verwenden.</p><label class="selection-check"><input type="checkbox" name="confirmBookingChange" required>Ich bestätige genau diese Änderungen.</label>':'<p>Änderung gesperrt:</p><ul>'+preview.blocks.map(x=>'<li>'+esc(x.id+' · '+x.reason)+'</li>').join('')+'</ul>'),async consent=>{
+     if(!preview.ready)throw Error('Diese Änderung ist gesperrt.');
+     assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
+     const {candidate,receipt}=prepareBookingChange(model,request,{expectedModel,confirmed:consent.confirmBookingChange==='on'});
+     model=candidate;await save();bookingChangeReceipt=receipt;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung gespeichert.');
+    },{readOnly:!preview.ready});
+   dialogOpener=opener;$('saveDialog').hidden=!preview.ready;return false;
+  });$('saveDialog').textContent='Auswirkungen prüfen';
+}
+function openBookingUndo(){
+ assertBookingWritable();const expected=JSON.stringify(model),receipt=bookingChangeReceipt;
+ if(!canUndoBookingChange(model,receipt))throw Error('Undo nicht mehr verfügbar.');
+ showDialog('Buchungsänderung rückgängig machen','BUCHUNGEN','<p>Den exakten Portfoliozustand vor der letzten Buchungsänderung wiederherstellen?</p><label class="selection-check"><input type="checkbox" name="confirmUndo" required>Wiederherstellung bestätigen.</label>',async v=>{
+  if(v.confirmUndo!=='on')throw Error('Bestätigung fehlt.');assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();if(JSON.stringify(model)!==expected)throw Error('Datenstand geändert.');
+  model=prepareBookingUndo(model,receipt);await save();bookingChangeReceipt=null;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung rückgängig gemacht.');
+ });
 }
 function renderSettings(){
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
@@ -583,6 +634,7 @@ function showDialog(title,kicker,html,onSave,{readOnly=false}={}){
  $('dialogFields').innerHTML=html;
  $('dialogError').textContent='';
  $('dialogError').classList.add('hidden');
+ $('saveDialog').hidden=false;
  $('saveDialog').textContent=readOnly?'Prüfen':dialogSaveLabel(title);
  $('cancelDialog').textContent=readOnly?'Schließen':'Abbrechen';
  $('editDialog').classList.remove('position-removal-dialog');
@@ -1731,6 +1783,19 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
+ $('bookingList').addEventListener('change',e=>{const input=e.target.closest('[data-booking-select]');if(!input||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'toggle',id:input.dataset.bookingSelect});renderBookingManagement();}catch(error){notify(error.message,true);}});
+ $('bookingManagementTools').addEventListener('click',e=>{const b=e.target.closest('[data-booking-manage]');if(!b)return;try{
+  const action=b.dataset.bookingManage;
+  if(action==='undo'){openBookingUndo();return;}
+  if(['notes','edit','remove'].includes(action)){openBookingChange(action);return;}
+  if(action==='select')bookingSelecting=true;
+  if(action==='cancel'){bookingSelecting=false;selectedBookingIds=[];}
+  if(action==='clear')selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'clear'});
+  if(action==='filtered')selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'filtered',matchingIds:bookingMatchingIds});
+  if(action==='all'&&confirm('Ausdrücklich alle Buchungen auswählen, einschließlich ausgeblendeter Vorgänge?'))selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'all',confirmed:true});
+  renderBookings();$('bookingManagementTools').querySelector('button')?.focus();
+ }catch(error){notify(error.message,true);}});
+
  window.addEventListener('resize',fitPositionSelectionMenu);
  window.addEventListener('scroll',fitPositionSelectionMenu,{passive:true});
  $('positionSelectionTools').addEventListener('change',event=>{

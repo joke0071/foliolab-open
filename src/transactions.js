@@ -65,6 +65,20 @@ export function validateJournalEntry(entry){
   return n+units(p.amountBookEURExact);
  },zero);
  if(sum!==zero)throw Error('Buchungssätze sind nicht ausgeglichen.');
+ if(entry.type==='booking-management-audit'){
+  const a=entry.managementAudit;
+  if(entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
+   !a||a.version!==1||!['notes','edit','remove'].includes(a.action)||typeof a.reason!=='string'||!a.reason.trim()||a.reason.length>180||!Array.isArray(a.originals)||a.originals.length<1||a.originals.length>200||!Array.isArray(a.afterBookings)||a.afterBookings.length!==a.originals.length||JSON.stringify(a).length>512000)
+    throw Error('Ungültiger Buchungsänderungsnachweis.');
+  const auditIds=new Set();
+  for(let i=0;i<a.originals.length;i++){
+   const o=a.originals[i],b=o?.booking,j=o?.journal,after=a.afterBookings[i];
+   if(!b?.id||auditIds.has(b.id)||j?.source!=='manual'||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
+    (a.action==='remove'?after!==null:!after||after.id!==b.id))throw Error('Unvollständiger Buchungsänderungsnachweis.');
+   auditIds.add(b.id);validateJournalEntry(j);
+  }
+ }
+
  return entry;
 }
 /** Compare recorded holdings to opening balance plus chronological, exact journal movements. */
