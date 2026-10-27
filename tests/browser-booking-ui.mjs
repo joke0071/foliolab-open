@@ -32,6 +32,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
    await page.setViewportSize({width,height:900});await page.locator('#bookingManagementTools').scrollIntoViewIfNeeded();
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    assert.equal(await page.locator('#bookingManagementTools>.settings-actions').evaluate(el=>getComputedStyle(el).display),width<=700?'grid':'flex');
+   assert.ok(await page.locator('#bookingSelectFiltered').evaluate(input=>{const label=input.closest('label'),r=label.getBoundingClientRect(),s=label.querySelector('span').getBoundingClientRect();return s.top>=r.top-1&&s.bottom<=r.bottom+1&&s.left>=r.left-1&&s.right<=r.right+1;}),'wrapped selection scope stays inside its touch target');
    for(const box of await page.locator('.booking-row-tools .row-btn').evaluateAll(buttons=>buttons.map(b=>({width:b.getBoundingClientRect().width,height:b.getBoundingClientRect().height}))))assert.ok(box.width>=44&&box.height>=44,'44px direct icons');
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#bookingsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
    mkdirSync('artifacts/gates/booking-ui',{recursive:true});await page.screenshot({path:'artifacts/gates/booking-ui/'+engine+'-'+width+'.png'});
