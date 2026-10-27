@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "date": "2026-10-27",
-  "status": "AUTOMATED_PASSED_PENDING_VISUAL",
+  "status": "REVIEWED_PENDING_COMBINED_MAIN_GATES",
   "pr": "https://github.com/joke0071/foliolab-open/pull/175",
   "head": "dd6ec31bf7687b833442f247d150130f1ac5f8b3",
   "tree": "2802cc931fa6bd10344a693b923f3107e94f55a7",
@@ -93,8 +93,8 @@
     "currentMainUnchanged": true
   },
   "visual": {
-    "status": "BLOCKED_ENVIRONMENT_UNAVAILABLE",
-    "finalCandidateImagesViewed": false,
+    "status": "PASS",
+    "finalCandidateImagesViewed": true,
     "previous320And1440ImagesViewed": true,
     "previousVisualFinding": "Earlier narrow mobile text column corrected; final new images still require actual inspection",
     "requiredWidths": [
@@ -106,16 +106,26 @@
     "closedArrowWidths": [
       320,
       1440
+    ],
+    "reviewedScopes": [
+      "Chromium320/390/430/1440",
+      "ChromiumClosed320",
+      "Firefox320",
+      "WebKit320/1440"
     ]
   },
   "limitations": [
-    "No usable local execution environment is available; no new local browser/image claim",
     "PR remains draft and unmerged; no v189 live acceptance",
     "Real hardware/OAuth/provider original and full account boundary reconciliation gates remain separate"
   ],
-  "nextAction": "Restore execution environment; inspect final current candidate open/closed screenshots, finish visual acceptance without repeating unchanged passed tests. Then decide release for this read-only scope and execute actual main/Pages/live/targeted three-engine production acceptance before any v189 DONE claim.",
+  "nextAction": "After main CI/Pages/live40563994432 passes, run unchanged account application against integrated CI baseline, then release and perform actual targeted three-engine account live acceptance.",
   "allPredecessorPackagesComplete": false,
   "FLH05A": "DEFERRED",
   "specificationBlob": "953f816c648ebabec42476be80cd0bf481fe6a2e",
-  "requiredFLH05VectorsPreserved": 12
+  "requiredFLH05VectorsPreserved": 12,
+  "integrationAfterCI": {
+    "main": "433ab1585e475b8560694959b210b40a250f2cb6",
+    "combinedGatesPending": true,
+    "expectedUnitCount": 743
+  }
 }

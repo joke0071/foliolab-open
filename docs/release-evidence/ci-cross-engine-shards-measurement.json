@@ -1,0 +1,239 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "status": "MERGED_MAIN_LIVE_PENDING",
+  "pr": 176,
+  "head": "c5a760d01053bccf2d07f49bcc0dff6e2b06a2ec",
+  "base": "ca1fa8fd46b3060d10a13095400bc3d33b0f3c42",
+  "testedMerge": "7af5155fc7a9c8f68a5fca997e4adf1ed73f1d7d",
+  "spanSeconds": 391,
+  "savedSeconds": 276,
+  "savedPercent": 41.37931034482759,
+  "runnerSeconds": 1102,
+  "runnerDelta": 39,
+  "jobs": [
+    {
+      "name": "test",
+      "id": 122395281820,
+      "seconds": 391,
+      "startedAt": "2026-10-27T18:43:22Z",
+      "completedAt": "2026-10-27T18:49:53Z",
+      "phases": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Require a service-worker cache revision for shipped asset changes",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify standalone application",
+          "seconds": 23,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install browser test tools",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Browser smoke tests (320–1440 px)",
+          "seconds": 350,
+          "conclusion": "success"
+        },
+        {
+          "name": "Expose bounded synthetic C5 PR review",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve test evidence",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve representative dialog screenshots",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "cross-engine (1)",
+      "id": 122395282298,
+      "seconds": 355,
+      "startedAt": "2026-10-27T18:43:23Z",
+      "completedAt": "2026-10-27T18:49:18Z",
+      "phases": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "seconds": 49,
+          "conclusion": "success"
+        },
+        {
+          "name": "Test portfolio workflows on Firefox and WebKit",
+          "seconds": 298,
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve cross-engine evidence",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "cross-engine (2)",
+      "id": 122395282307,
+      "seconds": 356,
+      "startedAt": "2026-10-27T18:43:22Z",
+      "completedAt": "2026-10-27T18:49:18Z",
+      "phases": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "seconds": 103,
+          "conclusion": "success"
+        },
+        {
+          "name": "Test portfolio workflows on Firefox and WebKit",
+          "seconds": 246,
+          "conclusion": "success"
+        },
+        {
+          "name": "Preserve cross-engine evidence",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "tree": "95a779e21d6c33a99bf554af79cf30bd4d18ebf5",
+  "merge": "433ab1585e475b8560694959b210b40a250f2cb6",
+  "baseline": {
+    "app": "v188",
+    "commit": "ca1fa8fd46b3060d10a13095400bc3d33b0f3c42",
+    "run": 40534397532,
+    "requiredSpanSeconds": 667,
+    "testJobSeconds": 397,
+    "crossJobSeconds": 666,
+    "runnerSeconds": 1063
+  },
+  "candidate": {
+    "run": 40562584805,
+    "walletRun": 40562585201,
+    "unitTests": 737,
+    "fail": 0,
+    "skip": 0,
+    "requiredSpanSeconds": 391,
+    "crossShardsSeconds": [
+      355,
+      356
+    ],
+    "runnerSeconds": 1102
+  },
+  "saving": {
+    "seconds": 276,
+    "minutes": 4.6,
+    "percent": 41.37931034482759,
+    "runnerSecondsIncrease": 39,
+    "runnerPercentIncrease": 3.6688617121354654
+  },
+  "preserved": {
+    "crossCommands": 30,
+    "allAssertionsAndSnapshots": true,
+    "outsideCrossWorkflowByteIdentical": true,
+    "permissionsTriggersPinsDeployLiveUnchanged": true,
+    "applicationAssetsUnchanged": true
+  },
+  "mainRun": 40563994432,
+  "caveat": "Single observed matched-application pair; queue and runner variance not controlled; duplicated setup increases runner seconds; no install-time saving claimed",
+  "separateReleaseDecision": "Approved bounded CI scheduling change after full gates, scope review, identical tested tree and measured gain; no new financial/storage/backup/sync authorization"
+}
