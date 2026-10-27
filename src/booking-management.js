@@ -45,7 +45,7 @@ export function reviewBookingSelection(model,selectedIds,matchingIds){
 
 // Mutations are limited to provable EUR cash business events. The existing
 // transaction engine validates replacements; no historical price is inferred.
-import {executeTransaction,validateJournalEntry} from './transactions.js';
+import {executeTransaction,validateJournalEntry,nextJournalSequence} from './transactions.js';
 import {units,exact} from './decimal.js';
 import {safeImport,totalExactEUR} from './model.js';
 import {sourceDigest} from './import-identity.js';
@@ -65,6 +65,7 @@ function eligibility(model,b,action){
  if(b.transferMatch||b.targetPositionId||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
  if(model.bookings.filter(x=>x.journalEntryId===e.id).length!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
+ if(p.representedByPositionId||(p.economicRole&&p.economicRole!=='standard')||(p.valuationMode&&p.valuationMode!=='included'))reasons.push('Wirtschaftlich zugeordnete Position: gemeinsame Auswirkungen ungeklärt.');
  if(action==='notes')return reasons;
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
  if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für belegte manuelle EUR-Geldbuchungen.');
@@ -128,7 +129,7 @@ export function previewBookingChange(model,request){
  // reviewable after complete business-event removal, including backup/restore.
  const auditId=globalThis.crypto.randomUUID();
  const dates=[...model.journalEntries.map(e=>e.date),...candidate.journalEntries.map(e=>e.date)].sort();
- candidate.journalEntries.push({id:auditId,type:'booking-management-audit',date:dates.at(-1),recordedAt:new Date().toISOString(),sequence:Math.max(0,...candidate.journalEntries.map(e=>e.sequence||0))+1,source:'management-audit',postings:[{id:globalThis.crypto.randomUUID(),role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],managementAudit:{version:1,action,reason,originals,afterBookings}});
+ candidate.journalEntries.push({id:auditId,type:'booking-management-audit',date:dates.at(-1),recordedAt:new Date().toISOString(),sequence:nextJournalSequence(candidate),source:'management-audit',postings:[{id:globalThis.crypto.randomUUID(),role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],managementAudit:{version:1,action,reason,originals,afterBookings}});
  safeImport(clone(candidate));
  result.effects=[...new Set(selected.map(b=>b.positionId))].map(positionId=>{
   const before=model.positions.find(p=>p.id===positionId),after=candidate.positions.find(p=>p.id===positionId),group=selected.filter(b=>b.positionId===positionId),groupIds=group.map(b=>b.id),afterGroup=candidate.bookings.filter(b=>groupIds.includes(b.id));

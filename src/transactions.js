@@ -45,6 +45,12 @@ const checkTarget=(m,p,id)=>{const t=pos(m,id);if(t.id===p.id)throw Error('Ziel 
 /** @typedef {{id:string,type:string,date:string,recordedAt:string,sequence:number,postings:Posting[],cashPositionId:string|null,status:string}} JournalEntry */
 const id=()=>globalThis.crypto?.randomUUID?.()||'j-'+Date.now()+'-'+Math.random().toString(36).slice(2);
 const zero=0n;
+/** Keep new sequence identities monotonic after a guarded business-event removal. */
+export function nextJournalSequence(model){
+ const sequences=(model.journalEntries||[]).map(e=>e.sequence??0);
+ if(sequences.some(n=>!Number.isSafeInteger(n)||n<0))throw Error('Journalreihenfolge ist nicht prüfbar.');
+ const next=Math.max(0,...sequences)+1;if(!Number.isSafeInteger(next))throw Error('Journalreihenfolge überschreitet das Prüflimit.');return next;
+}
 /** Preserve an explicit, undated opening baseline; never reconstruct invented historical trades. */
 export function captureOpenings(model){
  model.openingPositions??=[];
@@ -67,7 +73,7 @@ export function validateJournalEntry(entry){
  if(sum!==zero)throw Error('Buchungssätze sind nicht ausgeglichen.');
  if(entry.type==='booking-management-audit'){
   const a=entry.managementAudit;
-  if(entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
+  if(!Number.isSafeInteger(entry.sequence)||entry.sequence<1||entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
    !a||a.version!==1||!['notes','edit','remove'].includes(a.action)||typeof a.reason!=='string'||!a.reason.trim()||a.reason.length>180||!Array.isArray(a.originals)||a.originals.length<1||a.originals.length>200||!Array.isArray(a.afterBookings)||a.afterBookings.length!==a.originals.length||JSON.stringify(a).length>512000)
     throw Error('Ungültiger Buchungsänderungsnachweis.');
   const auditIds=new Set();
@@ -135,7 +141,7 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
    post('nonmonetary',zero,p,q(p)-previousQuantity);
  }
  const entry={id:v.id??id(),type:kind,date:v.date,recordedAt:new Date().toISOString(),
-  sequence:(copy.journalEntries?.length||0)+1,postings,
+  sequence:nextJournalSequence(copy),postings,
   cashPositionId:linkedCash?.id||null,
   status:['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
   source:'manual'};
