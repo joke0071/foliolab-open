@@ -1007,9 +1007,9 @@
 /* FLH01: keep long evidence out of the compact transaction row. */
 .history-row.booking-compact{display:block;min-width:0}
 .booking-main{display:grid;grid-template-columns:7em minmax(0,2fr) minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.2fr);gap:10px;align-items:start;width:100%;font-size:12px}
-.booking-main>*{min-width:0;overflow-wrap:anywhere}.booking-main>strong:last-child{text-align:right}
+.booking-main>*{min-width:0;overflow-wrap:anywhere}.booking-main>strong:last-of-type{text-align:right}
 .booking-meta{margin-top:8px;font-size:12px}.booking-meta summary{cursor:pointer;min-height:28px;display:list-item}.booking-meta dd{overflow-wrap:anywhere}
-@media(max-width:767px){.booking-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-main>time{grid-column:1}.booking-main>strong:last-child{text-align:left;grid-column:1/-1}}
+@media(max-width:767px){.booking-main{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-main>time{grid-column:1}.booking-main>strong:last-of-type{text-align:left;grid-column:1/-1}}
 
 .transfer-candidate{align-items:flex-start;margin:12px 0;min-height:32px}.transfer-candidate span{min-width:0;overflow-wrap:anywhere}.transfer-candidate input{flex-shrink:0}.transfer-candidate + .transfer-candidate{border-top:1px solid #e8efe8;padding-top:12px}
 
@@ -1168,3 +1168,6 @@
 .booking-filter-tools{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr)}
 @media(max-width:767px){.booking-filter-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.booking-filter-tools>.field:first-child{grid-column:1/-1}}
 @media(max-width:700px){#positionSelectionTools,#bookingManagementTools>.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Keep booking text readable beside the desktop sidebar at intermediate widths. */
+@media(min-width:768px) and (max-width:1000px){.booking-management-row .booking-main{grid-template-columns:repeat(2,minmax(0,1fr))}.booking-management-row .booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-management-row .booking-main>time{grid-column:1}.booking-management-row .booking-main>strong:last-of-type{text-align:left;grid-column:1/-1}}
