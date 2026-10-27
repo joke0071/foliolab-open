@@ -1,3 +1,7 @@
+# Aktuelle erfolgreiche PR179-Messung · nur lesend
+
+Finaler Lauf40594291174: test441s (Browser401s, Installation6s, Units/Syntax26s), Cross1 402s (Tests344s, Installation51s), Cross2 368s (Tests308s, Installation52s). Pflichtprüfungen vollständig grün, keine CI-Implementierung oder Leistungsverbesserung behauptet. Unterschiedliche Testumfänge und Runnerstreuung erlauben keinen Optimierungsvergleich gegen PR178/PR176. Bestehende Entscheidung bleibt: kleine Zwischenoptimierung DEFERRED, vollständiges abschließendes Paket OPEN; aktiver UI-Abschluss wird nicht verlängert.
+
 # Sichere CI-Zwischenoptimierung · nur lesend · 27.10.2026
 
 Status: **DONE Laufzeitsichtung / DEFERRED Implementierung.** Niedrige Priorität gegenüber PR179. Keine Workflow-/Branch-Protection-/Cacheänderung, kein neuer PR/Entwicklungsstrang, kein Run abgebrochen, neugestartet oder ausschließlich zur Messung ausgelöst. Die abschließende vollständige CI-/Performanceoptimierung bleibt offen.

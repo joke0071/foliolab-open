@@ -1,0 +1,320 @@
+{
+  "status": "RELEASE_READY_APPROVAL_REQUIRED",
+  "production": {
+    "version": 190,
+    "main": "7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5",
+    "unchanged": true
+  },
+  "candidate": {
+    "serviceWorker": 191,
+    "published": false,
+    "pr": 179,
+    "branch": "feature/booking-management-ui",
+    "head": "d085e58624f2f1522bf851ef3d6de8c7b5962b95",
+    "tree": "2dc0b34b2bc0e3398b324c69af5a12e4241cdc53",
+    "testedMerge": "aed34f2af6f467e64f1c5e236429a508c1513557",
+    "mergeTreeMatchesSource": true
+  },
+  "checks": {
+    "run": 40594291174,
+    "conclusion": "success",
+    "walletRun": 40594291315,
+    "walletConclusion": "success",
+    "unitTests": 766,
+    "unitFailures": 0,
+    "unitSkips": 0,
+    "syntax": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "newAxeScans": 30,
+    "fixtureHistoryRows": 249,
+    "mandatoryJobs": [
+      122506135919,
+      122506136002,
+      122506136072
+    ],
+    "scenarios": [
+      "direct row actions without selection",
+      "shared page/all/clear cycle; filter/pagination/individual selections",
+      "44px controls and actual text containment",
+      "unsupported economic changes blocked; no partial mixed deletion",
+      "unchanged finance/journal/cashflows/history/originals on archive",
+      "quota failure; cancellation; direct actions usable again",
+      "actual post-put transaction abort",
+      "offline commit/reload",
+      "exact session undo",
+      "same-source repeat import duplicates without reactivation",
+      "current encrypted V2 complete restore in a fresh context",
+      "competing-tab stale-preview rejection"
+    ]
+  },
+  "artifacts": [
+    {
+      "id": 12776135746,
+      "name": "cross-engine-gates-aed34f2af6f467e64f1c5e236429a508c1513557-1",
+      "digest": "sha256:21d37e1ca5078c49bfa69839a5454241a5f6110d8e0dc0ea443d2a2eeac5f8b2"
+    },
+    {
+      "id": 12775737375,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:316fe1f75c8d92249e56be8a2ef46a361f29ad40da2a605c69131b8b1c327c46"
+    },
+    {
+      "id": 12775248904,
+      "name": "cross-engine-gates-aed34f2af6f467e64f1c5e236429a508c1513557-2",
+      "digest": "sha256:75ab22380a5cf4957f25cc660ddf8bebd0a8deea6a299720d630fee910864710"
+    },
+    {
+      "id": 12775114109,
+      "name": "release-gates-aed34f2af6f467e64f1c5e236429a508c1513557",
+      "digest": "sha256:7ae6e8807cfa8c705210434eeb3b35abbb6b5c289a193a65504669adc15f883d"
+    }
+  ],
+  "visual": {
+    "status": "PASS",
+    "priorSameCSSRun": 40593139062,
+    "priorSelectedImagesViewed": 18,
+    "finalSelectedImagesViewed": 4,
+    "finalFiles": [
+      "webkit-320.png",
+      "webkit-edit-320.png",
+      "firefox-edit-320.png",
+      "chromium-1440.png"
+    ],
+    "zipDigestsVerified": true,
+    "realAndroidOrSafariHardwareClaimed": false
+  },
+  "compatibility": {
+    "portableModelVersion": 4,
+    "optIn": "first explicitly confirmed archive",
+    "root": "bookingPresentation",
+    "metadataVersion": 1,
+    "field": "archivedIds",
+    "financialProjectionUnfiltered": true,
+    "startupMigration": false,
+    "indexedDBSchemaChange": false,
+    "oldReaderBehavior": "reject unsupported model version before dropping metadata",
+    "existingFormats": [
+      1,
+      2,
+      3
+    ],
+    "undo": "existing bounded booking-change session receipt; archive visibility independently reversible"
+  },
+  "releaseGate": {
+    "required": true,
+    "reason": "separate concrete approval for the new storage/backup model contract, per master instruction",
+    "mergeAuthorized": false,
+    "deploymentAuthorized": false
+  },
+  "queuedSlimSelectionUI": {
+    "status": "OPEN_DOCUMENTED_ONLY",
+    "codeOrExtraRunsForAddendum": false,
+    "normalState": "subtle Mehrfachauswahl in list header; no standalone Auswählen, checkboxes or bulk actions",
+    "implementationCheckpoint": "next regular conflict-free UI checkpoint after active package"
+  },
+  "ciInterim": {
+    "readOnly": "DONE",
+    "implementation": "DEFERRED",
+    "workflowChanges": false,
+    "requiredCoverageUnchanged": true,
+    "jobTimings": [
+      {
+        "id": 122506135919,
+        "name": "test",
+        "status": "success",
+        "seconds": 441,
+        "steps": [
+          {
+            "name": "Set up job",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a service-worker cache revision for shipped asset changes",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify standalone application",
+            "seconds": 26,
+            "conclusion": "success"
+          },
+          {
+            "name": "Install browser test tools",
+            "seconds": 6,
+            "conclusion": "success"
+          },
+          {
+            "name": "Browser smoke tests (320–1440 px)",
+            "seconds": 401,
+            "conclusion": "success"
+          },
+          {
+            "name": "Expose bounded synthetic C5 PR review",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve test evidence",
+            "seconds": 2,
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve representative dialog screenshots",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "seconds": 1,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 122506136002,
+        "name": "cross-engine (2)",
+        "status": "success",
+        "seconds": 368,
+        "steps": [
+          {
+            "name": "Set up job",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Firefox and WebKit for cross-engine regression",
+            "seconds": 52,
+            "conclusion": "success"
+          },
+          {
+            "name": "Test portfolio workflows on Firefox and WebKit",
+            "seconds": 308,
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve cross-engine evidence",
+            "seconds": 2,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "seconds": 0,
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "id": 122506136072,
+        "name": "cross-engine (1)",
+        "status": "success",
+        "seconds": 402,
+        "steps": [
+          {
+            "name": "Set up job",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "seconds": 1,
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Firefox and WebKit for cross-engine regression",
+            "seconds": 51,
+            "conclusion": "success"
+          },
+          {
+            "name": "Test portfolio workflows on Firefox and WebKit",
+            "seconds": 344,
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve cross-engine evidence",
+            "seconds": 2,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "seconds": 0,
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "seconds": 0,
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "performanceGainClaimed": false
+  },
+  "scopeLimits": [
+    "existing proven manual notes and manual EUR cash changes only",
+    "broader source interpretation, field editing, compatible bulk editing and economic exclusion remain OPEN",
+    "master predecessors remain PARTIAL; FLH05-A/PERF01 not started"
+  ],
+  "preservedFLH05SpecificationBlob": "953f816c648ebabec42476be80cd0bf481fe6a2e"
+}
