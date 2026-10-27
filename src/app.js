@@ -615,7 +615,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionSelectionTools').querySelector('button')||$('addWizard')).focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionSelectionTools').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='bookings')($('bookingManagementTools').querySelector('button')||$('addBooking')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
