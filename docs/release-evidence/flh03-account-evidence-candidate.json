@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "status": "AUTOMATED_PASSED_PENDING_VISUAL",
+  "pr": "https://github.com/joke0071/foliolab-open/pull/175",
+  "head": "dd6ec31bf7687b833442f247d150130f1ac5f8b3",
+  "tree": "2802cc931fa6bd10344a693b923f3107e94f55a7",
+  "testedMerge": "69071b3d81f5d8e5e922f0f21036ccf76404327a",
+  "testedMergeTreeIdentical": true,
+  "main": "ca1fa8fd46b3060d10a13095400bc3d33b0f3c42",
+  "productionVersion": 188,
+  "candidateServiceWorkerVersion": 189,
+  "merged": false,
+  "deployed": false,
+  "scope": "FLH03-16/07 read-only account evidence, existing position/transfer actions; no financial/storage/backup/workflow contract changes",
+  "unit": {
+    "tests": 741,
+    "passed": 741,
+    "failed": 0,
+    "skipped": 0
+  },
+  "runs": [
+    {
+      "id": 40558301991,
+      "name": "Wallet scan checks",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 497,
+      "jobs_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/runs/40558301991/jobs",
+      "logs_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/runs/40558301991/logs",
+      "workflow_id": 393302353
+    },
+    {
+      "id": 40558301803,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 821,
+      "jobs_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/runs/40558301803/jobs",
+      "logs_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/runs/40558301803/logs",
+      "workflow_id": 391740654
+    }
+  ],
+  "jobs": {
+    "chromium": 122380181903,
+    "crossEngine": 122380182728
+  },
+  "quality": {
+    "chromium": "PASS: account evidence, open/closed arrows, keyboard, drilldown, five widths/Axe/touch/zero writes; actual final job log",
+    "crossEngineLogLines": [
+      "2026-10-27T18:18:21.3454347Z UI07 firefox: 66 actual scans, 0 findings, 6 widths, native dialog keyboard/focus, reduced motion, 200% CSS zoom",
+      "2026-10-27T18:19:11.9094422Z UI07 webkit: 66 actual scans, 0 findings, 6 widths, native dialog keyboard/focus, reduced motion, 200% CSS zoom",
+      "2026-10-27T18:19:21.8290500Z QUALITY firefox: per-position dedupe, category/account/reset, 5 widths/Axe/history action/focus, account evidence/open+closed arrows/keyboard/drilldown, no writes, repair disappearance PASS",
+      "2026-10-27T18:19:29.0383173Z QUALITY webkit: per-position dedupe, category/account/reset, 5 widths/Axe/history action/focus, account evidence/open+closed arrows/keyboard/drilldown, no writes, repair disappearance PASS"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "strictMinimumTouchPixels": 44,
+    "controlCSSMinimum": 48
+  },
+  "artifacts": [
+    {
+      "id": 12760565977,
+      "name": "cross-engine-gates-69071b3d81f5d8e5e922f0f21036ccf76404327a",
+      "digest": "sha256:96af7303374c2bcb7bdeb8ef1f0b4d722d646dcf6ea5edc03a35cea76b2b51c3",
+      "size": 11637571
+    },
+    {
+      "id": 12759190408,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:f520336d3d50694a3a6cceafacbaa9c9c46c55381790eead58ba7ade4eb7a210",
+      "size": 947635
+    },
+    {
+      "id": 12759145457,
+      "name": "release-gates-69071b3d81f5d8e5e922f0f21036ccf76404327a",
+      "digest": "sha256:87be54849a6ba91469084aa07959cff01ab43997cf73eba9163660098cd4c80b",
+      "size": 7919067
+    }
+  ],
+  "sourceReview": {
+    "expectedChangedFiles": 9,
+    "noUnexpectedFiles": true,
+    "canonicalFinancialStorageBackupFilesUnchanged": true,
+    "htmlEscaping": true,
+    "namespaceAndArchiveSeparation": true,
+    "existingTransferEngineReused": true,
+    "currentMainUnchanged": true
+  },
+  "visual": {
+    "status": "BLOCKED_ENVIRONMENT_UNAVAILABLE",
+    "finalCandidateImagesViewed": false,
+    "previous320And1440ImagesViewed": true,
+    "previousVisualFinding": "Earlier narrow mobile text column corrected; final new images still require actual inspection",
+    "requiredWidths": [
+      320,
+      390,
+      430,
+      1440
+    ],
+    "closedArrowWidths": [
+      320,
+      1440
+    ]
+  },
+  "limitations": [
+    "No usable local execution environment is available; no new local browser/image claim",
+    "PR remains draft and unmerged; no v189 live acceptance",
+    "Real hardware/OAuth/provider original and full account boundary reconciliation gates remain separate"
+  ],
+  "nextAction": "Restore execution environment; inspect final current candidate open/closed screenshots, finish visual acceptance without repeating unchanged passed tests. Then decide release for this read-only scope and execute actual main/Pages/live/targeted three-engine production acceptance before any v189 DONE claim.",
+  "allPredecessorPackagesComplete": false,
+  "FLH05A": "DEFERRED",
+  "specificationBlob": "953f816c648ebabec42476be80cd0bf481fe6a2e",
+  "requiredFLH05VectorsPreserved": 12
+}
