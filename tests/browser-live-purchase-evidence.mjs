@@ -1,3 +1,4 @@
+import {clickDisclosed} from './browser-disclosures.mjs';
 import {readFile} from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import assert from 'node:assert/strict';
@@ -19,7 +20,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   });
   const read=()=>page.evaluate(async()=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',location.href).href);return await new PortfolioStorage().initialize();});
   const original=await read();
-  await page.goto(base+'?page=positions');await page.locator('[data-action="wallet-history"][data-id="btc"]').click();
+  await page.goto(base+'?page=positions');await clickDisclosed(page.locator('[data-action="wallet-history"][data-id="btc"]'));
   const d=page.locator('#walletHistoryDialog');await d.locator('[data-history="start"]').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('[data-history="start"]').disabled);
   const disclosure=d.locator('details').filter({has:page.locator('[data-evidence="file"]')});assert.equal(await disclosure.evaluate(e=>e.open),false);await disclosure.locator('summary').first().click();
   const tx='a'.repeat(64),csv='Currency,Fiat Amount,Bittr Fee,Bitcoin Purchased,Mining Fee,Bitcoin Amount,Bitcoin Transaction ID,Timestamp,IBAN,From\nEUR,500.00,9.00,0.01250000,0.00010000,0.01240000,'+tx+',2025-01-01 12:00:00Z,PRIVATE-IBAN,<img src=x onerror=alert(1)>';
@@ -30,7 +31,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   const linked=await read();assert.equal(linked.purchaseEvidence.receipts.length,1);assert.equal(linked.purchaseEvidence.decisions.length,1);const {purchaseEvidence,...finance}=linked;assert.deepEqual(finance,original);
   for(const width of [320,390,430,768,1024,1440]){await page.setViewportSize({width,height:900});assert.equal(await d.evaluate(e=>e.scrollWidth>e.clientWidth+1),false,'dialog overflow '+width);}
   assert.deepEqual(await page.evaluate(async()=> (await axe.run(document.getElementById('walletHistoryDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);
-  await d.locator('[data-history="close"]').click();await page.reload();await page.locator('[data-action="wallet-history"][data-id="btc"]').click();await page.waitForFunction(()=>!document.querySelector('[data-history="start"]').disabled);
+  await d.locator('[data-history="close"]').click();await page.reload();await clickDisclosed(page.locator('[data-action="wallet-history"][data-id="btc"]'));await page.waitForFunction(()=>!document.querySelector('[data-history="start"]').disabled);
   await d.locator('details').filter({has:page.locator('[data-evidence="file"]')}).locator('summary').first().click();await d.locator('[data-evidence="preview"] details summary').first().click();await d.locator('[data-unlink]').click();await page.waitForFunction(()=>document.querySelector('[data-evidence="status"]').textContent.includes('Gespeichert'));assert.equal((await read()).purchaseEvidence.decisions.at(-1).action,'unlink');
   const restored=await page.evaluate(async()=>{const {backup,safeImport}=await import(new URL('src/model.js',location.href).href),{PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',location.href).href),{createCompleteBackup,unpackCompleteBackup}=await import(new URL('src/complete-backup.js',location.href).href),{encryptBackup,decryptBackup}=await import(new URL('src/crypto-backup.js',location.href).href);const m=await new PortfolioStorage().initialize(),full=createCompleteBackup(JSON.parse(backup(m)),null,m.walletHistory);return safeImport(unpackCompleteBackup(JSON.parse(await decryptBackup(JSON.parse(await encryptBackup(JSON.stringify(full),'synthetic-passphrase')),'synthetic-passphrase'))).data).purchaseEvidence;});assert.deepEqual(restored,(await read()).purchaseEvidence);
   await d.locator('[data-evidence="file"]').setInputFiles({name:'synthetic.csv',mimeType:'text/csv',buffer:Buffer.from(csv)});

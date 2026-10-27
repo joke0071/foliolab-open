@@ -1,3 +1,4 @@
+import {clickDisclosed} from './browser-disclosures.mjs';
 import {legacyContext} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
@@ -65,9 +66,8 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
    await page.setViewportSize({width:390,height:844});
    await page.locator('#mobileNav [data-page="positions"]').click();
    const check=page.locator('[data-action="check-cash-balance"][data-id="term-one-cash"]');
-   for(const details of await check.locator('xpath=ancestor::details').all())await details.evaluate(el=>e.open=true);
    const raw=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
-   await check.click();await page.locator('#cashReference').fill('101');await page.locator('#cashReferenceCurrent').check();
+   await clickDisclosed(check);await page.locator('#cashReference').fill('101');await page.locator('#cashReferenceCurrent').check();
    await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/1 EUR/);
    assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),raw,'comparison with metadata is read-only');
    await page.locator('#cancelDialog').click();await page.locator('#mobileNav [data-page="dashboard"]').click();

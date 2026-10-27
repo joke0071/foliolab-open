@@ -1,3 +1,4 @@
+import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';import {readFile,mkdir} from 'node:fs/promises';import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url),axe=await readFile(require.resolve('axe-core/axe.min.js'),'utf8');
 for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
@@ -20,7 +21,7 @@ for(const engine of (process.env.QUALITY_ENGINES||'chromium').split(',')){
    await page.locator('[data-action="reset-quality-review"]').click();assert.equal(await page.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await page.locator('#qualityReviewAccount').inputValue(),'');assert.equal(await page.locator('#positionList .position-entry').count(),2);
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#qualityReviewTools',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await mkdir('artifacts/gates/quality',{recursive:true});await page.screenshot({path:'artifacts/gates/quality/'+engine+'-'+width+'.png'});
-   const action=page.locator('#positionList [data-action="wallet-history"]');assert.equal(await action.count(),1);await action.click();await page.locator('#walletHistoryDialog').waitFor({state:'visible'});await page.keyboard.press('Escape');await page.locator('#walletHistoryDialog').waitFor({state:'hidden'});assert.ok(await action.evaluate(el=>document.activeElement===el));
+   const action=page.locator('#positionList [data-action="wallet-history"]');assert.equal(await action.count(),1);await clickDisclosed(action);await page.locator('#walletHistoryDialog').waitFor({state:'visible'});await page.keyboard.press('Escape');await page.locator('#walletHistoryDialog').waitFor({state:'hidden'});assert.ok(await action.evaluate(el=>document.activeElement===el));
   }
   assert.deepEqual(await state(),before,'review/filter/history viewing must not change portfolio or revision');
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();for(const p of m.positions){p.price=100;p.priceExact='100';p.quoteAsOf=new Date().toISOString().slice(0,10);}m.walletHistory.pending=[];for(const session of m.walletHistory.sessions){session.issues=[];session.streams.forEach(s=>{s.opening={quantityBaseUnits:'0',beforeBlock:'0',source:'synthetic-verified-genesis'};s.coverage.status='verified';});}await s.save(m);s.close();});

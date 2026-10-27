@@ -1,3 +1,13 @@
+# Aktuell: v185 DONE; C5 gesichert, finale Gates offen
+
+C4/#169/main3f9da89 tatsächlich live abgenommen:712Tests, CI40461463933/MainPagesLive40462563364 SUCCESS,105Livehashes/SW185/6Kerngruppen18Axe/3EngineUI, korrigierte Bilder angesehen. Nicht wiederholen.
+
+C5: History/Kontoprüfung in Details, dezente Archivicons, Transfer-Akkordeon, Optional-Verbindungen im bestehenden Pattern samt gezieltem Kontrastfix. Guards/Finanzcode/Formattribute unverändert. Lokale712Tests und gezielte Chromium-Regressionen vor letztem Hinweisdelta bestanden. Erneuter Laufzeitausfall: letztes Ergebnis/Bytegleichheit nicht behauptet; kanonische Remote-CI/Bilder maßgeblich. Keine Tests abgeschwächt; originale Finanzassertions bleiben. Noch kein C5-Release.
+
+Gesamt PARTIAL; bounded max10-Abschlusscheck nach Stabilisierung/Live. #165 und FLH04#160/#161 separat ohne Produktionsfreigabe. D/P2 geparkt. Vollständiger nächster Schritt im FLH03_WORK_CHECKPOINT.md.
+
+---
+
 Neueste C5-Ergänzung (erst nach C4): Historie/Rekonstruktion/Kontoprüfung in Bestand/Kursdetails; Edit/Delete direkt, Archiv dezent dort oder Icon. Transferprüfung in eigenes geschlossenes Akkordeon neben Erträge/Abzüge mit korrektem Leerzustand. Einstellungen-Auftrag bleibt erhalten, bestehende Logik/Bestätigungen unverändert.320/390/430/Desktop und tatsächliche Interaktionen prüfen.
 
 # Aktuell: C3 deployed, C4 visuelle Einheitenabnahme; C5 neu vorgemerkt

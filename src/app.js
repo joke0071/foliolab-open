@@ -1,7 +1,7 @@
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
-import {createTransferMatchingUI} from './transfer-matching-ui.js';
+import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
 import {bookingRowMarkup,createBookingHistoryUI} from './booking-history-ui.js';
 import {forecastAccountInterest} from './interest-account.js';
@@ -343,15 +343,19 @@ function renderPositions(){
    ...(p.wallet?.enabled?[['Netzwerk',p.wallet.chain],['Öffentliche Wallet-Adresse',p.wallet.address]]:[])
   ];
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
+  const h=historyAction(model,p);
+  const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
+  const reviewButtons=reviewActions.map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
+  const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
   return '<div class="position-entry">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
-   (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div><div class="settings-actions quality-review-actions">'+[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()].map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('')+'</div>':'')+
+   (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
-   '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button></div></div></div>'+
-   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl></details><div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'"><button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+(p.archived?'Wieder einblenden':'Archivieren')+'</button>'+(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+ (()=>{const h=historyAction(model,p);return h&&!(filter==='__review'&&reviewById.get(p.id)?.issues.some(i=>i.action===h.action))?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'';})()+'</div></div>';
+   '<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div></div></div>'+
+   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -421,7 +425,11 @@ function openPositionRemoval(){
  $('cancelDialog').focus({preventScroll:true});
 }
 function renderBookings(){
- $('undoCSVImport').classList.toggle('hidden',!canUndoCSV(model,csvReceipt));
+ const undoAvailable=canUndoCSV(model,csvReceipt);
+ $('undoCSVImport').classList.toggle('hidden',!undoAvailable);
+ $('bookingUndoActions').hidden=!undoAvailable;
+ const transferChoices=transferDialogChoices(model),hasMatched=model.bookings.some(b=>b.transferMatch);
+ $('bookingTransferHint').textContent=loadFailure?'Gespeicherte Daten sind nicht lesbar. Zuerst unter Mehr die Wiederherstellung prüfen.':otherTabChangedPortfolio?'Der Datenstand wurde in einem anderen Tab geändert. Vor dem Abgleich neu laden.':!transferChoices.hasOwnCash?'Noch keine Guthabenposition auf einem eigenen Geldkonto vorhanden. Wallet- und Wertpapiertransfers werden hier nicht zugeordnet.':!transferChoices.outgoing.length?'Keine offenen Geldkonto-Auszahlungen. '+(hasMatched?'Vorhandene Zuordnungen bleiben in der Prüfung zugänglich.':'Erfasse oder importiere passende Geldbewegungen vor dem Abgleich.'):'Vorhandene Geldkonto-Auszahlungen mit belegten Eingängen abgleichen. Wallet- und Wertpapiertransfers bleiben getrennt.';
  $('bookingIncome').innerHTML=annualOverviewMarkup(model,{year:incomeYear,accountId:incomeAccount},incomeLimit);
  const query=$('bookingSearch').value.trim().toLocaleLowerCase('de'),type=$('bookingFilterType').value;
  const historyRows=bookingHistoryRows(model);
