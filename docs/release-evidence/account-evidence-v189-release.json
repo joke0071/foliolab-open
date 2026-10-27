@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-27",
+  "releaseVersion": 189,
+  "applicationCommit": "8ac0b2f9cba4a5fdbc61632f7b2cec2720e12261",
+  "applicationTree": "1101b31800f0237427f090169f586be32675d1c9",
+  "pr": 175,
+  "scope": "Read-only account evidence from existing finance, quality and history sources; no persistence or new finance engine",
+  "prCI": {
+    "run": 40567910132,
+    "wallet": 40567910143,
+    "units": 743,
+    "fail": 0,
+    "skip": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "status": "SUCCESS"
+  },
+  "mainPagesLive": {
+    "run": 40569298229,
+    "status": "SUCCESS",
+    "assetHashes": 107,
+    "cache": "foliolab-open-v189",
+    "coreGroups": 6,
+    "axeScans": 18,
+    "uiHistoryTransferEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "targetedProductionQA": {
+    "branch": "qa/v189-account-live",
+    "commit": "070bb4ec0d6a4c7622d184ccd3faccfc03966cff",
+    "run": 40571543151,
+    "job": 122426748384,
+    "status": "SUCCESS",
+    "publishedApplicationHashes": 7,
+    "originalTestAssertionsUnchanged": true,
+    "syntheticOnlyTestResourcesBridged": [
+      "tests/storage-origin.html",
+      "tests/wallet-history-fixtures.mjs"
+    ],
+    "applicationResourcesIntercepted": false,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "checks": [
+      "account status",
+      "per-account filtering",
+      "open/closed own arrows",
+      "keyboard",
+      "drilldown",
+      "minimum 44px controls",
+      "Axe",
+      "zero persisted review mutations",
+      "repair disappearance"
+    ],
+    "artifact": {
+      "id": 12764599942,
+      "sha256": "f75ecf06ef0e71204cb7655b05f7e3dd01b5cda6f6fae5ee4a23f58ff8396d9d"
+    },
+    "visualReview": {
+      "status": "PASS",
+      "screenshots": [
+        "chromium-account-320.png",
+        "chromium-account-390.png",
+        "chromium-account-430.png",
+        "chromium-account-1440.png",
+        "chromium-account-closed-320.png",
+        "firefox-account-320.png",
+        "webkit-account-320.png",
+        "webkit-account-1440.png"
+      ]
+    },
+    "preservedFailedPreparationRuns": [
+      {
+        "run": 40571222052,
+        "reason": "QA incorrectly requested unpublished tests as production assets; corrected test-only resource bridge"
+      },
+      {
+        "run": 40571419622,
+        "reason": "shallow checkout lacked pinned release ancestor; corrected explicit release fetch"
+      }
+    ]
+  },
+  "overallReleaseAcceptance": "LIVE_ACCEPTED",
+  "predecessorAudit": "ccd7dd879b720a02ff218f3239f33c579a01a388",
+  "FLH05A": "DEFERRED",
+  "PERF01": "NOT_STARTED",
+  "privateDataPublished": false,
+  "next": "Existing Ledger Live #159 WIP, then remaining executable predecessors per consolidated roadmap",
+  "limitations": [
+    "This read-only synthesis is not a complete provider balance/history reconciliation",
+    "No physical Android, TalkBack, native Safari or genuine OAuth/second-device acceptance claimed",
+    "No new financial mutation/storage/backup/sync permission inferred",
+    "Performance startup baseline and FLH05-A remain deferred by predecessor sequence"
+  ],
+  "checkpointBeforeRelease": "3e45691dd6fef0f291e488edaea94b1beb47e7cc"
+}
