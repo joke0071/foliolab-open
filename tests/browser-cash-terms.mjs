@@ -66,7 +66,6 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
    await page.setViewportSize({width:390,height:844});
    await page.locator('#mobileNav [data-page="positions"]').click();
    const check=page.locator('[data-action="check-cash-balance"][data-id="term-one-cash"]');
-   for(const details of await check.locator('xpath=ancestor::details').all())await details.evaluate(el=>e.open=true);
    const raw=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
    await clickDisclosed(check);await page.locator('#cashReference').fill('101');await page.locator('#cashReferenceCurrent').check();
    await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/1 EUR/);

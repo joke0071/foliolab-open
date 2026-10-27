@@ -1,3 +1,11 @@
+# C5-Wiederaufnahme: Cash-Terms-Test öffnet native Summary
+
+CI [40470251924](https://github.com/joke0071/foliolab-open/actions/runs/40470251924), HEAD903a829, ist fehlgeschlagen. Neue C5-Platzierungs-, Leerzustands-, Geometrie-, Typografie-/Kontrast- und bestehende Historien-/USD-Prüfungen haben in Chromium, Firefox und WebKit tatsächlich bestanden. Der spätere Cash-Terms-Test scheitert reproduzierbar an `details.evaluate(el=>e.open=true)` mit ReferenceError. Diese fehlerhafte Variablenreferenz steht bereits im Ausgangstest auf main; der neue native Disclosure-Helfer macht die manuelle Schleife vollständig überflüssig. Nur diese eine Schleife entfernen, danach weiterhin über echte Summary-Klicks öffnen. Sämtliche Betrags-, Read-only-, Worker-Update-, Backup-/Restore- und weiteren Assertions bleiben unverändert. Kein Produktcode geändert, keine Gate-Abschwächung.
+
+Work-Dateisystem wieder erreichbar: neuer isolierter lokaler Prüf-Worktree von exakt903a829; ältere uncommittete Worktrees unverändert erhalten. Finale CI nach diesem Testfix vollständig neu erforderlich. Kein Merge/Deployment; weiterhin v185 akzeptiert. Nächste Aktion: finalen HEAD prüfen, vier synthetische C5-Bilder tatsächlich ansehen, vollständige Gates und Live-Abnahme wie unten dokumentiert.
+
+---
+
 # Kanonischer C5-Erstlauf: neuer Testflow muss das geschlossene Akkordeon öffnen
 
 HEADd6b4511 / [CI40469111778](https://github.com/joke0071/foliolab-open/actions/runs/40469111778) hat im Chromium-Job die neuen Platzierungs-/Font-/Pfeil-/Kontrast-/Geometrie- und bestehenden Historien-/USD-Prüfungen durchlaufen. Die neue letzte No-Cash-Prüfung las anschließend innerText im **absichtlich geschlossenen** Transfer-Akkordeon: leerer Text statt erwarteter Erklärung. Dieser Lauf ist fehlgeschlagen und bleibt erhalten, kein Merge.
