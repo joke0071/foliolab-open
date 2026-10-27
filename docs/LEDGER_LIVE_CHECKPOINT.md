@@ -27,6 +27,14 @@ Feld- und Dialogreview schließt unpassende Eigentums-/Assetreferenzverknüpfung
 
 CI40573650180 auf6f04f94: Chromium einschließlich neuem Native-Ledger-Gate und757Units SUCCESS; beide Cross-Shards mit erhaltenen Fehlnachweisen beendet. Kein Job abgebrochen. Shard2: bestehender unveränderter ABCE-Navigationshelfer prüfte einmalig isVisible direkt nach Resize und wählte dann eine inzwischen verborgene Desktopnavigation. Korrektur ausschließlich im Test: sichtbare mobile/desktop Zielbuttons als live neu ausgewerteter Playwright-Locator, keine force-Klicks/Assertionentfernung. Shard1: neuer Test fing auch eigene Apprequests ab und erhielt beim Firefox-Offlinereload NS_ERROR_OFFLINE. Analog zum vorhandenen ABCE-Gate werden jetzt ausschließlich fremde Origins geroutet; echte App-/SW-Lieferung bleibt unberührt und vor Offline wird ein wirklicher SW-Controller abgewartet. Offline-Reload/Dateiauswahl/Nullmutation bleiben verpflichtend in allen3Engines. Keine Produktänderung oder geschwächte Offlinebehauptung, neuer kompletter Lauf erforderlich.
 
+## Zweiter Cross-Engine-Nachweis
+
+CI40574522241 auf65eca104: Firefox-Offlinereload weiterhin NS_ERROR_OFFLINE trotz eingegrenztem Routing und vorhandenem SW-Controller. Das ist kein Offline-PASS und wird nicht übersprungen. Neuer Test verwendet nun wie die vorhandenen erfolgreichen Archiv-/Offline-Regressionspfade keinerlei Request-Interception: echte Requests nur beobachten und alle fremden Origins weiterhin als Fehler auswerten. Keine Appantwort oder Offlineauslieferung mocken; echter Offlinereload/Preview/Cancel/kanonischeNullmutation bleibt in allen3Engines verpflichtend. Weitere finaleCI erforderlich.
+
+## Visuelle320px-Korrektur
+
+Tatsächliche Chromium-Bilder aus erstem erfolgreichen Chromiumjob122434181642/Artefakt12767441547 angesehen:320/390/430/1440. Dabei wurde trotz bestandener generischer Scrollbreitenprüfung bei320px ein links angeschnittener Abbrechen-Button gefunden: die lange gesperrte Aktion beanspruchte zu viel intrinsische Breite. Label auf „Nur Vorschau“ verkürzt; Sperrstatus/Grund bleiben im Dialog sichtbar, Callback weiterhin gesperrt. Zusätzliche Browserassertion verlangt beide Footeraktionen vollständig innerhalb des Dialogs, >=44px und ohne gegenseitige Überlappung bei allen5Breiten. Finale neue Bilder/CI stehen aus; alte Bilder nicht als finale visuelle Abnahme ausgeben.
+
 ## Nachweise / offene Gates
 
 - Lokal757/757 Unit-Tests,0Fehler/0Skip und Syntax PASS; darunter14native Ledger-Tests (elf bestehende plus drei neue Referenz-/Token-/Hostile-Fälle).

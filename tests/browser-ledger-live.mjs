@@ -8,7 +8,8 @@ const base=process.env.FLH03_BASE_URL||'http://127.0.0.1:4173/';
 for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true}),context=await browser.newContext({viewport:{width:390,height:900}}),page=await context.newPage();
  const errors=[],external=[];page.on('pageerror',e=>errors.push(e.message));
- await context.route(url=>url.origin!==new URL(base).origin&&url.protocol!=='blob:',r=>{external.push(r.request().url());return r.abort();});
+ // Observe actual requests without routing: interception interferes with Firefox's offline delivery.
+ context.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
  try{
   await page.addInitScript({content:axe});
   await page.goto(new URL('tests/storage-origin.html',base).href);
@@ -33,6 +34,9 @@ for(const engine of (process.env.FLH03_ENGINES||'chromium').split(',')){
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'page overflow '+width);
    assert.ok(await page.locator('#editDialog').evaluate(el=>el.scrollWidth<=el.clientWidth+1),'dialog overflow '+width);
    const box=await mapping.boundingBox();assert.ok(box.height>=44,'mapping touch target');
+   const dialogBox=await page.locator('#editDialog').boundingBox(),cancelBox=await page.locator('#cancelDialog').boundingBox(),saveBox=await page.locator('#saveDialog').boundingBox();
+   for(const b of [cancelBox,saveBox])assert.ok(b.height>=44&&b.x>=dialogBox.x&&b.x+b.width<=dialogBox.x+dialogBox.width,'footer action fully visible and >=44px at '+width);
+   assert.ok(cancelBox.x+cancelBox.width<=saveBox.x,'footer actions do not overlap');
    assert.deepEqual(await page.evaluate(async()=> (await axe.run('#editDialog',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);
    mkdirSync('artifacts/gates/ledger-live',{recursive:true});await page.screenshot({path:'artifacts/gates/ledger-live/'+engine+'-'+width+'.png'});
   }

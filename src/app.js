@@ -1354,7 +1354,7 @@ function openCSVImport(){
   importEditor.submitBlocked=true;
   $('csvBrokerStatus').textContent='Ledger-Live-Export erkannt. Übernahme bleibt gesperrt.';
   $('csvMapping').innerHTML=markup.mapping;$('csvReview').innerHTML=markup.review;$('csvReviewStatus').textContent=markup.status;
-  $('saveDialog').disabled=true;$('saveDialog').textContent='Ledger-Übernahme gesperrt';
+  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
   $('csvMapping').querySelectorAll('[data-ledger-scope]').forEach(select=>select.addEventListener('change',()=>{
    try{ledgerAssignments={...ledgerAssignments,[select.dataset.ledgerScope]:select.value};renderLedger(select.dataset.ledgerScope);}catch(error){$('csvReview').textContent='Ledger-Zuordnung nicht prüfbar: '+error.message;$('saveDialog').disabled=true;}
   }));
