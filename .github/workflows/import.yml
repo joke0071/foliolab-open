@@ -183,6 +183,10 @@ jobs:
             artifacts/dialog-visual-diff/
           if-no-files-found: ignore
   cross-engine:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -208,41 +212,44 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-cross-browser.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
-          UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
-          QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
-          ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
-          TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
-          TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs
-          FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
-          node tests/browser-cross-engine.mjs
-          FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
-          FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
-          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
-          FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
-          ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs
-          BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
-          UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
-          CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
-          TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
-          INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
-          node tests/browser-atomic-storage-cross-engine.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
-          IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
-          FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
-          HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
+          if [[ "${{ matrix.shard }}" == "1" ]]; then
+            UI07_ENGINES=firefox,webkit node tests/browser-ui07-audit.mjs
+            QUALITY_ENGINES=firefox,webkit node tests/browser-quality-review.mjs
+            ANNUAL_ENGINES=firefox,webkit node tests/browser-annual-overview.mjs
+            TRANSFER_ENGINES=firefox,webkit node tests/browser-transfer-matching.mjs
+            TRANSFER_STATE_ENGINES=firefox,webkit node tests/browser-transfer-states.mjs
+            FLH03_ENGINES=firefox,webkit node tests/browser-csv-batch.mjs
+            FLH03_08_ENGINES=firefox,webkit node tests/browser-position-selection.mjs
+            ARCHIVE_ENGINES=firefox,webkit node tests/browser-position-archive.mjs
+            BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
+            TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
+            node tests/browser-atomic-storage-cross-engine.mjs
+            IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
+          else
+            FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
+            node tests/browser-cross-engine.mjs
+            FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
+            FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
+            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
+            CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
+            INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
+            IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
+            IDB_ENGINES=firefox,webkit node tests/browser-idb-migration-acceptance.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
+            FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
+          fi
       - name: Preserve cross-engine evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cross-engine-gates-${{ github.sha }}
+          name: cross-engine-gates-${{ github.sha }}-${{ matrix.shard }}
           path: artifacts/gates/
           if-no-files-found: ignore
   deploy:
