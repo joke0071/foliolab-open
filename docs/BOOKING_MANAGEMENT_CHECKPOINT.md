@@ -1,3 +1,7 @@
+# Aktueller Kandidat PR179
+
+HEAD b0d0f62729c92c9b38f948b7f9fadd2e0ed3f0c2 / Tree21823d841cd0eeab3a2315b947ec7a498aef531d; CI40587872054 und Wallet40587871906 laufen. Kontextdialog jetzt ebenfalls je fünf Breiten mit Axe/Keyboard/Fokus/44px-Prüfung. Noch kein Release. Der folgende Implementierungscheckpoint und vollständige fachliche Nachtrag bleiben verbindlich.
+
 # Buchungs-UI: sicherer Implementierungscheckpoint · 27.10.2026
 
 Basis: main `7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5`, produktiv v190 LIVE_ACCEPTED. Einziger funktionaler Strang: `feature/booking-management-ui`. SW191 ist unveröffentlichter Kandidat. FLH05-A und PERF01 bleiben gemäß zentraler Vorgängersequenz zurückgestellt; PR157/161 unverändert.

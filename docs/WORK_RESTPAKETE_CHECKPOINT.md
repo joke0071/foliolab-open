@@ -1,14 +1,16 @@
-# Aktiver sicherer Buchungs-UI-Checkpoint · 27.10.2026
+# Aktueller Buchungs-UI-Kandidat · PR179 · 27.10.2026
 
-**PARTIAL / DRAFT / NICHT VERÖFFENTLICHT:** [PR179](https://github.com/joke0071/foliolab-open/pull/179), Branch `feature/booking-management-ui`, HEAD `8597a24c85d694c2a56b9b4d37665116edece11f`, Tree `07221013afb4f8026fe146b087274d2d342a67aa` (lokal/remote exakt). Produktion bleibt v190/main7b7fae7. Einziger aktiver funktionaler Strang gemäß Rang3; keine anderen PRs/Läufe abgebrochen.
+**PARTIAL / DRAFT / RELEASE GESPERRT:** [PR179](https://github.com/joke0071/foliolab-open/pull/179), HEAD `b0d0f62729c92c9b38f948b7f9fadd2e0ed3f0c2`, Tree `21823d841cd0eeab3a2315b947ec7a498aef531d` lokal/remote exakt. Produktion unverändert v190/main7b7fae7. Einziger aktiver funktionaler Strang gemäß Rang3; FLH05-A/PERF01 weiterhin zurückgestellt.
 
-Implementiert: gemeinsame direkte Zeilenicons und Auswahlleiste, ein kontextueller Dialog für den vorhandenen sicheren Korrekturumfang, reversibles reines Sichtbarkeitsarchiv mit Vorschau/Bestätigung/CAS/Undo. Keine neue Finanzengine, kein Ausschluss aus Berechnungen, keine erweiterten Import-/Wallet-/Trade-/Transfermutationen.
+Lokal766/766 Units/check PASS. Aktueller vollständiger PR-Lauf40587872054 und Wallet40587871906 laufen. **Noch keine vollständige Browser-/visuelle Abnahme und keine Merge-/Deploymentfreigabe behauptet.**
 
-Lokal766/766 Units und npm check PASS. PR-CI40585032435 und Wallet40585032099 laufen; Browser/visuelle Abnahme noch PENDING. Keine vollständige Abnahme behauptet.
+Erste drei Läufe40585032435/40585906272/40586826976 bleiben als Fehlnachweise erhalten: neue Testannahme zu explizit manuellen technischen Notizen präzisiert (wirtschaftliche Felder gesperrt), Handler für unveränderten Dialog korrekt begrenzt, Restore-Test auf den tatsächlichen aktuellen Backup-V2-Tresor umgestellt. Keine Finanz-/Schutzassertions entfernt. Jeweilige unabhängige Cross-Engine-Blöcke2 und Walletchecks bestanden; sämtliche laufenden Jobs vor jedem Branchupdate zu Ende laufen gelassen.
 
-**Eigenes Releasegate:** Erste bestätigte Archivierung aktiviert portables Modell4 mit streng validiertem `bookingPresentation`; alte Leser lehnen es sicher ab. Keine automatische Startmigration/IndexedDB-Schemaänderung. Deshalb vor Merge/Deployment eigene konkrete Nutzerfreigabe für den neuen Speicher-/Backup-Vertrag gemäß Masterregel einholen, erst nach vollständiger prüfbarer Abnahme.
+Erste synthetische Chromium-Bilder bei320/390/430/768/1440 tatsächlich angesehen. Dabei nachgewiesenen engen Fünfspaltenumbruch bei768px mit vorhandener Zweispaltenlogik behoben; Betragsausrichtung trotz Herkunftszeile wiederhergestellt. Finale Bilder einschließlich neuem Kontextdialog in fünf Breiten/3Engines noch prüfen. Artefakt des dritten Laufs12771502492, ZIP-SHA2562653bbe2a2c52cb35b0109dcb545dde21cdda566346909f45832673f23a3d48b; kein bestandener Gesamtgate dadurch behauptet.
 
-Breitere Bearbeitungsfelder, lokale Import-/API-Interpretation, kompatible Sammelbearbeitung und fachlicher Ausschluss bleiben OPEN nach belegten Einzelverträgen. UI09/UI10/1W und weitere ausführbare Vorgänger bleiben in bestehender Roadmap offen; FLH05-A/PERF01 nicht vorgezogen. Vollständiger Nachtrag und Kandidatenvertrag: [Buchungscheckpoint](BOOKING_MANAGEMENT_CHECKPOINT.md).
+Umfang: direkte gleiche Zeilenicons/Toolbar/Selektion; vorhandene sichere manuelle Notiz-/EUR-Cash-Korrekturen; Sichtbarkeitsarchiv ohne finanzielle Wirkung, mit Bestätigung/CAS/Undo/Reimportschutz. Breitere Import-/API-Interpretation, weitere Bearbeitungsfelder, Sammelbearbeitung und fachlicher Ausschluss bleiben OPEN.
+
+**Eigenes kritisches Releasegate:** Opt-in Modell4 mit streng validiertem bookingPresentation erst bei bestätigter Archivierung; alte Leser lehnen vor Metadatenverlust ab, kein Startupgrade/IDB-Schemawechsel. Eigene konkrete Nutzerfreigabe für Speicher-/Backup-Vertrag vor Merge/Deployment erforderlich. v188-Freigabe wird nicht erweitert. Dokumentierte Nachträge #149/#165 vollständig erhalten.
 
 ---
 
