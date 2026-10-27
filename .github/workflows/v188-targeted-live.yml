@@ -1,0 +1,71 @@
+name: v188 – targeted production acceptance
+on:
+  push:
+    branches: [qa/v188-live-targeted]
+    paths-ignore: ['docs/**']
+permissions:
+  contents: read
+jobs:
+  targeted-production:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      RELEASE_SHA: ca1fa8fd46b3060d10a13095400bc3d33b0f3c42
+      BOOKING_MANAGEMENT_BASE: https://foliolab.unperfekt.at/
+      ARCHIVE_BASE: https://foliolab.unperfekt.at/
+      FLH03_08_BASE: https://foliolab.unperfekt.at/
+      BOOKING_MANAGEMENT_ENGINES: chromium,firefox,webkit
+      ARCHIVE_ENGINES: chromium,firefox,webkit
+      FLH03_08_ENGINES: chromium,firefox,webkit
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify approved application tree and actual published bytes
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          test "$(git rev-parse "$RELEASE_SHA^{tree}")" = d400d1087c18af1c24b65c498414cfe70f57dcbf
+          git diff --exit-code "$RELEASE_SHA" HEAD -- index.html styles.css sw.js manifest.webmanifest src icons
+          python3 - <<'PY'
+          import urllib.request,hashlib,json,os,pathlib
+          base=os.environ['BOOKING_MANAGEMENT_BASE']
+          report={'release':os.environ['RELEASE_SHA'],'base':base,'scope':'actual published target assets; full core acceptance remains mandatory in main workflow','assets':[]}
+          for name in ['index.html','styles.css','sw.js','manifest.webmanifest','src/app.js','src/booking-management.js','src/position-selection.js','src/transactions.js']:
+              actual=urllib.request.urlopen(base+name,timeout=30).read()
+              expected=pathlib.Path(name).read_bytes()
+              assert actual==expected,'Published bytes differ: '+name
+              if name=='sw.js': assert b"const CACHE='foliolab-open-v188';" in actual
+              report['assets'].append({'path':name,'bytes':len(actual),'sha256':hashlib.sha256(actual).hexdigest(),'status':'PASS'})
+          pathlib.Path('artifacts/gates/v188-targeted-published-assets.json').write_text(json.dumps(report,indent=2))
+          print('Approved application tree and all target asset bytes match production')
+          PY
+      - name: Install pinned existing browser tools
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3 2>&1 | tee artifacts/gates/v188-targeted-install.log
+          DEBUG=pw:install npx playwright install --with-deps --only-shell chromium firefox webkit 2>&1 | tee -a artifacts/gates/v188-targeted-install.log
+      - name: Exercise published booking mutations, undo, selection and position actions
+        run: |
+          set -euo pipefail
+          node tests/browser-booking-management.mjs 2>&1 | tee artifacts/gates/v188-production-bookings.log
+          node tests/browser-position-archive.mjs 2>&1 | tee artifacts/gates/v188-production-archive.log
+          node tests/browser-position-removal.mjs 2>&1 | tee artifacts/gates/v188-production-selection-removal.log
+      - name: Preserve isolated synthetic production evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v188-targeted-production-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
