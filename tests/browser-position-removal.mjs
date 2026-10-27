@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,mkdirSync} from 'node:fs';
+mkdirSync('artifacts/gates',{recursive:true});
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_08_BASE||'http://127.0.0.1:4173/';
 const live=base.startsWith('https:'),useProxy=live&&Boolean(process.env.HTTPS_PROXY);
@@ -52,7 +53,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await page.locator('#positionSearch').fill('Wanted 0');await page.locator('[data-position-select="p-0"]').check();
   await page.locator('#positionSearch').fill('Other 1');await page.locator('[data-position-select="p-1"]').check();await page.locator('#positionSearch').fill('');
   for(const width of [320,390,430,768,1024,1440]){
-   console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await menu();await axe();assert.ok(await page.locator('.selection-master').evaluate(e=>e.getBoundingClientRect().width>=44));await page.keyboard.press('Escape');assert.equal(await page.locator('#positionSelectionMenu').evaluate(e=>e.open),false);assert.equal(await page.locator('#positionSelectionMenu>summary').evaluate(e=>e===document.activeElement),true);await axe();await button('preview-removal').click();await axe();
+   console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await menu();await axe();if(engine==='chromium')await page.screenshot({path:'artifacts/gates/c6-selection-'+width+'.png'});assert.ok(await page.locator('.selection-master').evaluate(e=>e.getBoundingClientRect().width>=44));await page.keyboard.press('Escape');assert.equal(await page.locator('#positionSelectionMenu').evaluate(e=>e.open),false);assert.equal(await page.locator('#positionSelectionMenu>summary').evaluate(e=>e===document.activeElement),true);await axe();await button('preview-removal').click();await axe();
    assert.match(await page.locator('#dialogFields').innerText(),/1 unverbundene Positionen löschbar, 1 gesperrt/);
    assert.equal(await page.locator('#saveDialog').evaluate(e=>e.classList.contains('primary')),false,'Destructive consent must never retain primary green styling');
    assert.equal(await page.locator('#saveDialog').evaluate(e=>getComputedStyle(e).transitionDuration),'0s','Destructive styling must be immediate, without a low-contrast color crossfade');
