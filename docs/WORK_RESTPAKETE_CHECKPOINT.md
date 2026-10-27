@@ -10,6 +10,10 @@ Vorgänger-Gesamtaudit weiterhin DONE nur als Inventar, Gesamtumsetzung PARTIAL.
 
 ---
 
+## Aufgenommener UI-Nachtrag #149/#165 · ohne Unterbrechung der Ledger-CI
+
+Nächster passender bestehender UI-Vorgängerschritt nach sicherem Ledgercheckpoint: Buchungs-Auswahl-/Aktionsleiste bezüglich Komponenten, Anordnung, Buttongrößen, Abständen und Farben an Positionen angleichen; mobil dieselbe kompakte Zweispaltenstruktur. Direkte rechte Iconaktionen je Buchungszeile: Notiz, erlaubte Betrag-/Datumskorrektur und Rücknahmeprüfung ohne vorherigen Auswahlmodus. Nicht erlaubte Aktionen ausblenden oder mit verständlichem Grund deaktivieren. Einzel-/Sammelaktionen klar unterscheiden. Bestehende Auswahlengine und #165-Zulässigkeits-/Beleg-/Vorschau-/Bestätigungs-/CAS-/Undo-Verträge wiederverwenden, keine neue Mutationskategorie/Archivierung oder unabhängige UI-Engine.320/390/430/Desktop,44px,Overflow/Axe/Keyboard und direkte Bedienung/Sperren testen. Bereits erledigte Teile überspringen. Dokumentiert: #149Kommentar6452174228, #165Kommentar6452174628. Keine pauschale neue kritische Freigabe; FLH05-A bleibt zurückgestellt.
+
 ## Letzter vollständig abgenommener Release und Gesamtaudit
 
 # Verbindlicher Master-Checkpoint nach v189-Live-Abnahme · 27.10.2026
