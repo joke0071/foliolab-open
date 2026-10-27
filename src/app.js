@@ -377,8 +377,15 @@ function renderPositionSelection(){
   (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+'</div></details></div>'+
   '<button type="button" class="btn outline" data-action="cancel-selection">Abbrechen</button>'+
   '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio?'disabled':'')+'>'+summary.currentCount+' Positionen löschen</button>';
+ $('positionSelectionMenu').addEventListener('toggle',fitPositionSelectionMenu);
  const checkbox=$('positionSelectFiltered');checkbox.checked=summary.matchingCount>0&&summary.inFilterCount===summary.matchingCount;checkbox.indeterminate=summary.inFilterCount>0&&summary.inFilterCount<summary.matchingCount;
  status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte aufheben und neu prüfen.':'');
+}
+function fitPositionSelectionMenu(){
+ const menu=$('positionSelectionMenu');if(!menu?.open)return;
+ const panel=menu.querySelector('.selection-options'),anchor=menu.parentElement.getBoundingClientRect(),nav=$('mobileNav').getBoundingClientRect();
+ const below=innerHeight-(nav.height?nav.height:0)-anchor.bottom-12,above=anchor.top-12,up=below<180&&above>below;
+ panel.style.top=up?'auto':'100%';panel.style.bottom=up?'100%':'auto';panel.style.maxHeight=Math.max(44,up?above:below)+'px';
 }
 function focusSelectionMenu(){const menu=$('positionSelectionMenu');if(menu){menu.open=true;menu.querySelector('summary').focus();}}
 function openPositionArchive(id){
@@ -553,7 +560,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')$('positionSelectionTools').querySelector('button')?.focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionSelectionTools').querySelector('button')||$('addWizard')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -1720,6 +1727,8 @@ async function handleActions(e){const button=e.target.closest('[data-action]');i
  try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
+ window.addEventListener('resize',fitPositionSelectionMenu);
+ window.addEventListener('scroll',fitPositionSelectionMenu,{passive:true});
  $('positionSelectionTools').addEventListener('change',event=>{
   if(event.target.id!=='positionSelectFiltered'||!positionSelecting)return;
   try{selectedPositionIds=updatePositionSelection(model,selectedPositionIds,{type:event.target.checked?'filtered':'unselect-filtered',matchingIds:positionMatchingIds});renderPositions();$('positionSelectFiltered').focus();}catch(error){notify(error.message,true);renderPositionSelection();}
