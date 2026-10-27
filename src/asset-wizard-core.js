@@ -1,4 +1,4 @@
-import {createProvider,createAccount,createPosition,snapshot,safeNumber} from './model.js';
+import {createProvider,createAccount,createPosition,snapshot,safeNumber,safeImport} from './model.js';
 import {executeTransaction} from './transactions.js';
 import {validateEconomicPosition} from './defi.js';
 /**
@@ -8,7 +8,8 @@ import {validateEconomicPosition} from './defi.js';
  * @param {object} input Wizard form state
  */
 export function buildAssetWizardDraft(source,input){
- if(!source||source.version!==3)throw Error('Unbekannter Portfoliostand.');
+ if(!source||![3,4].includes(source.version))throw Error('Unbekannter Portfoliostand.');
+ if(source.version===4)safeImport(structuredClone(source));
  const draft=structuredClone(source);
  const kinds=['etf','stock','fund','crypto','cash','other'];
  const kind=String(input?.kind||'');

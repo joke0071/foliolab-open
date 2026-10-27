@@ -41,7 +41,7 @@ export function portableDrivePreferences(input){
  return {clientId:id,mode,retention};
 }
 export function createCompleteBackup(data,configuration=null,history=null){
- if(!plain(data)||data.version!==3||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
+ if(!plain(data)||(![3,4].includes(data.version)||(data.version===4)!==(data.bookingPresentation!==undefined))||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
  const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data};
  if(configuration!==null){
   if(!plain(configuration))throw Error('Backup-Konfiguration ungültig.');

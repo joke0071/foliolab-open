@@ -1158,3 +1158,13 @@
 .provider-settings-row .row-btn{min-width:48px;min-height:48px;box-sizing:border-box}
 .account-evidence{width:100%;box-sizing:border-box}
 .account-evidence-body{font-size:13px;line-height:1.65}
+
+/* One visual selection pattern for positions and booking rows. */
+#positionSelectionTools,#bookingManagementTools>.settings-actions{gap:9px;margin:12px 0}
+#positionSelectionTools .btn,#bookingManagementTools .btn{min-width:44px;min-height:44px;white-space:normal}
+.booking-management-row{border-bottom:1px solid #edf2ed;padding:4px 0;min-width:0}.booking-management-row:last-child{border-bottom:0}
+.booking-row-tools{padding:4px 0}.booking-row-tools .row-btn{width:44px;height:44px;flex-basis:44px}.booking-row-tools [data-booking-row-action="remove"]{color:#8e635c}
+.booking-management-row>.booking-compact{border-bottom:0;padding-top:4px}.booking-origin{grid-column:1/-1;color:#4d6756;font-size:11px}.booking-meta summary{min-height:44px;box-sizing:border-box;padding-top:10px}
+.booking-filter-tools{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr)}
+@media(max-width:767px){.booking-filter-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.booking-filter-tools>.field:first-child{grid-column:1/-1}}
+@media(max-width:700px){#positionSelectionTools,#bookingManagementTools>.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}

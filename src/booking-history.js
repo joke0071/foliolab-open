@@ -3,6 +3,14 @@ import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
 
 const signed=(type,q,target=false)=>['sell','withdraw','deliver_out','fee','tax'].includes(type)||(['transfer','swap','merger'].includes(type)&&!target)?-q:q;
 const decimal=v=>{try{return v==null?null:units(v);}catch{return null;}};
+/** Display metadata only. Never filter this projection or any financial engine by archive state. */
+export function validateBookingArchive(value,model){
+ if(!value||typeof value!=='object'||Array.isArray(value)||value.version!==1||Object.keys(value).some(k=>!['version','archivedIds'].includes(k))||!Array.isArray(value.archivedIds)||!value.archivedIds.length||value.archivedIds.length>50000)throw Error('Ungültiges Buchungsarchiv.');
+ const history=bookingHistoryRows(model),known=new Set(history.map(b=>b.id)),seen=new Set();
+ if(known.size!==history.length)throw Error('Buchungsarchiv benötigt eindeutige Buchungsidentitäten.');
+ for(const id of value.archivedIds){if(typeof id!=='string'||!id||id.length>200||seen.has(id)||!known.has(id))throw Error('Buchungsarchiv enthält eine ungültige oder veraltete Identität.');seen.add(id);}
+ return {version:1,archivedIds:[...value.archivedIds]};
+}
 /** Read-only projection. Journal deltas take precedence over input quantities
  * (a correction input is a replacement balance, never a movement). */
 export function bookingHistoryRows(model){

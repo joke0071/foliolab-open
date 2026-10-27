@@ -73,11 +73,12 @@ function referenceReasons(model,b,e){
   if(latest.length!==1||!after||sorted(after)!==sorted(b))reasons.push('Gespeicherte Änderungskette passt nicht zum aktuellen Vorgang.');
  }
  const targets=[b.id,e.id,...e.postings.map(p=>p.id)];
- const rest={...model,bookings:model.bookings.filter(x=>x.id!==b.id),journalEntries:model.journalEntries.filter(x=>x.id!==e.id&&x.type!=='booking-management-audit'),externalCashFlows:model.externalCashFlows.filter(x=>x.id!==b.id)};
+ // Validated archive IDs are presentation references, never economic dependencies.
+ const rest={...model,bookingPresentation:undefined,bookings:model.bookings.filter(x=>x.id!==b.id),journalEntries:model.journalEntries.filter(x=>x.id!==e.id&&x.type!=='booking-management-audit'),externalCashFlows:model.externalCashFlows.filter(x=>x.id!==b.id)};
  if(references(rest,targets))reasons.push('Weitere gespeicherte Referenzen verhindern eine isolierte Änderung.');
  return reasons;
 }
-function eligibility(model,b,action){
+function eligibility(model,b,action,{checkReferences=true}={}){
  const e=model.journalEntries.find(e=>e.id===b?.journalEntryId),p=model.positions.find(p=>p.id===b?.positionId),reasons=[];
  if(!b||!e||!p)return ['Buchung, Journal oder Position fehlen.'];
  if(e.source!=='manual'||b.importSource||b.importFingerprint)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
@@ -85,7 +86,8 @@ function eligibility(model,b,action){
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
  if(model.bookings.filter(x=>x.journalEntryId===e.id).length!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
  if(p.representedByPositionId||(p.economicRole&&p.economicRole!=='standard')||(p.valuationMode&&p.valuationMode!=='included'))reasons.push('Wirtschaftlich zugeordnete Position: gemeinsame Auswirkungen ungeklärt.');
- reasons.push(...referenceReasons(model,b,e));
+ if(checkReferences)reasons.push(...referenceReasons(model,b,e));
+ else if(Object.keys(b).some(k=>!bookingKeys.has(k))||Object.keys(e).some(k=>!journalKeys.has(k))||e.postings.some(p=>Object.keys(p).some(k=>!postingKeys.has(k))))reasons.push('Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.');
  if(action==='notes')return [...new Set(reasons)];
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
  if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für belegte manuelle EUR-Geldbuchungen.');
@@ -122,6 +124,10 @@ export function previewBookingChange(model,request){
  const result={action,ids:[...ids],blocks,ready:false,effects:[],beforeTotalEURExact:totalExactEUR(model),afterTotalEURExact:null,candidate:null};
  if(action==='edit'&&request.changes?.date&&model.snapshots.some(s=>s.date>=request.changes.date))blocks.push({id:ids[0],reason:'Das neue Datum berührt gespeicherte Kontrollpunkte.'});
  if(blocks.length)return result;
+ if(action!=='remove'){
+  const b=selected[0],changes=request.changes||{},sameNote=String(changes.notes??b.notes??'').trim()===String(b.notes||'');
+  if(sameNote&&(action==='notes'||((changes.date??b.date)===b.date&&units(changes.quantity??b.quantityExact)===units(b.quantityExact))))throw Error('Keine Änderung angegeben.');
+ }
  const candidate=clone(model),originals=selected.map(b=>({booking:clone(b),journal:clone(model.journalEntries.find(e=>e.id===b.journalEntryId)),flows:clone(model.externalCashFlows.filter(f=>f.id===b.id))}));
  if(action==='notes'){
   const note=String(request.changes?.notes??'').trim();if(note.length>180)throw Error('Notiz ist zu lang.');
@@ -135,6 +141,7 @@ export function previewBookingChange(model,request){
   candidate.bookings=candidate.bookings.filter(b=>!ids.includes(b.id));
   const journals=selected.map(b=>b.journalEntryId);candidate.journalEntries=candidate.journalEntries.filter(e=>!journals.includes(e.id));
   candidate.externalCashFlows=candidate.externalCashFlows.filter(f=>!ids.includes(f.id));
+  if(action==='remove'&&candidate.bookingPresentation){candidate.bookingPresentation.archivedIds=candidate.bookingPresentation.archivedIds.filter(id=>!ids.includes(id));if(!candidate.bookingPresentation.archivedIds.length){delete candidate.bookingPresentation;candidate.version=3;}}
   if(!ledgerQuantityAudit(candidate).ok)throw Error('Verbleibender chronologischer Verlauf ist nicht sicher.');
   if(action==='edit'){
    const b=selected[0],changes=request.changes||{};
@@ -165,4 +172,37 @@ export function canUndoBookingChange(model,receipt){return Boolean(receipt?.kind
 export function prepareBookingUndo(model,receipt){
  if(!canUndoBookingChange(model,receipt))throw Error('Portfolio seit der Änderung verändert; Undo gesperrt.');
  const candidate=JSON.parse(receipt.before);safeImport(clone(candidate));return candidate;
+}
+
+/** The same existing eligibility contract, evaluated on demand rather than cloning per visible row. */
+export function bookingChangePermissions(model,id){
+ rows(model);safeImport(clone(model));const b=model.bookings.find(b=>b.id===id);
+ const audit=ledgerQuantityAudit(model).ok?[]:['Journal und Bestände stimmen nicht überein.'];
+ return Object.fromEntries(['notes','edit','remove'].map(action=>[action,[...audit,...eligibility(model,b,action)]]));
+}
+/** Note-only edits retain the original financial event exactly. */
+export function bookingEditRequest(booking,values){
+ const economic=(values.date??booking.date)!==booking.date||units(values.quantity??booking.quantityExact)!==units(booking.quantityExact);
+ return {ids:[booking.id],action:economic?'edit':'notes',reason:values.reason,changes:economic?{quantity:values.quantity,date:values.date,notes:values.notes}:{notes:values.notes}};
+}
+export function previewBookingArchive(model,ids,archived){
+ if(!Array.isArray(ids)||!ids.length||ids.length>5000||new Set(ids).size!==ids.length||typeof archived!=='boolean')throw Error('Höchstens 5.000 eindeutige Buchungen zum Archivieren auswählen.');
+ safeImport(clone(model));const known=new Map(rows(model).map(b=>[b.id,b])),current=new Set(model.bookingPresentation?.archivedIds||[]);
+ const items=ids.map(id=>{const b=known.get(id);if(!b)throw Error('Buchungsauswahl veraltet.');return {id,positionId:b.positionId,date:b.date,wasArchived:current.has(id),archived};});
+ return {items,changed:items.filter(b=>b.wasArchived!==archived).length,archived};
+}
+export function prepareBookingArchive(model,{ids,archived},{expectedModel,confirmed}={}){
+ if(confirmed!==true||expectedModel!==raw(model))throw Error('Bestätigung fehlt oder Archivvorschau ist veraltet.');
+ const preview=previewBookingArchive(model,ids,archived);if(!preview.changed)throw Error('Keine Änderung am Archivstatus.');
+ const candidate=clone(model),next=new Set(candidate.bookingPresentation?.archivedIds||[]);
+ for(const id of ids)if(archived)next.add(id);else next.delete(id);
+ if(next.size){candidate.bookingPresentation={version:1,archivedIds:[...next]};candidate.version=4;}else{delete candidate.bookingPresentation;candidate.version=3;}
+ safeImport(clone(candidate));
+ return {candidate,receipt:{kind:'booking-change-undo',before:expectedModel,after:raw(candidate),digest:sourceDigest(raw(candidate))}};
+}
+
+/** Row controls use the same eligibility rules; expensive cross-portfolio reference review stays on demand. */
+export function bookingRowActionReasons(model,id){
+ const b=model.bookings.find(b=>b.id===id);
+ return {notes:eligibility(model,b,'notes',{checkReferences:false}),remove:eligibility(model,b,'remove',{checkReferences:false})};
 }
