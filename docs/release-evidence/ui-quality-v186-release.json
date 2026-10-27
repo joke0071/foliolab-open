@@ -122,5 +122,27 @@
     ],
     "status": "QUEUED_AFTER_C5_LIVE",
     "constraints": "No running tests/PR/deploy interruption; no financial logic; preserve selection/filter/archive/restore; skip already-fixed."
+  },
+  "repair": {
+    "pr": 171,
+    "initialHead": "93e0f6a809305c4ec7c74abf08fcd05340e9418a",
+    "firstCi": 40475355964,
+    "status": "FINAL_GATES_PENDING",
+    "initialChromium": "SUCCESS",
+    "initialCross": "FAILED: missing asynchronous IDB readiness before history label assertion",
+    "diagnostic": "Original test with actual IndexedDB open success delayed300ms fails same empty label; final test with explicit readiness after every app navigation/reload passes full999/1059, FX, six widths, Axe and no-write assertions",
+    "productChanges": false,
+    "originalFinancialAssertionsUnchanged": true
+  },
+  "localCorrectedLive": {
+    "release": "3b1964c880a6b6417a739fdcdb8a267ed49e5a22",
+    "base": "https://foliolab.unperfekt.at/",
+    "core": "PASS",
+    "assets": 105,
+    "cache": "foliolab-open-v186",
+    "groups": 6,
+    "axeScans": 18,
+    "c5UiChromium": "PASS:5pages/5widths/shortheight/150%textstress/expandedsettings/Axe/exactIDBunchanged",
+    "imagesActuallyViewed": true
   }
 }
