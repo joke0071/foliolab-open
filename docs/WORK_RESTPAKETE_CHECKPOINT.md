@@ -1,3 +1,39 @@
+# Aktiver Master-Checkpoint ab v188 — 27.10.2026
+
+Aktueller verifizierter main/Produktion: `ca1fa8fd46b3060d10a13095400bc3d33b0f3c42`, SW188. PR173 nach konkreter Nutzerfreigabe gemergt und vollständig live abgenommen: Main/Pages/Core/UI-CI40534397532 sowie zusätzliche gezielte Drei-Engine-Mutations-Live-CI40536412182 SUCCESS;735 Unit-Tests,106 exakte veröffentlichte Assethashes,6Kerngruppen/18Axe. Keine laufenden Releases oder funktionalen Parallelstränge beim FLH05-Einstieg. Persistenter Releasebeleg: `qa/v188-live-targeted:docs/release-evidence/booking-management-v188-release.json` /6bbe2b7cf52283a3cc133895c554915cdba2cb3d.
+
+Dieser Block ist der aktuelle fortlaufende Status. Die unveränderten historischen Nachweise darunter bleiben erhalten und sind keine offene Wiederholungsarbeit. Bestehende konsolidierte Auditmatrix/Roadmap wird referenziert, nicht neu erfunden.
+
+| Paket | Tatsächlicher Status | Abhängigkeit / Restrisiko | Priorität / nächster Schnitt |
+| --- | --- | --- | --- |
+| v188 / #165 / Auswahl-UI | DONE für freigegebenen begrenzten Cash-/Notiz-/Auswahlumfang | Breitere Trade-/Import-/Wallet-/Transfermutationen bleiben gesperrt; sitzungslokales Undo | Erledigt, nicht erneut entwickeln |
+| FLH05-00 / #174 | IN PROGRESS: öffentliche Quellen, konkrete Codepfade/SHAs/Lizenzen gelesen; Formatkatalog in Arbeit | Exportexistenz ≠ Spaltenvertrag ≠ echter Bestandsabgleich | P0, **einziger aktiver fachlicher Strang**, vor neuer Parserarbeit |
+| FLH05-01/02 | OPEN/PARTIAL: vorhandener CSV-/Batch-/Mapping-/Identitykern wiederverwendbar | Encoding/Headerposition/Mehrdeutigkeit, sichere lokale Templates ergänzen | Nach00: Input-/Profilvertrag, kleine Inkremente |
+| FLH05-03–06 | PARTIAL: vorhandene Exact-/Journal-/CAS-/Preview-/Undo-/Transfer-/Historienbausteine produktiv | Mehrbeine/PartialFills/mehrere Fee-Währungen/Quellenabgleich brauchen Beweise; P0-Simulation vor Commit | Finanzintegrität vor neuer Formatbreite |
+| FLH05-07–09 | OPEN: strikte JSON-Profile, reproduzierbare10k/50k/100k-Benchmarks und erweiterte Securityfälle | Keine eval-Regeln, automatische Communityinstallation oder ungeprüfte Bibliothek | Sequenziell nach gemeinsamem Vertrag |
+| FLH05-10 / Originale | PARTIAL/BLOCKED je Dialekt | Ledger-/Bittr-Schemata früher lokal validiert; neue End-to-End-Abnahme gesondert. Native flatex Depot+Cash, Kraken, Bitpanda/TR noch konkret nachweisen | Dateianforderung vorbereiten; sichere Vorarbeit fortsetzen |
+| #159 Ledger Live | OPEN, früher Vorschauversuch geparkt/unveröffentlicht | Branch `feature/ledger-live-preview` /0c292c8d94b4f1ce95b1173873d0b713da56549b;11lokaleUnits, keine Browser-/Original-/Releaseabnahme | Erst nachFLH05-00 in gemeinsamen Kern integrieren |
+| FLH03-07/16, AT/BENCH/#124 | PARTIAL: belegte Cash-/Transfer-/Historien-/Jahres-/Kontoprüfungen erhalten | Anbieterübergreifende Gesamtsynthese und Originalabgleich offen; keine zweite Engine | Nach verfügbaren gemeinsamen Eingängen |
+| 1W Vermögenszeitraum | OPEN; Marktcharts haben bereits7T | Gemeinsame Wealth-Perioden erweitern, vorhandene Diagramme erhalten | Kleiner unabhängiger späterer Schnitt |
+| #44 Reliability | DONE für bereits abgenommene lokale IDB/CAS/Recovery/Restore-Pakete; reale Gates PARTIAL | Physischer Crash/Eviction/Android/TalkBack/Safari/Google OAuth nicht durch Emulation belegt | Bestehende Vertragsregressionen weiterführen |
+| #52 / AT-Steuer-/Kapitalmaßnahmen | PARTIAL/BLOCKED | Gemischter Barausgleich/steuerliche Basis erfordert Originalbelege und Fachvalidierung | Keine spekulative Steuerengine |
+| FLH04/#160/#161, Drive | PARTIAL: Backup und Sicherheitsarchitektur vorhanden, Sync nicht implementiert | Operator/OAuth/Remote-Parallelwriter/Neugerät/Recovery und eigene kritische Freigabe | Bestehenden Draft erhalten, Backup ≠ Sync |
+| Krypto-/Staking-/Kursrest | PARTIAL/BLOCKED pro Protokoll/Quelle | P-Chain/Sonic-Auszahlungen/Tokenidentität/CORS/Lizenz nur nach Primärbeleg | Einzelne belegbare Schnitte, keine Pflichtworker |
+| #149 UI/UX | DONE für v187/v188-Befunde | Neue konkrete Fehler separat reproduzieren; kein Redesign | Nur reale Deltas |
+| CI-Optimierung | OPEN, vorhandene Baseline erhalten | Getrennter PR nach sicherem funktionalem Checkpoint; keine parallelen Workflowänderungen | Tatsächliche Vorher/Nachher-Minuten/% ohne schwächere Gates |
+| D/P2/#157 | BLOCKED/geparkt | Unveränderte Firefox-/Cross-Origin-Fehlnachweise; keine neue Browser-Evidenz | Blockiert andere Arbeit nicht |
+| FLH06 PDF | OPEN, nur Recherche/Architekturvorbereitung beauftragt | Lokale Textextraktion/Versions-/Beleg-/CSV-Dedupevertrag, keine große Implementierung vor CSV | Nach CSV-Prioritäten vorbereiten |
+
+## FLH05-Reihenfolge und Freigabe
+
+Verbindliche neue Gliederung aus konsolidiertem Auftrag:00Recherche → Architektur/Gap →01Offlinepipeline →02Profile/DE-EN-Heuristik/Mapping →03striktes Finanzmodell →04komplexe Muster →05mathematische Validierung/Reconciliation →06P0Simulation/atomarer Commit/Undo →07sichere JSON-Communityprofile →08Performance →09Security/Regression →10Originalvalidierung. FLH06 zunächst nur vorbereiten.
+
+Quellen/Katalog/Gap/Architektur liegen unter `docs/import-formats/`. Neue finanz-, migrations-, backup- oder sicherheitskritische Produktionsänderungen sind ohne eigene konkrete Freigabe nicht erlaubt. Die v188-Freigabe autorisiert keine weiteren Parser-/Journalmutationen oder Sync. Zwischen abgeschlossener Recherche und sicherer Implementierung ist keine zusätzliche pauschale Wartefreigabe nötig. Private Originale ausschließlich lokal, öffentliche Fixtures rein synthetisch; keine Kontodaten/Adressen/Dateifingerprints veröffentlichen.
+
+---
+
+## Historische Checkpoints (unverändert)
+
 # Sequenzieller Abschluss der offenen Arbeitspakete
 
 Basis: main 7c050e49c0316cf9685870b35215c448007dc080, v157; #133/#134/#135 integriert. Keine offenen PRs beim Start. Ausschließlich synthetische Daten.
