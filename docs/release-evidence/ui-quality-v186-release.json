@@ -1,0 +1,126 @@
+{
+  "version": "v186",
+  "status": "DEPLOYED_LIVE_HARNESS_CORRECTION_REQUIRED",
+  "pr": 170,
+  "base": "3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5",
+  "head": "a6fff68c5a37976c3bc47a24663f5aeec125906c",
+  "tree": "7d114be5827f9b0050fcdc73d8f58c1f235d3391",
+  "testedVirtualMerge": "c7f171330b3adfada782af0d8c750f414e049776",
+  "merge": "3b1964c880a6b6417a739fdcdb8a267ed49e5a22",
+  "prGates": {
+    "run": 40471894438,
+    "successfulAttempt": 2,
+    "chromiumJob": 122083591892,
+    "crossJob": 122083593213,
+    "originalFullCrossJob": 122080733615,
+    "walletRun": 40471894723,
+    "units": {
+      "tests": 712,
+      "pass": 712,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "retainedFailures": [
+    {
+      "run": 40469111778,
+      "cause": "new test read innerText inside deliberately closed native disclosure; fixed flow by asserting closed state then clicking summary; same assertions retained"
+    },
+    {
+      "run": 40470251924,
+      "cause": "existing main test el=>e.open callback raises ReferenceError; removed obsolete manual-open loop, actual native disclosure helper opens ancestor"
+    },
+    {
+      "run": 40471894438,
+      "attempt": 1,
+      "job": 122080733826,
+      "cause": "unchanged position-removal service-worker-controller prerequisite timed out after reload; full identical local regression PASS; one targeted job retry PASS; no timeout/assertion/SW changes"
+    }
+  ],
+  "sourceReview": {
+    "reviewType": "separate source review pass by same agent; no third-party review claimed",
+    "unchanged": [
+      "archive/removal confirmation handlers",
+      "complete settings/event/storage/recovery app tail",
+      "all original input/select/textarea/form tags",
+      "financial and IndexedDB modules"
+    ]
+  },
+  "prScreenshots": [
+    {
+      "id": "c5-positions",
+      "path": "artifacts/gates/ui-positions-390.png",
+      "bytes": 98701,
+      "sha256": "02e8213bfb958fe2c32d348890aa59230d7b23ede17528dc92b9d9c479e9cd70",
+      "release": "c7f171330b3adfada782af0d8c750f414e049776"
+    },
+    {
+      "id": "c5-bookings",
+      "path": "artifacts/gates/c5-bookings-390.png",
+      "bytes": 38468,
+      "sha256": "42624bd44496b65ee67f2626f3616bc8c73f261ead27d4202fbb95cb33bcb319",
+      "release": "c7f171330b3adfada782af0d8c750f414e049776"
+    },
+    {
+      "id": "c5-connections",
+      "path": "artifacts/gates/c5-connections-390.png",
+      "bytes": 119319,
+      "sha256": "25637eface1023f3e7aafc700e94d68f71ae16c825c688a4548b93697ca1e401",
+      "release": "c7f171330b3adfada782af0d8c750f414e049776"
+    },
+    {
+      "id": "c5-connections-viewport",
+      "path": "artifacts/gates/c5-connections-viewport-390.png",
+      "bytes": 55147,
+      "sha256": "ac1f906a3d5a4f4ea23b1033f7dfd7411163f37604aa0e5178be111e5979a0a7",
+      "release": "c7f171330b3adfada782af0d8c750f414e049776"
+    }
+  ],
+  "prScreenshotsActuallyViewed": true,
+  "localChecks": [
+    "syntax",
+    "712 unit tests",
+    "five pages at 320/390/430/768/1440, short-height and150% text stress",
+    "expanded optional settings Axe/font/chevrons/alignment",
+    "exact IDB record unchanged for read-only UI",
+    "cash terms full upgrade/renewal/payout/backup/offline/CAS",
+    "position removal full201/401/six widths/quota/abort/CAS/plain+encrypted restore/offline"
+  ],
+  "mainRun": 40473609639,
+  "live": {
+    "job": 122090367559,
+    "status": "FAILED",
+    "publishedAssets": 105,
+    "exactAssetHashes": "PASS",
+    "cache": "foliolab-open-v186",
+    "reason": "One remaining direct click on wallet-history action inside closed holding disclosure; native summary helper required. No product/assertion change.",
+    "coreCompleted": false,
+    "threeEngineUiCompleted": false
+  },
+  "exclusions": [
+    "physical Android and OS font enlargement",
+    "native Safari hardware",
+    "real OAuth/Google Drive",
+    "new booking mutations165",
+    "FLH04 sync release",
+    "D universal cross-origin guarantee explicitly removed; historical failed proof retained"
+  ],
+  "next": "Main/Pages/Live success, all105 exact assets, SW186, all3 browser UI live and fixed screenshots; then bounded five-area quality check, max10 confirmed findings; FLH04 only after UI, no sync production authority",
+  "mainGates": {
+    "run": 40473609639,
+    "chromiumJob": 122086348427,
+    "crossJob": 122086348630,
+    "deployJob": 122090244043,
+    "status": "SUCCESS"
+  },
+  "nextUiSupplement": {
+    "scope": [
+      "overview total/welcome vertical gap",
+      "history coverage/performance three disclosures single separators",
+      "hide calendar button when no relevant calendar entries, preserve function",
+      "archive visibility toggle inside selection only if archived, reachable archived-only"
+    ],
+    "status": "QUEUED_AFTER_C5_LIVE",
+    "constraints": "No running tests/PR/deploy interruption; no financial logic; preserve selection/filter/archive/restore; skip already-fixed."
+  }
+}
