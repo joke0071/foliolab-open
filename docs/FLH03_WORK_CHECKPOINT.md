@@ -1,3 +1,15 @@
+# Kanonischer C5-Erstlauf: neuer Testflow muss das geschlossene Akkordeon öffnen
+
+HEADd6b4511 / [CI40469111778](https://github.com/joke0071/foliolab-open/actions/runs/40469111778) hat im Chromium-Job die neuen Platzierungs-/Font-/Pfeil-/Kontrast-/Geometrie- und bestehenden Historien-/USD-Prüfungen durchlaufen. Die neue letzte No-Cash-Prüfung las anschließend innerText im **absichtlich geschlossenen** Transfer-Akkordeon: leerer Text statt erwarteter Erklärung. Dieser Lauf ist fehlgeschlagen und bleibt erhalten, kein Merge.
+
+Nur den neuen Testablauf berichtigen: geschlossenen Anfangszustand ausdrücklich prüfen, vorhandene Summary tatsächlich klicken, danach dieselbe strenge Guthabenpositions-Erklärung und exakte Nullmutationen prüfen. Zusätzlicher neuer Recovery-Schritt navigiert ausdrücklich in den Lesebereich Buchungen, prüft die unsichtbare normale Sektion und vorhandene Fehlermeldung; alle ursprünglichen Disable-/Programmatic-bypass-/Recordassertions bleiben. Kein Produkt-/Recovery-/Finanzcode geändert, keine Assertion entfernt/übersprungen.
+
+Die neue normale Viewportdiagnose zeigt den Skiplink korrekt außerhalb des Bildschirms (untere Kante ca.-19px). Überlagerung im langen Element-Screenshot ist damit nicht als normaler Layoutfehler reproduziert. Keine spekulative CSSkorrektur oder Verdeckung. Normale Viewportbilder und feste relevante C5-Bilder bleiben für echte Sichtprüfung erhalten.
+
+Nächste Aktion: alten Crosslauf regulär abschließen lassen, korrigierten Testflow sichern, sämtliche finalen HEAD-Gates und PR-Bilder neu prüfen. Weiterhin akzeptiertes v185, C5/SW186 nicht veröffentlicht.
+
+---
+
 # Aktuell: v185 live DONE; C5 kanonisch gesichert, finale CI offen
 
 **C4/#169 vollständig produktiv abgenommen:** main `3f9da89b2123c30ef4c758a8781c0eb5b3cf51c5`, Tree9776aad4, finaler HEAD7316fa5. [PR-CI40461463933](https://github.com/joke0071/foliolab-open/actions/runs/40461463933)+Wallet40461464114 und [Main/Pages/Live40462563364](https://github.com/joke0071/foliolab-open/actions/runs/40462563364) vollständig SUCCESS.712/712/0Fail/0Skip,105 exakte Livehashes,SW185,6 Kerngruppen/18 Axe, B1–C4 live in3 Engines. Mengen-/USD-Bilder tatsächlich angesehen, v184-Einheitenbefund geschlossen. Beleg release-evidence/ui-quality-v185-release.json. Diese Arbeiten nicht wiederholen.
