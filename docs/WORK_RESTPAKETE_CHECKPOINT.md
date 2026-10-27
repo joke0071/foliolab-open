@@ -1,3 +1,17 @@
+# Aktiver sicherer Buchungs-UI-Checkpoint · 27.10.2026
+
+**PARTIAL / DRAFT / NICHT VERÖFFENTLICHT:** [PR179](https://github.com/joke0071/foliolab-open/pull/179), Branch `feature/booking-management-ui`, HEAD `8597a24c85d694c2a56b9b4d37665116edece11f`, Tree `07221013afb4f8026fe146b087274d2d342a67aa` (lokal/remote exakt). Produktion bleibt v190/main7b7fae7. Einziger aktiver funktionaler Strang gemäß Rang3; keine anderen PRs/Läufe abgebrochen.
+
+Implementiert: gemeinsame direkte Zeilenicons und Auswahlleiste, ein kontextueller Dialog für den vorhandenen sicheren Korrekturumfang, reversibles reines Sichtbarkeitsarchiv mit Vorschau/Bestätigung/CAS/Undo. Keine neue Finanzengine, kein Ausschluss aus Berechnungen, keine erweiterten Import-/Wallet-/Trade-/Transfermutationen.
+
+Lokal766/766 Units und npm check PASS. PR-CI40585032435 und Wallet40585032099 laufen; Browser/visuelle Abnahme noch PENDING. Keine vollständige Abnahme behauptet.
+
+**Eigenes Releasegate:** Erste bestätigte Archivierung aktiviert portables Modell4 mit streng validiertem `bookingPresentation`; alte Leser lehnen es sicher ab. Keine automatische Startmigration/IndexedDB-Schemaänderung. Deshalb vor Merge/Deployment eigene konkrete Nutzerfreigabe für den neuen Speicher-/Backup-Vertrag gemäß Masterregel einholen, erst nach vollständiger prüfbarer Abnahme.
+
+Breitere Bearbeitungsfelder, lokale Import-/API-Interpretation, kompatible Sammelbearbeitung und fachlicher Ausschluss bleiben OPEN nach belegten Einzelverträgen. UI09/UI10/1W und weitere ausführbare Vorgänger bleiben in bestehender Roadmap offen; FLH05-A/PERF01 nicht vorgezogen. Vollständiger Nachtrag und Kandidatenvertrag: [Buchungscheckpoint](BOOKING_MANAGEMENT_CHECKPOINT.md).
+
+---
+
 # Verbindlicher Master-Checkpoint nach v190-Live-Abnahme · 27.10.2026
 
 **DONE: PR178 / begrenzte native Ledger-Vorschau produktiv und LIVE_ACCEPTED.** Aktueller main `7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5`, geprüfter Tree `eb11131cbf0e64b2ec6492796180cccd536480f1`. [Releasebeleg](release-evidence/ledger-live-v190-release.json), [Ledger-Fachcheckpoint](LEDGER_LIVE_CHECKPOINT.md). Dieser aktuelle Master-Dokumentationsstand liegt auf dem erhaltenen Branch feature/flh05-import-foundation; keine zusätzliche Integration dieser Abschlussdokumentation in main behauptet.

@@ -1,6 +1,40 @@
+# Buchungs-UI: sicherer Implementierungscheckpoint · 27.10.2026
+
+Basis: main `7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5`, produktiv v190 LIVE_ACCEPTED. Einziger funktionaler Strang: `feature/booking-management-ui`. SW191 ist unveröffentlichter Kandidat. FLH05-A und PERF01 bleiben gemäß zentraler Vorgängersequenz zurückgestellt; PR157/161 unverändert.
+
+## Implementierter begrenzter Umfang
+
+- Direkte Bearbeiten-/Löschen-/Archivicons je Buchungszeile mit vorhandenen Positionskomponenten, 44px-Zielen; gemeinsame Auswahlengine und kompakte Zweispaltenleiste.
+- Kontextdialog nutzt ausschließlich vorhandene geprüfte manuelle Notiz- und EUR-Cash-Korrekturen. Kein scheinbarer Speichervorgang bei unveränderten Feldern.
+- Archivieren/Wiederherstellen sämtlicher stabil identifizierter Buchungszeilen ist reine Sichtbarkeit. Alle Buchungen, Journalpostings, Originalquellen, Cashflows, Bestände und historischen Berechnungen bleiben unverändert. Keine Ausschlussfunktion.
+- Einzel- und Sammelarchivierung brauchen Vorschau, ausdrückliche Bestätigung, exakte Vorzustandsprüfung und bestehenden atomaren CAS-Speicher; gemeinsames begrenztes Undo.
+- Import-/Trade-/Transfer-/Wallet-/technische Finanzmutationen bleiben anhand bestehender Regeln gesperrt; keine stillen Teilerfolge.
+
+## Datenvertrag und eigene Releaseentscheidung
+
+Optionales `bookingPresentation: {version:1, archivedIds:string[]}` verwendet bestehende stabile Buchungs-/Journalzeilenidentitäten. Strikte Schlüssel-, Größen-, Versions-, Eindeutigkeits- und Referenzprüfung. Finanzielle Projektionen werden nicht gefiltert. Reimporte behalten Quellidentität und Archivstatus.
+
+Erst die ausdrücklich bestätigte erste Archivierung setzt das portable Modell auf Version4. Kein Startupgrade, keine IndexedDB-Schema-/Store-/Modusänderung. Formate1/2/3 ohne Archiv bleiben unverändert. Bestehende v190-Leser lehnen Version4 am vorhandenen Versionsgate ab, bevor sie neue Sichtbarkeitsmetadaten verlieren können. Aktuelle Leser, vollständige und verschlüsselte Backups erhalten diese. Explizite Wiederherstellung der letzten archivierten Zeile entfernt nur diese Metadaten und erlaubt wieder Version3.
+
+**Merge/Deployment gesperrt bis konkrete Nutzerfreigabe für diesen neuen Speicher-/Backup-Vertrag vorliegt**, gemäß Masterregel für neue migrations-, backup- und sicherheitskritische Änderungen. Die frühere v188-Freigabe deckt diesen Vertrag nicht ab.
+
+## Nachweise und verbleibende Gates
+
+Lokal: 766/766 Unit-Tests, null Fehler/Skip; npm check PASS. Neun neue Fachtests prüfen exakte finanzielle Unverändertheit einschließlich Historien, technische Zeilen, Reimport, Undo, Sicherungen, alte Versionsgrenze und bestehenden Anlageassistenten.
+
+Neu vorbereitetes Browsergate wird aus dem bestehenden verpflichtenden Buchungsmanagement-Gate in Chromium/Firefox/WebKit aufgerufen, ohne Workflowänderung oder entfernte Prüfungen. Synthetisch249 Buchungen einschließlich Import/technischer Korrektur: fünf Breiten320/390/430/768/1440, Axe,44px, Auswahlzyklus100→249→0, blockierte gemischte Löschungen, Quota/post-put-Abbruch, Offline, verschlüsselter Restore auf frischem Kontext, Reimport, Undo und Mehrtab-Stale-Vorschau. **Browser-/CI-/visuelle Abnahme noch PENDING; keine lokale Browserabnahme behauptet.**
+
+Offen außerhalb dieses begrenzten Inkrements: lokale Import-/API-Interpretationskorrekturen, breitere wirtschaftliche Bearbeitungsfelder, kompatible Sammelbearbeitung und separat benannte Ausschlussfunktion. Erst pro Fall belegte Wirkungen, Originalschutz, Referenzen und Rücknahmevertrag implementieren; keine pauschale Behauptung vollständiger #149/#165-Abnahme.
+
+## Begrenzte UI-Referenzen, kein FLH05-Recherchestart
+
+Actual: [Transfer-Gegenstücke](https://actualbudget.org/docs/transactions/transfers/), [Splitgruppen](https://actualbudget.org/docs/transactions/split-transactions/). rotki: [lokale Ereignisanpassungen](https://docs.rotki.com/usage-guides/history/events). Portfolio Performance: [Buchungsübersicht](https://help.portfolio-performance.info/en/reference/view/accounts/all-transactions/), [direkte Bearbeitung](https://help.portfolio-performance.info/en/how-to/shortcuts/). Nur Bedien-/Schutzprinzipien verglichen; kein Fremdcode übernommen, keine allgemeine Archivfunktion dieser Projekte behauptet.
+
+---
+
 # Verbindlicher UI-/UX-Nachtrag zu #149 und #165 · 27.10.2026
 
-Status: **OPEN, dokumentiert; noch nicht implementiert oder veröffentlicht.** Dieser konsolidierte Nachtrag ersetzt die zuvor gewünschten drei direkten Einzelbuttons „Notiz / Betrag-Datum / Rücknahme“ und die ältere Einschränkung „keine Buchungsarchivierung“. Bestehende fachliche Sperren und der freigegebene v188-Umfang bleiben bis zu einer geprüften Erweiterung verbindlich. Kein neuer Finanzkern, kein Redesign, keine parallele Implementierung. Laufender sicherer Ledger-Schritt #159/PR178 und dessen CI werden nicht unterbrochen; Umsetzung erst beim nächsten zulässigen UI-Schritt der zentralen Roadmap.
+Status: **PARTIAL: begrenzter Implementierungskandidat, noch nicht veröffentlicht.** Dieser konsolidierte Nachtrag ersetzt die zuvor gewünschten drei direkten Einzelbuttons „Notiz / Betrag-Datum / Rücknahme“ und die ältere Einschränkung „keine Buchungsarchivierung“. Bestehende fachliche Sperren und der freigegebene v188-Umfang bleiben bis zu einer geprüften Erweiterung verbindlich. Kein neuer Finanzkern, kein Redesign, keine parallele Implementierung. Laufender sicherer Ledger-Schritt #159/PR178 und dessen CI werden nicht unterbrochen; Umsetzung erst beim nächsten zulässigen UI-Schritt der zentralen Roadmap.
 
 ## Gemeinsame Oberfläche und direkte Aktionen
 
