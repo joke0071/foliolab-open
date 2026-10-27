@@ -134,6 +134,12 @@ export function attachChartInteractions(container) {
    if(point.detail){const extra=document.createElement('span');extra.textContent=point.detail;tip.append(extra);}
    if(point.compareValue){const extra=document.createElement('span');extra.textContent=point.compareValue;tip.append(extra);}
    cursor.classList.remove('hidden');tip.classList.remove('hidden');
+   // Historical details can be longer than a narrow mobile plot. Keep all
+   // text inside that plot; other chart placement retains its existing rule.
+   if(container.closest('.wallet-history-dialog')){
+     const half=tip.getBoundingClientRect().width/2;
+     tip.style.left=Math.max(half,Math.min(plot.clientWidth-half,point.x/600*plot.clientWidth))+'px';
+   }
  }
  function nearest(event) {
    const bounds=plot.getBoundingClientRect();

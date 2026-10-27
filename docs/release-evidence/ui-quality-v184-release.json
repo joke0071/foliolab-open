@@ -1,0 +1,46 @@
+{
+  "release": "v184",
+  "sourceSHA": "37e1b881f038cb3e0465a570e746e4b31d9ce3d7",
+  "treeSHA": "5b587f27693926e62a3408495ef75c2730f3cb14",
+  "PR": 168,
+  "finalPRHead": "6ae19fe0a1d271e529c9928ee5e77872ba20d8b3",
+  "finalPRCI": 40427864606,
+  "walletCI": 40427864643,
+  "mainCI": 40428656423,
+  "jobs": {
+    "test": 121940678650,
+    "crossEngine": 121940678828,
+    "deploy": 121944073639,
+    "liveAcceptance": 121944182429
+  },
+  "status": "DEPLOYED_AUTOMATED_GATES_PASS_VISUAL_FOLLOWUP_REQUIRED",
+  "actualResults": {
+    "tests": 709,
+    "pass": 709,
+    "fail": 0,
+    "skip": 0,
+    "exactLiveAssets": 105,
+    "cache": "foliolab-open-v184",
+    "coreGroups": 6,
+    "axeScans": 18,
+    "targetedUI": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "quantityContinuity": "PASS",
+    "EURGapAndNoSyntheticPrices": "PASS",
+    "exactZeroWrites": "PASS"
+  },
+  "visualFinding": {
+    "syntheticImage": "artifacts/gates/ui-history-quantity-390.png",
+    "sha256": "2ed870ea9d39d447bb8068c9bccf686333aa17d880ce85f09a95d4779374926b",
+    "reviewPerformed": true,
+    "finding": "Quantity line correct, but pre-existing default EUR axis label is wrong for quantities. C4 required before visual closure."
+  },
+  "limits": [
+    "No physical Android/native Safari/OS-font/OAuth acceptance.",
+    "Overall UI stabilization remains PARTIAL; C5 queued, final bounded check later.",
+    "No production authorization for booking mutations165 or FLH04160/161."
+  ]
+}
