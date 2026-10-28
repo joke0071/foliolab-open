@@ -1,3 +1,39 @@
+# Konsolidierter UI-Nachtrag: Datenbasis und historische Referenzwerte · 28.10.2026
+
+Dieser Nachtrag ergänzt die bereits vorgemerkten UI-Punkte; keine zweite Planung und keine Duplikatimplementierung. PR184/Sonic und alle laufenden Implementierungs-, Test-, Merge-, Deployment- und Live-Gates regulär und unverändert abschließen. Der nächste reguläre konfliktfreie UI-Checkpoint bündelt die kleinen Änderungen möglichst in einem PR. Zusätzliche fachliche Archiv-/Persistenz-/Löscharbeit bei Bedarf sauber vom reinen UI-Anteil trennen; keine ungeprüfte Funktion unter Zeitdruck freischalten. Danach den ursprünglichen Masterauftrag ohne neue Priorisierungsdiskussion fortsetzen.
+
+## Gemeinsam vorgemerkter UI-Umfang
+
+- Verlauf: Datenbasis-Auswahl deutlich kompakter und zurückhaltender, nach Möglichkeit in die Diagramm-Kopfsteuerung neben/unter den Zeiträumen integrieren. Alle bestehenden Optionen und Bedeutungen erhalten; automatisch mit belegten Quellen bleibt bevorzugter Standard. Keine historische Berechnung oder Datenquelle ändern. Mobile ohne Überlauf und mit ausreichend großen Touch-Flächen. Vorhandene Zeiträume7T/1M/3M/6M/1J/3J/5J/Max unverändert.
+- „Kontrollpunkte & manuelle Werte“ in **„Historische Referenzwerte“** umbenennen. Bereits korrekt eingeklappten Standardzustand erhalten. Bestehende Referenzen, Herkunft, Qualität, Prüfstatus und Originalinformationen vollständig bewahren; migrierte beziehungsweise historisch ungeprüfte Gesamtstände ausdrücklich kennzeichnen.
+- Die bereits vorgemerkten dekorativen Lucide-Linienicons bleiben dieselben: Datenabdeckung & Abgleich → shield-check, Rendite & Geldflüsse → chart-no-axes-combined, nun Historische Referenzwerte → clipboard-check. Keine doppelte Icon-/Akkordeonimplementierung.
+- Übersicht: Liquidität/Fälligkeiten bei identischen Daten auf Mobile und Desktop zugänglich halten. Lesende Chromium-Diagnose mit demselben isolierten synthetischen Modell zeigt bei320/390/768/1024/1440 jeweils genau eine sichtbare/aufklappbare Übersicht und unverändertes IDB; bisher kein Desktop-Ausblendungsfehler reproduziert. Vor einem Fix gegen dann aktuelles main erneut prüfen. Kein Anspruch, dass unterschiedliche lokale Datenbestände identische Abschnitte zeigen.
+- Überflüssige letzte Anbieter-Trennlinie entfernen, Zwischentrennlinien erhalten. Lesend reproduziert: angehängte Liquiditätsdetails verhindern bisherige last-child-Ausnahme, letzter Anbieter und geschlossene Summary tragen noch Linien; Liquidität besitzt bereits eine eigene obere Trennlinie. Keine sonstigen Abstands-/Farb-/Interaktionsänderungen und kein Redesign.
+
+## Historische Referenzwerte: schlanke Verwaltung
+
+Normalzustand nur Datum, Herkunft/Beschreibung, Datenstatus und rechtsbündiger Vermögenswert mit vorhandenen dezenten Zeilen/Trennlinien; keine Checkboxen und keine dauerhaften Edit-/Delete-Icons. Aktionen „Stichtag hinzufügen“ und „Verwalten“ gemeinsam oberhalb der Liste, vorzugsweise rechtsbündig. Vorhandene Funktionen erst kontrolliert in die Verwaltung überführen, nicht ersatzlos entfernen.
+
+„Verwalten“ aktiviert, „Fertig“ beendet den Verwaltungsmodus. Dann Checkboxen links; kompakte gemeinsame Leiste mit Auswahlanzahl, Archivieren, Wiederherstellen bei archivierten Einträgen, zulässigem Löschen und Auswahl aufheben. Zulässige Einzelbearbeitung etwa per Stift nur im Modus. Master-Checkbox ausschließlich für aktuell sichtbare Einträge mit korrektem indeterminate-Zustand; versteckte/gefilterte/archivierte Einträge niemals unbeabsichtigt auswählen. Bei gemischter oder teilweise gesperrter Auswahl verständliche Gründe und sichere Behandlung, keine stillen Teilerfolge oder übersprungenen gesperrten Datensätze. Dieselben Bedienprinzipien auf Mobile/Desktop, bestehende Auswahl-/Dialogmuster möglichst wiederverwenden. Positions-/Buchungsauswahl ist bereits v192 DONE und wird nicht erneut gebaut.
+
+## Finanz- und Persistenzvertrag vor Freigabe
+
+Archivieren ist ausschließlich reversible Sichtbarkeit in dieser Verwaltungsliste. Archivierte Referenzen bleiben vollständig gespeichert und über Ansicht/Filter erreichbar; Wiederherstellen blendet sie wieder ein. Kurven, historische Renditen, Bestände, Geldflüsse, Reconciliation und Berechnungsgrundlagen bleiben exakt unverändert. Archivstatus muss Backup/Restore/Migration überstehen. „Aus Berechnungen ausschließen“ ist eine andere finanzwirksame Aktion und wird hier ausdrücklich NICHT neu entwickelt.
+
+Vorhandene Quellen und Abhängigkeiten vor dem Implementieren prüfen und nicht gleichbehandeln: manuelle Werte nur zulässig mit verständlicher Historien-Auswirkungsvorschau und Bestätigung korrigieren; migrierte Nachweise/Originalinformationen bewahren und ungesicherte Änderungen nicht als Korrektur eines belegten Originals darstellen; automatisch rekonstruierte Werte nur über zuständige Quellen beziehungsweise bestehende Korrekturmechanismen ändern. Keine pauschale Freigabe aller Zeilen.
+
+Löschen ausschließlich für ausdrücklich zulässige unabhängige Einträge. Auswirkungen auf Historie/Rendite/Abgleich/Referenzen vorab mit bestehenden Mechanismen prüfen; bei Abhängigkeiten oder unzureichender Beleglage sperren. Eindeutige Bestätigung, vorhandene atomare Speicherung/CAS und vollständiger Schutz auch bei Sammelaktionen; niemals still über gesperrte Datensätze hinweg löschen. Archivieren ist die bevorzugte Standardaktion für alte nicht mehr benötigte Referenzen.
+
+Private historisch migrierte Gesamtstände weder entfernen noch durch neue Modellwerte ersetzen. Ungeprüfte Referenzen nicht automatisch als voll belegte Renditenachweise behandeln. Rekonstruierte, beobachtete, importierte und manuelle Werte unterscheidbar halten. TWR/XIRR nur über vorhandene fachlich geeignete ausreichend belegte Grundlagen; keine Finanzengine oder Nebenänderung ihrer Berechnungen.
+
+## Abnahme und Folge
+
+Gezielte Unit-/Integrations-/UI-Regressionen und320/390/1440px einschließlich weiterer sinnvoller Breakpoints, Tastatur/A11y/Touch/Nullmutation, unveränderte Finance-/Import-/Reconciliation-/Chromium-/Firefox-/WebKit-/Backup-/Restore-/CAS-/Offline-Gates. Eigenständiger kleiner PR beziehungsweise klar getrennter erforderlicher Fachschnitt, nur vollständig grün und mit vorhandener Freigabe kontrolliert mergen/deployen; tatsächliche Produktion, Archiv/Wiederherstellung und unveränderte Finanzwerte prüfen und dokumentieren. Aktuellen Sonic-Lauf dafür nicht abbrechen, pausieren, neu starten oder parallel beeinträchtigen.
+
+**FLH-PROJ01 bleibt nur ein dokumentiertes späteres Folgepaket nach den relevanten FLH03-Historien-/Renditegrundlagen; keine vorzeitige Prognose-, Diagramm-, Modell- oder Persistenzimplementierung.** Seine bereits gesicherten Anforderungen bleiben vollständig erhalten.
+
+---
+
 # Aktiver Sonic-Nachweisschnitt · Draft PR184 · 28.10.2026
 
 v194 ist vollständig LIVE_ACCEPTED (unten). Einziger funktionaler Strang: [PR184](https://github.com/joke0071/foliolab-open/pull/184), `feature/flh03-sonic-evidence`, HEAD `22efc3935b59135589e9848bcb7ec9557be70ba1`, Tree `c6c6d53555072b3717e0f4a44d05eac962ab977c` exakt wie lokal geprüft. Der Vertrag wurde vor dem Code separat als `e2d2ad49210194e4714e89edb2cdb7d376588a32` gesichert.
