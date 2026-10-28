@@ -1,0 +1,124 @@
+{
+  "release": "v199",
+  "status": "LIVE_ACCEPTED",
+  "sha": "c28053a109ed0338cdb040d88758766a1888a535",
+  "tree": "c4583d5d866c56f46d6c59741cbfc6b49348e3b4",
+  "prs": [
+    188,
+    189
+  ],
+  "run": 40715191210,
+  "all_required_jobs": "success",
+  "units": {
+    "pass": 831,
+    "fail": 0,
+    "skip": 0
+  },
+  "core": {
+    "sha": "c28053a109ed0338cdb040d88758766a1888a535",
+    "cache": "foliolab-open-v199",
+    "base": "https://foliolab.unperfekt.at/",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "result": "PASS",
+    "errors": [],
+    "startedAt": "2026-10-28T15:30:56.647Z",
+    "finishedAt": "2026-10-28T15:31:16.771Z"
+  },
+  "assetMatches": 115,
+  "axeScans": 18,
+  "newModuleBytes": [
+    {
+      "path": "./src/kraken-ledger.js",
+      "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6"
+    },
+    {
+      "path": "./src/kraken-ledger-ui.js",
+      "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b"
+    }
+  ],
+  "kraken": {
+    "chromium": "PASS confirmed in production-ui-chromium.log",
+    "cross": {
+      "base": "https://foliolab.unperfekt.at/",
+      "scope": "Synthetic native Kraken read-only CSV preview",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "checks": [
+            "native auto/explicit recognition",
+            "schema/mixed/mode quarantine",
+            "all legs and exact declared fees",
+            "hostile source escaping",
+            "50/100 paging and focus",
+            "5 widths/Axe/44px",
+            "forced submit/Escape/cancel/reopen",
+            "actual offline reload",
+            "exact IDB/revision/settings zero mutation",
+            "no external preview requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "checks": [
+            "native auto/explicit recognition",
+            "schema/mixed/mode quarantine",
+            "all legs and exact declared fees",
+            "hostile source escaping",
+            "50/100 paging and focus",
+            "5 widths/Axe/44px",
+            "forced submit/Escape/cancel/reopen",
+            "actual offline reload",
+            "exact IDB/revision/settings zero mutation",
+            "no external preview requests"
+          ]
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "production": {
+      "id": 12828797633,
+      "sha256": "30aa80f0f74355d576f6b5590ca0300f8f0631f70b3fb68c8080b70e863462ed",
+      "verified_before_extraction": true
+    },
+    "final_main": {
+      "id": 12829155170,
+      "sha256": "9653a6e30e52f34ac014cab3a69de9166c9b5cae3ec3b4e173a0f3c4623a57cc",
+      "verified_before_read": true,
+      "tested_sha_matches": true
+    }
+  },
+  "visual_review": {
+    "result": "PASS",
+    "images": [
+      "kraken-ledger/chromium-390.png",
+      "kraken-ledger/firefox-320.png",
+      "kraken-ledger/webkit-1440.png",
+      "live/320.png",
+      "live/390.png",
+      "live/1440.png"
+    ]
+  },
+  "preserved_failures": [
+    {
+      "run": 40710232523,
+      "attempt": 1,
+      "failure": "Existing WebKit static logo assertion 0 != 2; bounded identical failed-job retry passed, root cause not fully established."
+    },
+    {
+      "run": 40710232523,
+      "attempt": 2,
+      "failure": "New Kraken test started from nondeployed tests helper page; fixed test initialization only in PR189."
+    }
+  ],
+  "scope": "Read-only documentary preview; no financial postings, model/storage/migration/backup changes. Original data remains private; full economic provider reconciliation remains PARTIAL."
+}

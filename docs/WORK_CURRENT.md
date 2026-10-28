@@ -2,55 +2,65 @@
 
 Stand: 28.10.2026. Einstieg auf `feature/flh05-import-foundation`; keine zweite Roadmap.
 Verbindlich: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT.md).
+Bei Konflikten GitHub und detaillierte Nachweise prüfen; ältere Einträge sind Historie.
 
-- Letzter abgenommener Release: **v198 LIVE_ACCEPTED**.
-- Veröffentlicht: **v199, NICHT LIVE_ACCEPTED**.
-- main: `c28053a109ed0338cdb040d88758766a1888a535` (PR188/189 gemergt).
+- Letzter produktiv abgenommener Release: **v199 LIVE_ACCEPTED**.
+- main: `c28053a109ed0338cdb040d88758766a1888a535` (PR188/189).
 - Baum: `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`, exakt geprüfter Korrekturkandidat.
-- Aktiver Branch: `feature/flh03-kraken-ledger-preview`; [PR189](https://github.com/joke0071/foliolab-open/pull/189) gemergt.
-- HEAD `f6a1fc29bb43e5e53d3be9a22d586a739a7514c9`, Tree `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`.
-- Pflicht-CI40713975520/Wallet40713975525 vollständig SUCCESS, Ein-Zeilen-Review PASS.
-- Main-/Pages-/Live40715191210 läuft regulär.
-- **KRAKEN03 IN_PROGRESS**, **KRAKEN-QA01 Implementierung/PR DONE** (zweite Etappe).
-- Gesamtmaster/FLH03-03 PARTIAL; wirtschaftliche Übernahme bleibt gesperrt.
+- [PR188](https://github.com/joke0071/foliolab-open/pull/188) und [PR189](https://github.com/joke0071/foliolab-open/pull/189) gemergt.
+- Kein aktiver Funktions-PR; Krakenbranch vollständig gesichert als Referenz erhalten.
+- **KRAKEN03 DONE / KRAKEN-QA01 DONE**; zwei Etappen dieser Sitzung abgeschlossen.
+- Gesamtmaster/FLH03-03 **PARTIAL**; wirtschaftliche Übernahme bleibt gesperrt.
+- Geparkte PR157/161 unverändert; keine laufenden Actions oder lokalen Writer.
 
-## Erledigt / geprüft
+## Erledigt
 
-- KRAKEN01/02 DONE: Fachvertrag, reinlesende native16-Spalten-Vorschau, synthetische Tests.
-- PR188-CI40704994032/Wallet40704994025 SUCCESS,831/831Units/3Engines.
-- Main40710232523: test/Cross1 SUCCESS; Cross2 nach einmaliger gezielter Wiederholung SUCCESS.
-- Historischer WebKit-Logoaussetzer dokumentiert; unveränderte Assertions danach PASS.
-- MainZIP12826556226 vorExtraktionDigest bestätigt, testedSHA exakt,831/831Units/0Fail/0Skip.
-- Deployment SUCCESS; Kernlive115Assetvergleiche/SW199/6Gruppen/18Axe/Restore/Offline PASS.
-- Livejob122903996772 FAILURE vor Kraken-Seed: Test öffnet nichtdeployte tests-Hilfsseite.
-- Keine vollständige Drei-Engine-Produktionsabnahme; kein v199-LIVE_ACCEPTED.
+- Reine native16-Spalten-Kraken-Vorschau kontrolliert veröffentlicht und tatsächlich live abgenommen.
+- Alle Zeilen/refid-Mehrbeine, deklarierte Fee-Währung und ungeklärte/duplizierte Konflikte erhalten.
+- Übernahme einschließlich forcedSubmit gesperrt; kein Finanz-/Storage-/Migrations-/Backupumbau.
+- KRAKEN-QA01: Live-Teststart auf echte Startseite/IDB-ready korrigiert statt nichtdeployter
+  tests-Hilfsseite; ausschließlich ein Testdatei-/Ein-Zeilen-Diff, sämtliche Assertions erhalten.
 
-## Aktuelle Etappe / Abnahme
+## Letzte erfolgreiche Prüfungen
 
-KRAKEN-QA01: nur Teststart auf produktiver Startseite nach bestehender IDB-Bereitschaft
-statt `tests/storage-origin.html`. Keine Produkt-/Finanz-/Storage-/Backupänderung.
-Alle Assertions, Pflichtengines, Nullmutation, Offline, Security und Finance unverändert.
-VorCode frischer Kollisionscheck, bestehender Krakenbranch, da188 gemergt neuer Korrektur-PR.
-Abnahme: Ein-Zeilen-Diff/Syntax, volle unveränderte PR-CI/3Engines/Review, kontrollierter Merge,
-vollständige tatsächliche Produktionsgates, Artefakt-Digests/Modulbytes/Bilder.
-Keine zusätzliche externe Freigabe für Testkorrektur/reinlesende Vorschau erforderlich.
+- PR189-CI40713975520/Wallet40713975525 vollständig SUCCESS.
+- [Main-/Pages-/Live40715191210](https://github.com/joke0071/foliolab-open/actions/runs/40715191210)
+  vollständig SUCCESS:831/831Units/0Fail/0Skip, Syntax, Chromium, beide Pflichtshards,
+  Deployment und tatsächliche Produktionsabnahme.
+- Produktion SW199,115exakteDateivergleiche inklusive beider Krakenmodule,
+  6Kerngruppen/18Axe, echte Plain-/EncryptedUIRestore und OfflinecommitReload PASS.
+- Neue Kraken-Suite tatsächlich inChromium/Firefox/WebKit auf Produktionsdomain PASS:
+  Auto/Explizit/Schema/Misch-/Modussperre, alleBeine/Fees/hostileInput/50-100Anzeige/Fokus/
+  5Breiten/Axe/44px/forcedSubmit/Cancel/Escape/Neuöffnen/Offline/exakteIDB-Settings-Nullmutation.
+- Finale Main-/ProduktionsZIP-Digests vor Lesen/Extraktion bestätigt, SHA/Baum exakt.
+- Sechs Produktionsbilder tatsächlich angesehen, PASS: Kraken Chromium390/Firefox320/
+  WebKit1440 und Kern320/390/1440.
+- [Maschinenbeleg](release-evidence/kraken-ledger-v199-release.json).
+- Frühere fehlgeschlagene Main-/Livegates unverändert dokumentiert, nicht als PASS umgedeutet.
+  Historischer WebKit-Logoaussetzer nach einmaliger identischer Wiederholung bestanden;
+  Test-Hilfsseitenfehler in PR189 korrigiert; finaler neuer Release vollständig grün.
 
-## Exakt nächster Schritt
+## Exakt nächster ausführbarer Schritt
 
-Main40715191210 regulär vollständig abschließen; tatsächliche Drei-Engine-Liveberichte,
-Artefakt-Digest/Modulbytes/Produktionsbilder prüfen und erst dann v199 LIVE_ACCEPTED. Danach notwendiger Releaseabschluss und sicherer Stopp.
-Maximal zwei Etappen: KRAKEN03-Release + KRAKEN-QA01-Fehlerkorrektur.
-Danach nächste Sitzung bestehende Bitpanda-/Flatex-/P-Chain-Folge, keine neue Roadmap.
+Nächste Sitzung **FLH03-04-BP01 TODO**: frischer Kollisionscheck, vorhandenen
+[Originalformataudit](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md) und gezielte
+bestehende CSV-/Decimal-/Previewverträge laden; vor Code begrenzten reinlesenden
+Bitpanda18/17-/Vorspannvertrag sichern. Fehlendes Tax-Feld/Leerwerte/Striche unbekannt,
+expliziten Zeitoffset/Fiat/Asset/Feeasset/Spread/Product/In-Out erhalten;
+keine Steuer0, Preis-/Kosten-/Cash-/Stakingannahmen oder neue wirtschaftliche Übernahme.
+Bestehende Parser-/Dialogmechanik wiederverwenden; neue Formatvarianten nicht erfinden.
+Danach laut bestehender Folge Flatex-Formatlücken/P-Chain-Reste; FLH05/PERF nicht vorziehen.
+Kein weiteres Entwicklungspaket dieser Sitzung. FLH-PROJ01 nur später dokumentiert.
 
-## Erhaltene Grenzen / Nachweise
+## Externe Grenzen / Detailquellen
 
-- [Kraken-Vertrag](https://github.com/joke0071/foliolab-open/blob/c783f460e3069d0654269ae2d1e1879022ede20d/docs/FLH03_KRAKEN_LEDGER_CONTRACT.md)
-- [Kandidatenbeleg](release-evidence/kraken-ledger-pr188-candidate.json)
-- [Originalformataudit](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md)
 - Originale privat; öffentliche Fixtures ausschließlich synthetisch.
 - Flatex ausdrücklich unvollständig; weitere Originale derzeit nicht verfügbar.
-- Trades/Balances/unabhängige Stichtage weiterhin konkret offen; keine erfundenen Buchungen.
-- Geparkte PR157/161 unverändert; FLH05/PERF nicht vorziehen; FLH-PROJ01 nur später dokumentiert.
+- Trades/Balances/unabhängige Stichtage konkret offen; keine erfundenen Buchungen/Bestände.
+- Keine zusätzliche externe Freigabe für reine Vorschau nötig; wirtschaftliche Integration separat.
+- [Kraken-Fachvertrag](https://github.com/joke0071/foliolab-open/blob/c783f460e3069d0654269ae2d1e1879022ede20d/docs/FLH03_KRAKEN_LEDGER_CONTRACT.md)
+- [PR188-Kandidatenbeleg](release-evidence/kraken-ledger-pr188-candidate.json)
+- Bestehende Roadmap/FLH03_WORK_CHECKPOINT bleiben maßgeblich; keine neue Gesamtplanung.
 
 ## Verbindliche Übergabe
 
