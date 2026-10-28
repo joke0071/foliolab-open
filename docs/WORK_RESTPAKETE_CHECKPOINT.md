@@ -1,3 +1,48 @@
+# Native Identitätsgrundlage remote gesichert · PR193 in Pflicht-CI · 28.10.2026
+
+Einziger Funktionsbranch `feature/flh03-flatex-native-identity`,
+[PR193](https://github.com/joke0071/foliolab-open/pull/193),
+HEAD `c6329da2c8beea0c3f284e9c945d39133551285a`, Baum `429070d61277b00770493ac2aefcff28b98ea402`
+exakt lokal/API-Remote. Vorabvertrag vor Code27fc50fe auf Dokumentationsbranch gesichert,
+zusätzlich separater Funktionsbranch-Vertragscommitedb34c1. Zentraler Checkpoint weiterhin
+feature/flh05-import-foundation. Main4e9a4a7/v202 LIVE_ACCEPTED unverändert;
+nur geparkte157/161 daneben, keine konkurrierende Entwicklung/CI vor Kandidatensicherung.
+
+Vertrag DONE; **geprüfte reine Grundlage IN_PROGRESS** bis finale unveränderte volle
+CI/Wallet/Drei-Engine-/Quell-/Artefaktabnahme. Native Quellenangebote mit exakter
+Bank-ID/Seiten-/Scope-Namespace, vorhandenem SHA256 über alle Raw-Felder außer
+Exportordinal. Alle Lokatoren erhalten; keine Dateiname-/Datum-/Orderfallbackidentität,
+keine automatische Dedupe oder Kontobindung. Native Evidenz im vorhandenen sourcePayload,
+bestehende Payload-/Manual-/Backupvalidatoren wiederverwendet. Kein neues Top-Level-
+Backupfeld, keine aktive Dialog-/Finanz-/Persistenzintegration.
+
+Vorheriger Raw-Evidenzfehler synthetisch reproduziert und geschlossen. Zusätzlicher
+gemischter Native-/Legacy-Stapel ROT reproduziert; symmetrisch gegen vorhandenen
+Dry-run korrigiert und beide Reihenfolgen durch Unit/Browser gesichert. Keine Assertion,
+Pins oder Workflows abgeschwächt. Finale892/892Units unter Node20,0Fehler/Skip,
+16neue fokussierte Tests unter Node24 sowie Syntax und korrigierter Chromiumgate PASS:
+direkte Parserdokumente/unabhängiger SHA, Overlap/Konflikt/fehlende Ref/Zeilenerhalt,
+Replay/Manual-/Legacy-/Mixed-/Restore-/Stale-Schutz, echte SW-Offline-Neuladung,
+exakter IDB-Record/Revision/Settings unverändert, keine externen Requests.
+Nur unabhängige synthetische Finanz-DTOs zum Schutzkernbeweis, kein nativer Wirtschaftsadapter.
+
+Aktuelle Läufe: 40766119069 Wallet scan checks; 40766119013 FolioLab Open – testen und veröffentlichen.
+**Exakt nächster Schritt:** diese Läufe regulär abschließen lassen; tatsächliche
+892Unit-/Chromium-/Firefox-/WebKitberichte, ZIP-Digests, testedSHA und identische
+Kandidaten-/Merge-/Lokalbäume sowie finalen8-Dateien-Diff prüfen und zentral sichern.
+Nach zwei Etappen Vertrag + geprüfte Grundlage sicher übergeben; Staging-/Kontobindung,
+UI und kontrollierter Release separat. Nicht aus Quellenidentität eine wirtschaftliche
+Importfreigabe oder vollständige Historien-/Performanceabnahme ableiten.
+SW203 unveröffentlicht; Produktion v202 unverändert.
+
+Keine privaten Originale in diesem Strukturschnitt geöffnet oder privaten Produktivdaten
+verändert; öffentliche Tests/Artefakte ausschließlich synthetisch. UI-MASTER28/
+DELETE-MASTER28 und bestehende Roadmap erhalten/offen; FLH04/PERF/FLH05/PROJ01 nicht
+umpriorisieren. Gesamtmaster PARTIAL. Quellen und aktueller Stand dauerhaft remote
+gesichert; lokale synthetische Testartefakte nur Zwischenmaterial.
+
+---
+
 # Native Flatex-Importidentität wiederaufgenommen · 28.10.2026
 
 Frischer Kollisionscheck: main4e9a4a7392e3469eeb2018b7a9516debe3a48e96/v202 LIVE_ACCEPTED
