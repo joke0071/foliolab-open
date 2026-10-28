@@ -60,7 +60,10 @@ Nach BP01/BP02 geprüften Kandidaten sichern und stoppen. FLH-PROJ01 nur später
 ## Externe Grenzen / Detailquellen
 
 - Originale privat; öffentliche Fixtures ausschließlich synthetisch.
-- Flatex ausdrücklich unvollständig; weitere Originale derzeit nicht verfügbar.
+- Frühere Flatex-Datei unvollständig; neue konsolidierte Depot-/Kontoreferenzen gemeldet,
+  noch nicht von Work geprüft. Private Sollwerte bleiben privat.
+- [Flatex-Nachtrag](FLH03_FLATEX_UNIVERSAL_ADDENDUM.md): FX-AUDIT01 TODO im bestehenden
+  Flatex-Schritt nach laufender Bitpanda-Folge; keine Unterbrechung/Umpriorisierung.
 - Trades/Balances/unabhängige Stichtage konkret offen; keine erfundenen Buchungen/Bestände.
 - Keine zusätzliche externe Freigabe für reine Vorschau nötig; wirtschaftliche Integration separat.
 - [Kraken-Fachvertrag](https://github.com/joke0071/foliolab-open/blob/c783f460e3069d0654269ae2d1e1879022ede20d/docs/FLH03_KRAKEN_LEDGER_CONTRACT.md)
