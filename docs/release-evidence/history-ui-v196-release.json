@@ -1,0 +1,51 @@
+{
+  "release": "v196",
+  "status": "LIVE_ACCEPTED",
+  "scope": "consolidated history UI presentation only; reference management remains next separate safety scope",
+  "pr": 185,
+  "sha": "bccd1f7956edba4d9ec0c5f11dc8edd023f31809",
+  "tree": "c7a28cc05d9ad815d2921409d1d92bc1df64a13b",
+  "testedPRHead": "a486c826c20f24b98f17cc10444f8035ff9ef416",
+  "testedMerge": "98e58bbacd2971f60bf1a9800bc45a0e0c798ed1",
+  "runs": {
+    "pr": 40674702170,
+    "wallet": 40674702018,
+    "mainPagesAndActualLive": 40675847701
+  },
+  "units": {
+    "tests": 799,
+    "passed": 799,
+    "failed": 0,
+    "skipped": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "production": {
+    "domain": "https://foliolab.unperfekt.at/",
+    "cache": "foliolab-open-v196",
+    "matchedAssets": 111,
+    "coreGroups": 6,
+    "axeScans": 18,
+    "plainFreshUIRestore": "PASS",
+    "encryptedFreshUIRestore": "PASS",
+    "realOfflineCommitReload": "PASS",
+    "targetedHistoryFollowup": "all three engines, widths 320/390/768/1024/1440, icons/keyboard/expanded Axe/basis/legacy provenance/provider separators/liquidity/empty/exact canonical record and revision zero mutation PASS",
+    "artifact": 12810857902,
+    "zipSHA256": "01721b18a5a25108c6ae4bd62a7dd75a64b4a5c55eb13cf086b603b110cff7fd",
+    "selectedActualImagesViewed": [
+      "chromium-history-320",
+      "firefox-history-390",
+      "webkit-history-1440",
+      "webkit-liquidity-320"
+    ],
+    "visualReview": "PASS"
+  },
+  "pending": [
+    "reference management provenance/dependency/edit/delete/CAS and archive persistence contract and implementation",
+    "FLH-PROJ01 documentation only",
+    "other pre-existing master roadmap and external gates"
+  ]
+}
