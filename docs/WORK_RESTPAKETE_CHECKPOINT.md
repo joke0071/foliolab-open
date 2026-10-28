@@ -1,3 +1,9 @@
+# PR187 gemergt · v198-Releasegates laufen · 28.10.2026
+
+Kontrollierter Merge mit erwarteter HEAD-SHA: `8391dc0a8478af7e1aeb860b8b705217fdd24546`; Tree `5a6ad50997bfc932fa0220278a912f93267ff2e7` exakt geprüfter Kandidat. [Main-/Pages-/Live40693772763](https://github.com/joke0071/foliolab-open/actions/runs/40693772763) läuft regulär, nichts unterbrechen oder doppelt starten. **P09-ID03 IN_PROGRESS**, v197 weiterhin letzte LIVE_ACCEPTED-Version. Nach vollständig grünen Gates ProduktionsZIP/Digest, neue Modulbytes, tatsächliche Drei-Engine-P-Chain-Identitäts-/IDB-/Settings-Nullmutation und Kernbilder prüfen. Ausschließlich lesende Quellvorbereitung zum nächsten bereits offenen konsistenten UTXO-Zustandsvertrag während CI; keine parallele Implementierung.
+
+---
+
 # P09-ID03 gestartet · geprüfter reinlesender Release freigegeben · 28.10.2026
 
 Frischer Kollisionscheck: main `7b96a411925621f59021c36ad4d4a60a531c3a92`, PR187 HEAD `06726680c794145d158d378d6b24741fa0c34247`, Mergebaum `5a6ad50997bfc932fa0220278a912f93267ff2e7` unverändert; Pflicht-CI40691053325/Wallet40691053211 SUCCESS, nur PR187 und geparkte157/161, keine laufenden Tests/anderen Writer. Bestehende821/821Units/3Engine-Nachweise wiederverwendet. **P09-ID03 IN_PROGRESS.** Eigene begrenzte Releaseentscheidung unter ausdrücklicher Masterfortsetzung positiv: reine, nicht aktiv integrierte Adress-/Beobachtungsprüfhelfer ohne neue Finanz-/Storage-/Backupmutation. Keine neue kritische Nutzerfreigabe erforderlich; späterer aktiver Adapter bleibt separat. Nächster Schritt: Merge mit erwarteter HEAD-SHA, dann vollständige Main-/Pages-/tatsächliche Drei-Engine-Liveabnahme/Modulbytes/Kernbilder. Bis dahin v197 letzte LIVE_ACCEPTED-Version. Keine parallele Produktentwicklung.

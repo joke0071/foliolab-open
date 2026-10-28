@@ -5,8 +5,8 @@ Verbindliche Details: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT
 Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind Historie.
 
 - Letzter produktiv abgenommener Release: **v197 LIVE_ACCEPTED**.
-- Aktueller main: `7b96a411925621f59021c36ad4d4a60a531c3a92` (PR186).
-- Einziger Funktions-PR: [PR187](https://github.com/joke0071/foliolab-open/pull/187), offen, kein Draft.
+- Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
+- Einziger Funktions-PR: [PR187](https://github.com/joke0071/foliolab-open/pull/187), gemergt; Liveabnahme läuft.
 - Branch: `feature/flh03-pchain-identity`.
 - HEAD: `06726680c794145d158d378d6b24741fa0c34247`.
 - Getesteter PR-Merge: `2036ac9a225fb06256652f746c01f03c71c71a49`.
@@ -14,7 +14,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Arbeitspaket FLH03-09: P-Chain-Adresse und kontextgebundene UTXO-Beobachtungsidentität.
 - **P09-ID01 DONE / P09-ID02 DONE** für Vertrag und geprüften Implementierungskandidaten.
 - **P09-ID03 IN_PROGRESS:** kontrollierter Release und tatsächliche Produktionsabnahme.
-- Releaseentscheidung für den geprüften reinlesenden Scope positiv; kontrollierter Merge folgt.
+- Main-/Pages-/Live-Lauf40693772763 läuft regulär; keine Duplikate starten.
 - v198 noch nicht live abgenommen.
 - Gesamtmaster und FLH03-09 insgesamt **PARTIAL**; PR157/161 unverändert geparkt.
 
