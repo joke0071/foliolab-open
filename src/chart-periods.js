@@ -1,6 +1,7 @@
 /** Shared chart periods; longer market options are shown only where supported. */
 export const CHART_PERIODS = Object.freeze({
  wealth:Object.freeze([
+  Object.freeze({value:'week',label:'7 T',days:7}),
   Object.freeze({value:'month',label:'1 M',days:30}),
   Object.freeze({value:'quarter',label:'3 M',days:90}),
   Object.freeze({value:'halfyear',label:'6 M',days:180}),

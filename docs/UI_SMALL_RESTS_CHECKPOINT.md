@@ -1,0 +1,14 @@
+# UI17-09/10 und 1W – begrenzter Fortsetzungscheckpoint
+
+Basis: vollständig live abgenommenes v192/main `6dab772e9ed15878779a5f345b132091917b7167`. Einziger funktionaler Strang: `feature/ui-small-rests`. SW193 ist Kandidat, nicht veröffentlicht.
+
+- Markenschreibweise im Willkommenstext auf FolioLab Open vereinheitlicht.
+- Kontoanlage ohne Anbieter setzt nach tatsächlich erfolgreicher Anbieter-Speicherung im bestehenden Kontodialog mit expliziter Anbieter-ID fort. Ein einmaliger Close-Listener läuft nach dem vorhandenen Dialog-/Fokus-Cleanup; keine Fortsetzung bei Abbruch, verweigertem Discard oder Speicherfehler, keine Änderung der normalen Anbieteranlage. Kontospeicherung bleibt eigene ausdrückliche bestehende Aktion; kein automatisches Konto oder Anfangsguthaben.
+- Gemeinsamer Vermögenszeitraum `week`/„7 T“ mit sieben inklusiven Kalendertagen für Übersicht und Verlauf. Bestehende Projektion und Filterfunktion unverändert; keine neue Bewertung, Interpolation oder Persistenz. Leere und partielle Abdeckung bleiben ehrlich.
+- Acht Vermögenspresets dürfen innerhalb schmaler Karten umbrechen und haben44px-Ziele; nur beide bestehenden Vermögensleisten angepasst, Marktchart-Steuerung unverändert.
+
+Lokal767/767 Units,0Fail/0Skip, Syntax PASS. Unabhängiger Datumsgrenztest einschließlich Jahreswechsel/Schaltjahr und sparse/empty-Daten. Neuer bestehend integrierter Browsergate in browser-ui-quality prüft Chromium, später automatisch Firefox/WebKit und tatsächliche Produktion: Provider→Konto-Erfolg, Abbruch/Escape/verweigerter Discard, echte Quota, exakte Revisionen/Anbieterwahl/Fokus, keine überlebende Fortsetzung; fünf Breiten320/390/430/768/1440/Axe/44px; beide Wochenansichten mit unabhängig vorgegebenen110/130/140EUR und ausgeschlossener Tag-7-Probe, explizites100EUR-Teilportfolio mit unbekanntem ETF, leere Abdeckung und Nullmutation. Vollständiger neuer Chromiumflow lokal PASS. Bestehende Dialog-Consistency/Kontoeröffnung/Onboarding-Suggestions lokal ebenfalls PASS. Sechs ausgewählte lokale Bilder tatsächlich visuell geprüft, PASS.
+
+Erhaltener lokaler Entwicklungsbefund: Das achte Preset erzeugte bei320px unter geerbtem nowrap9px Seitenüberlauf; konkrete Ursache durch Bounding-Boxes/Screenshot belegt und scoped wrapping+44px behoben. Eine anfänglich unvollständige synthetische Teilportfolio-Probe hatte keine datierten Eröffnungsbelege; Anwendung verweigerte deshalb korrekt die Rekonstruktion. Nur Fixture über vorhandenes captureOpenings mit expliziten synthetischen Datumsbelegen korrigiert, unabhängiger100EUR-Sollwert und alle Assertions erhalten. Keine Finanzengine geändert.
+
+Finale vollständige neue GitHub-CI/Firefox/WebKit, finale Bilder, Main/Deployment und tatsächliche Live-Abnahme noch PENDING. Keine Workflow-/Gateänderung oder frühzeitige FLH05-/PERF-Implementierung. Nach Abnahme gemäß bestehender Roadmap FLH03-07/16-Eingangs-/Statusreste und Original-/Protokollnachweise weiterführen; Gesamtauftrag bleibt PARTIAL.
