@@ -1,4 +1,13 @@
 /** Versioned provenance, not a second journal. Legacy bookings remain untouched. */
+import {FLATEX_NATIVE_COLUMNS} from './flatex-native.js';
+const nativeReference=v=>typeof v==='string'&&v.trim()!==''&&v.trim()!=='-'&&v.length<=200&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
+/** Reserved optional evidence inside the existing sourcePayload, not a new schema. */
+export function validateNativeSourceEvidence(source){
+ const native=typeof source?.sourceId==='string'&&source.sourceId.startsWith('flatex-native-'),v=source?.sourceEvidence;
+ if(!native){if(v!==undefined)throw Error('Native Quellevidenz benötigt ihren eigenen Namespace.');return undefined;}
+ if(!/^flatex-native-v1:(depot|account):[a-f0-9]{64}$/.test(source.sourceId)||!nativeReference(source.externalId)||!v||typeof v!=='object'||Array.isArray(v)||Object.keys(v).sort().join(',')!=='payloadDigest,version'||v.version!==1||typeof v.payloadDigest!=='string'||!/^[a-f0-9]{64}$/.test(v.payloadDigest))throw Error('Native Quellidentität oder Quellevidenz ungültig.');
+ return {version:1,payloadDigest:v.payloadDigest};
+}
 export function importSourceKey(source){
  return source?.externalId?JSON.stringify([source.sourceId,source.accountId,source.externalId]):null;
 }
@@ -17,10 +26,43 @@ export function validateImportSource(value,accountId){
  }
  if(!value.sourceId||!value.accountId||value.accountId!==accountId||!value.sourcePayload||!value.ownedSnapshot||
     !Number.isSafeInteger(value.occurrence)||value.occurrence<1)throw Error('Importherkunft passt nicht zur Buchung.');
+ let sourceEvidence;try{sourceEvidence=JSON.parse(value.sourcePayload)?.sourceEvidence;}catch{}
+ validateNativeSourceEvidence({...value,sourceEvidence});
  return Object.fromEntries(['version','sourceId','accountId','externalId','sourcePayload','ownedSnapshot','fileId','occurrence','ownership'].map(k=>[k,value[k]]));
 }
 export function sourceUnmodified(model,booking){
  return booking.importSource?.ownership==='imported'&&booking.importSource.ownedSnapshot===bookingOwnership(model,booking);
+}
+
+/** Pure native source offers. No account binding, deduplication or financial rows. */
+export function inspectNativeFlatexSourceIdentities(documents){
+ if(!Array.isArray(documents)||!documents.length||documents.length>20||documents.some(d=>d?.kind!=='flatex-native-document-preview'||d.version!==1||!Object.isFrozen(d)||d.ready!==false||d.writeEnabled!==false||!Array.isArray(d.rows)||!Object.isFrozen(d.rows)||!FLATEX_NATIVE_COLUMNS[d.type]))throw Error('Native Flatex-Quelldokumente fehlen oder sind ungeprüft.');
+ const total=documents.reduce((n,d)=>n+d.rows.length,0);if(!total||total>5000)throw Error('Native Quellidentität benötigt 1 bis maximal 5.000 Zeilen.');
+ const rows=[],keys=new Map();
+ for(const [sourceIndex,d]of documents.entries()){
+  const columns=FLATEX_NATIVE_COLUMNS[d.type],lines=new Set();
+  if(!Array.isArray(d.columns)||d.columns.length!==columns.length||columns.some((c,i)=>d.columns[i]?.key!==c.key||d.columns[i]?.header!==c.header||d.columns[i]?.index!==i))throw Error('Native Flatex-Quellspalten ungeprüft.');
+  for(const r of d.rows){
+   if(!Number.isSafeInteger(r?.line)||r.line<2||lines.has(r.line)||!Object.isFrozen(r)||!Object.isFrozen(r.values)||!Array.isArray(r.fields)||!Object.isFrozen(r.fields)||r.fields.length!==columns.length||!Array.isArray(r.issues)||!Object.isFrozen(r.issues)||r.issues.some(i=>typeof i!=='string')||Object.keys(r.values).length!==columns.length||columns.some((c,i)=>typeof r.values[c.key]!=='string'||r.values[c.key]!==r.fields[i])||(r.order!==null&&typeof r.order?.reference!=='string'))throw Error('Native Flatex-Quellzeile nicht eindeutig prüfbar.');
+   lines.add(r.line);const v=r.values,sourceScope=d.type==='depot'?v.depot:v.account,bankReference=v.transactionReference;
+   const sourceId=nativeReference(sourceScope)?'flatex-native-v1:'+d.type+':'+sourceDigest(JSON.stringify(sourceScope)):null;
+   const externalId=nativeReference(bankReference)?bankReference:null;
+   const payloadDigest=sourceDigest(JSON.stringify(columns.filter(c=>c.key!=='number').map(c=>[c.key,v[c.key]])));
+   const entry={sourceIndex,line:r.line,sourceType:d.type,sourceScope,bankReference,orderReference:r.order?.reference??null,sourceId,externalId,payloadDigest,status:'source-review',identity:null,reasons:[...r.issues]};rows.push(entry);
+   if(!sourceId||!externalId)entry.reasons.push('Quellkontext oder Bankreferenz fehlt oder ist ungeklärt; kein Ersatzschlüssel.');
+   else{const key=JSON.stringify([sourceId,externalId]),list=keys.get(key)||[];list.push(entry);keys.set(key,list);}
+  }
+ }
+ for(const list of keys.values()){
+  const conflict=new Set(list.map(r=>r.payloadDigest)).size>1;
+  for(const r of list){
+   if(conflict){r.status='conflict';r.reasons.unshift('Dieselbe Quellidentität enthält geänderte Originalfelder.');}
+   else if(list.length>1){r.status='overlap-review';r.reasons.unshift('Mehrere Vorkommen derselben Quelle; alle Zeilen bleiben erhalten.');}
+   else if(!r.reasons.length){r.status='candidate-source';r.identity={sourceId:r.sourceId,externalId:r.externalId,sourceEvidence:{version:1,payloadDigest:r.payloadDigest},costsVerified:false};}
+  }
+ }
+ const freeze=v=>{if(v&&typeof v==='object'&&!Object.isFrozen(v)){for(const x of Object.values(v))freeze(x);Object.freeze(v);}return v;};
+ return freeze({kind:'flatex-native-source-identities',version:1,ready:false,writeEnabled:false,rows,note:'Quellenidentitäten ohne Kontobindung, Authentizitätsnachweis, Finanzmapping, Deduplizierung oder Importfreigabe.'});
 }
 
 // SHA-256 of canonical parsed source data. Synchronous to preserve the existing

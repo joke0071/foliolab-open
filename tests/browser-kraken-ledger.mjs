@@ -18,7 +18,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const file=text=>({name:'synthetic-kraken.csv',mimeType:'text/csv',buffer:Buffer.from(text)});
  const preview=()=>p.waitForFunction(()=>document.getElementById('csvReviewStatus')?.textContent.includes('Kraken Ledger:'));
  try{
-  await p.goto(base);await ready();const seed=ledgerModel();seed.settings.autoRefresh=false;
+  await p.goto(base);await ready();
+  // Finish the first worker claim before seed/re-navigation. Otherwise a late
+  // controller handoff can reload the second document during its baseline read.
+  await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
   await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);const before=await read();
   ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});

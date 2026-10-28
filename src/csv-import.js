@@ -1,4 +1,4 @@
-import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest} from './import-identity.js';
+import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
 import {safeImport,backup} from './model.js';
@@ -38,6 +38,7 @@ function resolvePosition(model,key,defaultId,allowedAccountId=''){
 export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositionId='',positionOverrides={},skippedLines=[],allowedAccountId='',fxRateOverrides={},sourceId='generic-csv',sourceIdentities={}}={}){
  const baseline=JSON.stringify(model);
  const draft=structuredClone(model),claimedIds=new Set();
+ let nativeSeen=model.bookings.some(b=>b.importSource?.sourceId?.startsWith('flatex-native-'));
  const fileDigest=sourceDigest(JSON.stringify([parsed.sourceName||'',parsed.headers,parsed.rows]));
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
@@ -66,12 +67,14 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const taxKnown=!!String(d[mapping.taxEUR]??'').trim()&&origin?.costsVerified!==false;
    const costsKnown=!trade||(feeKnown&&taxKnown);
    if(trade){if(!feeKnown)row.feeEUR=null;if(!taxKnown)row.taxEUR=null;}
-   const source={version:1,sourceId:origin?.sourceId||sourceId,accountId:pos.accountId,
-    externalId:origin?.externalId??ref,sourcePayload:JSON.stringify(row),fileId:origin?.fileId||fileDigest+':'+item.index,occurrence:1,ownership:'imported',ownedSnapshot:''};
+   const identity={sourceId:origin?.sourceId||sourceId,externalId:origin?.externalId??ref,sourceEvidence:origin?.sourceEvidence};
+   const evidence=validateNativeSourceEvidence(identity),sourceRow=evidence?{...row,sourceEvidence:evidence}:row;
+   const source={version:1,sourceId:identity.sourceId,accountId:pos.accountId,
+    externalId:identity.externalId,sourcePayload:JSON.stringify(sourceRow),fileId:origin?.fileId||fileDigest+':'+item.index,occurrence:1,ownership:'imported',ownedSnapshot:''};
    // An omitted settlement selection on repeat import cannot erase the
    // previously confirmed link; an explicitly changed selection conflicts.
    const samePayload=prior=>{
-    const previous=JSON.parse(prior.sourcePayload),current={...row};
+    const previous=JSON.parse(prior.sourcePayload),current={...sourceRow};
     if(!current.cashPositionId&&!linked&&!cashPositionId)current.cashPositionId=previous.cashPositionId;
     return JSON.stringify(previous)===JSON.stringify(current);
    };
@@ -83,6 +86,10 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
     if(!sourceUnmodified(draft,matches[0]))throw sourceConflict('Manuell geänderte Buchung bleibt geschützt. Bitte Importkonflikt prüfen.');
     duplicates++;list.push({line:item.index,status:'duplicate',row});continue;
    }
+   if(evidence)nativeSeen=true;
+   if(nativeSeen&&draft.bookings.some(b=>b.accountId===source.accountId&&Boolean(evidence)!==Boolean(b.importSource?.sourceId?.startsWith('flatex-native-'))&&
+      (((b.importSource?.sourceId==='flatex-at'||source.sourceId==='flatex-at')&&b.importSource?.externalId===source.externalId)||(b.positionId===row.positionId&&b.date===row.date&&b.type===row.type))))
+    throw sourceConflict('Native und andere Buchungsherkunft könnten dieselbe Quelle betreffen. Bitte Herkunft ausdrücklich prüfen.');
    const base=fingerprint(row);
    const count=ref?1:(occurrences.get(base)||0)+1;
    if(!ref)occurrences.set(base,count);
