@@ -1,0 +1,219 @@
+{
+  "status": "CANDIDATE_REVIEWED",
+  "date": "2026-10-28",
+  "pr": 187,
+  "branch": "feature/flh03-pchain-identity",
+  "base": "7b96a411925621f59021c36ad4d4a60a531c3a92",
+  "head": "06726680c794145d158d378d6b24741fa0c34247",
+  "contract": "7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c",
+  "tree": "5a6ad50997bfc932fa0220278a912f93267ff2e7",
+  "tested_merge": "2036ac9a225fb06256652f746c01f03c71c71a49",
+  "local_index_tree": "5a6ad50997bfc932fa0220278a912f93267ff2e7",
+  "runs": [
+    {
+      "id": 40691053325,
+      "result": "success",
+      "units": {
+        "pass": 821,
+        "fail": 0,
+        "skip": 0
+      },
+      "required_jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ],
+      "deploy": "skipped",
+      "live": "skipped"
+    },
+    {
+      "id": 40691053211,
+      "result": "success"
+    }
+  ],
+  "local": {
+    "targeted_pass": 24,
+    "all_unit_pass": 821,
+    "syntax": "PASS",
+    "browser": "Not executed: missing expected Playwright Chromium binary; regular CI provides browser acceptance"
+  },
+  "reports": {
+    "12817601980": {
+      "digest": "608bbde6de24c40209509f8e94408896fc3081f27f36ece311a17aeac1f77af5",
+      "files": [
+        "pchain-evidence-firefox-webkit.json"
+      ],
+      "pchain-evidence-firefox-webkit.json": {
+        "base": "http://127.0.0.1:4173/",
+        "result": "PASS",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "owner": {
+              "address": "P-avax142424242424242424242424242424242gukazp",
+              "networkID": "1",
+              "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+              "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+            },
+            "sameKey": true,
+            "contextSeparated": true,
+            "identityRejected": [
+              {
+                "label": "network mismatch",
+                "rejected": true
+              },
+              {
+                "label": "bad checksum",
+                "rejected": true
+              },
+              {
+                "label": "EVM is not P address",
+                "rejected": true
+              },
+              {
+                "label": "wrong chain",
+                "rejected": true
+              },
+              {
+                "label": "Bech32m",
+                "rejected": true
+              },
+              {
+                "label": "missing chain context",
+                "rejected": true
+              },
+              {
+                "label": "unsafe output index",
+                "rejected": true
+              }
+            ],
+            "idbUnchanged": true,
+            "prefsUnchanged": true,
+            "immutable": true
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "owner": {
+              "address": "P-avax142424242424242424242424242424242gukazp",
+              "networkID": "1",
+              "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+              "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+            },
+            "sameKey": true,
+            "contextSeparated": true,
+            "identityRejected": [
+              {
+                "label": "network mismatch",
+                "rejected": true
+              },
+              {
+                "label": "bad checksum",
+                "rejected": true
+              },
+              {
+                "label": "EVM is not P address",
+                "rejected": true
+              },
+              {
+                "label": "wrong chain",
+                "rejected": true
+              },
+              {
+                "label": "Bech32m",
+                "rejected": true
+              },
+              {
+                "label": "missing chain context",
+                "rejected": true
+              },
+              {
+                "label": "unsafe output index",
+                "rejected": true
+              }
+            ],
+            "idbUnchanged": true,
+            "prefsUnchanged": true,
+            "immutable": true
+          }
+        ]
+      }
+    },
+    "12817338279": {
+      "digest": "f107dfb5c4dcc27ff5a7a3357affdf3760157177f427c9ace63d6b946bf4304f",
+      "files": [
+        "pchain-evidence-chromium.json"
+      ],
+      "pchain-evidence-chromium.json": {
+        "base": "http://127.0.0.1:4173/",
+        "result": "PASS",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "owner": {
+              "address": "P-avax142424242424242424242424242424242gukazp",
+              "networkID": "1",
+              "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+              "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+            },
+            "sameKey": true,
+            "contextSeparated": true,
+            "identityRejected": [
+              {
+                "label": "network mismatch",
+                "rejected": true
+              },
+              {
+                "label": "bad checksum",
+                "rejected": true
+              },
+              {
+                "label": "EVM is not P address",
+                "rejected": true
+              },
+              {
+                "label": "wrong chain",
+                "rejected": true
+              },
+              {
+                "label": "Bech32m",
+                "rejected": true
+              },
+              {
+                "label": "missing chain context",
+                "rejected": true
+              },
+              {
+                "label": "unsafe output index",
+                "rejected": true
+              }
+            ],
+            "idbUnchanged": true,
+            "prefsUnchanged": true,
+            "immutable": true
+          }
+        ]
+      },
+      "testedSHA": "2036ac9a225fb06256652f746c01f03c71c71a49"
+    }
+  },
+  "artifact_digests_checked_before_extraction": true,
+  "review": {
+    "scope": "all seven changed files; fixed source contract, independent synthetic vectors, strict canonical/network/chain/outpoint checks; all pre-existing browser assertions preserved",
+    "blocking_findings": [],
+    "ui_changes": false,
+    "active_app_scanner_financial_storage_backup_changes": false,
+    "workflow_changes": false
+  },
+  "remaining": [
+    "P09-ID03 controlled merge and Main/Pages/actual three-engine production acceptance",
+    "Full FLH03-09 consistent UTXO/staking/atomic transfer/fees/independent ownership and expected balance gates"
+  ],
+  "production": "v197 LIVE_ACCEPTED; candidate SW198 not deployed",
+  "session": "P09-ID01 and P09-ID02 complete; stop after two stages"
+}
