@@ -5,8 +5,8 @@ Verbindliche Details: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT
 Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind Historie.
 
 - Letzter produktiv abgenommener Release: **v196 LIVE_ACCEPTED**.
-- Aktueller main: `bccd1f7956edba4d9ec0c5f11dc8edd023f31809` (PR185).
-- Einziger funktionaler PR: [Draft PR186](https://github.com/joke0071/foliolab-open/pull/186).
+- Aktueller main: `7b96a411925621f59021c36ad4d4a60a531c3a92` (PR186).
+- Gemergter Release-PR: [PR186](https://github.com/joke0071/foliolab-open/pull/186).
 - Funktionsbranch: `feature/reference-management`.
 - Kandidat: `c7d307c0eea079071adbce2add80780710ca1c8e`.
 - Geprüfter PR-Merge: `29d298f2c9f4123aeeb0da9c4905090226bc2b4f`.
@@ -37,8 +37,8 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 
 ## Externe Freigabegrenze / nächster Schritt
 
-**Exakt nächste Aktion:** unveränderten PR186 nach finalem Kollisionscheck kontrolliert mergen;
-anschließend Main-/Pages-/echte Drei-Engine-Liveabnahme vollständig abschließen.
+**Exakt nächste Aktion:** laufenden Main-/Pages-/Live-Lauf 40687427813 regulär abschließen;
+danach Produktionsartefakte und Bilder prüfen. Noch keine v197-Liveabnahme behaupten.
 Neue Referenzarchive verwenden portable Modell4-Metadatenversion2. Leser bis v196
 lehnen solche Sicherungen ab; bisherige Sicherungen bleiben im neuen Leser lesbar.
 Wiederherstellung aller Referenzen führt zu Metadaten1 (falls Buchungsarchive bestehen)
