@@ -9,7 +9,8 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - [PR186](https://github.com/joke0071/foliolab-open/pull/186): gemergt, veröffentlicht, abgenommen.
 - Kandidat: `c7d307c0eea079071adbce2add80780710ca1c8e`.
 - Releasebaum: `2572b4aa3bab516f4a4b92c489684a4ad69609bb`, exakt geprüfter Kandidat/Mergebaum.
-- Einziger Funktionsbranch: `feature/flh03-pchain-identity`; noch kein PR.
+- Einziger Funktionsbranch: `feature/flh03-pchain-identity`; [PR187](https://github.com/joke0071/foliolab-open/pull/187).
+- Kandidat: `06726680c794145d158d378d6b24741fa0c34247`.
 - PR157/161 bleiben unverändert geparkt.
 - `feature/reference-management` bleibt als gesicherte Referenz erhalten; keine ungesicherten Codeänderungen.
 - Arbeitspaket historische Referenzverwaltung / UI-Nachtrag: **REF186-RELEASE DONE**.
@@ -43,8 +44,10 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
   vor Code separat gesichert: `7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c`.
 - **P09-ID02 IN_PROGRESS:** reine Prüfhelfer/Tests gemäß Vertrag; keine aktive Walletintegration.
 - Basis v197/main `7b96a411925621f59021c36ad4d4a60a531c3a92`; keine externen Blocker für diesen begrenzten Umfang.
-- Exakt nächste Aktion: kanonische P-Mainnet-/Fuji-Adressprüfung und ausdrücklich
-  kontextgebundene UTXO-Identität implementieren, gezielt testen, bestehende 3-Engine-Suite erweitern.
+- Implementierung gesichert: 24/24 gezielte und 821/821 gesamte Units, Syntax PASS.
+- Lokaler Browserstart vor Ausführung wegen fehlender Playwright-Binärdatei blockiert.
+- Exakt nächste Aktion: laufende Pflicht-CI40691053325/Wallet40691053211 regulär abschließen,
+  Browserberichte und exakten Mergebaum prüfen; keine CI-Duplikate.
 - Danach unveränderte Pflicht-CI/Review; bei Release volle Main-/Pages-/Liveabnahme.
 - Übrige P-Chain-/Sonic-/Drive-Folge gemäß Detailcheckpoint; FLH05/PERF nicht vorziehen.
 - FLH-PROJ01 bleibt ausschließlich später dokumentiert.
