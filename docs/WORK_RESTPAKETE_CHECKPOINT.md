@@ -1,3 +1,11 @@
+# v191 veröffentlicht · gezielte Buchungs-Live-Abnahme läuft · 28.10.2026
+
+PR180 kontrolliert gemergt als `5b9bb792125343b602157bb949ec8b0efcb28fd0`, Tree `4c0412776a3f9d035712608e7b51e6cded336cc0` identisch mit geprüftem PR180-Mergebaum. Vollständiger [Main-/Pages-/Live-Lauf40642187590](https://github.com/joke0071/foliolab-open/actions/runs/40642187590) SUCCESS: test122662627307, beide Pflichtshards122662626999/122662627234, deploy122665125310, live122665458385. Lokal zusätzlich766/766 Units und Syntax PASS.
+
+Zusätzliche tatsächliche Buchungs-Produktion [40643428354](https://github.com/joke0071/foliolab-open/actions/runs/40643428354) RUNNING. QA-only `0ad401b0a37ae241455a98e2eb6bceadd6775e20` auf qa/v191-booking-live ändert ausschließlich `.github/workflows/v191-booking-live.yml`. Alle App-/Testdateien bleiben exakt Release-SHA; vollständiger veröffentlichter Assetvergleich/SW191, drei Engines, ursprüngliche Assertions/Restore/CAS/Offline plus visuelle Bildabnahme erforderlich. Noch kein vollständiges LIVE_ACCEPTED für v191 behauptet; kein weiterer Funktionsstrang gestartet.
+
+---
+
 # Alleinige Wiederaufnahme und kontrollierter PR180-Merge · 28.10.2026
 
 Nutzer bestätigt ausdrücklich: bisheriger Work-Lauf beendet/gestoppt; dieser Agent ist alleiniger Entwicklungsagent. Bestehende Sequenz bleibt verbindlich, keine parallele Funktionsentwicklung. PR180 HEAD `01ab8fedeab82c7d2fb864dce3f57c6c18efc4b4` und unverändertes main `ef783a99da2641b42f716cc08d28f2d50baee0c4` erneut geprüft; mergeable/clean. Finale Pflicht-CI40640857694 und Wallet40640857708 SUCCESS. Kontrollierter Merge mit erwarteter HEAD-SHA: `5b9bb792125343b602157bb949ec8b0efcb28fd0`.
