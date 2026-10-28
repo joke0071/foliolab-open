@@ -1,3 +1,17 @@
+# PR191 gemergt · FX-UI02 Main-/Liveabnahme offen · 28.10.2026
+
+Kontrollierter Merge mit erwarteter HEAD6d66d3d: main `88508742db6bed9be57d6e907b2bfe56d61b1631`.
+Vorher frischer Main/PR/Actions/Checkpoint-/Reviewcheck ohne Kollision, keine laufende
+fremde Arbeit. FX-UI01 erfolgreich abgenommen und vorher dauerhaft gesichert.
+**FX-UI02 IN_PROGRESS**, v200 bleibt letzter LIVE_ACCEPTED; v201 noch nicht abgenommen.
+Mainlauf: 40749554400.
+Nächster Schritt reguläre volle Main-/Pages-/tatsächliche Drei-Engine-Livegates
+abschließen, Artefaktdigests/Produktionsdateien/Restore/Offline/Bilder prüfen und sichern.
+Keine parallele Produktänderung oder doppelter Lauf. UI-MASTER28/DELETE-MASTER28
+und Order-/Mehrfachgegenbein-/Wirtschaftsvertrag bleiben offen, Master PARTIAL.
+
+---
+
 # FX-UI01 DONE · FX-UI02 kontrollierter Release vorbereitet · 28.10.2026
 
 PR191/HEAD6d66d3d57421e8b0d96862afc15992f124b06b68, getesteter Merge567c09228db375dd7ba0ab384f3cf7c8ae685911, Baumc48b6e1edae946a53ad38b565418c7bda6d93fdf exakt lokal/remote/PR-Merge. Pflicht40748383976 undWallet40748384443 vollständig SUCCESS:855/855Units/0Fail/0Skip, Syntax/Chromium/beideFirefox-WebKit-Pflichtshards. Neue Dialogberichte in allen3Engines tatsächlich gelesen: zwei Eingänge/einzeln/gemeinsam/Teil-Dateien, harte Grenzen/Kategorien/Misch-/Fremd-/Schemaguards, Werte/Referenzen/Escaping, zehnLayoutzustände/fünfBreiten/Axe/44px, Paging/Fokus/Submit/Abbruch/Neuöffnen, verspäteteDateilesungen, echteOfflineprüfung und exakteIDB-/Revisions-/Settings-Nullmutation PASS. 12-Dateien-Gesamtquellreview ohneBlocker, nachgrünerCI keineProduktänderung. CI-Bilder ChromiumEingänge390/FirefoxEingänge320/WebKitDetail1440 angesehen, keinBlocker.
