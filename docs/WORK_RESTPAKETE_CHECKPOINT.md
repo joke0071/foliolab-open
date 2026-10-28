@@ -1,3 +1,37 @@
+# Native Flatex-Importidentität wiederaufgenommen · 28.10.2026
+
+Frischer Kollisionscheck: main4e9a4a7392e3469eeb2018b7a9516debe3a48e96/v202 LIVE_ACCEPTED
+unverändert, PR192 gemergt/abgenommen, nur geparkte157/161 offen. Vollständige178Branchinventur
+und jüngste Actions einschließlich40760547088 SUCCESS; keine laufende CI oder fremder
+Git-/Node-Writer erkennbar. Zentraler Checkpointf0083c20 rekonstruiert. Alter Funktionsbranch
+order-links abgeschlossen; feature/flh05-import-foundation bleibt zentraler Dokumentationsbranch.
+Keine konkurrierenden Änderungen oder Wiederholung abgenommener Format-/Order-UI-Arbeit.
+
+Vorhandener Kern geprüft: importSourceKey/sourceDigest/bookingOwnership/sourceUnmodified,
+previewCSV/csv-batch und deren Replay-/Konflikt-/Restore-/Undo-/CASverträge vorhanden.
+Native Quellidentität fehlt; heutige Herkunft vergleicht normalisierte Finanzfelder.
+Raw-Quelländerungen wie Valuta können bei gleich bleibender Finanzprojektion sonst
+unbemerkt bleiben. Keine neue Finanzmutation oder zweiter Importkern erforderlich.
+
+**Zwei Etappen:** (1) kleinsten nativen Identitäts-/Quellnachweisvertrag vor Code sichern;
+(2) reine geprüfte Grundlage im bestehenden import-identity-/previewCSV-Kern ergänzen.
+Bank-ID getrennt nach Quellseite/-kontext, ohne Datum/Order/File/Ordinal im Identitätskey;
+alle Quelldaten außer Exportordinal über vorhandenen SHA256-Kern als versionierte Evidenz.
+Native Evidenz im bestehenden sourcePayload verankern, damit bestehende gleiche-ID/
+abweichende-Payload-/Korrekturschutzgates wiederverwendet werden. Keine neue Backupstruktur,
+Dialog-/Finanzintegration/automatische Dedupe oder Importfreigabe; voller Vertrag folgt
+vor Implementierung. Bestehende Legacy-/Generikverträge unverändert.
+
+Aktuelles Paket IN_PROGRESS, noch keine neue Implementierung/Abnahme behauptet.
+Produktion v202 unverändert; nach Grundlage UI-/wirtschaftliche Integration und Release
+separat. Keine privaten Originale für diesen synthetischen Struktur-/Korrekturschutzschnitt
+erforderlich, keine privaten Produktivdaten ändern. UI-MASTER28/DELETE-MASTER28 und
+bestehende Roadmap erhalten, Master PARTIAL. Exakt nächster Schritt Vorabvertrag sichern,
+synthetisches Valuta-Gegenbeispiel gegen vorhandenen Kern reproduzieren, dann minimal
+native Evidenz/Identität und unveränderte volle Pflicht-CI/Runtimegates prüfen.
+
+---
+
 # v202 LIVE_ACCEPTED · native Flatex-Ordervorschau produktiv abgenommen · 28.10.2026
 
 **Aktueller verbindlicher Stand:** Reine Orderbeziehungsgrundlage und deren
