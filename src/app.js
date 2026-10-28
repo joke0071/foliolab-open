@@ -1,5 +1,6 @@
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
 import {flatexNativeMarkup} from './flatex-native-ui.js';
+import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {readCSVRecords} from './csv-records.js';
 import {looksLikeBitpandaCSV,parseBitpandaCSV} from './bitpanda-preview.js';
 import {bitpandaMarkup} from './bitpanda-preview-ui.js';
@@ -1259,6 +1260,7 @@ function openCSVImport(){
  let krakenDocument=null,krakenLimit=50,krakenMode=false;
  let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false;
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
+ let flatexNativeLinks=null,flatexOrderLimit=20,flatexLegLimits={};
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1437,12 +1439,16 @@ function openCSVImport(){
  };
  const renderFlatexNative=()=>{
   importEditor.submitBlocked=true;
+  const opened=[...$('csvReview').querySelectorAll('details[id][open]')].map(e=>e.id);
   const count=flatexNativeDocuments.reduce((n,f)=>n+f.document.rows.length,0);
   $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Übernahme bleibt gesperrt.';
-  $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit});
+  $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits});
+  for(const id of opened){const e=$(id);if(e)e.open=true;}
   $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau.';
   $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
   $('flatexNativeShowMore')?.addEventListener('click',()=>{const previous=flatexNativeLimit;flatexNativeLimit+=50;renderFlatexNative();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
+  $('flatexOrdersShowMore')?.addEventListener('click',()=>{const previous=flatexOrderLimit;flatexOrderLimit+=20;renderFlatexNative();$('flatexOrderGroup-'+previous)?.querySelector('summary')?.focus();});
+  for(const button of $('csvReview').querySelectorAll('[data-flatex-order-legs]'))button.addEventListener('click',()=>{const i=Number(button.dataset.flatexOrderLegs),previous=flatexLegLimits[i]??20;flatexLegLimits[i]=previous+20;renderFlatexNative();$('flatexOrderLeg-'+i+'-'+previous)?.focus();});
  };
  async function chooseCSV(){
   const generation=++selectionGeneration;
@@ -1453,6 +1459,7 @@ function openCSVImport(){
   krakenDocument=null;krakenLimit=50;krakenMode=false;
   bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
+  flatexNativeLinks=null;flatexOrderLimit=20;flatexLegLimits={};
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
@@ -1469,7 +1476,7 @@ function openCSVImport(){
     if(!['auto','flatex-native'].includes(source))throw Error('Flatex-Originale bitte über die native Flatex-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
     const documents=inputs.map(f=>{const document=readFlatexNativeBytes(f.bytes);if(f.category&&document.type!==f.category)throw Error((f.category==='depot'?'Depotumsätze':'Kontoumsätze')+': falsche Dateikategorie.');return {name:f.name,document};});
     if(documents.reduce((n,f)=>n+f.document.rows.length,0)>5000)throw Error('Flatex: insgesamt maximal 5.000 Datenzeilen je Vorschau.');
-    flatexNativeDocuments=documents;renderFlatexNative();return;
+    flatexNativeLinks=inspectNativeFlatexOrderLinks(documents.map(f=>f.document));flatexNativeDocuments=documents;renderFlatexNative();return;
    }
    // Inspect raw records before strict generic headers/widths or financial mapping.
    const bitpanda=inputs.some(f=>{try{return looksLikeBitpandaCSV(readCSVRecords(f.text,{delimiter:',',maxRecords:5021}));}catch{return false;}});

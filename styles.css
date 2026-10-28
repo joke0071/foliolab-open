@@ -1149,6 +1149,11 @@
 #bookingChangeTransactions{margin:12px 0;overflow-wrap:anywhere}#bookingChangeTransactions>summary{min-height:44px}#bookingChangeTransactions li{margin:10px 0}
 
 .ledger-live-preview{min-width:0}.ledger-live-preview p,.ledger-live-preview li,.ledger-live-preview summary{overflow-wrap:anywhere}.ledger-live-preview select,.ledger-live-preview .btn{min-height:44px;max-width:100%}
+.flatex-order-review{margin:12px 0;border-block:1px solid #e3ebe4;padding:4px 0}
+.flatex-order-review summary{min-height:44px;box-sizing:border-box;padding:12px 4px;cursor:pointer;overflow-wrap:anywhere}
+.flatex-order-group{border-top:1px solid #e3ebe4;margin-top:8px}
+.flatex-order-group ol{padding-left:24px}.flatex-order-group li{margin-block:8px}
+.flatex-order-group p{margin:6px 0}.flatex-order-review summary:focus-visible,.flatex-order-group li:focus{outline:2px solid #327f52;outline-offset:2px}
 .kraken-ledger-preview dd{margin-inline-start:0;overflow-wrap:anywhere}.kraken-ledger-preview dt{font-weight:700}
 /* Account evidence reuses the existing settings disclosure and action pattern. */
 .account-evidence{min-width:0;margin:0 0 12px}.account-evidence summary{min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}.account-evidence-body{padding:0 12px 12px;overflow-wrap:anywhere}.account-evidence-body ul{padding-left:20px}.account-evidence .settings-actions{flex-wrap:wrap}.account-evidence .btn{min-width:44px;min-height:44px;white-space:normal}

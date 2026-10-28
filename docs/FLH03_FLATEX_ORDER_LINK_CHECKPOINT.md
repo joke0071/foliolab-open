@@ -1,3 +1,30 @@
+# Vorschau-Anbindung implementiert, Kandidatenabnahme offen · 28.10.2026
+
+Reine Grundlage e48f147 / PR192 nach vollen872Units/CI40756057570 und
+Wallet40756057649 sowie geprüften Drei-Engine-Artefakten DONE im Helferumfang;
+zentraler Beleg1c4c331 auf feature/flh05-import-foundation.
+UI-Vertrag vor Code auf Dokumentationsbranch7050375 gesichert, lokal identisch
+in FLH03_FLATEX_ORDER_LINK_UI_CONTRACT.md. Kein neuer Entwicklungszweig.
+
+Bestehender native Renderer um eingeklappte reinlesende Ordergruppen erweitert.
+Alle konservativen Status/Gründe, Dateiordinal/Zeile/Bank-/Orderreferenz getrennt,
+exakte Quellwerte ohne Summen. Helper einmal je Dateistapel,20er-Gruppen-/Belegpaging
+mit Fokus/Offenhaltung, Datei-/Modusreset und ursprüngliche50er-Quellanzeige erhalten.
+Vier neue synthetische Units,876/876Units unter Node20/24 PASS; gezielte Chromium-
+Dialogprüfung einschließlich5Breiten/Axe/44px/Paging/Fokus/Submit/Cancel/Escape/
+Offline und exaktem IDB-/Revisions-/Settings-Nullmutationsgate PASS.
+Finaler konsistenter Kandidat benötigt noch volle aktuelle unveränderte Pflicht-CI,
+beide Cross-Engine-Shards, Artefakt-/Quellprüfung und tatsächliche Bildprüfung.
+
+Keine Änderung von Parser/Helper/Legacy/Finanz/Storage/Backup; keine privaten
+Originale in diesem UI-Schnitt geöffnet, keine privaten Produktivdaten geändert.
+Produktion weiterhin main8850874/v201 LIVE_ACCEPTED, SW202 noch unveröffentlicht.
+UI-Integration IN_PROGRESS bis aktuelle Gates; danach kontrollierter Merge/Pages/
+Livecheck mit echten Bytehashes/Browsern/Restore/Offline. UI-MASTER28/DELETE-MASTER28
+und bestehende Roadmap erhalten. Gesamtmaster PARTIAL.
+
+---
+
 # Mehrfach-ORDER-Quarantäne ergänzt, finale Abnahme noch offen · 28.10.2026
 
 Erstkandidat f8e74b2934efd4b7ec47acb09435ec45b505bb4e / PR192 bleibt historische
