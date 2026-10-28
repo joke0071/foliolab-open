@@ -1,3 +1,13 @@
+# BP03-Kandidat gesichert · Pflicht-CI offen · 28.10.2026
+
+Vorhandener PR190/Branch `feature/flh03-bitpanda-preview` auf `b4ab4a52a43f4fd00bcaa0027fa6661018be6f58`, Baum `33bc9c41e273e776ed4304784cc6fd82cfb2f74c`; lokale getestete Quelle gleicher Baum. Direkter Git-Push mangels Shell-Credentials nicht möglich; identischer Baum über verbundenen GitHub-Git-API-Commit mit erwartetem bisherigem HEAD erfolgreich dauerhaft gesichert. main unverändert c28053a/v199 LIVE_ACCEPTED. Keine konkurrierende CI/Writer vor Sicherung, nur bestehender PR190 und geparkte157/161. BP03 IN_PROGRESS bis finale CI/Review.
+
+Native Bitpanda-Vorschau jetzt im bestehenden CSV-Dialog: Erkennung vor generischem Mapping, einzelne Datei, Fremd-/Mischmodi und erzwungener Submit gesperrt; Quellzeilen/Issues, exakte Mengen und deklarierte Gebühren, unbekannte Steuerwerte, Paging/Fokus/Escaping. Keine Finanz-/Storage-/Backupmutation. 844/844 lokale Units/0Fail/0Skip und Syntax PASS. Neue lokale Chromium-Abnahme PASS: fünf Breiten/Axe/44px, Guards/Schema/Submit, Fokus/Paging/Escape/Cancel/Neuöffnen, echte SW-Offlineprüfung, exakter IDB-/Revisions-/Settingsvergleich unverändert und keine externen Requests; allgemeine Semikolon-CSV mit zitiertem Komma weiterhin zugelassen. Chromiumdownload nach erstem unvollständigem ZIP über reguläre Fallbackquelle erfolgreich; erste lokale Browserstarts hatten getrennten Serverkontext und keine Verbindung, gemeinsamer Server-/Testkontext bestand ohne Produktänderung. Keine daraus erfundene Produktursache.
+
+Nächster Schritt: reguläre unveränderte PR-CI samt Drei-Engine-/Scope-/Bildreview abwarten, Ergebnisse/Artefakte prüfen und sichern. Danach BP04 kontrollierter Merge/Main-/Pages-/tatsächliche Produktionsabnahme. Keine neue Paketarbeit; zwei Folgeetappen BP03/BP04. Originale nicht zusätzlich geöffnet/veröffentlicht; Flatex im regulären Folgeschritt. Gesamtmaster PARTIAL, FLH05/PERF/PROJ01 weiterhin zurückgestellt.
+
+---
+
 # Wiederaufnahme verifiziert · BP03 aktiv · 28.10.2026
 
 Frischer GitHub-Abgleich: main `c28053a109ed0338cdb040d88758766a1888a535`, v199 laut abgeschlossenem Releasebeleg LIVE_ACCEPTED; Main-/Pages-/Live40715191210 SUCCESS. Keine GitHub-Releases angelegt (PWA-Version ist maßgeblich). PR190 offen, HEAD `e83d3bddc2132ea5a5632902f5971e97679b0818`, Pflicht40720747693/Wallet40720747688 SUCCESS; nur geparkte PR157/161 daneben. Sämtliche jüngsten Actions beendet, Branches und lokale Prozesse geprüft, kein konkurrierender Writer erkennbar. Maßgeblicher Dokumentationsbranch bleibt `feature/flh05-import-foundation`; funktional ausschließlich vorhandenen Branch `feature/flh03-bitpanda-preview`/PR190 fortsetzen. BP01/BP02 nicht wiederholen.
