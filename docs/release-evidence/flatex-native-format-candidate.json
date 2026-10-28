@@ -1,0 +1,44 @@
+{
+  "stage": "FX-FORMAT01",
+  "status": "DONE within pure format/PR scope",
+  "head": "56c0b1397b02aa3041daf4f434340f530aeeedde",
+  "tested_merge": "1de2d7e62ed1bf82c9b9758c18b9ecf96e615a6d",
+  "tree": "f3dcf3a74e411ad7158946ab993d98bad2b02615",
+  "runs": [
+    40745005502,
+    40745005842
+  ],
+  "units": {
+    "pass": 853,
+    "fail": 0,
+    "skip": 0
+  },
+  "all_required_jobs": "success",
+  "runtime_reports_read": [
+    "flatex-native-chromium.json",
+    "flatex-native-firefox-webkit.json"
+  ],
+  "checks": [
+    "12/10 positional blank headers",
+    "UTF8/CP1252 including all 32 C1 mappings",
+    "exact quantities/unknown vs zero",
+    "separate references/dates",
+    "immutable no-write API",
+    "actual SW offline reload",
+    "exact IDB/revision/settings unchanged",
+    "no external requests"
+  ],
+  "artifacts": [
+    {
+      "id": 12840569630,
+      "sha256": "92f615757ba1d4d5fb868a2575862677afe701cfe6de88e22d93eb81f488b963"
+    },
+    {
+      "id": 12841842143,
+      "sha256": "4109f503542ebd5b2951ef8f765dc20186b31c8c98d3095c62296e6865c03d38"
+    }
+  ],
+  "production": "v200 LIVE_ACCEPTED, no merge/deployment",
+  "next": "FX-UI01 on same PR191/branch; separate native source preview, then controlled read-only release",
+  "master": "PARTIAL"
+}

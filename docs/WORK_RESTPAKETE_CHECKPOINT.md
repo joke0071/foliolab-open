@@ -1,3 +1,11 @@
+# FX-FORMAT01 DONE · FX-UI01 begonnen · 28.10.2026
+
+Frischer Kollisionscheck: main b2a07f4/v200 unverändert, nur eigener PR191 und geparkte157/161, jüngste Actions beendet, kein lokaler fremder Writer. Finale Pflicht40745005502/Wallet40745005842 SUCCESS; 853/853Units/0Fail/0Skip, Syntax und beide vollständigen Browser-Shards. Beide Artefaktdigests vor Extraktion bestätigt, testedSHA1de2d7e und drei neue Runtimeberichte tatsächlich gelesen: 12/10-Spalten, alle32CP1252-C1-Zeichen, exakte Werte/Referenzen, echte Offlineprüfung und exakte IDB-/Revisions-/Settings-Nullmutation PASS. Acht-Dateien-Gesamtdiff ohne Blocker, Baumf3dcf3a exakt lokal/remote/Merge. [Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-format-candidate.json).
+
+**FX-FORMAT01 DONE im begrenzten Parser-/PR-Umfang. FX-UI01 IN_PROGRESS:** [vorab gesicherter Dialogvertrag](FLH03_FLATEX_NATIVE_UI_CONTRACT.md). Bestehenden PR191/Branch fortsetzen, keine neue parallele Entwicklung. Native Quarantänevorschau, getrennte Depot-/Kontouploads und begrenzte Mehrdateiansicht; keine Buchungs-/Matcher-/Finanzmutation. Danach FX-UI02 nur bei bestandenen Gates kontrolliert releasen. Zwei Folgeetappen UI01/UI02 dieser Sitzung. Produktion bis dahin v200 LIVE_ACCEPTED, SW201 unveröffentlicht. UI-MASTER28 und vollständig gesicherter DELETE-MASTER28 bleiben offen; keine privaten Produktivdatenänderungen. Master PARTIAL, Roadmap unverändert.
+
+---
+
 # Gesicherte Übergabe während laufender finaler CI · 28.10.2026
 
 **Kein finaler Kandidaten-PASS behauptet.** FX-AUDIT01 DONE; FX-FORMAT01 implementiert,
