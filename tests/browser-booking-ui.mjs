@@ -31,6 +31,16 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   await page.reload();await ready();await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await ready();await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));await nav('bookings');
   const before=await record();assert.equal(await page.locator('[data-booking-select]').count(),0);assert.equal(await page.locator('[data-booking-manage]').count(),1);
   for(const action of ['edit','remove','archive'])assert.ok(await row(action).isVisible(),'direct row action without selection: '+action);
+  for(const width of [320,390,430,768,1440]){
+   await page.setViewportSize({width,height:900});const trigger=page.locator('#bookingListHead [data-booking-manage="select"]');
+   await trigger.scrollIntoViewIfNeeded();assert.equal(await trigger.innerText(),'Mehrfachauswahl');assert.equal(await page.locator('#bookingManagementTools button,#bookingManagementTools input,[data-booking-select]').count(),0);
+   assert.ok(await trigger.evaluate(b=>{const r=b.getBoundingClientRect(),h=b.parentElement.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=h.left&&r.right<=h.right+1;}));
+   for(const action of ['edit','remove','archive'])assert.ok(await row(action).isVisible());
+   await scan('#bookingsPage');mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/bookings-'+engine+'-'+width+'.png'});
+   await trigger.focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#bookingListHead button').count(),0);assert.ok(await page.locator('#bookingSelectFiltered').isVisible());
+   await tool('cancel').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
+  }
+  assert.deepEqual(await record(),before,'header/keyboard selection cycles do not persist');await page.setViewportSize({width:390,height:900});
   assert.ok(await row('edit',imported.id).isDisabled());assert.ok(await row('remove',imported.id).isDisabled());assert.ok(await row('archive',imported.id).isEnabled());
   // This fixture is an explicitly manual correction with its original booking, so existing safe note edits remain available. Economic fields stay locked.
   assert.ok(await row('remove',technical.id).isDisabled());assert.ok(await row('archive',technical.id).isEnabled());await row('edit',technical.id).click();assert.ok(await page.locator('[name=quantity]').isDisabled());assert.ok(await page.locator('[name=date]').isDisabled());assert.ok(await page.locator('[name=notes]').isEnabled());await close();assert.deepEqual(await record(),before);
