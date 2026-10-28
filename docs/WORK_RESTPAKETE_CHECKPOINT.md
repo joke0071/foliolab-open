@@ -1,3 +1,35 @@
+# PR193 korrigierter Testsetup-Kandidat gesichert · finale CI läuft · 28.10.2026
+
+Einziger Funktionsbranch feature/flh03-flatex-native-identity / PR193,
+HEAD `ff2b79d58fd7ee6cccfbcd3ba992a961c947d6a9`, Baum `78b7ccbc65e5052f9798d1dfe42f0940afff6c77`
+exakt lokal/API-Remote. Gegenüber erstem Kandidatc6329 nur bestehender Kraken-
+Testsetup und Paketcheckpoint geändert; App-/Identitäts-/Finanzquellen unverändert.
+Erstlauf40766119013 regulär beendet: test/Cross(1)SUCCESS, Cross(2)FAILURE beim
+vorhandenen Kraken-Kontextwechsel; Wallet40766119069SUCCESS. Kein Abbruch/
+Blind-Rerun. Roter Job123090598458 und ZIP12850402591/Digest darunter erhalten.
+
+Minimaler Setup wartet vor Seed/zweiter Navigation auf ersten aktiven SW-Controller,
+statt in dessen Übergabe neu zu navigieren. Gezielter Chromium-Krakenlauf PASS,
+alle ursprünglichen Assertions/Offline-/exakten Nullmutationsgates erhalten;
+keine Sleep-/Retry-/Pin-/Workflowlockerung. Finale892Units/16neue Fokusfälle,
+Syntax und neue Identitätsruntime lokal PASS; neue Identitätsgates bereits in
+vorigem CI-Chromium/Firefox/WebKit PASS, aber Gesamt-PASS noch nicht behauptet.
+
+Aktuelle finale Läufe: 40767434644 Wallet scan checks; 40767434426 FolioLab Open – testen und veröffentlichen.
+**Grundlage IN_PROGRESS** bis neue volle unveränderte CI/Wallet/Quell-/Artefaktprüfung.
+Exakt nächster Schritt diese Läufe regulär abschließen lassen; actual native-identity-
+Runtimeberichte in3Engines, corrected Kraken-Setup, ZIP-Digests/testedSHA und identische
+Kandidaten-/Merge-/Lokalbäume tatsächlich prüfen und zentral dauerhaft sichern.
+Dann zwei Etappen Vertrag + geprüfte reine Grundlage abgeschlossen übergeben;
+Staging-/Kontobindung/UI/Release separat. Funktionsbranch nicht überschreiben/
+duplizieren, keinen früheren Kandidaten als finale Abnahme ausgeben.
+
+Main4e9a4a7/v202 LIVE_ACCEPTED unverändert, SW203 unveröffentlicht; nur geparkte157/161
+daneben, keine fremden Work-Prozesse unterbrochen. Keine privaten Originale/Produktivdaten
+verändert; UI-MASTER28/DELETE-MASTER28 und bestehende Roadmap erhalten. Master PARTIAL.
+
+---
+
 # PR193: vorhandener Kraken-CI-Startwettlauf erkannt · Korrektur lokal · 28.10.2026
 
 Aktueller gesicherter Kandidat weiterhin c6329da2c8beea0c3f284e9c945d39133551285a /
