@@ -1,3 +1,11 @@
+# PR192: zusätzliche Mehrfach-ORDER-Quarantäne lokal in Prüfung · 28.10.2026
+
+Erstkandidat f8e74b2/PR192 weiter in regulärer CI40754640919; Wallet40754640913 SUCCESS, keine Unterbrechung oder Doppelstarts. Im abschließenden synthetischen Gegenbeispieltest reproduziert: eine Zeile mit zwei ORDER-Tupeln und gleichem Typ/ISIN wurde noch possible-single, obwohl nur die letzte Orderreferenz aus der nativen Projektion stammt. Keine Finanzmutation möglich, aber konservativer Beziehungsvertrag verlangt source-review für die ganze Gruppe.
+
+Begrenzte lokale Korrektur: genau eine ORDER-Angabe je qualifizierter Quellzeile verlangen; zusätzlicher Unit- und Browserfall. Keine Abschwächung/Umdeutung des Tests, keine Änderung von Quellparser/Legacy-API/Dialog/Storage/Backup. Korrektur noch NICHT remote gesichert; vollständige lokale872-Tests/Node20/Chromium-/private Prüfung laufen. Erst aktuellen CI-Lauf regulär beenden lassen, dann konsistenten Korrekturcommit auf demselben Branch/PR sichern und volle unveränderte Pflicht-CI erneut prüfen. Produktion v201 unverändert, SW202 unveröffentlicht; Grundlagenteil bis dahin IN_PROGRESS. Zwei Etappen Vertrag/Helfer, UI/Release später separat, UI-/Lösch-Nachträge und Roadmap erhalten.
+
+---
+
 # Native Orderbeziehungsgrundlage gesichert · PR192 in Pflicht-CI · 28.10.2026
 
 Vorabvertrag e5f2a20ae01e6b0a25edcccdc8bf026f1fb3aca7 DONE.
