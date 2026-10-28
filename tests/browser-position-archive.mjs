@@ -9,7 +9,8 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
  await ctx.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
  const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
  const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
- const nav=async page=>p.locator((await p.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav')+' [data-page="'+page+'"]').click();
+ // Re-evaluate visibility at click time across responsive layout/navigation.
+ const nav=page=>p.locator('#mobileNav [data-page="'+page+'"]:visible,#sidebarNav [data-page="'+page+'"]:visible').click();
  const record=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
  const menu=async()=>{if(await p.locator('[data-action=select-positions]').count())await p.locator('[data-action=select-positions]').click();};
  const cycle=()=>p.locator('#positionSelectFiltered').click();

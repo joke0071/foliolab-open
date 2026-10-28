@@ -1,3 +1,22 @@
+# Sichtbare Archivnavigation vor finaler CI · 28.10.2026
+
+Zweiter Kandidat ff2b79d58fd7ee6cccfbcd3ba992a961c947d6a9 / Lauf40767434426
+regulär beendet: test und Cross(2)SUCCESS, Wallet40767434644SUCCESS. Korrigierter
+Kraken-Setup in voller Cross-Engine-Prüfung grün. Cross(1)FAILURE beim bestehenden
+Archivtest browser-position-archive.mjs:32/nav:12: mobiler WebKit-Setup wartete auf
+versteckten Desktopbutton. Die vorab abgefragte mobileNav-Sichtbarkeit darf nicht
+als fester Navigationszweig über Layout-/Navigationswechsel erhalten bleiben.
+
+Minimaler Testfix: :visible-Union der beiden echten Navigationsbuttons beim regulären
+Klick auswerten; kein force/retry/Timeout-/Assertion-/Pin-/Workflowwechsel. Gezielter
+lokaler Chromium-Archivlauf vollständig PASS: sechs Breiten/Axe, Archiv/Restore,
+unveränderte Ökonomie/Historie, Quota/CAS, Offline, Plain-/Encrypted-UI-Restore.
+App-/Identitäts-/Finanzquellen seit c6329 unverändert, rote Evidenz beider Läufe
+erhalten; beide Läufe vor Korrekturpush regulär beendet. Neue volle Pflicht-CI
+bleibt erforderlich. Produktion v202, SW203 unveröffentlicht, Grundlage IN_PROGRESS.
+
+---
+
 # Begrenzte Kraken-Setup-Synchronisation vor finaler CI · 28.10.2026
 
 Erstkandidat c6329da2c8beea0c3f284e9c945d39133551285a / PR193 im ersten Lauf
