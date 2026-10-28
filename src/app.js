@@ -1,5 +1,6 @@
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
-import {flatexNativeMarkup} from './flatex-native-ui.js';
+import {flatexNativeMarkup,reviewNativeFlatexBindings} from './flatex-native-ui.js';
+import {inspectNativeFlatexSourceIdentities} from './import-identity.js';
 import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {readCSVRecords} from './csv-records.js';
 import {looksLikeBitpandaCSV,parseBitpandaCSV} from './bitpanda-preview.js';
@@ -1261,6 +1262,7 @@ function openCSVImport(){
  let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false;
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
  let flatexNativeLinks=null,flatexOrderLimit=20,flatexLegLimits={};
+ let flatexSourceIdentities=null,flatexBindings={},flatexBindingLimit=20,flatexBindingStale=false,flatexBindingAction=0;
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1441,14 +1443,37 @@ function openCSVImport(){
   importEditor.submitBlocked=true;
   const opened=[...$('csvReview').querySelectorAll('details[id][open]')].map(e=>e.id);
   const count=flatexNativeDocuments.reduce((n,f)=>n+f.document.rows.length,0);
+  const staging=reviewNativeFlatexBindings(model,flatexSourceIdentities,flatexBindings,{stale:flatexBindingStale||Boolean(loadFailure)||otherTabChangedPortfolio});
   $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Übernahme bleibt gesperrt.';
-  $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits});
+  $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits,staging,bindingLimit:flatexBindingLimit});
   for(const id of opened){const e=$(id);if(e)e.open=true;}
   $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau.';
   $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
   $('flatexNativeShowMore')?.addEventListener('click',()=>{const previous=flatexNativeLimit;flatexNativeLimit+=50;renderFlatexNative();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
   $('flatexOrdersShowMore')?.addEventListener('click',()=>{const previous=flatexOrderLimit;flatexOrderLimit+=20;renderFlatexNative();$('flatexOrderGroup-'+previous)?.querySelector('summary')?.focus();});
   for(const button of $('csvReview').querySelectorAll('[data-flatex-order-legs]'))button.addEventListener('click',()=>{const i=Number(button.dataset.flatexOrderLegs),previous=flatexLegLimits[i]??20;flatexLegLimits[i]=previous+20;renderFlatexNative();$('flatexOrderLeg-'+i+'-'+previous)?.focus();});
+  $('flatexBindingsShowMore')?.addEventListener('click',()=>{const previous=flatexBindingLimit;flatexBindingLimit+=20;renderFlatexNative();$('flatexBinding-'+previous)?.focus();});
+  const updateBinding=async(control,confirm)=>{
+   const i=Number(confirm?control.dataset.flatexBindingConfirm:control.dataset.flatexBindingAccount),context=staging.contexts[i],generation=selectionGeneration,action=++flatexBindingAction;
+   if(!context?.sourceId)return;
+   const desired=confirm&&control.checked,accountId=confirm?(flatexBindings[context.sourceId]?.accountId||''):control.value;
+   flatexBindings[context.sourceId]={accountId,confirmed:false,accountSnapshot:''};
+   if(!confirm&&$('flatexBindingConfirm-'+i))$('flatexBindingConfirm-'+i).checked=false;
+   for(const c of $('csvReview').querySelectorAll('[data-flatex-binding-account],[data-flatex-binding-confirm]'))c.disabled=true;
+   try{
+    if(loadFailure||otherTabChangedPortfolio||flatexBindingStale)throw Error('Datenstand geändert.');
+    await portfolioStore.assertCurrent();
+    if(generation!==selectionGeneration||action!==flatexBindingAction||editor!==importEditor||!$('editDialog').open)return;
+    const current=reviewNativeFlatexBindings(model,flatexSourceIdentities,flatexBindings).contexts[i];
+    if(desired&&current?.sourceId===context.sourceId&&current.accountId===accountId&&!current.disabled)flatexBindings[context.sourceId]={accountId,confirmed:true,accountSnapshot:current.accountSnapshot};
+    renderFlatexNative();$(control.id)?.focus();
+   }catch{
+    if(generation!==selectionGeneration||action!==flatexBindingAction||editor!==importEditor||!$('editDialog').open)return;
+    flatexBindings={};flatexBindingStale=true;renderFlatexNative();$('flatexNativeBindings').open=true;
+   }
+  };
+  for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-account]'))control.addEventListener('change',()=>updateBinding(control,false));
+  for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-confirm]'))control.addEventListener('change',()=>updateBinding(control,true));
  };
  async function chooseCSV(){
   const generation=++selectionGeneration;
@@ -1460,6 +1485,7 @@ function openCSVImport(){
   bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
   flatexNativeLinks=null;flatexOrderLimit=20;flatexLegLimits={};
+  flatexSourceIdentities=null;flatexBindings={};flatexBindingLimit=20;flatexBindingStale=false;flatexBindingAction++;
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
@@ -1468,6 +1494,7 @@ function openCSVImport(){
    if(files.length>20)throw Error('Maximal 20 Dateien je Import.');
    if(files.some(f=>f.size>2_000_000))throw Error('Je Datei sind höchstens 2 MB erlaubt.');
    $('csvMapping').innerHTML='';$('csvReview').textContent='Dateien werden geprüft.';
+   $('csvReviewStatus').textContent='Dateien werden geprüft.';
    const inputs=await Promise.all(selected.map(async({file,category})=>{const bytes=new Uint8Array(await file.arrayBuffer());return {name:file.name,category,bytes,text:new TextDecoder('utf-8').decode(bytes)};}));
    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
    const native=inputs.some(f=>{try{return looksLikeFlatexNativeCSV(readCSVRecords(f.text,{delimiter:';'}));}catch{return false;}});
@@ -1476,7 +1503,10 @@ function openCSVImport(){
     if(!['auto','flatex-native'].includes(source))throw Error('Flatex-Originale bitte über die native Flatex-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
     const documents=inputs.map(f=>{const document=readFlatexNativeBytes(f.bytes);if(f.category&&document.type!==f.category)throw Error((f.category==='depot'?'Depotumsätze':'Kontoumsätze')+': falsche Dateikategorie.');return {name:f.name,document};});
     if(documents.reduce((n,f)=>n+f.document.rows.length,0)>5000)throw Error('Flatex: insgesamt maximal 5.000 Datenzeilen je Vorschau.');
-    flatexNativeLinks=inspectNativeFlatexOrderLinks(documents.map(f=>f.document));flatexNativeDocuments=documents;renderFlatexNative();return;
+    const links=inspectNativeFlatexOrderLinks(documents.map(f=>f.document)),identities=inspectNativeFlatexSourceIdentities(documents.map(f=>f.document));
+    let stale=Boolean(loadFailure)||otherTabChangedPortfolio;try{await portfolioStore.assertCurrent();}catch{stale=true;}
+    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
+    flatexNativeLinks=links;flatexSourceIdentities=identities;flatexBindingStale=stale;flatexNativeDocuments=documents;renderFlatexNative();return;
    }
    // Inspect raw records before strict generic headers/widths or financial mapping.
    const bitpanda=inputs.some(f=>{try{return looksLikeBitpandaCSV(readCSVRecords(f.text,{delimiter:',',maxRecords:5021}));}catch{return false;}});

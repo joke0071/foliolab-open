@@ -1,8 +1,47 @@
 /** Existing disclosure UI; source documents never become financial transactions. */
 import {escapeHTML as esc} from './model.js';
+import {flatexCustodyAccounts} from './flatex-reconciliation.js';
+import {importSourceKey,sourceUnmodified,validateImportSource} from './import-identity.js';
 const labels={'order-buy':'ORDER Kauf','order-sell':'ORDER Verkauf',accumulation:'Thesaurierung','custody-change':'Lagerstellenwechsel',split:'Split',merger:'Fusion','fusion-cancellation':'Storno Fusion',cancellation:'Storno',unclassified:'Ungeklärt'};
 const orderLabels={'possible-single':'Mögliche 1:1-Beziehung','multiple-cash-review':'Mehrere Kontobelege prüfen','multiple-depot-review':'Mehrere Depotausführungen prüfen','missing-depot':'Depotbeleg fehlt','missing-cash':'Kontobeleg fehlt',conflict:'Widerspruch prüfen','overlap-review':'Überlappung prüfen','cancelled-review':'Storno prüfen','scope-review':'Quellkontexte prüfen','source-review':'Quellangaben prüfen'};
 const show=v=>esc(v==null||v===''?'unbekannt':String(v).length>300?String(v).slice(0,300)+' (Anzeige gekürzt)':String(v));
+const stagingLabels={'source-only':'Zuordnung bestätigt – Buchungswirkung ungeprüft','existing-source':'Quellnachweis vorhanden – Buchungswirkung ungeprüft','manual-review':'Manuell geändert – geschützt','existing-conflict':'Vorhandenen Quellnachweis prüfen',conflict:'Geänderte Originalquelle prüfen','overlap-review':'Überlappung prüfen','source-review':'Quellangaben prüfen',unassigned:'Portfolio-Konto auswählen',unconfirmed:'Zuordnung noch bestätigen',stale:'Datenstand geändert – neu laden'};
+/** Session-only account/source review. Never projects or commits transactions. */
+export function reviewNativeFlatexBindings(model,identities,assignments={}, {stale=false}={}){
+ if(identities?.kind!=='flatex-native-source-identities'||identities.version!==1||identities.ready!==false||identities.writeEnabled!==false||!Object.isFrozen(identities)||!Array.isArray(identities.rows)||!identities.rows.length||identities.rows.length>5000||!assignments||typeof assignments!=='object'||Array.isArray(assignments))throw Error('Ungeprüfte native Kontozuordnung.');
+ for(const key of ['accounts','providers','bookings','journalEntries'])if(!Array.isArray(model?.[key])||model[key].some(x=>typeof x?.id!=='string'||!x.id)||new Set(model[key].map(x=>x.id)).size!==model[key].length)throw Error('Portfoliokontext nicht eindeutig prüfbar.');
+ const providers=new Map(model.providers.map(p=>[p.id,p])),choices={depot:flatexCustodyAccounts(model),account:model.accounts.filter(a=>['checking','savings','securities','other'].includes(a.type)&&/flatex/i.test(providers.get(a.providerId)?.name||''))};
+ const groups=new Map(),nativeBookings=new Map(),legacyAccounts=new Set();
+ for(const b of model.bookings){const key=importSourceKey(b.importSource);if(key){const list=nativeBookings.get(key)||[];list.push(b);nativeBookings.set(key,list);}if(!b.importSource?.sourceId?.startsWith('flatex-native-'))legacyAccounts.add(b.accountId);}
+ for(const r of identities.rows){const key=r.sourceId??JSON.stringify([r.sourceType,r.sourceScope]),list=groups.get(key)||[];list.push(r);groups.set(key,list);}
+ const contexts=[...groups.values()].map((rows,index)=>{
+  const r=rows[0],options=choices[r.sourceType].map(a=>({id:a.id,label:a.name+' · '+providers.get(a.providerId).name+' · '+a.currency})),binding=r.sourceId?assignments[r.sourceId]:null;
+  const account=choices[r.sourceType].find(a=>a.id===binding?.accountId),accountSnapshot=account?JSON.stringify([account,providers.get(account.providerId)]):'';
+  const confirmed=Boolean(!stale&&r.sourceId&&account&&binding.confirmed===true&&binding.accountSnapshot===accountSnapshot);
+  return {index,sourceId:r.sourceId,sourceType:r.sourceType,sourceScope:r.sourceScope,rowCount:rows.length,options,accountId:account?.id||'',accountLabel:options.find(o=>o.id===account?.id)?.label||'',accountSnapshot,confirmed,disabled:stale||!r.sourceId||!options.length,legacyReview:confirmed&&legacyAccounts.has(account.id),reason:stale?'Datenstand geändert. Bitte neu laden.':!r.sourceId?'Quellkontext ungeklärt.':!options.length?'Passendes Flatex-Konto unter „Mehr“ anlegen.':binding?.confirmed&&!confirmed?'Kontodaten geändert. Bitte erneut bestätigen.':''};
+ });
+ const bySource=new Map(contexts.filter(c=>c.sourceId).map(c=>[c.sourceId,c]));
+ const rows=identities.rows.map(r=>{
+  const context=bySource.get(r.sourceId);let status=r.status==='candidate-source'?'source-only':r.status,reasons=[...r.reasons];
+  if(stale)status='stale';
+  else if(r.status==='candidate-source'){
+   if(!context?.accountId)status='unassigned';
+   else if(!context.confirmed)status='unconfirmed';
+   else{
+    const matches=nativeBookings.get(importSourceKey({...r.identity,accountId:context.accountId}))||[];
+    if(matches.length>1){status='existing-conflict';reasons=['Mehrere Buchungen mit derselben Quellenidentität.'];}
+    else if(matches.length){const b=matches[0];try{validateImportSource(b.importSource,b.accountId);const evidence=JSON.parse(b.importSource.sourcePayload).sourceEvidence;if(evidence.payloadDigest!==r.payloadDigest){status='existing-conflict';reasons=['Originalfelder weichen vom vorhandenen Nachweis ab.'];}else if(!sourceUnmodified(model,b)){status='manual-review';reasons=['Manuelle Änderungen bleiben erhalten.'];}else status='existing-source';}catch{status='existing-conflict';reasons=['Vorhandene Herkunft ist nicht vollständig prüfbar.'];}}
+   }
+  }
+  return {sourceIndex:r.sourceIndex,line:r.line,status,label:stagingLabels[status],reasons,accountId:context?.confirmed?context.accountId:null};
+ });
+ const freeze=v=>{if(v&&typeof v==='object'&&!Object.isFrozen(v)){for(const x of Object.values(v))freeze(x);Object.freeze(v);}return v;};
+ return freeze({kind:'flatex-native-binding-review',version:1,ready:false,writeEnabled:false,stale:Boolean(stale),contexts,rows,confirmed:contexts.filter(c=>c.confirmed).length,legacyReview:contexts.some(c=>c.legacyReview)});
+}
+export function flatexNativeBindingMarkup(staging,{limit=20}={}){
+ if(staging?.kind!=='flatex-native-binding-review'||staging.ready!==false||staging.writeEnabled!==false||!Object.isFrozen(staging)||!Number.isSafeInteger(limit)||limit<1||limit>5000)throw Error('Ungeprüfte native Kontozuordnungsanzeige.');
+ return '<details id="flatexNativeBindings" class="flatex-order-review"><summary>Kontozuordnung · '+staging.confirmed+' von '+staging.contexts.length+' bestätigt</summary><p class="small-help">Nur für diese Vorschau. Buchungswirkung, Bestände und Kosten bleiben ungeprüft; keine Übernahme.</p>'+(staging.stale?'<p role="status">Datenstand geändert. Bitte neu laden.</p>':'')+(staging.legacyReview?'<p class="small-help">Vorhandene Buchungen anderer Herkunft sind noch nicht abgeglichen.</p>':'')+staging.contexts.slice(0,limit).map(c=>'<fieldset id="flatexBinding-'+c.index+'" class="flatex-binding-context" tabindex="-1"><legend>'+show(c.sourceType==='depot'?'Depot':'Konto')+' · '+show(c.sourceScope)+'</legend><p>'+c.rowCount+' Quellzeilen</p><label class="field"><span>Portfolio-Konto</span><select id="flatexBindingAccount-'+c.index+'" data-flatex-binding-account="'+c.index+'" '+(c.disabled?'disabled':'')+'><option value="">Portfolio-Konto auswählen</option>'+c.options.map(a=>'<option value="'+esc(a.id)+'" '+(a.id===c.accountId?'selected':'')+'>'+show(a.label)+'</option>').join('')+'</select></label>'+(c.accountLabel?'<p class="small-help flatex-binding-selected">Gewählt: '+show(c.accountLabel)+'</p>':'')+'<label class="flatex-binding-confirm"><input type="checkbox" id="flatexBindingConfirm-'+c.index+'" data-flatex-binding-confirm="'+c.index+'" '+(c.confirmed?'checked ':'')+(c.disabled||!c.accountId?'disabled':'')+'>Zuordnung für diese Vorschau bestätigen</label>'+(c.reason?'<p class="small-help">'+esc(c.reason)+'</p>':'')+'</fieldset>').join('')+(staging.contexts.length>limit?'<button type="button" id="flatexBindingsShowMore" class="btn outline">Weitere '+Math.min(20,staging.contexts.length-limit)+' Kontexte anzeigen</button>':'')+'</details>';
+}
 export function flatexNativeOrderMarkup(documents,links,{limit=20,legLimits={}}={}){
  if(links?.kind!=='flatex-native-order-links'||links.ready!==false||links.writeEnabled!==false||!Object.isFrozen(links)||!Number.isSafeInteger(limit)||limit<1||limit>5000)throw Error('Ungültige Flatex-Orderanzeige.');
  const possible=links.groups.filter(g=>g.status==='possible-single').length;
@@ -18,17 +57,20 @@ export function flatexNativeOrderMarkup(documents,links,{limit=20,legLimits={}}=
  }).join('');
  return '<details id="flatexNativeOrders" class="flatex-order-review"><summary>Orderbeziehungen · '+links.groups.length+' Gruppen · '+possible+' mögliche Paare · '+(links.groups.length-possible)+' Prüffälle</summary><p class="small-help">Nur mögliche Quellenbeziehungen, keine bestätigte Abrechnung oder Kontoeigentümerschaft. Keine Buchungsübernahme, Summierung oder Gebühren-/Steueraufteilung.</p><p>'+links.unassigned.length+' Zeilen ohne Orderreferenz bleiben in den Quellzeilen sichtbar. '+Math.min(limit,links.groups.length)+' von '+links.groups.length+' Gruppen angezeigt.</p>'+groups+(links.groups.length>limit?'<button type="button" class="btn outline" id="flatexOrdersShowMore">Weitere '+Math.min(20,links.groups.length-limit)+' Gruppen anzeigen</button>':'')+'</details>';
 }
-export function flatexNativeMarkup(documents,{limit=50,orderLinks=null,orderLimit=20,legLimits={}}={}){
+export function flatexNativeMarkup(documents,{limit=50,orderLinks=null,orderLimit=20,legLimits={},staging=null,bindingLimit=20}={}){
  if(!Array.isArray(documents)||!documents.length||documents.length>20||documents.some(f=>f?.document?.kind!=='flatex-native-document-preview'||f.document.writeEnabled!==false||f.document.ready!==false||!['depot','account'].includes(f.document.type))||!Number.isSafeInteger(limit)||limit<1||limit>5000)throw Error('Ungültige Flatex-Originalformatanzeige.');
- const all=documents.flatMap(f=>f.document.rows.map(row=>({name:f.name,document:f.document,row})));
+ const all=documents.flatMap((f,sourceIndex)=>f.document.rows.map(row=>({name:f.name,document:f.document,row,sourceIndex})));
+ const staged=new Map((staging?.rows||[]).map(r=>[JSON.stringify([r.sourceIndex,r.line]),r]));
  if(all.length>5000)throw Error('Flatex: insgesamt maximal 5.000 Datenzeilen je Vorschau.');
  const counts=documents.reduce((s,f)=>{s[f.document.type]+=f.document.rows.length;return s;},{depot:0,account:0});
  const dates=all.flatMap(({row})=>row.dates.bookingDate?[row.dates.bookingDate]:[]).sort();
- const rows=all.slice(0,limit).map(({name,document:d,row:r})=>{
+ const rows=all.slice(0,limit).map(({name,document:d,row:r,sourceIndex})=>{
   const v=r.values,n=r.numbers,depot=d.type==='depot',type=depot?'Depot':'Konto';
+  const sourceReview=staged.get(JSON.stringify([sourceIndex,r.line]));
   const amount=depot?(n.nominal??'unbekannt')+' '+v.unit:(n.amount??'unbekannt')+' '+v.amountCurrency;
   return '<details class="performance-details"><summary><span>'+show(type+' · '+(r.dates.bookingDate||v.bookingDate)+' · '+labels[r.kind]+' · '+amount)+'</span></summary><div class="performance-details-body">'+
    '<p>'+show(name)+' · Zeile '+r.line+' · '+show(d.encoding)+'</p>'+
+   (sourceReview?'<p class="flatex-source-status">'+esc(sourceReview.label)+(sourceReview.reasons.length?' · '+esc(sourceReview.reasons[0]):'')+'</p>':'')+
    '<p>Buchtag: '+show(r.dates.bookingDate)+' · Valuta: '+show(r.dates.valueDate)+'</p>'+
    '<p>Bank-Transaktionsreferenz: '+show(v.transactionReference)+' · Orderreferenz im Quelltext: '+show(r.order?.reference)+'. Keine bestätigte Gegenbuchung.</p>'+
    (depot?'<p>Nominal laut Export: '+show(n.nominal)+' '+show(v.unit)+' · Kurs laut Export: '+show(n.rate)+' '+show(v.priceCurrency)+'</p>':'<p>Betrag laut Export: '+show(n.amount)+' '+show(v.amountCurrency)+'. Keine bestätigte externe Ein- oder Auszahlung.</p>')+
@@ -37,6 +79,6 @@ export function flatexNativeMarkup(documents,{limit=50,orderLinks=null,orderLimi
  }).join('');
  return '<div class="ledger-live-preview flatex-native-preview"><h3>Flatex Originalformat – lokale Vorschau</h3><p>'+counts.depot+' Depotzeilen · '+counts.account+' Kontozeilen · '+Math.min(limit,all.length)+' von '+all.length+' angezeigt.</p>'+
   (dates.length?'<p>Gültige Buchtage: '+esc(dates[0])+' bis '+esc(dates.at(-1))+'. Ungeklärte Datumsangaben bleiben in den Quellzeilen sichtbar.</p>':'')+
-  '<p class="small-help">Keine Buchungsübernahme. Dateien und mögliche Überlappungen bleiben getrennt; Order- und Cashzuordnung sind noch nicht bestätigt. Für getrennte Uploads „Flatex Originalformat – Vorschau“ wählen.</p>'+(orderLinks?flatexNativeOrderMarkup(documents,orderLinks,{limit:orderLimit,legLimits}):'')+rows+
+  '<p class="small-help">Keine Buchungsübernahme. Dateien und mögliche Überlappungen bleiben getrennt; Order- und Cashzuordnung sind noch nicht bestätigt. Für getrennte Uploads „Flatex Originalformat – Vorschau“ wählen.</p>'+(staging?flatexNativeBindingMarkup(staging,{limit:bindingLimit}):'')+(orderLinks?flatexNativeOrderMarkup(documents,orderLinks,{limit:orderLimit,legLimits}):'')+rows+
   (all.length>limit?'<button type="button" id="flatexNativeShowMore" class="btn outline">Weitere '+Math.min(50,all.length-limit)+' Zeilen anzeigen</button>':'')+'</div>';
 }
