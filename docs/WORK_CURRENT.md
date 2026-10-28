@@ -9,10 +9,11 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - [PR186](https://github.com/joke0071/foliolab-open/pull/186): gemergt, veröffentlicht, abgenommen.
 - Kandidat: `c7d307c0eea079071adbce2add80780710ca1c8e`.
 - Releasebaum: `2572b4aa3bab516f4a4b92c489684a4ad69609bb`, exakt geprüfter Kandidat/Mergebaum.
-- Kein aktiver funktionaler PR; PR157/161 bleiben unverändert geparkt.
+- Einziger Funktionsbranch: `feature/flh03-pchain-identity`; noch kein PR.
+- PR157/161 bleiben unverändert geparkt.
 - `feature/reference-management` bleibt als gesicherte Referenz erhalten; keine ungesicherten Codeänderungen.
 - Arbeitspaket historische Referenzverwaltung / UI-Nachtrag: **REF186-RELEASE DONE**.
-- Gesamtmaster: **PARTIAL**. Keine neue Funktion nach dem Releaseabschluss begonnen.
+- Gesamtmaster: **PARTIAL**; P09-ID01 DONE, P09-ID02 IN_PROGRESS.
 
 ## Zuletzt abgeschlossene Etappen
 
@@ -36,17 +37,17 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Keine offenen technischen Releasegates für den begrenzten PR186-Umfang.
   Physische Hardware/OAuth/Original-/Fachgates gemäß Detailcheckpoint separat offen.
 
-## Exakt nächster ausführbarer Schritt
+## Aktuelle Etappen und nächster Schritt
 
-Nach Kollisionscheck vorhandene FLH03-09/10-Fachcheckpoints lesen, erledigte reinlesende
-P-Chain-UTXO-v194-/Sonic-Zustands-v195-Schnitte überspringen.
-Nächste kleine Etappe aus bestehendem Rang5: offenen P-Chain-Adress-/globalen Identitätsvertrag
-gegen vorhandenen Codec/Scanner abgrenzen und vor aktiver Integration sichern.
-Konsistenter UTXO-/Stakingzustand, C↔P, Fees und unabhängige Sollwerte bleiben offen;
-keine bestehende Nachweisprojektion als vollständige Walletintegration darstellen.
-Danach Rang5/Sonic-Reste bzw. folgende Drive-Due-/FLH04-Verträge gemäß bestehender Sequenz.
-Kein FLH05-/PERF-Vorziehen. FLH-PROJ01 bleibt ausschließlich später dokumentiert.
-Die nächste Sitzung beginnt hier und lädt nur relevante Detailabschnitte nach.
+- **P09-ID01 DONE:** [Adress-/Identitätsvertrag](https://github.com/joke0071/foliolab-open/blob/7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c/docs/FLH03_PCHAIN_IDENTITY_CONTRACT.md)
+  vor Code separat gesichert: `7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c`.
+- **P09-ID02 IN_PROGRESS:** reine Prüfhelfer/Tests gemäß Vertrag; keine aktive Walletintegration.
+- Basis v197/main `7b96a411925621f59021c36ad4d4a60a531c3a92`; keine externen Blocker für diesen begrenzten Umfang.
+- Exakt nächste Aktion: kanonische P-Mainnet-/Fuji-Adressprüfung und ausdrücklich
+  kontextgebundene UTXO-Identität implementieren, gezielt testen, bestehende 3-Engine-Suite erweitern.
+- Danach unveränderte Pflicht-CI/Review; bei Release volle Main-/Pages-/Liveabnahme.
+- Übrige P-Chain-/Sonic-/Drive-Folge gemäß Detailcheckpoint; FLH05/PERF nicht vorziehen.
+- FLH-PROJ01 bleibt ausschließlich später dokumentiert.
 
 ## Verbindlicher Sitzungs- und Übergabevertrag
 
@@ -64,4 +65,4 @@ Die nächste Sitzung beginnt hier und lädt nur relevante Detailabschnitte nach.
   Keine CI-Duplikate, Retryschleifen oder parallelen Ersatzprozesse bei Rate Limits.
 - Nach zwei Etappen am sicheren gesicherten Stopppunkt enden; laufende Sicherheits-/
   Releaseabschlüsse regulär fertigführen. Keine Historie löschen.
-- Übergabe: REF186-QA/WORK-ORG01 und genehmigter notwendiger Releaseabschluss DONE.
+- Aktuelle Sitzung: P09-ID01 DONE, P09-ID02 IN_PROGRESS; höchstens diese zwei Etappen.
