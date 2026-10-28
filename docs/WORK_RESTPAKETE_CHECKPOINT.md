@@ -1,3 +1,92 @@
+# Native Flatex-Quellidentität: geprüfte Grundlage abgeschlossen · PR193 · 28.10.2026
+
+**Verbindlicher aktueller Stand:** Vorabvertrag und reine native Identitäts-/
+Quellevidenzgrundlage **DONE im begrenzten PR-/Helferumfang**. PR193 bleibt offen;
+keine aktive native Staging-/Dialog-/Finanzintegration, kein Merge/Deployment.
+Produktion weiterhin v202 LIVE_ACCEPTED, SW203 unveröffentlicht.
+Gesamtmaster/FLH03–05 bleiben **PARTIAL**.
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Aktueller Funktionsbranch / Commit | `feature/flh03-flatex-native-identity` / `f42bc8ecc8538ce30ecc6ca9f862df0c0e6a2162`, PR193 offen |
+| Letzter verifizierter main | `4e9a4a7392e3469eeb2018b7a9516debe3a48e96`, produktiv v202 unverändert |
+| Getesteter Merge / Dateibaum | `dedf4710aca2cb96433c1dbdb68f8e477ca2fd55` / `9ee00039d58e0b402f8060f676731d5a98ffd0c1`, exakt lokal, Remote-HEAD und PR-Testmerge |
+| Dokumentationsbranch | `feature/flh05-import-foundation`; dieser Checkpoint und Kandidatenbeleg gemeinsam auf Parent `c6ab28d7f7da0d75ef427d4192a3964d1a95ef16` gesichert, Commit über Dateihistorie nachvollziehbar |
+| Release / Deployment | v202 bleibt letzte echte Liveabnahme; SW203 nur Kandidat, Deploy-/Live-Jobs im PR korrekt SKIPPED |
+| PR-Status | [#193](https://github.com/joke0071/foliolab-open/pull/193) geprüfte Grundlage/offen; #192 gemergt und produktiv abgenommen; nur geparkte #157/#161 daneben |
+| Actions | [40768795011](https://github.com/joke0071/foliolab-open/actions/runs/40768795011) Versuch1 SUCCESS, test und beide Cross-Engine-Shards vollständig grün; Wallet40768794737 SUCCESS, keine laufenden Actions beim Abschlusscheck |
+| Letzter fertiger Arbeitsschritt | Kleinster Vertrag vor Code gesichert, reine Quellenangebote und bestehender Evidenz-/Korrekturschutz ergänzt, volle finale CI/Quell-/Artefaktabnahme DONE |
+| Aktuelles Paket / nicht produktiv | FLH03-Flatex: native Staging-/Portfolio-Kontobindung und wirtschaftliche Integration noch offen; diese geprüfte Grundlage liegt vollständig gesichert im offenen PR |
+| Tests / Ergebnisse | 892/892 Units,0Fehler/Skip, Syntax,16neue Fokusfälle; tatsächliche Chromium141.0.7390.37/Firefox157.0/WebKit27.2-Identitätsberichte PASS, beide korrigierten bestehenden Browsergates vollständig grün |
+| Fehler / Abhängigkeiten / Risiken | Frühere rote Testsetupbefunde korrigiert und historisch erhalten. Identitätsangebote sind keine Konto-/Eigentums-/Authentizitäts-/Wirtschaftsfreigabe; privater nativer Original-Replay/End-to-End-Abgleich sowie volle Historien-/Performanceabnahme noch offen |
+| Exakt nächster sinnvoller Schritt | Frischer Kollisionscheck; auf demselben Branch/PR kleinsten ausdrücklich bestätigten Quelle-Scope-zu-Portfolio-Konto-/reinlesenden Stagingvertrag am bestehenden nativen CSV-Dialog sichern und minimal anbinden. Lokatoren/Ordergruppen/Reviewstatus/Submit-/Generation-/Nullmutationsschutz erhalten; UI und kontrollierter Release danach separat, keinen zweiten Importkern aufbauen |
+
+**Implementiert und wiederverwendet:** Im bestehenden import-identity.js reine
+inspectNativeFlatexSourceIdentities für direkte gefrorene native Dokumente,
+1–20Dateien/1–5000Zeilen. Identität aus getrenntem Seiten-/Quellkontextnamespace und
+exakter Bank-ID; Datum/Order/File/Exportordinal erzeugen keine neue Identität.
+Vorhandener SHA256-Kern über feste Originalfeldpaare außer Exportordinal;
+unabhängige Node-crypto-/Browser-SubtleCrypto-Referenz bestätigt. Alle Lokatoren
+erhalten, Überschneidung/abweichende Quelle/fehlende Referenz/Parserissues bleiben
+Review ohne Identitätsangebot. Immutable, ready=false/writeEnabled=false,
+costsVerified:false; keine Finanzzeile oder Kontobindung.
+
+Optionale versionierte native Evidenz im vorhandenen sourcePayload nutzt gemeinsamen
+previewCSV-/Importherkunftvalidator-/Payloadvergleich und sourceUnmodified/
+bookingOwnership weiter. Gleiche ID mit geänderter Rohquelle, manuelle Änderungen,
+fremde/ungültige Evidenz und unbelegte nichtnative Altherkunft bleiben geschützt;
+gemischte Legacy-/Native-Stapel in beiden Reihenfolgen geprüft. Keine automatische
+Namespace-Migration oder Dedupe. Generik-/Legacyfälle ohne native Berührung unverändert.
+Transaktionsengine, Top-Level-Backupstruktur, Storage-/CAS-/Undoverträge erhalten;
+keine neue aktive Dialog-/Finanz-/Persistenzintegration.
+
+**Tatsächliche finale Evidenz:** Release-ZIP12851927507 SHA256
+`0ed7d97f12f5f3a9e22de23e7edafc643058e99abbdeca85dde976cdb9bdd0d0`
+und Cross-ZIP12851737312 SHA256
+`db2c938b274d0ffedaeae623c524a0100671cae6dce00548319fab6c73039229`
+vor Extraktion verifiziert. tested-sha exakt dedf4710, unit.log892PASS,
+neue native-identity-Berichte in allen3Engines tatsächlich gelesen:
+direkte Parserdokumente/unabhängiger SHA, getrennte Referenzen, Overlap/Konflikt/
+Zeilenerhalt, gemeinsamer Replay-/Manual-/Legacy-/Mixed-/Backup-/Stale-Schutz,
+echter SW-Offline-Reload/Modulimport, exakter IDB-Record/Revision/Settings unverändert,
+keine externen Identitätsrequests. Finanzprojektionen in diesen Tests sind unabhängige
+synthetische DTOs zum Schutzkernbeweis und kein nativer Wirtschaftsadapter.
+[Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-identity-candidate.json).
+
+**Rote Evidenz und gezielte Teststabilisierung:** 40766119013: nur Cross2/Kraken-
+Setupkontext bei Navigation rot; danach erster Workercontroller vor Seed/Navigation
+abgewartet. 40767434426: nur Cross1/Archivnavigation rot, mobiler WebKit-Lauf wartete
+auf versteckten Desktopbutton; nun regulärer Klick auf tatsächlich sichtbare
+Mobile-/Desktop-Union. Beide Läufe jeweils regulär beendet, erst dann konsistente
+Testfixes auf demselben Branch/PR. Aktueller vollständiger Lauf grün. Keine Retry-/
+Sleep-/Timeout-/Assertion-/Pin-/Workflowlockerung. Korrigierte Krakenberichte
+Firefox/WebKit tatsächlich gelesen; korrigierte Archiv-PASS-Zeilen beider Engines
+aus finalem Cross1-Job tatsächlich gelesen: sechs Breiten/Axe, unveränderte Ökonomie/
+Historie, Quota/CAS, Offline-Commit/Reload, Plain-/Encrypted-UI-Restore PASS.
+Finaler10Dateien-Diff geprüft. Kein neuer visueller UI-PASS behauptet, da keine
+Produktdarstellung geändert wurde; v202-Livebilder gelten für vorherige Abnahme.
+
+**Datenschutz und Anforderungen:** Keine privaten Originale in diesem Strukturschnitt
+geöffnet, keine privaten Produktivdaten geändert, keine privaten Werte/IDs/Fingerprints
+veröffentlicht. Öffentliche Tests/Logs/Artefakte vollständig synthetisch. Keine
+vollständige Import-/Bestands-/Cashflow-/Anschaffungskosten-/Performancefreigabe.
+Historischer Zielstart01.01.2022 und Verbot fiktiver Eröffnungen/Kosten/Cashflows bleiben.
+UI-MASTER28/DELETE-MASTER28 und sichere Löschlogik verbindlich offen im nächsten
+passenden Verwaltungsschnitt. FLH04-/OAuth-/Hardware-/AT-Fachgates und ursprüngliche
+Roadmap/P0/P1/BENCH/CI-Reste erhalten; PERF vor vorgesehenem FLH05-Schritt,
+PROJ01 nur Backlog. Keine weitere Nutzerentscheidung oder externer Zugriffsstopp.
+
+**Sichere Wiederaufnahme:** Zwei vereinbarte Etappen Vertrag + geprüfte reine
+Grundlage abgeschlossen, kein drittes Implementierungspaket/Merge/Deployment begonnen.
+Keine ungesicherte Produktarbeit; Quelldaten/Ergebnisse remote gesichert, lokale
+synthetische Artefakte nur Zwischenmaterial. Paketcheckpoint im Kandidatenbaum
+beschreibt den damaligen CI-Stand; dieser neuere zentrale Checkpoint/Beleg dokumentiert
+die jetzt abgeschlossene Grundlagenabnahme. Nächster Work-Chat prüft main/Branches/
+PRs/Actions/Checkpoint/Writer neu und setzt den obigen nativen Kontobindungs-/Staging-
+Schritt fort, ohne Format/Order-UI oder diese Identitätsgrundlage erneut zu entwickeln.
+
+---
+
 # PR193: beide konkreten Testsetupkorrekturen gesichert · finale Pflicht-CI läuft · 28.10.2026
 
 Aktueller einziger Funktionsbranch feature/flh03-flatex-native-identity / PR193,

@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-28T21:16:02.921Z",
+  "status": "DONE_FOUNDATION_ONLY_NOT_DEPLOYED",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-identity",
+  "head": "f42bc8ecc8538ce30ecc6ca9f862df0c0e6a2162",
+  "tree": "9ee00039d58e0b402f8060f676731d5a98ffd0c1",
+  "testedMerge": "dedf4710aca2cb96433c1dbdb68f8e477ca2fd55",
+  "pr": 193,
+  "prState": "open",
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "scope": "Pure native source identity offers and shared sourcePayload evidence/replay/manual/legacy protection. No active native dialog/staging/economic integration, no merge/deploy/new live acceptance.",
+  "production": {
+    "version": 202,
+    "main": "4e9a4a7392e3469eeb2018b7a9516debe3a48e96",
+    "tree": "e8076abe54638f93e9011a162cca150ea789fae9",
+    "previousLiveAccepted": true,
+    "unchanged": true,
+    "sw203Published": false
+  },
+  "contract": {
+    "securedBeforeCode": true,
+    "docCommit": "27fc50fe62181b3f749cbd82b7ce120c04c06623",
+    "functionalCommit": "edb34c1ea8d448b39d0e673d22b709268f8d76be",
+    "path": "docs/FLH03_FLATEX_NATIVE_IDENTITY_CONTRACT.md"
+  },
+  "runs": [
+    {
+      "id": 40768795011,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ],
+      "deploy": "skipped",
+      "liveAcceptance": "skipped"
+    },
+    {
+      "id": 40768794737,
+      "conclusion": "success",
+      "scope": "Wallet scan checks"
+    }
+  ],
+  "units": {
+    "pass": 892,
+    "fail": 0,
+    "skip": 0
+  },
+  "newFocusedTests": 16,
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12851927507,
+      "name": "release-gates-dedf4710aca2cb96433c1dbdb68f8e477ca2fd55",
+      "digest": "sha256:0ed7d97f12f5f3a9e22de23e7edafc643058e99abbdeca85dde976cdb9bdd0d0",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12851737312,
+      "name": "cross-engine-gates-dedf4710aca2cb96433c1dbdb68f8e477ca2fd55-2",
+      "digest": "sha256:db2c938b274d0ffedaeae623c524a0100671cae6dce00548319fab6c73039229",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "actualRuntimeReports": {
+    "chromium": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native source identity/evidence and existing preview guards only; no dialog/economic integration",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "direct native parser/exact independent SHA256",
+            "side/scope/bank/order identity separation",
+            "ordinal-independent evidence/overlap/conflict/all locators kept",
+            "existing preview replay/source conflict/manual protection/legacy guard",
+            "pure backup restore/replay/stale preview guard",
+            "immutable input/output/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external identity requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    "cross": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native source identity/evidence and existing preview guards only; no dialog/economic integration",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "direct native parser/exact independent SHA256",
+            "side/scope/bank/order identity separation",
+            "ordinal-independent evidence/overlap/conflict/all locators kept",
+            "existing preview replay/source conflict/manual protection/legacy guard",
+            "pure backup restore/replay/stale preview guard",
+            "immutable input/output/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external identity requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "direct native parser/exact independent SHA256",
+            "side/scope/bank/order identity separation",
+            "ordinal-independent evidence/overlap/conflict/all locators kept",
+            "existing preview replay/source conflict/manual protection/legacy guard",
+            "pure backup restore/replay/stale preview guard",
+            "immutable input/output/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external identity requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    "kraken": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native Kraken read-only CSV preview",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "checks": [
+            "native auto/explicit recognition",
+            "schema/mixed/mode quarantine",
+            "all legs and exact declared fees",
+            "hostile source escaping",
+            "50/100 paging and focus",
+            "5 widths/Axe/44px",
+            "forced submit/Escape/cancel/reopen",
+            "actual offline reload",
+            "exact IDB/revision/settings zero mutation",
+            "no external preview requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "checks": [
+            "native auto/explicit recognition",
+            "schema/mixed/mode quarantine",
+            "all legs and exact declared fees",
+            "hostile source escaping",
+            "50/100 paging and focus",
+            "5 widths/Axe/44px",
+            "forced submit/Escape/cancel/reopen",
+            "actual offline reload",
+            "exact IDB/revision/settings zero mutation",
+            "no external preview requests"
+          ]
+        }
+      ]
+    }
+  },
+  "actualArchiveProof": {
+    "jobId": 123100059240,
+    "lines": [
+      "2026-10-28T21:09:00.7245675Z firefox: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS",
+      "2026-10-28T21:09:17.0611762Z webkit: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS"
+    ]
+  },
+  "sourceReview": {
+    "files": 10,
+    "newImportCore": false,
+    "transactionEngineUnchanged": true,
+    "storageAndTopLevelBackupSchemaUnchanged": true,
+    "sourceEvidenceStoredInExistingSourcePayload": true,
+    "noActiveNativeEconomicIntegration": true,
+    "legacyWithoutNativeInteractionUnchanged": true,
+    "originalAssertionsPinsWorkflowsUnchanged": true,
+    "newVisualUIAcceptanceClaimed": false
+  },
+  "redGreenHistory": [
+    {
+      "stage": "local",
+      "reproduced": "Changed native sourceEvidence with identical normalized financial projection was counted as duplicate.",
+      "fix": "Existing same-ID sourcePayload comparison now includes validated native evidence.",
+      "result": "PASS"
+    },
+    {
+      "stage": "local",
+      "reproduced": "Mixed native/legacy source rows in either batch order could bypass original-model-only provenance review.",
+      "fix": "Symmetric provenance guard against existing draft model; both orders covered by unit/browser assertions.",
+      "result": "PASS"
+    },
+    {
+      "run": 40766119013,
+      "head": "c6329da2c8beea0c3f284e9c945d39133551285a",
+      "failedJob": 123090598458,
+      "failedScope": "Existing Kraken browser setup, second navigation/baseline",
+      "observed": "Execution context destroyed, most likely because of a navigation",
+      "fix": "Wait for first SW.ready and actual controller before seeding/re-navigation; no retries/sleeps/assertion changes.",
+      "artifact": {
+        "id": 12850402591,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg1MDQwMjU5MQ==",
+        "name": "cross-engine-gates-4b28eede86d69bb7be71cf7f051a7a83ed16a523-2",
+        "size_in_bytes": 5689823,
+        "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/12850402591",
+        "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/12850402591/zip",
+        "expired": false,
+        "digest": "sha256:39b6a60673b9fc929254da8d83917d912ebb5f0dd1e6c726edd198881200f3c2",
+        "created_at": "2026-10-28T20:50:00Z",
+        "updated_at": "2026-10-28T20:50:00Z",
+        "expires_at": "2027-01-26T20:45:34Z",
+        "workflow_run": {
+          "id": 40766119013,
+          "repository_id": 1428407144,
+          "head_repository_id": 1428407144,
+          "head_branch": "feature/flh03-flatex-native-identity",
+          "head_sha": "c6329da2c8beea0c3f284e9c945d39133551285a"
+        }
+      },
+      "artifactDigestVerified": true,
+      "otherJobs": [
+        "test SUCCESS",
+        "cross-engine (1) SUCCESS"
+      ],
+      "completedNormallyBeforeFixPush": true
+    },
+    {
+      "run": 40767434426,
+      "head": "ff2b79d58fd7ee6cccfbcd3ba992a961c947d6a9",
+      "failedJob": 123095246127,
+      "failedScope": "Existing position archive browser setup",
+      "observed": "Mobile WebKit selected hidden sidebar navigation via earlier isVisible snapshot; click timed out.",
+      "fix": "Regular click on live :visible union of mobile/desktop navigation targets.",
+      "artifact": {
+        "id": 12851845656,
+        "digest": "sha256:45863a35f479aab1cc07b7ffd7d4e697b885b3e00e3d22bf4dcfe5a029c46069",
+        "digestVerified": false
+      },
+      "otherJobs": [
+        "test SUCCESS",
+        "cross-engine (2) SUCCESS"
+      ],
+      "completedNormallyBeforeFixPush": true
+    }
+  ],
+  "privacy": {
+    "allPublicFixturesAndReportsSynthetic": true,
+    "privateOriginalsRead": false,
+    "privateProductionDataMutated": false,
+    "privateFingerprintsPublished": false,
+    "nativeOriginalReplayEndToEndCertified": false
+  },
+  "collisionCheck": {
+    "mainUnchanged": true,
+    "openPRs": [
+      193,
+      161,
+      157
+    ],
+    "otherPRsParked": true,
+    "activeRuns": 0,
+    "noCompetingWriterObserved": true,
+    "checkpointParent": "c6ab28d7f7da0d75ef427d4192a3964d1a95ef16"
+  },
+  "masterStatus": "PARTIAL",
+  "preservedOpenAddenda": [
+    "UI-MASTER28",
+    "DELETE-MASTER28"
+  ],
+  "next": "Fresh collision check; continue this branch/PR. Secure the smallest explicit native source-scope to portfolio-account binding and read-only staging/display contract in the existing native CSV dialog, preserve source/order locators and guards. No automatic economics or legacy crosswalk; targeted UI and full gates/controlled release separately. Actual native economic adapter, original-data replay/history/performance certification remain separate open work.",
+  "sessionBoundary": "Two agreed stages complete: contract and tested pure foundation. Source and acceptance evidence durably saved; no third implementation package, merge or deployment."
+}
