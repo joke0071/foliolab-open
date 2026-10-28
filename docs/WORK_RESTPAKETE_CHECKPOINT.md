@@ -1,3 +1,11 @@
+# BP03 DONE · BP04 kontrollierter Release begonnen · 28.10.2026
+
+PR190/HEAD b4ab4a52a43f4fd00bcaa0027fa6661018be6f58, getesteter Merge a115cc14d02e1a5cb7d01472379d65b440967d9c, Baum33bc9c41e273e776ed4304784cc6fd82cfb2f74c exakt lokal/remote/Kandidat. Pflicht40735978372 undWallet40735978420 vollständig SUCCESS:844/844Units/0Fail/0Skip, Syntax/Chromium/beideFirefox-WebKit-Pflichtshards. Neue Dialogberichte in allen3Engines tatsächlich PASS: Nullmutation/Offline/Guards/Axe/Fokus/Paging und allgemeine zitierteSemikolon-CSV. 14-Dateien-Gesamtquell-/Scope-/Submitreview ohneBlocker; nachgrünerCI keineProduktänderung. Chromium390/Firefox320/WebKit1440-CI-Bilder tatsächlichangesehen, keineblockierendenBefunde. ZIP12837696471 Digestd9fdb08688812c2e9aa0522f48a625d39917041e25e8c9550a5da0c2588bbab4 undCross2ZIP12837268423 Digestfc7be8de25fd3c42a62d76dff23edb209402f8e32b29dcc355c5fe887aa4abe7 vorExtraktionbestätigt, testedSHAexakt. [Maschinenbeleg](release-evidence/bitpanda-bp03-pr190-candidate.json).
+
+BP03 DONE imbegrenztenreinlesendenDialogumfang. **BP04 IN_PROGRESS:** positivebegrenzteReleaseentscheidung gemäßMasterfortsetzung; keinezusätzlichekritischeNutzerfreigabe nötig, da keineFinanz-/Storage-/Backupmutation. FrischerMain/PR/Actions/Review/Checkpoint-Kollisionscheck vorMerge mit erwarteterHEAD; dann volleunveränderteMain-/Pages-/DreiEngine-Produktionsabnahme, Assets/Artefaktdigests/Bilder. Produktion weiterhinv199LIVE_ACCEPTED, SW200unveröffentlicht. ZweiEtappenBP03/BP04, danachgesicherterStopp ohneweiteresPaket. Master/FLH03-04PARTIAL, wirtschaftlicherImport/Original-/Flatex-/FLH04-/Hardware-/Fachgatesbleiben. ExaktnächsterSchritt: kontrollierterMergePR190, Main-/Produktionsgatesabwarten.
+
+---
+
 # BP03-Kandidat gesichert · Pflicht-CI offen · 28.10.2026
 
 Vorhandener PR190/Branch `feature/flh03-bitpanda-preview` auf `b4ab4a52a43f4fd00bcaa0027fa6661018be6f58`, Baum `33bc9c41e273e776ed4304784cc6fd82cfb2f74c`; lokale getestete Quelle gleicher Baum. Direkter Git-Push mangels Shell-Credentials nicht möglich; identischer Baum über verbundenen GitHub-Git-API-Commit mit erwartetem bisherigem HEAD erfolgreich dauerhaft gesichert. main unverändert c28053a/v199 LIVE_ACCEPTED. Keine konkurrierende CI/Writer vor Sicherung, nur bestehender PR190 und geparkte157/161. BP03 IN_PROGRESS bis finale CI/Review.

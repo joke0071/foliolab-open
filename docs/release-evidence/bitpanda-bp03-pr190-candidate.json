@@ -1,0 +1,53 @@
+{
+  "stage": "BP03",
+  "status": "DONE within read-only dialog/PR scope",
+  "pr": 190,
+  "head": "b4ab4a52a43f4fd00bcaa0027fa6661018be6f58",
+  "tested_merge": "a115cc14d02e1a5cb7d01472379d65b440967d9c",
+  "tree": "33bc9c41e273e776ed4304784cc6fd82cfb2f74c",
+  "runs": [
+    40735978372,
+    40735978420
+  ],
+  "units": {
+    "pass": 844,
+    "fail": 0,
+    "skip": 0
+  },
+  "all_required_pr_jobs": "success",
+  "source_review": "14 combined files; no blocking source/scope/submit findings",
+  "screenshots_viewed": [
+    "chromium-390",
+    "firefox-320",
+    "webkit-1440"
+  ],
+  "artifacts": [
+    {
+      "id": 12837696471,
+      "sha256": "d9fdb08688812c2e9aa0522f48a625d39917041e25e8c9550a5da0c2588bbab4"
+    },
+    {
+      "id": 12837268423,
+      "sha256": "fc7be8de25fd3c42a62d76dff23edb209402f8e32b29dcc355c5fe887aa4abe7"
+    }
+  ],
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "checks": [
+    "native preamble/18-17 auto/explicit recognition",
+    "schema/mixed/mode quarantine",
+    "exact quantities/declared fees/unknown tax",
+    "escaping",
+    "paging/focus/5widths/Axe/44px",
+    "submit/Escape/cancel/reopen",
+    "SW offline",
+    "exact IDB/revision/settings zero mutation",
+    "no external requests"
+  ],
+  "production": "v199 LIVE_ACCEPTED; SW200 unreleased",
+  "next": "BP04 controlled merge/production acceptance; then existing Flatex step",
+  "master": "PARTIAL"
+}
