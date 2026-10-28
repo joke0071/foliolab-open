@@ -1,3 +1,11 @@
+# Wiederaufnahme verifiziert · BP03 aktiv · 28.10.2026
+
+Frischer GitHub-Abgleich: main `c28053a109ed0338cdb040d88758766a1888a535`, v199 laut abgeschlossenem Releasebeleg LIVE_ACCEPTED; Main-/Pages-/Live40715191210 SUCCESS. Keine GitHub-Releases angelegt (PWA-Version ist maßgeblich). PR190 offen, HEAD `e83d3bddc2132ea5a5632902f5971e97679b0818`, Pflicht40720747693/Wallet40720747688 SUCCESS; nur geparkte PR157/161 daneben. Sämtliche jüngsten Actions beendet, Branches und lokale Prozesse geprüft, kein konkurrierender Writer erkennbar. Maßgeblicher Dokumentationsbranch bleibt `feature/flh05-import-foundation`; funktional ausschließlich vorhandenen Branch `feature/flh03-bitpanda-preview`/PR190 fortsetzen. BP01/BP02 nicht wiederholen.
+
+**BP03 IN_PROGRESS:** vorhandenen CSV-Dialog um streng reinlesende native Bitpanda-Vorschau ergänzen; Erkennung vor generischem Parser/Mapping, einzelne Datei, Fremd-/Mischmodus und Submit sperren, Paging/Fokus/Abbruch/Generation/Escaping erhalten. Noch keine neue Implementierung oder Abnahme behauptet. Danach volle unveränderte Pflichtgates/Review; BP04 Release erst nach bestandenem Kandidaten. Zwei bestehende Folgeetappen BP03/BP04, kein weiteres Paket dieser Sitzung. Flatex-Originalabgleich folgt regulär danach; private Originale in dieser Wiederaufnahme noch nicht geöffnet, keine privaten Daten veröffentlicht. Finanzimport/Bestandsvollständigkeit, FLH04/Realgeräte/OAuth/Fachgates bleiben offen; FLH05/PERF nicht vorziehen, PROJ01 bleibt Backlog. Nächster Schritt: UI und synthetische Regressionen auf PR190 implementieren und konsistent sichern.
+
+---
+
 # BP01/BP02 DONE · PR190 geprüft · Flatex-Nachtrag gesichert · 28.10.2026
 
 **Zwei Etappen abgeschlossen:** BP01-Vertrag vor Code `e22a803ae03057744701587f421e11f724852dca`; BP02 reine Parsergrundlage im vereinbarten Implementierungs-/PR-Abnahmeumfang DONE. [PR190](https://github.com/joke0071/foliolab-open/pull/190), Branch `feature/flh03-bitpanda-preview`, HEAD `e83d3bddc2132ea5a5632902f5971e97679b0818`, getesteter PR-Merge `6de821d0cfd9513a756370d883ef35b38a5ea1a4`; lokaler Index-/Remote-/Mergebaum exakt `25cd84474adad7f592e65611daf3d12b509df22c`. Zehn-Dateien-Quell-/Scope-Review ohne blockierenden Befund, keine Produktänderung nach grüner CI.
