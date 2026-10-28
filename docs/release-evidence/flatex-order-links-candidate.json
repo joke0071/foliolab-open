@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-28T19:48:15.978Z",
+  "status": "DONE_PURE_FOUNDATION_ONLY",
+  "scope": "Read-only native Flatex order relationship helper. No dialog integration, economic import, merge, deployment or live acceptance in this stage.",
+  "repository": "joke0071/foliolab-open",
+  "pullRequest": 192,
+  "branch": "feature/flh03-flatex-order-links",
+  "head": "e48f14771fb083139dcc9604c0b7cf5c6489b602",
+  "testedMerge": "83ddf3d9358833b2788d0ba35cb05a58caeb72b5",
+  "tree": "ee89acc8eb51ba3b6ee1225f4aacc4285d111034",
+  "treeEquality": {
+    "local": true,
+    "remoteHead": true,
+    "testedMerge": true
+  },
+  "production": {
+    "version": 201,
+    "main": "88508742db6bed9be57d6e907b2bfe56d61b1631",
+    "previousLiveAccepted": true,
+    "unchanged": true,
+    "sw202Published": false
+  },
+  "runs": [
+    {
+      "id": 40756057570,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ],
+      "deploy": "skipped",
+      "liveAcceptance": "skipped"
+    },
+    {
+      "id": 40756057649,
+      "conclusion": "success",
+      "workflow": "Wallet scan checks"
+    }
+  ],
+  "units": {
+    "tests": 872,
+    "pass": 872,
+    "fail": 0,
+    "skipped": 0
+  },
+  "focusedNewTests": 17,
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12847505390,
+      "name": "release-gates-83ddf3d9358833b2788d0ba35cb05a58caeb72b5",
+      "digest": "sha256:97a5b6e423b7ed364e37926ec4bd72f6f7f884dff62fe7fbbd9c1f4de58da18b",
+      "sha256VerifiedBeforeExtraction": true
+    },
+    {
+      "id": 12845498742,
+      "name": "cross-engine-gates-83ddf3d9358833b2788d0ba35cb05a58caeb72b5-2",
+      "digest": "sha256:a37b0a169e46b6710557f04bf3a32f5e67ed5bb5dc09bb14682ab7ebcecfa3c2",
+      "sha256VerifiedBeforeExtraction": true
+    }
+  ],
+  "runtimeReports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "independent bank/order references",
+            "possible 1:1 reuses legacy matcher",
+            "multiple cash/depot legs stay review",
+            "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+            "tiny exact decimal direction",
+            "all source rows retained/immutable/no writes",
+            "legacy and input/horizon bounds",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external relationship requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "independent bank/order references",
+            "possible 1:1 reuses legacy matcher",
+            "multiple cash/depot legs stay review",
+            "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+            "tiny exact decimal direction",
+            "all source rows retained/immutable/no writes",
+            "legacy and input/horizon bounds",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external relationship requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "independent bank/order references",
+            "possible 1:1 reuses legacy matcher",
+            "multiple cash/depot legs stay review",
+            "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+            "tiny exact decimal direction",
+            "all source rows retained/immutable/no writes",
+            "legacy and input/horizon bounds",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external relationship requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "sourceReview": {
+    "files": 7,
+    "legacySemanticsUnchanged": true,
+    "parserUnchanged": true,
+    "appUnchanged": true,
+    "storageBackupUnchanged": true,
+    "workflowPinsAssertionsUnchanged": true,
+    "newVisualUIAcceptanceClaimed": false
+  },
+  "correction": {
+    "firstCandidate": "f8e74b2934efd4b7ec47acb09435ec45b505bb4e",
+    "firstRuns": [
+      40754640919,
+      40754640913
+    ],
+    "firstRunsCompletedNormally": true,
+    "reproduced": "Multiple ORDER tuples of the same type and ISIN in a single source row could be treated as possible-single using the final tuple.",
+    "fix": "Require exactly one ORDER statement in each qualified source row; otherwise retain the whole relationship in source-review.",
+    "unitAndBrowserRegression": "PASS"
+  },
+  "privateAudit": {
+    "readOnlyExistingLocalCopies": true,
+    "driveMetadataUnchanged": true,
+    "independentReferencePairsAgree": true,
+    "allSourceRowsRetained": true,
+    "privateTargetConfirmed": true,
+    "publishedPrivateData": false,
+    "productionDataMutated": false,
+    "fullFinancialHistoryProven": false
+  },
+  "collisionCheck": {
+    "mainUnchanged": true,
+    "onlyOpenPRs": [
+      192,
+      161,
+      157
+    ],
+    "otherPRsParked": true,
+    "activeRuns": 0,
+    "checkpointParent": "a5929058f416d29614e1f19d8fe486c3de2d1288",
+    "noCompetingWriterObserved": true
+  },
+  "masterStatus": "PARTIAL",
+  "next": "Fresh collision check; continue on the same branch/PR with a small read-only display contract and integrate conservative relationship groups into the existing native Flatex preview. Preserve submit guards and zero financial writes; targeted UI tests then unchanged full CI and separate controlled release/live acceptance.",
+  "preservedOpenAddenda": [
+    "UI-MASTER28",
+    "DELETE-MASTER28"
+  ],
+  "roadmapUnchanged": true,
+  "sessionBoundary": "Two agreed stages completed: contract and tested pure foundation. Dialog/release stages follow separately."
+}

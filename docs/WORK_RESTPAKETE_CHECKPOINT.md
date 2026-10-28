@@ -1,3 +1,60 @@
+# Native Flatex-Orderbeziehungen: reine Grundlage abgenommen und gesichert · 28.10.2026
+
+**Verbindlicher aktueller Stand:** Vertrag und reine Zuordnungsgrundlage **DONE im begrenzten PR-/Helferumfang**. PR192 bleibt offen/unveröffentlicht; kein Merge, Deployment oder neuer Live-PASS. Produktion weiterhin v201 LIVE_ACCEPTED. Gesamtmaster und FLH03–05 **PARTIAL**.
+
+| Checkpointfeld | Verifizierter Stand |
+| --- | --- |
+| Funktionsbranch / Commit | `feature/flh03-flatex-order-links`, `e48f14771fb083139dcc9604c0b7cf5c6489b602` |
+| Letzter verifizierter main | `88508742db6bed9be57d6e907b2bfe56d61b1631`, Produktion v201 unverändert |
+| Getesteter PR-Merge / Quellbaum | `83ddf3d9358833b2788d0ba35cb05a58caeb72b5` / `ee89acc8eb51ba3b6ee1225f4aacc4285d111034`; exakt lokal, Remote-HEAD und Testmerge |
+| Dokumentationsbranch | `feature/flh05-import-foundation`; Checkpoint und maschinenlesbarer Beleg atomar auf Parent `a5929058f416d29614e1f19d8fe486c3de2d1288` gesichert, Sicherungscommit über Dateihistorie nachvollziehbar |
+| Release / Deployment | v201 LIVE_ACCEPTED aus vorheriger Abnahme; SW202 nur Kandidat, PR-Deploy/Live-Jobs korrekt SKIPPED |
+| PR-Status | [#192](https://github.com/joke0071/foliolab-open/pull/192) offen, reine Grundlage geprüft; #191 bereits gemergt/produktiv abgenommen; #157/#161 weiterhin geparkt |
+| Actions | [40756057570](https://github.com/joke0071/foliolab-open/actions/runs/40756057570) SUCCESS Versuch1, test und beide Cross-Engine-Shards SUCCESS; Wallet40756057649 SUCCESS, keine laufenden Actions beim Abschlusscheck |
+| Letzter fertiger Schritt | Fachvertrag separat vor Code gesichert; konservativer nativer Orderbeziehungshelfer samt finaler Quell-/Unit-/Drei-Engine-/Offline-/Nullmutations- und Artefaktprüfung DONE |
+| Aktuelles Paket / noch nicht produktiv | FLH03-Flatex: Order-/Cash-/Mehrfachgegenbeinbeziehungen; Helper im PR geprüft, noch keine Dialoganzeige oder wirtschaftliche Importfreigabe |
+| Tests / Ergebnisse | 872/872 Units, 0 Fehler/Skip; Syntax und17 neue fokussierte Tests PASS; Chromium141.0.7390.37, Firefox157.0 und WebKit27.2 tatsächliche neue Runtimeberichte PASS |
+| Risiken / Grenzen | Mehrfachbeine, Konflikte, Überschneidungen, Storno sowie unklare Quellen/Scopes bleiben Review; keine Summierung, Dedupe, Gebühren-/Steuer-/Saldo-/Performanceannahme, kein vollständiger Historienbeweis |
+| Exakt nächster Schritt | Frischer Kollisionscheck; auf demselben Branch/PR kleinen reinlesenden Anzeigevertrag sichern und die konservativen Beziehungen in die bestehende native Flatex-Vorschau einbinden; Submit-/Nullmutationsschutz erhalten, gezielte UI-Prüfung, volle unveränderte CI und separater kontrollierter Release mit echter Liveabnahme |
+
+**Tatsächlich geprüfte Evidenz:** Release-ZIP12847505390 SHA256
+`97a5b6e423b7ed364e37926ec4bd72f6f7f884dff62fe7fbbd9c1f4de58da18b`
+und Cross-Engine-ZIP12845498742 SHA256
+`a37b0a169e46b6710557f04bf3a32f5e67ed5bb5dc09bb14682ab7ebcecfa3c2`
+vor Extraktion verifiziert. tested-sha exakt83ddf3d, unit.log872PASS,
+neue flatex-order-links-Berichte in drei Engines tatsächlich gelesen: Quellzeilenerhalt/
+Unveränderlichkeit, echte SW-Offline-Neuladung/Modulimport, exakter IDB-Record samt
+Revision/Settings unverändert und keine externen Beziehungsrequests PASS.
+[Maschinenlesbarer Kandidatenbeleg](release-evidence/flatex-order-links-candidate.json).
+
+**Quellumfang und Fehlerhistorie:** Sieben Dateien final geprüft; kein app.js-/Quellparser-/
+Finanz-/Storage-/Backupwechsel und keine Abschwächung von Workflows, Pins oder Assertions.
+Vor finaler Abnahme reproduzierte Mehrfach-ORDER-Lücke gezielt geschlossen: mehr als eine
+ORDER-Angabe derselben Quellzeile sperrt die gesamte Gruppe als source-review.
+Unit- und Browsergegenbeispiel PASS. Erstläufe40754640919/40754640913 waren SUCCESS
+und regulär beendet, erst danach korrigierter Kandidat und finale volle CI; kein
+fremder Prozess unterbrochen oder paralleler Entwicklungspfad eröffnet.
+Kein neuer visueller UI-PASS behauptet, weil dieser Schnitt keinen Dialog verändert.
+
+**Datenschutz:** Unveränderte private lokale Originalkopien nur lesend und getrennt
+gegen unabhängige Python-csv/Decimal-Beziehungen geprüft; privates Sollziel und
+Erhalt aller Quellzeilen bestätigt. Keine privaten Kennungen, Mengen, Zeiträume,
+Transaktionen, Werte oder Hashes im öffentlichen Beleg; keine privaten Produktivdaten
+geändert. Kein Saldo-/Anschaffungskosten-/Cashflow-/Performancebeweis daraus ableiten.
+
+**Nutzerentscheidungen / Wiederaufnahme:** Die vereinbarten zwei Etappen Vertrag +
+geprüfte reine Grundlage sind dauerhaft abgeschlossen; Dialog/Release separat
+fortsetzen. UI-MASTER28 und DELETE-MASTER28 sowie
+`docs/UNIFIED_SAFE_DELETION_ADDENDUM.md` bleiben verbindlich und offen im nächsten
+passenden Verwaltungsschnitt. Bestehende Roadmap/Reihenfolge unverändert:
+keine Vorziehung von FLH05/PERF oder PROJ01, keine parallelen Arbeiten und keine
+erneute Implementierung abgenommener Schritte. Fachlicher Paketcheckpoint im
+PR-Quellbaum beschreibt den damaligen IN_PROGRESS-Stand; dieser zentrale neuere
+Checkpoint und obiger Beleg dokumentieren die jetzt abgeschlossene Helferabnahme.
+Quelle und Ergebnisse remote gesichert, lokale synthetische Artefakte nur Zwischenmaterial.
+
+---
+
 # PR192 korrigierter Kandidat dauerhaft gesichert · finale CI offen · 28.10.2026
 
 Bestehender Branch feature/flh03-flatex-order-links / PR192,
