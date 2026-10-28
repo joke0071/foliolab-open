@@ -1,3 +1,11 @@
+# v192 Hauptgates grün · zusätzliche Positions-Produktion Diagnose offen · 28.10.2026
+
+Main/Pages/Live40645289206 vollständig SUCCESS, v192 tatsächlich veröffentlicht; Kernnachweis12797956518 SHA8f657c136fcdec9addcf91ca2c11aed414159b994c97cc317eabccfe806cb2e5 heruntergeladen/verifiziert,109Dateivergleiche/6Kerngruppen/18Axe PASS. Zusätzlicher QA-only Lauf40646597977 FAILED: native Buchungs-UI und Buchungsmanagement in Chromium PASS, anschließend Positions-Test Voraussetzung navigator.serviceWorker.controller nach Reload Timeout anZeile30. Firefox/WebKit in diesem zusätzlichen Lauf SKIPPED, keine v192-Gesamt-Liveabnahme behauptet. Main-/PR-Engines bleiben tatsächlich grün.
+
+Fehlnachweis/Artefakt12797572881(SHA2dcd830f14e1b22ee955e94bea270bc530ff583106a0e2ac5df2beee759df7fc) erhalten. Konkrete neue Testtransporthypothese: Positions-Test setzt ignoreHTTPSErrors pauschal bei HTTPS, erfolgreiche Core-/Buchungstests nur bei tatsächlichem lokalen Proxy. QA-Branch nach beendetem Fehllauf allein weitergeführt: kontrollierter Chromium-A/B-Probe mit frischen identischen synthetischen401-Positions-Kontexten und Controller/Scope/Cache/Netzwerkdiagnose; temporäre Produktionskopie des Positions-Tests begrenzt TLS-Ausnahme auf useProxy. Sämtliche ursprünglichen Assertions, Controller-/Offline-/Finanz-/CAS-/Restoregates und ausgelieferte App-/Testbytes unverändert. Keine Produktänderung, kein identischer blinder Retry, kein neues Release oder Folgepaket begonnen. Diagnose darf erst nach wirklichem Nachweis als Ursache benannt werden.
+
+---
+
 # PR181 kontrolliert gemergt · v192-Releasegates laufen · 28.10.2026
 
 Finale Pflicht-CI40644389670 und Wallet40644389516 SUCCESS,766Units/0Fail/0Skip+Syntax+Chromium+beideFirefox/WebKit-Shards. Getesteter Merge0f6f4d24c8c8796ea57a761af333801149acb6a5 hat exakt lokalen/PR-Treebc25754038bfd0c2cee2707daf1121764511ca96. Sechs frische Firefox/WebKit-Normalzustandsbilder aus SHA256-verifizierten Cross1/2-Artefakten12797540142/12796494908 tatsächlich angesehen,PASS; fünf lokale Normalbilder und zusätzliche lokale aktive Zustände geprüft. Scope-/Sourceprüfung ohne blockierenden Befund, kein Finanz-/Modell-/Backup-/Storageengine-Delta.
