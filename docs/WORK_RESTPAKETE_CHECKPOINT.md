@@ -1,3 +1,13 @@
+# v191-Releaseabschluss: kalenderfeste Testdaten / PR180 · 28.10.2026
+
+PR179 freigegeben und gemergt als `ef783a99da2641b42f716cc08d28f2d50baee0c4`. **Main40640250948 FAILED, Deployment und Live übersprungen:** Bestehender Chromium-Bewertungsdrilldown verwendete 21.10.2026 als festen „aktuellen“ Kurs; am28.10 ist dieser korrekt älter als7Tage. Deshalb3statt2Problempositionen. Beide vollständigen Cross-Engine-Shards SUCCESS,766Units/Syntax PASS; Fehlnachweis erhalten, kein Job abgebrochen/neugestartet.
+
+[PR180](https://github.com/joke0071/foliolab-open/pull/180) auf demselben erhaltenen UI-Branch behebt ausschließlich die Testdaten: heute/vor30Tagen statt festen Datumswerten. HEAD `01ab8fedeab82c7d2fb864dce3f57c6c18efc4b4`,1Testdatei,+3/−1, sämtliche Assertions unverändert; kein Produkt-/Workflow-/SW-Delta. Lokale Syntax PASS, Pflicht-CI läuft. Reiner Testfix innerhalb freigegebenem Releaseabschluss, keine neue kritische Fachfunktion.
+
+Produktion weiterhin v190, **v191 noch nicht veröffentlicht oder live abgenommen**. Erst nach PR180-Pflichtgates kontrollierter Merge, dann Main/Pages/Live und gezielte tatsächliche Buchungs-Produktion in3Engines. Vorbereiteter QA-Commit ohne Branch/Run wird auf dann finalen Release-SHA angepasst; keine Test-/App-Assertions verändert. Schlanker Listenkopf-Nachtrag bleibt nur dokumentiert; FLH05-A/PERF01 nicht vorgezogen.
+
+---
+
 # PR179 freigegeben und gemergt · v191-Live-Abnahme ausständig · 28.10.2026
 
 **DONE konkreter Freigabe-/Merge-Schritt, RUNNING Main/Pages/Live.** Nach wiederholtem „Fortsetzen“ als Antwort auf die konkrete Freigabefrage zu PR179 einschließlich optionalem Archiv-/Backupformat wurde die Veröffentlichung freigegeben. Merge `ef783a99da2641b42f716cc08d28f2d50baee0c4`, Tree `2dc0b34b2bc0e3398b324c69af5a12e4241cdc53` exakt identisch mit bestandenem Kandidaten. Vor Merge main/HEAD/Mergebaum und beide finalen grünen CI-Läufe erneut unverändert geprüft; Featurebranch erhalten.
