@@ -1,3 +1,80 @@
+# v202 LIVE_ACCEPTED · native Flatex-Ordervorschau produktiv abgenommen · 28.10.2026
+
+**Aktueller verbindlicher Stand:** Reine Orderbeziehungsgrundlage und deren
+Dialogintegration samt kontrolliertem Release **DONE im dokumentarischen Vorschauumfang**.
+Gesamtmaster/FLH03–05 bleiben **PARTIAL**. Keine wirtschaftliche Importfreigabe
+und kein vollständiger Bestands-/Anschaffungskosten-/Cashflow-/Performancebeweis.
+
+| Checkpointfeld | Verifizierter aktueller Stand |
+| --- | --- |
+| Aktueller Branch / Commit | Produkt/main `4e9a4a7392e3469eeb2018b7a9516debe3a48e96`; abgeschlossener Funktionsbranch `feature/flh03-flatex-order-links`, Kandidat `c08860ab9e942af084f11400c3282fba6fa993c5` |
+| Letzter verifizierter main / Baum | `4e9a4a7392e3469eeb2018b7a9516debe3a48e96` / `e8076abe54638f93e9011a162cca150ea789fae9`, exakt lokal, Kandidat, getesteter PR-Merge und tatsächlicher main |
+| Release / Deployment | PWA/Pages `foliolab-open-v202` **LIVE_ACCEPTED** auf https://foliolab.unperfekt.at/; kein zusätzlicher GitHub-Tagrelease angelegt |
+| Zentraler Dokumentationsbranch | `feature/flh05-import-foundation`; Checkpoint und Releasebeleg gemeinsam auf Parent `80b678fdefded098e2c45d80e9ac9c37f71c9a4e` gesichert, Sicherungscommit über Dateihistorie eindeutig |
+| PRs | [#192](https://github.com/joke0071/foliolab-open/pull/192) gemergt/produktiv abgenommen; #191 bereits zuvor abgenommen; nur geparkte #157/#161 offen |
+| GitHub Actions | PR40758881972 und Wallet40758881897 SUCCESS; [Main/Pages/Live40760547088](https://github.com/joke0071/foliolab-open/actions/runs/40760547088) Versuch1 vollständig SUCCESS, alle5Jobs grün, keine laufenden Actions beim Abschlusscheck |
+| Letzter fertiger Schritt | UI-Integration und kontrollierter Release mit tatsächlicher Drei-Engine-Produktionsprüfung, Artefakt-/Bytehash-/Restore-/Offline-/Bildabnahme DONE |
+| Aktuelles fachliches Paket | FLH03-Flatex fortführen; Format/Uploads/reinlesende Ordergruppen abgeschlossen, dauerhafte native Importidentität/Idempotenz/Korrekturschutz sowie wirtschaftliche Übernahme noch offen |
+| Implementiert, noch nicht abgenommen | Keine ungesicherten oder unabgenommenen Produktänderungen aus diesem Lauf; Reviewstatus von Mehrfachbeinen/Konflikten ist beabsichtigter dokumentarischer Vertrag |
+| Tests / Ergebnisse | 876/876 Units,0Fehler/Skip, Syntax, volle Pflicht-CI, Chromium/Firefox/WebKit, echte Offlineanzeige und exakter IDB-Record/Revision/Settings unverändert PASS |
+| Offene Risiken / Abhängigkeiten | Quellenbeziehung ist keine Abrechnung/Eigentums-/Bestandsaussage; Mehrfachbeine/Storno/Overlap/Konflikte/unklare Quellen bleiben Review. Keine automatische Verdichtung, Verteilung, Dedupe oder Finanzmutation |
+| Exakt nächster sinnvoller Schritt | Frischer Kollisionscheck; abgenommene Schritte überspringen. Bestehende native Quellidentitäts-/Idempotenz-/Korrekturschutzlücke an import-identity.js/csv-batch/previewCSV/sourceUnmodified/bookingOwnership sowie Backfill-/Buchungsrücknahme-/CASverträgen abgrenzen; kleinsten reinlesenden Vertrag vor Code sichern und synthetische Gegenbeispiele nachweisen, keinen zweiten Importkern aufbauen |
+
+**Ausgeliefertes Verhalten:** Im bestehenden nativen Flatex-CSV-Dialog eingeklappte
+Orderbeziehungen mit möglichen1:1-Paaren, Prüffällen und Zeilen ohne Orderreferenz.
+Alle konservativen Status und Gründe; Dateiordinal/Dateiname/physische Zeile,
+Bank-/Orderreferenz und Quellkontext getrennt. Alle Depot-/Kontobeine mit exakten
+deklarierten Zahlen/Einheiten/Währungen und Buchtag/Valuta erhalten. Unabhängige
+20er-Gruppen-/Beleganzeige mit Fokus/Offenhaltung und sicherem Datei-/Modusreset.
+Ursprüngliche50er-Quellanzeige und deaktivierte Übernahme samt erzwungenem Submitguard
+erhalten. Kein wirtschaftlicher Import, keine Summen-/Gebühren-/Steuer-/FXannahme.
+Helper einmal je erfolgreich gewähltem Dateistapel; Parser/Helper/Legacy/Finanz/
+Storage/Backup in diesem UI-Schnitt unverändert.
+
+**Tatsächliche Produktionsabnahme:**120 veröffentlichte Dateihashes inklusive SW202
+stimmen exakt mit main überein; sechs Kerngruppen und18Axe-Scans ohne Befund.
+Echte unverschlüsselte und verschlüsselte UI-Backupdownloads in frischen synthetischen
+Profilen wiederhergestellt und neu geladen; Offline-Commit/Reload bestanden.
+Neue native Helper-/Dialoggates tatsächlich auf Produktionsdomain in Chromium/
+Firefox/WebKit PASS: alle Status/Beine/getrennte Referenzen/gleiche Dateinamen,
+Paginierung/Fokus/Offenhaltung/Reset, fünf Breiten320/390/430/768/1440/Axe/44px,
+Escaping/lange Quellen, Submit/Cancel/Escape/Neuöffnen/Generation, echte
+SW-Offlineanzeige, exakter IDB-Record/Revision/Settings unverändert,
+keine externen Vorschaurequests. Chromium-Dialog-PASS explizit im Produktionslog;
+der zuletzt geschriebene native UI-Bericht enthält Firefox/WebKit.
+Sechs finale Produktionsbilder tatsächlich angesehen: Orderpaare Chromium320,
+Firefox320, WebKit1440 sowie Kern320/390/1440; kein blockierender Befund.
+
+**Dauerhafte Evidenz:** Produktions-ZIP12848024379 SHA256
+`8e2fca24005cbda347a361c0643804d361620fb419708c48acba4b7b2ebf15d7`
+und Main-ZIP12847713806 SHA256
+`9425ae39199239ed40531c7aa4f8bd52d1a588a66612723b0b84554d3f6872ee`
+vor Extraktion verifiziert; tested-sha und Livebericht exaktmain4e9a4a7 zugeordnet.
+Aktuelle Kandidaten-ZIPs/Digests sowie tatsächliche Berichte/Asset-/Bildhashes im
+[Releasebeleg](release-evidence/flatex-order-preview-v202-release.json).
+Kein Pflichtgate, Workflowpin oder bestehender Assert abgeschwächt; finale13Dateien
+quellseitig geprüft, keine unnötige CI-Wiederholung.
+
+**Datenschutz / Anforderungen:** Keine privaten Originale in diesem UI-/Releaseabschnitt
+erneut geöffnet und keine privaten Produktivdaten geändert. Öffentliche Fixtures,
+Bilder, CI-Logs und Berichte ausschließlich synthetisch. Früherer unabhängiger privater
+Order-Sollabgleich bleibt begrenzte Evidenz, kein vollständiger Finanz-/Historiennachweis.
+Historischer Zielstart01.01.2022 und Verbot fiktiver Eröffnungen/Kosten/Cashflows bleiben.
+UI-MASTER28 und DELETE-MASTER28 samt `UNIFIED_SAFE_DELETION_ADDENDUM.md` verbindlich
+offen für nächsten passenden Verwaltungsschnitt. FLH04-/OAuth-/Hardware-/AT-Fachgates,
+bestehende P0/P1-/Benchmark-/CI-Reste und Roadmap erhalten; PERF vor vorgesehenem
+FLH05-Schritt, PROJ01 ausschließlich Backlog.
+
+**Wiederaufnahme:** Zwei vereinbarte Folgeetappen UI-Prüfung + Release sind sicher
+abgeschlossen; kein dritter Entwicklungsschnitt begonnen. Keine ungesicherte Produktarbeit.
+Der Paketcheckpoint im abgenommenen Quellbaum beschreibt den damaligen Kandidatenstand;
+dieser neuere zentrale Checkpoint und Releasebeleg sind maßgeblich für die finale Abnahme.
+Nächster Work-Chat beginnt mit aktuellem main-/PR-/Branches-/Actions-/Checkpoint-/
+Writercheck und obigem nativen Identitäts-/Korrekturschutzvertrag, ohne Format/Order-UI
+erneut zu implementieren oder ungeprüfte wirtschaftliche Buchungen freizuschalten.
+
+---
+
 # v202 veröffentlicht · tatsächliche Liveabnahme läuft · 28.10.2026
 
 Main `4e9a4a7392e3469eeb2018b7a9516debe3a48e96`, identischer geprüfter Baum `e8076abe54638f93e9011a162cca150ea789fae9`.
