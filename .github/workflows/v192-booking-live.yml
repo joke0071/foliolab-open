@@ -56,17 +56,51 @@ jobs:
           assert.equal(source.split(marker).length,4,'three exact setup/restore/peer origin URLs');
           assert.ok(!source.includes('.route('),'no request interception');
           writeFileSync('tests/.v192-booking-production.mjs',source.replaceAll(marker,process.env.BOOKING_UI_BASE));
+          const selection=readFileSync('tests/browser-position-removal.mjs','utf8');
+          assert.equal(selection.split('ignoreHTTPSErrors:live').length,3,'two existing production TLS exception options');
+          assert.ok(!selection.includes('.route('),'no selection network interception');
+          writeFileSync('tests/.v192-selection-production.mjs',selection.replaceAll('ignoreHTTPSErrors:live','ignoreHTTPSErrors:useProxy'));
+          writeFileSync('artifacts/gates/selection-production-transport.json',JSON.stringify({originalTest:'tests/browser-position-removal.mjs',unchangedAssertions:true,onlyTransportDelta:'TLS exception only when HTTPS_PROXY is actually configured; valid GitHub HTTPS uses certificate verification',networkInterception:false},null,2));
           writeFileSync('artifacts/gates/booking-production-setup.json',JSON.stringify({release:process.env.RELEASE_SHA,originalTest:'tests/browser-booking-management.mjs',unchangedAssertions:true,setup:'fresh actual production origins; synthetic fixtures before baselines',networkInterception:false,productionAssetsIntercepted:false},null,2));
           NODE
       - name: Install Chromium test environment
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3
           npx playwright install chromium --only-shell
+      - name: Diagnose service-worker control with validated HTTPS versus certificate bypass
+        run: |
+          node --input-type=module <<'NODE'
+          import {chromium} from 'playwright';
+          import {writeFileSync} from 'node:fs';
+          const browser=await chromium.launch({headless:true}),results=[];
+          try{for(const ignoreHTTPSErrors of [true,false]){
+           const context=await browser.newContext({acceptDownloads:true,ignoreHTTPSErrors}),page=await context.newPage(),events=[];
+           page.on('requestfailed',r=>events.push({url:r.url(),failure:r.failure()}));
+           const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+           try{
+            await page.goto(process.env.FLH03_08_BASE);await ready();
+            await page.evaluate(async()=>{
+             const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
+             const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'broker',name:'Synthetic broker'}));
+             for(const id of ['a','b'])m.accounts.push(createAccount({id,providerId:'broker',name:'Depot '+id,type:'securities'},m));
+             for(let i=0;i<401;i++)m.positions.push(createPosition({id:'p-'+i,providerId:'broker',accountId:i%2?'b':'a',name:(i%2?'Other ':'Wanted ')+i,isin:'IE00B4L5Y983',symbol:'SAME',kind:'etf',quantity:1,price:10},m));
+             m.snapshots.push({id:'retained',date:'2023-01-01',source:'current',total:10,totalEURExact:'10',byPosition:{'p-0':'10'}});
+             const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
+            });
+            await page.reload();await ready();await page.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';});
+            await page.reload();await ready();
+            try{await page.waitForFunction(()=>!!navigator.serviceWorker.controller);}catch(error){events.push({controllerWait:String(error)});}
+            const state=await page.evaluate(async()=>({url:location.href,controller:navigator.serviceWorker.controller?.scriptURL,registrations:await Promise.all((await navigator.serviceWorker.getRegistrations()).map(async r=>({scope:r.scope,active:r.active?.state,url:r.active?.scriptURL}))),caches:await caches.keys()}));
+            results.push({ignoreHTTPSErrors,state,events});console.log('CONTROLLER PROBE '+JSON.stringify(results.at(-1)));
+           }catch(error){results.push({ignoreHTTPSErrors,error:String(error),events});console.log('CONTROLLER PROBE '+JSON.stringify(results.at(-1)));}
+           finally{await context.close();}
+          }}finally{await browser.close();writeFileSync('artifacts/gates/controller-transport-probe.json',JSON.stringify(results,null,2));}
+          NODE
       - name: Actual Selection and Booking workflows in production Chromium
         run: |
           set -euo pipefail
           node tests/.v192-booking-production.mjs 2>&1 | tee artifacts/gates/booking-production-chromium.log
-          node tests/browser-position-removal.mjs 2>&1 | tee artifacts/gates/selection-production-chromium.log
+          node tests/.v192-selection-production.mjs 2>&1 | tee artifacts/gates/selection-production-chromium.log
       - name: Install Firefox and WebKit test environment
         timeout-minutes: 8
         run: |
@@ -86,7 +120,7 @@ jobs:
         run: |
           set -euo pipefail
           node tests/.v192-booking-production.mjs 2>&1 | tee artifacts/gates/booking-production-cross.log
-          node tests/browser-position-removal.mjs 2>&1 | tee artifacts/gates/selection-production-cross.log
+          node tests/.v192-selection-production.mjs 2>&1 | tee artifacts/gates/selection-production-cross.log
       - name: Preserve actual production evidence
         if: always()
         uses: actions/upload-artifact@v4
