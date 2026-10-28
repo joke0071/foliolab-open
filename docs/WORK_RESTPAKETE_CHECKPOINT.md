@@ -1,3 +1,9 @@
+# PR190 gemergt · BP04 Main-/Liveabnahme offen · 28.10.2026
+
+Kontrollierter Merge mit erwarteter HEAD b4ab4a52: main `b2a07f4131a7b38d1fa7da40fab8ea58b72fd119`. VorMerge main/PRs/Actions/Checkpoint/Reviewthreads frisch geprüft: keine laufende fremde Arbeit, nur PR190 und geparkte157/161, keine offenen Reviewbefunde. BP03 erfolgreich abgeschlossen, **BP04 IN_PROGRESS** bis vollständiger Main-/Pages-/tatsächlicher Drei-Engine-Liveabnahme. v199 bleibt letzter LIVE_ACCEPTED-Release; v200 noch nicht abgenommen. Nächster Schritt regulären Mainworkflow verfolgen, keine Duplikatläufe oder parallele Produktänderung; Artefakte/Digests/Produktionsbytes/Bilder prüfen und danach zentral dauerhaft sichern.
+
+---
+
 # BP03 DONE · BP04 kontrollierter Release begonnen · 28.10.2026
 
 PR190/HEAD b4ab4a52a43f4fd00bcaa0027fa6661018be6f58, getesteter Merge a115cc14d02e1a5cb7d01472379d65b440967d9c, Baum33bc9c41e273e776ed4304784cc6fd82cfb2f74c exakt lokal/remote/Kandidat. Pflicht40735978372 undWallet40735978420 vollständig SUCCESS:844/844Units/0Fail/0Skip, Syntax/Chromium/beideFirefox-WebKit-Pflichtshards. Neue Dialogberichte in allen3Engines tatsächlich PASS: Nullmutation/Offline/Guards/Axe/Fokus/Paging und allgemeine zitierteSemikolon-CSV. 14-Dateien-Gesamtquell-/Scope-/Submitreview ohneBlocker; nachgrünerCI keineProduktänderung. Chromium390/Firefox320/WebKit1440-CI-Bilder tatsächlichangesehen, keineblockierendenBefunde. ZIP12837696471 Digestd9fdb08688812c2e9aa0522f48a625d39917041e25e8c9550a5da0c2588bbab4 undCross2ZIP12837268423 Digestfc7be8de25fd3c42a62d76dff23edb209402f8e32b29dcc355c5fe887aa4abe7 vorExtraktionbestätigt, testedSHAexakt. [Maschinenbeleg](release-evidence/bitpanda-bp03-pr190-candidate.json).
