@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-28T20:07:51.757Z",
+  "status": "UI_CANDIDATE_ACCEPTED_NOT_YET_DEPLOYED",
+  "pr": 192,
+  "head": "c08860ab9e942af084f11400c3282fba6fa993c5",
+  "tree": "e8076abe54638f93e9011a162cca150ea789fae9",
+  "testedMerge": "bea76d4b8e77be55b3eba063c077e3d4170d743a",
+  "localRemoteTestTreeEqual": true,
+  "runs": [
+    {
+      "id": 40758881972,
+      "attempt": 1,
+      "conclusion": "success"
+    },
+    {
+      "id": 40758881897,
+      "conclusion": "success"
+    }
+  ],
+  "units": {
+    "pass": 876,
+    "fail": 0,
+    "skip": 0
+  },
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12848370581,
+      "name": "release-gates-bea76d4b8e77be55b3eba063c077e3d4170d743a",
+      "digest": "sha256:8a22ef626b6abaf69b1a41a7d5f92ed772d91192d025b51d66dfc8f56aaeb028",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12847164879,
+      "name": "cross-engine-gates-bea76d4b8e77be55b3eba063c077e3d4170d743a-2",
+      "digest": "sha256:4e400aaefe5ceb98fd22e739f07d3d181dafba5e3250684c613b8462cd8aad5f",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "reports": {
+    "0": {
+      "ui": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "checks": [
+              "native CP1252/blank-header auto/explicit recognition",
+              "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+              "exact quantities/currencies/separate references",
+              "hostile source escaping",
+              "50/100 source paging and focus",
+              "order statuses/reasons/all legs/duplicate filenames/separate references",
+              "independent group/leg paging/focus/disclosure preservation/reset",
+              "expanded order groups at 5 widths/Axe/44px",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload with order display",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      },
+      "helper": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    "1": {
+      "ui": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "native CP1252/blank-header auto/explicit recognition",
+              "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+              "exact quantities/currencies/separate references",
+              "hostile source escaping",
+              "50/100 source paging and focus",
+              "order statuses/reasons/all legs/duplicate filenames/separate references",
+              "independent group/leg paging/focus/disclosure preservation/reset",
+              "expanded order groups at 5 widths/Axe/44px",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload with order display",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "native CP1252/blank-header auto/explicit recognition",
+              "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+              "exact quantities/currencies/separate references",
+              "hostile source escaping",
+              "50/100 source paging and focus",
+              "order statuses/reasons/all legs/duplicate filenames/separate references",
+              "independent group/leg paging/focus/disclosure preservation/reset",
+              "expanded order groups at 5 widths/Axe/44px",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload with order display",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      },
+      "helper": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    }
+  },
+  "imagesActuallyReviewed": [
+    "chromium-order-pair-320.png",
+    "chromium-order-pair-1440.png",
+    "firefox-order-pair-320.png",
+    "webkit-order-pair-1440.png"
+  ],
+  "review": {
+    "files": 13,
+    "parserFinancialStorageBackupUnchanged": true,
+    "existingLegacySemanticsUnchanged": true,
+    "pinsWorkflowsAssertionsUnchanged": true,
+    "noCompetingWriterObserved": true,
+    "openReviewThreads": 0
+  },
+  "privacy": {
+    "syntheticFixturesOnly": true,
+    "privateSourcesReadInUIStage": false,
+    "privateProductionDataMutated": false
+  },
+  "releaseDecision": "Proceed under existing master authorization for bounded read-only functionality; no financial import release.",
+  "productionAtDecision": {
+    "version": 201,
+    "main": "88508742db6bed9be57d6e907b2bfe56d61b1631"
+  },
+  "next": "Merge with expected head, wait full unchanged main/Pages/live gates, verify exact deployed bytes/reports/ZIP digests/images; no live acceptance claimed before actual completion.",
+  "masterStatus": "PARTIAL"
+}

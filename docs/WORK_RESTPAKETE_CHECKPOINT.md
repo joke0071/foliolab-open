@@ -1,3 +1,43 @@
+# PR192 UI-Kandidat abgenommen · kontrollierter Release beginnt · 28.10.2026
+
+**UI-Integration DONE im Kandidatenumfang; Release IN_PROGRESS.** Main8850874/v201
+LIVE_ACCEPTED noch unverändert, SW202 unveröffentlicht. Bestehender Funktionsbranch
+feature/flh03-flatex-order-links, HEAD `c08860ab9e942af084f11400c3282fba6fa993c5`,
+getesteter Merge `bea76d4b8e77be55b3eba063c077e3d4170d743a`, identischer lokaler/Remote-/Mergebaum
+`e8076abe54638f93e9011a162cca150ea789fae9`. Nur geparkte157/161 daneben, alle Actions beendet,
+keine offenen Reviewthreads oder konkurrierender Writer; vollständige Branchinventur.
+
+Volle unveränderte PR-CI40758881972 Versuch1 und Wallet40758881897 SUCCESS.
+876Units/0Fehler/Skip, Syntax, beide Cross-Engine-Shards und neue tatsächliche native
+Dialog-/Helperberichte Chromium/Firefox/WebKit PASS. Echte SW-Offlineanzeige,
+exakter IDB-Record/Revision/Settings unverändert, keine externen Vorschaurequests,
+alle Status/Beine/Paginierungen/Fokus/Reset/5Breiten/Axe/44px/Submit/Cancel/Escape PASS.
+Release-ZIP12848370581 SHA256
+`8a22ef626b6abaf69b1a41a7d5f92ed772d91192d025b51d66dfc8f56aaeb028`
+und Cross-ZIP12847164879 SHA256
+`4e400aaefe5ceb98fd22e739f07d3d181dafba5e3250684c613b8462cd8aad5f`
+vor Extraktion verifiziert; tested-sha exaktbea76d4b. Vier neue CI-Bilder tatsächlich
+angesehen: normale Orderpaare Chromium320/1440, Firefox320, WebKit1440;
+kein blockierender Befund.13Dateien final geprüft, Parser-/Finanz-/Storage-/Backup-/
+Legacyvertrag und bestehende Workflows/Pins/Assertions erhalten.
+[Dauerhafter Kandidatenbeleg](release-evidence/flatex-order-preview-candidate.json).
+
+Positive begrenzte Releaseentscheidung unter bestehendem Masterauftrag: reinlesende
+Vorschau, keine neue kritische Finanzmutation und keine weitere Nutzerentscheidung
+erforderlich. **Exakt nächster Schritt:** PR192 nur mit erwarteter HEAD mergen,
+vollen Main-/Pages-/Live-Lauf regulär abwarten; tatsächliche120Assetbytes/Restore/
+Offline/Drei-Engine-Dialogberichte/Digests/Produktionsbilder prüfen und sofort
+zentral sichern. Bis dahin keinen LIVE_ACCEPTED-Status für v202 behaupten.
+
+Keine privaten Originale im UI-Schnitt geöffnet oder privaten Produktivdaten verändert.
+Keine wirtschaftliche Import-/Historien-/Performancefreigabe. Nach zwei Etappen
+UI + Release gesichert übergeben; anschließend vorhandenen nativen Identitäts-/
+Idempotenz-/Korrekturschutzvertrag am bestehenden Importkern abgrenzen, keine
+ungeprüfte wirtschaftliche Übernahme. UI-MASTER28/DELETE-MASTER28 und bestehende
+Roadmap unverändert offen/erhalten, Gesamtmaster PARTIAL.
+
+---
+
 # PR192: Flatex-Ordergruppen im Dialog gesichert · Pflicht-CI läuft · 28.10.2026
 
 Aktiver Funktionsbranch `feature/flh03-flatex-order-links`, HEAD `c08860ab9e942af084f11400c3282fba6fa993c5`,
