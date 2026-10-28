@@ -1,3 +1,11 @@
+# Flatex-Order-/Mehrfachgegenbeinvertrag wiederaufgenommen · 28.10.2026
+
+Frischer Kollisionscheck: main88508742db6bed9be57d6e907b2bfe56d61b1631/v201 LIVE_ACCEPTED unverändert, Main40749554400 und jüngste PR-/Walletläufe vollständig SUCCESS, nur geparkte157/161 offen. Zentraler Checkpoint79d72f3 bestätigt; Flatex-Branches inventarisiert, PR191 vollständig gemergt/abgenommen. Lokaler Quellbaum entspricht geprüftem v201, nur synthetische Testartefakte untracked. Prozessinventar über ps liefert diesmal einen Laufzeitfehler; alternative reine Prozessprüfung vor Funktionsschreiben ergänzen, keine fremden Prozesse unterbrechen.
+
+Nächster regulärer Schnitt IN_PROGRESS: vorhandene pairFlatexSettlements/auditFlatexSettlementAmounts und native Quellprojektion geprüft. Legacy-1:1-Vertrag beibehalten; native Orderreferenz getrennt von Bank-TA-IDs, alle Quellzeilen/Beine erhalten, Überschneidungen/Konflikte/Stornos/Scope-/Datums-/Währungsprobleme explizit. Vor Code kleinsten reinlesenden Vertrag mit synthetischen Gegenbeispielen sichern. Keine Finanz-/Storage-/Backupmutation und keine wirtschaftliche Buchungsfreigabe. Private Originale ausschließlich lokal und getrennt prüfen, keine privaten Sollwerte/Zeilen/Referenzen veröffentlichen. Zwei Etappen: Vertrag + geprüfte reine Zuordnungsgrundlage; UI-Anbindung/Release später separat. UI-MASTER28/DELETE-MASTER28 und bestehende Roadmap erhalten, Master PARTIAL.
+
+---
+
 # v201 LIVE_ACCEPTED · Flatex-Originalvorschau abgeschlossen · 28.10.2026
 
 **Aktueller verbindlicher Stand:** FX-FORMAT01 sowie FX-UI01/FX-UI02 sind im begrenzten
