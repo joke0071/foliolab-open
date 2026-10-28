@@ -2,35 +2,10 @@ import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest} from './
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
 import {safeImport,backup} from './model.js';
+import {readCSVRecords} from './csv-records.js';
 /** Client-only CSV parser; never uploads the original document to a remote service. */
 export function parseCSV(input,{delimiter,sourceName=''}={}){
- const raw=String(input||'').replace(/^\uFEFF/,'');
- if(!raw.trim()||raw.length>2_000_000)throw Error('CSV leer oder größer als 2 MB.');
- const head=raw.slice(0,1200),separators=delimiter?[delimiter]:[';',',','\t'];
- const sep=delimiter||separators.map(c=>({c,n:head.split('\n')[0].split(c).length})).sort((a,b)=>b.n-a.n)[0].c;
- if(![';',',','\t'].includes(sep))throw Error('CSV-Trennzeichen ungültig.');
- const rows=[];let row=[],cell='',quoted=false,closedQuote=false,started=false;
- for(let i=0;i<raw.length;i++){
-  const c=raw[i];
-  if(c==='"'){
-   if(quoted&&raw[i+1]==='"'){cell+='"';i++;}
-   else if(quoted){quoted=false;closedQuote=true;}
-   else if(!started){quoted=true;started=true;}
-   else throw Error('CSV enthält ein ungültiges Anführungszeichen.');
-  }else if(!quoted&&(c===sep||c==='\n'||c==='\r')){
-   row.push(cell);cell='';started=false;closedQuote=false;
-   if(c!==sep){
-    if(c==='\r'&&raw[i+1]==='\n')i++;
-    if(row.some(x=>x.trim()))rows.push(row);
-    row=[];
-   }
-  }else{
-   if(closedQuote)throw Error('CSV enthält Zeichen nach einem schließenden Anführungszeichen.');
-   cell+=c;started=true;
-  }
- }
- if(quoted)throw Error('CSV enthält ein nicht geschlossenes Anführungszeichen.');
- row.push(cell);if(row.some(x=>x.trim()))rows.push(row);
+ const lexed=readCSVRecords(input,{delimiter}),sep=lexed.delimiter,rows=lexed.records.map(r=>r.cells);
  if(rows.length<2||rows.length>5001)throw Error('CSV benötigt Kopfzeile und maximal 5.000 Datenzeilen.');
  const headers=rows.shift().map(h=>h.trim().slice(0,120));
  if(headers.some(x=>!x)||new Set(headers.map(x=>x.toLowerCase())).size!==headers.length)throw Error('Leere oder doppelte CSV-Spalten.');

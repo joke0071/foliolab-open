@@ -2,6 +2,8 @@ import './browser-ui-small-rests.mjs';
 import './browser-history-followup.mjs';
 import './browser-reference-management.mjs';
 import './browser-kraken-ledger.mjs';
+import './browser-bitpanda-evidence.mjs';
+import './browser-bitpanda-preview.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
