@@ -1,3 +1,35 @@
+# FX-UI01-Kandidat gesichert · finale UI-CI läuft · 28.10.2026
+
+PR191 auf bestehendem Branch feature/flh03-flatex-native-format,
+HEAD `6d66d3d57421e8b0d96862afc15992f124b06b68`, Baum `c48b6e1edae946a53ad38b565418c7bda6d93fdf` exakt lokal/remote.
+Vorabvertrag 25b061e0661c6f81b4ad15540f0118a9569126c3 auf dem zentralen Dokumentationsbranch.
+FX-FORMAT01 zuvor vollständig abgenommen; keine Wiederholung/zweiter Strang.
+
+**FX-UI01 IN_PROGRESS** bis finale CI/Scope-/Bildabnahme. Native Originalformat-Vorschau
+mit getrennten Depot-/Kontoeingängen (einzeln/gemeinsam/mehrere Teil-Dateien), 20-Dateien-/
+2MB-/5000-Gesamtzeilengrenzen; verlustfreie Bytes, Quarantäne vor generischem Mapping,
+keine wirtschaftliche Buchung oder automatische Order-/Cash-/Dedupeannahme.
+Vorhandene Beta und übrige CSV-Profile erhalten. Alle Dateien/Zeilen sichtbar getrennt.
+
+855/855 lokale Units/0Fail/0Skip, Syntax und korrigierter Chromium-UI-Gate PASS:
+Auto/Explizit/CP1252/Blankheader, Kategorie-/Fremd-/Misch-/Schema-/Limitguards,
+getrennte/gemeinsame/Teil-Dateien, exakte Werte/Referenzen/Escaping, zehn Layoutzustände
+(Eingänge + Vorschau bei fünf Breiten)/Axe/44px, Paging/Fokus/Escape/Cancel/Neuöffnen,
+erzwungener Submit, kontrollierte verspätete Dateilesungen, echter SW-Offline-Reload
+und exakter IDB-/Revisions-/Settingsvergleich ohne Änderung, keine externen Requests.
+Lokale Eingänge320/Detail1440 tatsächlich angesehen, kein blockierender Befund.
+Keine privaten Originale zusätzlich geöffnet oder Produktivdaten geändert.
+
+Neue Läufe: 40748384443 Wallet scan checks; 40748383976 FolioLab Open – testen und veröffentlichen.
+Nächster Schritt diese reguläre unveränderte volle CI abwarten, tatsächliche neue
+Drei-Engine-Berichte/Artefaktdigests/Bilder und identischen Mergebaum prüfen, zentral sichern.
+Danach FX-UI02 kontrollierter read-only Release mit Main/Pages/tatsächlicher Liveabnahme.
+Produktion v200 LIVE_ACCEPTED/main b2a07f4 unverändert, SW201 unveröffentlicht.
+UI-MASTER28 und DELETE-MASTER28 vollständig erhalten/offen, keine parallele Umsetzung.
+Gesamtmaster und FLH03-05 PARTIAL; bestehende Roadmap/Abhängigkeiten unverändert.
+
+---
+
 # FX-FORMAT01 DONE · FX-UI01 begonnen · 28.10.2026
 
 Frischer Kollisionscheck: main b2a07f4/v200 unverändert, nur eigener PR191 und geparkte157/161, jüngste Actions beendet, kein lokaler fremder Writer. Finale Pflicht40745005502/Wallet40745005842 SUCCESS; 853/853Units/0Fail/0Skip, Syntax und beide vollständigen Browser-Shards. Beide Artefaktdigests vor Extraktion bestätigt, testedSHA1de2d7e und drei neue Runtimeberichte tatsächlich gelesen: 12/10-Spalten, alle32CP1252-C1-Zeichen, exakte Werte/Referenzen, echte Offlineprüfung und exakte IDB-/Revisions-/Settings-Nullmutation PASS. Acht-Dateien-Gesamtdiff ohne Blocker, Baumf3dcf3a exakt lokal/remote/Merge. [Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-format-candidate.json).
