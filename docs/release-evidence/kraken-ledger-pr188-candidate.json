@@ -1,0 +1,127 @@
+{
+  "status": "CANDIDATE_REVIEWED",
+  "date": "2026-10-28",
+  "pr": 188,
+  "branch": "feature/flh03-kraken-ledger-preview",
+  "base": "8391dc0a8478af7e1aeb860b8b705217fdd24546",
+  "head": "c783f460e3069d0654269ae2d1e1879022ede20d",
+  "contract": "314c4fc6a2c44ff1e1698cb62efaf0de007fb720",
+  "tree": "ecc9f587340e3fb2a9b0246b06fa85e9973b16d8",
+  "tested_merge": "f44920f884391037a6229cf5185fec7604ff61ab",
+  "local_index_tree": "ecc9f587340e3fb2a9b0246b06fa85e9973b16d8",
+  "runs": [
+    {
+      "id": 40704994032,
+      "result": "success",
+      "units": {
+        "pass": 831,
+        "fail": 0,
+        "skip": 0
+      },
+      "required_jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ],
+      "deploy": "skipped",
+      "live": "skipped"
+    },
+    {
+      "id": 40704994025,
+      "result": "success"
+    }
+  ],
+  "local": {
+    "new_tests": 10,
+    "all_units": 831,
+    "syntax": "PASS",
+    "browser": "No local browser PASS claimed; regular CI supplies all engine evidence"
+  },
+  "reports": {
+    "12824215831": {
+      "sha256": "d3964aabbf826b1dbb196d847e090a8e3937af3f6b28fa30ac039a905811ff5c",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Kraken read-only CSV preview",
+        "engines": [
+          {
+            "engine": "chromium",
+            "result": "PASS",
+            "checks": [
+              "native auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "all legs and exact declared fees",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      },
+      "testedSHA": "f44920f884391037a6229cf5185fec7604ff61ab"
+    },
+    "12823783074": {
+      "sha256": "a1a7d24dcc5fbaaec94316a8d5b654c3a31be147d65d63c12525586fcdd05414",
+      "report": {
+        "base": "http://127.0.0.1:4173/",
+        "scope": "Synthetic native Kraken read-only CSV preview",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "native auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "all legs and exact declared fees",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "native auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "all legs and exact declared fees",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "artifact_digests_checked_before_extraction": true,
+  "review": {
+    "scope": "all eleven changed files; exact declared values and immutable observations; native routing and callback/submit guards; preserved existing assertions; no financial/storage/backup path",
+    "blocking_findings": [],
+    "workflow_changes": false,
+    "images_actually_reviewed": [
+      "chromium-390.png",
+      "firefox-320.png",
+      "webkit-1440.png"
+    ],
+    "visual_result": "PASS"
+  },
+  "remaining": [
+    "KRAKEN03 controlled merge and actual Main/Pages/three-engine production acceptance",
+    "Full economic Kraken import/independent trade and balance gates"
+  ],
+  "production": "v198 LIVE_ACCEPTED; candidate SW199 not deployed",
+  "session": "KRAKEN01 and KRAKEN02 complete; stop after two stages"
+}

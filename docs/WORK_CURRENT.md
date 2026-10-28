@@ -6,55 +6,57 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 
 - Letzter produktiv abgenommener Release: **v198 LIVE_ACCEPTED**.
 - Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
-- Releasebaum: `5a6ad50997bfc932fa0220278a912f93267ff2e7`, identisch geprüfter Kandidat.
-- PR187 vollständig abgenommen. Einziger neuer Funktionsbranch: `feature/flh03-kraken-ledger-preview`.
-- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), HEAD `c783f460e3069d0654269ae2d1e1879022ede20d`.
-- PR157/161 bleiben unverändert geparkt; kein anderer Writer/aktive CI beim Abschluss.
-- **P09-ID03 DONE:** kontrollierter reinlesender P-Chain-Identitätsrelease.
-- **FLH03-ORIG01 DONE:** neuer regulärer lesender Original-CSV-/Parserabgleich.
-- Gesamtmaster und FLH03-09 bleiben **PARTIAL**; keine vollständige Walletintegration.
+- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), offen/geprüft, kein Draft.
+- Branch: `feature/flh03-kraken-ledger-preview`.
+- HEAD: `c783f460e3069d0654269ae2d1e1879022ede20d`.
+- Getesteter PR-Merge: `f44920f884391037a6229cf5185fec7604ff61ab`.
+- Kandidat-/lokaler-/Mergebaum identisch: `ecc9f587340e3fb2a9b0246b06fa85e9973b16d8`.
+- **FLH03-03-KRAKEN01 DONE / KRAKEN02 DONE** für Vertrag und geprüften Implementierungskandidaten.
+- **KRAKEN03 TODO:** kontrollierter Release mit vollständiger tatsächlicher Liveabnahme.
+- Kein Merge/Deployment für PR188 begonnen; SW199 unveröffentlicht.
+- Gesamtmaster und FLH03-03 **PARTIAL**; PR157/161 unverändert geparkt.
 
-## Letzte erfolgreiche Prüfungen
+## Abgeschlossene Etappen dieser Sitzung
 
-- PR-CI40691053325 und Wallet40691053211 SUCCESS.
-- [Main/Pages/Live40693772763](https://github.com/joke0071/foliolab-open/actions/runs/40693772763)
-  vollständig SUCCESS:821/821Units/0Fail/0Skip, Syntax, Chromium, beide Firefox/WebKit-Shards,
-  Deployment und tatsächliche Drei-Engine-Liveabnahme.
-- Produktion: SW198,113exakteDateivergleiche,6Kerngruppen/18Axe ohne Befund.
-- Neue P-Chain-Adress-/Identitäts-/Negativ-/IDB-/Settings-Nullmutationsgates3Engines PASS.
-- ProduktionsZIP-Digest vor Extraktion geprüft; neue320/390/1440-Kernbilder tatsächlich angesehen.
-- [Releasebeleg](release-evidence/pchain-identity-v198-release.json).
-- Keine offenen technischen Releasegates für PR187; spätere aktive Finanzadapter separat freigeben.
-
-## Regulärer Originaldaten-Checkpoint
-
-- Vier benannte Originalexporte zugänglich und ausschließlich lesend privat geprüft.
-- Bittr: bestehender Kaufbelegparser akzeptiert Original; bestehende Allowlist bestätigt.
-- Kraken: bestätigter16-Spalten-Ledgerdialekt; kein nativer wirtschaftlicher Adapter.
-  Generisches fee→feeEUR ist für deklarierte Nicht-EUR-Gebühren keine Freigabe.
-- Bitpanda: Vorspann +18/17-Feld-Varianten; bestehender Parser lehnt Originalstruktur ab.
-- Flatex:13-Spalten-Depot mit drei unbenannten Positionsfeldern, kein gültiges UTF-8.
-  Headerdetektor erkennt Depot, Parser lehnt Blankheader ab; Thesaurierungen separat.
-- Flatex laut Nutzer unvollständig; weitere Originale derzeit nicht verfügbar.
-  Keine vollständige Depot-/Cash-/Steuer-/Saldoabnahme oder erfundenen Eröffnungen.
-- Exakte private Zeiträume/Anzahlen im privaten Prüfbericht; öffentlich nur abstrahierter
-  [Formatabgleich](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md).
-- Vier vollständig synthetische Schema-Prüfungen PASS; kein Produkt-/Parser-/Workflowcode geändert.
-- Alle Originale bleiben privat/unverändert; keine Zeilen, Beträge, IDs, Adressen oder Fingerprints publiziert.
-
-## Aktuelle Etappen / nächster Schritt
-
-- **FLH03-03-KRAKEN01 DONE:** [Vertrag vor Code](https://github.com/joke0071/foliolab-open/blob/314c4fc6a2c44ff1e1698cb62efaf0de007fb720/docs/FLH03_KRAKEN_LEDGER_CONTRACT.md),
+- **KRAKEN01 DONE:** [Fachvertrag vor Code](https://github.com/joke0071/foliolab-open/blob/314c4fc6a2c44ff1e1698cb62efaf0de007fb720/docs/FLH03_KRAKEN_LEDGER_CONTRACT.md),
   Commit `314c4fc6a2c44ff1e1698cb62efaf0de007fb720`.
-- **FLH03-03-KRAKEN02 IN_PROGRESS:** reine native Ledger-Vorschau im vorhandenen CSV-Dialog.
-- Basis v198/main8391dc0; keine kritische Finanz-/Storage-/Backupmutation oder Buchungsfreigabe.
-- Implementierung gesichert: zehn neue Fachtests und gesamte831/831Units/0Fail/0Skip, Syntax PASS.
-- Exakt nächste Aktion: laufende Pflicht-CI regulär abschließen, alle3Engine-Berichte,
-  tatsächliche Bilder, Quellscope und unveränderten Kandidat-/Mergebaum prüfen.
-- Fehlende gepaarte Trades/Balances/unabhängige Stichtage bleiben explizit;
-  keine aktuell nicht verfügbaren Originale erneut pauschal anfordern.
-- Danach bestehende Bitpanda-/Flatex-/P-Chain-Folge gemäß Roadmap; FLH05/PERF nicht vorziehen.
-- FLH-PROJ01 bleibt ausschließlich später dokumentiert.
+- **KRAKEN02 DONE:** reine native16-Spalten-Vorschau im vorhandenen CSV-Dialog.
+  Zeilen/Mehrbeingruppen, deklarierte Fees und ungeklärte/duplizierte/konfligierende Daten erhalten;
+  generisches Mapping und Übernahme einschließlich forcedSubmit gesperrt.
+- Kein Finanz-/Modell-/Storage-/Migrations-/Backupumbau; Originale privat, Tests nur synthetisch.
+- Quell-/Scope-/Bildreview ohne blockierenden Befund; alle bisherigen Gates/Pins/Assertions erhalten.
+
+## Letzte erfolgreiche Prüfungen / offene Gates
+
+- Lokal zehn neue Fachtests,831/831Units/0Fail/0Skip, Syntax PASS.
+- [Pflicht-CI40704994032](https://github.com/joke0071/foliolab-open/actions/runs/40704994032)
+  und Wallet40704994025 vollständig SUCCESS:831/831Units, Syntax, Chromium, beide Pflichtshards.
+- Neuer Kraken-Gate tatsächlich inChromium/Firefox/WebKit PASS: Erkennung/Quarantäne/
+  Fees/alleBeine/hostileInput/50-100Anzeige/Fokus/5Breiten/Axe/44px/forcedSubmit/
+  Escape/Cancel/Neuöffnen/echterOfflineReload/exakteIDB-Revision-Settings-Nullmutation.
+- Release-/Cross2-ZIP-Digests vor Extraktion geprüft; getesteter Mergebaum exakt.
+  Drei finale Bilder tatsächlich angesehen: Chromium390,Firefox320,WebKit1440; PASS.
+  [Kandidatenbeleg](release-evidence/kraken-ledger-pr188-candidate.json).
+- Offen: frischer Kollisions-/HEAD-/Mergebaumcheck, kontrollierter Merge, volle Main-/Pages-/
+  tatsächliche Drei-Engine-Livegates/Modulbytes/Produktionsbilder.
+- Keine neue externe Freigabe für die reine Vorschau erforderlich; spätere wirtschaftliche
+  Übernahme erfordert eigenen kritischen Fach-/Releasevertrag und weitere Belege.
+
+## Exakt nächster ausführbarer Schritt
+
+**KRAKEN03 starten:** main/HEAD/PRs/Actions/Writer prüfen, identische grüne Kandidatengates
+wiederverwenden. PR188 kontrolliert mit erwarteter HEAD-SHA mergen, vollständigen Main-/
+Pages-/tatsächlichen Drei-Engine-Livelauf regulär abschließen, Artefakte/Bilder prüfen.
+Erst danach v199 LIVE_ACCEPTED dokumentieren. Keine bereits grüne PR-CI erneut starten.
+Details: Fachvertrag/Kandidatencheckpoint im PR; aktueller QA-Nachweis hier/im Detailcheckpoint.
+
+Vorheriger Originalaudit bleibt maßgeblich; keine erneute Gesamtrekonstruktion:
+Bittr-Belegpfad bestätigt, Kraken-Mehrbeine/Fees quellenbezogen, Bitpanda18/17/Vorspann
+und Flatex13/Blankheader/Encoding offen. Flatex ausdrücklich unvollständig; weitere
+Originale derzeit nicht verfügbar. Fehlende Trades/Balances/unabhängige Stichtage
+konkret führen; keine erfundenen Eröffnungen/Cashflows/Steuern.
+Danach bestehende Bitpanda-/Flatex-/P-Chain-Folge, FLH05/PERF nicht vorziehen,
+FLH-PROJ01 weiterhin ausschließlich später dokumentiert.
 
 ## Verbindlicher Sitzungs- und Übergabevertrag
 
@@ -67,7 +69,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
   Nach konsistentem Schritt bzw. spätestens etwa30–45Minuten gezielt prüfen/testen,
   sinnvoll committen und kollisionsfrei auf bestehendem Branch sichern.
 - Nach Etappe beide Statusdateien möglichst atomar mit Ergebnis/Commit/Tests/Release/nächstem Schritt.
-- Identische grüne Nachweise wiederverwenden; alle Pflichtgates erhalten.
+- Identische grüne Nachweise wiederverwenden; sämtliche Pflichtgates erhalten.
   Keine CI-Duplikate, Retryschleifen oder parallelen Ersatzprozesse bei Rate Limits.
 - Nach zwei Etappen gesichert stoppen; begonnene Sicherheits-/Releaseabschlüsse regulär beenden.
-- Aktuelle Sitzung: KRAKEN01 DONE, KRAKEN02 IN_PROGRESS; danach gesicherter Stopp.
+- Sitzung abgeschlossen: KRAKEN01/02 DONE, PR188 geprüft/offen, KRAKEN03 TODO.
