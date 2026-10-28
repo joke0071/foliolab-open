@@ -8,10 +8,11 @@ Bei Konflikten GitHub und detaillierte Nachweise prüfen; ältere Einträge sind
 - main: `c28053a109ed0338cdb040d88758766a1888a535` (PR188/189).
 - Baum: `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`, exakt geprüfter Korrekturkandidat.
 - [PR188](https://github.com/joke0071/foliolab-open/pull/188) und [PR189](https://github.com/joke0071/foliolab-open/pull/189) gemergt.
-- Kein aktiver Funktions-PR; Krakenbranch vollständig gesichert als Referenz erhalten.
-- **KRAKEN03 DONE / KRAKEN-QA01 DONE**; zwei Etappen dieser Sitzung abgeschlossen.
+- Aktiver Funktionsbranch: `feature/flh03-bitpanda-preview`; BP02-PR folgt.
+- **FLH03-04-BP01 DONE / BP02 IN_PROGRESS**: Vertrag vor Code, reine Parsergrundlage.
+- BP01-Vertragscommit `e22a803ae03057744701587f421e11f724852dca`; noch keine Bitpanda-UI/Übernahme.
 - Gesamtmaster/FLH03-03 **PARTIAL**; wirtschaftliche Übernahme bleibt gesperrt.
-- Geparkte PR157/161 unverändert; keine laufenden Actions oder lokalen Writer.
+- Geparkte PR157/161 unverändert; vor BP02 keine laufenden Actions oder lokalen Writer.
 
 ## Erledigt
 
@@ -42,15 +43,15 @@ Bei Konflikten GitHub und detaillierte Nachweise prüfen; ältere Einträge sind
 
 ## Exakt nächster ausführbarer Schritt
 
-Nächste Sitzung **FLH03-04-BP01 TODO**: frischer Kollisionscheck, vorhandenen
+**BP02 ausführen** gemäß separat gesichertem Bitpanda-Vertrag. Vorhandenen
 [Originalformataudit](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md) und gezielte
-bestehende CSV-/Decimal-/Previewverträge laden; vor Code begrenzten reinlesenden
-Bitpanda18/17-/Vorspannvertrag sichern. Fehlendes Tax-Feld/Leerwerte/Striche unbekannt,
+bestehende CSV-/Decimal-/Previewverträge laden; bestehenden reinlesenden
+Bitpanda18/17-/Vorspannvertrag umsetzen (reiner Parser/Runtimetests, noch kein Dialog). Fehlendes Tax-Feld/Leerwerte/Striche unbekannt,
 expliziten Zeitoffset/Fiat/Asset/Feeasset/Spread/Product/In-Out erhalten;
 keine Steuer0, Preis-/Kosten-/Cash-/Stakingannahmen oder neue wirtschaftliche Übernahme.
 Bestehende Parser-/Dialogmechanik wiederverwenden; neue Formatvarianten nicht erfinden.
 Danach laut bestehender Folge Flatex-Formatlücken/P-Chain-Reste; FLH05/PERF nicht vorziehen.
-Kein weiteres Entwicklungspaket dieser Sitzung. FLH-PROJ01 nur später dokumentiert.
+Nach BP01/BP02 geprüften Kandidaten sichern und stoppen. FLH-PROJ01 nur später dokumentiert.
 
 ## Externe Grenzen / Detailquellen
 
