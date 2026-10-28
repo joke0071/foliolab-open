@@ -10,6 +10,14 @@ export const FLATEX_NATIVE_COLUMNS=Object.freeze({
   ['bookingDate','valueDate','counterpartyBIC','counterpartyAccount','details','transactionReference','amount','amountCurrency','originatorAccount','account'])
 });
 const unknown=v=>v==null||v===''||v==='-';
+// https://encoding.spec.whatwg.org/index-windows-1252.txt
+// Explicit C1 mapping avoids observed runtime variation (0x80 -> U+0080).
+const cp1252C1=[0x20ac,0x81,0x201a,0x192,0x201e,0x2026,0x2020,0x2021,0x2c6,0x2030,0x160,0x2039,0x152,0x8d,0x17d,0x8f,0x90,0x2018,0x2019,0x201c,0x201d,0x2022,0x2013,0x2014,0x2dc,0x2122,0x161,0x203a,0x153,0x9d,0x17e,0x178];
+function decodeCP1252(bytes){
+ let result='';
+ for(let i=0;i<bytes.length;i+=8192)result+=String.fromCharCode(...Array.from(bytes.subarray(i,i+8192),b=>b>=128&&b<=159?cp1252C1[b-128]:b));
+ return result;
+}
 export const looksLikeFlatexNativeCSV=lexed=>{
  const h=lexed?.records?.[0]?.cells?.map(v=>v.trim());
  return Boolean(h&&h.includes('')&&['Buchtag','Valuta','Buchungsinformationen','TA-Nr.'].filter(k=>h.includes(k)).length>=3);
@@ -49,7 +57,7 @@ function project(input,encoding){
   if(fields.length!==columns.length)throw Error('Flatex: abweichende Spaltenanzahl im Originalformat.');
   if(columns.every((c,i)=>c.header===fields[i]))throw Error('Flatex: wiederholter Header im Originalformat.');
   const values=Object.fromEntries(columns.map((c,i)=>[c.key,fields[i]])),numbers={},dates={},issues=[];
-  for(const [key,v]of Object.entries(values))if(v.length>300||/[\u0000-\u001f]/.test(v))issues.push(key+': ungewöhnliches oder langes Quellfeld.');
+  for(const [key,v]of Object.entries(values))if(v.length>300||/[\u0000-\u001f\u007f-\u009f]/.test(v))issues.push(key+': ungewöhnliches oder langes Quellfeld.');
   for(const key of ['bookingDate','valueDate']){
    dates[key]=null;try{dates[key]=sourceDate(values[key]);}catch{issues.push(key+': Quelltag ungültig oder unbekannt.');}
   }
@@ -82,6 +90,6 @@ export function readFlatexNativeBytes(bytes){
  if((bytes[0]===255&&bytes[1]===254)||(bytes[0]===254&&bytes[1]===255)||(bytes[0]===0&&bytes[1]===0))throw Error('Flatex: UTF-16/32 ist nicht als bestätigtes Originalencoding freigegeben.');
  let text,encoding='utf-8';
  try{text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);}
- catch{text=new TextDecoder('windows-1252',{fatal:true}).decode(bytes);encoding='windows-1252';}
+ catch{text=decodeCP1252(bytes);encoding='windows-1252';}
  return project(text,encoding);
 }

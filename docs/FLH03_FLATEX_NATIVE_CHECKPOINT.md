@@ -1,3 +1,26 @@
+# Node20-Decodierung korrigiert, finale CI noch offen · 28.10.2026
+
+Erstkandidat ee5795bcfd92b303dafbfd9e9f1048d1d097daa8: Wallet40743513720
+fehlgeschlagen im neuen Eurozeichen-Test; Haupt-CI40743513733 läuft regulär weiter.
+Node20.20.2-Decodierung von CP1252-C1-Bytes lokal unabhängig reproduziert:
+0x80 wurde U+0080 statt U+20AC. Keine Behauptung einer unbewiesenen internen
+Laufzeitursache, keine Assertion abgeschwächt.
+
+Begrenzte Korrektur: explizite CP1252-C1-Zuordnung nach WHATWG-Primärindex
+https://encoding.spec.whatwg.org/index-windows-1252.txt, bounded Chunk-Decodierung
+und Kontrollzeichen-Issues. UTF8-Fatalprüfung und übriger Fachvertrag unverändert.
+Alle 32 C1-Zuordnungen unabhängig als erwartete Zeichen im Unit-/Browsergate geprüft.
+853/853 gesamte Tests unter Node20 und lokalem Node24, 0 Fehler/Skip, Syntax PASS.
+Korrigierter Chromium-Runtime-/Offline-/exakter Nullmutationsgate und beide privaten
+Originale mit vollständigem unabhängigen Feld-/Datum-/Decimalvergleich erneut PASS.
+
+Keine weitere Produktänderung außerhalb FX-FORMAT01, SW201 unveröffentlicht.
+Nach regulärem Ende des Erstlaufs korrigierten Kandidaten auf demselben PR191
+sichern und volle unveränderte Pflicht-CI erneut prüfen. Dieser Commit allein
+behauptet noch keine finale CI-Abnahme. Produktion v200, Gesamtmaster PARTIAL.
+
+---
+
 # FX-FORMAT01 – Kandidat in Prüfung, 28.10.2026
 
 Basis main b2a07f4131a7b38d1fa7da40fab8ea58b72fd119 / v200 LIVE_ACCEPTED.

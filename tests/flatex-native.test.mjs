@@ -21,6 +21,13 @@ test('actual byte decoding distinguishes UTF-8 and CP1252, including euro, umlau
  for(const bytes of [new Uint8Array([255,254,65,0]),new Uint8Array([254,255]),new Uint8Array([0,0,254,255]),new Uint8Array(2_000_001),null])assert.throws(()=>readFlatexNativeBytes(bytes));
  assert.throws(()=>parseFlatexNativeCSV(text+'\u0000'));assert.throws(()=>parseFlatexNativeCSV(csv('depot',[{4:'broken\ufffd'}])));
 });
+test('CP1252 C1 bytes have standard euro/punctuation/letter meanings across runtimes',()=>{
+ const text=csv('depot',[{4:'SYN-BYTES'}]),[prefix,suffix]=text.split('SYN-BYTES');
+ const bytes=new Uint8Array([...syntheticCP1252(prefix),...Array.from({length:32},(_,i)=>128+i),...syntheticCP1252(suffix)]);
+ const row=readFlatexNativeBytes(bytes).rows[0];
+ assert.equal(row.values.description,'€\u0081‚ƒ„…†‡ˆ‰Š‹Œ\u008dŽ\u008f\u0090‘’“”•–—˜™š›œ\u009džŸ');
+ assert.match(row.issues.join(' '),/description: ungewöhnliches/);
+});
 test('German exact decimal projections retain signs, grouping and unknown versus explicit zero',()=>{
  const d=parseFlatexNativeCSV(csv('depot',[{5:'-9.007.199.254.740.993,000000000000000001',9:'1.234'},{5:'-',9:''},{5:'0',9:'0'},{5:'1,0000000000000000001',9:'1.23'},{5:'1e3',9:'1,2.3'}]));
  assert.equal(d.rows[0].numbers.nominal,'-9007199254740993.000000000000000001');assert.equal(d.rows[0].numbers.rate,'1234');assert.deepEqual(d.rows[1].numbers,{nominal:null,rate:null});assert.deepEqual(d.rows[2].numbers,{nominal:'0',rate:'0'});
