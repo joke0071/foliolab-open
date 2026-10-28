@@ -1,0 +1,59 @@
+{
+  "reviewed_at": "2026-10-28",
+  "scope": "Bounded continuation of PR186; no product changes, merge, deployment or repeat CI",
+  "main": "bccd1f7956edba4d9ec0c5f11dc8edd023f31809",
+  "head": "c7d307c0eea079071adbce2add80780710ca1c8e",
+  "tested_merge": "29d298f2c9f4123aeeb0da9c4905090226bc2b4f",
+  "tree": "2572b4aa3bab516f4a4b92c489684a4ad69609bb",
+  "runs": [
+    {
+      "id": 40681735312,
+      "result": "success",
+      "units": {
+        "pass": 812,
+        "fail": 0,
+        "skip": 0
+      },
+      "jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ],
+      "deploy": "skipped",
+      "live_acceptance": "skipped"
+    },
+    {
+      "id": 40681735033,
+      "result": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 12813886014,
+      "sha256": "186c864d8cd65bb2b3b2959438cd76b974f324fa39be425ac82e9e99c17170ac"
+    },
+    {
+      "id": 12813520876,
+      "sha256": "0c0bd1671ef0551ac18338266727092dd8224b2db91b6afc9f3a46aa95dbce9c"
+    },
+    {
+      "id": 12813446429,
+      "sha256": "aa94c9b9fd0ca986c3b181b2ea4b212bd2164be46aa3983b0d3dc9e842f04d1f"
+    }
+  ],
+  "artifact_hashes_verified_before_extraction": true,
+  "reference_suite": [
+    "chromium PASS",
+    "firefox PASS",
+    "webkit PASS"
+  ],
+  "visuals_actually_reviewed": [
+    "firefox-manage-320.png",
+    "webkit-normal-390.png",
+    "webkit-manage-1440.png"
+  ],
+  "source_review": "Archive validation and normalization; booking/reference coexistence; clone-bound preview and CAS/save paths; provenance/edit/delete/add protection; new independent tests. No blocking finding in bounded review.",
+  "writer_check": "Remote refs unchanged; no active or queued Actions and no active local test/git writer found. Existing preview server left running.",
+  "release": "v196 LIVE_ACCEPTED per existing detailed production evidence; not re-run in this session",
+  "approval": "PENDING: explicit user approval of portable archive metadata version2; no merge/deploy"
+}
