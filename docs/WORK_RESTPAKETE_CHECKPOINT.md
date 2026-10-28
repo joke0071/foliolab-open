@@ -1,3 +1,11 @@
+# FX-AUDIT01 wiederaufgenommen · 28.10.2026
+
+Frischer Kollisionscheck: main b2a07f4131a7b38d1fa7da40fab8ea58b72fd119 / v200 LIVE_ACCEPTED unverändert; jüngste Actions einschließlich40737628881 erfolgreich beendet, nur geparkte PR157/161 offen. Zentraler Checkpoint b3b2dad bestätigt. Lokale Prozesse/Arbeitskopie geprüft, keine fremde Entwicklung erkennbar; lediglich synthetische frühere Testartefakte untracked. Frühere Flatex-Branches werden auf Integration geprüft, kein neuer überlappender Funktionsbranch begonnen.
+
+**FX-AUDIT01 IN_PROGRESS:** vorhandene neun Istpunkte und Parser-/Reconciliation-/Backfill-/Identitäts-/Korrekturschutzverträge gezielt prüfen. Private Referenzen im autorisierten Drive-Ordner gefunden; Rohdatenprüfung noch offen. Nur Flatex-Depot/Konto für diesen Schritt lokal lesend materialisieren, keine Originalinhalte, IDs, Beträge, Zeiträume, Adressen oder Fingerprints in öffentliche Dokumentation/Tests/Logs übernehmen. Öffentliche Ergebnisse ausschließlich strukturell und synthetisch. Danach tatsächliche Lücken klassifizieren, Fachvertrag vor minimalem Implementierungsschritt sichern. Keine fiktiven Eröffnungen/Cashflows/Kosten, kein Parser-PASS als vollständige Historienabnahme. UI-MASTER28 und bestehende Roadmap bleiben erhalten, FLH05/PERF/PROJ01 nicht vorziehen.
+
+---
+
 # v200 LIVE_ACCEPTED · BP03/BP04 abgeschlossen · 28.10.2026
 
 **Aktueller verbindlicher Stand:** Bitpanda-Formatprüfung und Dialogvorschau sind produktiv abgenommen. Gesamtmaster und FLH03-04 bleiben **PARTIAL**: Eine Vorschau ist keine wirtschaftliche Importfreigabe und kein vollständiger Historien- oder Bestandsnachweis.
