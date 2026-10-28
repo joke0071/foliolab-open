@@ -1,3 +1,36 @@
+# Native Orderbeziehungsgrundlage gesichert · PR192 in Pflicht-CI · 28.10.2026
+
+Vorabvertrag e5f2a20ae01e6b0a25edcccdc8bf026f1fb3aca7 DONE.
+Einziger Funktionsbranch `feature/flh03-flatex-order-links`,
+[PR192](https://github.com/joke0071/foliolab-open/pull/192),
+HEAD `f8e74b2934efd4b7ec47acb09435ec45b505bb4e`, Baum `21a75fef5819630293ec6fc488aded87daf8e6db` exakt lokal/API-Remote.
+Main8850874/v201 LIVE_ACCEPTED unverändert, nur geparkte157/161 daneben,
+keine konkurrierende CI/Writer vor Sicherung. Direkt via GitHub-Git-API mit erwarteter
+HEAD gesichert; keine Shell-Push-Credentials benötigt.
+
+Reine Zuordnungsgrundlage **IN_PROGRESS** bis finale Pflicht-CI/Scope-/Runtimeprüfung:
+871/871 gesamte lokale Units unter Node20/0Fail/0Skip, Syntax und16 fokussierte neue
+Tests unter Node24 PASS. Chromium-Runtimegate PASS: getrennte Referenzen, vorhandener
+1:1-Matcher, mehrere Cash-/Depotausführungen bleiben Review, Konflikt/Overlap/Storno/
+Währung/Scope/fehlende/unzugeordnete Fälle, exakte kleine Zahlen, alle Zeilen erhalten,
+Bounds/Unveränderlichkeit/Legacy, echter SW-Offline-Reload/Modulimport, exakter
+IDB-Record/Revision/Settings unverändert, keine externen Requests.
+
+Vorhandene private Originalkopien bei unveränderten Drive-Metadaten lesend geprüft;
+sämtliche möglichen1:1-Quelllokatoren stimmen mit unabhängiger Python-Referenz überein,
+privates Sollziel bestätigt. Keine privaten Mengen/Zeilen/IDs/Beträge/Fingerprints
+veröffentlicht, kein vollständiger Historien-/Saldo-/Cashflow-/Performancebeweis.
+Keine Dialog-/app.js-/Finanz-/Storage-/Backupänderung. SW202 unveröffentlicht.
+
+Läufe: 40754640919 FolioLab Open – testen und veröffentlichen; 40754640913 Wallet scan checks.
+Nächster Schritt diese unveränderte volle CI/Wallet/Drei-Engine-Runtimeberichte,
+Artefaktdigests und identische Merge-/Lokal-/Kandidatenbäume prüfen und zentral sichern.
+Nach den zwei Etappen Vertrag + geprüfte reine Grundlage sicher übergeben;
+Dialogintegration und kontrollierter Release folgen separat, keine wirtschaftliche
+Freigabe behaupten. UI-MASTER28/DELETE-MASTER28 und Roadmap unverändert, Master PARTIAL.
+
+---
+
 # Orderbeziehungs-Vertrag vor Code gesichert · reine Grundlage lokal geprüft · 28.10.2026
 
 Vorabvertrag e5f2a20ae01e6b0a25edcccdc8bf026f1fb3aca7 auf neuem alleinigen Funktionsbranch feature/flh03-flatex-order-links (main8850874/v201 als Basis). Alte PR191/Branches abgeschlossen, keine laufende CI oder konkurrierende PR. Alternative Prozessinventur über /proc erfolgreich, kein fremder Writer erkennbar; ps-Laufzeitfehler umgangen, kein fremder Prozess unterbrochen. Aktuelle Drive-Metadaten der privaten Referenzen entsprechen früherem Stand, vorhandene private lokale Kopien nur lesend wiederverwendet.
