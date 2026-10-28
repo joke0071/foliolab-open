@@ -1,3 +1,13 @@
+# PR179 freigegeben und gemergt · v191-Live-Abnahme ausständig · 28.10.2026
+
+**DONE konkreter Freigabe-/Merge-Schritt, RUNNING Main/Pages/Live.** Nach wiederholtem „Fortsetzen“ als Antwort auf die konkrete Freigabefrage zu PR179 einschließlich optionalem Archiv-/Backupformat wurde die Veröffentlichung freigegeben. Merge `ef783a99da2641b42f716cc08d28f2d50baee0c4`, Tree `2dc0b34b2bc0e3398b324c69af5a12e4241cdc53` exakt identisch mit bestandenem Kandidaten. Vor Merge main/HEAD/Mergebaum und beide finalen grünen CI-Läufe erneut unverändert geprüft; Featurebranch erhalten.
+
+[Main/Pages/Live40640250948](https://github.com/joke0071/foliolab-open/actions/runs/40640250948) läuft. **v191 noch nicht LIVE_ACCEPTED.** Nach Pflichtgates und Pages gezielte tatsächliche Produktionsabnahme der neuen Buchungsabläufe in drei Engines einschließlich Archivmodell4, vollständigem verschlüsseltem Restore, Reimport, CAS/Fehlerfällen und Offline. Keine laufenden Jobs abgebrochen oder neu gestartet. Vorherige vollständige Live-Abnahme v190 bleibt Referenz bis neuer Nachweis.
+
+Der schlanke Listenkopf-Nachtrag bleibt ausschließlich vorgemerkt, keine zusätzliche Implementierung dafür. FLH05-A/PERF01 weiterhin nicht vorgezogen. Ursprüngliche Grenzen, Pflichtgates und historische Nachweise unten bleiben erhalten.
+
+---
+
 # PR179 releasefähig · konkrete Freigabe ausständig · 27.10.2026
 
 **DONE begrenzte Implementierung/Review/Regression · BLOCKED Merge/Deployment bis Nutzerfreigabe.** [PR179](https://github.com/joke0071/foliolab-open/pull/179), HEAD `d085e58624f2f1522bf851ef3d6de8c7b5962b95`, Tree `2dc0b34b2bc0e3398b324c69af5a12e4241cdc53`. Tatsächlich geprüfter Mergebaum `aed34f2af6f467e64f1c5e236429a508c1513557` hat exakt denselben Tree; main weiterhin `7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5`, mergeable/clean. Produktion bleibt v190 LIVE_ACCEPTED, SW191 unveröffentlicht.

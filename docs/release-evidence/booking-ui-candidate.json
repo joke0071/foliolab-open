@@ -1,5 +1,5 @@
 {
-  "status": "RELEASE_READY_APPROVAL_REQUIRED",
+  "status": "MERGED_RELEASE_ACCEPTANCE_PENDING",
   "production": {
     "version": 190,
     "main": "7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5",
@@ -316,5 +316,12 @@
     "broader source interpretation, field editing, compatible bulk editing and economic exclusion remain OPEN",
     "master predecessors remain PARTIAL; FLH05-A/PERF01 not started"
   ],
-  "preservedFLH05SpecificationBlob": "953f816c648ebabec42476be80cd0bf481fe6a2e"
+  "preservedFLH05SpecificationBlob": "953f816c648ebabec42476be80cd0bf481fe6a2e",
+  "release": {
+    "approval": "Repeated Fortsetzen in direct response to explicit PR179/model4 merge/deployment question",
+    "merge": "ef783a99da2641b42f716cc08d28f2d50baee0c4",
+    "tree": "2dc0b34b2bc0e3398b324c69af5a12e4241cdc53",
+    "mainRun": 40640250948,
+    "liveAccepted": false
+  }
 }
