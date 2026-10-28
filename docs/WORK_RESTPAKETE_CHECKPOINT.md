@@ -1,3 +1,11 @@
+# Lösch-Nachtrag aufgenommen · laufendes FX-FORMAT01 unverändert · 28.10.2026
+
+[Verbindlicher Nachtrag: einheitliche sichere Löschlogik](UNIFIED_SAFE_DELETION_ADDENDUM.md) vollständig gesichert. **DELETE-MASTER28 OPEN** beim nächsten passenden konfliktfreien Verwaltungsschritt: Löschen von Buchungen/Positionen/Referenzwerten ermöglichen, wenn vollständige sichere Rücknahme bewiesen ist; keine pauschale Sperre allein wegen Herkunft. Referenzabhängigkeiten (Renditestart/Bewertungsgrundlagen/Kontrollpunkte/Diagramme/Originalnachweise/TWR/XIRR/Bestandsabgleich), kompakte Sperrgründe/Alternativen, Vorschau/Bestätigung, keine stillen Teillöschungen und keine künstlichen Ersatzwerte verbindlich. Bestehende Schutzpfade bis zum sicheren neuen Nachweis erhalten. Keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe.
+
+Laufender Flatex-Prozess PR191 und CI40743513733 bleiben unverändert regulär aktiv; Node20-Encodingkorrektur lokal geprüft, noch nicht remote fortgeschrieben. Keine Unterbrechung, Neustart, Umpriorisierung oder parallele Löschimplementierung. Dieser Nachtrag ist reine Übergabesicherung, keine weitere Entwicklungsetappe. Danach vorhandene Roadmap und UI-MASTER28 fortsetzen.
+
+---
+
 # FX-FORMAT01: Node20-Encodingfehler reproduziert, lokale Korrektur in Prüfung · 28.10.2026
 
 PR191/HEAD ee5795bcfd92b303dafbfd9e9f1048d1d097daa8: Wallet40743513720 FAILURE in neuem Byte-Decodierungstest. Beobachtet unter Node20: TextDecoder windows-1252 liefert für 0x80 U+0080 statt Eurozeichen. Lokal mit Node20.20.2 und mehreren C1-Bytes unabhängig reproduziert; keine reine Testfixture-Abschwächung. Haupt-CI40743513733 läuft noch, nicht unterbrechen/duplizieren. Produktion v200 unverändert.
