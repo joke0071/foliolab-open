@@ -13,8 +13,9 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Kandidat-/lokaler-/Mergebaum identisch: `5a6ad50997bfc932fa0220278a912f93267ff2e7`.
 - Arbeitspaket FLH03-09: P-Chain-Adresse und kontextgebundene UTXO-Beobachtungsidentität.
 - **P09-ID01 DONE / P09-ID02 DONE** für Vertrag und geprüften Implementierungskandidaten.
-- **P09-ID03 TODO:** kontrollierter Release und tatsächliche Produktionsabnahme.
-- Kein Merge/Deployment für PR187 begonnen; SW198 bleibt unveröffentlicht.
+- **P09-ID03 IN_PROGRESS:** kontrollierter Release und tatsächliche Produktionsabnahme.
+- Releaseentscheidung für den geprüften reinlesenden Scope positiv; kontrollierter Merge folgt.
+- v198 noch nicht live abgenommen.
 - Gesamtmaster und FLH03-09 insgesamt **PARTIAL**; PR157/161 unverändert geparkt.
 
 ## Abgeschlossene Etappen dieser Sitzung
@@ -66,4 +67,4 @@ Spätere Sonic-/Drive-/FLH04-Folge erhalten; FLH05/PERF nicht vorziehen, FLH-PRO
 - Identische grüne Nachweise wiederverwenden; sämtliche Pflichtgates erhalten.
   Keine CI-Duplikate, Retryschleifen oder parallelen Ersatzprozesse bei Rate Limits.
 - Nach zwei Etappen gesichert stoppen; begonnene Sicherheits-/Releaseabschlüsse regulär beenden.
-- Sitzung abgeschlossen: P09-ID01/02 DONE, PR187 geprüft/offen, P09-ID03 TODO.
+- Aktuelle Sitzung: P09-ID03 IN_PROGRESS; keine parallele Entwicklung.

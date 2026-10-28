@@ -1,3 +1,9 @@
+# P09-ID03 gestartet · geprüfter reinlesender Release freigegeben · 28.10.2026
+
+Frischer Kollisionscheck: main `7b96a411925621f59021c36ad4d4a60a531c3a92`, PR187 HEAD `06726680c794145d158d378d6b24741fa0c34247`, Mergebaum `5a6ad50997bfc932fa0220278a912f93267ff2e7` unverändert; Pflicht-CI40691053325/Wallet40691053211 SUCCESS, nur PR187 und geparkte157/161, keine laufenden Tests/anderen Writer. Bestehende821/821Units/3Engine-Nachweise wiederverwendet. **P09-ID03 IN_PROGRESS.** Eigene begrenzte Releaseentscheidung unter ausdrücklicher Masterfortsetzung positiv: reine, nicht aktiv integrierte Adress-/Beobachtungsprüfhelfer ohne neue Finanz-/Storage-/Backupmutation. Keine neue kritische Nutzerfreigabe erforderlich; späterer aktiver Adapter bleibt separat. Nächster Schritt: Merge mit erwarteter HEAD-SHA, dann vollständige Main-/Pages-/tatsächliche Drei-Engine-Liveabnahme/Modulbytes/Kernbilder. Bis dahin v197 letzte LIVE_ACCEPTED-Version. Keine parallele Produktentwicklung.
+
+---
+
 # P09-ID01/02 DONE · PR187 geprüft, Release als nächste Etappe · 28.10.2026
 
 **P09-ID01 DONE:** Fachvertrag vor Code `7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c`. **P09-ID02 DONE im begrenzten Implementierungs-/PR-Abnahmeumfang:** [PR187](https://github.com/joke0071/foliolab-open/pull/187), `feature/flh03-pchain-identity`, HEAD `06726680c794145d158d378d6b24741fa0c34247`; lokale Index-/Kandidaten-/PR-Mergebäume exakt `5a6ad50997bfc932fa0220278a912f93267ff2e7`. Getesteter PR-Merge `2036ac9a225fb06256652f746c01f03c71c71a49`; keine weitere Produktänderung nach finaler CI. Reine P-Mainnet-/Fuji-Adressprüfung sowie ausdrücklich netzwerk-/quell-/zielgebundene UTXO-Beobachtungsidentität, keine globale wirtschaftliche Buchungsidentität. App/Scanner/Finanzmodell/Backup/Migration unverändert. Nur neuer Modulpfad/SW198 und bestehende P-Chain-Suite erweitert; keine neue Workflow-/Pin-/Gateänderung. Gesamter Sieben-Dateien-Scope und Quell-/Negativprüfungen ohne blockierenden Befund.
