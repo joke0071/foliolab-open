@@ -8,7 +8,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
 - Releasebaum: `5a6ad50997bfc932fa0220278a912f93267ff2e7`, identisch geprüfter Kandidat.
 - PR187 vollständig abgenommen. Einziger neuer Funktionsbranch: `feature/flh03-kraken-ledger-preview`.
-- Noch kein PR für den neuen Schnitt.
+- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), HEAD `c783f460e3069d0654269ae2d1e1879022ede20d`.
 - PR157/161 bleiben unverändert geparkt; kein anderer Writer/aktive CI beim Abschluss.
 - **P09-ID03 DONE:** kontrollierter reinlesender P-Chain-Identitätsrelease.
 - **FLH03-ORIG01 DONE:** neuer regulärer lesender Original-CSV-/Parserabgleich.
@@ -48,8 +48,9 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
   Commit `314c4fc6a2c44ff1e1698cb62efaf0de007fb720`.
 - **FLH03-03-KRAKEN02 IN_PROGRESS:** reine native Ledger-Vorschau im vorhandenen CSV-Dialog.
 - Basis v198/main8391dc0; keine kritische Finanz-/Storage-/Backupmutation oder Buchungsfreigabe.
-- Exakt nächste Aktion: Parser-/Anzeigeprojektion, sichere native Erkennung/Submitguards und
-  unabhängige Units/3Engine-Browsergates gemäß Vertrag implementieren und prüfen.
+- Implementierung gesichert: zehn neue Fachtests und gesamte831/831Units/0Fail/0Skip, Syntax PASS.
+- Exakt nächste Aktion: laufende Pflicht-CI regulär abschließen, alle3Engine-Berichte,
+  tatsächliche Bilder, Quellscope und unveränderten Kandidat-/Mergebaum prüfen.
 - Fehlende gepaarte Trades/Balances/unabhängige Stichtage bleiben explizit;
   keine aktuell nicht verfügbaren Originale erneut pauschal anfordern.
 - Danach bestehende Bitpanda-/Flatex-/P-Chain-Folge gemäß Roadmap; FLH05/PERF nicht vorziehen.
