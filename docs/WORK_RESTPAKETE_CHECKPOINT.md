@@ -1,3 +1,35 @@
+# v200 LIVE_ACCEPTED · BP03/BP04 abgeschlossen · 28.10.2026
+
+**Aktueller verbindlicher Stand:** Bitpanda-Formatprüfung und Dialogvorschau sind produktiv abgenommen. Gesamtmaster und FLH03-04 bleiben **PARTIAL**: Eine Vorschau ist keine wirtschaftliche Importfreigabe und kein vollständiger Historien- oder Bestandsnachweis.
+
+| Punkt | Verifizierter Stand |
+| --- | --- |
+| Produkt / main | `foliolab-open-v200`, `b2a07f4131a7b38d1fa7da40fab8ea58b72fd119` |
+| Geprüfter Dateibaum | `33bc9c41e273e776ed4304784cc6fd82cfb2f74c`, exakt lokal / PR-Merge / main |
+| Funktionsbranch / letzter Kandidat | `feature/flh03-bitpanda-preview`, `b4ab4a52a43f4fd00bcaa0027fa6661018be6f58`; PR #190 gemergt |
+| Zentraler Dokumentationsbranch | `feature/flh05-import-foundation`; dieser Checkpoint und Releasebeleg werden gemeinsam committed. Der Commit ist über die Dateihistorie eindeutig ermittelbar. |
+| PR-Abnahme | 40735978372 und Wallet 40735978420 SUCCESS; 844/844 Units, 0 Fehler / 0 Skip, Syntax, Chromium und beide Firefox-/WebKit-Pflichtshards |
+| Main / Pages / Live | [40737628881](https://github.com/joke0071/foliolab-open/actions/runs/40737628881), Versuch 2 abschließend SUCCESS; erfolgreiche Main-/Deploymentjobs wiederverwendet, nur fehlgeschlagener Livejob gezielt wiederholt |
+| Offene PRs / aktive Prozesse | Nur geparkte #157 und #161; keine aktive CI oder konkurrierende Änderung beim Abschlusscheck |
+| Letzter Teilabschluss | BP03 Dialoganbindung und BP04 kontrollierter Release einschließlich tatsächlicher Produktionsabnahme DONE |
+| Unabgenommene Produktänderungen | Keine aus diesem Lauf. Neue UI-MASTER28-Anforderungen darunter sind dokumentiert, noch nicht implementiert. |
+
+**Was umgesetzt wurde:** Native Bitpanda-Dateien werden vor allgemeinem CSV-Finanzmapping erkannt. Genau eine Datei; Mischstapel, fremde Importmodi und erzwungene Übernahme bleiben gesperrt. Vorhandener Dialog mit Generation-/Abbruch-/Fokusmechanik, 50-Zeilen-Paging, geparsten Quellfeldern und Issues. Alle Quellzeilen bleiben erhalten; exakte Assetmengen und Gebühren in deklarierter Währung, fehlende Steuerwerte ausdrücklich unbekannt. Vorspanninhalte werden nicht angezeigt. Keine Finanz-, Speicher-, Migrations- oder Backupänderung; keine Originaldaten veröffentlicht.
+
+**Tatsächliche Produktionsabnahme:** 118 exakte veröffentlichte Dateihashes einschließlich neuer Module und SW200; sechs Kerngruppen, 18 Axe-Scans ohne Befund; echte unverschlüsselte und verschlüsselte UI-Backups in frischen Profilen wiederhergestellt, Offline-Commit und Reload bestanden. Neue Bitpanda-Parser- und Dialogprüfung auf der Produktionsdomain in Chromium, Firefox und WebKit PASS: Vorspann/18-/17-Felder, Auto-/Expliziterkennung, Schema-/Fremd-/Mischmodus-/Submitguards, exakte Mengen/deklarierte Gebühren/unbekannte Steuer, Escaping, fünf Breiten/Axe/44px, Paging/Fokus/Escape/Cancel/Neuöffnen, echter SW-Offline-Reload, exakter unveränderter IDB-Record einschließlich Revision und Settings, keine externen Vorschaurequests. Chromium-Ergebnis im separaten Produktionslog bestätigt; der zuletzt geschriebene Dialogbericht enthält Firefox/WebKit. Sechs finale Produktionsbilder tatsächlich angesehen: Bitpanda Chromium390/Firefox320/WebKit1440 und Kern320/390/1440; kein blockierender Befund.
+
+**Erhaltene Fehlerhistorie:** Erster Livejob 122995691860 scheiterte vor der Sonic-Fachprüfung im WebKit-Appstart/IDB-Bereitschaftswarten nach 30 Sekunden. Derselbe Startpfad hatte unmittelbar vorher in P-Chain-WebKit bestanden; Main-/PR-WebKit und Produktions-Chromium waren grün. Einmalige begründete Wiederholung ausschließlich des Livejobs mit identischem SHA, Timeout und Assertions bestand vollständig (122998489822). Genaue Ursache des ersten Starttimeouts bleibt unbewiesen; keine Assertion entfernt oder Produktänderung als vermeintliche Reparatur eingeführt. Fehlerartefakt 12839355798 / SHA256 `90fd8b6d559baf5285bd2585dfa6dcb84abc18e8c831027df50b6cb50249847b` erhalten.
+
+Finale Produktions-ZIP 12838912223 / SHA256 `9e49bb206a6f1853e9183bd1b7782552ec1ac6503894ee52918bb4fc83db9654` sowie Main-ZIP 12837364471 / SHA256 `3a9b30d40bdcb2fac7a93729a12b4f014436fc76cdf9e45585a3bebf35efaf19` vor Extraktion bestätigt. Main-tested-sha und Livebericht ordnen exakt den Merge zu. [Dauerhafter Releasebeleg mit Hashes und geprüften Berichten](release-evidence/bitpanda-v200-release.json).
+
+**Sicherer Sitzungsabschluss nach den zwei vereinbarten Folgeetappen BP03/BP04:** Keine ungesicherte Produktarbeit, kein weiteres Paket begonnen. Dokumentationsfortschreibungen verändern die veröffentlichte App nicht und sind nicht als zusätzliche main-Deployments auszugeben.
+
+**Exakt nächster regulärer Schritt:** Frischer main-/Branches-/PR-/Actions-/Checkpoint-/Writercheck; anschließend bestehenden Flatex-Schritt **FX-AUDIT01** fortsetzen. Zuerst die neun dokumentierten Istpunkte anhand vorhandener Parser/Fachverträge und der neu gemeldeten privaten Depot-/Kontoreferenzen als vorhanden / teilweise / fehlt / fehlerhaft klassifizieren. Frühere Flatex-Branches und vorhandene Implementierung rekonstruieren, keinen überlappenden neuen Strang eröffnen. Zugriff hier noch nicht erneut geprüft; fehlenden Zugriff konkret dokumentieren und unabhängige Arbeit fortsetzen. Historischer Zielstart 01.01.2022; keine erfundenen Eröffnungen, Anschaffungskosten oder Cashflows.
+
+**Neue Nutzerentscheidungen bleiben verbindlich:** UI-MASTER28 darunter hat Vorrang vor widersprüchlichen älteren UI-Textstellen: Verwalten/Fertig und dezente Bearbeiten-Links im Normalmodus für die drei Verwaltungsbereiche, sichere Auswahlgrenzen/Archivfilter und mobile Zeiträume ohne horizontales Scrollen. Tatsächliche Lücke im Positions-/Buchungs-Listenkopf bestätigt, noch offen; beim nächsten regulären UI-Schritt minimal schließen, vor abhängigen FLH05-Schritten erhalten. Übrige FLH03-/FLH04-/OAuth-/Hardware-/Steuerfachgates bleiben konkret offen. Bestehende Roadmap und Reihenfolge unverändert; PERF vor dem vorgesehenen FLH05-Schritt, FLH-PROJ01 nur Backlog.
+
+---
+
 # BP04 Livegate fehlgeschlagen · begrenzte Diagnose/Wiederholung · 28.10.2026
 
 Main40737628881/Test/Cross1/Cross2/Deployment SUCCESS auf b2a07f4131a7b38d1fa7da40fab8ea58b72fd119. Livejob122995691860 FAILURE: WebKit in unverändertem tests/browser-sonic-staking-evidence.mjs:12 wartet nach erfolgreicher Navigation 30s auf portfolioStorageState/IndexedDB aktiv. Keine Sonic-Fachassertion und kein Bitpanda-Dialog im Cross-Produktionsschritt erreicht. Unmittelbar vorher P-Chain-WebKit mit demselben App-/IDB-Startprädikat PASS, Sonic-Firefox PASS; identischer Main-/PR-WebKit-Stand grün. Produktions-Chromium inklusive neuerBitpanda-Suite und Kernabnahme bestanden. Konkrete Hypothese: intermittierender frischer App-/Modul-/IDB-Start im Live-WebKit; genaue Ursache NICHT bewiesen, keine Produktunbedenklichkeit aus Timeout allein ableiten.
