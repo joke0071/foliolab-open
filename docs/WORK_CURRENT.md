@@ -12,8 +12,8 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Getesteter PR-Merge: `f44920f884391037a6229cf5185fec7604ff61ab`.
 - Kandidat-/lokaler-/Mergebaum identisch: `ecc9f587340e3fb2a9b0246b06fa85e9973b16d8`.
 - **FLH03-03-KRAKEN01 DONE / KRAKEN02 DONE** für Vertrag und geprüften Implementierungskandidaten.
-- **KRAKEN03 TODO:** kontrollierter Release mit vollständiger tatsächlicher Liveabnahme.
-- Kein Merge/Deployment für PR188 begonnen; SW199 unveröffentlicht.
+- **KRAKEN03 IN_PROGRESS:** kontrollierter Release mit vollständiger tatsächlicher Liveabnahme.
+- Release gestartet: geprüfte identische grüne Gates wiederverwenden; v198 bleibt bis Liveabnahme maßgeblich.
 - Gesamtmaster und FLH03-03 **PARTIAL**; PR157/161 unverändert geparkt.
 
 ## Abgeschlossene Etappen dieser Sitzung
