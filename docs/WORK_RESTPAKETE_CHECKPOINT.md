@@ -1,3 +1,17 @@
+# Aktiver Sonic-Nachweisschnitt · Draft PR184 · 28.10.2026
+
+v194 ist vollständig LIVE_ACCEPTED (unten). Einziger funktionaler Strang: [PR184](https://github.com/joke0071/foliolab-open/pull/184), `feature/flh03-sonic-evidence`, HEAD `22efc3935b59135589e9848bcb7ec9557be70ba1`, Tree `c6c6d53555072b3717e0f4a44d05eac962ab977c` exakt wie lokal geprüft. Der Vertrag wurde vor dem Code separat als `e2d2ad49210194e4714e89edb2cdb7d376588a32` gesichert.
+
+Neues reines Prüfmodul für deklarierte SFC4.0.5-Beobachtungen: gleicher Block/Vertrag, richtige Validator-/Konstantenzuordnung, belegte Implementierungssemantik, exakte uint256-Werte und Überlaufprüfung. Zeit UND Epoch müssen die dynamischen Wartefristen erfüllen; frühere Deaktivierung verwendet die belegte Protokollregel. Ein reifer Request bleibt pending; ein leerer Request beweist keine Zahlung. Keine dauerhafte Generation aus wiederverwendbarer wrID, kein Reward-/Summenwert und keine Scanner-/Finanz-/Modell-/Historien-/Storage-/Backupintegration. Vollständige Sonic10-Integration bleibt PARTIAL.
+
+Lokal799/799Units,0Fail/0Skip, Syntax und neuer tatsächlicher Chromium-Modul-/Zustands-/IDB-/Settings-Nullmutationsgate PASS.15 neue unabhängige Referenzen für Zeit/Epoch/Deaktivierung, uint256/Überlauf, leeres Mapping, gemischte Belege und unveränderliche Ausgaben. Eine anfängliche neue Fehlertexterwartung wurde grammatisch berichtigt; die geforderte falsche Validatorzuordnung wurde bereits korrekt abgelehnt. Keine fachliche Assertion entfernt. Vier zusätzliche Workflow-Kommandos; alle bisherigen30 historischen und PChain-Zusatzsuiten, Engines, Pins und Pflichtgates erhalten.
+
+[Vollständige Pflicht-CI40668113457](https://github.com/joke0071/foliolab-open/actions/runs/40668113457), Wallet40668113404 und vorhandener informativer öffentlicher Walletaudit40668113519 laufen. Firefox/WebKit, finale Review-/Merge-/Main-/Pages-/Live-Gates PENDING; SW195 ist nur Kandidat, Produktion bleibt v194.
+
+**Unmittelbar nach sicherem Abschluss dieses Pakets:** den neu vorgemerkten kleinen UI-Schnitt gegen dann aktuelles main prüfen: drei Verlauf-Lucide-Icons, tatsächliche Mobile-/Desktop-Zugänglichkeit „Liquidität & Fälligkeiten“, letzte Anbieter-Trennlinie bei erhaltenen Zwischentrennlinien. Bereits Erledigtes überspringen, keine parallele UI-Implementierung, vollständige Pflicht- und Livegates. Danach bestehende Mastersequenz fortsetzen. **FLH-PROJ01 bleibt ausschließlich dokumentiert und wird jetzt nicht implementiert.** Vollständiger Nutzer-Nachtrag ist darunter unverändert erhalten.
+
+---
+
 # Nutzer-Nachtrag: kleine UI-Korrekturen und FLH-PROJ01 vorgemerkt · 28.10.2026
 
 Kollisionsschutz unverändert: laufende Implementierung/Tests/PRs/Merges/Deployments nicht unterbrechen, keine parallelen funktionalen Stränge. v194 vollständig LIVE_ACCEPTED (unten). Bereits begonnener nächsterRang5-Schnitt `feature/flh03-sonic-evidence`: verifizierter4.0.5-Zustandsvertrag vorCode lokalgesichert, ersterreinlesenderModulentwurf begonnen, nochkeine neueAbnahme. Er bleibt aktuellalleinigerEntwicklungsstrang. FolgendeUI-Deltas erst am nächsten sicheren geeignetenUI-Checkpoint nachAbschlussdesaktuellbegonnenenPakets gegenaktuellesmain reproduzieren, bereitsErledigtesüberspringen; anschließend bestehendeMastersequenz fortsetzen.
