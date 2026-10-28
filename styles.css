@@ -1198,3 +1198,22 @@
  #historyPage .history-basis{flex-direction:column;align-items:stretch;gap:4px;flex-basis:100%}
  #historyPage .history-basis select{flex:auto;width:100%}
 }
+
+/* Reference management reuses the existing list selection and dialog components. */
+.reference-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.reference-toolbar .reference-filter{flex:0 1 260px;margin:8px 0;min-width:0;max-width:100%}
+.reference-filter select{min-height:44px}
+.reference-management-head{justify-content:flex-end;flex-wrap:wrap;margin:8px 0 8px auto}
+.reference-management-head .btn{padding:8px}
+#referenceSelectionTools:empty,#referenceSelectionStatus:empty{display:none}
+#referenceSelectionTools>.settings-actions{gap:9px;margin:12px 0}
+#referenceSelectionTools .btn{min-width:44px;min-height:44px;white-space:normal}
+.reference-row .reference-copy{flex:1;min-width:0;overflow-wrap:anywhere}
+.reference-row>.selection-check{padding:0;gap:6px;min-width:44px;justify-content:center}
+.reference-row .snapshot-row-actions .row-btn{min-width:44px;min-height:44px}
+.history-row.reference-row{flex-wrap:nowrap}
+.history-row.reference-row>.reference-copy{flex:1 1 0;min-width:0}
+.history-row.reference-row>.holding-r{flex:0 0 auto;width:auto;justify-content:flex-end;flex-direction:column;align-items:flex-end;gap:6px}
+.reference-row .history-sub{overflow-wrap:anywhere}
+.reference-row .reference-protection{display:block;font-size:11px;color:#526c59;margin-top:4px;line-height:1.5}
+@media(max-width:700px){#referenceSelectionTools>.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reference-management-head{margin-left:auto}}

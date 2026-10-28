@@ -43,3 +43,4 @@ Gezielte unabhängige Unitreferenzen für Herkunft/Mischzustände/ungültige IDs
 Browser: Normalansicht, Verwalten/Fertig, sichtbare100er-Seite/Teilcheckbox/Filter/Seitenausweitung, zulässige/gesperrte Bearbeitung, gesperrtes Löschen, Archiv/Wiederherstellen, Neuanlage, Herkunft, 320/390/430/768/1440, Tastatur/Fokus/Axe/44px, echte Quota/post-put-Abbrüche/CAS, Plain und frischer verschlüsselter V2-UI-Restore, Offlinecommit/Reload. Bestehende Chromium-/Firefox-/WebKit-/Finance-/Import-/Restoregates unverändert. Finalen Kandidaten und Bilder vollständig prüfen, dann konkrete kritische Releaseentscheidung; vor Zustimmung kein Merge/Deployment. Nach Freigabe unverändert vollständige Main-/Pages-/tatsächliche Produktionsabnahme.
 
 Gesamt-UI bleibt PARTIAL bis tatsächlicher Abnahme. FLH-PROJ01 bleibt ausschließlich dokumentiert; danach bestehende Mastersequenz ohne neue Planung fortsetzen.
+

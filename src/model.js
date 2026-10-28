@@ -264,7 +264,7 @@ export function safeImport(raw){
   if(archiveFormat)m.version=4;
   return m;
 }
-export function backup(model,{includeHistory=false}={}){if((model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Archivmetadaten und Datenversion widersprechen sich.');const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){if((model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Archivmetadaten und Datenversion widersprechen sich.');if(model.version===4)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){

@@ -5,11 +5,28 @@ const signed=(type,q,target=false)=>['sell','withdraw','deliver_out','fee','tax'
 const decimal=v=>{try{return v==null?null:units(v);}catch{return null;}};
 /** Display metadata only. Never filter this projection or any financial engine by archive state. */
 export function validateBookingArchive(value,model){
- if(!value||typeof value!=='object'||Array.isArray(value)||value.version!==1||Object.keys(value).some(k=>!['version','archivedIds'].includes(k))||!Array.isArray(value.archivedIds)||!value.archivedIds.length||value.archivedIds.length>50000)throw Error('Ungültiges Buchungsarchiv.');
+ const references=value?.version===2;
+ const keys=references?['version','archivedIds','referenceArchivedIds']:['version','archivedIds'];
+ if(!value||typeof value!=='object'||Array.isArray(value)||![1,2].includes(value.version)||keys.some(k=>!Object.hasOwn(value,k))||Object.keys(value).some(k=>!keys.includes(k))||!Array.isArray(value.archivedIds)||(!references&&!value.archivedIds.length)||value.archivedIds.length>50000)throw Error('Ungültiges Buchungsarchiv.');
  const history=bookingHistoryRows(model),known=new Set(history.map(b=>b.id)),seen=new Set();
  if(known.size!==history.length)throw Error('Buchungsarchiv benötigt eindeutige Buchungsidentitäten.');
  for(const id of value.archivedIds){if(typeof id!=='string'||!id||id.length>200||seen.has(id)||!known.has(id))throw Error('Buchungsarchiv enthält eine ungültige oder veraltete Identität.');seen.add(id);}
- return {version:1,archivedIds:[...value.archivedIds]};
+ if(!references)return {version:1,archivedIds:[...value.archivedIds]};
+ const refIds=value.referenceArchivedIds,shots=model.snapshots;
+ if(!Array.isArray(refIds)||!refIds.length||refIds.length>15000||!Array.isArray(shots))throw Error('Ungültiges Referenzarchiv.');
+ const knownRefs=new Set(shots.map(s=>s.id)),seenRefs=new Set();
+ if(knownRefs.size!==shots.length)throw Error('Referenzarchiv benötigt eindeutige Stichtage.');
+ for(const id of refIds){if(typeof id!=='string'||!id||id.length>120||seenRefs.has(id)||!knownRefs.has(id))throw Error('Referenzarchiv enthält eine ungültige oder veraltete Identität.');seenRefs.add(id);}
+ return {version:2,archivedIds:[...value.archivedIds],referenceArchivedIds:[...refIds]};
+}
+/** One archive envelope for both lists; no change to economic records. */
+export function setArchivePresentation(model,{bookingIds=model.bookingPresentation?.archivedIds||[],referenceIds=model.bookingPresentation?.referenceArchivedIds||[]}={}){
+ if(referenceIds.length)model.bookingPresentation={version:2,archivedIds:[...bookingIds],referenceArchivedIds:[...referenceIds]};
+ else if(bookingIds.length)model.bookingPresentation={version:1,archivedIds:[...bookingIds]};
+ else delete model.bookingPresentation;
+ model.version=model.bookingPresentation?4:3;
+ if(model.bookingPresentation)validateBookingArchive(model.bookingPresentation,model);
+ return model;
 }
 /** Read-only projection. Journal deltas take precedence over input quantities
  * (a correction input is a replacement balance, never a movement). */

@@ -1,3 +1,4 @@
+import {referencePermissions,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,prepareReferenceRemoval,REFERENCE_DELETE_REASON} from './reference-management.js';
 import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './ledger-live.js';
 import {ledgerLiveMarkup} from './ledger-live-ui.js';
 import {accountEvidenceRows} from './account-evidence.js';
@@ -64,7 +65,7 @@ import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js
 import {createCompleteBackup,unpackCompleteBackup,portableDrivePreferences,COMPLETE_BACKUP_KIND} from './complete-backup.js';
 import {hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup,isPasswordBackup,adoptBackupPassword} from './backup-vault.js';
 import {openingCashInput} from './account-opening.js';
-import {snapshotEditChanges,editSnapshot,deleteSnapshot,deletePosition,assertPositionDeletable,setPositionArchived} from './portfolio-edit-actions.js';
+import {deletePosition,assertPositionDeletable,setPositionArchived} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
@@ -72,6 +73,7 @@ let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
+let referenceSelecting=false,selectedReferenceIds=[],referenceVisibleIds=[],referenceLimit=100;
 let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
 let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],includeArchived=false;
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
@@ -101,13 +103,13 @@ async function save(){
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }finally{saving=false;syncPortfolioState();}
+ }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
-function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
+function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function recoveryControlAllowed(control){return control.matches('[data-page],.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
@@ -187,6 +189,35 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   attachChartInteractions($('miniChart'));
   syncChartPeriodButtons($('miniChartPeriods'),'data-mini-range',miniRange,
    period=>period==='all'||filterChartPeriod(shots,'wealth',period).length>=2);
+}
+function renderReferences(){
+ const rows=referenceRows(model,$('referenceArchiveFilter').value),visible=rows.slice(0,referenceLimit),archived=new Set(model.bookingPresentation?.referenceArchivedIds||[]);
+ referenceVisibleIds=visible.map(s=>s.id);
+ if(selectedReferenceIds.some(id=>!referenceVisibleIds.includes(id)))selectedReferenceIds=[];
+ const manage=$('manageReferences'),tools=$('referenceSelectionTools'),status=$('referenceSelectionStatus');
+ manage.textContent=referenceSelecting?'Fertig':'Verwalten';manage.setAttribute('aria-pressed',String(referenceSelecting));manage.disabled=!model.snapshots.length;
+ if(referenceSelecting){
+  const summary=referenceSelectionSummary(model,selectedReferenceIds,referenceVisibleIds),coverage=selectionCoverage(selectedReferenceIds,referenceVisibleIds,referenceVisibleIds),states=new Set(selectedReferenceIds.map(id=>archived.has(id))),mixed=states.size>1,blocked=!bookingWritable()||!summary.currentCount||summary.requiresRefresh||mixed,allArchived=states.size===1&&states.has(true);
+  const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-reference-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
+  tools.innerHTML='<div class="settings-actions">'+selectionMaster('referenceSelectVisible',coverage,!referenceVisibleIds.length)+button('archive',allArchived?'Wiederherstellen':'Archivieren',blocked)+button('clear','Auswahl aufheben',!selectedReferenceIds.length)+button('remove','Löschen',true,'selection-danger')+'</div><p class="small-help" id="referenceDeleteReason">'+esc(REFERENCE_DELETE_REASON)+'</p>'+(mixed?'<p class="small-help">Aktive und archivierte Werte gemeinsam ausgewählt. Bitte eine einheitliche Ansicht wählen; es wird nichts teilweise geändert.</p>':'');
+  const check=$('referenceSelectVisible');check.checked=coverage.checked;check.indeterminate=coverage.partial;tools.querySelector('[data-reference-manage="remove"]').setAttribute('aria-describedby','referenceDeleteReason');
+  status.textContent=summary.selectedCount+' ausgewählt · '+visible.length+' aktuell angezeigt von '+rows.length+' · Auswahl gilt ausschließlich für diese Ansicht.';
+ }else{tools.innerHTML='';status.textContent=archived.size?archived.size+' archivierte Referenzwerte sind über „Ansicht“ erreichbar. Finanzwerte bleiben enthalten.':'';}
+ $('snapshotList').innerHTML=visible.length?visible.map(s=>{const permission=referencePermissions(model,s.id);
+  return '<div class="history-row reference-row" data-reference-id="'+esc(s.id)+'">'+(referenceSelecting?'<label class="selection-check"><input type="checkbox" data-reference-select="'+esc(s.id)+'" '+(selectedReferenceIds.includes(s.id)?'checked ':'')+'aria-label="Stichtag '+esc(dateLabel(s.date))+' auswählen"></label>':'')+'<div class="reference-copy"><div class="history-title">'+esc(dateLabel(s.date))+'</div><div class="history-sub">'+esc(s.note||'Portfolio-Stand')+'<br>'+esc(referenceOrigin(s))+(archived.has(s.id)?' · archiviert':'')+'</div>'+(referenceSelecting&&permission.editReason?'<span class="reference-protection" title="'+esc(permission.editReason)+'">Herkunft geschützt · Quelle prüfen.</span>':'')+'</div><div class="holding-r"><strong class="history-amount">'+money(s.total)+'</strong>'+(referenceSelecting&&!permission.editReason?'<div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="'+esc(s.id)+'" title="Referenzwert bearbeiten" aria-label="Stichtag vom '+esc(dateLabel(s.date))+' bearbeiten">'+svg('pencil',15)+'</button></div>':'')+'</div></div>';
+ }).join('')+(rows.length>visible.length?'<button type="button" class="btn outline" data-reference-manage="more">Weitere '+Math.min(100,rows.length-visible.length)+' anzeigen</button>':''):empty('Keine Referenzwerte in dieser Ansicht.');
+}
+function focusReferences(){($('referenceSelectVisible')||$('manageReferences')).focus();}
+function openReferenceArchive(){
+ assertBookingWritable();
+ const ids=[...selectedReferenceIds],summary=referenceSelectionSummary(model,ids,referenceVisibleIds);if(summary.hiddenCount||summary.requiresRefresh)throw Error('Nur aktuell sichtbare Referenzwerte auswählen.');
+ const stored=new Set(model.bookingPresentation?.referenceArchivedIds||[]),archived=!ids.every(id=>stored.has(id)),expectedModel=JSON.stringify(model),preview=previewReferenceArchive(model,ids,archived);
+ showDialog(archived?'Referenzwerte archivieren':'Referenzwerte wiederherstellen','NUR SICHTBARKEIT',
+  '<p>Nur die Verwaltungsansicht ändert sich. Originalwerte, Verlauf, Renditen, Geldflüsse, Bestände und Abgleich bleiben vollständig erhalten. Archivierte Werte sind über „Ansicht“ erreichbar.</p>'+(archived&&model.bookingPresentation?.version!==2?'<p class="small-help">Dieses Referenzarchiv benötigt eine aktuelle FolioLab-Version. Ältere Versionen können die neue Sicherung nicht laden. Bewahre eine vorhandene Sicherung auf.</p>':'')+'<details open><summary>Betroffene Referenzwerte ('+ids.length+')</summary><ul>'+preview.items.map(s=>'<li>'+esc(dateLabel(s.date))+' · '+money(Number(s.totalEURExact))+' · '+esc(s.origin)+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmReferenceArchive" required>Ich bestätige diese reine Änderung der Sichtbarkeit.</label>',async v=>{
+   assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
+   const fresh=referenceSelectionSummary(model,ids,referenceVisibleIds);if(fresh.hiddenCount||fresh.requiresRefresh)throw Error('Referenzansicht wurde geändert. Bitte neu auswählen.');
+   model=prepareReferenceArchive(model,{ids,archived},{expectedModel,confirmed:v.confirmReferenceArchive==='on'});await save();selectedReferenceIds=[];referenceSelecting=false;renderHistory();notify(archived?'Referenzwerte archiviert. Finanzwerte unverändert.':'Referenzwerte wieder eingeblendet.');
+  });$('saveDialog').textContent=archived?'Archivieren':'Wiederherstellen';
 }
 function showPositionDetail(id){
   const p=model.positions.find(x=>x.id===id);
@@ -270,7 +301,7 @@ function renderHistory(){
  $('capitalCompareHelp').textContent=reference?'Optionaler Vergleich zum ersten verifizierten Stichtag im gewählten Zeitraum.':'Für diesen Zeitraum fehlen ein bestätigter Startwert oder lückenlos erfasste externe Geldbewegungen.';
  $('historyChart').innerHTML=emptyHistory?'<div class="empty"><p>'+
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
-  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);$('snapshotList').innerHTML=model.snapshots.length?model.snapshots.slice().reverse().map(s=>`<div class="history-row"><div><div class="history-title">${esc(dateLabel(s.date))}</div><div class="history-sub">${esc([s.note||'Portfolio-Stand',s.valuationStatus==='legacy-unverified'?'historisch ungeprüft':s.valuationStatus==='manual'?'manuell bestätigt':''].filter(Boolean).join(' · '))}</div></div><div class="holding-r"><strong class="history-amount">${money(s.total)}</strong><div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="${esc(s.id)}" title="Stichtag bearbeiten" aria-label="Stichtag vom ${esc(dateLabel(s.date))} bearbeiten">${svg('pencil',15)}</button><button type="button" class="row-btn" data-action="delete-snapshot" data-id="${esc(s.id)}" title="Stichtag löschen" aria-label="Stichtag vom ${esc(dateLabel(s.date))} löschen">${svg('trash',15)}</button></div></div></div>`).join(''):empty('Hier erscheint dein erster gespeicherter Stichtag.');renderSnapshotCalendar();}
+  '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
  $('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
@@ -670,7 +701,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='bookings')($('bookingListHead').querySelector('button')||$('addBooking')).focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='history'){const replacement=opener?.dataset.action==='edit-snapshot'?[...$('snapshotList').querySelectorAll('[data-action=edit-snapshot]')].find(el=>el.dataset.id===opener.dataset.id):null;(replacement||$('manageReferences')).focus({preventScroll:true});}else if(page==='bookings')($('bookingListHead').querySelector('button')||$('addBooking')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -1583,29 +1614,29 @@ function openBooking(){
  configure();
 }
 function openSnapshot(s=null){
- const editing=Boolean(s);
- const locked=editing&&model.performanceFlowTrackingSince===s.date;
- const total=s?.totalEURExact??String(s?.total??'');
- showDialog(editing?'Stichtag bearbeiten':'Stichtag speichern','VERMÖGENSVERLAUF',
-  (editing?'<p class="dialog-intro">Notiz, Datum oder Gesamtwert bearbeiten. Eine Änderung von Datum oder Betrag wird ausdrücklich als manuelle Korrektur gekennzeichnet; alte Einzelpositionswerte bleiben nicht als vermeintlich verifiziert erhalten.</p>':
-   '<p class="dialog-intro">Heute wird der aktuelle Portfoliowert gespeichert. Für frühere Tage ist der damals tatsächlich bekannte Gesamtwert erforderlich; heutige Kurse sind kein historischer Wert.</p>')+
+ assertBookingWritable();
+ const editing=Boolean(s),permission=editing?referencePermissions(model,s.id):null;
+ if(permission?.editReason)return notify(permission.editReason,true);
+ const expectedModel=JSON.stringify(model),locked=Boolean(permission?.startProtected),total=s?.totalEURExact??String(s?.total??'');
+ showDialog(editing?'Referenzwert bearbeiten':'Stichtag hinzufügen','HISTORISCHE REFERENZWERTE',
+  (editing?'<p class="dialog-intro">Eindeutig manuell erfassten Wert korrigieren. Vor einer Änderung von Datum oder Betrag wird die Wirkung ausdrücklich zur Bestätigung angezeigt. Alte Revisionen bleiben erhalten.</p>':
+   '<p class="dialog-intro">Heute kann der aktuelle Portfoliowert erfasst werden. Für frühere Tage ist der damals tatsächlich bekannte Gesamtwert erforderlich. Vorhandene Originalwerte werden nicht überschrieben.</p>')+
   field('Stichtag','date',s?.date||new Date().toISOString().slice(0,10),'date','required max="'+new Date().toISOString().slice(0,10)+'"'+(locked?' readonly':''))+
   field(editing?'Gespeicherter Gesamtwert in EUR':'Historischer Gesamtwert in EUR (bei früherem Datum erforderlich)','manualTotalEUR',total,'text','inputmode="decimal"'+(editing?' required':'')+(locked?' readonly':'')+' placeholder="z. B. 12345,67"')+
   field('Notiz (optional)','note',s?.note||'','text','maxlength="180"')+
   (locked?'<p class="small-help" id="snapshotLocked">Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.</p>':''),
-  async (v)=>{
+  async v=>{
+   assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
    if(editing){
-    const values={date:v.date,totalEUR:v.manualTotalEUR,note:v.note};
-    const change=snapshotEditChanges(model,s.id,values);
-    if(change.correction&&!confirm('Datum oder Betrag wirklich korrigieren? Der Stichtag wird als manuell bestätigt gespeichert; die alte Einzelpositions-Aufschlüsselung entfällt. Die ursprüngliche Version bleibt im Änderungsverlauf dokumentiert.'))
-     throw Error('Korrektur nicht übernommen.');
-    editSnapshot(model,s.id,values,{confirmCorrection:change.correction});
-    await save();notify('Stichtag aktualisiert.');
-   }else{
-    snapshot(model,v.date,v.note,{manualTotalEUR:v.manualTotalEUR});await save();notify('Stichtag gespeichert.');
-   }
+    const values={date:v.date,totalEUR:v.manualTotalEUR,note:v.note},preview=previewReferenceEdit(model,s.id,values);
+    const amount=value=>money(Number(value))+' (genau '+String(value).replace('.',',')+' EUR)';
+    if(preview.correction&&!confirm('Änderung prüfen: '+dateLabel(preview.before.date)+' · '+amount(preview.before.totalEURExact)+' → '+dateLabel(preview.after.date)+' · '+amount(preview.after.totalEURExact)+'\n'+preview.impact+'\nDiese manuelle Korrektur bestätigen?'))return;
+    model=prepareReferenceEdit(model,s.id,values,{expectedModel,confirmed:true});
+   }else model=prepareReferenceAdd(model,{date:v.date,note:v.note,manualTotalEUR:v.manualTotalEUR},{expectedModel,confirmed:true});
+   await save();renderHistory();notify(editing?'Referenzwert aktualisiert.':'Stichtag gespeichert.');
   });
 }
+
 async function confirmDeletePosition(id,{fromDialog=false}={}){
  let p;
  try{p=assertPositionDeletable(model,id);}catch(error){return notify(String(error.message||error),true);}
@@ -1854,13 +1885,16 @@ function openPublicTradingView(positionId){
  wrap.append(widget,attribution);
  container.replaceChildren(wrap);
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusPositionSelection();break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{
- const shot=model.snapshots.find(x=>x.id===id);if(!shot)break;
- const isStart=model.performanceFlowTrackingSince===shot.date;
- if(!confirm('Stichtag vom '+dateLabel(shot.date)+' wirklich löschen?'+(isStart?' Damit wird der festgelegte Start der Renditeerfassung zurückgesetzt; vorhandene Buchungen bleiben erhalten.':'')))break;
- try{deleteSnapshot(model,id);await save();notify('Stichtag gelöscht.');}catch(error){notify(error.message,true);}break;
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusPositionSelection();break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'load-tradingview':openPublicTradingView(id);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{prepareReferenceRemoval(model,[id]);}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
+ $('manageReferences').addEventListener('click',()=>{referenceSelecting=!referenceSelecting;selectedReferenceIds=[];renderReferences();if(referenceSelecting)focusReferences();else $('manageReferences').focus();});
+ $('referenceArchiveFilter').addEventListener('change',()=>{const had=selectedReferenceIds.length;selectedReferenceIds=[];referenceLimit=100;renderReferences();if(had)notify('Auswahl beim Wechsel der Ansicht aufgehoben.');});
+ $('snapshotManager').addEventListener('toggle',()=>{if(!$('snapshotManager').open){referenceSelecting=false;selectedReferenceIds=[];renderReferences();}});
+ $('snapshotList').addEventListener('change',e=>{const input=e.target.closest('[data-reference-select]');if(!input||!referenceSelecting)return;try{selectedReferenceIds=updateReferenceSelection(model,selectedReferenceIds,{type:'toggle',id:input.dataset.referenceSelect},referenceVisibleIds);renderReferences();const target=[...$('snapshotList').querySelectorAll('[data-reference-select]')].find(el=>el.dataset.referenceSelect===input.dataset.referenceSelect);target?.focus();}catch(error){notify(error.message,true);}});
+ $('referenceSelectionTools').addEventListener('change',e=>{if(e.target.id!=='referenceSelectVisible'||!referenceSelecting)return;try{selectedReferenceIds=updateReferenceSelection(model,selectedReferenceIds,{type:e.target.checked?'filtered':'unselect-filtered',matchingIds:referenceVisibleIds},referenceVisibleIds);renderReferences();focusReferences();}catch(error){notify(error.message,true);}});
+ const manageReferences=e=>{const b=e.target.closest('[data-reference-manage]');if(!b)return;try{const action=b.dataset.referenceManage;if(action==='more'){selectedReferenceIds=[];referenceLimit+=100;renderReferences();if(referenceSelecting)focusReferences();return;}if(!referenceSelecting)throw Error('Zuerst Verwalten öffnen.');if(action==='archive')openReferenceArchive();else if(action==='remove')prepareReferenceRemoval(model,selectedReferenceIds);else if(action==='clear'){selectedReferenceIds=[];renderReferences();focusReferences();}}catch(error){notify(error.message,true);}};
+ $('referenceSelectionTools').addEventListener('click',manageReferences);$('snapshotList').addEventListener('click',manageReferences);
  $('bookingArchiveFilter').addEventListener('change',()=>{bookingLimit=100;renderBookings();});
  $('bookingList').addEventListener('click',e=>{const button=e.target.closest('[data-booking-row-action]');if(!button||button.disabled)return;try{const id=button.dataset.id,action=button.dataset.bookingRowAction;if(action==='archive')openBookingArchive([id],!(model.bookingPresentation?.archivedIds||[]).includes(id));else openBookingChange(action,[id]);}catch(error){notify(error.message,true);}});
  $('bookingList').addEventListener('change',e=>{const input=e.target.closest('[data-booking-select]');if(!input||!bookingSelecting)return;try{selectedBookingIds=updateBookingSelection(model,selectedBookingIds,{type:'toggle',id:input.dataset.bookingSelect});renderBookingManagement();}catch(error){notify(error.message,true);}});
@@ -1889,7 +1923,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  showDialog('CSV-Import rückgängig machen','BUCHUNGEN','<p class="dialog-intro">Den letzten CSV-Import dieser Sitzung einschließlich seines automatisch erzeugten Stichtags zurücknehmen? Dies ist nur möglich, solange seitdem nichts geändert wurde.</p>',async()=>{
   await portfolioStore.assertCurrent();undoCSV(model,csvReceipt);await save();csvReceipt=null;renderBookings();notify('CSV-Import rückgängig gemacht.');
  });
-});$('addSnapshot').addEventListener('click',openSnapshot);$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
+});$('addSnapshot').addEventListener('click',()=>openSnapshot());$('startPerformance').addEventListener('click',startPerformanceTracking);$('refreshAll').addEventListener('click',refreshAll);$('closeDialog').addEventListener('click',closeDialog);$('cancelDialog').addEventListener('click',closeDialog);$('editDialog').addEventListener('click',e=>{if(e.target===$('editDialog'))closeDialog();});
  const markEditorDirty=event=>{
   if(editor&&!editor.readOnly&&!event.target.closest('[data-interest-preview]')&&event.target.matches('input, select, textarea'))editor.dirty=true;
  };
