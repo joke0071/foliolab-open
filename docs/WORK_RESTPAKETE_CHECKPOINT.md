@@ -1,3 +1,34 @@
+# FX-FORMAT01-Kandidat gesichert · PR191 in Prüfung · 28.10.2026
+
+FX-AUDIT01 DONE (814a092b60ca802c049a7cd9c64de40244d1e147), Vorabvertrag vor Code
+412852f63091ece0d879e698c4fd65ba376ef63e. Einziger Funktionsbranch
+`feature/flh03-flatex-native-format`, [PR191](https://github.com/joke0071/foliolab-open/pull/191),
+HEAD `ee5795bcfd92b303dafbfd9e9f1048d1d097daa8`, Baum `9df58f29c5e63c19c2e8a09cb262acf8ebf9d167` exakt lokal/API-Remote.
+Alte Flatex-Branches/PR97 sind rekonstruierte historische Quellen, keine konkurrierenden offenen Arbeiten.
+
+**FX-FORMAT01 IN_PROGRESS** bis finale CI/Scope-/Runtimeprüfung. Reine native 12-/10-Spaltenprojektion,
+Blankpositionen, UTF-8/Windows-1252-Bytes, exakte deutsche Zahlen und getrennte Datum-/Referenzfelder,
+Sonderereignisse nur dokumentarisch. Keine Dialog-/Buchungsintegration, keine Änderung von app.js,
+generischem Parser oder bestehendem Beta-Pfad, kein Finanz-/Storage-/Backupumbau.
+
+852/852 lokale Units (0 Fehler/Skip), Syntax und neue Chromium-Runtimeprüfung PASS:
+tatsächliche Byte-Decodierung einschließlich Euro/Umlauten, Schema-/Werte-/Referenzguards,
+tiefe Unveränderlichkeit, echter SW-Offline-Reload/Modulimport, exakter IDB-Record/Revision/Settings
+unverändert, keine externen Requests. Beide privaten Originale vollständig lokal geprüft;
+alle Quellfelder und Datum-/Decimal-Projektionen stimmen mit unabhängiger Python-Prüfung überein.
+Keine privaten Zeilen, Kennungen, Mengen, Zeiträume, Geldbeträge oder Fingerprints veröffentlicht.
+Keine vollständige Historien-, Bestands- oder Performanceabnahme.
+
+Nächster Schritt: reguläre vollständige PR-CI und Walletprüfung abwarten, tatsächliche neue
+Drei-Engine-Berichte/Artefaktdigests, finalen Gesamtdiff und identische Bäume prüfen; zentral sichern.
+Nach zwei Etappen Audit + geprüfter Formatgrundlage sicher übergeben, keine zusätzliche
+Dialog-/Matcher-/Releaseetappe beginnen. Produktion v200 LIVE_ACCEPTED/main b2a07f4 unverändert,
+SW201 unveröffentlicht. Danach getrennte Depot-/Kontouploads und native Quarantänevorschau,
+Order-/Mehrfachgegenbeinvertrag und wirtschaftliche Integration separat. UI-MASTER28 bleibt offen;
+Gesamtmaster/FLH03-05 PARTIAL, FLH05/PERF/PROJ01 nicht vorziehen.
+
+---
+
 # FX-AUDIT01 DONE · FX-FORMAT01 als nächster begrenzter Schnitt · 28.10.2026
 
 Die neun Istpunkte sind anhand vorhandener Quelle, 55 bestandener Flatex-Tests und privater Originale klassifiziert: [Audit](FLH03_FLATEX_NATIVE_AUDIT.md). Beide bestätigten Windows-1252-/Blankheader-Originaldialekte werden aktuell abgewiesen; diese konkrete Lücke ist reproduziert. Privater Order-Sollabgleich unabhängig über Typ/ISIN/Ordertextreferenz bestätigt; Bank-TA-IDs sind verschiedene Quellreferenzen. Keine privaten Mengen/Zeilen/IDs/Beträge veröffentlicht, kein Vollständigkeits-/Saldo-/Performance-PASS behauptet.
