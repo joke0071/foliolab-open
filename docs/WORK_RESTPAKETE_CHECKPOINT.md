@@ -1,3 +1,89 @@
+# v203 LIVE_ACCEPTED · PR193 abgeschlossen · 28.10.2026
+
+**Verbindlicher aktueller Stand:** Native Flatex-Quellidentität und ausdrücklich
+bestätigte, reinlesende Kontozuordnung/Staging sind implementiert, vollständig
+geprüft, gemergt und produktiv abgenommen. Zwei vereinbarte Etappen UI + kontrollierter
+Release DONE. **Keine wirtschaftliche Import-/Historien-/Performancefreigabe;
+Gesamtmaster/FLH03–05 bleiben PARTIAL.** Ältere Statusblöcke darunter und
+paketeigene Kandidatencheckpoints dokumentieren historische Zwischenstände.
+
+| Pflichtfeld | Verifizierter Abschlussstand |
+| --- | --- |
+| Funktionsbranch / Commit | `feature/flh03-flatex-native-identity` / `a088fdfdb3bdd27f3ec08319a3ac770b57836d9e`, PR193 gemergt; kein neuer Entwicklungsstrang |
+| Letzter verifizierter main / Baum | `2b6ec81523db0623da9edfa2fa96eac60460581a` / `c15f092c15dfb63e583f6ca372f192bc1f98e1df`, exakt lokal, akzeptierter Kandidat und getesteter PR-Mergec47a504b |
+| Dauerhafter Checkpoint | `feature/flh05-import-foundation`; Checkpoint und finaler Maschinenbeleg atomar auf Parent419fd2f9 gesichert, tatsächlicher Commit in Dateihistorie. Diesen historischen Dokumentationsbranch nicht nach main mergen |
+| Release / Deployment | Pages v203 erfolgreich, tatsächliches `foliolab-open-v203` LIVE_ACCEPTED gegen https://foliolab.unperfekt.at/; letzte v202-Abnahme wird durch diesen neuen, begrenzten Releasebeleg fortgesetzt |
+| PRs | [193](https://github.com/joke0071/foliolab-open/pull/193) gemergt und produktiv abgenommen;192 zuvor abgeschlossen; nur geparkte157/161 offen |
+| Actions | [40781029787](https://github.com/joke0071/foliolab-open/actions/runs/40781029787) Versuch1 vollständig SUCCESS: test123142460709, Cross1 123142461132, Cross2 123142461192, Pages123146209194, Live123146498193; PR40779790578/Wallet40779790590 SUCCESS |
+| Zuletzt fertig | Bestehenden nativen Dialog minimal an Kontobindungs-/Quellevidenzprüfung angebunden; volle aktuelle Main-/Pages-/echte Live-/Artefakt-/Bildabnahme DONE |
+| Aktuelles Paket | FLH03-Flatex: Quellidentität und reinlesendes Kontostaging DONE im begrenzten Umfang; wirtschaftliche Qualifizierung/Original-Replay und vollständige historische Abnahme weiterhin offen |
+| Implementiert, nicht abgenommen | Keine zusätzlichen Produktänderungen dieses UI-/Releaseabschnitts offen. Reine Dokumentationssicherung ohne redundante Produkt-CI; lokale unversionierte Artefakte ausschließlich synthetisch |
+| Tests / Ergebnisse |902/902 Units,0Fehler/Skip, Syntax; neue Bindingtests10; vollständige Main-Regression und tatsächliche Produktionsberichte Chromium/Firefox/WebKit PASS;120 exakte ausgelieferte Assethashes inkl.SW,6Kerngruppen,18Axe-Scans/0Verstöße,0JS-Fehler |
+| Fehler / Abhängigkeiten / Risiken | Kein aktueller roter Gate-/Bildbefund. Frühere korrigierte Setupfehler bleiben unten dokumentiert. Quelle/Konto/gleicher Nachweis beweisen keine Buchungswirkung, Kosten, Bestände oder vollständige Historie; kein automatischer Legacyabgleich |
+| Exakt nächster Schritt | Nach frischem Kollisionscheck bestehenden FLH03-Vertrag/Original-Replay-/wirtschaftlichen Qualifizierungsstand gegen aktuelle Implementierung prüfen, belegte Lücken isolieren und kleinsten folgenden Vertrag vor wirtschaftlichem Mapping sichern; vorhandene Parser/previewCSV/Herkunft-/Manual-/CAS-/Backfillverträge wiederverwenden. Abgeschlossene Parser-/Order-/Identitäts-/UIarbeit überspringen; keine zweite Importengine oder überlappende Branches |
+| Nutzerentscheidungen | UI-MASTER28 und DELETE-MASTER28 verbindlich offen für nächsten passenden konfliktfreien Verwaltungsschritt; Originaldaten privat, Start01.01.2022, keine fiktiven Buchungen/Anfangsbestände/Kosten/Cashflows, keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe |
+
+## Tatsächlicher Produktionsnachweis
+
+[Dauerhafter finaler Maschinenbeleg](release-evidence/flatex-native-binding-v203-release.json)
+enthält exakte SHAs, Jobs, Digestbelege, tatsächlichen vollständigen Livekernbericht,
+alle120Dateihashes, tatsächliche neue Binding-/Identitätsberichte, UI-/Transferberichte
+und sieben tatsächlich angesehene Produktionsbilder mit Hashes.
+Main-Release-ZIP12856873743 SHA256
+`7bc6b53540fa86ac7dd77d8553a9de62b70e745893bce92ef568c16c2aec3fd4`;
+Produktions-ZIP12857798115 SHA256
+`dbed89c65c322afcb8a0587f7cccd9f2efed6f0714df993cedf458cf6d6406b6`.
+Beide vor Extraktion unabhängig verifiziert. tested-sha exakt2b6ec815, Mainunitlog902PASS.
+Livebericht exakt2b6ec815/SW203/Produktionsdomain/PASS/0Fehler; echte Plain- und
+verschlüsselte UI-Downloads → frische Testprofile → UI-Restore → Reload mit exakten
+Buchungen, echter Serviceworker-/Offline-Commit-/Reload PASS.
+
+Neue Bindingberichte im Produktionsartefakt Firefox/WebKit PASS; Chromium tatsächlich
+separat anhand erhaltener PASS-Zeile in production-ui-chromium.log verifiziert,
+da gemeinsame report.json vom späteren Crosslauf überschrieben wird.
+Quellidentitätsberichte Chromium141.0.7390.37/Firefox157.0/WebKit27.2 PASS.
+Tatsächliche Auswahl/gesonderte Bestätigung, Quellen-/Manualkonflikte, unabhängiges
+Paging/Fokus, Reset/Asyncgeneration, erzwungener Submit, echter konkurrierender
+synthetischer IDB-Writer/Staleguard, Offline und exakter Record-/Revisions-/Settings-
+Nullmutationsnachweis durch Dialog PASS. Produktionsbilder Chromium320/Manualstatus,
+Firefox320, WebKit1440 und Kern320/390/1440 angesehen: kein blockierender Befund.
+
+## Grenzen und sichere Wiederaufnahme
+
+Kontobindung bleibt flüchtig im Dialog, ohne automatische Auswahl, Persistenz,
+wirtschaftliche DTOs oder Schreibfreigabe; „Nur Vorschau“ bleibt gesperrt.
+Ein vorhandener Quellnachweis wird ausdrücklich nicht als geprüfte Finanzwirkung
+oder automatische Dublette ausgegeben. Alle Quellen/Überlappungen/Prüffälle bleiben
+sichtbar; keine manuellen Änderungen überschrieben.17Dateien Gesamt-PR,8UI-Schnitt;
+keine Gate-/Assertion-/Workflow-/Pinlockerung. Produktiv ausgelieferte Bytes
+entsprechen exakt dem abgenommenen Quellbaum.
+
+Keine privaten Originale in diesem UI-/Releaseabschnitt gelesen oder privaten
+Produktivdaten geändert; Tests/Artefakte/Bilder ausschließlich isoliert synthetisch.
+Bewusste Fixtureanlagen und zweiter Testwriter betreffen nur solche Testprofile.
+Privater Original-End-to-End-Abgleich, wirtschaftliche Nativeintegration, vollständige
+Bestands-/Anschaffungskosten-/Cashflow-/TWR-/XIRR-Abnahme bleiben gesonderte offene
+Fachgates; erfolgreicher Parser/Source-/UIlauf ersetzt sie nicht.
+
+UI-/Verwaltungsnachträge nicht verloren: einheitlich Verwalten/Fertig/Bearbeiten,
+kompakte sichere Auswahl aktueller Ansicht/Seite, Reset bei Filterwechsel, Archivfilter
+erhalten. DELETE-MASTER28: sichere Löschpfade für Buchungen/Positionen/Referenzwerte
+gezielt prüfen statt Herkunft pauschal sperren; Vorschau/Bestätigung, kurze Gründe,
+keine stille Teillöschung gemischter Auswahl, Renditestart/Kontrollpunkte/Originale/
+Quellen schützen, CAS/Backup/Restore nachweisen; keine künstlichen Ersatzwerte.
+Keine dieser offenen Verwaltungsfunktionen durch diesen Flatex-Release als erledigt markieren.
+
+Bestehende Roadmap/Abhängigkeiten unverändert: laufende FLH03-Vorgänger abschließen;
+UI/P0/P1/FLH04-/OAuth-/Hardware-/AT-/BENCH-/CI-Gates erhalten; PERF vor vorgesehenem
+FLH05-Schritt, PROJ01 nur Zukunftsbacklog. Keine neue Roadmap/zusätzliche Nutzerfreigabe.
+Finaler Kollisionscheck179Branches: nur Dokumentationsbranch durch eigenen Fortschritt
+geändert, keine fremden Branchänderungen, keine aktive Action/konkurrierenden lokalen
+Git-/Nodewriter, Main und Kandidat unverändert, nur geparkte157/161.
+Zwei vereinbarte Etappen abgeschlossen; kein drittes Implementierungspaket begonnen.
+Wiederaufnahme genau beim oben benannten nächsten regulären Fachschritt.
+
+---
+
 # v203 veröffentlicht · volle Main-Gates grün · Liveabnahme läuft · 28.10.2026
 
 **Release DEPLOYED / LIVE_ACCEPTANCE_PENDING**, noch kein LIVE_ACCEPTED für v203.
