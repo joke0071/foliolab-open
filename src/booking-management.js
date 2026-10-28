@@ -1,5 +1,5 @@
 /** #165 phase 1: read-only provenance and transient selection. No mutation API. */
-import {bookingHistoryRows} from './booking-history.js';
+import {bookingHistoryRows,setArchivePresentation} from './booking-history.js';
 import {ledgerQuantityAudit} from './transactions.js';
 import {updatePositionSelection,positionSelectionSummary} from './position-selection.js';
 
@@ -141,7 +141,7 @@ export function previewBookingChange(model,request){
   candidate.bookings=candidate.bookings.filter(b=>!ids.includes(b.id));
   const journals=selected.map(b=>b.journalEntryId);candidate.journalEntries=candidate.journalEntries.filter(e=>!journals.includes(e.id));
   candidate.externalCashFlows=candidate.externalCashFlows.filter(f=>!ids.includes(f.id));
-  if(action==='remove'&&candidate.bookingPresentation){candidate.bookingPresentation.archivedIds=candidate.bookingPresentation.archivedIds.filter(id=>!ids.includes(id));if(!candidate.bookingPresentation.archivedIds.length){delete candidate.bookingPresentation;candidate.version=3;}}
+  if(action==='remove'&&candidate.bookingPresentation)setArchivePresentation(candidate,{bookingIds:candidate.bookingPresentation.archivedIds.filter(id=>!ids.includes(id))});
   if(!ledgerQuantityAudit(candidate).ok)throw Error('Verbleibender chronologischer Verlauf ist nicht sicher.');
   if(action==='edit'){
    const b=selected[0],changes=request.changes||{};
@@ -196,7 +196,7 @@ export function prepareBookingArchive(model,{ids,archived},{expectedModel,confir
  const preview=previewBookingArchive(model,ids,archived);if(!preview.changed)throw Error('Keine Änderung am Archivstatus.');
  const candidate=clone(model),next=new Set(candidate.bookingPresentation?.archivedIds||[]);
  for(const id of ids)if(archived)next.add(id);else next.delete(id);
- if(next.size){candidate.bookingPresentation={version:1,archivedIds:[...next]};candidate.version=4;}else{delete candidate.bookingPresentation;candidate.version=3;}
+ setArchivePresentation(candidate,{bookingIds:[...next]});
  safeImport(clone(candidate));
  return {candidate,receipt:{kind:'booking-change-undo',before:expectedModel,after:raw(candidate),digest:sourceDigest(raw(candidate))}};
 }

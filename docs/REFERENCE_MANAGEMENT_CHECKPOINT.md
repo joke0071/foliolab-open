@@ -1,0 +1,32 @@
+# Historische Referenzverwaltung – begrenzter Kandidat v197
+
+Basis v196 LIVE_ACCEPTED / main `bccd1f7956edba4d9ec0c5f11dc8edd023f31809`. Fachvertrag vor Funktionscode separat gesichert: `864a60796291548f8a571075e5f8526fcf7e0ac1`, [REFERENCE_MANAGEMENT_CONTRACT.md](REFERENCE_MANAGEMENT_CONTRACT.md). Einziger funktionaler Strang `feature/reference-management`; PR157/161 unverändert geparkt, FLH-PROJ01 ausschließlich dokumentiert.
+
+## Implementierter begrenzter Umfang
+
+Normalansicht ohne dauerhafte Zeilenaktionen/Checkboxen; gemeinsame Kopfaktionen Stichtag hinzufügen/Verwalten, Archivansicht, Herkunft/Qualität und rechtsbündiger Betrag. Verwaltungsmodus/Fertig verwendet bestehende Stable-ID-Auswahl und gemeinsame Master-/Dialog-/Aktionskomponenten. Master erfasst ausschließlich die gerenderten 100er-Seiten; Teilzustand, Filter-/Seitenausweitung und Navigation verlieren keine heimlich mitgeführte Auswahl. Mobile Zweispaltenaktionen, 44px-Ziele und Tastatur/Fokus. Gezielt überschreibt der neue Referenzbereich den geerbten mobilen Vollbreitenbetrag; Werte bleiben auch bei 320px rechts neben der Beschreibung, geometrisch geprüft.
+
+Reversibles Referenzarchiv über bestehendes portables Modell4: `bookingPresentation.version=2` enthält die unveränderten Buchungs-IDs plus `referenceArchivedIds`. Kein neues IndexedDB-Schema/Startupgrade. Originale und alle Finanzprojektionen bleiben unverändert. Gemeinsame Normalisierung bewahrt beide Listen bei Buchungsarchiv/-wiederherstellung/-entfernung; letzte Referenzwiederherstellung nutzt wieder bestehendes Format1 oder Modell3. Import/Backup validieren alle Formen/IDs/Abhängigkeiten strikt. Echter unveränderter v196-Leser gegen synthetischen neuen Datensatz geprüft: lehnt Metadatenversion2 ausdrücklich ab, statt Status zu verwerfen.
+
+Einzelkorrektur ausschließlich eindeutig manueller Werte ohne automatische Aufschlüsselungen. Vor Datum-/Betragsänderung tatsächliche Vorher-/Nachher-Vorschau einschließlich Exaktbeträgen kleiner als ein Cent und explizite Bestätigung; vorhandene Revisionen/Fachfunktionen wiederverwendet, Renditestart geschützt. Automatische/migrierte/unbekannte Originale sind gesperrt und verständlich erklärt. Aktuell kein unabhängig löschbarer Stichtag belegt: alle sind Verlauf-/Abgleichgrundlagen; neue Verwaltung und alte direkte UI-Löschaktion sperren daher vollständig. Keine stille Teilmassenlöschung oder Renditestart-Rücksetzung. „Stichtag hinzufügen“ ist eine echte Neuanlage und überschreibt vorhandene (auch archivierte) Originale nicht; MouseEvent-Verwechslung behoben.
+
+Kandidaten ausschließlich auf Klonen, vollständige Modellbindung der Vorschau, bestehendes assertCurrent/atomarerCAS/Busy-/Stale-Gate unmittelbar vor Commit. Fehler, Abbrechen und konkurrierende Writer erhalten den vollständigen Record und dessen Revision. Nach tatsächlich reproduziertem Quota-/Abort-Fehler werden die neuen Verwaltungsaktionen nach Ende des Savezustands wieder freigegeben; Fehler → Abbrechen → erneute Aktion besteht.
+
+## Lokale Nachweise
+
+- 812/812 Units, 0 Fehler/Skip; 13 neue unabhängige Fachtests. Archiv erhält vollständige Originale, alle Datenbasen/Reconciliation und wirklich verfügbare TWR/XIRR, keine erfundene Nullreferenz.
+- Herkunft/Start-/Datumsschutz, gemischte/stale/unsichtbare Auswahl, ungültige Archive, Altmigration1/2/3, Plain/Complete/Passwort-Roundtrip und kombiniertes Buchungs-/Referenzarchiv einschließlich vorhandener Buchungsentfernung.
+- Neue tatsächliche Chromium-Suite mit 209/210 synthetischen Referenzen: Normal-/Verwaltungszustand, 100/200er-Seite, Teilcheckbox, Filter, Herkunft und programmatische alte Aktionsguards, tatsächliche manuelle Auswirkungsbestätigung, Neuanlage/Duplikatsperre, fünf Breiten/Axe/44px/Keyboard/Fokus.
+- Echte Quota und post-put-Transaktionsabbrüche, Abbrechen/Retry, konkurrierender Tab, Offlinecommit und Reload. Exakte wirtschaftliche Bytes und nicht-null TWR/XIRR bleiben beim Archiv unverändert; vollständige Wiederherstellung liefert den exakten vorherigen kanonischen Modelltext einschließlich altem Buchungsarchivformat1.
+- Plain und frischer verschlüsselter V2-Restore durch echte UI, danach Reload; wirkliche lokale Legacy→IndexedDB-Migration der neuen Metadaten über bestehende Migrations-API, identische Originale/Archive und Finanzprojektionen.
+- Bestehende vollständige Chromium-UI-Quality-Suite sowie Positionsdetailregression über sieben Breiten bestanden. Historische direkte Snapshot-Edit-/Delete-Erwartungen dort durch den neu verbindlichen Herkunfts-/Verwaltungs-/Archiviervertrag ersetzt; vorhandene Positions-/Präzisions-/Historienschutzassertionen erhalten.
+
+Erhaltene Vorbefunde: erster neuer Unitlauf 9/13 wegen nicht normalisierter Fixture-/Kryptoargument-/Altkonto-/bestehendem Buchungsabhängigkeitsgate; Fixtures korrigiert, keine Sicherheitsassertion entfernt. Voller Zwischenlauf 811/812 erkannte normalen Asset-ID-Aufbau im Restore; Ausgangsfixture auf denselben kanonischen Importpfad normalisiert, vollständige Gleichheitsassertion erhalten. Erster Browserlauf nutzte nicht vorhandene Playwright-isFocused-Hilfsfunktion; tatsächlichen DOM-Fokus geprüft. Danach tatsächlicher Savefehler-Latch entdeckt und im Produkt behoben. Vorläufe sind keine finale Abnahme.
+
+## Ausstehende Gates / konkrete Releasegrenze
+
+Finale PR-CI, beide unveränderten Firefox/WebKit-Pflichtshards, finale Bilder/Review und genaue HEAD-/Mergebaumzuordnung müssen vollständig grün sein. Neue Suite ist über den vorhandenen UI-Quality-Einstieg in allen Pflichtengines und im bestehenden tatsächlichen Drei-Engine-Produktionspfad enthalten; keine Workflow-/Pin-/Gatekürzung, keine Finanzengine geändert.
+
+**Noch kein Merge/Deployment:** neue Archivmetadatenversion2 verändert den portablen Backupvertrag. Erst am vollständig geprüften, konkreten PR gemäß zentralem Checkpoint eigene Nutzer-Releaseentscheidung einholen. Die alte Buchungsarchivfreigabe wird nicht still erweitert. Ältere Leser bis v196 können neu archivierte Referenzbackups nicht laden; bisherige Backups bleiben im neuen Leser lesbar. Erste Referenzarchivierung ist ausdrücklich bestätigt und zeigt die Kompatibilitätsgrenze. Produktion bleibt v196 LIVE_ACCEPTED.
+
+Nach passender Freigabe unverändert Main-/Pages-/tatsächliche 3Engine-Live-Abnahme einschließlich Archiv/Wiederherstellung/Restore/Offline und Bilder; erst dann Gesamt-UI-Nachtrag abschließen und bestehende Mastersequenz fortsetzen. Reale Hardware/OAuth/Original-/Fachgates bleiben separat offen; FLH-PROJ01 nicht vorziehen.
