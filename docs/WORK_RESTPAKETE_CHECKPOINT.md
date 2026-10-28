@@ -1,3 +1,42 @@
+# PR193: beide konkreten Testsetupkorrekturen gesichert · finale Pflicht-CI läuft · 28.10.2026
+
+Aktueller einziger Funktionsbranch feature/flh03-flatex-native-identity / PR193,
+HEAD `f42bc8ecc8538ce30ecc6ca9f862df0c0e6a2162`, Baum `9ee00039d58e0b402f8060f676731d5a98ffd0c1`
+exakt lokal/API-Remote. Gegenüber c6329 nur zwei bestehende Browser-Testsetups und
+Paketcheckpoint verändert; Identitäts-/Finanz-/Appquellen unverändert. Zentraler
+Dokumentationsbranch weiterhin feature/flh05-import-foundation, main4e9a4a7/v202
+LIVE_ACCEPTED unverändert, SW203 unveröffentlicht. Nur geparkte157/161 daneben.
+
+Beide früheren vollen Läufe regulär beendet, kein Abbruch/Blind-Rerun:
+40766119013 test/Cross1SUCCESS, Kraken-Setupkontext Cross2FAILURE;
+40767434426 test/Cross2SUCCESS, Archivnavigation Cross1FAILURE.
+Wallet40766119069/40767434644SUCCESS. Neue Identitätsgates bereits3Engines PASS,
+aber vollständige aktuelle Abnahme ausdrücklich noch offen. Rote Evidenz/Jobs/
+Artefaktdigests und gezielte Korrekturen darunter nachvollziehbar erhalten.
+
+Korrekturen ohne Assert-/Pin-/Workflow-/Timeoutlockerung: Kraken wartet auf ersten
+Workercontroller vor Seed/Navigation; Archivtest klickt über :visible-Union den
+tatsächlich sichtbaren Mobil-/Desktopbutton statt einen vorab ausgewählten Zweig.
+Gezielte lokale Chromium-Kraken- und Archivläufe vollständig PASS einschließlich
+Offline, exaktem Nullmutationsschutz beziehungsweise6Breiten/Axe/Quota/CAS/
+unveränderter Finanzhistorie/Plain-/Encrypted-UI-Restore. Kern unverändert892Units
+und16Fokusfälle PASS, Syntax PASS; kein neuer UI-/Finanzcode.
+
+Neue aktuelle Läufe: 40768795011 FolioLab Open – testen und veröffentlichen; 40768794737 Wallet scan checks.
+**Grundlage IN_PROGRESS. Exakt nächster Schritt:** diese aktuelle volle CI/Wallet
+regulär abschließen lassen, tatsächliche892Unit-/3Engine-Identitätsberichte und
+beide korrigierten vorhandenen Browsergates, ZIP-Digests/testedSHA und identische
+Kandidaten-/Merge-/Lokalbäume prüfen,10Dateien final reviewen und zentral sichern.
+Keinen älteren Teil-PASS als finale Abnahme ausgeben. Nach zwei Etappen Vertrag +
+geprüfte reine Grundlage gesichert übergeben; Kontobindung/Staging/UI/Release separat.
+
+Keine privaten Originale oder Produktivdaten verändert; öffentliche Prüfungen rein
+synthetisch. UI-MASTER28/DELETE-MASTER28 und bestehende Roadmap erhalten/offen,
+keine wirtschaftliche Import-/vollständige Historien-/Performancefreigabe.
+Gesamtmaster PARTIAL. Alle Quellen/letzter Zustand dauerhaft remote gesichert.
+
+---
+
 # PR193: zweiter vorhandener Browser-Setupfehler erfasst · 28.10.2026
 
 Aktueller gesicherter Kandidatff2b79d58fd7ee6cccfbcd3ba992a961c947d6a9 /
