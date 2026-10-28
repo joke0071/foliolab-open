@@ -1,3 +1,30 @@
+# Native Flatex-Kontobindung/Staging wiederaufgenommen · 28.10.2026
+
+Frischer Kollisionscheck: main4e9a4a7392e3469eeb2018b7a9516debe3a48e96/v202 LIVE_ACCEPTED
+unverändert; bestehender PR193/feature/flh03-flatex-native-identity maßgeblich auf
+f42bc8ecc8538ce30ecc6ca9f862df0c0e6a2162/Baum9ee00039, finale CI40768795011 und
+Wallet40768794737 SUCCESS, keine laufende CI. Nur geparkte157/161 daneben;179Branches/
+lokale Prozesse geprüft, keine fremde Entwicklung erkennbar. Zentralen Checkpointf259e8b8
+rekonstruiert; Format/Order-UI/Identitätsgrundlage DONE, nicht erneut implementieren.
+
+**Nächste reguläre zwei Etappen:** (1) kleinsten expliziten Scope-/Portfolio-Kontobindungs-
+und reinlesenden Stagingvertrag vor Code sichern, vorhandenen nativen Dialog minimal
+anbinden und voll prüfen; (2) bei grünen Gates kontrolliert mergen/Pages/Live abnehmen.
+Kein neuer Branch/PR, keine wirtschaftliche Importfreigabe. Native Identitäten einmal je
+Dateistapel cachen; Zuordnung + Bestätigung nur im Dialogspeicher, Reset bei Datei/Modus/
+Kontowechsel/Abbruch. Bestehende Depotchoices/ImportSourceKey/Evidenz-/Manualschutz und
+assertCurrent/Revision/CAS wiederverwenden, keine eigene Finanzprojektion/Journalstruktur.
+
+Geplant im vorhandenen Renderer: eingeklappte Kontozuordnung mit sicherer Kontextliste,
+unveränderten Ordergruppen/Quellzeilen; keine Autofüllung. Status einzelner Quellen in
+bestehenden Quellendetails, kein neuer großer Aktionsbereich. Aktuelle Aufgabe IN_PROGRESS,
+SW203 unveröffentlicht, Produktion v202; keine privaten Originale/Produktivdaten ändern.
+UI-MASTER28/DELETE-MASTER28 und Roadmap unverändert, Gesamtmaster PARTIAL.
+Exakt nächster Schritt Vorabvertrag sichern und reinlesende Kontobindung/Quellprüfung
+samt synthetischen Scope-/Evidenz-/Manual-/Reset-/Stale-/Offline-/Nullmutationstests ergänzen.
+
+---
+
 # Native Flatex-Quellidentität: geprüfte Grundlage abgeschlossen · PR193 · 28.10.2026
 
 **Verbindlicher aktueller Stand:** Vorabvertrag und reine native Identitäts-/
