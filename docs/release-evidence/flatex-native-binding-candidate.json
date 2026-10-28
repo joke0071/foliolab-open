@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-28T22:34:19.397Z",
+  "status": "UI_CANDIDATE_ACCEPTED_NOT_DEPLOYED",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-identity",
+  "head": "a088fdfdb3bdd27f3ec08319a3ac770b57836d9e",
+  "tree": "c15f092c15dfb63e583f6ca372f192bc1f98e1df",
+  "testedMerge": "c47a504bab889cdc8ef249567bf113ab3a7d1ae3",
+  "pr": 193,
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "productionAtDecision": {
+    "version": 202,
+    "main": "4e9a4a7392e3469eeb2018b7a9516debe3a48e96"
+  },
+  "runs": [
+    {
+      "id": 40779790578,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        "test",
+        "cross-engine (1)",
+        "cross-engine (2)"
+      ]
+    },
+    {
+      "id": 40779790590,
+      "conclusion": "success",
+      "scope": "Wallet scan checks"
+    }
+  ],
+  "units": {
+    "pass": 902,
+    "fail": 0,
+    "skip": 0
+  },
+  "newBindingUnitTests": 10,
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12857775256,
+      "name": "cross-engine-gates-c47a504bab889cdc8ef249567bf113ab3a7d1ae3-2",
+      "digest": "sha256:8f86b0a0ce69ece457a6cbfbf16432ab4c4ee8f0a924ad35dac091cdc145fdc4",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12857451170,
+      "name": "release-gates-c47a504bab889cdc8ef249567bf113ab3a7d1ae3",
+      "digest": "sha256:748f248936b8d94f037fd93cfbc35609ce18ad290b2cd8ee91c51f5cb280fa74",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "actualBindingReports": {
+    "0": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    "1": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  },
+  "imagesActuallyReviewed": [
+    "chromium-320.png",
+    "chromium-source-status.png",
+    "firefox-320.png",
+    "webkit-1440.png"
+  ],
+  "sourceReview": {
+    "files": 17,
+    "uiStepFiles": 8,
+    "noNewImportCore": true,
+    "noEconomicMapping": true,
+    "noNativeBindingPersistence": true,
+    "parserTransactionEngineStorageAndBackupFormatUnchangedInUIStep": true,
+    "pinsWorkflowsAssertionsUnchanged": true
+  },
+  "privacy": {
+    "publicFixturesAndImagesSynthetic": true,
+    "privateOriginalsReadInUIStep": false,
+    "privateProductionDataMutated": false,
+    "harnessUsesIsolatedSyntheticProfiles": true
+  },
+  "releaseDecision": "Proceed under existing master authorization for bounded read-only functionality, no financial import release.",
+  "masterStatus": "PARTIAL",
+  "next": "Merge with expected HEAD; full unchanged main/Pages/live gates, exact deployed bytes, restore/offline, actual new three-engine binding reports and production images; no LIVE_ACCEPTED claim before actual completion."
+}

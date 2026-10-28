@@ -1,3 +1,40 @@
+# PR193 Kontobindungs-/Stagingkandidat abgenommen · kontrollierter Release beginnt · 28.10.2026
+
+**UI-Integration DONE im Kandidatenumfang; Release IN_PROGRESS.** Main4e9a4a7/v202
+LIVE_ACCEPTED unverändert, SW203 unveröffentlicht. Funktionsbranch
+feature/flh03-flatex-native-identity, HEAD `a088fdfdb3bdd27f3ec08319a3ac770b57836d9e`,
+getesteter Merge `c47a504bab889cdc8ef249567bf113ab3a7d1ae3`, identischer lokaler/Remote-/
+Mergebaum `c15f092c15dfb63e583f6ca372f192bc1f98e1df`. Nur geparkte157/161 daneben; alle Actions
+beendet, keine offenen Reviewthreads oder konkurrierender Writer.
+
+Volle aktuelle unveränderte PR-CI40779790578 Versuch1 und Wallet40779790590 SUCCESS.
+902Units/0Fehler/Skip, Syntax, beide Cross-Engine-Shards und tatsächliche neue
+Bindingberichte Chromium/Firefox/WebKit PASS. Echter konkurrierender IDB-Writer,
+Stale-/Asyncgeneration-/Reset-/Submit-/Offline-/exakter Nullmutationsschutz durch
+Dialog PASS; natürliche Auswahl/Bestätigung und5Breiten/Axe/44px/volle Kontobezeichnung.
+Release-ZIP12857451170 SHA256
+`748f248936b8d94f037fd93cfbc35609ce18ad290b2cd8ee91c51f5cb280fa74`
+und Cross-ZIP12857775256 SHA256
+`8f86b0a0ce69ece457a6cbfbf16432ab4c4ee8f0a924ad35dac091cdc145fdc4`
+vor Extraktion verifiziert; tested-sha exaktc47a504b,902Unitlog und tatsächliche Berichte
+gelesen. Vier neue CI-Bilder angesehen: Chromium320/Manualstatus, Firefox320,
+WebKit1440; kein blockierender Befund.17Dateien final reviewt, keine Assertion/
+Workflow-/Pinlockerung. [Kandidatenbeleg](release-evidence/flatex-native-binding-candidate.json).
+
+Positive begrenzte Releaseentscheidung unter bestehendem Masterauftrag: reinlesende
+Quelle-/Kontozuordnung ohne Finanzmapping/Persistenz/automatischen Import. Keine
+zusätzliche Nutzerentscheidung erforderlich. Exakt nächster Schritt PR193 mit
+erwarteter HEAD mergen, volle Main-/Pages-/Live-Gates regulär abwarten; echte120
+Assetbytes/Restore/Offline/neue3Engine-Bindingberichte/Digests/Produktionsbilder
+prüfen und unmittelbar zentral sichern. Bis dahin v203 nicht LIVE_ACCEPTED nennen.
+
+Keine privaten Originale/Produktivdaten geändert, Harnessprofile rein synthetisch.
+UI-MASTER28/DELETE-MASTER28 und Roadmap erhalten. Wirtschaftlicher Nativeimport/
+Original-Replay/vollständige Historien-/Performanceabnahme offen. Zwei Etappen
+UI + Release, Gesamtmaster PARTIAL.
+
+---
+
 # PR193: native Kontozuordnung/Staging remote gesichert · Pflicht-CI läuft · 28.10.2026
 
 Bestehender Funktionsbranch feature/flh03-flatex-native-identity / PR193,
