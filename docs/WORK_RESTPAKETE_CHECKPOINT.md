@@ -1,3 +1,11 @@
+# FX-FORMAT01: Node20-Encodingfehler reproduziert, lokale Korrektur in Prüfung · 28.10.2026
+
+PR191/HEAD ee5795bcfd92b303dafbfd9e9f1048d1d097daa8: Wallet40743513720 FAILURE in neuem Byte-Decodierungstest. Beobachtet unter Node20: TextDecoder windows-1252 liefert für 0x80 U+0080 statt Eurozeichen. Lokal mit Node20.20.2 und mehreren C1-Bytes unabhängig reproduziert; keine reine Testfixture-Abschwächung. Haupt-CI40743513733 läuft noch, nicht unterbrechen/duplizieren. Produktion v200 unverändert.
+
+Begrenzte lokale Korrektur innerhalb FX-FORMAT01: explizite standardkonforme CP1252-C1-Zuordnung, UTF8-Fatalprüfung unverändert; zusätzlicher Euro-/Interpunktions-/Buchstaben-/Kontrollzeichenvektor für alle32C1-Bytes. WHATWG-Encoding-Primärquelle geprüft. Neun neue gezielte Tests lokal unter Node24/Node20 grün; vollständige lokale Tests und erneute private Original-/Chromiumprüfung noch in Arbeit. Korrektur noch NICHT remote gesichert; vorhandener Erstkandidat und Fehlerbeleg bleiben dauerhaft. Erst laufende CI regulär abschließen lassen, dann konsistenten Korrekturcommit auf demselben Branch sichern und finale unveränderte Pflicht-CI prüfen. Kein neuer Strang, keine Abschwächung von Assertions/Workflows/Pins und kein Merge/Deployment.
+
+---
+
 # FX-FORMAT01-Kandidat gesichert · PR191 in Prüfung · 28.10.2026
 
 FX-AUDIT01 DONE (814a092b60ca802c049a7cd9c64de40244d1e147), Vorabvertrag vor Code
