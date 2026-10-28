@@ -1,3 +1,7 @@
+# v194 begrenzter P-Chain-Nachweis abgenommen · 28.10.2026
+
+Rang3/UI17-09/10/1W DONEv193. Rang4 vorhandene07/16-Eingänge abgeglichen, readonly16/v189/Preview18v190 nichtwiederholt; vollständigeBrokeroriginale/Anfang-End/Cashreferenzen konkretweiterextern. Rang5 ersterPChain-UTXO-Vertrag DONEbegrenztv194/PR183/mainb2d5789, vollständigeMain/Pages/Live40664337654SUCCESS/783Units/3Engines/110Hashes/SW194/Nullmutation; keine aktivePChain-Bestandsübernahme.09weiterPARTIAL, Adress-/globalIdentitäts-/konsistenterStaking-/C↔P-/Fee-/Sollwertvertrag offen. NächsterkleinerRang5SchnittSonic10-Zustands-/Generationsvertrag, aktuelleverifizierte4.0.5-Implementierungsquellejetztlesendbelegt. KeinweitererfunktionalerStrangvorvorherigerLiveabnahme. BestehendeGesamtfolgeunverändert; CI-Zwischenoptimierung nachgemessenerlesenderStichprobeweiterzurückgestellt, keinApp-Performancenachweis.
+
 # UI17-09/10 und 1W abgeschlossen · v193 · 28.10.2026
 
 Rang3 jetzt DONE im beschriebenen begrenzten Umfang: v191/v192/v193 vollständig LIVE_ACCEPTED. PR182/main7dbb9c24, Main/Pages/Live40659623976 SUCCESS;767Units/3Engines/109Hashes/SW193, neuer Zielablauf tatsächlich live in allen3Engines und achtProduktionsbilder geprüft. Keine Finanz-/Storage-/Backupengineänderung. Maschinenbeleg release-evidence/ui-small-rests-v193-release.json. Nächster Rang4 vorhandeneFLH03-07/16-Eingänge/externenOriginalabgleich, danach Rang5Protokollverträge; bestehende Gesamtsequenz unverändert. Keine weitere UI-Neuimplementierung ohne konkretenBefund.

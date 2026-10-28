@@ -1,0 +1,243 @@
+{
+  "recordedAt": "2026-10-28",
+  "kind": "Read-only observational sample, not controlled benchmark or application startup performance",
+  "runs": [
+    {
+      "run": 40645289206,
+      "jobs": [
+        {
+          "name": "cross-engine (1)",
+          "result": "success",
+          "seconds": 416,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 80
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 327
+            }
+          ]
+        },
+        {
+          "name": "test",
+          "result": "success",
+          "seconds": 465,
+          "steps": [
+            {
+              "name": "Install browser test tools",
+              "seconds": 7
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "seconds": 414
+            }
+          ]
+        },
+        {
+          "name": "cross-engine (2)",
+          "result": "success",
+          "seconds": 414,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 75
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 327
+            }
+          ]
+        },
+        {
+          "name": "deploy",
+          "result": "success",
+          "seconds": 48,
+          "steps": [
+            {
+              "name": "Verify published homepage and matching service-worker version",
+              "seconds": 1
+            }
+          ]
+        },
+        {
+          "name": "live-acceptance",
+          "result": "success",
+          "seconds": 191,
+          "steps": [
+            {
+              "name": "Install existing Chromium acceptance tools",
+              "seconds": 6
+            },
+            {
+              "name": "Verify published bytes, core flows and targeted UI in Chromium",
+              "seconds": 45
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 58
+            },
+            {
+              "name": "Verify targeted production UI in Firefox and WebKit",
+              "seconds": 74
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 40659623976,
+      "jobs": [
+        {
+          "name": "cross-engine (2)",
+          "result": "success",
+          "seconds": 474,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 76
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 384
+            }
+          ]
+        },
+        {
+          "name": "test",
+          "result": "success",
+          "seconds": 468,
+          "steps": [
+            {
+              "name": "Install browser test tools",
+              "seconds": 6
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "seconds": 428
+            }
+          ]
+        },
+        {
+          "name": "cross-engine (1)",
+          "result": "success",
+          "seconds": 334,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 52
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 275
+            }
+          ]
+        },
+        {
+          "name": "deploy",
+          "result": "success",
+          "seconds": 15,
+          "steps": [
+            {
+              "name": "Verify published homepage and matching service-worker version",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "name": "live-acceptance",
+          "result": "success",
+          "seconds": 198,
+          "steps": [
+            {
+              "name": "Install existing Chromium acceptance tools",
+              "seconds": 4
+            },
+            {
+              "name": "Verify published bytes, core flows and targeted UI in Chromium",
+              "seconds": 44
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 59
+            },
+            {
+              "name": "Verify targeted production UI in Firefox and WebKit",
+              "seconds": 83
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run": 40663063298,
+      "jobs": [
+        {
+          "name": "cross-engine (1)",
+          "result": "success",
+          "seconds": 518,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 59
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 448
+            }
+          ]
+        },
+        {
+          "name": "test",
+          "result": "success",
+          "seconds": 501,
+          "steps": [
+            {
+              "name": "Install browser test tools",
+              "seconds": 12
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "seconds": 428
+            }
+          ]
+        },
+        {
+          "name": "cross-engine (2)",
+          "result": "success",
+          "seconds": 436,
+          "steps": [
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "seconds": 52
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "seconds": 377
+            }
+          ]
+        },
+        {
+          "name": "deploy",
+          "result": "skipped",
+          "seconds": null,
+          "steps": []
+        },
+        {
+          "name": "live-acceptance",
+          "result": "skipped",
+          "seconds": null,
+          "steps": []
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Chromium browser tests 414–428s versus tool installation6–12s in this sample",
+    "Firefox/WebKit installation52–80s and test phases275–448s; existing two shards preserved",
+    "Changes across commits/runners make this nonstatistical, no speedup guarantee inferred",
+    "No extra interim CI changes: caching alone is not the main Chromium bottleneck; full CI optimization remains later per canonical roadmap"
+  ],
+  "coverage": "All previous commands/engines/gates unchanged; PR183 only adds required P-Chain checks"
+}

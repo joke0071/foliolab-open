@@ -1,0 +1,71 @@
+{
+  "deploymentProbe": {
+    "at": "2026-10-28T09:19:57.794Z",
+    "origin": "https://foliolab.unperfekt.at",
+    "browser": "141.0.7390.37",
+    "proxyCertificateException": true,
+    "scope": "Read-only public SFC deployment metadata at one explicit block; no wallets, logs, financial balances, signatures or transaction submission",
+    "probe": {
+      "chainId": "0x92",
+      "blockNumber": "0x4df2942",
+      "blockHash": "0x43c216633b6bb3812284e59d0788feb418ed16a5de71269b628cbdb438c17617",
+      "contract": "0xFC00FACE00000000000000000000000000000000",
+      "erc1967ImplementationSlot": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+      "implementation": "0xf46ab7507088cc9d3f58bb85ae2c36c86103447d",
+      "proxyCode": {
+        "bytes": 163,
+        "sha256": "20692401374a4ba9df45823cc5cc278741e8c2365ceba816db1173df587a9b60"
+      },
+      "implementationCode": {
+        "bytes": 20819,
+        "sha256": "4dedff7aee0b55c1764a6885d24443e52358583b06aa81cf78673aeae7374290"
+      },
+      "limits": "Public deployment fingerprint only; source/ABI equivalence and historical upgrade coverage remain unproven"
+    }
+  },
+  "sourceMatch": {
+    "sourceURL": "https://sourcify.dev/server/v2/contract/146/0xf46ab7507088cc9d3f58bb85ae2c36c86103447d?fields=sources,abi,compilation,runtimeBytecode.onchainBytecode",
+    "matchId": "21368929",
+    "runtimeMatch": "exact_match",
+    "verifiedAt": "2026-03-06T14:19:20Z",
+    "compilation": {
+      "language": "Solidity",
+      "compiler": "solc",
+      "compilerVersion": "0.8.27+commit.40a35a09",
+      "compilerSettings": {
+        "optimizer": {
+          "runs": 200,
+          "enabled": true
+        },
+        "evmVersion": "cancun"
+      },
+      "name": "SFC",
+      "fullyQualifiedName": "contracts/sfc/SFC.sol:SFC"
+    },
+    "runtimeSHA256MatchesPinnedPublicRPC": true,
+    "verifiedSFCSourceSHA256": "a535f6e6163d30cf64bea38573800dd6cc2fe6508ca38ab5f04c7439a2a8a969",
+    "verifiedSourceVersion": "4.0.5",
+    "referenceSourceVersion": "4.0.6",
+    "methodComparisons": {
+      "function undelegate(": {
+        "sameAsNewerReadOnlyReference": true,
+        "sha256": "468d07db79bc4f1ac2a4a6f7c9f600998119dee6b7a64f9a89ae52c16580a6bf"
+      },
+      "function _withdraw(": {
+        "sameAsNewerReadOnlyReference": true,
+        "sha256": "7bc0c22bddb39ffc5fe0976257366e012ef5882bf155e5912f64de0ed6281ad8"
+      },
+      "function _receiverOf(": {
+        "sameAsNewerReadOnlyReference": true,
+        "sha256": "7d42fcf22a3c065de83d146a6d555835bc6397ca840eeec6645ce9746674815c"
+      }
+    },
+    "scope": "Read-only public deployment/source equivalence for this one observed implementation/block, not historical upgrade or wallet/financial acceptance"
+  },
+  "status": "PREREQUISITE_EVIDENCE_ONLY",
+  "limits": [
+    "No Sonic feature implementation or financial acceptance in PR183",
+    "One observed implementation and explicit block; historical upgrades and full wallet coverage remain open",
+    "Unlicensed foreign source read only, not copied into repository"
+  ]
+}
