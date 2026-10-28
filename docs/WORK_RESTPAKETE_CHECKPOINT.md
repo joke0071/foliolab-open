@@ -1,3 +1,11 @@
+# PR182 erster CI-Nachweis und begrenzte Testvertragskorrektur · 28.10.2026
+
+CI40649499897: beide vollständigen Firefox/WebKit-Shards SUCCESS, neuer UI17/7T-Flow in Firefox/WebKit PASS; Wallet40649499845 SUCCESS. Chromium bestand neuen UI-Flow und viele bestehende Regressionen, scheiterte später an alten exakten7-Preset-Erwartungen in browser-chart-period-consistency: neuer beauftragter7T-Preset korrekt vorhanden, Erwartung noch historisch. Fehlnachweis/Artefakt12798788966 SHAebf8bfddf035fa8cff8a3f3679a0dfd595b4e45dcd4ac505577a80229e385ee9 erhalten; Deploy/LiveSKIPPED.
+
+Nach regulärem Ende allerJobs ausschließlich zwei exakte Erwartungslisten um7T ergänzt plus Prüfung, dass nur ein aktueller Wochenpunkt keine Kurve aktiviert. Sämtliche bisherigen Monats-/Layout-/Markt-/Interaktionsassertions erhalten. Lokal vollständiger bestehender Chart-Consistency-Gate320–1440 PASS; kein neuer Produkt-/CSS-/SW-Delta. Neuer finaler HEAD `b0b7d0c6d2f42f95a9d4a21d0ec23635205207b2`, Tree `5b75fa0c0a00457a99e32bf1600ad62fa8149d3a` exakt lokal/remote. Neue vollständige CI läuft, keine Gates umgangen/Jobs abgebrochen; Produktion bleibt vollständig abgenommenesv192.
+
+---
+
 # Aktiver bestehender UI17-09/10/1W-Schnitt · DraftPR182 · 28.10.2026
 
 v192 vollständig LIVE_ACCEPTED, schlanke Mehrfachauswahl DONE. Einziger funktionaler Strang jetzt `feature/ui-small-rests`, [PR182](https://github.com/joke0071/foliolab-open/pull/182), HEAD `172c2c893a3023679cbc423ee8d49e013659caa4`, Tree `b455dc678790878d433a17b93a6eb0927cc88a36` exakt wie lokal geprüft. FolioLab-Schreibweise, einmalige Konto-Fortsetzung erst nach erfolgreichem Anbieter-Save/Close-Cleanup, vorhandener gemeinsamer7T-Filter, scoped umbrechende44px-Vermögenspresets; keine Finanz-/Bewertungs-/Modell-/Storage-/Backupengineänderung. SW193 unveröffentlicht.
