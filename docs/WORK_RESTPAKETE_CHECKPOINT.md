@@ -1,3 +1,11 @@
+# BP04 Livegate fehlgeschlagen · begrenzte Diagnose/Wiederholung · 28.10.2026
+
+Main40737628881/Test/Cross1/Cross2/Deployment SUCCESS auf b2a07f4131a7b38d1fa7da40fab8ea58b72fd119. Livejob122995691860 FAILURE: WebKit in unverändertem tests/browser-sonic-staking-evidence.mjs:12 wartet nach erfolgreicher Navigation 30s auf portfolioStorageState/IndexedDB aktiv. Keine Sonic-Fachassertion und kein Bitpanda-Dialog im Cross-Produktionsschritt erreicht. Unmittelbar vorher P-Chain-WebKit mit demselben App-/IDB-Startprädikat PASS, Sonic-Firefox PASS; identischer Main-/PR-WebKit-Stand grün. Produktions-Chromium inklusive neuerBitpanda-Suite und Kernabnahme bestanden. Konkrete Hypothese: intermittierender frischer App-/Modul-/IDB-Start im Live-WebKit; genaue Ursache NICHT bewiesen, keine Produktunbedenklichkeit aus Timeout allein ableiten.
+
+Fehlgeschlagene Evidenz12839355798/Digest90fd8b6d559baf5285bd2585dfa6dcb84abc18e8c831027df50b6cb50249847b vorExtraktionbestätigt, Fehler erhalten. **BP04 bleibt IN_PROGRESS, v200 NICHT LIVE_ACCEPTED.** Einmalige bewusste Wiederholung ausschließlich des fehlgeschlagenen Livejobs mit identischem SHA/Assertions/Timeouts; erfolgreicheMain-/Deploymentjobs wiederverwenden. Keine blinde Schleife/Assertionabschächung/Produktänderung. Bei erneutem Timeout gezielte instrumentierte Ursachenanalyse; kein Release-PASS behaupten. VorRetry Main/PR/Actions/Checkpoint frisch prüfen. Danach tatsächliche volle Produktionsberichte/Assets/Bilder prüfen und sichern, keine parallele Paketarbeit.
+
+---
+
 # v200 veröffentlicht · Live-Cross-Gates laufen · 28.10.2026
 
 Main-/Pages-Workflow40737628881 auf b2a07f4131a7b38d1fa7da40fab8ea58b72fd119: alle Main-Pflichttests und Deployment122995236779 SUCCESS. Tatsächlicher Livejob122995691860 läuft; Produktions-Chromium-Schritt erfolgreich beendet, Firefox-/WebKit-Installation gestartet. Noch keine vollständige Produktionsabnahme behauptet: **BP04 IN_PROGRESS / v200 veröffentlicht, nicht LIVE_ACCEPTED**; v199 bleibt zuletzt vollständig abgenommen. Keine neue Codeänderung oder Parallelentwicklung. Nächster Schritt reguläre Cross-Produktionsgates abschließen, tatsächliche Berichte/ZIP-Digest/118Assethashes/Restore/Offline/Bilder prüfen und finalen Releasecheckpoint dauerhaft sichern.
