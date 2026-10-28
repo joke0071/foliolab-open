@@ -1,3 +1,13 @@
+# Aktiver UI-Nachtrag PR181 · 28.10.2026
+
+v191 ist abgeschlossen und LIVE_ACCEPTED (unten). Einziger aktiver funktionaler Strang: `feature/ui-selection-header`, [DraftPR181](https://github.com/joke0071/foliolab-open/pull/181), HEAD `a349d9fe04f18524e9536e0d0804cb3e1ca68b63`, Tree `bc25754038bfd0c2cee2707daf1121764511ca96` exakt wie lokal geprüft. Nur schlanke Mehrfachauswahl-Listenköpfe beider Listen, bestehende sofort sichtbare Auswahl-/Zweispaltenaktionen und direkte Zeilenicons; keine Finanz-/Modell-/Backup-/Storageengine geändert. SW192 unveröffentlichter Kandidat.
+
+Lokal766/766Units/0Fail/0Skip+Syntax und vollständige vorhandene Chromium-Positions-/Buchungssuites PASS. Neue Normalzustands-/Tastatur-/Fokus-/44px-/Nullmutationsgates in320/390/430/768/1440, fünf ausgewählte lokale Bilder tatsächlich visuell geprüft. Kurz getrennte lokale Umgebung wieder verbunden, regulären erfolgreichen Abschluss aus bestehenden Logs bestätigt; kein Test unterbrochen oder neu gestartet. Finale vollständige PR-CI und Firefox/WebKit/Bilder/Main/Pages/tatsächliche Live-Abnahme PENDING. Details im PR: docs/UI_SELECTION_HEADER_CHECKPOINT.md.
+
+Danach bestehende UI17-09/10/1W-Reihenfolge, keine parallele Folgeimplementierung. FLH05-A/PERF01 unverändert zurückgestellt.
+
+---
+
 # v191 LIVE_ACCEPTED · kontrollierter Releaseabschluss · 28.10.2026
 
 **DONE:** PR179 und notwendiger reiner Testfix PR180 sind veröffentlicht und tatsächlich produktiv abgenommen. Release/main `5b9bb792125343b602157bb949ec8b0efcb28fd0`, Tree `4c0412776a3f9d035712608e7b51e6cded336cc0`, SW191. Finale PR180-CI40640857694/Wallet40640857708 und vollständige Main/Pages/Live40642187590 SUCCESS;766/766 Units,0Fail/0Skip, Syntax, Chromium/beide Firefox-WebKit-Pflichtshards. Lokal766/766+Syntax ebenfalls PASS.
