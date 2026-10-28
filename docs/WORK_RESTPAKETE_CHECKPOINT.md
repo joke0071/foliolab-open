@@ -1,3 +1,62 @@
+# Gesicherte Übergabe während laufender finaler CI · 28.10.2026
+
+**Kein finaler Kandidaten-PASS behauptet.** FX-AUDIT01 DONE; FX-FORMAT01 implementiert,
+lokal geprüft und dauerhaft gesichert, finale Abnahme noch **IN_PROGRESS**.
+
+| Punkt | Tatsächlicher Stand |
+| --- | --- |
+| Produktion / letzter verifizierter main | v200 LIVE_ACCEPTED, b2a07f4131a7b38d1fa7da40fab8ea58b72fd119, unverändert |
+| Einziger aktiver Funktionsbranch / PR | feature/flh03-flatex-native-format, [PR191](https://github.com/joke0071/foliolab-open/pull/191), offen |
+| Remote-HEAD / getesteter Merge | 56c0b1397b02aa3041daf4f434340f530aeeedde / 1de2d7e62ed1bf82c9b9758c18b9ecf96e615a6d |
+| Identischer Lokal-/Remote-/Mergebaum | f3dcf3a74e411ad7158946ab993d98bad2b02615 |
+| Finale Haupt-CI | [40745005502](https://github.com/joke0071/foliolab-open/actions/runs/40745005502), läuft noch |
+| Letzter gelesener Jobstatus | test123016333193 und cross-engine1/123016332733 IN_PROGRESS; cross-engine2/123016333333 SUCCESS |
+| Finale Wallet-/Node20-CI | 40745005842 SUCCESS |
+| Lokale Tests | 853/853 unter Node20 und Node24, 0 Fehler/Skip; Syntax, korrigierter Chromium-/Offline-/exakter IDB-/Revisions-/Settings-Nullmutationsgate PASS |
+| Private Referenzprüfung | Alle Quellfelder, Daten und Decimal-Projektionen beider Originale unabhängig geprüft; Originalwerte ausschließlich privat. Keine vollständige Historien-/Saldo-/Performanceabnahme. |
+| Bisheriges finales Artefakt | Cross2 12841842143 / SHA256 4109f503542ebd5b2951ef8f765dc20186b31c8c98d3095c62296e6865c03d38 verfügbar, noch NICHT heruntergeladen/inhaltsgeprüft |
+| Merge / Deployment | Nicht begonnen; SW201 unveröffentlicht |
+| Andere offene PRs | #157/#161 unverändert geparkt; keine parallele Verwaltungsimplementierung |
+
+Die lokale Wartephase wurde durch den Nutzer abgebrochen. Kein GitHub-Lauf wurde
+abgebrochen oder neu gestartet. Notwendige Übergabesicherung erfolgt jetzt; kein
+fehlerhafter oder ungeprüfter Zwischenstand wird nach main gemergt.
+
+**Exakt nächster Schritt:** Dieselbe Haupt-CI40745005502 regulär abschließen lassen,
+keinen Duplikatlauf starten. Alle finalen Pflichtjobs einschließlich Node20-Wallet
+verifizieren, Artefakte vor Extraktion gegen GitHub-Digests prüfen, tested-sha und neue
+`flatex-native-chromium.json` / `flatex-native-firefox-webkit.json` tatsächlich lesen
+(C1-Zuordnung, Blankpositionen, exakte Zahlen, Referenzen, echte Offline-/Nullmutation).
+Finalen acht-Dateien-Gesamtdiff und unveränderten HEAD/Baum bestätigen, dann
+FX-FORMAT01 im begrenzten Parser-/PR-Umfang abnehmen und dauerhaft dokumentieren.
+Bei Fehler gezielt untersuchen; keine Wiederholung ohne Hypothese und keine Gateabschwächung.
+
+Anschließend gemäß zwei vereinbarten Etappen Audit + Formatgrundlage sicheren
+Kandidaten übergeben. Später am selben PR/Branch native Quarantänevorschau mit getrennten
+Depot-/Kontouploads integrieren, Format vor generischem Mapping erkennen und tatsächliche
+Bytes statt verlustbehaftetem File.text() lesen; vorhandenen Dialog-/Generation-/Submit-/
+Fokus-/Abbruchvertrag erhalten. Order-/Mehrfachgegenbeinvertrag und wirtschaftliche
+Übernahme bleiben separat; keine zweite Import-/Finanzengine.
+
+**Neuer Lösch-Nachtrag vollständig gesichert und rückgelesen:** Commit
+fc50a31746de881504c2b0bcefa9e5459ddfc138,
+[UNIFIED_SAFE_DELETION_ADDENDUM.md](UNIFIED_SAFE_DELETION_ADDENDUM.md).
+DELETE-MASTER28 OPEN beim nächsten passenden konfliktfreien Verwaltungsschritt:
+keine pauschale Sperre allein wegen Herkunft, nachgewiesene vollständige Rücknahme/
+Abhängigkeiten, Renditestart/Originalquellen/TWR/XIRR/Verlauf/Bestandsabgleich,
+Vorschau/Bestätigung/CAS/Backup/Restore, kurze Sperrgründe und Alternativen;
+keine stillen Teillöschungen oder künstlichen Ersatzbewertungen.
+Keine Änderung privater Produktivdaten ohne ausdrückliche Freigabe.
+UI-MASTER28 bleibt ebenfalls offen. Laufende Arbeit nicht unterbrechen oder umpriorisieren.
+
+Erstfehler Wallet40743513720 (Node20-CP1252-Euro) und regulär abgeschlossene
+erste Haupt-CI40743513733 bleiben historische Belege. Standardkonforme explizite
+C1-Zuordnung wurde danach auf demselben PR korrigiert, keine Assertions/Pins/Workflows
+verändert. Gesamtmaster und FLH03-05 bleiben PARTIAL; bestehende Roadmap erhalten,
+FLH05/PERF/PROJ01 nicht vorziehen.
+
+---
+
 # FX-FORMAT01 korrigiert remote gesichert · finale PR-CI offen · 28.10.2026
 
 PR191 / `feature/flh03-flatex-native-format`, HEAD `56c0b1397b02aa3041daf4f434340f530aeeedde`,
