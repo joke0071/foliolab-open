@@ -1,3 +1,99 @@
+# v201 LIVE_ACCEPTED · Flatex-Originalvorschau abgeschlossen · 28.10.2026
+
+**Aktueller verbindlicher Stand:** FX-FORMAT01 sowie FX-UI01/FX-UI02 sind im begrenzten
+reinlesenden Vorschauumfang abgeschlossen. Gesamtmaster und FLH03-05 bleiben **PARTIAL**:
+Vorschau/Parser-PASS ist keine wirtschaftliche Importfreigabe und kein vollständiger
+Bestands-, Cashflow-, Historien- oder Performancenachweis.
+
+| Punkt | Verifizierter Stand |
+| --- | --- |
+| Produktion / letzter verifizierter main | `foliolab-open-v201`, `88508742db6bed9be57d6e907b2bfe56d61b1631` |
+| Exakt geprüfter Dateibaum | `c48b6e1edae946a53ad38b565418c7bda6d93fdf`, identisch lokal / PR-Merge / main |
+| Funktionsbranch / Kandidat | `feature/flh03-flatex-native-format`, `6d66d3d57421e8b0d96862afc15992f124b06b68`; PR #191 gemergt |
+| Zentraler Dokumentationsbranch | `feature/flh05-import-foundation`; dieser Checkpoint und Releasebeleg gemeinsam committed, Commit über Dateihistorie nachvollziehbar |
+| PR-Gates | 40748383976 / Wallet40748384443 SUCCESS; 855/855 Units, 0 Fehler/Skip, Syntax, Chromium und beide Firefox-/WebKit-Pflichtshards |
+| Main / Pages / tatsächliche Liveabnahme | [40749554400](https://github.com/joke0071/foliolab-open/actions/runs/40749554400) vollständig SUCCESS, Versuch1, keine Wiederholung |
+| Letzter fertiggestellter Schritt | Native Upload-/Quarantänevorschau samt kontrolliertem Release und tatsächlicher Produktionsabnahme DONE |
+| Nicht abgenommene Produktänderungen aus diesem Lauf | Keine. Order-/Mehrfachgegenbein-/Wirtschaftsvertrag sowie UI-MASTER28/DELETE-MASTER28 ausdrücklich noch offen |
+| Offene PRs / aktive Prozesse | Nur geparkte #157/#161; keine aktive CI oder konkurrierender Writer beim Abschlusscheck |
+
+**Ausgelieferte Funktion:** Im bestehenden CSV-Dialog neues Profil „Flatex Originalformat –
+Vorschau“ mit getrennten Depotumsatz-/Kontoumsatzfeldern, einzeln/gemeinsam und mehreren
+Teil-Dateien. Automatische native Erkennung vor allgemeinem Mapping; UTF-8/Windows-1252
+verlustfrei aus Originalbytes, 12-/10-Spalten einschließlich echter Leerheader vollständig
+positionsgetreu. Getrennte Quellzahlen/Einheiten/Währungen, Buchtag/Valuta und Bank-/Order-/
+Kontoreferenzen bleiben sichtbar, fehlende Werte unbekannt. Dateien/Überlappungen bleiben
+getrennt; keine automatische Deduplizierung, Gegenbuchung, Steuer-, Gebühren-, EUR- oder
+Bestandsannahme. Bestehende Legacy-Flatex-Beta und andere Importprofile erhalten.
+
+**Produktionsprüfung:** 120 exakte veröffentlichte Dateihashes einschließlich neuer Module
+und SW201, sechs Kerngruppen und 18 Axe-Scans ohne Befund. Echte unverschlüsselte und
+verschlüsselte UI-Backups in frischen Profilen wiederhergestellt, Offline-Commit/Reload
+bestanden. Neue reine Format- und Dialogprüfungen tatsächlich auf der Produktionsdomain
+in Chromium/Firefox/WebKit PASS: Encoding/Blankheader/exakte Werte/Referenzen/Escaping,
+zwei kategorisierte Eingänge, separate/gemeinsame/Teil-Dateien, Fremd-/Misch-/Schema-/
+Kategorie-/20-Dateien-/2MB-/5000-Gesamtzeilengates, zehn Layoutzustände bei fünf Breiten/
+Axe/44px, globales50-Zeilen-Paging/Fokus, erzwungener Submit/Escape/Cancel/Neuöffnen,
+kontrolliert verspätete Dateilesungen/Generationsschutz, echter SW-Offline-Reload,
+exakter unveränderter IDB-Record samt Revision und Settings, keine externen Vorschaurequests.
+Chromium-PASS separat im Produktionslog bestätigt; zuletzt geschriebener UI-Bericht
+enthält Firefox/WebKit. Sechs finale Produktionsbilder tatsächlich angesehen:
+Flatex-Eingänge Chromium390/Firefox320, Flatex-Detail WebKit1440, Kern320/390/1440;
+kein blockierender Befund.
+
+Finale Produktions-ZIP12844340832 / SHA256
+`2ebb3af7d99e15cb2ce436d57c1c5a1b7828c45edce4b54787f54f21bf28eec4`
+und Main-ZIP12843288797 / SHA256
+`a84543277bb9ae5128b13d5f90ffae4c7187098e73ee2c58bb74da18c05e00ba`
+vor Extraktion bestätigt, tested-sha und Livebericht exakt dem Merge zugeordnet.
+[Dauerhafter Releasebeleg mit geprüften Berichten und Hashes](release-evidence/flatex-native-v201-release.json).
+
+**Fehlerhistorie erhalten:** Der frühere Node20-C1-/Eurofehler in Wallet40743513720
+wurde reproduziert und vor der abgenommenen Formatgrundlage gezielt behoben
+(explizite standardkonforme Zuordnung, alle32C1-Zeichen geprüft). Keine Assertion,
+Pins oder Workflowgates abgeschwächt. Aktueller UI-/Release-Lauf einschließlich
+Main/Pages/Live vollständig im ersten Versuch bestanden.
+
+**Datenschutz und Grenzen:** In diesem UI-/Releaseabschnitt keine privaten Originale
+erneut geöffnet, keine privaten Produktivdaten geändert. Öffentliche Fixtures,
+Screenshots und Berichte ausschließlich synthetisch. Der frühere private Format-/
+Order-Sollabgleich bleibt in FX-AUDIT01 dokumentiert; dessen Sollwerte/Zeilen sind
+nicht öffentlich. Keine vollständige historische Finanzabnahme daraus ableiten.
+
+**Sicherer Abschluss nach den zwei Folgeetappen FX-UI01/FX-UI02:** Keine ungesicherte
+Produktarbeit, kein dritter Entwicklungsschnitt begonnen. Synthetische lokale Artefakte
+sind Zwischenmaterial; Quelle und maßgebliche Ergebnisse dauerhaft auf GitHub gesichert.
+Dokumentationsfortschreibungen verändern die veröffentlichte App nicht.
+
+**Exakt nächster regulärer Schritt:** Frischer main-/Branches-/PR-/Actions-/Checkpoint-/
+Writercheck. Anschließend vorhandenen Flatex-Orderreferenz-/Mehrfachgegenbeinvertrag
+aus FX-AUDIT01 und FLH03_FLATEX_UNIVERSAL_ADDENDUM.md bearbeiten: bestehenden
+pairFlatexSettlements/auditFlatexSettlementAmounts, Quellidentitäten und Korrekturschutz
+wiederverwenden; Bank-TA-Nummer nicht mit Orderreferenz gleichsetzen. Vor Code den
+kleinsten belegten Zuordnungs-/Konflikt-/Storno-/Mehrfachgegenbeinvertrag sichern,
+synthetische Gegenbeispiele und private unabhängige Sollbeziehung gezielt heranziehen.
+Keine zweite Journalengine, keine Ableitung von Gebühren/Steuern aus Differenzen,
+keine fiktiven Anfangsbestände/Kosten/externen Einzahlungen. Wirtschaftliche Übernahme
+erst nach eigenem vollständigem Fach-/Integritäts-/Abnahmevertrag; historische Zielbasis
+01.01.2022 und ETF-Neuausrichtung im bestehenden Auftrag erhalten.
+
+**Verbindliche Nachträge weiter offen:** UI-MASTER28 und
+[DELETE-MASTER28](UNIFIED_SAFE_DELETION_ADDENDUM.md) beim nächsten passenden
+konfliktfreien Verwaltungsschritt gemeinsam gegen Ist prüfen: Verwalten/Fertig,
+zulässige Bearbeiten-Links am Eintrag, sichere Auswahl-/Archivgrenzen und mobile
+Zeiträume ohne horizontales Scrollen; Löschen nach nachgewiesener vollständiger
+Abhängigkeitsbehandlung, keine pauschale Herkunftssperre, keine stillen Teillöschungen,
+kurze Gründe/Alternativen und Vorschau/Bestätigung/CAS/Backup/Restore. Renditestart,
+Originalquellen, Kontrollpunkte, TWR/XIRR/Verlauf/Bestandsabgleich schützen; keine
+künstlichen Ersatzbewertungen. Keine Änderung privater Produktivdaten ohne ausdrückliche
+Nutzerfreigabe. Aktive Flatex-Folge dafür nicht unterbrechen/umpriorisieren.
+
+Übrige FLH03-/FLH04-/OAuth-/Hardware-/Steuerfachgates und bestehende Gesamtroadmap
+unverändert erhalten. FLH05 nicht vorziehen, PERF vor dem vorgesehenen FLH05-Schritt,
+FLH-PROJ01 bleibt ausschließlich späteres Backlog.
+
+---
+
 # v201 veröffentlicht · tatsächliche Produktionsabnahme läuft · 28.10.2026
 
 Main88508742db6bed9be57d6e907b2bfe56d61b1631, geprüfterBaumc48b6e1edae946a53ad38b565418c7bda6d93fdf unverändert. Main40749554400: test123032258257/Cross1123032258597/Cross2123032258551 undDeployment123036716943 SUCCESS. v201 veröffentlicht, **FX-UI02 IN_PROGRESS / noch NICHT LIVE_ACCEPTED**; v200 bleibt letzter vollständig abgenommener Release. Livejob123036921505 läuft regulär, zunächst Chromium-Dateibytes/Kernabläufe/neueVorschau, danach Firefox/WebKit. Nächster Schritt tatsächliche volle Liveabnahme abschließen,120Produktionsdateien/Restore/Offline/DreiEngine-Berichte/Bilder/Artefaktdigests prüfen und final sichern. Kein neuer Code/Parallelstrang/Duplikatlauf. UI-MASTER28/DELETE-MASTER28 und wirtschaftlicher Order-/Mehrfachgegenbeinvertrag bleiben offen.
