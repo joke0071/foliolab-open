@@ -1,0 +1,41 @@
+[
+  {
+    "ignoreHTTPSErrors": true,
+    "state": {
+      "url": "https://foliolab.unperfekt.at/",
+      "registrations": [
+        {
+          "scope": "https://foliolab.unperfekt.at/",
+          "active": "activated",
+          "url": "https://foliolab.unperfekt.at/sw.js"
+        }
+      ],
+      "caches": [
+        "foliolab-open-v192"
+      ]
+    },
+    "events": [
+      {
+        "controllerWait": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded."
+      }
+    ]
+  },
+  {
+    "ignoreHTTPSErrors": false,
+    "state": {
+      "url": "https://foliolab.unperfekt.at/",
+      "controller": "https://foliolab.unperfekt.at/sw.js",
+      "registrations": [
+        {
+          "scope": "https://foliolab.unperfekt.at/",
+          "active": "activated",
+          "url": "https://foliolab.unperfekt.at/sw.js"
+        }
+      ],
+      "caches": [
+        "foliolab-open-v192"
+      ]
+    },
+    "events": []
+  }
+]

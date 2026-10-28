@@ -1,3 +1,7 @@
+# Aktueller UI-Releasefortschritt 28.10.2026
+
+v191/PR179–180 und v192/PR181 sind vollständig LIVE_ACCEPTED. Schlanke Mehrfachauswahl im Listenkopf beider Listen DONE, unveränderte Finanz-/Auswahl-/Speicherengine. v192 main6dab772e, Main/Pages/Live40645289206 sowie tatsächliche Auswahl-/Buchungs-Produktion40647218802 SUCCESS; Vollbeleg im Mastercheckpoint/ui-selection-v192-release.json. Nächster bestehender Rang3: UI17-09/10 und1W. Frühere offene Statusangaben für den schlanken Listenkopf darunter sind historisch; übrige Gesamtsequenz unverändert.
+
 # Releasefortschritt 28.10.2026
 
 PR179/180, v191-Buchungs-UI und Sichtbarkeitsarchiv sind LIVE_ACCEPTED: main5b9bb792, Main/Pages/Live40642187590 und gezielte Buchungs-Produktion40643428354 SUCCESS. Der neuere schlanke Mehrfachauswahl-Listenkopf bleibt nächster ausführbarer UI-Schnitt; danach UI17-09/10/1W. Keine neue Gesamtplanung; die bestehende Sequenz unten bleibt verbindlich. Vollbeleg: WORK_RESTPAKETE_CHECKPOINT.md und release-evidence/booking-ui-v191-release.json.

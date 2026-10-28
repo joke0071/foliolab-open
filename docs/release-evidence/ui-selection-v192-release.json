@@ -1,0 +1,122 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 192,
+  "date": "2026-10-28",
+  "production": "https://foliolab.unperfekt.at/",
+  "pr": 181,
+  "releaseSha": "6dab772e9ed15878779a5f345b132091917b7167",
+  "tree": "bc25754038bfd0c2cee2707daf1121764511ca96",
+  "prHead": "a349d9fe04f18524e9536e0d0804cb3e1ca68b63",
+  "testedMerge": "0f6f4d24c8c8796ea57a761af333801149acb6a5",
+  "prCI": 40644389670,
+  "walletCI": 40644389516,
+  "mainPagesLive": 40645289206,
+  "targetedProduction": {
+    "run": 40647218802,
+    "job": 122678737620,
+    "qaCommit": "4072ff85f02cd9b14f2060dee7611bc861145ce5",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "normalWidths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "positionPreviewWidths": [
+      320,
+      390,
+      430,
+      768,
+      1024,
+      1440
+    ],
+    "syntheticPositions": 401,
+    "syntheticBookings": 249,
+    "checks": [
+      "header entry with no normal-mode selection controls",
+      "direct row actions retained",
+      "keyboard entry/cancel/focus",
+      "immediate shared toolbar, mobile two columns",
+      "filter/page/global scope, hidden IDs",
+      "exact canonical record unchanged by selection",
+      "archive financial invariance",
+      "dependency-blocked deletes and mixed selection",
+      "quota and actual post-put transaction abort",
+      "stale competing tab CAS",
+      "plain and fresh encrypted backup restore",
+      "exact undo and reimport",
+      "service worker controller and real offline commit/reload"
+    ],
+    "appAndOriginalTestsIdenticalToRelease": true,
+    "temporaryWrapperChanges": [
+      "three booking localhost setup URLs to actual production origin",
+      "position test TLS exception limited to actual HTTPS_PROXY, same core transport contract"
+    ],
+    "assertionsUnchanged": true,
+    "networkInterception": false,
+    "uniqueAssetMatches": 108
+  },
+  "units": {
+    "passed": 766,
+    "failed": 0,
+    "skipped": 0,
+    "local": true,
+    "ci": true
+  },
+  "core": {
+    "assetComparisons": 109,
+    "groups": 6,
+    "axeScans": 18,
+    "cache": "foliolab-open-v192"
+  },
+  "artifacts": [
+    {
+      "id": 12797956518,
+      "sha256": "8f657c136fcdec9addcf91ca2c11aed414159b994c97cc317eabccfe806cb2e5",
+      "downloadedAndVerified": true
+    },
+    {
+      "id": 12797399953,
+      "sha256": "dd7a1fb432c97a812ce5dc7840ca047a155e2c2df54233c6d13a6ec74f371da7",
+      "downloadedAndVerified": true
+    }
+  ],
+  "visual": {
+    "result": "PASS",
+    "actuallyViewed": 12,
+    "images": [
+      "positions-chromium-320",
+      "positions-chromium-390",
+      "positions-chromium-1440",
+      "bookings-chromium-320",
+      "bookings-chromium-390",
+      "bookings-chromium-1440",
+      "positions-firefox-320",
+      "bookings-firefox-320",
+      "positions-webkit-320",
+      "positions-webkit-1440",
+      "bookings-webkit-320",
+      "bookings-webkit-1440"
+    ]
+  },
+  "retainedFailure": {
+    "run": 40646597977,
+    "artifact": 12797572881,
+    "sha256": "2dcd830f14e1b22ee955e94bea270bc530ff583106a0e2ac5df2beee759df7fc",
+    "stage": "position service-worker controller prerequisite",
+    "bookingChromiumPassed": true,
+    "diagnosis": "Controlled identical Chromium setup: ignoreHTTPSErrors=true had activated registration/cache but no controller and timed out; false acquired controller immediately. Full unchanged tests then passed all three engines using normal verified HTTPS.",
+    "probe": "ui-selection-v192-controller-probe.json"
+  },
+  "scopeLimits": [
+    "No finance/model/storage/backup engine changes",
+    "No physical Android/Safari/OAuth acceptance",
+    "Broader economic booking changes/Ignore and full master remain partial"
+  ],
+  "next": "Existing UI17-09/10 and shared 1W wealth period, then canonical predecessor sequence; FLH05-A/PERF01 not pulled forward"
+}
