@@ -1,3 +1,9 @@
+# v200 veröffentlicht · Live-Cross-Gates laufen · 28.10.2026
+
+Main-/Pages-Workflow40737628881 auf b2a07f4131a7b38d1fa7da40fab8ea58b72fd119: alle Main-Pflichttests und Deployment122995236779 SUCCESS. Tatsächlicher Livejob122995691860 läuft; Produktions-Chromium-Schritt erfolgreich beendet, Firefox-/WebKit-Installation gestartet. Noch keine vollständige Produktionsabnahme behauptet: **BP04 IN_PROGRESS / v200 veröffentlicht, nicht LIVE_ACCEPTED**; v199 bleibt zuletzt vollständig abgenommen. Keine neue Codeänderung oder Parallelentwicklung. Nächster Schritt reguläre Cross-Produktionsgates abschließen, tatsächliche Berichte/ZIP-Digest/118Assethashes/Restore/Offline/Bilder prüfen und finalen Releasecheckpoint dauerhaft sichern.
+
+---
+
 # BP04 Main-Gates grün · Deployment läuft · 28.10.2026
 
 Main `b2a07f4131a7b38d1fa7da40fab8ea58b72fd119`, Baum `33bc9c41e273e776ed4304784cc6fd82cfb2f74c` exakt geprüfter Kandidat. Workflow40737628881: test122990350116 und beideCross-Shards122990350721/122990351102 SUCCESS; 844/844 Units, 0Fail/Skip, Syntax und unveränderte Pflichtregression. MainZIP12837364471 vor Extraktion Digest3a9b30d40bdcb2fac7a93729a12b4f014436fc76cdf9e45585a3bebf35efaf19 bestätigt, tested-sha exakt Merge. Deploy122995236779 läuft regulär. **BP04 IN_PROGRESS, v200 noch nicht LIVE_ACCEPTED**, letzter abgenommenerRelease v199. Nächster Schritt Deployment und tatsächliche Drei-Engine-Produktionsabnahme regulär abschließen, 118Assetvergleiche/Restore/Offline/Bitpanda-Dialog/Nullmutation/Bilder und Artefaktdigests prüfen. Keine parallelen Änderungen oder doppelten Läufe. Neuer UI-MASTER28-Nachtrag darunter bleibt offen und maßgeblich; Flatex-Originalaudit folgt regulär, FLH05/PERF/PROJ01 nicht vorziehen.
