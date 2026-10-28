@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scope": "Wholly invented examples of observed schema shapes; no original financial rows, IDs, dates, counts or hashes.",
+  "productionBase": "v198/8391dc0a8478af7e1aeb860b8b705217fdd24546",
+  "examples": [
+    {
+      "provider": "bitpanda",
+      "format": "retail-preamble-18-17",
+      "text": "Report,SYNTHETIC EXPORT\nOwner,SYNTHETIC OWNER\nScope,SYNTHETIC SCOPE\nNotes,SYNTHETIC NOTES\nFormat,SYNTHETIC FORMAT\nTransaction ID,Timestamp,Transaction Type,In/Out,Amount Fiat,Fiat,Amount Asset,Asset,Asset market price,Asset market price currency,Asset class,Product ID,Fee,Fee asset,Fee percent,Spread,Spread Currency,Tax Fiat\nSYNTHETIC-BP-A,1999-01-02T12:00:00+01:00,buy,incoming,500,EUR,0.01,BTC,50000,EUR,Cryptocurrency,,0,BTC,0,0,EUR,0\nSYNTHETIC-BP-B,1999-01-03T12:00:00+01:00,reward,incoming,1,EUR,0.00002,BTC,50000,EUR,Cryptocurrency,,0,BTC,0,0,EUR",
+      "expectedCurrentParseCSV": "reject-ragged-width; never pad missing tax with zero"
+    },
+    {
+      "provider": "kraken",
+      "format": "ledgers-16",
+      "text": "txid,refid,time,type,subtype,aclass,subclass,asset,wallet,amount,fee,balance,amountusd,feeusd,balanceusd,feecurrency\nSYNTHETIC-K-A,SYNTHETIC-REF-A,1999-01-02 12:00:00,trade,tradespot,currency,crypto,BTC,spot,0.01,0.00001,0.01,500,0.50,500,BTC\nSYNTHETIC-K-B,SYNTHETIC-REF-A,1999-01-02 12:00:00,trade,tradespot,currency,fiat,EUR,spot,-500,0,0,-500,0,0,EUR\nSYNTHETIC-K-C,SYNTHETIC-REF-A,1999-01-02 12:00:00,trade,tradespot,currency,fiat,EUR,spot,0,0.50,-0.50,0,0.50,-0.50,EUR",
+      "expectedCurrentParseCSV": "accept-lexically-only; fee is not automatically feeEUR; no pair-size or timezone inference"
+    },
+    {
+      "provider": "bittr",
+      "format": "purchase-evidence-13",
+      "text": "IBAN,From,Currency,Fiat Amount,Bittr Fee,Bitcoin Purchased,Mining Fee,Bitcoin Amount,Current Value,Exchange Rate,Deposit Code,Bitcoin Transaction ID,Timestamp\nSYNTHETIC-IBAN,SYNTHETIC OWNER,EUR,500.00,9.00,0.01250000,0.00010000,0.01240000,9999,40000,SYNTHETIC-DEPOSIT,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,1999-01-02 12:00:00Z",
+      "expectedExistingParser": "parseBittrEvidence accepts one receipt and strips private-only columns; no financial posting"
+    },
+    {
+      "provider": "flatex",
+      "format": "depot-positioned-13",
+      "text": "Buchungstag;Valuta;Bezeichnung;ISIN;Nominal (Stk.);;Betrag;;Kurs;;Devisenkurs;TA.-Nr.;Buchungsinformation\n02.01.1999;04.01.1999;SYNTHETIC FUND;AT0000000001;1;STK;-100,00;EUR;100,00;EUR;1;SYNTHETIC-TA-A;ORDER Kauf SYNTHETIC FUND\n03.01.1999;05.01.1999;SYNTHETIC FUND;AT0000000001;1;STK;0,00;EUR;100,00;EUR;1;SYNTHETIC-TA-B;Thesaurierung SYNTHETIC FUND",
+      "expectedCurrentParseCSV": "reject-empty-header; do not delete positional currency columns; no tax/cash invention"
+    }
+  ]
+}

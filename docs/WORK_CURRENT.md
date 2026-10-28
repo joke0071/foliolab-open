@@ -6,53 +6,53 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 
 - Letzter produktiv abgenommener Release: **v198 LIVE_ACCEPTED**.
 - Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
-- Einziger Funktions-PR: [PR187](https://github.com/joke0071/foliolab-open/pull/187), gemergt, veröffentlicht, live abgenommen.
-- Branch: `feature/flh03-pchain-identity`.
-- HEAD: `06726680c794145d158d378d6b24741fa0c34247`.
-- Getesteter PR-Merge: `2036ac9a225fb06256652f746c01f03c71c71a49`.
-- Kandidat-/lokaler-/Mergebaum identisch: `5a6ad50997bfc932fa0220278a912f93267ff2e7`.
-- Arbeitspaket FLH03-09: P-Chain-Adresse und kontextgebundene UTXO-Beobachtungsidentität.
-- **P09-ID01 DONE / P09-ID02 DONE** für Vertrag und geprüften Implementierungskandidaten.
-- **P09-ID03 DONE:** kontrollierter Release und tatsächliche Produktionsabnahme.
-- Main-/Pages-/Live40693772763 vollständig SUCCESS; SW198 und 113 Dateivergleiche bestätigt.
-- Gesamtmaster und FLH03-09 insgesamt **PARTIAL**; PR157/161 unverändert geparkt.
+- Releasebaum: `5a6ad50997bfc932fa0220278a912f93267ff2e7`, identisch geprüfter Kandidat.
+- PR187 gemergt, veröffentlicht und tatsächlich live abgenommen; kein aktiver Funktions-PR.
+- PR157/161 bleiben unverändert geparkt; kein anderer Writer/aktive CI beim Abschluss.
+- **P09-ID03 DONE:** kontrollierter reinlesender P-Chain-Identitätsrelease.
+- **FLH03-ORIG01 DONE:** neuer regulärer lesender Original-CSV-/Parserabgleich.
+- Gesamtmaster und FLH03-09 bleiben **PARTIAL**; keine vollständige Walletintegration.
 
-## Abgeschlossene Etappen dieser Sitzung
+## Letzte erfolgreiche Prüfungen
 
-- **P09-ID01 DONE:** fester [Fachvertrag vor Code](https://github.com/joke0071/foliolab-open/blob/7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c/docs/FLH03_PCHAIN_IDENTITY_CONTRACT.md),
-  Commit `7d7fa3f9ae476dafcb8b1e3a4719b2ac8fc8400c`.
-- **P09-ID02 DONE:** reine Prüfhelfer, neun neue Fachtests, bestehende Browser-Suite erweitert.
-  Kein aktiver Scanner/RPC, Walletbestand, Finanz-/Storage-/Migrations-/Backupumbau.
-- Quell-/Scopeprüfung ohne blockierenden Befund; bisherige Assertions/Gates/Pins erhalten.
+- PR-CI40691053325 und Wallet40691053211 SUCCESS.
+- [Main/Pages/Live40693772763](https://github.com/joke0071/foliolab-open/actions/runs/40693772763)
+  vollständig SUCCESS:821/821Units/0Fail/0Skip, Syntax, Chromium, beide Firefox/WebKit-Shards,
+  Deployment und tatsächliche Drei-Engine-Liveabnahme.
+- Produktion: SW198,113exakteDateivergleiche,6Kerngruppen/18Axe ohne Befund.
+- Neue P-Chain-Adress-/Identitäts-/Negativ-/IDB-/Settings-Nullmutationsgates3Engines PASS.
+- ProduktionsZIP-Digest vor Extraktion geprüft; neue320/390/1440-Kernbilder tatsächlich angesehen.
+- [Releasebeleg](release-evidence/pchain-identity-v198-release.json).
+- Keine offenen technischen Releasegates für PR187; spätere aktive Finanzadapter separat freigeben.
 
-## Letzte erfolgreiche Prüfungen / offene Gates
+## Regulärer Originaldaten-Checkpoint
 
-- Lokal24/24 gezielte Tests, volle821/821Units/0Fail/0Skip und Syntax PASS.
-- Lokaler Browserstart war vor Ausführung wegen fehlender Playwright-Binärdatei blockiert.
-  Verbindlicher Drei-Engine-Nachweis stammt aus regulärer CI, kein lokaler Browser-PASS.
-- [Pflicht-CI40691053325](https://github.com/joke0071/foliolab-open/actions/runs/40691053325)
-  und Wallet40691053211 vollständig SUCCESS:821/821Units, Syntax, Chromium, beide Pflichtshards.
-- Neue Adress-/Identitätsprüfungen in Chromium/Firefox/WebKit PASS; Netzwerk/Chain/Negativfälle,
-  exakte Owner-/Outpoint-Zuordnung, IDB-/Settings-Nullmutation und Immutable-Ergebnisse geprüft.
-- Release-/Cross2-ZIP-Digests vor Extraktion bestätigt; Mergebaum exakt.
-  [Kandidatenbeleg](release-evidence/pchain-identity-pr187-candidate.json).
-- Offen: aktueller Kollisions-/HEAD-/Mergebaumcheck, Releaseentscheidung im reinlesenden Scope,
-  kontrollierter Merge, vollständige Main-/Pages-/echte Drei-Engine-Livegates, Modulbytes/Kernbilder.
-- Keine zusätzliche externe Freigabe für diese reinen Prüfhelfer erforderlich.
-  Ein späterer aktiver Finanzadapter benötigt eigene konkrete Freigabe und Fachbelege.
+- Vier benannte Originalexporte zugänglich und ausschließlich lesend privat geprüft.
+- Bittr: bestehender Kaufbelegparser akzeptiert Original; bestehende Allowlist bestätigt.
+- Kraken: bestätigter16-Spalten-Ledgerdialekt; kein nativer wirtschaftlicher Adapter.
+  Generisches fee→feeEUR ist für deklarierte Nicht-EUR-Gebühren keine Freigabe.
+- Bitpanda: Vorspann +18/17-Feld-Varianten; bestehender Parser lehnt Originalstruktur ab.
+- Flatex:13-Spalten-Depot mit drei unbenannten Positionsfeldern, kein gültiges UTF-8.
+  Headerdetektor erkennt Depot, Parser lehnt Blankheader ab; Thesaurierungen separat.
+- Flatex laut Nutzer unvollständig; weitere Originale derzeit nicht verfügbar.
+  Keine vollständige Depot-/Cash-/Steuer-/Saldoabnahme oder erfundenen Eröffnungen.
+- Exakte private Zeiträume/Anzahlen im privaten Prüfbericht; öffentlich nur abstrahierter
+  [Formatabgleich](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md).
+- Vier vollständig synthetische Schema-Prüfungen PASS; kein Produkt-/Parser-/Workflowcode geändert.
+- Alle Originale bleiben privat/unverändert; keine Zeilen, Beträge, IDs, Adressen oder Fingerprints publiziert.
 
-## Aktueller regulärer FLH03-Checkpoint
+## Exakt nächster ausführbarer Schritt
 
-- **FLH03-ORIG01 IN_PROGRESS:** vier neu bereitgestellte CSV-Originale lesend prüfen.
-- Dateien im benannten Ordner gefunden: Bitpanda, Kraken, Bittr, Flatex.
-- Flatex laut Nutzer ausdrücklich unvollständig; keine vollständige Depot-/Cashabnahme daraus ableiten.
-- Nächster Schritt: private lokale Struktur-/Zeitraum-/Typprüfung und Abgleich mit bestehenden Parsern.
-- Öffentlich nur abstrahierte Befunde und rein synthetische Fixtures; keine Originalwerte/IDs/Adressen/Fingerprints.
-- Laufender Release wurde vor diesem Prüfpunkt vollständig abgeschlossen; keine parallele Implementierung.
-- Bereits vorbereitete reine Quellenlektüre zu P-Chain-Mehrseitenkonsistenz bleibt Vorarbeit,
-  keine neue Umsetzung/Abnahme. Die reguläre Originalprüfung ergänzt die bestehenden FLH03-Gates.
-- Danach bestehende Reihenfolge anhand tatsächlicher Original-/Semantikgates fortsetzen.
-- FLH05/PERF nicht vorziehen; FLH-PROJ01 ausschließlich dokumentiert.
+**FLH03-03-KRAKEN01 TODO:** nach Kollisionscheck auf aktuellem main einen begrenzten
+reinlesenden Ledger-Vorschauvertrag vor Code sichern. Bestätigten16-Spalten-Dialekt,
+txid/refid, Mehrbeine, Fee-Währung, unbekannte Subtypen und unbewiesene Vollständigkeit
+an bestehenden CSV-/Decimal-/Preview-/Journal-/CAS-Schnittstellen abgrenzen.
+Keine vollständige Buchungsfreigabe oder feste Zweizeilen-/Zeit-/Einstandswerterfindung.
+Fehlende Trades/Balances/Anfang-Endbelege bleiben konkret offen; keine derzeit nicht
+verfügbaren Originale erneut pauschal anfordern. TR weiterhin originalbezogen blockiert.
+Danach vorhandene Bitpanda-/Flatex-Lücken gemäß bestehender FLH03-Sequenz fortsetzen.
+P-Chain-Mehrseiten-/Ankerliteratur nur lesend vorbereitet, erhalten; keine parallele Umsetzung.
+FLH05/PERF nicht vorziehen; FLH-PROJ01 weiterhin ausschließlich später dokumentiert.
 
 ## Verbindlicher Sitzungs- und Übergabevertrag
 
@@ -65,7 +65,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
   Nach konsistentem Schritt bzw. spätestens etwa30–45Minuten gezielt prüfen/testen,
   sinnvoll committen und kollisionsfrei auf bestehendem Branch sichern.
 - Nach Etappe beide Statusdateien möglichst atomar mit Ergebnis/Commit/Tests/Release/nächstem Schritt.
-- Identische grüne Nachweise wiederverwenden; sämtliche Pflichtgates erhalten.
+- Identische grüne Nachweise wiederverwenden; alle Pflichtgates erhalten.
   Keine CI-Duplikate, Retryschleifen oder parallelen Ersatzprozesse bei Rate Limits.
 - Nach zwei Etappen gesichert stoppen; begonnene Sicherheits-/Releaseabschlüsse regulär beenden.
-- Aktuelle Sitzung: P09-ID03 DONE, FLH03-ORIG01 IN_PROGRESS; danach gesicherter Stopp.
+- Sitzung abgeschlossen: P09-ID03 und FLH03-ORIG01 DONE; nächster Schritt KRAKEN01-Vertrag.
