@@ -1,3 +1,29 @@
+# PR192 korrigierter Kandidat dauerhaft gesichert · finale CI offen · 28.10.2026
+
+Bestehender Branch feature/flh03-flatex-order-links / PR192,
+HEAD `e48f14771fb083139dcc9604c0b7cf5c6489b602`, Baum `ee89acc8eb51ba3b6ee1225f4aacc4285d111034` exakt lokaler
+geprüfter Quellbaum und GitHub-API-Remote. Erstlauf40754640919/Wallet40754640913
+vollständig SUCCESS und regulär beendet, erst danach Korrektur gepusht. Kein laufender
+Work-Prozess unterbrochen, keine doppelte oder parallele Entwicklung.
+
+Zusätzliche Mehrfach-ORDER-Quarantäne innerhalb derselben reinen Grundlage:
+mehr als eine ORDER-Angabe pro Quellzeile bleibt vollständig source-review.
+872/872 lokale Units unter Node20 (0 Fehler/Skip), Syntax,17 neue fokussierte
+Tests unter Node24 und korrigierter Chromium-/Offline-/exakter Nullmutationsgate PASS.
+Privater Sollabgleich und Erhalt aller Quellzeilen erneut PASS; keine privaten Werte
+veröffentlicht. Keine Quellparser-/Legacy-/Dialog-/Finanz-/Storage-/Backupänderung
+und keine Assertions/Pins/Workflows abgeschwächt. Produktion v201/main8850874 unverändert.
+
+Neue Läufe: 40756057649 Wallet scan checks; 40756057570 FolioLab Open – testen und veröffentlichen.
+**Zuordnungsgrundlage IN_PROGRESS** bis finale volle CI/Wallet/Drei-Engine-/Scope-
+und Artefaktprüfung. Exakt nächster Schritt diese Läufe regulär abschließen lassen,
+finale Berichte/Digests/testedSHA/Bäume tatsächlich prüfen und zentral sichern.
+Nach zwei Etappen Vertrag + geprüfte reine Grundlage gesichert übergeben; Dialog/
+Release folgen später separat, SW202 unveröffentlicht, Master PARTIAL.
+UI-MASTER28/DELETE-MASTER28 und ursprüngliche Roadmap unverändert erhalten.
+
+---
+
 # PR192: zusätzliche Mehrfach-ORDER-Quarantäne lokal in Prüfung · 28.10.2026
 
 Erstkandidat f8e74b2/PR192 weiter in regulärer CI40754640919; Wallet40754640913 SUCCESS, keine Unterbrechung oder Doppelstarts. Im abschließenden synthetischen Gegenbeispieltest reproduziert: eine Zeile mit zwei ORDER-Tupeln und gleichem Typ/ISIN wurde noch possible-single, obwohl nur die letzte Orderreferenz aus der nativen Projektion stammt. Keine Finanzmutation möglich, aber konservativer Beziehungsvertrag verlangt source-review für die ganze Gruppe.
