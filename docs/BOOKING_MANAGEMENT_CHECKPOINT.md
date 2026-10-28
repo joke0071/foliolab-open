@@ -1,3 +1,15 @@
+# v191 LIVE_ACCEPTED · kontrollierter Releaseabschluss · 28.10.2026
+
+**DONE:** PR179 und notwendiger reiner Testfix PR180 sind veröffentlicht und tatsächlich produktiv abgenommen. Release/main `5b9bb792125343b602157bb949ec8b0efcb28fd0`, Tree `4c0412776a3f9d035712608e7b51e6cded336cc0`, SW191. Finale PR180-CI40640857694/Wallet40640857708 und vollständige Main/Pages/Live40642187590 SUCCESS;766/766 Units,0Fail/0Skip, Syntax, Chromium/beide Firefox-WebKit-Pflichtshards. Lokal766/766+Syntax ebenfalls PASS.
+
+Zusätzliche tatsächliche Buchungs-Produktion40643428354 auf QA-only0ad401b0a37ae241455a98e2eb6bceadd6775e20 SUCCESS. Nur Prüfworkflow hinzugefügt, sämtliche ausgelieferten App-/Testbytes und Assertions unverändert, keine Request-Interception. Main-Live109Assetvergleiche (enthält Root/index doppelt), gezielter Gate108 eindeutige veröffentlichte Dateien/SW191. Drei Engines, fünf Breiten320/390/430/768/1440,249synthetische Vorgänge, Axe/44px/Fokus, Archiv ohne Finanzänderung, echter Quota-/post-put-Abbruch/Abbrechen, Offline, Undo, Reimport, frischer verschlüsselter V2-Komplettrestore und Stale-Tab PASS. Acht ausgewählte echte Produktionsbilder tatsächlich angesehen, PASS. Beide Evidenz-ZIPs vor Extraktion SHA256-verifiziert. [Maschinenbeleg](release-evidence/booking-ui-v191-release.json).
+
+#149/#165 bleiben PARTIAL: breite wirtschaftliche Import-/Trade-/Wallet-/Transfer-/technische Mutationen, Sammelbearbeitung und Ignore nicht freigeschaltet. Reale Geräte-/OAuth-/Original-/Fachgates bleiben extern offen. Kein Gesamtabschluss behauptet.
+
+**Nächster einziger funktionaler Schnitt:** vorgemerkte schlanke Mehrfachauswahl im Listenkopf für Positionen und Buchungen; Normalzustand ohne Checkboxen/Sammelaktionen/alleinstehenden Auswählen-Button, aktiver Modus unmittelbar sichtbar/zweispaltig mobil. Direkte Zeilenicons und bestehende Engines/CAS/Undo/Restore unverändert. Danach übrige UI17-09/10/1W und bestehende Gesamtsequenz. FLH05-A/PERF01 nicht vorgezogen.
+
+---
+
 # PR179 freigegeben und gemergt · Live-Abnahme ausständig · 28.10.2026
 
 Konkrete Freigabe nach wiederholtem „Fortsetzen“ als Antwort auf die ausdrückliche Merge-/Deploymentfrage einschließlich optionalem Archiv-/Backupformat. Kontrollierter Merge `ef783a99da2641b42f716cc08d28f2d50baee0c4`, identischer getesteter Tree `2dc0b34b2bc0e3398b324c69af5a12e4241cdc53`. Main/Pages/Live40640250948 läuft; v191 noch nicht LIVE_ACCEPTED. Danach unveränderte bestehende Buchungs- und neue UI-Assertions direkt gegen die tatsächliche Produktion in Chromium/Firefox/WebKit, nur synthetische isolierte Browserdaten.

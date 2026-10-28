@@ -1,0 +1,98 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 191,
+  "date": "2026-10-28",
+  "production": "https://foliolab.unperfekt.at/",
+  "releaseSha": "5b9bb792125343b602157bb949ec8b0efcb28fd0",
+  "releaseTree": "4c0412776a3f9d035712608e7b51e6cded336cc0",
+  "prs": [
+    179,
+    180
+  ],
+  "unitTests": {
+    "passed": 766,
+    "failed": 0,
+    "skipped": 0,
+    "local": true,
+    "ci": true
+  },
+  "mainRun": 40642187590,
+  "mainJobs": {
+    "test": 122662627307,
+    "cross1": 122662626999,
+    "cross2": 122662627234,
+    "deploy": 122665125310,
+    "live": 122665458385
+  },
+  "targetedProduction": {
+    "run": 40643428354,
+    "job": 122666616615,
+    "qaCommit": "0ad401b0a37ae241455a98e2eb6bceadd6775e20",
+    "onlyWorkflowAdded": true,
+    "originalAppAndTestsUnchanged": true,
+    "requestInterception": false,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "syntheticBookingRows": 249,
+    "checks": [
+      "direct actions and contextual editing",
+      "selection scope/pagination",
+      "visibility-only archive and exact financial invariance",
+      "quota and post-put abort rollback",
+      "cancel failed save restores direct actions",
+      "offline commit and reload",
+      "exact bounded undo",
+      "reimport",
+      "fresh-context encrypted V2 complete restore",
+      "stale competing tab"
+    ],
+    "uniquePublishedFilesMatched": 108
+  },
+  "coreProduction": {
+    "assetComparisons": 109,
+    "groups": 6,
+    "axeScans": 18,
+    "cache": "foliolab-open-v191"
+  },
+  "artifacts": [
+    {
+      "id": 12796486918,
+      "sha256": "76ada7938d8286334ee4392431796aa751d20f4ce4edeadf22e3bcacabb9da34",
+      "downloadedAndVerified": true
+    },
+    {
+      "id": 12796641976,
+      "sha256": "5083950a87c9d97e6f5994c65e50ce19b3a3876482e9b958e7b646edd36f9b5b",
+      "downloadedAndVerified": true
+    }
+  ],
+  "visualReview": {
+    "result": "PASS",
+    "images": [
+      "chromium-320",
+      "chromium-390",
+      "chromium-430",
+      "chromium-1440",
+      "firefox-320",
+      "webkit-320",
+      "webkit-edit-320",
+      "webkit-1440"
+    ]
+  },
+  "limits": [
+    "No physical Android/Safari/OAuth acceptance",
+    "Broader trade/import/wallet/transfer financial changes and Ignore remain blocked pending proven contracts",
+    "Full FLH03 reconstruction and FLH04/FLH05 remain partial/open"
+  ],
+  "next": "Queued slim multi-selection header for positions and bookings, preserving existing selection and financial engines"
+}

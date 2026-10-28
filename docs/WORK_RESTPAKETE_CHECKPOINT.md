@@ -1,3 +1,15 @@
+# v191 LIVE_ACCEPTED · kontrollierter Releaseabschluss · 28.10.2026
+
+**DONE:** PR179 und notwendiger reiner Testfix PR180 sind veröffentlicht und tatsächlich produktiv abgenommen. Release/main `5b9bb792125343b602157bb949ec8b0efcb28fd0`, Tree `4c0412776a3f9d035712608e7b51e6cded336cc0`, SW191. Finale PR180-CI40640857694/Wallet40640857708 und vollständige Main/Pages/Live40642187590 SUCCESS;766/766 Units,0Fail/0Skip, Syntax, Chromium/beide Firefox-WebKit-Pflichtshards. Lokal766/766+Syntax ebenfalls PASS.
+
+Zusätzliche tatsächliche Buchungs-Produktion40643428354 auf QA-only0ad401b0a37ae241455a98e2eb6bceadd6775e20 SUCCESS. Nur Prüfworkflow hinzugefügt, sämtliche ausgelieferten App-/Testbytes und Assertions unverändert, keine Request-Interception. Main-Live109Assetvergleiche (enthält Root/index doppelt), gezielter Gate108 eindeutige veröffentlichte Dateien/SW191. Drei Engines, fünf Breiten320/390/430/768/1440,249synthetische Vorgänge, Axe/44px/Fokus, Archiv ohne Finanzänderung, echter Quota-/post-put-Abbruch/Abbrechen, Offline, Undo, Reimport, frischer verschlüsselter V2-Komplettrestore und Stale-Tab PASS. Acht ausgewählte echte Produktionsbilder tatsächlich angesehen, PASS. Beide Evidenz-ZIPs vor Extraktion SHA256-verifiziert. [Maschinenbeleg](release-evidence/booking-ui-v191-release.json).
+
+#149/#165 bleiben PARTIAL: breite wirtschaftliche Import-/Trade-/Wallet-/Transfer-/technische Mutationen, Sammelbearbeitung und Ignore nicht freigeschaltet. Reale Geräte-/OAuth-/Original-/Fachgates bleiben extern offen. Kein Gesamtabschluss behauptet.
+
+**Nächster einziger funktionaler Schnitt:** vorgemerkte schlanke Mehrfachauswahl im Listenkopf für Positionen und Buchungen; Normalzustand ohne Checkboxen/Sammelaktionen/alleinstehenden Auswählen-Button, aktiver Modus unmittelbar sichtbar/zweispaltig mobil. Direkte Zeilenicons und bestehende Engines/CAS/Undo/Restore unverändert. Danach übrige UI17-09/10/1W und bestehende Gesamtsequenz. FLH05-A/PERF01 nicht vorgezogen.
+
+---
+
 # v191 veröffentlicht · gezielte Buchungs-Live-Abnahme läuft · 28.10.2026
 
 PR180 kontrolliert gemergt als `5b9bb792125343b602157bb949ec8b0efcb28fd0`, Tree `4c0412776a3f9d035712608e7b51e6cded336cc0` identisch mit geprüftem PR180-Mergebaum. Vollständiger [Main-/Pages-/Live-Lauf40642187590](https://github.com/joke0071/foliolab-open/actions/runs/40642187590) SUCCESS: test122662627307, beide Pflichtshards122662626999/122662627234, deploy122665125310, live122665458385. Lokal zusätzlich766/766 Units und Syntax PASS.
