@@ -16,7 +16,7 @@ test('history has compact periods, popup calendar and closed snapshot manager',(
  assert.match(html,/id="historyCalendarDisclosure"/);
  assert.match(html,/id="historyCalendarGrid"/);
  assert.match(html,/id="addSnapshot" aria-label="Stichtag hinzufügen"/);
- assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary>Kontrollpunkte &amp; manuelle Werte<\/summary>/);
+ assert.match(html,/<details class="snapshot-manager" id="snapshotManager"><summary><span class="history-disclosure-title">[\s\S]*?Historische Referenzwerte<\/span><\/summary>/);
  assert.doesNotMatch(html,/<details class="snapshot-manager" id="snapshotManager" open/);
  assert.doesNotMatch(html,/Entwicklung nach Stichtagen/);
  assert.match(html,/class="panel history-panel" role="region" aria-label="Vermögensstände im Zeitverlauf"/);
