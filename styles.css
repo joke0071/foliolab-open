@@ -1180,3 +1180,7 @@
 .list-selection-head h3{margin:0;font-size:14px}
 .list-selection-head .btn{min-width:44px;min-height:44px;white-space:normal;font-size:12px;padding:8px 10px}
 .list-selection-head:empty,#positionSelectionTools:empty,#positionSelectionStatus:empty,#bookingManagementTools:empty{display:none}
+
+/* Eight shared wealth presets wrap within narrow cards and retain touch targets. */
+.chart-period.mini-chart-periods,#historyPage .chart-period.history-chart-period{flex-wrap:wrap}
+.chart-period.mini-chart-periods button,#historyPage .chart-period.history-chart-period button{min-width:44px;min-height:44px}

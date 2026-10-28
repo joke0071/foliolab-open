@@ -18,8 +18,9 @@ try{
  });
  await page.reload();
  const mini=page.locator('#miniChartPeriods');
- assert.deepEqual(await mini.locator('button').allTextContents(),['1 M','3 M','6 M','1 J','3 J','5 J','Max']);
+ assert.deepEqual(await mini.locator('button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
  assert.equal(await mini.locator('[aria-pressed="true"]').count(),1);
+ assert.ok(await mini.locator('[data-mini-range="week"]').isDisabled(),'one recent observation cannot fabricate a weekly curve');
  await mini.locator('[data-mini-range="month"]').click();
  assert.equal(await mini.locator('[data-mini-range="month"]').getAttribute('aria-pressed'),'true');
  const monthPoints=await page.locator('#miniChart [data-chart-points]').getAttribute('data-chart-points');
@@ -29,8 +30,9 @@ try{
   const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
   await page.locator(nav+' [data-page="history"]').click();
   const history=page.locator('#chartPeriods');
-  assert.deepEqual(await history.locator('button').allTextContents(),['1 M','3 M','6 M','1 J','3 J','5 J','Max']);
+  assert.deepEqual(await history.locator('button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
   assert.equal(await history.locator('[aria-pressed="true"]').count(),1);
+  assert.ok(await history.locator('[data-range="week"]').isDisabled(),'same sparse weekly coverage in both views');
   const layout=await page.locator('#historyPage .history-controls').evaluate(el=>{
    const controls=el.getBoundingClientRect();
    const actions=el.querySelector('.history-actions').getBoundingClientRect();

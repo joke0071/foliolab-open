@@ -1,3 +1,4 @@
+import './browser-ui-small-rests.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';

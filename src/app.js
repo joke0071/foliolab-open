@@ -165,7 +165,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
    review.addEventListener('click',showValuationIssues);
    hint.append(review);
   }else hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
-  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei Foliolab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
+  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    const wealth=wealthView();
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel,wealth);
   const alloc=allocationBreakdown(model,valueEUR,TYPES);
@@ -737,7 +737,7 @@ function openCashBalanceCheck(positionId){
  $('cashReference').addEventListener('input',clear);
  $('cashReferenceCurrent').addEventListener('change',clear);
 }
-function openProvider(p){
+function openProvider(p,onSaved){
  showDialog(p?'Anbieter bearbeiten':'Anbieter hinzufügen','FREIE ANBIETERWAHL',
  '<p class="dialog-intro">Name eingeben, z. B. „f“, und einen passenden Anbieter aus den Vorschlägen wählen. Der Typ wird vorgeschlagen, kann aber geändert werden. Die Liste funktioniert offline; es findet keine Internetsuche statt.</p>'+
  '<label class="field"><span>Anbietername</span><input name="name" id="providerName" required maxlength="80" autocomplete="off" value="'+esc(p?.name||'')+'" placeholder="z. B. Flatex, Trade Republic …"></label>'+
@@ -751,6 +751,8 @@ function openProvider(p){
   const x=createProvider({...v,name,id:p?.id});
   if(p)model.providers=model.providers.map(a=>a.id===p.id?x:a);else model.providers.push(x);
   await save();notify('Anbieter gespeichert.');
+  // Continue only after a successful save and the existing close/focus cleanup.
+  if(typeof onSaved==='function')$('editDialog').addEventListener('close',()=>onSaved(x),{once:true});
  });
  const name=$('providerName'),matches=$('providerMatches'),type=$('providerType');
  const show=()=>{matches.innerHTML=providerMatchMarkup(name.value);matches.classList.toggle('hidden',!name.value.trim());};
@@ -769,7 +771,7 @@ function accountMatchMarkup(providerId,query){
 }
 function openAccount(a,defaultProviderId){
  const interestAsOf=localToday();
- if(!model.providers.length){openProvider();notify('Bitte zuerst einen Anbieter anlegen.');return;}
+ if(!model.providers.length){openProvider(null,provider=>openAccount(a,provider.id));notify('Zuerst einen Anbieter anlegen. Danach öffnet sich die Kontoanlage.');return;}
  const providerId=a?.providerId||defaultProviderId||model.accounts.find(x=>x.id===model.settings?.lastAccountId)?.providerId||(model.providers.length===1?model.providers[0].id:'');
  const provider=model.providers.find(p=>p.id===providerId),suggestion=suggestedAccountForProvider(provider?.type||'other');
  showDialog(a?'Konto bearbeiten':'Konto hinzufügen','KONTEN UND DEPOTS',
