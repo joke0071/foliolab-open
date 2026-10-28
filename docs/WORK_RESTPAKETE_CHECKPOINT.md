@@ -1,3 +1,11 @@
+# Alleinige Wiederaufnahme und kontrollierter PR180-Merge · 28.10.2026
+
+Nutzer bestätigt ausdrücklich: bisheriger Work-Lauf beendet/gestoppt; dieser Agent ist alleiniger Entwicklungsagent. Bestehende Sequenz bleibt verbindlich, keine parallele Funktionsentwicklung. PR180 HEAD `01ab8fedeab82c7d2fb864dce3f57c6c18efc4b4` und unverändertes main `ef783a99da2641b42f716cc08d28f2d50baee0c4` erneut geprüft; mergeable/clean. Finale Pflicht-CI40640857694 und Wallet40640857708 SUCCESS. Kontrollierter Merge mit erwarteter HEAD-SHA: `5b9bb792125343b602157bb949ec8b0efcb28fd0`.
+
+Main-/Pages-/Live-Lauf [40642187590](https://github.com/joke0071/foliolab-open/actions/runs/40642187590) RUNNING, noch kein v191-Liveabschluss. Nach vollständigem Erfolg vorbereitete gezielte tatsächliche Buchungs-Produktionsprüfung auf finalen Release-SHA aktualisieren; App-/Testbytes und alle Assertions erhalten, drei Engines/Restore/CAS/Offline und visuelle Abnahme. Erst danach nächster regulärer UI-Schritt mit schlankem Listenkopf; FLH05-A/PERF01 nicht vorziehen.
+
+---
+
 # v191-Releaseabschluss: kalenderfeste Testdaten / PR180 · 28.10.2026
 
 PR179 freigegeben und gemergt als `ef783a99da2641b42f716cc08d28f2d50baee0c4`. **Main40640250948 FAILED, Deployment und Live übersprungen:** Bestehender Chromium-Bewertungsdrilldown verwendete 21.10.2026 als festen „aktuellen“ Kurs; am28.10 ist dieser korrekt älter als7Tage. Deshalb3statt2Problempositionen. Beide vollständigen Cross-Engine-Shards SUCCESS,766Units/Syntax PASS; Fehlnachweis erhalten, kein Job abgebrochen/neugestartet.
