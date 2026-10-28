@@ -1,3 +1,95 @@
+# Buchungs-UI: sicherer Implementierungscheckpoint · 27.10.2026
+
+Basis: main `7b7fae74d864914c9c4f4dab6a2300c8ee0e0ef5`, produktiv v190 LIVE_ACCEPTED. Einziger funktionaler Strang: `feature/booking-management-ui`. SW191 ist unveröffentlichter Kandidat. FLH05-A und PERF01 bleiben gemäß zentraler Vorgängersequenz zurückgestellt; PR157/161 unverändert.
+
+## Implementierter begrenzter Umfang
+
+- Direkte Bearbeiten-/Löschen-/Archivicons je Buchungszeile mit vorhandenen Positionskomponenten, 44px-Zielen; gemeinsame Auswahlengine und kompakte Zweispaltenleiste.
+- Kontextdialog nutzt ausschließlich vorhandene geprüfte manuelle Notiz- und EUR-Cash-Korrekturen. Kein scheinbarer Speichervorgang bei unveränderten Feldern.
+- Archivieren/Wiederherstellen sämtlicher stabil identifizierter Buchungszeilen ist reine Sichtbarkeit. Alle Buchungen, Journalpostings, Originalquellen, Cashflows, Bestände und historischen Berechnungen bleiben unverändert. Keine Ausschlussfunktion.
+- Einzel- und Sammelarchivierung brauchen Vorschau, ausdrückliche Bestätigung, exakte Vorzustandsprüfung und bestehenden atomaren CAS-Speicher; gemeinsames begrenztes Undo.
+- Import-/Trade-/Transfer-/Wallet-/technische Finanzmutationen bleiben anhand bestehender Regeln gesperrt; keine stillen Teilerfolge.
+
+## Datenvertrag und eigene Releaseentscheidung
+
+Optionales `bookingPresentation: {version:1, archivedIds:string[]}` verwendet bestehende stabile Buchungs-/Journalzeilenidentitäten. Strikte Schlüssel-, Größen-, Versions-, Eindeutigkeits- und Referenzprüfung. Finanzielle Projektionen werden nicht gefiltert. Reimporte behalten Quellidentität und Archivstatus.
+
+Erst die ausdrücklich bestätigte erste Archivierung setzt das portable Modell auf Version4. Kein Startupgrade, keine IndexedDB-Schema-/Store-/Modusänderung. Formate1/2/3 ohne Archiv bleiben unverändert. Bestehende v190-Leser lehnen Version4 am vorhandenen Versionsgate ab, bevor sie neue Sichtbarkeitsmetadaten verlieren können. Aktuelle Leser, vollständige und verschlüsselte Backups erhalten diese. Explizite Wiederherstellung der letzten archivierten Zeile entfernt nur diese Metadaten und erlaubt wieder Version3.
+
+**Merge/Deployment gesperrt bis konkrete Nutzerfreigabe für diesen neuen Speicher-/Backup-Vertrag vorliegt**, gemäß Masterregel für neue migrations-, backup- und sicherheitskritische Änderungen. Die frühere v188-Freigabe deckt diesen Vertrag nicht ab.
+
+## Nachweise und verbleibende Gates
+
+Lokal: 766/766 Unit-Tests, null Fehler/Skip; npm check PASS. Neun neue Fachtests prüfen exakte finanzielle Unverändertheit einschließlich Historien, technische Zeilen, Reimport, Undo, Sicherungen, alte Versionsgrenze und bestehenden Anlageassistenten.
+
+Neu vorbereitetes Browsergate wird aus dem bestehenden verpflichtenden Buchungsmanagement-Gate in Chromium/Firefox/WebKit aufgerufen, ohne Workflowänderung oder entfernte Prüfungen. Synthetisch249 Buchungen einschließlich Import/technischer Korrektur: fünf Breiten320/390/430/768/1440, Axe,44px, Auswahlzyklus100→249→0, blockierte gemischte Löschungen, Quota/post-put-Abbruch, Offline, verschlüsselter Restore auf frischem Kontext, Reimport, Undo und Mehrtab-Stale-Vorschau. **Browser-/CI-/visuelle Abnahme noch PENDING; keine lokale Browserabnahme behauptet.**
+
+Offen außerhalb dieses begrenzten Inkrements: lokale Import-/API-Interpretationskorrekturen, breitere wirtschaftliche Bearbeitungsfelder, kompatible Sammelbearbeitung und separat benannte Ausschlussfunktion. Erst pro Fall belegte Wirkungen, Originalschutz, Referenzen und Rücknahmevertrag implementieren; keine pauschale Behauptung vollständiger #149/#165-Abnahme.
+
+## Begrenzte UI-Referenzen, kein FLH05-Recherchestart
+
+Actual: [Transfer-Gegenstücke](https://actualbudget.org/docs/transactions/transfers/), [Splitgruppen](https://actualbudget.org/docs/transactions/split-transactions/). rotki: [lokale Ereignisanpassungen](https://docs.rotki.com/usage-guides/history/events). Portfolio Performance: [Buchungsübersicht](https://help.portfolio-performance.info/en/reference/view/accounts/all-transactions/), [direkte Bearbeitung](https://help.portfolio-performance.info/en/how-to/shortcuts/). Nur Bedien-/Schutzprinzipien verglichen; kein Fremdcode übernommen, keine allgemeine Archivfunktion dieser Projekte behauptet.
+
+---
+
+# Verbindlicher UI-/UX-Nachtrag zu #149 und #165 · 27.10.2026
+
+Status: **PARTIAL: begrenzter Implementierungskandidat, noch nicht veröffentlicht.** Dieser konsolidierte Nachtrag ersetzt die zuvor gewünschten drei direkten Einzelbuttons „Notiz / Betrag-Datum / Rücknahme“ und die ältere Einschränkung „keine Buchungsarchivierung“. Bestehende fachliche Sperren und der freigegebene v188-Umfang bleiben bis zu einer geprüften Erweiterung verbindlich. Kein neuer Finanzkern, kein Redesign, keine parallele Implementierung. Laufender sicherer Ledger-Schritt #159/PR178 und dessen CI werden nicht unterbrochen; Umsetzung erst beim nächsten zulässigen UI-Schritt der zentralen Roadmap.
+
+## Gemeinsame Oberfläche und direkte Aktionen
+
+Positionen und Buchungen verwenden bestehende Komponenten, Styles und Auswahlengine. Gleiche Buttonmaße, Abstände, Farben und Anordnung; mobil dieselbe kompakte Zweispaltenstruktur der Auswahl-/Aktionsleiste. Buchungszeilen zeigen Datum, Typ, Anlage, Menge/Betrag und Herkunft kompakt, technische Nachweise bleiben ausklappbar.
+
+Rechts oben in jeder Buchungszeile sind direkt ohne Auswahlmodus erreichbar: Stift = **Bearbeiten**, Papierkorb = **Löschen**, Archiv = **Archivieren/Wiederherstellen**. Nicht zulässige Aktionen deaktivieren mit verständlichem Grund oder ausblenden. Einzelaktionen und Sammelaktionen klar unterscheiden. Die alten separaten Hauptaktionen gehen in verständliche kontextabhängige Dialoge über; bestehende sichere Korrekturmechanismen werden intern weiterverwendet.
+
+## Einheitlicher Bearbeitungsdialog und Herkunftsmatrix
+
+Vor Implementierung tatsächliche Buchungs-/Positions-/Import-/Backup-/Reconciliation-Schnittstellen prüfen. Gewünschte Felder sind Datum/Uhrzeit, Buchungstyp, Anlage, Anbieter/Konto, Menge/Betrag/Preis/Währung, Gebühren/Steuern, Notiz/Kategorie und Zuordnungen zu Transfers oder Buchungen. Das ist eine **Zulässigkeitsmatrix**, keine pauschale Freigabe aller Felder. Nicht vorhandene Uhrzeit-, Kategorie- oder Belegsemantik nicht erfinden. Nicht zulässige Felder mit konkretem Grund kennzeichnen; kein scheinbar erfolgreiches Speichern ohne Änderung.
+
+| Herkunft | Erforderlicher Vertrag |
+| --- | --- |
+| Manuell | Zulässige Felder nach vollständiger Integritäts- und Abhängigkeitsprüfung bearbeiten; vorhandenen #165-Vertrag verwenden |
+| CSV/Broker | Originalbeleg und Quellidentität erhalten; Korrektur nachvollziehbar separat belegen; Wiederholungsimport darf sie nicht überschreiben |
+| Blockchain/API | Unveränderte Quelldaten; nur belegte lokale Interpretation/Zuordnung korrigieren, keine externe Originaltransaktion umschreiben |
+| Technische Bestandskorrektur | Herkunft und Abgleichsgrund anzeigen, Auswirkungen vor Änderung prüfen; niemals automatisch ignorieren oder entfernen |
+| Nicht rekonstruierbare Kosten-/Transfer-/Historienabhängigkeit | Änderung blockieren; keine neuen Gegenbuchungen, Tax-Lots oder historischen Werte erfinden |
+
+Die produktiven v188-Fälle werden nicht erneut entwickelt. Breitere wirtschaftliche Kategorien bleiben solange gesperrt, bis ihr eigener belegter inverser Fachvertrag, Tests und gegebenenfalls kritische Releasefreigabe vorliegen. Orientierung an Actual Budget, rotki und Portfolio Performance vor Übernahme auf tatsächliche Eignung prüfen; keine ungeprüfte Code- oder Architekturkoppelung.
+
+## Löschen und gesicherte Wiederherstellung
+
+Einzel- und Mehrfachlöschung nur für sicher ausführbare Fälle. Vorher sämtliche Abhängigkeiten, Transfergegenstücke und zusammengehörige Gruppen identifizieren; Folgen für Bestände, Einstandswerte, Rendite, Historien und Kontosalden prüfen. Finanzielle Auswirkungen konkret mit betroffenen Positionen zeigen, ausdrücklich bestätigen lassen, atomar übernehmen oder vollständig zurückrollen und sichere Wiederherstellung/Rücknahme ermöglichen.
+
+Kein einzelnes technisches Journalposting löschen, keine unkontrollierten Cascades, keine Teilgruppe, keine stillen Bestandskorrekturen oder erfundenen Gegenbuchungen. Originalimporte und API-/Blockchain-Belege bleiben erhalten. Gelöschte oder ausdrücklich ausgeschlossene Ereignisse dürfen beim Reimport nicht unbemerkt reaktiviert werden. Dafür vor Code einen kompatiblen Source-/Ausschluss-/Wiederherstellungsvertrag prüfen; keine stillschweigende Storage-Migration und keine unnötig neue Identitätsengine.
+
+## Archivieren ist keine Berechnungsausnahme
+
+- **Archivieren:** reversible Sichtbarkeit, standardmäßig ausgeblendet, über Archivfilter erreichbar; keinerlei Einfluss auf Finanzberechnungen oder historische Ergebnisse.
+- **Ignorieren / von Berechnungen ausschließen:** getrennte, ausdrücklich benannte Fachfunktion, nur geeignete Buchungsarten; konkrete Auswirkungsvorschau, Begründung und nachvollziehbarer Ausschlussstatus. Niemals als Archivieren darstellen.
+- Technische Bestandskorrekturen werden durch keine der beiden Funktionen automatisch entfernt oder fachlich ignoriert.
+
+Archivstatus muss von tatsächlichen vorhandenen Buchungstypen, sicheren Export-/Restore-Verträgen und stabilen Quellenidentitäten getragen werden. Keine UI-Markierung vortäuschen, die nach Speichern oder Restore verloren geht.
+
+## Mehrfachauswahl und gemischte Fälle
+
+Vorhandenen Zyklus weiterverwenden: aktuelle Seite → sämtliche gefilterten Einträge (ungefiltert alle) → Auswahl leer, redundante vollständig erfasste Stufen überspringen. Einzelcheckboxen, Anzahl, Filterbezug und Reichweite eindeutig; Abbrechen beendet Auswahlmodus. Filter/Sortierung/Pagination erweitern Auswahl nicht still. Keine versehentliche Auswahl aller Einträge, wenn nur die Seite gemeint ist.
+
+„Alle archivieren“ und „Alle löschen“ betreffen ausschließlich ausgewählte zulässige Einträge. Sammelbearbeitung nur fachlich kompatibler Buchungen/Felder. Gemischte Auswahlen zeigen erlaubte und blockierte Fälle; keine stillschweigenden Teilerfolge. Archivfilter, Rückkehr aus Dialogen und Seitenwechsel korrekt berücksichtigen.
+
+## Verbindliche Abnahme und Releasegrenzen
+
+Synthetisch prüfen: manuell bearbeiten/löschen/archivieren; Importkorrektur mit unverändertem Original; technische Bestandskorrektur mit Sperren; Kauf/Verkauf mit Kostenabhängigkeit; Transfergruppe mit zwei Seiten; Filter/Pagination/Einzelauswahl/gemischte Auswahl; Archivieren/Wiederherstellen mit identischen Mengen, Cashflows, Bewertungen und Historien; Löschen → Reimport ohne stille Wiederaktivierung; Backup/Restore mit Status/Quelle/Audit; Fehler und vollständiger Rollback; CAS/Mehrtab/stale Vorschau; bestehendes Undo.
+
+Mobile 320/390/430 und Desktop, mindestens 44×44 CSS-Pixel, kein horizontaler Overflow/Überlappung, Tastatur/Fokus/Axe/Touch. Alle drei direkten Zeilenaktionen ohne vorherige Mehrfachauswahl erreichbar. Blockierte fachliche Kategorien als blockiert prüfen, keine Scheinfunktion oder abgeschwächten Assertions.
+
+Kleine sequenzielle Inkremente im bestehenden Hauptstrang. Neue finanz-, migrations-, backup- oder sicherheitskritische Mutationen erst als vollständig geprüfter reviewbarer Kandidat und anschließend nur nach konkreter Nutzer-Releasefreigabe veröffentlichen. Tatsächliche PRs/SHAs/Tests/Deployment/offene Gates im zentralen Checkpoint dokumentieren. Keine Änderung der Gesamtsequenz und kein vorzeitiger FLH05-A-Start; dessen Spezifikation und zwölf Testvektoren bleiben erhalten.
+
+Dokumentiert in #149 Kommentar6452285529 und #165 Kommentar6452285941; diese neuere Fassung hat Vorrang vor Kommentaren6452174228/6452174628.
+
+---
+
+## Historischer Implementierungscheckpoint (freigegebenen Umfang erhalten)
+
 # #165: Korrektur, Rücknahme, Vorschau, CAS und Undo — Kandidat
 
 Basis main/v187 ab5c4aa9edcb44597975daf9684d5701f46a1cf1. Bestehender PR173 / Branch feature/booking-management-foundation wird weiterverwendet, nicht separat read-only gemergt. Vollständige frühere CI40511209825 ist Grundlage, keine Abnahme der neuen Mutationen. SW188 ist unveröffentlichter Kandidat. Kein Merge oder Deployment ohne konkrete Nutzerfreigabe.

@@ -11,6 +11,7 @@ import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
 import {enhanceKnownReferenceListing} from './reference-listings.js';
 import {normalizeLegacyCoinId} from './coin-identity.js';
+import {validateBookingArchive} from './booking-history.js';
 import {validateNativeStakingAddress} from './native-staking-networks.js';
 export const STORE_KEY='foliolab-open-v1';
 /** Remove only app-owned keys; other apps sharing this origin remain untouched. */
@@ -157,6 +158,11 @@ const exactMatchesDisplay=(display,precise)=>{
 const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.id||ids.has(x.id))throw Error('Doppelte oder leere ID bei '+label+'.');ids.add(x.id);}};
 /** Importiert v1/v2-Backups ohne erfundene Transaktionen als dokumentierte v3-Eröffnungsbestände. */
 export function safeImport(raw){
+  // Archive-capable portfolios opt into v4 only on explicit archive commit.
+  // v190 and older reject this marker before ignoring unknown display metadata.
+  const archiveFormat=raw?.version===4;
+  if(archiveFormat){if(raw.bookingPresentation===undefined)throw Error('Archivformat benötigt vollständige Archivmetadaten.');raw={...raw,version:3};}
+  else if(raw?.bookingPresentation!==undefined)throw Error('Buchungsarchiv benötigt die neue Datenversion.');
   if(!raw||![1,2,3].includes(raw.version)||!Array.isArray(raw.providers)||!Array.isArray(raw.positions)||!Array.isArray(raw.snapshots))throw Error('Datei ist kein unterstütztes FolioLab-Backup.');
   if(raw.version>=2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
   if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
@@ -254,9 +260,11 @@ export function safeImport(raw){
    const audit=ledgerQuantityAudit(m);
    if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');
   }
+  if(raw.bookingPresentation!==undefined)m.bookingPresentation=validateBookingArchive(raw.bookingPresentation,m);
+  if(archiveFormat)m.version=4;
   return m;
 }
-export function backup(model,{includeHistory=false}={}){const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){if((model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Archivmetadaten und Datenversion widersprechen sich.');const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -278,7 +286,8 @@ export function persist(model,storage=globalThis.localStorage){
  // once another tab has activated transactional IndexedDB.
  if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
   throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
- if(model.version!==3)throw Error('Unbekannte Datenversion. Speichern abgebrochen.');
+ if(![3,4].includes(model.version)||(model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Unbekannte Datenversion. Speichern abgebrochen.');
+ if(model.version===4)validateBookingArchive(model.bookingPresentation,model);
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
