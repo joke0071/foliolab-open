@@ -1,3 +1,13 @@
+# Orderbeziehungs-Vertrag vor Code gesichert · reine Grundlage lokal geprüft · 28.10.2026
+
+Vorabvertrag e5f2a20ae01e6b0a25edcccdc8bf026f1fb3aca7 auf neuem alleinigen Funktionsbranch feature/flh03-flatex-order-links (main8850874/v201 als Basis). Alte PR191/Branches abgeschlossen, keine laufende CI oder konkurrierende PR. Alternative Prozessinventur über /proc erfolgreich, kein fremder Writer erkennbar; ps-Laufzeitfehler umgangen, kein fremder Prozess unterbrochen. Aktuelle Drive-Metadaten der privaten Referenzen entsprechen früherem Stand, vorhandene private lokale Kopien nur lesend wiederverwendet.
+
+Vertrag DONE; reine Zuordnungsgrundlage IN_PROGRESS: inspectNativeFlatexOrderLinks im vorhandenen flatex-settlements.js, Legacy-API unverändert und qualifizierter 1:1-Weg darüber wiederverwendet. Getrennte Bank-/Order-/Quellkontextreferenzen, alle Lokatoren/Beine erhalten; Konflikte/Überschneidungen/Storno/Scope-/Quell-/Währungs-/Datumsprobleme blockieren mögliche Teilzuordnung. Mehrere Cash-/Depotausführungen bleiben Review, ohne Summen/Verteilung/Dedupe/Gebühren- oder Steuerableitung. Keine app.js-/Dialog-/Finanz-/Storage-/Backupänderung, SW202 unveröffentlicht.
+
+Unabhängiger privater Python-csv/Decimal-Sollabgleich stimmt mit sämtlichen neuen 1:1-Quellbeziehungen überein; alle Quellzeilen erhalten, keine privaten Sollwerte/Zeilen/Referenzen/Hashes veröffentlicht. Kein Bestands-/Cashflow-/Historien-/Performancebeweis. 28 gezielte neue/Legacy-Abgleichtests und erste volle870Units grün; zusätzlicher Referenz-/Kontrollzeichen-Gate danach ebenfalls grün, finale871-Unit-/Node20prüfung und Browserabnahme werden konsistent abgeschlossen. Nächster Schritt sicheren Kandidatencommit/PR mit vollen unveränderten Drei-Engine-/Offline-/Nullmutationsgates sichern und prüfen. Zwei Etappen Vertrag + Helfer, UI/Release danach separat. UI-MASTER28/DELETE-MASTER28 erhalten/offen; Produktion unverändert v201, Master PARTIAL.
+
+---
+
 # Flatex-Order-/Mehrfachgegenbeinvertrag wiederaufgenommen · 28.10.2026
 
 Frischer Kollisionscheck: main88508742db6bed9be57d6e907b2bfe56d61b1631/v201 LIVE_ACCEPTED unverändert, Main40749554400 und jüngste PR-/Walletläufe vollständig SUCCESS, nur geparkte157/161 offen. Zentraler Checkpoint79d72f3 bestätigt; Flatex-Branches inventarisiert, PR191 vollständig gemergt/abgenommen. Lokaler Quellbaum entspricht geprüftem v201, nur synthetische Testartefakte untracked. Prozessinventar über ps liefert diesmal einen Laufzeitfehler; alternative reine Prozessprüfung vor Funktionsschreiben ergänzen, keine fremden Prozesse unterbrechen.
