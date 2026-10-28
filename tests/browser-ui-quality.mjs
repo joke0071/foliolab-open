@@ -4,6 +4,8 @@ import './browser-reference-management.mjs';
 import './browser-kraken-ledger.mjs';
 import './browser-bitpanda-evidence.mjs';
 import './browser-bitpanda-preview.mjs';
+import './browser-flatex-native.mjs';
+import './browser-flatex-native-ui.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
