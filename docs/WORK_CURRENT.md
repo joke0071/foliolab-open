@@ -12,7 +12,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Geprüfter PR-Merge: `29d298f2c9f4123aeeb0da9c4905090226bc2b4f`.
 - Identischer Kandidaten-/Mergebaum: `2572b4aa3bab516f4a4b92c489684a4ad69609bb`.
 - Arbeitspaket: historische Referenzverwaltung / UI-Nachtrag.
-- Aktuelle Etappe **REF186-RELEASE: BLOCKED** – ausdrückliche Backupfreigabe fehlt.
+- Aktuelle Etappe **REF186-RELEASE: IN_PROGRESS** – ausdrückliche Backupfreigabe am 28.10.2026 erteilt.
 - Gesamtmaster: **PARTIAL**; SW197 ist unveröffentlicht.
 
 ## Zuletzt abgeschlossene Etappen
@@ -37,12 +37,14 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 
 ## Externe Freigabegrenze / nächster Schritt
 
-**Exakt nächste Aktion:** konkrete Nutzerentscheidung für PR186 einholen und dokumentieren.
+**Exakt nächste Aktion:** unveränderten PR186 nach finalem Kollisionscheck kontrolliert mergen;
+anschließend Main-/Pages-/echte Drei-Engine-Liveabnahme vollständig abschließen.
 Neue Referenzarchive verwenden portable Modell4-Metadatenversion2. Leser bis v196
 lehnen solche Sicherungen ab; bisherige Sicherungen bleiben im neuen Leser lesbar.
 Wiederherstellung aller Referenzen führt zu Metadaten1 (falls Buchungsarchive bestehen)
 oder Modell3 zurück. Archivierung verändert keine Finanzgrundlagen.
-Keine Zustimmung durch diesen Masterauftrag ableiten. Vor Zustimmung weder Merge noch Deployment.
+Konkrete Nutzerantwort „freigabe“ am 28.10.2026 nach Erläuterung dieser Grenze;
+Freigabe gilt für den geprüften PR186-Kandidaten, kein pauschaler späterer Freibrief.
 
 Danach: REF186-RELEASE vollständig abschließen, beide Statusdateien aktualisieren;
 erst dann nächstes tatsächlich offenes Vorgängerpaket gemäß bestehender Mastersequenz prüfen.
@@ -66,4 +68,4 @@ PR157/161 bleiben geparkt; keine neuen parallelen Funktionsstränge.
 - Sitzung nach zwei Etappen am sicheren gesicherten Stopppunkt beenden; laufende
   Sicherheits-/Releaseabschlüsse regulär fertigführen. Keine Historie löschen.
 - Neue Sitzung beginnt hier; nur relevante Detailabschnitte nachladen.
-- Übergabe dieser Sitzung: REF186-QA und WORK-ORG01 DONE; REF186-RELEASE BLOCKED.
+- Übergabe dieser Sitzung: REF186-QA und WORK-ORG01 DONE; REF186-RELEASE IN_PROGRESS nach ausdrücklicher Freigabe.

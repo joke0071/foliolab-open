@@ -1,3 +1,9 @@
+# PR186 ausdrücklich freigegeben · Releaseabschluss läuft · 28.10.2026
+
+Nutzerantwort **„freigabe“** erteilt die zuvor konkret erbetene Freigabe des erweiterten portablen Backupvertrags für PR186/HEAD `c7d307c0eea079071adbce2add80780710ca1c8e`. Erläutert und freigegeben: neu archivierte Referenzbackups benötigen Metadatenversion2 und werden von Lesern bis v196 abgelehnt; alte Backups bleiben im neuen Leser lesbar, Finanzgrundlagen/Originale beim Archiv erhalten. **REF186-RELEASE IN_PROGRESS**; kein allgemeiner Freibrief für spätere kritische Änderungen. main/PR/Checkpoint/offenePRs/Actions und lokale Writer erneut unverändert/kollisionsfrei geprüft. Geprüfter Kandidat-/Mergebaum unverändert `2572b4aa3bab516f4a4b92c489684a4ad69609bb`; Pflichtgates belegt grün, keine Wiederholung nötig. Nächster Schritt: kontrollierter Merge mit erwarteter HEAD-SHA, dann vollständige Main-/Pages-/tatsächliche Drei-Engine-Liveabnahme/Bilder. v196 bleibt bis dahin letzte LIVE_ACCEPTED-Version. Keine neue Entwicklungsetappe während des notwendigen Releaseabschlusses; historische Freigabe-Blockereinträge darunter sind überholt.
+
+---
+
 # PR186 geprüft · konkrete Freigabe ausstehend · kompakte Übergabe · 28.10.2026
 
 **Einstieg ab jetzt:** [WORK_CURRENT.md](WORK_CURRENT.md). Dieses Detaildokument bleibt verbindlich; alle bisherigen Nachweise darunter unverändert erhalten. Bestehende Roadmap/Prioritäten bleiben erhalten. Dokumentationsbranch `feature/flh05-import-foundation`, einziger Funktionsbranch `feature/reference-management`.
