@@ -1,0 +1,133 @@
+{
+  "stage": "FLH03-04-BP02",
+  "status": "DONE within pure-parser/PR candidate scope",
+  "pr": 190,
+  "branch": "feature/flh03-bitpanda-preview",
+  "head": "e83d3bddc2132ea5a5632902f5971e97679b0818",
+  "tested_merge": "6de821d0cfd9513a756370d883ef35b38a5ea1a4",
+  "tree": "25cd84474adad7f592e65611daf3d12b509df22c",
+  "contract_commit": "e22a803ae03057744701587f421e11f724852dca",
+  "runs": [
+    40720747693,
+    40720747688
+  ],
+  "all_required_pr_jobs": "success",
+  "units": {
+    "pass": 842,
+    "fail": 0,
+    "skip": 0
+  },
+  "targeted_tests": 21,
+  "generic_csv_baseline_comparison": {
+    "synthetic_cases": 1529,
+    "result": "PASS",
+    "scope": "same parsed outputs and acceptance/rejection against preceding parser; temporary local check, no implementation-copy tests committed"
+  },
+  "reports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic pure Bitpanda parser only; no dialog or financial integration",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "native preamble/18-17 schema",
+            "exact 18-digit amounts and declared fee asset",
+            "absent tax stays unknown",
+            "all duplicate/conflicting/unknown rows retained",
+            "hostile strings are data/preamble not exposed",
+            "negative schemas/generic strictness",
+            "deep immutability/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB record/revision/settings zero mutation",
+            "no external parser requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic pure Bitpanda parser only; no dialog or financial integration",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "native preamble/18-17 schema",
+            "exact 18-digit amounts and declared fee asset",
+            "absent tax stays unknown",
+            "all duplicate/conflicting/unknown rows retained",
+            "hostile strings are data/preamble not exposed",
+            "negative schemas/generic strictness",
+            "deep immutability/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB record/revision/settings zero mutation",
+            "no external parser requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "native preamble/18-17 schema",
+            "exact 18-digit amounts and declared fee asset",
+            "absent tax stays unknown",
+            "all duplicate/conflicting/unknown rows retained",
+            "hostile strings are data/preamble not exposed",
+            "negative schemas/generic strictness",
+            "deep immutability/no write API",
+            "actual SW offline reload/module import",
+            "exact IDB record/revision/settings zero mutation",
+            "no external parser requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 12831545990,
+      "sha256": "046bbb0112e363eee293fc5f3a50b47511278350cccdac8ac97938948caf68a7",
+      "verified_before_extraction": true
+    },
+    {
+      "id": 12832120017,
+      "sha256": "7b11592eea18d98a9570235ea262db24ac3c6c5e715e134e28834596b3ff83fc",
+      "verified_before_extraction": true
+    }
+  ],
+  "download_integrity_note": {
+    "first_main_local_copy_rejected": true,
+    "rejected_size": 11862016,
+    "expected_size": 13637717,
+    "rejected_sha256": "de0637f0a9d83e1002eddb0aa326bedf8d60c5f067f6cd13582e9a9177da8e74",
+    "not_extracted_or_used": true,
+    "one_fresh_download_verified": true,
+    "no_ci_rerun": true
+  },
+  "review": {
+    "result": "PASS",
+    "changed_files": 10,
+    "local_and_remote_and_tested_merge_trees_equal": true,
+    "no_product_change_after_ci": true,
+    "existing_generic_strictness_preserved": true,
+    "workflow_pins_gates_unchanged": true
+  },
+  "boundaries": {
+    "ui_integration": false,
+    "financial_import": false,
+    "merged": false,
+    "deployed": false,
+    "cache": "v200 unshipped",
+    "production": "v199 LIVE_ACCEPTED",
+    "master": "PARTIAL",
+    "private_originals_published": false
+  },
+  "next": "FLH03-04-BP03: continue existing PR190/branch with native read-only dialog/quarantine and full guards, then controlled BP04 release in a later stage"
+}
