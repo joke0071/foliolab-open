@@ -1,6 +1,8 @@
 import {referencePermissions,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,prepareReferenceRemoval,REFERENCE_DELETE_REASON} from './reference-management.js';
 import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './ledger-live.js';
 import {ledgerLiveMarkup} from './ledger-live-ui.js';
+import {looksLikeKrakenLedgerCSV,parseKrakenLedgerCSV} from './kraken-ledger.js';
+import {krakenLedgerMarkup} from './kraken-ledger-ui.js';
 import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
@@ -1249,6 +1251,7 @@ function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
 
  let ledgerDocument=null,ledgerAssignments={},ledgerLimit=50,ledgerMode=false;
+ let krakenDocument=null,krakenLimit=50,krakenMode=false;
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1268,13 +1271,14 @@ function openCSVImport(){
   return checked.preview;
  };
  showDialog('CSV importieren','BUCHUNGEN',
-  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex- oder Ledger-Live-Exporte. Ledger Live bleibt zunächst eine lokale Prüfvorschau. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
-  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option><option value="ledger">Ledger Live – Vorschau</option></select></label>'+
+  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live- oder Kraken-Ledger-Exporte. Ledger Live und Kraken bleiben lokale Prüfvorschauen. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option></select></label>'+
    '<label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label>'+
    '<div id="csvBrokerStatus" role="status"></div>'+
    '<button type="button" id="csvDownloadAudit" class="btn outline hidden">Flatex-Prüfbericht als CSV</button>'+
   '<div id="csvMapping"></div><p id="csvReviewStatus" class="visually-hidden" role="status" aria-live="polite">Nach der Dateiauswahl werden die Buchungen geprüft.</p><div id="csvReview"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
+   if(krakenMode)throw Error('Kraken Ledger bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
    if(ledgerMode)throw Error('Ledger Live bleibt eine lokale Vorschau. Ohne belegte Ereignis-, Gebühren- und Eigentumszuordnung ist keine Übernahme zulässig.');
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
     if(brokerImport){
@@ -1405,10 +1409,19 @@ function openCSVImport(){
   $('ledgerShowMore')?.addEventListener('click',()=>{ledgerLimit+=50;renderLedger();$('csvReview').querySelectorAll('details')[Math.max(0,ledgerLimit-50)]?.querySelector('summary')?.focus();});
   if(focusScope)$('csvMapping').querySelector('[data-ledger-scope="'+focusScope+'"]')?.focus({preventScroll:true});
  };
+ const renderKraken=()=>{
+  importEditor.submitBlocked=true;
+  $('csvBrokerStatus').textContent='Kraken-Ledger-Export erkannt. Übernahme bleibt gesperrt.';
+  $('csvMapping').innerHTML='';$('csvReview').innerHTML=krakenLedgerMarkup(krakenDocument,{limit:krakenLimit});
+  $('csvReviewStatus').textContent='Kraken Ledger: '+krakenDocument.rows.length+' Zeilen, nur lokale Vorschau.';
+  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
+  $('krakenShowMore')?.addEventListener('click',()=>{const previous=krakenLimit;krakenLimit+=50;renderKraken();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
+ };
  async function chooseCSV(){
   const generation=++selectionGeneration;
   const files=[...($('csvFile').files||[])];
   ledgerDocument=null;ledgerAssignments={};ledgerLimit=50;ledgerMode=false;importEditor.submitBlocked=false;
+  krakenDocument=null;krakenLimit=50;krakenMode=false;
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
@@ -1420,6 +1433,13 @@ function openCSVImport(){
    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
    const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name}),source=$('csvSource').value;
    const ledger=inputs.some(f=>looksLikeLedgerLiveCSV(parseCSV(f.text)));
+   const kraken=inputs.some(f=>looksLikeKrakenLedgerCSV(parseCSV(f.text)));
+   if(source==='kraken'||kraken){
+    krakenMode=true;importEditor.submitBlocked=true;
+    if(!['auto','kraken'].includes(source))throw Error('Kraken-Ledgers bitte über die native Kraken-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
+    if(inputs.length!==1)throw Error('Kraken Ledger bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
+    krakenDocument=parseKrakenLedgerCSV(inputs[0].text);renderKraken();return;
+   }
    if(source==='ledger'||ledger){
     if(!['auto','ledger'].includes(source))throw Error('Ledger-Live-Exporte bitte über die native Ledger-Vorschau prüfen, nicht als allgemeine oder Flatex-Buchungen.');
     if(inputs.length!==1)throw Error('Ledger Live bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
