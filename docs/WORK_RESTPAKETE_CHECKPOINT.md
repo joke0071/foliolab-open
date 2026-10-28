@@ -1,3 +1,13 @@
+# FX-UI01 DONE · FX-UI02 kontrollierter Release vorbereitet · 28.10.2026
+
+PR191/HEAD6d66d3d57421e8b0d96862afc15992f124b06b68, getesteter Merge567c09228db375dd7ba0ab384f3cf7c8ae685911, Baumc48b6e1edae946a53ad38b565418c7bda6d93fdf exakt lokal/remote/PR-Merge. Pflicht40748383976 undWallet40748384443 vollständig SUCCESS:855/855Units/0Fail/0Skip, Syntax/Chromium/beideFirefox-WebKit-Pflichtshards. Neue Dialogberichte in allen3Engines tatsächlich gelesen: zwei Eingänge/einzeln/gemeinsam/Teil-Dateien, harte Grenzen/Kategorien/Misch-/Fremd-/Schemaguards, Werte/Referenzen/Escaping, zehnLayoutzustände/fünfBreiten/Axe/44px, Paging/Fokus/Submit/Abbruch/Neuöffnen, verspäteteDateilesungen, echteOfflineprüfung und exakteIDB-/Revisions-/Settings-Nullmutation PASS. 12-Dateien-Gesamtquellreview ohneBlocker, nachgrünerCI keineProduktänderung. CI-Bilder ChromiumEingänge390/FirefoxEingänge320/WebKitDetail1440 angesehen, keinBlocker.
+
+MainZIP12842843381 Digest1333ed48198878cb556129d9b717898eb5dacf893f2c4a11075cdc11eafa8e07 undCross2ZIP12843586267 Digestb8898cf7b4b977200d787b6b5a3f640967f988e1d4de73984b4769f98242653d vorExtraktion bestätigt; testedSHAexakt. [Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-ui-candidate.json).
+
+**FX-UI01 DONE im begrenzten reinlesenden Vorschauumfang. FX-UI02 IN_PROGRESS:** positive begrenzte Releaseentscheidung gemäß Masterfortsetzung, keine zusätzliche kritische Freigabe für reine Vorschau (keine Finanz-/Storage-/Backupmutation). VorMerge frischer Main/PR/Actions/Checkpoint-/Reviewcheck und erwarteteHEAD; dann volle Main-/Pages-/tatsächliche Drei-Engine-Produktionsgates/Hashes/Restore/Offline/Bilder. v200 bleibt bis dahin letzter LIVE_ACCEPTED, SW201 unveröffentlicht. Order-/Mehrfachgegenbeinvertrag und wirtschaftlicher Import bleiben offen, ebenso UI-MASTER28/DELETE-MASTER28; keine privaten Produktivdatenänderungen. ZweiEtappen UI01/UI02, danach sicherer Übergabestand. MasterPARTIAL.
+
+---
+
 # FX-UI01-Kandidat gesichert · finale UI-CI läuft · 28.10.2026
 
 PR191 auf bestehendem Branch feature/flh03-flatex-native-format,

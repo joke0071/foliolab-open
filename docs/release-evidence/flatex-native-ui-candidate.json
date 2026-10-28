@@ -1,0 +1,53 @@
+{
+  "stage": "FX-UI01",
+  "status": "DONE within read-only UI/PR scope",
+  "pr": 191,
+  "head": "6d66d3d57421e8b0d96862afc15992f124b06b68",
+  "tested_merge": "567c09228db375dd7ba0ab384f3cf7c8ae685911",
+  "tree": "c48b6e1edae946a53ad38b565418c7bda6d93fdf",
+  "runs": [
+    40748383976,
+    40748384443
+  ],
+  "units": {
+    "pass": 855,
+    "fail": 0,
+    "skip": 0
+  },
+  "all_required_jobs": "success",
+  "source_review": "12 combined files reviewed; no blocking findings; no product changes after green CI",
+  "reports_read": [
+    "chromium flatex-native-ui/report.json",
+    "firefox/webkit flatex-native-ui/report.json"
+  ],
+  "screenshots_viewed": [
+    "chromium-inputs-390",
+    "firefox-inputs-320",
+    "webkit-1440"
+  ],
+  "artifacts": [
+    {
+      "id": 12842843381,
+      "sha256": "1333ed48198878cb556129d9b717898eb5dacf893f2c4a11075cdc11eafa8e07"
+    },
+    {
+      "id": 12843586267,
+      "sha256": "b8898cf7b4b977200d787b6b5a3f640967f988e1d4de73984b4769f98242653d"
+    }
+  ],
+  "checks": [
+    "native CP1252/blank headers",
+    "two categorized inputs/separate/combined/partial files",
+    "mixed/mode/schema/category/count guards",
+    "exact values/currencies/references/escaping",
+    "ten layouts at five widths/Axe/44px",
+    "paging/focus/submit/Escape/cancel/reopen",
+    "delayed file read generation guard",
+    "actual offline reload",
+    "exact IDB/revision/settings zero mutation",
+    "no external preview requests"
+  ],
+  "production": "v200 LIVE_ACCEPTED, SW201 unreleased",
+  "next": "FX-UI02 controlled read-only release and actual production acceptance",
+  "master": "PARTIAL"
+}
