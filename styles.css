@@ -75,7 +75,8 @@
 
 /* Provider details replace static rows, with grouped accounts/positions underneath. */
 .provider-accordion{border-bottom:1px solid #edf2ed}
-.provider-accordion:last-child{border-bottom:0}
+.provider-accordion:not(:has(~ .provider-accordion)){border-bottom:0}
+.provider-accordion:not([open])>.provider-row{border-bottom:0}
 .provider-accordion summary{list-style:none;cursor:pointer}
 .provider-accordion summary::-webkit-details-marker{display:none}
 .provider-accordion summary:hover,.provider-accordion[open] summary{background:#f8fbf8}
@@ -933,7 +934,7 @@
 .history-insights .history-capital-comparison{padding:6px 0 12px;margin-bottom:11px;border-bottom:1px solid #e6eee7;min-width:0}
 .history-insights .history-capital-comparison .csv-skip{margin:0 0 5px;display:flex;align-items:flex-start;gap:9px;min-width:0;line-height:1.5}
 .history-insights .history-capital-comparison input{margin-top:2px;flex:0 0 auto}
-.history-insights .history-capital-comparison .small-help{margin:0;color:#688071;line-height:1.5}
+.history-insights .history-capital-comparison .small-help{margin:0;color:#526c59;line-height:1.5}
 
 /* More settings: short forms up front, long setup and privacy on demand. */
 .data-source-panel .more-panel-intro{line-height:1.5;margin-top:12px;margin-bottom:10px;color:#546f5b}
@@ -1184,3 +1185,16 @@
 /* Eight shared wealth presets wrap within narrow cards and retain touch targets. */
 .chart-period.mini-chart-periods,#historyPage .chart-period.history-chart-period{flex-wrap:wrap}
 .chart-period.mini-chart-periods button,#historyPage .chart-period.history-chart-period button{min-width:44px;min-height:44px}
+
+/* Consolidated history follow-up: shared decorative icons and compact source control. */
+#historyPage .history-disclosure-title{display:flex;align-items:center;gap:8px;min-width:0}
+#historyPage .history-disclosure-icon{display:inline-flex;flex:0 0 17px;color:#6b8c73}
+#historyPage .history-disclosure-icon svg{width:17px;height:17px}
+#historyPage .history-basis{flex:0 1 330px;flex-direction:row;align-items:center;gap:8px;margin:0 0 0 auto;min-width:0;max-width:100%;font-size:11px;font-weight:450}
+#historyPage .history-basis[hidden]{display:none}
+#historyPage .history-basis>span{flex-shrink:0}
+#historyPage .history-basis select{flex:1;min-width:0;width:auto;min-height:44px;padding:8px;font-size:11px}
+@media(max-width:360px){
+ #historyPage .history-basis{flex-direction:column;align-items:stretch;gap:4px;flex-basis:100%}
+ #historyPage .history-basis select{flex:auto;width:100%}
+}
