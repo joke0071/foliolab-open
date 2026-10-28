@@ -1,3 +1,35 @@
+# PR193: vorhandener Kraken-CI-Startwettlauf erkannt · Korrektur lokal · 28.10.2026
+
+Aktueller gesicherter Kandidat weiterhin c6329da2c8beea0c3f284e9c945d39133551285a /
+PR193 / feature/flh03-flatex-native-identity, Baum429070d. Main4e9a4a7/v202
+LIVE_ACCEPTED unverändert; nur geparkte157/161 daneben, keine fremde Entwicklung.
+
+Erstlauf40766119013 Cross-Engine(2) Job123090598458 FAILURE: vorhandener
+tests/browser-kraken-ledger.mjs:23 „Execution context was destroyed, most likely
+because of a navigation“ beim Setup/zweiter Navigation vor Baseline-Lesen.
+Die neuen Identitätsgates in Firefox und WebKit sind im selben Lauf tatsächlich PASS;
+Artefakt12850402591 vor Extraktion mit SHA256
+39b6a60673b9fc929254da8d83917d912ebb5f0dd1e6c726edd198881200f3c2 verifiziert.
+Keinen vollständigen Kandidaten-PASS daraus ableiten. Andere Jobs regulär laufen
+lassen, kein Abbruch/Blind-Rerun. Wallet40766119069 SUCCESS.
+
+App kann bei Controllerwechsel neu laden; der bisherige Kraken-Setup navigierte/
+seedete vor abgeschlossenem ersten Workerclaim. Minimal lokale Testsynchronisation:
+auf serviceWorker.ready UND tatsächlichen Controller vor Seed/zweiter Navigation
+warten. Keine App-/Finanzänderung, keine Wiederholungs-/Sleep-/Assertion-/Pin-/
+Workflowlockerung. Gezielter lokaler Krakenlauf noch in Prüfung, Änderung noch
+NICHT remote gesichert. Kernquellen c6329 unverändert; volle892Units und lokale
+Chromium-Identitäts-/Offline-/Nullmutationsgates vorher PASS.
+
+**Exakt nächster Schritt:** gezielten Krakenlauf abschließen, reguläres Ende des
+ersten CI-Laufs abwarten, konsistenten reinen Testsync-Commit auf demselben Branch/
+PR sichern, dann neue volle unveränderte Pflicht-CI prüfen. Rote Evidenz erhalten.
+Grundlage IN_PROGRESS, SW203 unveröffentlicht, Produktion v202. Keine privaten
+Originale/Produktivdaten verändert; UI-/Lösch-Nachträge und Roadmap erhalten,
+zwei Etappen Vertrag + geprüfte Grundlage, Master PARTIAL.
+
+---
+
 # Native Identitätsgrundlage remote gesichert · PR193 in Pflicht-CI · 28.10.2026
 
 Einziger Funktionsbranch `feature/flh03-flatex-native-identity`,
