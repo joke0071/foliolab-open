@@ -25,8 +25,16 @@ Keine fremde Implementierung oder Originalfixtures übernehmen; ausschließlich 
 
 Sicherheitsgrenzen des Inkrements ausdrücklich begrenzt: maximal64KiB codierte Binärdaten und1024Owner, kein Anspruch auf alle möglichen P-Chain-Ausgaben. Überschreitung ist nicht „leer“.
 
+`lockState` klassifiziert ausschließlich die beobachteten Zeitsperren. Es beweist weder eine noch unverbrauchte Ausgabe, akzeptierte Chainherkunft, Atomic-Importabschluss noch Verfügbarkeit eines Guthabens. Das Modul wird nicht vom bestehenden Scanner/Modell/Finanzpfad importiert.
+
 ## Offene Abschlussgates
 
 Nach Implementierung unabhängige Referenz-/Negativtests, drei Browser-Engines/WebCrypto, vollständige unveränderte Finance-/IDB-/Backup-/Restore-/Offline-CI; geprüfter Mergebaum und tatsächliche Produktionsbytes/Bilder bei Veröffentlichung. Dieser Vertrag allein ist noch kein PASS.
+
+Implementierter Kandidat: `src/pchain-evidence.js`, ausschließlich unabhängig geschriebener begrenzter Decoder/Zeitsperren-/deklarierterOwnervergleich; keine bestehende Finanz-/Modell-/Storage-/Backup-/Scannerdatei geändert. Lokal783/783Units,0Fail/0Skip und Syntax PASS;15neue UTXO-Referenz-/Negativtests einschließlich unabhängig mit Python berechneter fester Prüfsumme, jedes beschädigten Bytes/jeder Trunkierungsgrenze, voller uint64-/1024Owner-Grenzen und klarer Multisig-Teilabdeckung. Tatsächlicher Chromium-Modul-/WebCrypto-/Nullmutationsgate PASS. Firefox/WebKit, vollständige neue GitHub-CI und Live-Abnahme PENDING, SW194 nur Kandidat.
+
+Lokaler Erstlauf780/781: historische CI-Policy erwartete exakt30Kommandos und lehnte die neue zusätzlicheSuite korrekt ab. Historisches30Kommandos-Manifest unverändert erhalten; neue31.Kommandopflicht und zusätzliche Negativtests separat ergänzt. Alle alten Kommandos/Engines/Shards/Assertions unverändert, keine CI-Optimierung oder Gatekürzung. Erster lokaler Browseraufruf traf einen in einer getrennten Ausführungs-Netzwerkumgebung gestarteten Server nicht (Connection refused); mit Server und Browser im selben Prozesskontext bestanden. Kein Produktfix und kein unbelegter Firefox/WebKit-PASS daraus.
+
+Der neue Browsergate läuft zusätzlich im bestehenden Chromium-/Cross2-/tatsächlichen Drei-Engine-Livepfad; nur vier neue Workflow-Kommandos, alle bisherigen Kommandos/Pins/Berechtigungen/Trigger unverändert. Öffentlicher Origin-Capability-Beleg: `release-evidence/protocol-origin-capability-2026-10-28.json`, ausdrücklich keine Bestandsabnahme.
 
 09 bleibt insgesamt PARTIAL: adressbezogener Codec/Identitätsnachweis, vollständige eindeutige UTXO-/Stakingabdeckung, konsistente Zustandsanker, C↔P-Export/Import/Fees und unabhängige Sollreferenzen sind vor aktivem Adapter/Bestandsübernahme separat erforderlich. Kein C-Chain-Wallet in P-Chain-Adresse umdeuten, keine prognostizierten Rewards oder automatischen Ausgleichsbuchungen. Sonic10 folgt separat im selben sequenziellen Masterauftrag; keine parallele Implementierung.
