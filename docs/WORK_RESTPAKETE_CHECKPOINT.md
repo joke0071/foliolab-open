@@ -1,3 +1,13 @@
+# Aktiver bestehender UI17-09/10/1W-Schnitt · DraftPR182 · 28.10.2026
+
+v192 vollständig LIVE_ACCEPTED, schlanke Mehrfachauswahl DONE. Einziger funktionaler Strang jetzt `feature/ui-small-rests`, [PR182](https://github.com/joke0071/foliolab-open/pull/182), HEAD `172c2c893a3023679cbc423ee8d49e013659caa4`, Tree `b455dc678790878d433a17b93a6eb0927cc88a36` exakt wie lokal geprüft. FolioLab-Schreibweise, einmalige Konto-Fortsetzung erst nach erfolgreichem Anbieter-Save/Close-Cleanup, vorhandener gemeinsamer7T-Filter, scoped umbrechende44px-Vermögenspresets; keine Finanz-/Bewertungs-/Modell-/Storage-/Backupengineänderung. SW193 unveröffentlicht.
+
+Lokal767/767Units/0Fail/0Skip+Syntax, vollständiger neuer Chromiumflow und bestehende Dialog-/Kontoeröffnungs-/Onboarding-Suites PASS; sechs ausgewählte lokale Bilder tatsächlich visuell PASS. Echte Quota/Discard/Cancel/Revision/ID-Zuordnung/Fokus, fünfBreiten/Axe44px, unabhängige7T-Grenzwerte/Jahreswechsel/Schaltjahr und vollständige/partielle/leereDaten/Nullmutation. Lokalen tatsächlichen9px-Overflow des achten Presets durchscopedWrap behoben; synthetischeTeilportfolioFixture umfehlendeexpliziteEröffnungsbelege korrigiert,100EUR-Sollwert/Assertions/Finanzengine unverändert.
+
+Neue vollständige GitHub-CI läuft; Firefox/WebKit/finaleBilder/Main/Pages/tatsächlicheLiveabnahme PENDING. NeueBrowserprüfungen über bestehendenUI-Quality-Pfad auch für tatsächlicheProduktion integriert, keineWorkflowänderung/keineGates entfernt. Danach bestehendeFLH03-07/16-/Format-/Protokollfolge; FLH05-A/PERF01 nicht vorgezogen.
+
+---
+
 # v192 LIVE_ACCEPTED · schlanke Mehrfachauswahl abgeschlossen · 28.10.2026
 
 **DONE:** [PR181](https://github.com/joke0071/foliolab-open/pull/181) veröffentlicht und tatsächlich produktiv abgenommen. Release/main `6dab772e9ed15878779a5f345b132091917b7167`, Tree `bc25754038bfd0c2cee2707daf1121764511ca96` identisch mit finalem PR-/lokalem/getestetem Mergebaum. PR40644389670+Wallet40644389516 und Main/Pages/Live40645289206 vollständig SUCCESS;766/766Units,0Fail/0Skip, Syntax, Chromium/beideFirefox-WebKit-Shards. Lokal zusätzlich volle Positions-/Buchungssuites PASS.
