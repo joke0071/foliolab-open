@@ -60,6 +60,7 @@ jobs:
           node tests/browser-phase3.mjs
           node tests/browser-wallet-history-core.mjs
           node tests/browser-pchain-evidence.mjs
+          node tests/browser-sonic-staking-evidence.mjs
           node tests/browser-bitcoin-history.mjs
           node tests/browser-ethereum-history.mjs
           node tests/browser-history-storage.mjs
@@ -233,6 +234,7 @@ jobs:
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
+            SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
             FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
             FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
@@ -332,6 +334,7 @@ jobs:
           echo "LIVE_QA_SHA $RELEASE_SHA"
           node tests/browser-live-acceptance.mjs 2>&1 | tee artifacts/gates/production-core.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-chromium.log
+          SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-chromium.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-chromium.log
           cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-chromium.json
           node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-chromium.log
@@ -357,6 +360,7 @@ jobs:
         run: |
           set -euo pipefail
           PCHAIN_BASE="$ACCEPTANCE_BASE" PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-cross.log
+          SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-cross.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
           cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-cross.json
           node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-cross.log
