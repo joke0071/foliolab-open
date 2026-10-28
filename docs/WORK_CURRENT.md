@@ -4,18 +4,17 @@ Stand: 28.10.2026. Einstieg auf `feature/flh05-import-foundation`; keine zweite 
 Verbindliche Details: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT.md).
 Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind Historie.
 
-- Letzter produktiv abgenommener Release: **v197 LIVE_ACCEPTED**.
+- Letzter produktiv abgenommener Release: **v198 LIVE_ACCEPTED**.
 - Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
-- Einziger Funktions-PR: [PR187](https://github.com/joke0071/foliolab-open/pull/187), gemergt; Liveabnahme läuft.
+- Einziger Funktions-PR: [PR187](https://github.com/joke0071/foliolab-open/pull/187), gemergt, veröffentlicht, live abgenommen.
 - Branch: `feature/flh03-pchain-identity`.
 - HEAD: `06726680c794145d158d378d6b24741fa0c34247`.
 - Getesteter PR-Merge: `2036ac9a225fb06256652f746c01f03c71c71a49`.
 - Kandidat-/lokaler-/Mergebaum identisch: `5a6ad50997bfc932fa0220278a912f93267ff2e7`.
 - Arbeitspaket FLH03-09: P-Chain-Adresse und kontextgebundene UTXO-Beobachtungsidentität.
 - **P09-ID01 DONE / P09-ID02 DONE** für Vertrag und geprüften Implementierungskandidaten.
-- **P09-ID03 IN_PROGRESS:** kontrollierter Release und tatsächliche Produktionsabnahme.
-- Main-/Pages-/Live-Lauf40693772763 läuft regulär; keine Duplikate starten.
-- v198 noch nicht live abgenommen.
+- **P09-ID03 DONE:** kontrollierter Release und tatsächliche Produktionsabnahme.
+- Main-/Pages-/Live40693772763 vollständig SUCCESS; SW198 und 113 Dateivergleiche bestätigt.
 - Gesamtmaster und FLH03-09 insgesamt **PARTIAL**; PR157/161 unverändert geparkt.
 
 ## Abgeschlossene Etappen dieser Sitzung
@@ -42,16 +41,18 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Keine zusätzliche externe Freigabe für diese reinen Prüfhelfer erforderlich.
   Ein späterer aktiver Finanzadapter benötigt eigene konkrete Freigabe und Fachbelege.
 
-## Exakt nächster ausführbarer Schritt
+## Aktueller regulärer FLH03-Checkpoint
 
-**P09-ID03 starten:** main/HEAD/PRs/Actions/Writer prüfen; vorhandene grüne Gates bei
-identischem Kandidaten wiederverwenden. PR187 kontrolliert mit erwarteter HEAD-SHA mergen;
-danach reguläre Main-/Pages-/Liveabnahme vollständig abschließen und Belege/Bilder prüfen.
-Keine bereits bestandene PR-CI erneut starten. Erst danach v198 LIVE_ACCEPTED dokumentieren.
-Details: Fachvertrag und Kandidatencheckpoint im PR; aktueller QA-Stand hier/im Detailcheckpoint.
-Danach offene konsistente P-Chain-UTXO-/Staking-/C↔P-/Fee-/Sollwertverträge gemäß Rang5.
-Beobachtungsidentität ist kein globaler wirtschaftlicher Ereignis-/Eigentums-/Saldo-Nachweis.
-Spätere Sonic-/Drive-/FLH04-Folge erhalten; FLH05/PERF nicht vorziehen, FLH-PROJ01 nur dokumentiert.
+- **FLH03-ORIG01 IN_PROGRESS:** vier neu bereitgestellte CSV-Originale lesend prüfen.
+- Dateien im benannten Ordner gefunden: Bitpanda, Kraken, Bittr, Flatex.
+- Flatex laut Nutzer ausdrücklich unvollständig; keine vollständige Depot-/Cashabnahme daraus ableiten.
+- Nächster Schritt: private lokale Struktur-/Zeitraum-/Typprüfung und Abgleich mit bestehenden Parsern.
+- Öffentlich nur abstrahierte Befunde und rein synthetische Fixtures; keine Originalwerte/IDs/Adressen/Fingerprints.
+- Laufender Release wurde vor diesem Prüfpunkt vollständig abgeschlossen; keine parallele Implementierung.
+- Bereits vorbereitete reine Quellenlektüre zu P-Chain-Mehrseitenkonsistenz bleibt Vorarbeit,
+  keine neue Umsetzung/Abnahme. Die reguläre Originalprüfung ergänzt die bestehenden FLH03-Gates.
+- Danach bestehende Reihenfolge anhand tatsächlicher Original-/Semantikgates fortsetzen.
+- FLH05/PERF nicht vorziehen; FLH-PROJ01 ausschließlich dokumentiert.
 
 ## Verbindlicher Sitzungs- und Übergabevertrag
 
@@ -67,4 +68,4 @@ Spätere Sonic-/Drive-/FLH04-Folge erhalten; FLH05/PERF nicht vorziehen, FLH-PRO
 - Identische grüne Nachweise wiederverwenden; sämtliche Pflichtgates erhalten.
   Keine CI-Duplikate, Retryschleifen oder parallelen Ersatzprozesse bei Rate Limits.
 - Nach zwei Etappen gesichert stoppen; begonnene Sicherheits-/Releaseabschlüsse regulär beenden.
-- Aktuelle Sitzung: P09-ID03 IN_PROGRESS; keine parallele Entwicklung.
+- Aktuelle Sitzung: P09-ID03 DONE, FLH03-ORIG01 IN_PROGRESS; danach gesicherter Stopp.

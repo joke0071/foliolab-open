@@ -1,0 +1,169 @@
+{
+  "core": {
+    "sha": "8391dc0a8478af7e1aeb860b8b705217fdd24546",
+    "cache": "foliolab-open-v198",
+    "base": "https://foliolab.unperfekt.at/",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "result": "PASS",
+    "errors": [],
+    "startedAt": "2026-10-28T13:17:11.787Z",
+    "finishedAt": "2026-10-28T13:17:29.297Z"
+  },
+  "assetMatches": 113,
+  "axeScans": 18,
+  "identityReports": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": {
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "immutable": true,
+        "sameKey": true,
+        "contextSeparated": true,
+        "identityRejected": [
+          {
+            "label": "network mismatch",
+            "rejected": true
+          },
+          {
+            "label": "bad checksum",
+            "rejected": true
+          },
+          {
+            "label": "EVM is not P address",
+            "rejected": true
+          },
+          {
+            "label": "wrong chain",
+            "rejected": true
+          },
+          {
+            "label": "Bech32m",
+            "rejected": true
+          },
+          {
+            "label": "missing chain context",
+            "rejected": true
+          },
+          {
+            "label": "unsafe output index",
+            "rejected": true
+          }
+        ]
+      }
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": {
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "immutable": true,
+        "sameKey": true,
+        "contextSeparated": true,
+        "identityRejected": [
+          {
+            "label": "network mismatch",
+            "rejected": true
+          },
+          {
+            "label": "bad checksum",
+            "rejected": true
+          },
+          {
+            "label": "EVM is not P address",
+            "rejected": true
+          },
+          {
+            "label": "wrong chain",
+            "rejected": true
+          },
+          {
+            "label": "Bech32m",
+            "rejected": true
+          },
+          {
+            "label": "missing chain context",
+            "rejected": true
+          },
+          {
+            "label": "unsafe output index",
+            "rejected": true
+          }
+        ]
+      }
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": {
+        "idbUnchanged": true,
+        "prefsUnchanged": true,
+        "immutable": true,
+        "sameKey": true,
+        "contextSeparated": true,
+        "identityRejected": [
+          {
+            "label": "network mismatch",
+            "rejected": true
+          },
+          {
+            "label": "bad checksum",
+            "rejected": true
+          },
+          {
+            "label": "EVM is not P address",
+            "rejected": true
+          },
+          {
+            "label": "wrong chain",
+            "rejected": true
+          },
+          {
+            "label": "Bech32m",
+            "rejected": true
+          },
+          {
+            "label": "missing chain context",
+            "rejected": true
+          },
+          {
+            "label": "unsafe output index",
+            "rejected": true
+          }
+        ]
+      }
+    }
+  ],
+  "status": "LIVE_ACCEPTED",
+  "release": "v198",
+  "pr": 187,
+  "tree": "5a6ad50997bfc932fa0220278a912f93267ff2e7",
+  "run": 40693772763,
+  "all_required_jobs": "success",
+  "artifact": {
+    "id": 12819232191,
+    "sha256": "37dc18e95990093d5a41ad123b4e588e8dff7b0dd2ac6d9c75b029df162bc315",
+    "verified_before_extraction": true
+  },
+  "visual_review": {
+    "result": "PASS",
+    "images": [
+      "live/320.png",
+      "live/390.png",
+      "live/1440.png"
+    ]
+  },
+  "scope": "Pure helpers only; full wallet/ownership/state/fee and external original/hardware gates remain open."
+}
