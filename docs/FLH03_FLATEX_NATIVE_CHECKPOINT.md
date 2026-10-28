@@ -1,3 +1,43 @@
+# FX-FORMAT01 abgenommen, FX-UI01-Kandidat in Prüfung · 28.10.2026
+
+Geprüfte Grundlage PR191/56c0b1397b02aa3041daf4f434340f530aeeedde:
+Pflicht40745005502/Wallet40745005842 vollständig SUCCESS, 853 Units und
+Drei-Engine-Runtimeberichte tatsächlich geprüft; Artefaktdigests und testedSHA
+bestätigt. Zentraler Beleg auf feature/flh05-import-foundation in
+release-evidence/flatex-native-format-candidate.json. Diese Grundlage nicht wiederholen.
+Vorab-UI-Vertrag separat vor Code auf Dokumentationsbranch gesichert:
+25b061e0661c6f81b4ad15540f0118a9569126c3 / FLH03_FLATEX_NATIVE_UI_CONTRACT.md.
+
+FX-UI01 IN_PROGRESS bis finale Pflicht-CI/Scope-/Bildabnahme. Derselbe Branch/PR191.
+Neues Originalformat-Profil im vorhandenen CSV-Dialog, getrennte Depot-/Kontoeingänge,
+einzeln/gemeinsam/mehrere Teil-Dateien; 20-Dateien-/2MB-/5000-Gesamtzeilengrenzen.
+Native Erkennung vor generischem Mapping, tatsächliche arrayBuffer-Bytes und bestehender
+verlustfreier Decoder. Alle Dateien/Zeilen getrennt, keine automatische Dedup-/Order-/
+Cash-/Finanzzuordnung. Bisherige Legacy-Flatex-Beta und andere Profile erhalten.
+Native Save-/Callback-/submitBlocked-Guards, Kategorien-/Schema-/Fremdmodussperren,
+Inputwechsel ohne versteckte Dateien, Generation-/Abbruch-/Fokusmechanik, 50-Zeilen-Paging.
+Neues reines Anzeigemodul im noch unveröffentlichten SW201 vorgecached.
+
+855/855 lokale Units (0 Fehler/Skip), Syntax PASS. Neue Chromium-Abnahme PASS:
+Auto/Explizit/CP1252/Leerheader/exakte Werte/Referenzen/Quelltext-Escaping,
+getrennte/gemeinsame/Teil-Dateien, falsche Kategorien/Misch-/Fremd-/Schema-/harten Limits,
+zehn Layoutzustände (Vorschau + zwei Eingänge bei fünf Breiten), Axe/44px,
+Paging/Fokus/Escape/Cancel/Neuöffnen, erzwungener Submit, kontrolliert verspätete
+Dateilesungen, echter SW-Offline-Reload, exakter IDB-Record/Revision/Settings unverändert,
+keine externen Vorschaurequests. Lokale Bilder Eingänge320/Detail1440 angesehen, kein Blocker.
+Öffentliche Fixtures rein synthetisch; keine neuen privaten Daten geöffnet oder verändert.
+
+Nächster Schritt vollständige reguläre PR-CI/Wallet und tatsächliche neue Berichte/
+Artefaktdigests/Bilder prüfen, finalen Scope und identische Bäume bestätigen und zentral
+sichern. Danach FX-UI02 kontrollierter reinlesender Release nur bei grünen Gates,
+volle Main-/Pages-/tatsächliche Drei-Engine-Produktionsabnahme. Zwei Folgeetappen
+UI01/UI02 dieser Sitzung; danach sicherer Übergabestand. Produktion derzeit v200,
+kein Merge/Deployment dieses Kandidaten begonnen. Order-/Mehrfachgegenbeinvertrag und
+wirtschaftliche Integration gesondert. UI-MASTER28/DELETE-MASTER28 bleiben erhalten,
+keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe; Master PARTIAL.
+
+---
+
 # Node20-Decodierung korrigiert, finale CI noch offen · 28.10.2026
 
 Erstkandidat ee5795bcfd92b303dafbfd9e9f1048d1d097daa8: Wallet40743513720
