@@ -1,3 +1,31 @@
+# PR193: zweiter vorhandener Browser-Setupfehler erfasst · 28.10.2026
+
+Aktueller gesicherter Kandidatff2b79d58fd7ee6cccfbcd3ba992a961c947d6a9 /
+PR193 / feature/flh03-flatex-native-identity, Baum78b7ccbc. Main4e9a4a7/v202
+LIVE_ACCEPTED unverändert. Finale CI40767434426 Cross(1) Job123095246127 FAILURE:
+browser-position-archive.mjs:32/nav:12 wählte im mobilen WebKit-Setup den versteckten
+#sidebarNav-Positionsbutton; regulärer Klick wartet30s auf dessen Sichtbarkeit und
+scheitert. Vorheriger Firefox-Archivlauf vollständig PASS. Roter Log tatsächlich
+gelesen, Artefakt12851845656 mit GitHub-Digest45863a35f479aab1cc07b7ffd7d4e697b885b3e00e3d22bf4dcfe5a029c46069
+vorhanden (noch nicht heruntergeladen, kein Digestprüf-PASS behauptet).
+
+Minimaler lokaler Testfix: Sichtbarkeit zum tatsächlichen Klickzeitpunkt über
+:visible-Union von mobileNav/sidebarNav neu auswerten, statt einen vorab beobachteten
+isVisible-Wert als festen Navigationszweig zu verwenden. Regulärer sichtbarer Klick,
+kein force/retry/Timeout-/Assertion-/Pin-/Workflowwechsel. Gezielter lokaler Archivlauf
+noch in Prüfung, Fix noch NICHT remote gesichert. App-/Identitäts-/Finanzquellen seit
+c6329 unverändert; vorherige Kraken-Setup-Synchronisation bleibt erhalten.
+
+Andere Jobs40767434426 regulär beenden lassen, keine Unterbrechung/Blindwiederholung.
+Wallet40767434644 SUCCESS. Grundlage weiter IN_PROGRESS; keine Zusammenführung oder
+Produktionsänderung. Exakt nächster Schritt gezielten Archivlauf prüfen, volles Ende
+des zweiten CI-Laufs abwarten, konsistenten Testfix auf gleichem Branch/PR sichern
+und dann volle unveränderte Pflichtgates erneut abnehmen. Beide roten Befunde und
+ihre konkreten Korrekturen erhalten. Keine privaten Daten geändert; UI-/Lösch-
+Nachträge und Roadmap unverändert, zwei Etappen Vertrag + Grundlage, Master PARTIAL.
+
+---
+
 # PR193 korrigierter Testsetup-Kandidat gesichert · finale CI läuft · 28.10.2026
 
 Einziger Funktionsbranch feature/flh03-flatex-native-identity / PR193,
