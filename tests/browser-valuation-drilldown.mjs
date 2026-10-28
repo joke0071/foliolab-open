@@ -9,7 +9,9 @@ try{
   const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
   const m=blankModel(),pr=createProvider({name:'Test Broker',type:'broker'});m.providers.push(pr);
   const account=createAccount({name:'Test Depot',providerId:pr.id,type:'securities'},m);m.accounts.push(account);
-  for(const [name,price,asOf] of [['Aktueller ETF',100,'2026-10-21'],['Ohne Kurs',0,null],['Veralteter ETF',50,'2026-10-01']]){
+  // Keep fresh/stale semantics stable as the actual browser date advances.
+  const today=new Date().toISOString().slice(0,10),stale=new Date(Date.now()-30*864e5).toISOString().slice(0,10);
+  for(const [name,price,asOf] of [['Aktueller ETF',100,today],['Ohne Kurs',0,null],['Veralteter ETF',50,stale]]){
    const pos=createPosition({name,kind:'etf',price,quantity:1,providerId:pr.id,accountId:account.id},m);
    pos.quoteAsOf=asOf;m.positions.push(pos);
   }
