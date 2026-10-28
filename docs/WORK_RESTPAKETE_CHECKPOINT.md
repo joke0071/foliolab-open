@@ -1,3 +1,11 @@
+# FX-AUDIT01 DONE · FX-FORMAT01 als nächster begrenzter Schnitt · 28.10.2026
+
+Die neun Istpunkte sind anhand vorhandener Quelle, 55 bestandener Flatex-Tests und privater Originale klassifiziert: [Audit](FLH03_FLATEX_NATIVE_AUDIT.md). Beide bestätigten Windows-1252-/Blankheader-Originaldialekte werden aktuell abgewiesen; diese konkrete Lücke ist reproduziert. Privater Order-Sollabgleich unabhängig über Typ/ISIN/Ordertextreferenz bestätigt; Bank-TA-IDs sind verschiedene Quellreferenzen. Keine privaten Mengen/Zeilen/IDs/Beträge veröffentlicht, kein Vollständigkeits-/Saldo-/Performance-PASS behauptet.
+
+Historische PR97-Änderungen sind quellseitig im heutigen Produkt vorhanden (spätere Importherkunft ergänzt), alte Flatex-Branches nicht als offene Arbeit wiederbeleben. Main unverändert b2a07f4/v200 LIVE_ACCEPTED; nur geparkte157/161, alle Actions beendet. **Nächster Schnitt FX-FORMAT01:** vor Code reinen nativen Formatvertrag separat sichern, dann bestehendem Lexer/Decimal-Kern positionsgetreue 12-/10-Spaltenprojektion und verlustfreie Byte-Decodierung ergänzen. Keine Dialog-/Finanz-/Storage-/Backupmutation oder generische Parserlockerung. Zwei Etappen dieser Sitzung: Audit + geprüfte Formatgrundlage; UI/Abgleich/Release anschließend separat. Gesamtmaster/FLH03-05 weiter PARTIAL; UI-MASTER28 und ursprüngliche Folge erhalten.
+
+---
+
 # FX-AUDIT01 wiederaufgenommen · 28.10.2026
 
 Frischer Kollisionscheck: main b2a07f4131a7b38d1fa7da40fab8ea58b72fd119 / v200 LIVE_ACCEPTED unverändert; jüngste Actions einschließlich40737628881 erfolgreich beendet, nur geparkte PR157/161 offen. Zentraler Checkpoint b3b2dad bestätigt. Lokale Prozesse/Arbeitskopie geprüft, keine fremde Entwicklung erkennbar; lediglich synthetische frühere Testartefakte untracked. Frühere Flatex-Branches werden auf Integration geprüft, kein neuer überlappender Funktionsbranch begonnen.
