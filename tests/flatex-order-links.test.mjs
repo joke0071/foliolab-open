@@ -70,3 +70,8 @@ test('input and row bounds fail closed while a full bounded source remains repre
 test('control characters and unbounded source reference strings never become possible matches',()=>{
  for(const d of [D([{8:'SYN\nREF'}]),D([{11:'SYN\u0081SCOPE'}]),D([{8:'9'.repeat(201)}]),D([{7:order('Kauf','IE00SYNTH001','9'.repeat(201))}])])assert.ok(inspect([d,C()]).groups.every(g=>g.status!=='possible-single'));
 });
+
+test('multiple ORDER tuples in one source row cannot yield a unique 1:1 candidate',()=>{
+ const d=D([{7:order('Kauf','IE00SYNTH001','9002')+' '+order()}]);
+ assert.deepEqual(status([d,C()]),['source-review']);
+});

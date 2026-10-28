@@ -14,6 +14,7 @@ const cases=[
  {name:'currency',files:[csv(),csv('account',[{7:'CHF'}])],statuses:['source-review']},
  {name:'scope',files:[csv(),csv('account',[{5:'SYN-A'},{5:'SYN-B',9:'SYN-SECOND'}])],statuses:['scope-review']},
  {name:'missing',files:[csv()],statuses:['missing-cash']},
+ {name:'multiple-order-tuples',files:[csv('depot',[{7:'ABR ORDER Kauf IE00SYNTH001 9002 ABR ORDER Kauf IE00SYNTH001 0009007199254740993'}]),csv('account')],statuses:['source-review']},
  {name:'unassigned',files:[csv('depot',[{7:'Thesaurierung'},{7:'Storno Fusion'}])],statuses:[]},
  {name:'tiny',files:[csv('depot',[{5:'0,000000000000000001'}]),csv('account',[{6:'-0,000000000000000001'}])],statuses:['possible-single']}
 ];
@@ -37,7 +38,7 @@ for(const engine of engines){
    if(offline){await ctx.setOffline(true);await p.reload();await ready();}
    const r=await run();assert.ok(r.rejected.every(Boolean));assert.equal(r.horizonRejected,true);assert.equal(r.legacyPossible,true);
    for(const [i,result]of r.results.entries()){assert.deepEqual(result.statuses,cases[i].statuses);assert.equal(result.rows,result.sourceRows);assert.equal(result.immutable,true);assert.equal(result.mutationBlocked,true);assert.equal(result.noWrite,true);assert.equal(result.unchanged,true);}
-   assert.equal(r.results[0].single.orderReference,'0009007199254740993');assert.notEqual(r.results[0].single.depot[0].bankReference,r.results[0].single.cash[0].bankReference);assert.equal(r.results[1].single.cash.length,2);assert.equal(r.results[9].unassigned,2);assert.deepEqual(await read(),before);
+   assert.equal(r.results[0].single.orderReference,'0009007199254740993');assert.notEqual(r.results[0].single.depot[0].bankReference,r.results[0].single.cash[0].bankReference);assert.equal(r.results[1].single.cash.length,2);assert.equal(r.results.find(x=>x.name==='unassigned').unassigned,2);assert.deepEqual(await read(),before);
   }
   assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
   report.engines.push({engine,version:browser.version(),result:'PASS',checks:['independent bank/order references','possible 1:1 reuses legacy matcher','multiple cash/depot legs stay review','overlap/conflict/storno/currency/scope/missing/unassigned guards','tiny exact decimal direction','all source rows retained/immutable/no writes','legacy and input/horizon bounds','actual SW offline reload/module import','exact IDB/revision/settings zero mutation','no external relationship requests']});

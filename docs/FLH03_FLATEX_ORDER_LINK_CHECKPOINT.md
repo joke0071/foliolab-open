@@ -1,3 +1,25 @@
+# Mehrfach-ORDER-Quarantäne ergänzt, finale Abnahme noch offen · 28.10.2026
+
+Erstkandidat f8e74b2934efd4b7ec47acb09435ec45b505bb4e / PR192 bleibt historische
+Grundlage. Im zusätzlichen Gegenbeispieltest vor finaler Abnahme reproduziert:
+Quellzeile mit zwei ORDER-Tupeln gleichen Typs/gleicher ISIN wurde anhand des letzten
+Tupels noch possible-single. Vertrag verlangt Quarantäne der ganzen Gruppe.
+
+Begrenzte Korrektur: genau eine ORDER-Angabe pro qualifizierter Quellzeile;
+sonst source-review, ohne Optimismus/Teilzuordnung. Neuer Unit-/Browsergegenbeweis.
+872/872 gesamte lokale Tests unter Node20, 0 Fehler/Skip, Syntax und17 fokussierte
+Tests unter Node24 PASS. Korrigierter Chromium-/Offline-/exakter Nullmutationsgate
+und privates Sollziel/Erhalt aller Quellzeilen erneut PASS. Keine Dialog-/Finanz-/
+Storage-/Backupänderung; Legacy-API und ursprüngliche Assertions unverändert.
+
+Erste volle CI40754640919 regulär beenden lassen, nicht unterbrechen/duplizieren;
+Wallet40754640913 SUCCESS. Danach Korrektur auf demselben Branch/PR sichern und
+volle unveränderte finale CI/Runtimeberichte prüfen. Dieser Commit allein behauptet
+noch keine finale Abnahme. SW202 unveröffentlicht, Produktion v201 LIVE_ACCEPTED.
+Zwei Etappen Vertrag + Helfer; UI/Release und übrige offene Nachträge separat.
+
+---
+
 # Native Flatex-Orderbeziehungen – Kandidat in Prüfung, 28.10.2026
 
 Basis main88508742db6bed9be57d6e907b2bfe56d61b1631/v201 LIVE_ACCEPTED.

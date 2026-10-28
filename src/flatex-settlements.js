@@ -91,6 +91,7 @@ export function inspectNativeFlatexOrderLinks(documents,{maxDays=7}={}){
   if(o.reference.length>200)e.reasons.push('Orderreferenz überschreitet die sichere Referenzgrenze.');
   if(!validDate(r.dates.bookingDate)||!validDate(r.dates.valueDate))e.reasons.push('Buchtag oder Valuta ungeklärt.');
   const isins=v.details.toUpperCase().match(/\b[A-Z]{2}[A-Z0-9]{10}\b/g)||[];
+  if((v.details.match(/\bORDER\b/gi)||[]).length!==1)e.reasons.push('Mehrere oder ungeklärte ORDER-Angaben in einer Quellzeile.');
   if(!isins.length||isins.some(isin=>isin!==o.isin)||(doc.type==='depot'&&v.isin?.toUpperCase()!==o.isin))e.reasons.push('Widersprüchliche oder fehlende Quell-ISIN.');
   if(!['order-buy','order-sell'].includes(r.kind)||r.kind!==(o.type==='buy'?'order-buy':'order-sell'))e.reasons.push('Kein freigegebenes unstorniertes ORDER-Quellereignis.');
   e.currency=doc.type==='depot'?v.priceCurrency:v.amountCurrency;
