@@ -8,8 +8,10 @@ Bei Konflikten GitHub und detaillierte Nachweise prüfen; ältere Einträge sind
 - main: `c28053a109ed0338cdb040d88758766a1888a535` (PR188/189).
 - Baum: `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`, exakt geprüfter Korrekturkandidat.
 - [PR188](https://github.com/joke0071/foliolab-open/pull/188) und [PR189](https://github.com/joke0071/foliolab-open/pull/189) gemergt.
-- Aktiver Funktionsbranch: `feature/flh03-bitpanda-preview`; BP02-PR folgt.
+- Aktiver Funktionsbranch: `feature/flh03-bitpanda-preview`; [PR190](https://github.com/joke0071/foliolab-open/pull/190) offen.
 - **FLH03-04-BP01 DONE / BP02 IN_PROGRESS**: Vertrag vor Code, reine Parsergrundlage.
+- HEAD `e83d3bddc2132ea5a5632902f5971e97679b0818`, Baum `25cd84474adad7f592e65611daf3d12b509df22c` (lokal/remote identisch).
+- Pflicht-CI40720747693 läuft, lokale842/842Units/Syntax/1529Vergleichsfälle PASS.
 - BP01-Vertragscommit `e22a803ae03057744701587f421e11f724852dca`; noch keine Bitpanda-UI/Übernahme.
 - Gesamtmaster/FLH03-03 **PARTIAL**; wirtschaftliche Übernahme bleibt gesperrt.
 - Geparkte PR157/161 unverändert; vor BP02 keine laufenden Actions oder lokalen Writer.
@@ -43,7 +45,9 @@ Bei Konflikten GitHub und detaillierte Nachweise prüfen; ältere Einträge sind
 
 ## Exakt nächster ausführbarer Schritt
 
-**BP02 ausführen** gemäß separat gesichertem Bitpanda-Vertrag. Vorhandenen
+**BP02 abschließen:** Pflicht-CI/3Engine-Runtime/Offline/Nullmutation und Diff prüfen.
+Keine doppelten Läufe. Danach Kandidaten-Checkpoint und gesicherter Stopp nachzweiEtappen.
+Umfang gemäß separat gesichertem Bitpanda-Vertrag. Vorhandenen
 [Originalformataudit](original-formats/ORIGINAL_FORMAT_AUDIT_2026-10-28.md) und gezielte
 bestehende CSV-/Decimal-/Previewverträge laden; bestehenden reinlesenden
 Bitpanda18/17-/Vorspannvertrag umsetzen (reiner Parser/Runtimetests, noch kein Dialog). Fehlendes Tax-Feld/Leerwerte/Striche unbekannt,
