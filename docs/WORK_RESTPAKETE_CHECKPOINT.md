@@ -1,3 +1,9 @@
+# Main-Gatefehler diagnostiziert · einmalige gezielte Wiederholung · 28.10.2026
+
+KRAKEN03 IN_PROGRESS, Produktion weiterhin v198 LIVE_ACCEPTED. Main40710232523 Versuch1: test/831Units/Chromium und cross-engine1 SUCCESS; cross-engine2 FAILURE in bestehender `browser-ui-quality.mjs:25` WebKit-Logoassertion `0 !== 2`. Die zwei erwarteten statischen `.logo-beta`-Elemente stehen unverändert in index.html; identischer PR-Mergebaum und vorheriger Drei-Engine-PR-PASS belegt. Neue native Kraken-Suite hatte in diesem fehlgeschlagenen Job bereits Firefox/WebKit inklusive Offline/exakter Nullmutation PASS, ebenso Referenzverwaltung. Noch keine Produktursache bewiesen; kein PASS für den fehlgeschlagenen Job behauptet. Alle anderen Jobs regulär beendet; deploy/live korrekt SKIPPED. Einmalige bewusste Wiederholung ausschließlich fehlgeschlagener Job samt abhängigen Gates mit identischem SHA/Assertions, keine automatische Schleife und keine Abdeckungskürzung. Bei erneutem Fehler gezielt untersuchen/korrigieren, Release bleibt gesperrt. Keine parallele Entwicklung.
+
+---
+
 # PR188 gemergt · v199-Liveabnahme offen · 28.10.2026
 
 Kontrollierter Merge mit erwarteter HEAD-SHA: `49fe892d09d53a8de13a7481d2526aca356cef5f`, Baum `ecc9f587340e3fb2a9b0246b06fa85e9973b16d8` exakt geprüfter Kandidat. [Main-/Pages-/Live40710232523](https://github.com/joke0071/foliolab-open/actions/runs/40710232523) läuft regulär; nicht abbrechen oder doppelt starten. **KRAKEN03 IN_PROGRESS**, v198 bleibt letzter LIVE_ACCEPTED-Release. Nächster Schritt: sämtliche Main-/Deployment-/tatsächlichen Drei-Engine-Livegates abschließen, Produktionsartefakt/Digest/Modulbytes/Bilder prüfen. Keine parallele Produktentwicklung.

@@ -37,7 +37,9 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Release-/Cross2-ZIP-Digests vor Extraktion geprüft; getesteter Mergebaum exakt.
   Drei finale Bilder tatsächlich angesehen: Chromium390,Firefox320,WebKit1440; PASS.
   [Kandidatenbeleg](release-evidence/kraken-ledger-pr188-candidate.json).
-- Offen: frischer Kollisions-/HEAD-/Mergebaumcheck, kontrollierter Merge, volle Main-/Pages-/
+- Main Versuch1: test/Cross1 SUCCESS; Cross2 WebKit-Logoassertion fehlgeschlagen.
+- Einmalige gezielte Wiederholung mit identischem SHA; keine Assertions geändert.
+- Offen: volle Main-/Pages-/
   tatsächliche Drei-Engine-Livegates/Modulbytes/Produktionsbilder.
 - Keine neue externe Freigabe für die reine Vorschau erforderlich; spätere wirtschaftliche
   Übernahme erfordert eigenen kritischen Fach-/Releasevertrag und weitere Belege.
