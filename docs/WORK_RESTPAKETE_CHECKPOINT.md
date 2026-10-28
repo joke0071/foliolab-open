@@ -1,3 +1,22 @@
+# Nutzer-Nachtrag: kleine UI-Korrekturen und FLH-PROJ01 vorgemerkt · 28.10.2026
+
+Kollisionsschutz unverändert: laufende Implementierung/Tests/PRs/Merges/Deployments nicht unterbrechen, keine parallelen funktionalen Stränge. v194 vollständig LIVE_ACCEPTED (unten). Bereits begonnener nächsterRang5-Schnitt `feature/flh03-sonic-evidence`: verifizierter4.0.5-Zustandsvertrag vorCode lokalgesichert, ersterreinlesenderModulentwurf begonnen, nochkeine neueAbnahme. Er bleibt aktuellalleinigerEntwicklungsstrang. FolgendeUI-Deltas erst am nächsten sicheren geeignetenUI-Checkpoint nachAbschlussdesaktuellbegonnenenPakets gegenaktuellesmain reproduzieren, bereitsErledigtesüberspringen; anschließend bestehendeMastersequenz fortsetzen.
+
+## Vorgemerkter kleiner UI-Schnitt
+
+- Verlauf: den drei vorhandenenAkkordeonüberschriften dezenteeinheitlicheLucide-Linienicons voranstellen: Datenabdeckung & Abgleich → `shield-check`; Rendite & Geldflüsse → `chart-no-axes-combined`; Kontrollpunkte & manuelle Werte → `clipboard-check`. VorhandeneÜberschriften/Disclosure-/Tastatur-/A11y-Verträge erhalten, Iconsdekorativ, bestehendeDarstellungsmechanikverwenden.
+- Übersicht: tatsächlicheMobile-/Desktop-Zugänglichkeit von „Liquidität & Fälligkeiten“ prüfen. Bisher nurNutzerbefund, nochkeinDarstellungsfehlernachgewiesen. BeiReproduktionkleinstekonsistenteDarstellungskorrektur, keinezweiteBerechnung/Komponente.
+- Übersicht: überflüssigeletzteAnbieter-Trennlinieentfernen; TrennlinienzwischenAnbieternbeibehalten. Gegenaktuellesmain prüfen, erledigtenFalldokumentiertüberspringen.
+- BestehendesDesign/Abstände/Farben/Interaktionsmustererhalten, keinRedesign. GezielteMobile-/Desktop-/Axe-/Touch-/Tastatur-/Nullmutationsprüfung, vollständigePflicht-CI, kontrollierterMerge/Deployment und tatsächlicheLiveabnahme. Keine laufendenGatesfürdiesenNachtragabbrechen.
+
+## FLH-PROJ01 — später, ausdrücklich NICHT jetzt implementieren
+
+Neues späteresArbeitspaket nachAbschlussderrelevantenFLH03-Historien-/Renditegrundlagen: vierteraufklappbarerBereich **Zukunftsprojektion** imReiterVerlauf. AktuellesPortfoliovermögenautomatischübernehmen, monatlicheSparrate/Anlagehorizonteinstellbar; Renditebasis automatisch/historisch/manuell. HistorischeTWR nurbeiausreichenderDatenqualität, automatischeModellannahme anhandAnlageklassen undbelastbarerHistorie. Drei transparenteSzenarien vorsichtig/Basis/optimistisch, nominaleundinflationsbereinigteWerte, eigenständigesPrognosediagramm striktgetrenntvontatsächlichenhistorischenWerten.
+
+SimulationendarfenBuchungen/Bestände/Historie/Backupdatennichtändern. FehlendeFinanzdaten/unsichereAnnahmen offenlegen, keine scheinpräzisePrognose; konkretenDatenqualitäts-/Annahmen-/TWR-/Inflations-/Rechenvertrag erstimspäterenPaket festlegen. Aktuell ausschließlichDokumentationinbestehendemzentralenCheckpointundRoadmap, keineImplementierung/Prototyp-/Diagramm-/Persistenzänderung undkeineVerschiebunglaufenderPflichtpakete. Keine neuekonkurrierendeMasterplanung.
+
+---
+
 # v194 LIVE_ACCEPTED · begrenzter P-Chain-UTXO-Nachweis abgeschlossen · 28.10.2026
 
 [PR183](https://github.com/joke0071/foliolab-open/pull/183) DONE im ausdrücklich begrenzten Vorbereitungsumfang: unabhängiger reinlesender UTXO7/22-Decoder mit Encoding/Prüfsumme/Codec/Owner-/Größen-/uint64-/Zeitsperrenvertrag. Kein aktiver P-Chain-Scanner, keine Bestands-/Finanz-/Modell-/Storage-/Backupintegration und keine zweite Historienengine. FLH03-09 insgesamt weiter PARTIAL.
