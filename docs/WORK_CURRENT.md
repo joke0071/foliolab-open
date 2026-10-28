@@ -6,7 +6,7 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 
 - Letzter produktiv abgenommener Release: **v198 LIVE_ACCEPTED**.
 - Aktueller main: `49fe892d09d53a8de13a7481d2526aca356cef5f` (PR188).
-- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), gemergt; Main-/Deployment-/Live40710232523 läuft.
+- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), gemergt; Deployment erfolgreich, Live40710232523 läuft.
 - Branch: `feature/flh03-kraken-ledger-preview`.
 - HEAD: `c783f460e3069d0654269ae2d1e1879022ede20d`.
 - Getesteter PR-Merge: `f44920f884391037a6229cf5185fec7604ff61ab`.
@@ -37,8 +37,9 @@ Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind
 - Release-/Cross2-ZIP-Digests vor Extraktion geprüft; getesteter Mergebaum exakt.
   Drei finale Bilder tatsächlich angesehen: Chromium390,Firefox320,WebKit1440; PASS.
   [Kandidatenbeleg](release-evidence/kraken-ledger-pr188-candidate.json).
-- Main Versuch1: test/Cross1 SUCCESS; Cross2 WebKit-Logoassertion fehlgeschlagen.
-- Einmalige gezielte Wiederholung mit identischem SHA; keine Assertions geändert.
+- Main Versuch1: Cross2 WebKit-Logoassertion fehlgeschlagen; historische Evidenz erhalten.
+- Einmalige gezielte Wiederholung SUCCESS; test/Cross1 wiederverwendet, Assertions identisch.
+- Deployment SUCCESS; tatsächliche Produktionsabnahme läuft, v199 noch nicht LIVE_ACCEPTED.
 - Offen: volle Main-/Pages-/
   tatsächliche Drei-Engine-Livegates/Modulbytes/Produktionsbilder.
 - Keine neue externe Freigabe für die reine Vorschau erforderlich; spätere wirtschaftliche
