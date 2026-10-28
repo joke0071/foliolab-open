@@ -1,3 +1,22 @@
+# Begrenzte Kraken-Setup-Synchronisation vor finaler CI · 28.10.2026
+
+Erstkandidat c6329da2c8beea0c3f284e9c945d39133551285a / PR193 im ersten Lauf
+40766119013 regulär beendet: test und Cross-Engine(1) SUCCESS, Wallet40766119069
+SUCCESS, Cross-Engine(2) FAILURE ausschließlich beim vorhandenen Kraken-Setup:
+browser-kraken-ledger.mjs:23 Execution context destroyed / navigation.
+Neue native Identitätsgates Chromium/Firefox/WebKit bereits tatsächlich PASS.
+Keine vollständige Abnahme aus den Teil-PASS ableiten; rote Evidenz zentral erhalten.
+
+Die App kann bei Service-Worker-Controllerwechsel neu laden. Kraken startete Seed/
+zweite Navigation vor gesichertem ersten Workerclaim; minimale Setupkorrektur wartet
+nun vor Seed auf serviceWorker.ready UND den tatsächlichen Controller. Gezielter
+Chromium-Krakenlauf samt5Breiten/Axe/Submit/Offline/exaktem Nullmutationsgate PASS.
+Keine App-/Finanzquellenänderung nach c6329, keine Retry-/Sleep-/Assertion-/Pin-/
+Workflowlockerung. Erstlauf vollständig beendet, dann konsistente Korrektur auf
+demselben Branch/PR; neue volle unveränderte finale CI/Artefaktabnahme erforderlich.
+
+---
+
 # Native Quellidentität: Kandidat lokal geprüft · 28.10.2026
 
 Basis main4e9a4a7392e3469eeb2018b7a9516debe3a48e96/v202 LIVE_ACCEPTED.
