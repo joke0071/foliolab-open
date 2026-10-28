@@ -1,3 +1,11 @@
+# PR181 kontrolliert gemergt · v192-Releasegates laufen · 28.10.2026
+
+Finale Pflicht-CI40644389670 und Wallet40644389516 SUCCESS,766Units/0Fail/0Skip+Syntax+Chromium+beideFirefox/WebKit-Shards. Getesteter Merge0f6f4d24c8c8796ea57a761af333801149acb6a5 hat exakt lokalen/PR-Treebc25754038bfd0c2cee2707daf1121764511ca96. Sechs frische Firefox/WebKit-Normalzustandsbilder aus SHA256-verifizierten Cross1/2-Artefakten12797540142/12796494908 tatsächlich angesehen,PASS; fünf lokale Normalbilder und zusätzliche lokale aktive Zustände geprüft. Scope-/Sourceprüfung ohne blockierenden Befund, kein Finanz-/Modell-/Backup-/Storageengine-Delta.
+
+Unter bestehender ausdrücklicher Masterfortsetzung nach erneutem main/HEAD/mergeable/Treecheck kontrolliert gemergt: `6dab772e9ed15878779a5f345b132091917b7167`. Main/Pages/Liveundefined läuft; kein v192-Produktionsabschluss behauptet. Nach vollständig grünen Gates zusätzliche tatsächliche Drei-Engine-Auswahl-/Buchungsprüfung beider Listen mit unveränderten Release-App-/Testbytes, Nullmutation/44px/Axe/Fokus/CAS/Restore/Offline sowie echte Bilder. Bis dahin kein weiterer funktionaler Strang; v191 bleibt letzte vollständige Live-Abnahme.
+
+---
+
 # Aktiver UI-Nachtrag PR181 · 28.10.2026
 
 v191 ist abgeschlossen und LIVE_ACCEPTED (unten). Einziger aktiver funktionaler Strang: `feature/ui-selection-header`, [DraftPR181](https://github.com/joke0071/foliolab-open/pull/181), HEAD `a349d9fe04f18524e9536e0d0804cb3e1ca68b63`, Tree `bc25754038bfd0c2cee2707daf1121764511ca96` exakt wie lokal geprüft. Nur schlanke Mehrfachauswahl-Listenköpfe beider Listen, bestehende sofort sichtbare Auswahl-/Zweispaltenaktionen und direkte Zeilenicons; keine Finanz-/Modell-/Backup-/Storageengine geändert. SW192 unveröffentlichter Kandidat.
