@@ -1149,6 +1149,7 @@
 #bookingChangeTransactions{margin:12px 0;overflow-wrap:anywhere}#bookingChangeTransactions>summary{min-height:44px}#bookingChangeTransactions li{margin:10px 0}
 
 .ledger-live-preview{min-width:0}.ledger-live-preview p,.ledger-live-preview li,.ledger-live-preview summary{overflow-wrap:anywhere}.ledger-live-preview select,.ledger-live-preview .btn{min-height:44px;max-width:100%}
+.kraken-ledger-preview dd{margin-inline-start:0;overflow-wrap:anywhere}.kraken-ledger-preview dt{font-weight:700}
 /* Account evidence reuses the existing settings disclosure and action pattern. */
 .account-evidence{min-width:0;margin:0 0 12px}.account-evidence summary{min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}.account-evidence-body{padding:0 12px 12px;overflow-wrap:anywhere}.account-evidence-body ul{padding-left:20px}.account-evidence .settings-actions{flex-wrap:wrap}.account-evidence .btn{min-width:44px;min-height:44px;white-space:normal}
 
