@@ -5,15 +5,15 @@ Verbindliche Details: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT
 Bei Widersprüchen GitHub und konkrete Nachweise prüfen; ältere Einträge sind Historie.
 
 - Letzter produktiv abgenommener Release: **v198 LIVE_ACCEPTED**.
-- Aktueller main: `8391dc0a8478af7e1aeb860b8b705217fdd24546` (PR187).
-- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), offen/geprüft, kein Draft.
+- Aktueller main: `49fe892d09d53a8de13a7481d2526aca356cef5f` (PR188).
+- Einziger Funktions-PR: [PR188](https://github.com/joke0071/foliolab-open/pull/188), gemergt; Main-/Deployment-/Live40710232523 läuft.
 - Branch: `feature/flh03-kraken-ledger-preview`.
 - HEAD: `c783f460e3069d0654269ae2d1e1879022ede20d`.
 - Getesteter PR-Merge: `f44920f884391037a6229cf5185fec7604ff61ab`.
 - Kandidat-/lokaler-/Mergebaum identisch: `ecc9f587340e3fb2a9b0246b06fa85e9973b16d8`.
 - **FLH03-03-KRAKEN01 DONE / KRAKEN02 DONE** für Vertrag und geprüften Implementierungskandidaten.
 - **KRAKEN03 IN_PROGRESS:** kontrollierter Release mit vollständiger tatsächlicher Liveabnahme.
-- Release gestartet: geprüfte identische grüne Gates wiederverwenden; v198 bleibt bis Liveabnahme maßgeblich.
+- Mergebaum identisch; v198 bleibt bis vollständiger Liveabnahme maßgeblich.
 - Gesamtmaster und FLH03-03 **PARTIAL**; PR157/161 unverändert geparkt.
 
 ## Abgeschlossene Etappen dieser Sitzung
