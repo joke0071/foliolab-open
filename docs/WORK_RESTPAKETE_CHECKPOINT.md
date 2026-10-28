@@ -1,3 +1,47 @@
+# PR192: Flatex-Ordergruppen im Dialog gesichert · Pflicht-CI läuft · 28.10.2026
+
+Aktiver Funktionsbranch `feature/flh03-flatex-order-links`, HEAD `c08860ab9e942af084f11400c3282fba6fa993c5`,
+Baum `e8076abe54638f93e9011a162cca150ea789fae9` identisch lokal/API-Remote. PR192 auf bestehendem
+Branch erweitert, kein zweiter PR/Entwicklungsstrang. Zentraler Dokumentationsbranch
+weiterhin feature/flh05-import-foundation; Anzeigevertrag7050375 vor Code gesichert.
+
+Main `88508742db6bed9be57d6e907b2bfe56d61b1631` / Produktion v201 LIVE_ACCEPTED
+unverändert. Nur geparkte157/161 daneben; keine konkurrierende CI/Writer vor Sicherung.
+Reine Grundlage bereits DONE, **Dialogintegration IN_PROGRESS** bis aktuelle volle
+Pflicht-CI/Artefakt-/Quell-/Drei-Engine-/Bildabnahme. SW202 unveröffentlicht.
+
+Implementiert: vorhandene Quellanzeige erhalten, eingeklappte Ordergruppen mit allen
+konservativen Status/Gründen und getrennten Dateiordinal-/Zeilen-/Bank-/Orderreferenzen,
+exakten Quellwerten ohne Summen. Helper einmal je Dateistapel; unabhängige20er-Gruppen-/
+Beleganzeige, Fokus/Offenhaltung, Reset bei Datei-/Moduswechsel. Submit-/Generation-/
+Offline-/Nullmutationsschutz erhalten. Keine Parser-/Helper-/Legacy-/Finanz-/Storage-/
+Backupänderung; Workflows/Pins/Assertions nicht abgeschwächt.13Dateien Gesamtdiff.
+
+876/876 finale Units unter Node20,0Fehler/Skip; Node24 ebenfalls876PASS, neue4UI-Tests
+danach zusätzlich gezielt PASS. Syntax und finaler Chromiumdialog PASS: alle Gruppenfälle,
+Paginierung/Fokus/Reset, fünf Breiten/Axe/44px, erzwungener Submit/Cancel/Escape,
+echte Offlineanzeige und exakter IDB-Record/Revision/Settings unverändert, keine externen
+Requests. Tatsächlich lokale Chromiumbilder320/1440 für normale Paare und feindliche/
+lange Quelltexte angesehen, kein blockierender Layoutbefund. Browser-Testvorbedingung
+nach neuer Unassigned-Prüfung korrekt zurückgesetzt, bestehende Assertions erhalten.
+Lokaler Server zwischen isolierten Ausführungen nicht erreichbar; gemeinsamer Runner
+mit korrekten MIME-Typen verwendet, anschließend finaler Lauf PASS.
+
+Aktuelle Läufe: [40758881972](https://github.com/joke0071/foliolab-open/actions/runs/40758881972)
+volle PR-CI; Wallet40758881897. Keine unnötigen Wiederholungen oder Abbrüche.
+**Exakt nächster Schritt:** beide Läufe regulär abschließen lassen, aktuelle testedSHA/
+Mergebaum/Units/Runtimeberichte/Digests und neue Firefox-/WebKitbilder tatsächlich prüfen,
+Quellreview und Checkpoint vor Merge sichern. Danach nur bei grünen Gates kontrollierter
+Merge/Main/Pages/Livecheck samt exakten Bytes, Restore/Offline und Produktionsbildern.
+Zwei Etappen dieses Laufs UI-Prüfung + kontrollierter Release; erstere noch IN_PROGRESS.
+
+Keine privaten Originale im UI-Schnitt geöffnet, keine privaten Produktivdaten geändert.
+Keine wirtschaftliche Importfreigabe, vollständige Historie oder Performanceabnahme.
+UI-MASTER28/DELETE-MASTER28, sichere Löschlogik und bestehende Roadmap unverändert
+erhalten/offen; keine Vorziehung von FLH05/PERF/PROJ01. Gesamtmaster PARTIAL.
+
+---
+
 # Flatex-Orderbeziehungen: Vorschau-Anbindung wiederaufgenommen · 28.10.2026
 
 Frischer Kollisionscheck: main88508742db6bed9be57d6e907b2bfe56d61b1631/v201 unverändert, PR192 offen auf e48f14771fb083139dcc9604c0b7cf5c6489b602, nur geparkte157/161 daneben, jüngste Pflichtläufe40756057570/40756057649 SUCCESS, keine laufende CI oder fremder Writer erkennbar. Zentraler Checkpoint1c4c331d06ca9c62940e23ed4b1b98dcc1ad0d10 rekonstruiert; kein neuer Entwicklungsstrang.
