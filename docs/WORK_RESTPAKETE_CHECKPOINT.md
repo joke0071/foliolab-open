@@ -1,3 +1,51 @@
+# PR193: native Kontozuordnung/Staging remote gesichert · Pflicht-CI läuft · 28.10.2026
+
+Bestehender Funktionsbranch feature/flh03-flatex-native-identity / PR193,
+HEAD `a088fdfdb3bdd27f3ec08319a3ac770b57836d9e`, Baum `c15f092c15dfb63e583f6ca372f192bc1f98e1df`
+exakt lokal/API-Remote. Kein neuer Branch/PR, Grundlagef42bc8e und vorherige
+Format-/Order-UI unverändert erhalten. Vorabvertragcc5bf653 vor Code dauerhaft
+gesichert. Zentraler Dokumentationsbranch feature/flh05-import-foundation.
+
+Main4e9a4a7/v202 LIVE_ACCEPTED unverändert; nur geparkte157/161 daneben, keine aktive
+CI oder konkurrierende Entwicklung vor Kandidatensicherung. SW203 unveröffentlicht.
+**Kontobindung/Staging IN_PROGRESS** bis finale aktuelle volle CI/Quell-/Artefakt-/
+Drei-Engine-/Bildabnahme.17Dateien Gesamtdiff,8Dateien dieses UI-Schnitts.
+
+Implementiert im vorhandenen Dialog/Renderer: eingeklappte explizite Zuordnung +
+gesonderte Bestätigung je Seite/Scope, keine Autozuordnung, gewähltes Konto mobil
+vollständig sichtbar. Bestehende Depotchoices und importSourceKey/Importherkunft-/
+Manualschutz wiederverwendet; reine Quellstatus ohne Finanzprojektion/Auto-Dedupe/
+Legacy-Migration. Identitäts-/Orderhelfer einmal je Dateistapel gecacht.
+Zuordnung nur im Dialogspeicher, Reset bei Konto/Datei/Modus/Abbruch/Neuöffnen;
+assertCurrent vor Auswahl/Bestätigung und Generation/Dialog nach Await geprüft.
+Keine Bindungspersistenz oder wirtschaftliche Übernahme, Submitguard immer aktiv.
+
+902/902 finale Units unter Node20/0Fehler/Skip; Node24 ebenfalls902PASS,10 neue
+fokussierte Bindingtests. Syntax, neue und bestehende Chromium-UIgates PASS:
+natürliche Auswahl/Bestätigung, vorhandene/Manual-/Konfliktnachweise,20er-Kontext-/
+Source-/Orderpaging/Fokus/Offenhaltung,5Breiten/Axe/44px/lange/feindliche Labels,
+erzwungener Submit, verzögerte Freshnessgeneration, tatsächlicher konkurrierender
+IDB-Writer (nur dessen eine Revision), Offline-Neuladung und exakter IDB-Record/
+Revision/Settings unverändert durch diesen Dialog. Lokale Bilder320/1440 und
+Manualstatus tatsächlich angesehen; mobile volle Kontobezeichnung gezielt verbessert.
+
+Aktuelle Läufe: 40779790590 Wallet scan checks; 40779790578 FolioLab Open – testen und veröffentlichen.
+**Exakt nächster Schritt:** diese volle unveränderte Pflicht-CI/Wallet regulär beenden
+lassen, aktuelle testedSHA/Merge-/Kandidatenbäume, tatsächliche3Engine-Berichte,
+ZIP-Digests und neue Firefox-/WebKitbilder prüfen, finalen Scope reviewen und
+Checkpoint vor Merge sichern. Danach zweite Etappe kontrollierter Merge/Main/
+Pages/echte Liveabnahme mit120Bytehashes/Restore/Offline/Produktionsbildern.
+
+Keine privaten Originale in diesem UI-Schnitt geöffnet oder privaten Produktivdaten
+geändert. Parser/Transaktionsengine/Storage-/Top-Level-Backupformat unverändert;
+keine Workflowpins/Assertions/Gates abgeschwächt. UI-MASTER28/DELETE-MASTER28,
+Historienstart01.01.2022/Verbot fiktiver Buchungen und bestehende Roadmap erhalten,
+Gesamtmaster PARTIAL. Wirtschaftlicher Nativeimport/Original-End-to-End-Abgleich
+und vollständige Historien-/Bestands-/Performanceabnahme separat offen.
+Quellen und Checkpoint dauerhaft remote gesichert, lokale Artefakte synthetisch.
+
+---
+
 # Native Flatex-Kontobindung/Staging wiederaufgenommen · 28.10.2026
 
 Frischer Kollisionscheck: main4e9a4a7392e3469eeb2018b7a9516debe3a48e96/v202 LIVE_ACCEPTED
