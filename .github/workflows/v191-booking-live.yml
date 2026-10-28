@@ -1,0 +1,93 @@
+name: v191 – targeted Booking production acceptance
+on:
+  push:
+    branches: [qa/v191-booking-live]
+    paths-ignore: ['docs/**']
+permissions:
+  contents: read
+jobs:
+  booking-production:
+    runs-on: ubuntu-24.04
+    env:
+      RELEASE_SHA: 5b9bb792125343b602157bb949ec8b0efcb28fd0
+      BOOKING_UI_BASE: https://foliolab.unperfekt.at/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Require exactly released app and test bytes
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "$RELEASE_SHA" --depth=1
+          git diff --exit-code "$RELEASE_SHA" HEAD -- src styles.css sw.js index.html manifest.webmanifest icons tests package.json
+          mkdir -p artifacts/gates
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const base=process.env.BOOKING_UI_BASE,sha=process.env.RELEASE_SHA;
+          assert.equal(base,'https://foliolab.unperfekt.at/');
+          const sw=readFileSync('sw.js','utf8');
+          const assets=JSON.parse(sw.match(/const ASSETS=(\[[^;]+\]);/)[1].replaceAll("'",'"'));
+          const paths=[...new Set(['sw.js',...assets.map(p=>p==='./'?'index.html':p.replace(/^\.\//,''))])];
+          const hashes=[];
+          for(const path of paths){
+            const u=new URL(path,base);u.searchParams.set('booking-release-check',sha);
+            const response=await fetch(u);assert.equal(response.status,200,path);
+            const actual=Buffer.from(await response.arrayBuffer()),expected=readFileSync(path);
+            assert.ok(actual.equals(expected),'Published source differs: '+path);
+            hashes.push({path,sha256:createHash('sha256').update(actual).digest('hex')});
+          }
+          assert.match(readFileSync('sw.js','utf8'),/const CACHE='foliolab-open-v191'/);
+          writeFileSync('artifacts/gates/booking-production-assets.json',JSON.stringify({releaseSha:sha,base,cache:'foliolab-open-v191',hashes},null,2));
+          console.log('V191 BOOKING LIVE: '+hashes.length+' exact published source hashes; released app/test tree unchanged');
+          NODE
+      - name: Use actual production origin for isolated synthetic setup without interception
+        run: |
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync,writeFileSync} from 'node:fs';
+          const source=readFileSync('tests/browser-booking-management.mjs','utf8');
+          const marker='http://127.0.0.1:4173/';
+          assert.equal(source.split(marker).length,4,'three exact setup/restore/peer origin URLs');
+          assert.ok(!source.includes('.route('),'no request interception');
+          writeFileSync('tests/.v191-booking-production.mjs',source.replaceAll(marker,process.env.BOOKING_UI_BASE));
+          writeFileSync('artifacts/gates/booking-production-setup.json',JSON.stringify({release:process.env.RELEASE_SHA,originalTest:'tests/browser-booking-management.mjs',unchangedAssertions:true,setup:'fresh actual production origins; synthetic fixtures before baselines',networkInterception:false,productionAssetsIntercepted:false},null,2));
+          NODE
+      - name: Install Chromium test environment
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npx playwright install chromium --only-shell
+      - name: Actual Booking workflows in production Chromium
+        run: |
+          set -euo pipefail
+          node tests/.v191-booking-production.mjs 2>&1 | tee artifacts/gates/booking-production-chromium.log
+      - name: Install Firefox and WebKit test environment
+        timeout-minutes: 8
+        run: |
+          set -euo pipefail
+          if [[ -f /etc/apt/apt-mirrors.txt ]]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+          fi
+          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null
+          fi
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
+          DEBUG=pw:install npx playwright install --with-deps firefox webkit
+      - name: Actual Booking workflows in production Firefox and WebKit
+        env:
+          BOOKING_MANAGEMENT_ENGINES: firefox,webkit
+        run: |
+          set -euo pipefail
+          node tests/.v191-booking-production.mjs 2>&1 | tee artifacts/gates/booking-production-cross.log
+      - name: Preserve actual production evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v191-booking-production-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+
