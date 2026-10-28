@@ -1,3 +1,13 @@
+# Flatex-Orderbeziehungen: Vorschau-Anbindung wiederaufgenommen · 28.10.2026
+
+Frischer Kollisionscheck: main88508742db6bed9be57d6e907b2bfe56d61b1631/v201 unverändert, PR192 offen auf e48f14771fb083139dcc9604c0b7cf5c6489b602, nur geparkte157/161 daneben, jüngste Pflichtläufe40756057570/40756057649 SUCCESS, keine laufende CI oder fremder Writer erkennbar. Zentraler Checkpoint1c4c331d06ca9c62940e23ed4b1b98dcc1ad0d10 rekonstruiert; kein neuer Entwicklungsstrang.
+
+Nächste reguläre Etappen: (1) bestehende native Vorschau um reinlesende konservative Ordergruppen erweitern und vollständig prüfen, (2) bei grünen Gates kontrolliert mergen, deployen und tatsächlich live abnehmen. Bestehender Helper/Legacy-Vertrag bleiben unverändert. Kein wirtschaftlicher Import, keine privaten Produktivdatenänderungen. Vor Code kleinen Anzeigevertrag dauerhaft sichern: Gruppenstatus/kurze Gründe, eindeutige Datei-/Zeilenlokatoren mit getrennten Bank-/Orderreferenzen, alle Beine und ungeordnete Zeilen erhalten, begrenzte progressive Anzeige/Fokus/Reset, Escaping, fünf Breiten/Axe, erzwungener Submit/Cancel/Escape, echte Offlineprüfung und exakter IDB-/Revisions-/Settings-Nullmutationstest. Keine bestätigte Abrechnung/Bestands-/Performanceaussage.
+
+Reine Grundlage bereits DONE; UI-Anbindung IN_PROGRESS, SW202 unveröffentlicht, Gesamtmaster PARTIAL. UI-MASTER28/DELETE-MASTER28 und bestehende Roadmap unverändert. Exakt nächster Schritt Anzeigevertrag sichern, dann bestehenden flatex-native-ui-Renderer und Dialogzustand minimal erweitern.
+
+---
+
 # Native Flatex-Orderbeziehungen: reine Grundlage abgenommen und gesichert · 28.10.2026
 
 **Verbindlicher aktueller Stand:** Vertrag und reine Zuordnungsgrundlage **DONE im begrenzten PR-/Helferumfang**. PR192 bleibt offen/unveröffentlicht; kein Merge, Deployment oder neuer Live-PASS. Produktion weiterhin v201 LIVE_ACCEPTED. Gesamtmaster und FLH03–05 **PARTIAL**.
