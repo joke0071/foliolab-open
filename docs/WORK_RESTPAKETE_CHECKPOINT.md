@@ -1,3 +1,9 @@
+# KRAKEN-QA01-Korrektur gesichert · PR189 in Pflicht-CI · 28.10.2026
+
+[PR189](https://github.com/joke0071/foliolab-open/pull/189), bestehenderBranch `feature/flh03-kraken-ledger-preview`, HEAD `f6a1fc29bb43e5e53d3be9a22d586a739a7514c9`, lokalerIndex-/RemoteTree exakt `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`. EinDatei-/EinZeilen-Diff ausschließlich `tests/browser-kraken-ledger.mjs`: echteStartseite/IDB-ready vor synthetischemSeed. Keine Assertion entfernt, Syntax PASS; keineProdukt-/Workflow-/Pinänderung und daher unverändertes SW199. RegulärePflicht-CI40713975520/Wallet40713975525 läuft, nicht doppelt starten. **KRAKEN-QA01 IN_PROGRESS**, KRAKEN03 nochblockiert bis Korrektur/Releaseabnahme; v199veröffentlicht ohneLIVE_ACCEPTED, v198zuletztabgenommen. ZweiteEtappe dieserSitzung; notwendigeTests/Release regulärabschließen, danachgesicherterStopp ohneweiteresPaket.
+
+---
+
 # KRAKEN03 Livegate blockiert · KRAKEN-QA01 gestartet · 28.10.2026
 
 **KRAKEN03 BLOCKED / KRAKEN-QA01 IN_PROGRESS.** v199/SHA49fe892d veröffentlicht, noch NICHT LIVE_ACCEPTED; letzter abgenommener Release v198. Main-/Crossgates grün (historischerWebKit-Logoaussetzer nach einmaliger unveränderter gezielter Wiederholung bestanden). Livejob122903996772 fehlgeschlagen: `browser-kraken-ledger.mjs:22` dynamischer Modulimport beim Seed. Konkrete Ursache im Testszenario: Navigation auf `tests/storage-origin.html`; Deployment veröffentlicht nur index/styles/manifest/sw/src/icons, keine tests-Hilfsseiten. Kernliveabnahme davor PASS:115exakteAssetbytes/SW199,6Gruppen/18Axe,Plain/EncryptedRestore/Offline; keine komplette3Engine-Abnahme behauptet. Fehlgeschlagener Produktionsbeleg12826454068/Digest92b06e97a534b902e3b1293c7733ffa372664ce8c344aadadab8ec41c67dbeff bleibt erhalten.

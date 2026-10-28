@@ -7,7 +7,9 @@ Verbindlich: [WORK_RESTPAKETE_CHECKPOINT.md](WORK_RESTPAKETE_CHECKPOINT.md).
 - Veröffentlicht: **v199, NICHT LIVE_ACCEPTED**.
 - main: `49fe892d09d53a8de13a7481d2526aca356cef5f` (PR188 gemergt).
 - Baum: `ecc9f587340e3fb2a9b0246b06fa85e9973b16d8`, exakt geprüfter Kandidat.
-- Aktiver Branch: `feature/flh03-kraken-ledger-preview`; Korrektur-PR folgt.
+- Aktiver Branch: `feature/flh03-kraken-ledger-preview`; [PR189](https://github.com/joke0071/foliolab-open/pull/189) offen.
+- HEAD `f6a1fc29bb43e5e53d3be9a22d586a739a7514c9`, Tree `c4583d5d866c56f46d6c59741cbfc6b49348e3b4`.
+- Pflicht-CI40713975520/Wallet40713975525 läuft; Syntax/Ein-Zeilen-Review PASS.
 - **KRAKEN03 BLOCKED**, **KRAKEN-QA01 IN_PROGRESS** (zweite Etappe).
 - Gesamtmaster/FLH03-03 PARTIAL; wirtschaftliche Übernahme bleibt gesperrt.
 
@@ -34,8 +36,8 @@ Keine zusätzliche externe Freigabe für Testkorrektur/reinlesende Vorschau erfo
 
 ## Exakt nächster Schritt
 
-Testinitialisierung korrigieren, gezielt prüfen und auf bestehendem Branch sichern;
-Korrektur-PR regulär abnehmen. Danach notwendiger Releaseabschluss und sicherer Stopp.
+PR189-CI regulär vollständig abschließen, identische Bäume/Review prüfen;
+danach kontrolliert mergen und tatsächliche Drei-Engine-Produktionsabnahme beenden. Danach notwendiger Releaseabschluss und sicherer Stopp.
 Maximal zwei Etappen: KRAKEN03-Release + KRAKEN-QA01-Fehlerkorrektur.
 Danach nächste Sitzung bestehende Bitpanda-/Flatex-/P-Chain-Folge, keine neue Roadmap.
 
