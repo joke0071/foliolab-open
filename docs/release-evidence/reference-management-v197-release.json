@@ -1,0 +1,175 @@
+{
+  "core": {
+    "sha": "7b96a411925621f59021c36ad4d4a60a531c3a92",
+    "cache": "foliolab-open-v197",
+    "base": "https://foliolab.unperfekt.at/",
+    "startedAt": "2026-10-28T12:33:25.997Z",
+    "finishedAt": "2026-10-28T12:33:47.098Z",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "scans": [
+      {
+        "label": "320 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "320 history",
+        "violations": 0
+      },
+      {
+        "label": "320 positions",
+        "violations": 0
+      },
+      {
+        "label": "320 bookings",
+        "violations": 0
+      },
+      {
+        "label": "320 more",
+        "violations": 0
+      },
+      {
+        "label": "390 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "390 history",
+        "violations": 0
+      },
+      {
+        "label": "390 positions",
+        "violations": 0
+      },
+      {
+        "label": "390 bookings",
+        "violations": 0
+      },
+      {
+        "label": "390 more",
+        "violations": 0
+      },
+      {
+        "label": "1440 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "1440 history",
+        "violations": 0
+      },
+      {
+        "label": "1440 positions",
+        "violations": 0
+      },
+      {
+        "label": "1440 bookings",
+        "violations": 0
+      },
+      {
+        "label": "1440 more",
+        "violations": 0
+      },
+      {
+        "label": "ETF history",
+        "violations": 0
+      },
+      {
+        "label": "saved synthetic crypto history",
+        "violations": 0
+      },
+      {
+        "label": "split transfer preview",
+        "violations": 0
+      }
+    ],
+    "result": "PASS",
+    "errors": []
+  },
+  "assetMatches": 112,
+  "referenceCross": {
+    "base": "https://foliolab.unperfekt.at/",
+    "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+    "engines": [
+      {
+        "engine": "firefox",
+        "result": "PASS",
+        "references": 210,
+        "widths": [
+          320,
+          390,
+          430,
+          768,
+          1440
+        ],
+        "checks": [
+          "normal/manage/visible page/partial/filter/no hidden selection",
+          "source and runtime guards/start/impact correction/add/duplicate",
+          "exact original and non-null TWR/XIRR invariance",
+          "quota/post-put/cancel/retry/CAS",
+          "combined booking/reference archive/restore",
+          "plain and fresh password V2 UI restore",
+          "actual offline commit/reload",
+          "keyboard/focus/axe/44px"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "references": 210,
+        "widths": [
+          320,
+          390,
+          430,
+          768,
+          1440
+        ],
+        "checks": [
+          "normal/manage/visible page/partial/filter/no hidden selection",
+          "source and runtime guards/start/impact correction/add/duplicate",
+          "exact original and non-null TWR/XIRR invariance",
+          "quota/post-put/cancel/retry/CAS",
+          "combined booking/reference archive/restore",
+          "plain and fresh password V2 UI restore",
+          "actual offline commit/reload",
+          "keyboard/focus/axe/44px"
+        ]
+      }
+    ]
+  },
+  "referenceChromiumLog": [
+    "chromium: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS"
+  ],
+  "release": "v197",
+  "status": "LIVE_ACCEPTED",
+  "pr": 186,
+  "main": "7b96a411925621f59021c36ad4d4a60a531c3a92",
+  "tree": "2572b4aa3bab516f4a4b92c489684a4ad69609bb",
+  "run": 40687427813,
+  "approval": {
+    "date": "2026-10-28",
+    "user_response": "freigabe",
+    "scope": "Explicit portable reference archive metadata version2 approval for PR186 after compatibility explanation",
+    "checkpoint_commit": "4239573f9b62a3ee6e5f2e99b07ef6c7f7668573"
+  },
+  "all_required_jobs": "success",
+  "artifact": {
+    "id": 12816337158,
+    "sha256": "e3d94ea89caf10a65fa0b2da575e87c7b7cc486af9a2c0a9b11be9f8aaea0064",
+    "verified_before_extraction": true
+  },
+  "visual_review": {
+    "result": "PASS",
+    "images": [
+      "firefox-manage-320.png",
+      "webkit-normal-390.png",
+      "webkit-manage-1440.png",
+      "chromium-normal-320.png"
+    ]
+  },
+  "limits": "Synthetic production browser acceptance; physical hardware/OAuth/private originals/external specialist gates remain separately open."
+}
