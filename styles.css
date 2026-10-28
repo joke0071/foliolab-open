@@ -1174,3 +1174,9 @@
 
 /* Keep booking text readable beside the desktop sidebar at intermediate widths. */
 @media(min-width:768px) and (max-width:1000px){.booking-management-row .booking-main{grid-template-columns:repeat(2,minmax(0,1fr))}.booking-management-row .booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}.booking-management-row .booking-main>time{grid-column:1}.booking-management-row .booking-main>strong:last-of-type{text-align:left;grid-column:1/-1}}
+
+/* Shared list headers expose selection without a second disclosure or toolbar. */
+.list-selection-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0 4px;min-width:0}
+.list-selection-head h3{margin:0;font-size:14px}
+.list-selection-head .btn{min-width:44px;min-height:44px;white-space:normal;font-size:12px;padding:8px 10px}
+.list-selection-head:empty,#positionSelectionTools:empty,#positionSelectionStatus:empty,#bookingManagementTools:empty{display:none}

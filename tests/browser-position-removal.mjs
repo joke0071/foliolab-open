@@ -31,6 +31,21 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   console.log(engine+': UI fixture active worker/controller before quota/abort '+JSON.stringify(await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,active:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys()}))));
   await page.locator('#sidebarNav [data-page=positions]').click();
   const before=await record();assert.equal(await page.locator('[data-position-select]').count(),0);
+  for(const width of [320,390,430,768,1440]){
+   await page.setViewportSize({width,height:900});
+   const trigger=page.locator('#positionListHead [data-action="select-positions"]');
+   await trigger.scrollIntoViewIfNeeded();assert.equal(await trigger.innerText(),'Mehrfachauswahl');
+   assert.equal(await page.locator('#positionSelectionTools button,#positionSelectionTools input').count(),0);
+   assert.equal(await page.locator('[data-position-select]').count(),0);
+   assert.ok(await trigger.evaluate(b=>{const r=b.getBoundingClientRect(),h=b.parentElement.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=h.left&&r.right<=h.right+1;}));
+   assert.equal(await page.locator('.position-entry').first().locator('.position-row-actions button').count(),3);
+   await axe();mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/positions-'+engine+'-'+width+'.png'});
+   await trigger.focus();await page.keyboard.press('Enter');
+   assert.equal(await page.locator('#positionListHead button').count(),0);assert.ok(await page.locator('#positionSelectFiltered').isVisible());
+   if(width<=700)assert.equal(await page.locator('#positionSelectionTools').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),2);
+   await button('cancel-selection').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
+  }
+  assert.deepEqual(await record(),before,'header/keyboard selection cycles are transient');await page.setViewportSize({width:1440,height:850});
   await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
   assert.equal(await page.locator('[data-position-select]').count(),100);
   await cycle();assert.match(await page.locator('#positionSelectionStatus').innerText(),/100 ausgewählt/);
