@@ -1,3 +1,26 @@
+# FX-FORMAT01 korrigiert remote gesichert · finale PR-CI offen · 28.10.2026
+
+PR191 / `feature/flh03-flatex-native-format`, HEAD `56c0b1397b02aa3041daf4f434340f530aeeedde`,
+Baum `f3dcf3a74e411ad7158946ab993d98bad2b02615` exakt lokaler geprüfter Quellbaum und Remote.
+Erstlauf40743513733 regulär vollständig grün beendet; Wallet40743513720 bleibt
+historischer reproduzierter Node20-Euro-Fehlnachweis. Erst danach Korrektur gepusht,
+keine laufende CI unterbrochen. Explizite CP1252-C1-Zuordnung und alle32-Zeichenvektoren,
+853/853 komplette lokale Units unter Node20 und Node24, Syntax, korrigierte
+Chromium-Runtime/Offline/exakteNullmutation und erneuter vollständiger privater
+Python-Feld-/Datum-/Decimalvergleich PASS. Keine private Werteveröffentlichung.
+
+**FX-FORMAT01 IN_PROGRESS** bis finale unveränderte Pflicht-CI/Drei-Engine-/Quellprüfung.
+Keine Dialog-/Finanz-/Storage-/Backupänderung. Produktion v200 LIVE_ACCEPTED/main b2a07f4,
+SW201 unveröffentlicht. Nächster Schritt tatsächliche neue CI/Wallet-/Runtimeberichte und
+Artefaktdigests prüfen, identische Bäume bestätigen, geprüften Kandidaten dauerhaft sichern.
+Nach Audit + Formatgrundlage gesicherter Stopp, danach native Quarantänevorschau mit
+getrennten Depot-/Kontouploads und späterer Order-/Mehrfachgegenbeinvertrag.
+UI-MASTER28 und DELETE-MASTER28 (Nachtrag fc50a31746de881504c2b0bcefa9e5459ddfc138)
+bleiben ausdrücklich offen und verbindlich; keine parallele Löschimplementierung,
+keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe. Master PARTIAL.
+
+---
+
 # Lösch-Nachtrag aufgenommen · laufendes FX-FORMAT01 unverändert · 28.10.2026
 
 [Verbindlicher Nachtrag: einheitliche sichere Löschlogik](UNIFIED_SAFE_DELETION_ADDENDUM.md) vollständig gesichert. **DELETE-MASTER28 OPEN** beim nächsten passenden konfliktfreien Verwaltungsschritt: Löschen von Buchungen/Positionen/Referenzwerten ermöglichen, wenn vollständige sichere Rücknahme bewiesen ist; keine pauschale Sperre allein wegen Herkunft. Referenzabhängigkeiten (Renditestart/Bewertungsgrundlagen/Kontrollpunkte/Diagramme/Originalnachweise/TWR/XIRR/Bestandsabgleich), kompakte Sperrgründe/Alternativen, Vorschau/Bestätigung, keine stillen Teillöschungen und keine künstlichen Ersatzwerte verbindlich. Bestehende Schutzpfade bis zum sicheren neuen Nachweis erhalten. Keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe.
