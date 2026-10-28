@@ -18,7 +18,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const file=text=>({name:'synthetic-kraken.csv',mimeType:'text/csv',buffer:Buffer.from(text)});
  const preview=()=>p.waitForFunction(()=>document.getElementById('csvReviewStatus')?.textContent.includes('Kraken Ledger:'));
  try{
-  await p.goto(new URL('tests/storage-origin.html',base).href);const seed=ledgerModel();seed.settings.autoRefresh=false;
+  await p.goto(base);await ready();const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
   await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);const before=await read();
   ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
