@@ -1218,6 +1218,44 @@
 .reference-filter select{min-height:44px}
 .reference-management-head{justify-content:flex-end;flex-wrap:wrap;margin:8px 0 8px auto}
 .reference-management-head .btn{padding:8px}
+
+/* Verified Sonnet follow-up: scoped targets and balanced wealth presets. */
+#dashboardPage .link-button,#dashboardPage #onboarding .btn,#positionsPage .filter-list .filter,
+#bookingsPage .filter-list .filter{min-height:44px;min-width:44px}
+#dashboardPage .link-button{display:inline-flex;align-items:center;justify-content:center}
+#positionsPage .action-group .responsive-action,
+#bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action,
+#historyPage .history-calendar-popover>summary{
+ min-width:44px;min-height:44px;height:auto
+}
+#historyPage .history-calendar-header button{width:44px;height:44px;flex:0 0 44px}
+#historyPage .history-calendar-day{min-width:44px;height:44px}
+#historyPage .history-calendar-foot button{min-width:44px;min-height:44px;white-space:normal}
+#historyPage .history-calendar-panel{width:352px;max-width:calc(100vw - 4px)}
+#historyPage .history-calendar-weekdays,#historyCalendarHint{color:#4d6756}
+.allocation-segment:focus-visible{outline:3px solid #173b2d;outline-offset:3px}
+@media(max-width:767px){
+ #positionsPage .action-group .responsive-action,
+ #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action,
+ #historyPage .history-calendar-popover>summary{
+  flex-basis:44px;width:44px;max-width:44px;height:44px
+ }
+ .chart-period.mini-chart-periods,#historyPage .chart-period.history-chart-period{
+  display:grid;grid-template-columns:repeat(4,minmax(44px,1fr));width:100%
+ }
+}
+/* Seven distinct 44px days fit even at320px. The bounded popup scrolls
+   vertically on short screens; hit areas never overlap adjacent days. */
+@media(max-width:420px){
+ #historyPage .history-calendar-panel{
+  position:fixed;left:50%;right:auto;transform:translateX(-50%);
+  top:clamp(72px,20dvh,140px);width:calc(100vw - 4px);max-width:360px;
+  padding:3px;max-height:min(70dvh,calc(100dvh - 160px))
+ }
+}
+@media(max-width:360px){
+ #historyPage .history-calendar-weekdays,#historyPage .history-calendar-grid{gap:0}
+}
 #referenceSelectionTools:empty,#referenceSelectionStatus:empty{display:none}
 #referenceSelectionTools>.settings-actions{gap:9px;margin:12px 0}
 #referenceSelectionTools .btn{min-width:44px;min-height:44px;white-space:normal}
