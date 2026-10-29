@@ -1,3 +1,15 @@
+# „Mehr“-Gesamtauftrag vollständig gesichert · PR202-Release läuft · 29.10.2026
+
+Der vollständige16-teilige Nutzerauftrag [Mehr: Gesamt-UX](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md) ist auf Commit6991601939cf9d0aba313e4b21db157c35426da6 gesichert. Er ersetzt den isolierten Backup-Beschriftungsprompt und integriert bestehende K03/K04-/Android-/Backup-/Drive-UX-Verträge. Alle Bereiche und geöffneten Unterakkordeons, Pflichttexte, Optionen/Exportgrenzen, Statusunterscheidungen, dynamische Origin, Drive/RPC/Worker/Datenschutz, Hierarchie, sieben Breiten und vollständige Zustandsmatrix erhalten. Keine neue Roadmap oder parallele Implementierung, keine Änderung der Sicherheits-/Speicher-/Finanzlogik.
+
+[Erste synthetische Ausgangsbelege](release-evidence/more-ux-baseline-v215.json):14 geschlossene/geöffnete Zustände bei320/360/390/412/430/768/1440px,19 Details geöffnet,0Seitenoverflow/0Axe, exakter raw/settings/revision unverändert. Mehrere kleine sichtbare Aktionen erfasst, einschließlich deaktivierter Elemente; Text-/Rahmen-/Hierarchiedeltas im Bild bestätigt. Script dauerhaft und hash-identisch gesichert. Status OPEN/PARTIAL, keine volle Backup-/OAuth-/Android-Hardwareabnahme. Roadmap und Audit vor diesem separaten Checkpoint aktualisiert.
+
+**PR202 wurde mit ausdrücklicher Nutzerfreigabe unverändert gemergt:** main c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9, Treebb57f1a8417389e8116a46de317ff66441e713c7. [Mainpipeline40937967415](https://github.com/joke0071/foliolab-open/actions/runs/40937967415) läuft. Produktionsstand vor Merge tatsächlich SW214. Lokale Chromium-Laufzeit war anfangs nicht vorhanden; nach Bereitstellung tatsächliche Produktionsprobe v214→v215 mit bestehendem synthetischen IndexedDB-Datensatz gestartet. Noch kein v215LIVE_ACCEPTED.
+
+**Nächster Schritt:** vollständige Main-/Pages-/Livegates und echte Produktions-Updateprobe samt allen Cache-Dateihashes, aktivem Controller, exaktem Datenerhalt und Offline-Neustart abschließen. Keine erneute Nutzerfreigabe für unveränderten PR202 nötig. Nach erfolgreicher Abnahme Releasebelege separat sichern, dann übrige UI-P1 einschließlich neu präzisierter Diagramme und später passende kompakte „Mehr“-Schnitte. Frühere4×2-Pflicht bleibt SUPERSEDED. Alle übrigen Masterverträge erhalten, FLH05/PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch nie als Appcode nach main mergen.
+
+---
+
 # PR202 freigegeben und gemergt · v215-Releasegates laufen · 29.10.2026
 
 Ausdrückliche Nutzerfreigabe „Freigabe“ für PR202 erhalten. Unveränderter HEAD620790477a54e4c5f565af9e83fcb62b9d769fce, Pflicht40930734405 und Wallet40930734559 SUCCESS, main zuvor d037b487, Testmerge1d8677c7 mit identischem Treebb57f1a8. Keine aktiven/wartenden Actions, offene PR202/161/157 und187 Branches geprüft. Kontrollierter Merge mit expected_head_sha: **c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9**.
