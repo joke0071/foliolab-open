@@ -1,3 +1,13 @@
+# PR198 strenger44px-Vertrag korrigiert · volle CI läuft · 29.10.2026
+
+**PARTIAL:** unveröffentlichter SW212-Kandidat. Neuer HEAD81cca6060008282ae1e0dc307684d53f4a303490 / Baum425ae224c33a90bfd399d7fc7ec93db04965f17b, Remote übernommen/lokalgleich. Nur tests/browser-responsive-actions.mjs gegenüber7fa geändert; sämtliche Produktbytes exakt unverändert. PR198 bleibt Draft; mainc08bc1d3/produktivv211 LIVE_ACCEPTED.
+
+Pflicht40898145611/test123532783759 scheiterte am historischen Größenmaximum38–41px für mobile Kopfbuttons. Tatsächliche neue Chromium-Kontrollprüfung/948Units zuvor PASS; kein Finanz-/Sicherheitsfehler. Ausdrücklicher Nutzervertrag UI-A02 verlangt>=44px. Alte Größenprüfung deshalb durch **exakt44x44 mobil plus>=44px alleBreiten** ersetzt; keine Toleranzerhöhung/entfernte Sicherheit. Einzeiligkeit/Kartenbegrenzung/Labels/A11y und tatsächliche Aktionen erhalten. Gezielter320–1440px-Test PASS. Fehlbeleg12909115275/Digestc17f8fec4de597b791eb3a94998c7ed6941792ee95e06e8f98cf01f141ea4928 im permanenten Kandidatenbeleg erhalten; frühereCrossjobs nicht abgebrochen.
+
+Neue volle Pflicht [40899143762](https://github.com/joke0071/foliolab-open/actions/runs/40899143762) / Wallet[40899143178](https://github.com/joke0071/foliolab-open/actions/runs/40899143178) auf exakt81cca606 laufen. **Exakte Fortsetzung:** beide regulär abschließen, tatsächliche finaleLogs/948Units/3Engineberichte/Testmergebaum/Bilder/ZIPdigests prüfen; bei Fehler erst Ursache. Nach endgültigerAbnahme Maschinenbeleg und separatenCheckpoint remote sichern, PRreviewbereit; Folgefreigabe vorMerge/Deployment nicht aus196 ableiten. Kein paralleler Funktionsstrang; alle Master-/Parkierungs-/PERF01-P1-/Originalbeleg-/Hardware-/OAuthgrenzen darunter erhalten.
+
+---
+
 # UI-P1/Chartkontrollen gesichert · PR198 CI läuft · 29.10.2026
 
 **DONE:** PR196 mainc08bc1d3/v211 LIVE_ACCEPTED; UI-Rückübernahme/alle8Sonnetkandidaten/Master-A–I dauerhaft übernommen, Issue197 geschlossen. Siehe vollständiger Releasebeleg53fdbafc und Zuständigkeitscheckpoint43e520cc unten.
