@@ -1,3 +1,15 @@
+# Aktuell gültiger Masterstand · 29.10.2026
+
+**PR196 DONE / LIVE_ACCEPTED:** main c08bc1d35b25d72081fb07a61e95532a883fdebe, unveränderter freigegebener Baum0d486119, produktiv v211/SW211. Main/Pages/Live40893805495 vollständig SUCCESS,946/946Units,Chromium/Firefox/WebKit,120exakte Live-Assethashes und tatsächliche Referenzrücknahme-/Native-Übernahmeberichte. Dauerhafter Maschinenbeleg [reference-removal-live-v211.json](release-evidence/reference-removal-live-v211.json), Commit53fdbafcfc8e8b71d63bb73ea50b500db04c008b. Keine universelle DELETE-/Folge-PR-Freigabe.
+
+**UI-VISUAL-CLAUDE: AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK.** Ausdrückliche Nutzerentscheidung: exklusive Claude-Implementierungsdelegation samt Work-Sperre vollständig aufgehoben. Work übernimmt sämtliche offenen UI-/UX-Aufgaben. Claude lieferte laut Nutzer ausschließlich unabhängigen read-only Audit, keinen Code/Branch/PR. Keinen weiteren Claude-Lauf starten. Historische Delegationstexte darunter sind überholt und bleiben nur als Nachweise erhalten.
+
+Die acht zusätzlichen Sonnet-Kandidaten UI-A01–A08 und der vollständige A–I-Restvertrag stehen im aktuellen Kopf von [UI_VISUAL_CLAUDE_HANDOFF.md](UI_VISUAL_CLAUDE_HANDOFF.md); Umsetzung unter bestehendem UI-MASTER28/#149, keine zweite Roadmap. P1 kompakte Beträge/echte44px-Ziele; P2 Kontrast/Zeiträume/Donutfokus, mobile Zeilen nur bedingt; P3 Willkommen/Leerraum nach belegtem Nutzen. Bereits erledigte UI überspringen. Eigene vorläufige Ausgangsmessung [pr196-followup-baseline.json](release-evidence/pr196-followup-baseline.json) bestätigt A01/A02/A04; übrige Kandidaten vor Umsetzung verifizieren.
+
+**FLH-PERF01 essentielleP1**, echte große IDB-Startperformance/30%-Medianziel, Erst-/Warmstart getrennt messen; nicht hinter optionalerP3 verzögern. FLH03/DELETE/IDB-Recovery/FLH04 und sämtliche ursprünglichen Anforderungen/Originalbeleg-/OAuth-/Hardware-/AT-/Releasegates bleiben erhalten. **FLH05/FLH-PROJ01 OPEN/PARKED.** Gesamtmaster PARTIAL. Keine parallele Implementierung, keine historischen Dokumentationsbranches nach main mergen; jede Etappe und separaten Checkpoint remote sichern.
+
+---
+
 # Aktueller Zuständigkeits- und Fortschrittsverweis · 29.10.2026
 
 Der folgende v188-Gesamtaudit bleibt als historische Bestandsaufnahme vollständig
