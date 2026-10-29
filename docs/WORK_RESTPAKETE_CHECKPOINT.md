@@ -1,3 +1,11 @@
+# Native Flatex-Projektionsvertrag vor Code gesichert · 29.10.2026
+
+Basis main3e9f4877/v204 unverändert, PR194 bereits abgeschlossen. [Vertrag](FLH03_FLATEX_NATIVE_PROJECTION_CONTRACT.md): kleinste reine native EUR-Stückhandelsprojektion + streng qualifizierte gemeinsame Simulation. Bestehende native Order-/Identitäts-/Kontobindungs- und previewCSV-/Backfill-/Kosten-/Baseline-/Undoverträge werden wiederverwendet. Alle Cash-/Sonder-/ungeklärten Zeilen blockieren den Gesamtstapel; keine stillschweigende Teilübernahme. Unbekannte Gebühren/Steuern bleiben null, kein Geldkonto/FX/Eröffnung/Kosten erfunden. Append nur leere ungeschützte Zielpositionen, Backfill nur vorhandener konservativer Pfad und exakter Endbestand. UI/Schreibfreigabe separat.
+
+Nächster Schritt auf genau einem von aktuellem main abgeleiteten Funktionsbranch minimale Projektion/Simulation implementieren und vollständige synthetische Unit-/Replay-/Manual-/Backup-/Undo-/Stale-/Drei-Engine-/Offline-/Nullmutationsnachweise liefern; vorhandene private Nicht-Handelsgrenzen im gesonderten Referenzcheck prüfen. Vertrag vor Code, noch keine neuen Produktänderungen/Tests. Zwei Etappen Vertrag + geprüfte Grundlage, kein vorzeitiger Merge/Deployment. Originaldaten privat, UI-MASTER28/DELETE-MASTER28/ursprüngliche Roadmap unverändert, Gesamtmaster PARTIAL.
+
+---
+
 # Native Flatex-Übernahmequalifizierung wiederaufgenommen · 29.10.2026
 
 Frischer Kollisionscheck180Branches: main3e9f4877/v204 LIVE_ACCEPTED unverändert, PR194 gemergt, nur geparkte157/161 offen. Main-/Pages-/Live-CI40828393381 vollständig SUCCESS, keine aktiven Actions/erkennbaren fremden Git-/Nodewriter. Checkpoint02ec5bf9 rekonstruiert. Format-/Order-/Identitäts-/Bindungs-/Betrags-/UIarbeit abgeschlossen, nicht neu implementieren. Maßgeblicher Dokumentationsbranch feature/flh05-import-foundation, historischen Appbaum nicht mergen.
