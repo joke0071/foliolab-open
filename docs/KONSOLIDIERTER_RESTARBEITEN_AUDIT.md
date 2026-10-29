@@ -1,3 +1,15 @@
+## Aktueller Abgleich der Nutzerpräzisierung · 29.10.2026
+
+- PR202: TECHNICALLY_ACCEPTED / REVIEW_READY, vollständige Pflicht- und Wallet-CI SUCCESS,954 Units/drei Engines. SW215 noch nicht freigegeben, gemergt oder veröffentlicht.
+- PR201: MERGED / DEPLOYED; reguläre Main-/Pages-/Livegates erfolgreich,121 tatsächliche Dateihashes. Der zusätzliche Updatepfad bleibt bis zum separat geprüften PR202 offen; kein uneingeschränktes LIVE_ACCEPTED behaupten.
+- UX03: OPEN mit neuem Sollzustand. Die frühere verpflichtende mobile 4×2-Anordnung ist ausdrücklich SUPERSEDED. Technischer 4+4-Nachweis bleibt historisch richtig, ersetzt keine neue visuelle Abnahme.
+- Achsen/Tooltip/Sparse-Daten: OPEN gemäß [vollständiger neuer Nutzerentscheidung](UI_MASTER28_ZEITRAUM_DIAGRAMM_KORREKTUR_2026-10-29.md); keine Änderung finanzieller Werte, Skalierung oder Historiensemantik. Automatisch/Linie/Punkte nur als vorhanden behandeln, wenn tatsächlich implementiert.
+- Prüfung der späteren UI-Umsetzung bei 320/360/390/430/768/1440px; Androidnachweise klar als Hardware oder Emulation trennen. Bisherige Sicherheits- und Finanzgates erhalten.
+
+Die Nutzerpräzisierung wurde ohne Änderung des geprüften PWA-Kandidaten übernommen. Frühere4×2-Sollmarkierungen in historischen Einträgen sind überholt. Übrige offene UI-/DELETE-/Android-/FLH03-/FLH04-/Recovery-Verträge bleiben erhalten, FLH05/PROJ01 OPEN/PARKED.
+
+---
+
 ## Verifizierter Status nach PR201 · 29.10.2026
 
 | Bereich | Nachgewiesener Status |
