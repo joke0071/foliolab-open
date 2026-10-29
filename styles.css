@@ -1230,3 +1230,5 @@
 .reference-row .history-sub{overflow-wrap:anywhere}
 .reference-row .reference-protection{display:block;font-size:11px;color:#526c59;margin-top:4px;line-height:1.5}
 @media(max-width:700px){#referenceSelectionTools>.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reference-management-head{margin-left:auto}}
+/* Reference rollback preview: fit narrow dialogs and retain actual touch sizes. */
+#referenceRemovalBackup{min-height:45px;max-width:100%;white-space:normal;overflow-wrap:anywhere}

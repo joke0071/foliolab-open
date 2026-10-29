@@ -9,8 +9,8 @@ Qualifikation der folgenden Kategorie ersetzt. Gesamtmaster PARTIAL.
 
 Eigenständig manuell angelegte Referenzen ohne Konto-/Positions-/Kursaufteilung,
 ohne automatische oder migrierte Originalrevisionen, ohne unbekannte Felder
-oder externe Identitätsreferenzen können nach konkreter Folgenvorschau gemeinsam
-zurückgenommen werden. Renditestart bleibt gesperrt; keine Teilfreigabe gemischter
+oder externe Identitätsreferenzen (auch in verschachteltem Unicode-JSON) können nach konkreter Folgenvorschau gemeinsam
+zurückgenommen werden. Renditestart und heutiger automatisch neu erfassbarer Stichtag bleiben gesperrt; keine Teilfreigabe gemischter
 Auswahl. Alle aktuellen Identitäten und Datumswerte müssen eindeutig sein.
 Quellherkunft allein ist keine allgemeine Löschsperre; weitere Kategorien bleiben
 offen, bis ihre Original-, Reimport- und Abhängigkeitsverträge bewiesen sind.

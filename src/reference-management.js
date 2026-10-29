@@ -75,6 +75,7 @@ function removalReason(model,s){
  if(model.performanceFlowTrackingSince===s.date)return 'Der Startstichtag der Renditeerfassung bleibt geschützt.';
  if(s.source!=='manual'||s.valuationStatus!=='manual'||s.byAccount!=null||s.byPosition!=null||!Array.isArray(s.quoteTimes)||s.quoteTimes.length)
   return 'Verlauf und Abgleich: Originalquelle, Aufschlüsselung oder Wiederimport sind noch nicht sicher rücknehmbar. Archivieren ist möglich.';
+ if(s.date===new Date().toISOString().slice(0,10))return 'Der heutige Stichtag kann automatisch neu erfasst werden. Zuerst den Erfassungs- und Wiederanlagevertrag prüfen.';
  if(Object.keys(s).some(k=>!snapshotKeys.includes(k))||!Array.isArray(s.revisions)||s.revisions.some(r=>!r||Object.keys(r).some(k=>!revisionKeys.includes(k))||r.source!=='manual'||r.valuationStatus!=='manual'))
   return 'Originalrevision oder zusätzliche Referenzfelder benötigen eine eigene Abhängigkeitsprüfung.';
  // Restrict the textual reference proof to literal, unescaped identities.
@@ -90,12 +91,23 @@ function removalCandidate(model,ids){
  const candidate=clone(model);
  for(const id of ids)deleteSnapshot(candidate,id);
  setArchivePresentation(candidate,{referenceIds:(candidate.bookingPresentation?.referenceArchivedIds||[]).filter(id=>!targets.has(id))});
- // All remaining data, including unknown/serialized metadata and other original
- // snapshots, must be free of the literal target identity. Substring matches
- // deliberately overblock rather than infer a cascade or ignore opaque evidence.
- const remaining=raw(candidate);
- if(new TextEncoder().encode(remaining).length>8000000)throw Error('Abhängigkeitsprüfung zu groß. Keine Löschfreigabe.');
- if(ids.some(id=>remaining.includes(id)))throw Error('Weitere Daten verweisen möglicherweise auf die Referenzidentität. Keine Teillöschung.');
+ // Inspect remaining originals AND encoded metadata. Raw substring checks alone
+ // miss JSON Unicode escapes; unknown/opaque encoded references fail closed.
+ let nodes=0,bytes=0;const stack=new WeakSet(),encoder=new TextEncoder();
+ const scan=(value,depth=0)=>{
+  if(++nodes>200000||depth>64)throw Error('Abhängigkeitsprüfung begrenzt. Keine Löschfreigabe.');
+  if(typeof value==='string'){
+   bytes+=encoder.encode(value).length;if(bytes>8000000)throw Error('Abhängigkeitsprüfung zu groß. Keine Löschfreigabe.');
+   if(ids.some(id=>value.includes(id)))throw Error('Weitere Daten verweisen möglicherweise auf die Referenzidentität. Keine Teillöschung.');
+   const text=value.trim();
+   if(['{','[','"'].includes(text[0])){let decoded;try{decoded=JSON.parse(text);}catch{throw Error('Nicht lesbare codierte Referenzdaten. Keine Löschfreigabe.');}scan(decoded,depth+1);}
+   else if(value.includes('\\u'))throw Error('Ungeklärte codierte Referenzdaten. Keine Löschfreigabe.');
+  }else if(value&&typeof value==='object'){
+   if(stack.has(value))throw Error('Zyklische Referenzdaten. Keine Löschfreigabe.');stack.add(value);
+   for(const [key,item]of Object.entries(value)){scan(key,depth+1);scan(item,depth+1);}stack.delete(value);
+  }
+ };
+ scan(candidate);
  safeImport(clone(candidate));return candidate;
 }
 function removalMetrics(model,start,end){

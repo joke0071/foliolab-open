@@ -233,7 +233,7 @@ function openReferenceRemoval(ids=[...selectedReferenceIds]){
  assertBookingWritable();
  const expectedModel=JSON.stringify(model),preview=previewReferenceRemoval(model,ids);
  let backupBaseline=null;
- const metric=v=>v===null?'nicht belegbar':String(v);
+ const metric=v=>v===null?'nicht belegbar':(v*100).toLocaleString('de-AT',{maximumFractionDigits:6})+' %';
  const before=preview.before,after=preview.after;
  const views=before.views.map((v,i)=>{const next=after.views[i],lost=v.dates.filter(d=>!next.dates.includes(d));return '<li>'+esc(v.basis+' · '+v.selectedBasis+' → '+next.selectedBasis+' · '+v.dates.length+' → '+next.dates.length+' Verlaufspunkte; entfallende Tage: '+(lost.join(', ')||'keine')+' · '+v.reconciliation.length+' → '+next.reconciliation.length+' Abgleichpunkte')+'</li>';}).join('');
  showDialog('Referenzwerte löschen','VORSCHAU',
@@ -243,7 +243,7 @@ function openReferenceRemoval(ids=[...selectedReferenceIds]){
    assertBookingWritable();if(backupBaseline!==expectedModel)throw Error('Zuerst ein aktuelles Backup dieser Vorschau herunterladen.');
    await portfolioStore.assertCurrent();assertBookingWritable();
    const candidate=prepareReferenceRemoval(model,ids,{expectedModel,confirmed:v.confirmReferenceRemoval==='on'});
-   model=candidate;await save();referenceRemovalReceipt=csvUndoReceipt(expectedModel,model);selectedReferenceIds=[];referenceSelecting=false;renderHistory();notify('Referenzwerte gelöscht. Undo bis zur nächsten Portfolioänderung möglich.');
+   const fields=$('dialogFields');fields.inert=true;try{model=candidate;await save();referenceRemovalReceipt=csvUndoReceipt(expectedModel,model);selectedReferenceIds=[];referenceSelecting=false;renderHistory();notify('Referenzwerte gelöscht. Undo bis zur nächsten Portfolioänderung möglich.');}finally{fields.inert=false;}
   });
  const removalEditor=editor,active=()=>editor===removalEditor&&$('editDialog').open;
  $('saveDialog').textContent='Referenzwerte löschen';
