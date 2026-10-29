@@ -1,3 +1,11 @@
+# PR201 freigegeben und gemergt · Releasegates laufen · 29.10.2026
+
+Nutzerfreigabe „Freigabe und fortsetzen“ ausdrücklich für PR201 erhalten. Unveränderter HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, main zuvor `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Pflicht40923950987 und Wallet40923951032 SUCCESS. Testmerge39cb71a9 / Tree74aa1231 erneut bestätigt. Keine aktiven/wartenden Actions oder kollidierenden offenen PRs vor Merge. Kontrollierter Merge mit expected_head_sha erfolgreich: `d037b4876e81c24421022d30865d171da762f328`, Tree unverändert `74aa1231c62364b094416aa7dbf822784d7be70a`.
+
+**Status: MERGED / RELEASE_GATES_PENDING, noch nicht LIVE_ACCEPTED.** Produktion vor Merge tatsächlich SW213. Keine Änderung von Löschberechtigungen oder Finanz-/Speicherlogik. Nächster Schritt: vollständige Main-/Pages-/Livegates, tatsächliche Assets und SW214, Maschinenbelege prüfen; erst danach LIVE_ACCEPTED. Anschließend übrige UI-P1 gemäß bestehendem Master. Alle Nachträge und externen Grenzen erhalten, FLH05/FLH-PROJ01 OPEN/PARKED. Historische frühere Freigabeanfragen unten sind überholt.
+
+---
+
 # Letzter konsolidierter Masterstand · PR201 reviewbereit · 29.10.2026
 
 **Der zusätzliche QA-/CI-/Android-/Drive-/Datenintegritätsvertrag ist vollständig übernommen:** [dauerhafter Sollvertrag](https://github.com/joke0071/foliolab-open/blob/6b546aa1a72765a6991df687019c98bffbc2a26a/docs/MASTER_ERGAENZUNG_QA_CI_DRIVE_DATENINTEGRITAET_2026-10-29.md). Keine neue Roadmap, Prioritätsänderung oder parallele Implementierung.
