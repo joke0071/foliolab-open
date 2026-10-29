@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-29T09:18:30Z",
+  "status": "GUARDED_NATIVE_SHARE_TAKEOVER_CANDIDATE_ACCEPTED_AWAITING_USER_RELEASE_DECISION",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-projection",
+  "head": "34dc5fb71c5ba5335e1a8b19b48fefed69b8f126",
+  "tree": "1d01a067c09274f6e29b8b0d3df7b289af8a1a72",
+  "testedMerge": "65862ae98747c12d1b62edf16ace336af95a498d",
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "pr": 195,
+  "runs": {
+    "ci": {
+      "id": 40846973952,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 123356742827,
+          "name": "test",
+          "conclusion": "success"
+        },
+        {
+          "id": 123356743247,
+          "name": "cross-engine (2)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123356743365,
+          "name": "cross-engine (1)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123360782421,
+          "name": "deploy",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 123360783691,
+          "name": "live-acceptance",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    "wallet": {
+      "id": 40846973914,
+      "conclusion": "success"
+    }
+  },
+  "units": {
+    "pass": 939,
+    "fail": 0,
+    "skip": 0
+  },
+  "syntax": "PASS",
+  "actualReports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Guarded native share takeover in isolated synthetic profiles only",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "mode": "append",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        },
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "mode": "backfill",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "targetSizes": [
+            {
+              "width": 320,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 320,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            }
+          ],
+          "checks": [
+            "explicit mode/current account confirmation",
+            "append empty and protected-balance blocking/backfill exact ending quantity",
+            "unknown costs/no external flows/no submit",
+            "mode/account/confirmation/file/lifetime delayed-generation resets",
+            "whole-batch special/cash protection",
+            "5 widths/Axe/44px/focus/escaped names",
+            "actual competing IDB writer between freshness checks/stale lock",
+            "actual offline reload/storage notification invalidation",
+            "exact IDB/revision/settings zero dialog writes/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Guarded native share takeover in isolated synthetic profiles only",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "mode": "append",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "mode": "backfill",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "mode": "append",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "mode": "backfill",
+          "result": "PASS",
+          "checks": [
+            "actual native append/backfill UI commit; one CAS revision",
+            "backup content/separate confirmation/reset/forced-submit guards",
+            "quota and post-put abort exact record/revision/settings unchanged",
+            "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+            "plain/encrypted stored native provenance roundtrip/replay",
+            "duplicate replay no write/revision; exact UI undo including snapshot",
+            "real competing writer after freshness rejected by actual CAS",
+            "offline actual UI commit",
+            "5 widths/Axe/44px/focus"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "targetSizes": [
+            {
+              "width": 320,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 320,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationRun",
+              "height": 44.99998474121094,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationMode",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationRun",
+              "height": 44.99998474121094,
+              "minHeight": "45px"
+            }
+          ],
+          "checks": [
+            "explicit mode/current account confirmation",
+            "append empty and protected-balance blocking/backfill exact ending quantity",
+            "unknown costs/no external flows/no submit",
+            "mode/account/confirmation/file/lifetime delayed-generation resets",
+            "whole-batch special/cash protection",
+            "5 widths/Axe/44px/focus/escaped names",
+            "actual competing IDB writer between freshness checks/stale lock",
+            "actual offline reload/storage notification invalidation",
+            "exact IDB/revision/settings zero dialog writes/no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "targetSizes": [
+            {
+              "width": 320,
+              "id": "flatexSimulationMode",
+              "height": 49,
+              "minHeight": "45px"
+            },
+            {
+              "width": 320,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationMode",
+              "height": 49,
+              "minHeight": "45px"
+            },
+            {
+              "width": 390,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationMode",
+              "height": 49,
+              "minHeight": "45px"
+            },
+            {
+              "width": 430,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationMode",
+              "height": 49,
+              "minHeight": "45px"
+            },
+            {
+              "width": 768,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationMode",
+              "height": 49,
+              "minHeight": "45px"
+            },
+            {
+              "width": 1440,
+              "id": "flatexSimulationRun",
+              "height": 45,
+              "minHeight": "45px"
+            }
+          ],
+          "checks": [
+            "explicit mode/current account confirmation",
+            "append empty and protected-balance blocking/backfill exact ending quantity",
+            "unknown costs/no external flows/no submit",
+            "mode/account/confirmation/file/lifetime delayed-generation resets",
+            "whole-batch special/cash protection",
+            "5 widths/Axe/44px/focus/escaped names",
+            "actual competing IDB writer between freshness checks/stale lock",
+            "actual offline reload/storage notification invalidation",
+            "exact IDB/revision/settings zero dialog writes/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 12885482858,
+      "name": "release-gates-65862ae98747c12d1b62edf16ace336af95a498d",
+      "digest": "sha256:d17e3cffb577c460d0d7392f3a05a190188f6cfee444e8b2b631e658ce254bcf",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12885653154,
+      "name": "cross-engine-gates-65862ae98747c12d1b62edf16ace336af95a498d-2",
+      "digest": "sha256:a8cd77235044bd1c51792d152e046b32c1a306bc8c1ec53a2286ee11dcd85598",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "testedSHARead": true,
+  "crossCheckoutLogMatchesTestedMerge": true,
+  "visualReview": {
+    "result": "PASS",
+    "actualCIImages": [
+      "chromium-backfill-320",
+      "firefox-append-1440",
+      "webkit-backfill-320",
+      "firefox-backfill-390"
+    ],
+    "checked": "Readability, escaped names, local backup/approval, quantities, mobile scrolling, contained action buttons and same design"
+  },
+  "supersededFailure": {
+    "head": "042076d2fa6146daf052c2ea7f6a4a6d16776ef1",
+    "ci": 40845406706,
+    "conclusion": "failure",
+    "accepted": false,
+    "reason": "Firefox native simulation run control at width768 measured43.99998474121094px despite CSS min-height44px",
+    "reproducedOnUnchangedArchivedHead": true,
+    "correction": "Scoped CSS min-height45px for new simulation controls; unchanged strict >=44 assertion and actual target measurements",
+    "localFirefoxContainerProbeNeededDisabledContentSandbox": true,
+    "ciProtectionOrAssertionsWeakened": false
+  },
+  "sourceReview": {
+    "result": "PASS",
+    "existingCSVBackfillBindingIdentityDecimalAndCASReused": true,
+    "noSecondEngineOrSchema": true,
+    "noWorkflowOrProductDependencyChanges": true,
+    "wholeBatchNoSkip": true,
+    "unknownFeesTaxesCostsRemainUnknown": true,
+    "backfillExactEndingQuantity": true,
+    "baselineBackupAndSeparateApproval": true,
+    "resetOnModeAccountSourceFileSimulationChanges": true,
+    "requalifyAndGenerationBaselineCheckBeforeWrite": true,
+    "cloneThenExistingCAS": true,
+    "inertDuringSave": true,
+    "quotaPostPutAbortAndRealPostFreshnessCASVerified": true,
+    "existingSnapshotAndSessionUndoReused": true,
+    "duplicateOnlyReplayDoesNotWrite": true
+  },
+  "production": {
+    "main": "3e9f48770df0e7d63b5be311d33376a85df848f9",
+    "version": 204,
+    "httpStatus": 200,
+    "directSWRead": 204,
+    "changed": false,
+    "candidateVersion": 208,
+    "published": false,
+    "privateOriginalsLoaded": false,
+    "privateProductionDataMutated": false
+  },
+  "collisionCheck": {
+    "branches": 181,
+    "changesOnlyOwnFunctionalAndDocumentationBranches": true,
+    "activeActions": 0,
+    "openPRs": [
+      195,
+      161,
+      157
+    ],
+    "parkedDrafts": [
+      161,
+      157
+    ],
+    "reviewThreadsOrSubmissions": 0
+  },
+  "masterStatus": "PARTIAL",
+  "next": "Explicit user decision required by existing economic mutation release boundary (#165) before merging/deploying this bounded PR195 candidate. After approval: fresh collision/exact tree/gates check, controlled merge, complete main/deploy and actual three-engine live acceptance; secure checkpoint. No private automatic imports. Full original/cash/special/cost/cashflow/history acceptance and UI/DELETE/PERF/Drive roadmap remain open. FLH05/PROJ01 parked, compatibility only through necessary reuse."
+}
