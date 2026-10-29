@@ -1,3 +1,69 @@
+# Aktueller Masterstand und verbindliche Arbeitsteilung · 29.10.2026
+
+Dieser neue Abschnitt übersteuert ältere Rang-/UI-/OPEN-Angaben darunter,
+ohne Anforderungen oder historische Belege zu entfernen. Gesamtmaster **PARTIAL**.
+Zentral maßgeblich: WORK_RESTPAKETE_CHECKPOINT.md; keine zweite Masterplanung.
+
+| Bereich | Aktueller Stand / Zuständigkeit |
+| --- | --- |
+| Produktion / abgeschlossener Vorgänger | main6fe75a997a076d0c17e5200b0bb7ee09532d7044 / v208; PR195 vollständig LIVE_ACCEPTED |
+| Aktueller Work-Schritt | PR196 feature/reference-removal-safe-subset / be860237af019deab0c4e393dbcc022976bb5c1f / SW211-Kandidat technisch abgenommen; Pflicht40883912046 und Wallet40883911994 SUCCESS,946Units/3Engines. Eigene konkrete Merge-/Deploymentfreigabe fehlt; Produktion unverändert |
+| UI-VISUAL-CLAUDE | **DELEGATED / OPEN**, exklusive Implementierung GitHub Copilot mit Claude Sonnet5.5, [Issue197](https://github.com/joke0071/foliolab-open/issues/197). Vollständiger Vertrag [UI_VISUAL_CLAUDE_HANDOFF.md](UI_VISUAL_CLAUDE_HANDOFF.md). Kein Agentlauf/Branch/PR gestartet; Modellwahl über verbundene GitHub-Schnittstelle nicht verifizierbar |
+| Work behält | FLH03 native Importe/Reconciliation, sichere Buchungs-/Positions-/Referenzverwaltung, DELETE-Fachlogik/CAS/atomare Rücknahme, IndexedDB, Backup/Restore/Recovery, FLH04 und essentielleP1-PERF01 sowie alle anderen freigegebenen Sicherheitsarbeiten |
+| Sicherheitskritische UI | Zwingend zu Work-Fachpaketen gehörige Bestätigungs-/Auswahl-/Lösch-/Backup-/Restore-/Stale-/Mehrtab-/Undointeraktionen und Tests bleiben Work. PR196 regulär abschließen; reine CSS-/Typografie-/Dashboardpakete danach nicht mehr selbst beginnen |
+| Geparkt | FLH05 universelle CSV-Engine und FLH-PROJ01 OPEN/PARKED bis ausdrücklicher erneuter Freigabe; notwendige FLH05-Kompatibilität nur durch gemeinsame bestehende Verträge, keine Zusatzphase/Refactorings |
+
+## Delegierter Restumfang, keine Wiederholung fertiger UI
+
+Claude übernimmt ausschließlich tatsächliche nach dann aktuellem main bestätigte
+Restbefunde: A Typografie/Abstände/Beschriftungen/Buttons/Trennlinien,
+Zahlen-/Datums-/Tabellendarstellung, visuelle Redundanzen/Leerflächen;
+B Dashboard-/Verlaufsteuerung/Icons/Liquiditätszugang/Trennlinien sowie konkrete
+Chart-Leerzustands-/Hinweis-/Responsive-Reste; C rein visueller Overflow/Clipping,
+Karten/Tabellen,44px-Ziele/sichtbarer Fokus, offene Akkordeons und nicht kritische
+Dialoge bei320/390/430/768/1440px. Keine fachliche Datenbasis-/Rechen-/Präzisions-
+/Zeit-/Speicher-/Importänderung oder neues Redesign.
+
+**Schon implementiert und erhalten:** kompakte Datenbasis im Chartkopf,
+Auto/Observed/Partial und7T–Max, drei Verlaufsicons (shield-Key zeichnet Haken),
+Liquidität & Fälligkeiten nach den Anbietern, letzte Anbieterlinie entfernt und
+Zwischentrennlinien bewahrt. Aktuelles main enthält diese Änderungen bereits;
+browser-history-followup bestätigt sie erneut in3Engines. Seine spezielle
+Matrix320/390/768/1024/1440 ist keine spezifische430px-Abnahme sämtlicher
+geöffneter Zustände; Claude bestätigt diese Breite bei tatsächlichen Deltas.
+Bestehende Wochenfilter/Leer-/Teil-/Auswahl-/Archiv-/Restorekorrekturen nicht
+erneut aus alten #149/UI-MASTER28-Texten implementieren.
+Ältere Aussagen unten über noch fehlenden Referenzarchiv-Restore sind historisch
+und durch aktuelle vorhandene Restore-/Sicherheitsnachweise überholt.
+
+## Kollisions- und Aktivierungsgrenze
+
+Zuerst PR196 einschließlich erforderlicher Nutzerentscheidung und Releasegates
+sicher abschließen. Danach frischer Remote-/Writer-/main-Abgleich, verlangtes
+Copilot-Modell tatsächlich verifizieren und eigener Claude-Branch/PR.
+Die Nutzerdelegation gilt bereits; es wird keine zusätzliche pauschale
+Startfreigabe erfunden. Technisch fehlen derzeit jedoch die verifizierbare
+Modellwahl/Dispatchmöglichkeit und die freie gemeinsame Integrationsbasis.
+Kein Ersatzmodell oder vorzeitiger kollidierender Codingauftrag.
+
+src/app.js, styles.css und Browser-Tests können trotz verschiedener Branches
+kollidieren. Vor paralleler Schreibarbeit konkrete Funktionen/Selektoren/Hunks
+abstimmen; Work-/Claude-Branches gegenseitig nicht ungefragt ändern.
+PR196-Referenzlöschdialoge und zugehörige kritische Tests bleiben Work.
+Claude-PR erst nach frischer Integration gegen dann aktuellen main, vollständigen
+Pflichtgates und erforderlicher Releasefreigabe mergen. Delegation bewirkt keine
+automatischen Deployments oder Merges. Historischen Dokumentationsbranch
+feature/flh05-import-foundation niemals als Appcode nach main übernehmen.
+
+Die verbleibende ursprüngliche Mastersequenz bleibt bestehen, wobei rein visuelle
+Umsetzung aus dem Work-Umfang herausgenommen ist. FLH-PERF01 bleibt essentielleP1
+für tatsächlich interaktiven Appstart großer IndexedDB-Portfolios mit belegbarem
+30%-Medianziel; CI-Beschleunigung ersetzt ihn nicht. Alle Hardware-/AT-/OAuth-/
+Originaldaten-/Fach-/P0/P1/BENCH-Grenzen bleiben erhalten. Nach jeder Etappe
+Commit/Push, separater Checkpoint, Remote-SHA- und Fortsetzungsnachweis.
+
+---
+
 # v195 sicher abgeschlossen; ein konsolidierter UI-Nachtrag folgt · 28.10.2026
 
 Sonic-Nachweis PR184/main4671382a ist begrenzt LIVE_ACCEPTED: vollständiger Main/Pages/Live40669589568 SUCCESS,799Units/3Engines/111Hashes/SW195/neuer Produktions-Zustandsgate/Nullmutation und drei Kernbilder geprüft. Keine aktive Guthaben-/Historienintegration, Sonic10 insgesamt PARTIAL. Aktiver Release wurde nicht wegen der Nachträge unterbrochen.
