@@ -56,8 +56,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await cycle();await cycle();
   assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 201/);
   await page.locator('#positionSearch').fill('Other');assert.match(await page.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 0.*201 ausgeblendet/);
-  await button('preview-removal').click();assert.equal(await page.locator('#dialogFields li').count(),201);assert.match(await page.locator('#dialogFields').innerText(),/Wanted 400/);
-  assert.equal(await page.locator('#cancelDialog').evaluate(e=>e===document.activeElement),true);
+  await button('preview-removal').click();assert.equal(await page.locator('#positionRemovalItems').evaluate(e=>e.open),false,'mass impact details start closed');assert.equal(await page.locator('#cancelDialog').evaluate(e=>e===document.activeElement),true);await page.locator('#positionRemovalItems>summary').click();assert.equal(await page.locator('#dialogFields li').count(),201);assert.match(await page.locator('#dialogFields').innerText(),/Wanted 400/);
   await page.keyboard.press('Escape');assert.equal(await page.locator('#editDialog').evaluate(e=>e.open),false);
   assert.equal(await button('preview-removal').evaluate(e=>e===document.activeElement),true);
   assert.deepEqual(await record(),before,'selection and preview write nothing');
@@ -76,7 +75,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
    assert.equal(await page.locator('#saveDialog').evaluate(e=>e.classList.contains('primary')),false,'Destructive consent must never retain primary green styling');
    assert.equal(await page.locator('#saveDialog').evaluate(e=>getComputedStyle(e).transitionDuration),'0s','Destructive styling must be immediate, without a low-contrast color crossfade');
    const geometry=await page.locator('#editDialog').evaluate(d=>{const r=d.getBoundingClientRect();return [...d.querySelectorAll('.dialog-footer button')].map(b=>{const q=b.getBoundingClientRect();return {id:b.id,inside:q.left>=r.left&&q.right<=r.right&&q.top>=r.top&&q.bottom<=r.bottom};});});assert.ok(geometry.every(b=>b.inside),'Every cancel/confirm target must fit the actual dialog at '+width+': '+JSON.stringify(geometry));
-   assert.match(await page.locator('#dialogFields').innerText(),/Historische Stichtage/);await page.locator('#cancelDialog').click();
+   assert.equal(await page.locator('#positionPreviewBlocked>details').evaluate(e=>e.open),false);await page.locator('#positionPreviewBlocked>details>summary').click();assert.match(await page.locator('#dialogFields').innerText(),/Historische Stichtage/);await page.locator('#cancelDialog').click();
   }
   await button('preview-removal').click();
   const downloadPromise=page.waitForEvent('download');await page.locator('#removalBackup').click();const dl=await downloadPromise;
