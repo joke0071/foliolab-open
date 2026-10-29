@@ -1,3 +1,13 @@
+# FLH03 native Betragsprüfung: Vorabvertrag gesichert · 29.10.2026
+
+Auf unverändertem main2b6ec815/v203, nur geparkte157/161, keine laufenden Actions. Wiederaufnahme0fa1049d dauerhaft gesichert. Native Originalmetadaten unverändert; zwei Originaldateien privat außerhalb des Git-Arbeitsbaums lesend materialisiert. Vorheriger Order-Sollbeleg bleibt gültig; neue private Referenzprüfung betrifft exakte Betragsarithmetik. Keine privaten Inhalte/Hashes im öffentlichen Vertrag.
+
+Belegte Lücke: bestehender auditFlatexSettlementAmounts erwartet Legacy-prepared-Daten und liefert für native Dokumente keine Prüfung; Orderhelper liefert absichtlich keine Summen. [Vorabvertrag](FLH03_FLATEX_NATIVE_AMOUNTS_CONTRACT.md): kleinste reine native1:1-Betragsprüfung im vorhandenen Modul, bestehende Order-/Identitäts-/Decimalfunktionen wiederverwenden. Alle Mehrfach-/Storno-/Quellen-/Präzisionsfälle bleiben Review; keine Gebührenzuweisung, keine Finanz-DTOs, keine UI-/Speicherintegration. Funktionsbranch erst auf aktuellem main anlegen, daPR193 abgeschlossen und kein überlappender offener Flatex-PR existiert.
+
+Nächster Schritt Vertrag minimal implementieren, synthetische Units/Drei-Engine-Offline-/Nullmutationsgates und unabhängigen privaten Decimalvergleich durchführen; dann vollständige aktuelle PR-CI/Wallet/Artefaktabnahme. Zwei Etappen Vertrag + geprüfte Grundlage; UI/Release separat, keine Produktionsfreigabe der Wirtschaftsübernahme. Noch keine neuen Produktänderungen/Tests, aktuelleArbeit IN_PROGRESS. UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/übrige Roadmap erhalten, PROJ01 Backlog. Gesamtmaster PARTIAL.
+
+---
+
 # FLH03-Flatex wirtschaftliche Qualifizierung wiederaufgenommen · 29.10.2026
 
 Frischer Kollisionscheck: main `2b6ec81523db0623da9edfa2fa96eac60460581a`, v203 LIVE_ACCEPTED unverändert; finale Main-/Pages-/Live-CI40781029787 SUCCESS,902Units und vorherige tatsächliche120Asset-/3Engine-/Restore-/Offlinebelege weiter gültig.179Branches geprüft, nur geparkte PR157/161 offen, keine laufenden Actions oder erkennbaren fremden lokalen Git-/Nodewriter. PR193 bereits gemergt; dessen Format-/Order-/Identitäts-/Kontobindungsarbeit nicht erneut implementieren.
