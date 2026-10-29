@@ -1,3 +1,16 @@
+## „Mehr“ vollständig im bestehenden UI-Master · 29.10.2026
+
+[Gesamter 16-teiliger Vertrag](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md) übernommen; ersetzt den einzelnen Backup-Beschriftungsprompt, fachliche Backup-/Driveverträge bleiben erhalten. K03/K04 und Android-Darstellung werden integriert statt doppelt implementiert.
+
+- OPEN: Passwortformulierung, Export-/Sicherungsstatus, optionale Daten und Details, abgesetzte Löschaktion, Anbieterplural, Kontodatenstand, OAuth-Origin/Pfeil, Drive-Reihenfolge/Intervalle/Aufbewahrung, Datenquellen/Worker-/RPC-/Datenschutzführung sowie einheitliche Hierarchie und Touchziele.
+- BEREITS VORHANDEN / BEWAHREN: beide Backup-Opt-ins ohne Präferenz aus, gespeicherte Auswahl erhalten; Trennung des einfachen JSON-Exports von optionalem verschlüsseltem Vollbackup, Ausschluss von Google-Tokens/Geräteschlüsseln.
+- PARTIAL: [14 synthetische Browser-Ausgangszustände](release-evidence/more-ux-baseline-v215.json), sieben Breiten/alle 19 Details geöffnet,0Overflow/0Axe und exakter Datensatz unverändert. Sichtbare kleine Aktionen als Screening erfasst, einschließlich deaktivierter Elemente. Text-/Rahmen-/Hierarchiedeltas im Bild bestätigt; keine Gesamt-DONE-Markierung.
+- OPEN/EXTERNAL: alle vier Optionskombinationen nach UI-Änderung, echte OAuth-/Drive-/Hardwarezustände, Bildschirmtastatur/Systemschrift/TalkBack getrennt prüfen.
+
+PR202 wurde mit eigener Nutzerfreigabe unverändert gemergt; Release-/Updategates laufen. Keine Änderungen am freigegebenen Kandidaten durch diesen Nachtrag. Bestehende Prioritäten erhalten, keine neue Roadmap, mobile 4×2-Vorgabe SUPERSEDED, FLH05/PROJ01 PARKED.
+
+---
+
 ## Aktueller Abgleich der Nutzerpräzisierung · 29.10.2026
 
 - PR202: TECHNICALLY_ACCEPTED / REVIEW_READY, vollständige Pflicht- und Wallet-CI SUCCESS,954 Units/drei Engines. SW215 noch nicht freigegeben, gemergt oder veröffentlicht.
