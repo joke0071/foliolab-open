@@ -1,3 +1,33 @@
+# PR195 ausdrücklich freigegeben · kontrollierter Release IN_PROGRESS · 29.10.2026
+
+Der Nutzer hat auf die konkrete Frage zur Merge-/Deploymentfreigabe des geprüften
+PR195 ausdrücklich „freigabe“ erteilt. Diese Freigabe gilt ausschließlich für den
+abgenommenen Umfang34dc5fb71c5ba5335e1a8b19b48fefed69b8f126 / SW208, nicht für
+weitere wirtschaftliche Pakete, private automatische Importe oder geparkte Vorhaben.
+
+Vor Merge erneut verifiziert: main3e9f4877 unverändert, PR195 offen/clean/mergeable,
+HEAD34dc5fb7 und Testmerge65862ae9/Baum1d01a067 identisch zum abgenommenen Kandidaten.
+Pflicht-CI40846973952 und Wallet40846973914 SUCCESS auf exakt dieser HEAD;
+test/beideCross-Engine-Shards SUCCESS, bisheriger Deploy/Live korrekt SKIPPED.
+Keine aktiven/wartenden Actions, nur195 sowie geparkte Drafts157/161 offen.
+Lokaler relevanter Code unverändert remote gesichert; nur synthetische artifacts.
+
+**Exakt nächste Aktion:** PR195 mit expected-head-SHA kontrolliert als Mergecommit
+integrieren. Mainbaum gegen1d01a067 prüfen, automatisch gestartete vollständige
+main-/Deployment-/Livegates regulär abschließen. Tatsächliche SW208/Produktionsbytes
+und aktuelle drei Browser-Engines einschließlich nativer Simulation und beider
+Übernahmemodi in isolierten synthetischen Profilen prüfen. Reale Nutzerprofile/
+Finanzdaten unverändert lassen. Erst nach echten Livebelegen Release abnehmen,
+Maschinenbeleg und zentralen Checkpoint separat remote sichern.
+
+Keine erneute Nutzerfreigabe für genau diesen Release erforderlich. Gesamtmaster
+PARTIAL; übrige Roadmap/FLH05-Kompatibilität und FLH05/PROJ01-Parkierung unverändert.
+Historischen Dokumentationsbranch keinesfalls als Produktcode mergen.
+Ältere Freigabe-Ausstandsblöcke darunter sind durch diese ausdrückliche Entscheidung
+überholt, bleiben als historische Nachweise erhalten.
+
+---
+
 # Wiederaufnahmeprüfung PR195 · Freigabe weiter ausständig · 29.10.2026
 
 **DONE:** neuesten Remote-/Checkpoint-/PR-/Actions-/Baum-/Livezustand erneut
