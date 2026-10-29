@@ -1,3 +1,22 @@
+# PERF01-Kandidat remote gesichert · PR200 CI und saubere Messung laufen · 29.10.2026
+
+**DONE / LIVE_ACCEPTED:** PR198/199, mainfee4fc5d, produktivv212; dauerhafterLivebeleg1401b512 und Checkpoint244d92c9. Main-/Pages-/echte3Engine-Live40907781116 SUCCESS,120Assethashes.
+
+**PARTIAL / UNVERÖFFENTLICHT:** [PR200](https://github.com/joke0071/foliolab-open/pull/200), Draft, einziger Funktionsbranch feature/perf01-date-validation-cache.
+HEAD870f4c0773e6ba95371e8b4e89865ac5a6754cbc / Baum86be70b0112d4f960abb55cc726918eba4c3064e, Remote/lokalgleich, fünfDateien. Begrenzte boolesche kanonischeDatumsvalidierungs-Wiederverwendung max16384 seitenlokaleEinträge; vollständigeidentischeString-/ISO-/Kalenderprüfung erhalten. KeinePortfolio-/Preis-/FX-/Journal-/Storageergebnisse gecacht. SW213 nurKandidat.
+
+Lokal950/950Units/Syntax PASS. Neue und bestehende Historienprüfungen Chromium/Firefox/WebKit PASS:16410Tage Cache-Druck, echte/unechteSchalttage/ungültigeInputs, Preis-/FX-Ablehnung nachgültigemDatum, frischeKorrekturwerte, exakteModellnichtmutation, sechsBreiten/Axe. Keine Workflow-/Dependency-/Storage-/CAS-/Finanzrechenänderung.
+
+Volle Pflicht[40911278126](https://github.com/joke0071/foliolab-open/actions/runs/40911278126) und Wallet[40911278522](https://github.com/joke0071/foliolab-open/actions/runs/40911278522) laufen auf870f4c07. Finale technischeAbnahme noch offen.
+
+Exakt quellhashgleicher Benchmark nun imFunktionsbranch tests/benchmark-startup.mjs (SHA256a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0). SauberefinaleNachhermessung aufexaktemHEAD läuft separat ohnegleichzeitige lokaleTests. Ein erster explorativerLauf fiel zeitlich mitlokalenTests zusammen und wird ausdrücklich **nicht** als Abnahmevergleich verwendet. Nochkeine30%-Erfolgsbehauptung.
+
+**Exakte Fortsetzung:** saubereMessung regulärabschließen, vollständigeRohserien/gleichesScript/Fixture/Browser/Viewport/Profilerfalse/RecordsSettingsRevision vergleichen. Stressmedian>=30%wenigerKaltstart nachweisen oderMisserfolg transparent, kleine/warm/offlineFälle berichten. VolleCI/950Units/alle3Engineberichte/Testmergebaum/Bilder/ZIPdigests prüfen, dauerhaftenMaschinenbeleg und separatenCheckpoint sichern; dannPRreviewbereit. EigeneFolge-PR-Freigabe vorMerge/Deployment, nichtaus199 ableiten.
+
+Alle übrigenMaster-/UI-/FLH03-/DELETE-/IDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-Verträge erhalten; GesamtmasterPARTIAL. KeinP3vorgezogen, FLH05/PROJ01 OPEN/PARKED. Keine privatenDaten oder produktivenNutzerportfolios verändert/veröffentlicht. HistorischenDokumentationsbranch niemals alsAppcode nachmain mergen.
+
+---
+
 # UI-v212 vollständig LIVE_ACCEPTED · PERF01 folgt · 29.10.2026
 
 **DONE / LIVE_ACCEPTED: PR198 und PR199.** Nutzerfreigaben umgesetzt; mainfee4fc5de4c57fee6643d30f20798c35b2b8807b / Baumbaa7b3805cb6813d6b58bd331e3b94f0f0e156bb, produktiv **v212 / SW212**.
