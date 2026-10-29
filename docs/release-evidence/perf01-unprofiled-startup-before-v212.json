@@ -70,5 +70,84 @@
     "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
     "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
     "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
-  ]
+  ],
+  "portableRepeat": {
+    "sha": "0db6863ae81eec1821ea54878a1cf28e8f7bcf0e",
+    "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+    "node": "v24.22.1",
+    "profiler": false,
+    "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "runs": 5,
+    "scenarios": [
+      {
+        "positions": 19,
+        "references": 1825,
+        "coldMs": [
+          542.2000000011176,
+          521.0999999996275,
+          570,
+          516,
+          563.5999999996275
+        ],
+        "warmMs": [
+          375.09999999962747,
+          390.90000000037253,
+          374.7000000011176,
+          354.7000000011176,
+          413.59999999962747
+        ],
+        "offlineMs": [
+          361.40000000037253,
+          366.19999999925494,
+          379.40000000037253,
+          336.30000000074506,
+          356
+        ],
+        "coldMedianMs": 542.2000000011176,
+        "warmMedianMs": 375.09999999962747,
+        "offlineMedianMs": 361.40000000037253,
+        "exactRecordUnchanged": true
+      },
+      {
+        "positions": 1000,
+        "references": 1825,
+        "coldMs": [
+          2969.7999999988824,
+          3083.9000000003725,
+          3191.9000000003725,
+          3322.2999999988824,
+          3113.9000000003725
+        ],
+        "warmMs": [
+          3014.9000000003725,
+          2815.2999999988824,
+          2995.0999999996275,
+          2860,
+          2882
+        ],
+        "offlineMs": [
+          2912.5999999996275,
+          3086.800000000745,
+          3110.300000000745,
+          3118.0999999996275,
+          3072.4000000003725
+        ],
+        "coldMedianMs": 3113.9000000003725,
+        "warmMedianMs": 2882,
+        "offlineMedianMs": 3086.800000000745,
+        "exactRecordUnchanged": true
+      }
+    ],
+    "limitations": [
+      "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+      "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+      "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+    ]
+  },
+  "reproducibleScript": "docs/release-evidence/perf01-startup-benchmark.mjs",
+  "note": "Both sets measured unchanged release0db6863a; portable repeat is the exact source-hashed algorithm for the next matched after measurement. No optimization implemented."
 }
