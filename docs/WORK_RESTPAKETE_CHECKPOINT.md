@@ -1,3 +1,15 @@
+# PERF01-Teilschnitt PR200 DONE / LIVE_ACCEPTED · v213 · 29.10.2026
+
+PR200 ausdrücklich freigegeben, unverändert gemergt und produktiv abgenommen. main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Tree `86be70b0112d4f960abb55cc726918eba4c3064e`, SW213. [Main-/Pages-/Livepipeline40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834) vollständig SUCCESS:950/950Units, Syntax, Chromium/Firefox/WebKit, Deploy und Livejob123602768796.120 tatsächlich veröffentlichte Asset-/SW-Hashes exakt. Referenzverwaltung/-rücknahme, nativeImportübernahme, CAS/Quota/Abort/Backup/Restore/Undo/Offline und UI/Axe/44px auf tatsächlicherProduktion PASS. Live-ZIP12916123946 SHA256af2fc49f8207fd5eeb37c4a41cbd8921a8b0341297365cfde592017c9a58c493 vor Extraktion geprüft; drei tatsächliche Browserbilder angesehen.
+
+[Dauerhafte vollständige Release-/Maschinenbelege](https://github.com/joke0071/foliolab-open/blob/0e488f527a1b247fa994b249d033dc1002e76a87/docs/release-evidence/perf01-v213-live-accepted.json). Tatsächliche Produktion, identisches Script/Transport/Umgebung/5frischeProzesse: großer synthetischerIDB-Kaltmedian3186,6→1611,3ms(-49,44%),warm-51,12%,offline-49,44%. ExakteOriginalrecords/Settings/Revisionen erhalten. KleinePortfolios schwanken,kalt+3,52%,offline+0,69%;keinHardware-/Privatportfolio-/Wallet-SLA. ≥30%-Ziel für den ausdrücklich gemessenen großenFixture erreicht. PERF01-Gesamt/#177 bleibt PARTIAL für breitere gemischteWallet-/Phasen-/Hardwareprofile; dieser sichereTeilschnitt ist abgeschlossen.
+
+**Nächster regulärer P1-Schritt:** [vollständig übernommener konsolidierter UI-/UX-Vertrag](https://github.com/joke0071/foliolab-open/blob/cbe1e31fd5ceffa978f3b23803fcb85374bd12ab/docs/UI_MASTER28_KONSOLIDIERTER_NACHTRAG_2026-10-29.md), zuerst UX01/02 deduplizierte kompakte Sperrkategorien und Auswahlstatus als rein visueller Schnitt. Bestehende Lösch-/Archiv-/Preview-/CAS-Verträge nicht erweitern. Danach restliche P1-Verwaltung/Diagramm/Liquidität/Buchungsliste, P2 und optionalP3 nach bestehenderReihenfolge. Kein Nutzerwunsch als erledigt aus v213 ableiten.
+
+Gesamtmaster PARTIAL. UI vollständig bei ChatGPTWork;Claude-Audit abgeschlossen/Issue197 geschlossen. FLH03/DELETE/Recovery/FLH04 und externe Originalbeleg-/OAuth-/Operator-/Hardwaregrenzen erhalten. FLH05/FLH-PROJ01 OPEN/PARKED. HistorischenDokumentationsbranch niemals nachmain mergen. SpäterePRs benötigen eigeneReleasefreigabe.
+
+---
+
 # PERF01 auf tatsächlicher Produktion gemessen · SW213 deployed / Livegates laufen
 
 PR200 gemergt auf main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Tree `86be70b0112d4f960abb55cc726918eba4c3064e` unverändert. [Pipeline40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834): Main950/950Unit+Syntax, Chromium, beide Firefox/WebKit-Shards und Pages-Deploy SUCCESS; Livejob123602768796 läuft. SW213 tatsächlich per unabhängigem HTTP gelesen; vollständige LIVE_ACCEPTED-Erklärung weiterhin ausstehend.
