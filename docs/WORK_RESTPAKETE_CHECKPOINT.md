@@ -1,3 +1,17 @@
+# PR201: finaler Kandidat gesichert, vollständige CI läuft · 29.10.2026
+
+**Gesamtmaster PARTIAL. Produktion v213/SW213 LIVE_ACCEPTED. UI-Sperrtextpaket PARTIAL / CI_PENDING.**
+
+- [PR201](https://github.com/joke0071/foliolab-open/pull/201), Branch `feature/ui-selection-reasons-v214`, finaler HEAD `8ce2b00f9c23d1c7c278e624bd56ffab004c91dc`, Tree `202f7b0bb62c07e5114e6f8739343880ec4a0539`, SW214 unveröffentlicht. Remote-Ref und lokale Tree-Gleichheit bestätigt.
+- [Pflicht-CI40921585526](https://github.com/joke0071/foliolab-open/actions/runs/40921585526), [Wallet-CI40921585511](https://github.com/joke0071/foliolab-open/actions/runs/40921585511) laufen. Historischer erster Kandidat43b3925a/CI40921013331 ist nicht der endgültige Freigabekandidat.
+- 953/953 Unit, Syntax und neue synthetische Browserfixture in Chromium/Firefox/WebKit lokal PASS:8 geschützte migrierte Originalwerte einmal als Kategorie,100 importierte Buchungen kompakt,205-Prüfgrenze/Gmail-Reset,korrekte überlappende Kategorien,zunächst geschlossene Details,Originalgründe und Identitäten vollständig zugänglich,5Breiten/kleineHöhen/200% synthetischer Textstress/44px/Tastatur/Axe,exakte Raw-/Settings-/Revisions-Nichtmutation.
+- Bestehende Chromium-Buchungs-/Referenz-/Positions- und jetzt auch Archivsuite PASS. Der401Positionen-Archivtest öffnet die neue bewusst geschlossene Folgenliste ausdrücklich; alle401Inhalts- und Sicherheitsassertions erhalten. Diese Anpassung ist jetzt committet/gepusht; keine ungesicherten Produkt-/Teständerungen.
+- Dauerhafte Kandidatenbelege: docs/release-evidence/ui-selection-blockers-v214-candidate.json. Initiale lokale Touchziel-/WebKit-Transportbefunde transparent dort dokumentiert. Keine Produktivabnahme von SW214 behaupten.
+
+**Nächste Stelle:** vollständige CI auf exakt diesem HEAD abnehmen, tatsächliche Testmerge-/ZIP-/JSON-/Bildbelege prüfen, PR201 reviewbereit machen und finalen Checkpoint sichern. Eigene Nutzerfreigabe vor Merge/Deployment PR201 erforderlich. Danach übrige UI-P1 gemäß Sollvertrag; neue K01–K04 P2 konfliktfrei. TradingView responsive Optimierung SUPERSEDED, vollständige Entfernung noch OPEN. FLH05/FLH-PROJ01 OPEN/PARKED; alle früheren Anforderungen und externen Grenzen erhalten.
+
+---
+
 # v213 LIVE_ACCEPTED · PR201 Sperrtexte gesichert · TradingView-Nachtrag integriert
 
 PR200 DONE / LIVE_ACCEPTED: main6ec0cf9c6e28edf1b19993357c3b839106b8aa80,SW213,Pipeline40916302834 vollständig SUCCESS,950Tests/3Engines/120Assethashes. Produktive große synthetischeKaltstartmessung3186,6→1611,3ms(-49,44%). Releasebelege0e488f527a1b247fa994b249d033dc1002e76a87,Abschlusscheckpoint138c03bb1a6e2eccd1df6bfafbc288cfd0dd8d14 remoteverifiziert. PERF01-Gesamt bleibt für breitereWallet-/Phasen-/Hardwareprofile PARTIAL.
