@@ -1,3 +1,64 @@
+# Verbindlicher Fortsetzungsstand · 29.10.2026 · Gesamtmaster PARTIAL
+
+| Bereich | Tatsächlich gesicherter Status |
+| --- | --- |
+| Produktion | main `d037b4876e81c24421022d30865d171da762f328`, v214/SW214 |
+| PR201, kompakte Sperrgründe | MERGED / DEPLOYED; reguläre Main-/Pages-/Livegates SUCCESS |
+| Zusätzliche PWA-Updateabnahme | BLOCKED bis zur getrennten Korrektur; neue Versionscaches können alte HTTP-Cachebytes enthalten |
+| PR202, PWA-Korrektur | TECHNICALLY_ACCEPTED / REVIEW_READY; noch nicht freigegeben, gemergt oder veröffentlicht |
+| Neuer Diagramm-Nachtrag | Vollständig dokumentiert / OPEN; verpflichtendes mobiles 4×2 ausdrücklich SUPERSEDED |
+| Übriger Master | PARTIAL; bestehende Prioritäten, Verträge und externe Grenzen erhalten |
+| FLH05 / FLH-PROJ01 | OPEN / PARKED |
+
+## PR201: veröffentlichter Umfang und genaue Grenze
+
+Die ausdrückliche Nutzerfreigabe „Freigabe und fortsetzen“ wurde ausschließlich für den unveränderten PR201 umgesetzt. Kandidat `78dc4ca4784694e543cc46a525ef629bf93f9333`, Tree `74aa1231c62364b094416aa7dbf822784d7be70a`; Merge `d037b4876e81c24421022d30865d171da762f328` hat denselben Tree.
+
+[Pipeline40927564281](https://github.com/joke0071/foliolab-open/actions/runs/40927564281) vollständig SUCCESS:953/953 Unit-Tests ohne Fehler/Skip, Syntax, Chromium/Firefox/WebKit, Pages und separate Liveabnahme.121 tatsächliche Asset-/SW-Hashes stimmen. Drei Main-Belegarchive und das Livearchiv wurden vor Extraktion per SHA256 verifiziert;52 Main- und36 Live-PASS-Berichte geprüft. Die kompakten Sperrgründe sind tatsächlich produktiv in drei Engines geprüft. [Dauerhafte Maschinenbelege](release-evidence/ui-selection-blockers-v214-live-gates.json); zwei tatsächliche synthetische Livebilder dauerhaft auf Dokumentationscommit `80b98f654e805960791a9a53b21b485fc77e80a0`.
+
+Eine zusätzliche Updateprobe belegt einen bestehenden Fehler: Cachelabel und aktiver Controller allein garantieren keine aktuellen App-/CSS-Bytes. Der warme HTTP-Cache kann alte Dateien in einen neuen Versionscache liefern. Die strengere Byteprüfung überholt frühere reine Cache-/Controller-Zwischenerfolge. Exakter IndexedDB-Datensatz, Einstellungen und Revision blieben unverändert; kein Datenverlust oder finanzielle Mutation beobachtet. Daher noch kein uneingeschränktes LIVE_ACCEPTED des gesamten Updatepfads.
+
+Der tatsächliche produktive sw.js-Inhalt wurde zuletzt direkt mit dem Mergecommit verglichen: SW214, SHA256 `394d7cf14a1718f68b980b4c9059d51d605e7d3a8487726b7cf3f99c39705fb6`.
+
+## PR202: abschließend geprüfter, unveröffentlichter Kandidat
+
+- Branch: `fix/pwa-update-fresh-assets-v215`
+- HEAD: `620790477a54e4c5f565af9e83fcb62b9d769fce`
+- Tree: `bb57f1a8417389e8116a46de317ff66441e713c7`
+- Testmerge: `1d8677c73f14e81c5ca9d8fe7ddf5c5487732e4d`, identischer Tree und Eltern main d037b487 / Kandidat62079047
+- [Pflicht40930734405](https://github.com/joke0071/foliolab-open/actions/runs/40930734405) und [Wallet40930734559](https://github.com/joke0071/foliolab-open/actions/runs/40930734559): SUCCESS
+- Pflichtjobs123648151053(test),123648150903(cross1),123648150514(cross2): SUCCESS; PR-Deploy123654140844 und Live123654141706 korrekt SKIPPED
+- 954/954 Units,0Fail/Skip, Syntax, drei Browser-Engines; alle bisherigen Pflichtgates erhalten
+- Drei finale ZIPs vor Extraktion SHA256-verifiziert,54 tatsächliche PASS-Berichte und tatsächliches synthetisches WebKit-CI-Bild geprüft
+- [Vollständige finale Kandidatenbelege](https://github.com/joke0071/foliolab-open/blob/aa54e677c7397504196f26e35d1e8b4478792a7d/docs/release-evidence/pwa-update-fresh-assets-v215-candidate.json)
+
+Die eng begrenzte Korrektur fordert beim Installieren vorhandene App-Shell-Dateien mit Request.cache=reload frisch an. SW215 ist unveröffentlicht. Genau vier Dateien geändert: Worker, zusätzliche Browserregression, additive Workflow-Aufrufe und ergänzte CI-Policyprüfung. Keine Finanz-, Löschberechtigungs-, IndexedDB-, CAS-, Backup-/Restore-, Undo-, OAuth- oder Drittanbieterlogik geändert.
+
+Die neue Regression prüft echten Workerwechsel bei noch frischem alten HTTP-Cache, sämtliche120 Cache-Dateihashes, aktiven App-/CSS-Inhalt, alte Cachebereinigung, exakten Datenstand und Offline-Neustart. Ein tatsächlicher503-Installationsabbruch erhält die vorherige Offline-App. Derselbe finale Test scheitert erwartungsgemäß am unveränderten SW214; eine ursprüngliche Byteprobe reproduziert zusätzlich die CSS-Hashabweichung. Chromium/Firefox/WebKit lokal und in voller CI PASS. Historischer30-Suite-CI-Nachweis unverändert; neues Gate zusätzlich abgesichert.
+
+CLI-Push war wegen fehlender HTTPS-Anmeldedaten nicht möglich. Der GitHub-Connector veröffentlichte den exakt lokal getesteten Tree; Remote-HEAD wurde verifiziert und der lokale Branch auf diesen Remotecommit abgeglichen. Kein erfolgreicher CLI-Push behauptet. Lokaler Working Tree ohne ungesicherte Produkt-/Teständerungen; nur generierte artifacts/ und Abhängigkeitssymlink untracked.
+
+## Neuester UI-Auftrag: Zeitraumwahl und Diagramme
+
+[Der vollständige fünfteilige Nutzer-Nachtrag](UI_MASTER28_ZEITRAUM_DIAGRAMM_KORREKTUR_2026-10-29.md) ist auf Commit `56101f86238824caf55a903b0aa7b1059f3b4cc8` dauerhaft gesichert. Roadmap, Restarbeitsaudit und bestehender konsolidierter UI-Vertrag wurden vor diesem separaten Checkpoint abgeglichen.
+
+**Die frühere verbindliche mobile 4×2-Vorgabe ist SUPERSEDED.** Neuer Sollzustand: bevorzugt kompakte adaptive horizontale Zeile,7T/1M/3M/6M/1J primär, Max schnell erreichbar,3J/5J dezent erweitert und gewählter Menüzeitraum eindeutig aktiv. Kein Außenrahmen,44px tatsächliche Touchziele, kein Seitenoverflow; Desktop möglichst alle acht Zeiträume. Lesbare Achsen ohne unnötig präzise Tausenderwerte, schmaler Tooltip mit Datum/exaktem Betrag und geeigneter nachrangiger Erklärung, korrekte Sparse-Punkte und tatsächliche Zeitabstände. Finanzwerte, Skalierung, Zeitfilter und Historienberechnung unverändert lassen. Automatisch/Linie/Punkte nicht als vorhanden behaupten, solange noch offen.
+
+Diese UI-Umsetzung bleibt OPEN und verändert den geprüften PR202 nicht. Später 320/360/390/430/768/1440px prüfen; tatsächliche Android-Hardware und Emulation eindeutig trennen. Der ältere technische4+4-Nachweis bleibt historische Gegenprobe, keine aktuelle visuelle Abnahme. Keine nachgewiesene Zuordnung des gemeldeten Androidlayouts zum gefundenen Cachefehler. [Synthetische Ausgangsbefunde für Tooltip/Liquidität/Zeiträume](release-evidence/ui-p1-layout-baseline-v214.json) erhalten.
+
+## Exakte nächste Fortsetzungsstelle
+
+1. Eigene ausdrückliche Nutzerfreigabe für Merge und produktives Deployment von **PR202 / unverändertem HEAD62079047 / SW215**. Freigabe von PR201 nicht übertragen.
+2. Danach main/HEAD/Testmerge/Gates erneut prüfen; kontrolliert mergen; vollständige Main-/Pages-/Live-/Updategates einschließlich tatsächlicher Dateien, Offlinefähigkeit und Datenerhalt durchführen. Releasebelege und separaten Remote-Checkpoint sichern.
+3. Anschließend übrige UI-P1 gemäß präzisiertem Sollvertrag fortsetzen: einheitliche Verwaltung/Bearbeiten/Archiv, Zeitraumwahl/Achsen/Tooltip, Liquiditätsleerzustand, kompakte Buchungsdetails und redundante Chartbeschriftung. Größere fachliche Löschumfänge bleiben eigene Nachweise und Freigaben.
+4. Androidbaseline und gemessene Optimierungen, UI-P2 einschließlich TradingView-Entfernung/K01–K04, geeigneter CI-Workflowcheckpoint sowie FLH04/FLH03 nach vorhandener Priorisierung. Keine neue Roadmap, parallele Implementierung oder geparkte Projektaktivierung.
+
+Vor diesem finalen Dokumentationsabschluss main d037b487 und PR202-HEAD62079047 erneut bestätigt; PR202 mergeable clean und reviewbereit. Offene PRs202/161/157, keine laufenden oder wartenden Actions. Keine fremden Branches überschrieben. Originaldaten privat, öffentliche Belege ausschließlich synthetisch. Echte Android-/OnePlus-/TalkBack-/VoiceOver-Hardwareabnahme, OAuth-/Operator- und Originalbeleggrenzen bleiben EXTERNAL beziehungsweise separat offen; unabhängige sichere Releases nicht pauschal blockieren.
+
+Alle vorherigen UI-, TradingView-, Android-, CI-, Drive-, Datenintegritäts-, FLH03-, DELETE-, FLH04-, IndexedDB-/Recovery- und Performanceverträge bleiben erhalten. Historischen Dokumentationsbranch niemals als alten Produktcode nach main mergen. Nachfolgende Einträge sind historische Zustände und keine aktuelle Gegenfreigabe.
+
+---
+
 # PR201 Livegates grün · PWA-Updatekorrektur PR202 gesichert · 29.10.2026
 
 **PR201: MERGED / DEPLOYED / FRESH_PROFILE_LIVE_GATES_SUCCESS; volle Updateabnahme weiterhin BLOCKED.** main `d037b4876e81c24421022d30865d171da762f328`, SW214 tatsächlich veröffentlicht. [Pipeline40927564281](https://github.com/joke0071/foliolab-open/actions/runs/40927564281) vollständig SUCCESS:953Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und separateLiveabnahme;121 tatsächlicheAssethashes. Drei Main-Beleg-ZIPs und Live-ZIP vorExtraktion SHA256-verifiziert,52Main-/36Live-PASSreports und synthetischeLivebilder geprüft. [Dauerhafte Belege](docs/release-evidence/ui-selection-blockers-v214-live-gates.json). Kompakte Sperrgründe sind real live geprüft, übrigerUIMaster bleibt PARTIAL.
