@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-29",
+  "pr": 198,
+  "approvedHead": "81cca6060008282ae1e0dc307684d53f4a303490",
+  "mergedMain": "0db6863ae81eec1821ea54878a1cf28e8f7bcf0e",
+  "run": 40901665578,
+  "status": "MERGED / DEPLOYMENT BLOCKED / NOT LIVE_ACCEPTED",
+  "jobs": {
+    "test": 123545310173,
+    "testResult": "success",
+    "cross1": 123545310345,
+    "cross1Result": "success",
+    "cross2": 123545309751,
+    "cross2Result": "failure",
+    "deploy": 123550226710,
+    "deployResult": "skipped",
+    "live": 123550228171,
+    "liveResult": "skipped"
+  },
+  "failure": {
+    "file": "tests/browser-reference-management.mjs",
+    "line": 48,
+    "condition": "navigator.serviceWorker.controller",
+    "timeoutMs": 30000,
+    "engineEvidence": "Only Firefox normal/manage screenshots present; no reference-management completion. First engine is Firefox.",
+    "historicalCause": "Original sample did not instrument registration/activation/controller phases. Do not claim exact underlying browser/product cause.",
+    "impact": "Failure occurs before forced offline archive commit. No failed financial invariant and no deployment. New UI controls and native Flatex append/backfill logs pass."
+  },
+  "artifact": {
+    "id": 12910670410,
+    "sha256": "c8143bf1f6987bc5ae1aa525b3caa41f7bcd489ed4ae82e85780d5b6b79b8393",
+    "downloadedDigestVerifiedBeforeExtraction": true
+  },
+  "next": "Prepare test-only controlled baseline: wait for application-created active worker, reload empty document, require actual controller and unchanged exact blank record before fixture seeding; keep original actual offline commit/reload and financial/CAS checks. Add startup telemetry. No manual SW registration, no retries/sleeps/timeout increase, no app code change. Own follow-up PR release boundary remains."
+}
