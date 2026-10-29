@@ -1,4 +1,28 @@
-# Native Flatex-Stückhistorienübernahme – Kandidat vor voller CI · 29.10.2026
+# Native Flatex-Übernahme: Zielgrößenkorrektur vor neuer voller CI · 29.10.2026
+
+042076d2 wurde NICHT final abgenommen: Pflicht-CI40845406706 regulär abgeschlossen,
+test/Cross1 SUCCESS, Cross2 FAILURE beim strikten44px-UIgate. Wallet40845406728
+SUCCESS, kein Merge/Deployment. Befund zentral vor Korrektur ina8177cc9 gesichert.
+
+Tatsächliche lokale Firefox157-Reproduktion auf unverändert archiviertem042076d2:
+768px, flatexSimulationRun BoundingBox43.99998474121094 bei computed min-height44px.
+Passender Playwright1.64.1/Firefox157 installiert; Browser zunächst Content-Sandbox-
+Crash in dieser isolierten Containerumgebung, lokale Probe mit deaktivierter
+Content-Sandbox erfolgreich. Dies ist keine Änderung an CI-/Produktschutzgates.
+Gezielter CSS-Mindestwert45px ausschließlich für neue Simulationscontrols ergibt
+45 bzw44.99998474121094px. Strikte >=44Assertion unverändert. Zusätzliche gemessene
+Zielgrößen in Browserbericht, genaue Engine/Breite/Control/Geometrie bei Fehler.
+
+Lokale korrigierte Chromium-Simulation/append/backfill und Firefox157-Simulation/
+append/backfill inkl. aller neuen Backup-/Quota-/post-put-/CAS-/Undo-/Restore- und
+Offlinegates PASS. Syntax PASS. Finanz-/Schreibpfad unverändert; nur CSS/SW208 und
+präzisere Testdiagnostik. Vollständige neue aktuelle CI/Wallet/3Engine-/Artefakt- und
+visuelle Abnahme steht aus. Produktion v204 unverändert. Keine Gates abgeschwächt,
+keine neue Implementierungsrichtung. Eigene Nutzerentscheidung vor aktivem Release.
+
+---
+
+# Historischer aktiver Übernahmekandidat vor CI
 
 Vorabvertrag für aktive Übernahme vor Code dauerhaft8bf23669 auf zentralem
 Dokumentationsbranch gesichert, jetzt auch im PR. Read-only-UIkandidat a8adc396
