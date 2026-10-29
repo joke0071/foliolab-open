@@ -1,0 +1,180 @@
+{
+  "status": "PRODUCTION_PERFORMANCE_MEASURED / FULL_LIVE_FLOW_GATE_PENDING",
+  "date": "2026-10-29",
+  "release": "6ec0cf9c6e28edf1b19993357c3b839106b8aa80",
+  "before": {
+    "sha": "fee4fc5de4c57fee6643d30f20798c35b2b8807b",
+    "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+    "node": "v24.22.1",
+    "profiler": false,
+    "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "runs": 5,
+    "scenarios": [
+      {
+        "positions": 19,
+        "references": 1825,
+        "coldMs": [
+          541.1999999992549,
+          554,
+          547.8000000007451,
+          595.5,
+          553.3000000007451
+        ],
+        "warmMs": [
+          378.90000000037253,
+          387.2999999988824,
+          399.5,
+          380.19999999925494,
+          407.09999999962747
+        ],
+        "offlineMs": [
+          353.19999999925494,
+          353.80000000074506,
+          388.7999999988824,
+          374.2999999988824,
+          400
+        ],
+        "coldMedianMs": 553.3000000007451,
+        "warmMedianMs": 387.2999999988824,
+        "offlineMedianMs": 374.2999999988824,
+        "exactRecordUnchanged": true
+      },
+      {
+        "positions": 1000,
+        "references": 1825,
+        "coldMs": [
+          3238.4000000003725,
+          3530.5,
+          3000.0999999996275,
+          3182.300000000745,
+          3186.60000000149
+        ],
+        "warmMs": [
+          2953.7000000011176,
+          3071.4000000003725,
+          2884.9000000003725,
+          3235.9000000003725,
+          3116.300000000745
+        ],
+        "offlineMs": [
+          3018.9000000003725,
+          3043,
+          2845.7000000011176,
+          3087.699999999255,
+          2975.5999999996275
+        ],
+        "coldMedianMs": 3186.60000000149,
+        "warmMedianMs": 3071.4000000003725,
+        "offlineMedianMs": 3018.9000000003725,
+        "exactRecordUnchanged": true
+      }
+    ],
+    "limitations": [
+      "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+      "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+      "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+    ],
+    "transport": {
+      "note": "Execution environment HTTPS inspection proxy used for this supplemental live benchmark only; certificate errors ignored for transport. Original benchmark source unchanged. Exact same launch wrapper required for after series.",
+      "sampleIsolation": "Synthetic dedicated browser profiles; every saved record/settings/revision checked exact; no private data accessed.",
+      "baselineSW": 212
+    }
+  },
+  "after": {
+    "sha": "6ec0cf9c6e28edf1b19993357c3b839106b8aa80",
+    "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+    "node": "v24.22.1",
+    "profiler": false,
+    "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "runs": 5,
+    "scenarios": [
+      {
+        "positions": 19,
+        "references": 1825,
+        "coldMs": [
+          573.7999999988824,
+          487.30000000074506,
+          588.4000000003725,
+          572.7999999988824,
+          519.2000000011176
+        ],
+        "warmMs": [
+          346.2000000011176,
+          340.3999999985099,
+          373.09999999962747,
+          453.40000000037253,
+          372.3999999985099
+        ],
+        "offlineMs": [
+          368.1000000014901,
+          355.90000000037253,
+          416.59999999962747,
+          426.19999999925494,
+          376.90000000037253
+        ],
+        "coldMedianMs": 572.7999999988824,
+        "warmMedianMs": 372.3999999985099,
+        "offlineMedianMs": 376.90000000037253,
+        "exactRecordUnchanged": true
+      },
+      {
+        "positions": 1000,
+        "references": 1825,
+        "coldMs": [
+          1469.9000000003725,
+          1600.199999999255,
+          1611.300000000745,
+          1786.1000000014901,
+          1687.2999999988824
+        ],
+        "warmMs": [
+          1412.4000000003725,
+          1473.4000000003725,
+          1540.800000000745,
+          1501.2999999988824,
+          1631.5999999996275
+        ],
+        "offlineMs": [
+          1417.7999999988824,
+          1435.4000000003725,
+          1669.6000000014901,
+          1564.7999999988824,
+          1526.300000000745
+        ],
+        "coldMedianMs": 1611.300000000745,
+        "warmMedianMs": 1501.2999999988824,
+        "offlineMedianMs": 1526.300000000745,
+        "exactRecordUnchanged": true
+      }
+    ],
+    "limitations": [
+      "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+      "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+      "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+    ]
+  },
+  "comparison": [
+    {
+      "positions": 19,
+      "coldImprovementPercent": -3.524308692953393,
+      "warmImprovementPercent": 3.8471469146438175,
+      "offlineImprovementPercent": -0.6946299763552988
+    },
+    {
+      "positions": 1000,
+      "coldImprovementPercent": 49.43513462624768,
+      "warmImprovementPercent": 51.120010418743874,
+      "offlineImprovementPercent": 49.44184968032871
+    }
+  ],
+  "scope": "Actual production v212 and v213, same unmodified benchmark SHA, five fresh browser processes each, controlled PWA, same environment and HTTPS inspection proxy wrapper, no concurrent local tests. Synthetic isolated browser profiles, exact original records/settings/revisions unchanged.",
+  "limits": "No private portfolio, large wallet journal or physical mobile hardware performance claim; small portfolio timings vary and can increase. Initial direct browser navigation without required proxy failed before a sample and is excluded."
+}
