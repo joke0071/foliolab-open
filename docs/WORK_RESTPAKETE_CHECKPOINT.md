@@ -1,3 +1,54 @@
+# Native Flatex-Dialogsimulation remote gesichert · volle CI läuft · 29.10.2026
+
+**PARTIAL, Kandidat noch nicht vollständig abgenommen.** Einziger Funktionsbranch
+feature/flh03-flatex-native-projection, [PR195](https://github.com/joke0071/foliolab-open/pull/195).
+HEAD a8adc39634ee0040a439a62cc2e8225bebb7b87c / Baum
+7af22cab575a4d4a74153fce13456efe20f28e67 exakt lokal und remote verifiziert.
+Vorabvertrag03f60896 und regulär erfolgreiche volle CI40841159604/Wallet40841159516
+vor Produktänderungen abgeschlossen. Keine fremden Writer/aktiven Actions bei
+erneutem Kollisionscheck. Main3e9f4877/v204 unverändert; SW206 unveröffentlicht.
+
+Implementiert im bestehenden Dialog: expliziter append/backfill-Modus ohne
+Vorauswahl, bestehende aktuelle Kontozuordnungen, gemeinsame native Simulation,
+exakte Mengenvergleiche, unbekannte Kosten und gesamter Stapelblock bei Cash/
+Sonder-/Quellkonflikten. Frische vor Simulation und Darstellung; Modus-/Konto-/
+Bestätigungs-/Datei-/Dialogwechsel verwerfen asynchrone Ergebnisse. Storagehinweis
+invalidiert sofort. Nativer Submitguard und submitBlocked bleiben gesperrt.
+Keine neue Finanzengine/Modelle/Backup-/Storageänderung oder private Datei benutzt.
+
+939 lokale Units/0Fail/0Skip, Syntax und neuer tatsächlicher Chromium-Dialogtest
+PASS. Fünf Breiten320/390/430/768/1440, Axe/44px/Fokus/Escaping, bestehende native
+UI-/Bindungs-/Betrags-/Projektions-/CASgates PASS. Verzögerte Konto-/Modus-/Datei-/
+Escape-/Wiederöffnungsgates, echte konkurrierende IDB-Speicherung zwischen beiden
+Frischeprüfungen, whole-batch Cash/Sonderfälle, erzwungenes Submit, SW-Offlinereload
+und exakter IDB-/Revision-/Settings-Nullmutationsbeweis PASS. Tatsächliche320/1440-
+Screenshots visuell geprüft. Öffentliche Fixtures/Artefakte ausschließlich synthetisch.
+
+Neue volle [CI40842974124](https://github.com/joke0071/foliolab-open/actions/runs/40842974124)
+und Wallet40842974152 gestartet; Firefox/WebKit-/aktuelle vollständige CI-/Artefakt-/
+Quellabnahme noch OFFEN. Keine frühere grüne CI als Abnahme des neuen UIstands ausgeben.
+7Dateien/172Additionen/5Entfernungen; Pins/Workflows unverändert, neuer Browsertest
+über bestehenden Drei-Engine-Einstieg. Lokaler Zwischencommitabb05ce durch identischen
+API-Remotecommit ersetzt und Baumvergleich verifiziert; direkter Push weiterhin ohne
+Credentials, GitHub-API erfolgreich. Nur lokale synthetische artifacts unversioniert.
+
+**Exakt nächste Fortsetzungsstelle:** diese beiden Läufe regulär abschließen,
+aktuelle Drei-Engine-Berichte/testedSHA/Artefakt-Digests und visuelle Bilder sowie
+Quellreview prüfen. Bei realem Befund erst regulären Laufabschluss abwarten, gezielt
+auf demselben PR korrigieren und volle neue Gates. Danach begrenzte UIkandidatenabnahme
+separat sichern; aktive Buchungsübernahme weiterhin eigener nächster Schnitt mit
+konkretem Backup-/Bestätigungs-/Baseline-/CAS-/Undo-/Bestandsschutzvertrag. Noch
+kein Merge/Deployment oder wirtschaftlicher Gesamtimport. Vollständige private
+Originale bleiben aufgrund Nicht-Handels-/Cash-/Sonderbelegen blockiert.
+
+FLH05-Zukunftskompatibilität verbindlich in875b49ff gesichert und hier durch
+Wiederverwendung bestehender gemeinsamer Verträge umgesetzt; keine FLH05-
+Implementierung/zusätzliche Phase/Refactoring. FLH05/PROJ01 geparkt, PERF01 essentielleP1.
+UI-/DELETE-MASTER28/FLH04/OAuth/Hardware/AT/P0/P1/BENCH/übrige Roadmap erhalten.
+Gesamtmaster PARTIAL, kein offenes Gesamtpaket geschlossen.
+
+---
+
 # Wiederaufnahme und FLH05-Zukunftskompatibilität gesichert · 29.10.2026
 
 **Aktuell PARTIAL, einziger Funktionsstrang PR195.** main3e9f4877 unverändert,
