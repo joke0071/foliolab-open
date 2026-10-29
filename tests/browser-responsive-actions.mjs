@@ -51,7 +51,10 @@ try{
     const stroke=await button.locator('.action-icon svg').evaluate(el=>parseFloat(getComputedStyle(el).strokeWidth));
     assert.ok(stroke>=2.1,id+' icon stroke too thin at '+width+': '+stroke);
    }
-   if(mobile)assert.ok(measured.rects.every(x=>x.w>=38&&x.w<=41&&x.h>=38&&x.h<=41),name+' not compact squares at '+width);
+   // UI-A02 explicitly replaces the former38–41px visual contract with real
+   //44px targets. Keep the compact square, wrapping and card-boundary gates.
+   assert.ok(measured.rects.every(x=>x.w>=44&&x.h>=44),name+' below44px at '+width);
+   if(mobile)assert.ok(measured.rects.every(x=>x.w===44&&x.h===44),name+' not44px compact squares at '+width);
    else assert.ok(measured.rects.every(x=>x.w>65),name+' desktop labels have no space at '+width);
   }
   await page.locator(nav+' [data-page="positions"]').click();

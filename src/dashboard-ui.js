@@ -1,15 +1,8 @@
 import {cashTermsAccountHint} from './cash-terms-ui.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {units,exact} from './decimal.js';
+import {compactMoney as compactAmount} from './format.js';
 /** Presentation-only dashboard helpers. Never imply performance when only wealth history exists. */
-const compactAmount = value => {
-  const n = Number(value);
-  if (!Number.isFinite(n)) return '–';
-  const abs = Math.abs(n), format = x => new Intl.NumberFormat('de-AT', {maximumFractionDigits:1}).format(x);
-  if (abs >= 1000000) return '€ ' + format(n/1000000) + ' Mio.';
-  if (abs >= 1000) return '€ ' + format(n/1000) + ' Tsd.';
-  return '€ ' + format(n);
-};
 export {compactAmount};
 
 export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealth=historicalWealthView(model)) {
@@ -100,7 +93,15 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  if(second)points.forEach((p,i)=>{p.compareValue='Kapitalreferenz: '+money(second[i]);});
  const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+pad+' '+height+' Z';
  const series=esc(JSON.stringify(points));
- const labels=[yMax,(yMax+yMin)/2,yMin].map(v=>'<span>'+esc(axisFormat(v))+'</span>').join('');
+ const ticks=[yMax,(yMax+yMin)/2,yMin];
+ let tickLabels=ticks.map(v=>axisFormat(v));
+ // Only the default EUR formatter may gain display digits. Custom price/unit axes
+ // retain their own currency and precision contract.
+ if(axisFormat===compactAmount){
+  for(let digits=4;new Set(tickLabels).size<ticks.length&&digits<=12;digits++)tickLabels=ticks.map(v=>compactAmount(v,digits));
+  if(new Set(tickLabels).size<ticks.length)tickLabels=ticks.map(v=>'€ '+new Intl.NumberFormat('de-AT',{maximumSignificantDigits:17}).format(v));
+ }
+ const labels=tickLabels.map(label=>'<span>'+esc(label)+'</span>').join('');
  const axis='<div class="chart-x-labels"><span>'+esc(dateLabel(sampled[0].date))+'</span><span>'+esc(dateLabel(sampled.at(-1).date))+'</span></div>';
  return '<div class="chart-interactive"><div class="chart-y-labels" aria-hidden="true">'+labels+'</div>'+
  '<div class="chart-plot" role="group" tabindex="0" aria-label="Interaktiver Vermögensverlauf. Pfeiltasten links und rechts zeigen Stichtage." data-chart-points="'+series+'">'+

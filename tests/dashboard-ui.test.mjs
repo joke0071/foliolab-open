@@ -3,6 +3,19 @@ import assert from 'node:assert/strict';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,compactAmount} from '../src/dashboard-ui.js';
 import {blankModel,createProvider,createAccount,createPosition,valueEUR,money,escapeHTML} from '../src/model.js';
 const labels=d=>d;
+test('Compact money distinguishes audit examples and never turns missing values into zero',()=>{
+ const cases=[[983.1,'€ 983,1'],[1000,'€ 1 Tsd.'],[1010,'€ 1,01 Tsd.'],[1059,'€ 1,059 Tsd.'],[9999,'€ 9,999 Tsd.'],[1234567,'€ 1,235 Mio.'],[-1010,'€ -1,01 Tsd.']];
+ for(const [value,label]of cases)assert.equal(compactAmount(value),label);
+ for(const value of [null,undefined,'',NaN,Infinity,true])assert.equal(compactAmount(value),'–');
+ assert.equal(new Set(cases.map(([v])=>compactAmount(v))).size,cases.length);
+});
+test('Default EUR chart axes keep distinct labels for tiny and large actual values',()=>{
+ for(const amount of [1e-9,983.1,1000,1010,1059,9999,1e6,-1010]){
+  const html=drawInteractiveChart([{date:'2024-01-01',total:amount},{date:'2024-01-02',total:amount*1.01}],{money,esc:escapeHTML,dateLabel:labels});
+  const axis=html.match(/class="chart-y-labels"[^>]*>(.*?)<\/div>/)[1];
+  assert.equal(new Set([...axis.matchAll(/<span>(.*?)<\/span>/g)].map(x=>x[1])).size,3,'distinct labels for '+amount);
+ }
+});
 test('Compact axis uses de-AT thousands while keeping precision in point values',()=>{
  assert.match(compactAmount(198000),/198\s*Tsd\./);
  assert.match(compactAmount(-198000),/-198\s*Tsd\./);

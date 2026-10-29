@@ -1,4 +1,5 @@
 /** Interaktives, rein lokales Allokationsdiagramm ohne Chart-Bibliothek. */
+import {compactMoney} from './format.js';
 const shareFormat=new Intl.NumberFormat('de-AT',{maximumFractionDigits:1});
 export function formatAllocationShare(value){
  if(value>0&&value<.1)return '< 0,1 %';
@@ -41,15 +42,10 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
  const value=chosen?money(chosen.value):money(netTotal);
  const label=chosen?chosen.name:'Portfolio';
  const share=chosen?formatAllocationShare(chosen.percent):liabilities>0?'Nettovermögen':'Gesamtwert';
- const compact=amount=>{
-  const x=Number(amount),abs=Math.abs(x);
-  const fmt=y=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(y);
-  return abs>=1000000?'€ '+fmt(x/1000000)+' Mio.':abs>=1000?'€ '+fmt(x/1000)+' Tsd.':money(x);
- };
  return {donut:'<svg class="allocation-svg" viewBox="0 0 200 200" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
   '<circle class="allocation-track" cx="100" cy="100" r="84" stroke="#e8efe9" stroke-width="30" fill="none"/>'+segments+'</svg>'+
-  '<button class="donut-inner allocation-center" type="button" aria-label="Gesamtwert des Portfolios anzeigen" title="'+esc(money(netTotal))+'">'+
-  '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(compact(chosen?chosen.value:netTotal))+'</strong>'+
+  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(label+': '+value+' · Gesamtwert des Portfolios anzeigen')+'" title="'+esc(money(netTotal))+'">'+
+  '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(compactMoney(chosen?chosen.value:netTotal))+'</strong>'+
   '<small id="donutShare">'+esc(share)+'</small></button>',
   legend:rest,activeIndex:chosen?slices.indexOf(chosen):-1};
 }
@@ -62,15 +58,10 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
  const buttons=[...legend.querySelectorAll('[data-allocation-index]')];
  const controls=[...segments,...buttons];
  let pinned=initialIndex>=0?initialIndex:-1;
- const compact=n=>{
-  const x=Number(n),abs=Math.abs(x);
-  const fmt=y=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(y);
-  return abs>=1000000?'€ '+fmt(x/1000000)+' Mio.':abs>=1000?'€ '+fmt(x/1000)+' Tsd.':money(x);
- };
  function display(index){
   const item=slices[index];
   label.textContent=item?.name||'Portfolio';
-  value.textContent=compact(item?.value??netTotal);
+  value.textContent=compactMoney(item?.value??netTotal);
   value.title=money(item?.value??netTotal);
   share.textContent=item?formatAllocationShare(item.percent):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert');
   controls.forEach(el=>{
@@ -78,7 +69,7 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
    el.classList.toggle('active',active);
    el.setAttribute('aria-pressed',String(Number(el.dataset.allocationIndex)===pinned));
   });
-  center.setAttribute('aria-label',item?'Gesamtwert anzeigen statt '+item.name:'Gesamtwert des Portfolios anzeigen');
+  center.setAttribute('aria-label',(item?'Gesamtwert anzeigen statt '+item.name:'Gesamtwert des Portfolios anzeigen')+' · '+money(item?.value??netTotal));
  }
  function pin(index){
   pinned=pinned===index?-1:index;

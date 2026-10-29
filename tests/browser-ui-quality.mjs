@@ -1,4 +1,5 @@
 import './browser-ui-small-rests.mjs';
+import './browser-ui-audit-controls.mjs';
 import './browser-history-followup.mjs';
 import './browser-reference-management.mjs';
 import './browser-kraken-ledger.mjs';
