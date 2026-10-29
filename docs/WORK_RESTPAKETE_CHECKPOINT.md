@@ -1,3 +1,48 @@
+# PR195 native Projektion remote gesichert · volle CI läuft · 29.10.2026
+
+Einziger Funktionsbranch feature/flh03-flatex-native-projection, HEAD
+`7274797f6847acd101589da9c00348bda9f3b42f`, Baum `a48eb56bb200ea3d9e9bcf6945e67366fd316718`
+exakt lokal/Remote. [PR195](https://github.com/joke0071/foliolab-open/pull/195) offen.
+Vertrag c4d9a330 vor Code gesichert; main3e9f4877/v204 LIVE_ACCEPTED unverändert.
+Vor Push180Branches/PRs/Actions geprüft: nur geparkte157/161, keine fremde Änderung.
+Zentraler Dokumentationsbranch feature/flh05-import-foundation, historischen Appbaum nicht mergen.
+
+Implementiert im vorhandenen Kern: native EUR-Stückhandelsprojektion mit allen
+Source-Lokatoren/Prüffällen, gemeinsame readonly Simulation unter bestehenden
+Konto-/Quellbestätigungen und previewCSV-/Kosten-/Manual-/Backfill-/Baselinegates.
+Jeder Cash-/Sonder-/Konflikt-/Intraday-/Einheiten-/FX-/Präzisionsfall sperrt den
+ganzen Stapel. Unbekannte Nebenkosten null, keine Geld-/Eröffnungs-/Kostenfiktion.
+Append nur leere ungeschützte Positionen bzw. unveränderte Source-Replays;
+Backfill konservativ mit exakter beobachteter Endmenge. Kein aktiver UI-/Commit-/
+Persistenzpfad, äußere ready/writeEnabled false. SW205 unveröffentlicht.
+9Dateien/262Additionen/1Entfernung; Workflows/Pins/Assertions unverändert.
+
+937Units Node20/0Fehler/Skip,17neue Fokusfälle und Syntax PASS. Tatsächlicher Chromium-
+Modullauf mit Offline/Replay/Manual-/Quellen-/Baseline-/Undo-/Backfillgates PASS.
+Primärprofil exakter IDB-/Revisions-/Settings-Nullmutationsbeweis; separater frischer
+synthetischer CAS-Kontext akzeptiert genau eine Revision, konkurrierenden nativen
+Entwurf abgelehnt. Plain-/Encrypted-Restore über bestehenden Kern geprüft.
+Keine UIänderung oder neue visuelle UIabnahme behauptet.
+
+Private Originale ausschließlich außerhalb Git lesend, aktueller unabhängiger Python-
+csv/Decimal-/Namespacevergleich gegen Projektionsfelder PASS. Originalgesamtdateien
+wegen Nicht-Handels-/Cash-/Prüffällen korrekt komplett nicht qualifiziert; keine
+stille Teilübernahme, alle Lokatoren erhalten. Originale unverändert, kein privater
+Bestand importiert. Zusätzlicher9Dateien-Scan gegen lange Originalkennungen PASS;
+keine privaten Zeilen/Werte/IDs/Zeiträume/Fingerprints in Repo/CI. Tests synthetisch.
+
+Aktuelle Läufe: .
+Status IN_PROGRESS bis aktuelle volle CI/Wallet, tatsächliche3Engine-Berichte,
+ZIP-Digests/testedSHA und finale Quellabnahme. Exakt nächster Schritt diese Gates
+regulär beenden lassen, aktuelle Artefakte/Quelle prüfen und Kandidatenabnahme
+mit eindeutigem Folgevertrag dauerhaft zentral sichern. Zwei Etappen Vertrag +
+geprüfte Grundlage; keine dritte UI-/Release-/Übernahmeintegration vorgezogen.
+Vollständige native Historien-/Bestands-/Kosten-/Cashflow-/Performancefreigabe offen.
+UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/übrige Roadmap unverändert,
+historischerStart01.01.2022/keine Fiktionen, PROJ01 Backlog. Gesamtmaster PARTIAL.
+
+---
+
 # Native Flatex-Projektionsvertrag vor Code gesichert · 29.10.2026
 
 Basis main3e9f4877/v204 unverändert, PR194 bereits abgeschlossen. [Vertrag](FLH03_FLATEX_NATIVE_PROJECTION_CONTRACT.md): kleinste reine native EUR-Stückhandelsprojektion + streng qualifizierte gemeinsame Simulation. Bestehende native Order-/Identitäts-/Kontobindungs- und previewCSV-/Backfill-/Kosten-/Baseline-/Undoverträge werden wiederverwendet. Alle Cash-/Sonder-/ungeklärten Zeilen blockieren den Gesamtstapel; keine stillschweigende Teilübernahme. Unbekannte Gebühren/Steuern bleiben null, kein Geldkonto/FX/Eröffnung/Kosten erfunden. Append nur leere ungeschützte Zielpositionen, Backfill nur vorhandener konservativer Pfad und exakter Endbestand. UI/Schreibfreigabe separat.
