@@ -1,3 +1,15 @@
+# Präzisierung der Laufzuordnung · 29.10.2026
+
+Aktueller unveränderter Kandidat a8adc396/Baum7af22cab: **Pflicht-CI40842974152**
+(FolioLab Open – testen und veröffentlichen) läuft regulär; **Wallet40842974124 SUCCESS**.
+Im unmittelbar folgenden Sicherungsblock waren die beiden neuen IDs vertauscht
+beschriftet; diese Zuordnung korrigiert ausschließlich die Dokumentation. Keine
+Produkt-/Teständerung, kein Retry/Abbruch, Produktion weiter v204. Exakt nächster
+Schritt: Pflicht-CI40842974152 vollständig abschließen und deren aktuelle echte
+Drei-Engine-Berichte/Artefakte/testedSHA/Digests/visuelle Bilder prüfen.
+
+---
+
 # Native Flatex-Dialogsimulation remote gesichert · volle CI läuft · 29.10.2026
 
 **PARTIAL, Kandidat noch nicht vollständig abgenommen.** Einziger Funktionsbranch
