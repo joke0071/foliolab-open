@@ -1,3 +1,45 @@
+# Korrigierter nativer Übernahmekandidat remote gesichert · neue finale CI · 29.10.2026
+
+HEAD34dc5fb71c5ba5335e1a8b19b48fefed69b8f126 / Baum
+1d01a067c09274f6e29b8b0d3df7b289af8a1a72 exakt lokal/remote, gleicher
+feature/flh03-flatex-native-projection/PR195. Vorherige volle CI40845406706
+regulär FAILURE beendet: test/Cross1 SUCCESS, Cross2 strikter44px-Firefoxbefund;
+Wallet40845406728 SUCCESS. Diese frühere aktive Version042076d2 NICHT abgenommen.
+
+Ursache jetzt tatsächlich lokal auf unverändertem archiviertem042076d2 reproduziert:
+Playwright1.64.1/Firefox157,768px, flatexSimulationRun43.99998474121094px bei computed
+min-height44px. Gezielte CSS-Mindesthöhe45px nur neuer Simulationscontrols ergibt
+45 bzw44.99998474121094px. Strikte >=44px-Assertion unverändert, keine Toleranz/
+Gateabschwächung; zusätzliche echte Zielgrößen im Bericht und präzise Fehlerdaten.
+Lokale Firefox-Containerprobe benötigt deaktivierte Content-Sandbox; CI/Produkt-
+Schutzregeln unverändert. Keine Änderung an Finanz-/Schreiblogik gegenüber042076d2.
+
+Korrigierte Chromium- UND tatsächliche Firefox157-Simulation/append/backfill PASS,
+einschließlich Backup/Zustimmung/Resets/Quota/post-put-Abbruch/realemCASkonflikt/
+inert währendSave/Undo/gespeichertem Plain+EncryptedRestore/Replay/Offline,
+fünfBreiten/Axe/44px und horizontaleAktionsgrenzen. Syntax PASS;939Units zuletzt
+grün, neue unveränderte vollständige CI prüft erneut. SW208 unveröffentlichter
+Kandidat; Produktionmain3e9f4877/v204 unverändert. Nur4Dateien/31Additionen/
+5Entfernungen Korrekturschnitt. Quell-/CSSreview eng begrenzt. Lokaler Commitae22f94
+auf identischen tatsächlichen API-Remotecommit34dc5fb7 synchronisiert.
+
+Neue Pflicht-[CI40846973952](https://github.com/joke0071/foliolab-open/actions/runs/40846973952)
+und Wallet40846973914 laufen auf korrigiertem Stand. **PARTIAL bis tatsächlicher
+neuer voller Abnahme.** Exakt nächster Schritt beide regulär abschließen, aktuelle
+echte Übernahmeberichte aller3Engines/beidenModi/44px-Messwerte sowie testedSHA/
+Baum/ZIPdigests/visuelleBilder und Quell-/Kollisionsreview prüfen. Bei neuem realem
+Befund nach Laufabschluss gezielt korrigieren; sonst reviewbaren Kandidaten final
+dauerhaft abnehmen. Danach konkrete Nutzerentscheidung für Merge/Deployment neuer
+wirtschaftlicher Buchungsmutationen gemäß bestehender Freigabegrenze #165.
+Keine private automatische Übernahme oder Produktionsänderung.
+
+Vorabvertrag und bisherige Sicherheits-/Fachbeweise/Fehlhistorie darunter erhalten.
+FLH05-Zukunftskompatibilität nur vorhandene gemeinsame Verträge, keine zusätzliche
+Engine/Phase/Refactoring. FLH05/PROJ01 geparkt; UI-/DELETE-MASTER28/PERF01 essentielleP1/
+FLH04/ursprüngliche Roadmap unverändert. Gesamtmaster PARTIAL.
+
+---
+
 # Finale Übernahme-CI: Firefox-Zielgrößenbefund · keine Abnahme · 29.10.2026
 
 Kandidat042076d2/Baumde6b4e92 unverändert remote gesichert. Pflicht-CI40845406706
