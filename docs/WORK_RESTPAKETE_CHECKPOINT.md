@@ -1,3 +1,63 @@
+# PR196 korrigierte Testvorbereitung gesichert · neue vollständige CI · 29.10.2026
+
+**PARTIAL bis neue volle Kandidatenabnahme.** Einziger Funktionsbranch
+feature/reference-removal-safe-subset / PR196 Draft,
+HEAD **cf725c1ebf09db3514249bc023211e03ee3a4f87** /
+Baum **9d65e7f267025a37fe6955890700068a415fde02**, exakt lokaler e30c9ce und Remote.
+PR-Testmerge e561badf9a7ab82713d62a7715a6659d01d8dfa9.
+Main6fe75a99/v208 unverändert, direktes HTTPS200/SW208 erneut gelesen,
+SWdatei-SHA25670ef8dd081ab4d99ed16904952d275e47d7dcb5bbbd111b65fad840ab9f3e8b0.
+Kein Merge/Deployment oder private Finanzmutation.
+
+Alte Pflicht40876478879 regulär FAILURE abgeschlossen:
+test123456484709 zeitlich veraltete21.10.-Kursfixture (v208-Baseline identisch
+reproduziert); Cross1 123456485062 SUCCESS; Cross2 123456485089 FAILURE am
+bestehenden tests/browser-flatex-native-ui.mjs:98 vor Offline mangels Controller.
+Deploy123460602721/Live123460603759 korrekt SKIPPED. Alte Wallet40876478789 SUCCESS.
+Cross2artefakt12899410206 SHA256
+d4189c541bc46a384dbbb48e4c8086c8ac199130f67656b327c630e9d8a2c12f erhalten.
+Erstes Testartefakt12897804510 SHA256311876fba7502e841d8340ca2108e57226e3727623409ad7dba8c510fc35b5a4
+tatsächlich heruntergeladen/verifiziert, testedSHA bf1e945a gelesen.
+
+Gezielte separate Korrektur ausschließlich2Testdateien:
+Phase2 aktuelle synthetische Quote/FX-Datumswerte statt ablaufender Konstante;
+zusätzlicher10Tagealter synthetischer Kurs wird vom UNVERÄNDERTEN Altersgate
+abgewiesen, Altbestand bleibt50. Bestehende Listing-/Währungs-/HistorischeFX-
+/Provenienzassertionen erhalten. Derselbe korrigierte Test gegen v208-Baseline
+UND Kandidaten produktbaum tatsächlich PASS.
+Nativer Previewtest stellt nun nach SWready mit Reload und strikter
+Controllerassertion einen kontrollierten Baselinezustand her; ursprüngliche
+spätere Offline-/Controller-/Nullmutationsgates vollständig erhalten.
+Kein Timeout erhöht, kein Test/Produkt-Altersgate abgeschwächt. Auslöser des
+CI-Controllerzeitouts nicht abschließend gemessen; keine bewiesene Produktreparatur
+oder blindes Retry behaupten. Zusätzlicher früher Controllerzustand wird geloggt.
+
+Neue volle Pflicht **40878033465**, Wallet **40878033446** auf genaucf725c1e
+laufen/warten; regulär abschließen, nicht erneut triggern oder unterbrechen.
+946Units/0Fail/0Skip/Syntax zuletzt PASS; seitdem keine Produkt-/Unittestbytes geändert.
+Tatsächlicher lokaler Chromium: korrigierte Phase2 und kompletter nativer
+Previewtest samt Offline/Nullmutation PASS. Passendes isoliertes Playwright1.64.1/
+Firefox157: kompletter nativer Previewtest mit aktivem SW209/Controller,
+vollständige bestehende Referenzverwaltung UND neue Rücknahme PASS
+(Quota/post-put/stale UND realeCASrace nach Frischeprüfung, Backup/Keyausschluss/
+V2PlainRestore/Undo/Offline/fünfBreiten/Axe/44px/Fokus).
+Firefox320-Neubild tatsächlich visuell geprüft. Lokaler Firefoxcontainer benötigt
+MOZ_DISABLE_CONTENT_SANDBOX=1; CI-/Produkt-Sandboxregeln unverändert.
+Keine unversionierten Browserabhängigkeiten/Artefakte als Produktcode übernehmen.
+
+**Exakt nächste Aktion:** neue volle Pflicht/Wallet regulär beenden; tatsächliche
+neue Logs, getestetenTestmergebaum, SHA256-verifizierte Artefakte, neue
+Referenzrücknahmeberichte aller3Engines und aktuelle Bilder prüfen.
+Bei Befunden gezielt gleicherPR, keine Retryserie oder Gateabschwächung.
+Dann belegten begrenzten Kandidaten reviewbereit herstellen und erst dann
+eigene konkrete Nutzerfreigabe vor diesem kritischen Merge/Deployment erfragen.
+PR195-Freigabe nicht erweitern. Gesamtmaster/alle übrigen UI-/Löschkategorien,
+FLH03/FLH04/essentielleP1-PERF01/ursprüngliche Roadmap PARTIAL;
+FLH05/PROJ01 OPEN/PARKED, nur notwendige gemeinsame Verträge.
+Historische Belege und Anforderungen unten vollständig erhalten.
+
+---
+
 # PR196: bestehende Kursfixture überschreitet Altersgate · Diagnose belegt · 29.10.2026
 
 Kandidat07a03dd3/Baumced8b29f unverändert remote. Pflicht40876478879/test123456484709
