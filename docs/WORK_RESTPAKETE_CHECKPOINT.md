@@ -1,3 +1,20 @@
+# PR196 autorisiert und gemergt · UI-Rückübernahme entschieden · 29.10.2026
+
+**Vorrangiger Nutzerentscheid:** Die ausdrückliche Merge-/Deploymentfreigabe gilt für unveränderten PR196/be860237/SW211. Die exklusive Claude-Implementierung ist vollständig aufgehoben. UI-VISUAL-CLAUDE: **AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK**. Kein Claude-Code/Branch/PR zu übernehmen, keinen weiteren Claude-Lauf starten. Historische Sperrtexte unten sind überholt; alle Anforderungen/Nachweise bleiben erhalten.
+
+**PARTIAL / RELEASE IN PROGRESS:** PR196 kontrolliert gemergt, noch keine produktive Endabnahme behauptet.
+- Release/main: c08bc1d35b25d72081fb07a61e95532a883fdebe.
+- Exakter Baum: 0d486119e6b8530e31be96faab49a2fc00ebf7e7, identisch freigegebenem HEAD und Testmerge ccbf2e63.
+- Frischer Abgleich: main vor Merge6fe75a99, HEADbe860237 unverändert, mergeable clean, keine laufenden/wartenden Actions, nur196 und geparkte Drafts157/161 offen, keine Reviews. Zehn-Dateien-Sicherheitsdelta erneut geprüft.
+- Finale PR-Gates:40883912046/test123482405876/Cross123482405757+123482405354 SUCCESS; Wallet40883911994 SUCCESS. Main-CI/Pages/Live: [40893805495](https://github.com/joke0071/foliolab-open/actions/runs/40893805495) läuft.
+- Vor Merge direkt produktiv weiterhin SW208 gelesen. SW211 ist Kandidat bis tatsächlich erfolgreiche Deployment-/Livegates.
+
+**Exakte Fortsetzung:** Main-CI regulär abwarten/Logs und Maschinenbelege prüfen; tatsächliche SW211/Assetbytes und neue Referenzrücknahme/bestehende native Übernahme in allen3Engines live bestätigen, erst dann DONE/LIVE_ACCEPTED. Keine Abschwächung/pauschale DELETE-Freigabe/privaten Daten. Danach übrige vier Masterquellen und Issue197 aktualisieren/abschließen; acht Sonnet-Befunde gegen aktuellen Code reproduzieren und unter bestehendem UI-MASTER28 führen. P1 Beträge/44px, P2 Kontrast/Zeiträume/Fokus, restliches UI nur belegte Deltas. FLH-PERF01 essentielleP1 nicht hinter P3 verzögern (reale große IDB-Startzeit,30%-Medianziel). FLH05/PROJ01 OPEN/PARKED. Neue sicherheitskritische Funktionen/spätere PRs behalten eigene Freigabegrenzen. Historischen Dokumentationsbranch niemals nach main mergen.
+
+Gesamtmaster PARTIAL. Vollständiger verbindlicher Fortsetzungsauftrag des Nutzers vom29.10.2026 bleibt maßgeblich. Release-/CAS-/Backup-/Restore-/Undo-/Originalbeleg-/OAuth-/Hardware-/AT-Verträge und sämtliche historischen Anforderungen bleiben erhalten.
+
+---
+
 # PR196 technisch abgenommen · UI-VISUAL exklusiv an Claude übergeben · 29.10.2026
 
 **DONE:** begrenzter sicherer manueller Referenz-Rücknahmekandidat vollständig
