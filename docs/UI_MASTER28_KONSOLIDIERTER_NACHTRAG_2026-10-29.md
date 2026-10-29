@@ -184,3 +184,31 @@ Nach jeder Etappe und vor Limits, Unterbrechungen oder Kontextwechseln: Working 
 Historischen Dokumentationsbranch niemals als alten Produktcode nach main mergen. FLH05 und FLH-PROJ01 bleiben OPEN/PARKED. FLH03, DELETE-MASTER28, FLH04, IndexedDB, Backup/Recovery, Performance und sämtliche übrigen Masteranforderungen bleiben erhalten. Keine privaten Original-CSV-Dateien, Finanzdaten oder Secrets veröffentlichen; fremde Branches nicht überschreiben; Tests nicht abschwächen.
 
 Diese Spezifikation ist der dauerhaft übernommene Sollvertrag und keine Implementierungsbehauptung. Konkrete Abnahmen werden nach Reproduktion und Tests im bestehenden Mastercheckpoint fortgeschrieben. PR200 ist ausdrücklich freigegeben; zusätzliche wirtschaftliche Löschumfänge oder spätere Releases erhalten dadurch keine pauschale Freigabe.
+
+## Erster Abgleich mit bestehendem Master und tatsächlichen Befunden
+
+Stand: PR200 gemergt, Main-/Live-Abnahme läuft. Reiner Abgleich, noch keine neue UI-Implementierung.
+
+| Bestehender Bereich | Aktueller Status und Anschluss |
+| --- | --- |
+| A – Appweite Typografie | PARTIAL: vorhandene Vereinheitlichungen erhalten; Positionsbuchungshistorie aus UX-08 konkret abweichend |
+| B – Übersicht und Verlauf | PARTIAL: v187–v193 und v212 belegt; UX-03/04/05/06 konkret erneut prüfen, keine Annahme einer Cacheursache |
+| C – Positionen und Buchungen | PARTIAL: bestehende Gmail-Auswahl, Aktionen und Archivierung erhalten; UX-01/10 sowie neues Normal-/Verwaltungsprinzip offen |
+| D – Historische Referenzen | PARTIAL: Verwaltung/Archiv/Restore und PR196 sichere manuelle Rücknahme vorhanden; UX-02 bestätigt; UX-09 benötigt getrennten neuen Fachbeweis |
+| E – Erträge, Abzüge und Transfers | Bestehende abgenommene Logik und 490/400-Regression erhalten; nur tatsächliche visuelle Deltas bearbeiten |
+| F – Erststart und Importe | DONE für v193 Konto-Fortsetzung und FolioLab-Schreibweise; neue Importer weiterhin eigene Beleggates |
+| G – Einstellungen | PARTIAL: vorhandene API-/Wallet-/Backup-/Drive-Struktur erhalten; Diagrammprädferenz neu offen |
+| H – Mobile und Accessibility | PARTIAL: breite Browser-/Axe-Nachweise vorhanden; Textvergrößerung und tatsächlicher Screenshotzustand erneut prüfen, physische Geräte/AT separat offen |
+| I – Dirty-Dialog und Browsernavigation | Bestehenden AUD04/#157-Vertrag bewahren; keine neue universelle Cross-Origin-/beforeunload-Lösung |
+| UI-A01 – Präzise Beträge/Achsen | DONE für v212-Kandidat und Livebelege; bei neuen Diagrammänderungen Regression erhalten |
+| UI-A02 – Touchziele | PARTIAL: v212 scoped 44px-Nachweise; neue Verwaltungsbedienung erneut messen |
+| UI-A03 – Kontrast | Vorhandene Fixes erhalten; sichtbare neue/aufgeklappte Zustände konkret messen |
+| UI-A04 – Zeitraum/Leerzustände | PARTIAL: v212 4×2-Standardtests vorhanden; neuer Androidbefund UX-03 hat weiterhin Abnahmebedarf |
+| UI-A05 – Mobile Positionen | PARTIAL/bedingt: neuer Verwaltungsvertrag maßgeblich, keine zweite Auswahlengine |
+| UI-A06 – Willkommen | OPTIONAL: nur bei belegtem UX-Vorteil, keine Verzögerung von P1 |
+| UI-A07 – Donutfokus | DONE für v212 mit sichtbarem SVG-Fokus und drei Browserbelegen |
+| UI-A08 – Leerer Verlauf | Vorhandene Fixes erhalten; nur konkret verbleibende nutzlose Fläche ändern |
+| FLH-PERF01 | Messziel für große synthetische Fixtures erreicht; produktive Main-/Live-Abnahme SW213 noch offen |
+| FLH05 / FLH-PROJ01 | OPEN / PARKED, keine Implementierung ohne neue Nutzerentscheidung |
+
+Die bereitgestellten Android-Screenshots wurden intern eingesehen. UX-01/02 (wiederholte Sperrtexte), UX-03 (6+2), UX-04 (rechter Tooltiprand), UX-05 (Stichtagstexte), UX-07 (Normalstatus im Header), UX-08 (große ISO-Buchungszeilen) sind darin sichtbar. Entsprechende aktuelle Renderpfade im geprüften Code wiedergefunden; UX-06 zusätzlich durch die Früh-Rückgabe ohne cashTerms erklärbar. Das beweist noch keine neue Implementierung oder vollständige Reproduktion aller Gerätebedingungen. Private Screenshots und ihre Finanzwerte werden nicht ins öffentliche Repository übernommen; sämtliche öffentlichen Reproduktionen müssen neue synthetische Fixtures verwenden.
