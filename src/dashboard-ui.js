@@ -68,6 +68,21 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
   }).join('');
 }
 
+function eurAxisLabels(values){
+ const magnitude=Math.max(...values.map(Math.abs));
+ const divisor=magnitude>=1e9?1e9:magnitude>=1e6?1e6:1;
+ const unit=divisor===1e9?' Mrd. €':divisor===1e6?' Mio. €':' €';
+ const notation=magnitude>0&&magnitude<.01?'scientific':'standard';
+ const distinct=new Set(values).size;
+ for(let digits=3;digits<=15;digits++){
+  const formatter=new Intl.NumberFormat('de-AT',{notation,maximumSignificantDigits:digits});
+  const labels=values.map(value=>formatter.format(value/divisor)+unit);
+  if(new Set(labels).size===distinct)return labels;
+ }
+ const formatter=new Intl.NumberFormat('de-AT',{notation,maximumSignificantDigits:17});
+ return values.map(value=>formatter.format(value/divisor)+unit);
+}
+
 export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Ein weiterer belegter Zeitpunkt für den Verlauf fehlt.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
  const step=Math.max(1,Math.ceil(samples.length/140));
@@ -94,13 +109,9 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+pad+' '+height+' Z';
  const series=esc(JSON.stringify(points));
  const ticks=[yMax,(yMax+yMin)/2,yMin];
- let tickLabels=ticks.map(v=>axisFormat(v));
- // Only the default EUR formatter may gain display digits. Custom price/unit axes
- // retain their own currency and precision contract.
- if(axisFormat===compactAmount){
-  for(let digits=4;new Set(tickLabels).size<ticks.length&&digits<=12;digits++)tickLabels=ticks.map(v=>compactAmount(v,digits));
-  if(new Set(tickLabels).size<ticks.length)tickLabels=ticks.map(v=>'€ '+new Intl.NumberFormat('de-AT',{maximumSignificantDigits:17}).format(v));
- }
+ // Labels only: bounds, tick positions, exact point values and custom currency
+ // or unit formatters retain their existing calculations and contracts.
+ const tickLabels=axisFormat===compactAmount?eurAxisLabels(ticks):ticks.map(v=>axisFormat(v));
  const labels=tickLabels.map(label=>'<span>'+esc(label)+'</span>').join('');
  const axis='<div class="chart-x-labels"><span>'+esc(dateLabel(sampled[0].date))+'</span><span>'+esc(dateLabel(sampled.at(-1).date))+'</span></div>';
  return '<div class="chart-interactive"><div class="chart-y-labels" aria-hidden="true">'+labels+'</div>'+
@@ -127,22 +138,25 @@ export function attachChartInteractions(container) {
    const point=points[active];
    cursor.style.left=(point.x/600*100)+'%';
    cursor.style.top=(point.y/180*100)+'%';
-   tip.style.left=Math.min(80,Math.max(20,point.x/600*100))+'%';
+   const percent=point.x/600*100;
+   tip.style.left=percent+'%';
+   // Proportional anchoring keeps either edge inside the plot, including after
+   // resize, without measuring layout on every pointer movement.
+   tip.style.transform='translateX(-'+percent+'%)';
    tip.replaceChildren();
    const date=document.createElement('span'),value=document.createElement('strong');
    date.textContent=point.date;value.textContent=point.value;
    tip.append(date,value);
-   if(point.detail){const extra=document.createElement('span');extra.textContent=point.detail;tip.append(extra);}
-   if(point.compareValue){const extra=document.createElement('span');extra.textContent=point.compareValue;tip.append(extra);}
-   cursor.classList.remove('hidden');tip.classList.remove('hidden');
-   // Historical details can be longer than a narrow mobile plot. Keep all
-   // text inside that plot; other chart placement retains its existing rule.
-   if(container.closest('.wallet-history-dialog')){
-     const half=tip.getBoundingClientRect().width/2;
-     tip.style.left=Math.max(half,Math.min(plot.clientWidth-half,point.x/600*plot.clientWidth))+'px';
+   const details=document.createElement('div');details.className='chart-tooltip-detail';
+   if(point.detail&&point.detail!=='Erfasster Kontrollpunkt, keine interpolierte Tagesbewertung'){
+    const extra=document.createElement('span');extra.textContent=point.detail;details.append(extra);
    }
+   if(point.compareValue){const extra=document.createElement('span');extra.textContent=point.compareValue;details.append(extra);}
+   if(details.children.length){details.tabIndex=0;details.setAttribute('aria-label','Details zum Diagrammpunkt');tip.append(details);}
+   cursor.classList.remove('hidden');tip.classList.remove('hidden');
  }
  function nearest(event) {
+   if(event.target.closest?.('.chart-tooltip'))return;
    const bounds=plot.getBoundingClientRect();
    const percent=Math.max(0,Math.min(1,(event.clientX-bounds.left)/bounds.width));
    select(Math.round(percent*(points.length-1)));
@@ -150,9 +164,21 @@ export function attachChartInteractions(container) {
  plot.addEventListener('pointermove',event=>{if(event.pointerType!=='touch')nearest(event);});
  plot.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')touched=true;nearest(event);});
  plot.addEventListener('click',nearest);
- plot.addEventListener('pointerleave',()=>{if(!touched&&document.activeElement!==plot){cursor.classList.add('hidden');tip.classList.add('hidden');}});
+ plot.addEventListener('pointerleave',()=>{if(!touched&&!plot.contains(document.activeElement)){cursor.classList.add('hidden');tip.classList.add('hidden');}});
  plot.addEventListener('focus',()=>select(active));
  plot.addEventListener('keydown',event=>{
+   if(event.target!==plot){
+     // Keep keyboard scrolling in the focused detail box; reaching its end
+     // must not move the surrounding page or select another financial point.
+     const details=tip.querySelector('.chart-tooltip-detail');
+     if(event.target===details&&['Home','End','ArrowUp','ArrowDown','PageUp','PageDown'].includes(event.key)){
+       event.preventDefault();
+       if(event.key==='Home')details.scrollTop=0;
+       else if(event.key==='End')details.scrollTop=details.scrollHeight;
+       else details.scrollTop+=(['ArrowUp','PageUp'].includes(event.key)?-1:1)*(event.key.startsWith('Page')?details.clientHeight:40);
+     }
+     return;
+   }
    if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
      event.preventDefault();
      select(event.key==='Home'?0:event.key==='End'?points.length-1:active+(event.key==='ArrowRight'?1:-1));

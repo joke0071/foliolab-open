@@ -16,7 +16,7 @@ test('Default EUR chart axes keep distinct labels for tiny and large actual valu
   assert.equal(new Set([...axis.matchAll(/<span>(.*?)<\/span>/g)].map(x=>x[1])).size,3,'distinct labels for '+amount);
  }
 });
-test('Compact axis uses de-AT thousands while keeping precision in point values',()=>{
+test('EUR axes use readable rounded euro labels while compact totals and exact point values stay intact',()=>{
  assert.match(compactAmount(198000),/198\s*Tsd\./);
  assert.match(compactAmount(-198000),/-198\s*Tsd\./);
  const snapshots=[
@@ -24,10 +24,24 @@ test('Compact axis uses de-AT thousands while keeping precision in point values'
  ];
  const html=drawInteractiveChart(snapshots,{money,esc:escapeHTML,dateLabel:labels});
  assert.match(html,/chart-y-labels/);
- assert.match(html,/Tsd\./);
+ const axis=html.match(/class="chart-y-labels"[^>]*>(.*?)<\/div>/)[1];
+ assert.doesNotMatch(axis,/Tsd\./);
+ assert.match(axis,/[\d.]+ €/);
+ for(const [,label]of axis.matchAll(/<span>([\d.]+) €<\/span>/g))assert.equal(Number(label.replaceAll('.',''))%1000,0,'readable rounded thousands as full euro labels');
  assert.match(html,/188\.922,79/);
  assert.match(html,/data-chart-points/);
  assert.match(html,/Pfeiltasten/);
+});
+test('EUR axis formatting changes no point coordinates, values or comparison geometry',()=>{
+ const rows=[{date:'2024-01-01',total:196883.123},{date:'2024-04-01',total:199059.987}];
+ const args={money,esc:escapeHTML,dateLabel:labels,comparison:rows.map(r=>({...r,total:r.total-20}))};
+ const current=drawInteractiveChart(rows,args),previous=drawInteractiveChart(rows,{...args,axisFormat:v=>compactAmount(v)});
+ const points=html=>html.match(/data-chart-points="([^"]+)"/)[1];
+ assert.equal(points(current),points(previous),'identical exact tooltip payload and SVG coordinates');
+ const geometry=html=>[...html.matchAll(/<path d="([^"]+)"/g)].map(m=>m[1]);
+ assert.deepEqual(geometry(current),geometry(previous),'line, fill and reference geometry unchanged');
+ const axis=current.match(/class="chart-y-labels"[^>]*>(.*?)<\/div>/)[1];
+ assert.doesNotMatch(axis,/Tsd\.|,\d/,'normal wealth axes need no fractional thousands');
 });
 test('Dashboard stats show comparable money values and explicitly distinguish wealth change',()=>{
  const m=blankModel();const p=createProvider({name:'Broker'});m.providers.push(p);

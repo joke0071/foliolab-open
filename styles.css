@@ -1280,3 +1280,15 @@
 .blocked-reasons-details p{font-size:12px;line-height:1.5;overflow-wrap:anywhere}
 .blocked-reason-identities>summary{min-height:44px;display:flex;align-items:center;font-size:12px}
 .blocked-reasons-details>summary,#positionRemovalItems>summary{min-height:44px;display:flex;align-items:center}
+
+/* Native chart tooltips: keep exact values and necessary details inside the plot. */
+.chart-plot>.chart-tooltip{
+ box-sizing:border-box;width:max-content;max-width:min(220px,100%);
+ max-height:min(180px,calc(100% - 14px));overflow:hidden;
+ white-space:normal;overflow-wrap:anywhere;text-align:center;line-height:1.4;
+ padding:7px 8px;gap:3px;color:#4d6756;pointer-events:auto;touch-action:pan-y
+}
+.chart-tooltip>span,.chart-tooltip>strong{flex:0 0 auto}
+.chart-tooltip-detail{min-height:0;width:100%;overflow:auto;overscroll-behavior:contain}
+.chart-tooltip-detail>span{display:block}
+.chart-tooltip-detail:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
