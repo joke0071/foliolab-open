@@ -1,3 +1,17 @@
+# PR201: final präzisierte Eintragszählung gesichert · CI läuft
+
+**Aktueller HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, Tree `74aa1231c62364b094416aa7dbf822784d7be70a`, Branch feature/ui-selection-reasons-v214.** Lokaler Tree/Remote-Ref identisch; Working Tree ohne ungesicherte Produkt-/Teständerung, Upstream korrekt auf eigenen UI-Branch gesetzt.
+
+Vorheriger Kandidatb65776a9 hat [Pflicht-CI40922446803](https://github.com/joke0071/foliolab-open/actions/runs/40922446803) vollständig bestanden:953Units/Syntax/Chromium/Firefox/WebKit, Deploy/Live für PR korrekt SKIPPED; Wallet40922446637SUCCESS. Der Controller-Vorbedingungsfehler ist damit auf vollerCI behoben, keine Assertions abgeschwächt.
+
+Abschließende reine Beschriftungspräzisierung: Zahlen bezeichnen betroffene **Einträge**, nicht die Anzahl verknüpfter Kontrollpunkte, Wallets oder Gebühren. Zum Beispiel „100 Einträge mit Herkunftsschutz · 100 Einträge mit Stichtagsbezug“. Überlappungen korrekt, keine Addition zu falscher Gesamtsumme. Regeln/Permissions/Finanz-/Storagepfade unverändert. Neue dreizeilige Buchungssummary, Unitgruppierung und Browserfixture nach dieser Änderung lokal in allen3EnginesPASS. Nur Helpertexte und entsprechende neueTestbeschriftung gegenüber grünem b657 geändert.
+
+Neueste [Pflicht-CI40923950987](https://github.com/joke0071/foliolab-open/actions/runs/40923950987) läuft; [Wallet40923951032](https://github.com/joke0071/foliolab-open/actions/runs/40923951032) abgeschlossen. Testmerge39cb71a9dff3625cf0a1764b4a5727fc94437621. Letzte Freigabe noch nicht aus grünem Vorgänger ableiten, neuestePflichtgates abwarten.
+
+NächsteStelle: kompletteCI auf78dc4ca4 abnehmen,Testmerge/Tree/ArtefaktSHA256/JSON/Bilder prüfen,PR201reviewbereit und finaleBelege+separatenCheckpoint sichern. EigeneNutzerfreigabe vorMerge/DeploymentPR201. Produktionbleibtv213/SW213LIVE_ACCEPTED; GesamtmasterPARTIAL. Alle konsolidiertenUI-,TradingView-/Kurs-/Konten-/Technik- und Android-Ergänzungen vollständig in bestehenden Sollverträgen/Roadmap/Audit erhalten; TradingViewOptimierungSUPERSEDED,EntfernungP2OPEN,AndroidhardwareEXTERNAL. FLH05/PROJ01PARKED.
+
+---
+
 # Letzter gesicherter Stand: PR201 b65776a9 / finale CI läuft
 
 **29.10.2026 · Gesamtmaster PARTIAL · Produktion v213/SW213 LIVE_ACCEPTED.**
