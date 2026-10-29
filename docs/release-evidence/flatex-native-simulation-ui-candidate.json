@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "status": "READ_ONLY_NATIVE_DIALOG_CANDIDATE_ACCEPTED_NOT_DEPLOYED",
+  "head": "a8adc39634ee0040a439a62cc2e8225bebb7b87c",
+  "tree": "7af22cab575a4d4a74153fce13456efe20f28e67",
+  "testedMerge": "383dd5df83aeae07f911140cfcb3aed40a922259",
+  "pr": 195,
+  "ci": 40842974152,
+  "wallet": 40842974124,
+  "conclusion": "success",
+  "units": {
+    "pass": 939,
+    "fail": 0,
+    "skip": 0
+  },
+  "engines": [
+    "Chromium 141.0.7390.37",
+    "Firefox 157.0",
+    "WebKit 27.2"
+  ],
+  "checks": [
+    "actual UI append/backfill; no default mode; confirmed bindings",
+    "whole-batch cash/special blocking",
+    "delayed mode/account/file/Escape/generation resets",
+    "real competing IDB writer between freshness checks",
+    "forced submit blocked; exact IDB/revision/settings zero writes",
+    "5 widths; Axe; 44px; offline reload; escaped names"
+  ],
+  "artifacts": [
+    {
+      "id": 12883374455,
+      "sha256": "96678b37dfb1a2dd6fdcf2c54c0096d63532810674a7c0e8d4232989304f4875"
+    },
+    {
+      "id": 12883149905,
+      "sha256": "73dbe9964fe4c5ffb59f0ddee200cc5a81bd056d17a254e46cb154b10afc80b9"
+    }
+  ],
+  "digestsVerifiedBeforeExtraction": true,
+  "actualReportsRead": true,
+  "testedSHARead": true,
+  "visualImagesReviewed": [
+    "local Chromium320/1440",
+    "CI WebKit320",
+    "CI Firefox1440"
+  ],
+  "sourceReview": "PASS: existing shared engine only; native submit closed; no new model/storage/dependency/workflow; all reset/freshness paths reviewed",
+  "production": {
+    "main": "3e9f48770df0e7d63b5be311d33376a85df848f9",
+    "version": 204,
+    "changed": false
+  },
+  "next": "Same PR/branch: bounded native share takeover contract secured on documentation branch8bf23669; implement guarded backup/confirmation/CAS/undo candidate, all gates, then explicit user decision before economic release. No private portfolio changes. FLH05/PROJ01 parked; UI/DELETE/PERF/FLH04 roadmap preserved."
+}
