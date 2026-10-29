@@ -1,3 +1,105 @@
+# v208 LIVE_ACCEPTED · PR195 freigegeben, gemergt und produktiv abgenommen · 29.10.2026
+
+**DONE:** begrenzter nativer Flatex-Stückhistorien-Übernahmerelease PR195 vollständig
+abgeschlossen. **Gesamtmaster PARTIAL.** Die konkrete Nutzerfreigabe liegt vor
+und wurde umgesetzt; für diesen abgeschlossenen Release keine erneute Freigabe
+einholen. Alte AWAITING-USER-/Fehler-/IN-PROGRESS-Blöcke darunter sind historische
+Zwischenstände und werden durch diesen finalen Nachweis überholt.
+
+| Pflichtfeld | Tatsächlicher finaler Stand |
+| --- | --- |
+| PR / Freigabe |195 gemergt; ausdrückliche Nutzerantwort „freigabe“ vor Merge in2f44301d dauerhaft gesichert |
+| main / Releasecommit |6fe75a997a076d0c17e5200b0bb7ee09532d7044 |
+| Dateibaum |1d01a067c09274f6e29b8b0d3df7b289af8a1a72, exakt identisch zu abgenommenem Kandidaten34dc5fb7 |
+| Main/Pages/Live |[40866889300](https://github.com/joke0071/foliolab-open/actions/runs/40866889300), Versuch2 vollständig SUCCESS |
+| Pflichtjobs |test123427591465, Cross1 123427593353, Cross2 123427594161, deploy123430929138, live-acceptance123431088346 jeweils SUCCESS |
+| Unit/Syntax |939/939,0Fail/0Skip und Syntax PASS; tatsächlicher neuer Mainlog gelesen |
+| Produktiv |https://foliolab.unperfekt.at/ · SW208 direkt gelesen;120 veröffentlichte Dateihashes exakt Releasecheckout |
+| Tatsächliche Livegates |Chromium141/Firefox157/WebKit27.2; native Simulation und Übernahme append/backfill; UI/Axe/Restore/Offline/CAS/Quota/Undo PASS |
+| Kernabnahme |6Gruppen/18Axe-Scans, alle120 Asset-/SWbytes und tatsächlich geladene Appbytes stimmen zum Release |
+| Dauerhafter Maschinenbeleg |docs/release-evidence/flatex-native-v208-release.json in8de5b1f5; aktuelle vollständige Berichte/120Hashes/Jobs/Fehlhistorie gespeichert |
+| Offene PRs / Laufzustand |Nur geparkte Drafts157/161; keine laufenden/wartenden Actions bei finalem Check |
+| Lokaler Status |Relevanter Code vollständig remote, origin/main6fe75a99/Baum1d01a067 verifiziert; nur synthetische reproduzierbare artifacts unversioniert |
+
+## Tatsächlich verifizierter Produktivumfang
+
+Alle ausgewählten nativen Quellen werden gemeinsam über die vorhandenen
+Quell-/Konto-/EUR-/ISIN-/Typ-/Manual-/Provenienz-/Bestands-/Kosten-/Backfillgates
+qualifiziert. Explizite Simulation, aktuelles Backup ohne API-Keys mit
+Historienbezug, eigene Bestätigung, erneute vollständige Qualifizierung und
+Baseline-/Generation-/Revisionsprüfung vor bestehendem atomaren CAScommit.
+Append nur leere ungeschützte Positionen oder unveränderter Replay; Backfill
+bewahrt exakte beobachtete Endmenge. Unbekannte Gebühren/Steuern/Kosten bleiben
+unbekannt. Cash-/Sonder-/Storno-/FX-/Konflikt-/Intraday-/Präzisionsfälle sperren
+den ganzen Stapel, keine stille Auslassung oder erfundene Eröffnung/Cashflows.
+Keine neue Importengine, Modell-/Speicher-/Backupschemata oder Pflichtdienste.
+
+Aktuelle tatsächliche Produktionsnachweise aller3Engines/beiderModi gelesen:
+Backupinhalt/Keyausschluss/separate Zustimmung/Resets/forciertes Submit, exakte
+Mengen/unbekannte Kosten/fremdes Depot gleicher ISIN/keine externen Flüsse,
+echte Quota/post-put-Abbrüche mit exaktem Originalrecord/Revision/Settings,
+eine akzeptierte CASrevision und echter konkurrierender Schreiber NACH
+Frischeprüfung abgewehrt; native Dubletten ohne Write, exaktes UI-Undo samt
+automatischem aktuellem Stichtag, gespeicherte Provenienz über Plain/Encrypted-
+Restore, Offlinecommit, fünfBreiten/Axe/44px/Fokus/Aktionsgrenzen. Während Save
+Dialogfelder tatsächlich inert. Keine privaten Originale geladen oder privaten
+Nutzerprofile/-Finanzdaten verändert; ausschließlich isolierte synthetische Tests.
+
+Produktions-ZIP12895003411 vor Extraktion unabhängig SHA256-verifiziert:
+7c8ba986f2c88fdf9273f97c36730b8c55c1a9af37cfe75a319e74ca38b3c3b8.
+Erfolgreiches Main-ZIP12895695163 ebenfalls vor Extraktion verifiziert:
+fa97e84cbc6143da19a147c399042a6e21e40f6426d201b66f1eb269ca92afef;
+testedSHA6fe75a99 gelesen. Produktionsreport sha/cache/base/result stimmen,
+native Crossberichte tatsächlich auf https://foliolab.unperfekt.at/;
+Chromium-native Übernahmen über aktuelle Produktionsjoblogs und erhaltene
+Chromiumbilder belegt (gemeinsame report.json wird später vom Crossschritt
+überschrieben; keine erfundene zusätzliche Chromium-JSONabnahme).
+Tatsächliche neue Produktionsbilder Chromium320-Backfill, Firefox1440-Append,
+WebKit320-Backfill, Firefox390-Backfill visuell geprüft: PASS.
+
+## Erhaltener erster Mainfehler
+
+Versuch1 von40866889300/test123423796159 scheiterte am bestehenden SW-Controller-
+Vorbereitungsgate tests/browser-position-removal.mjs:30 nach aktivierter
+Registrierung/Reload. Deploy/Live blieben korrekt gesperrt. Beide Crossshards
+bestanden. Unveränderter isolierter Volltest danach PASS einschließlich aller
+Controller-/Quota-/post-put-/CAS-/Restore-/Offlinegates. Nach Diagnose genau
+einmal fehlgeschlagene Jobs mit allen unveränderten Assertions wiederholt;
+Versuch2 und komplette Deployment-/Livekette SUCCESS. Keine Test-/Workflow-/
+Produktbytes geändert, keine Timeouts erhöht oder Sicherheitsgates gelockert.
+Ursache nicht abschließend bewiesen; bei erneutem Auftreten gezielt weiter
+diagnostizieren, keine Retryserie. Fehlerartefakt12894515953/Digest
+9457d42f4969185ca206b27641105d9c22953c783b4e260d72ec7cbe3085ce19 erhalten.
+
+## Exakte nächste Fortsetzungsstelle und offene Masteranforderungen
+
+PR195/v208 nicht erneut entwickeln, abnehmen oder um Freigabe bitten.
+Beim nächsten regulären konfliktfreien Master-Schritt frischen Remotecheck
+durchführen und bestehende UI-MASTER28/DELETE-MASTER28-Deltas auf aktuellem main
+abgleichen: docs/BOOKING_MANAGEMENT_CHECKPOINT.md,
+docs/REFERENCE_MANAGEMENT_CONTRACT.md, src/booking-management.js,
+src/position-selection.js und src/reference-management.js gegen den vollständig
+erhaltenen Nutzernachtrag. Bereits belegte Verwaltung/Auswahl/Archivierung/Undo
+wiederverwenden; sichere inverse Kategorien und Abhängigkeiten vor weiteren
+Lösch-/Bearbeitungsfreigaben konkret nachweisen. Keine pauschale Herkunftssperre,
+wenn eine sichere Rücknahme belegbar ist; keine Aktivierung ohne Beweis. Kein
+zweiter Finanz-/Löschkern oder neues Gesamtprojekt. Im lesenden Vorabgleich
+bestehende umfassende Referenzlöschsperre und begrenzte Buchungsrücknahmen erkannt,
+noch keine neue Korrektur implementiert oder als erledigt markiert.
+
+Native vollständige Original-/Cash-/Kapitalmaßnahmen-/FX-/Steuer-/Kosten-/
+Cashflow-/Historien-/Renditeabnahmen bleiben je Fach-/Originalgate offen;
+keine private automatische Übernahme. FLH04/OAuth/Hardware/AT/P0/P1/BENCH/CI und
+ursprüngliche Roadmap vollständig erhalten. FLH-PERF01 bleibt essentielleP1
+für tatsächlichen Appstart großer IndexedDB-Portfolios an vorgesehener Stelle;
+CI-Beschleunigung ersetzt diesen Auftrag nicht. FLH05 und FLH-PROJ01 OPEN/PARKED
+bis erneuter ausdrücklicher Freigabe. FLH05-Zukunftskompatibilität nur bei ohnehin
+notwendigen Änderungen durch vorhandene gemeinsame Verträge, keine Zusatzphase/
+umfangreichen Refactorings/Implementierung vorziehen. Historischen Dokumentations-
+branch nicht als Produktcode mergen.
+
+---
+
 # Main-/Deploymentgates SUCCESS · SW208 ausgeliefert, Liveabnahme läuft · 29.10.2026
 
 Main6fe75a997a076d0c17e5200b0bb7ee09532d7044/Baum1d01a067 unverändert.
