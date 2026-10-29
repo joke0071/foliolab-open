@@ -1,3 +1,9 @@
+# PR195 korrigierter Kandidat: aktuelle CI-IDs · 29.10.2026
+
+HEAD631db637/Baum5c606ade, Testmergee5b1b3e4; neue Pflicht-CI40838759139 läuft, Wallet40838759176 SUCCESS. Vorheriger Quellreviewbefund Typprüfung gezielt korrigiert, finaler privater Referenzvergleich und vollständige Original-Stapelblockierung auf korrigiertem Stand erneut PASS. Keine privaten Werte veröffentlicht/Bestände importiert. Lokal937Units/Syntax/Chromium inkl. Zieltypengegenbeispielen grün; volle aktuelle3Engine-/Artefaktabnahme noch offen. Produktionv204 unverändert, Gesamtmaster PARTIAL. Exakt nächster Schritt diese CI regulär abschließen, tatsächliche Berichte mit Zieltyp-Whitelist und SHA/Digests prüfen; keine weitere Implementierung oder Veröffentlichung beginnen.
+
+---
+
 # PR195 Typkorrektur gesichert · neue volle CI erforderlich · 29.10.2026
 
 Korrigierte HEAD `631db63745f349b88d2d5943865f7e39e73c38ee`, Dateibaum `5c606ade88ac83c3a86a781e808ffeaebb4c58a7`
