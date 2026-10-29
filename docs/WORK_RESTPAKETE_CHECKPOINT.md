@@ -1,3 +1,13 @@
+# v216 · Main erfolgreich, gezielter Cross2-Wiederholungslauf aktiv · 29.10.2026
+
+Main40961182315 Versuch1 abgeschlossen: Test123754044549 SUCCESS mit955/955 Units,0Fail/Skip,Chromium-Chart-/Dashboard-/Finanz-/Offlinegates; Cross1 SUCCESS; Cross2 WebKit-PWA-Cachegate FAIL (unten dokumentiert). Deploy und Live korrekt SKIPPED.
+
+Einmaliger unveränderter Wiederholungslauf nach vollständigem Abschluss gestartet: **Versuch2**, Cross2-Job **123758648572** aktiv; erfolgreiche Jobs unter IDs123758650314 und123758651597 übernommen. Kein neuer Commit, keine Prüfungsänderung, kein erneuter Freigabebedarf. Ergebnis und Release weiterhin PENDING, kein LIVE_ACCEPTED.
+
+Tatsächlich heruntergeladene ZIPs vor Extraktion SHA256-verifiziert: Main12936522179 =9809e4e55585f2863c0c4d413f59f3c4eace07dc43b0037efe607caeb34a4166; Cross1-12935708182 =6fe21d29593e009c3970ed03f247cd953fc7e97b2bd31df57ce1d8a0788f4c82. Main-JSONs bestätigen insbesondere PWA-Update, Chart-Tooltip, Referenzverwaltung, native Importpfade PASS. Frühere fehlgeschlagene Cacheprüfung bleibt als ungeklärter Befund erhalten, auch bei erfolgreicher Wiederholung. Weiter: Versuch2 vollständig prüfen, danach ggf. Deployment und tatsächliche Live-Abnahme; bei erneutem Cachefehler keine weiteren blinden Retries.
+
+---
+
 # v216 RELEASE_BLOCKED · WebKit-PWA-Cachegate fehlgeschlagen · 29.10.2026
 
 PR203 mit ausdrücklicher Nutzerfreigabe gemergt, main82523b8b20d492167b8de8690b8b1dee7fc13b7a / Tree0364c9d0. [Main40961182315](https://github.com/joke0071/foliolab-open/actions/runs/40961182315): Cross1-Job123754044761 SUCCESS; Cross2-Job123754044793 FAIL in tests/browser-pwa-update.mjs:97 unter WebKit, complete matching precache0 statt120. Firefox im gleichen Job PASS. Ursache UNGEKLÄRT; weder Flakiness noch Produktfehler behauptet. [Dauerhafter genauer Fehlerbeleg](release-evidence/v216-main-pwa-update-failure.json), Commit785ac9ce2d6187a5f2a1265e6e71709ceba37f8a. Main-Test123754044549 zum Checkpoint noch aktiv; keine laufenden Jobs abgebrochen. Deployment durch Pflichtgate gesperrt, keine Live-Abnahme. Letzte bestätigte Produktion v215/SW215.
