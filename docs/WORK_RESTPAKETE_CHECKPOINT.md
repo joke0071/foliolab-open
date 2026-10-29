@@ -1,3 +1,27 @@
+# PERF01 gemessen und technisch abgenommen · PR200 reviewbereit · 29.10.2026
+
+**Gesamtmaster PARTIAL. UI-v212 DONE / LIVE_ACCEPTED; PERF01-Kandidat TECHNICALLY_ACCEPTED / RELEASE_APPROVAL_PENDING.**
+
+- Produktion bleibt v212/SW212 auf main `fee4fc5de4c57fee6643d30f20798c35b2b8807b`; PR198/199 live abgenommen durch Pipeline [40907781116](https://github.com/joke0071/foliolab-open/actions/runs/40907781116), 948 Tests und drei Browser, 120 tatsächliche Asset-/SW-Hashes.
+- [PR200](https://github.com/joke0071/foliolab-open/pull/200), Branch `feature/perf01-date-validation-cache`, HEAD `870f4c0773e6ba95371e8b4e89865ac5a6754cbc`, SW213 unveröffentlicht. Strenge kanonische Datumsvalidierung mit maximal 16.384 seitenlokalen Boolean-Ergebnissen wiederverwendet; keine finanziellen Ergebnisse, Preise/FX oder Portfoliozustände gecacht, keine Speicher-/Schema-/Berechnungsänderung.
+- [Pflicht-CI40911278126](https://github.com/joke0071/foliolab-open/actions/runs/40911278126) und [Wallet-CI40911278522](https://github.com/joke0071/foliolab-open/actions/runs/40911278522) SUCCESS. 950/950 Unit, Syntax, Chromium/Firefox/WebKit einschließlich 16.410-Tage-Verdrängung, strikter Kalender-/Preis-/FX-Guards, frischer Korrektur und exakter Nichtmutation. Bestehende CAS-/Mehrtab-/Backup-/Restore-/Undo-/Offline-/Import-/Referenzverträge bestanden.
+- Reproduzierbarer 1.000-Positionen/1.825-Referenzen-PWA/IndexedDB-Stresstest: kalter Median 3113,9→1542,8 ms (-50,45%); separate direkt aufeinanderfolgende A/B-Bestätigung 3624,2→1665,4 ms (-54,05%). Je fünf frische Chromium-Prozesse, identisches Benchmarkscript und Umgebung, zusätzliche Warm-/Offline-Läufe, exakte Originaldatenprüfung. ≥30%-Ziel für diese großen synthetischen Fixtures erreicht. Kleine Offline-Kontrollserie 394,9→400,9 ms (+1,52%, überlappende Bereiche); keine allgemeine Hardware-/Wallet-/Privatportfolio-Garantie.
+- [Vollständige Rohmessungen und finale Maschinenbelege](https://github.com/joke0071/foliolab-open/blob/82d4b512888072b94e75fe9653c5e07401ce5f5b/docs/release-evidence/perf01-date-validity-candidate.json); ZIP-Digests vor Extraktion geprüft, tatsächliche Reports und Browserbilder kontrolliert.
+- Nächste Fortsetzung: eigene Nutzerfreigabe für unveränderten PR200 einholen, danach HEAD/main/Testmerge/Pflichtgates erneut prüfen, kontrollierter Merge und vollständige Main-/Pages-/Live-Abnahme SW213. Die Freigabe für PR199 gilt nicht automatisch für PR200.
+- Sämtliche UI-Aufgaben bleiben bei ChatGPT Work; Issue197 abgeschlossen, keine Claude-Implementierung. FLH03/DELETE/Recovery/FLH04 und restlicher UI-Master gemäß bisheriger Priorisierung erhalten; Originalbeleg-/OAuth-/Operator-/Hardwaregrenzen bleiben offen. FLH05 und FLH-PROJ01 ausdrücklich OPEN / PARKED. Historischen Dokumentationsbranch niemals nach main mergen.
+
+---
+
+## Verbindlicher Fortsetzungscheckpoint: v212 LIVE_ACCEPTED / PR200 REVIEW_READY
+
+Testmerge `7a0c96a501a73fa3310b7f62b30180704eab62a7` und Kandidat haben Tree `86be70b0112d4f960abb55cc726918eba4c3064e`. Pflichtjobs: Unit123579592324, Cross1 123579592653, Cross2 123579593104 SUCCESS; PR-Deploy/Live korrekt SKIPPED. Geprüfte Artefakte:12913184243 SHA256 c1b8212975fdca269357ba1dcb8554f081d4a9e733ca6463a4750082a81c6e59;12913893746 a3a3f81f2f41b14d957cc42830fca22c1868435062f0bfe5ae39abfd1b6fedb1;12913963812 8d49822cff28438353ebd42472dde74e8ae9b4964627b4de4ae415abf4d23726.
+
+v212-Livebelege Commit1401b512309962c7b704a55755df5e740d18f926; zugehöriger Abnahmecheckpoint244d92c97378c74feb2b160836373dc57523bd9c. Finale PERF01-Belege82d4b512888072b94e75fe9653c5e07401ce5f5b. Produktiven SW212 abschließend direkt gelesen; 213 nicht veröffentlicht. Letzte Vor-Schreibprüfung: mainfee4fc5d unverändert, PR200HEAD870f4c07 unverändert, offene PR200/161/157, keine laufenden oder wartenden Actions und keine fremden Writer nachgewiesen. Lokaler Produktcode entspricht Remote-HEAD; diff-check sauber, nur generierte artifacts/ und Abhängigkeitssymlink untracked und nicht gepusht. Sämtlicher sicherer Produkt-/Testfortschritt bereits auf GitHub gesichert; Roadmap und Audit vor diesem separaten Checkpoint aktualisiert. Historische Befunde bleiben unverändert darunter erhalten.
+
+**Exakt nächster Schritt:** separate Merge-/Deploymentfreigabe für PR200 (oben genannter HEAD/SW213), anschließend frischen Stand abgleichen und volle Releasegates durchführen. Gesamtmaster bleibt PARTIAL, keine fehlenden Hardware-/OAuth-/Originalbelege als erledigt ausgeben.
+
+---
+
 ## PERF01 direkte A/B-Bestätigung ebenfalls gesichert · 29.10.2026
 
 Zusätzlich im selben Ausführungsaufruf nacheinander genehmigtesv212-Archivfee4fc5d und Kandidat870f4c07 mit exaktgleichem ScriptSHAa486bc44/Browser/Node/Viewport/Fixture/5Läufen ohneProfiler/lokaleTestsuite gemessen.1000Positionen/1825Referenzen: kalt3624,2→1665,4ms (**54,0478% weniger**), warm3337,5→1588,9ms (52,39%), offline3543,7→1624,8ms (54,15%). Alle exaktenRecords/Settings/Revisionen unverändert. BeideprimärenRohserien und dieseBestätigung vollständig imKandidatenbeleg, letzterBelegcommitfaf2b3ca83e3f6b1cd50d1226c4049bc3ec878aa.
