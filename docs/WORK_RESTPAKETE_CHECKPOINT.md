@@ -1,3 +1,61 @@
+# Native Flatex-Stückhistorienübernahme remote gesichert · neue volle CI · 29.10.2026
+
+**Kandidat PARTIAL vor finaler neuer Abnahme.** Einziger Funktionsbranch
+feature/flh03-flatex-native-projection / [PR195](https://github.com/joke0071/foliolab-open/pull/195),
+HEAD042076d2fa6146daf052c2ea7f6a4a6d16776ef1 / Baum
+de6b4e92828c558cb06285fe50fdb34878fe2a87 exakt lokal/remote. Vorheriger read-only
+UIkandidat a8adc396 vollständig abgenommen/7d41718c; dessen volle Läufe regulär
+abgeschlossen. Vorabvertrag8bf23669 vor aktiver Implementierung gesichert, jetzt
+auch in PR. Main3e9f4877/v204 unverändert, SW207 unveröffentlichter Kandidat.
+
+Aktiver Übernahmepfad als reviewbarer Kandidat implementiert: ausschließlich
+vollständige gemeinsame native Stückhistorienqualifizierung, exakter Baselinebezug,
+aktueller Key-freier Backupdownload inklusive Historie, eigene Bestätigung,
+erneute Qualifizierung/Revision/Baseline/Generation vor Import. Clone, bestehende
+importCSV/PortfolioStorage-CAS/Snapshot/CSV-Undo verwenden. Während Speicherung
+Dialogfelder inert; alle Fehler entziehen Entwurf/Zustimmung. Modus-/Quell-/Konto-/
+Datei-/Simulationswechsel entfernt Backupbezug und Zustimmung. Keine Teilübernahme,
+Cash-/Steuer-/FX-/Eröffnungs-/Kostenfiktionen, keine neue Engine/Modelle/Schemata.
+Dubletten allein ohne Save/Revision. Fremde Depots gleicher ISIN geschützt.
+
+Lokale939Units/0Fail/0Skip, Syntax und echte Chromium-Übernahme append/backfill
+PASS. Aktuelle Modus-/Quellbestätigungs-/Resets/forciertesSubmit/Backupinhalt/
+Keyausschluss, echte Quota/post-put-Abbrüche mit exakten unveränderten Records/
+Revision/Settings; eine erfolgreiche CASrevision, nativer Replay ohne Revision,
+exaktes UI-Undo samt aktuellem Stichtag, gespeicherte Provenienz Plain/Encrypted-
+Restore, Offline-UIcommit und echter konkurrierender Writer NACH Frischeprüfung
+am CASpunkt abgewiesen. Inert-Zustand während gehaltenem Save und Rücknahme nach
+Fehler geprüft. FünfBreiten/Axe/Fokus/44px/horizontale Aktionsgrenzen PASS.
+Realer320px-Visuellerstbefund lange Texte korrigiert, neue320-Sichtprüfung PASS.
+Bestehende native Chromium-UI-/Bindungs-/Betrags-/Simulationsgates ebenfalls PASS.
+6Dateien/202Additionen/7Entfernungen gegenüber abgenommenem UIkandidaten.
+Workflows/Pins/Finanzkern unverändert; neuer Übernahmebrowsertest über bestehenden
+Drei-Engine-Einstieg. Keine privaten Originale geladen oder Daten geändert.
+
+Neue Pflicht-[CI40845406706](https://github.com/joke0071/foliolab-open/actions/runs/40845406706)
+und Wallet40845406728 gestartet; volle aktuelle Firefox/WebKit-/Quell-/Artefakt-/
+visuelle Abnahme noch OFFEN. Lokaler Commitd5ae65b auf identischen tatsächlichen
+API-Remotecommit042076d2 synchronisiert. Nur synthetische lokale artifacts
+unversioniert. Keine abgeschwächten Gates, kein Merge/Deployment.
+
+**Exakt nächste Aktion:** beide neuen Läufe regulär abschließen; aktuelle echte
+Übernahmeberichte aller3Engines mit beiden Modi, Quota/post-put-Abbruch/echtem
+CASkonflikt/Undo/Restore/Offline sowie getesteten SHA/Baum/Digests und aktuelle
+visuelle Bilder prüfen. Erneuter Quell-/Kollisionsreview. Bei Befund gezielt nach
+Laufabschluss korrigieren und volle neue Gates; sonst finale reviewbare begrenzte
+Kandidatenabnahme + Maschinenbeleg dauerhaft sichern. **Danach eigene konkrete
+Nutzerentscheidung vor Merge/Deployment neuer wirtschaftlicher Buchungsmutationen**
+gemäß bestehender Freigabegrenze #165; keine private automatische Übernahme.
+Vollständige native Original-/Cash-/Sonder-/Historien-/Kosten-/Cashflow-/Renditegates
+weiter offen. Nicht den gesamten Master als DONE bezeichnen.
+
+FLH05-Zukunftskompatibilitätsnachtrag umgesetzt ausschließlich durch notwendige
+Wiederverwendung vorhandener gemeinsamer Verträge. Keine Zusatzphase/Refactoring/
+zweite Engine. FLH05/PROJ01 geparkt; UI-/DELETE-MASTER28/PERF01 essentielleP1/
+FLH04/OAuth/Hardware/AT/P0/P1/BENCH/ursprüngliche Roadmap erhalten.
+
+---
+
 # Native Flatex-Dialogsimulation abgenommen · nächster Übernahmeschnitt · 29.10.2026
 
 **DONE im begrenzten read-only UI-/Kandidatenumfang**, Gesamtmaster PARTIAL.
