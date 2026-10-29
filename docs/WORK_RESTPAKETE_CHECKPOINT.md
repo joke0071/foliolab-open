@@ -1,3 +1,31 @@
+# PR195 kontrolliert gemergt · Main/Deploy/Live laufen · 29.10.2026
+
+**DONE:** ausdrückliche Nutzerfreigabe vorab in2f44301d gesichert, PR195 mit
+expected-head34dc5fb7 regulär als Mergecommit integriert. Neuer main
+6fe75a997a076d0c17e5200b0bb7ee09532d7044, Baum1d01a067c09274f6e29b8b0d3df7b289af8a1a72
+exakt identisch zum geprüften Kandidaten. Eltern3e9f4877+34dc5fb7 bestätigt.
+Kein historischer Dokumentationscode gemergt, kein Force-Push.
+
+**IN_PROGRESS:** vollständiger Main-[Lauf40866889300](https://github.com/joke0071/foliolab-open/actions/runs/40866889300)
+auf exakt6fe75a99 gestartet. Noch keine neue produktive Liveabnahme; zuletzt v204.
+Automatisches Deployment und vorhandene tatsächliche Drei-Engine-Livegates laufen
+erst nach erfolgreichen Pflichtjobs. Keine privaten Profile/Daten verändert.
+
+**Exakt nächste Fortsetzungsstelle:** diesen Lauf regulär abschließen, test/
+Cross1/Cross2/deploy/live-acceptance einzeln prüfen. Direkte Live-SW208 und tatsächliche
+Assetgleichheit sowie neue native Simulations-/Übernahmeberichte beider Modi in
+Chromium/Firefox/WebKit prüfen; ZIPdigests vor Extraktion, ReleaseSHA/Baum,
+Quota/post-put-/CAS-/Undo-/Restore-/Offline-/Axe-/Zielgrößen und aktuelle visuelle
+Bilder. Erst danach LIVE_ACCEPTED melden und Maschinen-/Checkpointbeleg separat
+remote sichern. Bei realem Fehler gezielt im bestehenden Releasepfad korrigieren,
+keine Gates abschwächen. Bereits erteilte Freigabe für genau PR195 bleibt gültig.
+
+Gesamtmaster PARTIAL. Übrige ursprüngliche Roadmap und UI-/DELETE-/PERF01-/FLH04-
+Anforderungen erhalten; FLH05/PROJ01 OPEN/PARKED, Kompatibilität nur vorhandene
+gemeinsame Verträge. Kein neuer paralleler Funktionsstrang während Releasegates.
+
+---
+
 # PR195 ausdrücklich freigegeben · kontrollierter Release IN_PROGRESS · 29.10.2026
 
 Der Nutzer hat auf die konkrete Frage zur Merge-/Deploymentfreigabe des geprüften
