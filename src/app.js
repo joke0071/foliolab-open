@@ -1,5 +1,5 @@
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
-import {flatexNativeMarkup,reviewNativeFlatexBindings} from './flatex-native-ui.js';
+import {flatexNativeMarkup,reviewNativeFlatexBindings,flatexNativeSimulationMarkup} from './flatex-native-ui.js';
 import {inspectNativeFlatexSourceIdentities} from './import-identity.js';
 import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {readCSVRecords} from './csv-records.js';
@@ -68,7 +68,7 @@ import {pairFlatexSettlements} from './flatex-settlements.js';
 import {auditFlatexSettlementAmounts,auditNativeFlatexSettlementAmounts} from './flatex-settlement-audit.js';
 import {auditFlatexCashStatements,flatexCashAccountChoices} from './flatex-cash-audit.js';
 import {exportFlatexAuditCSV} from './flatex-review-export.js';
-import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
+import {prepareFlatexBackfillPreview,prepareNativeFlatexPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {createCompleteBackup,unpackCompleteBackup,portableDrivePreferences,COMPLETE_BACKUP_KIND} from './complete-backup.js';
@@ -1263,6 +1263,7 @@ function openCSVImport(){
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
  let flatexNativeLinks=null,flatexNativeAmounts=null,flatexOrderLimit=20,flatexLegLimits={};
  let flatexSourceIdentities=null,flatexBindings={},flatexBindingLimit=20,flatexBindingStale=false,flatexBindingAction=0;
+ let flatexSimulationMode='',flatexSimulation=null,flatexSimulationBusy=false,flatexSimulationStatus='';
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1444,11 +1445,40 @@ function openCSVImport(){
   const opened=[...$('csvReview').querySelectorAll('details[id][open]')].map(e=>e.id);
   const count=flatexNativeDocuments.reduce((n,f)=>n+f.document.rows.length,0);
   const staging=reviewNativeFlatexBindings(model,flatexSourceIdentities,flatexBindings,{stale:flatexBindingStale||Boolean(loadFailure)||otherTabChangedPortfolio});
+  if(staging.stale){flatexSimulation=null;flatexSimulationStatus='Datenstand geändert – neu laden.';}
   $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Übernahme bleibt gesperrt.';
   $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits,staging,bindingLimit:flatexBindingLimit,amountAudit:flatexNativeAmounts});
+  $('flatexNativeBindings').insertAdjacentHTML('afterend',flatexNativeSimulationMarkup(flatexSimulation,{mode:flatexSimulationMode,disabled:staging.stale,model}));
+  $('flatexSimulationRun').disabled=staging.stale||flatexSimulationBusy||!flatexSimulationMode||staging.contexts.some(c=>!c.confirmed);
   for(const id of opened){const e=$(id);if(e)e.open=true;}
-  $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau.';
+  $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau. '+flatexSimulationStatus;
   $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
+  $('flatexSimulationMode').addEventListener('change',event=>{
+   flatexBindingAction++;flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
+   flatexSimulationMode=['append','backfill'].includes(event.target.value)?event.target.value:'';
+   renderFlatexNative();$('flatexSimulationMode').focus();
+  });
+  $('flatexSimulationRun').addEventListener('click',async()=>{
+   const generation=selectionGeneration,action=++flatexBindingAction,mode=flatexSimulationMode,baseline=JSON.stringify(model);
+   const current=()=>generation===selectionGeneration&&action===flatexBindingAction&&editor===importEditor&&$('editDialog').open;
+   flatexSimulation=null;flatexSimulationBusy=true;flatexSimulationStatus='Stückhistorie wird geprüft.';renderFlatexNative();
+   try{
+    if(!mode||saving||busy||loadFailure||otherTabChangedPortfolio||flatexBindingStale)throw Error('Datenstand oder Modus nicht prüfbar.');
+    await portfolioStore.assertCurrent();if(!current())return;
+    if(baseline!==JSON.stringify(model)||saving||busy||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert.');
+    const result=prepareNativeFlatexPreview(model,flatexNativeDocuments.map(f=>f.document),flatexBindings,{mode});
+    await portfolioStore.assertCurrent();if(!current())return;
+    if(baseline!==JSON.stringify(model)||saving||busy||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert.');
+    flatexSimulation=result;flatexSimulationStatus=result.eligible?'Stückhistorie simuliert. Keine Übernahme.':'Simulation gesperrt: '+result.reason;
+   }catch{
+    if(!current())return;
+    flatexSimulation=null;flatexBindings={};flatexBindingStale=true;flatexSimulationStatus='Datenstand nicht aktuell prüfbar – neu laden.';
+   }
+   if(!current())return;
+   flatexSimulationBusy=false;renderFlatexNative();$('flatexNativeSimulation').open=true;
+   ($('flatexSimulationResult')||$('flatexNativeSimulation')).setAttribute('tabindex','-1');
+   ($('flatexSimulationResult')||$('flatexNativeSimulation')).focus();
+  });
   $('flatexNativeShowMore')?.addEventListener('click',()=>{const previous=flatexNativeLimit;flatexNativeLimit+=50;renderFlatexNative();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
   $('flatexOrdersShowMore')?.addEventListener('click',()=>{const previous=flatexOrderLimit;flatexOrderLimit+=20;renderFlatexNative();$('flatexOrderGroup-'+previous)?.querySelector('summary')?.focus();});
   for(const button of $('csvReview').querySelectorAll('[data-flatex-order-legs]'))button.addEventListener('click',()=>{const i=Number(button.dataset.flatexOrderLegs),previous=flatexLegLimits[i]??20;flatexLegLimits[i]=previous+20;renderFlatexNative();$('flatexOrderLeg-'+i+'-'+previous)?.focus();});
@@ -1458,6 +1488,8 @@ function openCSVImport(){
    if(!context?.sourceId)return;
    const desired=confirm&&control.checked,accountId=confirm?(flatexBindings[context.sourceId]?.accountId||''):control.value;
    flatexBindings[context.sourceId]={accountId,confirmed:false,accountSnapshot:''};
+   flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
+   $('flatexSimulationResult')?.remove();$('flatexSimulationRun').disabled=true;
    for(const value of $('csvReview').querySelectorAll('.flatex-amount-review'))value.remove();
    if(!confirm&&$('flatexBindingConfirm-'+i))$('flatexBindingConfirm-'+i).checked=false;
    for(const c of $('csvReview').querySelectorAll('[data-flatex-binding-account],[data-flatex-binding-confirm]'))c.disabled=true;
@@ -1476,6 +1508,10 @@ function openCSVImport(){
   for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-account]'))control.addEventListener('change',()=>updateBinding(control,false));
   for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-confirm]'))control.addEventListener('change',()=>updateBinding(control,true));
  };
+ importEditor.invalidateNativeSimulation=()=>{
+  if(!flatexNativeDocuments||editor!==importEditor||!$('editDialog').open)return;
+  flatexBindingAction++;flatexSimulation=null;flatexSimulationBusy=false;flatexBindings={};flatexBindingStale=true;renderFlatexNative();
+ };
  async function chooseCSV(){
   const generation=++selectionGeneration;
   const source=$('csvSource').value;
@@ -1487,6 +1523,7 @@ function openCSVImport(){
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
   flatexNativeLinks=null;flatexNativeAmounts=null;flatexOrderLimit=20;flatexLegLimits={};
   flatexSourceIdentities=null;flatexBindings={};flatexBindingLimit=20;flatexBindingStale=false;flatexBindingAction++;
+  flatexSimulationMode='';flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
@@ -2365,6 +2402,7 @@ $('storageMigrationSetup').classList.toggle('hidden',portfolioStore.isIndexedDB|
 window.addEventListener('storage',event=>{
  if(event.storageArea!==localStorage||!['foliolab-open-v1',MODE_KEY].includes(event.key)||event.oldValue===event.newValue||loadFailure)return;
  otherTabChangedPortfolio=true;syncPortfolioState();
+ editor?.invalidateNativeSimulation?.();
  for(const value of document.querySelectorAll('#csvReview .flatex-amount-review'))value.replaceWith(Object.assign(document.createElement('p'),{className:'small-help flatex-amount-status',textContent:'Betragsprüfung: Datenstand geändert – neu laden.'}));
  const cashResult=$('cashComparisonResult');
  if(cashResult)cashResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';
