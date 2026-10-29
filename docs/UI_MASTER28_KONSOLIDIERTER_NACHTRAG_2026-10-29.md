@@ -1,3 +1,12 @@
+# Verbindlicher Kursoptionen-Nachtrag übernommen · 29.10.2026
+
+**„TradingView responsiv optimieren“ = SUPERSEDED BY USER.** TradingView vollständig aus der aktiven Anwendung entfernen, kein anderes externes Widget. [Verbindlicher vollständiger Nachtrag mit vier IDs](https://github.com/joke0071/foliolab-open/blob/22e70228d7761285811f6bba0bcb0a8e8425527e/docs/UI_MASTER28_KURSOPTIONEN_NACHTRAG_2026-10-29.md):
+UI-M28-K01 TradingView entfernen/CSV-Kursoptionen vereinfachen; K02 längere Kryptoperioden nur bei realer Abdeckung; K03 Kontodatenstand ohne unnötigen Rahmen/kompakte Prüfwerte; K04 Suche, optionalen EODHD-Dienst und Datenschutz mit einer Cloudflare-Grundlage konsolidieren. Alle vier OPEN/P2. Legacy tradingViewSymbol lesbar halten, nicht aktiv nutzen; native Quellen/Charts/CSV/FX/ISIN/MIC/Backup/Offline unverändert. Keine Änderung von Endpunkten, Secrets, CORS, OAuth oder Speicherung.
+
+Kein Abbruch oder Umpriorisieren: PR200 v213 LIVE_ACCEPTED, laufender erster UI-P1-Schnitt [PR201](https://github.com/joke0071/foliolab-open/pull/201) zu Sperrtexten regulär abschließen. Kandidat SW214 unveröffentlicht; alle bisherigen P1/P2-Anforderungen einschließlich Verwaltung/Bearbeiten/Archiv/Diagrammmodi/Tooltip/Liquidität/Header/Buchungsliste/Stichtagstext erhalten. Neuer P2-Nachtrag möglichst anschließend zusammenhängend und konfliktfrei, keine parallele Implementierung.
+
+---
+
 # UI-MASTER28 – Verbindlicher konsolidierter UI-/UX-Nachtrag vom 29.10.2026
 
 Quelle: vollständiger Nutzerauftrag „Verwaltung, Diagramme, Löschlogik und vollständige visuelle Vereinheitlichung“, nach ausdrücklicher Freigabe für PR200. Dieser Nachtrag ergänzt denselben Masterauftrag und ersetzt keine historischen Anforderungen oder Nachweise.
