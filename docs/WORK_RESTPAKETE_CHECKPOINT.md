@@ -1,3 +1,59 @@
+# PR196 echte Close-Ereignisprüfung gesichert · letzte volle CI läuft · 29.10.2026
+
+**PARTIAL bis aktuelle vollständige Abnahme.** Einziger Funktionsbranch
+feature/reference-removal-safe-subset / PR196 Draft.
+HEAD **be860237af019deab0c4e393dbcc022976bb5c1f** /
+Baum **0d486119e6b8530e31be96faab49a2fc00ebf7e7**, exakt lokaler50442c5/Remote.
+Testmerge **ccbf2e639c012a9000b42bd3047d494e460f19af**.
+Refupdate ohneForce mit expected5244ff29. Ausschließlich
+tests/browser-reference-removal.mjs geändert, Produktbytes identisch5244ff29,
+daher SW211 unverändert/unveröffentlicht. Main6fe75a99/v208 unverändert.
+
+Vorherige Pflicht40882219353 regulär FAILURE beendet:
+test123476447345 neuer unmittelbarer Fokuscheck vor unbewiesenem close-Event;
+Cross1 123476447709 UND Cross2 123476447697 SUCCESS, Wallet40882219301 SUCCESS.
+Deploy123481771323/live123481771772 korrekt SKIPPED.
+Fehlerartefakt12900717647/Digest87850810934720f19b9205a85a9d7ff33f30e8dac7033641db8a539dbda03265;
+Cross1 12901920920/Digest050943dbea7a5f0acedd6d8811b7b764568468fdb3a4d7cd946043854d87cf39;
+Cross2 12900429746/Digestec155bab6e0c1758602d80caad84e6261650a2c72893d7df130511011c26a6e0.
+Frühere vollständige6c361af1-CI und tatsächliche lokalen5244ff29-Gates erhalten.
+
+Gezielte neue Beobachtung VOR tatsächlichem Offline-Save:
+once-close-Listener wird nach bestehendem Apphandler am echten Dialog registriert,
+erfasst die tatsächliche Fokus-ID nach dessen Ausführung. Test wartet auf
+genau dieses Ereignis, fordert erfassteID EXAKT manageReferences UND separat
+den tatsächlichen aktuellen Fokus. Falscher Fokus am Close-Ereignis bleibt
+harter Fehler, selbst falls später eine andere Aktion korrigiert.
+Keine Sleeps/Timeoutsteigerung/Toleranz/entfernte Fokusassertion oder Produktfix
+zum Verbergen des Tests. Bisheriger hidden-Helper allein bewies die App-close-
+Eventphase nicht. Alter CIzeitpunkt ohne Eventtelemetrie bleibt transparent.
+
+Tatsächliche vollständige Rücknahmegates mit dieser zusätzlichen Ereignisprüfung
+in Chromium141 UND Firefox157 PASS: vollständige Daten-/Settings-/Revisions-
+Abbruchverträge, exakt ein Offlinecommit, frische Vorschau/alle geöffnetenDetails/
+summary44px/innererOverflow/fünfBreiten/Axe, tatsächlicher Backup-Keyausschluss/
+eigene Zustimmung/Plain+V2Restore/exaktesUndo/Stale UND realeCASrace erhalten.
+Keine Produktdatei gegenüber5244ff29 geändert. Keine weitere Implementierung
+vor regulärem Abschluss dieser neuen aktuellen Läufe beginnen.
+
+Neue volle Pflicht **40883912046**, Wallet **40883911994** auf be860237 laufen.
+**Exakte nächste Aktion:** regulär abschließen; reale finale Logs/946Units/
+alle3Engineberichte mit tatsächlicher Close-Event-Fokusprüfung lesen;
+SHA/Baum/Testmerge0d486119 prüfen, ZIPdigests vor Extraktion,
+neue tatsächliche CIbilder aller3Engines am Vorschauanfang und aufgeklappten
+Backup-/Kapitalbereich prüfen. Abschließender Quell-/Deltareview; permanenten
+Maschinenbeleg separat committen/pushen, dann zentralen finalen Checkpoint
+separat sichern/Remote verifizieren; PRreviewbereit. Erst dann eigene konkrete
+Nutzerentscheidung vor kritischem Merge/Deployment. Keine voreilige Frage.
+PR195-Freigabe nicht erweitern; spätere Main-/Pages-/echte3Engine-Livegates Pflicht.
+
+Gesamtmaster/übrige UI-/Lösch-/FLH03-/FLH04-/essentielleP1-PERF01-/ursprüngliche
+Roadmap PARTIAL; FLH05/PROJ01 OPEN/PARKED, Kompatibilität nur notwendige bestehende
+Verträge. Historische Belege vollständig erhalten; keine privaten Daten benutzt/
+produktiv geändert. Relevanter Code remote, nur synthetische artifacts unversioniert.
+
+---
+
 # PR196 letzte CI: Fokusassertion vor Close-Ereignis · Diagnose/Absicherung · 29.10.2026
 
 HEAD5244ff29/Baumb1602a91 unverändert remote. Pflicht40882219353/
