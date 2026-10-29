@@ -1,3 +1,61 @@
+# Final gesichert: PR196 LIVE_ACCEPTED, PR198 reviewbereit · 29.10.2026
+
+**DONE:** PR #196 kontrolliert gemergt, produktiv v211 / SW211 vollständig abgenommen. UI-Implementierung vollständig an ChatGPT Work zurückgegeben; Issue #197 geschlossen; acht Sonnet-Befunde und vollständiger A–I-Vertrag integriert.
+**TECHNICALLY ACCEPTED / AWAITING USER RELEASE DECISION:** PR #198.
+**PARTIAL:** Gesamtmaster, übrige UI-/Fachpakete und tatsächliche Startoptimierung.
+
+| Pflichtfeld | Nachgewiesener Stand |
+| --- | --- |
+| Produktion | main c08bc1d35b25d72081fb07a61e95532a883fdebe, v211 / SW211; direkt zuletzt erneut gelesen |
+| Produktiver Release | PR196; Main/Pages/Live 40893805495 SUCCESS, 946 Units, alle 3 Engines, 120 exakte Live-Assethashes |
+| Produktiver Maschinenbeleg | docs/release-evidence/reference-removal-live-v211.json in 53fdbafcfc8e8b71d63bb73ea50b500db04c008b |
+| Einziger aktueller Funktionsbranch | feature/ui-audit-precision-touch-v212 |
+| Aktueller PR | [#198](https://github.com/joke0071/foliolab-open/pull/198), reviewbereit, kein Draft, nicht gemergt, kein Deployment |
+| Aktueller HEAD | 81cca6060008282ae1e0dc307684d53f4a303490 |
+| Kandidatenbaum | 425ae224c33a90bfd399d7fc7ec93db04965f17b |
+| Testmerge | 3865146d411b2ebedec59813473fe5dcb75464d8, exakt gleicher Baum; Eltern main c08bc1d3 und HEAD81cca606 |
+| Pflicht-CI | [40899143762](https://github.com/joke0071/foliolab-open/actions/runs/40899143762) SUCCESS |
+| Wallet-CI | [40899143178](https://github.com/joke0071/foliolab-open/actions/runs/40899143178) SUCCESS |
+| Pflichtjobs | test123536332992, Cross1 123536333152, Cross2 123536333215 SUCCESS; deploy123541277834 / live123541279585 korrekt SKIPPED |
+| Unit/Syntax/Browser | Tatsächlicher letzter Unitlog: 948/948, 0 Fail, 0 Skip; Syntax und Chromium/Firefox/WebKit PASS |
+| Kandidat | SW212, unveröffentlicht; Produktbytes gegenüber erstem UI-HEAD7fa5575f unverändert, letzter Commit ausschließlich strengerer Testvertrag |
+| Dauerhafter Kandidatenbeleg | docs/release-evidence/ui-audit-controls-candidate.json in 28ad1c9a2378aadea8ee6f6e0a46365f0cf99b3b |
+| Kollisions-/Reviewabgleich | main unverändert, keine laufenden Actions oder Reviews; nur aktueller198 plus geparkte Drafts157/161; keine fremden Branches geändert |
+| Lokaler Zustand | HEAD/Baum exakt remote übernommen, keine getrackten Reständerungen; nur reproduzierbare synthetische Artefakte und lokale Browserabhängigkeiten unversioniert |
+
+## Konkreter abgenommener UI-Umfang
+
+A01: gemeinsamer präziser Darstellungsformatter, fehlend bleibt unbekannt, ausreichend unterscheidbare EUR-Achsen, exakter Donutbetrag zugänglich. Bestehende Kurs-/Mengenachsen unverändert.
+A02 (begrenzt): echte 44-px-Ziele für Dashboardlinks/Willkommensaktionen, Positionsfilter, Kopfaktionen und Kalender. Sieben getrennte Tage auch bei 320 px; begrenzter Popup mit erreichbarem Reset in kurzem Viewport.
+A03 (Kalenderteil): gemessener Kleintextkontrast mindestens 4,5:1 mit bestehender Palette.
+A04 (Zeitraumteil): ausgeglichene mobile 4+4-Vermögenszeiträume; bestehende Zeiträume/Auswahlgrenzen erhalten.
+A07: sichtbarer Tastaturfokus auf SVG-Segmenten.
+
+Finale aktuelle CI-Berichte aller 3 Engines tatsächlich gelesen: je 50 leere/gefüllte Hauptansichten bei 320/390/430/768/1440 px, Axe, echte Zielgeometrie und Nichtüberlappung, 4+4, Kalenderkontrast, zugänglicher Betrag/Fokus, 320×360 und synthetischer vergrößerter Text, exakte Record-/Settings-/Revisionsnullmutation. Bestehende Referenzrücknahme und native Flatex append/backfill mit Backup/Consent/Quota/Abort/CAS/Undo/Restore/Offline bleiben bestanden. Neue aktuelle Chromium-/Firefox-/WebKit-Bilder tatsächlich angesehen.
+
+Main-ZIP12909825134 / a8070dfe961fba39e8e4306cce10c2acc2e005b62118068952bebb6dbc5aa2b1;
+Cross1-ZIP12908807406 / 81cfc52aba0b5b775b01a15ebf1f33aeb057bd5beb1e3190c135571675e6808b;
+Cross2-ZIP12908827255 / b1249fbd9e4cb0cb6a9a62479f42ba9ca76bb2080254f8cd12aa8868e0abe534.
+Alle drei vor Extraktion unabhängig SHA-256-verifiziert. Tatsächliche Logs, Berichte, Bildhashes und Fehlerhistorie dauerhaft im Kandidatenbeleg.
+
+Neun-Dateien-Quellreview: format/dashboard/allocation/styles/SW und vier Testdateien. Kein app.js/Finanzkern/Modell/Storage/Import/Backup/Workflow/Dependency geändert. Der historische Mobiltest38–41px widersprach dem ausdrücklichen neuen44px-Vertrag und wurde durch exakt44×44 mobil plus mindestens44px alle Breiten ersetzt; Umbruch-/Karten-/Label-/A11y-/Funktionsassertionen erhalten. Frühere CI40898145611 mit Mainfehler und beiden erfolgreichen Crossjobs bleibt dokumentiert, kein blinder Retry/keine gelockerte Sicherheitsprüfung.
+
+## Noch offen und exakte Fortsetzungsstelle
+
+**Jetzt tatsächliche Nutzerentscheidung:** Merge und Deployment von **PR #198 / HEAD81cca606 / SW212** freigeben oder konkrete Änderung verlangen. Der Nutzer hat die bisherige Freigabe ausdrücklich auf PR196 begrenzt; sie wird nicht auf den Folge-PR erweitert. Der Kandidat ist vollständig geprüft, reviewbar und remote gesichert. Keine neue kollidierende Implementierung beginnen.
+
+Nach eigener #198-Freigabe: erneut main/HEAD/Baum/Actions/Writer prüfen, ausschließlich geprüften Kandidaten kontrolliert mergen; vollständige Main-/Pages-/Livegates, tatsächliche SW212/Assetgleichheit und relevante neue/bestehende 3-Engine-Abläufe abnehmen; Maschinenbeleg und separaten Checkpoint sichern. Danach nächste sichere Arbeit nach bestehender Priorität.
+
+Gesamt-UI bleibt PARTIAL: weitere A02-Zielgruppen, A03 außerhalb Kalender, A04-Leerraumteil, A05 bedingt, A06/A08 P3 sowie tatsächliche übrige UI-MASTER28-Deltas. Neuer konkreter Sichtbefund im synthetischen 320-px-Bild: langes Anbieterlabel bedrängt Betrag; Provider-Zeilenquellcode in198 unverändert. Als bestehender Folgepunkt dokumentiert, kein unbegrenzter neuer Audit.
+
+**FLH-PERF01 essenzielle P1 vor P3:** vorbereitender CPU-Beleg in docs/release-evidence/perf01-cold-start-profile-v211.json / 6d77e639. Fünf frische Prozesse, profiliert ca3,19s Median; wiederholte validDate-Prüfung größter gemessener CPU-Anteil. Keine Optimierung/30%-Zielerreichung behauptet. Nächster Schritt: vergleichbare unprofilierte kalte/warme Dashboardmessungen und begrenzte Prüfung dieses Hotspots mit unveränderter Validierungs-/Finanzsemantik.
+
+Alle übrigen FLH03-/DELETE-MASTER28-/IDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-/P0-/P1-/BENCH-Verträge und Anforderungen bleiben vollständig erhalten. FLH05 und FLH-PROJ01 OPEN / PARKED. Keine privaten Originale, Finanzdaten oder Schlüssel veröffentlicht, keine produktiven privaten Daten verändert; nur isolierte synthetische Profile. Emulation ist keine Hardware-/AT-Abnahme. Historischen Dokumentationsbranch niemals als Appcode nach main mergen.
+
+Alle älteren Freigabe-fehlt-/v208-/Claude-exklusiv-/laufende-CI-Abschnitte unten sind historische Zwischenstände. Dieser Kopf ist maßgeblich.
+
+---
+
 ## PERF01 vorbereitender CPU-Befund gesichert · 29.10.2026
 
 Während PR198-CI ausschließlich read-only-Diagnose auf exakt abgenommenem mainc08bc1d3/v211, kein zweiter Funktionsbranch/keine Performanceimplementierung: docs/release-evidence/perf01-cold-start-profile-v211.json enthält fünf frischeChromiumprozesse mit tatsächlichemIDB-Klon (1000synthetischeETF/1825manuelleReferenzen,1440x900). Mit aktivemCPUprofiler Kaltstarts3569,4/3211,8/3049,7/3186,2/3126,3ms, Median3186,2ms. Größter gemessenerSelf-Anteil validDate in historical-position-value.js ca1377–1643ms; wiederholtehistorischePositionsrekonstruktion als konkreter Untersuchungsansatz, keine unbewieseneIDB-Ursache. Warmwerte nach Positionssuche/Reload sind andererAnsicht und ausdrücklich **nicht direkt vergleichbar**.
