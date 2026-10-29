@@ -1,3 +1,27 @@
+# Aktueller Zuständigkeits- und Fortschrittsverweis · 29.10.2026
+
+Der folgende v188-Gesamtaudit bleibt als historische Bestandsaufnahme vollständig
+erhalten. Tatsächliche spätere main-/Release-/CI-Abnahmen und der neueste zentrale
+WORK_RESTPAKETE_CHECKPOINT.md sowie der aktuelle Kopf der KONSOLIDIERTE_ROADMAP.md
+haben Vorrang. main6fe75a99/v208 ist produktiv abgenommen; PR196/be860237/SW211
+ist technisch abgenommen und wartet auf eigene konkrete Releasefreigabe.
+Gesamtmaster bleibt PARTIAL, nicht sämtliche früheren OPEN-Zeilen sind neue Arbeit.
+
+Verbindliche Nutzerdelegation: rein visuelle Restumsetzung ausschließlich
+**UI-VISUAL-CLAUDE / GitHub Copilot mit Claude Sonnet5.5**, [Issue197](https://github.com/joke0071/foliolab-open/issues/197)
+und [Übergabevertrag](UI_VISUAL_CLAUDE_HANDOFF.md). Kompakte Datenbasis,
+drei vorhandene Verlaufsicons, Liquiditätszugang und letzte Anbieterlinie sind
+bereits implementiert; alte OPEN-Behauptungen dazu nicht erneut umsetzen.
+Vor Aktivierung PR196 sicher abschließen, Modellwahl tatsächlich verifizieren
+und gemeinsame Schreibbereiche koordinieren. Kein Claude-Codinglauf gestartet.
+Sicherheitskritische fachgebundene UI, Finance/CAS/Import/Restore sowie übriger
+Sicherheitsmaster bleiben Work; keine parallele kosmetische Work-Implementierung.
+FLH05/PROJ01 OPEN/PARKED; essentielleP1-PERF01 und alle ursprünglichen Anforderungen,
+Abnahmegrenzen und historischen Belege bleiben erhalten. Keine historische
+Dokumentationsbranch-Codebasis nach main mergen.
+
+---
+
 # Verbindlicher Vorgänger-Gesamtaudit — aktueller Deltaabschluss v188
 
 Stand 27.10.2026. **AUDIT DONE als vollständige Bestandsaufnahme; UMSETZUNG PARTIAL.** Keine Aussage, dass sämtliche Vorgänger fertig seien. Dieser aktuelle Abschnitt übersteuert die unverändert erhaltene historische v179-Vollmatrix darunter. Keine zweite Roadmap; ausführbare Reihenfolge ausschließlich in KONSOLIDIERTE_ROADMAP.md, fortlaufender Gesamtstatus in WORK_RESTPAKETE_CHECKPOINT.md.
