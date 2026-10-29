@@ -1,3 +1,181 @@
+# PR196 technisch abgenommen · UI-VISUAL exklusiv an Claude übergeben · 29.10.2026
+
+**DONE:** begrenzter sicherer manueller Referenz-Rücknahmekandidat vollständig
+technisch abgenommen, dauerhaft remote gesichert und PRreviewbereit.
+**DONE:** neuer Nutzerentscheid UI-VISUAL-CLAUDE dauerhaft in Übergabevertrag,
+Trackingissue, konsolidierter Roadmap und Audit übernommen.
+**PARTIAL:** Gesamtmaster und noch offene fachliche/visuelle Restumsetzung.
+**AWAITING USER:** eigene konkrete Merge-/Deploymentfreigabe für PR196 fehlt.
+**BLOCKED ACTIVATION:** kein Claude-Codinglauf vor sicherem Abschluss196 und
+tatsächlich verifizierter Copilot-Modellwahl; kein Ersatzmodell.
+Alle alten IN_PROGRESS-/Fehler-/Draft-/PENDING-Blöcke darunter sind historische
+Zwischenstände. Dieser neue Kopf hat Vorrang; keine fertigen Arbeiten wiederholen.
+
+## Tatsächlicher Abschlussstand PR196
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Funktionsbranch | feature/reference-removal-safe-subset |
+| PR | [196](https://github.com/joke0071/foliolab-open/pull/196), offen/reviewbereit, kein Draft/kein Merge/kein Automerge |
+| HEAD | be860237af019deab0c4e393dbcc022976bb5c1f |
+| Baum | 0d486119e6b8530e31be96faab49a2fc00ebf7e7, exakt lokal/Remote/PR-Testmerge |
+| Testmerge | ccbf2e639c012a9000b42bd3047d494e460f19af, Eltern main6fe75a99 und HEADbe860237 |
+| Pflicht-CI | [40883912046](https://github.com/joke0071/foliolab-open/actions/runs/40883912046) SUCCESS auf exaktbe860237 |
+| Wallet-CI | [40883911994](https://github.com/joke0071/foliolab-open/actions/runs/40883911994) SUCCESS auf exaktbe860237 |
+| Pflichtjobs | test123482405876, Cross1 123482405757, Cross2 123482405354 jeweils SUCCESS |
+| Units/Syntax | tatsächlicher aktueller Unitlog946/946,0Fail/0Skip; Syntax PASS |
+| Browser | Chromium141.0.7390.37/Firefox157.0/WebKit27.2, aktuelle tatsächliche Berichte aller3Engines PASS |
+| PR-Releasejobs | deploy123487996275 / live123487997224 korrekt SKIPPED, keine Releasefreigabe |
+| Produktiv | main6fe75a997a076d0c17e5200b0bb7ee09532d7044 / v208 LIVE_ACCEPTED unverändert; HTTPS200/SW208 direkt erneut gelesen |
+| Produktive SWbytes | SHA25670ef8dd081ab4d99ed16904952d275e47d7dcb5bbbd111b65fad840ab9f3e8b0 |
+| Kandidat | SW211 unveröffentlicht. Frühere209/210 nur Kandidaten, keine Veröffentlichung behaupten |
+| Permanenter Maschinenbeleg | docs/release-evidence/reference-removal-candidate.json in fda8bc7ab4f8fbb5c8cd85594e25f45871b076ea, Blob750929ff753adfaab32cafe3052b4dbb05f1d667 |
+| Review/Kollisionen | keine offenen Reviewkommentare/Reviews; nur196 sowie geparkte Drafts157/161, keine laufenden/wartenden Actions bei Abschlussprüfung |
+| Lokaler Zustand | relevante Änderungen vollständig remote; HEADbe860237/Baum0d486119; nur reproduzierbare synthetische artifacts unversioniert |
+
+### Abgenommener begrenzter Fachumfang
+
+Eigenständig manuelle vergangene Referenzwerte ohne automatische/migrierte
+Originalrevisionen, Konto-/Positions-/Kursaufteilung, unbekannte Originalfelder
+oder ungeklärte externe/codierte Identitätsbezüge können gemeinsam zurückgenommen
+werden. Renditestart und heutige mögliche automatische Neuerfassung bleiben
+geschützt. Unsichere gemischte Auswahl bricht vollständig ab. Keine pauschale
+Behauptung universeller Löschbarkeit oder abgeschlossener DELETE-MASTER28.
+
+Vorhandenes deleteSnapshot ausschließlich auf validiertem Klon, vorhandene
+Archivnormalisierung entfernt nur ausgewählte Referenzarchiv-IDs und bewahrt
+Buchungsarchive. Keine neue Modell-/Schema-/Import-/Finanz-/Backupengine.
+Bestände, Einstandswerte, Buchungen, Journal, Eröffnungen, externe Flüsse und
+Renditestart bleiben erhalten. Konservative ASCII-/200.000Knoten-/64Ebenen-/
+8MB- und opaque/Teilstring-Prüfgrenzen samt möglicher Überblockierung dokumentiert.
+
+Vorschau zeigt Originale und konkrete Folgen aus bestehenden Verlaufs-/Abgleich-/
+TWR-/XIRR-/Kapitalreferenzfunktionen auf unveränderten ursprünglichen Zeitraumgrenzen.
+Fehlende Endbewertung bleibt nicht belegbar, kein neuer Ersatzwert.
+Aktuelles Baselinebackup ohne API-Keys mit Historien, eigene Zustimmung,
+erneute exakte Modellprüfung/Frische/atomarer CAS; Undo nur bis zur nächsten
+Portfolioänderung, danach ursprüngliches Backup wiederherstellen.
+
+Aktuelle tatsächliche3Engine-Nachweise gelesen: Start-/Mischsperren, Backupinhalt/
+Keyausschluss/Zustimmung/forciertesSubmit, reale Quota/post-put-Abbrüche mit exaktem
+Record/Settings/Revision, exakt ein Offlinecommit/Reload, sessionUndo, frischer
+Plain-/verschlüsselterV2-Restore, Stale-Vorschau UND echteCASrace NACH Frischeprüfung,
+inert währendSave, fünfBreiten320/390/430/768/1440, sämtliche geöffneten summary-
+Ziele>=44px, innererDialogoverflow ausgeschlossen, jede neue Vorschau scrollTop0,
+Axe/Tastatur und erfasster exakter Fokus nach tatsächlichem close-Event plus
+aktueller Fokus PASS. Bestehende Referenz-/Buchungs-/Positions-/Native-import-
+Übernahmen append/backfill in allen3Engines bleiben PASS.
+Keine privaten Originale oder produktiven privaten Finanzdaten verwendet/geändert;
+nur isolierte synthetische Profile. Keine neue Hardware-/AT-Vollabnahme behaupten.
+
+### Geprüfte dauerhafte Artefaktidentitäten
+
+Alle folgenden ZIPs vor Extraktion unabhängig SHA256-verifiziert:
+- Main12901502778: fea1458b97e15a151bdffd656b8e40679f7644bdd8e22a8bd21542e1a3bd83e6;
+  testedSHA ccbf2e639c012a9000b42bd3047d494e460f19af und tatsächlicher946Unitlog gelesen.
+- Cross1 12901502986: a4dd569cc4ec41a4368734f5f3e25348ca463d655ac791ffb2f09bf737c36114.
+- Cross2 12902766022: 88a349ab5626a49b4a12cfc69b091a68ee62abd520be7901eaceba83b9c364c8.
+
+Aktuelle tatsächliche neue CIbilder visuell PASS: Chromium320 Anfang+Expanded/
+1440Anfang, Firefox1440Anfang/320Expanded, WebKit320Anfang+Expanded.
+Sieben Bildhashes und vollständige ausgewählte aktuelle Berichte permanent
+im Maschinenbeleg. Quell-/Delta-/Zehn-Dateien-Review abgeschlossen.
+Kein Finanzkern/Modell/Backupcrypto/Drive/Workflow/Dependency geändert.
+Ältere tatsächlich gefundene Quote-Fixture-/SW-Vorbereitungs-/44px-/Overflow-/
+Scroll-/Close-Event-Befunde und alle Fehlläufe bleiben unten/im Maschinenbeleg
+erhalten. Keine Assertions/Timeouts/Produkt-Altersgates gelockert, kein blinderRetry.
+
+## Verbindliche neue Arbeitsteilung UI-VISUAL-CLAUDE
+
+Der Nutzer hat ausdrücklich entschieden: offene **rein visuelle** UI-/UX-
+Restumsetzung ausschließlich GitHub Copilot mit **Claude Sonnet5.5**.
+Work implementiert nach sicherem Abschluss196 keine eigenen kosmetischen
+CSS-/Typografie-/Dashboard-/UI-MASTER28-Doppelpakete mehr.
+
+Dauerhafte Übergabe:
+- [Issue197](https://github.com/joke0071/foliolab-open/issues/197):
+  UI-VISUAL-CLAUDE, DELEGATED/OPEN, kein Agentlauf/Bot-Assignee ausgelöst.
+- docs/UI_VISUAL_CLAUDE_HANDOFF.md in70068b046cceaaabdc4d9e243bfd925cb214e990:
+  exakteA/B/C-Anforderungen, Erledigungen, Schreibbereiche/Schutzgrenzen,
+  Modell-/Aktivierungs-/Integrations-/Test-/Releasebedingungen.
+- docs/KONSOLIDIERTE_ROADMAP.md in e875ea61042f028225ea7c8695bfedcd60c5ea9c:
+  aktuelle Zuständigkeit/Gesamtsequenz vor historischen Abschnitten ergänzt.
+- docs/KONSOLIDIERTER_RESTARBEITEN_AUDIT.md in4d3246f9335825601a6a5ba949c5a9895659b6dd:
+  historische v188-Matrix ausdrücklich an aktuellen Stand/Zuständigkeit gebunden.
+
+A umfasst bestätigte Typografie-/Abstands-/Beschriftungs-/Button-/Trennlinien-/
+Zahlen-/Datums-/Tabellendarstellungsreste und visuelle Redundanz/Leerfläche.
+B umfasst nur verbleibende Dashboard-/Datenbasis-/Icon-/Liquiditäts-/Trennlinien-/
+Chart-Leerzustands-/Hinweis-/Responsive-Deltas. C umfasst rein visuellen
+Overflow/Clipping/Karten/Tabellen/Touchziele/Fokusindikatoren/offene Akkordeons
+und nicht kritische Dialoge in320/390/430/768/1440. Kein neues Redesign,
+kein Wechsel fachlicher Werte/Parser/Berechnungen/Zeiträume/Präzision/Datumsemantik.
+
+**Bereits main6fe75a99/v208 implementiert, nicht erneut bauen:** kompakte
+Datenbasissteuerung im Chartkopf mit Optionen/Auto und7T–Max; drei vorhandene
+17px-Icons (shield-Key zeichnet Schild MIT Haken, plus chart-no-axes-combined/
+clipboard-check); Liquidität & Fälligkeiten nach den Anbietern; nur letzte
+Anbieterlinie entfernt, Zwischentrennlinien erhalten. Sourceindex/format/app/
+styles und tatsächliche history-followup-Logs aller3Engines erneut geprüft.
+Dessen besondere Breitenmatrix320/390/768/1024/1440 ist nicht gleich einer
+speziellen430px-Abnahme aller geöffneten Zustände; allgemeineUIscans enthalten430.
+Claude bestätigt verlangte Zustände auf dann aktuellem main und überspringt
+bereits Fertiges. Bestehende Leer-/Teil-/Wochen-/Archiv-/Auswahl-/Restorekorrekturen
+und historische Abnahmen bleiben erhalten.
+
+Sicherheitskritische an Work-Fachpakete gebundene UI bleibt Work:
+Transaktionsbestätigung, fachliche Auswahl/Zulässigkeit, CAS-geschützte Lösch-/
+Backup-/Restore-/Recovery-/Stale-/Mehrtab-/Undo-/Importinteraktionen und Tests.
+PR196-Referenzdialoge/#referenceRemovalPreview/#referenceRemovalBackup bleiben
+Work-Sicherheitsbereich, keine parallele Claude-Umgestaltung. Work bleibt für
+eigene Releases verantwortlich; Claude-/Work-Branches gegenseitig nicht
+ungefragt ändern. Lesen/Review/Koordination/Masterdokumentation bleiben möglich.
+
+**Aktivierung technisch/kollisionsbedingt noch gesperrt:** kein Claude-Branch/
+PR oder Codingjob gestartet. Zunächst196 regulär einschließlich erforderlicher
+Freigabe/Releasegates abschließen, dann frischer main-/PR-/Action-/Writerabgleich
+und konkrete Selektor-/Funktions-/Hunkbereiche besonders app.js/styles.css/
+gemeinsamer Browsertests vereinbaren. Unterschiedliche Branches genügen nicht.
+Verbundene GitHub-Tools bieten keine verifizierbare Copilot-Modellwahl/
+Sonnet5.5-Dispatchfunktion; tatsächliche verlangte Auswahl muss über GitHub
+Copilot bestätigt werden. Bei dortiger Nichtverfügbarkeit exakt extern BLOCKED,
+kein Ersatzmodell/erfundener gestarteter Auftrag. Die Nutzerdelegation selbst
+ist erteilt; keine zusätzliche pauschale Startfreigabe erfunden.
+
+Claude arbeitet danach auf eigenem von frischem main abgeleiteten Branch/PR.
+Vor Merge frische Integration und vollständige unveränderte Pflichtgates/
+Bilder/SHA-/Baumnachweise/erforderliche Releaseentscheidung. Delegation erlaubt
+keine automatischen Merges/Deployments. Historischen Dokumentationsbranch
+feature/flh05-import-foundation niemals als Produktcode nach main mergen.
+
+## Exakte nächste Fortsetzungsstelle
+
+**Jetzt erforderliche Nutzerentscheidung:** PR196/be860237/SW211 für kontrollierten
+Merge und Deployment ausdrücklich freigeben oder konkrete Änderungsentscheidung.
+Keine Freigabe aus Fortsetzung/Delegation oder der alten PR195-Zustimmung ableiten.
+Keine neue kollidierende Implementierung beginnen; sicheren Kandidaten erhalten.
+
+Nach ausdrücklicher196-Freigabe frischen Kollisions-/HEAD-/Baum-/CIabgleich
+durchführen, nur geprüften Umfang kontrolliert mergen, vollständige Main-/Pages-/
+tatsächliche3Engine-Livegates inklusive neuer Rücknahme und bestehender nativer
+Übernahme prüfen, echte SW211/Assetgleichheit/Belege/Checkpoint sichern.
+Erst danach UI-VISUAL-CLAUDE-Aktivierung mit verifizierter Modellwahl und
+abgestimmten Schreibbereichen; Work setzt übrigen Fachmaster ohne kosmetische
+Doppelarbeit fort. Falls die Modellwahl/Dispatchmöglichkeit weiter fehlt,
+genau diese externe Grenze melden, nicht selbst visuell implementieren.
+
+Alle übrigen FLH03-Original-/Cash-/Storno-/FX-/Kapitalmaßnahmen-/Fee-/Tax-/
+Historien-/Reconciliation-/Provider-/Buchungs-/Positions-/Löschkategorien bleiben
+entsprechend vorhandenen Einzelgates offen. FLH04/OAuth/Hardware/AT/P0/P1/BENCH
+und ursprüngliche Roadmap erhalten. FLH-PERF01 bleibt essentielleP1 für reale
+Start-/Ladezeit großer IndexedDB-Portfolios, reproduzierbares30%-Medianziel,
+Datenintegrität/Offline/Mehrtab bewahren; CI-Beschleunigung ist kein Ersatz.
+FLH05 und FLH-PROJ01 OPEN/PARKED. FLH05-Zukunftskompatibilität ausschließlich
+notwendige gemeinsame Schnittstellen/Verträge, keine Zusatzphase/Refactorings/
+doppelten Parser/Modelle/Importstrecken oder vorgezogene Implementierung.
+
+---
+
 # PR196 echte Close-Ereignisprüfung gesichert · letzte volle CI läuft · 29.10.2026
 
 **PARTIAL bis aktuelle vollständige Abnahme.** Einziger Funktionsbranch
