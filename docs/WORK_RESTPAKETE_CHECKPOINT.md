@@ -1,3 +1,27 @@
+# Main-/Deploymentgates SUCCESS · SW208 ausgeliefert, Liveabnahme läuft · 29.10.2026
+
+Main6fe75a997a076d0c17e5200b0bb7ee09532d7044/Baum1d01a067 unverändert.
+Main40866889300 Versuch2: test123427591465 SUCCESS, beide Cross-Enginejobs SUCCESS,
+deploy123430929138 SUCCESS. Erster Controller-Timeout bleibt dokumentiert;
+vollständiger unveränderter Wiederholungslauf jetzt grün, kein Safetygate gelockert.
+Produktversion208 vom Deployment veröffentlicht; finale LIVE_ACCEPTED-Abnahme offen.
+
+**IN_PROGRESS:** tatsächliche Live-Abnahmejob123431088346 auf genau diesem Release.
+Vorhandener Gate prüft veröffentlichte Assetbytes/Cacheversion, echte UI-/Storage-/
+Backup-/Restore-/Offlineabläufe sowie Ziel-UI und native Simulation/Übernahme in
+Chromium, Firefox und WebKit mit isolierten synthetischen Profilen. Keine privaten
+Nutzerprofile oder Finanzdaten verändern.
+
+**Exakt nächste Aktion:** Livejob regulär abschließen, tatsächliche aktuelle
+Berichte/Logs und SHA256-verifizierte Produktionsartefakte lesen, alle3Engines/
+beide nativen Modi/Quota/post-put/CAS/Undo/Restore/Offline/Zielgrößen und tatsächliche
+visuelle Bilder prüfen. Danach begrenzten v208-Release abnehmen und getrennten
+Maschinen-/Checkpointbeleg remote sichern. Kein neuer Funktionsstrang vor
+Releaseabschluss. Nutzerfreigabe gültig; Gesamtmaster/übrige Roadmap PARTIAL,
+FLH05/PROJ01 weiter OPEN/PARKED.
+
+---
+
 # Main40866889300 Versuch2 läuft · keine weitere Wiederholung starten · 29.10.2026
 
 Der dokumentierte einmalige gezielte Wiederholungslauf wurde erfolgreich gestartet.
