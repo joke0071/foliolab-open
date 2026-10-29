@@ -1,3 +1,15 @@
+# PR198 ausdrücklich freigegeben und gemergt · Release läuft · 29.10.2026
+
+Nutzer hat nach der konkreten Freigabefrage ausdrücklich **„Freigabe“** erteilt: PR #198 / HEAD81cca606 / SW212 darf kontrolliert gemergt und produktiv veröffentlicht werden. Keine erneute Freigabe hierfür erforderlich; keine Erweiterung auf spätere PRs.
+
+**PARTIAL / RELEASE IN PROGRESS:** PR198 wurde nach frischem Abgleich kontrolliert gemergt. Neues main **0db6863ae81eec1821ea54878a1cf28e8f7bcf0e**, abgenommener Baum425ae224 unverändert. Vor Merge mainc08bc1d3, HEAD81cca606, Testmerge3865146d und alle Pflicht-/Walletgates exakt bestätigt; keine laufenden/wartenden Actions, nur198 und geparkte Drafts157/161. PR war clean/reviewbereit. Noch keine vollständige produktive SW212-Abnahme behaupten.
+
+**Exakte Fortsetzung:** Main-/Pages-/Live-CI auf0db6863a regulär abschließen, tatsächliche Logs/948Units/3Engineberichte/ZIPdigests/Bilder und echte SW212/Assetgleichheit einschließlich neuer UI-Kontrollen sowie bestehender Finance-/CAS-/Backup-/Restore-/Referenz-/Nativegates prüfen. Dauerhaften Releasebeleg, Roadmap/Audit und separaten zentralen Checkpoint sichern. Danach bestehende essenzielle P1-FLH-PERF01: vergleichbare unprofilierte kalte/warme Dashboardmessungen, gemessenen Datumsvalidierungs-Hotspot begrenzt untersuchen; keine optionale P3 vorziehen.
+
+UI-Zuständigkeit vollständig Work; Issue197 geschlossen. Übriger Master PARTIAL. FLH05 und FLH-PROJ01 OPEN/PARKED. Alle historischen Anforderungen und Sicherheits-/Originalbeleg-/OAuth-/Hardware-/AT-/Releaseverträge darunter bleiben erhalten. Kein paralleler Funktionsstrang/kein historischer Dokumentationsbranch nachmain.
+
+---
+
 # Final gesichert: PR196 LIVE_ACCEPTED, PR198 reviewbereit · 29.10.2026
 
 **DONE:** PR #196 kontrolliert gemergt, produktiv v211 / SW211 vollständig abgenommen. UI-Implementierung vollständig an ChatGPT Work zurückgegeben; Issue #197 geschlossen; acht Sonnet-Befunde und vollständiger A–I-Vertrag integriert.
