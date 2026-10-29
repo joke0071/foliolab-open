@@ -1,3 +1,22 @@
+# UI-P1/Chartkontrollen gesichert · PR198 CI läuft · 29.10.2026
+
+**DONE:** PR196 mainc08bc1d3/v211 LIVE_ACCEPTED; UI-Rückübernahme/alle8Sonnetkandidaten/Master-A–I dauerhaft übernommen, Issue197 geschlossen. Siehe vollständiger Releasebeleg53fdbafc und Zuständigkeitscheckpoint43e520cc unten.
+**PARTIAL:** erster neuer UI-Kandidat, keine Veröffentlichung/kein Merge.
+- Einziger Funktionsbranch feature/ui-audit-precision-touch-v212, [PR198](https://github.com/joke0071/foliolab-open/pull/198) Draft.
+- HEAD7fa5575f0e629f097a5b0c3aa23a8eff29d4c549 / Baum112c5916334e5642d416fce184fc05caa5af9761, main-basierter8Dateien-Delta. Commit/Ref ohneForce mit expectedc08bc1d3; Remote lokal übernommen, keine tracked Reständerungen.
+- SW212 nur Kandidat. Main/Produktion v211 unverändert.
+- Lokal948/948Units/0Fail/0Skip+Syntax PASS. Neue echte Kontrollprüfung in Chromium/Firefox/WebKit je50leere/gefüllte Ansichten320/390/430/768/1440: echte44px-Ziele/keineÜberlappung,320pxSiebenspaltenkalender,4+4Zeiträume,Kalenderkontrast>=4,5:1,exakter zugänglicherDonutwert/sichtbarer SVGfokus,320x360+150%synthetischerText/erreichbarerReset/Escape-Rückfokus und exakte Record-/Settings-/Revisionsnullmutation PASS. Tatsächliche Bilder aller3Engines geprüft.
+- Pflicht-[40898145611](https://github.com/joke0071/foliolab-open/actions/runs/40898145611) und Wallet-[40898146496](https://github.com/joke0071/foliolab-open/actions/runs/40898146496) laufen auf exakt7fa5575f. FinaleAbnahme noch offen.
+- Permanenter lokaler Kandidatenbeleg docs/release-evidence/ui-audit-controls-candidate.json in97dafa5b7560f8a52fccba4b60f78d71492e86e9.
+
+Umfang: gemeinsam präziser Kompaktformatter (unbekannt bleibt unbekannt), adaptive ausschließlich EUR-Achsenlabels, exakterDonutbetrag im zugänglichen Aktionsnamen; scoped Dashboardlinks/Willkommensaktionen/Positionsfilter/Kopfaktionen/Kalender44px; balancierte mobile Vermögenszeiträume; begrenzterKalender mit nicht überlappendenTagen auch320px/kurzenHöhen; Kalenderkleintextkontrast und SVGfokus. Keine Modell-/Finanz-/Speicher-/Import-/Auswahl-/Löschlogik geändert, keine Workflows/Dependencies. Alte eigene Kurs-/Mengenachsen unverändert. Neue Assertions ohne Abschwächung bestehenderTests eingebunden.
+
+**Exakte Fortsetzung:** laufende beiden CI regulär abschließen. Tatsächliche Logs/948Units/alle3Engineberichte/Testmergebaum/Bilder/ZIPdigests prüfen. Bei Fehler Ursache diagnostizieren, keine blindenRetries/Assertions-/Timeoutlockerung. Kandidatenbeleg aktualisieren/separatcommitten, dann Checkpoint separatcommitten/RemoteSHAverifizieren; erst dann PRreviewbereit. Vor Folge-Merge/Deployment bestehende separate Freigabegrenze respektieren; PR196-Freigabe nicht erweitern.
+
+A01 umgesetzt im Kandidaten; A02 nur benannteZielgruppen, weitere relevanteAktionen offen zuverifizieren. A03 Kalenderteil umgesetzt, übrigeTexte offen; A04 balancierteZeiträume, Leerraumteil offen; A07 umgesetzt imKandidaten. A05 bedingt/offen, A06/A08/P3 offen und nicht vor essentielleP1-FLH-PERF01. Übriges UI-MASTER28/FLH03/DELETE/FLH04/IDB-Master PARTIAL; PERF01 tatsächlicheStartoptimierung weiterhinOPEN/P1, kein30%-Erfolgbehauptet; FLH05/PROJ01 OPEN/PARKED. Kein zusätzlicher paralleler Funktionsstrang.
+
+---
+
 # PR196 LIVE_ACCEPTED · UI vollständig zurück bei Work · 29.10.2026
 
 **DONE / LIVE_ACCEPTED:** PR196, main c08bc1d35b25d72081fb07a61e95532a883fdebe, Baum0d486119e6b8530e31be96faab49a2fc00ebf7e7 identisch unverändert freigegebenem be860237, produktiv v211/SW211.
