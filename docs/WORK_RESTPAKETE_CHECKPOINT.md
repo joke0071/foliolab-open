@@ -1,3 +1,11 @@
+## Begrenzter PERF01-Vertrag vor Code gesichert · 29.10.2026
+
+docs/FLH_PERF01_DATE_VALIDATION_CONTRACT.md in27de67a67b794292100b6427325d01cb3145f02f hält den nächsten bestehenden P1-Schnitt fest: identische kanonische Datumsvalidierung boolesch/seitenlokal/begrenzt16384mal wiederverwenden, keine Modell-/Preis-/FX-/Journal-/Speicherergebnisse cachen, unveränderte vollständige Validierung. Edge-/Cache-Druck-/frische wirtschaftliche Ergebnisse und exakt quellhashgleiche Nachhermessung mit30%-Stressfallziel sind Pflicht. Noch kein Produktcode/zusätzlicher Funktionsbranch.
+
+Aktiv bleibt Release199/mainfee4fc5d, Main/Pages/Live40907781116 läuft regulär. Erst vollständige produktive Abnahme und Belege sichern, danach PERF01 implementieren. Alle übrigen Master-/Parkierungs-/Freigabegrenzen unten unverändert.
+
+---
+
 # PR199 ausdrücklich freigegeben und gemergt · Release212 läuft · 29.10.2026
 
 Der Nutzer hat **„Freigabe und Fortsetzung“** für den konkret abgenommenen PR199 erteilt. Diese Merge-/Deploymentfreigabe ist erteilt; keine erneute Bestätigung für199 erforderlich, keine Erweiterung auf spätere PRs.
