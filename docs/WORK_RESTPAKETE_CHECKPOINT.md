@@ -1,3 +1,54 @@
+# PR196 remote gesichert · vollständige neue CI läuft · 29.10.2026
+
+**PARTIAL bis aktuelle vollständige Abnahme.** Einziger Funktionsbranch
+feature/reference-removal-safe-subset / [PR196](https://github.com/joke0071/foliolab-open/pull/196)
+(Draft). HEAD **07a03dd3544244346cbc01d102f75d2de6d37a57**,
+Baum **ced8b29ff83a261d1ddf2cea4c4a4b428d851e88** exakt lokaler ed1bc74 und Remote.
+PR-Testmerge bf1e945a49dab29c88d97d67ce879b5cad293118, mergeable true;
+main6fe75a99/v208 unverändert. Remoteupdate ohne Force/mit erwarteter1410c411 bestätigt.
+Vorabvertrag31acb824 vor Code erhalten; vorheriger Zwischenstand1410c411 gesichert.
+
+Neue Läufe **40876478789** und **40876478879** auf genau07a03dd3 laufen/warten.
+Pflicht-/Walletzuordnung und echte finalen Resultate/Artefakte noch prüfen.
+Keine laufende Arbeit unterbrechen/überschreiben. Keine weitere Implementierung
+bis regulärem Abschluss dieser Kandidaten-CI. SW209 unveröffentlicht.
+
+Lokal946/946 Units,0Fail/0Skip und Syntax PASS. Vollständiges bestehendes
+tests/browser-reference-management.mjs UND neu eingebundenes
+tests/browser-reference-removal.mjs in tatsächlichem Chromium141 PASS:
+Normal-/Verwalten-/Auswahl-/Archiv-/Bearbeiten-/Neuanlagefunktionen erhalten;
+neue Rücknahme zeigt Originale und konkrete Vorher/Nachher-Verlaufs-/Abgleich-/
+TWR-/XIRR-/Kapitalreferenzfolgen, fehlende Endbewertung bleibt unbekannt.
+Tatsächlicher Backupinhalt ohne synthetischen API-Key, eigene Zustimmung und
+forciertes Submit, fehlendes/veraltetes Dialogbackup gesperrt, Start/Mischung,
+Quota/post-put exakte Originalrecord/Settings/Revision, echte Offline-Löschung
+mit einer Revision/Reload, exaktes sitzungslokales Undo, frischer Plain/V2-Restore,
+Stale-Schreiber UND tatsächliche CAS-Race nach Frischeprüfung PASS.
+Dialogfelder während Save inert. FünfBreiten320/390/430/768/1440, Axe,
+strikte44px/horizontale Grenzen und Fokus PASS; aktuelles Chromium320-Bild
+tatsächlich angesehen. Firefox/WebKit/volle aktuelle CI noch nicht abgenommen.
+
+Gezielte CSS-Korrektur des dokumentierten320px-Befunds PASS, Assertions erhalten.
+Heute mögliche automatische Neuerfassung bleibt explizit geschützt.
+Zusätzliche Originalfelder und automatische/migrierte Originalrevisionen blockieren;
+auch verschachtelte Unicode-JSON-Referenzen werden vor Rücknahme geprüft.
+Keine zweite Finanz-/Importengine, kein neues Modell/Schema, keine privaten Daten.
+Zwischenzeitliche lokale Testfixtureprobleme (falsches Errorlabel/Legacy-v1-
+Verschlüsselung statt vorhandener V2-UIhülle) ohne Produkt-/Gateabschwächung korrigiert.
+
+**Exakte nächste Aktion:** diese beiden Läufe regulär beenden, Pflicht-/Wallet-/
+Drei-Engine-Jobs und tatsächliche neue Berichte prüfen, Artefakte vor Extraktion
+SHA256-verifizieren, TestedSHA/Testmergebaum/Quellen und echte neue Bilder
+vergleichen. Befunde gezielt im selben Strang korrigieren. Erst danach Kandidat
+reviewbereit und eigene konkrete Nutzerfreigabe vor kritischem Merge/Deployment.
+PR195-Freigabe deckt PR196 nicht ab; keine verfrühte Freigabefrage.
+Nach Zustimmung vollständige Main-/Pages-/Drei-Engine-Liveabnahme und Belege.
+Alle weiteren Lösch-/Herkunfts-/UIkategorien, FLH03, FLH04/OAuth, essentielleP1-
+PERF01 und ursprüngliche Roadmap weiterhin PARTIAL; FLH05/PROJ01 OPEN/PARKED.
+Historischen Dokumentationsbranch nicht als Produktcode mergen.
+
+---
+
 # Referenz-Rücknahme: Code remote gesichert, Browserbefund in Korrektur · 29.10.2026
 
 **PARTIAL / kein Release.** Einziger Funktionsbranch feature/reference-removal-safe-subset,
