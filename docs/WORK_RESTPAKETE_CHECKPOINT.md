@@ -1,3 +1,16 @@
+# Release212: Main und Pages erfolgreich, tatsächliche Liveabnahme läuft · 29.10.2026
+
+**PARTIAL bis Abschluss der tatsächlichen Livegates.** mainfee4fc5de4c57fee6643d30f20798c35b2b8807b / Baumbaa7b380 exakt freigegebener199-Kandidat, Appbytes unverändert freigegebenem198.
+Main40907781116: test123567165221, Cross1 123567165668, Cross2 123567165802 **SUCCESS**; tatsächlicherUnitlog948/948/0Fail/0Skip/Syntax und neue Worker-/Referenz-/Rücknahme-/nativeFlatex-/UIberichte aller3Engines geprüft. MainZIP12911694620/Digest180076d9dc39392d2027c8033c2414fc7351307654b50ebd66bf17ac639f2a32, Cross1 12911908640/f41d56c149dc128b3cd3be12f1d9541de904331b66ee18817c1dfc8d5c7e7698 und Cross2 12912633070/637baaf6416f7056eac6908bafc1bae770838c08b6001d0d6ec1059f770d2ec2 vor Extraktion verifiziert; aktuelleBilder gelesen.
+
+Pages/deploy123572503649 **SUCCESS**. DirekterHTTPS-Read mitCache-Busting zeigt **SW212 tatsächlich ausgeliefert**. Noch keine volleLIVE_ACCEPTED-Behauptung: live-acceptance123572864018 läuft regulär in derselbenPipeline.
+
+**Exakte Fortsetzung:** Livejob regulär abschließen, produktivesArtefaktZIP unabhängig digestprüfen, tatsächliche120Assethashes/workerPhasen/UI-/Finanz-/CAS-/Backup-/Restore-/Referenz-/Nativeberichte und Livebilder aller3Engines lesen. Dann dauerhaftenReleasebeleg und aktualisierteRoadmap/Audit/Checkpoint separatcommitten/pushen/RemoteSHAprüfen. Erst danach begrenzteessentielleP1-PERF01-Implementierung gemäß gespeichertemVertrag27de67a6 und exakt quellhashgleichemBenchmarka486bc44, vorher frischenmain/PR/Writerabgleich.
+
+Nutzerfreigaben198/199 erfüllt; weiterePRs behalten eigeneReleasegrenzen. Alle übrigenMaster-/UI-/Fach-/Hardware-/OAuth-/Originalbeleganforderungen bleiben erhalten. FLH05/PROJ01 OPEN/PARKED. Keine parallelePerformanceimplementierung.
+
+---
+
 ## Begrenzter PERF01-Vertrag vor Code gesichert · 29.10.2026
 
 docs/FLH_PERF01_DATE_VALIDATION_CONTRACT.md in27de67a67b794292100b6427325d01cb3145f02f hält den nächsten bestehenden P1-Schnitt fest: identische kanonische Datumsvalidierung boolesch/seitenlokal/begrenzt16384mal wiederverwenden, keine Modell-/Preis-/FX-/Journal-/Speicherergebnisse cachen, unveränderte vollständige Validierung. Edge-/Cache-Druck-/frische wirtschaftliche Ergebnisse und exakt quellhashgleiche Nachhermessung mit30%-Stressfallziel sind Pflicht. Noch kein Produktcode/zusätzlicher Funktionsbranch.
