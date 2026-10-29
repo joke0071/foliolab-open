@@ -1,3 +1,28 @@
+# PR196 LIVE_ACCEPTED · UI vollständig zurück bei Work · 29.10.2026
+
+**DONE / LIVE_ACCEPTED:** PR196, main c08bc1d35b25d72081fb07a61e95532a883fdebe, Baum0d486119e6b8530e31be96faab49a2fc00ebf7e7 identisch unverändert freigegebenem be860237, produktiv v211/SW211.
+**DONE:** UI-Rückübernahme in allen vier Masterquellen und Issue197 dokumentiert, Issue197 closed/completed; Sonnet read-only Audit abgeschlossen, sämtliche Implementierung zurück bei ChatGPT Work, keine exklusive Sperre/kein weiterer Claude-Lauf.
+**PARTIAL:** Gesamtmaster und UI-Restumsetzung; keine universelle DELETE-/Folge-PR-Freigabe.
+
+## Verifizierte Releasebelege
+- Main-/Pages-/Live [40893805495](https://github.com/joke0071/foliolab-open/actions/runs/40893805495) vollständig SUCCESS. Jobs test123517334482, Cross1 123517334046, Cross2 123517334650, deploy123523335863, live123523565842.
+-946/946Unit/0Fail/0Skip, Syntax und alle3Engines.120exakte produktive Asset-/SW-Hashes. Tatsächliche aktuelle Produktionslogs/Reports enthalten neue Referenzrücknahme UND bestehende native Flatex append/backfill inklusive CAS/Quota/Abort/Backup/Consent/Undo/Restore/Offline/5Breiten/Axe/Fokus in Chromium/Firefox/WebKit; keine bloße Übernahme alter Kandidatenbelege.
+- Main-/Cross1-/Cross2-/Produktions-ZIPs unabhängig vor Extraktion SHA256geprüft. Tatsächliche neue CI-/Livebilder aller3Engines visuell geprüft.
+- Permanent docs/release-evidence/reference-removal-live-v211.json in53fdbafcfc8e8b71d63bb73ea50b500db04c008b; enthält Reports,120Assethashes,ZIPdigests,Log-/Bildhashes und Grenzen. GitHub-Produktionsartefakt12906947869 läuft05.11.ab, dauerhafter JSONbeleg bleibt.
+- Zusätzliche eigene Live-Chromium- und Firefox-Gates bestanden; lokales WebKit noch ergänzend laufend. Diese redundanten lokalen Versuche ersetzen/relativieren die vollständig bestandene tatsächliche3Engine-ProduktionsCI nicht. Lokale Host-/Sandboxdiagnose transparent im Beleg; Produkt/Assertions unverändert.
+- Keine privaten Originale/Finanzdaten/Keys veröffentlicht oder produktive private Daten verändert; nur isolierte synthetische Profile.
+
+## Zuständigkeit und integrierter Auftrag
+UI-VISUAL-CLAUDE: **AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK**. Alle historischen Delegations-/Freigabe-fehlt-/v208-Aussagen unten sind überholt.
+Roadmap e5ff196b, Audit0c32dfa1, vollständiger neuer A–I-/UI-A01–A08-/Prioritäts-/Sicherheitsvertrag im Kopf docs/UI_VISUAL_CLAUDE_HANDOFF.md in4781f368. [Issue197](https://github.com/joke0071/foliolab-open/issues/197) geschlossen, historische Anforderungen erhalten. Keine zweite Roadmap/kein historischer Appcodemerge.
+
+## Exakte nächste Fortsetzungsstelle
+Frisch main/PRs/Branches/Actions/Writer prüfen; ein aktueller main-basierter Funktionsbranch für bestätigte UI-A01/A02 und eng zusammengehörige Chartkontrollen (A03/A04/A07 nur nach Reproduktion). A01 Präzision/Nullwerte/exakter zugänglicher Donut; A02 echte44px/keineÜberlappung/320pxKalender; A04 Maxumbruch390/430 reproduziert, Ausgangsbeleg41b0b0c. Bereits erledigte Auswahl-/Referenz-/History-/Konto-/Markenlogik erhalten. Small/UI-P3 nicht vor essentielleP1-FLH-PERF01 ziehen. Keine Sicherheits-/Finanz-/Storage-/Importänderung.
+
+FLH-PERF01 noch OPEN/P1: vorläufige tatsächliche IDB-Messung im Beleg, Erst-/Warmstart trennen, keine30%-Verbesserung behauptet. Übrige FLH03/DELETE/FLH04/IDB-/Hardware-/AT-/Originalbeleg-/OAuthgates vollständig erhalten. FLH05/PROJ01 OPEN/PARKED. Alle Folge-PRs und neuen sicherheitskritischen Funktionen behalten vorhandene Freigabegrenzen. Nach jeder Etappe separaten Checkpoint/RemoteSHA sichern.
+
+---
+
 ## Gesicherter vorbereitender Messbeleg · 29.10.2026
 
 Read-only-Ausgangsmessungen auf unverändertem Releasebaum c08bc1d3 jetzt permanent in docs/release-evidence/pr196-followup-baseline.json, Commit41b0b0c0009cfb3165fb33e47a94325a2e578589. Je25leere/gefüllte Chromiumzustände320/390/430/768/1440 ohne Overflow; A01 drei Formatter und konkrete Rundung bestätigt; A02 Kopfaktionen38–40px/Filter34px/Links15px/Kalendertage bei320ca31x35px; A04 Max allein in zweiter Zeile390/430 bestätigt. Keine vollständige3Engine-/Hardwareabnahme. Vorläufiger tatsächlicher IDB-Vorlauf1000Positionen/1825Referenzen,5Reloads3226.8/274.7/223.6/192.6/173.5ms: starke Erst-/Warmstartdifferenz, keine Optimierung/30%-Zielerreichung behaupten. Finales PERF01-Design muss diese Zustände getrennt erfassen.
