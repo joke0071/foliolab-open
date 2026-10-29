@@ -1,3 +1,62 @@
+# Verifizierter Master-Checkpoint · PR #203 reviewbereit · 29.10.2026
+
+**Gesamtmaster PARTIAL. Produktion v215 / SW215 LIVE_ACCEPTED. PR #203 TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED. Eigene ausdrückliche Releasefreigabe für PR #203 noch offen.**
+
+## Tatsächlicher Stand und Kollisionsschutz
+
+GitHub unmittelbar vor diesem Checkpoint erneut gelesen: main **c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9**; offene PRs #203 (HEAD05706316), #161 (0d980c2f), #157 (08714cc6). Keine laufenden oder wartenden Actions. #203 ist kein Entwurf, nicht gemergt und mergeable. Keine fremden App-Branches verändert. Historischen Dokumentationsbranch niemals als Produktcode nach main mergen.
+
+Der letzte verfügbare lokale Abgleich zeigte identischen Kandidatentree und keine ungesicherten Produkt-/Teständerungen; generierte lokale Testartefakte bleiben gesondert. Beim abschließenden Checkpoint ist die Ausführungsumgebung nicht mehr verfügbar; deshalb wurde kein neuer lokaler Working-Tree- oder Live-HTTP-Abgleich behauptet. GitHub-Status und CI wurden unmittelbar erneut verifiziert. Die nachstehende produktive Abnahme stammt aus den dauerhaft gesicherten tatsächlichen Releaseprüfungen.
+
+## Produktive Abnahme v215 dauerhaft abgeschlossen
+
+PR #202 und PR #201 sind **DONE / LIVE_ACCEPTED bei v215**. Main-Lauf [40937967415](https://github.com/joke0071/foliolab-open/actions/runs/40937967415) SUCCESS:954/954 Units, Syntax, Chromium/Firefox/WebKit, vollständige Main-/Deployment-/Livegates. 121 veröffentlichte Asset-/SW-Hashes, 90 tatsächliche PASS-Berichte und vier vor Extraktion SHA256-verifizierte ZIPs dokumentiert.
+
+- [Produktive Releasebelege](release-evidence/pwa-fresh-assets-v215-live-accepted.json)
+- [Tatsächliches synthetisches Produktionsupdate v214 → v215](release-evidence/pwa-production-upgrade-v214-v215.json)
+- Zugehörige exakte Prüfquelle: release-evidence/pwa-production-upgrade-v214-v215.mjs.
+- Bestehender kanonischer IndexedDB-Datensatz samt Einstellungen/Revision unverändert, aktiver SW215, passende Cacheassets und Offline-Wiederaufnahme geprüft. Keine privaten Daten oder reale Android-Hardwareabnahme behauptet.
+
+## PR #203: finale technische Prüfung abgeschlossen
+
+[PR #203](https://github.com/joke0071/foliolab-open/pull/203), Branch **fix/native-chart-axis-tooltip-v216**, HEAD **057063167a04acd7b66364d4f0c824e6bd8978de**, Tree **0364c9d003750f59a1f6a1482bb79f2a531f3c4d**. Testmerge **458d0d5d4ea8291f189850dcb060c8954d0a27e7** hat denselben Tree auf main c141fd58. **SW216 unveröffentlicht.**
+
+[Pflicht40945850048](https://github.com/joke0071/foliolab-open/actions/runs/40945850048) und [Wallet40945850073](https://github.com/joke0071/foliolab-open/actions/runs/40945850073) wurden erneut auf exakt HEAD05706316 als completed/success gelesen.955/955 Units,0 Fail/Skip,Syntax,Chromium/Firefox/WebKit und bestehende Finanz-/Import-/CAS-/Quota-/Abbruch-/Backup-/Restore-/Undo-/Offlinegates erfolgreich. Deploy und Live im PR erwartungsgemäß SKIPPED.
+
+Umfang: lesbare Standard-EUR-Achsen ohne Änderung von Skalierung/Punktwerten/Geometrie; maximal220px breite, innerhalb der Diagrammfläche verankerte Tooltips; Datum und exakter Betrag bleiben sichtbar, notwendige lange Details separat per Tastatur scrollbar. Wiederholte Kontrollpunkt-Erklärung einmal in vorhandener Datenabdeckung erhalten. Eigene Kurs-/Einheitenformatter und kompakte Summen unverändert.
+
+Finale Artefakte vor Extraktion SHA256-verifiziert:
+- Main12929177850:949ad2ab61d1f00302af7ec954167e66472cfeac656e67963073e0f5b08418ad.
+- Cross212928793700:02dee99f503a9ee7b01ed2bdd0aa8d9cd57da48ee3c8a34a07f3124b5d7b91de.
+- Cross112928403973:06e391543844520f51b5d5d9b7f8d2ef659ba51ef2ec9560ec4b2d77f05e6928.
+
+56 tatsächliche PASS-Berichte geprüft. Tatsächliche synthetische CI-Bilder Chromium390 und WebKit320 visuell geprüft und dauerhaft gesichert. [Finale Maschinenbelege mit Sourceblobs, Testmerge, Berichten und Fehlerhistorie](release-evidence/native-chart-axis-tooltip-v216-candidate.json), Belegcommit **7903d878292bf348dee03ce3b10fce2df1582a05**; Bildcommit **aac31f693adddd0eaf3ed7d7502664c4b49e2463**.
+
+Der erste Mainjob auf d85b5dfd scheiterte allein an einer veralteten Formatannahme im bestehenden Dashboardtest. Test-only-Folgecommit prüft konkret930 €,818 €,705 €; alle sechsbreiten Layout-/Kalender-/Wert-/Tooltipprüfungen erhalten. Alte Cross-Shards vollständig erfolgreich beendet; kein Lauf abgebrochen und keine Gates abgeschwächt. Finaler Produktcode entspricht dem ersten Kandidaten.
+
+## Neue Nutzeraufträge vollständig integriert, keine doppelte Roadmap
+
+- [Vollständiger 16-teiliger Mehr-UX-Vertrag](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md), Aufnahmecommit6991601939cf9d0aba313e4b21db157c35426da6. Reale Umsetzung weiterhin OPEN/PARTIAL. [Begrenzte synthetische Ausgangsmessung](release-evidence/more-ux-baseline-v215.json):14 Zustände,7 Breiten,19 geöffnete Details,kein Overflow/Axe-Verstoß,Datensatz unverändert; keine vollständige fachliche Backup-/OAuth-Abnahme daraus ableiten.
+- [Vollständiger 16-teiliger appweiter Text-/Funktionsaudit UI-TEXT01–10](UI_MASTER28_TEXT_FUNKTIONSAUDIT_2026-10-29.md), Aufnahmecommit81289830010aa35b7a819c8537878e0de63b2b65. Identische doppelte Nutzerübermittlung einmal integriert; alle bisherigen Anforderungen erhalten.
+- [Begrenzte reproduzierbare Rendererproben](release-evidence/ui-text01-03-renderer-probes.json), endgültiger Belegcommit66ad1c3eaab072038372f36f108e59f073fff8eb: **UI-TEXT01/P1 REPRODUCED / OPEN** (exaktes unbekanntes Kursfeld zeigt0,00 und Quelle Manuell); **UI-TEXT02 REPRODUCED / OPEN** (1096 verfügbar, auch bei unterstütztem Wertpapier-CSV, aber nicht gerendert); **UI-TEXT03 sichtbarer unzulässiger Krypto-CSV-Pfad NOT REPRODUCIBLE**, vorhandener isSecurity-Guard wirksam. Vorbereitetes totes Markup bleibt beim TradingView-Rückbau geschützt. Keine Netzwerk-, Speicher- oder Modelländerung durch Proben.
+- Roadmap und Restarbeitenaudit bereits auf finale Reviewbereitschaft und diese Befunde aktualisiert.
+
+## Bewusst offene Restverträge
+
+PR #203 erledigt ausschließlich den Achsen-/Tooltip-Schnitt. Kompakte adaptive Zeitraumzeile (alte verpflichtende4×2-Vorgabe **SUPERSEDED**), tatsächliche Zeitdistanz auf der Sparse-X-Achse, Automatisch/Linie/Punkte, Entfernung redundanter Chartbeschriftungen, Liquiditätsleerzustand, kompakte gebuchte Vorgänge, einheitliche Verwaltung/Archivfilter, vollständiger Mehr-Umbau und appweiter Textaudit bleiben im bestehenden Master OPEN/PARTIAL. Keine vollständige UI-Abnahme aus diesem einzelnen PR ableiten.
+
+TradingView vollständig aus aktiver Anwendung entfernen; frühere Responsive-Optimierung SUPERSEDED. Native Kurse, CSV-Kompatibilität, alte tradingViewSymbol-Daten und bestehende Sicherheitsgrenzen erhalten. Erweiterte Lösch-/Bearbeitungspfade für migrierte Referenzen und komplexe Buchungen bleiben separat unter DELETE-MASTER28 fachlich nachweispflichtig und freigabepflichtig.
+
+FLH-PERF01 v213 produktiv belegte49,44% Verbesserung erhalten; Android-/gemischte Wallet-/Interaktionsmessungen weiterhin getrennt PARTIAL/EXTERNAL. CI-Optimierung nur nach Messbeweis, keine Testreduktion. FLH03-Originalbelege, FLH04-OAuth-/Transport-/Operatorgrenzen und reale Android-/TalkBack-Hardware bleiben getrennte externe Grenzen. IndexedDB-only, Local-first, Offline, CAS/Mehrtab, Backup/Restore/Undo und Datenintegrität bleiben verbindlich. **FLH05 und FLH-PROJ01 OPEN/PARKED.**
+
+## Exakte nächste Fortsetzungsstelle
+
+**Eigene ausdrückliche Nutzerfreigabe für Merge und produktives Deployment von PR #203 auf HEAD057063167a04acd7b66364d4f0c824e6bd8978de einholen.** Frühere PR-Freigaben werden nicht übertragen. Danach aktuelle Ref-/Scope-/Testmerge-/Pflichtgates erneut prüfen, kontrolliert mergen und vollständige Main-/Pages-/Deployment-/Live-/PWA-Update-Abnahme durchführen. Erst bei tatsächlicher Live-Abnahme DONE/LIVE_ACCEPTED setzen.
+
+Danach bestätigte UI-P1-Deltas nach bestehender Priorität fortsetzen, insbesondere ehrliche Fehlwert-/Quellenanzeige, kompakte Zeitraumwahl, Liquidität und gebuchte Vorgänge; keine konkurrierende Roadmap, keine parallele Implementierung. Historische Nachweise unten unverändert erhalten.
+
+---
+
 # PR203 aktualisierter Testvertrag gesichert · finale CI läuft · 29.10.2026
 
 Aktueller HEAD **057063167a04acd7b66364d4f0c824e6bd8978de**, Tree **0364c9d003750f59a1f6a1482bb79f2a531f3c4d**, Branch fix/native-chart-axis-tooltip-v216. Remote-Ref und lokaler Tree identisch, keine ungesicherten Produkt-/Teständerungen; SW216 unveröffentlicht, Produktion v215/SW215 LIVE_ACCEPTED.
