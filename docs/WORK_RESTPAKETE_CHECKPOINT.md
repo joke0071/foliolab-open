@@ -1,3 +1,13 @@
+# v216 RELEASE_BLOCKED · WebKit-PWA-Cachegate fehlgeschlagen · 29.10.2026
+
+PR203 mit ausdrücklicher Nutzerfreigabe gemergt, main82523b8b20d492167b8de8690b8b1dee7fc13b7a / Tree0364c9d0. [Main40961182315](https://github.com/joke0071/foliolab-open/actions/runs/40961182315): Cross1-Job123754044761 SUCCESS; Cross2-Job123754044793 FAIL in tests/browser-pwa-update.mjs:97 unter WebKit, complete matching precache0 statt120. Firefox im gleichen Job PASS. Ursache UNGEKLÄRT; weder Flakiness noch Produktfehler behauptet. [Dauerhafter genauer Fehlerbeleg](release-evidence/v216-main-pwa-update-failure.json), Commit785ac9ce2d6187a5f2a1265e6e71709ceba37f8a. Main-Test123754044549 zum Checkpoint noch aktiv; keine laufenden Jobs abgebrochen. Deployment durch Pflichtgate gesperrt, keine Live-Abnahme. Letzte bestätigte Produktion v215/SW215.
+
+Lokales Repository nach automatischer Bereinigung frisch von GitHub rekonstruiert, exakter Merge/tree und sauberer Working Tree geprüft. Lokaler WebKit-Start scheitert vor dem Test an fehlenden Systembibliotheken; Dependencyinstallation scheitert an Host-setgroups/seteuid-Beschränkung. Kein lokaler App-PASS behauptet. Kein Appcode geändert, keine Tests abgeschwächt. Erster gezielter Job-Retry vom GitHub-API abgelehnt, weil Workflow noch läuft (HTTP403, kein Berechtigungsreview); nicht als gestarteter Retry zählen.
+
+**Fortsetzung:** Main-Test regulär beenden lassen, finale Logs/Artefakte sichern; danach einmal gezielt unveränderten Cross2-Job erneut ausführen. Bei erneutem Fehler Diagnose mit Cache-/Worker-Zuständen, keine blinde Dauerschleife und keine Umgehung der Gates. Bestehende Releasefreigabe bleibt für unveränderten PR203 erhalten; keine neue Nutzerfreigabe für bloße Wiederprüfung erforderlich. v216 erst nach vollständigen Main-/Pages-/Deployment-/Livegates abnehmen. Alle übrigen Masteraufgaben unverändert, keine neue konfliktträchtige Implementierung.
+
+---
+
 # PR #203 freigegeben und gemergt · Main-/Releasegates laufen · 29.10.2026
 
 Nutzer hat nach konkreter PR203-Releasefrage ausdrücklich „Freigabe“ erteilt. Vor Merge main c141fd58, HEAD057063167a04acd7b66364d4f0c824e6bd8978de, identischen Testmerge-Tree0364c9d0 sowie beide erfolgreichen Pflichtläufe40945850048/40945850073 erneut verifiziert; keine aktiven Actions. Kontrollierter Merge mit expected_head_sha erfolgreich: **82523b8b20d492167b8de8690b8b1dee7fc13b7a**.
