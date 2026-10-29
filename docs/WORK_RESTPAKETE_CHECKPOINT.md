@@ -1,3 +1,13 @@
+## PR #203 / v216 produktiv abgenommen · 29.10.2026
+
+**DONE / LIVE_ACCEPTED:** PR203 HEAD05706316 kontrolliert nach ausdrücklicher Nutzerfreigabe gemergt, main82523b8b20d492167b8de8690b8b1dee7fc13b7a, identischer Tree0364c9d0. Produktion **v216/SW216**. [Main-/Pages-/Live40961182315](https://github.com/joke0071/foliolab-open/actions/runs/40961182315) final SUCCESS (Versuch3):955/955 Units,0Fail/Skip,Chromium/Firefox/WebKit,Deployment und tatsächliche Live-Abnahme.121 veröffentlichte Asset-/SW-Hashes exakt,31 finale Live-JSON-Berichte PASS,vier ZIPs vor Extraktion SHA256-verifiziert. Tatsächlichen finalen WebKit390-Screenshot visuell geprüft. [Dauerhafte Maschinenbelege](release-evidence/native-chart-v216-live-accepted.json), Belegcommit94ca74047caafde586710653aa9a38c3519f1442.
+
+Erledigt sind ausschließlich lesbare native EUR-Achsen und schmale vollständig zugängliche Tooltips; Finanz-/Skalierungs-/Punkt-/Speicherlogik unverändert. Erstfehler (WebKit-PWA-Cache0/120 und später initiales Live-IndexedDB-ready-Timeout) dauerhaft separat dokumentiert; jeder fehlgeschlagene Job einmal unverändert wiederholt, danach erfolgreich. Ursachen weiter ungeklärt, kein pauschaler Flakiness-Nachweis, keine Tests abgeschwächt. Als konkrete begrenzte QA-Folgepunkte erhalten.
+
+**Gesamtmaster PARTIAL.** Nächster bestehender UI-P1-Schnitt: UI-TEXT01 ehrliche unbekannte Kurs-/Quellenanzeige und passende vorhandene Regressionen; anschließend übrige bestätigte P1-Deltas nach bestehender Priorität. UI-TEXT02/03,Mehr-Gesamtauftrag,kompakte Zeitraumzeile (alte4×2-Pflicht SUPERSEDED),Sparse-Zeitachse,Diagrammmodi,Liquidität,gebuchte Vorgänge,Chartbeschriftungen,Verwaltung,TradingView-Rückbau und sämtliche sonstigen Masterverträge bleiben erhalten. Keine neue Roadmap. FLH05/FLH-PROJ01 OPEN/PARKED; reale Android-Hardware und externe OAuth-/Originalbeleggrenzen getrennt offen. Eigene Freigabe für spätere Releases erforderlich; PR203 braucht keine erneute Freigabe.
+
+---
+
 # v216 · Main erfolgreich, gezielter Cross2-Wiederholungslauf aktiv · 29.10.2026
 
 Main40961182315 Versuch1 abgeschlossen: Test123754044549 SUCCESS mit955/955 Units,0Fail/Skip,Chromium-Chart-/Dashboard-/Finanz-/Offlinegates; Cross1 SUCCESS; Cross2 WebKit-PWA-Cachegate FAIL (unten dokumentiert). Deploy und Live korrekt SKIPPED.
