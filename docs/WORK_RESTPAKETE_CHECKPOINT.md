@@ -1,3 +1,96 @@
+# v204 LIVE_ACCEPTED · PR194 abgeschlossen · 29.10.2026
+
+**Verbindlicher aktueller Stand:** Native Flatex-Betragsprüfung und geschützte
+Anzeige exakter Betragsbelege in bestehenden Orderdetails implementiert, vollständig
+geprüft, gemergt und produktiv abgenommen. Zwei Etappen UI + kontrollierter Release
+DONE. **Keine wirtschaftliche Import-/vollständige Historien-/Kosten-/Cashflow-/
+Performancefreigabe; Gesamtmaster/FLH03–05 bleiben PARTIAL.** Ältere Blöcke und
+paketeigene Kandidatencheckpoints beschreiben historische Zwischenstände.
+
+| Pflichtfeld | Verifizierter Abschlussstand |
+| --- | --- |
+| Funktionsbranch / Commit | `feature/flh03-flatex-native-amounts` / `62d9bb77ca8cdadc8926d16e6d081effdd0da250`, PR194 gemergt; kein neuer Entwicklungsstrang |
+| Letzter verifizierter main / Baum | `3e9f48770df0e7d63b5be311d33376a85df848f9` / `36b6e7a1c8e0593594c6f26ac782bcb31b12b702`, exakt lokal/akzeptierter Kandidat/Testmerge6b94b96f |
+| Dauerhafter Checkpoint | feature/flh05-import-foundation; zentraler Checkpoint und finaler Maschinenbeleg atomar auf Parent2b1c2692 gesichert, tatsächlicher Commit in Dateihistorie. Historischen Appbaum dieses Dokumentationsbranches nicht mergen |
+| Release / Deployment | Pages v204 erfolgreich, tatsächliches foliolab-open-v204 LIVE_ACCEPTED gegen https://foliolab.unperfekt.at/ |
+| PRs | [194](https://github.com/joke0071/foliolab-open/pull/194) gemergt und produktiv abgenommen;193 zuvor abgeschlossen; nur geparkte157/161 offen |
+| Actions | [40828393381](https://github.com/joke0071/foliolab-open/actions/runs/40828393381) Versuch1 vollständig SUCCESS: test123296646618, Cross1 123296646985, Cross2 123296647117, Pages123299649114, Live123299876358; PR40827149731/Wallet40827149715 SUCCESS |
+| Zuletzt fertig | Bestehende native Vorschau minimal um geschützte exakte Betragsbelege ergänzt; volle aktuelle Main-/Pages-/echte Live-/Artefakt-/Bildabnahme DONE |
+| Aktuelles Paket | FLH03-Flatex: reine1:1-Betragsgrundlage und UI-Staging DONE im begrenzten Umfang; wirtschaftliche Nativeübernahme/Backfill und vollständige historische Abnahme weiterhin offen |
+| Implementiert, nicht abgenommen | Keine zusätzlichen Produktänderungen dieses UI-/Releaseabschnitts offen. Unversionierte lokale Artefakte ausschließlich synthetisch; keine redundante Produkt-CI für zentrale Dokumentationssicherung |
+| Tests / Ergebnisse |920/920 Units,0Fehler/Skip,6neue UI-Fokusfälle/Syntax; vollständige Main-Regression und tatsächliche neue Produktionsberichte Chromium/Firefox/WebKit PASS;120 exakte ausgelieferte Assethashes inkl.SW,6Kerngruppen,18Axe-Scans/0Verstöße,0JS-Fehler |
+| Fehler / Risiken | Keine aktuellen roten Gates oder blockierenden Bildbefunde. Lokaler Testdisclosure vor innerText-Prüfung korrigiert, Assertions erhalten. Dokumentarische Gleichheit ist keine Kostenfreiheit/Eigentums-/Buchungs-/Historienfreigabe; Mehrfach-/Storno-/Präzisionsfälle bleiben Review |
+| Exakt nächster sinnvoller Schritt | Nach frischem Kollisionscheck bestehenden nativen wirtschaftlichen Übernahme-/Backfillvertrag gegen aktuelle gemeinsame previewCSV-/Herkunft-/Manual-/CAS-/Bestands-/Kosten-/Cashverträge und private Originalbelege qualifizieren; bereits belegte Fähigkeiten wiederverwenden, kleinste tatsächlich fehlende sichere Projektions-/Abgleichlücke vor Code festhalten. Abgeschlossene Format-/Order-/Identitäts-/Bindungs-/Betrags-/UIarbeit nicht neu implementieren; kein zweiter Importkern/überlappender PR |
+| Nutzerentscheidungen | Historischer Start01.01.2022/keine fiktiven Eröffnungen/Kosten/Cashflows, private Originale nur Referenz, keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe; UI-MASTER28/DELETE-MASTER28 verbindlich offen, ursprüngliche Roadmap/Abhängigkeiten erhalten |
+
+## Tatsächliche Produktionsabnahme
+
+[Dauerhafter finaler Maschinenbeleg](release-evidence/flatex-native-amounts-v204-release.json)
+mit exakten SHAs/Jobs/ZIP-Digests, vollständigem tatsächlichem Livekernbericht,
+allen120Assethashes, neuen Binding-/reinen Betrags-/UI-/Transferberichten und
+sieben tatsächlich angesehenen Produktionsbildern samt Hashes.
+Main-Release-ZIP12878290427 SHA256
+`652d25ae956e73d82eb2316575c3a1d83a5fd3bce751e9a86a5b0eedf98d0075`;
+Produktions-ZIP12877474003 SHA256
+`3d656df5efffe59a2c5b414768663280f2af15b3db14847d5b649380a798861d`.
+Beide vor Extraktion unabhängig verifiziert; Main-tested-sha exakt3e9f4877 und
+Unitlog920PASS/0Fehler/Skip tatsächlich gelesen. Livebericht exakt3e9f4877/SW204/
+Produktionsdomain/PASS/0Fehler. Tatsächliche Plain-/verschlüsselte UI-Downloads →
+frische synthetische Profile → UI-Restore → Reload mit exakten Buchungen sowie
+echter SW-/Offline-Commit-/Reload PASS.
+
+Neue Bindingberichte Firefox/WebKit enthalten ausdrücklich neue Betrags-/Bestätigungs-/
+Entzugs-/Async-/Stale-/5Breiten-/Nullmutationschecks PASS. Chromium tatsächlich anhand
+erhaltener zusätzlicher FLATEX AMOUNT UI-PASS-Zeile in production-ui-chromium.log
+verifiziert, da gemeinsame Binding-report.json vom späteren Crosslauf überschrieben
+wird. Reine Betragsberichte Chromium141.0.7390.37/Firefox157.0/WebKit27.2 ebenfalls
+tatsächlich gelesen/PASS. Neue Produktionsbilder Chromium-Beträge320/1440,
+Firefox-Beträge320, WebKit-Beträge1440 und Kern320/390/1440 angesehen:
+volle exakte Dezimalwerte, keine horizontalen Überläufe oder blockierenden Befunde.
+
+## Geprüftes Verhalten und Grenzen
+
+Nur bei beiden ausdrücklich bestätigten aktuellen Konto-/Quellbindungen und
+numerisch qualifiziertem1:1-Beleg zeigt die bestehende Orderdetailansicht Brutto/
+Kontobeleg/ungeklärte Differenz in deklarierter Währung. Keine zusätzliche Hauptkarte
+oder Aktionsleiste. Manual-/Quellen-/Stale-/unbestätigte Fälle sperren berechnete Werte,
+bei Wechsel vor verzögertem assertCurrent sofort entfernt; bekannte externe
+Storagekonflikte entfernen sie ebenfalls. Source-/Order-/Beinpaging/Fokus/Offenhaltung
+und Reset/Generation/Submitguards erhalten. Auch0 wird nur rechnerisch gleich
+genannt, keine automatische Gebühren-/Steuer-/FX-Zuordnung, keine wirtschaftliche
+Buchungsmenge/Finanz-DTOs/Persistenz/Übernahme. „Nur Vorschau“ bleibt deaktiviert.
+
+12Dateien Gesamt-PR/5UI-Dateien/309Additionen/28Entfernungen final reviewt,
+keine Workflow-/Pin-/Assertionlockerung. Produktiv ausgelieferte Bytes exakt
+akzeptierter Quellbaum. Private unabhängige CSV/Decimal-Grundlagenevidenz aus
+vorherigem Abschnitt unverändert gültig und wiederverwendet; Originaldateien in
+diesem UI-/Releaseabschnitt nicht erneut gelesen. Keine privaten Produktivdaten
+geändert, alle Tests/Logs/Artefakte/Bilder isoliert synthetisch. Bewusste
+Fixtureanlagen/konkurrierender Testwriter betreffen ausschließlich Testprofile.
+
+Wirtschaftliche Nativeübernahme, Mehrfachbeine/Teilausführungen/Kapitalmaßnahmen,
+vollständige Bestände/Kontensalden/Anschaffungskosten/Cashflows/TWR/XIRR und belegte
+historische Rekonstruktion bleiben gesonderte offene Fachgates. Parser-/Quellen-/
+Rechen-/UI-PASS ersetzt sie nicht. Keine fiktiven Buchungen, Bestandskorrekturen,
+Eröffnungen, Kosten oder externen Einzahlungen ergänzen.
+
+UI-MASTER28/DELETE-MASTER28 beim nächsten passenden konfliktfreien Verwaltungsschritt
+verbindlich: Verwalten/Fertig/Bearbeiten, sichere Auswahl aktueller Ansicht/Seite,
+Filterreset, kompakte Aktionen/Archivfilter; kontrolliert entfernbare Buchungen/
+Positionen/Referenzwerte ermöglichen, kurze Sperrgründe/Alternativen, Vorschau/
+Bestätigung, keine stille Teillöschung, Renditestart/Quellen/CAS/Backup/Restore schützen.
+Keine dieser offenen Verwaltungsfunktionen durch diesen Flatex-Release als erledigt markieren.
+FLH04/OAuth/Hardware/AT/P0/P1/BENCH/CI-Restgates und bestehende Roadmap unverändert;
+PERF vor vorgesehenem FLH05, PROJ01 nur Zukunftsbacklog. Keine neue Roadmap.
+
+Finaler Kollisionscheck180Branches: Main/Kandidat unverändert, keine fremden
+Branchänderungen/aktiven Actions oder erkennbaren konkurrierenden lokalen Writer;
+nur geparkte157/161 offen, PR194 gemergt. Zwei Etappen UI + Release abgeschlossen,
+kein drittes Implementierungspaket begonnen. Kein Nutzerentscheid oder externer
+Zugriffsstopp. Wiederaufnahme genau beim oben benannten nächsten regulären Fachschritt.
+
+---
+
 # v204 veröffentlicht · volle Main-/Live-CI grün · Artefaktabnahme läuft · 29.10.2026
 
 Main `3e9f48770df0e7d63b5be311d33376a85df848f9`, Baum36b6e7a1 exakt akzeptierter
