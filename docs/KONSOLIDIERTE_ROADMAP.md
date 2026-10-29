@@ -1,3 +1,15 @@
+## Vollständiger „Mehr“-Nachtrag integriert · 29.10.2026
+
+[Der neue 16-teilige Sollvertrag](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md) ersetzt den einzelnen Backup-Beschriftungsauftrag und erweitert bestehende K03/K04-/Android-/Backup-/Drive-UX-Arbeit. Kein neues Projekt und keine parallele Implementierung. Status OPEN/PARTIAL; vorhandene Backup-/OAuth-/Speicherlogik wird nicht neu entwickelt.
+
+Umfang: alle Anbieter/Konten, Datenstand, JSON/verschlüsselte Backups/Passwort/Optionen/Status/Wiederherstellung/endgültiges Löschen, Drive/OAuth/Intervalle/Aufbewahrung/Ordner, Kursquellen/API-Diagnose/optionale Worker, Blockchain/RPC/Staking, Datenschutz und alle geöffneten Unterakkordeons. Sicherheits- und Funktionsgrenzen gemäß vollständigem Sollvertrag erhalten. Gewöhnliche Aktionen früh erreichbar, technische Details nachrangig, einheitliche Typografie/Pfeile/44px/Abstände statt verschachtelter Karten.
+
+Erste [synthetische Ausgangsprüfung](release-evidence/more-ux-baseline-v215.json):14 Zustände über 320/360/390/412/430/768/1440px,19 geöffnete Details, kein Seitenoverflow/Axe-Verstoß, exakter Datensatz unverändert. Reproduzierte Text-/Hierarchie-/Touchdeltas sind OPEN; keine vollständige vierfache Backup-/echte OAuth-/Android-Hardwareabnahme behaupten.
+
+Laufender freigegebener PR202 zuerst regulär über Main/Pages/Live/Update abnehmen. Danach bestehende UI-P1-Reihenfolge, präzisierte Diagrammanforderungen und konfliktfreie „Mehr“-Pakete. Der frühere mobile 4×2-Zwang bleibt SUPERSEDED. FLH05/PROJ01 OPEN/PARKED; übriger Master unverändert.
+
+---
+
 ## Verbindlicher aktueller Übergabepunkt · 29.10.2026
 
 [PR202](https://github.com/joke0071/foliolab-open/pull/202) ist technisch abgenommen und reviewbereit: HEAD `620790477a54e4c5f565af9e83fcb62b9d769fce`, SW215 unveröffentlicht. Pflicht40930734405 und Wallet40930734559 vollständig SUCCESS;954 Units, drei Engines,54 geprüfte PASS-Berichte, drei vor Extraktion SHA256-verifizierte Belegarchive. Eigene Releasefreigabe erforderlich. PR201 ist auf main d037b487/v214 veröffentlicht und in frischen Produktionsprofilen abgenommen; vollständiger PWA-Updateabschluss bleibt bis zur gesonderten Korrektur offen. [Permanente PR202-Belege](release-evidence/pwa-update-fresh-assets-v215-candidate.json).
