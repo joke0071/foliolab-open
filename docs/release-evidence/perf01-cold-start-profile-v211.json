@@ -1,0 +1,339 @@
+{
+  "sha": "c08bc1d35b25d72081fb07a61e95532a883fdebe",
+  "fixture": "1000 synthetic ETF positions,1825 manual references; actual IndexedDB storageState cloned into five fresh browser processes;1440x900,unthrottled Chromium",
+  "coldMs": [
+    3569.4000000003725,
+    3211.800000000745,
+    3049.7000000011176,
+    3186.2000000011176,
+    3126.300000000745
+  ],
+  "warmMs": [
+    309.30000000074506,
+    249.2999999988824,
+    244.40000000037253,
+    244.59999999962747,
+    235.90000000037253
+  ],
+  "coldMedianMs": 3186.2000000011176,
+  "warmMedianMs": 244.59999999962747,
+  "profiles": [
+    [
+      {
+        "frame": "validDate|http://127.0.0.1:4173/src/historical-position-value.js|6",
+        "selfMs": 1643.039
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|17",
+        "selfMs": 450.583
+      },
+      {
+        "frame": "(garbage collector)||-1",
+        "selfMs": 308.694
+      },
+      {
+        "frame": "(program)||-1",
+        "selfMs": 189.32
+      },
+      {
+        "frame": "historicalQuantityRows|http://127.0.0.1:4173/src/historical-position-value.js|22",
+        "selfMs": 174.991
+      },
+      {
+        "frame": "projectHistoricalPosition|http://127.0.0.1:4173/src/historical-position-value.js|71",
+        "selfMs": 127.398
+      },
+      {
+        "frame": "dateLabel|http://127.0.0.1:4173/src/app.js|279",
+        "selfMs": 118.04
+      },
+      {
+        "frame": "(idle)||-1",
+        "selfMs": 88.979
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|90",
+        "selfMs": 67.992
+      },
+      {
+        "frame": "money|http://127.0.0.1:4173/src/model.js|297",
+        "selfMs": 58.79
+      },
+      {
+        "frame": "RegExp: ^\\d{4}-\\d\\d-\\d\\d$||-1",
+        "selfMs": 44.717
+      },
+      {
+        "frame": "historicalWealthView|http://127.0.0.1:4173/src/historical-portfolio-value.js|41",
+        "selfMs": 39.756
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|35",
+        "selfMs": 39.094
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|36",
+        "selfMs": 37.185
+      },
+      {
+        "frame": "renderDashboard|http://127.0.0.1:4173/src/app.js|166",
+        "selfMs": 36.501
+      }
+    ],
+    [
+      {
+        "frame": "validDate|http://127.0.0.1:4173/src/historical-position-value.js|6",
+        "selfMs": 1493.783
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|17",
+        "selfMs": 303.083
+      },
+      {
+        "frame": "(garbage collector)||-1",
+        "selfMs": 292.003
+      },
+      {
+        "frame": "historicalQuantityRows|http://127.0.0.1:4173/src/historical-position-value.js|22",
+        "selfMs": 167.106
+      },
+      {
+        "frame": "(program)||-1",
+        "selfMs": 151.325
+      },
+      {
+        "frame": "(idle)||-1",
+        "selfMs": 147.83
+      },
+      {
+        "frame": "projectHistoricalPosition|http://127.0.0.1:4173/src/historical-position-value.js|71",
+        "selfMs": 94.467
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|90",
+        "selfMs": 92.742
+      },
+      {
+        "frame": "dateLabel|http://127.0.0.1:4173/src/app.js|279",
+        "selfMs": 91.482
+      },
+      {
+        "frame": "money|http://127.0.0.1:4173/src/model.js|297",
+        "selfMs": 74.877
+      },
+      {
+        "frame": "RegExp: ^\\d{4}-\\d\\d-\\d\\d$||-1",
+        "selfMs": 59.45
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|36",
+        "selfMs": 41.235
+      },
+      {
+        "frame": "renderDashboard|http://127.0.0.1:4173/src/app.js|166",
+        "selfMs": 31.474
+      },
+      {
+        "frame": "historicalWealthView|http://127.0.0.1:4173/src/historical-portfolio-value.js|41",
+        "selfMs": 31.357
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|35",
+        "selfMs": 20.705
+      }
+    ],
+    [
+      {
+        "frame": "validDate|http://127.0.0.1:4173/src/historical-position-value.js|6",
+        "selfMs": 1377.374
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|17",
+        "selfMs": 324.427
+      },
+      {
+        "frame": "(garbage collector)||-1",
+        "selfMs": 260.152
+      },
+      {
+        "frame": "historicalQuantityRows|http://127.0.0.1:4173/src/historical-position-value.js|22",
+        "selfMs": 157.965
+      },
+      {
+        "frame": "(program)||-1",
+        "selfMs": 128.415
+      },
+      {
+        "frame": "(idle)||-1",
+        "selfMs": 125.683
+      },
+      {
+        "frame": "dateLabel|http://127.0.0.1:4173/src/app.js|279",
+        "selfMs": 103.266
+      },
+      {
+        "frame": "projectHistoricalPosition|http://127.0.0.1:4173/src/historical-position-value.js|71",
+        "selfMs": 101.789
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|90",
+        "selfMs": 85.32
+      },
+      {
+        "frame": "money|http://127.0.0.1:4173/src/model.js|297",
+        "selfMs": 79.118
+      },
+      {
+        "frame": "renderDashboard|http://127.0.0.1:4173/src/app.js|166",
+        "selfMs": 38.412
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|36",
+        "selfMs": 35.958
+      },
+      {
+        "frame": "RegExp: ^\\d{4}-\\d\\d-\\d\\d$||-1",
+        "selfMs": 30.323
+      },
+      {
+        "frame": "historicalWealthView|http://127.0.0.1:4173/src/historical-portfolio-value.js|41",
+        "selfMs": 28.55
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|35",
+        "selfMs": 28.472
+      }
+    ],
+    [
+      {
+        "frame": "validDate|http://127.0.0.1:4173/src/historical-position-value.js|6",
+        "selfMs": 1442.903
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|17",
+        "selfMs": 311.489
+      },
+      {
+        "frame": "(garbage collector)||-1",
+        "selfMs": 303.011
+      },
+      {
+        "frame": "(program)||-1",
+        "selfMs": 191.472
+      },
+      {
+        "frame": "projectHistoricalPosition|http://127.0.0.1:4173/src/historical-position-value.js|71",
+        "selfMs": 182.45
+      },
+      {
+        "frame": "(idle)||-1",
+        "selfMs": 132.48
+      },
+      {
+        "frame": "historicalQuantityRows|http://127.0.0.1:4173/src/historical-position-value.js|22",
+        "selfMs": 126.49
+      },
+      {
+        "frame": "dateLabel|http://127.0.0.1:4173/src/app.js|279",
+        "selfMs": 92.257
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|90",
+        "selfMs": 81.897
+      },
+      {
+        "frame": "money|http://127.0.0.1:4173/src/model.js|297",
+        "selfMs": 67.443
+      },
+      {
+        "frame": "RegExp: ^\\d{4}-\\d\\d-\\d\\d$||-1",
+        "selfMs": 39.395
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|36",
+        "selfMs": 38.092
+      },
+      {
+        "frame": "renderDashboard|http://127.0.0.1:4173/src/app.js|166",
+        "selfMs": 31.894
+      },
+      {
+        "frame": "historicalWealthView|http://127.0.0.1:4173/src/historical-portfolio-value.js|41",
+        "selfMs": 28.146
+      },
+      {
+        "frame": "units|http://127.0.0.1:4173/src/decimal.js|12",
+        "selfMs": 18.697
+      }
+    ],
+    [
+      {
+        "frame": "validDate|http://127.0.0.1:4173/src/historical-position-value.js|6",
+        "selfMs": 1423.675
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|17",
+        "selfMs": 380.521
+      },
+      {
+        "frame": "(garbage collector)||-1",
+        "selfMs": 253.575
+      },
+      {
+        "frame": "historicalQuantityRows|http://127.0.0.1:4173/src/historical-position-value.js|22",
+        "selfMs": 174.793
+      },
+      {
+        "frame": "(program)||-1",
+        "selfMs": 143.638
+      },
+      {
+        "frame": "(idle)||-1",
+        "selfMs": 131.842
+      },
+      {
+        "frame": "projectHistoricalPosition|http://127.0.0.1:4173/src/historical-position-value.js|71",
+        "selfMs": 102.845
+      },
+      {
+        "frame": "dateLabel|http://127.0.0.1:4173/src/app.js|279",
+        "selfMs": 92.726
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|90",
+        "selfMs": 64.446
+      },
+      {
+        "frame": "money|http://127.0.0.1:4173/src/model.js|297",
+        "selfMs": 63.268
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-position-value.js|35",
+        "selfMs": 37.199
+      },
+      {
+        "frame": "|http://127.0.0.1:4173/src/historical-portfolio-value.js|36",
+        "selfMs": 35.893
+      },
+      {
+        "frame": "renderDashboard|http://127.0.0.1:4173/src/app.js|166",
+        "selfMs": 32.645
+      },
+      {
+        "frame": "RegExp: ^\\d{4}-\\d\\d-\\d\\d$||-1",
+        "selfMs": 29.642
+      },
+      {
+        "frame": "historicalWealthView|http://127.0.0.1:4173/src/historical-portfolio-value.js|41",
+        "selfMs": 28.49
+      }
+    ]
+  ],
+  "limitations": [
+    "Preliminary PERF01 diagnostic only, no optimization or30percent target achieved.",
+    "Warm measurement follows Positions search and reload (page query retained); not directly comparable to cold dashboard.",
+    "No large wallet journal/cold device/storage encryption/hardware benchmark represented.",
+    "Cold runs include active V8 CPU profiler overhead; future30percent comparison must use matched unprofiled dashboard runs."
+  ],
+  "nextWithinExistingPERF01": "Use matched unprofiled cold and warm dashboard samples; investigate repeated validDate in historical-position-value.js with unchanged validation/financial semantics, bounded per-calculation reuse, then validate30percent median target and full financial/offline/CAS regressions. No optimization implemented in PR198."
+}
