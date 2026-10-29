@@ -9,7 +9,7 @@ import {createCompleteBackup,unpackCompleteBackup} from '../src/complete-backup.
 import {encryptBackup,decryptBackup} from '../src/crypto-backup.js';
 import {prepareBookingArchive,prepareBookingChange} from '../src/booking-management.js';
 import {validateBookingArchive} from '../src/booking-history.js';
-import {referencePermissions,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,prepareReferenceRemoval} from '../src/reference-management.js';
+import {referencePermissions,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,previewReferenceRemoval,prepareReferenceRemoval} from '../src/reference-management.js';
 const raw=m=>JSON.stringify(m),clone=m=>structuredClone(m);
 const consent=m=>({expectedModel:raw(m),confirmed:true});
 function fixture(){
@@ -74,6 +74,42 @@ test('adding never overwrites an existing or archived original and never resets 
  const m=fixture(),s=m.snapshots[0],a=prepareReferenceArchive(m,{ids:[s.id],archived:true},consent(m));assert.throws(()=>prepareReferenceAdd(a,{date:s.date,manualTotalEUR:'1'},consent(a)),/Originalwert/);assert.throws(()=>prepareReferenceAdd(a,{manualTotalEUR:'1'},consent(a)),/ausdrücklich/);assert.throws(()=>prepareReferenceAdd(a,{date:'2023-06-01'},consent(a)),/historische Stichtage/);
  const added=prepareReferenceAdd(a,{date:'2023-06-01',manualTotalEUR:'104',note:'Synthetic additional observation'},consent(a));assert.equal(added.snapshots.length,3);assert.deepEqual(added.snapshots.find(x=>x.id===s.id),s);assert.deepEqual(added.bookingPresentation,a.bookingPresentation);assert.equal(added.performanceFlowTrackingSince,a.performanceFlowTrackingSince);
 });
-test('every current reference is deletion-protected even when archived or at performance start',()=>{
- const m=fixture(),before=raw(m);for(const s of m.snapshots){assert.ok(referencePermissions(m,s.id).deleteReason);assert.throws(()=>prepareReferenceRemoval(m,[s.id]),/Verlauf und Abgleich/);}assert.equal(raw(m),before);const a=prepareReferenceArchive(m,{ids:m.snapshots.map(s=>s.id),archived:true},consent(m));assert.throws(()=>prepareReferenceRemoval(a,a.snapshots.map(s=>s.id)),/Verlauf und Abgleich/);assert.equal(a.performanceFlowTrackingSince,m.performanceFlowTrackingSince);
+test('manual endpoint removal preserves finance and start but reports lost boundary returns as unknown',()=>{
+ const m=fixture(),id=m.snapshots[1].id,before=raw(m),preview=previewReferenceRemoval(m,[id]);
+ assert.equal(referencePermissions(m,id).deleteReason,'');assert.equal(preview.before.twr,0.10000000000000009);assert.equal(preview.after.twr,null);assert.equal(preview.after.xirr,null);assert.ok(preview.after.issues.includes('Start- oder Endbewertung fehlt'));
+ const after=prepareReferenceRemoval(m,[id],consent(m));assert.equal(raw(m),before);assert.equal(after.snapshots.length,1);assert.deepEqual(after.snapshots,[m.snapshots[0]]);
+ const omit=x=>{const v=clone(x);delete v.snapshots;return v;};assert.deepEqual(omit(after),omit(m));assert.equal(after.performanceFlowTrackingSince,m.performanceFlowTrackingSince);
+});
+test('manual intermediate removal uses existing projections without inventing a replacement observation',()=>{
+ const m=fixture();snapshot(m,'2023-06-01','Synthetic independent control',{manualTotalEUR:'104'});const s=m.snapshots[1],before=raw(m),p=previewReferenceRemoval(m,[s.id]),after=prepareReferenceRemoval(m,[s.id],consent(m));
+ assert.equal(p.before.views.find(v=>v.basis==='observed').dates.length,3);assert.deepEqual(p.after.views.find(v=>v.basis==='observed').dates,['2023-01-01','2024-01-01']);assert.ok(Math.abs(p.after.twr-0.1)<1e-12);assert.ok(Math.abs(p.after.xirr-0.1)<0.001);assert.equal(raw(m),before);assert.deepEqual(after.snapshots,[m.snapshots[0],m.snapshots[2]]);
+});
+test('removal blocks start, original-source dependencies and unknown fields, never partially deletes',()=>{
+ const m=fixture(),start=m.snapshots[0].id,id=m.snapshots[1].id;
+ assert.ok(referencePermissions(m,start).deleteReason);assert.throws(()=>previewReferenceRemoval(m,[start,id]),/Startstichtag/);
+ for(const mutate of [s=>s.source='current',s=>s.source='legacy',s=>s.byAccount={a:110},s=>s.quoteTimes=[{source:'synthetic'}],s=>s.extra='unknown',s=>s.revisions=[{source:'current',valuationStatus:'observed'}],s=>s.revisions=[{source:'manual',valuationStatus:'manual',extra:'unknown'}]]){
+  const bad=clone(m);mutate(bad.snapshots[1]);const before=raw(bad);assert.throws(()=>previewReferenceRemoval(bad,[id]));assert.throws(()=>prepareReferenceRemoval(bad,[id],consent(bad)));assert.equal(raw(bad),before);
+ }
+});
+test('reference dependencies include opaque/serialized metadata, other originals and duplicate dates',()=>{
+ const m=fixture(),id=m.snapshots[1].id;
+ for(const attach of [x=>x.settings.synthetic={snapshotId:id},x=>x.settings.synthetic=JSON.stringify({reference:id}),x=>x.snapshots[0].note=id,x=>x.snapshots[0].byAccount={[id]:100},x=>x.settings.synthetic='truncated { '+id]){
+  const bad=clone(m);attach(bad);const before=raw(bad);assert.throws(()=>previewReferenceRemoval(bad,[id]),/verweisen/);assert.equal(raw(bad),before);
+ }
+ const duplicate=clone(m);duplicate.snapshots[1].date=duplicate.snapshots[0].date;duplicate.performanceFlowTrackingSince=null;assert.throws(()=>previewReferenceRemoval(duplicate,[id]),/nicht eindeutig/);
+});
+test('removal requires exact consent and rejects stale, invalid or duplicate selection without mutation',()=>{
+ const m=fixture(),id=m.snapshots[1].id,before=raw(m);
+ for(const options of [{},{...consent(m),confirmed:false},{...consent(m),expectedModel:before+' '}])assert.throws(()=>prepareReferenceRemoval(m,[id],options),/Bestätigung/);
+ for(const ids of [[],[id,id],['missing']])assert.throws(()=>prepareReferenceRemoval(m,ids,consent(m)));assert.equal(raw(m),before);
+});
+test('removal cleans only selected reference archive IDs and preserves booking archive format',()=>{
+ let m=fixture();executeTransaction(m,{positionId:'cash',date:'2024-06-01',type:'deposit',quantity:'5',unitPrice:1});const bid=m.bookings[0].id,id=m.snapshots[1].id;
+ m=prepareBookingArchive(m,{ids:[bid],archived:true},consent(m)).candidate;const both=prepareReferenceArchive(m,{ids:[id],archived:true},consent(m));const after=prepareReferenceRemoval(both,[id],consent(both));assert.deepEqual(after.bookingPresentation,m.bookingPresentation);assert.equal(after.version,4);assert.deepEqual(after.bookings,both.bookings);assert.deepEqual(after.journalEntries,both.journalEntries);
+ const plain=fixture(),sid=plain.snapshots[1].id,only=prepareReferenceArchive(plain,{ids:[sid],archived:true},consent(plain)),removed=prepareReferenceRemoval(only,[sid],consent(only));assert.equal(removed.version,3);assert.equal(removed.bookingPresentation,undefined);
+});
+test('removed originals retain exact session undo and plain/encrypted backup recovery',async()=>{
+ const {csvUndoReceipt,canUndoCSV,undoCSV}=await import('../src/csv-batch.js');const m=fixture(),id=m.snapshots[1].id,original=raw(m),payload=backup(m,{includeHistory:true});const candidate=prepareReferenceRemoval(m,[id],consent(m)),receipt=csvUndoReceipt(original,candidate);
+ assert.equal(canUndoCSV(candidate,receipt),true);const changed=clone(candidate);changed.settings.autoRefresh=!candidate.settings.autoRefresh;assert.equal(canUndoCSV(changed,receipt),false);assert.throws(()=>undoCSV(changed,receipt));undoCSV(candidate,receipt);assert.equal(raw(candidate),original);
+ const envelope=await encryptBackup(JSON.stringify(createCompleteBackup(JSON.parse(payload))),'Synthetic reference removal 2026!');const unpacked=unpackCompleteBackup(JSON.parse(await decryptBackup(JSON.parse(envelope),'Synthetic reference removal 2026!')));for(const restored of [safeImport(JSON.parse(payload)),safeImport(unpacked.data)])assert.deepEqual(restored.snapshots,m.snapshots);
 });

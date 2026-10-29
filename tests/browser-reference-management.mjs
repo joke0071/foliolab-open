@@ -57,3 +57,5 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  }finally{await browser.close();}
 }
 writeFileSync('artifacts/gates/reference-management/report.json',JSON.stringify(report,null,2));
+
+await import("./browser-reference-removal.mjs");
