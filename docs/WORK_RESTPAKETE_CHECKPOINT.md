@@ -1,3 +1,11 @@
+# PR #203 freigegeben und gemergt · Main-/Releasegates laufen · 29.10.2026
+
+Nutzer hat nach konkreter PR203-Releasefrage ausdrücklich „Freigabe“ erteilt. Vor Merge main c141fd58, HEAD057063167a04acd7b66364d4f0c824e6bd8978de, identischen Testmerge-Tree0364c9d0 sowie beide erfolgreichen Pflichtläufe40945850048/40945850073 erneut verifiziert; keine aktiven Actions. Kontrollierter Merge mit expected_head_sha erfolgreich: **82523b8b20d492167b8de8690b8b1dee7fc13b7a**.
+
+**PR203 MERGED / RELEASE_PENDING, noch NICHT LIVE_ACCEPTED.** [Main-/Deployment-/Live-Lauf40961182315](https://github.com/joke0071/foliolab-open/actions/runs/40961182315) gestartet. Nächster Schritt: alle Main-/Crossbrowser-/Pages-/Deployment-/Livegates abwarten und tatsächliche Artefakte/Assets/SW216 prüfen; erst danach produktiv abnehmen. Bisher bestätigte Produktion v215/SW215. Freigabe umfasst nur diesen Kandidaten; keine Übertragung auf spätere PRs. Alle unten dokumentierten Master-/Text-/Mehr-Anforderungen und geparkten Projekte unverändert.
+
+---
+
 # Verifizierter Master-Checkpoint · PR #203 reviewbereit · 29.10.2026
 
 **Gesamtmaster PARTIAL. Produktion v215 / SW215 LIVE_ACCEPTED. PR #203 TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED. Eigene ausdrückliche Releasefreigabe für PR #203 noch offen.**
