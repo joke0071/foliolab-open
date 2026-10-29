@@ -1,3 +1,115 @@
+# Native Flatex-Projektions-/Simulationsgrundlage abgenommen · PR195 offen · 29.10.2026
+
+**Verbindlicher aktueller Stand:** Native EUR-Stückhandelsprojektion und streng
+qualifizierte Simulation im bestehenden CSV-/Backfillkern **DONE im begrenzten
+Helfer-/PRumfang**. Zwei Etappen Vertrag + geprüfte Grundlage abgeschlossen.
+Keine aktive UI-/Übernahmeintegration, kein Merge/Deployment. Produktion weiterhin
+**v204 LIVE_ACCEPTED**, SW205 unveröffentlichter Kandidat. Gesamtmaster/FLH03–05
+bleiben **PARTIAL**. Ältere Kandidaten-/Fehlerblöcke darunter bleiben historisch.
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Aktueller Branch / Commit | `feature/flh03-flatex-native-projection` / `631db63745f349b88d2d5943865f7e39e73c38ee`, [PR195](https://github.com/joke0071/foliolab-open/pull/195) offen |
+| Letzter verifizierter main | `3e9f48770df0e7d63b5be311d33376a85df848f9`, v204 tatsächliche Liveabnahme unverändert |
+| Getesteter Merge / Baum | `e5b1b3e4616db109499114045ccbf73efb4aaa1a` / `5c606ade88ac83c3a86a781e808ffeaebb4c58a7`, exakt lokal/Remote/Kandidat/Testmerge |
+| Dauerhafte Sicherung | Zentraler Checkpoint + Maschinenbeleg atomar auf feature/flh05-import-foundation, Parent82bfbced; tatsächlicher Commit in Dateihistorie. Historischen Appbaum dieses Dokumentationsbranches nicht mergen |
+| Release / Deployment | v204 bleibt produktiv abgenommen; SW205 nicht veröffentlicht, Deploy-/Livejobs im PR korrekt SKIPPED |
+| PRs |195 geprüfte Grundlage/offen;194 zuvor gemergt/produktiv abgenommen; nur geparkte157/161 daneben |
+| Actions | [40838759139](https://github.com/joke0071/foliolab-open/actions/runs/40838759139) Versuch1 vollständig SUCCESS, test/Cross1/Cross2 grün; Wallet40838759176 SUCCESS, keine laufenden Actions im finalen Check |
+| Zuletzt fertig | Vertrag vor Code, native Projektion/gemeinsame Simulation, zusätzlicher Quellreview-Typbefund korrigiert, privater Referenz-/Gegenbeispiel-/voller aktueller Drei-Engine-/Quell-/Artefaktnachweis DONE |
+| Aktuelles Paket | FLH03: reine native Stückhistorien-Projektions-/Simulationsgrundlage DONE; deren Dialog-/Übernahmeintegration und wirtschaftliche Gesamtfreigabe weiterhin offen |
+| Implementiert, nicht produktiv | Vollständig remote gesicherter9Dateien-Kandidat in offenem PR195; keine weiteren ungesicherten Produktänderungen. Lokale unversionierte Artefakte synthetisch |
+| Tests |937/937 Units,0Fehler/Skip,17neue Fokusfälle, finaler Node20-Lauf/Syntax; tatsächliche aktuelle Chromium141.0.7390.37/Firefox157.0/WebKit27.2-Projektionsberichte PASS inkl. Zieltypgegenbeispielen |
+| Fehler / Risiken | Keine aktuellen roten Gates/offenen Quellreviewfehler. Frühere Typzulassung trotz grünem CI ausdrücklich nicht abgenommen, korrigiert und erneut voll geprüft. Vollständige Originale weiterhin wegen ungeklärter Nicht-Handels-/Cash-/Sonderereignisse gesperrt; keine vollständige Historien-/Kosten-/Cashflow-/Performancefreigabe |
+| Exakt nächster Schritt | Frischer Kollisionscheck; auf demselben Branch/PR kleinsten Vertrag zur Stückhistorien-Simulation im vorhandenen nativen Dialog sichern: expliziter Append-/Backfillmodus, aktuelle Quell-/Kontobestätigung, ganze Stapelblockierung, unbekannte Nebenkosten/Bestandsschutz, bestehende Baseline-/Manual-/CAS-/Generation-/Submitgates wiederverwenden. Keine neue parallele Importengine/PR, keine private automatische Übernahme. Aktive Übernahme-/UI-/kontrollierte Releaseabnahme getrennt absichern |
+| Nutzerentscheidungen | Historienstart01.01.2022/keine fiktiven Eröffnungen/Kosten/Cashflows; Originale privat, keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe. UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/ursprüngliche Roadmap erhalten, PROJ01 Backlog |
+
+## Tatsächlich geprüfter Umfang
+
+prepareNativeFlatexImport im bestehenden flatex-import.js nutzt die vorhandenen
+nativen Order-/Quellidentitätsgates und projiziert ausschließlich belegte EUR-
+Stückkäufe/-verkäufe in bestehende CSV_FIELDS/FLATEX_MAPPING. Native Namespace/
+Bank-ID/Raw-Evidenz bleiben getrennt erhalten, keine Dateiname-/Datum-/Orderfallback-ID.
+Alle Original-Lokatoren/Prüffälle bleiben vertreten. Cash/Sonderereignisse/Overlap/
+Konflikte/unbelegte Intraday-Reihenfolge/FX/Einheiten/Präzisionsverlust sperren den
+ganzen nachfolgenden Simulationsstapel, keine stille Teilauslassung.
+Gebühren/Steuern bleiben leere Quellenfelder und im bestehenden Kern null/unbekannt;
+keine Cash-/Eröffnungs-/Kosten-/externen Cashflowfiktionen.
+
+prepareNativeFlatexPreview im bestehenden flatex-backfill.js erzeugt Projektion
+selbst und verwendet reviewNativeFlatexBindings/previewCSV/prepareFlatexBackfillPreview.
+Nur ausdrücklich gewählter aktueller Depotkontext, vorhandene eindeutige EUR-ETF/
+Aktien/Fonds; keine Krypto-/Guthaben-/Sonstiges-/Walletziele oder automatischen Anlagen.
+Append nur leere ungeschützte Ziele bzw. unveränderte Source-Replays; vorhandene
+beobachtete Mengen ausschließlich über konservativen Backfill mit exaktem Endbestand,
+geschützten Kosten/Journal/Eröffnungen/Stichtagen. Jeder Prüffall eligible:false/
+preview:null, kein partieller Simulationsentwurf zur Übernahme. Äußere ready/
+writeEnabled false; keine aktive UI-/Commit-/Speicherfunktion oder neues Backupschema.
+
+[Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-projection-candidate.json)
+enthält exakte SHAs/Läufe/Jobs/Digests und tatsächlich gelesene aktuelle Drei-Engine-
+Berichte. Release-ZIP12882660106 SHA256
+`3b2357ea7e5226dfb525556a4ec92a6bc4a96058db91f90f92ff6ade04029562`;
+Cross2-ZIP12882286850 SHA256
+`4a9f505d71c19f9064861a794b15e8752cf9079b6aa7e2a71d38c0ad71d4e86e`.
+Beide vor Extraktion unabhängig verifiziert; tested-sha exakte5b1b3e4 und
+Unitlog937PASS/0Fehler/Skip gelesen. Tatsächliche neue Berichte aller3Engines PASS:
+Parser/sharedPreview/Backfill, fehlende/aktuelle Bindungen, unbekannte Nebenkosten,
+Quellen-/Manual-/Baseline-/Typgegenbeispiele, synthetischer Commit/Backup/Replay/
+exaktes Undo im Speicher, echte SW-Offlineneuladung/Modulimport,0externe Requests.
+Primärprofil exakter IDB-/Revisions-/Settings-Nullmutationsbeweis. Separater frischer
+synthetischer CAS-Kontext ausdrücklich mit Fixtureseed und genau einer akzeptierten
+nativen Simulationsrevision; konkurrierender Entwurf abgelehnt. Dies sind bewusst
+synthetische Kernnachweise, keine privaten oder UI-gesteuerten Produktivimporte.
+Plain-/Encrypted-Restore über bestehenden Kern in Units geprüft.
+Keine UI-Darstellung verändert, keine neue visuelle UIabnahme behauptet.
+
+## Quellreviewkorrektur und private Evidenz
+
+Erster Kandidat7274797f: CI40837424918/Wallet40837424785 regulär SUCCESS beendet,
+aber unabhängiger Quellreview zeigte, dass EUR/ISIN allein crypto/other als Ziel
+zuließ. **Dieser Stand wurde ausdrücklich NICHT abgenommen.** Befund109e835f vor
+Korrektur dauerhaft gesichert. Danach auf demselben Branch gezielte ETF-/Aktien-/
+Fonds-Whitelist und Unit-/Browsergegenbeispiele ergänzt; Kryptoguthaben/Sonstiges
+nun abgewiesen, neue vollständige aktuelle CI bestanden. Kein blindes Retry,
+keine Laufunterbrechung/Assertion-/Workflow-/Pinlockerung,9Dateien/263Additionen/
+1Entfernung final reviewt. Fachlicher Befund geschlossen, Historie erhalten.
+
+Private Originale ausschließlich außerhalb Git lesend über Google-Drive-Skill.
+Unabhängiger Python-csv/Decimal-/Namespacevergleich gegen tatsächliche native
+Projektionsfelder PASS, auf finalem Stand erneut geprüft. Ganze Originaldateien
+wegen Nicht-Handels-/Cash-/Prüffällen korrekt komplett nicht qualifiziert; alle
+Quelllokatoren erhalten, keine stille Teilauswahl und kein privater Import.
+Keine Originalwerte/Kennungen/Zeilen/Zeiträume/Fingerprints veröffentlicht;
+finaler9Dateien-Kennungscheck PASS, eigene temporäre Originalkopien entfernt,
+Drive-Originale unverändert. Öffentliche Tests/Artefakte ausschließlich synthetisch.
+
+## Grenzen und sichere Wiederaufnahme
+
+Diese geprüfte Grundlage ist keine vollständige wirtschaftliche Übernahme oder
+Historien-/Saldo-/Bestands-/Kosten-/Steuer-/Cashflow-/TWR-/XIRR-Abnahme.
+Kapitalmaßnahmen/Cash-/Mehrfachgegenbeine/Intraday-/FX-/Fortsetzungs-/vollständige
+Originalrekonstruktion behalten offene Fachgates. Bereits implementierte Parser/
+Order-/Identitäts-/Betrags-/Bindungs-/UIbelege wiederverwenden, keine Fiktionen.
+Keine privaten Produktivdatenänderungen ohne ausdrückliche Nutzerfreigabe.
+
+Final181Branches geprüft, Main/Kandidat unverändert, keine fremden Branchänderungen/
+aktiven Actions oder erkennbaren fremden Writer, nur195+geparkte157/161 offen;
+keine Reviewkommentare. Paketeigener Kandidatencheckpoint beschreibt Vor-CI-Stand,
+dieser neueste zentrale Block hat Vorrang. Zwei vereinbarte Etappen Vertrag +
+geprüfte Grundlage abgeschlossen, keine dritte Implementierung/Merge/Deployment.
+
+UI-MASTER28/DELETE-MASTER28 beim nächsten passenden konfliktfreien Verwaltungsschritt
+verbindlich erhalten: Verwalten/Fertig/Bearbeiten, sichere Auswahl aktueller Ansicht/
+Seite/Filterreset, kompakte Aktionen/Archivfilter, kontrollierte Löschpfade statt
+Herkunftspauschalsperre, kurze Gründe/Alternativen, Vorschau/Bestätigung, keine stille
+Teillöschung, Renditestart/Quellen/CAS/Backup/Restore schützen. Übrige Roadmap,
+FLH04/OAuth/Hardware/AT/P0/P1/BENCH/CI-Gates und PERF vor vorgesehenem FLH05 erhalten,
+PROJ01 nur Backlog. Kein neuer Nutzerentscheid oder externer Zugriffsstopp.
+Wiedereinstieg genau beim oben benannten nächsten regulären Dialog-/Übernahmevertrag.
+
+---
+
 # PR195 korrigierter Kandidat: aktuelle CI-IDs · 29.10.2026
 
 HEAD631db637/Baum5c606ade, Testmergee5b1b3e4; neue Pflicht-CI40838759139 läuft, Wallet40838759176 SUCCESS. Vorheriger Quellreviewbefund Typprüfung gezielt korrigiert, finaler privater Referenzvergleich und vollständige Original-Stapelblockierung auf korrigiertem Stand erneut PASS. Keine privaten Werte veröffentlicht/Bestände importiert. Lokal937Units/Syntax/Chromium inkl. Zieltypengegenbeispielen grün; volle aktuelle3Engine-/Artefaktabnahme noch offen. Produktionv204 unverändert, Gesamtmaster PARTIAL. Exakt nächster Schritt diese CI regulär abschließen, tatsächliche Berichte mit Zieltyp-Whitelist und SHA/Digests prüfen; keine weitere Implementierung oder Veröffentlichung beginnen.

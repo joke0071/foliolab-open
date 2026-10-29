@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-29T08:10:44.858Z",
+  "status": "BOUNDED_NATIVE_PROJECTION_CANDIDATE_ACCEPTED_NOT_DEPLOYED",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-projection",
+  "head": "631db63745f349b88d2d5943865f7e39e73c38ee",
+  "tree": "5c606ade88ac83c3a86a781e808ffeaebb4c58a7",
+  "testedMerge": "e5b1b3e4616db109499114045ccbf73efb4aaa1a",
+  "pr": 195,
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "production": {
+    "version": 204,
+    "main": "3e9f48770df0e7d63b5be311d33376a85df848f9",
+    "status": "LIVE_ACCEPTED_UNCHANGED",
+    "candidate205Published": false
+  },
+  "runs": [
+    {
+      "id": 40838759139,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 123329740722,
+          "name": "test",
+          "conclusion": "success"
+        },
+        {
+          "id": 123329740907,
+          "name": "cross-engine (2)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123329741033,
+          "name": "cross-engine (1)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123333038822,
+          "name": "deploy",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 123333039469,
+          "name": "live-acceptance",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "id": 40838759176,
+      "conclusion": "success",
+      "scope": "Wallet scan checks"
+    }
+  ],
+  "supersededReview": {
+    "head": "7274797f6847acd101589da9c00348bda9f3b42f",
+    "ciRun": 40837424918,
+    "ciConclusion": "success",
+    "walletRun": 40837424785,
+    "accepted": false,
+    "reason": "Independent source review found crypto/other ISIN targets admitted despite securities-only contract; not a CI failure. Preserved and corrected on same PR after regular run completion.",
+    "correction": "Explicit ETF/stock/fund whitelist and synthetic unit/browser counterexamples; full new exact-head CI passed."
+  },
+  "units": {
+    "pass": 937,
+    "fail": 0,
+    "skip": 0,
+    "newFocusedTests": 17,
+    "localNode": 20
+  },
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12882660106,
+      "name": "release-gates-e5b1b3e4616db109499114045ccbf73efb4aaa1a",
+      "digest": "sha256:3b2357ea7e5226dfb525556a4ec92a6bc4a96058db91f90f92ff6ade04029562",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12882286850,
+      "name": "cross-engine-gates-e5b1b3e4616db109499114045ccbf73efb4aaa1a-2",
+      "digest": "sha256:4a9f505d71c19f9064861a794b15e8752cf9079b6aa7e2a71d38c0ad71d4e86e",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "actualReports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native projection/shared simulation only; no UI or private import",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "native direct parser/shared preview/backfill/no fictional costs or external flows",
+            "explicit binding/stale/source/manual/baseline guards",
+            "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+            "synthetic commit/backup/replay/exact undo in memory",
+            "actual SW offline reload/module import",
+            "primary profile exact IDB/revision/settings zero mutation",
+            "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+            "no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic native projection/shared simulation only; no UI or private import",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "native direct parser/shared preview/backfill/no fictional costs or external flows",
+            "explicit binding/stale/source/manual/baseline guards",
+            "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+            "synthetic commit/backup/replay/exact undo in memory",
+            "actual SW offline reload/module import",
+            "primary profile exact IDB/revision/settings zero mutation",
+            "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+            "no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "native direct parser/shared preview/backfill/no fictional costs or external flows",
+            "explicit binding/stale/source/manual/baseline guards",
+            "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+            "synthetic commit/backup/replay/exact undo in memory",
+            "actual SW offline reload/module import",
+            "primary profile exact IDB/revision/settings zero mutation",
+            "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+            "no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "privateReference": {
+    "originalFilesReadOnly": true,
+    "independentPythonCSVDecimalAndNamespaceReference": "PASS",
+    "projectionFieldsComparedToOriginals": true,
+    "completeOriginalFilesCorrectlyBlocked": true,
+    "allOriginalLocatorsRetained": true,
+    "noOriginalPortfolioImport": true,
+    "privateProductionDataMutated": false,
+    "publicValuesIdentifiersCountsDatesOrFingerprints": false,
+    "ownTemporaryOriginalCopiesRemoved": true,
+    "candidateIdentifierScan": "PASS"
+  },
+  "sourceReview": {
+    "files": 9,
+    "additions": 263,
+    "deletions": 1,
+    "sharedCSVBackfillBindingIdentityAndDecimalReused": true,
+    "noNewImportCore": true,
+    "unknownFeesTaxesAndBasisRemainUnknown": true,
+    "noExternalFlowsInQuantitySimulation": true,
+    "noActiveUIOrCommitAPI": true,
+    "noStorageOrBackupSchemaChange": true,
+    "pinsWorkflowsAssertionsUnchanged": true
+  },
+  "casEvidence": {
+    "primaryProfileExactRecordRevisionSettingsUnchanged": true,
+    "separateFreshSyntheticProfile": true,
+    "syntheticSeed": true,
+    "exactlyOneAcceptedNativeSimulationRevision": true,
+    "competingNativeSimulationRejected": true
+  },
+  "visualAcceptance": {
+    "UIChanged": false,
+    "newVisualPassClaimed": false
+  },
+  "collisionCheck": {
+    "checkedAt": "2026-10-29T08:09:07.935Z",
+    "main": "3e9f48770df0e7d63b5be311d33376a85df848f9",
+    "source": "631db63745f349b88d2d5943865f7e39e73c38ee",
+    "docParent": "82bfbcedba0d03d765d462e3aca0d9e81a26d634",
+    "branches": 181,
+    "foreignBranchChanges": 0,
+    "activeActions": 0,
+    "openPRs": [
+      195,
+      161,
+      157
+    ],
+    "reviewComments": 0
+  },
+  "masterStatus": "PARTIAL",
+  "next": "Fresh collision check; continue same PR/branch with smallest existing-dialog native share-history simulation contract, explicit append/backfill choice and current account/source confirmations, complete batch blockers, unknown-cost warning, existing snapshot/baseline/CAS/manual guards. No automatic private writes; active takeover/UI and controlled release need separate bounded acceptance. Complete originals/non-trade/cash/corporate actions/intraday/FX/history/costs/cashflows/performance remain open. Preserve UI-MASTER28/DELETE-MASTER28 and roadmap; PROJ01 backlog."
+}
