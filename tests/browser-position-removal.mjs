@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync,mkdirSync} from 'node:fs';
+import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 mkdirSync('artifacts/gates',{recursive:true});
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.FLH03_08_BASE||'http://127.0.0.1:4173/';
@@ -15,6 +15,20 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const axe=async()=>{await page.evaluate(async()=>{for(let i=0;i<3;i++){const animations=document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)&&a.playState==='running');if(!animations.length)break;await Promise.all(animations.map(a=>a.finished.catch(()=>{})));}await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});await page.evaluate(readFileSync('node_modules/axe-core/axe.min.js','utf8')); const r=await page.evaluate(async()=>await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));if(r.violations.length)console.error(engine+': contrast CSS '+JSON.stringify(await page.evaluate(()=>['saveDialog','addWizard'].map(id=>{const e=document.getElementById(id),s=getComputedStyle(e);return {id,disabled:e.disabled,colour:s.color,bg:s.backgroundColor,opacity:s.opacity,dialog:document.getElementById('editDialog').open};}))));assert.deepEqual(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary,html:n.html,checks:n.any}))})),[]);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
  try{
   await page.goto(base);await ready();
+  // Establish the app-created worker/controller on the untouched blank record,
+  // before the large fixture can overlap registration, activation or reload.
+  // An activated registration alone does not prove a controlled document.
+  const swState=()=>page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {controller:Boolean(navigator.serviceWorker.controller),script:navigator.serviceWorker.controller?.scriptURL??null,active:r?.active?.state??null,installing:r?.installing?.state??null,waiting:r?.waiting?.state??null};});
+  const blankRecord=await record(),baseline={initial:await swState()};
+  try{
+   await page.evaluate(()=>{window.__positionWorkerActivated=false;void navigator.serviceWorker.ready.then(r=>{const check=()=>{window.__positionWorkerActivated=r.active?.state==='activated';};check();r.active?.addEventListener('statechange',check);});});
+   await page.waitForFunction(()=>window.__positionWorkerActivated===true);
+   baseline.activated=await swState();await page.reload();await ready();baseline.controlled=await swState();
+   assert.equal(baseline.controlled.controller,true,'actual application controller before fixture seeding');
+   assert.equal(baseline.controlled.script,new URL('sw.js',base).href);
+   assert.deepEqual(await record(),blankRecord,'worker/controller acquisition preserves exact original blank record');
+   baseline.result='PASS';
+  }finally{baseline.final=await swState().catch(e=>({error:String(e)}));writeFileSync('artifacts/gates/'+engine+'-position-removal-sw-baseline.json',JSON.stringify(baseline,null,2));}
   await page.evaluate(async()=>{
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'broker',name:'Synthetic broker'}));
