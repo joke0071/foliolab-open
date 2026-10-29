@@ -1,3 +1,15 @@
+## Appweiter Text- und Funktionskonsistenzauftrag integriert · 29.10.2026
+
+[Der vollständige 16-teilige Sollvertrag einschließlich UI-TEXT01–10](UI_MASTER28_TEXT_FUNKTIONSAUDIT_2026-10-29.md) ist auf Commit81289830010aa35b7a819c8537878e0de63b2b65 gesichert. Der identisch doppelt übermittelte Auftrag wird einmal im bestehenden UI-Master geführt. Der vollständige Mehr-Vertrag bleibt bestehen; keine neue Roadmap, parallele Implementierung oder unbegrenzte Auditphase.
+
+P1: fehlende Kurse nicht als0 oder Quelle pauschal Manuell darstellen; falsche Herkunft/Bestätigung/Vollständigkeit/Sicherheit und sichtbare Funktion ohne sicheren Fachpfad reproduzieren. Im Detailcode sind Number(... )||0 und der Quellenfallback bestätigt; sichere Darstellung echter0 gegen fehlende Daten/Provenienz noch offen. UI-TEXT02/03 mit bestehendem Kursoptionenpaket abgleichen. UI-TEXT04–10, Begriffssystem, Datumsformate, Wallet-/Import-/Fehlertexte, Sicherheitsdialoge und passende ARIA bleiben OPEN/PARTIAL. Konkrete fehlende Daten und technische Nachweise erhalten; keine Finanz-/Kurs-/Journal-/Import-/CAS-/Backup-/Walletlogik aufgrund einer Formulierung verändern.
+
+Der laufende [PR203](https://github.com/joke0071/foliolab-open/pull/203) bleibt der abgegrenzte Achsen-/Tooltip-Schnitt: HEADd85b5dfd5af03cd2fe79a1c00b16057afb90e3c5, Tree80a729f0da79146f1ff3e7125bee082e1693c04e, SW216 unveröffentlicht. Lokal955 Units/Syntax/Chromium7Breiten/Axe/exakter Datenerhalt PASS; volle CI läuft. Datum und Betrag bleiben bei langen Details fest sichtbar, nur notwendiger Detailteil scrollt mit isolierter Tastatursteuerung. Skalen/Punktwerte/Koordinaten und Finanzdaten unverändert. Der appweite Textauftrag erweitert diesen geprüften Kandidaten nicht.
+
+PR202 und PR201 sind in tatsächlichem v215 LIVE_ACCEPTED; PWA-Updateblocker behoben. Nach Abschluss des laufenden Schnitts fachlich irreführende Text-P1-Deltas im passenden vorhandenen Paket vor redaktionellerP3-Kosmetik behandeln. Mehr/Diagramme/Android und alle übrigen Masterverträge bleiben erhalten;4×2-Pflicht SUPERSEDED, FLH05/PROJ01 OPEN/PARKED.
+
+---
+
 ## v215 produktiv abgenommen · 29.10.2026
 
 **PR202 DONE / LIVE_ACCEPTED:** main c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9, SW215, vollständige Main-/Pages-/Livepipeline40937967415 SUCCESS.954 Units, drei Engines,121 tatsächliche veröffentlichte Dateihashes. Vier ZIPs vor Extraktion SHA256-verifiziert;90 tatsächliche PASS-Berichte geprüft. Zusätzlicher echter Produktionswechsel v214→v215 mit bestehendem synthetischem IndexedDB-Datensatz,120 passenden Cache-Dateien, aktivem Worker, exaktem Datenerhalt und Offline-Neustart PASS. Keine Hardwareabnahme behauptet. [Dauerhafte Releasebelege](release-evidence/pwa-fresh-assets-v215-live-accepted.json).
