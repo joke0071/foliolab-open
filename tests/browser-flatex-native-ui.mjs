@@ -20,7 +20,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  try{
   await p.goto(base);await ready();const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);const before=await read();
+  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);
+  // Ready registration alone may predate control of the current navigation.
+  // Establish a controlled document before the baseline; retain the later strict offline gate.
+  await p.reload();await ready();await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  console.log(engine+': native preview controlled baseline '+JSON.stringify(await p.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,active:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys()}))));const before=await read();
   ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   await open();await p.locator('#csvFile').setInputFiles(file(csv('depot',[{4:'Öl und € <img src=x onerror=alert(1)>',5:'0,000000000000000001'},{7:'Thesaurierung',5:'-'},{7:'Future',9:'-'}])));await preview();
   assert.ok(await p.locator('#saveDialog').isDisabled());assert.equal(await p.locator('#csvMap-date').count(),0);assert.equal(await p.locator('#csvReview .performance-details').count(),3);

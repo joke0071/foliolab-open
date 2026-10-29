@@ -1,3 +1,68 @@
+# DELETE-MASTER28: begrenzter Referenz-Rücknahmevertrag · 29.10.2026
+
+Basis main6fe75a997a076d0c17e5200b0bb7ee09532d7044 / v208 LIVE_ACCEPTED.
+Einziger neuer Funktionsstrang: feature/reference-removal-safe-subset.
+Die historische pauschale Löschsperre unten wird nur nach nachgewiesener
+Qualifikation der folgenden Kategorie ersetzt. Gesamtmaster PARTIAL.
+
+## Sicherer erster Schnitt
+
+Eigenständig manuell angelegte Referenzen ohne Konto-/Positions-/Kursaufteilung,
+ohne automatische oder migrierte Originalrevisionen, ohne unbekannte Felder
+oder externe Identitätsreferenzen (auch in verschachteltem Unicode-JSON) können nach konkreter Folgenvorschau gemeinsam
+zurückgenommen werden. Renditestart und heutiger automatisch neu erfassbarer Stichtag bleiben gesperrt; keine Teilfreigabe gemischter
+Auswahl. Alle aktuellen Identitäten und Datumswerte müssen eindeutig sein.
+Quellherkunft allein ist keine allgemeine Löschsperre; weitere Kategorien bleiben
+offen, bis ihre Original-, Reimport- und Abhängigkeitsverträge bewiesen sind.
+
+Bestehendes deleteSnapshot nur auf getrenntem validiertem Klon verwenden und den
+Start zuvor schützen. Referenzarchiv-IDs über setArchivePresentation bereinigen,
+Buchungsarchive erhalten. Kein neues Modell, Schema, Tombstone oder zweiter
+Speicher. Ausgewählte Originale bleiben im vorher ausdrücklich erstellten Backup
+und im sitzungslokalen exakten Undo-Vorzustand. Kein stilles Wiederanlegen,
+automatischer Reimport oder erfundener Ersatzwert.
+
+Vorschau nennt alle Originaldaten mit Datum/Betrag/Herkunft und den Verlust der
+Beobachtung, des Abgleichs und gegebenenfalls allein daraus abgeleiteter
+Kalendertage. Vorher/Nachher der vorhandenen Verlaufsansichten, Kapitalreferenz,
+TWR/XIRR und ihrer Probleme anzeigen; unbekannt bleibt unbekannt. Gleiche
+Zeitraumgrenzen aus dem Ausgangszustand für den Kennzahlenvergleich verwenden,
+keine neue Renditeengine. Mengen, Positionen, Einstandswerte, Journal,
+Eröffnungen, externe Geldflüsse und Renditestart bleiben bytegleich.
+
+Vor Commit: gültiger Speicherzustand, Backup exakt zur Vorschau ohne API-Keys
+mit Historien, ausdrückliche eigene Bestätigung, vollständiger Modellvorstand,
+erneute Fachprüfung, assertCurrent und bestehender atomarer CAS-Save.
+Undo nur für exakten unveränderten Nachzustand; danach Backup/Restore.
+Quota, post-put-Abbruch, Abbrechen, fehlendes Backup/Bestätigung und konkurrierende
+Revision müssen exakten Originalrecord/Settings/Revision erhalten. Kein separates
+Journalposting, kein Importbeleg und kein Transfer wird entfernt.
+
+Prüfgrenzen dieses Schnitts: ASCII-Stichtagsidentitäten, höchstens200.000
+Prüfknoten/64 Ebenen/8MB geprüfte Zeichenketten. Identitäts-Teilstrings und
+nicht lesbare codierte Metadaten sperren konservativ auch mögliche Zufallstreffer;
+keine stille Auflösung unbekannter Bezüge. Weitere Quellen und diese engeren
+Grenzen bleiben ausdrücklich offene Qualifikation, keine vollständige DELETE-Abnahme.
+
+## Nachweise und Freigabe
+
+Unitreferenzen: Start, Endpunktverlust mit null statt erfundener Rendite,
+unabhängige manuelle Zwischenbeobachtung, Originalrevision, versteckte Referenz,
+unbekannte Felder, Archivformatwechsel/Buchungsarchiverhalt, gemischte Auswahl,
+vollständige Nichtmutation bei Fehler, exaktes Undo und Plain/Encrypted-Restore.
+Browser: tatsächlicher Backupinhalt/Bestätigung/forciertes Submit, Vorschau,
+gemischte Sperre, Quota/post-put/CAS/Offline/Reload/Undo, Tastatur/Fokus/Axe/44px
+und fünf Breiten in Chromium/Firefox/WebKit über bestehende Pflichtgates.
+Neue sicherheits-/finanzkritische Produktionsänderung: zuerst vollständig geprüfter
+reviewbarer Kandidat, danach konkrete Nutzerfreigabe vor Merge/Deployment.
+Freigabe PR195 gilt ausschließlich für den bereits abgeschlossenen v208-Release.
+
+FLH05-Kompatibilität nur notwendige Wiederverwendung bestehender Verträge.
+FLH05/PROJ01 OPEN/PARKED. UI-/DELETE-/FLH03/FLH04/PERF01 essentielleP1 und alle
+sonstigen ursprünglichen Anforderungen/Releasebelege bleiben offen erhalten.
+
+---
+
 # Historische Referenzwerte – Herkunft, Sichtbarkeit und Persistenz vor Code
 
 Basis: v196 LIVE_ACCEPTED, main `bccd1f7956edba4d9ec0c5f11dc8edd023f31809`. Einziger neuer funktionaler Strang: `feature/reference-management`. Maßgeblich bleibt der vollständige zentrale UI-Nachtrag auf `feature/flh05-import-foundation`; keine neue Masterplanung. Diese Vertragsfassung wird vor Funktionscode separat gesichert.

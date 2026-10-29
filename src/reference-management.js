@@ -1,10 +1,13 @@
 /** Historical references: existing selection/CAS/edits, visibility-only archive. */
 import {safeImport,snapshot} from './model.js';
-import {snapshotEditChanges,editSnapshot} from './portfolio-edit-actions.js';
+import {snapshotEditChanges,editSnapshot,deleteSnapshot} from './portfolio-edit-actions.js';
 import {updatePositionSelection,positionSelectionSummary} from './position-selection.js';
+import {historicalWealthView} from './historical-portfolio-value.js';
+import {portfolioTwr,portfolioXirr,performanceIssues} from './performance.js';
+import {capitalReferenceSeries} from './capital-flows.js';
 import {setArchivePresentation} from './booking-history.js';
 const clone=m=>structuredClone(m),raw=m=>JSON.stringify(m);
-export const REFERENCE_DELETE_REASON='Jeder gespeicherte Stichtag ist eine Grundlage für Verlauf und Abgleich. Löschen ist deshalb gesperrt; Archivieren blendet ihn reversibel nur in dieser Liste aus.';
+export const REFERENCE_DELETE_REASON='Löschen benötigt eine vollständige Abhängigkeitsprüfung, ein aktuelles Backup und eine eigene Bestätigung. Archivieren verändert nur die Sichtbarkeit.';
 function rows(model){
  if(!Array.isArray(model?.snapshots))throw Error('Historische Referenzwerte fehlen.');
  const seen=new Set();for(const s of model.snapshots){if(typeof s?.id!=='string'||!s.id||s.id.length>120||seen.has(s.id))throw Error('Stichtagsidentitäten sind nicht eindeutig.');seen.add(s.id);}
@@ -22,7 +25,7 @@ function current(model,expectedModel,confirmed){
 export function referencePermissions(model,id){
  const s=selected(model,[id])[0];
  const manual=s.source==='manual'&&s.valuationStatus==='manual'&&s.byAccount==null&&s.byPosition==null&&Array.isArray(s.quoteTimes)&&s.quoteTimes.length===0;
- return {editReason:manual?'':'Herkunft geschützt: automatische, migrierte oder ungeklärte Originalwerte nur über die zuständige Quelle prüfen.',deleteReason:REFERENCE_DELETE_REASON,startProtected:model.performanceFlowTrackingSince===s.date};
+ return {editReason:manual?'':'Herkunft geschützt: automatische, migrierte oder ungeklärte Originalwerte nur über die zuständige Quelle prüfen.',deleteReason:removalReason(model,s),startProtected:model.performanceFlowTrackingSince===s.date};
 }
 export function referenceOrigin(s){
  return s.valuationStatus==='legacy-unverified'||s.source==='legacy'?'historisch ungeprüft · migriertes Original':s.source==='manual'&&s.valuationStatus==='manual'?'Manuell bestätigt':s.source==='current'?'Erfasster aktueller Stand · '+(s.valuationStatus==='partial'?'unvollständig':s.valuationStatus==='observed'?'beobachtet':'Qualität ungeklärt'):'Herkunft oder Qualität ungeklärt';
@@ -66,4 +69,56 @@ export function prepareReferenceAdd(model,{date,note,manualTotalEUR},{expectedMo
  current(model,expectedModel,confirmed);if(typeof date!=='string'||!date)throw Error('Stichtag ausdrücklich angeben.');if(rows(model).some(s=>s.date===date))throw Error('Für diesen Stichtag existiert bereits ein Originalwert. Bitte in der Verwaltung prüfen; Hinzufügen überschreibt ihn nicht.');
  const candidate=clone(model);snapshot(candidate,date,note,{manualTotalEUR});safeImport(clone(candidate));return candidate;
 }
-export function prepareReferenceRemoval(model,ids){selected(model,ids);throw Error(REFERENCE_DELETE_REASON);}
+const snapshotKeys=['id','date','total','totalEURExact','recordedAt','byAccount','byPosition','valuationStatus','source','quoteTimes','revisions','note'];
+const revisionKeys=['recordedAt','date','note','totalEURExact','valuationStatus','source'];
+function removalReason(model,s){
+ if(model.performanceFlowTrackingSince===s.date)return 'Der Startstichtag der Renditeerfassung bleibt geschützt.';
+ if(s.source!=='manual'||s.valuationStatus!=='manual'||s.byAccount!=null||s.byPosition!=null||!Array.isArray(s.quoteTimes)||s.quoteTimes.length)
+  return 'Verlauf und Abgleich: Originalquelle, Aufschlüsselung oder Wiederimport sind noch nicht sicher rücknehmbar. Archivieren ist möglich.';
+ if(s.date===new Date().toISOString().slice(0,10))return 'Der heutige Stichtag kann automatisch neu erfasst werden. Zuerst den Erfassungs- und Wiederanlagevertrag prüfen.';
+ if(Object.keys(s).some(k=>!snapshotKeys.includes(k))||!Array.isArray(s.revisions)||s.revisions.some(r=>!r||Object.keys(r).some(k=>!revisionKeys.includes(k))||r.source!=='manual'||r.valuationStatus!=='manual'))
+  return 'Originalrevision oder zusätzliche Referenzfelder benötigen eine eigene Abhängigkeitsprüfung.';
+ // Restrict the textual reference proof to literal, unescaped identities.
+ if(!/^[a-zA-Z0-9_-]{1,120}$/.test(s.id))return 'Stichtagsidentität ist für die Abhängigkeitsprüfung nicht eindeutig lesbar.';
+ return '';
+}
+/** Explicit manual-observation inverse, using the existing snapshot removal and
+ * archive contracts. No storage writes, cascades, source suppression or revaluation. */
+function removalCandidate(model,ids){
+ safeImport(clone(model));const shots=selected(model,ids),targets=new Set(ids);
+ if(new Set(model.snapshots.map(s=>s.date)).size!==model.snapshots.length)throw Error('Stichtagsdaten sind nicht eindeutig.');
+ for(const s of shots){const reason=removalReason(model,s);if(reason)throw Error(reason);}
+ const candidate=clone(model);
+ for(const id of ids)deleteSnapshot(candidate,id);
+ setArchivePresentation(candidate,{referenceIds:(candidate.bookingPresentation?.referenceArchivedIds||[]).filter(id=>!targets.has(id))});
+ // Inspect remaining originals AND encoded metadata. Raw substring checks alone
+ // miss JSON Unicode escapes; unknown/opaque encoded references fail closed.
+ let nodes=0,bytes=0;const stack=new WeakSet(),encoder=new TextEncoder();
+ const scan=(value,depth=0)=>{
+  if(++nodes>200000||depth>64)throw Error('Abhängigkeitsprüfung begrenzt. Keine Löschfreigabe.');
+  if(typeof value==='string'){
+   bytes+=encoder.encode(value).length;if(bytes>8000000)throw Error('Abhängigkeitsprüfung zu groß. Keine Löschfreigabe.');
+   if(ids.some(id=>value.includes(id)))throw Error('Weitere Daten verweisen möglicherweise auf die Referenzidentität. Keine Teillöschung.');
+   const text=value.trim();
+   if(['{','[','"'].includes(text[0])){let decoded;try{decoded=JSON.parse(text);}catch{throw Error('Nicht lesbare codierte Referenzdaten. Keine Löschfreigabe.');}scan(decoded,depth+1);}
+   else if(value.includes('\\u'))throw Error('Ungeklärte codierte Referenzdaten. Keine Löschfreigabe.');
+  }else if(value&&typeof value==='object'){
+   if(stack.has(value))throw Error('Zyklische Referenzdaten. Keine Löschfreigabe.');stack.add(value);
+   for(const [key,item]of Object.entries(value)){scan(key,depth+1);scan(item,depth+1);}stack.delete(value);
+  }
+ };
+ scan(candidate);
+ safeImport(clone(candidate));return candidate;
+}
+function removalMetrics(model,start,end){
+ return {views:['auto','observed','partial'].map(basis=>{const v=historicalWealthView(model,basis);return {basis,selectedBasis:v.basis,dates:v.samples.map(s=>s.date),reconciliation:v.projection.reconciliation.map(s=>({date:s.date,differenceEURExact:s.differenceEURExact})),reason:v.reason};}),
+  start,end,twr:portfolioTwr(model,start,end),xirr:portfolioXirr(model,start,end),issues:performanceIssues(model,start,end),capital:capitalReferenceSeries(model,model.snapshots)};
+}
+export function previewReferenceRemoval(model,ids){
+ const candidate=removalCandidate(model,ids),dates=model.snapshots.map(s=>s.date).sort(),start=dates[0],end=dates.at(-1);
+ return {items:selected(model,ids).map(s=>clone(s)),before:removalMetrics(model,start,end),after:removalMetrics(candidate,start,end),
+  impact:'Die ausgewählten Beobachtungen und ihre Abgleichpunkte entfallen. Nur daraus abgeleitete Verlaufstage können entfallen. Renditen und Kapitalreferenz werden aus den verbleibenden Belegen berechnet; fehlende Werte bleiben unbekannt. Bestände, Einstandswerte, Buchungen, Journal, Geldflüsse und Renditestart bleiben unverändert.'};
+}
+export function prepareReferenceRemoval(model,ids,{expectedModel,confirmed}={}){
+ current(model,expectedModel,confirmed);return removalCandidate(model,ids);
+}
