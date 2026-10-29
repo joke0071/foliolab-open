@@ -1,0 +1,21 @@
+{
+  "release": "82523b8b20d492167b8de8690b8b1dee7fc13b7a",
+  "run": 40961182315,
+  "job": 123762945688,
+  "status": "DEPLOYED_NOT_ACCEPTED",
+  "publishedAssetMatches": 121,
+  "cache": "foliolab-open-v216",
+  "core": "PASS: 6 groups,18 Axe scans",
+  "failure": "browser-chart-tooltip.mjs:27 initial ready(): IndexedDB aktiv wait timeout30000ms",
+  "cause": "UNRESOLVED",
+  "retry": "one unchanged failed-live-job retry requested; no code/gate changes",
+  "logExcerpt": [
+    "2026-10-29T22:10:37.9109167Z LIVE published bytes: 121 exact SHA-256 matches, foliolab-open-v216",
+    "2026-10-29T22:10:56.1224901Z LIVE acceptance PASS: 6 groups, 18 Axe scans, 121 asset matches",
+    "2026-10-29T22:11:34.8655071Z page.waitForFunction: Timeout 30000ms exceeded.",
+    "2026-10-29T22:11:34.8656801Z     at ready (/home/runner/work/foliolab-open/foliolab-open/tests/browser-chart-tooltip.mjs:12:20)",
+    "2026-10-29T22:11:34.8658135Z     at /home/runner/work/foliolab-open/foliolab-open/tests/browser-chart-tooltip.mjs:27:29 {",
+    "2026-10-29T22:11:34.8659039Z   name: 'TimeoutError'"
+  ],
+  "firstWebKitCacheFailure": "retained separately; unchanged cross2 retry completed PASS in Firefox/WebKit"
+}
