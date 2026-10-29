@@ -1,10 +1,10 @@
 {
   "date": "2026-10-29",
-  "status": "LOCAL_TESTS_PASS / CI_RUNNING / NOT_MERGED / NOT_DEPLOYED",
+  "status": "TEST_CONTRACT_UPDATED / FINAL_CI_RUNNING / NOT_MERGED / NOT_DEPLOYED",
   "pr": 203,
   "branch": "fix/native-chart-axis-tooltip-v216",
-  "head": "d85b5dfd5af03cd2fe79a1c00b16057afb90e3c5",
-  "tree": "80a729f0da79146f1ff3e7125bee082e1693c04e",
+  "head": "057063167a04acd7b66364d4f0c824e6bd8978de",
+  "tree": "0364c9d003750f59a1f6a1482bb79f2a531f3c4d",
   "base": "c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9",
   "sw": 216,
   "unit": {
@@ -94,16 +94,16 @@
   ],
   "ci": [
     {
-      "id": 40944351430,
-      "name": "FolioLab Open – testen und veröffentlichen",
-      "status": "in_progress",
-      "result": null
-    },
-    {
-      "id": 40944351197,
+      "id": 40945850073,
       "name": "Wallet scan checks",
       "status": "completed",
       "result": "success"
+    },
+    {
+      "id": 40945850048,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "status": "in_progress",
+      "result": null
     }
   ],
   "scope": [
@@ -131,5 +131,39 @@
       "FLH-PROJ01"
     ]
   },
-  "next": "Finish complete mandatory40944351430 and Wallet40944351197, inspect testmerge/tree/artifact hashes/JSON/screenshots; review-ready and own explicit release approval."
+  "next": "Finish full mandatory40945850048 and Wallet40945850073 on05706316; inspect exact testmerge/tree and actual ZIP/JSON/image proofs; own release approval only after review-ready.",
+  "initialFullCI": {
+    "run": 40944351430,
+    "head": "d85b5dfd5af03cd2fe79a1c00b16057afb90e3c5",
+    "mainJob": 123695648447,
+    "mainResult": "failure",
+    "unit": {
+      "passed": 955,
+      "failed": 0,
+      "skipped": 0
+    },
+    "cause": "Legacy browser-dashboard-polish asserted /Tsd\\.|€ \\d/ although new approved axis contract intentionally produces930 €,818 €,705 €. New chart regression passed before this assertion.",
+    "crossJobs": [
+      {
+        "id": 123695647711,
+        "result": "success"
+      },
+      {
+        "id": 123695648352,
+        "result": "success"
+      }
+    ],
+    "walletRun": 40944351197,
+    "walletResult": "success",
+    "cancelled": false
+  },
+  "testOnlyFollowup": {
+    "head": "057063167a04acd7b66364d4f0c824e6bd8978de",
+    "path": "tests/browser-dashboard-polish.mjs",
+    "sha": "f214518509ebd7f2a61a2cb32f0dabe0c22fa8b0",
+    "change": "Replace obsolete currency-position/abbreviation assumption with exact three-value assertion930 €,818 €,705 €. All six-width layout/calendar/financial/tooltip assertions retained.",
+    "localResult": "Original full six-width dashboard regression and new seven-width chart suite PASS",
+    "productSource": "All seven original product/new-test blobs unchanged from initial head; only the existing legacy test changes.",
+    "concurrency": "Observed workflow groups PR jobs by immutable merge SHA; initial cross jobs completed successfully, no run cancelled."
+  }
 }
