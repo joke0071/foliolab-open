@@ -1,5 +1,5 @@
 {
-  "status": "MEASURED / LOCAL_FUNCTIONAL_GATES_PASS / FULL_CI_PENDING",
+  "status": "TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED",
   "date": "2026-10-29",
   "head": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc",
   "tree": "86be70b0112d4f960abb55cc726918eba4c3064e",
@@ -434,5 +434,1599 @@
       }
     ],
     "smallOfflineObservation": "19-position paired offline median394.9→400.9ms is1.52percent slower; raw ranges overlap, do not claim every small-case sample improves or a device-wide SLA."
+  },
+  "finalGates": {
+    "main": "fee4fc5de4c57fee6643d30f20798c35b2b8807b",
+    "head": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc",
+    "tree": "86be70b0112d4f960abb55cc726918eba4c3064e",
+    "testedMerge": "7a0c96a501a73fa3310b7f62b30180704eab62a7",
+    "mandatory": {
+      "id": 40911278126,
+      "result": "SUCCESS",
+      "jobs": {
+        "unit": 123579592324,
+        "cross1": 123579592653,
+        "cross2": 123579593104
+      },
+      "unitPassed": 950,
+      "failed": 0,
+      "skipped": 0,
+      "syntax": "PASS",
+      "deployment": "SKIPPED (PR)"
+    },
+    "wallet": {
+      "id": 40911278522,
+      "result": "SUCCESS"
+    },
+    "sourceFiles": [
+      {
+        "path": "src/historical-position-value.js",
+        "blob": "66bdccad783464a8b6b9ddc72d1ac2937f74a4d2"
+      },
+      {
+        "path": "sw.js",
+        "blob": "00070a6ff6d105dccc3cc2dd51934d41ebac57fb"
+      },
+      {
+        "path": "tests/benchmark-startup.mjs",
+        "blob": "5c8be6d3395400fcc953c33296b883466492d8b7"
+      },
+      {
+        "path": "tests/browser-historical-position-value.mjs",
+        "blob": "8a93a53084dfaffbe058ef5c0924ba840c8f7b12"
+      },
+      {
+        "path": "tests/historical-position-value.test.mjs",
+        "blob": "a1803dc952641f7dcc5bc354b4e26464775edfbf"
+      }
+    ],
+    "artifactVerification": [
+      {
+        "id": 12913963812,
+        "sha256": "8d49822cff28438353ebd42472dde74e8ae9b4964627b4de4ae415abf4d23726",
+        "verifiedBeforeExtraction": true
+      },
+      {
+        "id": 12913893746,
+        "sha256": "a3a3f81f2f41b14d957cc42830fca22c1868435062f0bfe5ae39abfd1b6fedb1",
+        "verifiedBeforeExtraction": true
+      },
+      {
+        "id": 12913184243,
+        "sha256": "c1b8212975fdca269357ba1dcb8554f081d4a9e733ca6463a4750082a81c6e59",
+        "verifiedBeforeExtraction": true
+      }
+    ],
+    "reports": {
+      "main": {
+        "ui-quality.json": {
+          "sha256": "541f929834cdd1f5c5c6dce5d134ae492618237738a616df7eeb3ceed0bcd723",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+            "engines": [
+              {
+                "engine": "chromium",
+                "status": "PASS",
+                "scans": [
+                  {
+                    "page": "dashboard",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 1440,
+                    "height": 560
+                  }
+                ],
+                "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+                "checks": [
+                  "all five pages",
+                  "archive visible without detail disclosure",
+                  "44px actions,separator and focus clearance,no overlaps",
+                  "liquidity below providers and closed",
+                  "mobile labeled history records/desktop table",
+                  "focused exact decimal disclosure",
+                  "Escape/focus return",
+                  "zero exact IndexedDB record mutations"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-binding/report.json": {
+          "sha256": "d52fcf6689111c223c4442c8098514d0453da418f174202cf7c2b3bd560f060b",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "checks": [
+                  "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+                  "existing source/manual/conflicting proof stays read-only",
+                  "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+                  "withdrawal and delayed account check immediately remove computed values",
+                  "account/file/mode/Escape/cancel/reopen resets",
+                  "20-context paging/focus and independent source/order paging",
+                  "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+                  "forced submit blocked",
+                  "delayed freshness generation guard",
+                  "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+                  "actual offline reload and confirmation",
+                  "exact IDB/revision/settings unchanged by staging/no external requests"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        },
+        "bitpanda-preview/report.json": {
+          "sha256": "1b91415487b6d3d83281713f715ae9b57011d11a371911785d5ec14f7b832b7f",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Bitpanda read-only CSV preview",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "checks": [
+                  "native preamble/18-17 auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "exact quantities and declared fee assets/unknown tax",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "reference-removal/report.json": {
+          "sha256": "f91ee40b6637f39f0793bb0e7ee83bec134b709bc87b101909d151d71dbfd2e9",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "synthetic manual reference inverse; no private data",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "mixed/start blocks",
+                  "actual original backup and separate consent/forged submit",
+                  "actual endpoint unknown metrics and selected identities",
+                  "quota/post-put exact record/settings/revision",
+                  "offline one-revision removal/reload",
+                  "session exact undo",
+                  "fresh plain/encrypted original recovery",
+                  "stale writer and actual CAS race after freshness",
+                  "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+                ]
+              }
+            ]
+          }
+        },
+        "kraken-ledger/report.json": {
+          "sha256": "bfb86e7a9adda7eae7158d5109cefd37a7f33e93adc7f6077211a2cd9b967a8f",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Kraken read-only CSV preview",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "checks": [
+                  "native auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "all legs and exact declared fees",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "reference-management/report.json": {
+          "sha256": "60dbb880f7e38e01e68c7c1d7116d621a1af6e777f92fa467699fbf812e19758",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "references": 210,
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "normal/manage/visible page/partial/filter/no hidden selection",
+                  "source and runtime guards/start/impact correction/add/duplicate",
+                  "exact original and non-null TWR/XIRR invariance",
+                  "quota/post-put/cancel/retry/CAS",
+                  "combined booking/reference archive/restore",
+                  "plain and fresh password V2 UI restore",
+                  "actual offline commit/reload",
+                  "keyboard/focus/axe/44px"
+                ]
+              }
+            ]
+          }
+        },
+        "ui-audit-controls/report.json": {
+          "sha256": "50c18ee5e0a7d2813baacb9eca31287f70f42daa15908781f2a261686321cde0",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "synthetic presentation controls; exact IndexedDB nonmutation",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "scans": [
+                  "empty dashboard 320",
+                  "empty history 320",
+                  "empty positions 320",
+                  "empty bookings 320",
+                  "empty more 320",
+                  "empty dashboard 390",
+                  "empty history 390",
+                  "empty positions 390",
+                  "empty bookings 390",
+                  "empty more 390",
+                  "empty dashboard 430",
+                  "empty history 430",
+                  "empty positions 430",
+                  "empty bookings 430",
+                  "empty more 430",
+                  "empty dashboard 768",
+                  "empty history 768",
+                  "empty positions 768",
+                  "empty bookings 768",
+                  "empty more 768",
+                  "empty dashboard 1440",
+                  "empty history 1440",
+                  "empty positions 1440",
+                  "empty bookings 1440",
+                  "empty more 1440",
+                  "filled dashboard 320",
+                  "filled history 320",
+                  "open calendar 320",
+                  "filled positions 320",
+                  "filled bookings 320",
+                  "filled more 320",
+                  "filled dashboard 390",
+                  "filled history 390",
+                  "open calendar 390",
+                  "filled positions 390",
+                  "filled bookings 390",
+                  "filled more 390",
+                  "filled dashboard 430",
+                  "filled history 430",
+                  "open calendar 430",
+                  "filled positions 430",
+                  "filled bookings 430",
+                  "filled more 430",
+                  "filled dashboard 768",
+                  "filled history 768",
+                  "open calendar 768",
+                  "filled positions 768",
+                  "filled bookings 768",
+                  "filled more 768",
+                  "filled dashboard 1440",
+                  "filled history 1440",
+                  "open calendar 1440",
+                  "filled positions 1440",
+                  "filled bookings 1440",
+                  "filled more 1440",
+                  "320x360 synthetic150percent calendar text"
+                ],
+                "checks": [
+                  "50empty/filled views",
+                  "real44px nonoverlapping scoped controls",
+                  "seven-day320px calendar",
+                  "balanced4+4 wealth presets",
+                  "calendar4.5contrast",
+                  "exact accessible donor amount and visible SVG focus",
+                  "short height/enlarged text/reset/Escape focus",
+                  "exact IndexedDB nonmutation"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-ui/report.json": {
+          "sha256": "d382cd9e50b8ea90ffbc7726902a728e66bcf01143b7f07a2227f06a4ec3557e",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+            "engines": [
+              {
+                "engine": "chromium",
+                "result": "PASS",
+                "checks": [
+                  "native CP1252/blank-header auto/explicit recognition",
+                  "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+                  "exact quantities/currencies/separate references",
+                  "hostile source escaping",
+                  "50/100 source paging and focus",
+                  "order statuses/reasons/all legs/duplicate filenames/separate references",
+                  "independent group/leg paging/focus/disclosure preservation/reset",
+                  "expanded order groups at 5 widths/Axe/44px",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload with order display",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-simulation-ui/report.json": {
+          "sha256": "1d0be9605a0c7f8cceb47c1f70b0d64c7fc8f3d8c03290a36b04d1bb56804c0a",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+            "engines": [
+              {
+                "engine": "chromium",
+                "version": "141.0.7390.37",
+                "result": "PASS",
+                "targetSizes": [
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  }
+                ],
+                "checks": [
+                  "explicit mode/current account confirmation",
+                  "append empty and protected-balance blocking/backfill exact ending quantity",
+                  "unknown costs/no external flows/no submit",
+                  "mode/account/confirmation/file/lifetime delayed-generation resets",
+                  "whole-batch special/cash protection",
+                  "5 widths/Axe/44px/focus/escaped names",
+                  "actual competing IDB writer between freshness checks/stale lock",
+                  "actual offline reload/storage notification invalidation",
+                  "exact IDB/revision/settings zero dialog writes/no external requests"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        },
+        "flatex-native-commit/report.json": {
+          "sha256": "28152fbe43733c82503376e7202ac34ec82c33bf5c942729bf892d5fe34eb4e4",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Guarded native share takeover in isolated synthetic profiles only",
+            "engines": [
+              {
+                "engine": "chromium",
+                "version": "141.0.7390.37",
+                "mode": "append",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              },
+              {
+                "engine": "chromium",
+                "version": "141.0.7390.37",
+                "mode": "backfill",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        }
+      },
+      "cross1": {},
+      "cross2": {
+        "ui-quality.json": {
+          "sha256": "8543b49cebd181ab640ed65eec084651db9337cc32029503216d6f7877b3b20b",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+            "engines": [
+              {
+                "engine": "firefox",
+                "status": "PASS",
+                "scans": [
+                  {
+                    "page": "dashboard",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 1440,
+                    "height": 560
+                  }
+                ],
+                "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+                "checks": [
+                  "all five pages",
+                  "archive visible without detail disclosure",
+                  "44px actions,separator and focus clearance,no overlaps",
+                  "liquidity below providers and closed",
+                  "mobile labeled history records/desktop table",
+                  "focused exact decimal disclosure",
+                  "Escape/focus return",
+                  "zero exact IndexedDB record mutations"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "status": "PASS",
+                "scans": [
+                  {
+                    "page": "dashboard",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 320,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 390,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 430,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 768,
+                    "height": 560
+                  },
+                  {
+                    "page": "dashboard",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "history",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "positions",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "bookings",
+                    "width": 1440,
+                    "height": 560
+                  },
+                  {
+                    "page": "more",
+                    "width": 1440,
+                    "height": 560
+                  }
+                ],
+                "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+                "checks": [
+                  "all five pages",
+                  "archive visible without detail disclosure",
+                  "44px actions,separator and focus clearance,no overlaps",
+                  "liquidity below providers and closed",
+                  "mobile labeled history records/desktop table",
+                  "focused exact decimal disclosure",
+                  "Escape/focus return",
+                  "zero exact IndexedDB record mutations"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-binding/report.json": {
+          "sha256": "3ed63e166a8936c43247e782d8d41166a6831df4d2a325649c711fc04b23dc18",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "checks": [
+                  "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+                  "existing source/manual/conflicting proof stays read-only",
+                  "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+                  "withdrawal and delayed account check immediately remove computed values",
+                  "account/file/mode/Escape/cancel/reopen resets",
+                  "20-context paging/focus and independent source/order paging",
+                  "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+                  "forced submit blocked",
+                  "delayed freshness generation guard",
+                  "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+                  "actual offline reload and confirmation",
+                  "exact IDB/revision/settings unchanged by staging/no external requests"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "checks": [
+                  "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+                  "existing source/manual/conflicting proof stays read-only",
+                  "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+                  "withdrawal and delayed account check immediately remove computed values",
+                  "account/file/mode/Escape/cancel/reopen resets",
+                  "20-context paging/focus and independent source/order paging",
+                  "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+                  "forced submit blocked",
+                  "delayed freshness generation guard",
+                  "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+                  "actual offline reload and confirmation",
+                  "exact IDB/revision/settings unchanged by staging/no external requests"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        },
+        "bitpanda-preview/report.json": {
+          "sha256": "a234d4db3e0d1b198a5465292cf67b8f17d2cb3cdaf7e1d4679a59c2d1c977cc",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Bitpanda read-only CSV preview",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "checks": [
+                  "native preamble/18-17 auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "exact quantities and declared fee assets/unknown tax",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "checks": [
+                  "native preamble/18-17 auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "exact quantities and declared fee assets/unknown tax",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "reference-removal/report.json": {
+          "sha256": "77a298457f5074457215bfd11a715ca0890f411c1ea0a58e9eb76b424d15b6aa",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "synthetic manual reference inverse; no private data",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "mixed/start blocks",
+                  "actual original backup and separate consent/forged submit",
+                  "actual endpoint unknown metrics and selected identities",
+                  "quota/post-put exact record/settings/revision",
+                  "offline one-revision removal/reload",
+                  "session exact undo",
+                  "fresh plain/encrypted original recovery",
+                  "stale writer and actual CAS race after freshness",
+                  "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "mixed/start blocks",
+                  "actual original backup and separate consent/forged submit",
+                  "actual endpoint unknown metrics and selected identities",
+                  "quota/post-put exact record/settings/revision",
+                  "offline one-revision removal/reload",
+                  "session exact undo",
+                  "fresh plain/encrypted original recovery",
+                  "stale writer and actual CAS race after freshness",
+                  "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+                ]
+              }
+            ]
+          }
+        },
+        "kraken-ledger/report.json": {
+          "sha256": "02e4e4a0ef98714c2e5295b32c262df50fefe238ecc71cbbb0dd39f2385ea010",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Kraken read-only CSV preview",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "checks": [
+                  "native auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "all legs and exact declared fees",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "checks": [
+                  "native auto/explicit recognition",
+                  "schema/mixed/mode quarantine",
+                  "all legs and exact declared fees",
+                  "hostile source escaping",
+                  "50/100 paging and focus",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "reference-management/report.json": {
+          "sha256": "300d210e16c7d65e703e1782774f8d36a7984b2273492013a71ca2c6d51dab6c",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "references": 210,
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "normal/manage/visible page/partial/filter/no hidden selection",
+                  "source and runtime guards/start/impact correction/add/duplicate",
+                  "exact original and non-null TWR/XIRR invariance",
+                  "quota/post-put/cancel/retry/CAS",
+                  "combined booking/reference archive/restore",
+                  "plain and fresh password V2 UI restore",
+                  "actual offline commit/reload",
+                  "keyboard/focus/axe/44px"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "references": 210,
+                "widths": [
+                  320,
+                  390,
+                  430,
+                  768,
+                  1440
+                ],
+                "checks": [
+                  "normal/manage/visible page/partial/filter/no hidden selection",
+                  "source and runtime guards/start/impact correction/add/duplicate",
+                  "exact original and non-null TWR/XIRR invariance",
+                  "quota/post-put/cancel/retry/CAS",
+                  "combined booking/reference archive/restore",
+                  "plain and fresh password V2 UI restore",
+                  "actual offline commit/reload",
+                  "keyboard/focus/axe/44px"
+                ]
+              }
+            ]
+          }
+        },
+        "ui-audit-controls/report.json": {
+          "sha256": "eceeaabab689973a23cd7da2bf0f7790f153e81dc7edf7733e75fd6e784f1013",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "synthetic presentation controls; exact IndexedDB nonmutation",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "scans": [
+                  "empty dashboard 320",
+                  "empty history 320",
+                  "empty positions 320",
+                  "empty bookings 320",
+                  "empty more 320",
+                  "empty dashboard 390",
+                  "empty history 390",
+                  "empty positions 390",
+                  "empty bookings 390",
+                  "empty more 390",
+                  "empty dashboard 430",
+                  "empty history 430",
+                  "empty positions 430",
+                  "empty bookings 430",
+                  "empty more 430",
+                  "empty dashboard 768",
+                  "empty history 768",
+                  "empty positions 768",
+                  "empty bookings 768",
+                  "empty more 768",
+                  "empty dashboard 1440",
+                  "empty history 1440",
+                  "empty positions 1440",
+                  "empty bookings 1440",
+                  "empty more 1440",
+                  "filled dashboard 320",
+                  "filled history 320",
+                  "open calendar 320",
+                  "filled positions 320",
+                  "filled bookings 320",
+                  "filled more 320",
+                  "filled dashboard 390",
+                  "filled history 390",
+                  "open calendar 390",
+                  "filled positions 390",
+                  "filled bookings 390",
+                  "filled more 390",
+                  "filled dashboard 430",
+                  "filled history 430",
+                  "open calendar 430",
+                  "filled positions 430",
+                  "filled bookings 430",
+                  "filled more 430",
+                  "filled dashboard 768",
+                  "filled history 768",
+                  "open calendar 768",
+                  "filled positions 768",
+                  "filled bookings 768",
+                  "filled more 768",
+                  "filled dashboard 1440",
+                  "filled history 1440",
+                  "open calendar 1440",
+                  "filled positions 1440",
+                  "filled bookings 1440",
+                  "filled more 1440",
+                  "320x360 synthetic150percent calendar text"
+                ],
+                "checks": [
+                  "50empty/filled views",
+                  "real44px nonoverlapping scoped controls",
+                  "seven-day320px calendar",
+                  "balanced4+4 wealth presets",
+                  "calendar4.5contrast",
+                  "exact accessible donor amount and visible SVG focus",
+                  "short height/enlarged text/reset/Escape focus",
+                  "exact IndexedDB nonmutation"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "scans": [
+                  "empty dashboard 320",
+                  "empty history 320",
+                  "empty positions 320",
+                  "empty bookings 320",
+                  "empty more 320",
+                  "empty dashboard 390",
+                  "empty history 390",
+                  "empty positions 390",
+                  "empty bookings 390",
+                  "empty more 390",
+                  "empty dashboard 430",
+                  "empty history 430",
+                  "empty positions 430",
+                  "empty bookings 430",
+                  "empty more 430",
+                  "empty dashboard 768",
+                  "empty history 768",
+                  "empty positions 768",
+                  "empty bookings 768",
+                  "empty more 768",
+                  "empty dashboard 1440",
+                  "empty history 1440",
+                  "empty positions 1440",
+                  "empty bookings 1440",
+                  "empty more 1440",
+                  "filled dashboard 320",
+                  "filled history 320",
+                  "open calendar 320",
+                  "filled positions 320",
+                  "filled bookings 320",
+                  "filled more 320",
+                  "filled dashboard 390",
+                  "filled history 390",
+                  "open calendar 390",
+                  "filled positions 390",
+                  "filled bookings 390",
+                  "filled more 390",
+                  "filled dashboard 430",
+                  "filled history 430",
+                  "open calendar 430",
+                  "filled positions 430",
+                  "filled bookings 430",
+                  "filled more 430",
+                  "filled dashboard 768",
+                  "filled history 768",
+                  "open calendar 768",
+                  "filled positions 768",
+                  "filled bookings 768",
+                  "filled more 768",
+                  "filled dashboard 1440",
+                  "filled history 1440",
+                  "open calendar 1440",
+                  "filled positions 1440",
+                  "filled bookings 1440",
+                  "filled more 1440",
+                  "320x360 synthetic150percent calendar text"
+                ],
+                "checks": [
+                  "50empty/filled views",
+                  "real44px nonoverlapping scoped controls",
+                  "seven-day320px calendar",
+                  "balanced4+4 wealth presets",
+                  "calendar4.5contrast",
+                  "exact accessible donor amount and visible SVG focus",
+                  "short height/enlarged text/reset/Escape focus",
+                  "exact IndexedDB nonmutation"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-ui/report.json": {
+          "sha256": "ce619463ae857e8068e1d51941b8c30589dad5f2192ce7b28f647bd62c9f29c8",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+            "engines": [
+              {
+                "engine": "firefox",
+                "result": "PASS",
+                "checks": [
+                  "native CP1252/blank-header auto/explicit recognition",
+                  "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+                  "exact quantities/currencies/separate references",
+                  "hostile source escaping",
+                  "50/100 source paging and focus",
+                  "order statuses/reasons/all legs/duplicate filenames/separate references",
+                  "independent group/leg paging/focus/disclosure preservation/reset",
+                  "expanded order groups at 5 widths/Axe/44px",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload with order display",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "result": "PASS",
+                "checks": [
+                  "native CP1252/blank-header auto/explicit recognition",
+                  "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+                  "exact quantities/currencies/separate references",
+                  "hostile source escaping",
+                  "50/100 source paging and focus",
+                  "order statuses/reasons/all legs/duplicate filenames/separate references",
+                  "independent group/leg paging/focus/disclosure preservation/reset",
+                  "expanded order groups at 5 widths/Axe/44px",
+                  "5 widths/Axe/44px",
+                  "forced submit/Escape/cancel/reopen",
+                  "actual offline reload with order display",
+                  "exact IDB/revision/settings zero mutation",
+                  "no external preview requests"
+                ]
+              }
+            ]
+          }
+        },
+        "flatex-native-simulation-ui/report.json": {
+          "sha256": "3290a60b75a8d284b7b4fe8bb1df6246cad8b32d580569c459dfeeec64865564",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+            "engines": [
+              {
+                "engine": "firefox",
+                "version": "157.0",
+                "result": "PASS",
+                "targetSizes": [
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationRun",
+                    "height": 44.99998474121094,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationMode",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationRun",
+                    "height": 44.99998474121094,
+                    "minHeight": "45px"
+                  }
+                ],
+                "checks": [
+                  "explicit mode/current account confirmation",
+                  "append empty and protected-balance blocking/backfill exact ending quantity",
+                  "unknown costs/no external flows/no submit",
+                  "mode/account/confirmation/file/lifetime delayed-generation resets",
+                  "whole-batch special/cash protection",
+                  "5 widths/Axe/44px/focus/escaped names",
+                  "actual competing IDB writer between freshness checks/stale lock",
+                  "actual offline reload/storage notification invalidation",
+                  "exact IDB/revision/settings zero dialog writes/no external requests"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "version": "27.2",
+                "result": "PASS",
+                "targetSizes": [
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationMode",
+                    "height": 49,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 320,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationMode",
+                    "height": 49,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 390,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationMode",
+                    "height": 49,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 430,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationMode",
+                    "height": 49,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 768,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationMode",
+                    "height": 49,
+                    "minHeight": "45px"
+                  },
+                  {
+                    "width": 1440,
+                    "id": "flatexSimulationRun",
+                    "height": 45,
+                    "minHeight": "45px"
+                  }
+                ],
+                "checks": [
+                  "explicit mode/current account confirmation",
+                  "append empty and protected-balance blocking/backfill exact ending quantity",
+                  "unknown costs/no external flows/no submit",
+                  "mode/account/confirmation/file/lifetime delayed-generation resets",
+                  "whole-batch special/cash protection",
+                  "5 widths/Axe/44px/focus/escaped names",
+                  "actual competing IDB writer between freshness checks/stale lock",
+                  "actual offline reload/storage notification invalidation",
+                  "exact IDB/revision/settings zero dialog writes/no external requests"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        },
+        "flatex-native-commit/report.json": {
+          "sha256": "343b43fa6cb6419d38ce0041e0b21bd5cceaf839a9e4eaeb1aa4be05d85e1270",
+          "report": {
+            "base": "http://127.0.0.1:4173/",
+            "scope": "Guarded native share takeover in isolated synthetic profiles only",
+            "engines": [
+              {
+                "engine": "firefox",
+                "version": "157.0",
+                "mode": "append",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              },
+              {
+                "engine": "firefox",
+                "version": "157.0",
+                "mode": "backfill",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "version": "27.2",
+                "mode": "append",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              },
+              {
+                "engine": "webkit",
+                "version": "27.2",
+                "mode": "backfill",
+                "result": "PASS",
+                "checks": [
+                  "actual native append/backfill UI commit; one CAS revision",
+                  "backup content/separate confirmation/reset/forced-submit guards",
+                  "quota and post-put abort exact record/revision/settings unchanged",
+                  "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+                  "plain/encrypted stored native provenance roundtrip/replay",
+                  "duplicate replay no write/revision; exact UI undo including snapshot",
+                  "real competing writer after freshness rejected by actual CAS",
+                  "offline actual UI commit",
+                  "5 widths/Axe/44px/focus"
+                ]
+              }
+            ],
+            "result": "PASS"
+          }
+        }
+      },
+      "/tmp/perf200-final-main/ui-audit-controls/chromium-focus-390.png": {
+        "sha256": "a5bdf744b4378618e3edcbc25ad16ec9e1f7ee787c77c5802e2400b063f4507f"
+      },
+      "/tmp/perf200-final-cross2/reference-removal/firefox-preview-320.png": {
+        "sha256": "a6877296eb36e15885db0471fdb901063b0e6d046098463339eea9ed4dd4b60e"
+      },
+      "/tmp/perf200-final-cross2/ui-audit-controls/webkit-calendar-320.png": {
+        "sha256": "6e9b36a014848263e6e86f4b051ae2ddd3952e150a68904bf81b3c36c4e1bbd3"
+      }
+    },
+    "dateReuseBrowserProof": [
+      "2026-10-29T16:25:37.5529783Z chromium: historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS",
+      "2026-10-29T16:34:43.1365806Z firefox: historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS",
+      "2026-10-29T16:34:44.8372550Z webkit: historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS"
+    ],
+    "production": {
+      "version": 212,
+      "sw": 212,
+      "status": "LIVE_ACCEPTED",
+      "releaseRun": 40907781116
+    },
+    "releaseApproval": "User approval covers PR199. PR200 requires its own merge/deployment approval under the master; no merge/deployment attempted."
   }
 }
