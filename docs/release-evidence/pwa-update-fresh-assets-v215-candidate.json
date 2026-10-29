@@ -1589,5 +1589,23 @@
     "fallback": "GitHub connector created exact local tree bb57f1a8; remote ref62079047 verified and local branch aligned to it.",
     "status": "REMOTE_VERIFIED"
   },
-  "next": "Finish mandatory40930734405 and Wallet40930734559, inspect exact testmerge/tree/artifacts/reports. Then review-ready and separate user release approval."
+  "next": "Finish mandatory40930734405 and Wallet40930734559, inspect exact testmerge/tree/artifacts/reports. Then review-ready and separate user release approval.",
+  "identicalFinalScriptNegativeControl": {
+    "sourceSha256": "f92285811af41f760e3c2cdc30121d22683316496ef63920259ca5a136d4021c",
+    "report": {
+      "scope": "Synthetic warm HTTP cache, real previous/current Service Workers, exact cached bytes and IndexedDB, no physical hardware claim",
+      "cache": "foliolab-open-v214",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "FAIL",
+          "checks": [
+            "previous worker controls actual synthetic IndexedDB portfolio with warm HTTP app/CSS cache"
+          ],
+          "error": "Error: Failed-release fixture was not requested"
+        }
+      ]
+    },
+    "interpretation": "Expected failure with the identical final regression script against unmodified shipped SW214: still-fresh HTTP cache prevents the required new CSS request, so the deliberately injected503 is never reached. Initial pre-fix byte-only probe separately failed the CSS hash assertion."
+  }
 }
