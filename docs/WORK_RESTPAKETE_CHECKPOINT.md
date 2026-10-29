@@ -1,3 +1,23 @@
+# Android-Ergänzung in bestehenden Master integriert · 29.10.2026
+
+[Verbindlicher Android-Vertrag](https://github.com/joke0071/foliolab-open/blob/20e4e6276d8f67cc54e5c3b7121f22d561b01518/docs/UI_MASTER28_ANDROID_PERF_NACHTRAG_2026-10-29.md) einmal konsolidiert; die identische erneute Übermittlung eröffnet keinen zweiten Auftrag. FLH-PERF01/ANDROID = BASELINE_PENDING; UI-MASTER28/ANDROID = PARTIAL; echte Android-/OnePlus-Nord-4-Abnahme = EXTERNAL, Gerät hier nicht nachgewiesen zugänglich.
+
+Die bekannte Optimierung wird nicht neu gebaut: **PR200 v213/SW213 LIVE_ACCEPTED**, main6ec0cf9c6e28edf1b19993357c3b839106b8aa80. Tatsächliche Produktionsmessung des großen synthetischen Fixtures -49,44% Kaltstart, keine Android-Hardwareaussage. Neue Anforderungen:320/360/390/412/430 sowie768/1440px; Hoch/Quer/kleineHöhen/Standalone-PWA/Systemschrift/Adressleiste/Tastatur/SafeArea/Scroll/44px; Startphasen, Navigation, Listen/100+Auswahl, Charts/Tooltips und Main-Thread-Longtasks profilieren. A≈20,B≈100 mit TausendenBuchungen,C1000/1825,DOffline; gleicheUmgebung/Fixture/Cache/DB,5Läufe/Median/Streuung,Profiler separat.100msFeedback/200msAktionen/50msLongtasks sind Orientierungsziele ohne unbelegte Gates. Vor jeder weiteren Optimierung Baseline, kein unkontrollierter Finanzcache, vollständige Invalidierung, CAS/Integrität erhalten.
+
+Laufenden [PR201](https://github.com/joke0071/foliolab-open/pull/201) regulär zuerst abschließen. Aktueller HEADb65776a98a387472f4b49ac809f620ac28565bca enthält ausschließlich zusätzlichen Testvorbedingungsnachweis nach CI-Controller-Timeout, keine weitere Appänderung. Kein laufender CI abgebrochen; keine neue parallele Umsetzung. Danach Android-Deltas mit vorhandenen UI-Paketen verbinden, keine zweite Auswahl-/Chart-/Storageengine und kein universeller Back-/beforeunload-Umbau.
+
+TradingView-Optimierung bleibt SUPERSEDED, Entfernung UI-M28-K01 und K02–K04 OPEN/P2. Sämtlicher konsolidierter UI-Vertrag und übrige Master bleiben erhalten; FLH05/FLH-PROJ01 OPEN/PARKED. Hardwaregrenzen nicht als Erledigung oder pauschalen Produktblocker ausgeben.
+
+---
+
+## PR201: letzte sichere Fortsetzungsstelle
+
+HEADb65776a98a387472f4b49ac809f620ac28565bca gepusht. Vorheriger8ce2b00f/PflichtCI40921585526: Chromium-Job123615947393 scheitert an tatsächlicherController-Vorbedingung nachAktivierung, nicht an Gruppierungsassertions. Historische43b3925a/CI40921013331 scheiterte am noch nicht geöffneten401Positionen-Detailtest; Testinteraktion bereits korrigiert, alle Inhalte/Checks bewahrt. Neue Testvorbereitung übernimmt die in PR199 etablierte sichere Blankrecord→Aktivierung→Reload→realerAppController/ScriptURL→exakterRecord-Nichtmutation vor Fixture. Bestehende spätere aktiveController-/echteOffline-/CAS-/Quota-/Abort-/Backup-/Restore-/Löschprüfungen unverändert erhalten. Lokal Chromium vollständigePositionssuite PASS; Firefox/WebKit laufen erneut.953Units/Appcode seit8ce unverändert. KandidatSW214weiterunveröffentlicht,PR201DRAFT/CI_PENDING,keineMergefreigabe. Keine weiteren Produktänderungen bis CI geklärt und Belege gesichert.
+
+Nächster Schritt: neueste CI-IDs für b65776a9 aufnehmen, lokaleCrossengine-Positionssuite und vollständigePflicht/Walletgates abschließen; tatsächlicheBelege prüfen,Checkpointseparat sichern. Dann eigeneReleaseentscheidung PR201. Android-/TradingView-/übrigeUI-Ergänzungen vollständig dokumentiert, keine davon still verlieren.
+
+---
+
 # PR201: finaler Kandidat gesichert, vollständige CI läuft · 29.10.2026
 
 **Gesamtmaster PARTIAL. Produktion v213/SW213 LIVE_ACCEPTED. UI-Sperrtextpaket PARTIAL / CI_PENDING.**
