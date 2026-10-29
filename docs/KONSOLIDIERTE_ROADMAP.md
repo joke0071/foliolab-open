@@ -1,3 +1,15 @@
+# Android-Ergänzung in bestehenden Master integriert · 29.10.2026
+
+[Verbindlicher Android-Vertrag](https://github.com/joke0071/foliolab-open/blob/20e4e6276d8f67cc54e5c3b7121f22d561b01518/docs/UI_MASTER28_ANDROID_PERF_NACHTRAG_2026-10-29.md) einmal konsolidiert; die identische erneute Übermittlung eröffnet keinen zweiten Auftrag. FLH-PERF01/ANDROID = BASELINE_PENDING; UI-MASTER28/ANDROID = PARTIAL; echte Android-/OnePlus-Nord-4-Abnahme = EXTERNAL, Gerät hier nicht nachgewiesen zugänglich.
+
+Die bekannte Optimierung wird nicht neu gebaut: **PR200 v213/SW213 LIVE_ACCEPTED**, main6ec0cf9c6e28edf1b19993357c3b839106b8aa80. Tatsächliche Produktionsmessung des großen synthetischen Fixtures -49,44% Kaltstart, keine Android-Hardwareaussage. Neue Anforderungen:320/360/390/412/430 sowie768/1440px; Hoch/Quer/kleineHöhen/Standalone-PWA/Systemschrift/Adressleiste/Tastatur/SafeArea/Scroll/44px; Startphasen, Navigation, Listen/100+Auswahl, Charts/Tooltips und Main-Thread-Longtasks profilieren. A≈20,B≈100 mit TausendenBuchungen,C1000/1825,DOffline; gleicheUmgebung/Fixture/Cache/DB,5Läufe/Median/Streuung,Profiler separat.100msFeedback/200msAktionen/50msLongtasks sind Orientierungsziele ohne unbelegte Gates. Vor jeder weiteren Optimierung Baseline, kein unkontrollierter Finanzcache, vollständige Invalidierung, CAS/Integrität erhalten.
+
+Laufenden [PR201](https://github.com/joke0071/foliolab-open/pull/201) regulär zuerst abschließen. Aktueller HEADb65776a98a387472f4b49ac809f620ac28565bca enthält ausschließlich zusätzlichen Testvorbedingungsnachweis nach CI-Controller-Timeout, keine weitere Appänderung. Kein laufender CI abgebrochen; keine neue parallele Umsetzung. Danach Android-Deltas mit vorhandenen UI-Paketen verbinden, keine zweite Auswahl-/Chart-/Storageengine und kein universeller Back-/beforeunload-Umbau.
+
+TradingView-Optimierung bleibt SUPERSEDED, Entfernung UI-M28-K01 und K02–K04 OPEN/P2. Sämtlicher konsolidierter UI-Vertrag und übrige Master bleiben erhalten; FLH05/FLH-PROJ01 OPEN/PARKED. Hardwaregrenzen nicht als Erledigung oder pauschalen Produktblocker ausgeben.
+
+---
+
 # Verbindlicher Kursoptionen-Nachtrag übernommen · 29.10.2026
 
 **„TradingView responsiv optimieren“ = SUPERSEDED BY USER.** TradingView vollständig aus der aktiven Anwendung entfernen, kein anderes externes Widget. [Verbindlicher vollständiger Nachtrag mit vier IDs](https://github.com/joke0071/foliolab-open/blob/22e70228d7761285811f6bba0bcb0a8e8425527e/docs/UI_MASTER28_KURSOPTIONEN_NACHTRAG_2026-10-29.md):
