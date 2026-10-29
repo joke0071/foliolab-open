@@ -1,3 +1,15 @@
+## Aktueller Release- und PWA-Updatebefund · 29.10.2026
+
+PR #201 wurde nach ausdrücklicher Nutzerfreigabe unverändert gemergt und als v214/SW214 veröffentlicht. Main `d037b4876e81c24421022d30865d171da762f328`; Pipeline [40927564281](https://github.com/joke0071/foliolab-open/actions/runs/40927564281) einschließlich Pages und separater Liveabnahme erfolgreich. Die kompakten Sperrgründe sind in Chromium, Firefox und WebKit tatsächlich produktiv geprüft. 953 Unit-Tests und 121 veröffentlichte Dateihashes stimmen. [Dauerhafte Releasebelege](release-evidence/ui-selection-blockers-v214-live-gates.json).
+
+**Die vollständige Updateabnahme bleibt BLOCKED:** Eine zusätzliche synthetische Prüfung mit warmem HTTP-Cache weist nach, dass ein neuer Versionscache ältere App-/CSS-Dateien übernehmen kann. Datensatz, Einstellungen und Revision blieben unverändert. Dieses belegte Delta fällt unter den bestehenden PWA-/Recoveryvertrag; es begründet keine neue Roadmap und keine Änderung der übrigen Prioritäten.
+
+Die begrenzte Korrektur liegt in [PR #202](https://github.com/joke0071/foliolab-open/pull/202), Branch `fix/pwa-update-fresh-assets-v215`, HEAD `620790477a54e4c5f565af9e83fcb62b9d769fce`, SW215 unveröffentlicht. Request.cache=reload verhindert die Übernahme alter HTTP-Cachebytes beim Installieren. Die zusätzliche Regression prüft sämtliche Cache-Dateihashes, echten Workerwechsel, 503-Abbruch mit erhaltener alter Offline-App und exakten Datenstand. Lokal drei Engines und 954 Unit-Tests erfolgreich; vollständige CI und eigene Releasefreigabe noch ausstehend.
+
+Nächste Fortsetzung: PR202 vollständig prüfen und getrennt freigeben lassen; danach Main-/Pages-/Live-/Updateabnahme abschließen, anschließend übrige UI-P1 und gemessene Android-Deltas im bestehenden Master bearbeiten. Hardware bleibt EXTERNAL. UI-K01–K04 einschließlich TradingView-Entfernung bleiben OPEN/P2, frühere Widgetoptimierung SUPERSEDED; FLH05 und FLH-PROJ01 OPEN/PARKED. Alle bisherigen Fach-, UI-, Import-, Drive- und Sicherheitsverträge bleiben erhalten.
+
+---
+
 # Letzter konsolidierter Masterstand · PR201 reviewbereit · 29.10.2026
 
 **Der zusätzliche QA-/CI-/Android-/Drive-/Datenintegritätsvertrag ist vollständig übernommen:** [dauerhafter Sollvertrag](https://github.com/joke0071/foliolab-open/blob/6b546aa1a72765a6991df687019c98bffbc2a26a/docs/MASTER_ERGAENZUNG_QA_CI_DRIVE_DATENINTEGRITAET_2026-10-29.md). Keine neue Roadmap, Prioritätsänderung oder parallele Implementierung.
