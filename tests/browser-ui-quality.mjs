@@ -1,3 +1,4 @@
+import './browser-chart-tooltip.mjs';
 import './browser-blocked-reasons.mjs';
 import './browser-ui-small-rests.mjs';
 import './browser-ui-audit-controls.mjs';
