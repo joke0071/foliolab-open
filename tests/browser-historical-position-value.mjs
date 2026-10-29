@@ -15,6 +15,24 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  assert.match(await page.locator('#synthetic-mini-history').innerText(),/Historischer Positionswert/);
  const miniPoints=await page.locator('#synthetic-mini-history .chart-plot').getAttribute('data-chart-points');assert.match(miniPoints,/200/);assert.ok(!miniPoints.includes('500'));
  assert.equal(await page.evaluate(()=>JSON.stringify(window.fixture)===window.before),true);
+ const reuse=await page.evaluate(async()=>{
+  const {historicalQuantityRows,projectHistoricalPosition}=await import('/src/historical-position-value.js'),{executeTransaction}=await import('/src/transactions.js');
+  const m=structuredClone(window.fixture),before=JSON.stringify(m),baseline=projectHistoricalPosition(m,'etf'),invalid=['1900-02-29','2023-02-29','2024-02-30','2024-13-01','2024-01-01T00:00:00Z',null,20240101];
+  const rejected=()=>invalid.map(date=>{try{historicalQuantityRows(m,'etf',[date]);return false;}catch(error){return error.message==='Ungültiger Bewertungstag.';}});
+  const firstRejected=rejected(),leap=historicalQuantityRows(m,'etf',['2024-02-29'])[0].quantityExact;
+  const dates=Array.from({length:16410},(_,i)=>new Date(Date.UTC(1970,0,1+i)).toISOString().slice(0,10));historicalQuantityRows(m,'etf',dates);
+  const secondRejected=rejected(),same=JSON.stringify(projectHistoricalPosition(m,'etf'))===JSON.stringify(baseline);
+  let priceRejected=false,fxRejected=false;
+  try{projectHistoricalPosition(m,'etf',{marketHistory:{currency:'EUR',points:[{date:'2023-01-02',total:0}]}});}catch(error){priceRejected=error.message==='Historischer Kurs ungültig.';}
+  const usd=structuredClone(m);usd.positions[0].currency='USD';
+  try{projectHistoricalPosition(usd,'etf',{marketHistory:{currency:'USD',points:[{date:'2023-01-02',total:100}]},fxPoints:[{date:'2023-01-02',currency:'USD',source:'Frankfurter',rate:'0'}]});}catch(error){fxRejected=error.message==='Historischer FX-Nachweis ungültig.';}
+  const unchanged=JSON.stringify(m)===before;executeTransaction(m,{positionId:'etf',type:'correction',date:'2023-01-04',targetQuantity:'7'});
+  const fresh=projectHistoricalPosition(m,'etf').rows.at(-1);
+  return {firstRejected,secondRejected,leap,same,priceRejected,fxRejected,unchanged,freshQuantity:fresh.quantityExact,freshValue:fresh.valueEURExact};
+ });
+ assert.deepEqual(reuse,{firstRejected:Array(7).fill(true),secondRejected:Array(7).fill(true),leap:'5',same:true,priceRejected:true,fxRejected:true,unchanged:true,freshQuantity:'7',freshValue:'770'});
+ assert.equal(await page.evaluate(()=>JSON.stringify(window.fixture)===window.before),true);
+ console.log(engine+': historical date reuse,16410day pressure,strict calendar/price/FX guards,fresh correction and zero model writes PASS');
  await page.addScriptTag({url:base+'node_modules/axe-core/axe.min.js'});assert.deepEqual(await page.evaluate(async()=> (await axe.run(document.getElementById('bookingHistoryDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);
  // A local USD CSV can acquire dated FX without any security-provider key.
  await page.keyboard.press('Escape');await d.evaluate(e=>e.remove());let fxRequests=0;await page.route('https://api.frankfurter.dev/**',route=>{fxRequests++;return route.fulfill({json:{base:'USD',rates:{'2023-01-02':{EUR:0.9},'2023-01-03':{EUR:0.8}}}});});
