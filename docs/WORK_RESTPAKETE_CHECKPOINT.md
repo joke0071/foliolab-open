@@ -1,3 +1,45 @@
+# Wiederaufnahme und FLH05-Zukunftskompatibilität gesichert · 29.10.2026
+
+**Aktuell PARTIAL, einziger Funktionsstrang PR195.** main3e9f4877 unverändert,
+Live-SW204 direkt erneut gelesen. Neuester vorgefundener Checkpoint ea2d100e und
+PR195/631db637 haben den älteren Startstand ersetzt. 181 Remote-Branches, offene
+PR195 sowie geparkte Drafts157/161, letzte Actions und Reviews geprüft: keine
+erkennbaren konkurrierenden Änderungen, keine laufenden Actions bei Erstprüfung,
+keine Reviews. Lokale Arbeitskopie neu/sauber; fremde Work-Sitzungen sind über
+diese Schnittstellen nicht direkt einsehbar. Keine privaten Dateien geladen.
+
+Vorabvertrag für nächsten regulären Schnitt dauerhaft remote:
+[03f60896](https://github.com/joke0071/foliolab-open/commit/03f60896cb5fecb50a6496cb2dbf5516dd0d94ac),
+docs/FLH03_FLATEX_NATIVE_SIMULATION_UI_CONTRACT.md auf bestehendem
+feature/flh03-flatex-native-projection. Nur ausdrücklich ausgelöste read-only
+Dialogsimulation über vorhandene prepareNativeFlatexPreview; kein aktiver Submit,
+keine zweite Engine, keine Finanz-/Produktivfreigabe. Umsetzung/Tests folgen
+nach regulärem Abschluss etwaiger Actions dieses Dokumentationscommits.
+Direkter Git-Push ohne Credentials nicht möglich; verbundene GitHub-API schreibt
+stattdessen remote, jeder Erfolg per Ref/Inhaltsvergleich nachzuprüfen. Lokaler
+abweichender Dokumentationscommit df2cc0d wird bei identischem Baum auf tatsächliche
+Remotehistorie synchronisiert, kein verlorener Code.
+
+**Verbindlicher Nutzernachtrag FLH05-Zukunftskompatibilität:** FLH05 bleibt als
+eigenständiges Arbeitspaket bis ausdrücklicher Nutzerfreigabe geparkt. Bei ohnehin
+notwendigen FLH03-/Import-/Reconciliation-/Datenmodell-/UIänderungen dokumentierte
+zukünftige Anforderungen im Rahmen der bestehenden gemeinsamen Komponenten,
+Schnittstellen und Verträge berücksichtigen. Keine Zusatzphasen, umfangreichen
+Refactorings, doppelten Parser/Modelle/Importstrecken, Unterbrechung oder
+Umpriorisierung. Weitergehende FLH05-Anforderungen nur hier dokumentieren, nicht
+jetzt umsetzen. Dieser Schnitt verwendet unverändert die vorhandenen
+CSV_FIELDS/FLATEX_MAPPING, Herkunfts-/Bindungs-/Preview-/Backfill-/CASverträge;
+keine neue universelle Engine. FLH-PROJ01 ebenfalls geparkt. PERF01 bleibt P1.
+
+**Exakt nächste Aktion:** frische Remote-/Actionsprüfung, dokumentierten kleinen
+Dialogsimulationsschnitt auf demselben Branch/PR implementieren und alle
+gezielten sowie bestehenden vollen Gates durchlaufen; aktuelle Berichte/Quellreview/
+Artefakte prüfen, getrennt committen und zentral absichern. Keine aktive private
+Buchungsübernahme. Alle offenen UI-/DELETE-/PERF-/FLH04-/Roadmapanforderungen und
+historischen Nachweise darunter bleiben erhalten.
+
+---
+
 # Native Flatex-Projektions-/Simulationsgrundlage abgenommen · PR195 offen · 29.10.2026
 
 **Verbindlicher aktueller Stand:** Native EUR-Stückhandelsprojektion und streng
