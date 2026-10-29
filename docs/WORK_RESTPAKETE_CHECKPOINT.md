@@ -1,3 +1,19 @@
+# PR198 gemergt, produktive Abnahme blockiert · gezielte Testvorbereitung · 29.10.2026
+
+**PARTIAL / MERGED / NOT LIVE_ACCEPTED:** ausdrücklich freigegebener PR198 wurde als main0db6863ae81eec1821ea54878a1cf28e8f7bcf0e gemergt. Main-CI40901665578 ist fehlgeschlagen; Deployment und Livejobs korrekt SKIPPED. Produktion direkt erneut gelesen: weiterhin v211/SW211. Keine SW212-Liveabnahme behaupten.
+
+**Konkreter Fehler:** Cross2 123545309751 Timeout30000ms in tests/browser-reference-management.mjs:48 bei navigator.serviceWorker.controller VOR dem tatsächlichen Offline-Archivcommit. Artefakt enthält nur Firefox-Referenzscreenshots; keine Reference-Management-Abschlussmeldung. Mainjob123545310173 (948Units/Syntax/Chromium) und Cross1 123545310345 SUCCESS; neueUI-Kontrollen und nativeFlatex-Übernahme imCrosslog erfolgreich. Ursprünglicher Fehlversuch instrumentierte Registrierungs-/Aktivierungs-/Kontrollphasen nicht: genaue damalige Browser-/Produktursache nicht als bewiesen ausgeben.
+
+Permanenter Fehlerbeleg docs/release-evidence/ui-v212-main-offline-precondition-failure.json in717aa0f9. ZIP12910670410 vor Extraktion unabhängig SHA256c8143bf1f6987bc5ae1aa525b3caa41f7bcd489ed4ae82e85780d5b6b79b8393 verifiziert.
+
+**Einziger neuer Strang:** fix/reference-offline-test-baseline, von unverändertem main0db6863a; ausschließlich Testvorbereitung, keine App-/SW-/Finanz-/Storageänderung. Vor synthetischer Datenseedung auf appseitig registrierten aktivierten Worker warten, leeres Dokument neu laden, tatsächliche Kontrolle durch exakt sw.js und exakten unveränderten Blankrecord verlangen; Registrierungsphasen protokollieren. Kein manuelles SW-Register, kein Retry/Sleep/Timeoutplus. Ursprüngliche spätereController-, echteOfflinecommit-/Reload-/CAS-/Backup-/Restore-/Undo-/Finanzassertionen unverändert erhalten. Lokale gezielte Prüfung läuft; danach gesamte volleCI und gesicherterreviewbarer Folge-PR. SpäterePR-Freigabegrenze des Nutzers nicht aus198 erweitern.
+
+**Exakte Fortsetzung:** Testvorbereitung in allen3Engines gezielt prüfen, separat committen/pushen/PR und volleGates abnehmen, Fehlerhistorie/Checkpoint sichern. Keine parallelePerformanceimplementierung beginnen. Nach nötiger Folgefreigabe Main-/Pages-/SW212-/tatsächlicheLivegates abschließen.
+
+PERF01-Vorhermessung auf unverändertemReleasecode gesichert (fb015b13); portable gleichwertige Wiederholungsmessung ebenfalls lokal vorhanden, noch keine Optimierung. PERF01 bleibt essentielleP1 vorP3; FLH05/PROJ01 OPEN/PARKED. Alle übrigenMaster-/Originalbeleg-/OAuth-/Hardware-/AT-/Releaseverträge unten erhalten. HistorischenDokumentationsbranch niemals nachmain mergen.
+
+---
+
 ## PERF01 vergleichbare Vorher-Messung gesichert · 29.10.2026
 
 Auf unverändertem main0db6863a (PR198-Releasecode) ausschließlich vorbereitend gemessen: docs/release-evidence/perf01-unprofiled-startup-before-v212.json in fb015b137101874d92bcc498441a309bc1594ab9. Keine Performanceimplementierung oder zusätzlicher Funktionsbranch während Release198.
