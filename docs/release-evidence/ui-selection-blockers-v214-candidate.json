@@ -3,8 +3,8 @@
   "date": "2026-10-29",
   "pr": 201,
   "branch": "feature/ui-selection-reasons-v214",
-  "head": "8ce2b00f9c23d1c7c278e624bd56ffab004c91dc",
-  "tree": "202f7b0bb62c07e5114e6f8739343880ec4a0539",
+  "head": "b65776a98a387472f4b49ac809f620ac28565bca",
+  "tree": "0293192dcd8f8a8dc9df3315fa1d09d855500864",
   "main": "6ec0cf9c6e28edf1b19993357c3b839106b8aa80",
   "production": {
     "sw": 213,
@@ -92,24 +92,140 @@
   "existingChromiumSuites": {
     "booking": "PASS: preview, direct actions, quota, abort, CAS, actual offline, undo, fresh plain/encrypted restore",
     "referenceRemoval": "PASS: protected start, consent/backup, metrics, quota/abort, offline, undo/restore/CAS",
-    "positionRemoval": "PASS: 201/401 selection, 6 widths, hidden IDs, initial and restored focus, exact quota/abort, CAS, offline, backup/restore",
+    "positionRemoval": "PASS: 201/401 selection, 6 widths, hidden IDs, initial and restored focus, exact quota/abort, CAS, offline, backup/restore; final worker precondition repeated successfully in all three local engines",
     "positionArchive": "PASS: 401 visible/hidden impact records opened explicitly; unchanged economic values/history, quota/CAS/offline/restore"
   },
   "changedSafetySurface": "Presentation only. No core permission/eligibility/CAS/model/storage/financial function changed. Existing 200-booking economic check cap retained, no silent partial removal introduced.",
   "ci": {
-    "mandatory": 40921585526,
-    "wallet": 40921585511,
-    "status": "PENDING"
+    "mandatory": 40922446803,
+    "wallet": 40922446637,
+    "walletResult": "SUCCESS",
+    "mandatoryStatus": "IN_PROGRESS"
   },
   "localIterations": [
     "New initially closed position impact summary had a small target detected by Axe; fixed to44px, no Axe rule disabled.",
     "Position/archive regressions now explicitly open the initially closed impact list, retaining exact 201/401 item counts and all existing content/finance/safety assertions.",
-    "Initial local WebKit process failed before executing due required runtime library path missing. Correct existing FOLIOLAB_WEBKIT_LIBS path restored local launch; no CI or source assertions weakened."
+    "Initial local WebKit process failed before executing due required runtime library path missing. Correct existing FOLIOLAB_WEBKIT_LIBS path restored local launch; no CI or source assertions weakened.",
+    "Full CI40921585526 main job123615947393 reached active registration but timed out waiting for actual controller after fixture seed/reload. No blocker/financial assertion failed. Added the already-established PR199 blank-record activation/reload/actual-controller+scriptURL/exact-nonmutation precondition before seeding; all later original controller/offline/backup/CAS/delete assertions retained. Full local Chromium/Firefox/WebKit position-removal suites then PASS. No longer timeout, forced registration, request interception or skipped assertion."
   ],
   "scopeLimits": [
     "Only UX01/02 blocker grouping and related selection/preview copy are addressed. Unified normal/manage mode, Bearbeiten links, archive dropdowns, charts, liquidity, header and booking timeline remain pending.",
     "200% enlargement is synthetic CSS text styling in browser tests; physical hardware, operating-system font settings and assistive technology are not claimed.",
     "UI-M28-K01–K04 and TradingView removal remain OPEN/P2; TradingView responsive optimization SUPERSEDED. No TradingView runtime removal in this PR.",
     "Separate user release approval required for PR201."
-  ]
+  ],
+  "testmerge": "86305943b980548662cf9741d40da842b343403a",
+  "localWorkerProof": {
+    "chromium": {
+      "initial": {
+        "controller": false,
+        "script": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "script": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "script": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "script": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    },
+    "firefox": {
+      "initial": {
+        "controller": false,
+        "script": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    },
+    "webkit": {
+      "initial": {
+        "controller": false,
+        "script": null,
+        "active": null,
+        "installing": null,
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "script": "http://127.0.0.1:4174/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    }
+  },
+  "historicalRuns": [
+    {
+      "head": "43b3925af21a5c523286bcfda06d8898d781e568",
+      "run": 40921013331,
+      "mainFailure": "Archived-position regression expected closed impact content to be visible. Open disclosure explicitly before all original 401 item/content assertions."
+    },
+    {
+      "head": "8ce2b00f9c23d1c7c278e624bd56ffab004c91dc",
+      "run": 40921585526,
+      "mainFailure": "Actual Service Worker controller prerequisite timeout; diagnostic precondition added before fixture seed."
+    }
+  ],
+  "additiveContracts": {
+    "consolidatedUI": "docs/UI_MASTER28_KONSOLIDIERTER_NACHTRAG_2026-10-29.md",
+    "courseAndSettings": "docs/UI_MASTER28_KURSOPTIONEN_NACHTRAG_2026-10-29.md",
+    "android": "docs/UI_MASTER28_ANDROID_PERF_NACHTRAG_2026-10-29.md",
+    "androidState": "BASELINE_PENDING; no real Android hardware accessible/proven; no desktop/synthetic result presented as hardware acceptance"
+  }
 }
