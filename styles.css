@@ -1272,3 +1272,11 @@
 #referenceRemovalBackup{min-height:45px;max-width:100%;white-space:normal;overflow-wrap:anywhere}
 #referenceRemovalPreview{min-width:0;overflow-wrap:anywhere}
 #referenceRemovalPreview .performance-details{min-width:0}
+
+/* Counted blockers share one compact, initially closed detail access. */
+.blocked-reasons-summary{margin:8px 0 0}
+.blocked-reasons-details{margin:4px 0 0}
+.blocked-reasons-details h4{font-size:13px;line-height:1.4;margin:12px 0 4px}
+.blocked-reasons-details p{font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.blocked-reason-identities>summary{min-height:44px;display:flex;align-items:center;font-size:12px}
+.blocked-reasons-details>summary,#positionRemovalItems>summary{min-height:44px;display:flex;align-items:center}
