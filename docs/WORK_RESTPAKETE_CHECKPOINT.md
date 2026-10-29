@@ -1,3 +1,28 @@
+# PR195 Typkorrektur gesichert · neue volle CI erforderlich · 29.10.2026
+
+Korrigierte HEAD `631db63745f349b88d2d5943865f7e39e73c38ee`, Dateibaum `5c606ade88ac83c3a86a781e808ffeaebb4c58a7`
+exakt lokal/Remote auf bestehendem feature/flh03-flatex-native-projection/PR195.
+Nur Zieltypen ETF/Aktie/Fonds zugelassen; EUR/ISIN allein akzeptiert keine crypto/
+cash/other-Position mehr. Drei synthetische Gegenbeispiele im Unit- UND tatsächlichen
+Browserpfad ergänzt, keine Assertions/Gates gelockert. Finale lokale937Units
+Node20/0Fehler/Skip, Syntax, Chromium-Offline-/Backfill-/Replay-/Manual-/Undo-/
+Primär-Nullmutations-/separater-CASlauf PASS; Gegenbeispiel ausdrücklich jetzt blockiert.
+
+Voriger Stand7274797f: CI40837424918 und Wallet40837424785 regulär SUCCESS beendet,
+aber wegen unabhängigem Quellreview-Typbefund ausdrücklich nicht abgenommen.
+Keine Laufunterbrechung/Retry/Parallelarbeit. Native Projektion und privater
+Originalvergleich unverändert, da Korrektur ausschließlich Zieltypqualifizierung
+betrifft. Produktion main3e9f4877/v204 bleibt unverändert.
+
+Status IN_PROGRESS bis neuer tatsächlicher CI/Wallet-/3Engine-/Quell-/Artefaktabnahme
+für diese korrigierte HEAD. Exakt nächster Schritt neue Läufe ermitteln, regulär
+beenden lassen, tatsächliche Berichte mit Zieltyp-Gegenbeispielen/testedSHA/Digests
+prüfen und finale Kandidatenabnahme dauerhaft sichern. Keine aktive UI/Finanz-/
+Übernahme-/Releasefreigabe. Zentrale frühere Quellen/Auditbefunde bleiben historisch
+erhalten. UI-MASTER28/DELETE-MASTER28/übrige Roadmap unverändert, Gesamtmaster PARTIAL.
+
+---
+
 # PR195 Quellreviewbefund vor Abnahme · 29.10.2026
 
 Kandidat7274797f/Bauma48eb56b unverändert, Pflicht-CI40837424918 läuft regulär, Wallet40837424785 SUCCESS. Eigener synthetischer Gegenbeispieltest im Quellreview: Position.kind crypto/other mit EUR/ISIN wurde von prepareNativeFlatexPreview als eligible akzeptiert; cash wird schon im gemeinsamen Kern blockiert. Dies verletzt den vorab vereinbarten ausschließlichen Wertpapierumfang. **Keine Kandidatenabnahme/Mergefreigabe für diesen Stand**, auch bei grüner CI.
