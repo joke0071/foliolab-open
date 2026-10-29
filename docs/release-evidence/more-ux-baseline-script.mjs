@@ -1,4 +1,3 @@
-// Reproduce from matching app root with python3 -m http.server 4176.
 import assert from 'node:assert/strict';import {chromium} from 'playwright';import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
 const b=await chromium.launch({headless:true,args:['--no-sandbox']}),c=await b.newContext({viewport:{width:390,height:700}}),p=await c.newPage();await c.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});const report={scope:'Synthetic More UX baseline on unchanged PR202 tree; Chromium emulation only, no hardware or OAuth operator acceptance',states:[]},errors=[];p.on('pageerror',e=>errors.push(e.message));mkdirSync('artifacts/more-ux-baseline',{recursive:true});
 const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
