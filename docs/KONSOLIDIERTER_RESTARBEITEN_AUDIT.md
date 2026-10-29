@@ -1,3 +1,17 @@
+# PERF01 gemessen und technisch abgenommen · PR200 reviewbereit · 29.10.2026
+
+**Gesamtmaster PARTIAL. UI-v212 DONE / LIVE_ACCEPTED; PERF01-Kandidat TECHNICALLY_ACCEPTED / RELEASE_APPROVAL_PENDING.**
+
+- Produktion bleibt v212/SW212 auf main `fee4fc5de4c57fee6643d30f20798c35b2b8807b`; PR198/199 live abgenommen durch Pipeline [40907781116](https://github.com/joke0071/foliolab-open/actions/runs/40907781116), 948 Tests und drei Browser, 120 tatsächliche Asset-/SW-Hashes.
+- [PR200](https://github.com/joke0071/foliolab-open/pull/200), Branch `feature/perf01-date-validation-cache`, HEAD `870f4c0773e6ba95371e8b4e89865ac5a6754cbc`, SW213 unveröffentlicht. Strenge kanonische Datumsvalidierung mit maximal 16.384 seitenlokalen Boolean-Ergebnissen wiederverwendet; keine finanziellen Ergebnisse, Preise/FX oder Portfoliozustände gecacht, keine Speicher-/Schema-/Berechnungsänderung.
+- [Pflicht-CI40911278126](https://github.com/joke0071/foliolab-open/actions/runs/40911278126) und [Wallet-CI40911278522](https://github.com/joke0071/foliolab-open/actions/runs/40911278522) SUCCESS. 950/950 Unit, Syntax, Chromium/Firefox/WebKit einschließlich 16.410-Tage-Verdrängung, strikter Kalender-/Preis-/FX-Guards, frischer Korrektur und exakter Nichtmutation. Bestehende CAS-/Mehrtab-/Backup-/Restore-/Undo-/Offline-/Import-/Referenzverträge bestanden.
+- Reproduzierbarer 1.000-Positionen/1.825-Referenzen-PWA/IndexedDB-Stresstest: kalter Median 3113,9→1542,8 ms (-50,45%); separate direkt aufeinanderfolgende A/B-Bestätigung 3624,2→1665,4 ms (-54,05%). Je fünf frische Chromium-Prozesse, identisches Benchmarkscript und Umgebung, zusätzliche Warm-/Offline-Läufe, exakte Originaldatenprüfung. ≥30%-Ziel für diese großen synthetischen Fixtures erreicht. Kleine Offline-Kontrollserie 394,9→400,9 ms (+1,52%, überlappende Bereiche); keine allgemeine Hardware-/Wallet-/Privatportfolio-Garantie.
+- [Vollständige Rohmessungen und finale Maschinenbelege](https://github.com/joke0071/foliolab-open/blob/82d4b512888072b94e75fe9653c5e07401ce5f5b/docs/release-evidence/perf01-date-validity-candidate.json); ZIP-Digests vor Extraktion geprüft, tatsächliche Reports und Browserbilder kontrolliert.
+- Nächste Fortsetzung: eigene Nutzerfreigabe für unveränderten PR200 einholen, danach HEAD/main/Testmerge/Pflichtgates erneut prüfen, kontrollierter Merge und vollständige Main-/Pages-/Live-Abnahme SW213. Die Freigabe für PR199 gilt nicht automatisch für PR200.
+- Sämtliche UI-Aufgaben bleiben bei ChatGPT Work; Issue197 abgeschlossen, keine Claude-Implementierung. FLH03/DELETE/Recovery/FLH04 und restlicher UI-Master gemäß bisheriger Priorisierung erhalten; Originalbeleg-/OAuth-/Operator-/Hardwaregrenzen bleiben offen. FLH05 und FLH-PROJ01 ausdrücklich OPEN / PARKED. Historischen Dokumentationsbranch niemals nach main mergen.
+
+---
+
 # UI-v212 produktiv abgeschlossen · PERF01 ist nächster P1-Schritt · 29.10.2026
 
 **PR198 und PR199 DONE / LIVE_ACCEPTED.** mainfee4fc5de4c57fee6643d30f20798c35b2b8807b, produktiv v212/SW212. Vollständige Main-/Pages-/Livepipeline40907781116 SUCCESS:948Units, dreiEngines,120exakteLive-Assethashes, tatsächliche Worker-/UI-/Referenz-/Rücknahme-/Native-/CAS-/Backup-/Restore-/Offlineberichte und Produktionsbilder geprüft. DauerhafterBeleg [ui-v212-live-accepted.json](release-evidence/ui-v212-live-accepted.json) in1401b512309962c7b704a55755df5e740d18f926. Checkpoint244d92c9 remoteverifiziert. Der ursprüngliche Offline-Testblocker bleibt historisch dokumentiert und ist im tatsächlichen Releaseabschluss erledigt.
