@@ -52,8 +52,8 @@ try {
    const summary=await page.locator('#summaryStats').innerText();
    for(const heading of ['Wertpapiere','Guthaben','Kryptowährungen','Veränderung'])assert.match(summary,new RegExp(heading));
    assert.ok(await page.locator('#miniChart .chart-y-labels').isVisible());
-   const axis=await page.locator('#miniChart .chart-y-labels').innerText();
-   assert.match(axis,/Tsd\.|€ \d/);
+   const axis=await page.locator('#miniChart .chart-y-labels span').allTextContents();
+   assert.deepEqual(axis,['930 €','818 €','705 €'],'readable EUR labels retain the fixture bounds and rounded middle tick');
  }
  await page.setViewportSize({width:390,height:850});
  await page.locator('#mobileNav [data-page="history"]').click();
