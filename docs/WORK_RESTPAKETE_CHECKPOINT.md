@@ -1,3 +1,41 @@
+# PR194 native Betragsprüfung gesichert · volle CI läuft · 29.10.2026
+
+Einziger Funktionsbranch feature/flh03-flatex-native-amounts, HEAD `75222b4fa8bfb65cb5a59ca46e2a54dd61fe96f9`,
+Dateibaum `f7cf55687ec2995b1ce180e0a2de2581ad81dcf7` exakt lokal und Remote; [PR194](https://github.com/joke0071/foliolab-open/pull/194) offen.
+Vertrag d91b4586 vor Code gesichert; main2b6ec815/v203 LIVE_ACCEPTED unverändert.
+PR193 bereits erledigt, nur geparkte157/161 daneben; keine Fremdbranchänderungen vor Push.
+Zentraler Checkpointbranch feature/flh05-import-foundation; dieser Stand dauerhaft gesichert.
+
+Implementiert: reine native1:1-Betragsprüfung im bestehenden Modul mit gemeinsamem Legacy-
+Rechenkern; vorhandene Order-/Identitäts-/Decimalgates, alle Quellen/Reviewgruppen erhalten,
+Stück-/Nominal-/Währungs-/Produktpräzisionsschutz. ready/writeEnabled/costsVerified false.
+Keine UI-/Finanz-/Storage-/Backupintegration und keine Gebühren-/Steuer-/FX-Ableitung.
+SW204 unveröffentlicht.7Dateien,215Additionen/12Entfernungen, unveränderte Workflows/Pins/Gates.
+
+Node20 und Node24 jeweils914PASS/0Fehler/Skip,12neue synthetische Fokusfälle plus Legacy-
+Regression einschl. unverändertem Legacy-Rundungsverhalten, Syntax PASS. Chromium neuer
+echter SW-Offline-/IDB-/Revisions-/Settings-Nullmutations-/Guardlauf PASS,0externe Requests.
+Privater unabhängiger Python-csv/Decimal-Originalvergleich gegen Helfer PASS; alle Zeilen
+erhalten, Originale unverändert; keine Originalwerte/Zeilen/IDs/Zeiträume/Fingerprints in Repo/CI.
+Ein lokaler Testfixturefehler (wiederverwendete Bank-ID der unassigned-Zeile) korrigiert,
+ohne Assertions abzuschwächen; keine aktuelle rote lokale Prüfung.
+
+Aktuelle Läufe: 40818068885 FolioLab Open – testen und veröffentlichen; 40818068877 Wallet scan checks.
+Status IN_PROGRESS bis aktuelle volle Pflicht-CI/Wallet, tatsächliche Drei-Engine-Berichte,
+ZIP-Digests/tested-sha und finaler Quellbaum geprüft sind. Kandidatencheckpoints in PR
+beschreiben vorherigen Stand; dieser zentrale Checkpoint bleibt maßgeblich.
+
+Exakt nächster Schritt diese Läufe regulär beenden lassen; neue tatsächliche Chromium-/
+Firefox-/WebKit-Betragsberichte inkl. Offline/Nullmutation und genaue Artefakte prüfen,
+Kandidatenabnahme + nächsten bestehenden Fachschritt dauerhaft sichern. Kein Merge/
+Deployment in diesen zwei Etappen Vertrag + geprüfte reine Grundlage; UI-/kontobezogene
+Staginganbindung und separater kontrollierter Release später. Keine wirtschaftliche
+Import-/Kosten-/Bestands-/Cashflow-/Historien-/Performancefreigabe.
+UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/ursprüngliche Roadmap unverändert,
+historischerStart01.01.2022/keine Fiktionen, PROJ01 Backlog. Gesamtmaster PARTIAL.
+
+---
+
 # FLH03 native Betragsprüfung: Vorabvertrag gesichert · 29.10.2026
 
 Auf unverändertem main2b6ec815/v203, nur geparkte157/161, keine laufenden Actions. Wiederaufnahme0fa1049d dauerhaft gesichert. Native Originalmetadaten unverändert; zwei Originaldateien privat außerhalb des Git-Arbeitsbaums lesend materialisiert. Vorheriger Order-Sollbeleg bleibt gültig; neue private Referenzprüfung betrifft exakte Betragsarithmetik. Keine privaten Inhalte/Hashes im öffentlichen Vertrag.
