@@ -1,3 +1,26 @@
+# Aktueller Releasezustand und abgesicherte Fortsetzung · 29.10.2026
+
+| Bereich | Verbindlicher Stand |
+| --- | --- |
+| PR198 | Vom Nutzer ausdrücklich freigegeben und als main0db6863ae81eec1821ea54878a1cf28e8f7bcf0e gemergt |
+| Veröffentlichung | Main-CI40901665578 scheiterte vor Offline-Referenzcommit am fehlenden Worker-Controller; Deploy/Live korrekt übersprungen. **SW212 noch nicht LIVE_ACCEPTED** |
+| Produktion | Direkt erneut bestätigt weiterhin **v211 / SW211**, letzter abgenommener Release PR196 |
+| Reparatur | [PR199](https://github.com/joke0071/foliolab-open/pull/199), reviewbereit, HEAD36df866e296c80add2d596665fb098b94162a081, Baumbaa7b3805cb6813d6b58bd331e3b94f0f0e156bb |
+| Umfang199 | Ausschließlich eine Testdatei: appseitig aktivierten Worker, kontrolliertes leeres Dokument und exakten unveränderten Blankrecord vor Fixtureseedung verlangen. Alle ursprünglichen Offline-/Finanz-/CAS-/Restoreassertionen erhalten; sämtliche App-/SW212-Bytes unverändert |
+| Abnahme199 | Pflicht40904401167 und Wallet40904401243 SUCCESS; 948/948 Units, Syntax und alle 3 Browser-Engines. Tatsächliche Workerprotokolle/ZIPdigests/Bilder und wirtschaftliche Regressionsberichte gelesen |
+| Nächste Grenze | Eigene Merge-/Deploymentfreigabe für Folge-PR199 erforderlich. Die erteilte198-Freigabe nicht erweitern |
+| Gesamtmaster | PARTIAL; UI-Zuständigkeit vollständig Work, Issue197 geschlossen. FLH05/PROJ01 OPEN/PARKED |
+
+Permanente Belege: [ursprünglicher gestoppter Release](release-evidence/ui-v212-main-offline-precondition-failure.json), [final abgenommener Testkandidat199](release-evidence/reference-offline-baseline-candidate.json), letzter Kandidatenbeleg-Commit385d033073f7f6dd40269c0eac0c4a3e0a8f39dc. Der ursprüngliche Fehlversuch zeichnete Registrierungsphasen nicht auf; genaue historische Browser-/Produktursache nicht behaupten. Neue Telemetrie zeigt in Chromium/Firefox/WebKit installing/controllerfalse → aktiviert → tatsächlich kontrolliert. Keine manuelle Workerregistrierung, Sleeps, Retries, Timeoutsteigerung oder gelockerte Prüfung.
+
+Nach eigener199-Freigabe unveränderten HEAD/Base/Actions/Writer erneut prüfen, Testkorrektur kontrolliert mergen, volle Main-/Pages-/tatsächliche 3-Engine-Liveabnahme einschließlich SW212 und Assetgleichheit durchführen und dauerhaft sichern. Erst danach den nächsten Funktionsschritt beginnen.
+
+**FLH-PERF01 bleibt essenzielle P1 vor P3.** Vergleichbare unprofilierte Vorherdaten sind gesichert: [Baseline](release-evidence/perf01-unprofiled-startup-before-v212.json), [portabler Benchmark](release-evidence/perf01-startup-benchmark.mjs). Identischer quellhashgebundener Wiederholungslauf bei1000Positionen/1825Referenzen: Median kalt3113,9ms, warm2882,0ms, offline3086,8ms; sämtliche Records/Settings/Revisionen unverändert. Größter zuvor gemessener CPU-Hotspot: wiederholte Datumsvalidierung. **Noch keine Performanceimplementierung/30%-Verbesserung.** Keine parallele Performanceentwicklung während des Releaseblockers.
+
+Alle offenen UI-MASTER28-/FLH03-/DELETE-/IndexedDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-/P0-/P1-/BENCH-Verträge bleiben erhalten. Historische Angaben darunter werden durch diesen Kopf und den neuesten zentralen Checkpoint übersteuert; keine Anforderungen oder Belege gelöscht. Historischen Dokumentationsbranch niemals als Appcode nachmain mergen.
+
+---
+
 # Gesicherter Stand nach UI-Rückübernahme · 29.10.2026
 
 | Bereich | Aktueller Stand |
