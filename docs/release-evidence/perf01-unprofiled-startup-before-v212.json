@@ -1,0 +1,74 @@
+{
+  "sha": "0db6863ae81eec1821ea54878a1cf28e8f7bcf0e",
+  "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "runs": 5,
+  "scenarios": [
+    {
+      "positions": 19,
+      "references": 1825,
+      "coldMs": [
+        600.6999999992549,
+        570.1999999992549,
+        631.1999999992549,
+        580.2000000011176,
+        567.5
+      ],
+      "warmMs": [
+        438,
+        446,
+        429,
+        426.90000000037253,
+        389.40000000037253
+      ],
+      "offlineMs": [
+        386.69999999925494,
+        459.7000000011176,
+        391.7000000011176,
+        392.69999999925494,
+        386.90000000037253
+      ],
+      "coldMedianMs": 580.2000000011176,
+      "warmMedianMs": 429,
+      "offlineMedianMs": 391.7000000011176,
+      "exactRecordUnchanged": true
+    },
+    {
+      "positions": 1000,
+      "references": 1825,
+      "coldMs": [
+        3357.4000000003725,
+        3381.699999999255,
+        3544.10000000149,
+        3194.4000000003725,
+        2961.699999999255
+      ],
+      "warmMs": [
+        3138.4000000003725,
+        3434.800000000745,
+        2968.199999999255,
+        3044.4000000003725,
+        3114.699999999255
+      ],
+      "offlineMs": [
+        3000.5999999996275,
+        3427.10000000149,
+        2921.0999999996275,
+        3032.7000000011176,
+        3314.699999999255
+      ],
+      "coldMedianMs": 3357.4000000003725,
+      "warmMedianMs": 3114.699999999255,
+      "offlineMedianMs": 3032.7000000011176,
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+    "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+    "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+  ]
+}
