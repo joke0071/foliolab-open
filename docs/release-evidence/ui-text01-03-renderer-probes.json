@@ -1,0 +1,63 @@
+{
+  "scope": "Pure UI renderer probes on unchanged position-detail source; synthetic only, no network or storage",
+  "checks": [
+    {
+      "id": "UI-TEXT01",
+      "status": "REPRODUCED / P1 OPEN",
+      "evidence": "Valid canonical position with no supplied price has quality=missing, yet detail shows0,00 and fallback Manuell. Renderer leaves model unchanged."
+    },
+    {
+      "id": "UI-TEXT02",
+      "status": "REPRODUCED / OPEN",
+      "available": [
+        7,
+        30,
+        90,
+        180,
+        365,
+        1096,
+        1826,
+        "max"
+      ],
+      "rendered": [
+        "7",
+        "30",
+        "90",
+        "180",
+        "365",
+        "1826",
+        "max",
+        "1826",
+        "max"
+      ]
+    },
+    {
+      "id": "UI-TEXT03",
+      "status": "VISIBLE_UNSUPPORTED_CSV_NOT_REPRODUCED / PREPARED_MARKUP_REVIEW_OPEN",
+      "evidence": "Crypto detail currently hides security-only additional tools even with imported history. Keep this guard when removing TradingView; do not expose unsupported crypto import merely by moving prepared markup."
+    }
+  ],
+  "securityThreeYearControl": {
+    "available": [
+      7,
+      30,
+      90,
+      180,
+      365,
+      1096,
+      1826,
+      "max"
+    ],
+    "rendered1096": false,
+    "supportedCSV": true
+  },
+  "supportedSecurityControl": true,
+  "modelUnchanged": true,
+  "reproduction": {
+    "copySourceTo": "artifacts/text-audit-probes.mjs",
+    "command": "node artifacts/text-audit-probes.mjs",
+    "sourceSha256": "f32b61df1699f7c95dcb513a5e73b48a75b885123010a412426cd2fff06a395f",
+    "source": "import assert from 'node:assert/strict';import {writeFileSync} from 'node:fs';\nimport {blankModel,createProvider,createAccount,createPosition,escapeHTML,money,valueEUR} from '../src/model.js';\nimport {positionDetailMarkup} from '../src/position-detail-ui.js';import {availablePositionPeriods} from '../src/position-history.js';import {priceQuality} from '../src/quote-quality.js';\nconst m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC text audit'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC account',type:'securities'},m));\nconst p=createPosition({id:'asset',providerId:'p',accountId:'a',name:'SYNTHETIC BTC',kind:'crypto',symbol:'BTC',coinId:'bitcoin',quantity:1},m);m.positions.push(p);\nconst render=()=>positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});\nconst before=JSON.stringify(m),missing=render();assert.equal(priceQuality(p).state,'missing');assert.match(missing,/0,00/);assert.match(missing,/Kursquelle: Manuell/);assert.equal(JSON.stringify(m),before);\nconst report={scope:'Pure UI renderer probes on unchanged position-detail source; synthetic only, no network or storage',checks:[{id:'UI-TEXT01',status:'REPRODUCED / P1 OPEN',evidence:'Valid canonical position with no supplied price has quality=missing, yet detail shows0,00 and fallback Manuell. Renderer leaves model unchanged.'}]};\nm.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:Array.from({length:10},(_,i)=>({date:(2017+i)+'-01-01',total:100+i}))};\nconst complete=JSON.stringify(m),periods=availablePositionPeriods(p,m),html=render(),visible=[...html.matchAll(/data-position-range=\"([^\"]+)\"/g)].map(x=>x[1]);\nreport.checks.push({id:'UI-TEXT02',status:periods.includes(1096)&&!visible.includes('1096')?'REPRODUCED / OPEN':'FURTHER_REVIEW',available:periods,rendered:visible});\nassert.equal((html.match(/data-action=\"import-price-history\"/g)||[]).length,0);assert.equal((html.match(/CSV-Kursverlauf importieren/g)||[]).length,0);\nreport.checks.push({id:'UI-TEXT03',status:'VISIBLE_UNSUPPORTED_CSV_NOT_REPRODUCED / PREPARED_MARKUP_REVIEW_OPEN',evidence:'Crypto detail currently hides security-only additional tools even with imported history. Keep this guard when removing TradingView; do not expose unsupported crypto import merely by moving prepared markup.'});const supported=positionDetailMarkup({...p,kind:'etf',symbol:'SYNSEC'},m,{esc:escapeHTML,money,quant:String,valueEUR});assert.equal((supported.match(/data-action=\"import-price-history\"/g)||[]).length,1,'supported security control is reachable');const securityPeriods=availablePositionPeriods({...p,kind:'etf',symbol:'SYNSEC'},m);assert.ok(securityPeriods.includes(1096));assert.equal((supported.match(/data-position-range=\"1096\"/g)||[]).length,0);report.securityThreeYearControl={available:securityPeriods,rendered1096:false,supportedCSV:true};report.supportedSecurityControl=true;assert.equal(JSON.stringify(m),complete);report.modelUnchanged=true;writeFileSync('artifacts/text-audit-probes.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));\n"
+  },
+  "positionDetailBlob": "f1f02f13e93f09a4fd839ae53e56c12eb45281b7"
+}
