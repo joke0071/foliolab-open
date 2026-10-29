@@ -1,3 +1,38 @@
+# PR194 Betragsvorschau remote gesichert · volle CI läuft · 29.10.2026
+
+Funktionsbranch feature/flh03-flatex-native-amounts / PR194, HEAD `62d9bb77ca8cdadc8926d16e6d081effdd0da250`,
+Baum `36b6e7a1c8e0593594c6f26ac782bcb31b12b702` exakt lokal/Remote. Kein neuer Branch/PR.
+Vorabvertrag f5119cc8 gesichert. Main2b6ec815/v203 LIVE_ACCEPTED unverändert,
+SW204 weiterhin Kandidat, nur geparkte157/161 daneben, keine Fremdbranchänderungen vor Push.
+
+UI-Anbindung implementiert im bestehenden Dialog/Orderrenderer: Betragsaudit einmal je
+Dateistapel nach bestehendem Generation-/Dialogguard gecacht. Exakte Brutto-/Cash-/
+Differenzwerte nur bei beiden aktuellen Konto-/Quellbestätigungen und quellklarem1:1-
+Beleg. Manual-/Quellen-/Stalekonflikte, unbestätigt und alle fachlichen Prüffälle bleiben
+gesperrt. Bei Kontowechsel vor asynchronem Freshnesscheck sofort alte berechnete Werte
+entfernen; externer Storagekonflikt entfernt ebenfalls die Anzeige. Vorhandene Quelle/
+Paging/Fokus/Details/Submitguards erhalten; keine Persistenz/Finanz-DTOs/Importfreigabe.
+
+920Units Node20/0Fehler/Skip,6neue UI-Fokusfälle zusätzlich zu12Betragsfällen; Syntax PASS.
+Erweiterter tatsächlicher Chromium-Dialoglauf PASS:0/ungeklärte/volle große Dezimalwerte,
+zwei Bestätigungen/Entzug/Kontowechsel/delayed assertCurrent, Manual-/Quellenkonflikte,
+Präzisionssperre,5Breiten/Axe/Overflow/Paging/Fokus/Submit/Asyncgeneration/CAS/Offline/
+exakter IDB-/Revision-/Settings-Nullmutationsschutz, keine externen Requests.
+Lokale neue320-/1440-Betragsbilder tatsächlich angesehen, kein blockierender Befund.
+Ein lokaler Test wurde vor Push korrigiert: echte Orderdisclosures vor innerText-Prüfung
+öffnen; keine Assertionlockerung. Private Grundlagenevidenz wiederverwendet, keine
+Originaldateien erneut gelesen und keine privaten Produktivdaten geändert.
+
+Aktuelle Läufe: 40827149731 FolioLab Open – testen und veröffentlichen; 40827149715 Wallet scan checks.
+UI-/Release IN_PROGRESS bis aktuelle volle CI/Wallet, tatsächliche3Engine-Berichte/
+ZIP-Digests/tested-sha, finale Quell-/Bildabnahme. Exakt nächster Schritt diese Gates
+regulär beenden lassen und aktuelle Artefakte/Bilder prüfen, vor Merge zentral sichern;
+danach kontrollierter Merge/Main-/Pages-/echte Liveabnahme. Keine Gate-/Workflow-/
+Pinlockerung. UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/ursprüngliche Roadmap
+erhalten, Historienstart01.01.2022/keine Fiktionen, PROJ01 Backlog. Gesamtmaster PARTIAL.
+
+---
+
 # PR194 Betragsvorschau wiederaufgenommen · UI-/Releasevertrag · 29.10.2026
 
 Frischer Kollisionscheck180Branches: main2b6ec815/v203 LIVE_ACCEPTED unverändert, PR194 offen mit75222b4f/Baumf7cf5568 maßgeblich, aktuelle volle CI40818068885 und Wallet40818068877 SUCCESS. Nur geparkte157/161 daneben, keine aktiven Actions oder erkennbaren fremden lokalen Writer. Zentralen Checkpoint8168f7f6 rekonstruiert; reine Betragsgrundlage DONE, keine Doppelimplementierung.
