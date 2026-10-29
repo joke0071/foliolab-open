@@ -1,3 +1,15 @@
+# PR203 aktualisierter Testvertrag gesichert · finale CI läuft · 29.10.2026
+
+Aktueller HEAD **057063167a04acd7b66364d4f0c824e6bd8978de**, Tree **0364c9d003750f59a1f6a1482bb79f2a531f3c4d**, Branch fix/native-chart-axis-tooltip-v216. Remote-Ref und lokaler Tree identisch, keine ungesicherten Produkt-/Teständerungen; SW216 unveröffentlicht, Produktion v215/SW215 LIVE_ACCEPTED.
+
+Erster Lauf40944351430 auf d85b5dfd:955Units/Syntax und neue Chartprüfung in Chromium/Firefox/WebKit PASS; beide Cross-Shards vollständig SUCCESS. Mainjob123695648447 scheiterte ausschließlich an altem Dashboard-Regex /Tsd.|€ vor Zahl/, das die neue freigegebene Achsenform nicht akzeptiert. Test-only-Folgecommit ersetzt dies durch konkrete erwartete Werte930 €,818 €,705 €; alle übrigen sechsbreiten Layout-/Kalender-/Wert-/Tooltipprüfungen erhalten, lokal komplette alte Dashboard- und neue7Breiten-Suite PASS. Keine Produktcodeänderung gegenüber dem ersten geprüften Kandidaten, acht Dateien insgesamt. Kein Lauf abgebrochen/cancelled; alte Cross-Shards fertig abgewartet beziehungsweise unverändert auf ihrem SHA weitergelaufen.
+
+[Finale Pflicht40945850048](https://github.com/joke0071/foliolab-open/actions/runs/40945850048) läuft; [Wallet40945850073](https://github.com/joke0071/foliolab-open/actions/runs/40945850073) SUCCESS. [Aktualisierte Maschinenbelege mit Fehlerhistorie](release-evidence/native-chart-axis-tooltip-v216-candidate.json). **Nächster Schritt:** alle Pflichtjobs auf neuem HEAD abschließen, Testmerge/Tree/ZIP-Digests/tatsächliche Reports und Bilder prüfen; erst danach reviewbereit und eigene Releasefreigabe. Keine alte Freigabe übertragen.
+
+Der vollständige appweite16-teilige Text-/Erklärungs-/Funktionsaudit mit UI-TEXT01–10 ist einmalig auf Commit81289830 gesichert, trotz identischer Doppelübermittlung. Vollständiger Mehr-Vertrag bleibt erhalten. UI-TEXT01-P1 fehlender Kurs/pauschale Quelle im Source bestätigt, korrekte Null-/Herkunftsdarstellung folgt als eigener geprüfter Delta-Schritt nach laufendem Schnitt; Finanzlogik unverändert. Alle anderen Text-/Mehr-/Diagramm-/Android-/CI-/Fachverträge nach vorhandener Priorität erhalten. 4×2-Pflicht SUPERSEDED, neue Zeiträume/Sparse-Achse/Diagrammmodi/Chartlabelabbau nicht durch PR203 erledigt. FLH05/PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch nie als Appcode nach main mergen.
+
+---
+
 # PR203 gesichert, volle CI läuft · Textaudit einmalig integriert · 29.10.2026
 
 Produktion weiterhin v215/SW215 LIVE_ACCEPTED, main c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9. PR202 und PR201 in v215 abgenommen, tatsächlicher Produktions-Workerwechsel/alle Cache-Dateihashes/exakter Datenerhalt/Offline PASS; vorheriger PWA-Blocker behoben.
