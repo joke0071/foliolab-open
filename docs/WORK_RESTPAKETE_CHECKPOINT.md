@@ -1,3 +1,17 @@
+# PR201 Livegates grün · PWA-Updatekorrektur PR202 gesichert · 29.10.2026
+
+**PR201: MERGED / DEPLOYED / FRESH_PROFILE_LIVE_GATES_SUCCESS; volle Updateabnahme weiterhin BLOCKED.** main `d037b4876e81c24421022d30865d171da762f328`, SW214 tatsächlich veröffentlicht. [Pipeline40927564281](https://github.com/joke0071/foliolab-open/actions/runs/40927564281) vollständig SUCCESS:953Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und separateLiveabnahme;121 tatsächlicheAssethashes. Drei Main-Beleg-ZIPs und Live-ZIP vorExtraktion SHA256-verifiziert,52Main-/36Live-PASSreports und synthetischeLivebilder geprüft. [Dauerhafte Belege](docs/release-evidence/ui-selection-blockers-v214-live-gates.json). Kompakte Sperrgründe sind real live geprüft, übrigerUIMaster bleibt PARTIAL.
+
+Zusätzliche strikte Updateprobe zeigt bestehendenFehler: neuerVersionscache/aktiverController kann nochalteapp.js/CSS-Bytes ausfrischemHTTPcache enthalten. KeinDatenverlust oderFinanzmutationbeobachtet. Cachelabel-/Controllerprüfungallein genügte nicht; frühereZwischenerfolge durchtatsächlicheByteprüfungüberholt. Keine nachgewieseneZuordnung desAndroid6+2-Befundes zudieserUrsache.
+
+**PR202 DRAFT / CI_RUNNING / SW215 UNVERÖFFENTLICHT:** `fix/pwa-update-fresh-assets-v215`, HEAD `620790477a54e4c5f565af9e83fcb62b9d769fce`, Tree `bb57f1a8417389e8116a46de317ff66441e713c7`. InstallationfordertbestehendeApp-Shell perRequest.cache=reload frischan. NeuerreproduzierbarerRegressionstest: frischeralterHTTPcache, tatsächlicherWorkerwechsel, sämtlicheDateihashes, exakterraw/settings/revision, Offline-Neustartundrealer503-InstallationsabbruchmitweiterfunktionsfähigeralterOffline-App. VorFix CSSHashabweichung, nachFixlokalalle3EnginesPASS;954Units/Syntax/CIPolicyPASS. VierDateien,keineFinanz-/CAS-/Speicher-/Löschberechtigungsänderung. Historischer30SuiteManifestunverändert;neuesGatezusätzlichinden3Engines.
+
+[Pflicht40930734405](https://github.com/joke0071/foliolab-open/actions/runs/40930734405) / [Wallet40930734559](https://github.com/joke0071/foliolab-open/actions/runs/40930734559) laufen. [GesicherteKandidatenbelege](docs/release-evidence/pwa-update-fresh-assets-v215-candidate.json). CLI-PushwarwegenfehlendemHTTPS-Loginabgewiesen;GitHubConnectorhatdenselbenTreeveröffentlicht,RemoteHEADverifiziert,lokalenBranchaufRemoteCommitabgeglichen.KeineerfolgreicheCLI-Pushbehauptung.
+
+**ExaktnächsteStelle:** finalePR202CI/Testmerge/Artefakteprüfen,reviewbereitstellen,eigeneausdrücklicheNutzerfreigabefürMerge/DeploymentSW215;PR201Freigabenichtübertragen.DanachvolleMain-/Pages-/Live-/UpgradegatesundzentralenCheckpoint,sodannübrigeUI-P1.DiePWA-KorrekturistnachgewiesenerRelease-/UpdatefehlerimvorhandenenVertrag,keineneueRoadmap.AndroidhardwareEXTERNAL;FLH05/PROJ01PARKED.AllebisherigenUI-/TradingView-/Android-/CI-/FLH03-/FLH04-/Recovery-Nachträgeerhalten.
+
+---
+
 # PR201 deployed · zusätzliche PWA-Updateabnahme BLOCKED · 29.10.2026
 
 PR201 mit ausdrücklicher Nutzerfreigabe unverändert gemergt: main `d037b4876e81c24421022d30865d171da762f328`, Tree74aa1231. Pflichtpipeline40927564281:953Units/Syntax/alle3Engines und Pages SUCCESS; reguläre Livepipeline läuft. SW214 ist veröffentlicht. **Noch kein uneingeschränktes LIVE_ACCEPTED.**
