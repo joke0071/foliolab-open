@@ -1,0 +1,115 @@
+{
+  "status": "LOCAL_GATES_PASS / FINAL_CI_PENDING / NOT_MERGED / NOT_DEPLOYED",
+  "date": "2026-10-29",
+  "pr": 201,
+  "branch": "feature/ui-selection-reasons-v214",
+  "head": "8ce2b00f9c23d1c7c278e624bd56ffab004c91dc",
+  "tree": "202f7b0bb62c07e5114e6f8739343880ec4a0539",
+  "main": "6ec0cf9c6e28edf1b19993357c3b839106b8aa80",
+  "production": {
+    "sw": 213,
+    "status": "LIVE_ACCEPTED",
+    "run": 40916302834
+  },
+  "candidateSW": 214,
+  "unit": {
+    "passed": 953,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "localReports": {
+    "chromium": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic grouped blocker presentation; original eligibility and exact stored record unchanged",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "8 identical legacy reasons once",
+            "100 imported booking blockers compact",
+            "205 check cap and Gmail reset intact",
+            "mixed categories count unique identities",
+            "position preview closed and nondeletable",
+            "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+          ]
+        }
+      ]
+    },
+    "cross": {
+      "base": "http://127.0.0.1:4174/",
+      "scope": "Synthetic grouped blocker presentation; original eligibility and exact stored record unchanged",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "8 identical legacy reasons once",
+            "100 imported booking blockers compact",
+            "205 check cap and Gmail reset intact",
+            "mixed categories count unique identities",
+            "position preview closed and nondeletable",
+            "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "8 identical legacy reasons once",
+            "100 imported booking blockers compact",
+            "205 check cap and Gmail reset intact",
+            "mixed categories count unique identities",
+            "position preview closed and nondeletable",
+            "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+          ]
+        }
+      ]
+    }
+  },
+  "existingChromiumSuites": {
+    "booking": "PASS: preview, direct actions, quota, abort, CAS, actual offline, undo, fresh plain/encrypted restore",
+    "referenceRemoval": "PASS: protected start, consent/backup, metrics, quota/abort, offline, undo/restore/CAS",
+    "positionRemoval": "PASS: 201/401 selection, 6 widths, hidden IDs, initial and restored focus, exact quota/abort, CAS, offline, backup/restore",
+    "positionArchive": "PASS: 401 visible/hidden impact records opened explicitly; unchanged economic values/history, quota/CAS/offline/restore"
+  },
+  "changedSafetySurface": "Presentation only. No core permission/eligibility/CAS/model/storage/financial function changed. Existing 200-booking economic check cap retained, no silent partial removal introduced.",
+  "ci": {
+    "mandatory": 40921585526,
+    "wallet": 40921585511,
+    "status": "PENDING"
+  },
+  "localIterations": [
+    "New initially closed position impact summary had a small target detected by Axe; fixed to44px, no Axe rule disabled.",
+    "Position/archive regressions now explicitly open the initially closed impact list, retaining exact 201/401 item counts and all existing content/finance/safety assertions.",
+    "Initial local WebKit process failed before executing due required runtime library path missing. Correct existing FOLIOLAB_WEBKIT_LIBS path restored local launch; no CI or source assertions weakened."
+  ],
+  "scopeLimits": [
+    "Only UX01/02 blocker grouping and related selection/preview copy are addressed. Unified normal/manage mode, Bearbeiten links, archive dropdowns, charts, liquidity, header and booking timeline remain pending.",
+    "200% enlargement is synthetic CSS text styling in browser tests; physical hardware, operating-system font settings and assistive technology are not claimed.",
+    "UI-M28-K01–K04 and TradingView removal remain OPEN/P2; TradingView responsive optimization SUPERSEDED. No TradingView runtime removal in this PR.",
+    "Separate user release approval required for PR201."
+  ]
+}
