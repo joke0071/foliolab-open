@@ -1,3 +1,42 @@
+# PR196 letzte CI: Fokusassertion vor Close-Ereignis · Diagnose/Absicherung · 29.10.2026
+
+HEAD5244ff29/Baumb1602a91 unverändert remote. Pflicht40882219353/
+test123476447345 FAILURE in tests/browser-reference-removal.mjs:31:404:
+nach tatsächlich verborgenem Dialog document.activeElement===manageReferences
+noch false. Bestehende Referenzverwaltung und alle vorherigen nativen Import-
+/Übernahmegates im tatsächlichen Log PASS. Finanz-/Revisionsassertionen direkt
+nach dieser Fokusprüfung in diesem abgebrochenen neuenCIteil noch nicht erreicht;
+vorherige vollständige6c361af1-CI und beide lokale5244ff29-Gates bleiben belegt.
+Beide Crossjobs123476447697/123476447709 laufen regulär weiter.
+Keine Abnahme/Retry/Merge/Deployment, main/v208 unverändert.
+
+Quellbefund: createDialogDiscardGuard ruft dialog.close() auf; Rückfokus wird erst
+im separaten close-Event durch app.js:onClose gesetzt. Bisheriger neuer Testhelper
+wartet lediglich auf hidden und behauptet damit keine bereits abgearbeitete
+close-Event-Fokusphase. Das erklärt eine mögliche Terminierungsrace; tatsächliche
+Fokus-ID/Close-Eventphase wurde im ersten Fehllog nicht aufgezeichnet, deshalb
+keine abschließend gemessene Produktfehlerursache behaupten.
+
+**Exakte nächste Aktion:** beide Crossjobs regulär abschließen. Danach gleicherPR,
+ausschließlich neue Testbeobachtung unmittelbar VOR dem erfolgreichen Offline-
+Save registrieren: zusätzlicher once-close-Listener NACH bestehendem Apphandler,
+dort tatsächliche Fokus-ID erfassen. Auf dieses echte Ereignis warten und exakt
+manageReferences sowie tatsächlichen aktuellen Fokus behaupten. Keine pauschalen
+Sleeps, Timeoutsteigerung, Toleranz oder Entfernen der Fokusassertion. So wird
+die reale Post-Close-Bedingung statt einer unbewiesenen hidden-Gleichzeitigkeit
+geprüft; zukünftiger falscher Fokus bleibt harter Fehler samt erfasster ID.
+Produktcode/Finanzlogik/letzter Scrollfix unverändert, daher keine zusätzliche
+SWrevision nötig für reine Testbeobachtung. Tatsächliche lokale Chromium/Firefox-
+Gates danach, separat committen/pushen, neue vollständige finaleCI.
+
+Erst tatsächliche letzte volle3Engine-/Artefakt-/Bildabnahme und permanenter
+Kandidatenbeleg/Checkpoint, dann konkrete Nutzerentscheidung vor kritischem
+Release. PR195-Freigabe nicht erweitern. Alle Master-/Parkierungs-/Historien-
+anforderungen unten vollständig erhalten; Gesamtmaster PARTIAL.
+Keine privaten Originale benutzt, keine produktiven privaten Finanzdaten verändert.
+
+---
+
 # PR196 letzter Kontextfix remote gesichert · SW211 finale CI läuft · 29.10.2026
 
 **PARTIAL bis aktuelle volle Abnahme.** Einziger Funktionsbranch
