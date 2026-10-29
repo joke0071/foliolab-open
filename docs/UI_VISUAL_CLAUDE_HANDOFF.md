@@ -1,3 +1,69 @@
+# Aktuell gültiger Masterstand · 29.10.2026
+
+**PR196 DONE / LIVE_ACCEPTED:** main c08bc1d35b25d72081fb07a61e95532a883fdebe, unveränderter freigegebener Baum0d486119, produktiv v211/SW211. Main/Pages/Live40893805495 vollständig SUCCESS,946/946Units,Chromium/Firefox/WebKit,120exakte Live-Assethashes und tatsächliche Referenzrücknahme-/Native-Übernahmeberichte. Dauerhafter Maschinenbeleg [reference-removal-live-v211.json](release-evidence/reference-removal-live-v211.json), Commit53fdbafcfc8e8b71d63bb73ea50b500db04c008b. Keine universelle DELETE-/Folge-PR-Freigabe.
+
+**UI-VISUAL-CLAUDE: AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK.** Ausdrückliche Nutzerentscheidung: exklusive Claude-Implementierungsdelegation samt Work-Sperre vollständig aufgehoben. Work übernimmt sämtliche offenen UI-/UX-Aufgaben. Claude lieferte laut Nutzer ausschließlich unabhängigen read-only Audit, keinen Code/Branch/PR. Keinen weiteren Claude-Lauf starten. Historische Delegationstexte darunter sind überholt und bleiben nur als Nachweise erhalten.
+
+Die acht zusätzlichen Sonnet-Kandidaten UI-A01–A08 und der vollständige A–I-Restvertrag stehen im aktuellen Kopf von [UI_VISUAL_CLAUDE_HANDOFF.md](UI_VISUAL_CLAUDE_HANDOFF.md); Umsetzung unter bestehendem UI-MASTER28/#149, keine zweite Roadmap. P1 kompakte Beträge/echte44px-Ziele; P2 Kontrast/Zeiträume/Donutfokus, mobile Zeilen nur bedingt; P3 Willkommen/Leerraum nach belegtem Nutzen. Bereits erledigte UI überspringen. Eigene vorläufige Ausgangsmessung [pr196-followup-baseline.json](release-evidence/pr196-followup-baseline.json) bestätigt A01/A02/A04; übrige Kandidaten vor Umsetzung verifizieren.
+
+**FLH-PERF01 essentielleP1**, echte große IDB-Startperformance/30%-Medianziel, Erst-/Warmstart getrennt messen; nicht hinter optionalerP3 verzögern. FLH03/DELETE/IDB-Recovery/FLH04 und sämtliche ursprünglichen Anforderungen/Originalbeleg-/OAuth-/Hardware-/AT-/Releasegates bleiben erhalten. **FLH05/FLH-PROJ01 OPEN/PARKED.** Gesamtmaster PARTIAL. Keine parallele Implementierung, keine historischen Dokumentationsbranches nach main mergen; jede Etappe und separaten Checkpoint remote sichern.
+
+---
+
+# UI-Rückübernahme und verbindlicher Master-Nachtrag · 29.10.2026
+
+Status **UI-VISUAL-CLAUDE: AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK**.
+
+Ausdrückliche neue Nutzerentscheidung: Die bisherige exklusive Implementierungsdelegation und jede daraus abgeleitete Work-UI-Sperre sind vollständig aufgehoben. ChatGPT Work verantwortet wieder sämtliche offenen UI-/UX-Arbeiten einschließlich fachgebundener Sicherheits-UI. Kein weiterer Claude-Codinglauf. Laut Nutzer ausschließlich unabhängiger read-only Sonnet5.5-Audit; kein Claude-Code/Branch/PR zu übernehmen. Historische Delegationstexte darunter bleiben ausschließlich als Nachweise erhalten und sind keine aktuellen Sperren.
+
+Gesamtmaster **PARTIAL**. Weiterhin ein Master/Checkpoint, kein paralleler Implementierungsstrang, keine neue konkurrierende Roadmap. Historischen Dokumentationsbranch niemals als Appcode nach main mergen. Bereits vorhandene Anforderungen, Releasebelege und Sicherheitsgrenzen bleiben erhalten.
+
+## Sonnet-Audit und bestehender UI-MASTER28
+
+Vom Nutzer übermittelte externe Prüfung: damaliger main6fe75a99, Chromium, synthetische Daten, Übersicht/Verlauf/Positionen/Buchungen/Mehr,320/390/430/768/1440px, leer/gefüllt,50Zustände ohne horizontalen Overflow. Keine externe Vollabnahme für Firefox/WebKit, vergrößerten Text, kleine Höhen oder CI. Befunde vor Implementierung gegen neuesten Code reproduzieren; keine Hardware-/iOS-/Android-/TalkBack-/VoiceOver-Abnahme daraus ableiten.
+
+| ID | Priorität / Kandidat | Verbindliche Umsetzung und Prüfumfang |
+| --- | --- | --- |
+| UI-A01 | P1 kompakte Beträge/Achsen | Bestehende Formatter wiederverwenden; ausreichend präzise und unterscheidbar, dynamische Stellen; exakter Donutwert direkt oder zugänglich; doppelte Achsenlabels vermeiden. Regression983,10/1000/1010/1059/9999/Millionen/negativ/unbekannt. Nur Darstellung, keine gespeicherte Präzision/Berechnung ändern. |
+| UI-A02 | P1 Touchziele | Echte bedienbare Bereiche messen, relevante Aktionen mindestens44x44CSSpx; link-button/Kalender/Kopfaktionen/Filterchips, keine Überlappung.320px-Siebenspaltenkalender gesondert lösen. Scoped CSS, keine pauschale globale.btn-Änderung. |
+| UI-A03 | P2 kleiner Textkontrast | Sichtbare berechnete Farben/Overrides messen: Wochentage/historyCalendarHint/Wizardkatalog/fehlender Kurs/field small/subtle/chart-caption. Normaltext mindestens4,5:1 soweit erforderlich, bestehende Palette. |
+| UI-A04 | P2 Zeiträume/Diagrammleerzustände | Max-Umbruch390px reproduzieren,320/390/430px; kompakte einzeilige oder ausgewogene Rasterdarstellung. Zeiträume/Auswahl/Filtergrenzen erhalten. Nur echte Leerzustände verdichten, keine Chartberechnung ändern. |
+| UI-A05 | P2 bedingt mobile Positionszeilen |320px getrennte Iconzeile nur bei tatsächlichem Vorteil ändern; Titel/Aktionszugang/44px/Auswahl-/Archivvertrag erhalten. Keine zweite Auswahlengine/Löschlogik. |
+| UI-A06 | P3 Willkommenskarte | Vier Aktionen auf Gleichmäßigkeit/Lesbarkeit prüfen,2x2 oder kompakte mobile Anordnung nur mit tatsächlichem Vorteil; Wizard/Navigation erhalten. |
+| UI-A07 | P2 Donutfokus | allocation-segment Tastaturfokus sichtbar machen falls bestätigt; SVGgeometrie/Clipping/Firefox/WebKit prüfen. Keine Allokationsberechnung ändern. |
+| UI-A08 | P3 leerer Verlauf | Nur belegte überflüssige Höhe bei leerem Portfolio reduzieren; Hinweis/Hauptaktion erhalten, belegte Diagramme unverändert. |
+
+Alle Kandidaten bleiben unter bestehendem UI-MASTER28/#149. Status zunächst **OPEN / VERIFY**, keine pauschale Bestätigung der acht Befunde. A01-Quellabgleich bestätigt drei Formatter mit nur einer Kompaktdezimalstelle; eigener vorläufiger Chromium-Leerscan auf releasec08bc1d3 bestätigt zu kleine Kopfaktionen/Filter/Links,25Zustände ohne Overflow. Das ersetzt keine gefüllte/3Engine-/Kalenderabnahme.
+
+Vollständiger verbleibender UI-Vertrag A–I:
+- A Typografie: Schriftfamilie/-größen/-gewichte/Zeilenhöhen, Überschriften/Hilfe/Buttons/Zahlen/Datum/Tabellen/Dialoge/Akkordeons konsistent; bereits Vereinheitlichtes erhalten.
+- B Übersicht/Verlauf: Karten/Trennlinien/Chartachsen/Tooltips/Datenbasis/Zeiträume/Leer-Teilzustände/Rendite-Geldflüsse/Liquidität/Anbieter-Konten, Fachwerte unverändert.
+- C Positionen/Buchungen: direkte Aktionen, Gmail-Auswahlengine/kompakte Leisten/Archiv-Restore/Edit-Delete/Status/Touch-Tastatur/Mobile erhalten.
+- D Referenzen: Normal-/Verwaltungsmodus/Verwalten-Fertig/Auswahl/Archiv/Mobile/Aktionen/Fehler/sichere Vorschau; CAS/Backup/Undo/Bestätigung nicht schwächen.
+- E Erträge/Abzüge/Transfers: kompakte Kennzahlen/Zahlen/unbekannte Werte/Leerzustände/gesperrte Aktionen/Akkordeons; vorhandene Fachlogik erhalten.
+- F Erststart/Import: leeres Portfolio/Anbieter/Konto/Position/Importvorschau/Voraussetzungen/nächste Schritte; v193-Kontofortsetzung/FolioLab-Marke nicht erneut bauen.
+- G Einstellungen: Quellen/Anbieter-Konten/API/Wallet-Blockchain/Backup/Drive/Experten hierarchisch konsistent; keine API-/Security-/Storageänderung.
+- H Mobile/A11y:320/390/430/768/1440px, kurze Höhen, Tastatur/Fokus/44px/Kontrast/Textvergrößerung/Overflow/Dialogscroll/offene Akkordeons/Screenreaderlabels. Emulation und echte Hardware/AT getrennt.
+- I AUD04/#157: bestehenden Dirty-Dialog-/Navigationvertrag respektieren; keine universelle beforeunload-/Cross-Origin-Lösung ohne belastbare neue Ursache und passende Freigabe.
+
+Schon erledigt, gegen aktuellen Code erhalten: Vermögen-/Willkommenskartenabstand, Verlaufstrennlinien/3Icons, kompakte Datenbasis/7T–Max/gemeinsamer Wochenfilter, Liquidität nach Anbietern/letzte Anbieterlinie, Gmail-Mehrfachauswahl/Buchungsaktionen/mobile Historienansichten, Kontofortsetzung/FolioLab, Referenzarchiv+Restore, Achseneinheiten sowie vorhandene Recovery-/Kontrast-/Leerfixes. Historische OPEN-Zeilen allein sind keine Implementierungsaufträge.
+
+Begrenzter UX-Abschlusscheck der fünf Ansichten mit synthetischen Portfolios: Auffindbarkeit, Führung, Muster, Dichte, Mobile, Feedback, fehlende Kurse/Teilgeschichte, Geldbeträge, A11y, Fokus/Scroll. Nur reproduzierbare Deltas; keine unbegrenzte neue Auditphase.
+
+## Priorität, Sicherheit und übriger Master
+
+Nach sicherer produktiver PR196-Abnahme: Zuständigkeit/Issue197 sichern; kleine zusammengehörige P1-Pakete Beträge/Touch, danach P2 Kontrast/Zeiträume/Donutfokus/gegebenenfalls Positionsaktionen, bestätigte übrige UI-Deltas. **FLH-PERF01 essentielleP1 nicht hinter optionaler P3-Kosmetik verzögern.** P3 Willkommen/Leerraum zuletzt sinnvoll bündeln.
+
+FLH-PERF01: tatsächliches großes IndexedDB-Portfolio, reproduzierbare Vorhermessung/Median/Interaktivität, Initialisierung/Abfragen/Indexe/Rendering/Mainthread/Chunking-Lazy prüfen. Ziel mindestens30% niedrigerer medianer Appstart soweit messbar ohne Qualitätsverlust. Offline/CAS/Mehrtab erhalten; CI-Laufzeit ist kein Ersatz.
+
+FLH03 native FlatexAT/Bittr/Kraken/Bitpanda/LedgerLive/weitere belegbare Anbieter, Rekonstruktion/Reconciliation/sichere wirtschaftliche Übernahme bleiben bestehen; nur freigegebene und durch Originalbelege qualifizierte Abschnitte. DELETE-MASTER28 bleibt PARTIAL mit quellbezogenen Abhängigkeits-/Vorschau-/CAS-/Undo-/Backup-/Restore-/Atomaritätsgates; PR196 ist keine universelle Freigabe. IDB-only/Recovery/offline/Migration/Mehrtab erhalten. FLH04 Revisionen/Geräteidentität/Konflikte/Recovery/Verschlüsselung sowie externe OAuth-/Transport-/Operatorgates erhalten. **FLH05 und FLH-PROJ01 OPEN / PARKED**, keine eigenständige Implementierung ohne neue ausdrückliche Entscheidung; notwendige Zukunftskompatibilität ohne Zusatzphase.
+
+VanillaJS/HTML/CSS/PWA/local-first/keine Serverpflicht/zentralen Secrets/unnötigen Dependencies. Keine fremden Branches überschreiben, keine privaten CSVs/Finanzdaten/Keys veröffentlichen. Tests nicht abschwächen. Unit/Syntax/Chromium/Firefox/WebKit/mobile/Axe/Fokus plus Finance/CAS/Backup/Restore/Import und echte Livebytes prüfen. Die PR196-Freigabe gilt ausschließlich unverändertem be860237/SW211; spätere sicherheitskritische Funktionen/PRs behalten eigene erforderliche Releasegrenzen.
+
+Jede sichere Etappe committen/pushen/Remote-SHA verifizieren, separaten zentralen Checkpoint mit DONE/PARTIAL/BLOCKED, Branch/SHA/PR/CI/Liveversion/externer Grenze/exakter Fortsetzung. Vor Limits zuerst sichern, keine neue große Arbeit beginnen. Fehlgeschlagenen Push niemals als remote gesichert ausgeben.
+
+---
+
 # UI-VISUAL-CLAUDE – verbindliche Übergabe · 29.10.2026
 
 Status: **DELEGATED / OPEN, Aktivierung gesperrt**.
