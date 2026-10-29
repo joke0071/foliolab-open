@@ -2,15 +2,15 @@
 const categories=[
  [/Startstichtag|Renditeerfassung/,'geschützte Startstichtage'],
  [/Originalquelle|Aufschlüsselung|Wiederimport sind/,'geschützte Originalwerte'],
- [/Importierte oder unbekannte Herkunft|Herkunft geschützt/,'geschützte Herkunft'],
- [/Wallet|Blockchain/,'Wallet-Verknüpfungen'],
- [/Verknüpfter Vorgang|Gegenbuchung|Transfer|DeFi|Wirtschaftlich.*Position/,'verknüpfte Vorgänge'],
- [/Journal|Referenz|Revision|Identität|Nachweis|Zuordnung/,'ungeklärte Abhängigkeiten'],
- [/Kontrollpunkt|Stichtag/,'abhängige Kontrollpunkte'],
- [/Gebühren|Steuer|Gegenkonto/,'zusätzliche Kosten oder Gegenkonten'],
- [/Mengen|EUR-Beträge|Geldbestand/,'ungeklärte Bestandsnachweise'],
- [/Status|Kapitalfluss/,'ungeklärte Geldflüsse'],
- [/Wirtschaftliche Änderung/,'eingeschränkte Änderungsmöglichkeiten'],
+ [/Importierte oder unbekannte Herkunft|Herkunft geschützt/,'Einträge mit Herkunftsschutz'],
+ [/Wallet|Blockchain/,'Einträge mit Walletbezug'],
+ [/Verknüpfter Vorgang|Gegenbuchung|Transfer|DeFi|Wirtschaftlich.*Position/,'verknüpfte Einträge'],
+ [/Journal|Referenz|Revision|Identität|Nachweis|Zuordnung/,'Einträge mit Abhängigkeiten'],
+ [/Kontrollpunkt|Stichtag/,'Einträge mit Stichtagsbezug'],
+ [/Gebühren|Steuer|Gegenkonto/,'Einträge mit Kostenverknüpfung'],
+ [/Mengen|EUR-Beträge|Geldbestand/,'Einträge mit Bestandsfragen'],
+ [/Status|Kapitalfluss/,'Einträge mit Geldflussfragen'],
+ [/Wirtschaftliche Änderung/,'eingeschränkt änderbare Einträge'],
  [/Automatisch verwaltete/,'automatisch verwaltete Positionen']
 ];
 export function groupBlockedReasons(entries){
@@ -19,7 +19,7 @@ export function groupBlockedReasons(entries){
   labels.set(id,label||id);
   for(const reason of new Set(reasons.filter(r=>typeof r==='string'&&r.trim()))){
    blocked.add(id);
-   const label=categories.find(([pattern])=>pattern.test(reason))?.[1]||'weitere Abhängigkeiten';
+   const label=categories.find(([pattern])=>pattern.test(reason))?.[1]||'Einträge mit weiterem Prüfbedarf';
    if(!groups.has(label))groups.set(label,{label,ids:new Set(),reasons:new Map()});
    const group=groups.get(label);group.ids.add(id);
    if(!group.reasons.has(reason))group.reasons.set(reason,new Set());
