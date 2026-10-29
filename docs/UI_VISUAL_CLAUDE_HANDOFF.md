@@ -1,3 +1,13 @@
+# Konsolidierter UI-Nachtrag übernommen · PR200-Release läuft · 29.10.2026
+
+[Verbindlicher Sollvertrag UX01–10 und vollständige Abnahmematrix](https://github.com/joke0071/foliolab-open/blob/e4ce49d5cba0e9fee2b3acdf03f13b443a0bc5d8/docs/UI_MASTER28_KONSOLIDIERTER_NACHTRAG_2026-10-29.md). Die neuen konkreten Androidbefunde werden gegen aktuelles Produkt reproduziert; vorhandene CSS-Regeln/alte DONE-Vermerke gelten nicht als Gegenbeleg. Bestehende UI-MASTER28-Anforderungen und Sonnet-A01–08 bleiben erhalten.
+
+PR200 ist ausdrücklich freigegeben und mit unverändertem geprüften Tree gemergt: main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`. [Main-/Pages-/Livepipeline40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834) läuft; SW213 noch nicht live abgenommen. Erst PERF01 regulär abschließen, dann UI-P1: Sperrkategorien, gemeinsame Verwaltung/Bearbeiten/Gmail-Auswahl, kompakte Leisten, Tooltips, 4×2-Zeiträume, Liquiditätsleerzustand, kompakte Buchungshistorie, beide redundanten Stichtagsbeschriftungen. Danach P2 einschließlich Archivdropdown, Diagrammmodi/zeitliche X-Achse und Headerstatus; P3 optional. Neue wirtschaftliche Löschpfade separat mit Fachbeweis und Freigabe. Keine zweite Auswahl-/Speicher-/Chartengine.
+
+ChatGPT Work bleibt alleiniger Implementierer. UI-VISUAL-CLAUDE: AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK. Issue197 abgeschlossen. Gesamtmaster PARTIAL; externe Hardware-/OAuth-/Originalbeleggrenzen unverändert; FLH05/FLH-PROJ01 OPEN/PARKED.
+
+---
+
 # Aktuell gültiger Masterstand · 29.10.2026
 
 **PR196 DONE / LIVE_ACCEPTED:** main c08bc1d35b25d72081fb07a61e95532a883fdebe, unveränderter freigegebener Baum0d486119, produktiv v211/SW211. Main/Pages/Live40893805495 vollständig SUCCESS,946/946Units,Chromium/Firefox/WebKit,120exakte Live-Assethashes und tatsächliche Referenzrücknahme-/Native-Übernahmeberichte. Dauerhafter Maschinenbeleg [reference-removal-live-v211.json](release-evidence/reference-removal-live-v211.json), Commit53fdbafcfc8e8b71d63bb73ea50b500db04c008b. Keine universelle DELETE-/Folge-PR-Freigabe.
