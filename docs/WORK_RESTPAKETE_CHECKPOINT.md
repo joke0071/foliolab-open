@@ -1,3 +1,13 @@
+## PERF01 vergleichbare Vorher-Messung gesichert · 29.10.2026
+
+Auf unverändertem main0db6863a (PR198-Releasecode) ausschließlich vorbereitend gemessen: docs/release-evidence/perf01-unprofiled-startup-before-v212.json in fb015b137101874d92bcc498441a309bc1594ab9. Keine Performanceimplementierung oder zusätzlicher Funktionsbranch während Release198.
+
+Ohne CPUprofiler, tatsächliche IndexedDB, installierte kontrollierte PWA, identisches Dashboard1440×900, fünf frische Browserprozesse, jeweils gleicher warmer Dashboardreload und tatsächlicher Offline-Reload. Synthetische19 bzw1000Positionen, jeweils1825Referenzen. Median bei19: kalt580,2ms / warm429,0ms / offline391,7ms; bei1000: kalt3357,4ms / warm3114,7ms / offline3032,7ms. In allen30Startprüfungen exakter Record/Settings/Revision unverändert. Keine direkten echten Nutzerdaten und keine Hardware-/Wallet-Großhistorienabnahme. Noch keine30%-Verbesserung; exakt gleiche Messlogik nach kleinem Optimierungskandidaten verwenden.
+
+Aktueller Release bleibtPR198/main0db6863a/SW212 mit Main/Pages/Live40901665578 in_progress; volle produktive Abnahme zuerst regulär abschließen. Danach bestehende essentielleP1-PERF01 begrenzt am gemessenen Datumsvalidierungs-Hotspot fortsetzen. Übrige Master-/Release-/Parkierungsgrenzen unten bleiben erhalten.
+
+---
+
 # PR198 ausdrücklich freigegeben und gemergt · Release läuft · 29.10.2026
 
 Nutzer hat nach der konkreten Freigabefrage ausdrücklich **„Freigabe“** erteilt: PR #198 / HEAD81cca606 / SW212 darf kontrolliert gemergt und produktiv veröffentlicht werden. Keine erneute Freigabe hierfür erforderlich; keine Erweiterung auf spätere PRs.
