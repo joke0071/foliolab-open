@@ -1,0 +1,21 @@
+{
+  "status": "RELEASE_BLOCKED",
+  "release": "82523b8b20d492167b8de8690b8b1dee7fc13b7a",
+  "run": 40961182315,
+  "job": 123754044793,
+  "engine": "webkit",
+  "test": "tests/browser-pwa-update.mjs:97",
+  "assertion": "complete matching precache",
+  "actual": 0,
+  "expected": 120,
+  "priorFirefoxSameJob": "PASS",
+  "artifact": {
+    "id": 12936126738,
+    "reportedUploadSHA256": "730eb7d765e1676e1e58eb53970454e5a4f895f9581a3b959edfd0624e1c5542",
+    "downloadDigestVerified": false
+  },
+  "cause": "UNRESOLVED; no flaky or product defect conclusion yet",
+  "local": "Browser launch blocked by missing WebKit system libraries; dependency install failed; no local product result",
+  "gates": "No checks weakened; deploy blocked; production not accepted",
+  "failureLogExcerpt": "\n2026-10-29T21:51:49.3772765Z firefox: PWA UPDATE warm HTTP cache/current asset hashes/old cache removal/exact IDB/offline PASS\n2026-10-29T21:51:56.7624603Z node:internal/modules/run_main:123\n2026-10-29T21:51:56.7624855Z     triggerUncaughtException(\n2026-10-29T21:51:56.7625006Z     ^\n2026-10-29T21:51:56.7625074Z \n2026-10-29T21:51:56.7625397Z AssertionError [ERR_ASSERTION]: complete matching precache\n2026-10-29T21:51:56.7625631Z \n2026-10-29T21:51:56.7625704Z 0 !== 120\n2026-10-29T21:51:56.7625794Z \n2026-10-29T21:51:56.7626090Z     at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-pwa-update.mjs:97:45 {\n2026-10-29T21:51:56.7626538Z   generatedMessage: false,\n2026-10-29T21:51:56.7626780Z   code: 'ERR_ASSERTION',\n2026-10-29T21:51:56.7626971Z   actual: 0,\n2026-10-29T21:51:56.7627140Z   expected: 120,\n2026-10-29T21:51:56.7627279Z   operator: 'strictEqual',\n2026-10-29T21:51:56.7627425Z   diff: 'simple'\n2026-10-29T21:51:56.7627558Z }\n2026-10-29T21:51:56.7627633Z \n2026-10-29T21:51:56.7627694Z Node.js v22.23.4\n2026-10-29T21:51:56.7766571Z ##[error]Process completed with exit code 1.\n2026-10-29T21:51:56.7820294Z ##[group]Run actions/uploa"
+}
