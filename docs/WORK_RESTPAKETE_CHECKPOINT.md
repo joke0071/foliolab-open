@@ -1,3 +1,13 @@
+# Native Flatex-Übernahmequalifizierung wiederaufgenommen · 29.10.2026
+
+Frischer Kollisionscheck180Branches: main3e9f4877/v204 LIVE_ACCEPTED unverändert, PR194 gemergt, nur geparkte157/161 offen. Main-/Pages-/Live-CI40828393381 vollständig SUCCESS, keine aktiven Actions/erkennbaren fremden Git-/Nodewriter. Checkpoint02ec5bf9 rekonstruiert. Format-/Order-/Identitäts-/Bindungs-/Betrags-/UIarbeit abgeschlossen, nicht neu implementieren. Maßgeblicher Dokumentationsbranch feature/flh05-import-foundation, historischen Appbaum nicht mergen.
+
+Aktuelles Paket IN_PROGRESS: kleinste sichere native Projektion in bestehenden previewCSV-/Backfillkern qualifizieren. Vorhanden: native Rohformat-/Evidenz-/Kontobindungsprüfungen, unbekannte Gebühren/Steuern als null, geschützte Kostenbasis, atomarer Import/Stale-Baseline, konservativer Bestands-/Backfillpfad. Fehlend: native, ausdrücklich bestätigte Quell-/Kontozuordnung in konservative Finanzvorschau, ohne generischen Parser aufzuweichen oder CSV-Zeilen/Identitäten zu erfinden. Noch keine neuen Produktänderungen/Tests; v204 produktiv unverändert.
+
+Nächster Schritt begrenzten Fachvertrag vor Code sichern: reine native EUR-Stückhandelsprojektion, vollständige Quarantäne aller ungeklärten/sonstigen/Cashzeilen, Wiederverwendung gemeinsamer Preview-/Kosten-/Backfill-/Manual-/CASgates und synthetischer Beweise. Keine aktive UI-/Importfreigabe oder privaten Produktivmutationen. Bereits geprüfte private Originalevidenz für Grenzen wiederverwenden; privaten Folgevergleich getrennt halten. Zielstart01.01.2022/keine Fiktionen, UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/übrige Roadmap erhalten, FLH05 nicht vorziehen, PROJ01 Backlog. Gesamtmaster PARTIAL.
+
+---
+
 # v204 LIVE_ACCEPTED · PR194 abgeschlossen · 29.10.2026
 
 **Verbindlicher aktueller Stand:** Native Flatex-Betragsprüfung und geschützte
