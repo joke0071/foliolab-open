@@ -21,15 +21,16 @@ for(const engine of engines){
     const documents=[parseFlatexNativeCSV(text)],before=JSON.stringify(model),r=preview(model,documents,assignments,{mode:'append'});
     const unchanged=JSON.stringify(model)===before,unknown=r.preview.simulated.bookings.every(b=>b.feeEUR===null&&b.taxEUR===null&&b.costsVerified===false),noFlows=r.preview.simulated.externalCashFlows.length===0;
     const blocked=[preview(model,documents,{}, {mode:'append'}),preview(model,documents,assignments,{mode:'append',stale:true})].every(x=>!x.eligible&&x.preview===null);
+    const nonSecurityBlocked=['crypto','cash','other'].every(kind=>{const wrong=structuredClone(model);wrong.positions[0].kind=kind;const check=preview(wrong,documents,assignments,{mode:'append'});return !check.eligible&&check.preview===null;});
     const backfill=preview(held.model,[parseFlatexNativeCSV(held.text)],held.assignments,{mode:'backfill'});
     const simulated=structuredClone(model);importCSV(simulated,r.preview);const restored=safeImport(JSON.parse(backup(simulated))),again=preview(restored,documents,assignments,{mode:'append'});
     const manual=structuredClone(restored);manual.bookings[0].notes='Synthetic user correction';const protectedManual=!preview(manual,documents,assignments,{mode:'append'}).eligible;
     const rawChanged=[parseFlatexNativeCSV(text.replace('06.01.1999','07.01.1999'))];const protectedSource=!preview(restored,rawChanged,assignments,{mode:'append'}).eligible;
     const stale=structuredClone(model);stale.settings.autoRefresh=!stale.settings.autoRefresh;let staleBlocked=false;try{importCSV(stale,r.preview);}catch{staleBlocked=true;}
     const receipt=csvUndoReceipt(before,simulated);undoCSV(simulated,receipt);
-    return {eligible:r.eligible,ready:r.preview.ready,quantity:r.preview.simulated.positions[0].quantityExact,outerNoWrite:r.ready===false&&r.writeEnabled===false,unchanged,unknown,noFlows,blocked,backfill:backfill.eligible&&backfill.preview.simulated.positions[0].quantityExact==='1',duplicates:again.preview.duplicates,protectedManual,protectedSource,staleBlocked,undoExact:JSON.stringify(simulated)===before};
+    return {eligible:r.eligible,ready:r.preview.ready,quantity:r.preview.simulated.positions[0].quantityExact,outerNoWrite:r.ready===false&&r.writeEnabled===false,unchanged,unknown,noFlows,blocked,nonSecurityBlocked,backfill:backfill.eligible&&backfill.preview.simulated.positions[0].quantityExact==='1',duplicates:again.preview.duplicates,protectedManual,protectedSource,staleBlocked,undoExact:JSON.stringify(simulated)===before};
    },{model:f.model,assignments:f.assignments,text:f.text,held:{model:held.model,assignments:held.assignments,text:held.text}});
-   assert.equal(result.ready,2);assert.equal(result.quantity,'1');assert.equal(result.duplicates,2);for(const k of ['eligible','outerNoWrite','unchanged','unknown','noFlows','blocked','backfill','protectedManual','protectedSource','staleBlocked','undoExact'])assert.equal(result[k],true,k);
+   assert.equal(result.ready,2);assert.equal(result.quantity,'1');assert.equal(result.duplicates,2);for(const k of ['eligible','outerNoWrite','unchanged','unknown','noFlows','blocked','nonSecurityBlocked','backfill','protectedManual','protectedSource','staleBlocked','undoExact'])assert.equal(result[k],true,k);
    assert.deepEqual(await read(),before);
   }
   // Separate fresh synthetic context proves the existing real IDB CAS path;
@@ -48,7 +49,7 @@ for(const engine of engines){
    assert.deepEqual(proof,{rejected:true,oneRevision:true,bookings:2,quantity:'1'});
   }finally{await cas.close();}
   assert.deepEqual(await read(),before);assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
-  report.engines.push({engine,version:browser.version(),result:'PASS',checks:['native direct parser/shared preview/backfill/no fictional costs or external flows','explicit binding/stale/source/manual/baseline guards','synthetic commit/backup/replay/exact undo in memory','actual SW offline reload/module import','primary profile exact IDB/revision/settings zero mutation','separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected','no external requests']});console.log(engine+': FLATEX NATIVE PROJECTION shared preview/backfill/replay/manual/undo/offline/primary zero writes/separate synthetic CAS PASS');
+  report.engines.push({engine,version:browser.version(),result:'PASS',checks:['native direct parser/shared preview/backfill/no fictional costs or external flows','explicit binding/stale/source/manual/baseline guards','only ETF/stock/fund targets; crypto/cash/other targets rejected','synthetic commit/backup/replay/exact undo in memory','actual SW offline reload/module import','primary profile exact IDB/revision/settings zero mutation','separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected','no external requests']});console.log(engine+': FLATEX NATIVE PROJECTION shared preview/backfill/replay/manual/undo/offline/primary zero writes/separate synthetic CAS PASS');
  }finally{await ctx.close();await browser.close();}
 }
 report.result='PASS';writeFileSync('artifacts/gates/flatex-native-projection-'+engines.join('-')+'.json',JSON.stringify(report,null,2));

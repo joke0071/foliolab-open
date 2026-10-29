@@ -48,7 +48,7 @@ test('account selection, separate current confirmation, source scope and provide
  const h=fixture();h.documents.push(parse(text([{8:'OTHER',7:'ORDER Kauf IE00SYNTH001 102',11:'OTHER-SCOPE'}])));blocked(run(h));
 });
 test('missing/ambiguous/wrong-currency/wallet securities cannot be silently mapped or created',()=>{
- for(const change of [f=>f.model.positions=[],f=>f.model.positions.push({...f.model.positions[0],id:'second'}),f=>f.model.positions[0].currency='CHF',f=>f.model.positions[0].managementSource='wallet']){const f=fixture(),before=()=>JSON.stringify(f.model);change(f);const b=before();blocked(run(f));assert.equal(before(),b);}
+ for(const change of [f=>f.model.positions=[],f=>f.model.positions.push({...f.model.positions[0],id:'second'}),f=>f.model.positions[0].currency='CHF',f=>f.model.positions[0].managementSource='wallet',...['crypto','cash','other'].map(kind=>f=>f.model.positions[0].kind=kind)]){const f=fixture(),before=()=>JSON.stringify(f.model);change(f);const b=before();blocked(run(f));assert.equal(before(),b);}
 });
 test('append cannot add history on top of observed balances or existing protected evidence',()=>{
  const held=fixture({quantity:1});blocked(run(held));

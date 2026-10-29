@@ -17,7 +17,7 @@ export function prepareNativeFlatexPreview(model,documents,assignments,options={
  const reconciliation=reconcileFlatexPositions(prepared,model,accountId);
  if(reconciliation.results.some(r=>!r.positionId))return blocked('Jede ISIN muss genau einer bestehenden Anlage im gewählten Depot zugeordnet sein.');
  const positions=reconciliation.results.map(r=>model.positions.find(p=>p.id===r.positionId));
- if(positions.some(p=>p.currency!=='EUR'||p.wallet?.enabled||p.managementSource==='wallet'))return blocked('Nur bestehende EUR-Wertpapiere ohne automatische Walletverwaltung sind qualifiziert.');
+ if(positions.some(p=>!['etf','stock','fund'].includes(p.kind)||p.currency!=='EUR'||p.wallet?.enabled||p.managementSource==='wallet'))return blocked('Nur bestehende EUR-Positionen vom Typ ETF, Aktie oder Fonds ohne Walletverwaltung sind qualifiziert.');
  let preview;
  if(options.mode==='backfill'){
   const result=prepareFlatexBackfillPreview(model,prepared,accountId);
