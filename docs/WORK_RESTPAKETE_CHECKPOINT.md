@@ -1,3 +1,11 @@
+# PR195 Quellreviewbefund vor Abnahme · 29.10.2026
+
+Kandidat7274797f/Bauma48eb56b unverändert, Pflicht-CI40837424918 läuft regulär, Wallet40837424785 SUCCESS. Eigener synthetischer Gegenbeispieltest im Quellreview: Position.kind crypto/other mit EUR/ISIN wurde von prepareNativeFlatexPreview als eligible akzeptiert; cash wird schon im gemeinsamen Kern blockiert. Dies verletzt den vorab vereinbarten ausschließlichen Wertpapierumfang. **Keine Kandidatenabnahme/Mergefreigabe für diesen Stand**, auch bei grüner CI.
+
+Exakt nächster Schritt aktuellen Lauf unverändert regulär abschließen lassen, dann auf demselben Branch/PR nur ETF/Aktie/Fonds als Zieltypen zulassen und Gegenbeispieltests ergänzen; vollständige neue Kandidatenprüfung/CI erforderlich. Lauf nicht abbrechen, keine Assertions/Gates lockern. Native Projektion/privater Referenzvergleich selbst unverändert gültig; keine aktive UI/Produktivmutation, Produktion weiter v204/main3e9f4877. Gesamtmaster PARTIAL. Befund und Wiederaufnahme hier dauerhaft gesichert.
+
+---
+
 # PR195 aktuelle CI-IDs · 29.10.2026
 
 Maßgeblicher Kandidat7274797f/Bauma48eb56b unverändert. Volle Pflicht-CI40837424918 läuft regulär; Wallet40837424785 SUCCESS. PR-Testmerge5073c5e6 wird gegen denselben Quellbaum geprüft. Produktion v204/main3e9f4877 unverändert. Keine neuen Produktänderungen nach Kandidatensicherung583a24de, keine Gates/Assertions/Pins gelockert. Weiterhin IN_PROGRESS bis tatsächliche3Engine-/Artefakt-/Quellabnahme; exakt nächster Schritt aktuellen Lauf abschließen lassen und Nachweise prüfen. Keine privaten Produktivdaten geändert, Gesamtmaster PARTIAL.
