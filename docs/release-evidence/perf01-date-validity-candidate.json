@@ -206,7 +206,7 @@
   "stressColdTarget30PercentMet": true,
   "environment": {
     "playwright": "1.56.1",
-    "scope": "same installed Chromium1194, same container, no concurrent local test suite during final after run; GitHub CI runs remotely"
+    "scope": "Same supplied runtime/browser/viewport/script; confirmatory before/after were additionally run sequentially in one execution session. No physical-device or timing SLA."
   },
   "localFunctional": {
     "units": 950,
@@ -230,6 +230,209 @@
     "Synthetic19/1000ETF positions with1825manual references, actual IndexedDB/installedPWA/unprofiled matched dashboard; five fresh processes and warm/offline reloads.",
     "No personal real portfolio, large blockchain journal or physical mobile benchmark.",
     "App remains unpublished candidate; complete CI and own release approval required.",
-    "No storage/schema/financial arithmetic/FX source/policy changes; bounded page-local boolean validity cache only."
-  ]
+    "No storage/schema/financial arithmetic/FX source/policy changes; bounded page-local boolean validity cache only.",
+    "19-position paired offline median394.9→400.9ms is1.52percent slower; raw ranges overlap, do not claim every small-case sample improves or a device-wide SLA."
+  ],
+  "confirmatoryPairedRun": {
+    "method": "Single execution call; approved v212 git archive on localhost4173 and candidate worktree on4174; identical script run sequentially, no simultaneous local test suite or profiler.",
+    "before": {
+      "sha": "fee4fc5de4c57fee6643d30f20798c35b2b8807b",
+      "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+      "node": "v24.22.1",
+      "profiler": false,
+      "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "runs": 5,
+      "scenarios": [
+        {
+          "positions": 19,
+          "references": 1825,
+          "coldMs": [
+            785.2000000011176,
+            752.3000000007451,
+            658.4000000003725,
+            545.3000000007451,
+            526.6999999992549
+          ],
+          "warmMs": [
+            519.7000000011176,
+            482.6000000014901,
+            410.40000000037253,
+            393.7000000011176,
+            368.7000000011176
+          ],
+          "offlineMs": [
+            490.19999999925494,
+            429.5,
+            394.90000000037253,
+            377.2999999988824,
+            355.40000000037253
+          ],
+          "coldMedianMs": 658.4000000003725,
+          "warmMedianMs": 410.40000000037253,
+          "offlineMedianMs": 394.90000000037253,
+          "exactRecordUnchanged": true
+        },
+        {
+          "positions": 1000,
+          "references": 1825,
+          "coldMs": [
+            3093.800000000745,
+            3012.9000000003725,
+            3624.199999999255,
+            3701.4000000003725,
+            3671.7000000011176
+          ],
+          "warmMs": [
+            3018.699999999255,
+            3442.5999999996275,
+            3337.5,
+            3440.300000000745,
+            3125.5999999996275
+          ],
+          "offlineMs": [
+            3118.7999999988824,
+            3891.4000000003725,
+            3543.699999999255,
+            3402.5,
+            3555.5999999996275
+          ],
+          "coldMedianMs": 3624.199999999255,
+          "warmMedianMs": 3337.5,
+          "offlineMedianMs": 3543.699999999255,
+          "exactRecordUnchanged": true
+        }
+      ],
+      "limitations": [
+        "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+        "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+        "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+      ]
+    },
+    "after": {
+      "sha": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc",
+      "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+      "node": "v24.22.1",
+      "profiler": false,
+      "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "runs": 5,
+      "scenarios": [
+        {
+          "positions": 19,
+          "references": 1825,
+          "coldMs": [
+            561.8000000007451,
+            563.5,
+            629.6999999992549,
+            632.0999999996275,
+            585.0999999996275
+          ],
+          "warmMs": [
+            400.59999999962747,
+            371.09999999962747,
+            453.90000000037253,
+            522,
+            373.2000000011176
+          ],
+          "offlineMs": [
+            400.90000000037253,
+            388.40000000037253,
+            397.80000000074506,
+            456.19999999925494,
+            404.19999999925494
+          ],
+          "coldMedianMs": 585.0999999996275,
+          "warmMedianMs": 400.59999999962747,
+          "offlineMedianMs": 400.90000000037253,
+          "exactRecordUnchanged": true
+        },
+        {
+          "positions": 1000,
+          "references": 1825,
+          "coldMs": [
+            1655.4000000003725,
+            1665.4000000003725,
+            1661,
+            1806.199999999255,
+            1696.5
+          ],
+          "warmMs": [
+            1530.5,
+            1555.9000000003725,
+            1599.8999999985099,
+            1624.199999999255,
+            1588.9000000003725
+          ],
+          "offlineMs": [
+            1619,
+            1700.0999999996275,
+            1711.4000000003725,
+            1554.0999999996275,
+            1624.7999999988824
+          ],
+          "coldMedianMs": 1665.4000000003725,
+          "warmMedianMs": 1588.9000000003725,
+          "offlineMedianMs": 1624.7999999988824,
+          "exactRecordUnchanged": true
+        }
+      ],
+      "limitations": [
+        "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+        "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+        "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+      ]
+    },
+    "comparison": [
+      {
+        "positions": 19,
+        "mode": "cold",
+        "beforeMedianMs": 658.4000000003725,
+        "afterMedianMs": 585.0999999996275,
+        "reductionPercent": 11.133049817846839
+      },
+      {
+        "positions": 19,
+        "mode": "warm",
+        "beforeMedianMs": 410.40000000037253,
+        "afterMedianMs": 400.59999999962747,
+        "reductionPercent": 2.38791423019887
+      },
+      {
+        "positions": 19,
+        "mode": "offline",
+        "beforeMedianMs": 394.90000000037253,
+        "afterMedianMs": 400.90000000037253,
+        "reductionPercent": -1.5193719929081642
+      },
+      {
+        "positions": 1000,
+        "mode": "cold",
+        "beforeMedianMs": 3624.199999999255,
+        "afterMedianMs": 1665.4000000003725,
+        "reductionPercent": 54.04778985705218
+      },
+      {
+        "positions": 1000,
+        "mode": "warm",
+        "beforeMedianMs": 3337.5,
+        "afterMedianMs": 1588.9000000003725,
+        "reductionPercent": 52.39250936328472
+      },
+      {
+        "positions": 1000,
+        "mode": "offline",
+        "beforeMedianMs": 3543.699999999255,
+        "afterMedianMs": 1624.7999999988824,
+        "reductionPercent": 54.14961763131123
+      }
+    ],
+    "smallOfflineObservation": "19-position paired offline median394.9→400.9ms is1.52percent slower; raw ranges overlap, do not claim every small-case sample improves or a device-wide SLA."
+  }
 }
