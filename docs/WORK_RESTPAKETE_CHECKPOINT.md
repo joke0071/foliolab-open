@@ -1,3 +1,62 @@
+# PR196 letzter Kontextfix remote gesichert · SW211 finale CI läuft · 29.10.2026
+
+**PARTIAL bis aktuelle volle Abnahme.** Einziger Funktionsbranch
+feature/reference-removal-safe-subset / [PR196](https://github.com/joke0071/foliolab-open/pull/196)
+Draft. HEAD **5244ff29d7aee9bf94a07396edaf6036cde5acec**,
+Baum **b1602a91c3e833bd326e3f7d1392d54fc4dc81e1**, exakt lokaler d941883 und Remote.
+Testmerge **fc35afebe34b75b998b83c54c94082a074e941e8**. Ref ohneForce mit
+expected6c361af1 aktualisiert und Remotehead verifiziert.
+SW211 unveröffentlicht; main6fe75a99 / produktivv208 unverändert.
+
+Vorherige volle Pflicht **40880172369** und Wallet **40880172596** SUCCESS:
+test123469265055 / Cross1 123469265386 / Cross2 123469265836 SUCCESS,
+deploy123473808410/live123473811261 korrekt SKIPPED.
+Tatsächliches finales Chromium-ZIP12900850533 vor Extraktion SHA256
+bcb425c12af55bf64f88c3facbc9aadcb03446429c913219e5ed4412aa4f45d2 verifiziert:
+testedSHA8bbf7e39,946/946Units/0Fail/0Skip; neue Referenzrücknahme-/bestehende
+Referenzverwaltung-/UIberichte PASS. Aktuelle Chromium320-Expanded/1440-Bilder
+gelesen. Crossartefakte12900951346/Digest18f1d859eef42adaa91bf715131e9eafae6889c35901e44cec0b1e43d47490d2
+und12900840919/Digestb2da3735cd4ba03f99cefadd5ec0af01b05b4bb79991d55c4231838cd62ee5d9
+erhalten; neue aktuelle Nachweise des folgenden Heads bleiben erforderlich.
+
+Sichtprüfung fand noch wiederverwendete Dialog-Scrollposition; tatsächliche
+Firefoxdiagnostik auf unverändertem6c361af1 beim frischen Öffnen:
+320px0,390px392,430px354,768/1440px184 Scrollpixel. Auswirkung/Originale
+lagen beim Wiederöffnen dadurch teils oberhalb des sichtbaren Bereichs.
+**Gezielt behoben:** genau eine neue Quellzeile setzt ausschließlich beim neuen
+Referenzlöschdialog dialogFields.scrollTop=0 vor Fokus auf Abbrechen.
+Strikte neue Assertion bei JEDEM Öffnen, auch nach Backup-Scroll/Schließen/
+Breitenwechsel. Keine Finanz-/Speicher-/Berechtigungsänderung, keine globale
+Dialogrefaktorierung. SW211 wegen geänderter ausgelieferter Appbytes.
+
+Tatsächliche vollständige neue Rücknahmegates in Chromium141 UND Firefox157
+nach diesem letzten Fix PASS: frische Vorschau oben, alle geöffneten Details/
+summary-Ziele/innererOverflow/fünfBreiten/Axe/44px, Backup/Keyausschluss/Zustimmung/
+Quota/post-put/Offline/Reload/Undo/Plain+V2Restore/Stale/echteCASrace erhalten.
+Syntax PASS. Lokaler WebKit wegen Hostbibliotheken weiterhin kein Nachweis;
+verpflichtende tatsächliche WebKit27.2-CI bleibt vollständig aktiv.
+Keine Tests/Sicherheitsgates gelockert oder übersprungen.
+
+Neue volle Pflicht **40882219353** und Wallet **40882219301** laufen auf5244ff29.
+**Exakte nächste Aktion:** beide regulär beenden, keine neue Implementierung
+oder Retryserie; echte finale Logs/946Units/3Engineberichte prüfen,
+getestetenTestmergebaum gegenb1602a91 bestätigen, ZIPdigests vor Extraktion,
+neue tatsächliche Chromium/Firefox/WebKit-Bilder (Anfang UND aufgeklappter
+Backupbereich) ansehen, abschließenden Delta-/Quell-/PRreview durchführen.
+Dann separaten dauerhaften Maschinenbeleg und finalen zentralen Checkpoint
+committen/pushen/Remote-SHAs prüfen; PRreviewbereit herstellen.
+Erst dann eigene konkrete Nutzerfreigabe für PR196 vor kritischem Merge/Deployment.
+PR195-Freigabe nicht ausweiten. Nach Zustimmung frisch prüfen, kontrollierter
+Merge und vollständige Main-/Pages-/Drei-Engine-Livegates/Releasebelege.
+
+Alle anderen UI-/Lösch-/FLH03-Kategorien, FLH04/OAuth, essentielleP1-PERF01 und
+ursprüngliche Roadmap PARTIAL. FLH05/PROJ01 OPEN/PARKED; nur notwendige gemeinsame
+Verträge wiederverwenden. Frühere Fehl-/Zwischenbelege unten vollständig erhalten.
+Keine private Finanzdatei benutzt oder produktive private Daten verändert.
+Kein ungesicherter Produktcode; nur reproduzierbare synthetische artifacts unversioniert.
+
+---
+
 # PR196 Detailkorrektur remote gesichert · SW210 volle CI läuft · 29.10.2026
 
 **PARTIAL bis finale aktuelle Abnahme.** Einziger Funktionsbranch
