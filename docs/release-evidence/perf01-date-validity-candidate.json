@@ -1,0 +1,235 @@
+{
+  "status": "MEASURED / LOCAL_FUNCTIONAL_GATES_PASS / FULL_CI_PENDING",
+  "date": "2026-10-29",
+  "head": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc",
+  "tree": "86be70b0112d4f960abb55cc726918eba4c3064e",
+  "pr": 200,
+  "candidateSW": 213,
+  "before": {
+    "sha": "0db6863ae81eec1821ea54878a1cf28e8f7bcf0e",
+    "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+    "node": "v24.22.1",
+    "profiler": false,
+    "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "runs": 5,
+    "scenarios": [
+      {
+        "positions": 19,
+        "references": 1825,
+        "coldMs": [
+          542.2000000011176,
+          521.0999999996275,
+          570,
+          516,
+          563.5999999996275
+        ],
+        "warmMs": [
+          375.09999999962747,
+          390.90000000037253,
+          374.7000000011176,
+          354.7000000011176,
+          413.59999999962747
+        ],
+        "offlineMs": [
+          361.40000000037253,
+          366.19999999925494,
+          379.40000000037253,
+          336.30000000074506,
+          356
+        ],
+        "coldMedianMs": 542.2000000011176,
+        "warmMedianMs": 375.09999999962747,
+        "offlineMedianMs": 361.40000000037253,
+        "exactRecordUnchanged": true
+      },
+      {
+        "positions": 1000,
+        "references": 1825,
+        "coldMs": [
+          2969.7999999988824,
+          3083.9000000003725,
+          3191.9000000003725,
+          3322.2999999988824,
+          3113.9000000003725
+        ],
+        "warmMs": [
+          3014.9000000003725,
+          2815.2999999988824,
+          2995.0999999996275,
+          2860,
+          2882
+        ],
+        "offlineMs": [
+          2912.5999999996275,
+          3086.800000000745,
+          3110.300000000745,
+          3118.0999999996275,
+          3072.4000000003725
+        ],
+        "coldMedianMs": 3113.9000000003725,
+        "warmMedianMs": 2882,
+        "offlineMedianMs": 3086.800000000745,
+        "exactRecordUnchanged": true
+      }
+    ],
+    "limitations": [
+      "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+      "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+      "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+    ]
+  },
+  "after": {
+    "sha": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc",
+    "benchmarkScriptSha256": "a486bc44f69ab6081fea132049f4697b686a3bf7705b31572ea36cb6942e42a0",
+    "node": "v24.22.1",
+    "profiler": false,
+    "scope": "unprofiled actual IndexedDB, installed controlled PWA, fresh Chromium processes versus same-page warm dashboard reload; synthetic only",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "runs": 5,
+    "scenarios": [
+      {
+        "positions": 19,
+        "references": 1825,
+        "coldMs": [
+          544.5,
+          515.2999999988824,
+          477.09999999962747,
+          490,
+          493.59999999962747
+        ],
+        "warmMs": [
+          386.2999999988824,
+          328.2999999988824,
+          309.2000000011176,
+          341.90000000037253,
+          375.5
+        ],
+        "offlineMs": [
+          351.5,
+          324.5,
+          341,
+          360.6000000014901,
+          383.7999999988824
+        ],
+        "coldMedianMs": 493.59999999962747,
+        "warmMedianMs": 341.90000000037253,
+        "offlineMedianMs": 351.5,
+        "exactRecordUnchanged": true
+      },
+      {
+        "positions": 1000,
+        "references": 1825,
+        "coldMs": [
+          1542.7999999988824,
+          1611.5999999996275,
+          1562.0999999996275,
+          1487.9000000003725,
+          1507.4000000003725
+        ],
+        "warmMs": [
+          1378.199999999255,
+          1415.2999999988824,
+          1380.5999999996275,
+          1398.9000000003725,
+          1511.0999999996275
+        ],
+        "offlineMs": [
+          1430.699999999255,
+          1478.5999999996275,
+          1544.8999999985099,
+          1502.4000000003725,
+          1330.2999999988824
+        ],
+        "coldMedianMs": 1542.7999999988824,
+        "warmMedianMs": 1398.9000000003725,
+        "offlineMedianMs": 1478.5999999996275,
+        "exactRecordUnchanged": true
+      }
+    ],
+    "limitations": [
+      "Synthetic ETF/reference stress fixture; no large wallet journals or physical mobile hardware.",
+      "Warm samples are same-page Dashboard and are directly matched; every cold sample starts a new browser process with the installed PWA.",
+      "Navigation-to-interactive measurement includes two rendering frames, excludes browser-process launch, no CPU profiler/throttling."
+    ]
+  },
+  "comparison": [
+    {
+      "positions": 19,
+      "mode": "cold",
+      "beforeMedianMs": 542.2000000011176,
+      "afterMedianMs": 493.59999999962747,
+      "reductionPercent": 8.96348211017889
+    },
+    {
+      "positions": 19,
+      "mode": "warm",
+      "beforeMedianMs": 375.09999999962747,
+      "afterMedianMs": 341.90000000037253,
+      "reductionPercent": 8.850973073657135
+    },
+    {
+      "positions": 19,
+      "mode": "offline",
+      "beforeMedianMs": 361.40000000037253,
+      "afterMedianMs": 351.5,
+      "reductionPercent": 2.739346984051556
+    },
+    {
+      "positions": 1000,
+      "mode": "cold",
+      "beforeMedianMs": 3113.9000000003725,
+      "afterMedianMs": 1542.7999999988824,
+      "reductionPercent": 50.454414078849744
+    },
+    {
+      "positions": 1000,
+      "mode": "warm",
+      "beforeMedianMs": 2882,
+      "afterMedianMs": 1398.9000000003725,
+      "reductionPercent": 51.460791117266744
+    },
+    {
+      "positions": 1000,
+      "mode": "offline",
+      "beforeMedianMs": 3086.800000000745,
+      "afterMedianMs": 1478.5999999996275,
+      "reductionPercent": 52.09926137102272
+    }
+  ],
+  "stressColdTarget30PercentMet": true,
+  "environment": {
+    "playwright": "1.56.1",
+    "scope": "same installed Chromium1194, same container, no concurrent local test suite during final after run; GitHub CI runs remotely"
+  },
+  "localFunctional": {
+    "units": 950,
+    "syntax": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "checks": [
+      "16410canonical-day pressure",
+      "strict invalid days/leap days/types",
+      "quote/FX/source rejection after date reuse",
+      "fresh correction after prior projection",
+      "exact model nonmutation",
+      "historical UI six widths/Axe"
+    ]
+  },
+  "excludedExploratoryRun": "An earlier after run overlapped local tests and is excluded from the accepted comparison. Only final source-matched after series above is used.",
+  "limits": [
+    "Synthetic19/1000ETF positions with1825manual references, actual IndexedDB/installedPWA/unprofiled matched dashboard; five fresh processes and warm/offline reloads.",
+    "No personal real portfolio, large blockchain journal or physical mobile benchmark.",
+    "App remains unpublished candidate; complete CI and own release approval required.",
+    "No storage/schema/financial arithmetic/FX source/policy changes; bounded page-local boolean validity cache only."
+  ]
+}
