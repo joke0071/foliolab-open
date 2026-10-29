@@ -1,0 +1,716 @@
+{
+  "date": "2026-10-29",
+  "status": "BASELINE_ONLY / NO_WORKFLOW_CHANGE",
+  "scope": "Three successful representative runs; no before/after optimization claim. Installation includes npm/browser/OS setup; separate substep attribution remains open.",
+  "runs": [
+    {
+      "id": 40923950987,
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/40923950987",
+      "jobs": [
+        {
+          "id": 123624347811,
+          "name": "cross-engine (2)",
+          "status": "success",
+          "seconds": 637,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 34
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 595
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123624348285,
+          "name": "test",
+          "status": "success",
+          "seconds": 517,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Require a service-worker cache revision for shipped asset changes",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Verify standalone application",
+              "status": "success",
+              "seconds": 27
+            },
+            {
+              "name": "Install browser test tools",
+              "status": "success",
+              "seconds": 7
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "status": "success",
+              "seconds": 472
+            },
+            {
+              "name": "Expose bounded synthetic C5 PR review",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Preserve test evidence",
+              "status": "success",
+              "seconds": 3
+            },
+            {
+              "name": "Preserve representative dialog screenshots",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123624348548,
+          "name": "cross-engine (1)",
+          "status": "success",
+          "seconds": 508,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 63
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 435
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 3
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123630215017,
+          "name": "deploy",
+          "status": "skipped",
+          "seconds": 0,
+          "steps": []
+        },
+        {
+          "id": 123630216480,
+          "name": "live-acceptance",
+          "status": "skipped",
+          "seconds": 0,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "id": 40922446803,
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/40922446803",
+      "jobs": [
+        {
+          "id": 123619018193,
+          "name": "cross-engine (1)",
+          "status": "success",
+          "seconds": 477,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 3
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 72
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 393
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123619019184,
+          "name": "test",
+          "status": "success",
+          "seconds": 381,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Require a service-worker cache revision for shipped asset changes",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Verify standalone application",
+              "status": "success",
+              "seconds": 16
+            },
+            {
+              "name": "Install browser test tools",
+              "status": "success",
+              "seconds": 4
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "status": "success",
+              "seconds": 352
+            },
+            {
+              "name": "Expose bounded synthetic C5 PR review",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Preserve test evidence",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Preserve representative dialog screenshots",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123619019494,
+          "name": "cross-engine (2)",
+          "status": "success",
+          "seconds": 589,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 38
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 543
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123624556007,
+          "name": "deploy",
+          "status": "skipped",
+          "seconds": 0,
+          "steps": []
+        },
+        {
+          "id": 123624557121,
+          "name": "live-acceptance",
+          "status": "skipped",
+          "seconds": 0,
+          "steps": []
+        }
+      ]
+    },
+    {
+      "id": 40916302834,
+      "url": "https://github.com/joke0071/foliolab-open/actions/runs/40916302834",
+      "jobs": [
+        {
+          "id": 123597324326,
+          "name": "test",
+          "status": "success",
+          "seconds": 540,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Require a service-worker cache revision for shipped asset changes",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Verify standalone application",
+              "status": "success",
+              "seconds": 28
+            },
+            {
+              "name": "Install browser test tools",
+              "status": "success",
+              "seconds": 6
+            },
+            {
+              "name": "Browser smoke tests (320–1440 px)",
+              "status": "success",
+              "seconds": 492
+            },
+            {
+              "name": "Expose bounded synthetic C5 PR review",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Preserve test evidence",
+              "status": "success",
+              "seconds": 3
+            },
+            {
+              "name": "Preserve representative dialog screenshots",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123597324766,
+          "name": "cross-engine (1)",
+          "status": "success",
+          "seconds": 482,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 52
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 424
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123597325156,
+          "name": "cross-engine (2)",
+          "status": "success",
+          "seconds": 520,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 67
+            },
+            {
+              "name": "Test portfolio workflows on Firefox and WebKit",
+              "status": "success",
+              "seconds": 443
+            },
+            {
+              "name": "Preserve cross-engine evidence",
+              "status": "success",
+              "seconds": 3
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 1
+            }
+          ]
+        },
+        {
+          "id": 123602499171,
+          "name": "deploy",
+          "status": "success",
+          "seconds": 24,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 4
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 7
+            },
+            {
+              "name": "Prepare static site",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Run actions/configure-pages@v5",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/upload-pages-artifact@v3",
+              "status": "success",
+              "seconds": 2
+            },
+            {
+              "name": "Run actions/deploy-pages@v4",
+              "status": "success",
+              "seconds": 7
+            },
+            {
+              "name": "Verify published homepage and matching service-worker version",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        },
+        {
+          "id": 123602768796,
+          "name": "live-acceptance",
+          "status": "success",
+          "seconds": 474,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 1
+            },
+            {
+              "name": "Install existing Chromium acceptance tools",
+              "status": "success",
+              "seconds": 7
+            },
+            {
+              "name": "Verify published bytes, core flows and targeted UI in Chromium",
+              "status": "success",
+              "seconds": 111
+            },
+            {
+              "name": "Install Firefox and WebKit for cross-engine regression",
+              "status": "success",
+              "seconds": 45
+            },
+            {
+              "name": "Verify targeted production UI in Firefox and WebKit",
+              "status": "success",
+              "seconds": 300
+            },
+            {
+              "name": "Expose bounded synthetic screenshots for visual review",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Preserve actual production acceptance evidence",
+              "status": "success",
+              "seconds": 4
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "success",
+              "seconds": 0
+            },
+            {
+              "name": "Complete job",
+              "status": "success",
+              "seconds": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Existing two-shard cross-engine CI retained. Slowest shard2 tests543–595s in PR runs; shard1 tests393–435s. Setup34–72s.",
+    "Measured job stages alone do not justify changing security tests, timeout rules or native navigation.",
+    "Failed-run/flaky-test timing and individual suite attribution remain open; any optimization requires matched after measurements."
+  ]
+}
