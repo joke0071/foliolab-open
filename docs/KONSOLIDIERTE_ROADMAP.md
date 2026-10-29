@@ -1,3 +1,13 @@
+## Verbindlicher aktueller Übergabepunkt · 29.10.2026
+
+[PR202](https://github.com/joke0071/foliolab-open/pull/202) ist technisch abgenommen und reviewbereit: HEAD `620790477a54e4c5f565af9e83fcb62b9d769fce`, SW215 unveröffentlicht. Pflicht40930734405 und Wallet40930734559 vollständig SUCCESS;954 Units, drei Engines,54 geprüfte PASS-Berichte, drei vor Extraktion SHA256-verifizierte Belegarchive. Eigene Releasefreigabe erforderlich. PR201 ist auf main d037b487/v214 veröffentlicht und in frischen Produktionsprofilen abgenommen; vollständiger PWA-Updateabschluss bleibt bis zur gesonderten Korrektur offen. [Permanente PR202-Belege](release-evidence/pwa-update-fresh-assets-v215-candidate.json).
+
+**Neue Nutzerentscheidung: Die mobile 4×2-Pflicht ist SUPERSEDED.** [Vollständiger Diagramm-Nachtrag](UI_MASTER28_ZEITRAUM_DIAGRAMM_KORREKTUR_2026-10-29.md): bevorzugt kompakte adaptive Zeile, primär7T/1M/3M/6M/1J und schnell erreichbares Max;3J/5J dezent erweitert mit sichtbarer aktiver Auswahl. Kein Außenrahmen,44px echte Touchziele, kein Seitenoverflow; Desktop möglichst acht Zeiträume. Lesbare Achsen, schmaler Tooltip mit exaktem Datum/Betrag und nachrangiger Erklärung sowie fachlich korrekte Sparse-Darstellung bleiben OPEN. Kein neues Produktcodepaket während der PR202-Abnahme.
+
+Nach eigener PR202-Freigabe vollständige Main-/Pages-/Live-/Updategates durchführen; danach die präzisierten UI-P1-Punkte und übrige Masterarbeit in bestehender Reihenfolge fortsetzen. Keine neue Roadmap. Alle bisherigen Nachträge bleiben erhalten; FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## Aktueller Release- und PWA-Updatebefund · 29.10.2026
 
 PR #201 wurde nach ausdrücklicher Nutzerfreigabe unverändert gemergt und als v214/SW214 veröffentlicht. Main `d037b4876e81c24421022d30865d171da762f328`; Pipeline [40927564281](https://github.com/joke0071/foliolab-open/actions/runs/40927564281) einschließlich Pages und separater Liveabnahme erfolgreich. Die kompakten Sperrgründe sind in Chromium, Firefox und WebKit tatsächlich produktiv geprüft. 953 Unit-Tests und 121 veröffentlichte Dateihashes stimmen. [Dauerhafte Releasebelege](release-evidence/ui-selection-blockers-v214-live-gates.json).
