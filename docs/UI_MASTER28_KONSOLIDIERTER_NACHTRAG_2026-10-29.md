@@ -104,58 +104,83 @@ Technikdetails standardmäßig unaufdringlich/beiBedarfaufklappbar; keine doppel
 38+-Vorgänge: sinnvolle neuesteTeilmenge(5–10), vorhandenenZugang zur vollständigenHistorie imReiterBuchungen nutzen; WeitereAnzeigen nur beiNutzen,kein endlosOffenerPositionskartenbereich.
 Daten/Journal/Menge/Datum/Herkunft/Bestand/Kostenbasis/Rendite exakt erhalten. Keine Buchung ausDatenbasis entfernen. Desktop/Mobil getrennt prüfen.
 
-## 14. Dashboard/Verlauf – Bewährtes bewahren, tatsächliche Deltas prüfen
+## 14. Dashboard und Verlauf – bestehende Vereinbarungen erhalten
 
-Nicht neu entwickeln: AbstandGesamtvermögen/Willkommen,Verlaufstrennlinien,dreiIcons,kompakteDatenbasis,Wochenfilter,7TbisMax,LiquiditätunterAnbietern,entfernteletzteAnbieterlinie,korrigierteAchsen,V192/V193-Auswahl/Wording,mobileHistorien.
-Prüfen: langeAnbieterlabels nebenBeträgen,doppelteHinweise,Kartenabstände,ButtonsaufLinien,großeChartleerflächen,Änderungskachelumbrüche,kleineViewportHöhen,Kalender-/Datenbasiszugang,beobachtetvsrekonstruiert,fehlendeKurse/unbekannteBasis. HistorischeReleasebelege berücksichtigen.
+Nicht neu entwickeln: Abstand zwischen Gesamtvermögen und Willkommenskarte; Verlaufstrennlinien und drei Icons; kompakte Datenbasissteuerung; gemeinsamer Wochenfilter; Zeiträume 7T bis Max; Liquidität unter Anbietern; entfernte letzte Anbieter-Trennlinie; korrigierte Chart-Achseneinheiten; V192/V193-Auswahl- und Wordingkorrekturen; bestehende mobile Historienansichten.
 
-## 15. Erträge/Abzüge/Transfers/Referenzen/Dialoge
+Tatsächliche Restabweichungen prüfen: lange Anbieterlabels neben Beträgen, doppelte Hinweise, uneinheitliche Kartenabstände, Buttons auf Trennlinien, unnötig große Diagramm-Leerflächen, Umbruch der Vermögensänderungskacheln, kleine Bildschirmhöhen, Kalender- und Datenbasiszugang, Unterscheidung beobachteter und rekonstruierter Historien, fehlende Kurse und unbekannte Datenbasis. Vorhandene Releasebelege berücksichtigen.
 
-Erträge/Abzüge: kompakteKennzahlen,rechtsbündigeWerte,verständlicheUngeklärte,synthetischen490/400-Fall erhalten,keineirreführendenNullen,FilternurbeiNutzen.
-Transfers: kompakteLeerzustände,deaktivierteAktionenohneKandidaten,klareGründe,keineDoppelzählung/wirtschaftlicheÄnderung.
-Referenzen: lesbar,Herkunftklar,keinewiederholtenSperrtexte,kompaktesArchiv,Normal/Verwaltung,Bearbeiten/Rücknahmenurbelegtzulässig.
-Dialoge: keinDoppelScroll,keineabgeschnitteneBestätigung,kompaktmobil,Fokuswiederherstellung,44px,bestehendeCAS/Backup/Undo/Restore.
+## 15. Erträge, Abzüge, Transfers, Referenzen und Dialoge
 
-## 16. Appweite Konsistenz – gezielte tatsächliche Deltas
+Erträge und Abzüge: kompakte Kennzahlen, rechtsbündige Werte, verständliche ungeklärte Einträge, historischen synthetischen 490/400-Fall erhalten, keine irreführenden Nullwerte. Filter nur bei tatsächlichem Nutzen.
 
-Schriftfamilie/-größe/-gewicht/Zeilenhöhe,Überschriften,Tabellen,Beträge/Datum,Hilfetexte,Karten,Buttons,Linien,Einrückung,Tooltips,mobileAkkordeons,Leerzustände,Fokus/Accessibility. KeineGesamtneugestaltung,unnötigenKomponenten;bestehendeMuster wiederverwenden.
+Interne Transfers: kompakte Leerzustände, deaktivierte Aktionen ohne Kandidaten, klare Sperrgründe. Keine Doppelzählung oder unzulässige wirtschaftliche Änderung.
 
-## 17. Verbindliche Reihenfolge
+Historische Referenzen: lesbare Datensätze, deutliche Herkunft, keine wiederholten Sperrtexte, kompakte Archivsteuerung und einheitlicher Normal-/Verwaltungsmodus. Bearbeitung/Rücknahme ausschließlich bei nachgewiesener Zulässigkeit.
 
-Zuerst laufendesPERF01 sicher abschließen.
-P1:1Sperrtexte,2Normal/Verwaltung,3BearbeitenText,4kompakteLeisten,5Tooltips,6Zeiträume,7Liquidität,8GebuchteVorgänge,9Stichtagstexte.
-P2:1ArchivDropdowns,2Diagrammmodi,3zeitkorrekteXAchse,4Headerstatus,5übrigeTouch/Kontrast,6Tabellen/Dialoge,7Typografie,8responsiveKarten/Chartcontrols.
-P3optional:Willkommensraster,Leerraum,belegteKosmetik.
-DELETEseparat:Fachbeweise/Freigaben fürmigrierte/automatischeReferenzen,komplexe/importgebundeneBuchungen,wirtschaftlichverknüpftePositionen. UI-A01–A08 weiterintegriert,keineDoppelentwicklung.
+Dialoge: kein doppeltes Scrollen, keine abgeschnittenen Bestätigungen, kompakte mobile Darstellung, gute Fokuswiederherstellung, vereinbarte Touchziele. CAS-, Backup-, Undo- und Restore-Verträge bewahren.
 
-## 18. Verbindliche Test-/Abnahmematrix
+## 16. Appweite visuelle Konsistenz
 
-Chromium/Firefox/WebKit;320/390/430/768/1440CSSpx;kleineViewportHöhen;200%Textvergrößerung;Touch/Maus/Tastatur;Axe/Fokus/Kontrast;langeLabels;kleine/großeGeldbeträge;1/2/vieleStichtage;regelmäßige/unregelmäßigeDatumsabstände;1/8/100/>200Auswahl;gemischte/identischeGründe;aktive/archiviertePositionen/Buchungen/Referenzen;fehlende/unvollständige/vorhandeneLiquidität;38+-Buchungen;alle3Diagrammmodi;Tooltiplinks/rechts;kontrolliertePWA/SW-/Cacheübergänge;leer/gefüllt.
-KonkreteAbnahme:
--8gleicheGründe einmalKategorie,100Buchungen keinTextberg.
--Normal/Verwaltungvisuell/funktionalgleich,„Bearbeiten“stattStift,ArchivkleinAktiv/Archiviert/Alle.
--Zeiträumekein6+2/7+1wenn4×2vorgesehen.
--TooltipDatum/Betrag/vollständigeErläuterungsichtbar.
--3ModiohneerfundeneZwischenwerte,zeitlicheDistanzkorrekt.
--UnterbeidenChartskeineredundanteStichtagsbeschriftung.
--LiquiditätauchvorhandeneKontenohneZusatzinfoserreichbar.
--KeinNormalHeadererfolg,Warnungenbleiben.
--GebuchteVorgängekompaktösterreichischesDatum.
--KeineunerlaubteLöschung,stilleTeillöschung,finanzielleMutation.
-BestehendeFinanz/Import/CAS/Backup/Restore/Undo/Mehrtab/Offlinegatesnichtabschwächen. ÖffentlicheArtefaktenursynthetisch. Emulator-/Browsernachweise niemalsalsHardware/iOS/Android/TalkBack/VoiceOverabnahmeausgeben.
+Gezielt tatsächliche Deltas prüfen: Schriftfamilien, Größen, Gewichte, Zeilenhöhen, Überschriften, Tabellen, Beträge und Datum, Hilfetexte, Karten, Buttons, Trennlinien, Einrückungen, Tooltips, mobile Akkordeons, Leerzustände, Fokus und Accessibility. Keine umfassende Neugestaltung oder unnötigen Komponenten; vorhandene Muster wiederverwenden.
 
-## 19. Vollständigkeitsabgleich ohne unbegrenzte Auditphase
+## 17. Verbindliche Prioritäten
 
-DiesenAuftrag gegenallebekanntenEntscheidungen25.–29.10.2026,UI-MASTER28,Issue149,Sonnet197,Release-/Testbelegeabgleichen.
-JedenPunkt kennzeichnen:DONE(bereitsabgenommen),FIXED(neukorrigiert),PARTIAL,BLOCKED(mitGrund),NOTREPRODUCIBLE(nurmitaktuellenGegenbelegen),OPTIONAL. BeiÜbernahmeOPENfürnochungeprüfteKonkreta;keinevorzeitigeAbnahme.
-KeinWunschstillverlieren,keineDoppelimplementierung,keineunbegrenzteAuditphase.
+Zuerst den laufenden FLH-PERF01-Prozess sicher abschließen.
 
-## 20. Dauerhafte Absicherung und übriger Master
+P1: (1) wiederholte Sperrtexte, (2) gemeinsamer Normal-/Verwaltungsmodus, (3) klickbarer Bearbeiten-Text, (4) kompakte Verwaltungsleisten, (5) abgeschnittene Tooltips, (6) ausgewogene mobile Zeitraumwahl, (7) Liquidität auf Desktop, (8) überladene Positionsbuchungshistorie, (9) redundante Stichtagsbeschriftungen.
 
-NachjederEtappeundvorLimits/Unterbrechung/Kontextwechsel:WorkingTree/Branchprüfen,sichereÄnderungencommitten/pushen,RemoteSHAverifizieren,zentralenCheckpointseparatcommitten/pushen,PR/CI/Release/LivebelegeundDONE/PARTIAL/BLOCKED/offeneTests/externeGrenzen/exakteFortsetzungsstellesichern. FehlgeschlagenenPushtransparentmelden,keinenRemoteerfolgbehaupten.
-HistorischenCheckpointbranchniemalsalsaltenAppcodeinmainmergen.
-FLH05/FLH-PROJ01 OPEN/PARKED;FLH03,DELETE-MASTER28,FLH04,IDB/Recovery/Backup,PerformanceundsämmtlicheübrigenAnforderungenbehaltenihrePrioritätenundSicherheitsverträge. KeinePrivatdaten/OriginalCSV/Secretsöffentlich,keinefremdenBranchesüberschreiben,keineTestsabschwächen.
+P2: (1) kleine Archiv-Dropdowns, (2) konfigurierbare Diagrammdarstellung, (3) zeitlich korrekte X-Achse, (4) permanenter Speicherstatus, (5) übrige Touch- und Kontrastprobleme, (6) mobile Tabellen/Dialoge, (7) Typografie, (8) responsive Karten/Chartcontrols.
 
-## Fortschrittsnachweise
+P3 optional: Willkommensraster, unnötiger Leerraum und weitere klar belegte kosmetische Abweichungen.
 
-Diese Spezifikation ist dauerhaft übernommener Sollvertrag, keine Behauptung der Implementierung. Konkrete Abnahmezeilen werden nach Reproduktion und Tests im bestehenden Mastercheckpoint fortgeschrieben. PR200-Mergefreigabe ist erteilt; zusätzliche fachliche Löschfreigaben oder spätere Releasefreigaben nicht daraus ableiten.
+Separat DELETE-MASTER28: erweiterte sichere Lösch-/Bearbeitungspfade für migrierte und automatische Referenzen, komplexere oder importgebundene Buchungen und wirtschaftlich verknüpfte Positionen. Vor Implementierung jeweils vollständigen Fachvertrag und Abhängigkeitsbeweis erstellen; Freigabe getrennt von visuellen Korrekturen. UI-A01–A08 bleiben integriert, keine Doppelentwicklung.
+
+## 18. Test- und Abnahmematrix
+
+Mindestens prüfen:
+
+- Chromium, Firefox und WebKit; 320/390/430/768/1440 CSS-Pixel; kleine Höhen; 200 % Textvergrößerung.
+- Touch, Maus, Tastatur, Axe, Fokus und Kontrast; lange Bezeichnungen; große und kleine Geldbeträge.
+- Ein, zwei und viele historische Stichtage; regelmäßige und unregelmäßige Datumsabstände.
+- 1, 8, 100 und über 200 ausgewählte Einträge; identische und gemischte Sperrgründe.
+- Aktive und archivierte Positionen, Buchungen und Referenzen.
+- Fehlende, unvollständige und vorhandene Liquiditätsangaben; mindestens 38 Positionsbuchungen.
+- Alle drei Diagrammdarstellungen; linker und rechter Tooltiprand.
+- Kontrollierte PWA, relevante Cache-/Service-Worker-Übergänge; leere und gefüllte Portfolios.
+
+Konkrete Abnahme:
+
+- Acht identische Gründe erscheinen einmal als Kategorie; 100 Buchungen erzeugen keinen seitenlangen Sperrtext.
+- Normal- und Verwaltungsmodus in allen drei Bereichen visuell und funktional konsistent; Bearbeiten-Text statt Stift; kleines Dropdown Aktiv/Archiviert/Alle.
+- Keine 6+2- oder 7+1-Anordnung, wenn 4×2 vorgesehen ist.
+- Datum, Betrag und vollständige Tooltiperläuterung lesbar.
+- Automatisch/Linie/Punkte ohne erfundene Zwischenwerte; tatsächliche Zeitdistanzen sichtbar.
+- Kein redundantes „Erfasste Stichtage“ unter den beiden Vermögenscharts.
+- Liquidität auf Desktop und Mobile auch ohne Zusatzangaben vorhandener Konten erreichbar.
+- Kein permanentes „Lokal gespeichert“ im mobilen Header; kritische Speicherzustände bleiben sichtbar.
+- Kompakte Buchungshistorie mit österreichischem Datum und konsistenter Typografie.
+- Keine unerlaubte Löschung, stille Teillöschung oder finanzielle Mutation.
+
+Alle bestehenden Finanz-, Import-, CAS-, Backup-, Restore-, Undo-, Mehrtab- und Offlinegates erhalten. Öffentliche Artefakte ausschließlich synthetisch. Browser-/Emulatornachweise niemals als physische Android-/iOS-/TalkBack-/VoiceOver-Abnahme ausgeben.
+
+## 19. Vollständigkeitsabgleich
+
+Diesen Vertrag gegen sämtliche bekannten Nutzerentscheidungen vom 25.–29.10.2026, UI-MASTER28, Issue #149, Sonnet-Audit und vorhandene Release-/Testbelege abgleichen. Pro Punkt dokumentieren:
+
+- DONE: bereits implementiert und abgenommen.
+- FIXED: neu korrigiert.
+- PARTIAL: teilweise erfüllt.
+- BLOCKED: gesperrt mit nachvollziehbarem Grund.
+- NOT REPRODUCIBLE: aktuell nicht reproduzierbar, nur mit Gegenbelegen.
+- OPTIONAL: kein notwendiger Produktfehler.
+
+OPEN ist bei Übernahme die Kennzeichnung noch ungeprüfter konkreter Befunde. Keine vorzeitige Abnahme, kein still verlorener Nutzerwunsch, keine Doppelimplementierung und keine unbegrenzte neue Auditphase.
+
+## 20. Dauerhafte Absicherung und Fortsetzung
+
+Nach jeder Etappe und vor Limits, Unterbrechungen oder Kontextwechseln: Working Tree und Branch prüfen; sichere Änderungen committen und pushen; Remote-SHAs verifizieren; zentralen Checkpoint separat committen/pushen; PR-/CI-/Release-/Livebelege, DONE/PARTIAL/BLOCKED, offene Tests, externe Grenzen und exakte Fortsetzungsstelle dokumentieren. Fehlgeschlagenen Push transparent melden und keinen Remoteerfolg behaupten.
+
+Historischen Dokumentationsbranch niemals als alten Produktcode nach main mergen. FLH05 und FLH-PROJ01 bleiben OPEN/PARKED. FLH03, DELETE-MASTER28, FLH04, IndexedDB, Backup/Recovery, Performance und sämtliche übrigen Masteranforderungen bleiben erhalten. Keine privaten Original-CSV-Dateien, Finanzdaten oder Secrets veröffentlichen; fremde Branches nicht überschreiben; Tests nicht abschwächen.
+
+Diese Spezifikation ist der dauerhaft übernommene Sollvertrag und keine Implementierungsbehauptung. Konkrete Abnahmen werden nach Reproduktion und Tests im bestehenden Mastercheckpoint fortgeschrieben. PR200 ist ausdrücklich freigegeben; zusätzliche wirtschaftliche Löschumfänge oder spätere Releases erhalten dadurch keine pauschale Freigabe.
