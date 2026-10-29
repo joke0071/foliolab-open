@@ -1,3 +1,68 @@
+# Final gesichert: PR198 gemergt, Release blockiert; Test-PR199 abgenommen · 29.10.2026
+
+**DONE:** Die ausdrückliche Nutzerfreigabe für PR198 wurde verwendet; kontrollierter Merge ist erfolgt.
+**PARTIAL / NOT LIVE_ACCEPTED:** SW212 noch nicht veröffentlicht/abgenommen; Main-CI stoppte vor Deployment.
+**TECHNICALLY ACCEPTED / AWAITING OWN USER RELEASE DECISION:** ausschließlich testseitiger Folge-PR199.
+**PARTIAL:** Gesamtmaster einschließlich übriger UI-/Fachpakete und tatsächlicher Startoptimierung.
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Aktueller main | 0db6863ae81eec1821ea54878a1cf28e8f7bcf0e, enthält freigegebenen PR198 |
+| Produktion | Direkt mit Cache-Busting erneut gelesen: **v211 / SW211**; vorheriger Release PR196 LIVE_ACCEPTED |
+| Gescheiterte Main-CI | [40901665578](https://github.com/joke0071/foliolab-open/actions/runs/40901665578): Main123545310173 und Cross1 123545310345 SUCCESS, Cross2 123545309751 FAILURE; deploy123550226710/live123550228171 korrekt SKIPPED |
+| Fehler | Firefox-Referenzverwaltung, tests/browser-reference-management.mjs:48, 30s auf navigator.serviceWorker.controller vor echtem Offline-Archivcommit. Ursprüngliche Registrierungs-/Aktivierungsphasen nicht aufgezeichnet; genaue damalige Browser-/Produktursache nicht behaupten |
+| Fehlerbeleg | docs/release-evidence/ui-v212-main-offline-precondition-failure.json /717aa0f9; ZIP12910670410 vor Extraktion SHA256c8143bf1f6987bc5ae1aa525b3caa41f7bcd489ed4ae82e85780d5b6b79b8393 verifiziert |
+| Einziger aktiver Folgekandidat | [PR199](https://github.com/joke0071/foliolab-open/pull/199), fix/reference-offline-test-baseline, reviewbereit, kein Draft, kein Merge/Automerge/Deployment |
+| HEAD199 | 36df866e296c80add2d596665fb098b94162a081 |
+| Baum199 | baa7b3805cb6813d6b58bd331e3b94f0f0e156bb |
+| Testmerge199 | 105956aeb37234319fedec2a24690721d720358e, exakt derselbe Baum; Eltern main0db6863a und HEAD36df866e |
+| Pflicht-CI199 | [40904401167](https://github.com/joke0071/foliolab-open/actions/runs/40904401167) SUCCESS |
+| Wallet-CI199 | [40904401243](https://github.com/joke0071/foliolab-open/actions/runs/40904401243) SUCCESS |
+| Pflichtjobs199 | test123555095826, Cross1 123555095319, Cross2 123555095853 SUCCESS; deploy123561001767/live123561002920 korrekt SKIPPED |
+| Tatsächliche Abnahme | 948/948 Units, 0 Fail, 0 Skip; Syntax, Chromium/Firefox/WebKit; aktuelle Originalberichte, neue Workerprotokolle, Bilder und ZIPdigests geprüft |
+| Kandidatenbeleg199 | docs/release-evidence/reference-offline-baseline-candidate.json in385d033073f7f6dd40269c0eac0c4a3e0a8f39dc |
+| Quellumfang199 | Exakt eine Datei: tests/browser-reference-management.mjs / Blobebb04f62976773de6f57f9816bd766c83c1509ef |
+| Produktbytes | Sämtliche Appdateien, src, CSS, HTML, Manifest, Icons und SW212 exakt identisch zum freigegebenen PR198/main0db6863a; keine neue Funktion oder geänderte Finanz-/Speicherlogik |
+| Lokaler Zustand | HEAD/Baum exakt remote übernommen, keine getrackten Reständerungen; nur reproduzierbare synthetische Artefakte und Browserabhängigkeiten unversioniert |
+
+## Abgenommene begrenzte Korrektur
+
+Vor jeder synthetischen Datenseedung wartet der Referenztest auf den **von der Anwendung registrierten** aktivierten Worker. Die Aktivierung wird über ready/statechange und ein synchron gepolltes Testflag beobachtet. Danach wird das noch leere Dokument neu geladen; tatsächlicher Controller durch exakt sw.js und exakter unveränderter Ausgangsrecord einschließlich Settings/Revision sind harte Assertions.
+
+Keine manuelle SW-Registrierung, Sleeps, Retries, Timeoutsteigerung oder entfernte Assertion. Die ursprüngliche spätere Controllerprüfung, tatsächlicher Offline-Archivcommit mit exakt einer Revision, Offline-Reload, wirtschaftliche Invarianten, Quota/post-put-Abbruch, Stale/CAS, Undo, Plain-/verschlüsselter Restore und sämtliche übrigen Referenz-/Rücknahme-/Native-/UIgates bleiben erhalten.
+
+Tatsächliche letzte CI-Telemetrie in allen3Engines bestätigt initial installing/controllerfalse → activated/controllertrue → kontrolliertes Dokument mit unverändertem Blankrecord. Vollständige aktuelle Referenzverwaltung UND Rücknahme sowie native Flatex append/backfill, UI-Kontrollen und übrige verpflichtende Regressionen PASS. Neue CI-Bilder Chromium-manage320, Firefox-normal390 und WebKit-manage320 tatsächlich angesehen. Keine Hardware-/AT-Vollabnahme und keine privaten Original-/Finanzdaten verwendet oder veröffentlicht.
+
+Eine lokale erste uncommittete asynchrone Wartebedingung wurde vor Push verworfen, weil der installierte Playwright-Poller ein Promise sofort als truthy behandelte. Der finale synchrone Ereignisflag-Poll ist tatsächlich geprüft. Dies ist eine separate lokale Entwicklungsbeobachtung und **nicht** die behauptete Ursache des ursprünglichen Mainfehlers.
+
+## Verifizierte finale Artefakte199
+
+- Main12911995860: SHA25609481f4d2d206ff7acf98925fe27cbed79d2bd2f93fa422d6dcde5745d49a810; tatsächlicher tested-sha105956ae und948Unitlog gelesen.
+- Cross1 12912070346: SHA2565ba520347eef415204fc46b416997ecc5922402bfc1520d71ebed47b7bf37321.
+- Cross2 12912185598: SHA2565e4628f2e809cead897e30b158e70e54700e0e3640f8ae707c8954abb748343f.
+Alle drei ZIPs unabhängig vor Extraktion verifiziert. Tatsächliche Workerzustände, relevante Berichte, Bildhashes, Fehlerhistorie und Grenzen dauerhaft im Kandidatenbeleg.
+
+## Exakte nächste Fortsetzungsstelle und erforderliche Entscheidung
+
+**Jetzt eigene Nutzerfreigabe für Merge und Deployment von PR199 / HEAD36df866e erforderlich.** Der ursprüngliche Masterauftrag begrenzt Freigaben auf den jeweiligen PR; die erteilte198-Freigabe wurde für198 verwendet und wird nicht auf Folge-PR199 erweitert. Der Testkandidat ist vollständig geprüft, konkret reviewbar und dauerhaft remote gesichert.
+
+Nach199-Freigabe:
+1. main/HEAD/Testmergebaum/offene PRs/aktive Actions und Writer erneut prüfen.
+2. Ausschließlich unveränderten abgenommenen Testkandidaten kontrolliert mergen.
+3. Volle Main-/Pages-/tatsächliche 3-Engine-Livegates einschließlich neuem Workerbaseline-Nachweis, echter SW212-/Assetgleichheit, UI-Kontrollen und bestehenden Finance-/CAS-/Backup-/Restore-/Referenz-/Nativegates abschließen.
+4. Erst dann **PR198/UI-v212 sowie Testreparatur LIVE_ACCEPTED** ausweisen, Releasebeleg/Roadmap/Audit und separaten Checkpoint committen/pushen/Remote-SHA verifizieren.
+5. Danach essentielle P1-FLH-PERF01 gemäß bestehendem Auftrag fortsetzen; keine optionalen P3 vorziehen.
+
+## Weiterer Master und PERF01
+
+UI-Zuständigkeit vollständig Work; Issue197 geschlossen; alle8Sonnetbefunde und A–I-Verträge erhalten. A01/A07 und begrenzte A02/A03/A04-Anteile sind in freigegebenem198 implementiert, aber noch nicht produktiv abgenommen. Weitere relevante A02-Aktionen, Kontrast außerhalb Kalender, Leerraumteil/A05/A06/A08 und tatsächliche übrige UI-Deltas bleiben offen. Konkreter bekannter Folgepunkt: langes Anbieterlabel kann bei320px den Betrag bedrängen; kein unendlicher neuer Audit.
+
+PERF01 bleibt **OPEN / ESSENZIELLE P1**: unprofilierte tatsächliche IDB-/PWA-Vorhermessungen, identisches Dashboard, fünf frische Prozesse und zugehörige warme/Offline-Reloads, je19/1000Positionen und1825Referenzen gesichert. Exakte quellhashgebundene portable Wiederholung: bei1000 Median kalt3113,9ms / warm2882,0ms / offline3086,8ms; alle Records/Settings/Revisionen unverändert. Baseline docs/release-evidence/perf01-unprofiled-startup-before-v212.json in63fcfb0b, exakter portabler Code docs/release-evidence/perf01-startup-benchmark.mjs in5cf2b069. Zuvor gemessener CPU-Hotspot wiederholter validDate-Prüfung bleibt begrenzter Untersuchungsansatz. **Keine Performanceimplementierung oder30%-Verbesserung behauptet.** Kein paralleler Funktionsstrang während des Releaseblockers.
+
+Alle übrigen FLH03-/DELETE-MASTER28-/IndexedDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-/P0-/P1-/BENCH-Anforderungen und Releasegrenzen bleiben vollständig erhalten. FLH05 und FLH-PROJ01 **OPEN / PARKED**. Keine privaten Daten/Schlüssel veröffentlichen; historische Dokumentationsbranches niemals als Appcode nachmain mergen. Alle älteren Statusköpfe darunter sind historische Zwischenstände; dieser Kopf ist maßgeblich.
+
+---
+
 # Testkorrektur remote gesichert · PR199 volle CI läuft · 29.10.2026
 
 **PARTIAL:** PR198 gemergt (main0db6863a), Deployment durch Mainfehler40901665578 gestoppt, Produktion direkt bestätigt weiterhinSW211. Keine produktive SW212-Abnahme.
