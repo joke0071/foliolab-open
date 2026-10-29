@@ -1,3 +1,40 @@
+# DELETE-MASTER28 Wiederaufnahme · manueller Referenz-Rücknahmekandidat in Arbeit · 29.10.2026
+
+**PARTIAL:** v208/PR195 bleibt abgeschlossen und produktiv abgenommen.
+Frischer Abgleich: main6fe75a99, zentraler Remotecheckpoint5913a656,
+offene Drafts157/161 unverändert, keine laufenden/wartenden Actions; sämtliche
+181 Branches in zwei Seiten geprüft, keine neue kollidierende Arbeit erkennbar.
+Einzige lokale Worktree; Prozessinventar technisch nicht verfügbar, daher keine
+Behauptung vollständiger fremder Sitzungsüberwachung. Relevanter Ausgangscode
+sauber, vorhandene synthetische artifacts nicht als Produktcode übernehmen.
+
+Vorabvertrag im einzigen neuen Funktionsbranch feature/reference-removal-safe-subset
+auf main6fe75a99: **31acb824f0d2f916cf1cfe2e68889877cb265326**, Remotecommit bestätigt.
+docs/REFERENCE_MANAGEMENT_CONTRACT.md ergänzt begrenzte manuelle unabhängige
+Beobachtungsrücknahme, vollständige Folgenvorschau, bestehendes deleteSnapshot/
+Archivnormalisierung/CAS, baselinegebundenes Backup, Zustimmung und exaktes Undo.
+Renditestart/Quellrevisionen/unbekannte Felder/fremde Identitätsbezüge blockieren;
+kein neues Modell/Schema/Engine, keine automatische private Datenänderung.
+
+Lokaler Funktionskandidat bereits implementiert, **noch nicht als vollständig
+abgenommen oder veröffentlicht behandeln**. Syntax PASS;945/945 Unit-Tests,
+0Fail/0Skip. Neue Browserprüfung vorbereitet und in bestehendes Pflichtgate
+eingehängt; lokaler Chromiumstart noch durch fehlendes Browserbinary blockiert,
+Installation läuft. Kein Sicherheitsgate gelockert. Exakte nächste Fortsetzung:
+Browserinstallation abschließen, tatsächliche neue und bestehende Referenzgates
+ausführen/Fehler gezielt korrigieren, Quellreview, Code auf diesem Branch remote
+sichern und PR/volle Drei-Engine-CI herstellen. Dann echte aktuelle Artefakte/
+Bilder prüfen und reviewbaren begrenzten Kandidaten abnehmen.
+
+Vor Merge/Deployment dieses neuen kritischen Referenzumfangs ist eine eigene
+konkrete Nutzerfreigabe erforderlich; PR195-Freigabe wird nicht ausgeweitet.
+Noch keine Freigabe erfragen, solange Kandidat unvollständig geprüft ist.
+UI-/DELETE-/FLH03/FLH04/PERF01 essentielleP1 und ursprüngliche Roadmap bleiben
+PARTIAL. FLH05/PROJ01 OPEN/PARKED, Zukunftskompatibilität nur notwendige gemeinsame
+Verträge ohne Zusatzphase/Refactorings. Historische Belege unten erhalten.
+
+---
+
 # v208 LIVE_ACCEPTED · PR195 freigegeben, gemergt und produktiv abgenommen · 29.10.2026
 
 **DONE:** begrenzter nativer Flatex-Stückhistorien-Übernahmerelease PR195 vollständig
