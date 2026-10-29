@@ -1,0 +1,290 @@
+{
+  "status": "PARTIAL / LOCAL_GATES_PASS / FULL_CI_RUNNING",
+  "head": "36df866e296c80add2d596665fb098b94162a081",
+  "tree": "baa7b3805cb6813d6b58bd331e3b94f0f0e156bb",
+  "pr": 199,
+  "base": "0db6863ae81eec1821ea54878a1cf28e8f7bcf0e",
+  "applicationBytes": "exactly identical to approved PR198 / SW212",
+  "scope": "Only tests/browser-reference-management.mjs: explicit application-worker activated/controlled baseline and exact blank record nonmutation before seeding; original actual offline commit/reload and financial/CAS/backup/restore checks retained.",
+  "baselineStates": {
+    "chromium": {
+      "initial": {
+        "controller": false,
+        "controllerScript": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    },
+    "firefox": {
+      "initial": {
+        "controller": false,
+        "controllerScript": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    },
+    "webkit": {
+      "initial": {
+        "controller": false,
+        "controllerScript": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "activated": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "controlled": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      },
+      "result": "PASS",
+      "final": {
+        "controller": true,
+        "controllerScript": "http://127.0.0.1:4173/sw.js",
+        "active": "activated",
+        "installing": null,
+        "waiting": null
+      }
+    }
+  },
+  "reports": {
+    "chromiumReference": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "PASS",
+          "references": 210,
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "normal/manage/visible page/partial/filter/no hidden selection",
+            "source and runtime guards/start/impact correction/add/duplicate",
+            "exact original and non-null TWR/XIRR invariance",
+            "quota/post-put/cancel/retry/CAS",
+            "combined booking/reference archive/restore",
+            "plain and fresh password V2 UI restore",
+            "actual offline commit/reload",
+            "keyboard/focus/axe/44px"
+          ]
+        }
+      ]
+    },
+    "chromiumRemoval": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "synthetic manual reference inverse; no private data",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "mixed/start blocks",
+            "actual original backup and separate consent/forged submit",
+            "actual endpoint unknown metrics and selected identities",
+            "quota/post-put exact record/settings/revision",
+            "offline one-revision removal/reload",
+            "session exact undo",
+            "fresh plain/encrypted original recovery",
+            "stale writer and actual CAS race after freshness",
+            "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+          ]
+        }
+      ]
+    },
+    "crossReference": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "references": 210,
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "normal/manage/visible page/partial/filter/no hidden selection",
+            "source and runtime guards/start/impact correction/add/duplicate",
+            "exact original and non-null TWR/XIRR invariance",
+            "quota/post-put/cancel/retry/CAS",
+            "combined booking/reference archive/restore",
+            "plain and fresh password V2 UI restore",
+            "actual offline commit/reload",
+            "keyboard/focus/axe/44px"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "references": 210,
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "normal/manage/visible page/partial/filter/no hidden selection",
+            "source and runtime guards/start/impact correction/add/duplicate",
+            "exact original and non-null TWR/XIRR invariance",
+            "quota/post-put/cancel/retry/CAS",
+            "combined booking/reference archive/restore",
+            "plain and fresh password V2 UI restore",
+            "actual offline commit/reload",
+            "keyboard/focus/axe/44px"
+          ]
+        }
+      ]
+    },
+    "crossRemoval": {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "synthetic manual reference inverse; no private data",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "mixed/start blocks",
+            "actual original backup and separate consent/forged submit",
+            "actual endpoint unknown metrics and selected identities",
+            "quota/post-put exact record/settings/revision",
+            "offline one-revision removal/reload",
+            "session exact undo",
+            "fresh plain/encrypted original recovery",
+            "stale writer and actual CAS race after freshness",
+            "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "widths": [
+            320,
+            390,
+            430,
+            768,
+            1440
+          ],
+          "checks": [
+            "mixed/start blocks",
+            "actual original backup and separate consent/forged submit",
+            "actual endpoint unknown metrics and selected identities",
+            "quota/post-put exact record/settings/revision",
+            "offline one-revision removal/reload",
+            "session exact undo",
+            "fresh plain/encrypted original recovery",
+            "stale writer and actual CAS race after freshness",
+            "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+          ]
+        }
+      ]
+    }
+  },
+  "logs": {
+    "reference-baseline-chromium.log": {
+      "sha256": "50d40f6716347125aeaf43a5305dac45d486bafd4146a498cd299bab825ca555",
+      "passLines": [
+        "chromium: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS",
+        "chromium: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS"
+      ]
+    },
+    "reference-baseline-cross.log": {
+      "sha256": "e969620e41fb7565ce431b08825e3c95e57184fed97e109992385a430d7f2e8b",
+      "passLines": [
+        "firefox: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS",
+        "webkit: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS",
+        "firefox: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS",
+        "webkit: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS"
+      ]
+    }
+  },
+  "ci": {
+    "mandatory": 40904401167,
+    "wallet": 40904401243
+  },
+  "diagnosticLimits": [
+    "Original CI failed waiting for actual controller; registration/activation phases were not captured, so historical exact root cause remains unproven.",
+    "An initial uncommitted asynchronous wait predicate was not repeatedly polled by installed Playwright; replaced before push with an activation-event flag and strict synchronous polling. This is a separate local test-development observation, not the original CI cause.",
+    "No app-side register call injected, no retry/sleep/timeout increase, no assertion removal, no product or financial changes.",
+    "Local Firefox host sandbox setup and WebKit library setup are container-specific; mandatory GitHub jobs retain their original environment."
+  ]
+}
