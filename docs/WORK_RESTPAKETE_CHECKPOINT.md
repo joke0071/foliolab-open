@@ -1,3 +1,37 @@
+# PR196: bestehende Kursfixture überschreitet Altersgate · Diagnose belegt · 29.10.2026
+
+Kandidat07a03dd3/Baumced8b29f unverändert remote. Pflicht40876478879/test123456484709
+FAILURE in tests/browser-phase2.mjs:33 (125.25 erwartet,100 unverändert).
+Wallet40876478789 SUCCESS; beide Crossjobs123456485062/123456485089 laufen regulär
+weiter. Nicht unterbrechen, kein Retry. Noch keine vollständige Kandidatenabnahme.
+
+**Ursache tatsächlich nachgewiesen:** identischer unveränderter Phase2-Test
+scheitert auch gegen separaten per git archive origin/main6fe75a99 erzeugten
+v208-Produktbaum. Diagnose aus refreshErrorDetails:
+„twelve: Kursdatum2026-10-21 ist nicht aktuell genug – Bestand unverändert.“
+security-sources.js:27 schützt Kurse älter als8Tage (dateOnly zu12:00UTC).
+Der fest codierte Mock21.10. überschritt am29.10. nach12:00UTC dieses korrekte
+Gate; frühere ReleaseCI vor12:00 bestand. Gegenwärtiger Test und v208-Baseline
+weisen identischen Fehler auf, keine neue Referenzmutation als Ursache.
+Währungs-Mismatch ABC ebenfalls korrekt abgewiesen.
+
+**Exakte nächste Fortsetzung:** beide noch laufenden Crossjobs regulär beenden.
+Dann nur tests/browser-phase2.mjs auf zeitlich aktuelle synthetische
+Quote-/aktuelleFXfixture und entsprechende Datumsassertion umstellen; historischer
+FXfall20.10. bleibt historisch. Zusätzlich explizit überalterten synthetischen
+Kurs mit unverändertem Altbestand prüfen. Produkt-Alters-/Identitäts-/Währungs-
+gates unverändert lassen. Gezielten Test gegen v208-Baseline UND Kandidat prüfen,
+separat committen/pushen, dann vollständige neue CI auf demselben PR196.
+Neue Referenzgates lokal bereits PASS, volle aktuelle3Engine-Abnahme offen.
+
+Fehl-Releaseartefakt12897804510 SHA256
+311876fba7502e841d8340ca2108e57226e3727623409ad7dba8c510fc35b5a4 erhalten.
+Main/v208 unverändert, SW209 unveröffentlicht, kein Merge/Deployment.
+Neue konkrete Releasefreigabe erst am vollständig geprüften Kandidaten.
+Gesamtmaster PARTIAL, alle Roadmap-/Parkierungsregeln und historischen Belege erhalten.
+
+---
+
 # PR196 remote gesichert · vollständige neue CI läuft · 29.10.2026
 
 **PARTIAL bis aktuelle vollständige Abnahme.** Einziger Funktionsbranch
