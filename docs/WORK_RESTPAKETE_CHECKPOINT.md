@@ -1,3 +1,9 @@
+# PR195 aktuelle CI-IDs · 29.10.2026
+
+Maßgeblicher Kandidat7274797f/Bauma48eb56b unverändert. Volle Pflicht-CI40837424918 läuft regulär; Wallet40837424785 SUCCESS. PR-Testmerge5073c5e6 wird gegen denselben Quellbaum geprüft. Produktion v204/main3e9f4877 unverändert. Keine neuen Produktänderungen nach Kandidatensicherung583a24de, keine Gates/Assertions/Pins gelockert. Weiterhin IN_PROGRESS bis tatsächliche3Engine-/Artefakt-/Quellabnahme; exakt nächster Schritt aktuellen Lauf abschließen lassen und Nachweise prüfen. Keine privaten Produktivdaten geändert, Gesamtmaster PARTIAL.
+
+---
+
 # PR195 native Projektion remote gesichert · volle CI läuft · 29.10.2026
 
 Einziger Funktionsbranch feature/flh03-flatex-native-projection, HEAD
