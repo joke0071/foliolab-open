@@ -1,0 +1,212 @@
+{
+  "head": "7fa5575f0e629f097a5b0c3aa23a8eff29d4c549",
+  "tree": "112c5916334e5642d416fce184fc05caa5af9761",
+  "pr": 198,
+  "candidateSW": 212,
+  "status": "PARTIAL / local gates pass; full CI pending; no production release",
+  "unit": {
+    "pass": 948,
+    "fail": 0,
+    "skip": 0
+  },
+  "cross": {
+    "base": "http://127.0.0.1:4173/",
+    "scope": "synthetic presentation controls; exact IndexedDB nonmutation",
+    "engines": [
+      {
+        "engine": "firefox",
+        "result": "PASS",
+        "scans": [
+          "empty dashboard 320",
+          "empty history 320",
+          "empty positions 320",
+          "empty bookings 320",
+          "empty more 320",
+          "empty dashboard 390",
+          "empty history 390",
+          "empty positions 390",
+          "empty bookings 390",
+          "empty more 390",
+          "empty dashboard 430",
+          "empty history 430",
+          "empty positions 430",
+          "empty bookings 430",
+          "empty more 430",
+          "empty dashboard 768",
+          "empty history 768",
+          "empty positions 768",
+          "empty bookings 768",
+          "empty more 768",
+          "empty dashboard 1440",
+          "empty history 1440",
+          "empty positions 1440",
+          "empty bookings 1440",
+          "empty more 1440",
+          "filled dashboard 320",
+          "filled history 320",
+          "open calendar 320",
+          "filled positions 320",
+          "filled bookings 320",
+          "filled more 320",
+          "filled dashboard 390",
+          "filled history 390",
+          "open calendar 390",
+          "filled positions 390",
+          "filled bookings 390",
+          "filled more 390",
+          "filled dashboard 430",
+          "filled history 430",
+          "open calendar 430",
+          "filled positions 430",
+          "filled bookings 430",
+          "filled more 430",
+          "filled dashboard 768",
+          "filled history 768",
+          "open calendar 768",
+          "filled positions 768",
+          "filled bookings 768",
+          "filled more 768",
+          "filled dashboard 1440",
+          "filled history 1440",
+          "open calendar 1440",
+          "filled positions 1440",
+          "filled bookings 1440",
+          "filled more 1440",
+          "320x360 synthetic150percent calendar text"
+        ],
+        "checks": [
+          "50empty/filled views",
+          "real44px nonoverlapping scoped controls",
+          "seven-day320px calendar",
+          "balanced4+4 wealth presets",
+          "calendar4.5contrast",
+          "exact accessible donor amount and visible SVG focus",
+          "short height/enlarged text/reset/Escape focus",
+          "exact IndexedDB nonmutation"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "scans": [
+          "empty dashboard 320",
+          "empty history 320",
+          "empty positions 320",
+          "empty bookings 320",
+          "empty more 320",
+          "empty dashboard 390",
+          "empty history 390",
+          "empty positions 390",
+          "empty bookings 390",
+          "empty more 390",
+          "empty dashboard 430",
+          "empty history 430",
+          "empty positions 430",
+          "empty bookings 430",
+          "empty more 430",
+          "empty dashboard 768",
+          "empty history 768",
+          "empty positions 768",
+          "empty bookings 768",
+          "empty more 768",
+          "empty dashboard 1440",
+          "empty history 1440",
+          "empty positions 1440",
+          "empty bookings 1440",
+          "empty more 1440",
+          "filled dashboard 320",
+          "filled history 320",
+          "open calendar 320",
+          "filled positions 320",
+          "filled bookings 320",
+          "filled more 320",
+          "filled dashboard 390",
+          "filled history 390",
+          "open calendar 390",
+          "filled positions 390",
+          "filled bookings 390",
+          "filled more 390",
+          "filled dashboard 430",
+          "filled history 430",
+          "open calendar 430",
+          "filled positions 430",
+          "filled bookings 430",
+          "filled more 430",
+          "filled dashboard 768",
+          "filled history 768",
+          "open calendar 768",
+          "filled positions 768",
+          "filled bookings 768",
+          "filled more 768",
+          "filled dashboard 1440",
+          "filled history 1440",
+          "open calendar 1440",
+          "filled positions 1440",
+          "filled bookings 1440",
+          "filled more 1440",
+          "320x360 synthetic150percent calendar text"
+        ],
+        "checks": [
+          "50empty/filled views",
+          "real44px nonoverlapping scoped controls",
+          "seven-day320px calendar",
+          "balanced4+4 wealth presets",
+          "calendar4.5contrast",
+          "exact accessible donor amount and visible SVG focus",
+          "short height/enlarged text/reset/Escape focus",
+          "exact IndexedDB nonmutation"
+        ]
+      }
+    ]
+  },
+  "logs": {
+    "ui212-browser-chromium.log": {
+      "sha256": "db4b56eb17bf08bcf9c47831da50594627cbd57fc52158240ec7081755f98589",
+      "lines": [
+        "chromium: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS"
+      ]
+    },
+    "ui212-browser-cross.log": {
+      "sha256": "3889293ddf35dfc5bbdaa88030cf696161b803cce95d35a1532964509064eb68",
+      "lines": [
+        "firefox: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS",
+        "webkit: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS"
+      ]
+    },
+    "ui212-units.log": {
+      "sha256": "f95a6f8ad29ebf934577fd967554c00e36c264c766044f28189dde0b82b77512",
+      "lines": [
+        "ℹ tests 948",
+        "ℹ pass 948",
+        "ℹ fail 0"
+      ]
+    },
+    "ui212-syntax.log": {
+      "sha256": "45ec98e8609d91c615ae6a08d540a6f554b02be522fb3483b1c2ab8a267f7965",
+      "lines": []
+    }
+  },
+  "reviewedImages": {
+    "chromium-focus-320.png": {
+      "sha256": "c9752059d201c5b89a5eb9bf6c786528c3c10b0ef25c67adc87c56a2d60db74a",
+      "review": "PASS; actual local image viewed"
+    },
+    "chromium-calendar-320.png": {
+      "sha256": "ef33d3b757ae82a43c6af4dd0211c234d8726c5d7b70af6203d6a99a48fe34c3",
+      "review": "PASS; actual local image viewed"
+    },
+    "chromium-calendar-390.png": {
+      "sha256": "d96daee231b4d498953fc6cd79072c9004dc4e505449579c844334dccbc30be9",
+      "review": "PASS; actual local image viewed"
+    },
+    "firefox-calendar-320.png": {
+      "sha256": "552e29adefad8ae993db1e23f17f50d4d387f376ea3678a8435101344bc600df",
+      "review": "PASS; actual local image viewed"
+    },
+    "webkit-focus-390.png": {
+      "sha256": "9d89ce04d3fdca2b4f15b102a2357291fe04edcec1dc4f9fbffc16b070e27cc8",
+      "review": "PASS; actual local image viewed"
+    }
+  },
+  "scope": "UI-A01, scoped A02, calendar A03, preset balance A04, focus A07. Remaining audit/UI/PERF tasks remain open. No financial/storage/selection/removal logic changes."
+}
