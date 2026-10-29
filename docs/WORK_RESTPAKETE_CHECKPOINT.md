@@ -1,3 +1,21 @@
+# Main40866889300 Versuch2 läuft · keine weitere Wiederholung starten · 29.10.2026
+
+Der dokumentierte einmalige gezielte Wiederholungslauf wurde erfolgreich gestartet.
+Main6fe75a997a076d0c17e5200b0bb7ee09532d7044 unverändert, run_attempt2 IN_PROGRESS.
+Testjob123427591465 läuft vollständig neu; Crossjobs123427593353 und123427594161
+SUCCESS. **Nicht erneut triggern oder unterbrechen.** Vorherige Fehler-/Diagnose-
+belege und unveränderter isolierter Volltest bleiben erhalten.
+
+Exakt nächste Aktion: diesen Versuch regulär abschließen; nach erfolgreichem
+test/deploy/live-acceptance tatsächliche SW208/Produktionsbytes und alle drei
+Browser samt beiden nativen Übernahmemodi prüfen, Artefakte/visuelle Belege
+abnehmen und finalen Releasecheckpoint sichern. Bei erneutem Controllerproblem
+keine Retryserie. Keine Produkt-/Workflow-/Teständerungen oder privaten Mutationen.
+Bereits erteilte Nutzerfreigabe bleibt gültig; Gesamtmaster PARTIAL, übrige
+Anforderungen/Parkierungen unverändert.
+
+---
+
 # Main-Controllerdiagnose: unveränderter Test vollständig PASS · gezielter Wiederholungslauf · 29.10.2026
 
 Main40866889300 Versuch1 regulär abgeschlossen: test FAILURE am SW-Controller-
