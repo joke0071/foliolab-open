@@ -1,3 +1,13 @@
+## PERF01 direkte A/B-Bestätigung ebenfalls gesichert · 29.10.2026
+
+Zusätzlich im selben Ausführungsaufruf nacheinander genehmigtesv212-Archivfee4fc5d und Kandidat870f4c07 mit exaktgleichem ScriptSHAa486bc44/Browser/Node/Viewport/Fixture/5Läufen ohneProfiler/lokaleTestsuite gemessen.1000Positionen/1825Referenzen: kalt3624,2→1665,4ms (**54,0478% weniger**), warm3337,5→1588,9ms (52,39%), offline3543,7→1624,8ms (54,15%). Alle exaktenRecords/Settings/Revisionen unverändert. BeideprimärenRohserien und dieseBestätigung vollständig imKandidatenbeleg, letzterBelegcommitfaf2b3ca83e3f6b1cd50d1226c4049bc3ec878aa.
+
+Kleiner19Positionen-Fall derBestätigung: kalt658,4→585,1ms, warm410,4→400,6ms; offline394,9→400,9ms (1,52%langsamer beiüberlappendenRohwertbereichen). DieseStreuung transparentberichten, keinepauschaleVerbesserungjedeskleinenFalles oderHardware-SLA behaupten.30%-Ziel ist im expliziten großenTestfall inbeidenunprofiliertenVergleichen erreicht.
+
+AktiverFunktionskandidat unverändertPR200/870f4c07/SW213. Hauptjob123579592324 undCross1 123579592653 aktuellSUCCESS, Cross2 123579593104 läuft; Wallet40911278522SUCCESS. **ExakteFortsetzung:** regulärenvollenCI-Abschluss/950Units/3Engineberichte/Testmerge/Bilder/ZIPdigests abnehmen, finalenBeleg undCheckpoint separatremote sichern, PRreviewbereit; eigeneFreigabe vorMerge/Deployment. Produktionv212/fee4fc5d LIVE_ACCEPTED. KeinweitererFunktionsstrang; übrigerMasterPARTIAL, FLH05/PROJ01 OPEN/PARKED.
+
+---
+
 # PERF01 saubere Messung erreicht Ziel · finale CI läuft · 29.10.2026
 
 **PARTIAL bis volle technische/produktive Abnahme.** PR200/HEAD870f4c0773e6ba95371e8b4e89865ac5a6754cbc/Baum86be70b0112d4f960abb55cc726918eba4c3064e/SW213 unveröffentlicht, Funktionsbranch feature/perf01-date-validation-cache. Produktion bleibt vollständigabgenommenv212/mainfee4fc5d.
