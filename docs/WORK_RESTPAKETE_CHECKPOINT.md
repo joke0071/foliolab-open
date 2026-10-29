@@ -1,3 +1,30 @@
+# PR194 gemergt · v204 in Main-/Releasegates · 29.10.2026
+
+PR194 erfolgreich mit erwarteter HEAD62d9bb77 gemergt. Neuer main
+`3e9f48770df0e7d63b5be311d33376a85df848f9`, Dateibaum `36b6e7a1c8e0593594c6f26ac782bcb31b12b702`
+exakt lokal/akzeptiertem Kandidaten/getestetem Merge. Keine zusätzlichen
+Quelländerungen, kein neuer Entwicklungsstrang. Kandidatenabnahme812de7d0 vor
+Merge dauerhaft gesichert; zentraler Dokumentationsbranch feature/flh05-import-foundation.
+
+**Release IN_PROGRESS, noch kein v204 LIVE_ACCEPTED.** Letzte vollständige
+Produktionsabnahme v203. Neue Main-Läufe: 40828393381 FolioLab Open – testen und veröffentlichen in_progress.
+PR40827149731/Wallet40827149715 SUCCESS,920Units und aktuelle tatsächliche3Engine-/
+Artefakt-/Bildabnahme unverändert gültig. Nur reinlesende Vorschau, keine Finanzfreigabe.
+
+Exakt nächster Schritt volle unveränderte Main-/Cross-/Pages-/neue Live-Gates
+regulär abschließen lassen; tatsächliche120Assethashes/Restore/Offline/3Engine-
+Betragsberichte/Digests und neue Produktionsbilder prüfen und sofort zentral sichern.
+Pages/SW-Version allein ist kein Liveabnahmebeweis. Bei Fehler Evidenz erhalten,
+minimal korrigieren, Gates nicht lockern. Zwischencheckpoint nach Pages sichern.
+
+Keine privaten Originale/Produktivdaten geändert, Testprofile synthetisch.
+UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF und ursprüngliche Roadmap erhalten;
+PROJ01 Backlog. Zwei Etappen UI + Release, wirtschaftlicher Nativeimport und
+vollständige Historien-/Kosten-/Cashflow-/Performanceabnahme separat offen.
+Gesamtmaster PARTIAL.
+
+---
+
 # PR194 Betragsvorschau abgenommen · kontrollierter Release beginnt · 29.10.2026
 
 **UI-Integration DONE im begrenzten Kandidatenumfang; Release IN_PROGRESS.**
