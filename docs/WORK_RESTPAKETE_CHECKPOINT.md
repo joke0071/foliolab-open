@@ -1,3 +1,32 @@
+# Main-Controllerdiagnose: unveränderter Test vollständig PASS · gezielter Wiederholungslauf · 29.10.2026
+
+Main40866889300 Versuch1 regulär abgeschlossen: test FAILURE am SW-Controller-
+Vorbereitungsgate, beide Firefox/WebKit-Shards SUCCESS, Deploy/Live SKIPPED.
+main6fe75a99 und Dateibaum1d01a067 unverändert. Keine Produkt-/Workflow-/Testbytes
+geändert. Fehlerhypothese transienter Controller-/Navigationszustand bleibt
+transparent unbewiesen; frühere TLSdiagnose ist kein Beweis für diesen HTTPfall.
+
+Nach Browserinstallation derselbe unveränderte tests/browser-position-removal.mjs
+mit exakt Kandidaten-/Main-Appbaum isoliert vollständig PASS: aktivierter SW208
+mit echtem Controller, sechsBreiten/zwölfAxe-Scans/Nullmutationen, echte Quota- und
+post-put-Abbrüche, Mehrtab-CAS, plain/encrypted UIrestore und echte Offline-
+Löschung/Neuladung mit genau einer Revision. Keine Assertions übersprungen/
+Timeouts erhöht oder Safetygates gelockert. Bereits zweimal bestandene Kandidaten-
+CI am identischen Baum und unveränderte isolierte Vollprüfung belegen keinen
+reproduzierbaren Produktfehler, ersetzen jedoch nicht den gescheiterten Maingate.
+
+**Exakt nächster Schritt:** einmal gezielt fehlgeschlagene Jobs von40866889300
+mit unveränderten vollständigen Prüfungen erneut ausführen (inklusive abhängiger
+Deploy-/Livejobs). Erfolgreiche Crossjobs desselben SHAs nicht unnötig wiederholen.
+Ersten Fehllauf/Artefakt12894515953 mit Digest
+9457d42f4969185ca206b27641105d9c22953c783b4e260d72ec7cbe3085ce19 erhalten.
+Bei erneutem Controllerfehler keine Retryserie; gezielte Diagnose/Korrektur.
+Nach echter voller Main-/Deploy-/Drei-Engine-Liveabnahme separat dauerhaft sichern.
+Nutzerfreigabe bleibt gültig; Produktion zuletztv204; keine privaten Änderungen.
+Gesamtmaster/übrige Roadmap/Parkierungen unverändert.
+
+---
+
 # Main-Release: bestehendes SW-Controllergate fehlgeschlagen · 29.10.2026
 
 PR195 bleibt autorisiert und regulär gemergt auf main6fe75a99, Baum identisch zum
