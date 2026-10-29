@@ -1,3 +1,13 @@
+## PERF01 vorbereitender CPU-Befund gesichert · 29.10.2026
+
+Während PR198-CI ausschließlich read-only-Diagnose auf exakt abgenommenem mainc08bc1d3/v211, kein zweiter Funktionsbranch/keine Performanceimplementierung: docs/release-evidence/perf01-cold-start-profile-v211.json enthält fünf frischeChromiumprozesse mit tatsächlichemIDB-Klon (1000synthetischeETF/1825manuelleReferenzen,1440x900). Mit aktivemCPUprofiler Kaltstarts3569,4/3211,8/3049,7/3186,2/3126,3ms, Median3186,2ms. Größter gemessenerSelf-Anteil validDate in historical-position-value.js ca1377–1643ms; wiederholtehistorischePositionsrekonstruktion als konkreter Untersuchungsansatz, keine unbewieseneIDB-Ursache. Warmwerte nach Positionssuche/Reload sind andererAnsicht und ausdrücklich **nicht direkt vergleichbar**.
+
+PERF01 bleibtOPEN/P1; **keine30%-Verbesserungbehauptet**. Nächster bestehenderPERF01-Schritt nach sicheremUI-Checkpoint: gleicheunprofilierteKalt-/Warm-Dashboardmessungen, identischeDaten/Umgebung, wiederholteDatumsprüfung mit unveränderterValidierungs-/Finanzsemantik untersuchen, erst dann kleinenOptimierungskandidaten/Finance-/Offline-/CASregressionen. Profilerwerte allein sind keinFinalbenchmark. GroßeWallethistorien/Hardware nichtabgedeckt. KeinVorziehenvonP3/FLH05/PROJ01.
+
+AktiverFunktionskandidat bleibtPR198/81cca606/SW212; Pflicht40899143762 und Wallet40899143178 regulärabschließen. Alle untenstehendenMaster-/Release-/Freigabe-/Absicherungsgrenzen erhalten.
+
+---
+
 # PR198 strenger44px-Vertrag korrigiert · volle CI läuft · 29.10.2026
 
 **PARTIAL:** unveröffentlichter SW212-Kandidat. Neuer HEAD81cca6060008282ae1e0dc307684d53f4a303490 / Baum425ae224c33a90bfd399d7fc7ec93db04965f17b, Remote übernommen/lokalgleich. Nur tests/browser-responsive-actions.mjs gegenüber7fa geändert; sämtliche Produktbytes exakt unverändert. PR198 bleibt Draft; mainc08bc1d3/produktivv211 LIVE_ACCEPTED.
