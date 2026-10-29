@@ -1,4 +1,43 @@
-# Native Flatex-Dialogsimulation – Kandidatenstand vor neuer CI · 29.10.2026
+# Native Flatex-Stückhistorienübernahme – Kandidat vor voller CI · 29.10.2026
+
+Vorabvertrag für aktive Übernahme vor Code dauerhaft8bf23669 auf zentralem
+Dokumentationsbranch gesichert, jetzt auch im PR. Read-only-UIkandidat a8adc396
+vollständig abgenommen/zentral7d41718c: Pflicht-CI40842974152/Wallet40842974124,
+939Units/3Engines/Artefakte/visuelle Bilder/Quellreview PASS. Kein Merge/Deployment.
+
+Neuer aktiver Kandidat verwendet unveränderte prepareNativeFlatexPreview und
+importCSV/PortfolioStorage-CAS. Nach zulässiger Simulation: aktuelles Backup ohne
+Keys inklusive Historie, separate konkrete Übernahmebestätigung. Modus-/Quell-/
+Konto-/Datei-/Simulationswechsel verwirft Backupbezug und Zustimmung. Vor Submit
+Revision/Baseline/Generation und vollständige native Qualifizierung erneut prüfen;
+Finanzzeilen müssen exakt der bestätigten Simulation entsprechen. Auf Clone
+vorbereiten, vorhandenen aktuellen Snapshot/Undo wiederverwenden. Während des
+atomaren Saves Dialogfelder inert; nach Fehler Zustimmung/Entwurf verwerfen.
+Keine Cash-/Kosten-/Eröffnungsfiktionen oder Teilauslassung. Keine neue Engine.
+
+Lokale939Units/0Fail/0Skip, Syntax und echte Chromium-Übernahme append/backfill PASS:
+Backupinhalt/Keyausschluss/gesonderte Zustimmung/Resets/forciertes Submit, exakte
+Endmenge/geschütztes zweites Depot gleicher ISIN/unbekannte Nebenkosten/keine
+externen Cashflows, echte Quota und post-put-Abbrüche mit exaktem unverändertem
+Record/Revision/Settings, genau eine akzeptierte CASrevision, nativer Replay ohne
+neue Revision, exaktes UI-Undo samt Stichtag, gespeicherte Provenienz über Plain- und
+EncryptedRestore, echter konkurrierender Schreiber NACH Frischeprüfung am CASpunkt
+abgewiesen, Dialogfelder während Save tatsächlich inert, Offline-UIcommit.
+Fünf Breiten/Axe/Fokus/44px und horizontale Aktionsgrenzen PASS;320px-Visuellerstbefund
+zu lange Buttontexte durch kurze passende Beschriftungen korrigiert und erneut geprüft.
+Bestehende Chromium-NativeUI-/Bindungs-/Betrags-/Simulationsgates ebenfalls PASS.
+
+SW207 unveröffentlichter Kandidat. Aktuelle volle neue CI/Wallet/Firefox/WebKit- und
+Artefakt-/Quellabnahme noch OFFEN. **Eigene konkrete Nutzerentscheidung vor Merge/
+Deployment neuer wirtschaftlicher Buchungsmutationen erforderlich**; keine private
+Originaldatei/Produktivdaten verändert. Vollständige Original-/Cash-/Sonderfälle
+bleiben offen. Nach finalen Gates konkrete Releaseentscheidung vorlegen, keine
+Freigabe für übrigen Master/FLH05/PROJ01 daraus ableiten. Diese bleiben geparkt,
+UI-/DELETE-MASTER28/PERF01/FLH04/übrige Roadmap erhalten. Gesamtmaster PARTIAL.
+
+---
+
+# Historischer UIkandidat vor CI
 
 Fortsetzung auf demselben Branch/PR195 nach abgenommener Grundlage631db637 und
 regulär erfolgreicher Dokumentations-CI40841159604/Wallet40841159516. Vorabvertrag
