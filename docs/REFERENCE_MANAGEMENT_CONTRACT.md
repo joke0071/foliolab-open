@@ -38,6 +38,12 @@ Quota, post-put-Abbruch, Abbrechen, fehlendes Backup/Bestätigung und konkurrier
 Revision müssen exakten Originalrecord/Settings/Revision erhalten. Kein separates
 Journalposting, kein Importbeleg und kein Transfer wird entfernt.
 
+Prüfgrenzen dieses Schnitts: ASCII-Stichtagsidentitäten, höchstens200.000
+Prüfknoten/64 Ebenen/8MB geprüfte Zeichenketten. Identitäts-Teilstrings und
+nicht lesbare codierte Metadaten sperren konservativ auch mögliche Zufallstreffer;
+keine stille Auflösung unbekannter Bezüge. Weitere Quellen und diese engeren
+Grenzen bleiben ausdrücklich offene Qualifikation, keine vollständige DELETE-Abnahme.
+
 ## Nachweise und Freigabe
 
 Unitreferenzen: Start, Endpunktverlust mit null statt erfundener Rendite,

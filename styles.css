@@ -1232,3 +1232,5 @@
 @media(max-width:700px){#referenceSelectionTools>.settings-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.reference-management-head{margin-left:auto}}
 /* Reference rollback preview: fit narrow dialogs and retain actual touch sizes. */
 #referenceRemovalBackup{min-height:45px;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+#referenceRemovalPreview{min-width:0;overflow-wrap:anywhere}
+#referenceRemovalPreview .performance-details{min-width:0}
