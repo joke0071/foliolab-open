@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-29",
+  "status": "LOCAL_TESTS_PASS / CI_RUNNING / NOT_MERGED / NOT_DEPLOYED",
+  "pr": 203,
+  "branch": "fix/native-chart-axis-tooltip-v216",
+  "head": "d85b5dfd5af03cd2fe79a1c00b16057afb90e3c5",
+  "tree": "80a729f0da79146f1ff3e7125bee082e1693c04e",
+  "base": "c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9",
+  "sw": 216,
+  "unit": {
+    "passed": 955,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "localBrowser": {
+    "base": "http://127.0.0.1:4173/",
+    "scope": "Synthetic real dashboard/history and shared native component tooltip geometry; no physical Android claim",
+    "engines": [
+      {
+        "engine": "chromium",
+        "result": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          412,
+          430,
+          768,
+          1440
+        ],
+        "checks": [
+          "real dashboard/history exact values and readable axes",
+          "observed explanation once in coverage",
+          "native main/position/wallet component edge bounds",
+          "mouse/synthetic touch/keyboard",
+          "full long details keyboard scroll",
+          "7widths/Axe/short height/synthetic200percent text",
+          "exact canonical record unchanged"
+        ]
+      }
+    ]
+  },
+  "visualReview": {
+    "result": "PASS",
+    "images": [
+      {
+        "path": "artifacts/gates/chart-tooltip/chromium-history-390.png",
+        "sha256": "7f9a61e538a42440d285c19e2be6becb2908a584b7bb0ad606b8d18fbd0da55f"
+      },
+      {
+        "path": "artifacts/gates/chart-tooltip/chromium-wallet-320.png",
+        "sha256": "c55c2bcc7fe2b2df20fc916e72a9da19730b2c754c694d88a4dfb273c4fe06d1"
+      }
+    ],
+    "scope": "Synthetic Chromium emulation. Period4x2/caption/sparse-X-axis remain visible open master items; not claimed fixed."
+  },
+  "sourceBlobs": [
+    {
+      "path": "src/app.js",
+      "length": 255957,
+      "sha": "6b00b9530ea624beb9a764d7f86d78cc3162bbc4"
+    },
+    {
+      "path": "src/dashboard-ui.js",
+      "length": 13068,
+      "sha": "ee28f5b284e7a565dc4681e432dc20075bf0b15c"
+    },
+    {
+      "path": "styles.css",
+      "length": 117535,
+      "sha": "79924ecb147427c2e708a17d1b1960b339a46c8c"
+    },
+    {
+      "path": "sw.js",
+      "length": 4640,
+      "sha": "0c14323a5415b61c10fb33e5e3e0077d6b979d35"
+    },
+    {
+      "path": "tests/browser-chart-tooltip.mjs",
+      "length": 9442,
+      "sha": "f8bd5b8ee0b61de473415d245efb9d9aba75fa8f"
+    },
+    {
+      "path": "tests/browser-ui-quality.mjs",
+      "length": 27136,
+      "sha": "1342bf2eee33adc60e66f5685d7c2df7787f9162"
+    },
+    {
+      "path": "tests/dashboard-ui.test.mjs",
+      "length": 5644,
+      "sha": "68a8cbe60bfb2ca915f6e4d247dfd096133f7490"
+    }
+  ],
+  "ci": [
+    {
+      "id": 40944351430,
+      "name": "FolioLab Open – testen und veröffentlichen",
+      "status": "in_progress",
+      "result": null
+    },
+    {
+      "id": 40944351197,
+      "name": "Wallet scan checks",
+      "status": "completed",
+      "result": "success"
+    }
+  ],
+  "scope": [
+    "Default EUR axes: consistent readable rounded units; compact total formatter and custom price/unit axes preserved.",
+    "Tooltip≤220px, proportional horizontal bounds, vertical bounds; date/exact value remain visible while necessary details scroll.",
+    "Focused details Home/End/Arrow/Page keys scroll only details, preserving point and outer page.",
+    "Repeated observed-point explanation stays in existing coverage disclosure, not every tooltip."
+  ],
+  "safety": [
+    "Finance/history/storage/CAS/backup/restore/import/delete functions unchanged.",
+    "Raw/settings/revision deep equality across navigation/pointer/focus/text enlargement.",
+    "Coordinates, exact payload, line/fill/reference geometry same across axis formatters; existing guards retained."
+  ],
+  "localFailureHistory": [
+    "Initial long-detail keyboard probe exposed native End scrolling the outer page; fixed focused-detail key handling and added page-scroll/value preservation assertions.",
+    "Visual review found date/value could scroll out of view; fixed non-scrolling header and scrollable detail body, with explicit header visibility assertion.",
+    "New fixture moves physical pointer from left to right and centers the actual target; all edge/value/scroll/Axe assertions retained."
+  ],
+  "retainedMasters": {
+    "more": "Complete16-section contract69916019 and fourteen-state baseline; implementation OPEN/PARTIAL.",
+    "text": "Complete16-section app-wide UI-TEXT01–10 contract81289830 integrated once despite identical duplicate delivery; functional P1 findings verified separately later.",
+    "periods": "Mobile mandatory4x2 SUPERSEDED; compact adaptive periods not part of this candidate.",
+    "parked": [
+      "FLH05",
+      "FLH-PROJ01"
+    ]
+  },
+  "next": "Finish complete mandatory40944351430 and Wallet40944351197, inspect testmerge/tree/artifact hashes/JSON/screenshots; review-ready and own explicit release approval."
+}
