@@ -1,3 +1,27 @@
+# Finale Übernahme-CI: Firefox-Zielgrößenbefund · keine Abnahme · 29.10.2026
+
+Kandidat042076d2/Baumde6b4e92 unverändert remote gesichert. Pflicht-CI40845406706
+Cross2/Job123351554060 FAILURE: tests/browser-flatex-native-simulation-ui.mjs:31,
+strikte echte BoundingBox-Höhe eines Simulationscontrols erreicht44px nicht.
+Vorherige native Identitäts-/Betrags-/Projektions-/CASgates in Firefox PASS;
+neuer aktiver Übernahmetest im Cross2lauf noch nicht erreicht. Wallet40845406728
+SUCCESS, andere Pflichtjobs laufen regulär weiter. **Keine finale Abnahme/Merge/
+Deployment**, Produktion weiterhinv204. Kein Retry/Abbruch/Assertionlockern.
+
+Exakt nächste Aktion: verbleibende Jobs regulär abschließen; anschließend gezielt
+neue Simulationscontrols mit robuster tatsächlicher Mindestzielgröße korrigieren,
+44px-Assertion unverändert erhalten und zusätzliche Geometrie-Diagnostik ausgeben.
+Vorhandene44px-CSSregel greift grundsätzlich im nativen Container, enginespezifische
+Subpixelgeometrie als Hypothese prüfen, nicht als bewiesene Ursache behaupten.
+Lokaler passender Firefox-Installationsversuch durch fehlerhaften CDN-Download
+noch ohne Reproduktionsnachweis; CI ist der tatsächliche Firefox-Nachweis.
+Nach Korrektur SWrevision erhöhen, lokaleGates und vollständige neue aktuelle
+Drei-Engine-/Wallet-/Artefakt-/Quellabnahme. Gleicher Branch/PR, kein Parallelstrang.
+Vor Release bleibt eigene konkrete Nutzerfreigabe erforderlich. Alle Roadmap-/
+FLH05-Kompatibilitäts-/Parkierungsregeln unverändert.
+
+---
+
 # Native Flatex-Stückhistorienübernahme remote gesichert · neue volle CI · 29.10.2026
 
 **Kandidat PARTIAL vor finaler neuer Abnahme.** Einziger Funktionsbranch
