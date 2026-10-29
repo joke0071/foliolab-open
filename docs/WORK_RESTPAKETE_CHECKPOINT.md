@@ -1,3 +1,28 @@
+# Referenz-Rücknahme: Code remote gesichert, Browserbefund in Korrektur · 29.10.2026
+
+**PARTIAL / kein Release.** Einziger Funktionsbranch feature/reference-removal-safe-subset,
+Code **1410c411faa44c6a2b7080526c44c2eaa1dcd34b**, Baum88cf0dc89229dfa4f11135d75a8c09065e3ca650
+exakt lokaler Commit15ff37f und Remote; Refupdate ohne Force mit erwarteter31acb824.
+945/945 Units und Syntax PASS. Vorabvertrag31acb824 erhalten. Main6fe75a99/v208
+unverändert, keine privaten Daten oder Produktion geändert.
+
+Erster tatsächlicher neuer Chromiumbrowserlauf deckt bei320px Backupbutton
+293.734375px breit/rechts321.734375 beiViewport320 und nur39px hoch auf.
+Strikte44px-/Overflowassertion bleibt unverändert; Kandidat daher NICHT abgenommen.
+Gezielte lokale Korrektur max-width100%/Umbruch/min-height45px ausschließlich für
+diesen neuen Backupbutton vorbereitet; erneute tatsächliche Browserprüfung läuft.
+Keine Finanzlogik für diesen Layoutbefund geändert.
+
+Exakte nächste Aktion: laufenden lokalen Browserlauf abschließen/gezielt korrigieren,
+bestehendes Referenzgate unverändert zusammen mit neuem Gate ausführen,
+CSS/Korrekturen separat remote sichern; danach PR und vollständige3Engine-CI,
+tatsächliche neue Berichte und Bilder prüfen. Vor kritischem Merge/Deployment
+eigene konkrete Nutzerfreigabe erst am vollständig geprüften Kandidaten erfragen.
+Kein neuer Funktionsstrang. Gesamtmaster/alle weiteren Anforderungen PARTIAL,
+FLH05/PROJ01 OPEN/PARKED; PERF01 bleibt essentielleP1. Alle historischen Belege erhalten.
+
+---
+
 # DELETE-MASTER28 Wiederaufnahme · manueller Referenz-Rücknahmekandidat in Arbeit · 29.10.2026
 
 **PARTIAL:** v208/PR195 bleibt abgeschlossen und produktiv abgenommen.
