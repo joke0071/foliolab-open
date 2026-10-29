@@ -1,3 +1,26 @@
+# Gesicherter Stand nach UI-Rückübernahme · 29.10.2026
+
+| Bereich | Aktueller Stand |
+| --- | --- |
+| PR #196 / Produktion | DONE / LIVE_ACCEPTED, main c08bc1d35b25d72081fb07a61e95532a883fdebe, v211 / SW211 |
+| UI-Zuständigkeit | Vollständig bei ChatGPT Work. Issue #197 als abgeschlossener Audit geschlossen; keine exklusive Claude-Sperre |
+| Erster UI-Kandidat | PR #198 reviewbereit, HEAD 81cca6060008282ae1e0dc307684d53f4a303490, Baum 425ae224c33a90bfd399d7fc7ec93db04965f17b, SW212 unveröffentlicht |
+| Abnahme | Pflicht-CI 40899143762 und Wallet 40899143178 SUCCESS; 948/948 Units, Syntax und Chromium/Firefox/WebKit; aktuelle SHA-256-geprüfte Artefakte/Bilder gelesen |
+| Releasegrenze | Eigene Merge-/Deploymentfreigabe für Folge-PR #198 erforderlich; PR196-Freigabe wird nicht erweitert |
+| Gesamtmaster | PARTIAL. UI- und Fachreste bleiben erhalten; FLH05 und FLH-PROJ01 OPEN / PARKED |
+
+Kandidatenumfang: präzise gemeinsame kompakte Geldbeträge, unterscheidbare EUR-Achsen, exakter zugänglicher Donutbetrag; scoped 44-px-Ziele, balancierte mobile Zeitraumleisten, 320-px-Siebenspaltenkalender, Kalendertextkontrast und SVG-Fokus. Keine Finanz-/Speicher-/Import-/Auswahl-/Löschlogik geändert. Der alte 38–41-px-Test wurde entsprechend dem neuen Nutzervertrag durch exakt 44×44 px mobil und mindestens 44 px in allen Breiten ersetzt; übrige Assertions bleiben erhalten.
+
+Permanenter Beleg: [ui-audit-controls-candidate.json](release-evidence/ui-audit-controls-candidate.json), Commit 28ad1c9a2378aadea8ee6f6e0a46365f0cf99b3b. Tatsächliche finale Berichte enthalten 50 leere/gefüllte Ansichten je Engine, fünf Breiten, Axe, Nichtüberlappung, kurzen Viewport/vergrößerten Text, Fokus und exakte IndexedDB-Nullmutation; bestehende Referenz-/native Übernahme-/CAS-/Backup-/Restoregates bleiben bestanden. Keine Hardware-/AT-Vollabnahme.
+
+UI-MASTER28 bleibt PARTIAL: weitere relevante A02-Aktionen, A03 außerhalb Kalender, A04-Leerraumteil, A05 bedingt, A06/A08 P3 und übrige tatsächliche Restbefunde prüfen. Konkreter zusätzlicher Sichtbefund: langes Anbieterlabel kann bei 320 px den Betrag bedrängen; Provider-Zeilenquellcode wurde in #198 nicht geändert. Als bestehenden Folgepunkt erhalten, keine neue konkurrierende Auditphase.
+
+FLH-PERF01 bleibt essenzielle P1 vor optionalem P3. Der vorbereitende CPU-Beleg [perf01-cold-start-profile-v211.json](release-evidence/perf01-cold-start-profile-v211.json) ist gesichert: fünf frische Prozesse, profiliert etwa 3,19 s Median; wiederholte Datumsvalidierung ist größter gemessener CPU-Anteil. Noch keine Optimierung oder 30%-Zielerreichung. Nächster Performance-Schritt: vergleichbare unprofilierte kalte/warme Dashboardmessungen und begrenzte Untersuchung dieses Hotspots bei unveränderter Finanz-/Validierungssemantik. Keine parallele Implementierung während des aktuellen Releasekandidaten.
+
+Maßgeblich bleibt der neueste zentrale WORK_RESTPAKETE_CHECKPOINT.md. Sämtliche historischen Anforderungen und Nachweise darunter bleiben erhalten; überholte Statusangaben sind keine Wiederholungsaufträge.
+
+---
+
 # Aktuell gültiger Masterstand · 29.10.2026
 
 **PR196 DONE / LIVE_ACCEPTED:** main c08bc1d35b25d72081fb07a61e95532a883fdebe, unveränderter freigegebener Baum0d486119, produktiv v211/SW211. Main/Pages/Live40893805495 vollständig SUCCESS,946/946Units,Chromium/Firefox/WebKit,120exakte Live-Assethashes und tatsächliche Referenzrücknahme-/Native-Übernahmeberichte. Dauerhafter Maschinenbeleg [reference-removal-live-v211.json](release-evidence/reference-removal-live-v211.json), Commit53fdbafcfc8e8b71d63bb73ea50b500db04c008b. Keine universelle DELETE-/Folge-PR-Freigabe.
