@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-29T04:40:37.957Z",
+  "status": "BOUNDED_FOUNDATION_CANDIDATE_ACCEPTED_NOT_DEPLOYED",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-amounts",
+  "head": "75222b4fa8bfb65cb5a59ca46e2a54dd61fe96f9",
+  "tree": "f7cf55687ec2995b1ce180e0a2de2581ad81dcf7",
+  "testedMerge": "e61240779195d44a13daf923cc5ab39ee7574e1b",
+  "pr": 194,
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "production": {
+    "version": 203,
+    "main": "2b6ec81523db0623da9edfa2fa96eac60460581a",
+    "status": "LIVE_ACCEPTED_UNCHANGED",
+    "candidateSW204Published": false
+  },
+  "runs": [
+    {
+      "id": 40818068885,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 123263781421,
+          "name": "test",
+          "conclusion": "success"
+        },
+        {
+          "id": 123263781521,
+          "name": "cross-engine (1)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123263781546,
+          "name": "cross-engine (2)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123266345249,
+          "name": "deploy",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 123266345575,
+          "name": "live-acceptance",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "id": 40818068877,
+      "conclusion": "success",
+      "scope": "Wallet scan checks"
+    }
+  ],
+  "units": {
+    "pass": 914,
+    "fail": 0,
+    "skip": 0,
+    "localNodeVersions": [
+      20,
+      24
+    ],
+    "newFocusedTests": 12
+  },
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12873861383,
+      "name": "release-gates-e61240779195d44a13daf923cc5ab39ee7574e1b",
+      "digest": "sha256:32f2866a7dbe54ea2212c1ef679bd26f7cd313d9eeb2b427aa72c3a565b5117f",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12873169389,
+      "name": "cross-engine-gates-e61240779195d44a13daf923cc5ab39ee7574e1b-2",
+      "digest": "sha256:4fa899576f4c0d8c3b9585878732fcb1b1a8a89b8a1593ae37bcd261f380ae25",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "actualReports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic documentary native 1:1 amounts only; no economic import or UI integration",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "exact buy/sell/large/tiny/foreign-currency reference values",
+            "product precision/units/direction/source/currency guards",
+            "multi-leg/overlap/conflict/storno/missing guards",
+            "all locators/immutability/no financial DTO or writes",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic documentary native 1:1 amounts only; no economic import or UI integration",
+      "engines": [
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "exact buy/sell/large/tiny/foreign-currency reference values",
+            "product precision/units/direction/source/currency guards",
+            "multi-leg/overlap/conflict/storno/missing guards",
+            "all locators/immutability/no financial DTO or writes",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "exact buy/sell/large/tiny/foreign-currency reference values",
+            "product precision/units/direction/source/currency guards",
+            "multi-leg/overlap/conflict/storno/missing guards",
+            "all locators/immutability/no financial DTO or writes",
+            "actual SW offline reload/module import",
+            "exact IDB/revision/settings zero mutation",
+            "no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "privateReference": {
+    "originalFilesReadOnly": true,
+    "independentPythonCSVDecimalReference": true,
+    "nativeHelperComparedToIndependentReference": "PASS",
+    "allOriginalRowsRetained": true,
+    "sourceDocumentsUnchanged": true,
+    "noEconomicImport": true,
+    "privateValuesIdentifiersCountsDatesAndFingerprintsPublished": false,
+    "temporaryCopiesOutsideRepository": true
+  },
+  "sourceReview": {
+    "files": 7,
+    "additions": 215,
+    "deletions": 12,
+    "existingOrderIdentityAndDecimalGuardsReused": true,
+    "legacyArithmeticBehaviorPreserved": true,
+    "nativeProductRoundingRejected": true,
+    "noFinancialDTO": true,
+    "noUIIntegration": true,
+    "noStorageOrBackupChanges": true,
+    "noWorkflowPinAssertionWeakening": true,
+    "originalLongIdentifierScan": "PASS",
+    "nonFunctionalWhitespaceNote": "Two new documentation files contain a trailing blank line; no product behavior or gate impact."
+  },
+  "visualAcceptance": {
+    "newUIChanged": false,
+    "newVisualPassClaimed": false
+  },
+  "collisionCheck": {
+    "checkedAt": "2026-10-29T04:39:21.425Z",
+    "main": "2b6ec81523db0623da9edfa2fa96eac60460581a",
+    "source": "75222b4fa8bfb65cb5a59ca46e2a54dd61fe96f9",
+    "docParent": "22ec7fa4cf2511a9368aa61ba3c7942fd92f2b7e",
+    "branches": 180,
+    "openPRs": [
+      194,
+      161,
+      157
+    ],
+    "activeActions": 0,
+    "foreignBranchChanges": 0
+  },
+  "masterStatus": "PARTIAL",
+  "next": "Fresh collision check; reuse this same PR/branch for minimal read-only amount evidence integration into existing native Flatex staging, with explicit account/source confirmations, source/manual/revision guards and disabled submit preserved. Secure UI contract before code; controlled merge/main/Pages/actual live acceptance separately after full unchanged gates. Financial import, multi-leg allocation, original historical balances/costs/cashflows/performance remain separate open gates.",
+  "userRequirements": {
+    "historicalStart": "2022-01-01",
+    "noFictitiousBookingsCostsFlows": true,
+    "privateProductionWritesRequireExplicitAuthorization": true,
+    "UI_MASTER28": "OPEN",
+    "DELETE_MASTER28": "OPEN",
+    "roadmapDependencies": "UNCHANGED",
+    "PROJ01": "BACKLOG"
+  }
+}

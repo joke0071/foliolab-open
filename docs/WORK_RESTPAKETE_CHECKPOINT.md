@@ -1,3 +1,97 @@
+# Native Flatex-Betragsgrundlage abgenommen · PR194 offen · 29.10.2026
+
+**Verbindlicher aktueller Stand:** Vorabvertrag und kleinste reine native1:1-
+Betragsprüfung **DONE im begrenzten Helfer-/PRumfang**. Zwei Etappen Vertrag +
+geprüfte Grundlage abgeschlossen. Keine aktive UI-/Finanzintegration, kein Merge/
+Deployment. Produktion weiterhin **v203 LIVE_ACCEPTED**, SW204 unveröffentlichter
+Kandidat. Gesamtmaster/FLH03–05 bleiben **PARTIAL**.
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Aktueller Branch / Commit | `feature/flh03-flatex-native-amounts` / `75222b4fa8bfb65cb5a59ca46e2a54dd61fe96f9`, [PR194](https://github.com/joke0071/foliolab-open/pull/194) offen |
+| Letzter verifizierter main | `2b6ec81523db0623da9edfa2fa96eac60460581a`, v203 tatsächliche Liveabnahme unverändert |
+| Getesteter PR-Merge / Baum | `e61240779195d44a13daf923cc5ab39ee7574e1b` / `f7cf55687ec2995b1ce180e0a2de2581ad81dcf7`, exakt lokal/Remote/Kandidat/Testmerge |
+| Dauerhafte Sicherung | Zentraler Checkpoint + Maschinenbeleg atomar auf feature/flh05-import-foundation, Parent22ec7fa4; tatsächlicher Commit über Dateihistorie. Historischen Appbaum dieses Dokumentationsbranches nicht mergen |
+| Release / Deployment | v203 bleibt produktiv abgenommen, SW204 nicht veröffentlicht; Deploy/Live im PR korrekt SKIPPED |
+| PRs |194 geprüfte Grundlage/offen;193 gemergt und produktiv abgenommen; nur geparkte157/161 daneben |
+| Actions | [40818068885](https://github.com/joke0071/foliolab-open/actions/runs/40818068885) Versuch1 vollständig SUCCESS, test/Cross1/Cross2 grün; Wallet40818068877 SUCCESS; keine aktiven Actions im finalen Check |
+| Zuletzt fertig | Native reine Betragsprüfung mit bestehenden Order-/Identitäts-/Decimalgates implementiert, private unabhängige Referenz und volle aktuelle QA-/Quell-/Artefaktabnahme DONE |
+| Aktuelles Paket | FLH03 wirtschaftliche Qualifizierung: dokumentarische1:1-Betragsgrundlage DONE; deren UI-/kontobezogene Staginganbindung und wirtschaftliche Importfreigabe weiterhin offen |
+| Implementiert, nicht produktiv abgenommen | Vollständig remote gesicherter7Dateien-Kandidat in PR194; kein weiterer ungesicherter Produktcode, keine private Produktivmutation |
+| Tests |914/914 Units,0Fehler/Skip;12neue Fokusfälle, finale lokale Node20/Node24-Läufe und CI-Unitlog tatsächlich geprüft; Syntax, tatsächliche Chromium141.0.7390.37/Firefox157.0/WebKit27.2-Betragsberichte PASS |
+| Fehler / Risiken | Keine aktuellen roten Gates. Ein lokaler synthetischer Bank-ID-Fixturekonflikt vor Push korrigiert, Assertions erhalten. Zwei reine Dokumentations-EOF-Leerzeilen ohne Funktions-/Gatewirkung. Dokumentarische Gleichheit ist keine Kosten-/Bestands-/Historien-/Performancefreigabe |
+| Exakt nächster Schritt | Frischer Kollisionscheck, auf demselben Branch/PR kleinsten UI-Vertrag sichern und reine Betragsbelege in vorhandene native Vorschau/Orderdetails integrieren; explizite Konto-/Quellbestätigung, Raw-/Manual-/Revision-/Async-/Paging-/Nullmutations-/Submitguards erhalten. Danach eigener kontrollierter Merge/Main/Pages/echte Liveabnahme. Keinen neuen parallelen Flatex-PR oder Importkern eröffnen |
+| Nutzerentscheidungen | Historienstart01.01.2022/keine Fiktionen, private Originale nur Referenz und keine privaten Produktivdatenänderungen ohne ausdrückliche Freigabe; UI-MASTER28/DELETE-MASTER28 verbindlich offen, übrige Roadmap/Abhängigkeiten erhalten |
+
+## Tatsächlich geprüfter Umfang
+
+Im vorhandenen flatex-settlement-audit.js nutzt auditNativeFlatexSettlementAmounts
+die vorhandenen inspectNativeFlatexOrderLinks/inspectNativeFlatexSourceIdentities,
+ohne Identitäten oder Beziehungen neu zu erfinden. Interne reine Rechenfunktion
+mit Legacy-Prüfung geteilt; bisheriges Legacy-Fixedpoint-/Rundungsverhalten mit
+Regression bestätigt. Native Produkte mit Präzisionsverlust bleiben dagegen Review,
+statt gerundete Gleichheit als Beleg auszugeben. Nur eindeutige source-klare1:1-
+Stückbelege, passendes Kauf-/Verkaufsnominal und gleiche deklarierte Währungen
+werden rein rechnerisch gegenübergestellt; keine EUR-/FX-/Eigentumsannahme.
+Verkaufsnominalbetrag nur für dokumentarisches Brutto, keine Buchungsmenge.
+
+Mehrfachbeine/Teilausführungen, Konflikte/Overlap/Stornos, ungeklärte Einheiten/
+Quellen/Währungen/Richtungen/Präzision bleiben vollständig erhalten und gesperrt.
+Jede Quellzeile und jede Gruppe bleibt vertreten; Werte bei Review null.
+Differenzen sind ausschließlich ungeklärt, auch0 bestätigt keine Kostenfreiheit
+oder vollständige Finanzwirkung. ready/writeEnabled/costsVerified false; keine
+Finanz-DTOs, Journal-/Storage-/Backupänderung, automatische Übernahme oder UIänderung.
+
+[Dauerhafter Kandidatenbeleg](release-evidence/flatex-native-amounts-candidate.json)
+mit exakten SHAs/Läufen/Jobs/Digests und tatsächlich gelesenen Drei-Engine-Berichten.
+Release-ZIP12873861383 SHA256
+`32f2866a7dbe54ea2212c1ef679bd26f7cd313d9eeb2b427aa72c3a565b5117f`,
+Cross2-ZIP12873169389 SHA256
+`4fa899576f4c0d8c3b9585878732fcb1b1a8a89b8a1593ae37bcd261f380ae25`
+jeweils vor Extraktion verifiziert. tested-sha exakte6124077, Unitlog914PASS/0Fehler/
+Skip. Neue tatsächliche Runtimeberichte aller3Engines: exakte synthetische Kauf-/
+Verkaufs-/große/kleine/Fremdwährungswerte, Präzisions-/Einheiten-/Richtungs-/Quell-/
+Mehrfach-/Konflikt-/Storno-/fehlende-Seite-Gates, alle Lokatoren/Unveränderlichkeit,
+echte SW-Offlineneuladung/Modulimport, exakter IDB-Record/Revision/Settings unverändert,
+0externe Requests PASS. Keine neue visuelle UIabnahme behauptet, Darstellung unverändert.
+
+## Private Prüfung, offene Fachgates und Übergabe
+
+Beide privaten Originaldateien über Google-Drive-Skill separat außerhalb Git nur
+lesend materialisiert, Metadaten entsprechen vorherigem Originalstand. Vorherigen
+Order-Sollabgleich wiederverwendet; neue unabhängige Python-csv/Decimal-Referenz
+prüft echte Ordertuple-/Seiten-/Datums-/Vorzeichen-/Einheiten-/Währungsbelege und
+ungerundete Brutto-/Cash-/Differenzbeträge gegen den Produkthelper: PASS.
+Alle Originalzeilen erhalten, Eingaben unverändert; kein Import durchgeführt.
+Keine Originalzeilen/Kennungen/Beträge/Mengen/Zeiträume/Fingerprints veröffentlicht;
+zusätzlicher Scan der7Kandidatendateien gegen lange Originalkennungen PASS.
+Öffentliche Fixtures/Logs/Artefakte ausschließlich synthetisch.
+
+Diese begrenzte Prüfung ersetzt keine vollständige historische Rekonstruktion,
+Kontosaldo-/Bestands-/Anschaffungskosten-/Cashflow-/TWR-/XIRR-Abnahme. Mehrfachbeine,
+Kapitalmaßnahmen, Kosten-/Steueraufteilung, interne Transfers und sichere wirtschaftliche
+Rücknahme/Übernahme behalten ihre eigenen noch offenen Verträge/Gates. Keine
+fiktiven Eröffnungen, Gebühren, Kosten oder externen Einzahlungen ergänzen.
+Privater Produktivbestand blieb unverändert.
+
+Final180Branches geprüft: nur eigene neue Funktions-/Checkpointänderungen,
+Main/Kandidat unverändert, PR194 maßgeblich,157/161 geparkt; keine aktiven Actions
+oder erkennbaren fremden Writer. Keine Workflow-/Pin-/Assertionlockerung,
+7Dateien/215Additionen/12Entfernungen final reviewt. Paketeigener Kandidatencheckpoint
+beschreibt Vor-CI-Stand; dieser zentrale neueste Block hat Vorrang. Nach zwei
+abgeschlossenen Etappen keine dritte Implementierung oder Veröffentlichung begonnen.
+
+UI-MASTER28/DELETE-MASTER28 beim nächsten passenden konfliktfreien Verwaltungsschritt
+weiter verbindlich: Verwalten/Fertig/Bearbeiten, sichere Auswahl aktueller Ansicht/
+Seite/Filterreset, kompakte Aktionen/Archivfilter; kontrolliert entfernbare Einträge
+freigeben, kurze Sperrgründe/Alternativen, Vorschau/Bestätigung, keine stille
+Teillöschung, Renditestart/Originalquellen/CAS/Backup/Restore schützen.
+FLH04/OAuth/Hardware/AT/P0/P1/BENCH/CI-Restgates und bestehende Roadmap unverändert;
+PERF vor vorgesehenem FLH05, PROJ01 nur Zukunftsbacklog. Keine neue Nutzerentscheidung
+oder externer Zugriffsstopp. Wiedereinstieg genau beim oben benannten UI-/Releasevertrag.
+
+---
+
 # PR194 native Betragsprüfung gesichert · volle CI läuft · 29.10.2026
 
 Einziger Funktionsbranch feature/flh03-flatex-native-amounts, HEAD `75222b4fa8bfb65cb5a59ca46e2a54dd61fe96f9`,
