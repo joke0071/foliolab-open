@@ -1,3 +1,13 @@
+## Letzter verifizierter UI-Checkpoint · PR203 reviewbereit · 29.10.2026
+
+**PR203 TECHNICALLY_ACCEPTED / REVIEW_READY:** HEAD057063167a04acd7b66364d4f0c824e6bd8978de, Tree0364c9d003750f59a1f6a1482bb79f2a531f3c4d, SW216 unveröffentlicht. Pflicht40945850048 und Wallet40945850073 SUCCESS;955Units/Syntax/drei Engines,56 geprüfte PASS-Berichte und drei vor Extraktion SHA256-verifizierte ZIPs. Tatsächliche synthetische CI-Bilder dauerhaft gesichert. [Finale Kandidatenbelege](release-evidence/native-chart-axis-tooltip-v216-candidate.json). Eigene Releasefreigabe noch offen. Produktion bleibt v215/SW215, main c141fd58, PR202/PR201 LIVE_ACCEPTED.
+
+Der vollständige Mehr-Auftrag und der appweite 16-teilige Textauftrag/UI-TEXT01–10 bleiben erhalten. Identische doppelte Übermittlung einmal integriert, keine neue Roadmap. [Begrenzte reproduzierbare Rendererproben](release-evidence/ui-text01-03-renderer-probes.json): UI-TEXT01/P1 bestätigt (exaktes fehlendes Kursfeld zeigt0,00/Quelle Manuell); UI-TEXT02 bestätigt (1096 verfügbar, auch bei unterstütztem Wertpapier-CSV aber nicht gerendert). UI-TEXT03 als sichtbarer unsupported Krypto-CSV-Import derzeit NOT REPRODUCIBLE; bestehende Sicherheitsabgrenzung beibehalten, vorbereitete tote Markups nicht durch TradingView-Entfernung freischalten. Keine Netzwerk-/Speicher-/Modelländerung durch Proben.
+
+Nach eigener PR203-Freigabe vollständige Main-/Pages-/Live-/Updategates; danach verbleibende UI-P1 nach bestehendem Master, insbesondere ehrliche Fehlwert-/Quellenanzeige und bestätigte weitere Deltas. Neue Zeitraumleiste, Sparse-Zeitachse, Diagrammmodi, redundante Chartlabels, Mehr-Umbau, übriger Textaudit und Androidnachweise bleiben OPEN/PARTIAL. Mobile 4×2-Pflicht SUPERSEDED; keine komplette UI-Erledigung durch einen kleinen Schnitt. Echte Hardware/OAuth/Originalbelege getrennt, FLH05/PROJ01 OPEN/PARKED.
+
+---
+
 ## Appweiter Text- und Funktionskonsistenzauftrag integriert · 29.10.2026
 
 [Der vollständige 16-teilige Sollvertrag einschließlich UI-TEXT01–10](UI_MASTER28_TEXT_FUNKTIONSAUDIT_2026-10-29.md) ist auf Commit81289830010aa35b7a819c8537878e0de63b2b65 gesichert. Der identisch doppelt übermittelte Auftrag wird einmal im bestehenden UI-Master geführt. Der vollständige Mehr-Vertrag bleibt bestehen; keine neue Roadmap, parallele Implementierung oder unbegrenzte Auditphase.
