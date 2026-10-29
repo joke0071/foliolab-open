@@ -1,3 +1,15 @@
+## v215 produktiv abgenommen · 29.10.2026
+
+**PR202 DONE / LIVE_ACCEPTED:** main c141fd58eecfe79dcf5a81f7bda612fb57b7a6d9, SW215, vollständige Main-/Pages-/Livepipeline40937967415 SUCCESS.954 Units, drei Engines,121 tatsächliche veröffentlichte Dateihashes. Vier ZIPs vor Extraktion SHA256-verifiziert;90 tatsächliche PASS-Berichte geprüft. Zusätzlicher echter Produktionswechsel v214→v215 mit bestehendem synthetischem IndexedDB-Datensatz,120 passenden Cache-Dateien, aktivem Worker, exaktem Datenerhalt und Offline-Neustart PASS. Keine Hardwareabnahme behauptet. [Dauerhafte Releasebelege](release-evidence/pwa-fresh-assets-v215-live-accepted.json).
+
+Der zusätzliche PWA-Updateblocker ist damit behoben. PR201 ist im tatsächlich geprüften v215 ebenfalls DONE / LIVE_ACCEPTED; alte v214-Updategrenze nicht rückwirkend leugnen. Gesamtmaster PARTIAL.
+
+Der vollständige [Mehr-Gesamtvertrag](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md) samt14 synthetischen Ausgangszuständen und zwei dauerhaften Vorherbildern ist gesichert; ersetzt den isolierten Backup-Beschriftungsauftrag und integriert K03/K04 ohne neue Roadmap. UI-Umsetzung weiterhin OPEN/PARTIAL. Bestehender Backupstatus kennzeichnet bereits den Download und fordert Prüfung der sicheren Ablage; diesen belegten Teil erhalten statt neu entwickeln. Weitere Optionen/Origin/Typografie/Hierarchie/Touchdeltas bleiben offen.
+
+Fortsetzung: bestehende UI-P1 gezielt umsetzen, neue Diagrammpräzisierung und Mehr-Auftrag konfliktfrei integrieren; mobile4×2-Pflicht SUPERSEDED. FLH05/PROJ01 OPEN/PARKED, übrige Masterverträge unverändert.
+
+---
+
 ## Vollständiger „Mehr“-Nachtrag integriert · 29.10.2026
 
 [Der neue 16-teilige Sollvertrag](UI_MASTER28_MEHR_GESAMTUX_2026-10-29.md) ersetzt den einzelnen Backup-Beschriftungsauftrag und erweitert bestehende K03/K04-/Android-/Backup-/Drive-UX-Arbeit. Kein neues Projekt und keine parallele Implementierung. Status OPEN/PARTIAL; vorhandene Backup-/OAuth-/Speicherlogik wird nicht neu entwickelt.
