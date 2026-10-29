@@ -1,3 +1,11 @@
+## Gesicherter vorbereitender Messbeleg · 29.10.2026
+
+Read-only-Ausgangsmessungen auf unverändertem Releasebaum c08bc1d3 jetzt permanent in docs/release-evidence/pr196-followup-baseline.json, Commit41b0b0c0009cfb3165fb33e47a94325a2e578589. Je25leere/gefüllte Chromiumzustände320/390/430/768/1440 ohne Overflow; A01 drei Formatter und konkrete Rundung bestätigt; A02 Kopfaktionen38–40px/Filter34px/Links15px/Kalendertage bei320ca31x35px; A04 Max allein in zweiter Zeile390/430 bestätigt. Keine vollständige3Engine-/Hardwareabnahme. Vorläufiger tatsächlicher IDB-Vorlauf1000Positionen/1825Referenzen,5Reloads3226.8/274.7/223.6/192.6/173.5ms: starke Erst-/Warmstartdifferenz, keine Optimierung/30%-Zielerreichung behaupten. Finales PERF01-Design muss diese Zustände getrennt erfassen.
+
+Main-CI40893805495 noch in_progress; deploy/live noch offen. Lokale946/946Units+Syntax erneut PASS. Appdateien unverändert. Exakte Fortsetzung bleibt regulärer Releaseabschluss, echte3Engine-Livegates, Eigentümerdokumente/Issue197, dann UI-P1. Alle vollständigen Anforderungen und Grenzen unten bleiben erhalten.
+
+---
+
 # PR196 autorisiert und gemergt · UI-Rückübernahme entschieden · 29.10.2026
 
 **Vorrangiger Nutzerentscheid:** Die ausdrückliche Merge-/Deploymentfreigabe gilt für unveränderten PR196/be860237/SW211. Die exklusive Claude-Implementierung ist vollständig aufgehoben. UI-VISUAL-CLAUDE: **AUDIT COMPLETED / IMPLEMENTATION RETURNED TO CHATGPT WORK**. Kein Claude-Code/Branch/PR zu übernehmen, keinen weiteren Claude-Lauf starten. Historische Sperrtexte unten sind überholt; alle Anforderungen/Nachweise bleiben erhalten.
