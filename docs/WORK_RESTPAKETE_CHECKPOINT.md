@@ -1,3 +1,17 @@
+# Letzter gesicherter Stand: PR201 b65776a9 / finale CI läuft
+
+**29.10.2026 · Gesamtmaster PARTIAL · Produktion v213/SW213 LIVE_ACCEPTED.**
+
+- Aktueller UI-Kandidat: [PR201](https://github.com/joke0071/foliolab-open/pull/201), `feature/ui-selection-reasons-v214`, HEAD `b65776a98a387472f4b49ac809f620ac28565bca`, Tree `0293192dcd8f8a8dc9df3315fa1d09d855500864`. Testmerge `86305943b980548662cf9741d40da842b343403a` hat denselben Tree auf unverändertem main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`.
+- Finale [Pflicht-CI40922446803](https://github.com/joke0071/foliolab-open/actions/runs/40922446803) läuft; Jobs123619019184 (test),123619018193 (cross1),123619019494 (cross2). [Wallet40922446637](https://github.com/joke0071/foliolab-open/actions/runs/40922446637) SUCCESS. Frühere Läufe bleiben historische Fehlbelege, nicht finale Releasegates.
+- Nach Testvorbedingungskorrektur vollständige Positions-Löschsuite lokal in Chromium/Firefox/WebKit PASS: tatsächlicher Appworker kontrolliert den unveränderten Blankrecord vor der401Positionen-Fixture; spätere aktiveController-/echteOffline-/201/401Auswahl-/Quota-/Abort-/CAS-/Backup-/Restoreprüfungen erhalten. Neue Sperrtextfixture mit8Legacy/100Buchungen/205Limit,5Breiten/kleinenHöhen/200%synthetischemText/44px/Tastatur/Axe/Nullmutation ebenso3EnginesPASS.953Units/SyntaxPASS, Appcode seit erstem Kandidat unverändert.
+- [Aktualisierte dauerhafte Kandidatenbelege6297c9d2](https://github.com/joke0071/foliolab-open/blob/6297c9d20a110f67b9b3f9683e94ec7313410c82/docs/release-evidence/ui-selection-blockers-v214-candidate.json). Lokale Datei-/Indexstände entsprechen Remote; nur generierte artifacts/ und Abhängigkeitssymlink untracked, keine ungesicherten Produkt-/Teständerungen.
+- Alle neuen Nutzeraufträge sind im selben Master erhalten: Gesamt-UI-Vertrag mitUX01–10; KursoptionenvertragK01–K04 (TradingView responsive Optimierung SUPERSEDED, vollständigeEntfernungOPEN/P2); Androidvertrag20e4e627 (einmalig trotzDoppelübermittlung, Baselineoffen, HardwareEXTERNAL). Roadmap und Audit verlinken beide Ergänzungen; keine parallele Implementierung oder neue Roadmap.
+
+**Exakt nächste Fortsetzung:** die drei Pflichtjobs auf b65776a9 abschließen, bei Fehlern konkreteLogs prüfen und ohne Abschwächung korrigieren; bei Erfolg getestetenMergeSHA, ZIP-Digests vor Extraktion, tatsächliche JSON-/Screenshotbelege prüfen; PR201 reviewbereit machen; finale Belegdatei und separaten Checkpoint pushen/RemoteSHA verifizieren. PR201 noch DRAFT,SW214nichtdeployed,keineMergefreigabe. Erst dann eigeneReleaseentscheidung. UI-P1 fortsetzen, Androidbaseline und P2-Verträge integriert; FLH05/FLH-PROJ01 PARKED; übrige Finanz-/FLH03-/FLH04-/Recovery-/Hardware-/OAuth-/Originalbelegverträge erhalten.
+
+---
+
 # Android-Ergänzung in bestehenden Master integriert · 29.10.2026
 
 [Verbindlicher Android-Vertrag](https://github.com/joke0071/foliolab-open/blob/20e4e6276d8f67cc54e5c3b7121f22d561b01518/docs/UI_MASTER28_ANDROID_PERF_NACHTRAG_2026-10-29.md) einmal konsolidiert; die identische erneute Übermittlung eröffnet keinen zweiten Auftrag. FLH-PERF01/ANDROID = BASELINE_PENDING; UI-MASTER28/ANDROID = PARTIAL; echte Android-/OnePlus-Nord-4-Abnahme = EXTERNAL, Gerät hier nicht nachgewiesen zugänglich.
