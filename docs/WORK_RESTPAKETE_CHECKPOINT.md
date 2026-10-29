@@ -1,3 +1,19 @@
+# Testkorrektur remote gesichert · PR199 volle CI läuft · 29.10.2026
+
+**PARTIAL:** PR198 gemergt (main0db6863a), Deployment durch Mainfehler40901665578 gestoppt, Produktion direkt bestätigt weiterhinSW211. Keine produktive SW212-Abnahme.
+
+**Einziger Folgekandidat:** [PR199](https://github.com/joke0071/foliolab-open/pull/199), Draft, Branch fix/reference-offline-test-baseline, HEAD36df866e296c80add2d596665fb098b94162a081 / Baumbaa7b3805cb6813d6b58bd331e3b94f0f0e156bb. Eine Testdatei geändert; sämtliche App-/SW212-Bytes exakt identisch zu freigegebenem PR198/main0db6863a. Lokal/Remote übernommen, keine getrackten Reständerungen.
+
+Geprüfte Vorbereitung: Auf appseitigen Worker über ready/statechange warten, Aktivierung mit synchronem Prädikat beobachten, leeres Dokument neu laden, tatsächlichen Controller/exakten sw.js und unveränderten Blankrecord einschließlich Settings/Revision verlangen. Keine manuelle Registrierung, keine Sleeps/Retry/Timeoutsteigerung. Ursprüngliche spätereControllerprüfung UND echteOfflinecommit-/Reload-/Referenz-/CAS-/Quota-/Abort-/Backup-/Restore-/Undogates bleiben vollständig erhalten.
+
+Gezielte tatsächliche Referenzverwaltung plus Rücknahme in Chromium/Firefox/WebKit PASS; Telemetrie in allen3Engines zeigt initialinstalling/controllerfalse -> activated -> controllertrue, exakter unveränderter Blankrecord. Lokaler erster uncommitteter asynchronerPoll wurde vor Push durch ereignisbasiertes Flag plus synchronenPoll korrigiert; nicht mit ursprünglichemCI-Fehler verwechseln. Dessen exakte damalige Registrierungsphase bleibt unbelegt.
+
+Neue volle Pflicht [40904401167](https://github.com/joke0071/foliolab-open/actions/runs/40904401167) läuft, Wallet[40904401243](https://github.com/joke0071/foliolab-open/actions/runs/40904401243) SUCCESS auf36df866e. Lokaler Maschinenbeleg docs/release-evidence/reference-offline-baseline-candidate.json gesichert. **Exakte Fortsetzung:** volleCI regulär abschließen, tatsächliche948Units/alle3Engineberichte/neueWorker-Telemetrie/Bilder/ZIPdigests/Testmergebaum abnehmen, permanentenKandidatenbeleg/separatenCheckpoint sichern und PRreviewbereit. Eigene Folge-PR-Merge-/Deploymentfreigabe nicht aus198 ableiten.
+
+PERF01-Vorherwerte gesichert; portabler identischerBenchmarkcode in docs/release-evidence/perf01-startup-benchmark.mjs /5cf2b069 und quellhashgebundene Wiederholung imBaselinebeleg63fcfb0b. Neue vergleichbare Mediane19Positionen542,2/375,1/361,4ms und1000Positionen3113,9/2882,0/3086,8ms (kalt/warm/offline, je1825Referenzen). Keine Optimierung/30%-Verbesserungbehauptet, kein weitererFunktionsstrang. EssentielleP1-PERF01 nach sicheremRelease, P3 später. FLH05/PROJ01 OPEN/PARKED; alle übrigenMaster-/Freigabe-/Originalbeleg-/OAuth-/Hardware-/ATgrenzen erhalten.
+
+---
+
 # PR198 gemergt, produktive Abnahme blockiert · gezielte Testvorbereitung · 29.10.2026
 
 **PARTIAL / MERGED / NOT LIVE_ACCEPTED:** ausdrücklich freigegebener PR198 wurde als main0db6863ae81eec1821ea54878a1cf28e8f7bcf0e gemergt. Main-CI40901665578 ist fehlgeschlagen; Deployment und Livejobs korrekt SKIPPED. Produktion direkt erneut gelesen: weiterhin v211/SW211. Keine SW212-Liveabnahme behaupten.
