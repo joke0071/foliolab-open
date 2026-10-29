@@ -1,3 +1,24 @@
+# Main-Release: bestehendes SW-Controllergate fehlgeschlagen · 29.10.2026
+
+PR195 bleibt autorisiert und regulär gemergt auf main6fe75a99, Baum identisch zum
+abgenommenen Kandidaten. Main40866889300/test123423796159 FAILURE: vorhandener
+tests/browser-position-removal.mjs:30 wartet nach aktivierter Service-Worker-
+Registrierung und erneuter Navigation30s vergeblich auf navigator.serviceWorker.controller.
+Vorherige Unit-/Syntax-/Speicher-/Import-/Offlinegates erfolgreich; übrige Cross-
+Enginejobs laufen regulär. Deployment blockiert, keine neue Liveabnahme behaupten.
+Keine Gates/Assertions/Produktdateien geändert, kein blinder Retry.
+
+**Exakt nächste Aktion:** verbleibende Jobs regulär abschließen, unveränderten
+Test am identischen Dateibaum isoliert diagnostizieren und SW-Lebenszykluszustände
+prüfen. Reale Ursache vor gezielter Korrektur/erneutem Lauf belegen; nötige strikte
+Controller-/Offline-/Nullmutations-/CASgates vollständig erhalten. Früherer v192-
+TLS-/Controllerbeleg wurde gelesen, ist aber wegen lokalem HTTP hier kein Beweis
+derselben Ursache. Freigabe für PR195 bleibt gültig, keine private Datenmutation.
+Nach erfolgreicher Main-/Deploy-/tatsächlicher Drei-Engine-Liveabnahme separat
+absichern. Gesamtmaster PARTIAL, Roadmap und Parkierungen unverändert.
+
+---
+
 # PR195 kontrolliert gemergt · Main/Deploy/Live laufen · 29.10.2026
 
 **DONE:** ausdrückliche Nutzerfreigabe vorab in2f44301d gesichert, PR195 mit
