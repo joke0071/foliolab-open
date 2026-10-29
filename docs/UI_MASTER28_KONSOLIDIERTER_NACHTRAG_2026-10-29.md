@@ -1,3 +1,9 @@
+## Aktualisierung durch ausdrückliche Nutzerentscheidung · 29.10.2026
+
+**Die verpflichtende mobile 4×2-Zeitraumwahl in diesem historischen Sollvertrag ist SUPERSEDED.** Maßgeblich ist nun [Mobile Zeitraumwahl und Diagrammdarstellung](UI_MASTER28_ZEITRAUM_DIAGRAMM_KORREKTUR_2026-10-29.md): bevorzugt eine schlanke adaptive horizontale Zeile mit erweiterter Auswahl, eindeutig aktivem Menüzeitraum, ohne äußeren Rahmen und mit 44px Touchzielen. Achsen, schmaler Tooltip und ehrliche Sparse-Darstellung werden dort präzisiert. Die neue UI-Umsetzung bleibt OPEN; keine Änderung des separat geprüften PWA-PR202. Alle anderen Anforderungen dieses Vertrags bleiben gültig.
+
+---
+
 # Aktueller Delta-Abgleich · PR201 technisch abgenommen · 29.10.2026
 
 | Referenz | Aktueller nachgewiesener Status |
