@@ -1,3 +1,30 @@
+# Letzter konsolidierter Masterstand · PR201 reviewbereit · 29.10.2026
+
+**Der zusätzliche QA-/CI-/Android-/Drive-/Datenintegritätsvertrag ist vollständig übernommen:** [dauerhafter Sollvertrag](https://github.com/joke0071/foliolab-open/blob/6b546aa1a72765a6991df687019c98bffbc2a26a/docs/MASTER_ERGAENZUNG_QA_CI_DRIVE_DATENINTEGRITAET_2026-10-29.md). Keine neue Roadmap, Prioritätsänderung oder parallele Implementierung.
+
+| Bereich | Aktueller Status |
+| --- | --- |
+| PR200 / Startoptimierung | DONE / LIVE_ACCEPTED, v213/SW213, main6ec0cf9c |
+| PR201 / kompakte Sperrgründe | TECHNICALLY_ACCEPTED / REVIEW_READY; noch nicht freigegeben, gemergt oder deployed |
+| Übriger UI-MASTER28 | PARTIAL; Normal/Verwalten/Bearbeiten/Archiv/Diagramme/Tooltip/Liquidität/Header/Buchungsliste und weitere konkrete Deltas erhalten |
+| Androidperformance | OPEN für zusätzliche reproduzierbare Baselines; reale Hardware EXTERNAL, kein pauschaler Blocker unabhängiger sicherer Releases |
+| PWA / Mehrtab / IndexedDB / Recovery | Bestehende Implementierung und Regressionen erhalten, zugehörige restliche Masterverträge weiter PARTIAL |
+| CI-Optimierung P2 | PARTIAL: bestehendes Sharding erhalten; weitere Laufzeit-/Caching-/Fixtureoptimierung nur gemessen und ohne Gateverlust |
+| Drive nach Verbindung / FLH04 | PARTIAL / EXTERNAL; unmittelbaren bereits autorisierten Ablauf prüfen, fehlende Einwilligung direkt anbieten, keine stille Überschreibung |
+| FLH03 native Importe | PARTIAL; Anbieter, Originalbeleggates, Reimport-/Dedupe-/FX-/Journalverträge und private Validierungsgrenzen erhalten |
+| Erweiterter DELETE-MASTER28 | OPEN für eigene Fachbeweise; PR201 erweitert keine Löschberechtigung |
+| TradingView | Responsive Optimierung SUPERSEDED; vollständige Entfernung und übrige K01–K04 OPEN/P2 |
+| Wallets / Staking / Kontenqualität | Bestehende Funktionen bewahren, offene Nachweise/Original-/Providergrenzen weiterführen, keine falschen Rendite-/Steuerbehauptungen |
+| FLH05 / FLH-PROJ01 | OPEN / PARKED; keine Implementierung ohne neue Nutzerentscheidung |
+
+PR201-Kandidat unverändert: Branch `feature/ui-selection-reasons-v214`, HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, Tree `74aa1231c62364b094416aa7dbf822784d7be70a`, SW214 unveröffentlicht. [Pflicht40923950987](https://github.com/joke0071/foliolab-open/actions/runs/40923950987) / [Wallet40923951032](https://github.com/joke0071/foliolab-open/actions/runs/40923951032) SUCCESS:953Tests und drei Engines. [Permanente Maschinenbelege und Bilder](https://github.com/joke0071/foliolab-open/blob/27d8f0042a3f36e2ef99b0abed1626818061e42d/docs/release-evidence/ui-selection-blockers-v214-candidate.json). Produktion bleibt tatsächlich geprüft v213/SW213; CI-Erfolg ist keine Liveabnahme von v214.
+
+**Verbindliche Fortsetzung:** (1) eigene ausdrückliche Releasefreigabe PR201, frische Sicherheits-/Identitätsprüfung, vollständiges Main-/Pages-/Live-Release; (2) übrige UI-P1; (3) Androidbaseline und gemessene Korrekturen; (4) UI-P2/geplante Fach-/Sicherheitsarbeiten; (5) CI am geeigneten Workflowcheckpoint; (6) FLH04/FLH03 nach bisherigen Prioritäten/Grenzen; (7) Geparktes geparkt lassen. Keine neue Universal-Sync-/Import-/Lösch-/History-Engine.
+
+Original-CSVs nur zur vorgesehenen privaten Validierung; keine realen Finanzdaten, Walletadressen oder Geheimnisse öffentlich. Historische Bewertungen, damalige Mengen, FX, Quellenherkunft/Qualität und unbekannte Werte unverändert. Automatisch/Linie/Punkte bleibt reine Visualisierung. Festgeld-Zinsprognosen sind keine FLH-PROJ01-Implementierung. Bereits erledigte Websitearbeit nicht neu aufrollen.
+
+---
+
 # v213 live · PR201 reviewbereit · Gesamtmaster PARTIAL · 29.10.2026
 
 **DONE / LIVE_ACCEPTED:** PR200, main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Produktion v213/SW213. [Releasepipeline40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834) SUCCESS;120 tatsächliche Asset-/SW-Hashes. Tatsächlicher Produktionsbenchmark des großen synthetischen IndexedDB-Portfolios:3186,6→1611,3ms Kaltmedian(-49,44%). Kleine Portfolios variieren; keine Android-Hardware- oder universelle Leistungszusage. Breiterer PERF01-Master einschließlich Android-/Wallet-/Phasenprofilen bleibt PARTIAL.
