@@ -1,6 +1,6 @@
 {
-  "head": "7fa5575f0e629f097a5b0c3aa23a8eff29d4c549",
-  "tree": "112c5916334e5642d416fce184fc05caa5af9761",
+  "head": "81cca6060008282ae1e0dc307684d53f4a303490",
+  "tree": "425ae224c33a90bfd399d7fc7ec93db04965f17b",
   "pr": 198,
   "candidateSW": 212,
   "status": "PARTIAL / local gates pass; full CI pending; no production release",
@@ -208,5 +208,20 @@
       "review": "PASS; actual local image viewed"
     }
   },
-  "scope": "UI-A01, scoped A02, calendar A03, preset balance A04, focus A07. Remaining audit/UI/PERF tasks remain open. No financial/storage/selection/removal logic changes."
+  "scope": "UI-A01, scoped A02, calendar A03, preset balance A04, focus A07. Remaining audit/UI/PERF tasks remain open. No financial/storage/selection/removal logic changes.",
+  "previousHead": "7fa5575f0e629f097a5b0c3aa23a8eff29d4c549",
+  "fullCI": {
+    "mandatory": 40899143762,
+    "wallet": 40899143178,
+    "status": "in progress"
+  },
+  "failureHistory": [
+    {
+      "run": 40898145611,
+      "job": 123532783759,
+      "artifact": 12909115275,
+      "digest": "sha256:c17f8fec4de597b791eb3a94998c7ed6941792ee95e06e8f98cf01f141ea4928",
+      "facts": "New Chromium UI controls and948Units passed. Existing browser-responsive-actions required mobile sizes38–41px, contradicting explicit new minimum44px UI-A02 contract. Corrected to strict44x44 on mobile AND minimum44px all widths; nowrap/card/labels/accessibility/actual-action assertions retained. Targeted320–1440px run PASS. Test-only follow-up; product bytes/SW212 unchanged. Original Cross jobs allowed to finish. No blind retry or product/security assertion weakening."
+    }
+  ]
 }
