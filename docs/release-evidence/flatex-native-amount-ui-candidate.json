@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-29T06:17:53.153Z",
+  "status": "UI_CANDIDATE_ACCEPTED_NOT_DEPLOYED",
+  "repository": "joke0071/foliolab-open",
+  "branch": "feature/flh03-flatex-native-amounts",
+  "head": "62d9bb77ca8cdadc8926d16e6d081effdd0da250",
+  "tree": "36b6e7a1c8e0593594c6f26ac782bcb31b12b702",
+  "testedMerge": "6b94b96fc4ab5e587581031a3c30c76d14bd8f2b",
+  "pr": 194,
+  "productionAtDecision": {
+    "version": 203,
+    "main": "2b6ec81523db0623da9edfa2fa96eac60460581a",
+    "candidate204Published": false
+  },
+  "treeEquality": {
+    "local": true,
+    "remote": true,
+    "testedMerge": true
+  },
+  "runs": [
+    {
+      "id": 40827149731,
+      "attempt": 1,
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 123292687692,
+          "name": "cross-engine (1)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123292688053,
+          "name": "test",
+          "conclusion": "success"
+        },
+        {
+          "id": 123292688069,
+          "name": "cross-engine (2)",
+          "conclusion": "success"
+        },
+        {
+          "id": 123295653543,
+          "name": "deploy",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 123295654411,
+          "name": "live-acceptance",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "id": 40827149715,
+      "scope": "Wallet scan checks",
+      "conclusion": "success"
+    }
+  ],
+  "units": {
+    "pass": 920,
+    "fail": 0,
+    "skip": 0,
+    "newUIFocusedTests": 6
+  },
+  "syntax": "PASS",
+  "artifacts": [
+    {
+      "id": 12877337832,
+      "name": "release-gates-6b94b96fc4ab5e587581031a3c30c76d14bd8f2b",
+      "digest": "sha256:a215bf83d6f460447231a29e39267fb6cb82c007469eb654db9f324c4c4504f8",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12877736018,
+      "name": "cross-engine-gates-6b94b96fc4ab5e587581031a3c30c76d14bd8f2b-2",
+      "digest": "sha256:a7f57a6413431234d5fc115d76555319627e7e4ec076914f0bd7de60b2669a7e",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "actualReports": [
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+      "engines": [
+        {
+          "engine": "chromium",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+            "withdrawal and delayed account check immediately remove computed values",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    },
+    {
+      "base": "http://127.0.0.1:4173/",
+      "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+      "engines": [
+        {
+          "engine": "firefox",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+            "withdrawal and delayed account check immediately remove computed values",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "result": "PASS",
+          "checks": [
+            "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+            "existing source/manual/conflicting proof stays read-only",
+            "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+            "withdrawal and delayed account check immediately remove computed values",
+            "account/file/mode/Escape/cancel/reopen resets",
+            "20-context paging/focus and independent source/order paging",
+            "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+            "forced submit blocked",
+            "delayed freshness generation guard",
+            "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+            "actual offline reload and confirmation",
+            "exact IDB/revision/settings unchanged by staging/no external requests"
+          ]
+        }
+      ],
+      "result": "PASS"
+    }
+  ],
+  "imagesActuallyReviewed": [
+    "chromium-amounts-320.png",
+    "chromium-amounts-1440.png",
+    "firefox-amounts-320.png",
+    "webkit-amounts-1440.png"
+  ],
+  "sourceReview": {
+    "files": 12,
+    "uiStepFiles": 5,
+    "additions": 309,
+    "deletions": 28,
+    "noNewImportCore": true,
+    "noFinancialDTO": true,
+    "noMappingPersistence": true,
+    "noStorageOrBackupFormatChanges": true,
+    "immediateWithdrawalDuringAsyncFreshness": true,
+    "sourceManualStaleGuardsPreserved": true,
+    "pinsWorkflowsAssertionsUnchanged": true
+  },
+  "privacy": {
+    "publicFixturesAndImagesSynthetic": true,
+    "privateOriginalsReadInUIStep": false,
+    "privateProductionDataMutated": false,
+    "foundationPrivateReference": "flatex-native-amounts-candidate.json"
+  },
+  "collisionCheck": {
+    "checkedAt": "2026-10-29T06:16:55.971Z",
+    "main": "2b6ec81523db0623da9edfa2fa96eac60460581a",
+    "source": "62d9bb77ca8cdadc8926d16e6d081effdd0da250",
+    "docParent": "3abd34e4e485542a1ef1168cbcfaaeac2e511df9",
+    "branches": 180,
+    "openPRs": [
+      194,
+      161,
+      157
+    ],
+    "activeActions": 0,
+    "foreignBranchChanges": 0
+  },
+  "releaseDecision": "Proceed under existing master authorization for bounded read-only amount evidence; full main/Pages/actual live acceptance still mandatory.",
+  "masterStatus": "PARTIAL",
+  "next": "Merge expected candidate; full unchanged main/Pages/live gates. Verify exact 120 deployed asset hashes, restore/offline, actual new three-engine amount UI reports/logs/images and artifact digests before LIVE_ACCEPTED."
+}

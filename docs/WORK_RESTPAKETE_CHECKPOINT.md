@@ -1,3 +1,46 @@
+# PR194 Betragsvorschau abgenommen · kontrollierter Release beginnt · 29.10.2026
+
+**UI-Integration DONE im begrenzten Kandidatenumfang; Release IN_PROGRESS.**
+Main2b6ec815/v203 LIVE_ACCEPTED unverändert, SW204 noch unveröffentlicht.
+Branch feature/flh03-flatex-native-amounts, HEAD `62d9bb77ca8cdadc8926d16e6d081effdd0da250`,
+getesteter Merge `6b94b96fc4ab5e587581031a3c30c76d14bd8f2b`,
+identischer lokaler/Remote-/Testmergebaum `36b6e7a1c8e0593594c6f26ac782bcb31b12b702`.
+Nur geparkte157/161 neben PR194,180Branches/Actions geprüft, keine fremde Entwicklung
+oder aktive CI und keine offenen Reviewkommentare. Zentraler Dokumentationsbranch
+feature/flh05-import-foundation; dieser Kandidatenbeleg vor Merge dauerhaft gesichert.
+
+Volle aktuelle unveränderte PR-CI40827149731 Versuch1 und Wallet40827149715 SUCCESS.
+920Units/0Fehler/Skip,6neue UI-Fokusfälle/Syntax, tatsächliche neue Chromium/Firefox/
+WebKit-Bindingberichte mit beiden Bestätigungen/exakten0-/Differenz-/großen Werten/
+Manualschutz/Entzug/delayed Freshness/CAS/Offline/Nullmutation PASS.
+Release-ZIP12877337832 SHA256
+`a215bf83d6f460447231a29e39267fb6cb82c007469eb654db9f324c4c4504f8`
+und Cross2-ZIP12877736018 SHA256
+`a7f57a6413431234d5fc115d76555319627e7e4ec076914f0bd7de60b2669a7e`
+vor Extraktion verifiziert, tested-sha exakt6b94b96f, Unitlog920PASS tatsächlich gelesen.
+Neue CI-Betragsbilder Chromium320/1440, Firefox320, WebKit1440 tatsächlich angesehen:
+vollständige exakte Werte, keine horizontalen Überläufe/Blocker.
+12Dateien Gesamt-PR/5UI-Dateien/309Additionen/28Entfernungen final reviewt,
+keine Workflows/Pins/Assertions gelockert. [Kandidatenbeleg](release-evidence/flatex-native-amount-ui-candidate.json).
+
+Positive begrenzte Releaseentscheidung unter bestehendem Masterauftrag: reinlesende
+Betragsbelege in bestehenden Orderdetails ohne Finanzmapping/Persistenz/Importfreigabe.
+Keine zusätzliche Nutzerentscheidung erforderlich. Exakt nächster Schritt PR194 mit
+erwarteter HEAD mergen, volle Main-/Cross-/Pages-/Live-Gates regulär abwarten; tatsächliche
+120Assetbytes/Restore/Offline/neue3Engine-Betragsberichte und Produktionsbilder/Digests
+prüfen und sofort zentral sichern. Bis dahin v204 nicht LIVE_ACCEPTED nennen.
+Nach Merge und Pages sichere Zwischencheckpoints; kein blindes Retry oder Gateabbau.
+
+Keine privaten Originale in diesem UI-Schnitt erneut gelesen, vorherige unabhängige
+private Referenzprüfung weiter gültig; keine privaten Produktivdaten geändert,
+Testprofile/Bilder synthetisch. Wirtschaftliche Nativeübernahme/vollständige Historie/
+Bestände/Kosten/Cashflows/TWR/XIRR weiterhin offene separate Fachgates.
+UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/übrige Roadmap erhalten,
+historischerStart01.01.2022/keine Fiktionen, PROJ01 Backlog. Zwei Etappen UI + Release,
+Gesamtmaster PARTIAL.
+
+---
+
 # PR194 Betragsvorschau remote gesichert · volle CI läuft · 29.10.2026
 
 Funktionsbranch feature/flh03-flatex-native-amounts / PR194, HEAD `62d9bb77ca8cdadc8926d16e6d081effdd0da250`,
