@@ -1,3 +1,60 @@
+# PR196 Detailkorrektur remote gesichert · SW210 volle CI läuft · 29.10.2026
+
+**PARTIAL bis finale aktuelle Abnahme.** Einziger Funktionsbranch
+feature/reference-removal-safe-subset / [PR196](https://github.com/joke0071/foliolab-open/pull/196)
+Draft. HEAD **6c361af13fa0927601c4c5cbe5e13f762b1e5991**,
+Baum **36e769975439f05d6339f51d87019d5f603a7d75**, exakt lokaler31859cc und Remote.
+Testmerge **8bbf7e394b2c4e561a6c3dfadb9ee9599ddf7231**. Update ohneForce mit
+expectedcf725c1e bestätigt. SW210 unveröffentlicht; main6fe75a99/v208 unverändert.
+
+Vorherige Pflicht **40878033465** und Wallet **40878033446** vollständig SUCCESS:
+test123461831261/Cross1 123461831301/Cross2 123461830946 SUCCESS,
+deploy123466707812/live123466708841 korrekt SKIPPED. Frühere beiden
+Testvorbereitungsbefunde durch zusätzliche unveränderte Safetygates erfolgreich
+geprüft; Fehlhistorie unten erhalten. Diese grüne ältereCI ersetzt nicht die
+Abnahme der nachträglich tatsächlich gefundenen Detail-Touch-/Overflowlücken.
+
+**DONE im lokalen Detailumfang:** vorhandene performance-details mit mindestens48px
+summary und gemeinsamer body-Komponente für beide neuen Details verwendet.
+Neuer scoped Umbruch für lange Originalidentitäten und Kapitalserien;
+Kapitalreferenz als lesbare Datum/Referenz/Nettozuflussliste statt interner JSON.
+Alle Ansichtsbezeichnungen verständlich deutsch. Keine neue Finanzlogik.
+Neue strikte Tests öffnen ALLE Details an fünfBreiten, messen nun alle summary-
+Ziele zusätzlich zu Buttons/Labels und prüfen dialogFields.scrollWidth<=clientWidth.
+Keine44px-/Overflowtoleranz oder Assertion gelockert. Zusätzliche tatsächliche
+Bilder für aufgeklappte Kapitalreferenz/Backup/Bestätigung gespeichert.
+
+Tatsächlicher lokaler Chromium: vollständiges bestehendes Referenzgate und
+erweitertes neues Rücknahmegate PASS. Tatsächlicher Firefox157/Playwright1.64.1:
+erweitertes neues Rücknahmegate PASS einschließlich aller geöffneten Details/
+44px/inneremOverflow/fünfBreiten/Axe sowie unverändertem Backup/Keyausschluss/
+Zustimmung/Quota/post-put/Offline/Undo/V2PlainRestore/Stale und echterCASrace.
+Aktuelles Firefox320-Expanded-Bild angesehen, Darstellung PASS.
+Lokaler WebKitstart durch fehlende Systembibliotheken blockiert; keine lokale
+WebKitabnahme behaupten. Echte WebKit27.2-Abnahme erfolgt im vorhandenen
+verpflichtenden CI-Gate mit vollständigen Hostabhängigkeiten; kein Gate entfallen.
+946Units/Syntax zuletzt PASS; nur Darstellung/Testabdeckung/Vertragsgrenzen
+seit letzter voller grünerCI geändert. Aktuelle Syntaxcheck PASS.
+
+Neue volle Pflicht **40880172369** und Wallet **40880172596** auf exakt6c361af1
+laufen; nicht unterbrechen/erneut triggern/überschreiben. **Exakte nächste Aktion:**
+beide regulär abschließen; tatsächliche aktuelle Berichte aller3Engines samt
+summary-Messung/inneremOverflow, getestetenSHA/Baum und ZIPdigests vor Extraktion
+prüfen, neue echte Chromium/Firefox/WebKit-Bilder ansehen, abschließenden Quellen-
+/Delta-/PRreview und dauerhaften Kandidatenbeleg sichern. Erst dann PRreviewbereit
+und eigene konkrete Nutzerfreigabe vor neuem kritischem Merge/Deployment.
+Bei tatsächlichem Befund gezielt gleicherPR, keine Retryserie/Testabschwächung.
+
+Vertrag enthält konservative Prüflimits/ASCII-IDs/Teilstring- und opaque-Daten-
+Sperren ausdrücklich; solche Zufallstreffer werden nicht unsicher aufgelöst.
+Weitere Quellen/Originalrevisionen/Renditestart/heutige automatische Neuerfassung
+sowie weitere UI-/Lösch-/FLH03-Kategorien bleiben offen; keine Gesamt-DELETE-Abnahme.
+Gesamtmaster PARTIAL; FLH04/OAuth/essentielleP1-PERF01 und ursprüngliche Roadmap
+erhalten. FLH05/PROJ01 OPEN/PARKED; Kompatibilität nur notwendige gemeinsame
+Verträge, kein Zusatzprojekt/Refactoring. Alle historischen Belege unten erhalten.
+
+---
+
 # PR196: zusätzliche aufgeklappte Detail-QA findet echte UI-Lücken · 29.10.2026
 
 HEADcf725c1e/Baum9d65e7f unverändert remote; neue Pflicht40878033465 läuft,
