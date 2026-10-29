@@ -1,0 +1,1631 @@
+{
+  "scope": "Synthetic More UX baseline on unchanged PR202 tree; Chromium emulation only, no hardware or OAuth operator acceptance",
+  "states": [
+    {
+      "width": 320,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 258,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 258,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 258,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 226,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 226,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 320,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 258,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 258,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 258,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 226,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 153.78125,
+          "height": 39
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 226,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 226,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 226,
+          "height": 39
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 108.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 226,
+          "height": 19.5
+        },
+        {
+          "text": "Prüfen",
+          "width": 109,
+          "height": 39
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 226,
+          "height": 39
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 226,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 226,
+          "height": 39
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 226,
+          "height": 39
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 135.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 232,
+          "height": 39
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 185.078125,
+          "height": 39
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 232,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 232,
+          "height": 39
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 200,
+          "height": 36
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 232,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 360,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 144.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 144.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 298,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 266,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 266,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 360,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 144.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 144.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 298,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 266,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 153.78125,
+          "height": 39
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 266,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 266,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 266,
+          "height": 39
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 108.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 266,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 129,
+          "height": 39
+        },
+        {
+          "text": "Prüfen",
+          "width": 129,
+          "height": 39
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 266,
+          "height": 39
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 266,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 266,
+          "height": 39
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 266,
+          "height": 39
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 135.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 272,
+          "height": 39
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 185.078125,
+          "height": 39
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 272,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 272,
+          "height": 39
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 240,
+          "height": 36
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 216,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 272,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 390,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 159.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 159.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 328,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 296,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 296,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 390,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 159.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 159.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 328,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 296,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 153.78125,
+          "height": 39
+        },
+        {
+          "text": "Verschlüsseltes Backup herunterladen",
+          "width": 296,
+          "height": 39
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 296,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 296,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 296,
+          "height": 39
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 108.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 296,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 144,
+          "height": 39
+        },
+        {
+          "text": "Prüfen",
+          "width": 144,
+          "height": 39
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 296,
+          "height": 39
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 296,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 113.875,
+          "height": 39
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 124.015625,
+          "height": 39
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 135.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 302,
+          "height": 39
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 185.078125,
+          "height": 39
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 302,
+          "height": 26
+        },
+        {
+          "text": "Gespeicherte API-Schlüssel entfernen",
+          "width": 279.859375,
+          "height": 39
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Technische Einrichtung & Datenschutz",
+          "width": 302,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 302,
+          "height": 39
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 270,
+          "height": 18
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Verbindung & Staking prüfen",
+          "width": 221.859375,
+          "height": 39
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 246,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 302,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 412,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 167.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 167.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 344,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 312,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 312,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 412,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 167.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 167.5,
+          "height": 39.59375
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 344,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 312,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 163.78125,
+          "height": 39
+        },
+        {
+          "text": "Verschlüsseltes Backup herunterladen",
+          "width": 312,
+          "height": 40.796875
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 312,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 312,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 312,
+          "height": 40.1875
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 118.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 312,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 152,
+          "height": 40.1875
+        },
+        {
+          "text": "Prüfen",
+          "width": 152,
+          "height": 40.1875
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 312,
+          "height": 40.1875
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 312,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 134.015625,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 145.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 318,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 195.078125,
+          "height": 40.796875
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 318,
+          "height": 26
+        },
+        {
+          "text": "Gespeicherte API-Schlüssel entfernen",
+          "width": 289.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Technische Einrichtung & Datenschutz",
+          "width": 318,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 318,
+          "height": 40.796875
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 286,
+          "height": 18
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Verbindung & Staking prüfen",
+          "width": 231.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 262,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 318,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 430,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 176.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 176.5,
+          "height": 39.59375
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 330,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 330,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 430,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 176.5,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 176.5,
+          "height": 39.59375
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 330,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 163.78125,
+          "height": 39
+        },
+        {
+          "text": "Verschlüsseltes Backup herunterladen",
+          "width": 330,
+          "height": 40.796875
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 330,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 330,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 330,
+          "height": 40.1875
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 118.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 330,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 161,
+          "height": 40.1875
+        },
+        {
+          "text": "Prüfen",
+          "width": 161,
+          "height": 40.1875
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 330,
+          "height": 40.1875
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 330,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 134.015625,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 145.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 214.03125,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 195.078125,
+          "height": 40.796875
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 328,
+          "height": 26
+        },
+        {
+          "text": "Gespeicherte API-Schlüssel entfernen",
+          "width": 289.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Technische Einrichtung & Datenschutz",
+          "width": 328,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 241.609375,
+          "height": 40.796875
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 296,
+          "height": 18
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Verbindung & Staking prüfen",
+          "width": 231.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 272,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 328,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 768,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 93,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 93,
+          "height": 39.59375
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 163,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 163,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 768,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 93,
+          "height": 39.59375
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 93,
+          "height": 39.59375
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 163,
+          "height": 20.390625
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 163,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 163,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 163,
+          "height": 42
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 142.53125,
+          "height": 40.1875
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 118.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 163,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Prüfen",
+          "width": 79.171875,
+          "height": 40.1875
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 150.671875,
+          "height": 40.1875
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 134.015625,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 145.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 214.03125,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 195.078125,
+          "height": 40.796875
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 422,
+          "height": 26
+        },
+        {
+          "text": "Gespeicherte API-Schlüssel entfernen",
+          "width": 289.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Technische Einrichtung & Datenschutz",
+          "width": 422,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 241.609375,
+          "height": 40.796875
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 390,
+          "height": 18
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Verbindung & Staking prüfen",
+          "width": 231.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 366,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 422,
+          "height": 26
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "expanded": false,
+      "details": 19,
+      "open": 0,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 88.09375,
+          "height": 39
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 106.703125,
+          "height": 39
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 471,
+          "height": 20.390625
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 471,
+          "height": 20.390625
+        }
+      ],
+      "violations": []
+    },
+    {
+      "width": 1440,
+      "expanded": true,
+      "details": 19,
+      "open": 19,
+      "overflow": false,
+      "oversized": [],
+      "smallActions": [
+        {
+          "text": "+ Konto",
+          "width": 88.09375,
+          "height": 39
+        },
+        {
+          "text": "+ Anbieter",
+          "width": 106.703125,
+          "height": 39
+        },
+        {
+          "text": "JSON exportieren",
+          "width": 150.75,
+          "height": 39
+        },
+        {
+          "text": "Backup wiederherstellen",
+          "width": 202.171875,
+          "height": 39
+        },
+        {
+          "text": "Alle Daten löschen",
+          "width": 160.328125,
+          "height": 39
+        },
+        {
+          "text": "Backup-Passwort",
+          "width": 471,
+          "height": 20.390625
+        },
+        {
+          "text": "Passwort festlegen",
+          "width": 163.78125,
+          "height": 39
+        },
+        {
+          "text": "Verschlüsseltes Backup herunterladen",
+          "width": 294.484375,
+          "height": 40.796875
+        },
+        {
+          "text": "Was wird gesichert?",
+          "width": 471,
+          "height": 18
+        },
+        {
+          "text": "Google Drive Backup",
+          "width": 471,
+          "height": 20.390625
+        },
+        {
+          "text": "Google-Zugang einrichten ↗",
+          "width": 190.546875,
+          "height": 24
+        },
+        {
+          "text": "Drive verbinden",
+          "width": 142.53125,
+          "height": 40.1875
+        },
+        {
+          "text": "Jetzt sichern",
+          "width": 118.75,
+          "height": 39
+        },
+        {
+          "text": "Backups verwalten",
+          "width": 471,
+          "height": 19.5
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Prüfen",
+          "width": 79.171875,
+          "height": 40.1875
+        },
+        {
+          "text": "Wiederherstellen",
+          "width": 150.671875,
+          "height": 40.1875
+        },
+        {
+          "text": "Backup-Ordner ändern",
+          "width": 471,
+          "height": 26
+        },
+        {
+          "text": "Aktualisieren",
+          "width": 123.875,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner wählen",
+          "width": 134.015625,
+          "height": 40.1875
+        },
+        {
+          "text": "Ordner erstellen",
+          "width": 145.46875,
+          "height": 39
+        },
+        {
+          "text": "EODHD-Verbindung prüfen",
+          "width": 214.03125,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Datenquellen speichern",
+          "width": 195.078125,
+          "height": 40.796875
+        },
+        {
+          "text": "API-Schlüssel & Sicherheit",
+          "width": 1038,
+          "height": 26
+        },
+        {
+          "text": "Gespeicherte API-Schlüssel entfernen",
+          "width": 289.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Technische Einrichtung & Datenschutz",
+          "width": 1038,
+          "height": 26
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Blockchain-Zugänge speichern",
+          "width": 241.609375,
+          "height": 40.796875
+        },
+        {
+          "text": "Solana-Staking einrichten (optional)",
+          "width": 1006,
+          "height": 18
+        },
+        {
+          "text": "",
+          "width": 41,
+          "height": 41
+        },
+        {
+          "text": "Verbindung & Staking prüfen",
+          "width": 231.859375,
+          "height": 40.796875
+        },
+        {
+          "text": "RPC einrichten & Sicherheit",
+          "width": 982,
+          "height": 26
+        },
+        {
+          "text": "Netzwerke & Hinweise",
+          "width": 1038,
+          "height": 26
+        }
+      ],
+      "violations": []
+    }
+  ],
+  "recordUnchanged": true,
+  "result": "BASELINE_RECORDED / UI_DELTAS_OPEN",
+  "measurementCaveats": [
+    "smallActions includes disabled visible buttons; counts are a screening baseline, not proof every listed element is an enabled required action.",
+    "System keyboard, physical Android font settings, real OAuth/Drive and all four backup restore combinations remain separate open checks."
+  ],
+  "scriptSha256": "9f3b755c6a84be6341de58683b5b89240afef71b111d146a1d324badc3d90f4d"
+}
