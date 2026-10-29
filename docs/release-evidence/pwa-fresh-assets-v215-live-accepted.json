@@ -3573,5 +3573,21 @@
     "Synthetic isolated browser profiles and emulation only; no physical Android/OnePlus/TalkBack/VoiceOver claim.",
     "Actual production214→215 app/CSS are unchanged; mandatory warm-cache fixture changes old app/CSS bytes and proves freshness in all3engines.",
     "All wider UI/DELETE/FLH03/FLH04/PERF01 tasks retain existing status; FLH05/PROJ01 PARKED. More16-section contract integrated, UI implementation still open."
-  ]
+  ],
+  "visualReview": {
+    "result": "PASS",
+    "files": [
+      "blocked-reasons/webkit-bookings-320.png",
+      "live/390.png"
+    ],
+    "scope": "Actual v215 production artifact; synthetic profiles; presentation unchanged by cache fix."
+  },
+  "moreBeforeImages": {
+    "commit": "a943e8a03f80194ae2ef55b30391615bc0474e82",
+    "paths": [
+      "docs/release-evidence/more-ux-before-backup-390.png",
+      "docs/release-evidence/more-ux-before-drive-390.png"
+    ],
+    "scope": "Synthetic local v215-equivalent baseline, not private Android screenshots."
+  }
 }
