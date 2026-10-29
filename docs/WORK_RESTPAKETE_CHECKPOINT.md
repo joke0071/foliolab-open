@@ -1,3 +1,18 @@
+# UI-v212 vollständig LIVE_ACCEPTED · PERF01 folgt · 29.10.2026
+
+**DONE / LIVE_ACCEPTED: PR198 und PR199.** Nutzerfreigaben umgesetzt; mainfee4fc5de4c57fee6643d30f20798c35b2b8807b / Baumbaa7b3805cb6813d6b58bd331e3b94f0f0e156bb, produktiv **v212 / SW212**.
+Main-/Pages-/Live[40907781116](https://github.com/joke0071/foliolab-open/actions/runs/40907781116) vollständig SUCCESS: test123567165221, Cross1 123567165668, Cross2 123567165802, deploy123572503649, live123572864018. TatsächlicherUnitlog948/948/0Fail/0Skip/Syntax und aktuelle Berichte aller3Engines gelesen.
+
+ProduktivesZIP12912478873 vor Extraktion SHA256f89700737ce55f20313291379d9a9927b2d1f3f2f6557184d97459882ec05b72 unabhängig verifiziert. ActualLiveberichtfee4fc5d/SW212/PASS: **120exakte Asset-/SWhashes**, echteUI-/Backup-/Restore-/Offlineabläufe. Neue Workerzustände zeigen auf tatsächlicher produktiverURL in allen3Engines appseitigeAktivierung/tatsächlicheKontrolle mit exaktem Blankrecord; Referenzverwaltung UND Rücknahme, nativeFlatexappend/backfill sowie neueUI-Kontrollen/Finanz-/CAS-/Backup-/Restoregates allePASS. Tatsächliche Produktionsbilder ChromiumKalender320, FirefoxReferenzen320, WebKitFokus390 angesehen. Keine bloßeÜbernahme vonKandidatenbelegen.
+
+PermanenterBeleg: docs/release-evidence/ui-v212-live-accepted.json, separat remote gesichert. UrsprünglicherMainfehler40901665578/717aa0f9 bleibt erhalten; produktiveReleaseblockade ist durch tatsächlichbestandeneMain-/Livegates erledigt. Keine privatenDaten/Keys oder realenNutzerportfolios verändert; synthetischeProfile, keineHardware-/AT-Vollabnahme.
+
+**Gesamtmaster PARTIAL. Exakte Fortsetzung:** frischmain/PR/Actions/Writer prüfen; EIN main-basierter PERF01-Funktionsbranch. BegrenzteDatumsvalidierungs-Wiederverwendung gemäß docs/FLH_PERF01_DATE_VALIDATION_CONTRACT.md /27de67a6 implementieren (boolesch, seitenlokal, max16384kanonischeDaten, vollständigeidentischePrüfung; keinePortfolioergebnisse cachen). Unit-/3Engine-Kalender-/Preis-/FX-/Korrektur-/Cache-Druck-/Nichtmutationsbelege, gleichequellhashgebundeneunprofilierteNachhermessungScriptSHAa486bc44 und Baseline63fcfb0b vergleichen;30%-Kaltstartziel im explizitenStressfall nachweisen. KeinIndex-/Storage-/Finanzrefactoring und keineP3Vorziehung. EigenenreviewbarenPR samtReleasegrenze respektieren.
+
+Alle übrigenUI-/FLH03-/DELETE-/IDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-/P0-/P1-/BENCH-Verträge erhalten. UI-ZuständigkeitWork, Issue197geschlossen; FLH05/PROJ01 OPEN/PARKED. HistorischenDokumentationsbranch niemals alsAppcode nachmain mergen. AlteBLOCKED-/v211-/Freigabe-fehlt-Angaben darunter sind historischeZwischenstände.
+
+---
+
 # Release212: Main und Pages erfolgreich, tatsächliche Liveabnahme läuft · 29.10.2026
 
 **PARTIAL bis Abschluss der tatsächlichen Livegates.** mainfee4fc5de4c57fee6643d30f20798c35b2b8807b / Baumbaa7b380 exakt freigegebener199-Kandidat, Appbytes unverändert freigegebenem198.
