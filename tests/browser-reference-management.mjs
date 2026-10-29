@@ -20,7 +20,31 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const close=()=>p.locator('#editDialog').waitFor({state:'hidden'});
  const begin=async()=>{await action('archive').click();await p.locator('[name=confirmReferenceArchive]').waitFor();};
  try{
-  await p.goto(base);await ready(p);await p.evaluate(async()=>{
+  await p.goto(base);await ready(p);
+  // Establish the actual offline-test precondition before seeding or opening
+  // dialogs. App-created registration/activation and a controlled document are
+  // separate phases; observing IDB-ready alone proves neither of them.
+  const swState=()=>p.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {controller:Boolean(navigator.serviceWorker.controller),controllerScript:navigator.serviceWorker.controller?.scriptURL??null,active:r?.active?.state??null,installing:r?.installing?.state??null,waiting:r?.waiting?.state??null};});
+  const blankRecord=await record(),swBaseline={initial:await swState()};
+  try{
+   await p.evaluate(()=>{
+    window.__referenceWorkerActivated=false;
+    void navigator.serviceWorker.ready.then(registration=>{
+     const check=()=>{window.__referenceWorkerActivated=registration.active?.state==='activated';};
+     check();registration.active?.addEventListener('statechange',check);
+    });
+   });
+   await p.waitForFunction(()=>window.__referenceWorkerActivated===true);
+   swBaseline.activated=await swState();await p.reload();await ready(p);swBaseline.controlled=await swState();
+   assert.equal(swBaseline.controlled.controller,true,'offline fixture begins in an actual controlled document');
+   assert.equal(swBaseline.controlled.controllerScript,new URL('sw.js',base).href,'the application worker controls the document');
+   assert.deepEqual(await record(),blankRecord,'controlled baseline reload preserves exact record/settings/revision');
+   swBaseline.result='PASS';
+  }finally{
+   swBaseline.final=await swState().catch(error=>({error:String(error)}));
+   writeFileSync('artifacts/gates/reference-management/'+engine+'-sw-baseline.json',JSON.stringify(swBaseline,null,2));
+  }
+  await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js'),{captureOpenings,executeTransaction}=await import('/src/transactions.js'),{prepareBookingArchive}=await import('/src/booking-management.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');let m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'Synthetic reference provider'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'Synthetic reference cash',type:'checking'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',name:'Synthetic reference cash',kind:'cash',quantity:100,price:1},m));captureOpenings(m);m.openingPositions[0].asOf='2020-01-01';
    for(let i=0;i<205;i++){const date=new Date(Date.UTC(2021,0,1+i)).toISOString().slice(0,10);snapshot(m,date,'SYNTHETIC older reference '+i,{manualTotalEUR:String(100+i%2)});m.snapshots.find(s=>s.date===date).id='old-'+i;}
    for(const [id,date,total]of [['start','2023-01-01','100'],['manual','2024-01-01','110'],['legacy','2024-06-01','112']]){snapshot(m,date,'SYNTHETIC '+id+' reference',{manualTotalEUR:total});m.snapshots.find(s=>s.date===date).id=id;}
