@@ -1159,6 +1159,8 @@
 .flatex-binding-confirm{display:flex;align-items:center;gap:10px;min-height:44px;line-height:1.45;font-size:13px;cursor:pointer}
 .flatex-binding-confirm input{flex:0 0 20px;width:20px;height:20px}.flatex-source-status{font-weight:650}
 .flatex-order-review + .flatex-order-review{margin-top:0;border-top:0}
+/* Keep new simulation targets above 44px even with engine subpixel geometry. */
+#flatexNativeSimulation :is(summary,select,.btn){min-height:45px}
 .kraken-ledger-preview dd{margin-inline-start:0;overflow-wrap:anywhere}.kraken-ledger-preview dt{font-weight:700}
 /* Account evidence reuses the existing settings disclosure and action pattern. */
 .account-evidence{min-width:0;margin:0 0 12px}.account-evidence summary{min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}.account-evidence-body{padding:0 12px 12px;overflow-wrap:anywhere}.account-evidence-body ul{padding-left:20px}.account-evidence .settings-actions{flex-wrap:wrap}.account-evidence .btn{min-width:44px;min-height:44px;white-space:normal}

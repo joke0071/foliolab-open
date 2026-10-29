@@ -1,5 +1,5 @@
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
-import {flatexNativeMarkup,reviewNativeFlatexBindings} from './flatex-native-ui.js';
+import {flatexNativeMarkup,reviewNativeFlatexBindings,flatexNativeSimulationMarkup} from './flatex-native-ui.js';
 import {inspectNativeFlatexSourceIdentities} from './import-identity.js';
 import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {readCSVRecords} from './csv-records.js';
@@ -68,7 +68,7 @@ import {pairFlatexSettlements} from './flatex-settlements.js';
 import {auditFlatexSettlementAmounts,auditNativeFlatexSettlementAmounts} from './flatex-settlement-audit.js';
 import {auditFlatexCashStatements,flatexCashAccountChoices} from './flatex-cash-audit.js';
 import {exportFlatexAuditCSV} from './flatex-review-export.js';
-import {prepareFlatexBackfillPreview} from './flatex-backfill.js';
+import {prepareFlatexBackfillPreview,prepareNativeFlatexPreview} from './flatex-backfill.js';
 import {invalidateUnverifiedFlatexBasis} from './flatex-cost-basis.js';
 import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js';
 import {createCompleteBackup,unpackCompleteBackup,portableDrivePreferences,COMPLETE_BACKUP_KIND} from './complete-backup.js';
@@ -1263,6 +1263,10 @@ function openCSVImport(){
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
  let flatexNativeLinks=null,flatexNativeAmounts=null,flatexOrderLimit=20,flatexLegLimits={};
  let flatexSourceIdentities=null,flatexBindings={},flatexBindingLimit=20,flatexBindingStale=false,flatexBindingAction=0;
+ let flatexSimulationMode='',flatexSimulation=null,flatexSimulationBusy=false,flatexSimulationStatus='';
+ let flatexNativeAccepted=false,flatexNativeBackupBaseline=null;
+ const clearNativeApproval=()=>{flatexNativeAccepted=false;flatexNativeBackupBaseline=null;$('dialogError').textContent='';$('dialogError').classList.add('hidden');};
+ const nativeCommitReady=()=>Boolean(flatexSimulation?.eligible&&flatexSimulation.preview.ready>0&&!flatexSimulationBusy&&!flatexBindingStale&&!loadFailure&&!otherTabChangedPortfolio&&!saving&&!busy&&flatexNativeAccepted&&flatexNativeBackupBaseline===flatexSimulation.preview.baseline&&flatexSimulation.preview.baseline===JSON.stringify(model));
  let batch=null,selectionGeneration=0,parsed=null,positionOverrides={},fxRateOverrides={},skippedLines=[],brokerImport=null,brokerAccepted=false,brokerBackupDownloaded=false,backfillRequested=false,bankEURConfirmed=false;
  const labels={date:'Datum',type:'Buchungsart',position:'Anlage / ISIN / Ticker',quantity:'Menge / Betrag',unitPrice:'Kurs',feeEUR:'Gebühren (EUR)',taxEUR:'Steuern (EUR)',fxRate:'Wechselkurs',cashPosition:'Verrechnungskonto',notes:'Notiz',externalId:'Buchungs-ID'};
  const necessary=['date','type','position','quantity','unitPrice'];
@@ -1290,7 +1294,24 @@ function openCSVImport(){
    '<button type="button" id="csvDownloadAudit" class="btn outline hidden">Flatex-Prüfbericht als CSV</button>'+
   '<div id="csvMapping"></div><p id="csvReviewStatus" class="visually-hidden" role="status" aria-live="polite">Nach der Dateiauswahl werden die Buchungen geprüft.</p><div id="csvReview"><p class="small-help">Nach der Dateiauswahl werden die Buchungen geprüft.</p></div>',
   async ()=>{
-   if(flatexNativeMode)throw Error('Flatex-Originalformat bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
+   if(flatexNativeMode){
+    if(!nativeCommitReady())throw Error('Flatex-Originalformat bleibt ohne aktuelle Simulation, Backup und ausdrückliche Übernahmebestätigung eine lokale Vorschau.');
+    const generation=selectionGeneration,action=flatexBindingAction,approved=flatexSimulation,mode=flatexSimulationMode;
+    try{
+     await portfolioStore.assertCurrent();
+     if(editor!==importEditor||!$('editDialog').open||generation!==selectionGeneration||action!==flatexBindingAction||approved!==flatexSimulation||!nativeCommitReady())throw Error('Datenstand oder Übernahmebestätigung geändert. Bitte erneut simulieren.');
+     const fresh=prepareNativeFlatexPreview(model,flatexNativeDocuments.map(f=>f.document),flatexBindings,{mode});
+     if(!fresh.eligible||fresh.preview.ready!==approved.preview.ready||fresh.preview.duplicates!==approved.preview.duplicates||JSON.stringify(fresh.preview.rows)!==JSON.stringify(approved.preview.rows))throw Error('Stückhistorie stimmt nicht mehr zur bestätigten Simulation.');
+     const draft=structuredClone(model),imported=importCSV(draft,fresh.preview);snapshot(draft);
+     $('dialogFields').inert=true;
+     try{model=draft;await save();}finally{$('dialogFields').inert=false;}
+     csvReceipt=csvUndoReceipt(fresh.preview.baseline,model);renderBookings();
+     notify(imported.imported+' Stückbuchungen übernommen · Kosten bleiben ungeprüft.');return;
+    }catch(error){
+     if(editor===importEditor&&generation===selectionGeneration&&action===flatexBindingAction){clearNativeApproval();flatexSimulation=null;flatexSimulationStatus='Nicht gespeichert. Bitte erneut simulieren und bestätigen.';renderFlatexNative();}
+     throw error;
+    }
+   }
    if(bitpandaMode)throw Error('Bitpanda bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
    if(krakenMode)throw Error('Kraken Ledger bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
    if(ledgerMode)throw Error('Ledger Live bleibt eine lokale Vorschau. Ohne belegte Ereignis-, Gebühren- und Eigentumszuordnung ist keine Übernahme zulässig.');
@@ -1444,11 +1465,64 @@ function openCSVImport(){
   const opened=[...$('csvReview').querySelectorAll('details[id][open]')].map(e=>e.id);
   const count=flatexNativeDocuments.reduce((n,f)=>n+f.document.rows.length,0);
   const staging=reviewNativeFlatexBindings(model,flatexSourceIdentities,flatexBindings,{stale:flatexBindingStale||Boolean(loadFailure)||otherTabChangedPortfolio});
-  $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Übernahme bleibt gesperrt.';
+  if(staging.stale){flatexSimulation=null;clearNativeApproval();flatexSimulationStatus='Datenstand geändert – neu laden.';}
+  $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Stückhistorie vor jeder Übernahme vollständig prüfen.';
   $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits,staging,bindingLimit:flatexBindingLimit,amountAudit:flatexNativeAmounts});
+  $('flatexNativeBindings').insertAdjacentHTML('afterend',flatexNativeSimulationMarkup(flatexSimulation,{mode:flatexSimulationMode,disabled:staging.stale,model}));
+  $('flatexSimulationRun').disabled=staging.stale||flatexSimulationBusy||!flatexSimulationMode||staging.contexts.some(c=>!c.confirmed);
+  if(flatexSimulation?.eligible&&flatexSimulation.preview.ready>0){
+   $('flatexSimulationResult').insertAdjacentHTML('beforeend','<div class="dialog-group"><button type="button" id="flatexNativeBackup" class="btn outline">Backup herunterladen</button><p id="flatexNativeBackupStatus" class="small-help">'+(flatexNativeBackupBaseline?'Backup-Download gestartet. Prüfe, ob du die Datei sicher abgelegt hast.':'Vor der Übernahme ist eine lokale Sicherung erforderlich.')+'</p><label class="flatex-binding-confirm"><input type="checkbox" id="flatexNativeAccept" '+(flatexNativeAccepted?'checked ':'')+(!flatexNativeBackupBaseline?'disabled':'')+'>Ich habe das Backup sicher abgelegt und den gesamten Stapel geprüft. Nur Stückhistorie übernehmen; Gebühren, Steuern und Kosten bleiben unbekannt.</label></div>');
+   $('flatexNativeAccept').addEventListener('change',event=>{flatexNativeAccepted=event.target.checked;renderFlatexNative();$('flatexNativeAccept').focus();});
+   $('flatexNativeBackup').addEventListener('click',async()=>{
+    const generation=selectionGeneration,action=++flatexBindingAction,result=flatexSimulation;
+    const current=()=>generation===selectionGeneration&&action===flatexBindingAction&&editor===importEditor&&$('editDialog').open&&result===flatexSimulation;
+    clearNativeApproval();flatexSimulationBusy=true;renderFlatexNative();$('flatexNativeBackup').disabled=true;
+    try{
+     if(saving||busy||loadFailure||otherTabChangedPortfolio||flatexBindingStale)throw Error('Datenstand nicht aktuell.');
+     await portfolioStore.assertCurrent();if(!current())return;
+     if(saving||busy||loadFailure||otherTabChangedPortfolio||result.preview.baseline!==JSON.stringify(model))throw Error('Datenstand geändert.');
+     const href=URL.createObjectURL(new Blob([backup(model,{includeHistory:true})],{type:'application/json'})),link=document.createElement('a');
+     link.href=href;link.download='FolioLab-Backup-vor-Flatex-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),500);
+     flatexNativeBackupBaseline=result.preview.baseline;
+    }catch{
+     if(!current())return;
+     clearNativeApproval();flatexSimulation=null;flatexBindings={};flatexBindingStale=true;
+    }
+    if(generation!==selectionGeneration||action!==flatexBindingAction||editor!==importEditor||!$('editDialog').open)return;
+    flatexSimulationBusy=false;renderFlatexNative();$('flatexNativeSimulation').open=true;($('flatexNativeAccept')||$('flatexNativeSimulation')).focus();
+   });
+  }
   for(const id of opened){const e=$(id);if(e)e.open=true;}
-  $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau.';
-  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
+  $('csvReviewStatus').textContent='Flatex Originalformat: '+count+' Zeilen, nur lokale Vorschau. '+flatexSimulationStatus;
+  importEditor.submitBlocked=!nativeCommitReady();$('saveDialog').disabled=importEditor.submitBlocked;$('saveDialog').textContent=importEditor.submitBlocked?'Nur Vorschau':'Übernehmen';
+  $('flatexSimulationMode').addEventListener('change',event=>{
+   flatexBindingAction++;flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
+   clearNativeApproval();
+   flatexSimulationMode=['append','backfill'].includes(event.target.value)?event.target.value:'';
+   renderFlatexNative();$('flatexSimulationMode').focus();
+  });
+  $('flatexSimulationRun').addEventListener('click',async()=>{
+   const generation=selectionGeneration,action=++flatexBindingAction,mode=flatexSimulationMode,baseline=JSON.stringify(model);
+   const current=()=>generation===selectionGeneration&&action===flatexBindingAction&&editor===importEditor&&$('editDialog').open;
+   flatexSimulation=null;flatexSimulationBusy=true;flatexSimulationStatus='Stückhistorie wird geprüft.';renderFlatexNative();
+   clearNativeApproval();
+   try{
+    if(!mode||saving||busy||loadFailure||otherTabChangedPortfolio||flatexBindingStale)throw Error('Datenstand oder Modus nicht prüfbar.');
+    await portfolioStore.assertCurrent();if(!current())return;
+    if(baseline!==JSON.stringify(model)||saving||busy||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert.');
+    const result=prepareNativeFlatexPreview(model,flatexNativeDocuments.map(f=>f.document),flatexBindings,{mode});
+    await portfolioStore.assertCurrent();if(!current())return;
+    if(baseline!==JSON.stringify(model)||saving||busy||loadFailure||otherTabChangedPortfolio)throw Error('Datenstand geändert.');
+    flatexSimulation=result;flatexSimulationStatus=result.eligible?'Stückhistorie simuliert. Keine Übernahme.':'Simulation gesperrt: '+result.reason;
+   }catch{
+    if(!current())return;
+    flatexSimulation=null;flatexBindings={};flatexBindingStale=true;flatexSimulationStatus='Datenstand nicht aktuell prüfbar – neu laden.';
+   }
+   if(!current())return;
+   flatexSimulationBusy=false;renderFlatexNative();$('flatexNativeSimulation').open=true;
+   ($('flatexSimulationResult')||$('flatexNativeSimulation')).setAttribute('tabindex','-1');
+   ($('flatexSimulationResult')||$('flatexNativeSimulation')).focus();
+  });
   $('flatexNativeShowMore')?.addEventListener('click',()=>{const previous=flatexNativeLimit;flatexNativeLimit+=50;renderFlatexNative();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
   $('flatexOrdersShowMore')?.addEventListener('click',()=>{const previous=flatexOrderLimit;flatexOrderLimit+=20;renderFlatexNative();$('flatexOrderGroup-'+previous)?.querySelector('summary')?.focus();});
   for(const button of $('csvReview').querySelectorAll('[data-flatex-order-legs]'))button.addEventListener('click',()=>{const i=Number(button.dataset.flatexOrderLegs),previous=flatexLegLimits[i]??20;flatexLegLimits[i]=previous+20;renderFlatexNative();$('flatexOrderLeg-'+i+'-'+previous)?.focus();});
@@ -1458,6 +1532,10 @@ function openCSVImport(){
    if(!context?.sourceId)return;
    const desired=confirm&&control.checked,accountId=confirm?(flatexBindings[context.sourceId]?.accountId||''):control.value;
    flatexBindings[context.sourceId]={accountId,confirmed:false,accountSnapshot:''};
+   flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
+   clearNativeApproval();
+   $('flatexSimulationResult')?.remove();$('flatexSimulationRun').disabled=true;
+   importEditor.submitBlocked=true;$('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
    for(const value of $('csvReview').querySelectorAll('.flatex-amount-review'))value.remove();
    if(!confirm&&$('flatexBindingConfirm-'+i))$('flatexBindingConfirm-'+i).checked=false;
    for(const c of $('csvReview').querySelectorAll('[data-flatex-binding-account],[data-flatex-binding-confirm]'))c.disabled=true;
@@ -1476,6 +1554,10 @@ function openCSVImport(){
   for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-account]'))control.addEventListener('change',()=>updateBinding(control,false));
   for(const control of $('csvReview').querySelectorAll('[data-flatex-binding-confirm]'))control.addEventListener('change',()=>updateBinding(control,true));
  };
+ importEditor.invalidateNativeSimulation=()=>{
+  if(!flatexNativeDocuments||editor!==importEditor||!$('editDialog').open)return;
+  flatexBindingAction++;flatexSimulation=null;flatexSimulationBusy=false;clearNativeApproval();flatexBindings={};flatexBindingStale=true;renderFlatexNative();
+ };
  async function chooseCSV(){
   const generation=++selectionGeneration;
   const source=$('csvSource').value;
@@ -1487,6 +1569,8 @@ function openCSVImport(){
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
   flatexNativeLinks=null;flatexNativeAmounts=null;flatexOrderLimit=20;flatexLegLimits={};
   flatexSourceIdentities=null;flatexBindings={};flatexBindingLimit=20;flatexBindingStale=false;flatexBindingAction++;
+  flatexSimulationMode='';flatexSimulation=null;flatexSimulationBusy=false;flatexSimulationStatus='';
+  clearNativeApproval();
   batch=null;parsed=null;brokerImport=null;brokerAccepted=false;brokerBackupDownloaded=false;backfillRequested=false;bankEURConfirmed=false;positionOverrides={};fxRateOverrides={};skippedLines=[];
   $('csvDownloadAudit').classList.add('hidden');
   $('saveDialog').disabled=true;$('saveDialog').textContent='Buchungen importieren';$('csvBrokerStatus').innerHTML='';
@@ -2365,6 +2449,7 @@ $('storageMigrationSetup').classList.toggle('hidden',portfolioStore.isIndexedDB|
 window.addEventListener('storage',event=>{
  if(event.storageArea!==localStorage||!['foliolab-open-v1',MODE_KEY].includes(event.key)||event.oldValue===event.newValue||loadFailure)return;
  otherTabChangedPortfolio=true;syncPortfolioState();
+ editor?.invalidateNativeSimulation?.();
  for(const value of document.querySelectorAll('#csvReview .flatex-amount-review'))value.replaceWith(Object.assign(document.createElement('p'),{className:'small-help flatex-amount-status',textContent:'Betragsprüfung: Datenstand geändert – neu laden.'}));
  const cashResult=$('cashComparisonResult');
  if(cashResult)cashResult.textContent='Der Datenstand wurde geändert. Bitte diesen Tab neu laden und erneut prüfen.';

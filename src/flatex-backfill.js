@@ -2,6 +2,42 @@ import {units,exact} from './decimal.js';
 import {previewCSV} from './csv-import.js';
 import {ledgerQuantityAudit} from './transactions.js';
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
+import {prepareNativeFlatexImport} from './flatex-import.js';
+import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
+
+/** Strict native simulation over the existing CSV/backfill engines. No write API. */
+export function prepareNativeFlatexPreview(model,documents,assignments,options={}){
+ if(!options||typeof options!=='object'||Array.isArray(options)||Object.keys(options).some(k=>!['mode','stale'].includes(k))||!['append','backfill'].includes(options.mode)||(options.stale!==undefined&&typeof options.stale!=='boolean'))throw Error('Expliziten nativen Vorschautyp ohne Importoverrides wählen.');
+ const prepared=prepareNativeFlatexImport(documents);
+ const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
+ if(prepared.issues.length||!prepared.parsed.rows.length)return blocked('Alle Quellen müssen geklärt sein; keine teilweise Übernahme von Cash-, Sonder- oder fehlerhaften Vorgängen.');
+ const binding=reviewNativeFlatexBindings(model,prepared.identities,assignments,{stale:options.stale});
+ if(binding.contexts.length!==1||binding.contexts[0].sourceType!=='depot'||!binding.contexts[0].confirmed||binding.rows.some(r=>!['source-only','existing-source'].includes(r.status)))return blocked('Eine aktuelle ausdrücklich bestätigte Depot-/Quellzuordnung ohne Manual- oder Quellenkonflikt ist erforderlich.');
+ const accountId=binding.contexts[0].accountId;
+ const reconciliation=reconcileFlatexPositions(prepared,model,accountId);
+ if(reconciliation.results.some(r=>!r.positionId))return blocked('Jede ISIN muss genau einer bestehenden Anlage im gewählten Depot zugeordnet sein.');
+ const positions=reconciliation.results.map(r=>model.positions.find(p=>p.id===r.positionId));
+ if(positions.some(p=>!['etf','stock','fund'].includes(p.kind)||p.currency!=='EUR'||p.wallet?.enabled||p.managementSource==='wallet'))return blocked('Nur bestehende EUR-Positionen vom Typ ETF, Aktie oder Fonds ohne Walletverwaltung sind qualifiziert.');
+ let preview;
+ if(options.mode==='backfill'){
+  const result=prepareFlatexBackfillPreview(model,prepared,accountId);
+  if(!result.eligible)return blocked(result.reason);preview=result.preview;
+ }else{
+  preview=previewCSV(model,prepared.parsed,prepared.mapping,{allowedAccountId:accountId});
+  if(preview.issues.length)return blocked('Gemeinsame Importprüfung meldet Quellen-, Kosten- oder Bestandskonflikte.');
+  const touched=new Set(preview.rows.filter(r=>r.status==='ready').map(r=>r.row.positionId));
+  for(const p of positions.filter(p=>touched.has(p.id))){
+   if(units(p.quantityExact??p.quantity)!==0n||p.costBasisExact!=null||p.costBasisEUR!=null||p.realizedPnLExact!=null||p.realizedPnLEUR!=null||
+    model.bookings.some(b=>[b.positionId,b.targetPositionId,b.cashPositionId].includes(p.id))||
+    model.journalEntries.some(e=>e.postings?.some(x=>x.positionId===p.id))||
+    (model.openingPositions||[]).some(o=>o.positionId===p.id&&(o.asOf||units(o.quantityExact)!==0n||o.costBasisExact!=null||o.realizedPnLExact!=null))||
+    (model.snapshots||[]).some(s=>s.byPosition&&Object.hasOwn(s.byPosition,p.id)&&units(s.byPosition[p.id])!==0n))return blocked('Neue native Historie nur in eine leere ungeschützte Position; vorhandene Bestände über den geprüften Backfillpfad abgleichen.');
+  }
+ }
+ if(preview.issues.length||preview.skipped||preview.ready+preview.duplicates!==prepared.parsed.rows.length||!ledgerQuantityAudit(preview.simulated).ok)return blocked('Kein vollständiger atomarer Simulationsnachweis.');
+ return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview,
+  note:'Gemeinsame Simulation ohne UI- oder Übernahmefreigabe. Nebenkosten und vollständige historische Abdeckung bleiben ungeprüft.'};
+}
 
 /**
  * Conservative historical trade replacement for manually observed positions.
