@@ -1,4 +1,7 @@
 import {parseCSV,normalizeCSVNumber,CSV_FIELDS} from './csv-import.js';
+import {units,exact,SCALE} from './decimal.js';
+import {inspectNativeFlatexSourceIdentities} from './import-identity.js';
+import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 
 /**
  * An isolated, read-only Flatex AT CSV adapter. The output is compatible with
@@ -10,6 +13,37 @@ import {parseCSV,normalizeCSVNumber,CSV_FIELDS} from './csv-import.js';
  */
 export const FLATEX_PROFILE = Object.freeze({id:'flatex-at',label:'Flatex Österreich'});
 export const FLATEX_MAPPING = Object.freeze(Object.fromEntries(CSV_FIELDS.map(key=>[key,key])));
+
+/** Native source projection only; unresolved rows block the whole later preview. */
+export function prepareNativeFlatexImport(documents){
+ const identities=inspectNativeFlatexSourceIdentities(documents),links=inspectNativeFlatexOrderLinks(documents);
+ const key=x=>JSON.stringify([x.sourceIndex,x.line]),sources=new Map(identities.rows.map(x=>[key(x),x]));
+ const groups=new Map(links.groups.flatMap(g=>[...g.depot,...g.cash].map(l=>[key(l),g])));
+ const parsed={headers:[...CSV_FIELDS],rows:[],sourceName:'',sourceIdentities:{}},issues=[],sourceRows=[],sourceTrades=[],depotIdentifiers=new Set(),intraday=new Map();
+ for(const [sourceIndex,doc]of documents.entries())for(const row of doc.rows){
+  const locator={sourceIndex,line:row.line},source=sources.get(key(locator)),group=groups.get(key(locator)),v=row.values,n=row.numbers;
+  const reject=(code,message)=>issues.push({...locator,code,message});
+  if(doc.type!=='depot'){reject('cash-review','Kontobelege bleiben ungeklärt; keine stille Auslassung oder Cashbuchung.');continue;}
+  if(!['order-buy','order-sell'].includes(row.kind)||!row.order){reject('event-review','Kein belegter unstornierter Stückhandelsvorgang.');continue;}
+  if(source.status!=='candidate-source'||group?.status!=='missing-cash'){
+   reject('source-review','Quellen- oder Orderkonflikt muss vor einer Gesamtsimulation geklärt werden.');continue;
+  }
+  if(v.unit!=='Stk.'||v.priceCurrency!=='EUR'){reject('currency-unit-review','Nur belegte EUR-Stücknotierung; keine Nennwert-, Prozent- oder FX-Annahme.');continue;}
+  const q=units(n.nominal),price=units(n.rate),quantity=q<0n?-q:q;
+  if(row.order.type==='buy'?q<=0n:q>=0n){reject('direction-review','Nominalrichtung widerspricht dem Kauf-/Verkaufsbeleg.');continue;}
+  if(price<=0n||(quantity*price)%SCALE!==0n){reject('precision-review','Ausführung muss ohne Rundungsverlust exakt darstellbar sein.');continue;}
+  const type=row.order.type,date=row.dates.bookingDate,isin=row.order.isin,index=parsed.rows.length+2;
+  parsed.rows.push(record({date,type,position:isin,quantity:exact(quantity),unitPrice:n.rate,notes:v.details,externalId:source.externalId}));
+  parsed.sourceIdentities[index]={...source.identity};sourceRows.push(locator);depotIdentifiers.add(v.depot);
+  sourceTrades.push({...locator,reference:source.externalId,depot:v.depot,date,isin,type,quantity:exact(quantity),unitPrice:n.rate,externalId:source.externalId});
+  const day=JSON.stringify([isin,date]),list=intraday.get(day)||[];list.push({type,locator});intraday.set(day,list);
+ }
+ for(const list of intraday.values())if(new Set(list.map(x=>x.type)).size>1)for(const x of list)issues.push({...x.locator,code:'intraday-review',message:'Reihenfolge gleichdatierter Käufe und Verkäufe ist nicht belegt.'});
+ const freeze=v=>{if(v&&typeof v==='object'&&!Object.isFrozen(v)){for(const x of Object.values(v))freeze(x);Object.freeze(v);}return v;};
+ return freeze({kind:'flatex-native-trade-projection',version:1,ready:false,writeEnabled:false,costsVerified:false,
+  parsed,mapping:{...FLATEX_MAPPING},sourceRows,sourceTrades,identities,rows:links.rows,depotIdentifiers:[...depotIdentifiers],issues,
+  note:'Nur native Stückhandelsprojektion; keine Kontobindung, Cashbuchung, Kostenbasis oder vollständige Historienfreigabe.'});
+}
 
 const aliases={
  date:['buchtag','buchungstag'],

@@ -1,0 +1,11 @@
+# Native Flatex-Projektion – Kandidatenstand vor CI · 29.10.2026
+
+Basis main3e9f4877/v204 LIVE_ACCEPTED, Vertrag vor Code c4d9a330 gesichert. Maßgebliche aktuelle Übergabe immer docs/WORK_RESTPAKETE_CHECKPOINT.md auf feature/flh05-import-foundation; dieser Paketcheckpoint beschreibt den Kandidaten vor vollständiger PR-Abnahme.
+
+Einziger Funktionsbranch feature/flh03-flatex-native-projection. Native EUR-Stückhandelsprojektion im bestehenden flatex-import.js; streng bestätigte reine Simulation über bestehende reviewNativeFlatexBindings/previewCSV/prepareFlatexBackfillPreview im flatex-backfill.js. Alle Quelllokatoren/Probleme erhalten, Cash/Sonderereignisse/Quellenkonflikte/Intraday/FX/Präzision blockieren den ganzen Stapel. Gebühren/Steuern bleiben unbekannt/null; kein Cashkonto/FX/Eröffnung/Kosten erfunden. Append nur leere ungeschützte Ziele oder unveränderte Source-Replays; Backfill bewahrt vorhandene beobachtete Endmenge und schützt Kosten/Journal/Stichtage. Kein aktiver UI-/Schreib-/Speicherpfad, äußere ready/writeEnabled false.
+
+937Units unter Node20/0Fehler/Skip und Syntax PASS,17neue Fokusfälle. Chromium tatsächliche Modulsimulation/Replay/Manual-/Quellen-/Baseline-/Undo-/Offlineprüfung PASS, Primärprofil exakt IDB/Revision/Settings unverändert, separater synthetischer CAS-Kontext genau eine akzeptierte Revision und konkurrierender Entwurf abgelehnt. Plain-/Encrypted-Restore über bestehenden Kern getestet. Öffentliche Tests/Artefakte synthetisch.
+
+Privater unabhängiger Python-csv/Decimal-/Namespacevergleich gegen native Originalprojektion PASS; ganze Originaldateien wegen Nicht-Handels-/Cash-/Prüffällen korrekt nicht qualifiziert. Alle Zeilen erhalten, keine Originalwerte/IDs/Zeiträume/Fingerprints veröffentlicht, keine private Produktivmutation. Keine vollständige historische/Bestands-/Kosten-/Cashflow-/Performancefreigabe.
+
+Aktuelle volle PR-CI/Wallet/Drei-Engine-/Quell-/Artefaktabnahme steht vor abschließender Abnahme noch aus. SW205 nur unveröffentlichter Kandidat, Produktion v204. Zwei Etappen Vertrag + geprüfte Grundlage; UI-/Übernahme-/Releaseintegration separat. UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF/ursprüngliche Roadmap und historischeStart01.01.2022/keine Fiktionen erhalten, PROJ01 Backlog. Gesamtmaster PARTIAL.
