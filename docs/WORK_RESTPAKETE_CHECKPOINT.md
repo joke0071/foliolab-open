@@ -1,3 +1,31 @@
+# v213 live · PR201 reviewbereit · Gesamtmaster PARTIAL · 29.10.2026
+
+**DONE / LIVE_ACCEPTED:** PR200, main `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Produktion v213/SW213. [Releasepipeline40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834) SUCCESS;120 tatsächliche Asset-/SW-Hashes. Tatsächlicher Produktionsbenchmark des großen synthetischen IndexedDB-Portfolios:3186,6→1611,3ms Kaltmedian(-49,44%). Kleine Portfolios variieren; keine Android-Hardware- oder universelle Leistungszusage. Breiterer PERF01-Master einschließlich Android-/Wallet-/Phasenprofilen bleibt PARTIAL.
+
+**TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED:** [PR201](https://github.com/joke0071/foliolab-open/pull/201), Branch `feature/ui-selection-reasons-v214`, HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, Tree `74aa1231c62364b094416aa7dbf822784d7be70a`, SW214 unveröffentlicht. Testmerge `39cb71a9dff3625cf0a1764b4a5727fc94437621` besitzt denselben Tree auf aktuellem main.
+
+[Pflicht-CI40923950987](https://github.com/joke0071/foliolab-open/actions/runs/40923950987) und [Wallet-CI40923951032](https://github.com/joke0071/foliolab-open/actions/runs/40923951032) SUCCESS.953/953Units,0Fail/0Skip,Syntax,Chromium/Firefox/WebKit; PR-Deploy/Live korrekt SKIPPED. Neue achtfacheLegacy-/100Buchungen-/205Limit-/überlappendeKategorien-/geschlosseneDetails-/5Breiten-/kleineHöhen-/synthetische200%Text-/44px-/Tastatur-/Axe-/Nullmutationsprüfungen PASS. Alle bestehenden Finanz-, Import-, CAS-, Quota-/Abort-, Backup-/Restore-, Undo-, Mehrtab- und echtenOfflinegates bestanden. Die zusätzliche Worker-Vorbedingung prüft Appcontroller und exakten Blankrecord vor der großenFixture; spätere strikteOfflinegates erhalten.
+
+[Vollständige dauerhafte Maschinenbelege](https://github.com/joke0071/foliolab-open/blob/27d8f0042a3f36e2ef99b0abed1626818061e42d/docs/release-evidence/ui-selection-blockers-v214-candidate.json): drei ZIP-SHA256 vor Extraktion geprüft,32 tatsächliche JSON-Reports mit PASS,vier tatsächliche synthetischeBrowserbilder geprüft und dauerhaft auf GitHub gespeichert. Historische Fehlversuche bleiben dokumentiert. Zählungen benennen betroffeneEinträge, nicht die Anzahl ihrerAbhängigkeiten; keine Permissions/Finanz-/Speicheränderung.
+
+UX01/02 sind im Kandidaten FIXED, nicht LIVE. Der vollständige UI-Vertrag, UX03–10, Normal/Verwalten/Bearbeiten/Archiv, Diagramme/Tooltip/Liquidität/Header/Buchungsliste bleiben nach Statusmatrix offen bzw.PARTIAL. TradingView responsive Optimierung ausdrücklich SUPERSEDED; Entfernung/CSV-Vereinfachung und K02–K04 OPEN/P2. Android-Nachtrag einmalig integriert; Baseline für20/100/1000/Offline und320/360/390/412/430/768/1440px noch offen, echtesOnePlus-/Androidgerät hier nicht zugänglich, Hardwareabnahme EXTERNAL. Keine doppelte Implementierung.
+
+**Nächste Stelle:** eigene Nutzerfreigabe für Merge/Deployment des unveränderten PR201 einholen. Danach frischen HEAD/main/Testmerge/Pflichtgates prüfen, kontrolliert mergen, vollständige Main-/Pages-/Live-Abnahme SW214 und separaten Releasecheckpoint sichern. Anschließend übrige UI-P1 und gemessene Android-Deltas nach bestehender Priorisierung; P2-Kurs-/TradingView-Themen konfliktfrei bündeln. Keine universelle Löschfreigabe. FLH05/FLH-PROJ01 OPEN/PARKED; FLH03/DELETE/FLH04/IndexedDB/Recovery und externe Originalbeleg-/OAuth-/Operator-/Hardwaregrenzen erhalten. Historischen Dokumentationsbranch niemals als alten Appcode nach main mergen.
+
+---
+
+## Gesicherte technische Identität und finale Fortsetzungsstelle
+
+Pflichtjobs:123624348285(test),123624348548(cross1),123624347811(cross2)SUCCESS; Deploy123630215017/Live123630216480 korrektSKIPPED.
+Geprüfte ZIPs:12920595902 SHA2563e2f037d853982dd1a171c7a9bda75a4790d23d704023ee603374ec2e6bf6864;12919438310 SHA2568f34834fbe26299f6ee1a4fe6006e512db490b4135cfdbf7df5fbcd6742ecea3;12919763696 SHA256573e4948d4f2aa96542e0d4de9f8d921b3a84e1a164aedfe80401505135fed12.
+Dauerhafte Screenshotblobs auf Dokumentationscommit ed7bb86aa2b131dfe54223ca02609d233186e002; finaler Maschinenbelegcommit27d8f0042a3f36e2ef99b0abed1626818061e42d. Keine privaten Screenshots/Finanzdaten veröffentlicht.
+
+Vor finalerDokumentation main unverändert6ec0cf9c,PR201HEAD78dc4ca4,draftfalse,mergeableclean,offenePR201/161/157,186Branches geprüft,keine laufenden/wartendenActions; tatsächlichenProduktivSW213 erneut direkt gelesen. Lokaler Branch/Upstream/RemoteSHA/Tree stimmen überein; diff-check sauber,nur generierte artifacts/ und Abhängigkeitssymlink untracked. Keine ungesicherten Produkt-/Teständerungen.
+
+Alle sicheren Meilensteine aufGitHub gesichert. **Unmittelbar nächster Schritt ist die separate Releasefreigabe PR201.** Keine neue Implementierung vor diesem stabilen Übergabepunkt; nach Release gemäß bestehendem Master fortsetzen. Roadmap/Audit/Sollvertrags-Statusmatrix und permanente Belege wurden vor diesem separaten Checkpoint aktualisiert. Nachfolgende Einträge sind historische Stände, keine aktuelle Gegenfreigabe.
+
+---
+
 # PR201: final präzisierte Eintragszählung gesichert · CI läuft
 
 **Aktueller HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, Tree `74aa1231c62364b094416aa7dbf822784d7be70a`, Branch feature/ui-selection-reasons-v214.** Lokaler Tree/Remote-Ref identisch; Working Tree ohne ungesicherte Produkt-/Teständerung, Upstream korrekt auf eigenen UI-Branch gesetzt.
