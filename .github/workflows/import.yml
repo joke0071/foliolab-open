@@ -54,6 +54,7 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
           node tests/browser-smoke.mjs
+          node tests/browser-pwa-update.mjs
           node tests/browser-extended.mjs
           node tests/browser-ledger.mjs
           node tests/browser-phase2.mjs
@@ -231,6 +232,7 @@ jobs:
             HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
           else
+            PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
