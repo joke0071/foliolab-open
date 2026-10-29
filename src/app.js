@@ -258,6 +258,7 @@ function openReferenceRemoval(ids=[...selectedReferenceIds]){
    backupBaseline=expectedModel;$('referenceRemovalBackupStatus').textContent='Backup dieser Vorschau erstellt.';
   }catch(error){if(active())$('referenceRemovalBackupStatus').textContent=error.message;}
  });
+ $('dialogFields').scrollTop=0;
  $('cancelDialog').focus({preventScroll:true});
 }
 function openReferenceRemovalUndo(){
