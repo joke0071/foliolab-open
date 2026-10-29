@@ -1,3 +1,21 @@
+# PERF01 saubere Messung erreicht Ziel · finale CI läuft · 29.10.2026
+
+**PARTIAL bis volle technische/produktive Abnahme.** PR200/HEAD870f4c0773e6ba95371e8b4e89865ac5a6754cbc/Baum86be70b0112d4f960abb55cc726918eba4c3064e/SW213 unveröffentlicht, Funktionsbranch feature/perf01-date-validation-cache. Produktion bleibt vollständigabgenommenv212/mainfee4fc5d.
+
+Saubere finaleNachhermessung aufexaktemHEAD ohnegleichzeitige lokaleTests abgeschlossen. ExaktesgleicheBenchmarkscript SHA256a486bc44..., Node/Browser/Viewport/Fixture/5Läufe/Profilerfalse/EchteIDB/installiertePWA/identischesDashboard wieportableRepeat-Baseline63fcfb0b. Im1000Positionen/1825Referenzen-Stressfall Mediane:
+- Kalt3113,9→1542,8ms, **50,4544% weniger**;30%-Ziel im explizitenTestfall erreicht.
+- Warm2882,0→1398,9ms,51,4608% weniger.
+- Offline3086,8→1478,6ms,52,0993% weniger.
+19Positionen: kalt542,2→493,6ms (8,96%), warm375,1→341,9ms (8,85%), offline361,4→351,5ms (2,74%). Sämtliche Records/Settings/Revisionen bei allen30Startprüfungen exakt unverändert. VollständigeVorher-/Nachher-Rohserien und Grenzen dauerhaft docs/release-evidence/perf01-date-validity-candidate.json in0e0b14acbbcbe5833a860891fb45e8503624243f.
+
+Früher explorativerNachherlauf mitparallel lokal laufendenTests ausdrücklichausgeschlossen. KeinepersönlichePortfolio-/Walletgroßhistorien-/Hardwaregarantie oder allgemeineSLA behauptet. KeineproduktiveOptimierung behaupten, solangeSW213 unveröffentlicht ist.
+
+Lokal950/950Units+Syntax und neue/bestehende3Engine-Historiengates PASS. VollePflicht40911278126 undWallet40911278522 auf870f4c07 regulärabschließen; tatsächliche950Units/3Engineberichte/Datums-,Preis-,FX-,Korrektur-/Nichtmutationslogs/Testmergebaum/Bilder/ZIPdigests lesen. Kandidatenbelegaktualisieren undCheckpoint separatremote sichern; erst danachPRreviewbereit. EigeneFolge-PR-Freigabe vorMerge/Deployment nichtaus199 ableiten.
+
+Alle übrigenMaster-/UI-/FLH03-/DELETE-/IDB-/Recovery-/FLH04-/Originalbeleg-/OAuth-/Hardware-/AT-Verträge und essentielleP1-Priorität erhalten. KeineP3Vorziehung; FLH05/PROJ01 OPEN/PARKED. HistorischenDokumentationsbranch niemals alsAppcode nachmain mergen.
+
+---
+
 # PERF01-Kandidat remote gesichert · PR200 CI und saubere Messung laufen · 29.10.2026
 
 **DONE / LIVE_ACCEPTED:** PR198/199, mainfee4fc5d, produktivv212; dauerhafterLivebeleg1401b512 und Checkpoint244d92c9. Main-/Pages-/echte3Engine-Live40907781116 SUCCESS,120Assethashes.
