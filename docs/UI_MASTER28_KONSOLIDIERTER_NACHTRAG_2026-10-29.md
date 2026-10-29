@@ -1,3 +1,22 @@
+# Aktueller Delta-Abgleich · PR201 technisch abgenommen · 29.10.2026
+
+| Referenz | Aktueller nachgewiesener Status |
+| --- | --- |
+| UX-01 – Buchungs-Sperrtexte | FIXED im unveröffentlichten PR201; 100 Einträge kompakt gruppiert, 200er-Prüfgrenze erhalten |
+| UX-02 – Referenz-Sperrtexte | FIXED im unveröffentlichten PR201; acht identische Gründe einmal, Originaldetails/Identitäten zugänglich |
+| UX-03 – Android-Zeitraumleiste | PARTIAL; Standard-4×2 belegt, konkreter Geräte-/Skalierungszustand weiter zu prüfen |
+| UX-04 – Tooltipränder | OPEN |
+| UX-05 – beide Stichtagsbeschriftungen | OPEN |
+| UX-06 – Liquidität ohne Zusatzangaben | PARTIAL; konkrete Früh-Rückgabe im bestehenden Renderer bestätigt |
+| UX-07 – permanenter Speicherstatus | OPEN |
+| UX-08 – Positionsbuchungsliste | OPEN |
+| UX-09 – migrierte Referenzen bearbeiten/löschen | BLOCKED bis gesonderter Fachvertrag und Abhängigkeitsbeweis; keine Freischaltung durch PR201 |
+| UX-10 – gemeinsame Verwaltung | PARTIAL; vorhandene Engine erhalten, Normal/Verwalten/Bearbeiten/Archiv-Dropdowns noch offen |
+
+[PR201](https://github.com/joke0071/foliolab-open/pull/201), HEAD78dc4ca4784694e543cc46a525ef629bf93f9333, SW214 unveröffentlicht:953Tests, dreiEngines, Pflicht40923950987/Wallet40923951032SUCCESS. [Vollständige Belege](https://github.com/joke0071/foliolab-open/blob/27d8f0042a3f36e2ef99b0abed1626818061e42d/docs/release-evidence/ui-selection-blockers-v214-candidate.json). Noch nicht gemergt oder produktiv. Produktion v213/SW213 bleibt LIVE_ACCEPTED. Neue K01–K04 bleiben OPEN/P2, TradingView-Optimierung SUPERSEDED. Androidbaseline bleibt offen, Hardwareabnahme EXTERNAL. Alle historischen Anforderungen bleiben darunter erhalten.
+
+---
+
 # Verbindlicher Kursoptionen-Nachtrag übernommen · 29.10.2026
 
 **„TradingView responsiv optimieren“ = SUPERSEDED BY USER.** TradingView vollständig aus der aktiven Anwendung entfernen, kein anderes externes Widget. [Verbindlicher vollständiger Nachtrag mit vier IDs](https://github.com/joke0071/foliolab-open/blob/22e70228d7761285811f6bba0bcb0a8e8425527e/docs/UI_MASTER28_KURSOPTIONEN_NACHTRAG_2026-10-29.md):
