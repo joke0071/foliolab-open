@@ -1,0 +1,4454 @@
+{
+  "releaseSha": "c08bc1d35b25d72081fb07a61e95532a883fdebe",
+  "date": "2026-10-29",
+  "scope": "Own read-only preliminary follow-up measurements. Synthetic isolated profiles only. No optimization, complete audit, hardware or production acceptance claim. Application unchanged after PR196 merge.",
+  "empty": [
+    {
+      "width": 320,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 150.71875,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Anbieter verwalten",
+          "w": 154.25,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Wallet verbinden",
+          "w": 139.59375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Backup importieren",
+          "w": 157.609375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15
+        },
+        {
+          "id": "",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 150.71875,
+          "h": 42.390625
+        },
+        {
+          "id": "startPerformance",
+          "text": "Renditeerfassung beginnen",
+          "w": 211.21875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34
+        },
+        {
+          "id": "addWizard",
+          "text": "Anlage",
+          "w": 38,
+          "h": 38
+        },
+        {
+          "id": "refreshAll",
+          "text": "Aktualisieren",
+          "w": 38,
+          "h": 38
+        },
+        {
+          "id": "addWallet",
+          "text": "Wallet",
+          "w": 38,
+          "h": 38
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "text": "CSV-Import",
+          "w": 38,
+          "h": 38
+        },
+        {
+          "id": "addBooking",
+          "text": "Buchung",
+          "w": 38,
+          "h": 38
+        },
+        {
+          "id": "",
+          "text": "Filter zurücksetzen",
+          "w": 154.171875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "text": "+ Konto",
+          "w": 258,
+          "h": 39.59375
+        },
+        {
+          "id": "addProvider",
+          "text": "+ Anbieter",
+          "w": 258,
+          "h": 39.59375
+        },
+        {
+          "id": "deleteAll",
+          "text": "Alle Daten löschen",
+          "w": 258,
+          "h": 39
+        },
+        {
+          "id": "saveBackupPassword",
+          "text": "Passwort festlegen",
+          "w": 153.78125,
+          "h": 39
+        },
+        {
+          "id": "checkMarketSources",
+          "text": "EODHD-Verbindung prüfen",
+          "w": 232,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Datenquellen speichern",
+          "w": 185.078125,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Blockchain-Zugänge speich",
+          "w": 232,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 150.71875,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Anbieter verwalten",
+          "w": 154.25,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Wallet verbinden",
+          "w": 139.59375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Backup importieren",
+          "w": 157.609375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15
+        },
+        {
+          "id": "",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 150.71875,
+          "h": 42.390625
+        },
+        {
+          "id": "startPerformance",
+          "text": "Renditeerfassung beginnen",
+          "w": 211.21875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34
+        },
+        {
+          "id": "addWizard",
+          "text": "Anlage",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "refreshAll",
+          "text": "Aktualisieren",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "addWallet",
+          "text": "Wallet",
+          "w": 40,
+          "h": 40
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "text": "CSV-Import",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "addBooking",
+          "text": "Buchung",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "",
+          "text": "Filter zurücksetzen",
+          "w": 154.171875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "text": "+ Konto",
+          "w": 159.5,
+          "h": 39.59375
+        },
+        {
+          "id": "addProvider",
+          "text": "+ Anbieter",
+          "w": 159.5,
+          "h": 39.59375
+        },
+        {
+          "id": "deleteAll",
+          "text": "Alle Daten löschen",
+          "w": 328,
+          "h": 39
+        },
+        {
+          "id": "saveBackupPassword",
+          "text": "Passwort festlegen",
+          "w": 153.78125,
+          "h": 39
+        },
+        {
+          "id": "checkMarketSources",
+          "text": "EODHD-Verbindung prüfen",
+          "w": 302,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Datenquellen speichern",
+          "w": 185.078125,
+          "h": 39
+        },
+        {
+          "id": "clearApiKeys",
+          "text": "Gespeicherte API-Schlüsse",
+          "w": 279.859375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Blockchain-Zugänge speich",
+          "w": 302,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "testSolanaRpc",
+          "text": "Verbindung & Staking prüf",
+          "w": 221.859375,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 160.71875,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Anbieter verwalten",
+          "w": 164.25,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Wallet verbinden",
+          "w": 149.59375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Backup importieren",
+          "w": 167.609375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15
+        },
+        {
+          "id": "",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "startPerformance",
+          "text": "Renditeerfassung beginnen",
+          "w": 221.21875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34
+        },
+        {
+          "id": "addWizard",
+          "text": "Anlage",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "refreshAll",
+          "text": "Aktualisieren",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "addWallet",
+          "text": "Wallet",
+          "w": 40,
+          "h": 40
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "text": "CSV-Import",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "addBooking",
+          "text": "Buchung",
+          "w": 40,
+          "h": 40
+        },
+        {
+          "id": "",
+          "text": "Filter zurücksetzen",
+          "w": 164.171875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "text": "+ Konto",
+          "w": 176.5,
+          "h": 39.59375
+        },
+        {
+          "id": "addProvider",
+          "text": "+ Anbieter",
+          "w": 176.5,
+          "h": 39.59375
+        },
+        {
+          "id": "exportBackup",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39
+        },
+        {
+          "id": "importBackup",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39
+        },
+        {
+          "id": "deleteAll",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39
+        },
+        {
+          "id": "saveBackupPassword",
+          "text": "Passwort festlegen",
+          "w": 163.78125,
+          "h": 39
+        },
+        {
+          "id": "checkMarketSources",
+          "text": "EODHD-Verbindung prüfen",
+          "w": 214.03125,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Datenquellen speichern",
+          "w": 195.078125,
+          "h": 40.796875
+        },
+        {
+          "id": "clearApiKeys",
+          "text": "Gespeicherte API-Schlüsse",
+          "w": 289.859375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Blockchain-Zugänge speich",
+          "w": 241.609375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "testSolanaRpc",
+          "text": "Verbindung & Staking prüf",
+          "w": 231.859375,
+          "h": 40.796875
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 160.71875,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Anbieter verwalten",
+          "w": 164.25,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Wallet verbinden",
+          "w": 149.59375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Backup importieren",
+          "w": 167.609375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15
+        },
+        {
+          "id": "",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "startPerformance",
+          "text": "Renditeerfassung beginnen",
+          "w": 221.21875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34
+        },
+        {
+          "id": "addWizard",
+          "text": "Anlage",
+          "w": 93.875,
+          "h": 41
+        },
+        {
+          "id": "refreshAll",
+          "text": "Aktualisieren",
+          "w": 133.390625,
+          "h": 41
+        },
+        {
+          "id": "addWallet",
+          "text": "Wallet",
+          "w": 90.4375,
+          "h": 41
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "text": "CSV-Import",
+          "w": 119.15625,
+          "h": 40
+        },
+        {
+          "id": "addBooking",
+          "text": "Buchung",
+          "w": 103.109375,
+          "h": 40
+        },
+        {
+          "id": "",
+          "text": "Filter zurücksetzen",
+          "w": 164.171875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "text": "+ Konto",
+          "w": 93,
+          "h": 39.59375
+        },
+        {
+          "id": "addProvider",
+          "text": "+ Anbieter",
+          "w": 93,
+          "h": 39.59375
+        },
+        {
+          "id": "exportBackup",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39
+        },
+        {
+          "id": "importBackup",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39
+        },
+        {
+          "id": "deleteAll",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39
+        },
+        {
+          "id": "checkMarketSources",
+          "text": "EODHD-Verbindung prüfen",
+          "w": 214.03125,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Datenquellen speichern",
+          "w": 195.078125,
+          "h": 40.796875
+        },
+        {
+          "id": "clearApiKeys",
+          "text": "Gespeicherte API-Schlüsse",
+          "w": 289.859375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Blockchain-Zugänge speich",
+          "w": 241.609375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "testSolanaRpc",
+          "text": "Verbindung & Staking prüf",
+          "w": 231.859375,
+          "h": 40.796875
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Anlage hinzufügen",
+          "w": 160.71875,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Anbieter verwalten",
+          "w": 164.25,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Wallet verbinden",
+          "w": 149.59375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Backup importieren",
+          "w": 167.609375,
+          "h": 39
+        },
+        {
+          "id": "",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15
+        },
+        {
+          "id": "",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "startPerformance",
+          "text": "Renditeerfassung beginnen",
+          "w": 221.21875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34
+        },
+        {
+          "id": "addWizard",
+          "text": "Anlage",
+          "w": 107.78125,
+          "h": 43
+        },
+        {
+          "id": "refreshAll",
+          "text": "Aktualisieren",
+          "w": 150.875,
+          "h": 43
+        },
+        {
+          "id": "addWallet",
+          "text": "Wallet",
+          "w": 104.015625,
+          "h": 43
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "text": "CSV-Import",
+          "w": 131.53125,
+          "h": 41
+        },
+        {
+          "id": "addBooking",
+          "text": "Buchung",
+          "w": 114.03125,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Filter zurücksetzen",
+          "w": 164.171875,
+          "h": 39
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "text": "+ Konto",
+          "w": 88.09375,
+          "h": 39
+        },
+        {
+          "id": "addProvider",
+          "text": "+ Anbieter",
+          "w": 106.703125,
+          "h": 39
+        },
+        {
+          "id": "exportBackup",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39
+        },
+        {
+          "id": "importBackup",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39
+        },
+        {
+          "id": "deleteAll",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39
+        },
+        {
+          "id": "saveBackupPassword",
+          "text": "Passwort festlegen",
+          "w": 163.78125,
+          "h": 39
+        },
+        {
+          "id": "checkMarketSources",
+          "text": "EODHD-Verbindung prüfen",
+          "w": 214.03125,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Datenquellen speichern",
+          "w": 195.078125,
+          "h": 40.796875
+        },
+        {
+          "id": "clearApiKeys",
+          "text": "Gespeicherte API-Schlüsse",
+          "w": 289.859375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "",
+          "text": "Blockchain-Zugänge speich",
+          "w": 241.609375,
+          "h": 40.796875
+        },
+        {
+          "id": "",
+          "text": "",
+          "w": 41,
+          "h": 41
+        },
+        {
+          "id": "testSolanaRpc",
+          "text": "Verbindung & Staking prüf",
+          "w": 231.859375,
+          "h": 40.796875
+        }
+      ]
+    }
+  ],
+  "filled": [
+    {
+      "width": 320,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15,
+          "x": 202.34375,
+          "y": 621.34375
+        },
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15,
+          "x": 170.953125,
+          "y": 1480.765625
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 662.34375
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 662.34375
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 662.34375
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 173,
+          "y": 662.34375
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 219,
+          "y": 662.34375
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 708.34375
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 708.34375
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 708.34375
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "width": 320,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "historyCalendarPrev",
+          "cls": "",
+          "text": "‹",
+          "w": 32,
+          "h": 32,
+          "x": 38,
+          "y": 339.875
+        },
+        {
+          "id": "historyCalendarNext",
+          "cls": "",
+          "text": "›",
+          "w": 32,
+          "h": 32,
+          "x": 244,
+          "y": 339.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "1",
+          "w": 31.421875,
+          "h": 35,
+          "x": 141.28125,
+          "y": 398.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "2",
+          "w": 31.4375,
+          "h": 35,
+          "x": 175.703125,
+          "y": 398.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "3",
+          "w": 31.421875,
+          "h": 35,
+          "x": 210.140625,
+          "y": 398.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "4",
+          "w": 31.4375,
+          "h": 35,
+          "x": 244.5625,
+          "y": 398.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "5",
+          "w": 31.421875,
+          "h": 35,
+          "x": 38,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "6",
+          "w": 31.421875,
+          "h": 35,
+          "x": 72.421875,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "7",
+          "w": 31.4375,
+          "h": 35,
+          "x": 106.84375,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "8",
+          "w": 31.421875,
+          "h": 35,
+          "x": 141.28125,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "9",
+          "w": 31.4375,
+          "h": 35,
+          "x": 175.703125,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "10",
+          "w": 31.421875,
+          "h": 35,
+          "x": 210.140625,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "11",
+          "w": 31.4375,
+          "h": 35,
+          "x": 244.5625,
+          "y": 436.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "12",
+          "w": 31.421875,
+          "h": 35,
+          "x": 38,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "13",
+          "w": 31.421875,
+          "h": 35,
+          "x": 72.421875,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "14",
+          "w": 31.4375,
+          "h": 35,
+          "x": 106.84375,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "15",
+          "w": 31.421875,
+          "h": 35,
+          "x": 141.28125,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "16",
+          "w": 31.4375,
+          "h": 35,
+          "x": 175.703125,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "17",
+          "w": 31.421875,
+          "h": 35,
+          "x": 210.140625,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "18",
+          "w": 31.4375,
+          "h": 35,
+          "x": 244.5625,
+          "y": 474.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "19",
+          "w": 31.421875,
+          "h": 35,
+          "x": 38,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "20",
+          "w": 31.421875,
+          "h": 35,
+          "x": 72.421875,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "21",
+          "w": 31.4375,
+          "h": 35,
+          "x": 106.84375,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "22",
+          "w": 31.421875,
+          "h": 35,
+          "x": 141.28125,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "23",
+          "w": 31.4375,
+          "h": 35,
+          "x": 175.703125,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "24",
+          "w": 31.421875,
+          "h": 35,
+          "x": 210.140625,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "25",
+          "w": 31.4375,
+          "h": 35,
+          "x": 244.5625,
+          "y": 512.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "26",
+          "w": 31.421875,
+          "h": 35,
+          "x": 38,
+          "y": 550.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "27",
+          "w": 31.421875,
+          "h": 35,
+          "x": 72.421875,
+          "y": 550.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "28",
+          "w": 31.4375,
+          "h": 35,
+          "x": 106.84375,
+          "y": 550.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "29",
+          "w": 31.421875,
+          "h": 35,
+          "x": 141.28125,
+          "y": 550.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "30",
+          "w": 31.4375,
+          "h": 35,
+          "x": 175.703125,
+          "y": 550.875
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "31",
+          "w": 31.421875,
+          "h": 35,
+          "x": 210.140625,
+          "y": 550.875
+        },
+        {
+          "id": "historyCalendarReset",
+          "cls": "",
+          "text": "Alle anzeigen",
+          "w": 95.40625,
+          "h": 17.390625,
+          "x": 180.59375,
+          "y": 610.171875
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 180.875
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 180.875
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 180.875
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 173,
+          "y": 180.875
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 219,
+          "y": 180.875
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 226.875
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 226.875
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 226.875
+        }
+      ],
+      "contrast": [
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mo",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Di",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mi",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Do",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Fr",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Sa",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "So",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Starttag und Endtag wählen · Punkte",
+          "color": "rgb(112, 135, 117)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        }
+      ]
+    },
+    {
+      "width": 320,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "filter active",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34,
+          "x": 15,
+          "y": 160.875
+        },
+        {
+          "id": "",
+          "cls": "filter ",
+          "text": "SYNTHETIC audit",
+          "w": 142.515625,
+          "h": 34,
+          "x": 76.65625,
+          "y": 160.875
+        },
+        {
+          "id": "addWizard",
+          "cls": "btn primary responsive-action",
+          "text": "Anlage",
+          "w": 38,
+          "h": 38,
+          "x": 177,
+          "y": 204.875
+        },
+        {
+          "id": "refreshAll",
+          "cls": "btn outline responsive-action",
+          "text": "Aktualisieren",
+          "w": 38,
+          "h": 38,
+          "x": 222,
+          "y": 204.875
+        },
+        {
+          "id": "addWallet",
+          "cls": "btn outline responsive-action",
+          "text": "Wallet",
+          "w": 38,
+          "h": 38,
+          "x": 267,
+          "y": 204.875
+        },
+        {
+          "id": "resolveListings",
+          "cls": "btn outline",
+          "text": "Positionen ansehen (1)",
+          "w": 260,
+          "h": 39,
+          "x": 30,
+          "y": 572.875
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 320,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "cls": "btn outline responsive-action",
+          "text": "CSV-Import",
+          "w": 38,
+          "h": 38,
+          "x": 206,
+          "y": 225.875
+        },
+        {
+          "id": "addBooking",
+          "cls": "btn primary responsive-action",
+          "text": "Buchung",
+          "w": 38,
+          "h": 38,
+          "x": 251,
+          "y": 225.875
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 320,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "cls": "btn outline",
+          "text": "+ Konto",
+          "w": 258,
+          "h": 39.59375,
+          "x": 31,
+          "y": 225.875
+        },
+        {
+          "id": "addProvider",
+          "cls": "btn outline",
+          "text": "+ Anbieter",
+          "w": 258,
+          "h": 39.59375,
+          "x": 31,
+          "y": 274.46875
+        },
+        {
+          "id": "deleteAll",
+          "cls": "btn danger",
+          "text": "Alle Daten löschen",
+          "w": 258,
+          "h": 39,
+          "x": 31,
+          "y": 814.0625
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 390,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15,
+          "x": 242.90625,
+          "y": 592.5625
+        },
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15,
+          "x": 240.953125,
+          "y": 1365.203125
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 633.5625
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 633.5625
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 633.5625
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 173,
+          "y": 633.5625
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 219,
+          "y": 633.5625
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 265,
+          "y": 633.5625
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 311,
+          "y": 633.5625
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 679.5625
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "width": 390,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "historyCalendarPrev",
+          "cls": "",
+          "text": "‹",
+          "w": 32,
+          "h": 32,
+          "x": 38,
+          "y": 328.9375
+        },
+        {
+          "id": "historyCalendarNext",
+          "cls": "",
+          "text": "›",
+          "w": 32,
+          "h": 32,
+          "x": 314,
+          "y": 328.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "1",
+          "w": 41.421875,
+          "h": 35,
+          "x": 171.28125,
+          "y": 387.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "2",
+          "w": 41.4375,
+          "h": 35,
+          "x": 215.703125,
+          "y": 387.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "3",
+          "w": 41.421875,
+          "h": 35,
+          "x": 260.140625,
+          "y": 387.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "4",
+          "w": 41.421875,
+          "h": 35,
+          "x": 304.5625,
+          "y": 387.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "5",
+          "w": 41.421875,
+          "h": 35,
+          "x": 38,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "6",
+          "w": 41.421875,
+          "h": 35,
+          "x": 82.421875,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "7",
+          "w": 41.4375,
+          "h": 35,
+          "x": 126.84375,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "8",
+          "w": 41.421875,
+          "h": 35,
+          "x": 171.28125,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "9",
+          "w": 41.4375,
+          "h": 35,
+          "x": 215.703125,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "10",
+          "w": 41.421875,
+          "h": 35,
+          "x": 260.140625,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "11",
+          "w": 41.421875,
+          "h": 35,
+          "x": 304.5625,
+          "y": 425.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "12",
+          "w": 41.421875,
+          "h": 35,
+          "x": 38,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "13",
+          "w": 41.421875,
+          "h": 35,
+          "x": 82.421875,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "14",
+          "w": 41.4375,
+          "h": 35,
+          "x": 126.84375,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "15",
+          "w": 41.421875,
+          "h": 35,
+          "x": 171.28125,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "16",
+          "w": 41.4375,
+          "h": 35,
+          "x": 215.703125,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "17",
+          "w": 41.421875,
+          "h": 35,
+          "x": 260.140625,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "18",
+          "w": 41.421875,
+          "h": 35,
+          "x": 304.5625,
+          "y": 463.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "19",
+          "w": 41.421875,
+          "h": 35,
+          "x": 38,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "20",
+          "w": 41.421875,
+          "h": 35,
+          "x": 82.421875,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "21",
+          "w": 41.4375,
+          "h": 35,
+          "x": 126.84375,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "22",
+          "w": 41.421875,
+          "h": 35,
+          "x": 171.28125,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "23",
+          "w": 41.4375,
+          "h": 35,
+          "x": 215.703125,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "24",
+          "w": 41.421875,
+          "h": 35,
+          "x": 260.140625,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "25",
+          "w": 41.421875,
+          "h": 35,
+          "x": 304.5625,
+          "y": 501.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "26",
+          "w": 41.421875,
+          "h": 35,
+          "x": 38,
+          "y": 539.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "27",
+          "w": 41.421875,
+          "h": 35,
+          "x": 82.421875,
+          "y": 539.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "28",
+          "w": 41.4375,
+          "h": 35,
+          "x": 126.84375,
+          "y": 539.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "29",
+          "w": 41.421875,
+          "h": 35,
+          "x": 171.28125,
+          "y": 539.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "30",
+          "w": 41.4375,
+          "h": 35,
+          "x": 215.703125,
+          "y": 539.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "31",
+          "w": 41.421875,
+          "h": 35,
+          "x": 260.140625,
+          "y": 539.9375
+        },
+        {
+          "id": "historyCalendarReset",
+          "cls": "",
+          "text": "Alle anzeigen",
+          "w": 95.40625,
+          "h": 17.390625,
+          "x": 250.59375,
+          "y": 592.234375
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 164.9375
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 81,
+          "y": 164.9375
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 127,
+          "y": 164.9375
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 173,
+          "y": 164.9375
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 219,
+          "y": 164.9375
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 265,
+          "y": 164.9375
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 311,
+          "y": 164.9375
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 35,
+          "y": 210.9375
+        }
+      ],
+      "contrast": [
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mo",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Di",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mi",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Do",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Fr",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Sa",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "So",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Starttag und Endtag wählen · Punkte",
+          "color": "rgb(112, 135, 117)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "filter active",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34,
+          "x": 15,
+          "y": 144.9375
+        },
+        {
+          "id": "",
+          "cls": "filter ",
+          "text": "SYNTHETIC audit",
+          "w": 142.515625,
+          "h": 34,
+          "x": 76.65625,
+          "y": 144.9375
+        },
+        {
+          "id": "addWizard",
+          "cls": "btn primary responsive-action",
+          "text": "Anlage",
+          "w": 40,
+          "h": 40,
+          "x": 241,
+          "y": 188.9375
+        },
+        {
+          "id": "refreshAll",
+          "cls": "btn outline responsive-action",
+          "text": "Aktualisieren",
+          "w": 40,
+          "h": 40,
+          "x": 288,
+          "y": 188.9375
+        },
+        {
+          "id": "addWallet",
+          "cls": "btn outline responsive-action",
+          "text": "Wallet",
+          "w": 40,
+          "h": 40,
+          "x": 335,
+          "y": 188.9375
+        },
+        {
+          "id": "resolveListings",
+          "cls": "btn outline",
+          "text": "Positionen ansehen (1)",
+          "w": 330,
+          "h": 39,
+          "x": 30,
+          "y": 540.9375
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 390,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "cls": "btn outline responsive-action",
+          "text": "CSV-Import",
+          "w": 40,
+          "h": 40,
+          "x": 272,
+          "y": 209.9375
+        },
+        {
+          "id": "addBooking",
+          "cls": "btn primary responsive-action",
+          "text": "Buchung",
+          "w": 40,
+          "h": 40,
+          "x": 319,
+          "y": 209.9375
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 390,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "cls": "btn outline",
+          "text": "+ Konto",
+          "w": 159.5,
+          "h": 39.59375,
+          "x": 31,
+          "y": 209.9375
+        },
+        {
+          "id": "addProvider",
+          "cls": "btn outline",
+          "text": "+ Anbieter",
+          "w": 159.5,
+          "h": 39.59375,
+          "x": 199.5,
+          "y": 209.9375
+        },
+        {
+          "id": "deleteAll",
+          "cls": "btn danger",
+          "text": "Alle Daten löschen",
+          "w": 328,
+          "h": 39,
+          "x": 31,
+          "y": 700.53125
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 430,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15,
+          "x": 279.90625,
+          "y": 575
+        },
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15,
+          "x": 277.953125,
+          "y": 1350.140625
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 38,
+          "y": 616
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 84,
+          "y": 616
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 130,
+          "y": 616
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 176,
+          "y": 616
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 222,
+          "y": 616
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 268,
+          "y": 616
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 314,
+          "y": 616
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 38,
+          "y": 662
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "width": 430,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "historyCalendarPrev",
+          "cls": "",
+          "text": "‹",
+          "w": 32,
+          "h": 32,
+          "x": 71,
+          "y": 331.9375
+        },
+        {
+          "id": "historyCalendarNext",
+          "cls": "",
+          "text": "›",
+          "w": 32,
+          "h": 32,
+          "x": 351,
+          "y": 331.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "1",
+          "w": 42,
+          "h": 35,
+          "x": 206,
+          "y": 390.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "2",
+          "w": 42,
+          "h": 35,
+          "x": 251,
+          "y": 390.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "3",
+          "w": 42,
+          "h": 35,
+          "x": 296,
+          "y": 390.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "4",
+          "w": 42,
+          "h": 35,
+          "x": 341,
+          "y": 390.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "5",
+          "w": 42,
+          "h": 35,
+          "x": 71,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "6",
+          "w": 42,
+          "h": 35,
+          "x": 116,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "7",
+          "w": 42,
+          "h": 35,
+          "x": 161,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "8",
+          "w": 42,
+          "h": 35,
+          "x": 206,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "9",
+          "w": 42,
+          "h": 35,
+          "x": 251,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "10",
+          "w": 42,
+          "h": 35,
+          "x": 296,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "11",
+          "w": 42,
+          "h": 35,
+          "x": 341,
+          "y": 428.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "12",
+          "w": 42,
+          "h": 35,
+          "x": 71,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "13",
+          "w": 42,
+          "h": 35,
+          "x": 116,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "14",
+          "w": 42,
+          "h": 35,
+          "x": 161,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "15",
+          "w": 42,
+          "h": 35,
+          "x": 206,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "16",
+          "w": 42,
+          "h": 35,
+          "x": 251,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "17",
+          "w": 42,
+          "h": 35,
+          "x": 296,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "18",
+          "w": 42,
+          "h": 35,
+          "x": 341,
+          "y": 466.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "19",
+          "w": 42,
+          "h": 35,
+          "x": 71,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "20",
+          "w": 42,
+          "h": 35,
+          "x": 116,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "21",
+          "w": 42,
+          "h": 35,
+          "x": 161,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "22",
+          "w": 42,
+          "h": 35,
+          "x": 206,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "23",
+          "w": 42,
+          "h": 35,
+          "x": 251,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "24",
+          "w": 42,
+          "h": 35,
+          "x": 296,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "25",
+          "w": 42,
+          "h": 35,
+          "x": 341,
+          "y": 504.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "26",
+          "w": 42,
+          "h": 35,
+          "x": 71,
+          "y": 542.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "27",
+          "w": 42,
+          "h": 35,
+          "x": 116,
+          "y": 542.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "28",
+          "w": 42,
+          "h": 35,
+          "x": 161,
+          "y": 542.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "29",
+          "w": 42,
+          "h": 35,
+          "x": 206,
+          "y": 542.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "30",
+          "w": 42,
+          "h": 35,
+          "x": 251,
+          "y": 542.9375
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "31",
+          "w": 42,
+          "h": 35,
+          "x": 296,
+          "y": 542.9375
+        },
+        {
+          "id": "historyCalendarReset",
+          "cls": "",
+          "text": "Alle anzeigen",
+          "w": 95.40625,
+          "h": 17.390625,
+          "x": 287.59375,
+          "y": 595.234375
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 38,
+          "y": 167.9375
+        },
+        {
+          "text": "1 M",
+          "w": 44,
+          "h": 44,
+          "x": 84,
+          "y": 167.9375
+        },
+        {
+          "text": "3 M",
+          "w": 44,
+          "h": 44,
+          "x": 130,
+          "y": 167.9375
+        },
+        {
+          "text": "6 M",
+          "w": 44,
+          "h": 44,
+          "x": 176,
+          "y": 167.9375
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 222,
+          "y": 167.9375
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 268,
+          "y": 167.9375
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 314,
+          "y": 167.9375
+        },
+        {
+          "text": "Max",
+          "w": 44,
+          "h": 44,
+          "x": 38,
+          "y": 213.9375
+        }
+      ],
+      "contrast": [
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mo",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Di",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mi",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Do",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Fr",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Sa",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "So",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Starttag und Endtag wählen · Punkte",
+          "color": "rgb(112, 135, 117)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        }
+      ]
+    },
+    {
+      "width": 430,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "filter active",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34,
+          "x": 15,
+          "y": 144.9375
+        },
+        {
+          "id": "",
+          "cls": "filter ",
+          "text": "SYNTHETIC audit",
+          "w": 142.515625,
+          "h": 34,
+          "x": 76.65625,
+          "y": 144.9375
+        },
+        {
+          "id": "addWizard",
+          "cls": "btn primary responsive-action",
+          "text": "Anlage",
+          "w": 40,
+          "h": 40,
+          "x": 281,
+          "y": 188.9375
+        },
+        {
+          "id": "refreshAll",
+          "cls": "btn outline responsive-action",
+          "text": "Aktualisieren",
+          "w": 40,
+          "h": 40,
+          "x": 328,
+          "y": 188.9375
+        },
+        {
+          "id": "addWallet",
+          "cls": "btn outline responsive-action",
+          "text": "Wallet",
+          "w": 40,
+          "h": 40,
+          "x": 375,
+          "y": 188.9375
+        },
+        {
+          "id": "resolveListings",
+          "cls": "btn outline",
+          "text": "Positionen ansehen (1)",
+          "w": 190.4375,
+          "h": 39,
+          "x": 205.5625,
+          "y": 541.9375
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 430,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "cls": "btn outline responsive-action",
+          "text": "CSV-Import",
+          "w": 40,
+          "h": 40,
+          "x": 309,
+          "y": 212.9375
+        },
+        {
+          "id": "addBooking",
+          "cls": "btn primary responsive-action",
+          "text": "Buchung",
+          "w": 40,
+          "h": 40,
+          "x": 356,
+          "y": 212.9375
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 430,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "cls": "btn outline",
+          "text": "+ Konto",
+          "w": 176.5,
+          "h": 39.59375,
+          "x": 34,
+          "y": 212.9375
+        },
+        {
+          "id": "addProvider",
+          "cls": "btn outline",
+          "text": "+ Anbieter",
+          "w": 176.5,
+          "h": 39.59375,
+          "x": 219.5,
+          "y": 212.9375
+        },
+        {
+          "id": "exportBackup",
+          "cls": "btn outline",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39,
+          "x": 34,
+          "y": 629.53125
+        },
+        {
+          "id": "importBackup",
+          "cls": "btn light",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39,
+          "x": 193.75,
+          "y": 629.53125
+        },
+        {
+          "id": "deleteAll",
+          "cls": "btn danger",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39,
+          "x": 34,
+          "y": 677.53125
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 768,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15,
+          "x": 600.90625,
+          "y": 602.5
+        },
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15,
+          "x": 598.953125,
+          "y": 1411.640625
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 265,
+          "y": 647
+        },
+        {
+          "text": "1 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 311,
+          "y": 647
+        },
+        {
+          "text": "3 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 359.4375,
+          "y": 647
+        },
+        {
+          "text": "6 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 407.875,
+          "y": 647
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 456.3125,
+          "y": 647
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 502.3125,
+          "y": 647
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 548.3125,
+          "y": 647
+        },
+        {
+          "text": "Max",
+          "w": 49.46875,
+          "h": 44,
+          "x": 594.3125,
+          "y": 647
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "width": 768,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "historyCalendarPrev",
+          "cls": "",
+          "text": "‹",
+          "w": 32,
+          "h": 32,
+          "x": 392,
+          "y": 222
+        },
+        {
+          "id": "historyCalendarNext",
+          "cls": "",
+          "text": "›",
+          "w": 32,
+          "h": 32,
+          "x": 672,
+          "y": 222
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "1",
+          "w": 42,
+          "h": 35,
+          "x": 527,
+          "y": 281
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "2",
+          "w": 42,
+          "h": 35,
+          "x": 572,
+          "y": 281
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "3",
+          "w": 42,
+          "h": 35,
+          "x": 617,
+          "y": 281
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "4",
+          "w": 42,
+          "h": 35,
+          "x": 662,
+          "y": 281
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "5",
+          "w": 42,
+          "h": 35,
+          "x": 392,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "6",
+          "w": 42,
+          "h": 35,
+          "x": 437,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "7",
+          "w": 42,
+          "h": 35,
+          "x": 482,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "8",
+          "w": 42,
+          "h": 35,
+          "x": 527,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "9",
+          "w": 42,
+          "h": 35,
+          "x": 572,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "10",
+          "w": 42,
+          "h": 35,
+          "x": 617,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "11",
+          "w": 42,
+          "h": 35,
+          "x": 662,
+          "y": 319
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "12",
+          "w": 42,
+          "h": 35,
+          "x": 392,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "13",
+          "w": 42,
+          "h": 35,
+          "x": 437,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "14",
+          "w": 42,
+          "h": 35,
+          "x": 482,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "15",
+          "w": 42,
+          "h": 35,
+          "x": 527,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "16",
+          "w": 42,
+          "h": 35,
+          "x": 572,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "17",
+          "w": 42,
+          "h": 35,
+          "x": 617,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "18",
+          "w": 42,
+          "h": 35,
+          "x": 662,
+          "y": 357
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "19",
+          "w": 42,
+          "h": 35,
+          "x": 392,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "20",
+          "w": 42,
+          "h": 35,
+          "x": 437,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "21",
+          "w": 42,
+          "h": 35,
+          "x": 482,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "22",
+          "w": 42,
+          "h": 35,
+          "x": 527,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "23",
+          "w": 42,
+          "h": 35,
+          "x": 572,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "24",
+          "w": 42,
+          "h": 35,
+          "x": 617,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "25",
+          "w": 42,
+          "h": 35,
+          "x": 662,
+          "y": 395
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "26",
+          "w": 42,
+          "h": 35,
+          "x": 392,
+          "y": 433
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "27",
+          "w": 42,
+          "h": 35,
+          "x": 437,
+          "y": 433
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "28",
+          "w": 42,
+          "h": 35,
+          "x": 482,
+          "y": 433
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "29",
+          "w": 42,
+          "h": 35,
+          "x": 527,
+          "y": 433
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "30",
+          "w": 42,
+          "h": 35,
+          "x": 572,
+          "y": 433
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "31",
+          "w": 42,
+          "h": 35,
+          "x": 617,
+          "y": 433
+        },
+        {
+          "id": "historyCalendarReset",
+          "cls": "",
+          "text": "Alle anzeigen",
+          "w": 95.40625,
+          "h": 17.390625,
+          "x": 608.59375,
+          "y": 485.296875
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 265,
+          "y": 152
+        },
+        {
+          "text": "1 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 311,
+          "y": 152
+        },
+        {
+          "text": "3 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 359.4375,
+          "y": 152
+        },
+        {
+          "text": "6 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 407.875,
+          "y": 152
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 456.3125,
+          "y": 152
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 502.3125,
+          "y": 152
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 548.3125,
+          "y": 152
+        },
+        {
+          "text": "Max",
+          "w": 49.46875,
+          "h": 44,
+          "x": 594.3125,
+          "y": 152
+        }
+      ],
+      "contrast": [
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mo",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Di",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mi",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Do",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Fr",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Sa",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "So",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Starttag und Endtag wählen · Punkte",
+          "color": "rgb(112, 135, 117)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "filter active",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34,
+          "x": 236,
+          "y": 123
+        },
+        {
+          "id": "",
+          "cls": "filter ",
+          "text": "SYNTHETIC audit",
+          "w": 142.515625,
+          "h": 34,
+          "x": 297.65625,
+          "y": 123
+        },
+        {
+          "id": "addWizard",
+          "cls": "btn primary responsive-action",
+          "text": "Anlage",
+          "w": 93.875,
+          "h": 41,
+          "x": 408.296875,
+          "y": 169
+        },
+        {
+          "id": "refreshAll",
+          "cls": "btn outline responsive-action",
+          "text": "Aktualisieren",
+          "w": 133.390625,
+          "h": 41,
+          "x": 510.171875,
+          "y": 169
+        },
+        {
+          "id": "addWallet",
+          "cls": "btn outline responsive-action",
+          "text": "Wallet",
+          "w": 90.4375,
+          "h": 41,
+          "x": 651.5625,
+          "y": 169
+        },
+        {
+          "id": "resolveListings",
+          "cls": "btn outline",
+          "text": "Positionen ansehen (1)",
+          "w": 190.4375,
+          "h": 39,
+          "x": 532.5625,
+          "y": 386
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 768,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "cls": "btn outline responsive-action",
+          "text": "CSV-Import",
+          "w": 119.15625,
+          "h": 40,
+          "x": 261,
+          "y": 198
+        },
+        {
+          "id": "addBooking",
+          "cls": "btn primary responsive-action",
+          "text": "Buchung",
+          "w": 103.109375,
+          "h": 40,
+          "x": 389.15625,
+          "y": 198
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 768,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "cls": "btn outline",
+          "text": "+ Konto",
+          "w": 93,
+          "h": 39.59375,
+          "x": 261,
+          "y": 198
+        },
+        {
+          "id": "addProvider",
+          "cls": "btn outline",
+          "text": "+ Anbieter",
+          "w": 93,
+          "h": 39.59375,
+          "x": 363,
+          "y": 198
+        },
+        {
+          "id": "exportBackup",
+          "cls": "btn outline",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39,
+          "x": 522,
+          "y": 417
+        },
+        {
+          "id": "importBackup",
+          "cls": "btn light",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39,
+          "x": 522,
+          "y": 465
+        },
+        {
+          "id": "deleteAll",
+          "cls": "btn danger",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39,
+          "x": 522,
+          "y": 513
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 1440,
+      "page": "dashboard",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Gesamtverlauf →",
+          "w": 116.09375,
+          "h": 15,
+          "x": 764.171875,
+          "y": 502.5
+        },
+        {
+          "id": "",
+          "cls": "link-button",
+          "text": "Alle Positionen →",
+          "w": 118.046875,
+          "h": 15,
+          "x": 1254.953125,
+          "y": 952.640625
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 305,
+          "y": 547
+        },
+        {
+          "text": "1 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 351,
+          "y": 547
+        },
+        {
+          "text": "3 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 399.4375,
+          "y": 547
+        },
+        {
+          "text": "6 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 447.875,
+          "y": 547
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 496.3125,
+          "y": 547
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 542.3125,
+          "y": 547
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 588.3125,
+          "y": 547
+        },
+        {
+          "text": "Max",
+          "w": 49.46875,
+          "h": 44,
+          "x": 634.3125,
+          "y": 547
+        }
+      ],
+      "contrast": []
+    },
+    {
+      "width": 1440,
+      "page": "history",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "historyCalendarPrev",
+          "cls": "",
+          "text": "‹",
+          "w": 32,
+          "h": 32,
+          "x": 1048,
+          "y": 228
+        },
+        {
+          "id": "historyCalendarNext",
+          "cls": "",
+          "text": "›",
+          "w": 32,
+          "h": 32,
+          "x": 1328,
+          "y": 228
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "1",
+          "w": 42,
+          "h": 35,
+          "x": 1183,
+          "y": 287
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "2",
+          "w": 42,
+          "h": 35,
+          "x": 1228,
+          "y": 287
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "3",
+          "w": 42,
+          "h": 35,
+          "x": 1273,
+          "y": 287
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "4",
+          "w": 42,
+          "h": 35,
+          "x": 1318,
+          "y": 287
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "5",
+          "w": 42,
+          "h": 35,
+          "x": 1048,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "6",
+          "w": 42,
+          "h": 35,
+          "x": 1093,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "7",
+          "w": 42,
+          "h": 35,
+          "x": 1138,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "8",
+          "w": 42,
+          "h": 35,
+          "x": 1183,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "9",
+          "w": 42,
+          "h": 35,
+          "x": 1228,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "10",
+          "w": 42,
+          "h": 35,
+          "x": 1273,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "11",
+          "w": 42,
+          "h": 35,
+          "x": 1318,
+          "y": 325
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "12",
+          "w": 42,
+          "h": 35,
+          "x": 1048,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "13",
+          "w": 42,
+          "h": 35,
+          "x": 1093,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "14",
+          "w": 42,
+          "h": 35,
+          "x": 1138,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "15",
+          "w": 42,
+          "h": 35,
+          "x": 1183,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "16",
+          "w": 42,
+          "h": 35,
+          "x": 1228,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "17",
+          "w": 42,
+          "h": 35,
+          "x": 1273,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "18",
+          "w": 42,
+          "h": 35,
+          "x": 1318,
+          "y": 363
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "19",
+          "w": 42,
+          "h": 35,
+          "x": 1048,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day has-snapshot",
+          "text": "20",
+          "w": 42,
+          "h": 35,
+          "x": 1093,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "21",
+          "w": 42,
+          "h": 35,
+          "x": 1138,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "22",
+          "w": 42,
+          "h": 35,
+          "x": 1183,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "23",
+          "w": 42,
+          "h": 35,
+          "x": 1228,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "24",
+          "w": 42,
+          "h": 35,
+          "x": 1273,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "25",
+          "w": 42,
+          "h": 35,
+          "x": 1318,
+          "y": 401
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "26",
+          "w": 42,
+          "h": 35,
+          "x": 1048,
+          "y": 439
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "27",
+          "w": 42,
+          "h": 35,
+          "x": 1093,
+          "y": 439
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "28",
+          "w": 42,
+          "h": 35,
+          "x": 1138,
+          "y": 439
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "29",
+          "w": 42,
+          "h": 35,
+          "x": 1183,
+          "y": 439
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "30",
+          "w": 42,
+          "h": 35,
+          "x": 1228,
+          "y": 439
+        },
+        {
+          "id": "",
+          "cls": "history-calendar-day",
+          "text": "31",
+          "w": 42,
+          "h": 35,
+          "x": 1273,
+          "y": 439
+        },
+        {
+          "id": "historyCalendarReset",
+          "cls": "",
+          "text": "Alle anzeigen",
+          "w": 95.40625,
+          "h": 17.390625,
+          "x": 1264.59375,
+          "y": 491.296875
+        }
+      ],
+      "periods": [
+        {
+          "text": "7 T",
+          "w": 44,
+          "h": 44,
+          "x": 305,
+          "y": 158
+        },
+        {
+          "text": "1 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 351,
+          "y": 158
+        },
+        {
+          "text": "3 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 399.4375,
+          "y": 158
+        },
+        {
+          "text": "6 M",
+          "w": 46.4375,
+          "h": 44,
+          "x": 447.875,
+          "y": 158
+        },
+        {
+          "text": "1 J",
+          "w": 44,
+          "h": 44,
+          "x": 496.3125,
+          "y": 158
+        },
+        {
+          "text": "3 J",
+          "w": 44,
+          "h": 44,
+          "x": 542.3125,
+          "y": 158
+        },
+        {
+          "text": "5 J",
+          "w": 44,
+          "h": 44,
+          "x": 588.3125,
+          "y": 158
+        },
+        {
+          "text": "Max",
+          "w": 49.46875,
+          "h": 44,
+          "x": 634.3125,
+          "y": 158
+        }
+      ],
+      "contrast": [
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mo",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Di",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Mi",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Do",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Fr",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Sa",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "So",
+          "color": "rgb(139, 159, 145)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        },
+        {
+          "tag": "SPAN",
+          "cls": "",
+          "text": "Starttag und Endtag wählen · Punkte",
+          "color": "rgb(112, 135, 117)",
+          "bg": "rgba(0, 0, 0, 0)",
+          "font": "10px"
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "page": "positions",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "",
+          "cls": "filter active",
+          "text": "Alle",
+          "w": 53.65625,
+          "h": 34,
+          "x": 276,
+          "y": 133.5
+        },
+        {
+          "id": "",
+          "cls": "filter ",
+          "text": "SYNTHETIC audit",
+          "w": 142.515625,
+          "h": 34,
+          "x": 337.65625,
+          "y": 133.5
+        },
+        {
+          "id": "addWizard",
+          "cls": "btn primary responsive-action",
+          "text": "Anlage",
+          "w": 107.78125,
+          "h": 43,
+          "x": 1019.328125,
+          "y": 129
+        },
+        {
+          "id": "refreshAll",
+          "cls": "btn outline responsive-action",
+          "text": "Aktualisieren",
+          "w": 150.875,
+          "h": 43,
+          "x": 1135.109375,
+          "y": 129
+        },
+        {
+          "id": "addWallet",
+          "cls": "btn outline responsive-action",
+          "text": "Wallet",
+          "w": 104.015625,
+          "h": 43,
+          "x": 1293.984375,
+          "y": 129
+        },
+        {
+          "id": "resolveListings",
+          "cls": "btn outline",
+          "text": "Positionen ansehen (1)",
+          "w": 190.4375,
+          "h": 39,
+          "x": 1188.5625,
+          "y": 321
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 1440,
+      "page": "bookings",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "openCSVImport",
+          "cls": "btn outline responsive-action",
+          "text": "CSV-Import",
+          "w": 131.53125,
+          "h": 41,
+          "x": 1118.4375,
+          "y": 154
+        },
+        {
+          "id": "addBooking",
+          "cls": "btn primary responsive-action",
+          "text": "Buchung",
+          "w": 114.03125,
+          "h": 41,
+          "x": 1258.96875,
+          "y": 154
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    },
+    {
+      "width": 1440,
+      "page": "more",
+      "overflow": false,
+      "targets": [
+        {
+          "id": "addAccount",
+          "cls": "btn outline",
+          "text": "+ Konto",
+          "w": 88.09375,
+          "h": 39,
+          "x": 600.203125,
+          "y": 154
+        },
+        {
+          "id": "addProvider",
+          "cls": "btn outline",
+          "text": "+ Anbieter",
+          "w": 106.703125,
+          "h": 39,
+          "x": 697.296875,
+          "y": 154
+        },
+        {
+          "id": "exportBackup",
+          "cls": "btn outline",
+          "text": "JSON exportieren",
+          "w": 150.75,
+          "h": 39,
+          "x": 870,
+          "y": 313
+        },
+        {
+          "id": "importBackup",
+          "cls": "btn light",
+          "text": "Backup wiederherstellen",
+          "w": 202.171875,
+          "h": 39,
+          "x": 1029.75,
+          "y": 313
+        },
+        {
+          "id": "deleteAll",
+          "cls": "btn danger",
+          "text": "Alle Daten löschen",
+          "w": 160.328125,
+          "h": 39,
+          "x": 870,
+          "y": 361
+        }
+      ],
+      "periods": [],
+      "contrast": []
+    }
+  ],
+  "startup": {
+    "sha": "c08bc1d35b25d72081fb07a61e95532a883fdebe",
+    "scope": "preliminary FLH-PERF01 baseline; actual IndexedDB, 1000 positions/1825 references, warm browser, desktop, unthrottled, 5 reloads; not final benchmark or claimed optimization",
+    "runs": [
+      {
+        "reloadInteractiveMs": 3226.800000000745
+      },
+      {
+        "reloadInteractiveMs": 274.70000000018626
+      },
+      {
+        "reloadInteractiveMs": 223.6000000005588
+      },
+      {
+        "reloadInteractiveMs": 192.6000000005588
+      },
+      {
+        "reloadInteractiveMs": 173.5
+      }
+    ]
+  }
+}
