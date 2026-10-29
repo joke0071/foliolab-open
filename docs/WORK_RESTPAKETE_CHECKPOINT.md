@@ -1,3 +1,13 @@
+# PR200 freigegeben und gemergt · UI-Nachtrag vollständig gesichert · 29.10.2026
+
+Nutzer hat PR200 ausdrücklich freigegeben. Unveränderten HEAD870f4c0773e6ba95371e8b4e89865ac5a6754cbc, mainfee4fc5d, Testmerge/Tree86be70b0112d4f960abb55cc726918eba4c3064e, PflichtCI40911278126 und WalletCI40911278522 SUCCESS vor Merge erneut geprüft. Merge mit erwarteterHEAD-Sicherung: **main6ec0cf9c6e28edf1b19993357c3b839106b8aa80**, exakt derselbe geprüfteTree. Pipeline [40916302834](https://github.com/joke0071/foliolab-open/actions/runs/40916302834) läuft. Produktive Abnahme SW213 noch OFFEN; zuletzt tatsächlichSW212. Keine Abnahme vor erfolgreichen Main-/Pages-/Livegates.
+
+**Vollständiger konsolidierter UI-/UX-Sollvertrag dauerhaft übernommen:** [docs/UI_MASTER28_KONSOLIDIERTER_NACHTRAG_2026-10-29.md](https://github.com/joke0071/foliolab-open/blob/e4ce49d5cba0e9fee2b3acdf03f13b443a0bc5d8/docs/UI_MASTER28_KONSOLIDIERTER_NACHTRAG_2026-10-29.md), Commit e4ce49d5cba0e9fee2b3acdf03f13b443a0bc5d8. EnthältUX01–10,kompakte deduplizierte Sperrkategorien mit korrekten Mehrfachzählungen,gemeinsameNormal/Verwaltung/BearbeitenText/GmailEngine,ArchivDropdowns,gesonderteDELETE-Fachbeweise/Abhängigkeiten,3Diagrammmodi/zeitlicheXAxis,Zeiträume/Tooltipgrenzen,beideStichtagstexte,Liquiditätsleerzustand,Headerwarnungen,38+-Buchungen,alle historischen Anforderungen/Prioritäten/Testmatrix/Vollständigkeitsstatus/Absicherung. Bestehender Master,UI-A01–08,FLH03/04/Recovery bleiben erhalten;FLH05/PROJ01PARKED.
+
+Nächste Stelle: laufendesPERF01-Release vollständig abnehmen und Maschinenbelege sichern; danach reproduzierbare UI-P1-Schnitte nach dokumentierter Reihenfolge. Keine parallele UI-Implementierung während Release; neue wirtschaftlicheLöschumfänge weiterhin separat freigeben.
+
+---
+
 # PERF01 gemessen und technisch abgenommen · PR200 reviewbereit · 29.10.2026
 
 **Gesamtmaster PARTIAL. UI-v212 DONE / LIVE_ACCEPTED; PERF01-Kandidat TECHNICALLY_ACCEPTED / RELEASE_APPROVAL_PENDING.**
