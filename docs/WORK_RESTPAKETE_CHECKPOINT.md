@@ -1,3 +1,35 @@
+# Native Flatex-Dialogsimulation abgenommen · nächster Übernahmeschnitt · 29.10.2026
+
+**DONE im begrenzten read-only UI-/Kandidatenumfang**, Gesamtmaster PARTIAL.
+PR195/HEADa8adc396/Baum7af22cab unverändert lokal/remote/Testmerge383dd5df.
+Vollständige Pflicht-CI40842974152 und Wallet40842974124 SUCCESS,939Units/0Fail/0Skip,
+Chromium141.0.7390.37/Firefox157.0/WebKit27.2; Deploy/Live korrekt SKIPPED.
+Beide ZIPs12883374455/12883149905 vor Extraktion SHA256-verifiziert, tatsächliche
+neue Dialogberichte aller3Engines PASS und testedSHA gelesen. Aktuelle CIbilder
+WebKit320/Firefox1440 und lokaleChromium320/1440 tatsächlich visuell geprüft,PASS.
+Quellreview abgeschlossen: ursprünglicher nativer Submit bleibt gesperrt, keine
+zweite Engine/Modelle/Speicherung/Workflows/Pins. Vollbeleg in
+release-evidence/flatex-native-simulation-ui-candidate.json. Keine Produktivfreigabe,
+main3e9f4877/v204 unverändert, SW206 unveröffentlicht. Keine Originaldateien benutzt.
+
+**Exakt nächster regulärer Schritt:** frischer Kollisionscheck, auf demselben
+Branch/PR den vor Code dauerhaft gesicherten Vertrag
+[FLH03_FLATEX_NATIVE_COMMIT_CONTRACT.md](FLH03_FLATEX_NATIVE_COMMIT_CONTRACT.md)
+aus8bf23669 umsetzen. Ausschließlich vollständig qualifizierte Stückhistorie,
+Backup exakt zum Baseline, ausdrückliche eigene Bestätigung, erneute gemeinsame
+Qualifizierung/Frische/Baseline/Generation vor bestehendem atomaren CAScommit,
+Quota/post-put-Abbruch/Undo/Replay/Restore/Offline/Drei-Engine-Gates. Erst vollständigen
+reviewbaren Kandidaten herstellen, dann **eigene konkrete Nutzerentscheidung vor
+Merge/Deployment der neuen aktiven wirtschaftlichen Übernahme**. Keine privaten
+Produktivdaten verändern. Nicht nur wegen Releasegrenze sichere Vorbereitung stoppen.
+
+FLH05-Kompatibilitätsnachtrag verbindlich gesichert: vorhandene gemeinsame Verträge
+wiederverwenden, keine Zusatzphasen/Refactorings/FLH05-Implementierung. FLH05/PROJ01
+geparkt; UI-/DELETE-MASTER28/PERF01 essentielleP1/FLH04/OAuth/Hardware/AT/P0/P1/
+BENCH/ursprüngliche Roadmap und alle historischen Belege erhalten.
+
+---
+
 # Präzisierung der Laufzuordnung · 29.10.2026
 
 Aktueller unveränderter Kandidat a8adc396/Baum7af22cab: **Pflicht-CI40842974152**
