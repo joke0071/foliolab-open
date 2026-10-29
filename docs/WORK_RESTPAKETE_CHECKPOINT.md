@@ -1,3 +1,89 @@
+# Native Flatex-Stückhistorienübernahme: Kandidat abgenommen · Nutzerfreigabe ausständig · 29.10.2026
+
+**DONE: vollständig geprüfter begrenzter Übernahmekandidat. PARTIAL: Gesamtmaster/
+vollständige FLH03-Abnahme. AWAITING USER: Merge/Deployment neuer wirtschaftlicher
+Buchungsmutationen gemäß bestehender Freigabegrenze #165.**
+Keine neue Implementierung beginnen, bevor diese konkrete Releaseentscheidung
+für PR195 vorliegt; bestehender einziger Funktionsstrang bleibt erhalten.
+
+| Pflichtfeld | Verifizierter Stand |
+| --- | --- |
+| Funktionsbranch / Commit | feature/flh03-flatex-native-projection / 34dc5fb71c5ba5335e1a8b19b48fefed69b8f126 |
+| PR | [195](https://github.com/joke0071/foliolab-open/pull/195), offen/reviewbereit; kein Merge |
+| Kandidatenbaum / Testmerge | 1d01a067c09274f6e29b8b0d3df7b289af8a1a72 / 65862ae98747c12d1b62edf16ace336af95a498d, exakt lokal/remote/Testmerge |
+| Pflicht-CI | [40846973952](https://github.com/joke0071/foliolab-open/actions/runs/40846973952) Versuch1 SUCCESS; test/Cross1/Cross2 SUCCESS |
+| Wallet | [40846973914](https://github.com/joke0071/foliolab-open/actions/runs/40846973914) SUCCESS |
+| Tests | 939/939 Units,0Fail/0Skip, Syntax; tatsächliche Chromium141.0.7390.37/Firefox157.0/WebKit27.2-Simulations- und Übernahmeberichte mit beiden Modi PASS |
+| Release / Live | main3e9f48770df0e7d63b5be311d33376a85df848f9, direkt erneut HTTP200/SW204; SW208 Kandidat unveröffentlicht, Deploy-/Livejobs im PR korrekt SKIPPED |
+| Dauerhafte Belege | release-evidence/flatex-native-takeover-candidate.json in7ef59400; vollständige aktuelle Reports/SHAs/Digests/Jobs/Fehlhistorie |
+| Kollisionscheck |181Branches, nur eigene Funktions-/Dokumentationsbranches geändert; keine aktiven Actions/fremden Writer erkennbar; nur195 und geparkte Drafts157/161 offen; keine Reviews/Reviewkommentare |
+| Lokaler Status | Alle relevanten Code-/Test-/Vertragsänderungen remote gesichert, Baumgleichheit verifiziert; nur synthetische reproduzierbare artifacts unversioniert |
+| Aktuelle Fehler | Keine offenen roten Gates/Quellreviewfehler im Kandidaten; früherer Firefoxbefund korrigiert und neu voll geprüft, historische Fehlläufe erhalten |
+| Exakt nächste Aktion | Konkrete Nutzerentscheidung für Merge/Deployment dieses begrenzten PR195 einholen; nach Freigabe frische Remote-/Kollisions-/SHA-/Baum-/Gateprüfung, kontrollierter Merge, volle main-/Deploy-/tatsächliche Drei-Engine-Liveabnahme und separater gesicherter Abschlusscheckpoint |
+
+## Implementierter und tatsächlich abgenommener Umfang
+
+Explizite ganze native EUR-Stückhandelsqualifizierung im bestehenden CSV-/Backfill-
+kern und Dialog. Bestehende aktuelle Quell-/Kontobestätigung, typ-/ISIN-/EUR-/Manual-/
+Provenienz-/Kosten-/Mengen-/Baselinegates. Append nur leere ungeschützte Positionen
+oder unveränderter Replay; Backfill bewahrt exakte beobachtete Endmenge. Jede
+ungeklärte Cash-/Sonder-/FX-/Storno-/Konflikt-/Intraday-/Präzisionszeile sperrt den
+gesamten Stapel. Keine stille Teilauslassung, neue Position oder Kosten-/Eröffnungs-/
+Cashflowfiktion. Gebühren/Steuern/Kosten bleiben unbekannt.
+
+Backup exakt zur Baseline, ohne API-Keys inklusive vorhandener Historie; gesonderte
+Nutzerbestätigung zum konkreten gesamten Stapel. Modus-/Datei-/Konto-/Quellbestätigungs-/
+Simulationswechsel entzieht Backupbezug/Zustimmung. Vor tatsächlichem Commit
+Revision/Baseline/Generation prüfen und vollständige native Qualifizierung erneut
+ausführen; Finanzzeilen müssen der bestätigten Simulation entsprechen. Clone,
+bestehende importCSV/PortfolioStorage-CAS/Snapshot-/sitzungslokale Undo-Pfade;
+Dialogfelder während Save inert, Fehler entziehen Übernahmeentwurf. Keine neue
+Importengine, Daten-/Speicher-/Backupschemata, Produktdependencies oder Workflowänderung.
+
+Aktuelle echte Drei-Engine-Berichte gelesen: beide Modi, Backupinhalt/Keyausschluss/
+gesonderte Zustimmung/Reset/erzwungenes Submit, exakte Mengen/unbekannte Kosten/
+fremdes Depot gleicher ISIN/keine externen Cashflows, echte Quota/post-put-Abbrüche
+mit exaktem unverändertem Record/Revision/Settings, eine akzeptierte CASrevision,
+echter konkurrierender Writer NACH Frischeprüfung am CASpunkt abgewiesen,
+Replay ohne neue Revision, exaktes UI-Undo einschließlich aktuellem Stichtag,
+gespeicherte Provenienz über Plain-/EncryptedRestore, tatsächlicher Offlinecommit,
+fünfBreiten/Axe/Fokus/44px/horizontale Aktionsgrenzen. Keine private Datei benutzt.
+
+Vor Extraktion unabhängig SHA256-verifiziert:
+- Release-ZIP12885482858:
+  d17e3cffb577c460d0d7392f3a05a190188f6cfee444e8b2b631e658ce254bcf
+- Cross2-ZIP12885653154:
+  a8cd77235044bd1c51792d152e046b32c1a306bc8c1ec53a2286ee11dcd85598
+
+testedSHA und Cross-Checkoutlog bestätigen Testmerge65862ae9; Unitlog939/0/0 gelesen.
+Aktuelle tatsächliche CIbilder Chromium320-Backfill, Firefox1440-Append,
+WebKit320-Backfill und Firefox390-Backfill visuell geprüft: PASS. Quellreview
+abgeschlossen. Frühere042076d2-CI40845406706 FAILURE bleibt NICHT abgenommen;
+unveränderte lokale Firefox157-Archivprobe reproduzierte43.99998474121094px bei768px.
+Gezielte45px-CSSkorrektur hält unveränderte strikte>=44Assertion ein; aktuelle
+Berichte messen Firefox mindestens44.99998474121094, Chromium/WebKit45px.
+Keine Toleranz, kein Ignore/Retry/Pin-/Workflow-/Assertionlockern.
+
+## Offene Grenzen und Anforderungen
+
+Diese Kandidatenabnahme ist keine Freigabe vollständiger privater Originaldateien,
+Cash-/Kapitalmaßnahmen-/Steuer-/FX-/Saldo-/Kosten-/Cashflow-/TWR-/XIRR-/gesamter
+Historienrekonstruktion. Originalgesamtdateien mit ungeklärten Vorgängen bleiben
+gesperrt. Keine private automatische Übernahme; keine privaten Produktivdaten
+verändert. Merge/Deployment des neuen aktiven wirtschaftlichen Umfangs erfordert
+jetzt die konkrete Nutzerentscheidung. Nicht auf ungeprüften Dokumentationsbaum
+feature/flh05-import-foundation mergen; dort liegen nur maßgebliche Checkpoints.
+
+FLH05-Zukunftskompatibilitätsnachtrag dauerhaft erhalten und ausschließlich durch
+notwendige Wiederverwendung bestehender gemeinsamer Komponenten/Verträge umgesetzt.
+Keine eigene FLH05-Implementierung, Zusatzphasen oder Refactorings. FLH05 und
+FLH-PROJ01 bleiben OPEN/PARKED bis ausdrücklicher erneuter Freigabe. PERF01 bleibt
+essentielleP1 an vorgesehener Stelle. UI-MASTER28/DELETE-MASTER28, FLH04/OAuth,
+Hardware/AT/P0/P1/BENCH/CI/ursprüngliche Roadmap und alle übrigen Anforderungen/
+historischen Nachweise unverändert erhalten. Gesamtmaster weiterhin PARTIAL.
+
+---
+
 # Korrigierter nativer Übernahmekandidat remote gesichert · neue finale CI · 29.10.2026
 
 HEAD34dc5fb71c5ba5335e1a8b19b48fefed69b8f126 / Baum
