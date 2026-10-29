@@ -1,3 +1,22 @@
+## Verifizierter Status nach PR201 · 29.10.2026
+
+| Bereich | Nachgewiesener Status |
+| --- | --- |
+| UX01/UX02, kompakte Sperrgründe | FIXED / produktiv in drei Engines geprüft; PR201, main d037b487, v214/SW214 |
+| Main/Pages/Livepipeline PR201 | SUCCESS, 40927564281; 953 Units, 121 tatsächliche Dateihashes |
+| Vollständiger PWA-Updatepfad | BLOCKED: neuer Cache kann noch alte HTTP-Cachebytes enthalten; kein Datenverlust beobachtet |
+| Korrektur PR202 / SW215 | Implementiert und lokal drei Engines/954 Units geprüft; finale CI und separate Releasefreigabe ausstehend |
+| UX03, mobile Zeitraumleiste | In synthetischem Chromium bei 320/360/390/412/430 px aktuell 4×2; konkreter Androidzustand weiter PARTIAL, keine bewiesene Cachezuordnung |
+| UX04, Tooltip | Reproduziert: lange Erläuterungen überschreiten Diagramm und Viewport; OPEN |
+| UX06, Liquidität | Reproduziert: vorhandene Konten ohne cashTerms ergeben keinen Bereich; PARTIAL / Korrektur offen |
+| Übrige UI-/DELETE-/Android-/FLH03-/FLH04-Verträge | Bestehende Statusmatrix und sämtliche Nachträge erhalten; keine pauschale Erledigung durch PR201 |
+| Hardware, Originalbelege, OAuth-/Operatorgrenzen | EXTERNAL beziehungsweise eigene Freigabegrenzen erhalten |
+| FLH05 / FLH-PROJ01 | OPEN / PARKED |
+
+[Dauerhafte PR201-Maschinenbelege](release-evidence/ui-selection-blockers-v214-live-gates.json) und [PR202-Kandidatenbelege](release-evidence/pwa-update-fresh-assets-v215-candidate.json) trennen reguläre Livegates, zusätzliche Updatefehler, lokale Prüfungen, CI und Freigabe. Frühe reine Cachelabel-/Controllerproben wurden durch die strengere tatsächliche Byteprüfung überholt. Keine Belege nachträglich gelöscht und keine Tests reduziert. [CI-Laufzeitbaseline](release-evidence/ci-timing-baseline-2026-10-29.json) ist gesichert; noch keine Workflow-Beschleunigung behauptet.
+
+---
+
 # Letzter konsolidierter Masterstand · PR201 reviewbereit · 29.10.2026
 
 **Der zusätzliche QA-/CI-/Android-/Drive-/Datenintegritätsvertrag ist vollständig übernommen:** [dauerhafter Sollvertrag](https://github.com/joke0071/foliolab-open/blob/6b546aa1a72765a6991df687019c98bffbc2a26a/docs/MASTER_ERGAENZUNG_QA_CI_DRIVE_DATENINTEGRITAET_2026-10-29.md). Keine neue Roadmap, Prioritätsänderung oder parallele Implementierung.
