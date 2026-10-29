@@ -1,0 +1,108 @@
+{
+  "scope": "Synthetic local candidate tree74aa1231 baseline, Chromium emulation only; reproduction evidence only, not completion or Android hardware acceptance",
+  "measurements": [
+    {
+      "width": 320,
+      "cashSectionCount": 0,
+      "periodRows": [
+        4,
+        4
+      ],
+      "tooltip": {
+        "left": -576.453125,
+        "right": 1080.046875,
+        "width": 1656.5,
+        "viewport": 320,
+        "clipped": true
+      }
+    },
+    {
+      "width": 360,
+      "cashSectionCount": 0,
+      "periodRows": [
+        4,
+        4
+      ],
+      "tooltip": {
+        "left": -544.453125,
+        "right": 1112.046875,
+        "width": 1656.5,
+        "viewport": 360,
+        "clipped": true
+      }
+    },
+    {
+      "width": 390,
+      "cashSectionCount": 0,
+      "periodRows": [
+        4,
+        4
+      ],
+      "tooltip": {
+        "left": -520.453125,
+        "right": 1136.046875,
+        "width": 1656.5,
+        "viewport": 390,
+        "clipped": true
+      }
+    },
+    {
+      "width": 412,
+      "cashSectionCount": 0,
+      "periodRows": [
+        4,
+        4
+      ],
+      "tooltip": {
+        "left": -504.65625,
+        "right": 1151.84375,
+        "width": 1656.5,
+        "viewport": 412,
+        "clipped": true
+      }
+    },
+    {
+      "width": 430,
+      "cashSectionCount": 0,
+      "periodRows": [
+        4,
+        4
+      ],
+      "tooltip": {
+        "left": -491.453125,
+        "right": 1171.046875,
+        "width": 1662.5,
+        "viewport": 430,
+        "clipped": true
+      }
+    },
+    {
+      "width": 768,
+      "cashSectionCount": 0,
+      "periodRows": [
+        8
+      ],
+      "tooltip": {
+        "left": -189.25,
+        "right": 1473.25,
+        "width": 1662.5,
+        "viewport": 768,
+        "clipped": true
+      }
+    },
+    {
+      "width": 1440,
+      "cashSectionCount": 0,
+      "periodRows": [
+        8
+      ],
+      "tooltip": {
+        "left": 343.546875,
+        "right": 2006.046875,
+        "width": 1662.5,
+        "viewport": 1440,
+        "clipped": true
+      }
+    }
+  ]
+}
