@@ -1,3 +1,45 @@
+# PR196: zusätzliche aufgeklappte Detail-QA findet echte UI-Lücken · 29.10.2026
+
+HEADcf725c1e/Baum9d65e7f unverändert remote; neue Pflicht40878033465 läuft,
+Wallet40878033446 SUCCESS. Keine aktiveCI unterbrechen oder überschreiben.
+Main6fe75a99/v208 unverändert. **Kandidat noch NICHT abgenommen**, unabhängig
+vom Ausgang laufenderCI: zusätzlicher tatsächlicher Firefox157-Detailtest
+hat neue eigene UI-Befunde belegt, die der bisherige Button-/Labeltest nicht prüft.
+
+Read-only-Diagnostik auf exakt aktuellem Produktbaum mit sämtlichen neuen
+Vorschaudetails geöffnet:
+- Beide neuen summary-Ziele nur19px bzw38px hoch statt44px.
+-320px: dialogFields clientWidth296,scrollWidth317; geöffnete lange
+Kapitalreferenz läuft im Dialog horizontal über.
+- Ab390px kein gemessener innerer Overflow; Fach-/CAS-/Backup-/Restoregates
+weiter PASS. Fehlende Testabdeckung nicht mit positivem Gesamtlabel verdecken.
+
+**Exakte nächste Aktion:** laufende Pflicht40878033465 regulär abschließen und
+aktuelle eventuelle weitere Befunde lesen. Danach gleicherPR196, vorhandene
+performance-details/summary/span/body-Komponente für beide neuen Detailbereiche
+wiederverwenden, scoped Umbruch der neuen Referenzlöschvorschau für lange
+Originalidentitäten/Kapitalserien. Kein globales Redesign/Refactoring.
+Neue strikte Geometrieassertionen müssen ALLE sichtbaren summary-Ziele und
+dialogFields.scrollWidth<=clientWidth prüfen; alle Details bei fünfBreiten öffnen.
+Mindestens44px unverändert, keine Toleranz. Auf Basis bisheriger tatsächlicher
+Werte bestehende mindestens48px performance-details-Vorgabe nutzen.
+Nach tatsächlichem Lokaltest in3Engines, notwendiger neuer SWrevision,
+separatem Codepush/Checkpoint neue vollständigeCI. Keine neue große Aufgabe.
+
+Passendes Playwright1.64.1 Firefox157 und WebKit27.2 inzwischen isoliert unter
+/tmp/foliolab-cross-tools installiert (keine Produktabhängigkeiten/Commits).
+Lokale Hauptabhängigkeiten weiterhin Chromium1.56.1. Firefoxsandboxschalter
+nur lokaler Container, CI-/Produktregeln unverändert. Zusätzlicher Diagnosecode
+nur reproduzierbare scratch-Datei, kein privates Original.
+Quelle der neuen Befunde: tatsächliche DOM-BoundingBoxes/innererScrollbereich
+im temporär erweiterten Browsergate; nicht als abgeschlossene Korrektur melden.
+
+Konkrete Releasefreigabe erst nach vollständigem reviewbarem Kandidaten erfragen.
+Gesamtmaster/übrige Lösch-/UI-/FLH03-/FLH04-/essentielleP1-PERF01-Aufträge PARTIAL,
+FLH05/PROJ01 OPEN/PARKED; alle historischen Belege erhalten.
+
+---
+
 # PR196 korrigierte Testvorbereitung gesichert · neue vollständige CI · 29.10.2026
 
 **PARTIAL bis neue volle Kandidatenabnahme.** Einziger Funktionsbranch
