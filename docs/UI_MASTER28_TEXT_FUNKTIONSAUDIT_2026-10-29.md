@@ -1,3 +1,9 @@
+## Erster abgegrenzter Nachweis, keine Gesamt-DONE-Markierung
+
+[Reproduzierbare reine Rendererproben](release-evidence/ui-text01-03-renderer-probes.json), synthetisch und ohne Netzwerk/Speicherung: UI-TEXT01 REPRODUCED/P1 OPEN (kanonisch fehlender Kurs, quality=missing, exaktes Kursfeld zeigt0,00 und Quelle Manuell); UI-TEXT02 REPRODUCED/OPEN (1096 verfügbar, aber kein entsprechender Button, auch im unterstützten Wertpapier-CSV-Kontrollfall). UI-TEXT03 ist als sichtbarer nicht unterstützter Krypto-CSV-Import derzeit NOT REPRODUCIBLE: bestehender Sicherheitsguard verbirgt die vorbereiteten Tools. Positivkontrolle zeigt den unterstützten Wertpapierimport. Guard bei TradingView-Entfernung/CSV-Vereinfachung erhalten; keine bloße Funktionsfreischaltung. Modell vollständig unverändert. Vollständige übrige Zustands-/Browserprüfung und Korrekturen bleiben offen.
+
+---
+
 # UI-MASTER28: Appweiter Text-, Erklärungs- und Funktionskonsistenz-Audit · 29.10.2026
 
 **Status: OPEN / Delta-Audit im bestehenden UI-Master.** Der identisch zweimal übermittelte 16-teilige Auftrag wird einmal übernommen. Der vollständige „Mehr“-Vertrag bleibt bestehen. Keine neue Roadmap, parallele Implementierung, neue Architektur oder unbegrenzte Auditphase; laufenden Diagramm-Schnitt nicht unterbrechen oder erweitern.
