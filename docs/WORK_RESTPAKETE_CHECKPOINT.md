@@ -1,3 +1,13 @@
+# PR194 Betragsvorschau wiederaufgenommen · UI-/Releasevertrag · 29.10.2026
+
+Frischer Kollisionscheck180Branches: main2b6ec815/v203 LIVE_ACCEPTED unverändert, PR194 offen mit75222b4f/Baumf7cf5568 maßgeblich, aktuelle volle CI40818068885 und Wallet40818068877 SUCCESS. Nur geparkte157/161 daneben, keine aktiven Actions oder erkennbaren fremden lokalen Writer. Zentralen Checkpoint8168f7f6 rekonstruiert; reine Betragsgrundlage DONE, keine Doppelimplementierung.
+
+Zwei nächste Etappen IN_PROGRESS: minimale UI-Anbindung im vorhandenen nativen Dialog auf demselben Branch/PR, dann kontrollierter Release/Liveabnahme. [Vorabvertrag](FLH03_FLATEX_NATIVE_AMOUNTS_UI_CONTRACT.md) vor Code gesichert. Exakte reine1:1-Rechnung einmal je Dateistapel cachen; Anzeige kompakt in bestehenden Orderdetails nur nach beiden aktuellen Konto-/Quellbestätigungen und ohne Manual-/Quellen-/Stalekonflikt. Kein neuer Finanz-/Speicherpfad, keine wirtschaftliche Importfreigabe. Aktuell keine neuen Produktänderungen oder Tests, SW204 unveröffentlicht; Grundlagennachweise914Units/3Engines/privater unabhängiger Decimalvergleich wiederverwenden.
+
+Nächster Schritt Markupanbindung und gezielte synthetische UI-/Bestätigungs-/Schutz-/5Breiten-/Axe-/Paging-/Offline-/CAS-/Nullmutationstests implementieren; volle neue Pflicht-CI/Quell-/Artefakt-/Bildabnahme, dann vor Merge erneut sichern. Keine privaten Originale erneut lesen oder privaten Produktivdaten ändern. UI-MASTER28/DELETE-MASTER28/FLH04/P0/P1/PERF und bestehende Roadmap erhalten, historischeStart01.01.2022/keine Fiktionen, PROJ01 Backlog. Gesamtmaster PARTIAL. Maßgeblicher Checkpointbranch feature/flh05-import-foundation, historischer Appbaum nicht mergen.
+
+---
+
 # Native Flatex-Betragsgrundlage abgenommen · PR194 offen · 29.10.2026
 
 **Verbindlicher aktueller Stand:** Vorabvertrag und kleinste reine native1:1-
