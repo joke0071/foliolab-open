@@ -1,3 +1,13 @@
+# PR201 deployed · zusätzliche PWA-Updateabnahme BLOCKED · 29.10.2026
+
+PR201 mit ausdrücklicher Nutzerfreigabe unverändert gemergt: main `d037b4876e81c24421022d30865d171da762f328`, Tree74aa1231. Pflichtpipeline40927564281:953Units/Syntax/alle3Engines und Pages SUCCESS; reguläre Livepipeline läuft. SW214 ist veröffentlicht. **Noch kein uneingeschränktes LIVE_ACCEPTED.**
+
+Zusätzliche synthetische Updateprobe mit tatsächlichen v213/v214-Commitdateien an demselben lokalen Ursprung: neues Cachelabel allein reicht nicht. Nach vollständig aktivem Controller und exklusivem v214-Cache liefert der Worker noch tatsächlichen alten v213-app.js-Inhalt. Exakter IndexedDB-Datensatz/Settings/Revision unverändert und Offlineportfolio erreichbar. Ursache wird eng auf HTTP-Cache bei cache.addAll untersucht; keine Finanzmutation festgestellt. Erste Probe prüfte zu früh, zweite Controller-/Cacheprüfung allein erschien erfolgreich, erst zusätzliche exakte Assetprüfung belegt den Fehler. Diese Zwischenstände nicht als abschließenden Erfolg werten.
+
+**Nächster Schritt:** getrennte kleine PWA-Korrektur auf aktuellem main (Cachefüllung muss aktuelle Bytes erzwingen), reproduzierbarer alter/neuer Worker mit bewusst warmem HTTP-Cache, tatsächliche App/CSS/helper-Bytes, exakter Datenerhalt und Offlineprüfung; alle bisherigen Gates erhalten. Eigene Merge-/Deploymentfreigabe für neuen PR nötig, keine Freigabe aus PR201 übertragen. Danach UI-P1 gemäß bestehender Priorisierung. Reale Androidhardware bleibt EXTERNAL; FLH05/PROJ01 PARKED. Baseline CI-P2 dauerhaft gesichert Commit66d3faf1; keine Workflowänderung.
+
+---
+
 # PR201 freigegeben und gemergt · Releasegates laufen · 29.10.2026
 
 Nutzerfreigabe „Freigabe und fortsetzen“ ausdrücklich für PR201 erhalten. Unveränderter HEAD `78dc4ca4784694e543cc46a525ef629bf93f9333`, main zuvor `6ec0cf9c6e28edf1b19993357c3b839106b8aa80`, Pflicht40923950987 und Wallet40923951032 SUCCESS. Testmerge39cb71a9 / Tree74aa1231 erneut bestätigt. Keine aktiven/wartenden Actions oder kollidierenden offenen PRs vor Merge. Kontrollierter Merge mit expected_head_sha erfolgreich: `d037b4876e81c24421022d30865d171da762f328`, Tree unverändert `74aa1231c62364b094416aa7dbf822784d7be70a`.
