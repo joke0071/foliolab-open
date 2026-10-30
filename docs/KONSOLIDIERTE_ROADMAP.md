@@ -1,3 +1,15 @@
+## Produktiv SW224 deployed; Folgeintegrationen abgesichert · 31.10.2026
+
+Main 02631aba230fb49bbed47e47b6888c3da3f8efe8 / SW224 ist über Run41140341663 erfolgreich DEPLOYED: 984/984 Units, Syntax, Chromium und drei Cross-Shards PASS. Direkt produktiv abgerufene sw.js und src/allocation-ui.js stimmen SHA256-genau mit dem Kandidaten überein (72e7a6cc74e3b6612379e51fe0f013bc6cce46760ce367071df7a57751aed629 / a5abb26ad80f0725663190a59b2434c83207393adac5ecc301bd2ed18d47390a). Live-Chromium-Kernabnahme bestanden, Firefox/WebKit-Produktionsprüfung läuft noch; **DEPLOYED / LIVE_ACCEPTANCE_PENDING**, noch kein vollständiger Live-Claim.
+
+#213/K04 aktueller HEAD ff8a2cdb730732dc909382dd579d06b07fcd9c14 / SW225: Ausrichtung der Speicherbuttons und 8px-Anbieter-/Datenquellen-Chevrons im Code repariert, Tests unverändert erhalten. Run41141241082 alle Cross-Shards SUCCESS, Chromium hat Browserprüfungen beendet und lädt noch Belege hoch. Noch NICHT GEMERGT/LIVE. #214+#227 aktueller gemeinsamer HEAD 58cf3c8178126591f8702a564e96b41cd84c1356 / SW226: enthält dieselben More-Korrekturen und Original-Copilot-Listen-/Filterarbeiten; Run41141246772 noch laufend. Keine pauschale Sammelübernahme.
+
+CI-Effizienz konkret implementiert in #227: Concurrency künftig pro PR-Nummer statt Commit-SHA, damit neue Commits alte Läufe desselben PRs tatsächlich ersetzen; Main bleibt getrennt. 14 gezielte CI-Vertrags-/Manifest-/Klassifikations-Tests PASS, alle vollständigen Test-/Cross-/Deploy-/Live-Jobkörper unverändert, keine Required Gates entfernt. Abgrenzung: #237 liefert eigenständig Browsercache, nicht doppelt implementiert.
+
+Nutzer-Nachtrag bestätigt #235/#236/#237 als parallel implementierte Drafts; aktuelle Übergabe gelesen. #235 übernommene kleine Gate-Reparatur: veralteter Klick auf entferntes „Weitere Kursoptionen“ durch tatsächliche direkt sichtbare CSV-Kontrollen ersetzt, Import/Löschung/Bestandsprüfung unverändert; HEAD 8c6e7fb9741d1a7fedd509ab62e71dc256f9b12b, CI erneut laufend. Vor Integration auf dann gültiges Main/SW aktualisieren. #236 benötigt finalen SW-Bump, #237 reale Cache-/Integrationsbelege. Beide nicht neu implementieren. Aktuell laufende Releases behalten Vorrang. Nur FLH05/FLH-PROJ01 PARKED; 0 € Zusatzbudget.
+
+---
+
 ## Zusätzliche parallele Umsetzung: UI-VISUAL06 #236 und CI-OPT01 Cache #237 · 30.10.2026
 
 **UI-VISUAL06 / Issue217 nun `IMPLEMENTED_AS_DRAFT`:** [PR236](https://github.com/joke0071/foliolab-open/pull/236) aus aktuellem Main, nur eng gescopte Onboarding/Position/Buchung-Empty-CSS und gezielte vorhandene Browser-Audit-Assertions. Vier echte Aktionen/44px/Null-IDB-Mutation erhalten; Wallet-/Unit-CI SUCCESS, Full-CI wegen PWA-Cache-Revision **noch nicht abgenommen**. Work muss bei einer späteren konfliktfreien CSS-Integration eine zur dann aktuellen Main-Version passende SW-Revisionsänderung und volle Abnahme beisteuern; bis dahin DRAFT, NICHT LIVE. CSS-Copilot-Drafts nicht doppeln.
