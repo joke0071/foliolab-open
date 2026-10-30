@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {allocationBreakdown,renderAllocationDonut,formatAllocationShare} from '../src/allocation-ui.js';
+import {allocationBreakdown,renderAllocationDonut,formatAllocationShare,allocationCenterName} from '../src/allocation-ui.js';
 import {money,escapeHTML,TYPES} from '../src/model.js';
 const colors={etf:'#4f8662',crypto:'#d2ac66',cash:'#7292bd',other:'#a2a3b2'};
 const model=positions=>({positions});
@@ -51,4 +51,10 @@ test('Allocation labels are escaped on rendering',()=>{
  const result=renderAllocationDonut(data,{money,esc:escapeHTML,colors,netTotal:100});
  assert.ok(!result.donut.includes('<img src=x>'));
  assert.match(result.legend,/&lt;img src=x&gt;/);
+});test('Donut center accessible name contains its visible label and share in every state',()=>{
+ const allocation=allocationBreakdown(model([{kind:'etf',value:140},{kind:'crypto',value:-50}]),valueEUR,TYPES);
+ const view=renderAllocationDonut(allocation,{money,esc:escapeHTML,colors,netTotal:90});
+ const name=view.donut.match(/class="donut-inner allocation-center"[^>]*aria-label="([^"]*)"/)[1];
+ assert.ok(name.startsWith('Portfolio, Nettovermögen: '),name);
+ assert.equal(allocationCenterName('ETF','100 %',money(140)),'ETF, 100 %: '+money(140)+' · Gesamtwert des Portfolios anzeigen');
 });
