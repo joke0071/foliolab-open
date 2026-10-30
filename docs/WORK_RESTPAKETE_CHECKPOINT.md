@@ -1,3 +1,21 @@
+## PR209 – Freigabe erfasst, Post-Reload-Testvoraussetzung korrigiert · 30.10.2026
+
+Nutzerwortlaut: **„Freigabe“**, im unmittelbaren Kontext des zuletzt genannten PR209-Kandidaten4880cc11. Die Freigabe ist für PR209 erfasst und noch nicht verbraucht. Keine Freigabe für andere PRs oder zum Umgehen roter Pflichtgates. Merge/Deployment bleiben bis vollständiger technischer Abnahme gesperrt.
+
+Die lokale Arbeitsumgebung ist wieder verfügbar. Beide Working Trees waren sauber; Main unverändert537bddc3202dec8025626e8fe8b00797d418d0f7, offene PRs/Branches und aktive Läufe geprüft, keine parallele Produktarbeit. Pflicht41046895036 finalFAIL: Hauptjob124033059683 und Cross1/124033060066 rot, Cross2/124033060158 und Wallet41046895043 erfolgreich. Vollständige Fehlerlogs nach anfänglichen temporären GitHub-Abruffehlern gelesen. Beide Fehler betreffen denselben neuen Fixture-Helfer nach dem Reload: Chromium controller undefined, WebKit active=activating. Die vorherige Bereitschaftsprüfung bewies nur den vorherigen Dokumentzustand.
+
+Gezielte Korrektur ausschließlich tests/browser-controlled-storage-fixture.mjs: dieselbe strenge aktive-Controller-Prüfung zusätzlich nach Reload und Appbereitschaft abwarten, dann alle bisherigen ScriptURL-/activated-/controlled-/exakten Blankrecord-Assertions unverändert prüfen. Kein Retry, keine Timeout- oder Assertionlockerung, keine Produkt-/SW-/Finanzänderung. Firefox Wealth und native Positionszeiträume waren im Fehlerlauf bereits vollständigPASS. Cross1-Artefakt12972768899 vor Extraktion SHA256-verifiziert: aacb942ebad38300e4e7f7a5d8bf22a6b7414ee237ec888ce8c641f0f67848a6; vorhandene Teilberichte gelesen, keine Gesamtfreigabe daraus.
+
+**Aktueller HEAD `3fcf4f3be92cb80796e86caf1bec20ad7c945439`, Tree `09cf9b58422b44749e8b040f39e07131036e41e7`.** Branch feature/ui-visual01-compact-periods remote exakt verifiziert, neuer Blob/Gesamtbaum identisch zum lokalen Commit. Anwendung einschließlich SW221 bytegleich zu4880cc11; nur der Testhelfer geändert. Lokal964/964Units,0Fail/Skip,alleSyntaxprüfungen/diff-checkPASS. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.**
+
+Aktueller Pflichtlauf: [41055171967](https://github.com/joke0071/foliolab-open/actions/runs/41055171967), noch laufend. Wallet41055172037 SUCCESS auf genau3fcf4f3b.
+
+Exakt weiter: vollständigen Pflicht-/Walletlauf für3fcf4f3b, finalen Testmerge/Tree, SHA-geprüfte Artefakte und tatsächliche Berichte/Bilder aller drei Engines,44×44/320/360/Keyboard/Escape/Axe/exakten Datenerhalt abnehmen. Erst danach Geltung der konkreten PR209-Freigabe anhand finalen unveränderten Produktumfangs und erfüllter Gates prüfen; keine Freigabe auf andere PRs übertragen. Nach freigegebenem Merge vollständige Main-/Pages-/Live-/PWA-Abnahme, vorerst keinv221LIVE_ACCEPTED.
+
+Produktionv220/SW220 bleibt DONE / LIVE_ACCEPTED.208 vollständig bewahrt;227 weiterhin COPILOT_DELIVERED / WORK_INTEGRATION_PENDING, übrige Copilot-Drafts/QA223 erhalten. UI-VISUAL06 und übrige nicht delegierte Masterarbeit beiWork. NurFLH05/FLH-PROJ01 bewusstPARKED. Alle vorhandenen Anforderungen/Freigabegrenzen gelten fort.
+
+---
+
 ## UI-VISUAL01 / PR209 – aktueller Kandidat remote gesichert · 30.10.2026
 
 **HEAD `4880cc11b4ebdea401ba1215c7115f3916765c6c`, Tree `5394fc7951e2af94fe70cd0c53dee095cfbf2de8`.** Branch feature/ui-visual01-compact-periods frisch remote verifiziert. Anwendung und SW221 bytegleich zu b625151a; letzter Nachschritt ausschließlich eine Native-Testassertion. Lokaler Commit und Remote-Tree wurden vor Veröffentlichung exakt verglichen. Kein Merge oder Deployment; keine PR209-Freigabe vorhanden.
