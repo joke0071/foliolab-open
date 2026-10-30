@@ -3,7 +3,6 @@ import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeri
 import {renderChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
-import {tradingViewIdentifier} from './security-sources.js';
 import {positionBookingTimeline} from './position-bookings.js';
 import {displayQuotePrice} from './quote-quality.js';
 
@@ -54,9 +53,6 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const csvTool=(isSecurity||p.kind==='crypto')?'<div class="position-csv-actions"><button class="position-csv-import" type="button" data-action="import-price-history" data-id="'+esc(p.id)+'">'+(imported?'CSV-Kursverlauf ersetzen':'CSV-Kursverlauf importieren')+'</button>'+
   (imported?'<button type="button" class="position-csv-remove" data-action="remove-price-history" data-id="'+esc(p.id)+'" aria-label="Importierten Kursverlauf entfernen">Entfernen</button>':'')+
   '</div><p class="position-csv-help">Ohne API-Schlüssel · lokal gespeichert. Benötigt Datum und Schlusskurs in der Handelswährung dieser Position.</p>':'';
- const tvSymbol=isSecurity?tradingViewIdentifier(p):null;
- const publicChart=tvSymbol?'<div class="public-chart"><p class="position-csv-help">Öffentliches Börsendiagramm von TradingView · erscheint erst nach Klick. Dabei wird eine Verbindung zu TradingView aufgebaut; die dort angezeigten Kurse werden nicht zur Portfoliobewertung übernommen.</p><button type="button" class="position-csv-import" data-action="load-tradingview" data-id="'+esc(p.id)+'">Öffentliches Diagramm laden</button><div data-tv-slot="'+esc(p.id)+'" class="tradingview-slot"></div></div>':
-  isSecurity?'<p class="position-csv-help">TradingView benötigt einen bestätigten Handelsplatz (z. B. Xetra) oder ein TradingView-Börsenkürzel.</p>':'';
  const nativeAvailable=Boolean(marketHistoryCapability(p,model.settings));
  const needsOwnChart=nativeAvailable||Boolean(imported);
  const periods=availablePositionPeriods(p,model);
@@ -73,7 +69,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
    hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional einen eigenen EODHD-, FMP- oder Twelve-Data-Schlüssel unter „Mehr“ hinterlegen.',
    {esc}):'';
- const extraTools=isSecurity?'<details class="position-chart-options"><summary>Weitere Kursoptionen</summary><div class="position-chart-options-body">'+csvTool+publicChart+'</div></details>':'';
+ const extraTools=isSecurity?'<div class="position-native-quote-actions">'+csvTool+'</div>':'';
  const timeline=positionBookingTimeline(model,p.id);
  const eventLabels={buy:'Kauf',sell:'Verkauf',deliver_in:'Einlieferung',deliver_out:'Auslieferung',
   split:'Split',swap:'Tausch',merger:'Fusion',isin_change:'ISIN geändert',ticker_change:'Ticker geändert',
