@@ -1,3 +1,19 @@
+## UI-VISUAL01 / PR209 – Resize-Zwischenzustand abgesichert · 30.10.2026
+
+**Aktueller HEAD `b625151a81a74a5f8c86f0f8a7a06576703f15d7`, Tree `176b2d62987eedc5025512097efa46a7815a3a5a`.** Remote-Branch und vollständigerTree/alle drei neuenBlobs gegen lokaleGitobjekte verifiziert, WorkingTree sauber. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Produktion weiterhin v220/SW220 DONE / LIVE_ACCEPTED aufMain537bddc3.
+
+Diagnoselauf41044618318/d516c5e1 scheiterte bereits vor der Referenzprüfung an browser-allocation.mjs:51: bei320px scrollWidth331, während Donut/Legende innerhalb ihrer Karte lagen. Er erreichte die neue failure-only-Referenzdiagnostik daher nicht. Kein vollständiger Rootcausebeweis aus diesem Log behauptet. Beide beobachteten Überläufe treten unmittelbar nach Viewportänderung auf. Codeprüfung zeigt einen passenden Zwischenzustand: mobile CSS wird sofort angewendet, die Verlagerung von1J inMehr erfolgt erst imMediaQuery-Event. Die schmale Zeile enthält vor diesem Handler sonst sieben44px-Ziele.
+
+Gezielter Integrationsfix innerhalb UI-VISUAL01: bei≤374px den noch direkt in derZeile befindlichen1J-Button perCSS ausblenden; nach vorhandener DOM-Verlagerung ist er imMehr-Menü normal sichtbar. Keine neueZeitraumlogik, keine Duplikatbuttons, keine geänderten Finanz-/Speicherfunktionen. Neue reproduzierbare Browserprobe stellt diesen echten Pre-Handler-DOM-Zustand gezielt her, prüft sofortige CSS-Begrenzung/keinSeitenüberlauf und Wiederherstellung derMenüverfügbarkeit mit der vorhandenen Layoutfunktion. Derselbe Test läuft inChromium/Firefox/WebKit bei320/360; alle bisherigenGrenzen bleiben erhalten.
+
+Cross1/41043660987 zeigte zusätzlich Timeout im neuen IDB-Warten: die übernommene legacyPage-Fixture initialisiert absichtlich den altenBrowser-Speicher. Beide gezielten Zeitraumtests jetzt mit tatsächlicher kanonischerIndexedDB-Neuinstallation und reguläremPortfolioStorage.save eingerichtet; vor Vergleich explizit vorhandenen raw/Integer-Revision-Record verlangen. KeineNull-gleich-Null-Abnahme, keineMigration oderProduktdatenänderung. NativeHistorienzahl weiter4 und vollständigerRecord vor/nach Auswahl exakt gleich. Ältere Legacy-/Migrationstests bleiben erhalten.
+
+**Lokal964/964Units,0Fail/Skip,Syntax/diff-checkPASS.** Vollständiger Pflichtlauf [41045466087](https://github.com/joke0071/foliolab-open/actions/runs/41045466087), Wallet41045466097, auf genau b625151a. SW221 passende unveröffentlichteIntegrationsversion, kein weitererBump. Keine lokaleBrowserabnahme behauptet; Browserdownload in dieserUmgebung liefert ungültigeArchive. Alle früheren Fehlversuche und weiterlaufendenCrossjobs unverändert erhalten, keine blind wiederholtenLäufe oderGate-/Timeoutlockerungen.
+
+**Exakt weiter:** vollständigen aktuellenLauf einschließlich dedizierterdreiEngine-Zeitraumszenarien, Testmerge/Tree, Artefakthashes/Berichte/Bilder/44×44/Keyboard/Axe/exaktenDatenerhalt abnehmen. BeiweiteremFehler konkreteDiagnose; keineUmpriorisierung oderParallel-UI-Integration. ErstnachvollerAbnahme eigenerPR209-Review und ausdrückliche konkreteMerge-/Deploymentfreigabe. #208 vollständig imKandidaten erhalten; übrigeCopilot-Drafts einschließlich227/QA223 einzeln später. UI-VISUAL06 und alle nichtdelegiertenMasteraufgabenbeiWork. NurFLH05/FLH-PROJ01bewusstPARKED.
+
+---
+
 ## UI-VISUAL01 / PR209 – tatsächlicher 320px-Überlauf blockiert Integration · 30.10.2026
 
 **HEAD `d516c5e104a8f497da68eb73c1b5f9c7ea417811`, Tree `70e0cb1e8534bb0b851ca6c4dc8a7b620ca07dbf`, remote gesichert. BLOCKED / DIAGNOSIS_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Produktion v220/SW220 bleibt DONE / LIVE_ACCEPTED aufMain537bddc3. PR220-Release beendet, keine Freigabe für209 übertragen.
