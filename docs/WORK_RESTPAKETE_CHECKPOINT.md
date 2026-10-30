@@ -1,3 +1,17 @@
+## CI-OPT01/PR230: WebKit-Aktivierung bleibt echter Prüffall · aktueller Kandidat gesichert · 30.10.2026
+
+**Aktueller HEAD `df7885b252eb3e8501fefba91e9a4defe09e5b43`, Tree `3299c997fc4cac8e148e52d6d2a4b3cbe2652106`**, derselbe Branch und DraftPR230. Remote-/lokaler Gesamtbaum exakt identisch, WorkingTree sauber. Keine Produkt-/Finanz-/SW-Änderung; Produktionv221/SW221 LIVE_ACCEPTED. Alle ursprünglichen PWA-Assertionen und30s/60s-Fristen bleiben bestehen.
+
+Voriger Lauf41090941790 besteht Firefox-PWA vollständig; WebKit meldet nach60s weiterhin activating trotz120 aktuellerCachedateien. Dies bleibt **FAIL / NOT_ACCEPTED**, keine Fristverlängerung oder activated-Ausnahme. Vollständiger SHA256-verifizierter [Beleg](release-evidence/ci-opt01-canary230-webkit-activation.json), Commitc94ad399. Frühere zwei konkrete Testablauffehler ebenfalls unverändert gesichert.
+
+Kleinster weiterer Testnachschritt: absichtlich fehlgeschlagenes update() muss selbst abgeschlossen sein, bevor nächsteGeneration beginnt; !installing/!waiting allein genügt dafür nicht. Zusätzlicher boolescher Abschlussbeleg, gleicher30s-Wartepfad. Controller-/Statechange-/Dokument-/Navigationsereignisse werden im Bericht ohne Produktmutation protokolliert. Syntax/diff-checkPASS, lokale letzte Gesamtprüfung969/969Units; keine unnötige identische lokale Wiederholung. Alle ursprünglichen Assertions weiterhin wortgleich.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Vollständige neue CI aufdf7885b gestartet, kein blinder Retry des roten Jobs. Exaktweiter: diesen Kandidaten auswerten; insbesondere echte abgeschlosseneFailedUpdateOperation, vierReadinesswerte=true, aktivierter aktuellerWorker, automatischerneuerDokumentwechsel, expliziterReload und120Hashes/Offline/IDB unverändert verlangen. Bei weiterem Aktivierungsblocker keine weitere unbegründete Volltestschleife: konkrete Lifecyclebelege sichern und Ursache gezielt eingrenzen. Kein Performance- oder Merge-PASS aus rotem Lauf.
+
+Alle übrigen Master-/Prioritäts-/Freigabeverträge erhalten. Kostenstopp für zusätzlicheWork-Credit-Pakete **0€**; keine Kaufplanung. Keine weiteren Copilot-Integrationen. NurFLH05/FLH-PROJ01 bewusstPARKED.
+
+---
+
 ## CI-OPT01/PR230: finale Testvoraussetzungen gesichert, vollständige CI läuft · 30.10.2026
 
 **Aktueller Kandidat:** [Draft PR230](https://github.com/joke0071/foliolab-open/pull/230), Branch `ci/ci-opt01-cross-balance-v1`, HEAD `1ab12f797b6409816cda39b504c1e86ddc85a0b2`, Tree `cded3cb644702e72a03d17639aa53e7969427966`. Remote- und lokaler Gesamtbaum exakt identisch, Working Tree sauber. Main3b00336d unverändert; Produktion v221/SW221 weiterhin DONE/LIVE_ACCEPTED. Keine Produkt-/Finanz-/Speicher-/SW-Änderung, keine Copilot-Integration, kein Merge oder Deployment.
