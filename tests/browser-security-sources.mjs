@@ -20,6 +20,7 @@ try{
  await page.locator('#providerOverview .provider-accordion > summary').click();
  const row=page.locator('#providerOverview [data-position-id="etf-test"]');
  await row.locator(':scope > summary').click();
+ await row.locator('[data-action="import-price-history"]').waitFor({state:'visible'});
  assert.equal(await row.locator('[data-action="load-tradingview"]').count(),0,'Deprecated external widget button must not exist');
  assert.equal(await row.locator('iframe[src*="tradingview"]').count(),0,'No vendor iframe');
  assert.equal(await row.locator('[data-action="import-price-history"]').count(),1,'Local CSV import remains available');
