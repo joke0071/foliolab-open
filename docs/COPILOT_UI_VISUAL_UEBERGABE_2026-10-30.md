@@ -1,3 +1,15 @@
+## Begrenzte Zusatzdelegation UI-VISUAL07 · PR220 läuft unverändert · 30.10.2026
+
+**Neue ausdrückliche Nutzerentscheidung:** UI-VISUAL07 / [Issue221](https://github.com/joke0071/foliolab-open/issues/221), Statistik-Kacheln und Anlageklassen-Legende, ausschließlich CSS bei GitHub Copilot. Separater Draft-PR, keine fachlichen Änderungen, kein Merge/Deployment. Work implementiert dieses kleine visuelle Teilpaket nicht parallel; später Inhalts-/Konflikt-/CSS-/Testprüfung und gültige konkrete Releasefreigabe. Diese begrenzte Ausnahme ergänzt die vorher abgeschlossene Delegation; keine weiteren Aufgaben stillschweigend übertragen.
+
+Alle übrigen offenen UI-Aufgaben einschließlich UI-VISUAL06/#217 bleiben **WORK-OWNED / OPEN**. **FLH05 und FLH-PROJ01 bleiben die einzigen bewusst geparkten Entwicklungsprojekte.** Technische Blockierungen und ausstehende Integration sind keine zusätzliche Parkierung. Bereits gelieferte Drafts209/213/214/218/219 einzeln kontrolliert integrieren,208 vorher inhaltlich vergleichen; keine doppelte Entwicklung.
+
+Laufender v220-Diagnoseprozess unverändert: PR220/HEAD520b3ff7, Tree33faa5e2; voller Pflichtlauf41032276589 läuft, Wallet41032276580 prüfen. Instrumentierte vollständige Chromium-UI-Suite im Diagnose41032276796 **SUCCESS**: alle18 Prüfmodule nacheinander, Referenzverwaltung mit tatsächlicher aktivierter/steuernder SW-Baseline, exakte Daten/Offline/Backup/CAS und Diagramme PASS. Signiertes ZIP12965784127 vor Extraktion SHA256-verifiziert;19 JSON-PASS-Berichte,29 PASS-Marker, tatsächliches Produktionsbild geprüft. Keine Assertions/Timeouts geändert und kein Produkt-/SW-Byte geändert. Dies stützt die Scheduler-Korrektur; genaue ursprüngliche SW-/Netzursache bleibt ungeklärt. v220/mainaf834705 weiterhin DEPLOYED / LIVE_ACCEPTANCE_BLOCKED bis vollständigem freigegebenem Folge-Release. Kein Merge oder Erfolg vorweggenommen.
+
+**Weiter:** finale Pflicht-/Cross-Engine-Ergebnisse und Artefakte auf genau520b3ff7 prüfen, dann vollständig geprüften Test-only-PR220 mit eigener konkreter Freigabe vorlegen. PR212-Freigabe gilt nicht für PR220. Nach Freigabe vollständiges Main-/Pages-/Liveverfahren; anschließend UI-VISUAL01 mit208-Vergleich, danach übrige gelieferte Pakete und reguläre Work-Aufgaben. Alle bisherigen Masteranforderungen bleiben erhalten.
+
+---
+
 ## Copilot-Delegation vollständig geliefert · PR220-Diagnose unverändert fortgesetzt · 30.10.2026
 
 **Copilot-Delegation abgeschlossen.** Fünf gelieferte, ungemergte Drafts zur späteren Einzelintegration: UI-VISUAL01/#209 HEAD7b3e4d06,02/#213 HEADe0c4462a,03/#214 HEADca9a14c0,04/#218 HEAD `f90ed7bfce611436e114b860d6dbb3746ef5d5c4`,05/#219 HEAD `1840be28b8fcd3f80c4798c7ceffe4b31530f3cd`. #208 HEAD4c4e32bc weiterhin vor Bereinigung inhaltlich vergleichen und eigene Positions-Zeitraumarbeiten erhalten. Keine der fünf visuellen Änderungen doppelt entwickeln. Integration später einzeln auf aktuellem Main, Konflikt-/CSS-Kaskadenprüfung, passende SW-Version, volle Pflichtgates und eigene konkrete Nutzerfreigabe vor jedem Merge/Deployment.
