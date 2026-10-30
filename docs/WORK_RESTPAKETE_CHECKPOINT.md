@@ -1,3 +1,21 @@
+## v221/SW221 DONE / LIVE_ACCEPTED · CI-OPT01 als nächste Fortsetzung · 30.10.2026
+
+**Vollständig abgenommen:** Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, Produktion **v221/SW221 DONE / LIVE_ACCEPTED**. PR209 einschließlich208 sowie DiagnosePR228 abgeschlossen; konkreteMergefreigaben verbraucht, keineFreigabe fürFolgePRs. Main/Anwendung/SW währendAbnahme unverändert, kein neuesDeployment imRetry.
+
+[Run41080709085](https://github.com/joke0071/foliolab-open/actions/runs/41080709085) final **SUCCESS, Versuch2**. UrsprünglicheMainjobs124148731858/Test,124148731923/Cross1,124148731416/Cross2 und124156063521/Deploy SUCCESS; einmaligergezielterLivejob124160800384 SUCCESS.964/964Units,0Fail/Skip; vorhandeneChromium/Firefox/WebKit-/Finanz-/IDB/CAS-/Backup-/Restore-/Offline-/PWA-/A11y-Gates erhalten und bestanden.
+
+Fünf reguläreMain-/Cross-/Dialog-/finaleLiveZIPs vorExtraktionSHA256-verifiziert. Main68JSONs/65PASS-Berichte; finaleProduktion40JSONs/40PASS-Berichte vollständiggeparst undgeprüft,121veröffentlichteAsset-/SW221-Hashes unabhängiggegenexaktenMain bestätigt,6Live-Kerngruppen/18Axe-Scans/errors[]. TatsächlicheFirefox/WebKit-P-Chain-,Sonic-,UI- undTransferberichtebeidePASS; neunMainStorageFixtures mit18strikttrueBereitschaftsphasen. TatsächlicheCI-Zeitraumbilder in3Engines undfinalesWebKit390-Produktionsbild angesehen.
+
+[Dauerhafte vollständigeReleasebelege](release-evidence/v221-pr228-release.json), separaterBelegcommit `5ef9d4f86f99ce7121ed3bed668d894c3abec139`; [tatsächlichesgeprüftesProduktionsbild](release-evidence/v221-pr228-live-webkit-390.png) imseparatenCommit `cdd857346c274e1e3c438378cb673b6757c6d1a1`. [Mainbelege](release-evidence/v221-pr228-main-acceptance.json) erhalten. KeineHardware-/Screenreader-/installierteGerätePWA-Abnahmebehauptet.
+
+**Fehlerhistorieunverändert:** ersterLivejob124156258681FAILmitbelegtemHTTP503/HTMLfürwallet-history-valuation.js, blockierterModulgraph, nachgelagerterstorage-ready-Timeout. [Vollständige503-Diagnose](release-evidence/v221-pr228-live-503-failure.json) undechtesFehlerbilddurabel. GenaueinunverändertergezielterLivejob-RetrynachdiesemBefund;keineRetryschleife,keineCode-/Timeout-/Assertion-/Gateänderung. Älterer41059923497bleibtFAIL/UrsacheUNKNOWN;Ursprungdes503(Server/CDN/Runnernetz)nichtabschließendunterschieden. ErfolgreicheAbnahmeistkeinpauschalerFixhistorischerInitialisierungsprobleme.
+
+**Exakt nächsteFortsetzung:** [CI-OPT01](CI_OPT01_AUFTRAG_2026-10-30.md) gemäßneuemNutzerauftrag vorweiterenumfangreichenCopilot-Integrationen. ZuerstdauerhafteVorhermessungausaktuellenWorkflow-/Browsermodul-/Run-/Stepdaten undZuordnungkritischerTestfällezuFAST/INTEGRATION/RELEASE;unbekannteÄnderungenkonservativvollständig. DanachkleinstenvollständigabgenommenenCI-Kandidatenerarbeiten;CI-VertragsänderungbenötigteigeneexpliziteNutzerfreigabevorMerge. KeineCopilot-Integrationjetztbegonnen.213/214/218/219/222/225/227/223und157/161unveränderterhalten,keinSammelmerge.
+
+GesamtmasterweiterhinPARTIAL. UI-VISUAL06/UI-MASTER28/FLH03/FLH04/DELETE/Verwaltung/Referenzwerte/Diagrammmodi/Liquidität/TradingView/Android/Performance/PWA/CIundsämtlicheOriginal-/OAuth-/Hardwaregrenzenerhalten. AusschließlichFLH05/FLH-PROJ01bewusstOPEN/PARKED. HistorischenDokumentationsbranchniemalsalsAppcodenachMainmergen.
+
+---
+
 ## CI-OPT01 dauerhaft aufgenommen · laufende v221-Liveabnahme unverändert · 30.10.2026
 
 Neuer vollständiger Nutzerauftrag [CI-OPT01](CI_OPT01_AUFTRAG_2026-10-30.md) im separaten Commit32828ad03637aaacf3590125555581b5eaade993 gesichert und bestehende Roadmap ergänzt. **Erst v221 vollständig absichern; danach CI-OPT01 vor weiteren umfangreichen Copilot-Integrationen.** Keine CI-OPT01-Code-/Workflowänderung, keine zusätzlichen Tests, kein paralleler Strang durch diese Auftragsaufnahme.
