@@ -1,3 +1,11 @@
+## P1-Nutzbarkeit: Work-Teilschnitt PR232 technisch abgenommen · 30.10.2026
+
+Produktion bleibt **v221/SW221 LIVE_ACCEPTED**, Main d6b2a14f2108bc210411054d5f3d7690ba44fd51. Für den Wochenend-Praxistest kein Merge/Deployment.
+
+[PR232](https://github.com/joke0071/foliolab-open/pull/232), HEAD12835f4102af973fc274c2be21973cb5ab8c9feb / Treeb045f340c06b51704c1482ff5685470cd96c09f9, vereinheitlicht die bestehende Listenverwaltung und den neutralen Buchungskicker (UX10-Teilschnitt/UI-TEXT07). Volle INTEGRATION41123919291 undWallet41123919378 grün;975Units,6SHA-/CRC-geprüfteZIPs,69Berichte,3Browser, je120exaktePWA-AssetHashes, tatsächlicheBilder einschließlich200%CSS-Zoom geprüft. [VollständigerBeleg](release-evidence/ui-master28-management-v222-integration.json), genaueFreigabe-/Fortsetzungsstelle im zentralenCheckpoint. Technisch abgenommen, NICHT GEMERGT/NICHT DEPLOYED; eigene konkreteFreigabe undPraxisabgleich erforderlich. SW222 nurKandidat.
+
+UX10/UI-MASTER28 bleiben insgesamtPARTIAL, übrigeText-/Archivfilter-/DELETE-/Facharbeiten offen. Kein Copilot-Paket doppelt implementiert oder integriert; bestehendeIntegrationsabhängigkeiten erhalten. AktualisierterNutzwertaudit bleibt maßgeblich, CI-Feinoptimierungen nachrangig. NurFLH05/FLH-PROJ01PARKED; keine zusätzlichenkostenpflichtigenWork-Credit-Pakete.
+
 ## CI-OPT01: PR230 und PR231 vollständig live abgenommen · 30.10.2026
 
 **Aktueller Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51`, Anwendung v221/SW221 unverändert DONE/LIVE_ACCEPTED.** PR231 mit eigener konkreter Freigabe gemergt; vollständige Review-CI41111739544 und Release41113336364, jeweils Versuch1, erfolgreich.975Units, drei Browser, volle Main-/Pages-/Liveabnahme. [Vollständige Livebelege](release-evidence/ci-opt01-pr231-live-acceptance.json) mit Verweisen auf69Main-/Cross-/Planberichte und40Liveberichte;121veröffentlichteHashes,6Kerngruppen,18Live-Axe-Scans bestätigt.
