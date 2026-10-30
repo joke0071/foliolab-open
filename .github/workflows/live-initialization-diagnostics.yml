@@ -1,4 +1,4 @@
-name: Bounded v220 live initialization diagnostics
+name: Bounded live initialization diagnostics
 on:
   pull_request:
     branches: [main]
@@ -7,6 +7,7 @@ on:
       - 'tests/browser-failure-diagnostics.mjs'
       - 'tests/browser-chart-tooltip.mjs'
       - 'tests/browser-reference-management.mjs'
+      - 'tests/browser-pchain-evidence.mjs'
 permissions:
   contents: read
 jobs:
@@ -48,6 +49,46 @@ jobs:
         if: always()
         with:
           name: bounded-live-initialization-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+          retention-days: 7
+
+  pchain-diagnostic:
+    if: github.head_ref == 'test/v221-live-pchain-initialization-diagnostics'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [firefox, webkit]
+    env:
+      PCHAIN_BASE: https://foliolab.unperfekt.at/
+      PCHAIN_ENGINES: ${{ matrix.engine }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install matching cross-engine acceptance tools
+        run: |
+          npm install --no-save playwright@1.64.1 axe-core@4.10.3
+          npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Verify unchanged published v221 worker identity
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/gates
+          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
+          cmp sw.js artifacts/gates/diagnostic-published-sw.js
+          sha256sum artifacts/gates/diagnostic-published-sw.js
+          head -n 1 artifacts/gates/diagnostic-published-sw.js
+      - name: One original P-Chain gate with startup failure evidence
+        run: node tests/browser-pchain-evidence.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bounded-v221-pchain-${{ matrix.engine }}-${{ github.sha }}
           path: artifacts/gates/
           if-no-files-found: error
           retention-days: 7
