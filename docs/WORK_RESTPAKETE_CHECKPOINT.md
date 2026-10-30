@@ -1,3 +1,15 @@
+## Alle acht Copilot-Quell-PRs gemergt; SW228-Release läuft · 31.10.2026
+
+Nach LIVE_ACCEPTED v226 wurden #219 inklusive #218 als ae9480be0ac75230606a9de7210f72cfebb41585 und #225 inklusive #222 als aa2df390d40ee4d2c77fe5dd11e83d8eb99a6b24 gemergt. #218 und #222 auf GitHub automatisch MERGED bestätigt. Damit sind #213/#214/#218/#219/#222/#223/#225/#227 tatsächlich integriert, nicht pauschal als fertige Gesamt-UI ausgegeben. Main SW228 / Release41145529388 läuft; **NOT YET LIVE_ACCEPTED**. v226 bleibt akzeptierte Produktion/Rückfallbasis mit gespeichertem Beleg.
+
+K01-/Onboarding-/Cache-Integrationsgates konkret repariert, keine Assertions gestrichen: Nach lazy provider-position toggle wird in beiden betroffenen nativen CSV-Browsertests auf die tatsächlich sichtbare CSV-Importaktion gewartet, danach weiterhin exakt ein Importknopf, keine TV-UI/Frames, echte Import-/Lösch-/Bestandsprüfungen. Der existierende tatsächliche CSV-Browserroundtrip war bereits PASS. Gemeinsame explizite Async-SW-Aktivierungs-/Kontrollprüfung auch in #235/#236 übernommen, damit keine unaufgelöste Promise als Bereitschaft gilt; sämtliche Offline-/Frischdokument-/IDB-Unverändertheit bleibt.
+
+Aktuelle verbindliche Ready-HEADs: #235 4ea044294a78de83ffaef301bebd40efd09ffeb9 / SW229, CI41145829748; #236 960cdd30e324e1468badfa606dafed036b52d73d / SW230, CI41145833449; #237 9d94d86369115843a3e986f28d97977aab24947e / SW230, CI41145841727. Neue Node-/Wallet-Gates grün, Browsergates laufen noch. Die streng geprüften acht Dialogreferenzen aus Artefakt13019302693 bleiben in allen drei Kandidaten, zwölf Referenzen und Fehlertoleranzen unverändert; lokaler 20-Bild-Pixelvergleich PASS. Quellen aus den parallelen User-Paketen vollständig wiederverwendet; keine Doppelimplementierungen.
+
+Status getrennt halten: K01/Onboarding/Browsercache IMPLEMENTED + INTEGRATION_PENDING, nicht LIVE. K02-Regressionsabsicherung und inkrementelles PERF01 LIVE seit v224; K03/K04 mit #213 LIVE seit v226. UI-MASTER28/Fachrestpakete insgesamt weiterhin PARTIAL (u.a. Diagrammmodi, konkrete DELETE-/FLH03-/FLH04-/Betreiber-/Evidenz- und reale Gerätegrenzen separat prüfen, nicht durch CSS erledigt behaupten). Nur FLH05/FLH-PROJ01 PARKED, keine weiteren kostenpflichtigen Work-Credits.
+
+---
+
 ## v226/SW226 LIVE_ACCEPTED · 31.10.2026
 
 Main 3b03f4d98b84bb118d7c16be1b9dfab0c553922a, vollständiger Run41143056998 inklusive Main-CI, Deploy, Live-Chromium/Firefox/WebKit SUCCESS. Produktiv #213/K04 und #214+#227 einschließlich per-PR-Concurrency. Eigener Live-Artefakt13020775375-Download: SHA256 fa0a610816d74faad1d85af64ef2a5801319d2801e72ddd238cca3dbc93cd72b / CRC PASS, commit-/SW-genauer PASS-Bericht, 121 Assetmatches, 18 Axe-Scans, 0 Fehler; Backup/Restore/IDB/Offline-Kerngruppen bestanden. [Vollständiger Releasebeleg](release-evidence/v226-live-acceptance.json). Neue akzeptierte Rückfallbasis v226, keine Datenrücksetzung/Down-Migration.
