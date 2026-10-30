@@ -1,3 +1,19 @@
+## CI-OPT01/PR231: konservative Draft-Stufen · vollständige Canary-CI läuft · 30.10.2026
+
+PR230 vollständigDONE/LIVE_ACCEPTED (siehe unten). Danach frischMain7490f243/offenePRs/saubereWorkingTrees geprüft und genau einen nächstenEntwicklungsstrang eröffnet. [DraftPR231](https://github.com/joke0071/foliolab-open/pull/231), Branch `ci/ci-opt01-draft-stages-v1`, HEAD `9369d6b3d880a52effc3ca54214a5fbc76d6113a`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9`. Remote-/lokalerTreeidentisch undsauber. KeineProdukt-/SW-Änderung. KeineFreigabefür231; heutige„Freigabe“bezog sich auf bereitsumgesetzten230 undwirdnichtübertragen.
+
+**BegrenzterTeilschnitt:** FAST ausschließlich expliziteMain-Drafts mitregulären hinzugefügten/geändertenMarkdown-Dateien unterdocs und/odermodifizierterstyles.css, aktuelleBasis vorausgesetzt. VollständigeUnits/Syntaximmer;CSSzusätzlichbestehendeChromiumUI07-/Responsive-/DialogA11y-Audits. AlleanderenDateien,Mischänderungen,unbekannteMetadaten,veralteteBasis,Löschungen/Umbenennungen/Symlinks/Modi konservativFULL. FertigePRs/ready_for_reviewINTEGRATION,MainRELEASE. Review-Trigger ergänzt. VollständigeHaupt-/Cross-/Pages-/LivebodiesbytegleichdurchHash-/Negativtestsgesichert; ursprünglicheTests/Assertions/Fristen/Versionenunverändert.
+
+[Vertrag](../CI_OPT01_DRAFT_STAGES.md) liegt imPR231, nicht imhistorischenAnwendungscode diesesDokumentationsbranches. Git-Diff-Klassifizierung mitexaktenEventSHAs undechtenGit-Fixturetests;Planbeleg enthältStufe/Grenze/Diff. FASTgrünniemalsIntegrationserfolg. KeinebehaupteteBranchprotection; konkretevollständigeKandidatenabnahmeundNutzerfreigabebleibenPflicht. BeiCI-Vertragsänderung läuftderselbegezielteFAST-BrowserpfadalsisolierterCanaryzusätzlichzurvollenRegression;UnitswerdenimCanarynichtunnötigwiederholt.
+
+Lokal975/975Units,0Fail/Skip,Syntax/YAML/diff-checkPASS. Vollständige[CI41109599229](https://github.com/joke0071/foliolab-open/actions/runs/41109599229) undWallet41109599183 aufgenaudiesemHEADlaufen. **PARTIAL/CI_RUNNING/NOT_REVIEW_READY/NOT_MERGED.**
+
+**Exaktweiter:** diesen vorhandenenLaufauswerten;PlanmussfürdiesenCI-VertragsdiffINTEGRATION/full=true/ciContract=true liefern;allebisherigenMain-/3Cross-/WalletchecksundisolierterFAST-Canarymüssenbestehen. ArtefaktZIPsvorExtraktionSHA256verifizieren,StagebelegundtatsächlicheCanary-/Fullberichteprüfen,Testmerge/Tree/RemoteHEADsichern. ErstbeiErfolgreviewbereitstellen,NachhermessungmitGrenzenausweisenundkonkreteFreigabefür231einholen. KeinweitererEntwicklungsstrangundkeinblinderRetry.
+
+CI-OPT01insgesamtweiterPARTIAL;Caching,Versionseinheit,ChromiumSharding,breitereImpactzuordnung/Retrypolitikoffen. AlleMasteranforderungenerhalten,nurFLH05/FLH-PROJ01bewusstPARKED. ZusätzlicheWork-Credit-Pakete0€:keineKäufe/Kaufplanung.
+
+---
+
 ## PR230 DONE/LIVE_ACCEPTED · CI-OPT01 regulär fortsetzen · 30.10.2026
 
 Vollständiger [Release41099688653](https://github.com/joke0071/foliolab-open/actions/runs/41099688653) Versuch1 **SUCCESS**, alle Main-/dreiCross-/Pages-/Livejobs erfolgreich auf Main `7490f243ff32c659c418cdf92540fe9ef1cc4189`, Tree `e0bc5ae461e7961c6ecdac09c8da911a56cdb652`. Keine Wiederholung oder Gateänderung. Anwendung/SW bleiben bytegleich v221/SW221. Freigabe230 verbraucht, keine Freigabeübertragung.
