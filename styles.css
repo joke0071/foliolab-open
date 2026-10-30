@@ -1373,3 +1373,85 @@
  .chart-period.mini-chart-periods button,
  #historyPage .chart-period.history-chart-period button{padding:0 4px}
 }
+
+/* UI-VISUAL02: calmer, uniform "Mehr" page. Presentation only. */
+#morePage .panel{overflow-wrap:anywhere}
+#morePage .panel-head{margin-bottom:12px}
+#morePage .body-copy,#morePage .small-help{font-size:12px;font-weight:400;line-height:1.6;color:#4d6756;margin:6px 0 12px}
+#morePage .setting-illustration{margin:0 0 14px;padding:0;background:transparent;border-radius:0}
+#morePage .setting-illustration strong{font-size:13px;font-weight:700;margin-bottom:2px}
+#morePage .settings-actions{gap:8px;margin:0 0 6px}
+#morePage .btn{min-height:44px;font-size:12px;font-weight:700;white-space:normal;text-align:center;line-height:1.35}
+#morePage .btn.danger{background:#fff;color:#9a443d;border-color:#e6cfcb}
+#morePage .more-subheading{font-size:13px;font-weight:700;color:#2f5a40;margin:16px 0 0}
+#morePage .full-backup-option{display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:8px 0;margin:0;font-size:13px;font-weight:400;line-height:1.45;color:#355a43;cursor:pointer}
+#morePage .full-backup-option input{flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;accent-color:#267044}
+#morePage .full-backup-option span{flex:1;min-width:0;font-weight:400}
+#morePage .checkbox-line{min-height:44px;font-weight:400;font-size:13px;line-height:1.45;align-items:flex-start;padding:8px 0;margin:0 0 10px}
+#morePage .checkbox-line input{flex:0 0 20px;width:20px;height:20px;margin:1px 0 0}
+
+/* One accordion look for every level: no stacked frames, one hairline, one chevron, 44px targets. */
+#morePage .advanced-apis{border:0;border-top:1px solid #e6eee7;border-radius:0;padding:0;margin:12px 0 0;min-width:0}
+#morePage .data-source-groups>.advanced-apis{margin:0}
+#morePage .advanced-apis>summary,
+#morePage .provider-settings-group>summary,
+#morePage .backup-password-help>summary,
+#morePage .drive-management>summary,
+#morePage .drive-folder-options>summary,
+#morePage .drive-setup-help>summary,
+#morePage .more-panel-help>summary{
+ display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 2px;margin:0;list-style:none;cursor:pointer;
+ font-size:13px;font-weight:700;line-height:1.4;color:#355a43;overflow-wrap:anywhere
+}
+#morePage .advanced-apis>summary::-webkit-details-marker,
+#morePage .backup-password-help>summary::-webkit-details-marker,
+#morePage .drive-management>summary::-webkit-details-marker,
+#morePage .drive-folder-options>summary::-webkit-details-marker,
+#morePage .drive-setup-help>summary::-webkit-details-marker,
+#morePage .more-panel-help>summary::-webkit-details-marker{display:none}
+#morePage .advanced-apis>summary::after,
+#morePage .backup-password-help>summary::after,
+#morePage .drive-management>summary::after,
+#morePage .drive-folder-options>summary::after,
+#morePage .drive-setup-help>summary::after,
+#morePage .more-panel-help>summary::after{
+ content:'';display:block;flex:0 0 auto;width:8px;height:8px;margin:-3px 6px 0 auto;
+ border-right:1.8px solid #6b8c73;border-bottom:1.8px solid #6b8c73;transform:rotate(45deg)
+}
+#morePage details[open]>summary::after{transform:rotate(225deg);margin-top:3px}
+#morePage .advanced-apis[open]>summary{margin-bottom:0;border-bottom:0}
+#morePage .advanced-apis>summary:focus-visible,
+#morePage details>summary:focus-visible{outline:2px solid #397f52;outline-offset:-2px;border-radius:6px}
+#morePage .advanced-apis>summary strong{font-size:13px;font-weight:700}
+#morePage .advanced-apis>summary small{display:block;font-size:11px;font-weight:400;color:#4d6756;margin-top:2px}
+#morePage .settings-summary{display:block;min-width:0;flex:1}
+#morePage .source-detail>summary{padding:8px 2px}
+#morePage .source-detail>p,#morePage .source-detail>form,#morePage .source-detail>.field,#morePage .source-detail>.source-actions,#morePage .source-detail>#solanaRpcSetup{margin-left:0;margin-right:0}
+#morePage .more-subdetail,
+#morePage .backup-password-help,
+#morePage .drive-management,
+#morePage .drive-folder-options,
+#morePage .more-panel-help,
+#morePage .data-source-panel .more-panel-help{margin:8px 0 0;padding:0;border:0;border-top:1px solid #edf2ed}
+#morePage .advanced-apis>:not(summary){padding-left:2px;padding-right:2px}
+#morePage .advanced-apis details.advanced-apis{margin-left:0;margin-right:0}
+#morePage .drive-setup-help{margin:0 0 10px}
+#morePage .drive-setup-help ol,#morePage .more-panel-help ol{font-size:12px;line-height:1.6;padding-left:20px;margin:6px 0 10px}
+#morePage .drive-setup-help code,#morePage .more-panel-help code,#morePage .small-help code{white-space:normal;overflow-wrap:anywhere}
+#morePage .danger-zone>summary{color:#7d5a55;font-weight:600}
+#morePage .danger-zone .btn{margin:2px 0 14px}
+#morePage .drive-action-status,#morePage .market-diagnostic{border-radius:8px}
+#morePage .field input,#morePage .field select{min-height:44px;max-width:100%}
+#morePage .field{font-weight:600}
+#morePage .provider-settings-group>summary{font-weight:700}
+#morePage .provider-settings-group>summary strong{font-size:13px}
+#morePage .account-entry{min-height:44px}
+#morePage .row-btn{width:44px;height:44px;flex:0 0 44px}
+@media(max-width:720px){
+ #morePage .panel{padding:16px 14px}
+ #morePage .settings-actions{grid-template-columns:minmax(0,1fr)}
+}
+#morePage .credential-toggle{min-height:44px;min-width:44px}
+
+/* Keep connection and API save actions aligned with the shared form inset. */
+#morePage #optionalConnections>button[type="submit"]{margin-left:2px;margin-right:2px;padding-left:12px;padding-right:12px}
