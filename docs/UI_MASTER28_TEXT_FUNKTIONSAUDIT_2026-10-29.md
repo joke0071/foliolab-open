@@ -1,3 +1,15 @@
+## PR206 Diagnose-FolgeHEAD gesichert · vollständige finale CI läuft · 30.10.2026
+
+Aktueller einzigerKandidat **HEAD8743a57caa3a8ec303d87bf931c7f6ea18cb748f**, Tree **c25411e55f1d3c45d031da404229d6d2d5bb7163**, Branchfix/ui-text02-three-year-v219. Produktdateien gegenüber erstemHEAD69451c8d **bytegleich**, SW219 unveröffentlicht. EinzigerFolgecommit ergänzt Failure-only-Diagnostik im bestehenden browser-pwa-update.mjs (Controller/Registrierung/Cache-Inhalte/bisherigeRequests/Seitenfehler) und wirft den ursprünglichenFehler weiter;alleAssertions,Timeouts,Offline-/Hash-/Datenerhaltgates unverändert. Keine automatischeRetryschleife oder Produktreparatur.
+
+Erster vollständigerLauf41015530552 regulär beendet:Main123930890447 SUCCESS mit959Units/Syntax und tatsächlicher3J-/95/100-/Datenerhalt-Browserregression PASS;Cross1123930890573 SUCCESS;Cross2123930890501 FAIL im dokumentiertenWebKit-PWA-Cachegate0/120. [InitialerFehlerbeleg](release-evidence/ui-text02-v219-webkit-precache-failure.json) erhalten;Ursache weiterhin UNGEKLÄRT. KeinJob unterbrochen. Keine altenPasses auf neuenTree übertragen.
+
+Lokal erneut959/959Units,0Fail/Skip und Syntax des Diagnoseskripts PASS. AlleRemote-Blobs/Tree gegenlokaleGitobjekte verifiziert;Gitfetch bestätigt aktuellenHEAD. Neue [Pflicht41016497083](https://github.com/joke0071/foliolab-open/actions/runs/41016497083) läuft auf genau8743a57c; [Wallet41016497049](https://github.com/joke0071/foliolab-open/actions/runs/41016497049) SUCCESS. **CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.**
+
+**Weiter:** vollständige finaleGates/Artefakte/Testmerge/Bild prüfen. Bei erneutemCachefehler die neuenZustandsbelege auswerten,keine blinden weiterenLäufe. Erst bei vollständigemErfolg reviewbereit und eigene ausdrücklicheFreigabe fürPR206;PR205-Freigabe verbraucht. Produktionv218/PR205 vollständigLIVE_ACCEPTED;Live-/PWA-Initialisierungsbefunde unverändert erhalten. Alle übrigenMaster-/PARKED-Verträge bleiben gültig;keine paralleleProduktimplementierung.
+
+---
+
 ## UI-TEXT02 / 3J Kandidat gesichert · PR206 CI läuft · 30.10.2026
 
 Produktion **v218/PR205 DONE / LIVE_ACCEPTED**, maincbb9e8e9fa58c768c128f304840269313aeae6ba, vollständige Main-/Pages-/Live41012601300 SUCCESS nach genau einem unveränderten Livejob-Retry. Erster Navigationsbefund weiterhin ungeklärt dokumentiert, keine Gates abgeschwächt. [Releasebelege](release-evidence/ui-text01-facts-v218-release.json).
