@@ -1,3 +1,19 @@
+## CI-OPT01: begrenzter Canary PR230 remote gesichert · 30.10.2026
+
+**Einziger aktiver Implementierungsstrang:** [Draft PR230](https://github.com/joke0071/foliolab-open/pull/230), Branch `ci/ci-opt01-cross-balance-v1`, HEAD `6e33db126dbd0b09bbf7891d7c8c5395f33fb34f`, Tree `c95b2f10b41f61f029b150c106bec722377a0d61`. Auf unverändertem Main3b00336d aufgebaut; alle vier Remote-Dateien und Gesamtbaum mit lokalem Commitbaum identisch. Working Tree sauber. Keine Copilot-Integration, kein Merge und kein Deployment.
+
+Erster priorisierter Teilschnitt gemäß Issue229: bisher langsamen Cross-Shard2 vor der intern sequenziellen UI-Suite auf zwei isolierte Runner teilen, insgesamt drei Cross-Shards. Alle37 Aufrufe und Engine-Umgebungen exakt einmal erhalten; historischer30-Kommandobeleg unverändert. Neue Gruppen19/7/11 Aufrufe, Reihenfolge innerhalb jeder Gruppe bewahrt. Alle18 internen UI-Module bleiben sequenziell. Deployment wartet auf die vollständige Matrix. Hauptjob inklusive Unit/Syntax/Chromium/SW-Gate und kompletter Pages-/Liveabschnitt bytegleich zuMain; Browserpins, Produkt-/Finanz-/Speicher-/Backup-/PWA-Dateien, Assertions und Timeouts unverändert.
+
+[Canary-Vertrag](https://github.com/joke0071/foliolab-open/blob/6e33db126dbd0b09bbf7891d7c8c5395f33fb34f/docs/CI_OPT01_CROSS_BALANCE.md), neues vollständiges v221-Kommandomanifest im selben Kandidaten. Bestehende Policytests auf drei Shards angepasst und zusätzliche Negativfälle für jeden Prüffall des dritten Shards ergänzt; keine historische Prüfaussage entfernt. Lokal **965/965 Units,0Fail/Skip**, Syntax und Diffprüfung bestanden. Reiner Bytevergleich bestätigt unveränderte Haupt-/Releaseabschnitte.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Vollständiger Pflichtlauf41089535516 und Wallet41089535397 laufen auf genau diesemHEAD. Noch keine Nachhermessung oder Einsparung behauptet. Testmergef8cd974184ba2c1b9611b2ff4689775e745d068f frisch zu prüfen. Erst vollständigen tatsächlichen Haupt-/Drei-Shard-Erfolg, SHA256-verifizierte Artefakte/Berichte und identischen geprüften Tree abnehmen; danach Wandzeit und Runnersekunden gegen vorhandene Baseline1936Runnersekunden bzw.821s längsten Crossjob vergleichen. Zusätzlichen Setupaufwand und Stichprobenstreuung offen ausweisen.
+
+**Exakt weiter:** diese eine vollständige Canary-CI auswerten, keine unnötigen Wiederholungen. Bei Fehler konkrete Diagnose; bei Erfolg Vorher/Nachher und unveränderte Testabdeckung separat remote sichern, PR technisch abnehmen und eigene konkrete Nutzerfreigabe vorMerge einholen. Anschließend nur nach Freigabe vollständige Main-/Pages-/Liveabnahme. Produktion bleibt v221/SW221 DONE/LIVE_ACCEPTED.
+
+FAST-Auswahl, Caching, Versionsangleichung, Chromium-Sharding und automatische Infrastruktur-Retries werden durch diesen begrenzten Teilschnitt nicht aktiviert. Alle drei Stufen verwenden vorerst vollständige bisherige Gates, unbekannterImpact=full. CI-OPT01 insgesamt weiterPARTIAL; spätere sichere Teilschnitte gemäß bestehendem Auftrag. **Budget für zusätzliche Work-Credit-Pakete0€**, keine Käufe oder Kaufplanung. Sämtliche übrigen Masteraufgaben und Freigabegrenzen erhalten; nurFLH05/FLH-PROJ01 bewusstPARKED.
+
+---
+
 ## Verbindlicher Kostenstopp für ChatGPT-Work-Credits · 30.10.2026
 
 **Explizite Nutzerentscheidung:** Keine zusätzlichen Work-Credit-Pakete mehr kaufen; Budget für weitere kostenpflichtige Credit-Zukäufe: **0 €**. Bisher 3 × 20 € Zusatzpakete erworben. Diese Vorgabe bleibt gültig, bis der Nutzer sie ausdrücklich selbst ändert. [CI-OPT01 / Issue #229](https://github.com/joke0071/foliolab-open/issues/229) wurde entsprechend aktualisiert.
