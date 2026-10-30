@@ -1,0 +1,150 @@
+{
+  "status": "REPRODUCED_TEST_HARNESS_ERROR / FIX_IMPLEMENTED / FULL_CI_PENDING",
+  "pullRequest": 209,
+  "diagnosticHead": "4b41bf2b15aaf3982a2c53087da5150ff1e7363a",
+  "diagnosticRun": 41056024516,
+  "diagnosticJob": 124063639962,
+  "artifact": {
+    "id": 12978010256,
+    "sha256": "0f1ee993e585d252625a1a3dcb494a07c9e54d69bad5f30876c1d8a762d74d74",
+    "verifiedBeforeExtraction": true,
+    "report": "webkit-1793363982284.json"
+  },
+  "observedFixture": {
+    "engine": "webkit",
+    "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-chart-period-consistency.mjs:61:8\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processImmediate (node:internal/timers:452:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)",
+    "events": [
+      {
+        "event": "navigation",
+        "url": "http://127.0.0.1:4173/",
+        "time": 1793363982300
+      },
+      {
+        "event": "navigation",
+        "url": "http://127.0.0.1:4173/",
+        "time": 1793363982579
+      },
+      {
+        "event": "load",
+        "url": "http://127.0.0.1:4173/",
+        "time": 1793363982720
+      },
+      {
+        "event": "navigation",
+        "url": "http://127.0.0.1:4173/",
+        "time": 1793363982720
+      }
+    ],
+    "stages": [
+      {
+        "stage": "initial-ready",
+        "state": {
+          "url": "http://127.0.0.1:4173/",
+          "timeOrigin": 1793363981889,
+          "documentState": "complete",
+          "controller": null,
+          "active": null,
+          "installing": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "installing"
+          },
+          "waiting": null,
+          "controlled": false,
+          "caches": [
+            "foliolab-open-v221"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv"
+        }
+      },
+      {
+        "stage": "before-reload",
+        "waitResult": false,
+        "state": {
+          "url": "http://127.0.0.1:4173/",
+          "timeOrigin": 1793363981889,
+          "documentState": "complete",
+          "controller": null,
+          "active": null,
+          "installing": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "installing"
+          },
+          "waiting": null,
+          "controlled": false,
+          "caches": [
+            "foliolab-open-v221"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv"
+        }
+      },
+      {
+        "stage": "after-reload",
+        "waitResult": true,
+        "state": {
+          "url": "http://127.0.0.1:4173/",
+          "timeOrigin": 1793363982569,
+          "documentState": "complete",
+          "controller": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "activated"
+          },
+          "active": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "activated"
+          },
+          "installing": null,
+          "waiting": null,
+          "controlled": true,
+          "caches": [
+            "foliolab-open-v221"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv"
+        }
+      },
+      {
+        "stage": "assertions",
+        "state": {
+          "url": "http://127.0.0.1:4173/",
+          "timeOrigin": 1793363982569,
+          "documentState": "complete",
+          "controller": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "activated"
+          },
+          "active": {
+            "script": "http://127.0.0.1:4173/sw.js",
+            "state": "activated"
+          },
+          "installing": null,
+          "waiting": null,
+          "controlled": true,
+          "caches": [
+            "foliolab-open-v221"
+          ],
+          "storage": "Transaktionale IndexedDB aktiv"
+        },
+        "verified": {
+          "controller": "http://127.0.0.1:4173/sw.js",
+          "active": "activated",
+          "controlled": true
+        }
+      }
+    ],
+    "result": "PASS"
+  },
+  "finding": "The asynchronous readiness predicate returned a false handle while the fixture proceeded. At that instant WebKit had no controller or active worker; the worker was installing. The old fixture PASS label only described its later assertions, not a valid pre-reload readiness result. The whole CI run remained red.",
+  "primarySource": "https://github.com/microsoft/playwright/blob/main/packages/playwright-core/src/server/frames.ts",
+  "sourceFinding": "waitForFunctionExpression checks predicate return truthiness before promise settlement. A Promise can resolve false after the scheduler accepts it.",
+  "fixHead": "a61af4c9ecc7dcb4a0aafd871d5884be807a10ae",
+  "fixTree": "8d237c705aa687cd14b6de2e4e8ec530fc45d3d8",
+  "fix": "Observe real registration/worker/controller events and poll a synchronous boolean; additionally require the returned handle to equal true. Keep script URL, activated/controlled and exact blank raw/settings/revision assertions. Inject Axe via context.addInitScript as existing project audits do, avoiding a nonexistent routed URL under a controlled service worker.",
+  "applicationFiles": "Byte-identical to approval context 4880cc11b4ebdea401ba1215c7115f3916765c6c, including SW221. Test-only followup.",
+  "validation": {
+    "localUnitTests": 964,
+    "failed": 0,
+    "skipped": 0,
+    "syntaxAndDiffCheck": "PASS",
+    "fullCI": "PENDING"
+  },
+  "limits": "Does not establish the root cause of all historical WebKit/PWA/IndexedDB findings. No real Android hardware or screenreader acceptance. No merge or deployment."
+}
