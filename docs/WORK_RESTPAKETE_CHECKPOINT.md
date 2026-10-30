@@ -1,3 +1,13 @@
+## K01, Onboarding und Browsercache vollständig CI_ACCEPTED · 31.10.2026
+
+Alle aktuellen Kandidaten nach konkreter Reparatur der Tests und erneuter Vollprüfung grün: #235 4ea044294a78de83ffaef301bebd40efd09ffeb9 / Run41145829748; #236 960cdd30e324e1468badfa606dafed036b52d73d / Run41145833449; #237 9d94d86369115843a3e986f28d97977aab24947e / Run41145841727. Jeweils Unit/Wallet, Canary und alle Chromium-/Firefox-/WebKit-Gates SUCCESS; deploy/live bei PRs korrekt SKIPPED. HEAD-Identität und Mergefähigkeit aktuell geprüft. Gemeinsamer lokal geprüfter Dateibaum stimmt exakt mit finalem GitHub-Tree 77a9a2b48b228996aebc545bc75c46a05abc6c2a überein.
+
+CI-Cache tatsächlich belegt: Run41145841727, Job124370926215, Cache-Hit foliolab-pw1.64.1-firefox-webkit-v1-Linux-X64; 214191046 Bytes wiederhergestellt, Installations-/Systemdependency-Aufruf unverändert ausgeführt (50s). Kein kontrollierter Gesamtzeit-/Prozentgewinn behauptet. Per-PR-Concurrency bereits LIVE seit v226.
+
+Main aa2df390d40ee4d2c77fe5dd11e83d8eb99a6b24 / SW228 ist DEPLOYED, volle Main-CI grün, Live-Chromium bestanden, Live-Firefox/WebKit noch laufend in Run41145529388. Aktiven Live-Stand nicht während der Prüfung wechseln; unmittelbar nach erfolgreicher Abnahme grüne #235→#236→#237 kontrolliert mergen, gemeinsame SW230-Releasepipeline beobachten und tatsächlich produktiv prüfen. Keine neue Nutzerfreigabe erforderlich. Bisherige sichere Rückfallbasis v226; nur FLH05/FLH-PROJ01 PARKED, zusätzliche Kostenpakete 0 €.
+
+---
+
 ## Alle acht Copilot-Quell-PRs gemergt; SW228-Release läuft · 31.10.2026
 
 Nach LIVE_ACCEPTED v226 wurden #219 inklusive #218 als ae9480be0ac75230606a9de7210f72cfebb41585 und #225 inklusive #222 als aa2df390d40ee4d2c77fe5dd11e83d8eb99a6b24 gemergt. #218 und #222 auf GitHub automatisch MERGED bestätigt. Damit sind #213/#214/#218/#219/#222/#223/#225/#227 tatsächlich integriert, nicht pauschal als fertige Gesamt-UI ausgegeben. Main SW228 / Release41145529388 läuft; **NOT YET LIVE_ACCEPTED**. v226 bleibt akzeptierte Produktion/Rückfallbasis mit gespeichertem Beleg.
