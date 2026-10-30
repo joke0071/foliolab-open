@@ -1,3 +1,19 @@
+## UI-VISUAL01 / PR209 – tatsächlicher 320px-Überlauf blockiert Integration · 30.10.2026
+
+**HEAD `d516c5e104a8f497da68eb73c1b5f9c7ea417811`, Tree `70e0cb1e8534bb0b851ca6c4dc8a7b620ca07dbf`, remote gesichert. BLOCKED / DIAGNOSIS_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Produktion v220/SW220 bleibt DONE / LIVE_ACCEPTED aufMain537bddc3. PR220-Release beendet, keine Freigabe für209 übertragen.
+
+Pflicht41043934433 auf9a051895: Unit-/Syntaxgate bestanden (964Tests), bestehende Finanz-/Speicher-/Buchungs-/Archivierungs-/CAS-/Restore-/Diagrammprüfungen bis browser-chart-tooltip bestanden; Hauptjob124023225570 danach rot an **browser-blocked-reasons.mjs:16, „references320overflow“**, im Szenario mit8 geschützten historischen Originalwerten und aktivierter Referenzauswahl. Dies ist ein offener tatsächlicher Integrationsbefund; Überlaufassertion bleibt verbindlich. Das Hauptartefakt12971931857 vor Extraktion SHA256-verifiziert (`ae6f5e6b6041f3287876bfc6c5e4ba3441fb8e03c880264b099669088b90c70c`);9JSONs/8PASS-Berichte sind lediglich Teilbelege, keine Gesamtabnahme.
+
+Der neue Nachschritt ändert ausschließlich failure-only-Diagnostik im bestehenden Blocker-Browsertest: bei Überlauf tatsächliche Viewport-/Scrollbreite, sichtbare ausragende DOM-Rechtecke/CSS und vollständigenScreenshot sichern, danach unverändert scheitern. Keine CSS-/Produkt-/Finanzänderung, kein SW-Bump, keine Assert-/Timeoutlockerung. Browser lokal nicht verfügbar; Downloadversuche liefern ungültige Archive, daher keine lokale Browserabnahme behauptet. Maßgeblich bleibt die tatsächliche CI-Umgebung.
+
+Neuer Pflichtlauf [41044618318](https://github.com/joke0071/foliolab-open/actions/runs/41044618318), Wallet41044618291, aufd516c5e1. Alter erster Lauf41042454421 final: HauptjobFAIL, beideCrossjobsSUCCESS; weitere frühereCrossjobs regulär weiterlaufend, keineAbbrüche. Das historische CI-Manifestsicherheitsgate einschließlich aller bisherigen Pflichten plus vier zusätzlicher Engineaufrufe bleibt erhalten.
+
+**Exakt weiter:** konkrete Überlaufgeometrie/Bild aus41044618318 auswerten, gegen bisher akzeptiertesv220-Szenario unterscheiden, kleinste notwendige Integrationskorrektur im gelieferten UI-VISUAL01-Scope vornehmen, vorhandene Tests unverändert vollständig erfüllen. Erst nach vollen Pflicht-/dreiEngine-/A11y-/Datenerhaltgates, Artefakt-/Bildprüfung und eigener konkreter Nutzerfreigabe mergen/deployen. Nicht zum nächsten visuellen Draft wechseln, solange dieser Kandidat ungeklärt ist.
+
+208 eigene Änderungen/Historie/Bilder vollständig erhalten.227 weiterhin COPILOT_DELIVERED / WORK_INTEGRATION_PENDING;213/214/218/219/222/225 undQA223 ebenso später einzeln. Keine parallele Neuentwicklung delegierter Pakete; UI-VISUAL06/#217 und übrige nichtdelegierte MasteraufgabenbeiWork. NurFLH05/FLH-PROJ01 bewusstPARKED. Alle Masteranforderungen und Freigabegrenzen gelten fort.
+
+---
+
 ## UI-VISUAL01 / PR209 – CI-Vertrag ergänzt, volle Abnahme läuft · 30.10.2026
 
 **Aktueller Kandidat HEAD `9a051895b0f4c871a7ebc5e4b3911a34c58cf3c2`, Tree `4901c234999e6f6b2e35dc3712b8314f3b4c279d`.** Remote-Branch feature/ui-visual01-compact-periods exakt verifiziert, Working Tree sauber. Alle Produktdateien inklusive SW221 weiterhin bytegleich zum integrierten0cd81c97; ausschließlich Test-/CI-Nachschritte. Produktion bleibt v220/SW220 DONE / LIVE_ACCEPTED.
