@@ -1,3 +1,15 @@
+## v221-Livefehler konkret diagnostiziert · einmaliger gezielter Retry vorgesehen · 30.10.2026
+
+Run41080709085 Versuch1 final FAILURE ausschließlich in Live124156258681. Main/Test/Cross1/Cross2/Pages SUCCESS,964Units und alle bisherigen Mainbelege erhalten. Main3b00336d/Tree172e887b/SW221 unverändert. **v221 DEPLOYED / LIVE_ACCEPTANCE_BLOCKED**, letzter vollständig akzeptierter Standv220; keine weitere UI-Integration.
+
+**Neue konkrete Diagnostik:** erster Firefox-Appstart erhält HTTP503 für `/src/wallet-history-valuation.js`, danach NS_ERROR_CORRUPTED_CONTENT und Modul wegen MIME text/html blockiert. Appmodulgraph initialisiert nicht, keineSW-Registration/Controller/Caches; sichtbarer Zustand „Browser-Speicher wird geprüft“. Bestehender30s-storage-ready-Timeout ist in diesem Versuch Folge des belegten fehlgeschlagenen Modulabrufs, nicht Beleg für fehlerhafte P-Chain-Finanzdaten. P-Chain-Fachprüfungen und folgende Firefox-/WebKit-Sonic/UI/Transferstufen nicht erreicht.
+
+ProduktionsZIP12989593843 vorExtraktion SHA256 `a99a20ce910fb44c195e7c67453d13ef4962fd7e7c67dc429e95b8a19d37cf0e` verifiziert;27 vollständige JSONs bewahrt,121 veröffentlichteAsset-/SW-Hashes unabhängig gegen exaktenMain geprüft. Dieselbe Moduldatei war kurz vorher im erfolgreichen121Hash-Abgleich vorhanden. Chromium-Livecore/Import/Finanz/CAS/Backup/Restore/Offline/UI bestanden. [Vollständige Fehl-/Teilbelege](release-evidence/v221-pr228-live-503-failure.json), [tatsächliches Firefox-Fehlerbild](release-evidence/v221-pr228-firefox-503-failure.png), separate Belegcommits1aa6002c undf5564d3d. Ursache des älteren41059923497 bleibtUNKNOWN; Server/CDN/Runner-Ursprung des503 nicht abschließend unterschieden. Keine pauschale frühere Rootcausebehauptung.
+
+**Begründete nächste Aktion:** genau ein unveränderter Retry nur des fehlgeschlagenen Livejobs124156258681, wegen jetzt belegtem503 bei unverändertem und zuvor korrekt ausgeliefertem Modul. Keine erneutenMain-/Cross-/Deployjobs, keine Code-/SW-/Assertion-/Timeoutänderung; keine roteAbnahme umdeuten. VorherHEAD/WorkingTrees/Remote erneut verifizieren. Bei erneutemFehler Belege sichern und externeVerfügbarkeit gezielt eingrenzen, keineRetryschleife. Vollständige tatsächlich neueLiveartefakte anschließend prüfen;v221erstbeiGesamterfolgLIVE_ACCEPTED. ÜbrigeMaster-/Copilot-/Freigabeverträge unverändert; nurFLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## Masterauftrag im neuen Work-Chat fortgesetzt · v221 Main/Pages bestanden · 30.10.2026
 
 Fortsetzung gemäß neuem MASTERSTART; der dokumentierte STOP des vorherigen Chats ist damit aufgehoben. Derselbe Master, dieselben Prioritäten und Anforderungen, keine neue Roadmap oder parallele Implementierung. Aktueller Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, unverändert. Alle gelieferten Copilot-Drafts und bisherigen Freigabegrenzen erhalten.
