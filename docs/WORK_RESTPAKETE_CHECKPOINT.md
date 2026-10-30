@@ -1,3 +1,11 @@
+## v218 Live-Abnahme BLOCKED · erster Navigationsaufruf ohne Ziel · 30.10.2026
+
+Main41012601300:957Units/Syntax/Chromium/Firefox/WebKit/Pages SUCCESS;v218/maincbb9e8e9 veröffentlicht. Livejob123924963768 FAIL in browser-live-acceptance.mjs:43/nav:27:30s Timeout auf #mobileNav [data-page=more] beim ersten UI-Aufruf, vor synthetischer Anlage/Finanzmutation. Zuvor121 veröffentlichte Asset-/SW-Hashes exakt verifiziert; Reporterrors=[]; kein abschließender DOM-/Navigationszustand erfasst. **Ursache UNGEKLÄRT**, kein pauschaler Flakiness- oder Produktrootcause-Nachweis. Noch kein LIVE_ACCEPTED.
+
+[Genauer Fehlerbeleg mit tatsächlichem Corebericht](release-evidence/v218-live-navigation-failure.json), ZIP12958791364 vor Extraktion SHA256-verifiziert. Live-Test/Index/CSS gegenüberv217 unverändert; aktuellerProduktdiff nur geprüfte Faktenanzeige/SW218. **Weiter:** genau einen unveränderten Wiederholungslauf des fehlgeschlagenen Livejobs zur Wiederholbarkeitsprüfung in frischem Kontext; erfolgreiche Jobs übernehmen. Keine Assertion/Timeouts/Gates ändern. Bei Wiederholung gezielte DOM-/Navigations-/Ladezustandsdiagnose statt weiterer blinder Retries. PR205-Freigabe für unveränderten Release gültig; keine neue Freigabe nötig. Keine parallele Implementierung. Übriger Master/PARKED unverändert.
+
+---
+
 ## v218 veröffentlicht · Main-Gates SUCCESS · Live-Abnahme läuft · 30.10.2026
 
 Freigegebener PR205/maincbb9e8e9fa58c768c128f304840269313aeae6ba/Tree46b8adf6:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit und Pages SUCCESS. Main41012601300/Deploy123924593466 erfolgreich; **v218/SW218 veröffentlicht, vollständige Live-Abnahme PENDING**. Livejob123924963768 prüft tatsächliche Produktion; kein LIVE_ACCEPTED vorweggenommen.
