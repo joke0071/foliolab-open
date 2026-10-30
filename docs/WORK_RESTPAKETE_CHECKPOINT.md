@@ -1,3 +1,17 @@
+## Masterauftrag im neuen Work-Chat fortgesetzt · v221 Main/Pages bestanden · 30.10.2026
+
+Fortsetzung gemäß neuem MASTERSTART; der dokumentierte STOP des vorherigen Chats ist damit aufgehoben. Derselbe Master, dieselben Prioritäten und Anforderungen, keine neue Roadmap oder parallele Implementierung. Aktueller Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, unverändert. Alle gelieferten Copilot-Drafts und bisherigen Freigabegrenzen erhalten.
+
+**Main-/Cross-/Pages-Abnahme erfolgreich, Liveabnahme läuft:** Run [41080709085](https://github.com/joke0071/foliolab-open/actions/runs/41080709085), Versuch 1. Hauptjob124148731858, Cross1/124148731923, Cross2/124148731416 und Deploy124156063521 SUCCESS. Live124156258681 IN_PROGRESS. 964/964 Units,0Fail/Skip; vollständige bestehende dreiBrowser-/Finanz-/CAS-/Backup-/Restore-/Offline-/PWA-/A11y-Gates bestanden. Vier ZIPs vor Extraktion SHA256-verifiziert;68 JSON-Berichte vollständig geparst und rekursiv geprüft,65 mit PASS. Neun kontrollierte Storage-Fixtures mit18 strikt true Bereitschaftsphasen und aktivem Controller bestätigt. Tatsächliche320px-Zeitraum-/Positionsbilder in Chromium/Firefox/WebKit visuell geprüft.
+
+[Dauerhafte vollständige Main-Belege](release-evidence/v221-pr228-main-acceptance.json), separat remote gesicherter Belegcommit `6c48ebd2b667af081e727e7947ebe0eb1cb08414`, Tree und Blob nach Fetch exakt lokal/remote verifiziert. Veröffentlichung über verbundenes GitHub-API; direktes git push hatte keine HTTPS-Credentials. Dokumentationsworktree nach identischem Tree sauber auf bestätigtem Remote-Commit synchronisiert. Kein Anwendungscode aus Dokumentationsbranch integriert.
+
+**Produktion v221/SW221 bleibt DEPLOYED / LIVE_ACCEPTANCE_PENDING; letzter vollständig LIVE_ACCEPTED-Stand bleibt v220.** Ursprünglicher roter41059923497 und UrsacheUNKNOWN/NOT_REPRODUCED erhalten; kein Runtimefix behauptet. Kein Retry, keine Gate-/Timeout-/Assertionänderung. Keine weitere UI-Integration begonnen.
+
+**Exakt weiter:** Live124156258681 regulär auslaufen lassen; danach tatsächliches Produktionsartefakt vor Extraktion SHA256-verifizieren, vollständige Produktionsberichte,121Asset-/SW221-Hashes,Offline/PWA/Backup/Restore/CAS und Livebilder prüfen. Erst bei vollständigem Erfolg v221 DONE / LIVE_ACCEPTED und Belege/Checkpoint separat remote sichern. Bei Fehler vorhandene Diagnostik auswerten. Anschließend bestehende Einzelintegration fortsetzen; weitere PRs benötigen eigene konkrete Freigabe. UI-VISUAL06 und übriger Master bei Work; ausschließlich FLH05/FLH-PROJ01 OPEN/PARKED.
+
+---
+
 ## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – 30.10.2026
 
 **HANDOFF_READY / ENTWICKLUNG AUF NUTZERWUNSCH GESTOPPT.** Kein Projektabbruch, keine neue Roadmap und keine Änderung der Prioritäten. Seit STOP ausschließlich lesende Statusprüfung und Dokumentationssicherung; keine neue Implementierung, PR, Merge, Deployment oder umfangreicher Testlauf begonnen. Laufende GitHub Actions weder abgebrochen noch verändert. Dieser jüngste Abschnitt hat bei Statuswidersprüchen Vorrang vor den anschließend unverändert erhaltenen historischen Einträgen.
