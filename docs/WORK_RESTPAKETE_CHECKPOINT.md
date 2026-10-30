@@ -1,3 +1,15 @@
+## PR220 freigegeben und kontrolliert gemergt · v220-Release läuft · 30.10.2026
+
+Die ausdrückliche Nutzerfreigabe „Freigabe“ gilt für PR220/HEAD `520b3ff7d73c3097e72691a3098ef3c8fc2c0955` und ist für diesen PR verbraucht. Frisch geprüft: unveränderter Mainaf834705, PR-HEAD, identischer Testmerge-Tree33faa5e2, Pflicht41032276589/Wallet41032276580/Live-Diagnose41032276796 SUCCESS, beide Working Trees sauber, keine fremden aktiven Läufe oder Produktdateikollisionen. **PR220 gemergt**, neuer Main `537bddc3202dec8025626e8fe8b00797d418d0f7`, Tree `33faa5e2947968bbbe58b097fa8bf7ca0e5b86c2` exakt gleich geprüftem Kandidaten.
+
+Main-/Pages-/Live [41038554426](https://github.com/joke0071/foliolab-open/actions/runs/41038554426) läuft auf genau diesem Main. **MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING.** Produktdateien und SW220 unverändert; kein neuer Versionssprung. Frühere fehlgeschlagene v220-Läufe bleiben als Fehlerhistorie erhalten, kein LIVE_ACCEPTED vor vollständiger neuer Main-/Pages-/Live-/PWA-Abnahme.
+
+**Exakt weiter:** volle Pipeline und tatsächliche Artefakte/Dateihashes/Liveberichte kontrollieren; bei Fehler gezielte Diagnose, keine Gates/Timeouts schwächen oder blind wiederholen. Nach sicherem Liveabschluss bestehende UI-VISUAL01-Integration mit209/208-Vergleich vorbereiten, danach reguläre Masterpriorität. Kein weiteres Paket automatisch mergen; jeder spätere PR braucht eigene konkrete Freigabe.
+
+Alle Copilot-Lieferungen209/213/214/218/219/222/225 und QA223 erhalten; UI-VISUAL09/#226 nur delegierter visueller Teil, keine Work-Parallelimplementierung. UI-VISUAL06/#217 und übrige nicht delegierte UI-/Fachaufgaben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED. Historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## UI-VISUAL09 / Issue226 ausdrücklich delegiert · 30.10.2026
 
 **[Issue226](https://github.com/joke0071/foliolab-open/issues/226): COPILOT_DELEGATED / DRAFT_PENDING / WORK_INTEGRATION_PENDING.** Der vollständige aktuelle [Vertrag](COPILOT_UI_VISUAL09_VERTRAG_2026-10-30.md) ist dauerhaft gesichert. Delegiert sind ausschließlich die konkreten visuellen Bereiche: Such-, Filter-, Sortier- und Aktionsleisten in Positionen; Such-, Filter- und Aktionsleisten in Buchungen; Darstellung der vorhandenen Akkordeons „Interne Transfers“ und „Erträge und Abzüge“ einschließlich geöffneter Inhalte. Copilot liefert einen separaten Draft ohne Merge/Deployment. Keine parallele Work-Implementierung dieser visuellen Teile.
