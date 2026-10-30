@@ -1,3 +1,15 @@
+## CI-OPT01 dauerhaft aufgenommen · laufende v221-Liveabnahme unverändert · 30.10.2026
+
+Neuer vollständiger Nutzerauftrag [CI-OPT01](CI_OPT01_AUFTRAG_2026-10-30.md) im separaten Commit32828ad03637aaacf3590125555581b5eaade993 gesichert und bestehende Roadmap ergänzt. **Erst v221 vollständig absichern; danach CI-OPT01 vor weiteren umfangreichen Copilot-Integrationen.** Keine CI-OPT01-Code-/Workflowänderung, keine zusätzlichen Tests, kein paralleler Strang durch diese Auftragsaufnahme.
+
+Vertrag umfasst Vorher-Messung sämtlicher Test-/Browser-/Installations-/Livezeiten, Doppelprüfungen/Fixtures/Abhängigkeiten und externe Infrastrukturfehler; FAST/INTEGRATION/RELEASE mit unverändert vollem Releasequalitätsstandard; konservative Datei-/Risikoauswahl, intern sequenzielle unabhängige Chromium-Jobs, reproduzierbare Caches, kompatible festgelegte Playwright-Versionen, erste Fehlerdiagnose und nur belegte begrenzte Infrastruktur-Retries. Alle bisherigen kritischen Fälle müssen im erforderlichen Pfad nachweisbar ausgeführt bleiben; Vorher/Nachher für Wandzeit, ersten relevanten Fehler, Browseranzahl, Rechenaufwand, Abdeckung, Zuverlässigkeit und Wiederholungen. Eigenen CI-Vertrag separat vollständig technisch abnehmen; eigene konkrete Nutzerfreigabe vor Merge. Vollständiger Auftrag im verlinkten Dokument, keine Anforderungen gestrichen.
+
+**Aktueller Releasepfad:** einmaliger begründeter Livejob-Retry124160800384 in Run41080709085 Versuch2 auf unverändertemMain3b00336d läuft. Main-/Cross-/Pages-Ergebnisse übernommen, kein neuesDeployment; ursprünglicherLive503 und ältererFehllauf bleiben erhalten. v221 weiterhin DEPLOYED / LIVE_ACCEPTANCE_PENDING, letzter vollständig akzeptierterStandv220. Keine weitereCopilot-Integration begonnen.
+
+**Exakt weiter:** laufenden Retry abnehmen und tatsächliche neueArtefakte/Hashes/Berichte/Bilder prüfen; bei erneutemFehler gezielteDiagnose stattRetryschleife. ErstnachvollständigerLiveabnahme v221LIVE_ACCEPTED undBelege separat sichern. DanachCI-OPT01-Baseline/Vertragszuordnung im bestehendenMaster beginnen. UI-VISUAL06 undallebisherigenAufgabenaktiv; nurFLH05/FLH-PROJ01 bewusstOPEN/PARKED.
+
+---
+
 ## v221-Livefehler konkret diagnostiziert · einmaliger gezielter Retry vorgesehen · 30.10.2026
 
 Run41080709085 Versuch1 final FAILURE ausschließlich in Live124156258681. Main/Test/Cross1/Cross2/Pages SUCCESS,964Units und alle bisherigen Mainbelege erhalten. Main3b00336d/Tree172e887b/SW221 unverändert. **v221 DEPLOYED / LIVE_ACCEPTANCE_BLOCKED**, letzter vollständig akzeptierter Standv220; keine weitere UI-Integration.
