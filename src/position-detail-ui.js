@@ -61,9 +61,10 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const needsOwnChart=nativeAvailable||Boolean(imported);
  const periods=availablePositionPeriods(p,model);
  const standard=periods.filter(x=>typeof x==='number'&&x<=365),long=periods.filter(x=>(typeof x==='number'&&x>365)||x==='max');
+ const selectedLong=days===1096?'3 J':days===1826?'5 J':'';
  const extra=long.length>1?
   '<span class="position-period-long">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</span>'+
-  '<details class="position-period-more"><summary aria-label="Weitere Zeiträume auswählen" title="Weitere Zeiträume">Mehr</summary>'+
+  '<details class="position-period-more"><summary aria-label="'+(selectedLong?'Ausgewählter Zeitraum '+selectedLong+'. Weitere Zeiträume auswählen':'Max und weitere Zeiträume auswählen')+'" title="Weitere Zeiträume">'+(selectedLong||'Mehr')+'</summary>'+
   '<div class="position-period-popover">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</div></details>':
   renderChartPeriodButtons('market','data-position-range',days,long);
  const controls=needsOwnChart?'<div class="chart-period position-period" role="group" aria-label="Zeitraum des Kursverlaufs">'+

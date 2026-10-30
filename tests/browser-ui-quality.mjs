@@ -1,21 +1,26 @@
-import './browser-chart-tooltip.mjs';
-import './browser-blocked-reasons.mjs';
-import './browser-ui-small-rests.mjs';
-import './browser-ui-audit-controls.mjs';
-import './browser-history-followup.mjs';
-import './browser-reference-management.mjs';
-import './browser-kraken-ledger.mjs';
-import './browser-bitpanda-evidence.mjs';
-import './browser-bitpanda-preview.mjs';
-import './browser-flatex-native.mjs';
-import './browser-flatex-native-ui.mjs';
-import './browser-flatex-order-links.mjs';
-import './browser-flatex-native-identity.mjs';
-import './browser-flatex-native-binding.mjs';
-import './browser-flatex-native-amounts.mjs';
-import './browser-flatex-native-projection.mjs';
-import './browser-flatex-native-simulation-ui.mjs';
-import './browser-flatex-native-commit.mjs';
+// Each imported module owns an isolated browser and awaits its full acceptance
+// suite. Static async imports start those browsers together; keep every gate,
+// but finish one module before starting the next against the same live host.
+for(const check of [
+ './browser-chart-tooltip.mjs',
+ './browser-blocked-reasons.mjs',
+ './browser-ui-small-rests.mjs',
+ './browser-ui-audit-controls.mjs',
+ './browser-history-followup.mjs',
+ './browser-reference-management.mjs',
+ './browser-kraken-ledger.mjs',
+ './browser-bitpanda-evidence.mjs',
+ './browser-bitpanda-preview.mjs',
+ './browser-flatex-native.mjs',
+ './browser-flatex-native-ui.mjs',
+ './browser-flatex-order-links.mjs',
+ './browser-flatex-native-identity.mjs',
+ './browser-flatex-native-binding.mjs',
+ './browser-flatex-native-amounts.mjs',
+ './browser-flatex-native-projection.mjs',
+ './browser-flatex-native-simulation-ui.mjs',
+ './browser-flatex-native-commit.mjs'
+])await import(check);
 import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
@@ -76,7 +81,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
     if(page==='more'&&await p.locator('#optionalConnections>.more-panel-help').evaluate(e=>e.open))await p.locator('#optionalConnections>.more-panel-help>summary').click();
     if(page==='more')for(const id of ['marketWorkerSetup','publicSearchSetup','optionalConnections','blockchainSettings','marketSettings'])if(await p.locator('#'+id).evaluate(e=>e.open))await p.locator('#'+id+'>summary').click();
    }
-   await nav('positions');assert.equal(await p.locator('.position-row-actions [data-action=archive-position]:visible').count(),3,'direct small archive icons');assert.equal(await p.locator('.position-actions [data-action=archive-position]').count(),0,'no large archive action');assert.equal(await p.locator('.position-actions button:visible').count(),0,'secondary actions stay collapsed');assert.equal(await p.locator('.position-actions').evaluateAll(groups=>groups.every(g=>g.parentElement.matches('.holding-expand'))),true,'shared detail action grouping');
+   await nav('positions');assert.equal(await p.locator('.position-row-actions [data-action=archive-position]:visible').count(),0,'archive is available in management, not as permanent row icons');assert.equal(await p.locator('.position-row-actions [data-action=edit-position]:visible').count(),3,'normal rows retain their edit text');assert.equal(await p.locator('.position-row-actions svg').count(),0,'normal row editing uses text rather than icons');assert.equal(await p.locator('.position-actions [data-action=archive-position]').count(),0,'no large archive action');assert.equal(await p.locator('.position-actions button:visible').count(),0,'secondary actions stay collapsed');assert.equal(await p.locator('.position-actions').evaluateAll(groups=>groups.every(g=>g.parentElement.matches('.holding-expand'))),true,'shared detail action grouping');
    if(process.env.UI_QUALITY_SCREENSHOTS&&engine==='chromium'&&[320,390,430,1440].includes(width))await p.screenshot({path:'artifacts/gates/ui-positions-'+width+'.png',fullPage:true});
    for(const summary of await p.locator('.holding-expand>summary').all())await summary.click();await scan('expanded position actions '+width);
    const geometry=await p.locator('.position-entry').evaluateAll(rows=>rows.map(row=>{const rr=row.getBoundingClientRect(),buttons=[...row.querySelectorAll('.position-actions button,.position-row-actions button')].map(b=>{const r=b.getBoundingClientRect();return {x:r.x,right:r.right,y:r.y,bottom:r.bottom,height:r.height};});return {bottom:rr.bottom,buttons};}));

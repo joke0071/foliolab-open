@@ -51,8 +51,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      if(page==='bookings')await geometry('#bookingsPage .panel-actions .responsive-action');
      if(page==='history'&&filled){
       const periods=await geometry('#chartPeriods button');
-      assert.equal(periods.length,8);
-      if(width<=767)assert.deepEqual([...new Set(periods.map(b=>b.top))].map(y=>periods.filter(b=>b.top===y).length),[4,4],'balanced4+4 presets');
+      assert.equal(periods.length,width>=721?8:width<=374?5:6,'visible presets; remaining ones sit in "Mehr" on phones');
+      assert.equal(new Set(periods.map(b=>b.top)).size,1,'compact single-row presets');
       const toggle=p.locator('#historyCalendarDisclosure>summary');await toggle.click();
       await geometry('#historyCalendarDisclosure>summary');await geometry('#historyCalendarPanel button');
       assert.ok(await p.locator('#historyCalendarPanel').evaluate(e=>{const r=e.getBoundingClientRect();return e.scrollWidth<=e.clientWidth&&r.left>=0&&r.right<=innerWidth;}),'bounded seven-day calendar');
