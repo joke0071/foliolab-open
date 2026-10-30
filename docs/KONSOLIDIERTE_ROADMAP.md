@@ -1,3 +1,13 @@
+## Aktueller Statusabgleich · 30.10.2026
+
+Maßgeblich ist der [zentrale Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). v221/SW221 ist auf Main `ecf775f5` veröffentlicht; die vollständige Live-Abnahme bleibt wegen des dokumentierten Firefox-Starttimeouts blockiert. PR209 einschließlich208 ist integriert, seine Freigabe verbraucht.
+
+Diagnose-PR228 / HEAD `484ceaf0` ist technisch abgenommen und reviewbereit:964 Units, vollständige dreiBrowser-Regression und beide begrenzten Produktionsproben grün. Der ursprüngliche Timeout ist nicht reproduziert, seine Ursache bleibt ungeklärt. Vor Merge ist eine eigene konkrete Freigabe für228 erforderlich, danach die vollständige neue Main-/Pages-/Live-Abnahme. Keinv221LIVE_ACCEPTED vor vollständigem Erfolg.
+
+Bestehende Masterprioritäten und Anforderungen bleiben erhalten. Andere Copilot-Integrationen folgen erst nach Releaseabschluss einzeln. UI-VISUAL06/#217 und übrige nicht delegierte Aufgaben bleiben beiWork; ausschließlich FLH05 undFLH-PROJ01 bewusstPARKED. Keine neue Roadmap oder parallele Implementierung.
+
+---
+
 ## UI-VISUAL01/PR209 Integrationskandidat gesichert · Produktion v220 LIVE_ACCEPTED · 30.10.2026
 
 **v220/SW220 DONE / LIVE_ACCEPTED**, Main537bddc3, vollständige Main-/Pages-/Live41038554426 SUCCESS im ersten Versuch,962Units/dreiBrowser/121Hashes/18Axe/37Live-PASS-Berichte. [Releasebelege](release-evidence/v220-pr220-release.json). PR220-Freigabe verbraucht.
