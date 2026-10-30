@@ -1,3 +1,11 @@
+## UI-VISUAL07-Draft222 zusätzlich gesichert · PR220 unverändert reviewbereit · 30.10.2026
+
+Bei der abschließenden frischen GitHub-Prüfung ist der separate Copilot-[Draft222](https://github.com/joke0071/foliolab-open/pull/222) zu UI-VISUAL07/#221 vorhanden, HEAD `d04018a808ee4781eb2135c3105132105d6ff014`, offen/ungemergt. Geänderte Dateien: `docs/ui-visual07/after-1440.png`, `docs/ui-visual07/after-320.png`, `docs/ui-visual07/after-390.png`, `docs/ui-visual07/before-1440.png`, `docs/ui-visual07/before-320.png`, `docs/ui-visual07/before-390.png`, `styles.css`. **WORK_REVIEW_PENDING / NOT_INTEGRATED**; keine visuelle Parallelentwicklung und keine Abnahme aus Draft-/Copilot-Claims ableiten. Nach sicherem v220-Abschluss separat nach bestehenden Konflikt-/CSS-/Finanz-/Test-/Freigaberegeln prüfen.
+
+PR220/HEAD520b3ff7 unverändert TECHNICALLY_ACCEPTED / REVIEW_READY; eigene konkrete Freigabe ist die nächste notwendige Grenze. v220 deployed, vollständige Liveabnahme weiterhin blockiert; untenstehende Belege und exakte Releasefortsetzung gelten. UI-VISUAL06 und alle übrigen UI-Aufgaben bei Work; nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## PR220 technisch abgenommen und reviewbereit · v220-Abnahme weiterhin offen · 30.10.2026
 
 **PR212 ist gemergt und v220/SW220 ist deployed.** Main `af8347054c9e5d50b854494f650e7d7675adcff6`. Main962Units/dreiBrowser/Pages bestanden; vollständiger Release41028863300 scheiterte zunächst an der SW-Startbaseline der Referenzverwaltung und beim genau einen geprüften unveränderten Livejob-Retry an der IndexedDB-Bereitschaft nach Chart-Fixture-Reload. Beide Fehler samt signiert geprüften Artefakten bleiben erhalten. **DEPLOYED / LIVE_ACCEPTANCE_BLOCKED, kein DONE/LIVE_ACCEPTED.** Frühere QA-Befunde bleiben offen.

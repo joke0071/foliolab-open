@@ -1,3 +1,11 @@
+## UI-VISUAL07-Draft222 zusätzlich gesichert · PR220 unverändert reviewbereit · 30.10.2026
+
+Bei der abschließenden frischen GitHub-Prüfung ist der separate Copilot-[Draft222](https://github.com/joke0071/foliolab-open/pull/222) zu UI-VISUAL07/#221 vorhanden, HEAD `d04018a808ee4781eb2135c3105132105d6ff014`, offen/ungemergt. Geänderte Dateien: `docs/ui-visual07/after-1440.png`, `docs/ui-visual07/after-320.png`, `docs/ui-visual07/after-390.png`, `docs/ui-visual07/before-1440.png`, `docs/ui-visual07/before-320.png`, `docs/ui-visual07/before-390.png`, `styles.css`. **WORK_REVIEW_PENDING / NOT_INTEGRATED**; keine visuelle Parallelentwicklung und keine Abnahme aus Draft-/Copilot-Claims ableiten. Nach sicherem v220-Abschluss separat nach bestehenden Konflikt-/CSS-/Finanz-/Test-/Freigaberegeln prüfen.
+
+PR220/HEAD520b3ff7 unverändert TECHNICALLY_ACCEPTED / REVIEW_READY; eigene konkrete Freigabe ist die nächste notwendige Grenze. v220 deployed, vollständige Liveabnahme weiterhin blockiert; untenstehende Belege und exakte Releasefortsetzung gelten. UI-VISUAL06 und alle übrigen UI-Aufgaben bei Work; nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## Begrenzte Zusatzdelegation UI-VISUAL07 · PR220 läuft unverändert · 30.10.2026
 
 **Neue ausdrückliche Nutzerentscheidung:** UI-VISUAL07 / [Issue221](https://github.com/joke0071/foliolab-open/issues/221), Statistik-Kacheln und Anlageklassen-Legende, ausschließlich CSS bei GitHub Copilot. Separater Draft-PR, keine fachlichen Änderungen, kein Merge/Deployment. Work implementiert dieses kleine visuelle Teilpaket nicht parallel; später Inhalts-/Konflikt-/CSS-/Testprüfung und gültige konkrete Releasefreigabe. Diese begrenzte Ausnahme ergänzt die vorher abgeschlossene Delegation; keine weiteren Aufgaben stillschweigend übertragen.
