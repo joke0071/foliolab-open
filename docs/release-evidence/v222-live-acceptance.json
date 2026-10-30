@@ -1,0 +1,181 @@
+{
+  "schema": "foliolab-open/live-release-evidence-v1",
+  "observed_on": "2026-10-30",
+  "release": "v222",
+  "service_worker": "SW222",
+  "status": "LIVE_ACCEPTED",
+  "production_url": "https://foliolab.unperfekt.at/",
+  "main_commit": "8353a1cab3c528a389d2bd7893df819f3c284225",
+  "main_tree": "b045f340c06b51704c1482ff5685470cd96c09f9",
+  "release_run": {
+    "id": 41126514518,
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/41126514518",
+    "required_jobs": {
+      "plan": "success",
+      "test": "success",
+      "cross_engine_1": "success",
+      "cross_engine_2": "success",
+      "cross_engine_3": "success",
+      "deploy": "success",
+      "live_acceptance": "success"
+    },
+    "fast_only": "skipped (release mode)",
+    "attempt": "latest reviewed",
+    "unit_tests": {
+      "total": 975,
+      "passed": 975,
+      "failed": 0,
+      "source": "test job 124306428735 TAP log"
+    }
+  },
+  "gate_artifacts": [
+    {
+      "name": "ci-stage",
+      "id": 13010254297,
+      "bytes": 354,
+      "sha256": "54977ce4515ca9309e3c47856f919523985599a9a1840996c054ec4ba44bf4e1",
+      "zip_crc": "PASS",
+      "members": 1,
+      "json_reports": 1
+    },
+    {
+      "name": "release-gates",
+      "id": 13010464046,
+      "bytes": 21148332,
+      "sha256": "63cfbdbded4e96972b61d8bb31ae4568fa0a6695f520ea94704edcac5bc59061",
+      "zip_crc": "PASS",
+      "members": 299,
+      "json_reports": 31
+    },
+    {
+      "name": "cross-engine-1",
+      "id": 13012110646,
+      "bytes": 15473360,
+      "sha256": "8ff5fb6e78b1be1743bb61eb325c717cc3eba2289f78d514bdd5bc12df2b9aa6",
+      "zip_crc": "PASS",
+      "members": 210,
+      "json_reports": 9
+    },
+    {
+      "name": "cross-engine-2",
+      "id": 13010768348,
+      "bytes": 2313136,
+      "sha256": "d9b85eeff155c37522f6c787ce5373681f4df802b84da5ff2bdbe8ca08f614ec",
+      "zip_crc": "PASS",
+      "members": 35,
+      "json_reports": 6
+    },
+    {
+      "name": "cross-engine-3",
+      "id": 13011801526,
+      "bytes": 24191760,
+      "sha256": "086d5a91bc97a4dac4a4297f9614d8e06544b2556162e76362d9a456887dae86",
+      "zip_crc": "PASS",
+      "members": 269,
+      "json_reports": 22
+    },
+    {
+      "name": "github-pages",
+      "id": 13010169846,
+      "bytes": 386641,
+      "sha256": "b05ea07de8ff61163294a10e224dd15a20ecbfe99c7d9ac47d72a9f5d90f2126",
+      "zip_crc": "PASS",
+      "members": 1,
+      "nested_archive": "artifact.tar"
+    },
+    {
+      "name": "production-live-acceptance",
+      "id": 13012102209,
+      "bytes": 36608553,
+      "sha256": "145c85f487d1f1a198571e0587d24aaccec75065e700f277446a3060cfe037e5",
+      "zip_crc": "PASS",
+      "members": 441,
+      "json_reports": 40
+    },
+    {
+      "name": "dialog-visual-reference",
+      "id": 13011376942,
+      "bytes": 947295,
+      "sha256": "96ffa5469199d3861507afe3dca3bc53d067012ea94c0785dda84b5a0dba8b8f",
+      "zip_crc": "PASS",
+      "members": 20
+    }
+  ],
+  "artifact_inspection": {
+    "primary_json_report_entries": 109,
+    "unique_json_paths": 60,
+    "all_json_parse": "PASS",
+    "cross_engine": "Chromium, Firefox, WebKit completed/success",
+    "ui07_axe_reports": {
+      "chromium": {
+        "scans": 66,
+        "violations": 0,
+        "errors": 0
+      },
+      "firefox": {
+        "scans": 66,
+        "violations": 0,
+        "errors": 0
+      },
+      "webkit": {
+        "scans": 66,
+        "violations": 0,
+        "errors": 0
+      }
+    },
+    "visual_review": [
+      "release-gates/booking-ui/chromium-320.png",
+      "release-gates/booking-ui/chromium-edit-320.png",
+      "release-gates/blocked-reasons/chromium-bookings-320.png"
+    ],
+    "browser_reports": "No fail/error statuses found in parsed relevant report result/status fields; normal service worker activated/installing states are not failures"
+  },
+  "published_live_report": {
+    "path": "production-live-acceptance/live/report.json",
+    "sha": "8353a1cab3c528a389d2bd7893df819f3c284225",
+    "cache": "foliolab-open-v222",
+    "result": "PASS",
+    "errors": [],
+    "proxyCertificateException": false,
+    "started_at": "2026-10-30T21:02:04.958Z",
+    "finished_at": "2026-10-30T21:02:24.345Z",
+    "service_worker_and_asset_hashes": {
+      "reported": 121,
+      "matched_against_actual_pages_artifact": 121,
+      "mismatches": 0,
+      "notes": "The ./ root entry resolves to published ./index.html; all other 120 entries map by exact path"
+    },
+    "loaded_assets": 113,
+    "live_axe_scans": 18,
+    "violations": 0,
+    "core_checks": [
+      "published precache assets, service worker and loaded app bytes",
+      "real UI synthetic provider/account/position create/edit and IDB commit/reload",
+      "five views at mobile/tablet/desktop sizes with synthetic chart/booking/transfer scenarios",
+      "plain backup actual UI download and isolated-profile restore/reload",
+      "encrypted backup actual UI download and isolated-profile restore/reload",
+      "service worker control/cache update, offline reload/navigation, IDB save/reload"
+    ]
+  },
+  "boundaries": {
+    "human_real_portfolio_weekend_test": "PENDING 2026-10-31..2026-11-01",
+    "native_android_talkback_and_real_device": "NOT CLAIMED",
+    "no_manual_new_workflows_triggered": true,
+    "no_new_merge_or_deploy_triggered_by_audit": true,
+    "no_product_or_sw_code_changes": true,
+    "remaining_copilot_drafts_not_integrated": [
+      213,
+      214,
+      218,
+      219,
+      222,
+      223,
+      225,
+      227
+    ],
+    "deliberate_parked_projects": [
+      "FLH05",
+      "FLH-PROJ01"
+    ]
+  }
+}
