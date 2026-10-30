@@ -1,0 +1,401 @@
+{
+  "package": "UI-TEXT01",
+  "pr": 204,
+  "status": "TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED",
+  "head": "35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0",
+  "tree": "5fb8176d0ea6f1f0792392b9eafebfda665f4b93",
+  "base": "82523b8b20d492167b8de8690b8b1dee7fc13b7a",
+  "testMerge": "4382ee5843b6b75516cc2ba1c7d7c53140ae2260",
+  "testMergeTreeMatches": true,
+  "production": "v216/SW216 LIVE_ACCEPTED",
+  "candidateSW": 217,
+  "unitTests": {
+    "passed": 957,
+    "failed": 0,
+    "skipped": 0,
+    "localLogSha256": "7fa62dc8f7844f7ca1cee09b3b3b034a48eb35de9c0b0f794180d67c828b5d60"
+  },
+  "syntax": "PASS",
+  "diffCheck": "PASS",
+  "scope": "Read-only quote rendering, quality and missing-price warnings. No financial persistence or valuation calculation changes.",
+  "zeroContract": "Default/legacy market zero without recorded quoteSource is indistinguishable from absent quote. Display unavailable. Zero with named source stays numeric; existing date/status/quality checks still apply. Non-market quote warnings retain prior semantics.",
+  "regressions": [
+    "Canonical missing-price reproduction with real model factory",
+    "Absent/null/blank/invalid/exact field priority",
+    "Unknown source never inferred as manual",
+    "Positive unknown-source quote remains visible",
+    "Source-backed zero stays numeric",
+    "Zero quality still checks date/status/provenance",
+    "Model and valuation unchanged",
+    "Missing-price warnings agree with recorded zero display",
+    "Seven-width Chromium browser renderer and storage equality"
+  ],
+  "localBrowser": "NOT_RUN: installation returned invalid/empty ZIPs",
+  "targetedBrowserScope": "New browser assertions run in existing Chromium drilldown suite. Existing complete Firefox/WebKit regression suites also required; no claim that new dedicated drilldown assertions run there.",
+  "hardware": "EXTERNAL: no real Android acceptance claimed",
+  "runs": {
+    "mandatory": 40997505773,
+    "wallet": 40997505790,
+    "walletStatus": "SUCCESS",
+    "mandatoryStatus": "SUCCESS"
+  },
+  "previousCandidate": {
+    "head": "c59f776d133a1a1e5eeeca4b9f4594133d1e003f",
+    "mandatory": 40996838356,
+    "wallet": 40996838351,
+    "status": "SUCCESS: intermediate candidate only; final warning correction requires own CI"
+  },
+  "files": {
+    "src/position-detail-ui.js": {
+      "blob": "978804d4c7c349d0a7662feed10220fef3ba86ea",
+      "sha256": "f8890c281c44c2db3a798cfe506987d81c7c7a968388dce79c974cfd5a6b2439"
+    },
+    "src/quote-quality.js": {
+      "blob": "9d0b607a1efa9cc897cff86c509f9900cbf849fd",
+      "sha256": "086f020e58a622e53ddc6af7720c9c5e5b3e550deea526aa5639139543af54a0"
+    },
+    "src/valuation-status.js": {
+      "blob": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb",
+      "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c"
+    },
+    "sw.js": {
+      "blob": "2c91b90865e9427ef50f9439be7d40307fe1189a",
+      "sha256": "9e6a3969575ebb2745a1fa75a83f64a92c94b30329ff50bbb834a54c9db78857"
+    },
+    "tests/browser-position-drilldown.mjs": {
+      "blob": "32b6d32581c51a6358ca4d90842d93ae6474ca60",
+      "sha256": "6a1dbb90c93fc1de15dedc6064708054822c582cf6f1f06af91e3f4938d5119e"
+    },
+    "tests/position-detail-priority.test.mjs": {
+      "blob": "056b57e99bfe3979c13afce884c33c8d1f3712eb",
+      "sha256": "a5c4fc1e5ca185efaaa5ec936f41c230c95eb3009ee2cfc8177b518608f58ded"
+    }
+  },
+  "releaseAuthorization": "Explicit approval required for PR204; PR203 approval consumed. No valid preauthorization documented.",
+  "next": "Explicit approval for PR204 HEAD35f0bb7c required; after approval fresh refs/gates/tree check, controlled merge, complete Main/Pages/Live/PWA acceptance. Then remaining existing UI-P1 sequence.",
+  "preserved": "All existing master contracts. FLH05 and FLH-PROJ01 OPEN/PARKED.",
+  "jobs": [
+    {
+      "id": 123873976466,
+      "name": "cross-engine (1)",
+      "result": "success"
+    },
+    {
+      "id": 123873976637,
+      "name": "cross-engine (2)",
+      "result": "success"
+    },
+    {
+      "id": 123873976803,
+      "name": "test",
+      "result": "success"
+    }
+  ],
+  "ciBrowserLog": "POSITION DRILLDOWN: real price chart, keyboard, periods, empty market, safe snapshot, honest missing/zero quotes, responsive 320–1440px PASS",
+  "artifacts": [
+    {
+      "id": 12952148114,
+      "name": "release-gates-4382ee5843b6b75516cc2ba1c7d7c53140ae2260",
+      "size_in_bytes": 20662450,
+      "digest": "sha256:bf929d8ac8dec5993b6c2e374c7bc81796ba2fa67c42fd030a4712f92b125036",
+      "sha256VerifiedBeforeExtraction": true
+    },
+    {
+      "id": 12951929144,
+      "name": "cross-engine-gates-4382ee5843b6b75516cc2ba1c7d7c53140ae2260-2",
+      "size_in_bytes": 25876151,
+      "digest": "sha256:75e5b312adf970e4ae8be027bfa4fb60fa423b31020df4eaeb2c4b20e8bcaa2f",
+      "sha256VerifiedBeforeExtraction": true
+    },
+    {
+      "id": 12951929121,
+      "name": "cross-engine-gates-4382ee5843b6b75516cc2ba1c7d7c53140ae2260-1",
+      "size_in_bytes": 14246818,
+      "digest": "sha256:35003da5614b64f37b77dd920789784b8b9d858d018cf675c1a6db79e6091761",
+      "sha256VerifiedBeforeExtraction": true
+    }
+  ],
+  "reports": [
+    {
+      "file": "12951929121/position-archive.json",
+      "sha256": "a02203e8f69f1813c886b279d572ea5bcee201418dc9a5c53a8a30868cd57bfe",
+      "passMarkers": 14
+    },
+    {
+      "file": "12951929121/booking-management.json",
+      "sha256": "586c2f1f256a071a87a061fd9050d9bc8fe5fee48b11462695daa2c98042b266",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929121/transfer-states.json",
+      "sha256": "67708093e39cc2bb2e99f0803de63e6a27e79eb6038e0ef6ba8d793a11921721",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/position-archive.json",
+      "sha256": "6d60af05155ee8f39b2d5398d48887041660695562cac38addb64578a3458861",
+      "passMarkers": 7
+    },
+    {
+      "file": "12952148114/flatex-native-identity-chromium.json",
+      "sha256": "c75e114f38d2f525ef8a5df5faf1dff6440fc5c2bafd791ff42b4948dcf8f24c",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/booking-management.json",
+      "sha256": "48af3715bb4b32ad306c0a73ecc553b28f06fc53cf99c3ffce14a3f40102cc65",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/flatex-native-chromium.json",
+      "sha256": "80b35a4d9451549f601c01fd5906b3ae2011916fa0545b577017d878bc57092d",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/chromium-position-removal-sw-baseline.json",
+      "sha256": "5c8ea7f9128cafda6760dcda8b92d35bf63540e4c093fad99ad57b9de99c92fb",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/sonic-evidence-chromium.json",
+      "sha256": "dc939d4fc3244cfb18b3bfa897b774f7f4852cee1dab83ba4679b41537cf3336",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/ui-quality.json",
+      "sha256": "541f929834cdd1f5c5c6dce5d134ae492618237738a616df7eeb3ceed0bcd723",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/flatex-order-links-chromium.json",
+      "sha256": "b4b5962693b9ef1d98abb1224ce5a569ff1168636612a5991b40d8d4799b4a0e",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/transfer-states.json",
+      "sha256": "7a4a393bd869c1003b50a0de063517e48bb88a61b3adf5a46f547b1f09d11593",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/flatex-native-amounts-chromium.json",
+      "sha256": "e0203043821899935872ab28f6ac608738e64686bc9208ba3ffdd915ace9331e",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/bitpanda-evidence-chromium.json",
+      "sha256": "e4cd9be8f6c63ff3ab3ceb09d80a4339003647575b7629c2bfb0ca55c5089382",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/flatex-native-projection-chromium.json",
+      "sha256": "e15f7f71d97a10b293b45c21c507c14d1c83a3d394f10119067c268eee21b3de",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/flh03-abce.json",
+      "sha256": "61fa40fc78de05dffa59102e6d5ada2f08603530d6b0f7ec9d3799cc322cf3d5",
+      "passMarkers": 21
+    },
+    {
+      "file": "12952148114/pchain-evidence-chromium.json",
+      "sha256": "23d5fc2f2a859612fcce36e87f1d2fdad36530f452f0f14263650882e2b35282",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/firefox-position-removal-sw-baseline.json",
+      "sha256": "5c8ea7f9128cafda6760dcda8b92d35bf63540e4c093fad99ad57b9de99c92fb",
+      "passMarkers": 1
+    },
+    {
+      "file": "12951929144/pchain-evidence-firefox-webkit.json",
+      "sha256": "ce53ab7f64a792fd2f62a834b0e27fa2272bb51b6127c7bff08fcd72f78356b5",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/webkit-position-removal-sw-baseline.json",
+      "sha256": "5c8ea7f9128cafda6760dcda8b92d35bf63540e4c093fad99ad57b9de99c92fb",
+      "passMarkers": 1
+    },
+    {
+      "file": "12951929144/bitpanda-evidence-firefox-webkit.json",
+      "sha256": "6d24c53e5e29b91a0e43fdfa97abd40695cf40c8e8ce832360c40e6a620b0a0e",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/sonic-evidence-firefox-webkit.json",
+      "sha256": "a97382c553f28c0910d620ca8a17cbc2989fc8e49a38e82b547d7a0eae02f1ec",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/flatex-native-amounts-firefox-webkit.json",
+      "sha256": "ba8e7174e86ea120726fb300b5ceb6f9f59ce6dcba9b8f2a549f142020aee755",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/flatex-native-firefox-webkit.json",
+      "sha256": "826d95e07da882581fa39908d90f0cd0a35558362d59aa22e87e4c4ddc2ba9ed",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/flatex-order-links-firefox-webkit.json",
+      "sha256": "e935cb423127619acda839595d26d9314d48a9724a36d7121fa4c4962bbe98bb",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/ui-quality.json",
+      "sha256": "8543b49cebd181ab640ed65eec084651db9337cc32029503216d6f7877b3b20b",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/flatex-native-projection-firefox-webkit.json",
+      "sha256": "bdb7179febc263b6a9fc9ff42ee2a6a92d112b79fde511497efe32712aded41c",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/flatex-native-identity-firefox-webkit.json",
+      "sha256": "64a633af9b1bd1525c4e6c70de722371aca2bd5d52fd1f53add3396096ad2840",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/flh03-abce.json",
+      "sha256": "e52427a1424842f20f51869ab764c71359e28cdab4004c7e64bb56d4605d2c21",
+      "passMarkers": 42
+    },
+    {
+      "file": "12952148114/flatex-native-simulation-ui/report.json",
+      "sha256": "1d0be9605a0c7f8cceb47c1f70b0d64c7fc8f3d8c03290a36b04d1bb56804c0a",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/bitpanda-preview/report.json",
+      "sha256": "1b91415487b6d3d83281713f715ae9b57011d11a371911785d5ec14f7b832b7f",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/flatex-native-commit/report.json",
+      "sha256": "28152fbe43733c82503376e7202ac34ec82c33bf5c942729bf892d5fe34eb4e4",
+      "passMarkers": 3
+    },
+    {
+      "file": "12952148114/flatex-native-ui/report.json",
+      "sha256": "d382cd9e50b8ea90ffbc7726902a728e66bcf01143b7f07a2227f06a4ec3557e",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/pwa-update/report.json",
+      "sha256": "bb5e12314f80e9570aaf4e99557a4a68be17cca18c4e03aaa3ac11a3d60d0fca",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/blocked-reasons/report.json",
+      "sha256": "53d80ecd4eb441df15f8533a8879eaa29a9d04e044ca5165b7c3c20f3586b29f",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/reference-removal/report.json",
+      "sha256": "f91ee40b6637f39f0793bb0e7ee83bec134b709bc87b101909d151d71dbfd2e9",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/ui-audit-controls/report.json",
+      "sha256": "50c18ee5e0a7d2813baacb9eca31287f70f42daa15908781f2a261686321cde0",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/chart-tooltip/report.json",
+      "sha256": "daf7f4c2584dc4b5eb1c79e3a35e81471c0cfe1361147641ca85cdc3fa083046",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/flatex-native-binding/report.json",
+      "sha256": "d52fcf6689111c223c4442c8098514d0453da418f174202cf7c2b3bd560f060b",
+      "passMarkers": 2
+    },
+    {
+      "file": "12952148114/kraken-ledger/report.json",
+      "sha256": "bfb86e7a9adda7eae7158d5109cefd37a7f33e93adc7f6077211a2cd9b967a8f",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/reference-management/report.json",
+      "sha256": "60dbb880f7e38e01e68c7c1d7116d621a1af6e777f92fa467699fbf812e19758",
+      "passMarkers": 1
+    },
+    {
+      "file": "12952148114/reference-management/chromium-sw-baseline.json",
+      "sha256": "739624aeccecd91325db84fc4c7845f821c98cd7f2d315f80bf68b70350e64b7",
+      "passMarkers": 1
+    },
+    {
+      "file": "12951929144/flatex-native-simulation-ui/report.json",
+      "sha256": "3290a60b75a8d284b7b4fe8bb1df6246cad8b32d580569c459dfeeec64865564",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/bitpanda-preview/report.json",
+      "sha256": "a234d4db3e0d1b198a5465292cf67b8f17d2cb3cdaf7e1d4679a59c2d1c977cc",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/flatex-native-commit/report.json",
+      "sha256": "343b43fa6cb6419d38ce0041e0b21bd5cceaf839a9e4eaeb1aa4be05d85e1270",
+      "passMarkers": 5
+    },
+    {
+      "file": "12951929144/flatex-native-ui/report.json",
+      "sha256": "ce619463ae857e8068e1d51941b8c30589dad5f2192ce7b28f647bd62c9f29c8",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/pwa-update/report.json",
+      "sha256": "385edb292ccb6ce41b757f451fbd22144a0fd945a140f88a9f9dca2afed29311",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/blocked-reasons/report.json",
+      "sha256": "87bf2460a3d20a12354f83a55f2af4b5f6b31d6408b4e227b57f16474c6bf9df",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/reference-removal/report.json",
+      "sha256": "77a298457f5074457215bfd11a715ca0890f411c1ea0a58e9eb76b424d15b6aa",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/ui-audit-controls/report.json",
+      "sha256": "eceeaabab689973a23cd7da2bf0f7790f153e81dc7edf7733e75fd6e784f1013",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/chart-tooltip/report.json",
+      "sha256": "8b15d3cf2ee2860373584384eabfc783cacafe95929d9eb41f0f1c466da1143c",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/flatex-native-binding/report.json",
+      "sha256": "3ed63e166a8936c43247e782d8d41166a6831df4d2a325649c711fc04b23dc18",
+      "passMarkers": 3
+    },
+    {
+      "file": "12951929144/kraken-ledger/report.json",
+      "sha256": "02e4e4a0ef98714c2e5295b32c262df50fefe238ecc71cbbb0dd39f2385ea010",
+      "passMarkers": 2
+    },
+    {
+      "file": "12951929144/reference-management/webkit-sw-baseline.json",
+      "sha256": "c0f8db2900e0e9735b27e2d0ffe3d07a899be6caf740f0965b87cb3e90682c4d",
+      "passMarkers": 1
+    },
+    {
+      "file": "12951929144/reference-management/firefox-sw-baseline.json",
+      "sha256": "739624aeccecd91325db84fc4c7845f821c98cd7f2d315f80bf68b70350e64b7",
+      "passMarkers": 1
+    },
+    {
+      "file": "12951929144/reference-management/report.json",
+      "sha256": "300d210e16c7d65e703e1782774f8d36a7984b2273492013a71ca2c6d51dab6c",
+      "passMarkers": 2
+    }
+  ],
+  "parsedJsonFiles": 59
+}
