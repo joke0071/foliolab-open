@@ -1,0 +1,176 @@
+{
+  "state": "FIRST_CI_FAILURE / ROOT_CAUSE_REPRODUCED / FIX_LOCAL_PASS / CURRENT_FULL_CI_RUNNING",
+  "pr": 232,
+  "head": "1872114ea1aa0130cc08d3da36afa13d9e34b1ab",
+  "run": 41121801027,
+  "failedGate": "browser-flatex-native-binding.mjs:47 original page-width assertion",
+  "failedJobs": [
+    124289498755,
+    124289498793
+  ],
+  "cause": "Background normal booking rows overflow, not the Flatex dialog: nonshrinking position-row-actions contain the new protected-source hint. At320px the text spans306.42px fromx31 to337.42. Dialog width assertion passes; document width337 violates320+1.",
+  "diagnostic": {
+    "width": 320,
+    "scroll": 337,
+    "offenders": [
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "position-row-actions",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "flex",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "class": "reference-protection",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "block",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "position-row-actions",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "flex",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "class": "reference-protection",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "block",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "position-row-actions",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "flex",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "class": "reference-protection",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "block",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "position-row-actions",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "flex",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "class": "reference-protection",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "block",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "class": "position-row-actions",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "flex",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "class": "reference-protection",
+        "left": 31,
+        "right": 337.421875,
+        "width": 306.421875,
+        "minWidth": "auto",
+        "whiteSpace": "normal",
+        "display": "block",
+        "text": "Geschützt · Buchungsdetails ansehen."
+      }
+    ]
+  },
+  "sourceProductHashes": {
+    "index.html": "c1d8a518e12c38514641f7c3249e18fce1481a88bef654223196848553ca0b17",
+    "src/app.js": "1fc5d23d22c01085845b4ad67be5a87b5ad35188205945b9dc51bc0cd7208daf",
+    "styles.css": "e39557362ee25dc99ab493d40de92ed08e0610b24acc3e6747ad1c383eaaeb0d",
+    "sw.js": "1f4df5b7c06ad93b5f1c3a8f82e7c4c7c4d4c18711cda02111c882d4e1eadc2b"
+  },
+  "fix": "Only booking action container may shrink/wrap; full protected-source hint retained. No body overflow hiding, no altered assertion/tolerance/timeout or financial gate. Extra normal-view width regression and failure diagnostics added.",
+  "production": "v221/SW221 unchanged; no merge/deploy or approval",
+  "retryPolicy": "No CI job retried/cancelled. Existing run allowed to finish. New full CI only after concrete fix and targeted local proof.",
+  "correctedCandidate": {
+    "head": "12835f4102af973fc274c2be21973cb5ab8c9feb",
+    "tree": "b045f340c06b51704c1482ff5685470cd96c09f9",
+    "run": 41123919291
+  },
+  "firstRunJobs": {
+    "main": "failure",
+    "cross1": "success",
+    "cross2": "success",
+    "cross3": "failure",
+    "wallet": "success"
+  },
+  "localFixEvidence": [
+    {
+      "suite": "browser-flatex-native-binding",
+      "sha256": "4a95fc66faf773d00cc88fc440685b55c3f1d31b563aa8ab3741cd566e635d95",
+      "log": "chromium: FLATEX NATIVE BINDING explicit scope/account/source/manual/reset/paging/5widths/Axe/CAS/offline/exact zero writes PASS\nchromium: FLATEX AMOUNT UI both confirmations/exact evidence/manual/withdrawal/async/stale/5widths PASS\n"
+    },
+    {
+      "suite": "browser-booking-management",
+      "sha256": "67aa6662e0b38237a6f2526d006cc2f76239593d3e32546a734502e304595e86",
+      "log": "BOOKING UI chromium: normal edit/central management/archive, shared toolbar/5 widths/Axe/44px,249 scope,metadata-only archive/restore,quota/post-put abort/offline,exact undo,reimport/encrypted restore,stale tab PASS\nchromium: BOOKING MANAGEMENT selection/preview/guards/CAS/quota/abort/offline/undo/restore/5widths/Axe PASS\n"
+    }
+  ],
+  "publicationCorrection": {
+    "intermediateHead": "04e9bdfdae57f17a3258a9e2793791ee6c7e2149",
+    "rejected": "Truncated tool stdout entered stylesheet during initial publication; never accepted. Complete source re-transferred and exact local/remote tree verified.",
+    "productionAffected": false
+  }
+}
