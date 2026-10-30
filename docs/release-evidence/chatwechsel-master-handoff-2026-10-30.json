@@ -1,0 +1,1189 @@
+{
+  "kind": "CHATWECHSEL_MASTER_HANDOFF_GITHUB_SNAPSHOT",
+  "capturedAt": "2026-10-30T15:36:18.235Z",
+  "userInstruction": "STOP: documentation and handoff only. Do not start implementation, PR, merge, deploy or extensive tests. Leave existing run unchanged.",
+  "main": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+  "tree": "172e887b085acfb4dcf5675207713eda99c2201d",
+  "production": {
+    "publishedVersion": 221,
+    "publishedSW": 221,
+    "status": "DEPLOYED / LIVE_ACCEPTANCE_BLOCKED",
+    "lastFullyAcceptedVersion": 220,
+    "lastFullyAcceptedMain": "537bddc3202dec8025626e8fe8b00797d418d0f7",
+    "lastFullyAcceptedRun": 41038554426
+  },
+  "currentRun": {
+    "id": 41080709085,
+    "head": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+    "attempt": 1,
+    "status": "in_progress",
+    "conclusion": null,
+    "jobs": [
+      {
+        "id": 124148731416,
+        "name": "cross-engine (2)",
+        "status": "in_progress",
+        "conclusion": null,
+        "startedAt": "2026-10-30T15:26:21Z",
+        "completedAt": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Firefox and WebKit for cross-engine regression",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Test portfolio workflows on Firefox and WebKit",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "Preserve cross-engine evidence",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "pending",
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 124148731858,
+        "name": "test",
+        "status": "in_progress",
+        "conclusion": null,
+        "startedAt": "2026-10-30T15:26:21Z",
+        "completedAt": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Require a service-worker cache revision for shipped asset changes",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Verify standalone application",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install browser test tools",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Browser smoke tests (320–1440 px)",
+            "status": "in_progress",
+            "conclusion": null
+          },
+          {
+            "name": "Expose bounded synthetic C5 PR review",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Preserve test evidence",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Preserve representative dialog screenshots",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "pending",
+            "conclusion": null
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "pending",
+            "conclusion": null
+          }
+        ]
+      },
+      {
+        "id": 124148731923,
+        "name": "cross-engine (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "startedAt": "2026-10-30T15:26:21Z",
+        "completedAt": "2026-10-30T15:34:34Z",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Firefox and WebKit for cross-engine regression",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Test portfolio workflows on Firefox and WebKit",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Preserve cross-engine evidence",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/setup-node@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "notStartedAtSnapshot": [
+      "deploy",
+      "live-acceptance"
+    ],
+    "artifacts": [
+      {
+        "id": 12990066489,
+        "name": "cross-engine-gates-3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce-1",
+        "digest": "sha256:478444063c1b8f29edffddf2682e1dc0bb4d6724af27035a57ccbaa0e0851295",
+        "downloaded": false,
+        "verified": false,
+        "reason": "Handoff snapshot: available artifact not yet reviewed"
+      }
+    ]
+  },
+  "previousFailure": {
+    "run": 41059923497,
+    "job": 124082520863,
+    "status": "failure",
+    "phase": "First Firefox P-Chain app initialization before evidence assertions",
+    "error": "30s timeout waiting for IndexedDB aktiv",
+    "rootCause": "UNKNOWN / NOT_REPRODUCED in bounded probes",
+    "evidence": "v221-pr209-live-partial.json",
+    "notAttempted": [
+      "WebKit P-Chain",
+      "Sonic cross-engine",
+      "full cross-engine production UI",
+      "cross-engine transfers"
+    ]
+  },
+  "approval": {
+    "pr228": "Explicit Freigabe received for head484ceaf0; merged and consumed",
+    "pr209": "Consumed",
+    "furtherPRs": "No approval; ask concretely after acceptance"
+  },
+  "merged": [
+    {
+      "number": 208,
+      "merged": true,
+      "head": "4c4e32bc5359b508c4f76464eac4aba8f4d9a4ed",
+      "merge": "0cd81c97e4997d545970cd596606c3dff54e28d2"
+    },
+    {
+      "number": 209,
+      "merged": true,
+      "head": "a61af4c9ecc7dcb4a0aafd871d5884be807a10ae",
+      "merge": "ecf775f5c17ceb301be04f20e1be400567f45261"
+    },
+    {
+      "number": 228,
+      "merged": true,
+      "head": "484ceaf0ca80830202d4a646d366d66e587433d6",
+      "merge": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce"
+    }
+  ],
+  "openPullRequests": [
+    {
+      "number": 227,
+      "title": "UI-VISUAL09: Filter- und Aktionsflächen Positionen/Buchungen",
+      "head": "485620239228e2770dcf74d24d8423565edea505",
+      "branch": "feature/ui-visual09-positions-bookings-filters",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 225,
+      "title": "UI-VISUAL08: Verlauf – Datenabdeckung, Rendite & Geldflüsse, Referenzwerte visuell vereinheitlichen",
+      "head": "3415af87280b3f7e27a9c9c488cc3f4b40f33d1a",
+      "branch": "feature/ui-visual08-history-details",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 223,
+      "title": "QA01: Donut-Mitte – Accessible Name enthält sichtbares Label (WCAG 2.5.3)",
+      "head": "8377ed7814437137679c90635c78d968b35ab835",
+      "branch": "fix/qa01-a11y-label-in-name",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 222,
+      "title": "UI-VISUAL07: Statistik-Kacheln und Anlageklassen-Legende der Übersicht kompakt gestalten",
+      "head": "d04018a808ee4781eb2135c3105132105d6ff014",
+      "branch": "feature/ui-visual07-overview-stats",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 219,
+      "title": "UI-VISUAL05: Anlageassistent und Wallet-Dialoge responsiv/visuell",
+      "head": "1840be28b8fcd3f80c4798c7ceffe4b31530f3cd",
+      "branch": "feature/ui-visual05-dialogs",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 218,
+      "title": "UI-VISUAL04: Navigation und Header visuell harmonisieren",
+      "head": "f90ed7bfce611436e114b860d6dbb3746ef5d5c4",
+      "branch": "feature/ui-visual04-navigation",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 214,
+      "title": "UI-VISUAL03: Buchungen und Positionsdetails kompakter",
+      "head": "ca9a14c09f5cacb4e8e479d9b9797632d0e857f7",
+      "branch": "feature/ui-visual03-bookings",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 213,
+      "title": "UI-VISUAL02: Reiter Mehr visuell vereinheitlichen",
+      "head": "e0c4462a70eb4bb949f8833f938838233c8290db",
+      "branch": "feature/ui-visual02-mehr",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "COPILOT_DELIVERED / WORK_INTEGRATION_PENDING"
+    },
+    {
+      "number": 161,
+      "title": "docs(FLH04): encryption, revision and Google operator gates before sync implementation",
+      "head": "0d980c2f43f28fd06ef9a7403b2144b6099fbc74",
+      "branch": "feature/flh04-sync-design",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "EXISTING_DRAFT / PRESERVE"
+    },
+    {
+      "number": 157,
+      "title": "D/P2: bounded native dirty-dialog warnings and unchanged internal discard protection",
+      "head": "08714cc602110bae479083b3d38fa1adc9be280c",
+      "branch": "feature/flh03-d-native-guard",
+      "draft": true,
+      "state": "open",
+      "owner": "Work: review/integration; no merge approval",
+      "status": "EXISTING_DRAFT / PRESERVE"
+    }
+  ],
+  "branches": [
+    {
+      "name": "audit/avalanche-rpc-valuation-labels-20261022",
+      "sha": "bc4ffae394596c6dcbd8210613fcf8db46988b9c"
+    },
+    {
+      "name": "audit/csv-focus-programmatic-drafts-2026-10-24",
+      "sha": "fa4dbfc40fbf1f01195f4aa1ad925762f0c2d9fe"
+    },
+    {
+      "name": "audit/csv-parser-hardening-20261021",
+      "sha": "64c92f35248aca65fc1f37b003981d22c42690fb"
+    },
+    {
+      "name": "audit/data-integrity-20261021",
+      "sha": "220cacddc20ebccc230727187ca17bd7e605e8b8"
+    },
+    {
+      "name": "audit/defi-dialog-context-2026-10-24",
+      "sha": "a32728731e967c802b2e0027f64fdebb5c6c79c2"
+    },
+    {
+      "name": "audit/dialog-accessibility-mobile-2026-10-24",
+      "sha": "2f7955945236cd54a06cd905b4c353e38d507440"
+    },
+    {
+      "name": "audit/dialog-final-signoff-2026-10-24",
+      "sha": "e7a36bbcd6525922f854a123bea85bd28e746afe"
+    },
+    {
+      "name": "audit/dialog-final-signoff-v123-2026-10-24",
+      "sha": "567b27c24ba25a07af920f1657fa1ecf130dc375"
+    },
+    {
+      "name": "audit/dialog-form-consistency-2026-10-24",
+      "sha": "5735fa139a20e83bad80a576b9094f2682a092e7"
+    },
+    {
+      "name": "audit/dialog-guard-wording-2026-10-24",
+      "sha": "70ceaa281d6618f41abd60e9e89ae8dc74392eab"
+    },
+    {
+      "name": "audit/dialog-wallet-account-choice-2026-10-24",
+      "sha": "415fbb1cb4be6fd1a37d02d468554b370d3ff5c5"
+    },
+    {
+      "name": "audit/financial-wallet-quality-20261021",
+      "sha": "4c473896e37f37f1a289ce3ffcf92f32ff910ee7"
+    },
+    {
+      "name": "audit/staking-dialog-disclosure-2026-10-24",
+      "sha": "0a437f495af805a6da4354fab50ed2dd0b571a6d"
+    },
+    {
+      "name": "audit/ui07-final-usability",
+      "sha": "4a6ff276c7eb731d7d5e3c9cb2221281e66995ad"
+    },
+    {
+      "name": "audit/valuation-completeness-20261021",
+      "sha": "6dce0c2274b0913192f4d74494c6c2b30cc1b19d"
+    },
+    {
+      "name": "audit/wallet-realworld-reliability-20261022",
+      "sha": "03c9355f5c5eaf3c8dcd8f6f346c04360e92f195"
+    },
+    {
+      "name": "audit/xrpl-ledger-consistency-20261021",
+      "sha": "f4a23ccee28855ba95eca95bed84d54cb3e49919"
+    },
+    {
+      "name": "audit/2026-10-22-request-resilience",
+      "sha": "45f02d52f669f28e9b02f406458869e6d4834b53"
+    },
+    {
+      "name": "audit/2026-10-23-backup-referential-integrity",
+      "sha": "f435ef450d7b39ef94743c8b5a00bcf867492b14"
+    },
+    {
+      "name": "audit/2026-10-23-backup-restore-release",
+      "sha": "8411ba2c963d8b3a70ea88b01287291129b5f3b4"
+    },
+    {
+      "name": "audit/2026-10-23-browser-performance",
+      "sha": "6d90dd749320b4700116925db13fa4b7b50169dd"
+    },
+    {
+      "name": "audit/2026-10-23-crossbrowser-accessibility",
+      "sha": "05e081079d04228af250f709c9feaf2118f7afdf"
+    },
+    {
+      "name": "audit/2026-10-23-final-legacy-quotes-chevrons",
+      "sha": "49a7c50604f80570e4e05ca3c122c7194fdafc2c"
+    },
+    {
+      "name": "audit/2026-10-23-fx-corporate-actions",
+      "sha": "e8421b39e3001cabbb6992b7639b329a59668a59"
+    },
+    {
+      "name": "audit/2026-10-23-fx-corporate-release",
+      "sha": "c8de4c3bac157f90b25b1d3379161048f3019dc2"
+    },
+    {
+      "name": "audit/2026-10-23-integrity-stability",
+      "sha": "ecf864ee9f8cd3bad8d3c1ad854806de5b4a12e5"
+    },
+    {
+      "name": "audit/2026-10-23-key-storage-dataflow",
+      "sha": "9537eb64f8c78ab6451d39b2598b981569f405e2"
+    },
+    {
+      "name": "audit/2026-10-23-ledger-reference",
+      "sha": "ca857fe97d46d81abe73a46cbeb9e0bc9ff5bbca"
+    },
+    {
+      "name": "audit/2026-10-23-live-deployment-smoke",
+      "sha": "333da42d2ab00c2cc56fa22ba9fff160693b2a88"
+    },
+    {
+      "name": "audit/2026-10-23-multitab-release",
+      "sha": "8f3df756928c4df5bb946b756932d445d44dd255"
+    },
+    {
+      "name": "audit/2026-10-23-multitab-sync",
+      "sha": "31f69c776c14ab7c7befbc96a45608e6a2f1a0d9"
+    },
+    {
+      "name": "audit/2026-10-23-pwa-cache-release-gate",
+      "sha": "4e65fddb71bec12b3e41e4c9418ded610d3ffaa6"
+    },
+    {
+      "name": "audit/2026-10-23-security-privacy",
+      "sha": "66ba8aa663188d8eec802a76281ee5fe4e38cc41"
+    },
+    {
+      "name": "audit/2026-10-23-wallet-valuation-consistency",
+      "sha": "aaf76989cf622a8bb919952630680e29b4602f22"
+    },
+    {
+      "name": "audit/2026-10-23-wallet-valuation-release",
+      "sha": "2cf6e7b3efaa92c51a6c29644ced9ab4d3b43f17"
+    },
+    {
+      "name": "chore/prepare-unperfekt-custom-domain",
+      "sha": "caffd47239d6ab8264fd61c20c352068d53d2487"
+    },
+    {
+      "name": "ci/cross-engine-shards",
+      "sha": "c5a760d01053bccf2d07f49bcc0dff6e2b06a2ec"
+    },
+    {
+      "name": "copilot/draft-pr-ui-visual01",
+      "sha": "4c4e32bc5359b508c4f76464eac4aba8f4d9a4ed"
+    },
+    {
+      "name": "docs/benchmark-restarbeiten-2026-10",
+      "sha": "b6318b94394f3e15bd00185fa5249241fb811fe9"
+    },
+    {
+      "name": "docs/flh02-v175-acceptance",
+      "sha": "0423c57269db31931b874751e158b963376d215e"
+    },
+    {
+      "name": "docs/flh02-v175-release",
+      "sha": "a5b1dbae2aac4704d07b2c617b13d1c073cf115a"
+    },
+    {
+      "name": "docs/flh02-v176-acceptance",
+      "sha": "b51a7505c18ee116639084834b2232b9f16a3cb0"
+    },
+    {
+      "name": "feat/catalog-crypto-oekb-2026-10-22",
+      "sha": "a024165b44be127350397e815bf683346f6bfbe5"
+    },
+    {
+      "name": "feat/compact-responsive-action-bars-v92",
+      "sha": "56f98c284a4b70cd5cd2acf3628be18dbd5dcbc3"
+    },
+    {
+      "name": "feat/extended-price-chart-periods-20261024",
+      "sha": "ceccfd97f5a2887bf96397ba5702447a5b243c87"
+    },
+    {
+      "name": "feat/history-calendar-compact-v90",
+      "sha": "5e270c6e2df847b5951ef096fe5849cfb7a7c3c2"
+    },
+    {
+      "name": "feat/issue-44-idb-transaction-foundation",
+      "sha": "b1032eb34460aff57cc03d01fb599ce9f5162826"
+    },
+    {
+      "name": "feat/issue-44-transactional-idb-cutover",
+      "sha": "aaa6a17e8d6bd24bb09c92956c3729a08f194ecf"
+    },
+    {
+      "name": "feat/mvp-reth-bep20-solana-fallback-20261022",
+      "sha": "6d8fda48b09a20674ad9e98b55caf48f889bebab"
+    },
+    {
+      "name": "feat/optional-eodhd-worker-perf-ui-v81",
+      "sha": "1620ede3c2720fd83683027885723d6e4cc2ef5c"
+    },
+    {
+      "name": "feat/security-catalog-sources-2026-10-22",
+      "sha": "bbea168a4eebac898ca88315fde8f11db93dcfbc"
+    },
+    {
+      "name": "feat/staking-coverage-catalog-native-networks-20261022",
+      "sha": "4b8f2c04b2115016955bf13ab1e4ffc4e90cb8b5"
+    },
+    {
+      "name": "feat/ui-integrity-2026-10-22",
+      "sha": "fa60cffa5d78118d6bb3e664ee681b4d55b6216e"
+    },
+    {
+      "name": "feat/v82-market-diagnostics-quote-quality",
+      "sha": "a3e322cbf9f1116c1ac0130887d4c2d8af702179"
+    },
+    {
+      "name": "feature/at01-quality-actions",
+      "sha": "690025981b08d40aa96790c9ade99dc8f3d1e6e4"
+    },
+    {
+      "name": "feature/at02-a-deposit-maturity",
+      "sha": "5e7a8fc87ef66a3e095d74177220a255d99c7e5a"
+    },
+    {
+      "name": "feature/at02-b-interest-scenarios",
+      "sha": "ef80f1b2bde1a07d9bcc31fd571f6cab7ea40051"
+    },
+    {
+      "name": "feature/at03-b-transfer-matching",
+      "sha": "b7720b69632c97a3e3eea5845be0d7cbd82ad290"
+    },
+    {
+      "name": "feature/at03-current-cash-reconciliation",
+      "sha": "3b48702d713ca35e76f0b54bd41026b560e567ee"
+    },
+    {
+      "name": "feature/at05-a-annual-overview",
+      "sha": "fca5cb490b90505824e49c35e680fc49ba80b23a"
+    },
+    {
+      "name": "feature/booking-management-foundation",
+      "sha": "c73df569ede16d13bffb939983328e143cc6db4b"
+    },
+    {
+      "name": "feature/booking-management-ui",
+      "sha": "01ab8fedeab82c7d2fb864dce3f57c6c18efc4b4"
+    },
+    {
+      "name": "feature/complete-password-backups",
+      "sha": "f8431fb323faedb3a1ab390802c4a7c8e8b37b61"
+    },
+    {
+      "name": "feature/consolidated-rest-audit-v179",
+      "sha": "6eaf5b0c28d192ef624651b66d3a91f81e25d0a4"
+    },
+    {
+      "name": "feature/etf-crypto-data-fallbacks-20261022",
+      "sha": "c58d342e580b25ac534b4012fed5da912be897be"
+    },
+    {
+      "name": "feature/flatex-broker-import",
+      "sha": "1b6708a93ed973c596f91c239bb809a4a0cd5f7d"
+    },
+    {
+      "name": "feature/flatex-broker-import-main",
+      "sha": "5bbfbd0603cbd6bb364dd93bfec7c153a8d1b31e"
+    },
+    {
+      "name": "feature/flatex-on-current-main",
+      "sha": "7a6335133d297e30e4a944fcab9120af1a7c9779"
+    },
+    {
+      "name": "feature/flh01-unified-history",
+      "sha": "26ff8e05323cc88318c3b5693a18a2c397f8157a"
+    },
+    {
+      "name": "feature/flh02-bittr-wallet-evidence",
+      "sha": "a0d0257175339daa83003681014e400182d149e2"
+    },
+    {
+      "name": "feature/flh02-position-value-foundation",
+      "sha": "7e1bb914bc66c3783e447b4cb34d2f8b2c7a4948"
+    },
+    {
+      "name": "feature/flh03-00-01-import-foundation",
+      "sha": "99391deae0f71bdab4ea38a4e13d25b45795427f"
+    },
+    {
+      "name": "feature/flh03-08-selection-preview",
+      "sha": "b03de570ac39adb86e778fc12a9b7158fe125b0d"
+    },
+    {
+      "name": "feature/flh03-08-sw-ready",
+      "sha": "f693ceced9e220e844c15d6ce0b98708b222c2fc"
+    },
+    {
+      "name": "feature/flh03-14-position-archive",
+      "sha": "3614b1763c7e1b4707a8cc5050b821497608eaf4"
+    },
+    {
+      "name": "feature/flh03-account-completeness",
+      "sha": "fe535068d2d0e5f7e704aa8aee5fa5e06b60eb3f"
+    },
+    {
+      "name": "feature/flh03-bitpanda-preview",
+      "sha": "b4ab4a52a43f4fd00bcaa0027fa6661018be6f58"
+    },
+    {
+      "name": "feature/flh03-d-native-guard",
+      "sha": "08714cc602110bae479083b3d38fa1adc9be280c"
+    },
+    {
+      "name": "feature/flh03-flatex-native-amounts",
+      "sha": "62d9bb77ca8cdadc8926d16e6d081effdd0da250"
+    },
+    {
+      "name": "feature/flh03-flatex-native-format",
+      "sha": "6d66d3d57421e8b0d96862afc15992f124b06b68"
+    },
+    {
+      "name": "feature/flh03-flatex-native-identity",
+      "sha": "a088fdfdb3bdd27f3ec08319a3ac770b57836d9e"
+    },
+    {
+      "name": "feature/flh03-flatex-native-projection",
+      "sha": "34dc5fb71c5ba5335e1a8b19b48fefed69b8f126"
+    },
+    {
+      "name": "feature/flh03-flatex-order-links",
+      "sha": "c08860ab9e942af084f11400c3282fba6fa993c5"
+    },
+    {
+      "name": "feature/flh03-kraken-ledger-preview",
+      "sha": "f6a1fc29bb43e5e53d3be9a22d586a739a7514c9"
+    },
+    {
+      "name": "feature/flh03-pchain-evidence",
+      "sha": "b5f2b6607cd6189b5e73cb685bdcb9b61f9148a7"
+    },
+    {
+      "name": "feature/flh03-pchain-identity",
+      "sha": "06726680c794145d158d378d6b24741fa0c34247"
+    },
+    {
+      "name": "feature/flh03-sonic-evidence",
+      "sha": "22efc3935b59135589e9848bcb7ec9557be70ba1"
+    },
+    {
+      "name": "feature/flh03-ui-a-e",
+      "sha": "6611a425d7868050ef4227443fd07b964eae9a7e"
+    },
+    {
+      "name": "feature/flh03-ui-abce-release",
+      "sha": "1a29cfa2670d0e7ab7efbcbe1181440dde776e61"
+    },
+    {
+      "name": "feature/flh03-v180-live-checkpoint",
+      "sha": "46661c9f86bdf932c427c50a4a315e62d2c0d84a"
+    },
+    {
+      "name": "feature/flh04-sync-design",
+      "sha": "0d980c2f43f28fd06ef9a7403b2144b6099fbc74"
+    },
+    {
+      "name": "feature/flh05-import-foundation",
+      "sha": "15ccffde864cb8935691c9d50595c6988faf29a9"
+    },
+    {
+      "name": "feature/folio-open-completion-20261021",
+      "sha": "de3a203976e6b7d43c75ba4121c519f6560f1538"
+    },
+    {
+      "name": "feature/google-drive-own-oauth",
+      "sha": "7149f6de3f87cecec4d132ea63ebb0200c82edac"
+    },
+    {
+      "name": "feature/history-ui-followup",
+      "sha": "a486c826c20f24b98f17cc10444f8035ff9ef416"
+    },
+    {
+      "name": "feature/idb-phase-b",
+      "sha": "1626a97e9e5cbb1a21a684c80542da71d10f5ecc"
+    },
+    {
+      "name": "feature/indexeddb-only-phase-a",
+      "sha": "9b304980214ee2f17ec88f46266a23c08afcad05"
+    },
+    {
+      "name": "feature/ledger-live-preview",
+      "sha": "9b91ff72d826db0cb2ef3627da79d0c988a109bd"
+    },
+    {
+      "name": "feature/local-etf-history-csv-20261022",
+      "sha": "1ab4a396a60ee79229c834d58ee7a54648092096"
+    },
+    {
+      "name": "feature/open-2-modernisierung-20261021",
+      "sha": "9385934e9b5a418d44fffb66a34496e79468c988"
+    },
+    {
+      "name": "feature/perf01-date-validation-cache",
+      "sha": "870f4c0773e6ba95371e8b4e89865ac5a6754cbc"
+    },
+    {
+      "name": "feature/phase1-ledger-v3-20261021",
+      "sha": "9e73369710a04289bb72308230c5835235a8a735"
+    },
+    {
+      "name": "feature/phase2-market-fx-performance-20261021",
+      "sha": "699f87142670c1fec8d2f7b046dc8d6fe9ab70a2"
+    },
+    {
+      "name": "feature/phase3-csv-wallet-defi-20261021",
+      "sha": "3006dcc6a86d7136a58e0c171f554577aebe9211"
+    },
+    {
+      "name": "feature/reference-management",
+      "sha": "c7d307c0eea079071adbce2add80780710ca1c8e"
+    },
+    {
+      "name": "feature/reference-removal-safe-subset",
+      "sha": "be860237af019deab0c4e393dbcc022976bb5c1f"
+    },
+    {
+      "name": "feature/smart-onboarding-provider-account-20261022",
+      "sha": "db02f70633f2dafc19e5364c79df3715bfa477d0"
+    },
+    {
+      "name": "feature/sol-wh01-history-core",
+      "sha": "647c2df94df20cef2dc5beea68bf2abc630b6923"
+    },
+    {
+      "name": "feature/sol-wh02-bitcoin-history",
+      "sha": "f21ccd1a19956ae0cace76227c1a29f795a4654d"
+    },
+    {
+      "name": "feature/sol-wh03-ethereum-history",
+      "sha": "55636880b0d1ff227db11478928c3fc056cd61dd"
+    },
+    {
+      "name": "feature/sol-wh04-07-integrated",
+      "sha": "62c7209b22a307cc6be65442db83f6ab9000dc09"
+    },
+    {
+      "name": "feature/ui-audit-precision-touch-v212",
+      "sha": "81cca6060008282ae1e0dc307684d53f4a303490"
+    },
+    {
+      "name": "feature/ui-c5-live-disclosure-gate",
+      "sha": "cd2a0910917838dd3984890665b5e90a836e6f48"
+    },
+    {
+      "name": "feature/ui-quality-b1",
+      "sha": "f997745b60fca68574333b4dafb2a4ba8faf2bbc"
+    },
+    {
+      "name": "feature/ui-quality-c1-transfer-state",
+      "sha": "046cebf5a4a27727b024d6053d9f5103bf5cebb7"
+    },
+    {
+      "name": "feature/ui-quality-c2-history-display",
+      "sha": "e1bb4dfebb21761dcc76412a2400f6e4d1d885f9"
+    },
+    {
+      "name": "feature/ui-quality-c3-chart-metric",
+      "sha": "6ae19fe0a1d271e529c9928ee5e77872ba20d8b3"
+    },
+    {
+      "name": "feature/ui-quality-c4-chart-units",
+      "sha": "7316fa50d219054396cb1184db6a5d30869081d6"
+    },
+    {
+      "name": "feature/ui-quality-c5-secondary-actions",
+      "sha": "a6fff68c5a37976c3bc47a24663f5aeec125906c"
+    },
+    {
+      "name": "feature/ui-selection-header",
+      "sha": "a349d9fe04f18524e9536e0d0804cb3e1ca68b63"
+    },
+    {
+      "name": "feature/ui-selection-reasons-v214",
+      "sha": "78dc4ca4784694e543cc46a525ef629bf93f9333"
+    },
+    {
+      "name": "feature/ui-small-rests",
+      "sha": "b0b7d0c6d2f42f95a9d4a21d0ec23635205207b2"
+    },
+    {
+      "name": "feature/ui-visual01-compact-periods",
+      "sha": "a61af4c9ecc7dcb4a0aafd871d5884be807a10ae"
+    },
+    {
+      "name": "feature/ui-visual02-mehr",
+      "sha": "e0c4462a70eb4bb949f8833f938838233c8290db"
+    },
+    {
+      "name": "feature/ui-visual03-bookings",
+      "sha": "ca9a14c09f5cacb4e8e479d9b9797632d0e857f7"
+    },
+    {
+      "name": "feature/ui-visual04-navigation",
+      "sha": "f90ed7bfce611436e114b860d6dbb3746ef5d5c4"
+    },
+    {
+      "name": "feature/ui-visual05-dialogs",
+      "sha": "1840be28b8fcd3f80c4798c7ceffe4b31530f3cd"
+    },
+    {
+      "name": "feature/ui-visual07-overview-stats",
+      "sha": "d04018a808ee4781eb2135c3105132105d6ff014"
+    },
+    {
+      "name": "feature/ui-visual08-history-details",
+      "sha": "3415af87280b3f7e27a9c9c488cc3f4b40f33d1a"
+    },
+    {
+      "name": "feature/ui-visual09-positions-bookings-filters",
+      "sha": "485620239228e2770dcf74d24d8423565edea505"
+    },
+    {
+      "name": "feature/unified-backup-password",
+      "sha": "c1a11a7c83a92e1b557fccbdc687f1ee008242e1"
+    },
+    {
+      "name": "feature/universal-security-listing-discovery-20261022",
+      "sha": "7cbb26b99537ffa98646bfae03940514a36e637e"
+    },
+    {
+      "name": "feature/verified-security-prices-multisource-20261022",
+      "sha": "b2ad813740d92b4991a98e1f9284bc1ddc1a56d3"
+    },
+    {
+      "name": "fix/catalog-source-accuracy-2026-10-22",
+      "sha": "21a56aff9bda9f152b483d529cb81bb1c85e714c"
+    },
+    {
+      "name": "fix/chart-failure-collapse-eye-hover-20261023",
+      "sha": "c00888620d1c9af6dac02afb466eee57ab2decf5"
+    },
+    {
+      "name": "fix/chart-time-spacing-v220",
+      "sha": "8ca41c80f9fd70db77c9ebb32e3f99091fed833b"
+    },
+    {
+      "name": "fix/compact-catalog-import-2026-10-22",
+      "sha": "04f64124a9dc03756a71a14be376f0cfac8013a9"
+    },
+    {
+      "name": "fix/crypto-history-resilience-20261022",
+      "sha": "b71b786215b88a2c0831d989007685575634fbd6"
+    },
+    {
+      "name": "fix/csv-review-test-race-2026-10-24",
+      "sha": "379ba9c5176e5446058bbdd8f202647012991a1f"
+    },
+    {
+      "name": "fix/eodhd-transport-credential-visibility-v76",
+      "sha": "01a7f5e440d143a0322becc2ae1e3691f71bd6bb"
+    },
+    {
+      "name": "fix/issue-44-crash-safe-revert-v87",
+      "sha": "b2e82976844ecc49eae19da05ec9db40d26d6ba9"
+    },
+    {
+      "name": "fix/issue-44-stale-source-migration-v86",
+      "sha": "bdd194954d55c2a6c67958afae53ebd66658d7b4"
+    },
+    {
+      "name": "fix/ledger-xpub-hd-address-types-20261022",
+      "sha": "fb98efd94379d2888bf9f8da5170bb11cfb5227b"
+    },
+    {
+      "name": "fix/native-chart-axis-tooltip-v216",
+      "sha": "057063167a04acd7b66364d4f0c824e6bd8978de"
+    },
+    {
+      "name": "fix/native-market-history-ui-20261023",
+      "sha": "027ebb6c6e95f0404a6f485b6d8d210b38d0eda0"
+    },
+    {
+      "name": "fix/provider-allocation-scope-20261023",
+      "sha": "332ec480fde2c13079636da61e85ceb9f5913f7f"
+    },
+    {
+      "name": "fix/pwa-update-fresh-assets-v215",
+      "sha": "620790477a54e4c5f565af9e83fcb62b9d769fce"
+    },
+    {
+      "name": "fix/pwa-update-reload-v91",
+      "sha": "b38a9bcbf06bf9c898161d34d9941a29aa27d0c3"
+    },
+    {
+      "name": "fix/qa01-a11y-label-in-name",
+      "sha": "8377ed7814437137679c90635c78d968b35ab835"
+    },
+    {
+      "name": "fix/reference-offline-test-baseline",
+      "sha": "36df866e296c80add2d596665fb098b94162a081"
+    },
+    {
+      "name": "fix/remove-curated-etf-suggestions-20261022",
+      "sha": "3e813c96eadec638c9f68d50713a836cb1435340"
+    },
+    {
+      "name": "fix/returns-chevron-mobile-v82",
+      "sha": "563b0490764698ae7d6c6047b0c378fb93c4fe2a"
+    },
+    {
+      "name": "fix/returns-chevron-mobile-v83",
+      "sha": "253cf39013798089853c31cd01e94503e07c2d01"
+    },
+    {
+      "name": "fix/snapshot-position-crud-v79",
+      "sha": "be0af87435193ecd1fee7e48716a31075cc8562d"
+    },
+    {
+      "name": "fix/solana-rpc-onboarding-clarity-20261023",
+      "sha": "67ea84a82eab5f8558bd57dd10f97ef433d21895"
+    },
+    {
+      "name": "fix/sonic-benqi-solana-staking-wallet-scan",
+      "sha": "8e0e52f088edd7b96ac71157c78da2ba2dec7a20"
+    },
+    {
+      "name": "fix/ui-text01-position-facts-v218",
+      "sha": "03ee0d329096aca0c7d4bb2ad0da6f83838acb0c"
+    },
+    {
+      "name": "fix/ui-text01-quote-display-v217",
+      "sha": "35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0"
+    },
+    {
+      "name": "fix/ui-text02-three-year-v219",
+      "sha": "8743a57caa3a8ec303d87bf931c7f6ea18cb748f"
+    },
+    {
+      "name": "fix/xetra-import-pwa-refresh-2026-10-22",
+      "sha": "495e168a505c29a0ffe7f6e8f9be2f99691db22e"
+    },
+    {
+      "name": "fix/xetra-real-csv-2026-10-22",
+      "sha": "d57de9c072f526148cd2b5d3bf69fac56654640e"
+    },
+    {
+      "name": "integration/p0-storage-current-main-20261024",
+      "sha": "9f131f4058074d2aedb9ae3642bcba8f81b88d6c"
+    },
+    {
+      "name": "integration/plus01-current-main-20261024",
+      "sha": "2833e42f00143ade38791ad041e6096f8ca1f87f"
+    },
+    {
+      "name": "main",
+      "sha": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce"
+    },
+    {
+      "name": "ops/cloudflare-worker-manual-deploy-20261025",
+      "sha": "0e79d8ebf1a587f77634924f2770d7c825086ac4"
+    },
+    {
+      "name": "p0/wp01-release-gates",
+      "sha": "a42effbcb344a4322d4ae7dcb75df7b13683b62f"
+    },
+    {
+      "name": "p0/wp02-financial-invariants",
+      "sha": "68429cf94967172886941642bb526cb3b384fbde"
+    },
+    {
+      "name": "p0/wp03-storage-integrity",
+      "sha": "a2ba026aeda580a0a7633367b60b725bc863c5eb"
+    },
+    {
+      "name": "p0/wp04-import-identity",
+      "sha": "421037021b48c010966a04a9d1bc029d6de27f29"
+    },
+    {
+      "name": "plus01/financial-import-delta",
+      "sha": "8cd0eb299f8048e705710c6d525e762bf04387e4"
+    },
+    {
+      "name": "qa/v188-live-targeted",
+      "sha": "6bbe2b7cf52283a3cc133895c554915cdba2cb3d"
+    },
+    {
+      "name": "qa/v189-account-live",
+      "sha": "070bb4ec0d6a4c7622d184ccd3faccfc03966cff"
+    },
+    {
+      "name": "qa/v190-ledger-live",
+      "sha": "6fcb4274543666a3629d5de2f498dde6fc6c0b25"
+    },
+    {
+      "name": "qa/v191-booking-live",
+      "sha": "0ad401b0a37ae241455a98e2eb6bceadd6775e20"
+    },
+    {
+      "name": "qa/v192-booking-live",
+      "sha": "4072ff85f02cd9b14f2060dee7611bc861145ce5"
+    },
+    {
+      "name": "test/generic-provider-allocation-fixtures-20261023",
+      "sha": "ce7fdf18f4dd10e11733ec016f3a557137b82559"
+    },
+    {
+      "name": "test/issue-44-idb-cross-engine-corruption-v83",
+      "sha": "43ea606ded641af9a2ce3a4b68f14e26b4f79adc"
+    },
+    {
+      "name": "test/issue-44-migration-matrix-doc-v75",
+      "sha": "432f740acac328864d082b05170e3de843cb9293"
+    },
+    {
+      "name": "test/offline-throttled-mobile-stress",
+      "sha": "c61f525cf85f03737b06870e216607dc42fa827e"
+    },
+    {
+      "name": "test/v220-live-initialization-diagnostics",
+      "sha": "520b3ff7d73c3097e72691a3098ef3c8fc2c0955"
+    },
+    {
+      "name": "test/v221-live-pchain-initialization-diagnostics",
+      "sha": "484ceaf0ca80830202d4a646d366d66e587433d6"
+    },
+    {
+      "name": "ui/beta-badge-2026-10-26",
+      "sha": "c9ff3fecffa606e06af60a1ad9d7940f45443869"
+    },
+    {
+      "name": "ui/compact-valuation-drilldown-20261023",
+      "sha": "c1143b0b93e788c9055a2bec51a4033305cfe43a"
+    },
+    {
+      "name": "ui/consistent-actions-and-density-20261023",
+      "sha": "7adef16547e7693e5efa5d706866239c3146b6cf"
+    },
+    {
+      "name": "ui/history-flat-disclosures-20261023",
+      "sha": "070393cd9908068156607f8f296de368a8230e1c"
+    },
+    {
+      "name": "ui/history-insights-header-20261023",
+      "sha": "008d37a6bce201114644a9ea76a679af319ed0f3"
+    },
+    {
+      "name": "ui/history-save-action-align-20261023",
+      "sha": "4fa67ef9dc2977956cddb7a0e45e97d6638fa72c"
+    },
+    {
+      "name": "ui/interactive-allocation-donut-20261022",
+      "sha": "e47eada1634bdf21d17ff43c0a507a6f3271eb9e"
+    },
+    {
+      "name": "ui/mobile-dashboard-polish-20261022",
+      "sha": "d6ed80a621c38a61b580439d40e1c5f297285c01"
+    },
+    {
+      "name": "ui/position-asset-class-icons-20261025",
+      "sha": "95ef5be25fd099297bb314481467cd3e7912920f"
+    },
+    {
+      "name": "ui/position-drilldown-charts-20261022",
+      "sha": "48c81c1dcbd18f2a22b7ccefa774b595c223da85"
+    },
+    {
+      "name": "ui/shared-plus-icon-20261023",
+      "sha": "3ac3806350bb760e5d3993c414864f294fe6c5b4"
+    },
+    {
+      "name": "ui/unified-mobile-history-actions-20261023",
+      "sha": "fb31bacacddc92542adcb8fcc00389e79cb03cac"
+    },
+    {
+      "name": "ux/booking-wallet-simplify-20261023",
+      "sha": "51b7032dd57eb44e36450bb51f45156a09052963"
+    },
+    {
+      "name": "ux/clarify-security-listing-review-2026-10-24",
+      "sha": "b02ac18dc3d662b64fc645fee59a635ed30ee40b"
+    },
+    {
+      "name": "ux/compact-google-drive-backup",
+      "sha": "2dee00d942df3b0a79bbb8919f2a9a13e34e035f"
+    },
+    {
+      "name": "ux/compact-password-and-return-details",
+      "sha": "846e64b5d52429f45d90bb037248aa358695e0f9"
+    },
+    {
+      "name": "ux/inline-advanced-position-20261024",
+      "sha": "c58ab8a2702c0836046a6780841d49efba9d8ce4"
+    },
+    {
+      "name": "ux/mehr-hilfe-verlauf-entschlacken-20261024",
+      "sha": "f72f1af952cddba2707666dcb41bfb4e3f34d64b"
+    },
+    {
+      "name": "ux/more-settings-progressive-disclosure",
+      "sha": "77003e21e2c32d9615f3347483c4a6b6c9ca1694"
+    },
+    {
+      "name": "ux/position-editor-streamline-2026-10-24",
+      "sha": "6742ccf789bb64a72527a0c8593e13fe389e73f3"
+    },
+    {
+      "name": "ux/simplify-add-position-csv-20261023",
+      "sha": "dadfce28e5c51424822e2d29752891051c8335c5"
+    },
+    {
+      "name": "ux/unified-chart-period-controls-20261024",
+      "sha": "1c912b64fd007c83a7d335c16d8e0410c19f519d"
+    },
+    {
+      "name": "work/continuation-20261027",
+      "sha": "d0ddd080345ff4f4e450afae90a74a4c881ad47a"
+    }
+  ],
+  "local": {
+    "sourceBranch": "main",
+    "sourceHead": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+    "sourceClean": true,
+    "checkpointBranch": "feature/flh05-import-foundation",
+    "checkpointBase": "15ccffde864cb8935691c9d50595c6988faf29a9",
+    "checkpointCleanBeforeHandoff": true,
+    "uncommittedApplicationChanges": false
+  },
+  "next": "Read latest central handoff and current run41080709085. Do not rerun blindly. On success download/hash-check artifacts and review full release/live/asset/SW/PWA evidence before LIVE_ACCEPTED. On failure inspect actual diagnostics first. No new UI integration before release resolution.",
+  "limits": [
+    "No real Android hardware",
+    "No screenreader acceptance",
+    "No installed device PWA acceptance",
+    "Copilot reports do not replace integration gates"
+  ]
+}
