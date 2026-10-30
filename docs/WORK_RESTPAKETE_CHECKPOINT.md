@@ -1,3 +1,13 @@
+## Korrektur des letzten Zwischenbelegs: Artefaktintegrität noch offen · 30.10.2026
+
+Der unmittelbar folgende Zwischenabschnitt hat die vollständige rekursive Prüfung der69MainJSONs zu früh behauptet: der gemeinsame Verifier ist beim erneuten ZIP-Hashabgleich abgebrochen. Diese69er-Abnahme ist bis zur erfolgreichen Klärung **NICHT BELEGT**. Die GitHub-Joberfolge bleiben unverändert gültig, ersetzen aber keine Artefaktprüfung.
+
+Betroffen ist lokale ZIP-Kopie13003959387 (Cross-Shard3). GitHub-Metadatum erwartete SHA256 `7f509bc431ea4af6579050be4805c681436b7f4ab23e0eaa34b88115a3015734`, aktuell lokal `18a96f71206bb8cce8e0277733d70d33334c9a6f24543e575a71fe2431ecb321`. Ursache noch unklar. Die fünf anderen vorhandenen ZIPs stimmen. Keine Assertion entfernt/gelockert, kein Release-PASS behaupten und keine Pipeline wiederholen. Vorhandene fehlerhafte Kopie erhalten, aktuelle GitHub-Metadaten und frischen Download unabhängig vergleichen; erst nach korrekterIntegrität die vollständigenReports neu prüfen. Livejob regulär weiterlaufen lassen.
+
+Main d6b2a14f bleibt gemergter freigegebener Kandidat, Release41113336364 LIVE_ACCEPTANCE_PENDING. Exakte Fortsetzung: diesen Hashkonflikt klären, danach vollständige tatsächliche Main-/Pages-/Liveabnahme wie dokumentiert. Keine weitere Implementierung und keine zusätzlichen Credit-Pakete.
+
+---
+
 ## PR231: Main/Cross/Pages erfolgreich – tatsächliche Liveabnahme läuft · 30.10.2026
 
 Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51` / Tree033a5de9 unverändert. [Release41113336364](https://github.com/joke0071/foliolab-open/actions/runs/41113336364), Versuch1: Stufenplanung, Hauptjob, alle drei Cross-Shards und Pagesdeploy SUCCESS. Tatsächlicher Plan RELEASE/full=true/ciContract=false; FAST erwartungsgemäß skipped. Live-acceptance ist noch in_progress, kein vollständiges LIVE_ACCEPTED aus den vorgelagerten Erfolgen ableiten.
