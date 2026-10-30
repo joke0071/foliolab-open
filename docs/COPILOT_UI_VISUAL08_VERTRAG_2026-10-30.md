@@ -1,12 +1,12 @@
-## Geliefert: UI-VISUAL08 / Draft225 · 30.10.2026
+## UI-VISUAL08 geliefert: Draft225 · 30.10.2026
 
-**COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**, HEAD `3415af87280b3f7e27a9c9c488cc3f4b40f33d1a`, Basis mainaf834705, Draft/offen/nicht gemergt. Tatsächliche Änderung: styles.css plus30Bilder, keinJS/HTML/Test/SW. Nachstehend vollständiger Lieferbericht aus dem GitHub-PR; Claims und noch offene Prüfungen sind bei Work unabhängig zu verifizieren.
+**COPILOT_DELIVERED / WORK_INTEGRATION_PENDING.** HEAD `3415af87280b3f7e27a9c9c488cc3f4b40f33d1a`, Basis mainaf834705. Draft offen und ungemergt; tatsächliche Änderung ausschließlich styles.css plus30 Bilder. Kein JS/HTML/Test/SW geändert.
 
-Pflicht41036969216 zumSicherungszeitpunktnochlaufend: Testjob124000066758FAILimSW-Gate,Cross1SUCCESS,Cross2läuft. Wallet41036969100SUCCESS. Keine vollständige Integrationsabnahme.200%Text,Fehlerzustände,Firefox/WebKit/Hardware/Screenreaderoffen. CSS-Append-Blöcke bei späteremMerge erhalten,Kaskade/Bedienung/Fachwerteprüfen;passendeSW-Version undvollePflichtgates/eigeneFreigabeerforderlich.
+Copilots erfolgreiche Einzeltests sind keine vollständige Integrationsabnahme. Offen bleiben vollständige CI, Firefox/WebKit,200% Schrift, Fehlerzustände, Hardware und Screenreader. Pflicht41036969216 läuft zum Sicherungszeitpunkt mit rotem SW-Revisionsgate und erfolgreichem Cross1; Cross2 läuft. Wallet41036969100 erfolgreich. Kaskade und Funktion nach späterer Einzelintegration vollständig prüfen; passende SW-Version und eigene konkrete Releasefreigabe bleiben erforderlich.
 
-PR220hatunverändertReleasevorrangundwartetaufseparatekonkreteMergefreigabe;keineUmpriorisierungoderparalleleNeuentwicklung. UI-VISUAL06undübrigeAufgabenbeiWork; nurFLH05/FLH-PROJ01bewusstPARKED. Ursprünglicher vollständigerDelegationsvertrag untenbleibtgültig.
+PR220 behält unverändert Releasevorrang und wartet auf separate Mergefreigabe. Keine parallele visuelle Neuentwicklung; UI-VISUAL06 und alle anderen nicht delegierten Aufgaben bleiben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED.
 
-### Gesicherter Lieferbericht
+### Vollständiger gesicherter Lieferbericht
 
 Closes #224. **Draft – kein Merge, kein Deployment, kein SW-Bump** (Gate „Require a service-worker cache revision“ bleibt unverändert und schlägt für diesen CSS-PR erwartungsgemäß an; Releasebehandlung bei Work).
 
