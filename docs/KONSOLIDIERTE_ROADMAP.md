@@ -1,3 +1,17 @@
+## CI-OPT01: PR230 und PR231 vollständig live abgenommen · 30.10.2026
+
+**Aktueller Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51`, Anwendung v221/SW221 unverändert DONE/LIVE_ACCEPTED.** PR231 mit eigener konkreter Freigabe gemergt; vollständige Review-CI41111739544 und Release41113336364, jeweils Versuch1, erfolgreich.975Units, drei Browser, volle Main-/Pages-/Liveabnahme. [Vollständige Livebelege](release-evidence/ci-opt01-pr231-live-acceptance.json) mit Verweisen auf69Main-/Cross-/Planberichte und40Liveberichte;121veröffentlichteHashes,6Kerngruppen,18Live-Axe-Scans bestätigt.
+
+PR230: drei isolierteCross-Shards mit allen37Aufrufen. PR231: konservativeFAST-Stufe nur für aktuelleMain-Drafts mit explizitenMarkdown-/CSS-Änderungen, vollständigeUnits/Syntax undbeiCSS vorhandeneUI-Audits. FertigePRs, kritische/unbekannte Änderungen sowie alleMain-Releases weiterhin vollständig. Historische vollständige Test-/Pages-/Livebodies bytegleich erhalten. FAST ist keineIntegrationsfreigabe.
+
+**CI-OPT01 insgesamt PARTIAL.** Caching, Versionsangleichung, Chromium-Sharding, breitereImpactzuordnung undRetrypolitik bleiben OPEN/DEFERRED gemäß neuer Praxis-/UX-Priorität. Keine weitere großeCI-Schleife vorziehen. Die nachstehende Wochenendpriorität bleibt maßgeblich: stabilen LIVE_ACCEPTED-Stand praktisch testen, tatsächlicheP0/P1 und gemesseneStartperformance vorKosmetik, bestehendeUI-Drafts gemäßAbhängigkeiten prüfen. Keine ungeplantenUI-Releases oder Freigabeübertragung.
+
+Eine lokaleZIP-Trunkierungsanomalie wurde transparent dokumentiert; vollständigerOriginalstream vonCross3 streng gegenGitHubSHA256/CRC geprüft und22Berichte separat gesichert. LokaleUrsacheUNKNOWN, keine Produktfehlerbehebung behauptet; kein fehlerhafterHash akzeptiert undkeineCI wiederholt.
+
+NurFLH05/FLH-PROJ01 bewusstPARKED. Keine zusätzlichenkostenpflichtigenWork-Credit-Pakete.
+
+---
+
 ## Verbindliche vollständige Restpaket-Priorisierung nach Roadmap-Abgleich 26.–30.10.2026 · 30.10.2026
 
 **Neueste Nutzerentscheidung/maßgeblicher gesamter Restumfang:** [Restpaket-Abgleich, Ownership und Nutzwertpriorisierung](MASTER_PRIORITAETEN_RESTAUDIT_2026-10-30.md). **Dieser neue Abschnitt übersteuert nur widersprechende historische Rang-/Delegations-/Statusangaben; sämtliche älteren konkreten Fach- und Sicherheitsanforderungen gelten weiter. Keine neue konkurrierende Roadmap und kein Produktcode-PR.**
