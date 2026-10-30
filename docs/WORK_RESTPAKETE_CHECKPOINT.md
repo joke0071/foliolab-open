@@ -1,3 +1,18 @@
+## PR205 / Positionsfakten · v218 produktiv abgenommen · 30.10.2026
+
+**DONE / LIVE_ACCEPTED für den freigegebenen Positionsfakten-Schnitt.** PR205/main **cbb9e8e9fa58c768c128f304840269313aeae6ba**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6** identisch mit geprüftem HEAD03ee0d32. Produktion **v218/SW218**. [Main-/Pages-/Live41012601300](https://github.com/joke0071/foliolab-open/actions/runs/41012601300) final SUCCESS,Versuch2:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und tatsächliche Produktionsabnahme erfolgreich.
+
+121 veröffentlichte Asset-/SW-Hashes exakt,6Live-Kerngruppen/18Axe,Backup-/Restore-/Offline-/Datenintegrität und vollständige UI-/Import-/Referenz-/Transfer-Livegates bestanden. Vier finale Main-/Cross-/Live-ZIPs vor Extraktion SHA256-verifiziert;37 erfolgreiche finale Liveberichte gelesen. Tatsächliches repräsentatives synthetisches WebKit320-Produktionsbild angesehen und dauerhaft gespeichert. [Releasebelege](release-evidence/ui-text01-facts-v218-release.json). Keine reale Android-Hardware- oder vollständige UI-MASTER28-Abnahme behauptet.
+
+Erster Livejob123924963768 scheiterte vor synthetischer UI-/Finanzmutation an erstem mobilen „Mehr“-Navigationsziel;121Hashes bereits PASS,errors=[] und kein abschließender DOM-Zustand. [Tatsächlicher Fehlerbericht](release-evidence/v218-live-navigation-failure.json) bleibt erhalten. Genau ein unveränderter Livejob-Retry123926028659 danach vollständig SUCCESS; Mainjobs übernommen, keine Gates/Timeouts/Assertions geändert. Ursache **UNGEKLÄRT**, als enger Live-/PWA-Initialisierungs-QA-Folgepunkt erhalten. Frühere v217-SW- und v216-WebKit-/IDB-Befunde weiterhin offen dokumentiert.
+
+UI-TEXT01: bestätigte Fehler in Anbieter-Detailansicht, Kursqualität/Warnung(v217) und aufgeklappten Positionsfakten(v218) behoben. Fehlend „Nicht verfügbar“,Quelle „Unbekannt“,belegteNull/volleExaktpräzision/Stichtagsherkunft erhalten; Finanzwerte und Bewertungsberechnungen unverändert. Keine pauschale Erledigung des gesamten Text-/Funktionsaudits. PR205-Freigabe ist verbraucht, keine erneute Freigabe für diesen abgeschlossenen Release und keine Übertragung auf spätere PRs.
+
+**Gesamtmaster PARTIAL. Nächster bestehender P1-Schnitt UI-TEXT02 / 3J:** availablePositionPeriods liefert1096 bei unterstützter Quelle/CSV,position-detail-ui filtert es noch heraus. Vorhandene reproduzierbare Rendererprobe,Erweiterte-Zeiträume- und Browserregression wiederverwenden; nur tatsächlich zugelassene Optionen anzeigen,keine neue Historie oder Datenlogik. Danach übrige bestätigte P1 nach bestehender Reihenfolge. Kompakte adaptiveZeitraumzeile (4×2-Pflicht SUPERSEDED),Sparse-Achse/Modi,Liquidität/gebuchteVorgänge/Verwaltung,Mehr-/Textaudit,TradingView-Rückbau,DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge OPEN/PARTIAL. **FLH05/FLH-PROJ01 OPEN/PARKED.** Keine parallele Implementierung;historischenDokumentationsbranch niemals alsAppcode mergen.
+
+---
+
+
 ## v218 Live-Abnahme BLOCKED · erster Navigationsaufruf ohne Ziel · 30.10.2026
 
 Main41012601300:957Units/Syntax/Chromium/Firefox/WebKit/Pages SUCCESS;v218/maincbb9e8e9 veröffentlicht. Livejob123924963768 FAIL in browser-live-acceptance.mjs:43/nav:27:30s Timeout auf #mobileNav [data-page=more] beim ersten UI-Aufruf, vor synthetischer Anlage/Finanzmutation. Zuvor121 veröffentlichte Asset-/SW-Hashes exakt verifiziert; Reporterrors=[]; kein abschließender DOM-/Navigationszustand erfasst. **Ursache UNGEKLÄRT**, kein pauschaler Flakiness- oder Produktrootcause-Nachweis. Noch kein LIVE_ACCEPTED.
