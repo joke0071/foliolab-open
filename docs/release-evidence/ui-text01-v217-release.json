@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "status": "DONE / LIVE_ACCEPTED",
   "release": "c6a07402d668c0a5d90d1294be8f72547d1577b0",
   "tree": "5fb8176d0ea6f1f0792392b9eafebfda665f4b93",
   "pr": 204,
@@ -7,7 +7,7 @@
   "userAuthorization": "Explicit Freigabe after concrete PR204 HEAD35f0bb7c merge/deployment question. Applies to PR204 only.",
   "cache": "foliolab-open-v217",
   "run": 41008536496,
-  "attempt": 1,
+  "attempt": 2,
   "units": {
     "pass": 957,
     "fail": 0,
@@ -38,8 +38,785 @@
       "name": "cross-engine-gates-c6a07402d668c0a5d90d1294be8f72547d1577b0-2",
       "sha256": "9a92fc7bfc185c4e1910af1922efcb6f2f3c13eefbc9e00aee3437b88724ac21",
       "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12957401180,
+      "name": "production-live-acceptance-c6a07402d668c0a5d90d1294be8f72547d1577b0",
+      "sha256": "1c8968f3ea38eef0d2ba2cb70a42f7eb10aef3df73df808400e17f7b9cf24f6a",
+      "verifiedBeforeExtraction": true
     }
   ],
-  "next": "Complete live acceptance and inspect actual production reports/assets/SW before LIVE_ACCEPTED. Then existing UI-TEXT02 P1, no parallel implementation.",
-  "preserved": "Entire master; FLH05/FLH-PROJ01 OPEN/PARKED; no real Android hardware claim."
+  "next": "Existing master P1 UI-TEXT02: make already-supported 3-year position period reachable, preserve actual coverage and existing charts. FLH05/PROJ01 remain PARKED.",
+  "preserved": "Entire master; FLH05/FLH-PROJ01 OPEN/PARKED; no real Android hardware claim.",
+  "finalJobs": {
+    "test": 123913366501,
+    "cross1": 123913320634,
+    "cross2": 123913349908,
+    "deploy": 123913321317,
+    "live": 123913319636
+  },
+  "assetHashes": [
+    {
+      "path": "./src/csv-records.js",
+      "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921"
+    },
+    {
+      "path": "./src/flatex-native.js",
+      "sha256": "928ee39a57c68638c78c0d3749588ab27e910235f1262f63e33aa627147c7333"
+    },
+    {
+      "path": "./",
+      "sha256": "3e692825afe1066cec2cb3934056a2a5ad3c65143490afcb3f06d16023d44c06"
+    },
+    {
+      "path": "./src/blocked-reasons-ui.js",
+      "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98"
+    },
+    {
+      "path": "./src/bitpanda-preview-ui.js",
+      "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d"
+    },
+    {
+      "path": "./src/kraken-ledger-ui.js",
+      "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b"
+    },
+    {
+      "path": "./src/pchain-identity.js",
+      "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460"
+    },
+    {
+      "path": "./src/bitpanda-preview.js",
+      "sha256": "f15127092ecd09b449d9fdfd6c10048d2e9d93b7ea75fb3bcdf88d7bbf38deda"
+    },
+    {
+      "path": "./src/sonic-staking-evidence.js",
+      "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f"
+    },
+    {
+      "path": "./src/ledger-live.js",
+      "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc"
+    },
+    {
+      "path": "./src/flatex-native-ui.js",
+      "sha256": "68bce5cb6e0030fa9e28e413888f671e32ae8096ddc61ea24bcb1dba4dfbf41a"
+    },
+    {
+      "path": "./src/ledger-live-ui.js",
+      "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a"
+    },
+    {
+      "path": "./src/reference-management.js",
+      "sha256": "00b491fc756278bf4de86cd6272cec078960a4f717f33141a3eceab55f1c27aa"
+    },
+    {
+      "path": "./src/pchain-evidence.js",
+      "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8"
+    },
+    {
+      "path": "./src/kraken-ledger.js",
+      "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6"
+    },
+    {
+      "path": "./src/account-evidence.js",
+      "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1"
+    },
+    {
+      "path": "./src/csv-batch.js",
+      "sha256": "651cd0ed88fd8758f7156453758511c1cb5427fba024580e877df8bd787fc59e"
+    },
+    {
+      "path": "./src/history-evidence-cache.js",
+      "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c"
+    },
+    {
+      "path": "./src/historical-portfolio-value.js",
+      "sha256": "9e6c13f9d2c37662ffbd9b5efd19954227c221bf5b658c343b5946309ccb9897"
+    },
+    {
+      "path": "./src/historical-position-value.js",
+      "sha256": "a218bd729e423430ef650cbba7cecd502e05f3ae2b4822ba38d544c7caaf8bd6"
+    },
+    {
+      "path": "./src/interest-ui.js",
+      "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7"
+    },
+    {
+      "path": "./src/interest-account.js",
+      "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a"
+    },
+    {
+      "path": "./src/interest-scenario.js",
+      "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89"
+    },
+    {
+      "path": "./src/cash-reconciliation.js",
+      "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4"
+    },
+    {
+      "path": "./src/cash-terms.js",
+      "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0"
+    },
+    {
+      "path": "./src/cash-terms-ui.js",
+      "sha256": "3aeb660bbb317855dd19a05a562929f458152b4d640146df72dd5213fa795bf9"
+    },
+    {
+      "path": "./src/wallet-history-days-worker.js",
+      "sha256": "3010dedd4e73698769c36f2de631a77e30ac02008142b4f9d169cb536ac1181e"
+    },
+    {
+      "path": "./src/wallet-history-calculation.js",
+      "sha256": "cb19b8212e9bbdbadf400314c5c46f0b1f88f1d32bd87f5b5fac3dccb6d86921"
+    },
+    {
+      "path": "./src/wallet-history-valuation.js",
+      "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a"
+    },
+    {
+      "path": "./src/solana-history.js",
+      "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070"
+    },
+    {
+      "path": "./src/wallet-history-days.js",
+      "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3"
+    },
+    {
+      "path": "./src/wallet-history-ui.js",
+      "sha256": "049843686bc03993b30da1301649518b9f5c207fd47fa5195c51a280b81c2ff0"
+    },
+    {
+      "path": "./src/wallet-history-state.js",
+      "sha256": "d08a8fab54cf7d877c4ced8a35122c05684ba91e42ec219d98d2d78f03248fdf"
+    },
+    {
+      "path": "./src/bitcoin-history.js",
+      "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8"
+    },
+    {
+      "path": "./src/import-identity.js",
+      "sha256": "84ec64cc0da07e8a2bbe2cdc95aee098a7ca3cd5f538684a35d2b483d33b51a8"
+    },
+    {
+      "path": "./src/wallet-history-core.js",
+      "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090"
+    },
+    {
+      "path": "./src/ethereum-history.js",
+      "sha256": "e867eeda35ae6dc4cb9ef7189bf8718adab581b1f5bca5078525ffea931445a2"
+    },
+    {
+      "path": "./index.html",
+      "sha256": "3e692825afe1066cec2cb3934056a2a5ad3c65143490afcb3f06d16023d44c06"
+    },
+    {
+      "path": "./src/credential-visibility.js",
+      "sha256": "91d0a960789625dae2b0f5d4abcf2210d6960580eca6995f4e0b2b8d1915d05a"
+    },
+    {
+      "path": "./src/dialog-discard.js",
+      "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030"
+    },
+    {
+      "path": "./src/economic-form-ui.js",
+      "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200"
+    },
+    {
+      "path": "./styles.css",
+      "sha256": "33c37b13972ddc5a2d8d8b99ff5a9fdf22436842883f0fb26614d50689df7f7e"
+    },
+    {
+      "path": "./src/purchase-evidence-ui.js",
+      "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0"
+    },
+    {
+      "path": "./src/booking-management.js",
+      "sha256": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe"
+    },
+    {
+      "path": "./src/purchase-evidence.js",
+      "sha256": "98d10db80551e36ff7092f5337a95643c5a9cdd6b823338607f916268d772993"
+    },
+    {
+      "path": "./src/backup-vault.js",
+      "sha256": "62c92a88d1dfb74351b56e45a4a95521e98ab87be931cf0a4f408d9848912f39"
+    },
+    {
+      "path": "./src/complete-backup.js",
+      "sha256": "92528ab05b2856bdcd74db37e01a2c61601c6b20a965b9f32ec97c628948fd03"
+    },
+    {
+      "path": "./src/drive-backup.js",
+      "sha256": "2986f8aabba843b71cb5d5b85e01dc7ece51c63b8b81afde8acecf81c61123cf"
+    },
+    {
+      "path": "./src/position-selection.js",
+      "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d"
+    },
+    {
+      "path": "./src/app.js",
+      "sha256": "10568ae1b27946b76afc65416b5344a0e731c3590de8e49685a3ce1ac9711c8c"
+    },
+    {
+      "path": "./src/asset-wizard.js",
+      "sha256": "0386f37c529cf6766a7865f2d3c816dcd402e5b44f39b6b32670eee23e8ea6cb"
+    },
+    {
+      "path": "./src/asset-wizard-core.js",
+      "sha256": "478c8529cf8a40caafe93cdabfcd2403879d5f959bdb92ffe2a57cff4644f12b"
+    },
+    {
+      "path": "./src/position-search.js",
+      "sha256": "cb22a4943142fa035d488d4934ff87c6ca24ba29cda8e8f71ab94319bfcc04ce"
+    },
+    {
+      "path": "./src/public-instruments-client.js",
+      "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589"
+    },
+    {
+      "path": "./src/refresh-ui.js",
+      "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a"
+    },
+    {
+      "path": "./src/market-diagnostics.js",
+      "sha256": "76eca7bd20e5c479c2f0d146e10648e46bac539e837cccd8386556eda92d5e91"
+    },
+    {
+      "path": "./src/quote-quality.js",
+      "sha256": "086f020e58a622e53ddc6af7720c9c5e5b3e550deea526aa5639139543af54a0"
+    },
+    {
+      "path": "./src/dashboard-ui.js",
+      "sha256": "60456520a5570bec83bf08aadd5861803fda0def5e3ba7cd103d3813b6d15e15"
+    },
+    {
+      "path": "./src/chart-periods.js",
+      "sha256": "8a54f63131706d5e3d3ab56f17081b2f171c7acc62849fa50c0e9e9ae9fc079d"
+    },
+    {
+      "path": "./src/eodhd-transport.js",
+      "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82"
+    },
+    {
+      "path": "./src/eodhd-worker-client.js",
+      "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f"
+    },
+    {
+      "path": "./src/position-history.js",
+      "sha256": "b84e61e6bcf802d4b1a4c42c6ce8dda3ac056550a03e8a08d193875c31a6a2f6"
+    },
+    {
+      "path": "./src/onboarding-suggestions.js",
+      "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626"
+    },
+    {
+      "path": "./src/security-discovery.js",
+      "sha256": "d9e767ba64d19df2830bd52b664be2c71e2af1c7a6e92d091b6a7bf83421cb0f"
+    },
+    {
+      "path": "./src/security-sources.js",
+      "sha256": "1660906d98610fc0fca761400bb10c3cf3c9406e5c6109fb1ff40a89978c8792"
+    },
+    {
+      "path": "./src/instrument-catalog.js",
+      "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7"
+    },
+    {
+      "path": "./src/reference-listings.js",
+      "sha256": "4437f2b9bc6bbb18d2df0db3da544c48df1b7c428cb197a2f799af55a3a1ea1e"
+    },
+    {
+      "path": "./src/security-catalog.js",
+      "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9"
+    },
+    {
+      "path": "./src/crypto-fallbacks.js",
+      "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a"
+    },
+    {
+      "path": "./src/historical-csv.js",
+      "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b"
+    },
+    {
+      "path": "./src/position-detail-ui.js",
+      "sha256": "f8890c281c44c2db3a798cfe506987d81c7c7a968388dce79c974cfd5a6b2439"
+    },
+    {
+      "path": "./src/position-bookings.js",
+      "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be"
+    },
+    {
+      "path": "./src/flatex-review-export.js",
+      "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec"
+    },
+    {
+      "path": "./src/portfolio-edit-actions.js",
+      "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04"
+    },
+    {
+      "path": "./src/allocation-ui.js",
+      "sha256": "c5abae3111c48450643920b9e3ead463c7ccd3d44ef5b23a9f390560a80de58e"
+    },
+    {
+      "path": "./src/position-quality-review.js",
+      "sha256": "a26a81b87e4d14ee17bdc67ffc89478eb1f47e59a92255a634e973d78e039796"
+    },
+    {
+      "path": "./src/valuation-status.js",
+      "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c"
+    },
+    {
+      "path": "./src/legacy-quote-audit.js",
+      "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3"
+    },
+    {
+      "path": "./src/atomic-storage.js",
+      "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+    },
+    {
+      "path": "./src/account-opening.js",
+      "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b"
+    },
+    {
+      "path": "./src/browser-portfolio-storage.js",
+      "sha256": "a8edf1ca1401e972ac9869fc71014290c75ade98b40f0a79669802ce01b34f01"
+    },
+    {
+      "path": "./src/model.js",
+      "sha256": "f24bd8063306e6f841e24d5ecc9f65cfcc6206482b5e932e5e4537fd6277dd75"
+    },
+    {
+      "path": "./src/decimal.js",
+      "sha256": "ee4e87eb5b98028a755b7f73d7105cddcb2b6749f4b75f23bb7dbcec992aed6a"
+    },
+    {
+      "path": "./src/transfer-matching-ui.js",
+      "sha256": "f13b0204f9e25adefcbfef78aba517273f17d7edff7670c30d225d9138026c17"
+    },
+    {
+      "path": "./src/transactions.js",
+      "sha256": "5573c8cb0b7047e75783514349f7b178d6a32625fa1c6eb12dc668de6330599f"
+    },
+    {
+      "path": "./src/coin-identity.js",
+      "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26"
+    },
+    {
+      "path": "./src/market.js",
+      "sha256": "c34a40072289c6bc8556561cfc96d104e437fbb257b71f188f63ac04f8e96a26"
+    },
+    {
+      "path": "./src/performance.js",
+      "sha256": "00f230874878c044c34968d7092fc3143fedaf98c9c2a4dc4b5e587a2f71e4f5"
+    },
+    {
+      "path": "./src/staking-discovery.js",
+      "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e"
+    },
+    {
+      "path": "./src/solana-rpc.js",
+      "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b"
+    },
+    {
+      "path": "./src/bnb-token-scanner.js",
+      "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c"
+    },
+    {
+      "path": "./src/staking-catalog.js",
+      "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025"
+    },
+    {
+      "path": "./src/ethereum-fallback.js",
+      "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e"
+    },
+    {
+      "path": "./src/request-cache.js",
+      "sha256": "17ac88f4c119d7865456cb2d717128fafb819e3ed90c25cc9806a7d521782a59"
+    },
+    {
+      "path": "./src/native-staking-networks.js",
+      "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2"
+    },
+    {
+      "path": "./src/wallet-visibility.js",
+      "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d"
+    },
+    {
+      "path": "./src/flatex-import.js",
+      "sha256": "3f76fffa6ed5ab785a38a17098aee0a3ec197e573e881ddc13f2ff0bf95bf0bb"
+    },
+    {
+      "path": "./src/csv-import.js",
+      "sha256": "f8306af4720d2b149632d0270c80b9bfb42e9d92eb5490beffd6514a06396c73"
+    },
+    {
+      "path": "./src/flatex-cost-basis.js",
+      "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9"
+    },
+    {
+      "path": "./src/flatex-reconciliation.js",
+      "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6"
+    },
+    {
+      "path": "./src/flatex-backfill.js",
+      "sha256": "637ca458ebde36e980256520cb2b82b4ff1e0ed3aa9909a98bdbb673ba1993af"
+    },
+    {
+      "path": "./src/flatex-settlement-audit.js",
+      "sha256": "bbd16b054ea5a84efc13458b0c57b888cf6246aa5ded40002c8afb2a2fb5a11a"
+    },
+    {
+      "path": "./src/flatex-cash-audit.js",
+      "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b"
+    },
+    {
+      "path": "./src/flatex-settlements.js",
+      "sha256": "e228dd61cf7a183a75ccf52b2277fad6716b96010a29e229948749f49a51bedc"
+    },
+    {
+      "path": "./src/booking-history.js",
+      "sha256": "b3cca7784ada77a043bd288d201e08e0b47ae3f8e43688220d93ee85e42fa323"
+    },
+    {
+      "path": "./src/assets.js",
+      "sha256": "7601b375d1cc7572b9eeb6f2a3fb988a4040e8b32463db6ae3f0a7c4e44e1acf"
+    },
+    {
+      "path": "./src/booking-history-ui.js",
+      "sha256": "84b0ef6fa1bb0cd85e9a0bed470d3881f3bdb022f13a7d496620b15a71df3baf"
+    },
+    {
+      "path": "./src/booking-insights-ui.js",
+      "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e"
+    },
+    {
+      "path": "./src/blockchain-adapters.js",
+      "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8"
+    },
+    {
+      "path": "./src/xrpl-assets.js",
+      "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1"
+    },
+    {
+      "path": "./src/defi.js",
+      "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd"
+    },
+    {
+      "path": "./src/bitcoin-hd.js",
+      "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6"
+    },
+    {
+      "path": "./src/capital-flows.js",
+      "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704"
+    },
+    {
+      "path": "./src/wallet-scan-update.js",
+      "sha256": "495be760c99ea3215a38d404f62db337bacc8d646b4c8dcd08d9775d7cc71b45"
+    },
+    {
+      "path": "./src/format.js",
+      "sha256": "4e0f52a8c3987e9c6eee0616b14e72723517b37ac6a148a9905739797f52ae28"
+    },
+    {
+      "path": "./icons/flask.svg",
+      "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1"
+    },
+    {
+      "path": "./sw.js",
+      "sha256": "9e6a3969575ebb2745a1fa75a83f64a92c94b30329ff50bbb834a54c9db78857"
+    },
+    {
+      "path": "./src/position-icons.js",
+      "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758"
+    },
+    {
+      "path": "./src/crypto-backup.js",
+      "sha256": "b23b8c6d1115daa54d83c94ec09d814d5e6306f4d2ebadfb8d9e87150f54d3ec"
+    },
+    {
+      "path": "./src/booking-insights.js",
+      "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c"
+    },
+    {
+      "path": "./manifest.webmanifest",
+      "sha256": "41c123fdd615c7c186e49eec3346a1d4ab0e57b80d5d018139829b267cfcb487"
+    }
+  ],
+  "liveChecks": [
+    "all published precache files + service worker and actual loaded application bytes match checkout",
+    "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+    "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+    "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+    "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+  ],
+  "liveScans": [
+    {
+      "label": "320 dashboard",
+      "violations": 0
+    },
+    {
+      "label": "320 history",
+      "violations": 0
+    },
+    {
+      "label": "320 positions",
+      "violations": 0
+    },
+    {
+      "label": "320 bookings",
+      "violations": 0
+    },
+    {
+      "label": "320 more",
+      "violations": 0
+    },
+    {
+      "label": "390 dashboard",
+      "violations": 0
+    },
+    {
+      "label": "390 history",
+      "violations": 0
+    },
+    {
+      "label": "390 positions",
+      "violations": 0
+    },
+    {
+      "label": "390 bookings",
+      "violations": 0
+    },
+    {
+      "label": "390 more",
+      "violations": 0
+    },
+    {
+      "label": "1440 dashboard",
+      "violations": 0
+    },
+    {
+      "label": "1440 history",
+      "violations": 0
+    },
+    {
+      "label": "1440 positions",
+      "violations": 0
+    },
+    {
+      "label": "1440 bookings",
+      "violations": 0
+    },
+    {
+      "label": "1440 more",
+      "violations": 0
+    },
+    {
+      "label": "ETF history",
+      "violations": 0
+    },
+    {
+      "label": "saved synthetic crypto history",
+      "violations": 0
+    },
+    {
+      "label": "split transfer preview",
+      "violations": 0
+    }
+  ],
+  "liveReports": [
+    {
+      "path": "production-ui-cross.json",
+      "sha256": "dfea7683a6cdb7201c43939efa8079d2a64d7e209fcdd60b9eda38c09088a267",
+      "passMarkers": 2
+    },
+    {
+      "path": "production-transfers-chromium.json",
+      "sha256": "84125232997ef9e6a9c2244ccfb16f551092db6b0ba36cb1a18adec3f8d1083e",
+      "passMarkers": 1
+    },
+    {
+      "path": "flatex-native-identity-firefox-webkit.json",
+      "sha256": "c585d020f30a4d1978854f3d35e07d963a69422047cc2202197db655b3409994",
+      "passMarkers": 3
+    },
+    {
+      "path": "flatex-native-amounts-firefox-webkit.json",
+      "sha256": "f9d962efde62f80026b1567d2a87830b4735460a22666f0b781754dc05f9c650",
+      "passMarkers": 3
+    },
+    {
+      "path": "flatex-native-amounts-chromium.json",
+      "sha256": "1370cc4bba990c5799a388ed6b8470380507a79d94beb082a24bca255732e120",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-identity-chromium.json",
+      "sha256": "28da3f5cbe0df71e002c541c895349e49ec0f9754ec05a450f2a20d2abbe233a",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-projection-firefox-webkit.json",
+      "sha256": "8433c5ce678e25d29d8a8b83c591222818011057f670d905d8b6a5a8c9016018",
+      "passMarkers": 3
+    },
+    {
+      "path": "sonic-evidence-firefox-webkit.json",
+      "sha256": "6caaaa5fae2e0d3cd3bed1512d3190d936943042fa2def2d748fd574dcb49f63",
+      "passMarkers": 3
+    },
+    {
+      "path": "ui-quality.json",
+      "sha256": "dfea7683a6cdb7201c43939efa8079d2a64d7e209fcdd60b9eda38c09088a267",
+      "passMarkers": 2
+    },
+    {
+      "path": "pchain-evidence-chromium.json",
+      "sha256": "cdf63cfd5515af1901ddfac721bc7c6473021f8999c8b0ad787b29649ae1d6a6",
+      "passMarkers": 2
+    },
+    {
+      "path": "production-ui-chromium.json",
+      "sha256": "a39d7e987072f60c537d79f331d0255b9c9d158267fbab27b4d1e771f99686ff",
+      "passMarkers": 1
+    },
+    {
+      "path": "flatex-order-links-firefox-webkit.json",
+      "sha256": "7e7d04a75c6d6374a35e5bcddd9ce6ff0fe465b260d390aae7deddd11000f902",
+      "passMarkers": 3
+    },
+    {
+      "path": "production-transfers-cross.json",
+      "sha256": "351881cc6b2f80a4976244841a4fe2bdc859e330320994502f5388011fd83569",
+      "passMarkers": 2
+    },
+    {
+      "path": "bitpanda-evidence-chromium.json",
+      "sha256": "9954504aab66d38ce66ca49b2590c0e06ea1f013851cd0ad212e64638fdb4264",
+      "passMarkers": 2
+    },
+    {
+      "path": "bitpanda-evidence-firefox-webkit.json",
+      "sha256": "209ff08dab66ed25d05af94caa5316d117096757d93ef8557dc3042d4e1ecd9f",
+      "passMarkers": 3
+    },
+    {
+      "path": "sonic-evidence-chromium.json",
+      "sha256": "588ca56fce5ed219df23a9ad75db32318251491928a27e9d776c42efa7e45c12",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-projection-chromium.json",
+      "sha256": "02ac824d88ac82946e53815a285add1c3950ef24de8c8afac4be75bfb782f4b0",
+      "passMarkers": 2
+    },
+    {
+      "path": "pchain-evidence-firefox-webkit.json",
+      "sha256": "8b18f476326fd5ede7135bb50a38a500beebf7027118e4d351d7f2e2cdda0c2f",
+      "passMarkers": 3
+    },
+    {
+      "path": "transfer-states.json",
+      "sha256": "351881cc6b2f80a4976244841a4fe2bdc859e330320994502f5388011fd83569",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-order-links-chromium.json",
+      "sha256": "07a0928bc1ba09f19ddb5f0c0a88f26729f518e2bbbf918f327101d7dbd75fef",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-firefox-webkit.json",
+      "sha256": "52949f6db785afb654e8e721c1b86ad6b8fffd9681d591746881fd68787f9d51",
+      "passMarkers": 3
+    },
+    {
+      "path": "flatex-native-chromium.json",
+      "sha256": "eb00b48faba396e623eab560641e770ed1daca22d9ae417d341a01528494e5d0",
+      "passMarkers": 2
+    },
+    {
+      "path": "live/report.json",
+      "sha256": "8b7a6850f93a9b289499fda2a1f34eddb407bc3ec2316b38450f79268e4d6586",
+      "passMarkers": 1
+    },
+    {
+      "path": "chart-tooltip/report.json",
+      "sha256": "624c280d843b76b98eedcc918ddc55d207a24177af75dfa5e6d1860488533dfe",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-simulation-ui/report.json",
+      "sha256": "134d18d3c6da29968595e8a45b4e7fa805b72dc2bf60de69db792e4dc9dd98d8",
+      "passMarkers": 3
+    },
+    {
+      "path": "reference-removal/report.json",
+      "sha256": "3479f2415e53ae63d80f28264935ca1e512711bb2d4d9ae46a098c3b5f7ec8c9",
+      "passMarkers": 2
+    },
+    {
+      "path": "bitpanda-preview/report.json",
+      "sha256": "4a5f0fb397538993067fb33498f3e145d72378f7bd59d50435601e46418df8a5",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-binding/report.json",
+      "sha256": "0b5fea6bf713c7c00a80f0dfb022a4522f4ef3c8036a0ff62b752f20e94c760b",
+      "passMarkers": 3
+    },
+    {
+      "path": "flatex-native-ui/report.json",
+      "sha256": "e9482776ff4e176f14b51054fc925031f312f82b7d1c235c754407745275d4da",
+      "passMarkers": 2
+    },
+    {
+      "path": "kraken-ledger/report.json",
+      "sha256": "32dca3bb3915078d75093e60331935fe9dfa7b4b559da127d9630501e5c05661",
+      "passMarkers": 2
+    },
+    {
+      "path": "flatex-native-commit/report.json",
+      "sha256": "b871f0d6183d047243a0d51f1bf8cfb6190792c88a950c04606e8dfc6515cf6d",
+      "passMarkers": 5
+    },
+    {
+      "path": "reference-management/chromium-sw-baseline.json",
+      "sha256": "15b6c1787c10c21e21ae66a6a9938b339a90e250de01821e644f33153121e811",
+      "passMarkers": 1
+    },
+    {
+      "path": "reference-management/firefox-sw-baseline.json",
+      "sha256": "13fc1b1dda36eb95ac8ae1c948073394f5f1f35202bc5b150390880167ecbb9d",
+      "passMarkers": 1
+    },
+    {
+      "path": "reference-management/webkit-sw-baseline.json",
+      "sha256": "13fc1b1dda36eb95ac8ae1c948073394f5f1f35202bc5b150390880167ecbb9d",
+      "passMarkers": 1
+    },
+    {
+      "path": "reference-management/report.json",
+      "sha256": "a6d145baa14b28b4e929287c1c7c51d396f2db48e5dd285b8aa5e2cd18905f34",
+      "passMarkers": 2
+    },
+    {
+      "path": "ui-audit-controls/report.json",
+      "sha256": "285bff74f736c3560698b39cabcda050909646b5ac272f18b9e715daee5d56e0",
+      "passMarkers": 2
+    },
+    {
+      "path": "blocked-reasons/report.json",
+      "sha256": "7c459de72b595498d5362fa4ac60b8d6bcc1d55aca1e52e1ed69fb894d255e4d",
+      "passMarkers": 2
+    }
+  ],
+  "visualReview": {
+    "path": "history-followup/webkit-history-320.png",
+    "result": "PASS; actually inspected synthetic production screenshot"
+  },
+  "firstFailure": {
+    "job": 123912141099,
+    "evidence": "v217-live-sw-registration-failure.json",
+    "cause": "UNKNOWN; no worker registration in fresh context, unchanged one-job retry passed. Preserve as QA follow-up."
+  }
 }

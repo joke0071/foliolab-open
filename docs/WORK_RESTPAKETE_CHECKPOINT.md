@@ -1,3 +1,18 @@
+## PR204 / UI-TEXT01 · v217 produktiv abgenommen · 30.10.2026
+
+**DONE / LIVE_ACCEPTED für UI-TEXT01.** Freigegebener PR204/main **c6a07402d668c0a5d90d1294be8f72547d1577b0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93** identisch mit geprüftem HEAD35f0bb7c. Produktion **v217/SW217**. [Main-/Pages-/Live41008536496](https://github.com/joke0071/foliolab-open/actions/runs/41008536496) final SUCCESS,Versuch2:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und tatsächliche Produktionsabnahme erfolgreich.
+
+121 produktive Asset-/SW-Hashes exakt,6Live-Kerngruppen/18Axe,Backup-/Restore-/Offline-/Datenintegrität und vollständige UI-/Import-/Referenz-/Transfer-Livegates bestanden. Vier finale Main-/Cross-/Live-ZIPs vor Extraktion SHA256-verifiziert;37 erfolgreiche finale Live-JSON-Berichte gelesen. Tatsächlichen synthetischen WebKit320-Historienscreenshot angesehen. [Dauerhafte Releasebelege](release-evidence/ui-text01-v217-release.json). Keine reale Android-Hardwareabnahme behauptet.
+
+Erster Livejob123912141099 scheiterte an fehlender SW-Registrierung/Aktivierung in frischem Referenztestkontext; vorherige121Hashes/Kern-/SW-/Offlineprüfung schon PASS. [Unveränderter Fehlerbeleg](release-evidence/v217-live-sw-registration-failure.json) erhalten. Genau ein unveränderter Livejob-Retry123913319636 danach vollständig SUCCESS; erfolgreiche Mainjobs übernommen. Ursache weiter **UNGEKLÄRT**, keine pauschale Flakiness- oder Produktrootcause. Als begrenzter PWA-QA-Folgepunkt erhalten; keine Gate-/Assertion-/Timeoutabschwächung.
+
+Fehlende Kurse/Quellen ehrlich dargestellt; belegte Nullkurse, Kursqualität und Fehlkurswarnung konsistent. Gespeicherte Finanzwerte/Bewertungsrechnung/Journal/Import/Backup/Sync unverändert. PR204-Freigabe ist verbraucht; keine erneute Freigabe für diesen abgeschlossenen Release und keine Übertragung auf spätere PRs.
+
+**Gesamtmaster PARTIAL. Nächster bestehender P1-Schnitt: UI-TEXT02** – bereits belegten verfügbaren Dreijahreszeitraum in Positionsdetails erreichbar machen, reale Abdeckung und Filter erhalten; bestehende Renderer-/Browserprobe wiederverwenden. Danach übrige UI-P1 nach unveränderter Masterpriorität. Kompakte adaptive Zeitraumzeile (alte4×2-Pflicht SUPERSEDED),Sparse-Achse/Modi,Liquidität/gebuchte Vorgänge/Verwaltung,Mehr-/Textaudit,TradingView-Rückbau sowie DELETE-/FLH03-/FLH04-/Android-/CI-/WebKit-/IDB-Verträge bleiben OPEN/PARTIAL. **FLH05/FLH-PROJ01 OPEN/PARKED.** Historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
+
 ## v217 Live-Abnahme BLOCKED · konkreter SW-Registrierungsbefund · 30.10.2026
 
 Main41008536496:957Units/Syntax/Chromium/Firefox/WebKit/Pages SUCCESS; v217/mainc6a07402 veröffentlicht. Livejob123912141099 FAIL in tests/browser-reference-management.mjs:37:30s Timeout auf tatsächliche SW-Aktivierung. Gesicherte initial/final-Baseline zeigt controller=false,keine registration/active/installing/waiting. Vorheriger Live-Kern im selben Job bestätigt121 exakte produktive SHA256-Hashes,SW217,6Kerngruppen/18Axe,Backup/Restore und tatsächlichenWorker/Offline PASS. Ursache **UNGEKLÄRT**, keine Flakiness-/Produktrootcause erfunden. Kein LIVE_ACCEPTED.

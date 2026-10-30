@@ -1,3 +1,18 @@
+## PR204 / UI-TEXT01 · v217 produktiv abgenommen · 30.10.2026
+
+**DONE / LIVE_ACCEPTED für UI-TEXT01.** Freigegebener PR204/main **c6a07402d668c0a5d90d1294be8f72547d1577b0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93** identisch mit geprüftem HEAD35f0bb7c. Produktion **v217/SW217**. [Main-/Pages-/Live41008536496](https://github.com/joke0071/foliolab-open/actions/runs/41008536496) final SUCCESS,Versuch2:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und tatsächliche Produktionsabnahme erfolgreich.
+
+121 produktive Asset-/SW-Hashes exakt,6Live-Kerngruppen/18Axe,Backup-/Restore-/Offline-/Datenintegrität und vollständige UI-/Import-/Referenz-/Transfer-Livegates bestanden. Vier finale Main-/Cross-/Live-ZIPs vor Extraktion SHA256-verifiziert;37 erfolgreiche finale Live-JSON-Berichte gelesen. Tatsächlichen synthetischen WebKit320-Historienscreenshot angesehen. [Dauerhafte Releasebelege](release-evidence/ui-text01-v217-release.json). Keine reale Android-Hardwareabnahme behauptet.
+
+Erster Livejob123912141099 scheiterte an fehlender SW-Registrierung/Aktivierung in frischem Referenztestkontext; vorherige121Hashes/Kern-/SW-/Offlineprüfung schon PASS. [Unveränderter Fehlerbeleg](release-evidence/v217-live-sw-registration-failure.json) erhalten. Genau ein unveränderter Livejob-Retry123913319636 danach vollständig SUCCESS; erfolgreiche Mainjobs übernommen. Ursache weiter **UNGEKLÄRT**, keine pauschale Flakiness- oder Produktrootcause. Als begrenzter PWA-QA-Folgepunkt erhalten; keine Gate-/Assertion-/Timeoutabschwächung.
+
+Fehlende Kurse/Quellen ehrlich dargestellt; belegte Nullkurse, Kursqualität und Fehlkurswarnung konsistent. Gespeicherte Finanzwerte/Bewertungsrechnung/Journal/Import/Backup/Sync unverändert. PR204-Freigabe ist verbraucht; keine erneute Freigabe für diesen abgeschlossenen Release und keine Übertragung auf spätere PRs.
+
+**Gesamtmaster PARTIAL. Nächster bestehender P1-Schnitt: UI-TEXT02** – bereits belegten verfügbaren Dreijahreszeitraum in Positionsdetails erreichbar machen, reale Abdeckung und Filter erhalten; bestehende Renderer-/Browserprobe wiederverwenden. Danach übrige UI-P1 nach unveränderter Masterpriorität. Kompakte adaptive Zeitraumzeile (alte4×2-Pflicht SUPERSEDED),Sparse-Achse/Modi,Liquidität/gebuchte Vorgänge/Verwaltung,Mehr-/Textaudit,TradingView-Rückbau sowie DELETE-/FLH03-/FLH04-/Android-/CI-/WebKit-/IDB-Verträge bleiben OPEN/PARTIAL. **FLH05/FLH-PROJ01 OPEN/PARKED.** Historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
+
 ## UI-TEXT01 / PR204 technisch abgenommen und reviewbereit · 30.10.2026
 
 **TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** [PR204](https://github.com/joke0071/foliolab-open/pull/204), Branch **fix/ui-text01-quote-display-v217**, HEAD **35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93**. Testmerge **4382ee5843b6b75516cc2ba1c7d7c53140ae2260** auf main82523b8b besitzt exakt denselben Tree. Alle sechs Source-/Test-/SW-Blobs lokal und remote identisch. Produktion bleibt **v216/SW216 LIVE_ACCEPTED**, SW217 unveröffentlicht.

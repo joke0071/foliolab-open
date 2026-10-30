@@ -1,3 +1,9 @@
+## UI-TEXT01 DONE / LIVE_ACCEPTED · v217 · 30.10.2026
+
+PR204/mainc6a07402,957Units/drei Engines/Main/Pages/Live SUCCESS. 121 veröffentlichte Dateihashes,37 finale Liveberichte. Vollständige Belege in release-evidence/ui-text01-v217-release.json; erster SW-Registrierungsbefund weiter ungeklärt dokumentiert. UI-TEXT02 ist der nächste bestehende P1-Schnitt; übriger Audit OPEN/PARTIAL. Historische Kandidaten-/Fehlerstände unten erhalten.
+
+---
+
 ## UI-TEXT01 technisch abgenommen und reviewbereit · PR204 · 30.10.2026
 
 Kandidat35f0bb7c/Tree5fb8176d, SW217 unveröffentlicht. Renderer, Kursqualität und rein lesende Fehlkurswarnung verwenden denselben Belegvertrag. Markt-Standardnullen ohne Quelle sind im unveränderten Modell nicht von fehlenden Kursen unterscheidbar; deshalb Nicht verfügbar. Belegte Nullkurse bleiben0,00 und müssen Datum/Status/Herkunft weiterhin getrennt erfüllen. Andere gespeicherte Werte und Finanzberechnungen unverändert. Lokal957/957 Units/Syntax PASS; finale Pflicht40997505773 und Wallet40997505790 SUCCESS; drei Engines,957 Units. Eigene Releasefreigabe fehlt. Frühere Rendererproben unten sind historische Fehlernachweise, keine aktuelle Kandidatenanzeige.
@@ -38,7 +44,7 @@ Ebene1: Name, relevanter Status, wichtigste Aktion und bei Bedarf ein kurzer Sat
 
 | ID | Verbindlicher Prüf- und Korrekturauftrag | Status |
 | --- | --- | --- |
-| UI-TEXT01 / P1 | Fehlender Kurs ist keine0. Fehlende/ungültige Werte als „–“ oder „Kurs nicht verfügbar“; echte0 nur mit tatsächlichem Beleg. Leere Quelle nicht automatisch „Manuell“. Nur Darstellung, gespeicherte Werte unverändert. | TECHNICALLY_ACCEPTED / PR204 REVIEW_READY; fehlend/ungültig als Nicht verfügbar, Quelle Unbekannt, Null nur mit Quellenbeleg; Finanzwerte unverändert |
+| UI-TEXT01 / P1 | Fehlender Kurs ist keine0. Fehlende/ungültige Werte als „–“ oder „Kurs nicht verfügbar“; echte0 nur mit tatsächlichem Beleg. Leere Quelle nicht automatisch „Manuell“. Nur Darstellung, gespeicherte Werte unverändert. | DONE / LIVE_ACCEPTED in v217; PR204; fehlend/ungültig als Nicht verfügbar, Quelle Unbekannt, Null nur mit Quellenbeleg; Finanzwerte unverändert |
 | UI-TEXT02 | availablePositionPeriods und Darstellung abgleichen;3J wird teilweise zugelassen und danach herausgefiltert. Längere Optionen nur mit echter Abdeckung; K02 wiederverwenden, keine Fakehistorie. | OPEN / bestehender Kursoptionenvertrag |
 | UI-TEXT03 | Krypto-CSV-Markup gegen tatsächlich unterstützten Wertpapier-Importpfad und Berechtigungen prüfen. Nur erreichbare unterstützte Funktionen anbieten; keine bloße Freischaltung unvollständiger Pfade. | OPEN; vorbereitete Markups nicht ungeprüft als sichtbar behandeln |
 | UI-TEXT04 | „Vermögensänderung“, Zusatz „Ein- und Auszahlungen enthalten · keine Rendite“, Zeitraum erhalten, fehlende Vergleichswerte konkret erklären. | OPEN / Darstellung ohne Berechnungsänderung |
