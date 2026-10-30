@@ -55,7 +55,7 @@ try{
   const targets=await holding.locator('.position-period button:visible, .position-period-more > summary:visible').evaluateAll(els=>els.map(el=>{
    const r=el.getBoundingClientRect();return {width:r.width,height:r.height,left:r.left,right:r.right};
   }));
-  assert.ok(targets.length>0&&targets.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=innerWidth+1),
+  assert.ok(targets.length>0&&targets.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=width+1),
    'Visible period targets must be at least 44×44 and within the viewport at '+width+': '+JSON.stringify(targets));
   if(width<=767)await holding.locator('.position-period-more > summary').click();
  }
@@ -96,7 +96,7 @@ try{
   const targets=await holding.locator('.position-period button:visible, .position-period-more > summary:visible').evaluateAll(els=>els.map(el=>{
    const r=el.getBoundingClientRect();return {width:r.width,height:r.height,left:r.left,right:r.right};
   }));
-  assert.ok(targets.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=innerWidth+1),
+  assert.ok(targets.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=width+1),
    'Selected period targets must be at least 44×44 and within the viewport at '+width+': '+JSON.stringify(targets));
   await holding.locator('.position-period').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/gates/ui-visual01/'+engine+'-emulated-'+width+'.png'});
