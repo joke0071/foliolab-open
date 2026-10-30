@@ -2,10 +2,12 @@ import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
 import {createRequire} from 'node:module';
-import {readFileSync} from 'node:fs';
+import {readFileSync,mkdirSync} from 'node:fs';
 const axeScript=readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'),'utf8');
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
+mkdirSync('artifacts/gates/ui-visual01',{recursive:true});
+const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
 const labels=['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max'];
 const checkAxe=async(root,width,state)=>{
  const violations=await root.evaluate(async el=>(await window.axe.run(el,{
@@ -57,6 +59,8 @@ try{
   persist(model);
  });
  await page.reload();
+ await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ const before=await record();
  await page.addScriptTag({url:'http://127.0.0.1:4173/__visual01_axe.js'});
  const mini=page.locator('#miniChartPeriods');
  assert.deepEqual(await mini.locator('button').allTextContents(),labels);
@@ -70,12 +74,17 @@ try{
   await page.setViewportSize({width,height:850});
   await page.locator('#mobileNav [data-page="dashboard"]:visible, #sidebarNav [data-page="dashboard"]:visible').click();
   await verifyTargets(mini,width);
-  await mini.screenshot({path:'/tmp/foliolab-visual01-dashboard-'+width+'.png'});
+  await mini.screenshot({path:'artifacts/gates/ui-visual01/wealth-dashboard-'+width+'.png'});
   if(width===390){
    const more=mini.locator('.period-more > summary');
    await more.focus();await page.keyboard.press('Enter');
    assert.equal(await mini.locator('.period-more').evaluate(el=>el.open),true);
    await page.keyboard.press('Tab');
+   assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('data-mini-range')),'threeYears');
+   await page.keyboard.press('Escape');
+   assert.equal(await mini.locator('.period-more').evaluate(el=>el.open),false,'Escape closes the expanded period list');
+   assert.equal(await more.evaluate(el=>document.activeElement===el),true,'Escape restores focus to the disclosure');
+   await page.keyboard.press('Enter');await page.keyboard.press('Tab');
    assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('data-mini-range')),'threeYears');
    await page.keyboard.press('Shift+Tab');
    assert.equal(await more.evaluate(el=>el.matches(':focus-visible')),true);
@@ -110,7 +119,7 @@ try{
    assert.equal(await history.locator('[data-range="fiveYears"]').getAttribute('aria-pressed'),'true');
    assert.equal(JSON.parse(await page.locator('#historyChart [data-chart-points]').getAttribute('data-chart-points')).length,4);
   }
-  await history.screenshot({path:'/tmp/foliolab-visual01-history-'+width+'.png'});
+  await history.screenshot({path:'artifacts/gates/ui-visual01/wealth-history-'+width+'.png'});
  }
  await page.locator('#chartPeriods [data-range="month"]').click();
  assert.equal(await page.locator('#chartPeriods [data-range="month"]').getAttribute('aria-pressed'),'true');
@@ -132,5 +141,6 @@ try{
   {label:'6 M',pressed:'false',range:'180'},
   {label:'1 J',pressed:'false',range:'365'}
  ]);
- console.log('CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/focus, Axe, active 3/5-year disclosure, 320/360/390/430/768/1440px screenshots PASS (/tmp/foliolab-visual01-*.png)');
+ assert.deepEqual(await record(),before,'period selection, responsive relocation and keyboard preserve the entire raw/settings/revision record');
+ console.log('CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/Escape/focus, Axe, active 3/5-year disclosure, 320–1440px, exact IDB preservation and retained screenshots PASS');
 }finally{await browser.close();}

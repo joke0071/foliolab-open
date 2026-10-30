@@ -772,8 +772,7 @@
 #historyPage .history-calendar-panel{left:auto;right:0}
 @media(max-width:767px){
  .chart-period button,
- #historyPage .chart-period.history-chart-period button,
- .chart-period.position-period button{min-width:39px;min-height:36px;padding:7px 9px}
+ #historyPage .chart-period.history-chart-period button{min-width:39px;min-height:36px;padding:7px 9px}
  #historyPage .history-actions{gap:7px}
  #historyPage .history-actions .history-add-button{
   background:#26563d;color:#fff;border-color:#26563d
@@ -784,34 +783,51 @@
 }
 @media(max-width:360px){
  .chart-period button,
- #historyPage .chart-period.history-chart-period button,
- .chart-period.position-period button{min-width:35px;min-height:36px;padding:7px 6px;font-size:10px}
+ #historyPage .chart-period.history-chart-period button{min-width:35px;min-height:36px;padding:7px 6px;font-size:10px}
  #historyPage .history-controls{gap:5px}
 }
 
-/* Native six-option market periods: limit phones to 4 presets plus one More menu. */
+/* Keep extended native market periods in a compact responsive selector. */
 .chart-period.position-period{position:relative;flex-wrap:nowrap}
 .chart-period.position-period .position-period-long{display:inline-flex;align-items:center;gap:2px}
 .chart-period.position-period .position-period-more{display:none}
+.chart-period.position-period{padding:0;border:0;border-radius:0;background:transparent}
+.chart-period.position-period button{
+ min-width:44px;min-height:44px;padding:8px 6px;border-radius:8px
+}
+.chart-period.position-period button.selected,
+.chart-period.position-period button[aria-pressed="true"]{
+ background:#e8f1e9;color:#245a3d;box-shadow:none;font-weight:760
+}
+.chart-period.position-period button:focus-visible{outline:3px solid #397f52;outline-offset:2px}
 @media(max-width:767px){
+ .chart-period.position-period{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));width:100%;max-width:100%
+ }
  .chart-period.position-period:has(.position-period-more) .position-period-long{display:none}
- .chart-period.position-period .position-period-more{display:block;position:relative}
+ .chart-period.position-period .position-period-more{display:block;position:relative;justify-self:stretch}
  .chart-period.position-period .position-period-more>summary{
-  display:flex;align-items:center;justify-content:center;min-width:43px;min-height:36px;
+  display:flex;align-items:center;justify-content:center;width:100%;min-width:44px;min-height:44px;
   padding:7px 8px;border-radius:9px;color:#4d6756;font-size:11px;font-weight:730;
   list-style:none;cursor:pointer
  }
  .chart-period.position-period .position-period-more>summary::-webkit-details-marker{display:none}
- .chart-period.position-period .position-period-more[open]>summary{background:white;color:#245a3d}
+ .chart-period.position-period .position-period-more>summary:focus-visible{outline:3px solid #397f52;outline-offset:2px}
+ .chart-period.position-period .position-period-more:has(.position-period-popover button[aria-pressed="true"])>summary,
+ .chart-period.position-period .position-period-more[open]>summary{background:#e8f1e9;color:#245a3d}
+ .chart-period.position-period .position-period-more>summary::after{
+  content:"";width:6px;height:6px;margin:-3px 0 0 3px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)
+ }
  .chart-period.position-period .position-period-popover{
   position:absolute;top:calc(100% + 8px);right:0;z-index:10;
   display:flex;gap:3px;padding:6px;border:1px solid #d8e5db;
   border-radius:11px;background:#fff;box-shadow:0 8px 22px #183b2726
  }
- .chart-period.position-period .position-period-popover button{min-width:48px}
+ .chart-period.position-period .position-period-popover button{min-width:44px;min-height:44px}
 }
-@media(max-width:360px){
- .chart-period.position-period .position-period-more>summary{min-width:39px;padding:7px 6px;font-size:10px}
+@media(max-width:380px){
+ .chart-period.position-period .position-period-popover{left:0;right:auto}
 }
 
 /* Position editor: primary holdings first; optional lookup and technical mapping second. */
