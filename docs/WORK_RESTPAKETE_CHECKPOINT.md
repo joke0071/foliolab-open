@@ -1,3 +1,17 @@
+## PR231: vollständiger Originalinhalt verifiziert, Mainbelege gesichert · 30.10.2026
+
+Der zuletzt dokumentierte Integritätsblocker ist für die **Nachweiskette** geklärt, nicht als Behebung einer lokalen Dateisystemursache umgedeutet. Zwei lokale ZIP-Kopien13003959387 blieben abgeschnitten (17.956.864 bzw.23.953.408 statt24.223.052Bytes); ihreHashes/Defekte bleiben erhalten, UrsacheUNKNOWN. Sie wurden nicht als Quelle der Abnahme verwendet.
+
+Stattdessen vollständigen frischen Originaldownload **im Speicher** vor jeder JSON-Auswertung streng geprüft:24.223.052Bytes, SHA256 `7f509bc431ea4af6579050be4805c681436b7f4ab23e0eaa34b88115a3015734` exakt wie GitHub und alleZIP-CRC fehlerfrei. Alle22JSON-Berichte direkt aus diesen verifiziertenBytes gelesen, rekursiv geprüft und separat remote gesichert: [Originalquellenbeleg](release-evidence/ci-opt01-pr231-cross3-source-verification.json), Commit8f56baaf. Keine ZIP-Hashprüfung oder Testassertion gelockert, keine Pipeline wiederholt. Lokale Trunkierungsursache bleibt ausdrücklich offen.
+
+Die fünf übrigen ZIPs stimmen direkt lokal mit GitHub überein. Gesamtverifier nun erfolgreich: alle69Main-/Cross-/PlanJSONs geprüft,65PASS+3Axe+1RELEASE-Plan,975Units ohneFehler/Skip; drei strenge PWA-Enginebelege bestanden. [Vollständiger dauerhafter Mainbeleg](release-evidence/ci-opt01-pr231-main-acceptance.json). Damit wird die vorherige zu frühe69erBehauptung erst jetzt tatsächlich belegt.
+
+Main d6b2a14f/Tree033a5de9 unverändert. Release41113336364: Hauptjob/dreiCross/PagesSUCCESS, Livejobweiterin_progress. **MAIN_AND_CROSS_ACCEPTED / PAGES_SUCCESS / LIVE_ACCEPTANCE_PENDING.** Exaktweiter: diesen vorhandenenLivejob regulär abnehmen, seinZIP streng prüfen und40Liveberichte/121Hashmatches/6Gruppen/18Axe/echteBilder bestätigen. Erst dann gesamtenReleaseDONE/LIVE_ACCEPTED sichern.
+
+Freigabe231 bereitsverwendet, keineweiterenPRs/Implementierungen. Wochenend-/UX-Priorität, sämtlicheMasteranforderungen undKostenstopp0€ erhalten; nurFLH05/FLH-PROJ01 bewusstPARKED.
+
+---
+
 ## Korrektur des letzten Zwischenbelegs: Artefaktintegrität noch offen · 30.10.2026
 
 Der unmittelbar folgende Zwischenabschnitt hat die vollständige rekursive Prüfung der69MainJSONs zu früh behauptet: der gemeinsame Verifier ist beim erneuten ZIP-Hashabgleich abgebrochen. Diese69er-Abnahme ist bis zur erfolgreichen Klärung **NICHT BELEGT**. Die GitHub-Joberfolge bleiben unverändert gültig, ersetzen aber keine Artefaktprüfung.
