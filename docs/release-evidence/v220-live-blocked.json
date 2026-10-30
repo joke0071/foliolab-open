@@ -1,0 +1,49 @@
+{
+  "status": "DEPLOYED / LIVE_ACCEPTANCE_BLOCKED",
+  "pr": 212,
+  "release": "af8347054c9e5d50b854494f650e7d7675adcff6",
+  "run": 41028863300,
+  "first": {
+    "status": "INITIAL_LIVE_FAILURE / DIAGNOSED_STATE / ROOT_CAUSE_UNKNOWN",
+    "pr": 212,
+    "release": "af8347054c9e5d50b854494f650e7d7675adcff6",
+    "run": 41028863300,
+    "job": 123977643473,
+    "artifact": {
+      "id": 12964884115,
+      "sha256": "fd61a72d655e5d53f217bb85d0bbce7770fa134d28335d2903f52892032e06d2",
+      "verifiedBeforeExtraction": true
+    },
+    "error": "browser-reference-management.mjs:37 page.waitForFunction __referenceWorkerActivated, 30000ms",
+    "baseline": {
+      "initial": {
+        "controller": false,
+        "controllerScript": null,
+        "active": null,
+        "installing": "installing",
+        "waiting": null
+      },
+      "final": {
+        "controller": false,
+        "controllerScript": null,
+        "active": null,
+        "installing": null,
+        "waiting": null
+      }
+    },
+    "scope": "Fresh Chromium reference-test context before synthetic financial seeding or reference mutations. No reference-management/report.json because exception precedes final writer.",
+    "alreadyPassed": "Main962Units/all3browsers/PWA, Pages, production core121hashes/6groups/18Axe/plain+encrypted restore/offline, live Chromium sparse chart regression and earlier targeted groups passed.",
+    "diagnosis": "Initial installation did not reach activated/controller baseline; exact failed network/worker cause absent from current report, so UNKNOWN. No evidence supporting date-geometry cause, no product fix claimed. Previous context's successful offline/controller core gate does not replace this failed reference-context gate.",
+    "retryDecision": "After inspecting original job log, unchanged SW/test source, exact fresh baseline and verified failed ZIP, permit exactly one unchanged failed-live-job rerun. Only transient context/install hypothesis; no assertions/timeouts/product changes and no test omission. If repeated, inspect/diagnose further and remain blocked; do not blindly repeat."
+  },
+  "second": {
+    "job": 123979011276,
+    "artifact": 12965637061,
+    "sha256": "0426803b0a32118cad0bf71e53daa6a13cceb3d2abb846bfb71813cfb065e6b1",
+    "verifiedBeforeExtraction": true,
+    "error": "browser-chart-tooltip.mjs:27 reload / ready at line12: IndexedDB-ready wait30s timeout",
+    "cause": "UNKNOWN; original report lacks failed request/storage DOM/SW states. Product gate is not waived."
+  },
+  "action": "No further unchanged live retries. Test-only Draft220 head1fdb2362 adds failure-only evidence and one bounded PR diagnostic run of each exact unchanged gate against public live in fresh synthetic profiles. Product byte-identical. Full mandatory gates and release approval boundary retained.",
+  "copilotSplit": "Delivered01/02/03 pending integration; only additional04/215 and05/216 delegated sequentially;06/217 Work-owned OPEN, no Copilot waiting; FLH05/PROJ01 PARKED."
+}
