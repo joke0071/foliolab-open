@@ -1,0 +1,45 @@
+{
+  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "release": "c6a07402d668c0a5d90d1294be8f72547d1577b0",
+  "tree": "5fb8176d0ea6f1f0792392b9eafebfda665f4b93",
+  "pr": 204,
+  "approvedHead": "35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0",
+  "userAuthorization": "Explicit Freigabe after concrete PR204 HEAD35f0bb7c merge/deployment question. Applies to PR204 only.",
+  "cache": "foliolab-open-v217",
+  "run": 41008536496,
+  "attempt": 1,
+  "units": {
+    "pass": 957,
+    "fail": 0,
+    "skip": 0
+  },
+  "jobs": {
+    "test": 123908892726,
+    "cross1": 123908892562,
+    "cross2": 123908892815,
+    "deploy": 123912055006,
+    "live": 123912141099
+  },
+  "artifactsVerifiedBeforeExtraction": [
+    {
+      "id": 12957110695,
+      "name": "cross-engine-gates-c6a07402d668c0a5d90d1294be8f72547d1577b0-1",
+      "sha256": "bd10c65194b7e5065a4dc7195cac6ebfa60abf4dfeb6502718886cdfd0be9265",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12957121107,
+      "name": "release-gates-c6a07402d668c0a5d90d1294be8f72547d1577b0",
+      "sha256": "63fb79258aa43a93a1e976b914ce6149ace7025c7fcbc76c07dddb3ab6e6f1d4",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12956748762,
+      "name": "cross-engine-gates-c6a07402d668c0a5d90d1294be8f72547d1577b0-2",
+      "sha256": "9a92fc7bfc185c4e1910af1922efcb6f2f3c13eefbc9e00aee3437b88724ac21",
+      "verifiedBeforeExtraction": true
+    }
+  ],
+  "next": "Complete live acceptance and inspect actual production reports/assets/SW before LIVE_ACCEPTED. Then existing UI-TEXT02 P1, no parallel implementation.",
+  "preserved": "Entire master; FLH05/FLH-PROJ01 OPEN/PARKED; no real Android hardware claim."
+}
