@@ -1,3 +1,13 @@
+## CI-OPT01 erster Teilschnitt abgenommen · PR230 wartet auf Freigabe · 30.10.2026
+
+[PR230](https://github.com/joke0071/foliolab-open/pull/230) **TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED**. HEADc6757318, Treee0bc5ae4; Testmerge23c7d403 hat denselben Tree auf unverändertem Main3b00336d. 969/969 Units, Chromium, alle drei Cross-Shards und Wallet erfolgreich; fünf ZIPs SHA256-verifiziert,68JSONs/65PASS-Berichte gelesen. [Vollständige Abnahme und Messdaten](release-evidence/ci-opt01-pr230-acceptance.json), Belegcommit73a69c7a.
+
+Gemessene vollständige Pflichtspanne **821→601s (−26,8%)**, Runnersekunden **1936→1851 (−4,4%)**. Zweite historische Referenz805s ergibt−25,3%. Einzelmessungen, keine Garantie und keine behauptete Work-Credit-/Euroersparnis. Entwicklungsaufwand der vier früheren roten Kandidaten getrennt dokumentiert. Alle37Cross-Aufrufe erhalten; zusätzliche echte PWA-Bereitschafts-/Aktivierungs-/Reloadnachweise, ursprüngliche Assertionen undFristen unverändert. Haupt-/Releaseworkflow und Produktdateien bytegleich.
+
+**Nächste Grenze: eigene konkrete Nutzerfreigabe für PR230/c6757318.** Danach frischeRefs/Checks/Tree/WorkingTrees prüfen, nur diesenKandidaten mergen und vollständige Main-/Pages-/Liveabnahme durchführen. Bis dahin Produktionv221/SW221 LIVE_ACCEPTED. CI-OPT01 insgesamtPARTIAL: FAST-/Impactauswahl,Caching,Versionsangleichung undChromium-Sharding bleiben offen. KeineCopilot-Sammelintegration. AlleMasteraufgaben erhalten; nurFLH05/FLH-PROJ01 bewusstPARKED. ZusätzlicheCreditkäufe/Kaufplanung0€.
+
+---
+
 ## CI-OPT01 Canary230 in technischer Abnahme · 30.10.2026
 
 Aktiver begrenzter Kandidat [PR230](https://github.com/joke0071/foliolab-open/pull/230), HEAD1ab12f79, Treecded3cb6. Drei isolierte Cross-Shards mit allen37 bisherigen Aufrufen; Haupt-/Releaseworkflow bytegleich, Produktcode und SW221 unverändert. Zwei konkrete PWA-Testvoraussetzungen wurden zusätzlich korrigiert: tatsächliche asynchrone Bereitschaft und geordnete automatische/ausdrückliche Reloads. Alle ursprünglichen Assertionen und Fristen erhalten, zusätzliche echte Bereitschafts-/Navigationsnachweise. Fehlerbelege dauerhaft erhalten.
