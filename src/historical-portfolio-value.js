@@ -34,7 +34,10 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
   return {date,totalEURExact:complete?exact(sum):null,partialEURExact:components.length?exact(sum):null,coverage:complete?'reconstructed':'partial',components,missing};
  });
  const observations=(model.snapshots??[]).map(s=>({...s,date:s.date,totalEURExact:s.totalEURExact??String(s.total),evidenceKind:'observed',snapshotId:s.id}));
- const reconciliation=days.flatMap(d=>observations.filter(s=>s.date===d.date&&d.totalEURExact!==null).map(s=>({date:d.date,snapshotId:s.snapshotId,reconstructedEURExact:d.totalEURExact,observedEURExact:s.totalEURExact,differenceEURExact:exact(units(d.totalEURExact)-units(s.totalEURExact)),status:units(d.totalEURExact)===units(s.totalEURExact)?'agrees':'review',reason:'Kurszeitpunkt, Cash-Abdeckung und manuelle Bewertung prüfen. Keine automatische Korrektur.'})));
+ // One date index per pure projection; duplicate snapshots retain their input order.
+ const observationsByDate=new Map();
+ for(const item of observations){const matches=observationsByDate.get(item.date);if(matches)matches.push(item);else observationsByDate.set(item.date,[item]);}
+ const reconciliation=days.flatMap(d=>d.totalEURExact===null?[]:(observationsByDate.get(d.date)||[]).map(s=>({date:d.date,snapshotId:s.snapshotId,reconstructedEURExact:d.totalEURExact,observedEURExact:s.totalEURExact,differenceEURExact:exact(units(d.totalEURExact)-units(s.totalEURExact)),status:units(d.totalEURExact)===units(s.totalEURExact)?'agrees':'review',reason:'Kurszeitpunkt, Cash-Abdeckung und manuelle Bewertung prüfen. Keine automatische Korrektur.'})));
  return {days,observations,reconciliation};
 }
 

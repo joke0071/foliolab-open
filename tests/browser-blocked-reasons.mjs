@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
@@ -13,12 +14,23 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const d=await openPortfolioDB();try{return await readPortfolioRecord(d);}finally{d.close();}});
  const scan=async label=>{
   await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});
-  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' overflow');
+  const fits=await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1);
+  if(!fits){
+   const geometry=await p.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth,elements:[...document.querySelectorAll('body *')].filter(e=>e.checkVisibility()).map(e=>{
+    const r=e.getBoundingClientRect(),s=getComputedStyle(e);return {tag:e.tagName,id:e.id,className:String(e.className),left:r.left,right:r.right,width:r.width,display:s.display,overflow:s.overflow,minWidth:s.minWidth,flex:s.flex};
+   }).filter(e=>e.right>innerWidth+1||e.left<-1)}));
+   const file=out+'/'+engine+'-'+label.replace(/[^a-z0-9]+/gi,'-');
+   writeFileSync(file+'-overflow.json',JSON.stringify({label,...geometry},null,2));
+   await p.screenshot({path:file+'-overflow.png',fullPage:true});
+   console.error('BLOCKED REASONS OVERFLOW',JSON.stringify({label,...geometry}));
+  }
+  assert.ok(fits,label+' overflow');
   assert.ok(await p.locator('.blocked-reasons summary,#positionRemovalItems>summary').evaluateAll(es=>es.filter(e=>e.checkVisibility()).every(e=>{const r=e.getBoundingClientRect();return r.height>=44&&r.width>=44;})),label+' visible disclosure44px');
   assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label+' Axe');
  };
  try{
-  await p.goto(base);await ready();
+  await p.goto(base);const worker=await controlledStorageFixture(p,ready,record);
+  console.log(engine+': BLOCKED REASONS actual controlled worker before fixture '+JSON.stringify(worker));
   await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC blocker test'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC cash',type:'cash'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',name:'SYNTHETIC cash',kind:'cash',quantity:1000,price:1},m));

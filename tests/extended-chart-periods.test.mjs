@@ -48,6 +48,8 @@ test('Actual supported presets remain reachable in detail controls, including th
    const html=rendered(selected);
    assert.match(html,/data-position-range="1096"[^>]*>3 J<\/button>/);
    if(selected===1096)assert.match(html,/data-position-range="1096" aria-pressed="true" class="selected">3 J/);
+   if(selected===1096)assert.match(html,/<summary aria-label="Ausgewählter Zeitraum 3 J\. Weitere Zeiträume auswählen" title="Weitere Zeiträume">3 J<\/summary>/);
+   if(selected===1826)assert.match(html,/<summary aria-label="Ausgewählter Zeitraum 5 J\. Weitere Zeiträume auswählen" title="Weitere Zeiträume">5 J<\/summary>/);
    if(kind==='crypto')assert.doesNotMatch(html,/data-action="import-price-history"/,'legacy history does not expose unsupported crypto CSV import');
   }
   m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(700),total:80},{date:ago(2),total:100}]};

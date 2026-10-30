@@ -33,7 +33,7 @@ import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
-import {renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
+import {groupExtraWealthPeriods,layoutPeriodMore,bindPeriodMore,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {availablePositionPeriods} from './position-history.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
@@ -113,7 +113,7 @@ async function save(){
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();}
+ }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();if(page==='bookings'&&!loadFailure)renderBookingManagement();}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -215,7 +215,7 @@ function renderReferences(){
  }else{tools.innerHTML='';status.textContent=archived.size?archived.size+' archivierte Referenzwerte sind über „Ansicht“ erreichbar. Finanzwerte bleiben enthalten.':'';}
  if(canUndoCSV(model,referenceRemovalReceipt))tools.innerHTML+='<div class="settings-actions"><button type="button" class="btn outline" data-reference-manage="undo-removal" '+(!bookingWritable()?'disabled':'')+'>Referenzlöschung rückgängig</button></div>';
  $('snapshotList').innerHTML=visible.length?visible.map(s=>{const permission=referencePermissions(model,s.id);
-  return '<div class="history-row reference-row" data-reference-id="'+esc(s.id)+'">'+(referenceSelecting?'<label class="selection-check"><input type="checkbox" data-reference-select="'+esc(s.id)+'" '+(selectedReferenceIds.includes(s.id)?'checked ':'')+'aria-label="Stichtag '+esc(dateLabel(s.date))+' auswählen"></label>':'')+'<div class="reference-copy"><div class="history-title">'+esc(dateLabel(s.date))+'</div><div class="history-sub">'+esc(s.note||'Portfolio-Stand')+'<br>'+esc(referenceOrigin(s))+(archived.has(s.id)?' · archiviert':'')+'</div>'+(referenceSelecting&&permission.editReason?'<span class="reference-protection" title="'+esc(permission.editReason)+'">Herkunft geschützt · Quelle prüfen.</span>':'')+'</div><div class="holding-r"><strong class="history-amount">'+money(s.total)+'</strong>'+(referenceSelecting&&!permission.editReason?'<div class="snapshot-row-actions"><button type="button" class="row-btn" data-action="edit-snapshot" data-id="'+esc(s.id)+'" title="Referenzwert bearbeiten" aria-label="Stichtag vom '+esc(dateLabel(s.date))+' bearbeiten">'+svg('pencil',15)+'</button></div>':'')+'</div></div>';
+  return '<div class="history-row reference-row" data-reference-id="'+esc(s.id)+'">'+(referenceSelecting?'<label class="selection-check"><input type="checkbox" data-reference-select="'+esc(s.id)+'" '+(selectedReferenceIds.includes(s.id)?'checked ':'')+'aria-label="Stichtag '+esc(dateLabel(s.date))+' auswählen"></label>':'')+'<div class="reference-copy"><div class="history-title">'+esc(dateLabel(s.date))+'</div><div class="history-sub">'+esc(s.note||'Portfolio-Stand')+'<br>'+esc(referenceOrigin(s))+(archived.has(s.id)?' · archiviert':'')+'</div>'+(permission.editReason?'<span class="reference-protection" title="'+esc(permission.editReason)+'">Herkunft geschützt · Quelle prüfen.</span>':'')+'</div><div class="holding-r"><strong class="history-amount">'+money(s.total)+'</strong>'+(!referenceSelecting&&!permission.editReason?'<div class="snapshot-row-actions"><button type="button" class="link-button" data-action="edit-snapshot" data-id="'+esc(s.id)+'" title="Referenzwert bearbeiten" aria-label="Stichtag vom '+esc(dateLabel(s.date))+' bearbeiten">Bearbeiten</button></div>':'')+'</div></div>';
  }).join('')+(rows.length>visible.length?'<button type="button" class="btn outline" data-reference-manage="more">Weitere '+Math.min(100,rows.length-visible.length)+' anzeigen</button>':''):empty('Keine Referenzwerte in dieser Ansicht.');
 }
 function focusReferences(){($('referenceSelectVisible')||$('manageReferences')).focus();}
@@ -434,9 +434,9 @@ function renderPositions(){
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   const h=historyAction(model,p);
   const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
-  const reviewButtons=reviewActions.map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
+  const reviewButtons=reviewActions.filter(i=>!positionSelecting||i.action!=='edit-position').map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
   const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'<div class="position-row-actions"><button type="button" class="row-btn" data-action="edit-position" data-id="'+esc(p.id)+'" title="Position bearbeiten" aria-label="'+esc(p.name)+' bearbeiten">'+svg('pencil',15)+'</button>'+'<button type="button" class="row-btn" data-action="delete-position" data-id="'+esc(p.id)+'" title="Position löschen" aria-label="'+esc(p.name)+' löschen">'+svg('trash',15)+'</button><button type="button" class="row-btn" data-action="archive-position" data-id="'+esc(p.id)+'" title="'+(p.archived?'Position wieder einblenden':'Position archivieren')+'" aria-label="'+esc(p.name)+(p.archived?' wieder einblenden':' archivieren')+'">'+svg(p.archived?'unarchive':'archive',15)+'</button></div>'+'</div><div class="holding-row">'+
+  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+(!positionSelecting?'<div class="position-row-actions"><button type="button" class="link-button" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button></div>':'')+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
@@ -464,19 +464,21 @@ function selectionMaster(id,coverage,disabled){
 function renderPositionSelection(){
  const tools=$('positionSelectionTools'),status=$('positionSelectionStatus'),head=$('positionListHead');
  if(!model.positions.length){positionSelecting=false;selectedPositionIds=[];head.innerHTML='';tools.innerHTML='';status.textContent='';return;}
- head.innerHTML='<h3>Positionen</h3>'+(!positionSelecting?'<button type="button" class="btn light" data-action="select-positions" aria-controls="positionSelectionTools positionList">Mehrfachauswahl</button>':'');
+ head.innerHTML='<h3>Positionen</h3><button type="button" class="btn light" data-action="'+(positionSelecting?'cancel-selection':'select-positions')+'" aria-controls="positionSelectionTools positionList" aria-pressed="'+positionSelecting+'">'+(positionSelecting?'Fertig':'Verwalten')+'</button>';
  if(!positionSelecting){tools.innerHTML='';status.textContent='';return;}
  const summary=positionSelectionSummary(model,selectedPositionIds,positionMatchingIds),scope=positionSelectionScope();
  const coverage=selectionCoverage(selectedPositionIds,positionMatchingIds.slice(0,positionLimit),scope);
  const archived=model.positions.filter(p=>p.archived),archivedSelected=archived.filter(p=>selectedPositionIds.includes(p.id)).length;
  const disabled=!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio;
+ const single=summary.currentCount===1&&!summary.hiddenCount?model.positions.find(p=>p.id===summary.currentIds[0]):null;
+ const allArchived=summary.currentCount>1&&summary.currentCount===archivedSelected;
+ const archiveAction=single?'<button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(single.id)+'" '+(disabled?'disabled':'')+'>'+(single.archived?'Wiederherstellen':'Archivieren')+'</button>':'<button type="button" class="btn outline" data-action="archive-selected" '+(disabled||allArchived?'disabled':'')+(allArchived?' aria-describedby="positionSingleRestoreHint"':'')+'>'+(allArchived?'Wiederherstellen':'Alle archivieren')+'</button>';
  tools.innerHTML=selectionMaster('positionSelectFiltered',coverage,!scope.length)+
   '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(disabled?'disabled':'')+'>Alle löschen</button>'+
-  '<button type="button" class="btn outline" data-action="archive-selected" '+(disabled?'disabled':'')+'>Alle archivieren</button>'+
-  '<button type="button" class="btn outline" data-action="cancel-selection">Abbrechen</button>'+
-  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'');
+  archiveAction+
+  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+(allArchived?'<p class="small-help" id="positionSingleRestoreHint">Zum Wiederherstellen jeweils eine archivierte Position auswählen.</p>':'');
  const checkbox=$('positionSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
- status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte abbrechen und neu prüfen.':'');
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte mit „Fertig“ beenden und neu prüfen.':'');
 }
 function focusPositionSelection(){($('positionSelectFiltered')||$('positionListHead').querySelector('button'))?.focus();}
 function openSelectedPositionArchive(){
@@ -485,7 +487,7 @@ function openSelectedPositionArchive(){
  if(!ids.length||ids.length!==selectedPositionIds.length)throw Error('Auswahl fehlt oder ist veraltet.');
  const items=ids.map(id=>model.positions.find(p=>p.id===id)),active=items.filter(p=>!p.archived);
  showDialog('Ausgewählte Positionen archivieren','POSITIONEN',
-  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung über das vorhandene Archivsymbol.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
+  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung: archivierte Positionen anzeigen, genau eine auswählen und „Wiederherstellen“ öffnen.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
    if(values.confirmArchive!=='on')throw Error('Archivierung ausdrücklich bestätigen.');
    if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
    await portfolioStore.assertCurrent();
@@ -572,22 +574,22 @@ function bookingWritable(){return !busy&&!saving&&!loadFailure&&!otherTabChanged
 function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand nicht schreibbar. Abruf abwarten oder neu laden.');}
 function bookingManagementRow(row,archived){
  const checks=bookingRowActionReasons(model,row.id),reason=checks.notes.join(' '),removeReason=checks.remove.join(' '),label=row.date+' · '+(row.positionName||model.positions.find(p=>p.id===row.positionId)?.name||row.positionId);
- const action=(name,icon,title,blocked='')=>'<button type="button" class="row-btn" data-booking-row-action="'+name+'" data-id="'+esc(row.id)+'" title="'+esc(blocked||title)+'" aria-label="'+esc(label+' · '+title)+'" '+(blocked||loadFailure||otherTabChangedPortfolio?'disabled':'')+'>'+svg(icon,15)+'</button>';
- const controls='<div class="position-card-tools booking-row-tools">'+(bookingSelecting?'<label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label>':'')+'<div class="position-row-actions">'+action('edit','pencil','Buchung bearbeiten',reason)+action('remove','trash','Buchung löschen',removeReason)+action('archive',archived?'unarchive':'archive',archived?'Buchung wiederherstellen':'Buchung archivieren')+'</div></div>';
+ const edit=reason?'<span class="reference-protection">Geschützt · Buchungsdetails ansehen.</span>':'<button type="button" class="link-button" data-booking-row-action="edit" data-id="'+esc(row.id)+'" aria-label="'+esc(label+' · Buchung bearbeiten')+'" '+(loadFailure||otherTabChangedPortfolio?'disabled':'')+'>Bearbeiten</button>';
+ const controls='<div class="position-card-tools booking-row-tools">'+(bookingSelecting?'<label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label>':'')+(!bookingSelecting?'<div class="position-row-actions">'+edit+'</div>':'')+'</div>';
  return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason})+'</article>';
 }
 function renderBookingManagement(){
  const root=$('bookingManagementTools'),head=$('bookingListHead'),rows=bookingHistoryRows(model);
  if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML='';root.innerHTML='';return;}
  const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
- head.innerHTML='<h3>Buchungen</h3>'+(!bookingSelecting&&rows.length?'<button type="button" class="btn light" data-booking-manage="select" aria-controls="bookingManagementTools bookingList">Mehrfachauswahl</button>':'');
+ head.innerHTML='<h3>Buchungen</h3>'+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
  if(!bookingSelecting)root.innerHTML='';
  else{
   const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;
   const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds),selected=new Set(selectedBookingIds),archiveIds=new Set(model.bookingPresentation?.archivedIds||[]),allArchived=selectedBookingIds.length>0&&selectedBookingIds.every(id=>archiveIds.has(id));
   const blocks=summary.currentCount<=200?rows.filter(b=>selected.has(b.id)).map(b=>({id:b.id,label:dateLabel(b.date)+' · '+(b.positionName||b.positionId),reasons:bookingRowActionReasons(model,b.id).remove})).filter(b=>b.reasons.length):[];
   const removeReason=blocked?'Zuerst eine aktuelle Auswahl treffen; Datenstand muss schreibbar sein.':summary.currentCount>200?'Höchstens 200 Buchungen je wirtschaftlicher Prüfung.':blocks.length?'Löschen gesperrt: geschützte Herkunft oder Abhängigkeiten.':'';
-  root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('remove','Alle löschen',!!removeReason,'selection-danger')+button('archive',allArchived?'Alle wiederherstellen':'Alle archivieren',blocked||summary.currentCount>5000)+button('cancel','Abbrechen')+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+bookingMatchingIds.length+' gefiltert'+(summary.hiddenCount?' · '+summary.hiddenCount+' ausgeblendet':'')+(summary.requiresRefresh?' · Auswahl veraltet. Bitte neu prüfen.':'')+'</p>'+(removeReason&&summary.selectedCount?(blocked||summary.currentCount>200?'<p class="small-help" id="bookingBlocked-remove">'+esc(removeReason)+'</p>':blockedReasonsMarkup(blocks,{id:'bookingBlocked-remove',esc})):'' );
+  root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('remove','Alle löschen',!!removeReason,'selection-danger')+button('archive',allArchived?'Alle wiederherstellen':'Alle archivieren',blocked||summary.currentCount>5000)+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+bookingMatchingIds.length+' gefiltert'+(summary.hiddenCount?' · '+summary.hiddenCount+' ausgeblendet':'')+(summary.requiresRefresh?' · Auswahl veraltet. Bitte neu prüfen.':'')+'</p>'+(removeReason&&summary.selectedCount?(blocked||summary.currentCount>200?'<p class="small-help" id="bookingBlocked-remove">'+esc(removeReason)+'</p>':blockedReasonsMarkup(blocks,{id:'bookingBlocked-remove',esc})):'' );
   const remove=root.querySelector('[data-booking-manage="remove"]');remove.title=removeReason;if(removeReason&&summary.selectedCount)remove.setAttribute('aria-describedby',$('bookingBlocked-removeSummary')?'bookingBlocked-removeSummary':'bookingBlocked-remove');
  }
  if(canUndoBookingChange(model,bookingChangeReceipt))root.innerHTML+='<div class="settings-actions">'+button('undo','Letzte Buchungsänderung rückgängig',!bookingWritable())+'</div>';
@@ -2473,8 +2475,8 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
 {const origin=$('driveOriginExample');if(origin&&/^https?:/.test(location.origin))origin.textContent=location.origin;}
-$('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
-$('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
+$('miniChartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-mini-range',miniRange));
+$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));layoutPeriodMore();bindPeriodMore();
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
  if(!loadFailure)return;
  const control=event.target.closest('button,input,select,textarea,form');

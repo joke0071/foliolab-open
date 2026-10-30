@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, converted_to_draft]
     branches: [main, "p0/**"]
   workflow_dispatch:
 
@@ -14,7 +15,76 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  plan:
+    name: Determine FAST / INTEGRATION / RELEASE
+    runs-on: ubuntu-24.04
+    outputs:
+      stage: ${{ steps.stage.outputs.stage }}
+      full: ${{ steps.stage.outputs.full }}
+      css: ${{ steps.stage.outputs.css }}
+      ci_contract: ${{ steps.stage.outputs.ci_contract }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - id: stage
+        name: Classify exact base/head changes conservatively
+        run: node tests/ci-stage-plan.mjs
+      - name: Preserve explicit stage and impact receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-stage-${{ github.sha }}
+          path: artifacts/ci-stage/
+          if-no-files-found: error
+  fast:
+    name: FAST only / UI contract canary — no integration approval
+    needs: [plan]
+    if: needs.plan.outputs.stage == 'FAST' || needs.plan.outputs.ci_contract == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Full unit and syntax checks for FAST drafts
+        if: needs.plan.outputs.stage == 'FAST'
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/fast
+          git rev-parse HEAD > artifacts/fast/tested-sha.txt
+          npm test 2>&1 | tee artifacts/fast/unit.log
+          npm run check 2>&1 | tee artifacts/fast/syntax.log
+      - name: Install tools for CSS draft or CI contract canary
+        if: needs.plan.outputs.css == 'true' || needs.plan.outputs.ci_contract == 'true'
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
+          npx playwright install chromium --only-shell
+      - name: Existing targeted accessibility and responsive audits
+        if: needs.plan.outputs.css == 'true' || needs.plan.outputs.ci_contract == 'true'
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/fast
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-fast-http.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-ui07-audit.mjs 2>&1 | tee artifacts/fast/ui07.log
+          node tests/browser-responsive-actions.mjs 2>&1 | tee artifacts/fast/responsive.log
+          node tests/browser-dialog-a11y-mobile.mjs 2>&1 | tee artifacts/fast/dialog-a11y.log
+      - name: Preserve FAST evidence separately from integration
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fast-only-not-integration-${{ github.sha }}
+          path: |
+            artifacts/fast/
+            artifacts/gates/
+          if-no-files-found: error
   test:
+    needs: [plan]
+    if: needs.plan.outputs.full == 'true'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -186,10 +256,12 @@ jobs:
             artifacts/dialog-visual-diff/
           if-no-files-found: ignore
   cross-engine:
+    needs: [plan]
+    if: needs.plan.outputs.full == 'true'
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2]
+        shard: [1, 2, 3]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -227,11 +299,15 @@ jobs:
             BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
             TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
             node tests/browser-atomic-storage-cross-engine.mjs
+            UI_PERIOD_ENGINE=firefox node tests/browser-chart-period-consistency.mjs
+            UI_PERIOD_ENGINE=firefox node tests/browser-extended-chart-periods.mjs
+            UI_PERIOD_ENGINE=webkit node tests/browser-chart-period-consistency.mjs
+            UI_PERIOD_ENGINE=webkit node tests/browser-extended-chart-periods.mjs
             IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
-          else
+          elif [[ "${{ matrix.shard }}" == "2" ]]; then
             PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
@@ -239,6 +315,7 @@ jobs:
             SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
             FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
             FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
+          else
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
             CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
             INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
