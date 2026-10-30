@@ -1,3 +1,19 @@
+## PR209 freigegeben und kontrolliert gemergt · v221-Release läuft · 30.10.2026
+
+**PR209 ist nach vollständiger technischer Abnahme und erteilter Nutzerfreigabe gemergt. Freigabe für diesenPR verbraucht.** Geprüfter HEADa61af4c9ecc7dcb4a0aafd871d5884be807a10ae; neuer Main `ecf775f5c17ceb301be04f20e1be400567f45261`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8` exakt gleich dem abgenommenen Kandidaten und Testmerge. Unveränderter Main537bddc3/HEAD/alle Checks/Tree/saubereWorkingTrees vorMerge nochmals geprüft, erwarteter HEAD im Merge-API verwendet. Seit Freigabekontext4880cc11 nur nachgewiesene Testkorrekturen, Produkt-/Finanz-/SW221-Dateien bytegleich. Keine Freigabe für weiterePRs.
+
+#208 wurde durch die erhaltene Commit-Ancestry ebenfalls tatsächlich als merged/closed erkannt, GitHub meldet Mergecommit0cd81c97. Seine eigenständigen nativen Positionszeiträume, Tests und Bilder sind vollständig imProduktbaum bewahrt; nichts verworfen.209 integriert ausschließlich UI-VISUAL01 aus208/209, keine anderen visuellen Pakete.
+
+**MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING.** Vollständige Main-/Pages-/Livepipeline [41059923497](https://github.com/joke0071/foliolab-open/actions/runs/41059923497) läuft auf genaudem neuenMain. SW221; keine weiteren Versionssprünge. Vorerst letzter vollständig akzeptierter Produktionsstandv220/SW220. **Keinv221LIVE_ACCEPTED**, bevor sämtliche Main-/Cross-/Pages-/Live-/Asset-/SW-/PWA-Belege tatsächlich geprüft sind.
+
+VorMerge Pflicht41057477444/Wallet41057477627SUCCESS,964Units/3Engines/4SHA-verifizierteZIPs/68JSONs/65PASS-Berichte/9Fixtures mit18tatsächlichtruePhasen. [Abnahme](release-evidence/v221-pr209-acceptance.json) und zwei tatsächliche schmale CI-Bilder imBelegcommit11c60b29 dauerhaft gesichert, separater Abnahmecheckpointca847723. [Diagnosebelege](release-evidence/v221-pr209-worker-fixture-diagnosis.json) und frühere roteLäufe bleiben erhalten; keine Gate-/Timeoutlockerung und keinepauschale Rootcausebehauptung füralleälteren PWA-/WebKit-/IDB-Folgepunkte.
+
+**Exakt weiter:** aktuelleMainpipeline regulär biszumEnde abnehmen, SHA-verifizierte Artefakte/Berichte/Bilder und tatsächliche veröffentlichte Asset-/SW221-Versionen prüfen; beiFehler konkreteDiagnose undkeinblinderRetry. NachvollständigemErfolg Releasebelege undzentralenCheckpoint separat remote sichern, erst dannv221 DONE / LIVE_ACCEPTED. Danach bestehendeMasterpriorität regulär fortsetzen: weitereCopilot-Lieferungen einzeln vergleichen/testen/vorbereiten, keine Sammelintegration undvorjedemweiterenMerge eigene konkreteFreigabe. UI-VISUAL06 undalle nichtdelegiertenMasteraufgaben bleibenbeiWork.
+
+213/214/218/219/222/225/227 undQA223 weiterhin COPILOT_DELIVERED / WORK_INTEGRATION_PENDING; bekannteCSS-Kaskaden/CSV-nach213/Dialogbaseline-nach219-Verträge erhalten. NurFLH05/FLH-PROJ01 bewusstPARKED. Alle bestehenden Anforderungen/Sicherheitsgrenzen geltenfort. Historischen Dokumentationsbranch niemals alsAnwendungscode mergen.
+
+---
+
 ## PR209 technisch abgenommen und freigegeben · v221-Release vorbereitet · 30.10.2026
 
 **PR209 HEAD `a61af4c9ecc7dcb4a0aafd871d5884be807a10ae`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8`, Testmerge `d6996c92df4769304219ee721430f13adb943658` mit identischem Tree auf akzeptiertem Main537bddc3. TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Draft aufgehoben, GitHub mergeable=true/clean.208- und209-Historien samt eigenständigen Änderungen/Tests/Bildern vollständig bewahrt; keine anderen visuellen Pakete integriert.
