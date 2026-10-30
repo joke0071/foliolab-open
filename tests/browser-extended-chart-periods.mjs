@@ -92,7 +92,7 @@ try{
    await holding.locator('.position-period-more > summary').click();
    const activeThreeYear=holding.locator('.position-period-popover [data-position-range="1096"]');
    assert.equal(await activeThreeYear.getAttribute('aria-pressed'),'true');
-   assert.equal(await holding.locator('.position-period-popover button:visible').count(),2);
+   assert.deepEqual(await holding.locator('.position-period-popover button:visible').allTextContents(),['3 J','5 J','Max'],'all three extended choices remain reachable after selecting 3 J');
   }else{
    const labels=await visibleChoices.allTextContents();
    assert.deepEqual(labels,['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
