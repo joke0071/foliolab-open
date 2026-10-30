@@ -1,3 +1,11 @@
+## v220 Live-Abnahme initial BLOCKED · gezielter unveränderter Retry nach Diagnose · 30.10.2026
+
+PR212/mainaf834705/SW220: Main962Units/dreiBrowser/Pages SUCCESS, Live41028863300/Job123977643473 FAIL bei browser-reference-management.mjs:37 (SW-Aktivierungsbaseline,30s). Tatsächliche neueChromium-Referenzcontext-Baseline initialinstalling/keinController,finalkeineActive/Installing/Controller;nochvorFinanzfixture. VorherigerLive-Kerntestmit121Hash/6Gruppen/18Axe/Backup/Offline undLive-Chromium-DiagrammregressionPASS. Keine Ursache ausDatumskorrekturbelegt,genaueInstallationsursacheUNGEKLÄRT. [InitialerBeleg](release-evidence/v220-live-sw-initialization-failure.json);gesamtesFehlerZIP12964884115 vorExtraktionSHA256verifiziert.
+
+NachkonkreterLog-/Baseline-/Sourceprüfung genau**ein unveränderterRetry nurdesfehlgeschlagenenLivejobs** vorgesehen. KeineAssertion/Timeout/Produktänderung,keinGateüberspringen. BeiWiederholungnichtblindweiterwiederholen,sondernBLOCKEDdiagnostizieren. ErstfinalevolleLive-AbnahmeermöglichtLIVE_ACCEPTED. FinaleUI-Arbeitsteilung215/216Copilot,217WorkundübrigerMasterunveränderterhalten.
+
+---
+
 ## Finale UI-Arbeitsteilung verbindlich korrigiert · v220 Liveprüfung läuft · 30.10.2026
 
 Neue ausdrückliche Nutzerentscheidung hat Vorrang vor älteren Delegations-/Parkierungstexten: **zusätzlich ausschließlich UI-VISUAL04/#215 (Navigation/Header) und UI-VISUAL05/#216 (Anlageassistent/Wallet-Dialoge) bei Copilot, nacheinander, nur Drafts ohne Merge/Deployment.** Work implementiert diese beiden visuellen Pakete nicht parallel. Bereits gelieferte UI-VISUAL01/#209,02/#213,03/#214 bleiben zur einzelnen kontrollierten Integration bei Work; #208 vorher inhaltlich vergleichen.
