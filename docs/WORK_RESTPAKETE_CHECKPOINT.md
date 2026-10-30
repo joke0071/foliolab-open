@@ -1,3 +1,25 @@
+## CI-OPT01/PR231 technisch abgenommen – konkrete Nutzerfreigabe erforderlich · 30.10.2026
+
+**Produktion v221/SW221 und PR230 sind DONE/LIVE_ACCEPTED.** Main bleibt `7490f243ff32c659c418cdf92540fe9ef1cc4189`. Der vollständige Release41099688653 ist erfolgreich; alle 40 Liveberichte, 121 tatsächlichen veröffentlichten Hashes und 18 Accessibility-Scans wurden geprüft. Keine offene Pages-Warteschlange mehr.
+
+**Neuer Kandidat: [Draft PR231](https://github.com/joke0071/foliolab-open/pull/231), HEAD `9369d6b3d880a52effc3ca54214a5fbc76d6113a`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9`.** Testmerge `9852cc0d2a5d35c716c26a5d3825bb17b8206819` besitzt exakt denselben Tree auf aktuellem Main. Lokaler und Remote-Stand identisch, Working Tree sauber. TECHNICALLY_ACCEPTED / USER_APPROVAL_REQUIRED / DRAFT / NOT_MERGED / NOT_DEPLOYED. Die Freigabe für230 ist verbraucht und gilt nicht für231.
+
+Vollständige [CI41109599229](https://github.com/joke0071/foliolab-open/actions/runs/41109599229), Versuch1, und Wallet41109599183 SUCCESS. 975/975 Units, 0 Fehler/Skip, Syntax/YAML/diff-check bestanden. Hauptjob und alle drei Cross-Shards erfolgreich. Alle 37 Cross-Aufrufe samt Engine-Zuordnung und sämtliche vollständigen Test-/Pages-/Live-Prüfbodies bytegleich zu Main; stärkere Hash- und Negativkontrollen. Keine Produkt-/SW-Änderung, gelockerte Assertion oder erhöhte Frist.
+
+Sieben ZIPs vor Extraktion SHA256-verifiziert, alle 70 JSONs rekursiv geprüft: 65 PASS-Berichte, vier Axe-Scanberichte und ein korrekter Stufenplan. Dieser CI-Diff wurde tatsächlich INTEGRATION/full=true/ciContract=true zugeordnet. Separater echter FAST-Browser-Canary: UI07 mit66 Scans/0Befunden, Responsive-Actions und Dialog-A11y-Mobile bestanden. In allen drei PWA-Engines vier strikt wahre Readinessphasen, native Aktivierung=activated, echter automatischer Dokumentwechsel, expliziter Reload,120Cachehashes, Offline und exakter Datenerhalt bestätigt. Echtes Canary-Bild bei200% CSS-Zoom visuell geprüft; keine Hardwareabnahme behauptet.
+
+[Dauerhafte vollständige Kandidatenabnahme](release-evidence/ci-opt01-pr231-acceptance.json), separater Belegcommit `4becca3252f25f1183d0b3702d65b2cd16fd2446`. [Geprüfter CI-Vertrag im Kandidaten](https://github.com/joke0071/foliolab-open/blob/9369d6b3d880a52effc3ca54214a5fbc76d6113a/docs/CI_OPT01_DRAFT_STAGES.md).
+
+**Messung mit Grenzen:** Stufenplanung8s, gezielter Browser-Canary81s. Volle Pflichtspanne inklusivePlan610s, vollständige Runner1969s plus einmaliger Plan/Canary89s, zusammen2058s. Kein tatsächlicher vollständiger FAST-only-Draft gemessen; 81s ist ausschließlich der Browser-Canary. Frühere PR230-/v221-Stichproben bleiben getrennt erhalten. Keine behauptete statistische Garantie, Zeit bis zum ersten echten Fehler (dieser Lauf fehlerfrei) oder Credit-/Euroersparnis.
+
+**Exakte Fortsetzung: eigene konkrete Nutzerfreigabe für PR231 auf HEAD9369d6b3 einholen.** Bis dahin Draft belassen, um keinen vorsorglichen zusätzlichen ready_for_review-Lauf auszulösen. Nach Freigabe frischen Main/HEAD/Testmerge/Tree/Checks und Working Trees prüfen, Reviewübergang ausführen; der neue Vertrag löst dabei zwingend vollständige INTEGRATION aus. Erst nach deren Erfolg auf genau dem freigegebenen Kandidaten mit erwartetem HEAD mergen. Danach vollständige Main-/Pages-/Live-/Asset-/SW-/PWA-Abnahme; keine Pflichtprüfungen überspringen oder alte Freigaben übertragen.
+
+FAST ist ausschließlich für aktuelle Main-Drafts mit regulären Markdown-Dateien unterdocs und/oder modifizierterstyles.css vorgesehen; immer vollständige Units/Syntax, beiCSS zusätzlich bestehende gezielte UI-Prüfungen. Unbekannte/weitere Dateien, kritische und gemischte Änderungen, veraltete Basis, Löschungen/Umbenennungen/Symlinks erzwingen FULL. FertigePRs bleiben INTEGRATION, Main RELEASE. FAST ist keine Integrationsfreigabe. Bestehende manuelle Freigabegrenzen gelten; keine neue Branch-Protection behaupten.
+
+CI-OPT01 bleibt PARTIAL: Caching, Versionsangleichung, Chromium-Sharding, breitere fachliche Impactzuordnung und Retrypolitik offen. Keine weiteren Copilot-Integrationen oder parallelen Entwicklungsstränge begonnen. Alle bisherigen Masteraufgaben erhalten; nur FLH05 und FLH-PROJ01 bewusst OPEN/PARKED. **Keine zusätzlichen kostenpflichtigen Work-Credit-Pakete kaufen oder einplanen; Kostenstopp0€.**
+
+---
+
 ## Neue Nutzerpriorität: Praxiswochenende 31.10.–01.11. · 30.10.2026
 
 **Verbindliche UX-Priorisierung und sicherer Testplan:** [Wochenend-Praxistest/Usability-Prioritäten](WOCHENENDE_PRAXISTEST_UX_PRIORITAETEN_2026-10-31.md) auf diesem Dokumentationsbranch. Nutzer möchte am Samstag/Sonntag eine möglichst umfassende reale Nutzungsprüfung, um ab Montag 02.11.2026 belegte UI-/Performance-/Funktionsoptimierungen zu priorisieren. **Stabilen LIVE_ACCEPTED-Stand als Testbasis verwenden, keine ungeprüften Wochenend-Merges.**
