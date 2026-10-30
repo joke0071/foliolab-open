@@ -1,3 +1,15 @@
+## Finale UI-Arbeitsteilung verbindlich korrigiert · v220 Liveprüfung läuft · 30.10.2026
+
+Neue ausdrückliche Nutzerentscheidung hat Vorrang vor älteren Delegations-/Parkierungstexten: **zusätzlich ausschließlich UI-VISUAL04/#215 (Navigation/Header) und UI-VISUAL05/#216 (Anlageassistent/Wallet-Dialoge) bei Copilot, nacheinander, nur Drafts ohne Merge/Deployment.** Work implementiert diese beiden visuellen Pakete nicht parallel. Bereits gelieferte UI-VISUAL01/#209,02/#213,03/#214 bleiben zur einzelnen kontrollierten Integration bei Work; #208 vorher inhaltlich vergleichen.
+
+**UI-VISUAL06/#217 (Erststart,Onboarding,Leerzustände) WORK-OWNED / OPEN, weder Copilot-delegiert noch PARKED; keine Wartebedingung auf215/216.** Alle übrigen nicht ausdrücklich delegierten UI-/Masteraufgaben bei Work: Text-/Erklärungs-Audit, Verwaltung/Mehrfachauswahl, fachliche Positionen/Buchungen, Diagrammmodi/-verbesserungen, Liquidität/Fälligkeiten, TradingView-Rückbau, Fehler-/Status-/Sicherheitsmeldungen und restlicher Master. Bearbeitung selbstständig ohne zusätzliche Freigabe; konkrete Merge-/Deploymentfreigaben unverändert. Issue217 bereits entsprechend betitelt; widersprüchliche historische Copilot-Wartezeile gezielt korrigiert, übrige Anforderungen erhalten. Keine neue Roadmap oder doppelte Implementierung.
+
+PR212/mainaf834705:962Units/Main/Chromium/Cross1/Cross2 und Pages SUCCESS; Live41028863300/Job123977643473 läuft. **MERGED / DEPLOYED / LIVE_ACCEPTANCE_PENDING**,v220 noch nicht final abgenommen. Danach erster UI-VISUAL01-Integrationskandidat209+eigene208-Anteile; keine Sammelintegration von213/214. SW-Version im tatsächlichen Kontext. #213 initialer WebKit-Cachebefund: signiertes ZIP12963972862 vor Extraktion SHA256-verifiziert; Diagnose zeigt noch aktivierten Controller, neue Registrierung installing, alteCache120/neueCache0. Ursache noch nicht abschließend bewiesen; vollständiger Befund vor späterem PWA-Testfix sichern, keine Assertion/Timeoutlockerung und kein blinder Retry. #214 final beideCrossjobsSUCCESS,TestjobimSW-Gaterot. #209 action_required mitCopilot alsActor und0Jobs,keinegrüneCI.
+
+Alle bestehenden Masterverträge erhalten; **FLH05/FLH-PROJ01 bleiben OPEN/PARKED.** Historischen Dokumentationsbranch niemals als Produktcode mergen.
+
+---
+
 ## PR212 freigegeben und gemergt · Copilot-Lieferstand gesichert · 30.10.2026
 
 Nutzerfreigabe ausdrücklich für PR212/HEAD8ca41c80 erteilt und für diesen PR verbraucht. Frische Prüfung: main6b2f4f2f unverändert, HEAD8ca41c80, Pflicht41025333344/Wallet41025333343 SUCCESS, Testmerge-Tree0dc91647 identisch, beide Working Trees sauber. **PR212 kontrolliert gemergt**, neuer main `af8347054c9e5d50b854494f650e7d7675adcff6`, Tree `0dc916477f07b242fb1f210a95c74e1a13e0f672`. Main-/Pages-/Live [41028863300](https://github.com/joke0071/foliolab-open/actions/runs/41028863300) läuft. **MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING**; zuletzt v219 LIVE_ACCEPTED, v220 noch nicht live abgenommen.

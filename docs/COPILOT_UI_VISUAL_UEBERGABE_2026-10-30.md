@@ -1,3 +1,15 @@
+## Finale UI-Arbeitsteilung verbindlich korrigiert · v220 Liveprüfung läuft · 30.10.2026
+
+Neue ausdrückliche Nutzerentscheidung hat Vorrang vor älteren Delegations-/Parkierungstexten: **zusätzlich ausschließlich UI-VISUAL04/#215 (Navigation/Header) und UI-VISUAL05/#216 (Anlageassistent/Wallet-Dialoge) bei Copilot, nacheinander, nur Drafts ohne Merge/Deployment.** Work implementiert diese beiden visuellen Pakete nicht parallel. Bereits gelieferte UI-VISUAL01/#209,02/#213,03/#214 bleiben zur einzelnen kontrollierten Integration bei Work; #208 vorher inhaltlich vergleichen.
+
+**UI-VISUAL06/#217 (Erststart,Onboarding,Leerzustände) WORK-OWNED / OPEN, weder Copilot-delegiert noch PARKED; keine Wartebedingung auf215/216.** Alle übrigen nicht ausdrücklich delegierten UI-/Masteraufgaben bei Work: Text-/Erklärungs-Audit, Verwaltung/Mehrfachauswahl, fachliche Positionen/Buchungen, Diagrammmodi/-verbesserungen, Liquidität/Fälligkeiten, TradingView-Rückbau, Fehler-/Status-/Sicherheitsmeldungen und restlicher Master. Bearbeitung selbstständig ohne zusätzliche Freigabe; konkrete Merge-/Deploymentfreigaben unverändert. Issue217 bereits entsprechend betitelt; widersprüchliche historische Copilot-Wartezeile gezielt korrigiert, übrige Anforderungen erhalten. Keine neue Roadmap oder doppelte Implementierung.
+
+PR212/mainaf834705:962Units/Main/Chromium/Cross1/Cross2 und Pages SUCCESS; Live41028863300/Job123977643473 läuft. **MERGED / DEPLOYED / LIVE_ACCEPTANCE_PENDING**,v220 noch nicht final abgenommen. Danach erster UI-VISUAL01-Integrationskandidat209+eigene208-Anteile; keine Sammelintegration von213/214. SW-Version im tatsächlichen Kontext. #213 initialer WebKit-Cachebefund: signiertes ZIP12963972862 vor Extraktion SHA256-verifiziert; Diagnose zeigt noch aktivierten Controller, neue Registrierung installing, alteCache120/neueCache0. Ursache noch nicht abschließend bewiesen; vollständiger Befund vor späterem PWA-Testfix sichern, keine Assertion/Timeoutlockerung und kein blinder Retry. #214 final beideCrossjobsSUCCESS,TestjobimSW-Gaterot. #209 action_required mitCopilot alsActor und0Jobs,keinegrüneCI.
+
+Alle bestehenden Masterverträge erhalten; **FLH05/FLH-PROJ01 bleiben OPEN/PARKED.** Historischen Dokumentationsbranch niemals als Produktcode mergen.
+
+---
+
 # Copilot-Übergabe UI-VISUAL01/02/03 · verbindlicher Master-Nachtrag · 30.10.2026
 
 Status: COPILOT_DELIVERED / WORK_INTEGRATION_PENDING. Kein automatischer Merge und keine automatische Releasefreigabe. Laufenden fachlichen PR212 und dessen Release unverändert zuerst abschließen. Keine parallele Neuentwicklung der gelieferten visuellen Pakete.
