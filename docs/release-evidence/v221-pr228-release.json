@@ -1,0 +1,4629 @@
+{
+  "status": "DONE / LIVE_ACCEPTED",
+  "version": 221,
+  "serviceWorker": 221,
+  "main": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+  "tree": "172e887b085acfb4dcf5675207713eda99c2201d",
+  "run": 41080709085,
+  "attempt": 2,
+  "liveJob": 124160800384,
+  "units": {
+    "pass": 964,
+    "fail": 0,
+    "skip": 0
+  },
+  "mainEvidence": "v221-pr228-main-acceptance.json",
+  "liveArtifact": {
+    "id": 12991716432,
+    "sha256": "d6223ef8e66a83a88776a6c1cf51a77e65fdfa13badf6d085d79762881620b2e",
+    "verifiedBeforeExtraction": true
+  },
+  "publishedHashesIndependentlyVerifiedAgainstMain": 121,
+  "coreChecks": 6,
+  "coreAxeScans": 18,
+  "reports": [
+    {
+      "path": "bitpanda-evidence-chromium.json",
+      "sha256": "9954504aab66d38ce66ca49b2590c0e06ea1f013851cd0ad212e64638fdb4264",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic pure Bitpanda parser only; no dialog or financial integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "bitpanda-evidence-firefox-webkit.json",
+      "sha256": "209ff08dab66ed25d05af94caa5316d117096757d93ef8557dc3042d4e1ecd9f",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic pure Bitpanda parser only; no dialog or financial integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "bitpanda-preview/report.json",
+      "sha256": "4a5f0fb397538993067fb33498f3e145d72378f7bd59d50435601e46418df8a5",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native Bitpanda read-only CSV preview",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "native preamble/18-17 auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "exact quantities and declared fee assets/unknown tax",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "native preamble/18-17 auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "exact quantities and declared fee assets/unknown tax",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "blocked-reasons/report.json",
+      "sha256": "7c459de72b595498d5362fa4ac60b8d6bcc1d55aca1e52e1ed69fb894d255e4d",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic grouped blocker presentation; original eligibility and exact stored record unchanged",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "8 identical legacy reasons once",
+              "100 imported booking blockers compact",
+              "205 check cap and Gmail reset intact",
+              "mixed categories count unique identities",
+              "position preview closed and nondeletable",
+              "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "8 identical legacy reasons once",
+              "100 imported booking blockers compact",
+              "205 check cap and Gmail reset intact",
+              "mixed categories count unique identities",
+              "position preview closed and nondeletable",
+              "five widths/small height/synthetic 200% text/44px/keyboard/Axe/exact record unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "chart-tooltip/report.json",
+      "sha256": "74d69e88c60630c57abc79e37a03f9b1e22ee521f8dc575944bcce72f3945d28",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic real dashboard/history and shared native component tooltip geometry; no physical Android claim",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "widths": [
+              320,
+              360,
+              390,
+              412,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "real dashboard/history actual elapsed-time ratio1/27 and nearest observed touch point",
+              "sparse native main/position/wallet coordinates and nearest mouse/touch/chronological keyboard at7widths",
+              "real dashboard/history exact values and readable axes",
+              "observed explanation once in coverage",
+              "native main/position/wallet component edge bounds",
+              "mouse/synthetic touch/keyboard",
+              "full long details keyboard scroll",
+              "7widths/Axe/short height/synthetic200percent text",
+              "exact canonical record unchanged"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "widths": [
+              320,
+              360,
+              390,
+              412,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "real dashboard/history actual elapsed-time ratio1/27 and nearest observed touch point",
+              "sparse native main/position/wallet coordinates and nearest mouse/touch/chronological keyboard at7widths",
+              "real dashboard/history exact values and readable axes",
+              "observed explanation once in coverage",
+              "native main/position/wallet component edge bounds",
+              "mouse/synthetic touch/keyboard",
+              "full long details keyboard scroll",
+              "7widths/Axe/short height/synthetic200percent text",
+              "exact canonical record unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "flatex-native-amounts-chromium.json",
+      "sha256": "1370cc4bba990c5799a388ed6b8470380507a79d94beb082a24bca255732e120",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic documentary native 1:1 amounts only; no economic import or UI integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-amounts-firefox-webkit.json",
+      "sha256": "f9d962efde62f80026b1567d2a87830b4735460a22666f0b781754dc05f9c650",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic documentary native 1:1 amounts only; no economic import or UI integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-binding/report.json",
+      "sha256": "0b5fea6bf713c7c00a80f0dfb022a4522f4ef3c8036a0ff62b752f20e94c760b",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic explicit session-only native account/source staging; no economic import",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+              "existing source/manual/conflicting proof stays read-only",
+              "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+              "withdrawal and delayed account check immediately remove computed values",
+              "account/file/mode/Escape/cancel/reopen resets",
+              "20-context paging/focus and independent source/order paging",
+              "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+              "forced submit blocked",
+              "delayed freshness generation guard",
+              "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+              "actual offline reload and confirmation",
+              "exact IDB/revision/settings unchanged by staging/no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "actual categorized files/explicit account selection/separate confirmation/no auto ownership",
+              "existing source/manual/conflicting proof stays read-only",
+              "exact amount evidence requires both confirmations; equal/residual/large precision; manual/conflict blocked",
+              "withdrawal and delayed account check immediately remove computed values",
+              "account/file/mode/Escape/cancel/reopen resets",
+              "20-context paging/focus and independent source/order paging",
+              "5 widths/Axe/44px/hostile labels and exact amount screenshots",
+              "forced submit blocked",
+              "delayed freshness generation guard",
+              "actual competing IDB writer/stale confirmation and amounts blocked/no dialog writes",
+              "actual offline reload and confirmation",
+              "exact IDB/revision/settings unchanged by staging/no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-chromium.json",
+      "sha256": "eb00b48faba396e623eab560641e770ed1daca22d9ae417d341a01528494e5d0",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic pure native Flatex source projection only; no dialog or economic integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-commit/report.json",
+      "sha256": "b871f0d6183d047243a0d51f1bf8cfb6190792c88a950c04606e8dfc6515cf6d",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Guarded native share takeover in isolated synthetic profiles only",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "mode": "append",
+            "result": "PASS",
+            "checks": [
+              "actual native append/backfill UI commit; one CAS revision",
+              "backup content/separate confirmation/reset/forced-submit guards",
+              "quota and post-put abort exact record/revision/settings unchanged",
+              "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+              "plain/encrypted stored native provenance roundtrip/replay",
+              "duplicate replay no write/revision; exact UI undo including snapshot",
+              "real competing writer after freshness rejected by actual CAS",
+              "offline actual UI commit",
+              "5 widths/Axe/44px/focus"
+            ]
+          },
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "mode": "backfill",
+            "result": "PASS",
+            "checks": [
+              "actual native append/backfill UI commit; one CAS revision",
+              "backup content/separate confirmation/reset/forced-submit guards",
+              "quota and post-put abort exact record/revision/settings unchanged",
+              "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+              "plain/encrypted stored native provenance roundtrip/replay",
+              "duplicate replay no write/revision; exact UI undo including snapshot",
+              "real competing writer after freshness rejected by actual CAS",
+              "offline actual UI commit",
+              "5 widths/Axe/44px/focus"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "mode": "append",
+            "result": "PASS",
+            "checks": [
+              "actual native append/backfill UI commit; one CAS revision",
+              "backup content/separate confirmation/reset/forced-submit guards",
+              "quota and post-put abort exact record/revision/settings unchanged",
+              "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+              "plain/encrypted stored native provenance roundtrip/replay",
+              "duplicate replay no write/revision; exact UI undo including snapshot",
+              "real competing writer after freshness rejected by actual CAS",
+              "offline actual UI commit",
+              "5 widths/Axe/44px/focus"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "mode": "backfill",
+            "result": "PASS",
+            "checks": [
+              "actual native append/backfill UI commit; one CAS revision",
+              "backup content/separate confirmation/reset/forced-submit guards",
+              "quota and post-put abort exact record/revision/settings unchanged",
+              "exact ending quantity/unknown costs/no external flows/separate same-ISIN depot protected",
+              "plain/encrypted stored native provenance roundtrip/replay",
+              "duplicate replay no write/revision; exact UI undo including snapshot",
+              "real competing writer after freshness rejected by actual CAS",
+              "offline actual UI commit",
+              "5 widths/Axe/44px/focus"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-firefox-webkit.json",
+      "sha256": "52949f6db785afb654e8e721c1b86ad6b8fffd9681d591746881fd68787f9d51",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic pure native Flatex source projection only; no dialog or economic integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-identity-chromium.json",
+      "sha256": "28da3f5cbe0df71e002c541c895349e49ec0f9754ec05a450f2a20d2abbe233a",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native source identity/evidence and existing preview guards only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-identity-firefox-webkit.json",
+      "sha256": "c585d020f30a4d1978854f3d35e07d963a69422047cc2202197db655b3409994",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native source identity/evidence and existing preview guards only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-projection-chromium.json",
+      "sha256": "02ac824d88ac82946e53815a285add1c3950ef24de8c8afac4be75bfb782f4b0",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native projection/shared simulation only; no UI or private import",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-projection-firefox-webkit.json",
+      "sha256": "8433c5ce678e25d29d8a8b83c591222818011057f670d905d8b6a5a8c9016018",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native projection/shared simulation only; no UI or private import",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-simulation-ui/report.json",
+      "sha256": "134d18d3c6da29968595e8a45b4e7fa805b72dc2bf60de69db792e4dc9dd98d8",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Explicit native dialog share simulation; synthetic profiles; zero import writes",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "targetSizes": [
+              {
+                "width": 320,
+                "id": "flatexSimulationMode",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 320,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 390,
+                "id": "flatexSimulationMode",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 390,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 430,
+                "id": "flatexSimulationMode",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 430,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 768,
+                "id": "flatexSimulationMode",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 768,
+                "id": "flatexSimulationRun",
+                "height": 44.99998474121094,
+                "minHeight": "45px"
+              },
+              {
+                "width": 1440,
+                "id": "flatexSimulationMode",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 1440,
+                "id": "flatexSimulationRun",
+                "height": 44.99998474121094,
+                "minHeight": "45px"
+              }
+            ],
+            "checks": [
+              "explicit mode/current account confirmation",
+              "append empty and protected-balance blocking/backfill exact ending quantity",
+              "unknown costs/no external flows/no submit",
+              "mode/account/confirmation/file/lifetime delayed-generation resets",
+              "whole-batch special/cash protection",
+              "5 widths/Axe/44px/focus/escaped names",
+              "actual competing IDB writer between freshness checks/stale lock",
+              "actual offline reload/storage notification invalidation",
+              "exact IDB/revision/settings zero dialog writes/no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "targetSizes": [
+              {
+                "width": 320,
+                "id": "flatexSimulationMode",
+                "height": 49,
+                "minHeight": "45px"
+              },
+              {
+                "width": 320,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 390,
+                "id": "flatexSimulationMode",
+                "height": 49,
+                "minHeight": "45px"
+              },
+              {
+                "width": 390,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 430,
+                "id": "flatexSimulationMode",
+                "height": 49,
+                "minHeight": "45px"
+              },
+              {
+                "width": 430,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 768,
+                "id": "flatexSimulationMode",
+                "height": 49,
+                "minHeight": "45px"
+              },
+              {
+                "width": 768,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              },
+              {
+                "width": 1440,
+                "id": "flatexSimulationMode",
+                "height": 49,
+                "minHeight": "45px"
+              },
+              {
+                "width": 1440,
+                "id": "flatexSimulationRun",
+                "height": 45,
+                "minHeight": "45px"
+              }
+            ],
+            "checks": [
+              "explicit mode/current account confirmation",
+              "append empty and protected-balance blocking/backfill exact ending quantity",
+              "unknown costs/no external flows/no submit",
+              "mode/account/confirmation/file/lifetime delayed-generation resets",
+              "whole-batch special/cash protection",
+              "5 widths/Axe/44px/focus/escaped names",
+              "actual competing IDB writer between freshness checks/stale lock",
+              "actual offline reload/storage notification invalidation",
+              "exact IDB/revision/settings zero dialog writes/no external requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-native-ui/report.json",
+      "sha256": "e9482776ff4e176f14b51054fc925031f312f82b7d1c235c754407745275d4da",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native Flatex Originalformat read-only CSV preview",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "native CP1252/blank-header auto/explicit recognition",
+              "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+              "exact quantities/currencies/separate references",
+              "hostile source escaping",
+              "50/100 source paging and focus",
+              "order statuses/reasons/all legs/duplicate filenames/separate references",
+              "independent group/leg paging/focus/disclosure preservation/reset",
+              "expanded order groups at 5 widths/Axe/44px",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload with order display",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "native CP1252/blank-header auto/explicit recognition",
+              "two categorized inputs/separate/combined/partial files/schema/mixed/mode quarantine/generation guard",
+              "exact quantities/currencies/separate references",
+              "hostile source escaping",
+              "50/100 source paging and focus",
+              "order statuses/reasons/all legs/duplicate filenames/separate references",
+              "independent group/leg paging/focus/disclosure preservation/reset",
+              "expanded order groups at 5 widths/Axe/44px",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload with order display",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "flatex-order-links-chromium.json",
+      "sha256": "07a0928bc1ba09f19ddb5f0c0a88f26729f518e2bbbf918f327101d7dbd75fef",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "flatex-order-links-firefox-webkit.json",
+      "sha256": "7e7d04a75c6d6374a35e5bcddd9ce6ff0fe465b260d390aae7deddd11000f902",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native Flatex order evidence only; no dialog/economic integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "kraken-ledger/report.json",
+      "sha256": "32dca3bb3915078d75093e60331935fe9dfa7b4b559da127d9630501e5c05661",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "Synthetic native Kraken read-only CSV preview",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "checks": [
+              "native auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "all legs and exact declared fees",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "checks": [
+              "native auto/explicit recognition",
+              "schema/mixed/mode quarantine",
+              "all legs and exact declared fees",
+              "hostile source escaping",
+              "50/100 paging and focus",
+              "5 widths/Axe/44px",
+              "forced submit/Escape/cancel/reopen",
+              "actual offline reload",
+              "exact IDB/revision/settings zero mutation",
+              "no external preview requests"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "live/report.json",
+      "sha256": "42193221f5ebf8ecc242d3203cc6cf923be0432e2003d02671b2f724eec16dba",
+      "report": {
+        "sha": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+        "cache": "foliolab-open-v221",
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T15:49:08.136Z",
+        "proxyCertificateException": false,
+        "assetHashes": [
+          {
+            "path": "./src/csv-records.js",
+            "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921"
+          },
+          {
+            "path": "./src/blocked-reasons-ui.js",
+            "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98"
+          },
+          {
+            "path": "./src/bitpanda-preview-ui.js",
+            "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d"
+          },
+          {
+            "path": "./src/bitpanda-preview.js",
+            "sha256": "f15127092ecd09b449d9fdfd6c10048d2e9d93b7ea75fb3bcdf88d7bbf38deda"
+          },
+          {
+            "path": "./src/kraken-ledger.js",
+            "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6"
+          },
+          {
+            "path": "./src/flatex-native.js",
+            "sha256": "928ee39a57c68638c78c0d3749588ab27e910235f1262f63e33aa627147c7333"
+          },
+          {
+            "path": "./src/flatex-native-ui.js",
+            "sha256": "68bce5cb6e0030fa9e28e413888f671e32ae8096ddc61ea24bcb1dba4dfbf41a"
+          },
+          {
+            "path": "./",
+            "sha256": "3e692825afe1066cec2cb3934056a2a5ad3c65143490afcb3f06d16023d44c06"
+          },
+          {
+            "path": "./src/kraken-ledger-ui.js",
+            "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b"
+          },
+          {
+            "path": "./src/pchain-identity.js",
+            "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460"
+          },
+          {
+            "path": "./src/sonic-staking-evidence.js",
+            "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f"
+          },
+          {
+            "path": "./src/reference-management.js",
+            "sha256": "00b491fc756278bf4de86cd6272cec078960a4f717f33141a3eceab55f1c27aa"
+          },
+          {
+            "path": "./src/pchain-evidence.js",
+            "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8"
+          },
+          {
+            "path": "./src/ledger-live.js",
+            "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc"
+          },
+          {
+            "path": "./src/ledger-live-ui.js",
+            "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a"
+          },
+          {
+            "path": "./src/account-evidence.js",
+            "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1"
+          },
+          {
+            "path": "./src/history-evidence-cache.js",
+            "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c"
+          },
+          {
+            "path": "./src/csv-batch.js",
+            "sha256": "651cd0ed88fd8758f7156453758511c1cb5427fba024580e877df8bd787fc59e"
+          },
+          {
+            "path": "./src/historical-portfolio-value.js",
+            "sha256": "9e6c13f9d2c37662ffbd9b5efd19954227c221bf5b658c343b5946309ccb9897"
+          },
+          {
+            "path": "./src/purchase-evidence-ui.js",
+            "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0"
+          },
+          {
+            "path": "./src/booking-management.js",
+            "sha256": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe"
+          },
+          {
+            "path": "./src/historical-position-value.js",
+            "sha256": "a218bd729e423430ef650cbba7cecd502e05f3ae2b4822ba38d544c7caaf8bd6"
+          },
+          {
+            "path": "./src/purchase-evidence.js",
+            "sha256": "98d10db80551e36ff7092f5337a95643c5a9cdd6b823338607f916268d772993"
+          },
+          {
+            "path": "./src/interest-ui.js",
+            "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7"
+          },
+          {
+            "path": "./src/interest-account.js",
+            "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a"
+          },
+          {
+            "path": "./src/cash-reconciliation.js",
+            "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4"
+          },
+          {
+            "path": "./src/wallet-history-days-worker.js",
+            "sha256": "3010dedd4e73698769c36f2de631a77e30ac02008142b4f9d169cb536ac1181e"
+          },
+          {
+            "path": "./src/interest-scenario.js",
+            "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89"
+          },
+          {
+            "path": "./src/cash-terms.js",
+            "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0"
+          },
+          {
+            "path": "./src/wallet-history-calculation.js",
+            "sha256": "cb19b8212e9bbdbadf400314c5c46f0b1f88f1d32bd87f5b5fac3dccb6d86921"
+          },
+          {
+            "path": "./src/cash-terms-ui.js",
+            "sha256": "3aeb660bbb317855dd19a05a562929f458152b4d640146df72dd5213fa795bf9"
+          },
+          {
+            "path": "./src/wallet-history-valuation.js",
+            "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a"
+          },
+          {
+            "path": "./src/solana-history.js",
+            "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070"
+          },
+          {
+            "path": "./src/wallet-history-days.js",
+            "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3"
+          },
+          {
+            "path": "./src/wallet-history-state.js",
+            "sha256": "d08a8fab54cf7d877c4ced8a35122c05684ba91e42ec219d98d2d78f03248fdf"
+          },
+          {
+            "path": "./src/bitcoin-history.js",
+            "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8"
+          },
+          {
+            "path": "./src/ethereum-history.js",
+            "sha256": "e867eeda35ae6dc4cb9ef7189bf8718adab581b1f5bca5078525ffea931445a2"
+          },
+          {
+            "path": "./src/wallet-history-core.js",
+            "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090"
+          },
+          {
+            "path": "./src/wallet-history-ui.js",
+            "sha256": "049843686bc03993b30da1301649518b9f5c207fd47fa5195c51a280b81c2ff0"
+          },
+          {
+            "path": "./src/import-identity.js",
+            "sha256": "84ec64cc0da07e8a2bbe2cdc95aee098a7ca3cd5f538684a35d2b483d33b51a8"
+          },
+          {
+            "path": "./src/credential-visibility.js",
+            "sha256": "91d0a960789625dae2b0f5d4abcf2210d6960580eca6995f4e0b2b8d1915d05a"
+          },
+          {
+            "path": "./src/economic-form-ui.js",
+            "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200"
+          },
+          {
+            "path": "./src/dialog-discard.js",
+            "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030"
+          },
+          {
+            "path": "./index.html",
+            "sha256": "3e692825afe1066cec2cb3934056a2a5ad3c65143490afcb3f06d16023d44c06"
+          },
+          {
+            "path": "./src/drive-backup.js",
+            "sha256": "2986f8aabba843b71cb5d5b85e01dc7ece51c63b8b81afde8acecf81c61123cf"
+          },
+          {
+            "path": "./src/backup-vault.js",
+            "sha256": "62c92a88d1dfb74351b56e45a4a95521e98ab87be931cf0a4f408d9848912f39"
+          },
+          {
+            "path": "./src/complete-backup.js",
+            "sha256": "92528ab05b2856bdcd74db37e01a2c61601c6b20a965b9f32ec97c628948fd03"
+          },
+          {
+            "path": "./src/account-opening.js",
+            "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b"
+          },
+          {
+            "path": "./src/portfolio-edit-actions.js",
+            "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04"
+          },
+          {
+            "path": "./styles.css",
+            "sha256": "6e52d33cbd85aacfe9a84020fddd8bf83993269262ba658756cabeffefb83f7a"
+          },
+          {
+            "path": "./src/app.js",
+            "sha256": "988bc6049e9b74613aef410576c529ef43210256b48368ee9f824fd671013e24"
+          },
+          {
+            "path": "./src/position-selection.js",
+            "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d"
+          },
+          {
+            "path": "./src/coin-identity.js",
+            "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26"
+          },
+          {
+            "path": "./src/position-search.js",
+            "sha256": "cb22a4943142fa035d488d4934ff87c6ca24ba29cda8e8f71ab94319bfcc04ce"
+          },
+          {
+            "path": "./src/asset-wizard-core.js",
+            "sha256": "478c8529cf8a40caafe93cdabfcd2403879d5f959bdb92ffe2a57cff4644f12b"
+          },
+          {
+            "path": "./src/public-instruments-client.js",
+            "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589"
+          },
+          {
+            "path": "./src/refresh-ui.js",
+            "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a"
+          },
+          {
+            "path": "./src/market-diagnostics.js",
+            "sha256": "76eca7bd20e5c479c2f0d146e10648e46bac539e837cccd8386556eda92d5e91"
+          },
+          {
+            "path": "./src/asset-wizard.js",
+            "sha256": "0386f37c529cf6766a7865f2d3c816dcd402e5b44f39b6b32670eee23e8ea6cb"
+          },
+          {
+            "path": "./src/dashboard-ui.js",
+            "sha256": "7c34bc17c1dcfbb7be749d3594cc309e561e647f89e5931f59b80128d63215c6"
+          },
+          {
+            "path": "./src/chart-periods.js",
+            "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359"
+          },
+          {
+            "path": "./src/position-history.js",
+            "sha256": "b84e61e6bcf802d4b1a4c42c6ce8dda3ac056550a03e8a08d193875c31a6a2f6"
+          },
+          {
+            "path": "./src/eodhd-transport.js",
+            "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82"
+          },
+          {
+            "path": "./src/security-sources.js",
+            "sha256": "1660906d98610fc0fca761400bb10c3cf3c9406e5c6109fb1ff40a89978c8792"
+          },
+          {
+            "path": "./src/eodhd-worker-client.js",
+            "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f"
+          },
+          {
+            "path": "./src/quote-quality.js",
+            "sha256": "086f020e58a622e53ddc6af7720c9c5e5b3e550deea526aa5639139543af54a0"
+          },
+          {
+            "path": "./src/reference-listings.js",
+            "sha256": "4437f2b9bc6bbb18d2df0db3da544c48df1b7c428cb197a2f799af55a3a1ea1e"
+          },
+          {
+            "path": "./src/security-discovery.js",
+            "sha256": "d9e767ba64d19df2830bd52b664be2c71e2af1c7a6e92d091b6a7bf83421cb0f"
+          },
+          {
+            "path": "./src/onboarding-suggestions.js",
+            "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626"
+          },
+          {
+            "path": "./src/instrument-catalog.js",
+            "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7"
+          },
+          {
+            "path": "./src/security-catalog.js",
+            "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9"
+          },
+          {
+            "path": "./src/position-bookings.js",
+            "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be"
+          },
+          {
+            "path": "./src/crypto-fallbacks.js",
+            "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a"
+          },
+          {
+            "path": "./src/historical-csv.js",
+            "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b"
+          },
+          {
+            "path": "./src/allocation-ui.js",
+            "sha256": "c5abae3111c48450643920b9e3ead463c7ccd3d44ef5b23a9f390560a80de58e"
+          },
+          {
+            "path": "./src/flatex-review-export.js",
+            "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec"
+          },
+          {
+            "path": "./src/position-detail-ui.js",
+            "sha256": "2e809e6ba214689325a21ccbd1835f03d6b4555e1d46c605a76de5a331fd2f0b"
+          },
+          {
+            "path": "./src/valuation-status.js",
+            "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c"
+          },
+          {
+            "path": "./src/position-quality-review.js",
+            "sha256": "a26a81b87e4d14ee17bdc67ffc89478eb1f47e59a92255a634e973d78e039796"
+          },
+          {
+            "path": "./src/legacy-quote-audit.js",
+            "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3"
+          },
+          {
+            "path": "./src/atomic-storage.js",
+            "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+          },
+          {
+            "path": "./src/assets.js",
+            "sha256": "7601b375d1cc7572b9eeb6f2a3fb988a4040e8b32463db6ae3f0a7c4e44e1acf"
+          },
+          {
+            "path": "./src/decimal.js",
+            "sha256": "ee4e87eb5b98028a755b7f73d7105cddcb2b6749f4b75f23bb7dbcec992aed6a"
+          },
+          {
+            "path": "./src/browser-portfolio-storage.js",
+            "sha256": "a8edf1ca1401e972ac9869fc71014290c75ade98b40f0a79669802ce01b34f01"
+          },
+          {
+            "path": "./src/transfer-matching-ui.js",
+            "sha256": "f13b0204f9e25adefcbfef78aba517273f17d7edff7670c30d225d9138026c17"
+          },
+          {
+            "path": "./src/model.js",
+            "sha256": "f24bd8063306e6f841e24d5ecc9f65cfcc6206482b5e932e5e4537fd6277dd75"
+          },
+          {
+            "path": "./src/transactions.js",
+            "sha256": "5573c8cb0b7047e75783514349f7b178d6a32625fa1c6eb12dc668de6330599f"
+          },
+          {
+            "path": "./src/blockchain-adapters.js",
+            "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8"
+          },
+          {
+            "path": "./src/performance.js",
+            "sha256": "00f230874878c044c34968d7092fc3143fedaf98c9c2a4dc4b5e587a2f71e4f5"
+          },
+          {
+            "path": "./src/solana-rpc.js",
+            "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b"
+          },
+          {
+            "path": "./src/bnb-token-scanner.js",
+            "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c"
+          },
+          {
+            "path": "./src/staking-discovery.js",
+            "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e"
+          },
+          {
+            "path": "./src/wallet-scan-update.js",
+            "sha256": "495be760c99ea3215a38d404f62db337bacc8d646b4c8dcd08d9775d7cc71b45"
+          },
+          {
+            "path": "./src/market.js",
+            "sha256": "c34a40072289c6bc8556561cfc96d104e437fbb257b71f188f63ac04f8e96a26"
+          },
+          {
+            "path": "./src/ethereum-fallback.js",
+            "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e"
+          },
+          {
+            "path": "./src/native-staking-networks.js",
+            "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2"
+          },
+          {
+            "path": "./src/staking-catalog.js",
+            "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025"
+          },
+          {
+            "path": "./src/request-cache.js",
+            "sha256": "17ac88f4c119d7865456cb2d717128fafb819e3ed90c25cc9806a7d521782a59"
+          },
+          {
+            "path": "./src/csv-import.js",
+            "sha256": "f8306af4720d2b149632d0270c80b9bfb42e9d92eb5490beffd6514a06396c73"
+          },
+          {
+            "path": "./src/wallet-visibility.js",
+            "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d"
+          },
+          {
+            "path": "./src/flatex-import.js",
+            "sha256": "3f76fffa6ed5ab785a38a17098aee0a3ec197e573e881ddc13f2ff0bf95bf0bb"
+          },
+          {
+            "path": "./src/flatex-reconciliation.js",
+            "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6"
+          },
+          {
+            "path": "./src/flatex-backfill.js",
+            "sha256": "637ca458ebde36e980256520cb2b82b4ff1e0ed3aa9909a98bdbb673ba1993af"
+          },
+          {
+            "path": "./src/flatex-settlement-audit.js",
+            "sha256": "bbd16b054ea5a84efc13458b0c57b888cf6246aa5ded40002c8afb2a2fb5a11a"
+          },
+          {
+            "path": "./src/flatex-cost-basis.js",
+            "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9"
+          },
+          {
+            "path": "./src/flatex-cash-audit.js",
+            "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b"
+          },
+          {
+            "path": "./src/booking-history.js",
+            "sha256": "b3cca7784ada77a043bd288d201e08e0b47ae3f8e43688220d93ee85e42fa323"
+          },
+          {
+            "path": "./src/booking-history-ui.js",
+            "sha256": "84b0ef6fa1bb0cd85e9a0bed470d3881f3bdb022f13a7d496620b15a71df3baf"
+          },
+          {
+            "path": "./src/flatex-settlements.js",
+            "sha256": "e228dd61cf7a183a75ccf52b2277fad6716b96010a29e229948749f49a51bedc"
+          },
+          {
+            "path": "./src/booking-insights-ui.js",
+            "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e"
+          },
+          {
+            "path": "./src/booking-insights.js",
+            "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c"
+          },
+          {
+            "path": "./src/capital-flows.js",
+            "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704"
+          },
+          {
+            "path": "./src/bitcoin-hd.js",
+            "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6"
+          },
+          {
+            "path": "./src/xrpl-assets.js",
+            "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1"
+          },
+          {
+            "path": "./src/defi.js",
+            "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd"
+          },
+          {
+            "path": "./src/position-icons.js",
+            "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758"
+          },
+          {
+            "path": "./src/format.js",
+            "sha256": "4e0f52a8c3987e9c6eee0616b14e72723517b37ac6a148a9905739797f52ae28"
+          },
+          {
+            "path": "./src/crypto-backup.js",
+            "sha256": "b23b8c6d1115daa54d83c94ec09d814d5e6306f4d2ebadfb8d9e87150f54d3ec"
+          },
+          {
+            "path": "./icons/flask.svg",
+            "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1"
+          },
+          {
+            "path": "./manifest.webmanifest",
+            "sha256": "41c123fdd615c7c186e49eec3346a1d4ab0e57b80d5d018139829b267cfcb487"
+          },
+          {
+            "path": "./sw.js",
+            "sha256": "7c80fe63f3a61f280acbb93aa648715a32d45960ecd74ed436da0005b677ff95"
+          }
+        ],
+        "loadedAssets": [
+          "./",
+          "./icons/flask.svg",
+          "./styles.css",
+          "./src/app.js",
+          "./src/flatex-native.js",
+          "./src/drive-backup.js",
+          "./src/import-identity.js",
+          "./src/flatex-settlements.js",
+          "./src/position-quality-review.js",
+          "./src/kraken-ledger-ui.js",
+          "./src/interest-ui.js",
+          "./src/cash-terms-ui.js",
+          "./src/cash-terms.js",
+          "./src/booking-history-ui.js",
+          "./src/position-selection.js",
+          "./src/flatex-native-ui.js",
+          "./src/security-discovery.js",
+          "./src/blocked-reasons-ui.js",
+          "./src/ledger-live-ui.js",
+          "./src/interest-account.js",
+          "./src/credential-visibility.js",
+          "./src/model.js",
+          "./src/dialog-discard.js",
+          "./src/csv-records.js",
+          "./src/bitpanda-preview-ui.js",
+          "./src/economic-form-ui.js",
+          "./src/bitpanda-preview.js",
+          "./src/dashboard-ui.js",
+          "./src/reference-management.js",
+          "./src/position-icons.js",
+          "./src/position-history.js",
+          "./src/historical-csv.js",
+          "./src/asset-wizard.js",
+          "./src/capital-flows.js",
+          "./src/chart-periods.js",
+          "./src/ledger-live.js",
+          "./src/quote-quality.js",
+          "./src/wallet-history-ui.js",
+          "./src/crypto-fallbacks.js",
+          "./src/format.js",
+          "./src/kraken-ledger.js",
+          "./src/account-evidence.js",
+          "./src/onboarding-suggestions.js",
+          "./src/transfer-matching-ui.js",
+          "./src/valuation-status.js",
+          "./src/staking-catalog.js",
+          "./src/booking-management.js",
+          "./src/market-diagnostics.js",
+          "./src/cash-reconciliation.js",
+          "./src/position-detail-ui.js",
+          "./src/security-sources.js",
+          "./src/wallet-visibility.js",
+          "./src/market.js",
+          "./src/bitcoin-hd.js",
+          "./src/flatex-settlement-audit.js",
+          "./src/flatex-review-export.js",
+          "./src/flatex-backfill.js",
+          "./src/flatex-cash-audit.js",
+          "./src/blockchain-adapters.js",
+          "./src/flatex-reconciliation.js",
+          "./src/performance.js",
+          "./src/flatex-import.js",
+          "./src/booking-insights-ui.js",
+          "./src/wallet-scan-update.js",
+          "./src/decimal.js",
+          "./src/historical-portfolio-value.js",
+          "./src/public-instruments-client.js",
+          "./src/refresh-ui.js",
+          "./src/csv-batch.js",
+          "./src/browser-portfolio-storage.js",
+          "./src/csv-import.js",
+          "./src/solana-rpc.js",
+          "./src/flatex-cost-basis.js",
+          "./src/portfolio-edit-actions.js",
+          "./src/interest-scenario.js",
+          "./src/transactions.js",
+          "./src/request-cache.js",
+          "./src/account-opening.js",
+          "./src/reference-listings.js",
+          "./src/complete-backup.js",
+          "./src/historical-position-value.js",
+          "./src/native-staking-networks.js",
+          "./src/history-evidence-cache.js",
+          "./src/eodhd-transport.js",
+          "./src/allocation-ui.js",
+          "./src/asset-wizard-core.js",
+          "./src/wallet-history-valuation.js",
+          "./src/defi.js",
+          "./src/booking-history.js",
+          "./src/security-catalog.js",
+          "./src/position-search.js",
+          "./src/backup-vault.js",
+          "./src/coin-identity.js",
+          "./src/instrument-catalog.js",
+          "./src/purchase-evidence-ui.js",
+          "./src/bitcoin-history.js",
+          "./src/wallet-history-days.js",
+          "./src/legacy-quote-audit.js",
+          "./src/wallet-history-state.js",
+          "./src/solana-history.js",
+          "./src/ethereum-history.js",
+          "./src/wallet-history-core.js",
+          "./src/eodhd-worker-client.js",
+          "./src/xrpl-assets.js",
+          "./src/bnb-token-scanner.js",
+          "./src/staking-discovery.js",
+          "./src/atomic-storage.js",
+          "./src/assets.js",
+          "./src/position-bookings.js",
+          "./src/ethereum-fallback.js",
+          "./src/booking-insights.js",
+          "./src/wallet-history-calculation.js",
+          "./src/purchase-evidence.js"
+        ],
+        "checks": [
+          "all published precache files + service worker and actual loaded application bytes match checkout",
+          "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+          "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+          "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+          "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+          "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+        ],
+        "scans": [
+          {
+            "label": "320 dashboard",
+            "violations": 0
+          },
+          {
+            "label": "320 history",
+            "violations": 0
+          },
+          {
+            "label": "320 positions",
+            "violations": 0
+          },
+          {
+            "label": "320 bookings",
+            "violations": 0
+          },
+          {
+            "label": "320 more",
+            "violations": 0
+          },
+          {
+            "label": "390 dashboard",
+            "violations": 0
+          },
+          {
+            "label": "390 history",
+            "violations": 0
+          },
+          {
+            "label": "390 positions",
+            "violations": 0
+          },
+          {
+            "label": "390 bookings",
+            "violations": 0
+          },
+          {
+            "label": "390 more",
+            "violations": 0
+          },
+          {
+            "label": "1440 dashboard",
+            "violations": 0
+          },
+          {
+            "label": "1440 history",
+            "violations": 0
+          },
+          {
+            "label": "1440 positions",
+            "violations": 0
+          },
+          {
+            "label": "1440 bookings",
+            "violations": 0
+          },
+          {
+            "label": "1440 more",
+            "violations": 0
+          },
+          {
+            "label": "ETF history",
+            "violations": 0
+          },
+          {
+            "label": "saved synthetic crypto history",
+            "violations": 0
+          },
+          {
+            "label": "split transfer preview",
+            "violations": 0
+          }
+        ],
+        "finishedAt": "2026-10-30T15:49:28.302Z",
+        "result": "PASS",
+        "errors": []
+      }
+    },
+    {
+      "path": "pchain-evidence-chromium.json",
+      "sha256": "a9a16c27fc9952bb16790c885a1a47728616ae35e2ed3a403178b71692dcf34e",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T15:49:28.668Z",
+        "scope": "Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T15:49:29.163Z",
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "pchain-evidence-firefox-webkit.json",
+      "sha256": "1b74c9b11f49fbbef4173435a8d49c17c95fddef07a24adeeb8e289d688b01da",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T15:52:36.108Z",
+        "scope": "Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T15:52:43.153Z",
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "production-transfers-chromium.json",
+      "sha256": "84125232997ef9e6a9c2244ccfb16f551092db6b0ba36cb1a18adec3f8d1083e",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "C1 transfer choice and empty states; financial matching unchanged",
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "scans": [
+              {
+                "label": "no cash account",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "checks": [
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "production-transfers-cross.json",
+      "sha256": "351881cc6b2f80a4976244841a4fe2bdc859e330320994502f5388011fd83569",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "C1 transfer choice and empty states; financial matching unchanged",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": [
+              {
+                "label": "no cash account",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "checks": [
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": [
+              {
+                "label": "no cash account",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "checks": [
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "production-ui-chromium.json",
+      "sha256": "a39d7e987072f60c537d79f331d0255b9c9d158267fbab27b4d1e771f99686ff",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+        "engines": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "scans": [
+              {
+                "page": "dashboard",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+            "checks": [
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "production-ui-cross.json",
+      "sha256": "dfea7683a6cdb7201c43939efa8079d2a64d7e209fcdd60b9eda38c09088a267",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": [
+              {
+                "page": "dashboard",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+            "checks": [
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": [
+              {
+                "page": "dashboard",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+            "checks": [
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "reference-management/chromium-sw-baseline.json",
+      "sha256": "15b6c1787c10c21e21ae66a6a9938b339a90e250de01821e644f33153121e811",
+      "report": {
+        "initial": {
+          "controller": false,
+          "controllerScript": null,
+          "active": null,
+          "installing": "installing",
+          "waiting": null
+        },
+        "activated": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "controlled": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "result": "PASS",
+        "final": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        }
+      }
+    },
+    {
+      "path": "reference-management/firefox-sw-baseline.json",
+      "sha256": "13fc1b1dda36eb95ac8ae1c948073394f5f1f35202bc5b150390880167ecbb9d",
+      "report": {
+        "initial": {
+          "controller": false,
+          "controllerScript": null,
+          "active": null,
+          "installing": null,
+          "waiting": null
+        },
+        "activated": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "controlled": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "result": "PASS",
+        "final": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        }
+      }
+    },
+    {
+      "path": "reference-management/report.json",
+      "sha256": "a6d145baa14b28b4e929287c1c7c51d396f2db48e5dd285b8aa5e2cd18905f34",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "references": 210,
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "normal/manage/visible page/partial/filter/no hidden selection",
+              "source and runtime guards/start/impact correction/add/duplicate",
+              "exact original and non-null TWR/XIRR invariance",
+              "quota/post-put/cancel/retry/CAS",
+              "combined booking/reference archive/restore",
+              "plain and fresh password V2 UI restore",
+              "actual offline commit/reload",
+              "keyboard/focus/axe/44px"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "references": 210,
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "normal/manage/visible page/partial/filter/no hidden selection",
+              "source and runtime guards/start/impact correction/add/duplicate",
+              "exact original and non-null TWR/XIRR invariance",
+              "quota/post-put/cancel/retry/CAS",
+              "combined booking/reference archive/restore",
+              "plain and fresh password V2 UI restore",
+              "actual offline commit/reload",
+              "keyboard/focus/axe/44px"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "reference-management/webkit-sw-baseline.json",
+      "sha256": "13fc1b1dda36eb95ac8ae1c948073394f5f1f35202bc5b150390880167ecbb9d",
+      "report": {
+        "initial": {
+          "controller": false,
+          "controllerScript": null,
+          "active": null,
+          "installing": null,
+          "waiting": null
+        },
+        "activated": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "controlled": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        },
+        "result": "PASS",
+        "final": {
+          "controller": true,
+          "controllerScript": "https://foliolab.unperfekt.at/sw.js",
+          "active": "activated",
+          "installing": null,
+          "waiting": null
+        }
+      }
+    },
+    {
+      "path": "reference-removal/report.json",
+      "sha256": "3479f2415e53ae63d80f28264935ca1e512711bb2d4d9ae46a098c3b5f7ec8c9",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "synthetic manual reference inverse; no private data",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "mixed/start blocks",
+              "actual original backup and separate consent/forged submit",
+              "actual endpoint unknown metrics and selected identities",
+              "quota/post-put exact record/settings/revision",
+              "offline one-revision removal/reload",
+              "session exact undo",
+              "fresh plain/encrypted original recovery",
+              "stale writer and actual CAS race after freshness",
+              "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "widths": [
+              320,
+              390,
+              430,
+              768,
+              1440
+            ],
+            "checks": [
+              "mixed/start blocks",
+              "actual original backup and separate consent/forged submit",
+              "actual endpoint unknown metrics and selected identities",
+              "quota/post-put exact record/settings/revision",
+              "offline one-revision removal/reload",
+              "session exact undo",
+              "fresh plain/encrypted original recovery",
+              "stale writer and actual CAS race after freshness",
+              "five widths/fresh preview scroll reset/expanded details/inner overflow/all summaries 44px/axe/actual close-event focus"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "sonic-evidence-chromium.json",
+      "sha256": "c30383761858c7f3959b4b49c743b7252a538023072dc8c06e423e8c90ff73e7",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T15:49:29.443Z",
+        "scope": "Synthetic declared withdrawal observations only; no real wallet, RPC, financial integration or payment inference",
+        "engines": [
+          {
+            "engine": "chromium",
+            "version": "141.0.7390.37",
+            "result": "PASS",
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T15:49:29.917Z",
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "sonic-evidence-firefox-webkit.json",
+      "sha256": "c1d38d47620910cb818d7655c0fbb542bfa14ea123f03ef337500adda4735270",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T15:52:43.587Z",
+        "scope": "Synthetic declared withdrawal observations only; no real wallet, RPC, financial integration or payment inference",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          },
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T15:52:47.260Z",
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "storage-fixture/chromium-1793375375159.json",
+      "sha256": "6e7e58dc49b7578af3e0669ab245fdee4e6004eeec518488f29ae02450172278",
+      "report": {
+        "engine": "chromium",
+        "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-blocked-reasons.mjs:32:41",
+        "events": [
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375375171
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375375489
+          },
+          {
+            "event": "load",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375375629
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375375633
+          }
+        ],
+        "stages": [
+          {
+            "stage": "initial-ready",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375374874.9,
+              "documentState": "complete",
+              "controller": null,
+              "active": null,
+              "installing": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "installing"
+              },
+              "waiting": null,
+              "controlled": false,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv"
+            }
+          },
+          {
+            "stage": "before-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375374874.9,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "after-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375375483.6,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "assertions",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375375483.6,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            },
+            "verified": {
+              "controller": "https://foliolab.unperfekt.at/sw.js",
+              "active": "activated",
+              "controlled": true
+            }
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "storage-fixture/firefox-1793375585548.json",
+      "sha256": "d7c4bcfc1b6af7d8a8bc49ebcbd9aac55244465dcf8359832c347acfae8c6dd4",
+      "report": {
+        "engine": "firefox",
+        "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-blocked-reasons.mjs:32:41",
+        "events": [
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375585584
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375586086
+          },
+          {
+            "event": "load",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375586411
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375586420
+          }
+        ],
+        "stages": [
+          {
+            "stage": "initial-ready",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375584995,
+              "documentState": "complete",
+              "controller": null,
+              "active": null,
+              "installing": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "installing"
+              },
+              "waiting": null,
+              "controlled": false,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv"
+            }
+          },
+          {
+            "stage": "before-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375584995,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "after-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375585996,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "assertions",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375585996,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            },
+            "verified": {
+              "controller": "https://foliolab.unperfekt.at/sw.js",
+              "active": "activated",
+              "controlled": true
+            }
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "storage-fixture/webkit-1793375603130.json",
+      "sha256": "bb636fbea747ec06ecbb2a45b448cbd744c5f50be30eac1b2f4c8caa2bd181f6",
+      "report": {
+        "engine": "webkit",
+        "caller": "Error: fixture caller\n    at controlledStorageFixture (file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-controlled-storage-fixture.mjs:10:35)\n    at file:///home/runner/work/foliolab-open/foliolab-open/tests/browser-blocked-reasons.mjs:32:41\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processImmediate (node:internal/timers:452:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)",
+        "events": [
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375603151
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375603445
+          },
+          {
+            "event": "load",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375603655
+          },
+          {
+            "event": "navigation",
+            "url": "https://foliolab.unperfekt.at/",
+            "time": 1793375603656
+          }
+        ],
+        "stages": [
+          {
+            "stage": "initial-ready",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375602718,
+              "documentState": "complete",
+              "controller": null,
+              "active": null,
+              "installing": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "installing"
+              },
+              "waiting": null,
+              "controlled": false,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv"
+            }
+          },
+          {
+            "stage": "before-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375602718,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "after-reload",
+            "waitResult": true,
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375603434,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            }
+          },
+          {
+            "stage": "assertions",
+            "state": {
+              "url": "https://foliolab.unperfekt.at/",
+              "timeOrigin": 1793375603434,
+              "documentState": "complete",
+              "controller": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "active": {
+                "script": "https://foliolab.unperfekt.at/sw.js",
+                "state": "activated"
+              },
+              "installing": null,
+              "waiting": null,
+              "controlled": true,
+              "caches": [
+                "foliolab-open-v221"
+              ],
+              "storage": "Transaktionale IndexedDB aktiv",
+              "fixture": {
+                "ready": true,
+                "error": null
+              }
+            },
+            "verified": {
+              "controller": "https://foliolab.unperfekt.at/sw.js",
+              "active": "activated",
+              "controlled": true
+            }
+          }
+        ],
+        "result": "PASS"
+      }
+    },
+    {
+      "path": "transfer-states.json",
+      "sha256": "351881cc6b2f80a4976244841a4fe2bdc859e330320994502f5388011fd83569",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "C1 transfer choice and empty states; financial matching unchanged",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": [
+              {
+                "label": "no cash account",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "checks": [
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": [
+              {
+                "label": "no cash account",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "no cash account",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "label": "cash without outgoing",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "checks": [
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "ui-audit-controls/report.json",
+      "sha256": "285bff74f736c3560698b39cabcda050909646b5ac272f18b9e715daee5d56e0",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "synthetic presentation controls; exact IndexedDB nonmutation",
+        "engines": [
+          {
+            "engine": "firefox",
+            "result": "PASS",
+            "scans": [
+              "empty dashboard 320",
+              "empty history 320",
+              "empty positions 320",
+              "empty bookings 320",
+              "empty more 320",
+              "empty dashboard 390",
+              "empty history 390",
+              "empty positions 390",
+              "empty bookings 390",
+              "empty more 390",
+              "empty dashboard 430",
+              "empty history 430",
+              "empty positions 430",
+              "empty bookings 430",
+              "empty more 430",
+              "empty dashboard 768",
+              "empty history 768",
+              "empty positions 768",
+              "empty bookings 768",
+              "empty more 768",
+              "empty dashboard 1440",
+              "empty history 1440",
+              "empty positions 1440",
+              "empty bookings 1440",
+              "empty more 1440",
+              "filled dashboard 320",
+              "filled history 320",
+              "open calendar 320",
+              "filled positions 320",
+              "filled bookings 320",
+              "filled more 320",
+              "filled dashboard 390",
+              "filled history 390",
+              "open calendar 390",
+              "filled positions 390",
+              "filled bookings 390",
+              "filled more 390",
+              "filled dashboard 430",
+              "filled history 430",
+              "open calendar 430",
+              "filled positions 430",
+              "filled bookings 430",
+              "filled more 430",
+              "filled dashboard 768",
+              "filled history 768",
+              "open calendar 768",
+              "filled positions 768",
+              "filled bookings 768",
+              "filled more 768",
+              "filled dashboard 1440",
+              "filled history 1440",
+              "open calendar 1440",
+              "filled positions 1440",
+              "filled bookings 1440",
+              "filled more 1440",
+              "320x360 synthetic150percent calendar text"
+            ],
+            "checks": [
+              "50empty/filled views",
+              "real44px nonoverlapping scoped controls",
+              "seven-day320px calendar",
+              "balanced4+4 wealth presets",
+              "calendar4.5contrast",
+              "exact accessible donor amount and visible SVG focus",
+              "short height/enlarged text/reset/Escape focus",
+              "exact IndexedDB nonmutation"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "result": "PASS",
+            "scans": [
+              "empty dashboard 320",
+              "empty history 320",
+              "empty positions 320",
+              "empty bookings 320",
+              "empty more 320",
+              "empty dashboard 390",
+              "empty history 390",
+              "empty positions 390",
+              "empty bookings 390",
+              "empty more 390",
+              "empty dashboard 430",
+              "empty history 430",
+              "empty positions 430",
+              "empty bookings 430",
+              "empty more 430",
+              "empty dashboard 768",
+              "empty history 768",
+              "empty positions 768",
+              "empty bookings 768",
+              "empty more 768",
+              "empty dashboard 1440",
+              "empty history 1440",
+              "empty positions 1440",
+              "empty bookings 1440",
+              "empty more 1440",
+              "filled dashboard 320",
+              "filled history 320",
+              "open calendar 320",
+              "filled positions 320",
+              "filled bookings 320",
+              "filled more 320",
+              "filled dashboard 390",
+              "filled history 390",
+              "open calendar 390",
+              "filled positions 390",
+              "filled bookings 390",
+              "filled more 390",
+              "filled dashboard 430",
+              "filled history 430",
+              "open calendar 430",
+              "filled positions 430",
+              "filled bookings 430",
+              "filled more 430",
+              "filled dashboard 768",
+              "filled history 768",
+              "open calendar 768",
+              "filled positions 768",
+              "filled bookings 768",
+              "filled more 768",
+              "filled dashboard 1440",
+              "filled history 1440",
+              "open calendar 1440",
+              "filled positions 1440",
+              "filled bookings 1440",
+              "filled more 1440",
+              "320x360 synthetic150percent calendar text"
+            ],
+            "checks": [
+              "50empty/filled views",
+              "real44px nonoverlapping scoped controls",
+              "seven-day320px calendar",
+              "balanced4+4 wealth presets",
+              "calendar4.5contrast",
+              "exact accessible donor amount and visible SVG focus",
+              "short height/enlarged text/reset/Escape focus",
+              "exact IndexedDB nonmutation"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "ui-quality.json",
+      "sha256": "dfea7683a6cdb7201c43939efa8079d2a64d7e209fcdd60b9eda38c09088a267",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+        "engines": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "scans": [
+              {
+                "page": "dashboard",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+            "checks": [
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "scans": [
+              {
+                "page": "dashboard",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 320,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 390,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 430,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 768,
+                "height": 560
+              },
+              {
+                "page": "dashboard",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "history",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "positions",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "bookings",
+                "width": 1440,
+                "height": 560
+              },
+              {
+                "page": "more",
+                "width": 1440,
+                "height": 560
+              }
+            ],
+            "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+            "checks": [
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "liveJsonRead": 40,
+  "livePassReports": 40,
+  "retainedFailure": {
+    "run": 41080709085,
+    "attempt": 1,
+    "job": 124156258681,
+    "evidence": "v221-pr228-live-503-failure.json",
+    "causeThisAttempt": "HTTP503/HTML for wallet-history-valuation.js blocked initial app module graph. One targeted unchanged live-job retry passed; no full-CI rerun or redeploy.",
+    "olderFailure41059923497": "Retained unchanged; root cause not separately established."
+  },
+  "changesDuringAcceptance": "No application/finance/DB/backup/PWA/source/gate/assertion/timeout changes; no UI integration. PR209/208/228 accepted. Merge approvals consumed.",
+  "screenshot": {
+    "path": "v221-pr228-live-webkit-390.png",
+    "source": "ui-positions-390.png",
+    "sha256": "9da521cb2a2d6ae16252fe2ea98ef2db2d6eb531d6977eee1a1733e1827e171a",
+    "visualReview": "Actual final synthetic production screenshot visually inspected; PASS"
+  },
+  "limits": [
+    "No physical Android/screenreader/installed-device PWA acceptance",
+    "Successful retry does not prove all historic initialization issues fixed",
+    "Underlying server/CDN/runner-network origin of observed503 not separately established"
+  ],
+  "next": "CI-OPT01 baseline and dependency/test-path contract before further extensive Copilot integrations; preserve all existing master requirements. Only FLH05/FLH-PROJ01 deliberately PARKED."
+}
