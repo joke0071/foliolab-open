@@ -1,3 +1,13 @@
+## PR205 freigegeben und kontrolliert gemergt · v218 RELEASE_PENDING · 30.10.2026
+
+Nutzer hat nach konkreter PR205/HEAD03ee0d32-Releasefrage ausdrücklich **„Freigabe“** erteilt. Vor Merge mainc6a07402, PR-HEAD03ee0d329096aca0c7d4bb2ad0da6f83838acb0c, Testmerged0322e2d/Tree46b8adf6 sowie Pflicht41011181867 und Wallet41011181874 SUCCESS erneut verifiziert; keine aktiven Actions. Kontrollierter Merge mit expected_head_sha: **maincbb9e8e9fa58c768c128f304840269313aeae6ba**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6**, exakt identisch mit geprüftem Kandidaten.
+
+**MERGED / RELEASE_PENDING / NOT_YET_LIVE_ACCEPTED.** [Main-/Pages-/Live41012601300](https://github.com/joke0071/foliolab-open/actions/runs/41012601300) läuft. Letzte vollständige Produktionsabnahme v217/SW217. SW218 noch nicht vollständig live abgenommen. [Laufender Releasebeleg](release-evidence/ui-text01-facts-v218-release.json). Freigabe gilt für unveränderten PR205; keine erneute Freigabe für seinen regulären Abschluss und keine Übertragung auf spätere PRs.
+
+**Weiter:** vollständige Main-/Crossbrowser-/Pages-/tatsächliche Livegates samt Artefakt-/Asset-/SW-/Reportprüfung abschließen; erst danach DONE/LIVE_ACCEPTED. Keine parallele Produktimplementierung. Anschließend bestehenden P1 UI-TEXT02/3J bearbeiten, keine neue Roadmap. Alle bisherigen Master-/Sicherheits-/Mehr-/Text-/DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge erhalten;FLH05/FLH-PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## PR205 reviewbereit · v217 live · dauerhafter Fortsetzungspunkt · 30.10.2026
 
 **Produktion PR204/v217 DONE / LIVE_ACCEPTED.** Main **c6a07402d668c0a5d90d1294be8f72547d1577b0**, SW217. Main-/Pages-/Live41008536496 final SUCCESS inVersuch2:957Units/dreiEngines,121 exakte produktive Asset-/SW-Hashes,6Kerngruppen/18Axe und37 erfolgreiche finale Liveberichte. [Releasebelege](release-evidence/ui-text01-v217-release.json), tatsächliches repräsentatives WebKit320-Produktionsbild dauerhaft gespeichert. Erster SW-Registrierungs-Timeout im frischen Referenzkontext bleibt im [Fehlerbeleg](release-evidence/v217-live-sw-registration-failure.json) ungeklärt erhalten; genau ein unveränderter Livejob-Retry vollständig PASS. Keine Gates abgeschwächt und keine reale Androidabnahme.

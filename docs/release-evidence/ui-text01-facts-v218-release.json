@@ -1,0 +1,12 @@
+{
+  "status": "MERGED / RELEASE_PENDING / NOT_YET_LIVE_ACCEPTED",
+  "pr": 205,
+  "approvedHead": "03ee0d329096aca0c7d4bb2ad0da6f83838acb0c",
+  "release": "cbb9e8e9fa58c768c128f304840269313aeae6ba",
+  "tree": "46b8adf6545c59cc606c9630299f56d21cec86a6",
+  "cache": "foliolab-open-v218",
+  "run": 41012601300,
+  "userAuthorization": "Explicit Freigabe after concrete PR205 HEAD03ee0d32 merge/deployment question; applies only to PR205.",
+  "lastAcceptedProduction": "v217/SW217",
+  "next": "Complete Main/Pages/Live acceptance and evidence. Then existing UI-TEXT02/3J. No parallel implementation."
+}
