@@ -1612,3 +1612,81 @@
  #historyPage .history-capital-comparison .small-help{padding-left:30px}
  #historyPage #performanceDetails>summary>small{padding-left:25px}
 }
+
+
+/* UI-VISUAL06: scoped, presentation-only first-run and empty-list refinements.
+   No global .empty/.panel/.btn overrides, no new actions, no state change. */
+#dashboardPage #onboarding{
+ margin:16px 0 12px;
+ padding:clamp(16px,2.3vw,24px);
+ background:linear-gradient(135deg,#f5faf5,#fff 75%);
+ border-color:#dce8df;
+}
+#dashboardPage #onboarding>strong{
+ display:block;
+ font-size:clamp(16px,1.65vw,19px);
+ line-height:1.3;
+ color:#234b34;
+ font-weight:780;
+ overflow-wrap:anywhere;
+}
+#dashboardPage #onboarding>p{
+ max-width:62ch;
+ margin:8px 0 16px;
+ line-height:1.55;
+ font-size:12px;
+ color:#4d6756;
+ overflow-wrap:anywhere;
+}
+#dashboardPage #onboarding>.toolbar-buttons{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ align-items:stretch;
+ justify-content:start;
+ gap:9px;
+ max-width:660px;
+}
+#dashboardPage #onboarding>.toolbar-buttons>.btn{
+ min-width:0;
+ min-height:44px;
+ width:100%;
+ padding:10px 12px;
+ text-align:center;
+ white-space:normal;
+ overflow-wrap:anywhere;
+ line-height:1.35;
+}
+#positionsPage #positionList>.empty{
+ max-width:56ch;
+ min-height:0;
+ margin:0 auto;
+ padding:18px 8px;
+ line-height:1.5;
+ overflow-wrap:anywhere;
+}
+#bookingsPage #bookingList>.booking-onboarding{
+ max-width:540px;
+ margin:8px auto 4px;
+ padding:18px 14px;
+ border:1px solid #e6eee7;
+ border-radius:13px;
+ background:#f8faf8;
+ line-height:1.5;
+ overflow-wrap:anywhere;
+}
+#bookingsPage #bookingList>.booking-onboarding>p{
+ margin:7px auto 0;
+ max-width:45ch;
+ overflow-wrap:anywhere;
+}
+@media(min-width:1250px){
+ #dashboardPage #onboarding>.toolbar-buttons{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+ }
+}
+@media(max-width:380px){
+ #dashboardPage #onboarding{padding:14px}
+ #dashboardPage #onboarding>.toolbar-buttons{gap:7px}
+ #dashboardPage #onboarding>.toolbar-buttons>.btn{padding:10px 7px}
+ #bookingsPage #bookingList>.booking-onboarding{padding:15px 10px}
+}

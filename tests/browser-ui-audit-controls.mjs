@@ -37,8 +37,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
      await nav(page);await scan((filled?'filled':'empty')+' '+page+' '+width);
      if(page==='dashboard'){
       await geometry('#dashboardPage .link-button');
-      if(!filled)await geometry('#onboarding .btn');
-      else{
+      if(!filled){
+       assert.equal(await p.locator('#onboarding').isVisible(),true,'First-run card is present only for empty provider list');
+       const welcomeActions=await geometry('#onboarding .btn');
+       assert.equal(welcomeActions.length,4,'All four existing first-run actions must remain available');
+       const grid=await p.locator('#onboarding>.toolbar-buttons').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length);
+       assert.equal(grid,width>=1250?4:2,'Compact welcome buttons form a responsive grid');
+       assert.equal(await p.locator('#onboarding [data-action]').evaluateAll(xs=>xs.map(x=>x.dataset.action).join(',')),
+        'start-wizard,start-provider,start-wallet,start-import','Unchanged onboarding action contract');
+      }else{
+       assert.equal(await p.locator('#onboarding').isVisible(),false,'Onboarding must disappear once a provider exists');
        const segment=p.locator('.allocation-segment[data-allocation-key=cash]');await p.keyboard.press('Tab');await segment.focus();
        assert.equal(await p.locator('#donutTotal').innerText(),'€ 1,01 Tsd.');
        assert.match(await p.locator('.allocation-center').getAttribute('aria-label'),/1\.010,00/);
@@ -47,8 +55,23 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
        await p.screenshot({path:out+'/'+engine+'-focus-'+width+'.png'});
       }
      }
-     if(page==='positions')await geometry('#positionsPage .action-group .responsive-action,#positionsPage .filter-list .filter');
-     if(page==='bookings')await geometry('#bookingsPage .panel-actions .responsive-action');
+     if(page==='positions'){
+      await geometry('#positionsPage .action-group .responsive-action,#positionsPage .filter-list .filter');
+      if(!filled){
+       const blank=p.locator('#positionList>.empty');
+       assert.equal(await blank.count(),1,'Empty positions remain a single informational state');
+       assert.ok(await blank.evaluate(el=>parseFloat(getComputedStyle(el).paddingTop)<=20),'Scoped empty positions must not waste vertical space');
+      }
+     }
+     if(page==='bookings'){
+      await geometry('#bookingsPage .panel-actions .responsive-action');
+      if(!filled){
+       const blank=p.locator('#bookingList>.booking-onboarding');
+       assert.equal(await blank.count(),1,'Empty bookings preserve their single existing message');
+       assert.equal(await blank.locator('button').count(),0,'No duplicate booking action added to the empty card');
+       assert.ok(await blank.evaluate(el=>parseFloat(getComputedStyle(el).paddingTop)<=20),'Compact booking card stays scoped');
+      }
+     }
      if(page==='history'&&filled){
       const periods=await geometry('#chartPeriods button');
       assert.equal(periods.length,width>=721?8:width<=374?5:6,'visible presets; remaining ones sit in "Mehr" on phones');
