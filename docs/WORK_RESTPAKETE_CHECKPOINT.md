@@ -1,3 +1,17 @@
+## PR230-Mainbelege dauerhaft gesichert · Pages-/Liveabschluss ausständig · 30.10.2026
+
+Main7490f243/Treee0bc5ae4 bleibt exakt der freigegebene und gemergte PR230-Kandidat. [Run41099688653](https://github.com/joke0071/foliolab-open/actions/runs/41099688653), Versuch1, meldet aktuell queued; Pages-Check124218302191 queued. Kein Lauf abgebrochen, wiederholt oder verändert. DetaillierteJobs-/Steps-Abfragen liefern zeitweiseReadTimeout; Run-/Artefakt-/Commitcheck-Abfragen funktionieren. MehrereCheckzustände nochin_progress, obwohl deren vollständigeArtefakte vorliegen; keine vollständigeReleaseabnahme allein daraus ableiten.
+
+**Verfügbare vollständige Main-/Cross-Artefakte tatsächlich geprüft:** fünfZIPs vorExtraktionSHA256-verifiziert, geprüfterCheckoutSHA7490f243 exakt;969/969Units,0Fail/Skip. Alle68JSONs vollständiggeparst undrekursivgeprüft,65PASS-Berichte plus3Axe-Scanberichte. PWA in3Engines mitje4strikttrueReadinessphasen,nativerAktivierung,echtemautomatischemDokumentwechsel,explizitemReload,120Hashes,OfflineundexaktemRecord bestätigt; ursprünglicheAssertions/Fristen unverändert.
+
+[Dauerhafte vollständige Main-/Cross-Berichte](release-evidence/ci-opt01-pr230-main-acceptance.json), separaterBelegcommit `bb44148723738ea314f7aa08928d41f6851eff20`. Statusdarin ausdrücklich MAIN_ARTIFACTS_VERIFIED / DEPLOY_QUEUED / LIVE_ACCEPTANCE_PENDING, keinvollständigerRelease-PASS.
+
+**Exaktweiter:** vorhandenenLauf regulär bisPages/Live verfolgen. Status überfunktionierendeRun-/Commitcheck-/Artefaktquellen prüfen; Detailabfragen nichtunbegrenztwiederholen. Nach tatsächlichemLiveabschluss ProduktionsZIP vorExtraktionSHA256-verifizieren, vollständigeLiveberichte,121 veröffentlichteAsset-/SW221-Hashes,Offline/PWA/Backup/Restore/CAS undtatsächlicheLivebilder prüfen. ErstnachvollständigemErfolg PR230 DONE/LIVE_ACCEPTED dokumentieren. Bis dahin keine nächsteCI-/Copilot-Implementierung. Bei weiterblockiertemexternemZugriff Zustand/Evidenz/Fortsetzung gesichert halten, keine unbegründeteRetry-/Testsuite-Schleife.
+
+Freigabe fürPR230 verbraucht; keineFreigabe fürweiterePRs. VorherigeProduktionv221/SW221 unverändertbereitsLIVE_ACCEPTED, neuerMain-ReleaseabschlussnochPENDING. CI-OPT01weiterPARTIAL. KostenstoppzusätzlicheWork-Credit-Pakete0€, keineKäufeoderKaufplanung. AlleMasteranforderungenbewahrt; nurFLH05/FLH-PROJ01 bewusstPARKED.
+
+---
+
 ## PR230 ausdrücklich freigegeben und gemergt · vollständige Releaseabnahme läuft · 30.10.2026
 
 Die Nutzerantwort **„Freigabe und Fortsetzung“** gilt konkret für den zuvor vollständig geprüften PR230/HEADc6757318 und wurde jetzt verwendet. Vor Merge aktuellenMain3b00336d, unverändertenPR-HEAD, alleChecks, Testmerge/Tree, offenePRs und saubereWorkingTrees erneut geprüft. NurPR230 mit erwartetemHEAD gemergt; dieseFreigabe ist verbraucht und gilt nicht fürweiterePRs.
