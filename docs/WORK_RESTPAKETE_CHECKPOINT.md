@@ -1,3 +1,21 @@
+## CI-OPT01/PR230: finale Testvoraussetzungen gesichert, vollständige CI läuft · 30.10.2026
+
+**Aktueller Kandidat:** [Draft PR230](https://github.com/joke0071/foliolab-open/pull/230), Branch `ci/ci-opt01-cross-balance-v1`, HEAD `1ab12f797b6409816cda39b504c1e86ddc85a0b2`, Tree `cded3cb644702e72a03d17639aa53e7969427966`. Remote- und lokaler Gesamtbaum exakt identisch, Working Tree sauber. Main3b00336d unverändert; Produktion v221/SW221 weiterhin DONE/LIVE_ACCEPTED. Keine Produkt-/Finanz-/Speicher-/SW-Änderung, keine Copilot-Integration, kein Merge oder Deployment.
+
+**Begrenzter Canary:** drei statt zwei isolierte Cross-Shards, alle37 Aufrufe samt Engine-Zuordnung und intern sequenzieller UI-Suite unverändert erhalten. Haupt-/Unit-/Chromium-/SW-Gate sowie Pages-/Liveabschnitt bytegleich zuMain. Historisches30-Kommandomanifest unverändert; zusätzliche vollständige v221-Zuordnung und stärkere Negativtests. Lokale Gesamtprüfung969/969Units,0Fail/Skip undSyntaxPASS; letzter Nachschritt am Testskript zusätzlich syntaxgeprüft. Alle ursprünglichen PWA-Assertionzeilen gegenMain wortgleich geprüft.
+
+Erster Lauf41089535516 scheiterte an WebKit-Cache0/120 vor wirklicher aktueller Installation. [SHA256-verifizierter vollständiger Fehlerbeleg](release-evidence/ci-opt01-canary230-pwa-failure.json), Commit28f9a4cb. Awaited Readiness ersetzt vier vorzeitig auswertbare asynchrone Prädikate; verlangt echte booleantrue-Werte und protokolliert Phasen. Vier Unit-Kontrollen schützen false/truthy/true, Frist, Navigation und echte Fehler. Keine Aktion wiederholt; ursprüngliche30s/60s-Fristen erhalten.
+
+Zweiter Lauf41090363130 bestätigt drei Readinesswerte=true und aktuellen Cache120, scheitert dann inFirefox an NS_BINDING_ABORTED des expliziten Reloads während vorgesehener automatischer controllerchange-Navigation. [Vollständiger SHA256-verifizierter Beleg](release-evidence/ci-opt01-canary230-navigation-failure.json), Commit9da03c44. Neu vorupdate gesetzter Navigationsbeobachter verlangt tatsächlichen Hauptframe-Commit und neues Dokument innerhalb derselben60s-Frist; danach folgt weiterhin expliziter Reload, vollständiger Hash-/Offline-/IDB-/Datenvergleich. Kein ignorierter Fehler oder Retry. Ältere Jobs regulär auslaufen lassen; keine rote Abnahme umdeuten.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Vollständiger Pflichtlauf [41090941790](https://github.com/joke0071/foliolab-open/actions/runs/41090941790) und Wallet41090941603 auf genau1ab12f79. Testmerge177bbf4f2a8c0132ba68fbaa853248c8bb8c987a frisch prüfen. Neuer Run ist wegen konkreter Testkorrektur erforderlich, kein blinder Job-Retry. Keine Nachherersparnis aus früheren roten Läufen behaupten.
+
+**Exakte Fortsetzung:** diesen Kandidaten vollständig abnehmen, inChromium/Firefox/WebKit vier tatsächliche Readinessreceipts=true plus automatischen neuenDokumentwechsel und alle ursprünglichen120Hashes/Offline/IDB/Records bestätigen. Sämtliche Haupt-/dreiCross-/Wallet-Gates, Testmerge/Tree und SHA256-verifizierte tatsächliche Artefakte/Berichte prüfen. Bei Erfolg reale Pflichtspanne/Runnersekunden/Setupzeiten gegen vorhandeneBaseline1936Runnersekunden bzw. Pflichtmaximum821s auswerten; Streuung und zusätzlichenRunneraufwand benennen. Belege separat remote sichern, dann technischfertigen Kandidaten zur eigenen konkreten Nutzerfreigabe vorlegen. Bei Fehler konkrete neue Diagnose, keine Assertions-/Timeoutlockerung oder unbegründeten Wiederholungen.
+
+CI-OPT01 insgesamt weiterPARTIAL; reduzierteFAST-Auswahl,Caching,Versionsangleichung,Chromium-Sharding und automatischeInfrastruktur-Retries nicht aktiviert. Alle bisherigen Masteraufgaben aktiv, nurFLH05/FLH-PROJ01 bewusstPARKED. **ZusätzlicheWork-Creditkäufe/Kaufplanung0€**, keine Verfügbarkeits-/Verbrauchszahlen erfinden. Historischen Dokumentationsbranch niemals alsAnwendungscode mergen.
+
+---
+
 ## CI-OPT01/PR230: PWA-Testvoraussetzung korrigiert, neuer vollständiger Kandidat · 30.10.2026
 
 **Aktueller HEAD `41a5c35547bd389d1f2a519004516d872b8548e8`, Tree `927351f8a54fdd20f6a90f16e3c1895771a03fff`**, derselbe Branch `ci/ci-opt01-cross-balance-v1` und DraftPR230. Alle Remote-Blobs/Gesamtbaum mit lokalem Commitbaum exakt identisch, WorkingTree sauber. Kein neuer Implementierungsstrang, keine Produkt-/Finanz-/SW-Änderung oder Copilot-Integration. Produktionv221/SW221 unverändert LIVE_ACCEPTED.
