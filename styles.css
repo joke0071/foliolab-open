@@ -319,6 +319,25 @@
 
 }
 
+/* UI-VISUAL05: compact, touch-friendly asset wizard and public wallet dialog (visual only). */
+.asset-wizard-dialog .field input,.asset-wizard-dialog .field select,#editDialog:has(#scanWalletButton) .field input,#editDialog:has(#scanWalletButton) .field select{min-height:44px}
+.asset-wizard-dialog .btn,#editDialog:has(#scanWalletButton) .btn{min-height:44px}
+.asset-wizard-dialog summary,.asset-wizard-dialog .advanced-apis>summary,.asset-wizard-dialog .wizard-catalog-tools>summary,#editDialog:has(#scanWalletButton) summary{min-height:44px;padding-top:9px;padding-bottom:9px;cursor:pointer;overflow-wrap:anywhere}
+.wizard-mode label,.asset-wizard-dialog .checkbox-line,#editDialog:has(#scanWalletButton) .checkbox-line{min-height:44px}
+.asset-wizard-dialog .dialog-head h2,#editDialog:has(#scanWalletButton) .dialog-head h2{overflow-wrap:anywhere}
+.asset-wizard-dialog .icon-close,#editDialog:has(#scanWalletButton) .icon-close{min-width:44px;min-height:44px;flex-shrink:0}
+.asset-wizard-dialog .field>span,#editDialog:has(#scanWalletButton) .field>span{overflow-wrap:anywhere}
+.wizard-feedback,.wizard-search-status,#scanWalletStatus,#editDialog:has(#scanWalletButton) .small-help{overflow-wrap:anywhere}
+.wallet-scan-row{min-height:44px}
+.wizard-matches .result-item{min-height:44px}
+.asset-wizard-dialog .dialog-footer{padding:12px 24px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #e8efe8;margin-top:0;flex-wrap:wrap}
+@media(max-width:720px){
+ .asset-wizard-dialog .dialog-footer{padding-left:16px;padding-right:16px}
+ .asset-wizard-dialog .dialog-head{padding:16px 12px 8px 16px}
+ .wizard-mode{gap:4px 14px}
+ .wallet-scan-results{max-height:min(315px,40dvh)}
+}
+
 /* Refresh failures are secondary details, not multiline overlays. */
 #refreshErrorDetails{margin:-4px 0 14px}
 .refresh-error-list{display:grid;gap:10px}
