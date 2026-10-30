@@ -1292,3 +1292,22 @@
 .chart-tooltip-detail{min-height:0;width:100%;overflow:auto;overscroll-behavior:contain}
 .chart-tooltip-detail>span{display:block}
 .chart-tooltip-detail:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
+
+/* UI-VISUAL09: Such-, Filter- und Aktionsflächen Positionen/Buchungen (nur Darstellung) */
+#positionsPage .toolbar,#bookingsPage .booking-filter-tools{gap:10px}
+#positionsPage .position-search-tools,#bookingsPage .booking-filter-tools{align-items:end}
+#positionsPage select,#bookingsPage .booking-filter-tools select,#bookingsPage #bookingTransferDetails select,#bookingsPage #bookingIncomeDetails select{min-height:44px;max-width:100%;text-overflow:ellipsis}
+#positionsPage #resolveListings,#bookingsPage .btn.light,#bookingsPage #bookingIncomeDetails .btn,#bookingsPage #bookingTransferDetails .btn{min-height:44px;min-width:44px;overflow-wrap:anywhere;white-space:normal;line-height:1.25}
+#positionsPage details>summary,#bookingsPage #bookingTransferDetails>summary,#bookingsPage #bookingIncomeDetails>summary{min-height:44px;box-sizing:border-box;align-items:center;gap:8px;overflow-wrap:anywhere}
+#bookingsPage #bookingTransferDetails>summary,#bookingsPage #bookingIncomeDetails>summary{padding-block:10px}
+#bookingsPage #bookingTransferDetails:focus-within,#bookingsPage #bookingIncomeDetails:focus-within{border-color:#2d6946}
+#bookingsPage #bookingTransferDetails>summary:focus-visible,#bookingsPage #bookingIncomeDetails>summary:focus-visible,#positionsPage details>summary:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
+#bookingsPage #bookingIncomeDetails .field,#bookingsPage #bookingTransferDetails .field{min-width:0}
+#bookingsPage #bookingIncomeDetails select,#bookingsPage #bookingTransferDetails select{width:100%}
+#positionsPage #positionSearch,#bookingsPage #bookingSearch{min-width:0;text-overflow:ellipsis}
+@media (max-width:480px){
+#positionsPage .filter-list{gap:8px}
+#bookingsPage .booking-filter-tools>*{min-width:0}
+#bookingsPage .panel-head-actions .btn{flex:1 1 140px}
+}
+#bookingsPage #bookingIncomeDetails details>summary,#bookingsPage #bookingTransferDetails details>summary{display:flex;align-items:center;min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}
