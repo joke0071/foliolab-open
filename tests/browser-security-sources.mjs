@@ -17,23 +17,13 @@ try{
   persist(m);
  });
  await page.reload();
- await page.route('https://s.tradingview.com/widgetembed/**',route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><title>Isolated chart</title>'}));
  await page.locator('#providerOverview .provider-accordion > summary').click();
  const row=page.locator('#providerOverview [data-position-id="etf-test"]');
  await row.locator(':scope > summary').click();
- assert.equal(await row.locator('[data-action="load-tradingview"]').isVisible(),false);
- await row.locator('.position-chart-options>summary').click();
- await row.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
- assert.equal(await row.locator('.tradingview-slot iframe').count(),0,'No third-party chart loaded without user action');
- assert.match(await row.innerText(),/Öffentliches Diagramm laden/);
- await row.locator('[data-action="load-tradingview"]').click();
- const frame=row.locator('.tradingview-slot iframe');
- const source=await frame.getAttribute('src');
- assert.equal(new URL(source).hostname,'s.tradingview.com');
- assert.equal(new URL(source).searchParams.get('symbol'),'XETR:VWCE');
- assert.match(await frame.getAttribute('sandbox'),/allow-scripts/);
- assert.equal(await row.locator('.tradingview-slot script').count(),0,'No third-party JS in portfolio origin');
- assert.equal(await row.locator('.tradingview-slot a').getAttribute('rel'),'noopener noreferrer');
+ assert.equal(await row.locator('[data-action="load-tradingview"]').count(),0,'Deprecated external widget button must not exist');
+ assert.equal(await row.locator('iframe[src*="tradingview"]').count(),0,'No vendor iframe');
+ assert.equal(await row.locator('[data-action="import-price-history"]').count(),1,'Local CSV import remains available');
+ assert.equal(await row.locator('.position-chart-options').count(),0,'No extra nested disclosure for one local action');
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#marketSettings > summary').click();
  await page.locator('[name="eodhdKey"]').fill('TESTONLY');
@@ -63,5 +53,5 @@ try{
   const r=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(r<=1,'Horizontal overflow at '+width);
  }
- console.log('SECURITY SOURCES: public chart consent, EODHD quote/history, strict listing, persistent settings, 320-1440px PASS');
+ console.log('SECURITY SOURCES: no third-party chart, local CSV, EODHD quote/history, strict listing, persistent settings, 320-1440px PASS');
 }finally{await browser.close();}
