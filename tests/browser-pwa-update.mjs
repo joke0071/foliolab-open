@@ -111,7 +111,29 @@ try{
    assert.deepEqual(await record(),before,'offline reload/navigation preserves exact record');
    assert.deepEqual(errors,[]);result.checks.push('updated offline reload and historical reference remain accessible; exact record preserved; no page errors');
    result.assetHashes=hashes;result.result='PASS';console.log(engine+': PWA UPDATE warm HTTP cache/current asset hashes/old cache removal/exact IDB/offline PASS');
-  }catch(error){result.result='FAIL';result.error=String(error).slice(0,2000);throw error;}
+  }catch(error){
+   result.result='FAIL';result.error=String(error).slice(0,2000);
+   // Failure-only evidence: do not poll, retry or change the original gate.
+   result.failureRequests=requests.map(request=>({...request}));
+   result.failurePageErrors=[...errors];
+   try{
+    result.failureState=await page.evaluate(async()=>{
+     const registration=await navigator.serviceWorker.getRegistration();
+     const worker=w=>w?{scriptURL:w.scriptURL,state:w.state}:null;
+     const names=await caches.keys(),contents=[];
+     for(const name of names){
+      const requests=await(await caches.open(name)).keys();
+      contents.push({name,count:requests.length,paths:requests.map(r=>new URL(r.url).pathname)});
+     }
+     return {url:location.href,readyState:document.readyState,
+      storageState:document.getElementById('portfolioStorageState')?.textContent??null,
+      controller:worker(navigator.serviceWorker.controller),
+      registration:registration?{scope:registration.scope,active:worker(registration.active),installing:worker(registration.installing),waiting:worker(registration.waiting)}:null,
+      caches:contents};
+    });
+   }catch(diagnosticError){result.failureState={error:String(diagnosticError)};}
+   throw error;
+  }
   finally{await browser.close();await writeFile('artifacts/gates/pwa-update/report.json',JSON.stringify(report,null,2));}
  }
 }finally{await new Promise(resolve=>server.close(resolve));}
