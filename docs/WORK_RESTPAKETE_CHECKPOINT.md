@@ -1,3 +1,15 @@
+## PR231: Main/Cross/Pages erfolgreich – tatsächliche Liveabnahme läuft · 30.10.2026
+
+Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51` / Tree033a5de9 unverändert. [Release41113336364](https://github.com/joke0071/foliolab-open/actions/runs/41113336364), Versuch1: Stufenplanung, Hauptjob, alle drei Cross-Shards und Pagesdeploy SUCCESS. Tatsächlicher Plan RELEASE/full=true/ciContract=false; FAST erwartungsgemäß skipped. Live-acceptance ist noch in_progress, kein vollständiges LIVE_ACCEPTED aus den vorgelagerten Erfolgen ableiten.
+
+Sechs Main-/Cross-/Plan-/Visual-ZIPs vor Extraktion SHA256-verifiziert, alle69JSONs vollständig rekursiv geprüft:65PASS,3Axe-Scanberichte und1Plan.975/975Units,0Fail/Skip; exakter geprüfterCheckoutSHA d6b2a14f. Alle drei PWA-Engines mit4strikttrueReadinessphasen, echter nativerAktivierung=activated, automatischemDokumentwechsel, explizitemReload,120Cachehashes,Offline undexaktemDatenerhalt bestanden. Kein Runtime-/SW-Bump; Anwendung v221/SW221 bytegleich.
+
+**Exakt weiter:** denselben laufenden Livejob regulär auswerten. Anschließend sein ZIP vor Extraktion SHA256-verifizieren, alle40Liveberichte sowie121veröffentlichteAsset-/SW-Hashes gegen exakteMainbytes,6Kerngruppen,18Axe-Scans undtatsächlicheLivebilder prüfen. GesamteReleasebelege separat remote sichern, erst dann PR231 DONE/LIVE_ACCEPTED dokumentieren. Keine weitere Implementierung/Integration undkeineblindenRetries.
+
+KonkreteFreigabe231 ist verwendet, keineÜbertragung. Wochenend-/Praxis-/UX-Priorität bleibt nach Abschluss maßgeblich, CI-RestOPEN/DEFERRED. AlleMasteranforderungen bewahrt; nurFLH05/FLH-PROJ01 bewusstPARKED. KeinezusätzlichenkostenpflichtigenWork-Credit-Pakete.
+
+---
+
 ## Verbindliche vollständige Restpaket-Priorisierung nach Roadmap-Abgleich 26.–30.10.2026 · 30.10.2026
 
 **Neueste Nutzerentscheidung/maßgeblicher gesamter Restumfang:** [Restpaket-Abgleich, Ownership und Nutzwertpriorisierung](MASTER_PRIORITAETEN_RESTAUDIT_2026-10-30.md). **Dieser neue Abschnitt übersteuert nur widersprechende historische Rang-/Delegations-/Statusangaben; sämtliche älteren konkreten Fach- und Sicherheitsanforderungen gelten weiter. Keine neue konkurrierende Roadmap und kein Produktcode-PR.**
