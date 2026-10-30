@@ -1,0 +1,383 @@
+{
+  "status": "BOUNDED_PRODUCTION_PROBES_PASS / REQUIRED_CI_PENDING / NOT_MERGED",
+  "pullRequest": 228,
+  "head": "484ceaf0ca80830202d4a646d366d66e587433d6",
+  "tree": "172e887b085acfb4dcf5675207713eda99c2201d",
+  "testmerge": "6c79d8c06f291e81b13eef66f1268bd3e7907045",
+  "baseMain": "ecf775f5c17ceb301be04f20e1be400567f45261",
+  "productionVersion": 221,
+  "diagnosticRun": 41067814937,
+  "jobs": [
+    {
+      "id": 124103777349,
+      "engine": "firefox",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 124103777602,
+      "engine": "webkit",
+      "result": "SUCCESS"
+    }
+  ],
+  "probes": [
+    {
+      "artifact": {
+        "id": 12983801465,
+        "name": "bounded-v221-pchain-webkit-6c79d8c06f291e81b13eef66f1268bd3e7907045",
+        "sha256": "5c9ca5d0a552203e4d032b60562b7b5c246c5b31bf7a77ed61c453b52b63c2e2",
+        "verifiedBeforeExtraction": true
+      },
+      "publishedWorkerSHA256": "7c80fe63f3a61f280acbb93aa648715a32d45960ecd74ed436da0005b677ff95",
+      "publishedWorkerEqualsMainCheckout": true,
+      "reportSHA256": "0994852b3678c03917ab04a7894c7c8b55b2a43f77dd9ede5ae740395b6dcfdf",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T14:01:11.737Z",
+        "scope": "Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration",
+        "engines": [
+          {
+            "engine": "webkit",
+            "version": "27.2",
+            "result": "PASS",
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T14:01:22.435Z",
+        "result": "PASS"
+      }
+    },
+    {
+      "artifact": {
+        "id": 12982778572,
+        "name": "bounded-v221-pchain-firefox-6c79d8c06f291e81b13eef66f1268bd3e7907045",
+        "sha256": "444da24b5cc8a52510da41b02b3063b7d778b6375f4879b78e11d606a81eb8f1",
+        "verifiedBeforeExtraction": true
+      },
+      "publishedWorkerSHA256": "7c80fe63f3a61f280acbb93aa648715a32d45960ecd74ed436da0005b677ff95",
+      "publishedWorkerEqualsMainCheckout": true,
+      "reportSHA256": "5a4a22f35f8b22c61c6e34a045b44de226ea9402589445bc273b42b854f109c5",
+      "report": {
+        "base": "https://foliolab.unperfekt.at/",
+        "startedAt": "2026-10-30T13:59:34.380Z",
+        "scope": "Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration",
+        "engines": [
+          {
+            "engine": "firefox",
+            "version": "157.0",
+            "result": "PASS",
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "finishedAt": "2026-10-30T13:59:37.060Z",
+        "result": "PASS"
+      }
+    }
+  ],
+  "comparison": {
+    "originalFailedLiveRun": 41059923497,
+    "originalFailedJob": 124082520863,
+    "originalFailure": "First Firefox app startup: 30s wait for IndexedDB active timed out before financial evidence checks.",
+    "boundedProbeOutcome": "Both original engine cases passed at unchanged assertions and timeout against unchanged SW221.",
+    "rootCause": "NOT_REPRODUCED / UNKNOWN. These positive probes do not explain the original failure and do not turn the failed full live pipeline green.",
+    "scope": "Test diagnostics and bounded probe workflow only; no runtime/application/financial/Service Worker bytes changed."
+  },
+  "requiredCI": {
+    "id": 41067814989,
+    "status": "RUNNING"
+  },
+  "next": "Complete required PR CI and evidence review. Separate concrete user approval is required before merging PR228; PR209 approval was consumed. A complete subsequent main/pages/live acceptance is still required for v221 LIVE_ACCEPTED."
+}
