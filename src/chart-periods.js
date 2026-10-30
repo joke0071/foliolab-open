@@ -42,6 +42,18 @@ export function renderChartPeriodButtons(kind,attribute,selected,values=null){
    (active?' class="selected"':'')+'>'+label+'</button>';
  }).join('');
 }
+/* Moves the 3 J / 5 J buttons of rendered wealth periods into a "Mehr" disclosure;
+   it stays open on wide screens (see app.js). Selection and availability stay on the buttons. */
+export function groupExtraWealthPeriods(html){
+ const extra=/<button type="button" data-(?:mini-)?range="(?:threeYears|fiveYears)"[^>]*>[^<]*<\/button>/g;
+ const moved=html.match(extra);
+ if(!moved)return html;
+ const rest=html.replace(extra,'');
+ const year=/<button[^>]*data-(?:mini-)?range="year"[^>]*>[^<]*<\/button>/.exec(rest);
+ if(!year)return html;
+ const close=year.index+year[0].length;
+ return rest.slice(0,close)+'<details class="period-more"><summary aria-label="Weitere Zeiträume (3 J, 5 J)" title="Weitere Zeiträume">Mehr</summary><span class="period-more-list">'+moved.join('')+'</span></details>'+rest.slice(close);
+}
 export function filterChartPeriod(points,kind,selected,now=Date.now()){
  const days=chartPeriodDays(kind,selected);
  if(days===null)return points;
