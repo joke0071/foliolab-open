@@ -1,3 +1,11 @@
+## Zusätzliches Work-Entlastungspaket: UI-M28-K01 TradingView-Codeaudit DONE · 30.10.2026
+
+**Remote gesichert:** [tatsächlich codebasierter K01-Entfernungs-/Legacy-/Testaudit](UI_M28_K01_TRADINGVIEW_ENTFERNUNG_CODEAUDIT_2026-10-30.md). Aktive TV-Fundstellen nicht nur in Positionsdetails/`app.js`, sondern auch in **Anlageassistent `asset-wizard.js`, Listing-Suche `security-discovery.js`, Referenz-Listing `reference-listings.js`, UI-/CSP-/CSS-/README- und Sicherheits-/Browser-Tests** verifiziert. Besonderes Risiko: Entfernt man nur das sichtbare Editorfeld, kann `openPosition` über `FormData` beim bloßen Bearbeiten `tradingViewSymbol` stillschweigend leeren; altes Feld in `model.js` für Backup-/Portfolio-Roundtrip **passiv erhalten**, neue aktive Nutzung entfernen. Bei `reference-listings.js` alte zusätzliche Ablehnungsgründe niemals durch ungeprüfte Aufweichung von ISIN-/MIC-/Währungs-/Provider-Identitätskontrollen ersetzen. CSP-TV-Host entfernen, OAuth-`frame-src` erhalten. Aktuelle positive TV-Tests in **stärkere negative „kein TV“** plus Legacy-/Kurs-CSV-/Sicherheitsregressionen überführen statt Testverlust.
+
+**Status:** K01 **CODEAUDIT_DONE / IMPLEMENTATION_OPEN**, K02–K04 bleiben OPEN; keine App-/SW-Änderung, kein PR, Merge, CI-Lauf oder Deployment durch diese Vorprüfung, keine Work-Credit-Nutzung. Der unmittelbar vorherige [v222-Copilot-Integrationsvoraudit](COPILOT_V222_INTEGRATIONS_VORAUDIT_2026-10-30.md) bleibt ebenfalls DONE. Bestehender v222-Release41126514518 hat Vorrang; keine parallel konkurrierenden Entwicklungsschreibvorgänge, keine unautorisierte Freigabe. Nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## P1 selbstständig übernommen: Copilot-v222-Integrationsvoraudit abgeschlossen · 30.10.2026
 
 **Fertig und remote gesichert:** [Diff-/Datei-/Abhängigkeits- und Regressionsaudit aller acht offenen Copilot-Drafts](COPILOT_V222_INTEGRATIONS_VORAUDIT_2026-10-30.md). Auf Basis von Main `8353a1cab3c528a389d2bd7893df819f3c284225`/PR232, tatsächlichen aktuellen acht PR-HEADs und vollständigen Unified-Diffs: **#213/#214/#218/#219/#222/#223/#225/#227** überprüft; keine neue Produkt-/SW-Änderung, keine CI-Neuausführung, kein Merge/Deploy, keine Work-Credits verbraucht.
