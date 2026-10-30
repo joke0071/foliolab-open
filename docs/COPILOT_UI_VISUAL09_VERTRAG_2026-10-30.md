@@ -1,3 +1,25 @@
+## Geliefert: UI-VISUAL09 / Draft227 · 30.10.2026
+
+**COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**, HEAD `485620239228e2770dcf74d24d8423565edea505`, Basis main537bddc3. Ausschließlich styles.css (19 zusätzliche Zeilen) und24 Bilder; offen/ungemergt, kein SW-Bump. Lieferclaims und fehlende Prüfungen unabhängig durch Work auf dem endgültigen Integrationstree verifizieren. CSS-Append-Konflikte und gemeinsame Touchhöhen mit214 tatsächlich prüfen. Laufende v220-Abnahme/PR220 hat unverändert Vorrang; keine parallele Integration. UI-VISUAL06 und übrige Fachaufgaben bleiben bei Work, nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+### Vollständiger gesicherter Copilot-Lieferbericht
+
+## UI-VISUAL09 (Issue #226)
+Nur CSS (`styles.css`, angehängter Block, Scope `#positionsPage`/`#bookingsPage`). Kein JS/HTML, keine Tests, kein SW-Bump.
+
+**Änderungen:** 44-px-Mindesthöhen für Selects (Sortierung, Vorgang, Archiv, Jahr, Konto), „Listings auflösen“, `.btn.light` und die Akkordeon-Summaries (inkl. verschachteltes „advanced-apis“ in Erträge); Umbruch langer Bezeichnungen; sichtbarer Fokus; kompaktere Abstände auf ≤480 px.
+
+**Vorher/Nachher:** `docs/ui-visual09/` (320/390/1440, Positionen/Buchungen, Standard und aktive Filter + offene Akkordeons). Vorher: Ziele 36–43 px; nachher keine Ziele <44 px, kein horizontaler Überlauf bei 320/360/390/412/430/768/1024/1440.
+
+**Tests:** `npm test` 962/962; 25 relevante Chromium-Browsertests (Buchungen, Positionen, Filter, Qualität, Accessibility, Verlauf, Referenzen) grün.
+
+**Kollisionen:** Merge-Test gegen #208, #219, #223 sauber; #209, #213, #214, #218, #222, #225 nur triviale Append-am-Dateiende-Konflikte in `styles.css`. #214 setzt teils gleiche Mindesthöhen (konsistent).
+
+**Offen:** Firefox/WebKit, echte Touch-Geräte, 200 %-Schrift nur stichprobenartig; CI-Gate „Service-Worker-Revision“ schlägt bei CSS-only erwartungsgemäß an (Work). Transfer/Ertrag-Akkordeons nur mit synthetischen Daten geprüft.
+
+
+---
+
 # UI-VISUAL09 – gesicherter Copilot-Vertrag · 30.10.2026
 
 Quelle: [Issue226](https://github.com/joke0071/foliolab-open/issues/226). Status bei Übernahme: offen, ausdrücklich delegiert; separater Draft noch nicht vorhanden. PR220 und die Releasepriorität bleiben unverändert. Nur der benannte visuelle Teil ist delegiert; sämtliche Fachlogik und übrige Aufgaben bleiben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED.

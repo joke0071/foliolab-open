@@ -1,3 +1,17 @@
+## UI-VISUAL09 / Draft227 geliefert · v220-Abnahme unverändert zuerst · 30.10.2026
+
+**[PR227](https://github.com/joke0071/foliolab-open/pull/227): COPILOT_DELIVERED / WORK_INTEGRATION_PENDING.** HEAD `485620239228e2770dcf74d24d8423565edea505`, Basis Main `537bddc3202dec8025626e8fe8b00797d418d0f7`; offen, Draft, nicht gemergt/deployt. Tatsächliche Dateiliste geprüft: ausschließlich19 zusätzliche Zeilen in styles.css sowie24 Vorher-/Nachherbilder unter docs/ui-visual09/. Kein HTML, JavaScript, Test oder SW-Bump. Vollständiger Lieferbericht und ursprünglicher Vertrag im [UI-VISUAL09-Vertrag](COPILOT_UI_VISUAL09_VERTRAG_2026-10-30.md) erhalten.
+
+Scope ausschließlich #positionsPage/#bookingsPage: benannte Such-/Filter-/Sortier-/Aktionsleisten und visuelle Transfer-/Ertrags-/Abzugsakkordeons. Copilot meldet962Units,25 bestandene Chromium-Tests,320–1440px ohne Überlauf und Mindesthöhen44px. Dies sind Lieferclaims, keine vollständige Work-Abnahme. Offen: Firefox/WebKit, reale Touch-Geräte, vollständige200%-Textprüfung, fachliche Transfer-/Ertragsszenarien und abschließende GitHub-Pflichtpipeline. Aktuell Pflicht41039105185 läuft, Wallet41039105163 SUCCESS; keine grüne Gesamtpipeline behaupten.
+
+Bekannte CSS-Append-Konflikte mit209/213/214/218/222/225 und teilweise gemeinsame Mindesthöhen mit214: bei späterer Einzelintegration beide Blöcke erhalten, tatsächliche Kaskade und Funktion prüfen. Ein erfolgreicher Textmerge ersetzt keine volle Regression. Alle bisherigen Copilot-Drafts,208 mit eigenen Positionszeiträumen und QA223 bleiben erhalten; keine doppelte Entwicklung.
+
+**Aktuelle Priorität unverändert:** PR220 bereits nach ausdrücklicher Freigabe gemergt, Main537bddc3 mit exakt geprüftem Tree33faa5e2. Main-/Pages-/Live41038554426 läuft. Cross1 SUCCESS, Main undCross2 nochlaufend. **MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING**, kein LIVE_ACCEPTED vor vollständiger tatsächlicher Pipeline. Die v220-Abnahme zuerst regulär abschließen; keine parallele Integration von227 oder anderen Lieferungen. PR220-Freigabe verbraucht, keine Freigabe für weitere PRs ableiten.
+
+Nach sicherem Liveabschluss bestehende Einzelintegration nach aktueller Masterpriorität vorbereiten, vollständige Pflicht-/Browser-/A11y-/Finanz-/Speichergates und passende SW-Version im tatsächlichen Kontext; vor jedem Merge eigene konkrete Freigabe. UI-VISUAL06/#217 und sämtliche übrigen nicht delegierten UI-/Fach-/Masteraufgaben bleiben bei Work. **Nur FLH05 und FLH-PROJ01 bewusst PARKED.** Alle Anforderungen und fachlichen Grenzen erhalten. Dieser Schritt ist ausschließlich Dokumentation; keine Produktänderungen, Tests, Neustarts oder Unterbrechungen.
+
+---
+
 ## UI-VISUAL09 / Issue226 ausdrücklich delegiert · 30.10.2026
 
 **[Issue226](https://github.com/joke0071/foliolab-open/issues/226): COPILOT_DELEGATED / DRAFT_PENDING / WORK_INTEGRATION_PENDING.** Der vollständige aktuelle [Vertrag](COPILOT_UI_VISUAL09_VERTRAG_2026-10-30.md) ist dauerhaft gesichert. Delegiert sind ausschließlich die konkreten visuellen Bereiche: Such-, Filter-, Sortier- und Aktionsleisten in Positionen; Such-, Filter- und Aktionsleisten in Buchungen; Darstellung der vorhandenen Akkordeons „Interne Transfers“ und „Erträge und Abzüge“ einschließlich geöffneter Inhalte. Copilot liefert einen separaten Draft ohne Merge/Deployment. Keine parallele Work-Implementierung dieser visuellen Teile.
