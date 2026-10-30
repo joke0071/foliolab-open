@@ -1455,3 +1455,75 @@
 
 /* Keep connection and API save actions aligned with the shared form inset. */
 #morePage #optionalConnections>button[type="submit"]{margin-left:2px;margin-right:2px;padding-left:12px;padding-right:12px}
+
+
+/* UI-VISUAL03: compact booking rows and position cards. Presentation only; markup, data and handlers unchanged. */
+#bookingsPage .field input,#bookingsPage .field select{min-height:44px}
+#bookingsPage .btn,#positionsPage .btn{min-height:44px}
+#bookingsPage details>summary,#positionsPage details>summary{min-height:44px;display:flex;align-items:center;box-sizing:border-box}
+.booking-management-row{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;align-items:start;padding:6px 0}
+.booking-management-row>.booking-row-tools{grid-column:2;grid-row:1;padding:0;min-height:0;flex-direction:column;align-items:flex-end;justify-content:flex-start;flex-wrap:nowrap}
+.booking-management-row>.booking-row-tools .position-row-actions{flex-direction:column;gap:4px;margin:0}
+.booking-management-row>.booking-compact{grid-column:1;grid-row:1;padding:6px 0 0;border-bottom:0}
+.booking-main{font-size:13px;line-height:1.4;row-gap:2px}
+.booking-main>time{color:#4d6756;font-size:12px;font-variant-numeric:tabular-nums}
+.booking-main>strong{font-weight:700}
+.booking-main>span,.booking-origin{color:#4d6756}
+.booking-origin{font-size:11px;line-height:1.4}
+.booking-meta{margin-top:2px}
+.booking-meta summary{font-size:12px;color:#4d6756;font-weight:600;padding:0}
+@media(max-width:767px){
+ .booking-main{grid-template-columns:minmax(0,1fr) auto}
+ .booking-main>strong:first-of-type{grid-column:1;grid-row:1}
+ .booking-main>strong:last-of-type{grid-column:2;grid-row:1;text-align:right}
+ .booking-main>time{grid-column:1;grid-row:2}
+ .booking-main>span:nth-of-type(2){grid-column:2;grid-row:2;text-align:right}
+ .booking-main>span:nth-of-type(1){grid-column:1/-1;grid-row:3}
+ .booking-origin{grid-column:1/-1;grid-row:4}
+ .booking-management-row:has(.selection-check){grid-template-columns:minmax(0,1fr)}
+ .booking-management-row:has(.selection-check)>.booking-row-tools{grid-column:1;grid-row:1;flex-direction:row;justify-content:space-between;align-items:center}
+ .booking-management-row:has(.selection-check)>.booking-row-tools .position-row-actions{flex-direction:row}
+ .booking-management-row:has(.selection-check)>.booking-compact{grid-row:2}
+}
+@media(min-width:768px){
+ .booking-management-row>.booking-row-tools{flex-direction:row;align-items:center}
+ .booking-management-row>.booking-row-tools .position-row-actions{flex-direction:row}
+}
+#positionList .position-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:8px;align-items:start}
+#positionList .position-entry>*{grid-column:1/-1;min-width:0}
+#positionList .position-entry>.position-card-tools{grid-column:2;grid-row:1;padding:6px 0 0;min-height:0;flex-direction:column;align-items:flex-end;flex-wrap:nowrap}
+#positionList .position-entry>.position-card-tools .position-row-actions{flex-direction:column;gap:4px;margin:0}
+#positionList .position-entry>.holding-row{grid-column:1;grid-row:1;padding-top:8px}
+#positionList .position-entry:has(.selection-check){grid-template-columns:minmax(0,1fr)}
+#positionList .position-entry:has(.selection-check)>.position-card-tools{grid-column:1;grid-row:1;flex-direction:row;align-items:center;padding:4px 12px}
+#positionList .position-entry:has(.selection-check)>.position-card-tools .position-row-actions{flex-direction:row}
+#positionList .position-entry:has(.selection-check)>.holding-row{grid-row:2}
+@media(min-width:768px){
+ #positionList .position-entry>.position-card-tools,#positionList .position-entry:has(.selection-check)>.position-card-tools{flex-direction:row;padding:8px 0 0}
+ #positionList .position-entry>.position-card-tools .position-row-actions{flex-direction:row}
+}
+.provider-position-detail{padding:10px 0 14px;background:transparent}
+.position-detail-source,.position-detail-note{margin-top:8px;font-size:11px}
+.position-booking-history{margin-top:10px;padding-top:0}
+.position-booking-history>summary{min-height:44px;font-size:12px;padding:0 2px}
+#positionList .holding-name,.provider-position-detail .position-detail-stat strong{overflow-wrap:anywhere}
+
+
+/* UI-VISUAL09: Such-, Filter- und Aktionsflächen Positionen/Buchungen (nur Darstellung) */
+#positionsPage .toolbar,#bookingsPage .booking-filter-tools{gap:10px}
+#positionsPage .position-search-tools,#bookingsPage .booking-filter-tools{align-items:end}
+#positionsPage select,#bookingsPage .booking-filter-tools select,#bookingsPage #bookingTransferDetails select,#bookingsPage #bookingIncomeDetails select{min-height:44px;max-width:100%;text-overflow:ellipsis}
+#positionsPage #resolveListings,#bookingsPage .btn.light,#bookingsPage #bookingIncomeDetails .btn,#bookingsPage #bookingTransferDetails .btn{min-height:44px;min-width:44px;overflow-wrap:anywhere;white-space:normal;line-height:1.25}
+#positionsPage details>summary,#bookingsPage #bookingTransferDetails>summary,#bookingsPage #bookingIncomeDetails>summary{min-height:44px;box-sizing:border-box;align-items:center;gap:8px;overflow-wrap:anywhere}
+#bookingsPage #bookingTransferDetails>summary,#bookingsPage #bookingIncomeDetails>summary{padding-block:10px}
+#bookingsPage #bookingTransferDetails:focus-within,#bookingsPage #bookingIncomeDetails:focus-within{border-color:#2d6946}
+#bookingsPage #bookingTransferDetails>summary:focus-visible,#bookingsPage #bookingIncomeDetails>summary:focus-visible,#positionsPage details>summary:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
+#bookingsPage #bookingIncomeDetails .field,#bookingsPage #bookingTransferDetails .field{min-width:0}
+#bookingsPage #bookingIncomeDetails select,#bookingsPage #bookingTransferDetails select{width:100%}
+#positionsPage #positionSearch,#bookingsPage #bookingSearch{min-width:0;text-overflow:ellipsis}
+@media (max-width:480px){
+#positionsPage .filter-list{gap:8px}
+#bookingsPage .booking-filter-tools>*{min-width:0}
+#bookingsPage .panel-head-actions .btn{flex:1 1 140px}
+}
+#bookingsPage #bookingIncomeDetails details>summary,#bookingsPage #bookingTransferDetails details>summary{display:flex;align-items:center;min-height:44px;box-sizing:border-box;overflow-wrap:anywhere}
