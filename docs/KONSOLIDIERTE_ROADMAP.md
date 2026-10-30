@@ -1,3 +1,15 @@
+## SW226 deployed; beabsichtigte Dialogreferenzen kontrolliert erneuert · 31.10.2026
+
+Main 3b03f4d98b84bb118d7c16be1b9dfab0c553922a / SW226 in Run41143056998: vollständige CI SUCCESS und Pages DEPLOYED; Live-Chromium-Kernprüfung erfolgreich, Produktions-Firefox/WebKit noch laufend. **DEPLOYED / LIVE_ACCEPTANCE_PENDING**, letzte vollständige Rückfallbasis v224.
+
+#219/#225-CI fand erwartete Pixeländerungen durch die neuen 44px-/Umbruch-/Footer-Styles (nicht als bestandene Altbilder verschwiegen). Acht konkret betroffene synthetische Dialogbilder aus dem unveränderlichen Runner-Artefakt13019302693/Run41143142653 wurden einzeln visuell geprüft; ZIP-SHA256 8480a4a2d1d9afd40bd3e628561ab2631a56d7132170a068c0e283d73b85dd90 und CRC bestätigt. Nur diese acht Referenzen in tests/dialog-visual-pixel-baselines.json aktualisiert; zwölf andere Einträge bytegleich, 20 Fälle, exakte Abmessungen, 16x16-RGB565, 42-Kanal-/12-Pixel-Schwellen unverändert. Lokaler Vergleich gegen alle 20 echten Runnerbilder danach PASS. Provenienz ist im Baseline-JSON festgehalten; kein automatisches Baseline-Regenerieren im Testlauf und keine Schwellenlockerung.
+
+Aktuelle abhängige HEADs mit derselben geprüften Referenzkorrektur (alte fehlgeschlagene Läufe ausdrücklich superseded, neue Browsergates noch erforderlich): #219 4bda7bed14cbb7cd88c8563ebb5ebfd5acc4cb60 / SW227; #225 e0bd767ffe35888f89257e479f62094dbece48e0 / SW228; #235 3e0401d536b91d32dd917acfcfc4cf0d746a8bc8 / SW229; #236 684bc4b5d463a1f70ba9d50850c133fd81d7a8bb / SW230; #237 90d8278ae9b8c78aadcb9a1728318c0f776aeda6 / SW230. Neue Voll-CIs: 41144284551, 41144292852, 41144297077, 41144302361, 41144308841. Wallet-/Node-Checks dieser HEADs bereits SUCCESS. App-/Finanzlogik seit lokalem Gesamt-PASS985/985 unverändert; Änderung betrifft nur überprüfte Bildreferenzen und nachvollziehbare Commit-Abhängigkeiten.
+
+Per-PR-Concurrency beendet überholte Kandidatenläufe jetzt automatisch; der aktive Main-/Live-Release bleibt davon getrennt. Bestehende Freigabe aktiv, weitere ausreichend grüne Kandidaten nach v226-Liveabnahme übernehmen; keine neuen kostenpflichtigen Credits. Nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## Alle unmittelbaren UI-/Work-Kandidaten konkret integriert · 31.10.2026
 
 #213/K04 gemergt a6c7a56fe3a2cb592d09e0de82069a604a40fc6a, danach #227 inklusive #214 als 3b03f4d98b84bb118d7c16be1b9dfab0c553922a. #214 auf GitHub automatisch MERGED bestätigt. Main SW226 / Run41143056998 RELEASE_PENDING; SW225-Zwischendeploy durch normale Concurrency ersetzt. **Letzte vollständig akzeptierte Produktion/Rückfallbasis weiterhin v224**, Beleg release-evidence/v224-live-acceptance.json. Keine v226-Liveabnahme vorweggenommen.
