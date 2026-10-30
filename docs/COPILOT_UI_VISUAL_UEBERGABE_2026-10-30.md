@@ -1,3 +1,17 @@
+## UI-VISUAL08 ausdrücklich an Copilot delegiert · 30.10.2026
+
+**[Issue224](https://github.com/joke0071/foliolab-open/issues/224): COPILOT_DELEGATED / DRAFT_PENDING / WORK_INTEGRATION_PENDING.** Verbindlicher Nutzerauftrag und vollständiger aktueller Issue-Vertrag sind im [UI-VISUAL08-Vertrag](COPILOT_UI_VISUAL08_VERTRAG_2026-10-30.md) dauerhaft gesichert. Ausschließlich visuelle Optimierung der drei Bereiche unter dem Diagramm im Reiter Verlauf: Datenabdeckung & Abgleich; Rendite & Geldflüsse; historische Referenzwerte einschließlich visueller Verwaltungsoberfläche, jeweils auch geöffnet. Copilot liefert einen separaten Draft ohne Merge/Deployment. Work implementiert diesen klar abgegrenzten visuellen Teil nicht parallel.
+
+**Bei Work verbleiben:** fachliche Referenzwertverwaltung, Lösch-/Archivierungs-/Undo-/Auswahllogik, Finanz-/Rendite-/Geldflussberechnungen, Diagrammverhalten und sämtliche anderen nicht ausdrücklich delegierten UI-Aufgaben. UI-VISUAL06/#217 weiterhin WORK-OWNED / OPEN. Nur FLH05 und FLH-PROJ01 bewusst PARKED.
+
+Kollisionsgrenze: CSS eng auf #historyPage und die drei benannten Sektionen begrenzen; keine globalen performance-details/btn/field-Regeln, keine Zeitraum-/chart-period-/history-controls-/Diagrammänderung. Keine Fachtexte, Daten, Warnsemantik, IDB/CAS, PWA oder SW-Version ändern. Unvermeidbare minimale DOM-Anpassung separat begründen; bei neuem Fach-PR im selben DOM-Bereich betroffenen Teil auslassen und Konflikt melden. Vollständige Issue-Nachweise: gefüllt/leer/Fehler, offen/geschlossen, lange Werte/Quellen, bis200%Text,320/360/390/412/430/768/1024/1440,44×44, Tastatur/Fokus/Axe und verfügbare Browser; ungeprüfte Engines/Hardware ausdrücklich kennzeichnen.
+
+Spätere Work-Integration nur nach aktuellem Main-/Branch-/CSS-/Funktionsvergleich, vollständigen Browser-/A11y-/Finanz-/Speichergates und eigener konkreter Nutzerfreigabe. Sechs frühere visuelle Drafts209/213/214/218/219/222,208 mit eigenen Positionszeiträumen und QA-Fix223 bleiben erhalten; keine doppelte Entwicklung oder Sammelintegration. Bisherige QA-MASTER01-Befunde und Integrationsabhängigkeiten unverändert.
+
+**PR220 unverändert:** HEAD520b3ff7, TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED; seine eigene ausdrückliche Mergefreigabe bleibt die aktuelle nächste Releasegrenze. Mainaf834705/v220 deployed, vollständige Liveabnahme weiterhinBLOCKED bis freigegebenem Folge-Release. Keine Produktänderung, Tests, neue CI oder Integration durch diesen Dokumentationscheckpoint; laufende223-CI unverändert. Danach bestehende Masterfortsetzung, keine neue Roadmap/Umpriorisierung. Historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## Finale Lieferung UI-VISUAL07 und QA-MASTER01 · 30.10.2026
 
 UI-VISUAL07/[Draft222](https://github.com/joke0071/foliolab-open/pull/222), HEADd04018a8: **COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**. Ausschließlich Übersicht-CSS plus Vorher-/Nachherbilder. Copilot962Units/320–1440/keinÜberlauf/≥44pxLegendenhöhe;Firefox/WebKit/volleWork-Prüfungoffen. GitHubPflicht41033356715FAILamSW-Gate,beideCrossjobsSUCCESS.
