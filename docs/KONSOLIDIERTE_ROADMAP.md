@@ -1,3 +1,20 @@
+## Alle unmittelbaren UI-/Work-Kandidaten konkret integriert · 31.10.2026
+
+#213/K04 gemergt a6c7a56fe3a2cb592d09e0de82069a604a40fc6a, danach #227 inklusive #214 als 3b03f4d98b84bb118d7c16be1b9dfab0c553922a. #214 auf GitHub automatisch MERGED bestätigt. Main SW226 / Run41143056998 RELEASE_PENDING; SW225-Zwischendeploy durch normale Concurrency ersetzt. **Letzte vollständig akzeptierte Produktion/Rückfallbasis weiterhin v224**, Beleg release-evidence/v224-live-acceptance.json. Keine v226-Liveabnahme vorweggenommen.
+
+Konkrete nachvollziehbare Folgeintegrationen (keine Doppelimplementierung):
+- #219 enthält #218-Originalcommits: Navigation + Wizard/Walletdialog-CSS, HEAD a8a1e7e85bdbd61ab1f4d3d073f33b98e36be0af, SW227; Voll-CI41143142653 läuft.
+- #225 enthält #222-Originalcommits: Übersicht + Verlauf/Referenz-CSS, HEAD c43cca9f1d0e6451b50f3aeee3cd74fcf82a85ca, SW228 auf #219; Voll-CI41143222929 läuft.
+- #235 K01 auf vorgenannter UI-Folge transplantiert, sämtliche 22 Dateipatches konfliktfrei mit exakt passendem Kontext angewendet, HEAD 50a0bd084bf643f1f2c9cd60d92bd2205e912b5e, SW229; Voll-CI41143505350 läuft. Aktive TV-UI/Frame/CSP/Discovery entfernt, native CSV erhalten; passiv bleiben nur model.js, restriktiver reference-listings-Guard und explizites Weiterreichen beim Editieren. Voriger CI-Fail nach CSV-Testfix war ausschließlich SW224-Kollision mit aktuellem Main, nicht umgangen.
+- #236 vorhandenes Onboarding-/Leerzustands-CSS + vorhandene Kontrollsuite übernommen, Recovery-/Load-Failure-Logik unverändert, HEAD 33ae1019d884f226144948140e1d53276685c04f, SW230; Voll-CI41143571679 anstehend/laufend.
+- #237 ursprüngliches Browsercache-Paket plus gezielte explizite SW-Aktivierungs-/Dokumentkontroll-Readiness für den wiederholt flakenden Auswahltest; kein Test entfernt. Mit per-PR-Concurrency aus #227 zusammengeführt, HEAD 1d9fe9eee6d33c7c3ceea1d45d371f71b18fecc8, unverändert SW230; Voll-CI41143633472 anstehend/laufend. Kein Cache-Gewinn behauptet, bevor gemessen.
+
+**Exakter gemeinsam integrierter Kandidat 1d9fe9eee6d33c7c3ceea1d45d371f71b18fecc8 lokal verifiziert: 985/985 Unit-Tests, 0 Fehler/Skip, alle JS-/Worker-Syntaxchecks und git diff --check PASS.** Davon 14 CI-Policy-/Manifest-/Kontrakttests zuvor gezielt und 4 explizite Async-Readiness-Tests PASS. GitHub-Browser-/Releasegates bleiben vor Übernahme erforderlich. Alle aktuellen Kandidaten enthalten die geprüften Vorgänger, keine blind zurückgerollten More-/Verwalten-/Kursperiodenregeln. Quellen und Bilder bleiben erhalten. Neue Releasefolge erst nach tatsächlicher v226-Liveabnahme und ausreichenden Nachfolge-Gates.
+
+Nutzer-Nachtrag #235/#236/#237 vollständig berücksichtigt; keine kostenpflichtigen Work-Credits, kein neuer Implementierungsauftrag an Dritte. Nur FLH05/FLH-PROJ01 PARKED. Historischen Checkpointbranch niemals insgesamt nach Main mergen.
+
+---
+
 ## v224/SW224 LIVE_ACCEPTED · 31.10.2026
 
 PR #233 (PERF01), #234 (K02-Regression) und #223 (Donut-A11y) sind tatsächlich veröffentlicht und vollständig produktiv abgenommen. Main 02631aba230fb49bbed47e47b6888c3da3f8efe8; Run41140341663 komplett SUCCESS. 984/984 Units, Syntax, Chromium, drei Cross-Shards, Deploy und vollständige Liveprüfung Chromium/Firefox/WebKit PASS. Live-Artefakt13019201722 SHA256 24af6e32bcd5ddad7e43a7bf6e5bc3c9469e05fcaed1b9ba5020b49c9d9aef91 / ZIP-CRC PASS; Bericht commit-/SW-genau, 121 veröffentlichte Asset-Hashes, 6 Kernprüfgruppen, 18 Axe-Scans, 0 Fehler. Eigene direkte Live-Dateihashes ebenfalls exakt. [Dauerhafter vollständiger Releasebeleg](release-evidence/v224-live-acceptance.json). v224 ist neue akzeptierte Rückfallbasis; Daten-/Schema-Downgrade ausdrücklich ausgeschlossen.
