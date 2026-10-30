@@ -1,5 +1,5 @@
 {
-  "status": "MERGED / RELEASE_PENDING / NOT_YET_LIVE_ACCEPTED",
+  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
   "pr": 205,
   "approvedHead": "03ee0d329096aca0c7d4bb2ad0da6f83838acb0c",
   "release": "cbb9e8e9fa58c768c128f304840269313aeae6ba",
@@ -8,5 +8,38 @@
   "run": 41012601300,
   "userAuthorization": "Explicit Freigabe after concrete PR205 HEAD03ee0d32 merge/deployment question; applies only to PR205.",
   "lastAcceptedProduction": "v217/SW217",
-  "next": "Complete Main/Pages/Live acceptance and evidence. Then existing UI-TEXT02/3J. No parallel implementation."
+  "next": "Complete Main/Pages/Live acceptance and evidence. Then existing UI-TEXT02/3J. No parallel implementation.",
+  "attempt": 1,
+  "units": {
+    "pass": 957,
+    "fail": 0,
+    "skip": 0
+  },
+  "jobs": {
+    "test": 123921615311,
+    "cross1": 123921614963,
+    "cross2": 123921615279,
+    "deploy": 123924593466,
+    "live": 123924963768
+  },
+  "artifactsVerifiedBeforeExtraction": [
+    {
+      "id": 12958780871,
+      "name": "cross-engine-gates-cbb9e8e9fa58c768c128f304840269313aeae6ba-2",
+      "sha256": "ee5e737cc211b563678261665d884127a2e23b9facb672cc81f5e4e50db35632",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12958367237,
+      "name": "cross-engine-gates-cbb9e8e9fa58c768c128f304840269313aeae6ba-1",
+      "sha256": "e376ca2e021b76d0224320bf6d4cba513a3f16696be337639002fd87009d62c3",
+      "verifiedBeforeExtraction": true
+    },
+    {
+      "id": 12958503106,
+      "name": "release-gates-cbb9e8e9fa58c768c128f304840269313aeae6ba",
+      "sha256": "b7dd324887919dcf13874a576c19662f452c31c5e6cba92eefda5a5bd473b6b0",
+      "verifiedBeforeExtraction": true
+    }
+  ]
 }

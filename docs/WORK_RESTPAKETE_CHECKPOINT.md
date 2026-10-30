@@ -1,3 +1,11 @@
+## v218 veröffentlicht · Main-Gates SUCCESS · Live-Abnahme läuft · 30.10.2026
+
+Freigegebener PR205/maincbb9e8e9fa58c768c128f304840269313aeae6ba/Tree46b8adf6:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit und Pages SUCCESS. Main41012601300/Deploy123924593466 erfolgreich; **v218/SW218 veröffentlicht, vollständige Live-Abnahme PENDING**. Livejob123924963768 prüft tatsächliche Produktion; kein LIVE_ACCEPTED vorweggenommen.
+
+Drei tatsächliche Main-/Cross-ZIPs vor Extraktion SHA256-verifiziert, [laufender Releasebeleg](release-evidence/ui-text01-facts-v218-release.json) mit exaktenHashes/Jobs gesichert. Bislang kein fehlgeschlagener oder wiederholter Job fürv218. **Weiter:** vollständige Live-/Asset-/SW-/Report-/Bildabnahme abschließen und dann dauerhaft DONE/LIVE_ACCEPTED sichern. Erst danach UI-TEXT02/3J. Konkrete PR205-Freigabe weiterhin gültig; keine erneute Freigabe für den unveränderten Abschluss nötig. Keine parallele Produktimplementierung. Vollständiger Master und PARKED-Pakete erhalten.
+
+---
+
 ## PR205 freigegeben und kontrolliert gemergt · v218 RELEASE_PENDING · 30.10.2026
 
 Nutzer hat nach konkreter PR205/HEAD03ee0d32-Releasefrage ausdrücklich **„Freigabe“** erteilt. Vor Merge mainc6a07402, PR-HEAD03ee0d329096aca0c7d4bb2ad0da6f83838acb0c, Testmerged0322e2d/Tree46b8adf6 sowie Pflicht41011181867 und Wallet41011181874 SUCCESS erneut verifiziert; keine aktiven Actions. Kontrollierter Merge mit expected_head_sha: **maincbb9e8e9fa58c768c128f304840269313aeae6ba**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6**, exakt identisch mit geprüftem Kandidaten.
