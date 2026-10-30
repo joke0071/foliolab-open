@@ -88,5 +88,33 @@ try{
    assert.ok(r.outer<=width+1,'horizontal overflow '+width+': '+JSON.stringify(r));
    assert.ok(r.p.every(v=>v.left>=v.cardLeft-1&&v.right<=v.cardRight+1),'drilldown escapes card '+width+': '+JSON.stringify(r));
  }
- console.log('POSITION DRILLDOWN: real price chart, keyboard, periods, empty market, safe snapshot, responsive 320–1440px PASS');
+ // Reuse the real renderer and canonical missing-price reproduction. This
+ // isolated view must not write a portfolio or trigger a quote request.
+ const storedBefore=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
+ await page.evaluate(async()=>{
+  const {positionDetailMarkup}=await import('/src/position-detail-ui.js');
+  const {blankModel,createProvider,createAccount,createPosition,escapeHTML,money,valueEUR}=await import('/src/model.js');
+  const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic broker'}));
+  m.accounts.push(createAccount({id:'a',providerId:'p',name:'Synthetic depot',type:'securities'},m));
+  const missing=createPosition({id:'missing',providerId:'p',accountId:'a',name:'Missing quote',kind:'etf',quantity:1},m);
+  const zero={...missing,id:'zero',quoteSource:'Manuell'};
+  m.positions.push(missing,zero);
+  const panel=document.createElement('section');panel.id='quote-display-regression';panel.className='panel';
+  for(const p of m.positions){
+   const detail=document.createElement('div');detail.dataset.quoteCase=p.id;
+   detail.innerHTML=positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});panel.append(detail);
+  }
+  document.querySelector('#providerOverview').replaceChildren(panel);
+ });
+ for(const width of [320,360,390,430,768,1024,1440]){
+  await page.setViewportSize({width,height:850});
+  const probe=page.locator('#quote-display-regression');
+  assert.equal(await probe.locator('[data-quote-case="missing"] .position-detail-stat').nth(1).locator('strong').innerText(),'Nicht verfügbar');
+  assert.equal(await probe.locator('[data-quote-case="missing"] .position-detail-source').innerText(),'Kursquelle: Unbekannt');
+  assert.match(await probe.locator('[data-quote-case="zero"] .position-detail-stat').nth(1).locator('strong').innerText(),/0,00/);
+  assert.equal(await probe.locator('[data-quote-case="zero"] .position-detail-source').innerText(),'Kursquelle: Manuell');
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'quote display overflow '+width);
+ }
+ assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),storedBefore,'quote display preserves stored portfolio');
+ console.log('POSITION DRILLDOWN: real price chart, keyboard, periods, empty market, safe snapshot, honest missing/zero quotes, responsive 320–1440px PASS');
 }finally{await browser.close();}
