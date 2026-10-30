@@ -1,3 +1,9 @@
+## PERF01 #233 – drei Cross-Shards erfolgreich, Zusatz-Differenzial-QA 400 Modelle · 30.10.2026
+
+[Permanent gesicherter PR233-QA-Beleg](PERF01_PR233_DIFFERENZQA_2026-10-30.md): 400 synthetische Fälle × Projektions-/Auto-/Teilportfolio-/Beobachtungs-Vergleich = **1600 exakt identische Ergebnisvergleiche**, 7449 Stichtagsdubletten, 80 Kurslücken, 0 Datenmutationen. Drei Cross-Engine-Shards im GitHub-[Lauf41134431156](https://github.com/joke0071/foliolab-open/actions/runs/41134431156) **SUCCESS**, ZIP-Prüfsummen+CRC und 37 JSON-Berichte überprüft; Wallet-CI SUCCESS. **Haupttest noch laufend**: PR233 bleibt **DRAFT / NOT_MERGED / NOT_DEPLOYED**, v222/SW222 unverändert LIVE_ACCEPTED. 400 Vergleichsmodelle sind kein Ersatz für echte IDB-Startperformance, tatsächliche Browser-Interaktivität und Wochenendtest. Keine CI/Gate-Abschwächung und keine automatische Freigabe.
+
+---
+
 ## PERF01 P1 – isolierter echter Draft-Kandidat vorhanden: #233 · 30.10.2026
 
 **Codefortschritt:** [PR233 – lokaler Datumsindex für historischen Stichtagsabgleich](https://github.com/joke0071/foliolab-open/pull/233), Kandidaten-HEAD `4674c8a76f35d5385c01a4cd897663b0ba6e7b7a`, 4 Dateien (pure Historienprojektion + 3 neue Node-Regressionsfälle + vorbereiteter SW223 + Rohmessbeleg). v222-Main unverändert. Historische v213-Performanceverbesserung aus #200 ist bereits LIVE; **dies ist nur ein zusätzliches begrenztes Perf-Restpaket**, kein neuer umfassender Startup-Refactor.
