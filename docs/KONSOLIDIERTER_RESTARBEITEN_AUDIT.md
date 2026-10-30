@@ -1,3 +1,15 @@
+## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – 30.10.2026
+
+Maßgeblich ist der neue gleichnamige Abschnitt im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) samt [GitHub-Statusbeleg](release-evidence/chatwechsel-master-handoff-2026-10-30.json). Entwicklung auf ausdrücklichen STOP kontrolliert beendet; keine neue Roadmap oder Priorisierung. Alle folgenden Anforderungen und historischen Abnahmen bleiben erhalten; dieser jüngste Status ersetzt ältere widersprüchliche Statuszeilen.
+
+Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`.209/208 und228 gemergt; konkrete Freigaben verbraucht. Produktion v221/SW221 veröffentlicht, **LIVE_ACCEPTANCE_BLOCKED**, letzter vollständig akzeptierter Standv220. Run41080709085 Versuch1 läuft: Cross1/124148731923SUCCESS, Hauptjob124148731858 und Cross2/124148731416IN_PROGRESS; Deploy/Live noch ausstehend (17:36Uhr Europe/Vienna). Verfügbares Cross1-Artefakt noch nicht inhaltlich abgenommen. Ursprünglicher roter41059923497 bleibt erhalten; TimeoutursacheUNKNOWN/NOT_REPRODUCED.
+
+Nächster zulässiger Schritt im neuen Chat: aktuellen Run-/Main-/Job-/Artefaktstand lesen; keine blinde Wiederholung. Erst nach vollständigem Erfolg und SHA256-verifizierter tatsächlicher Release-/Live-/Asset-/SW-/PWA-Abnahme v221LIVE_ACCEPTED dokumentieren. Dann bestehende Priorität fortsetzen.213/214/218/219/222/225/227 undQA223 unverändert geliefert/integrationspending;157/161 ebenfalls als bestehendeDrafts erhalten. Eigene konkrete Freigabe vor jedem weiteren Merge/Deployment. Keine Sammelintegration oder doppelte Entwicklung; CSS-/CSV-nach213-/Dialogbaseline-nach219-Verträge erhalten.
+
+UI-VISUAL06 und sämtliche nicht delegierten UI-/Masterarbeiten beiWork; UI-MASTER28,FLH03,FLH04,DELETE,Referenzwerte,Verwaltung,Diagramme,Kursqualität,Liquidität,TradingView,Performance,Android,PWA,WebKit,CI und Finanz-/Wallet-/Backup-Sicherheit vollständig erhalten. Bereits erledigte Schnitte nicht erneut öffnen. AusschließlichFLH05/FLH-PROJ01 bewusstPARKED. HistorischenDokumentationsbranch niemals alsAppcode mergen.
+
+---
+
 ## Aktueller Statusabgleich · 30.10.2026
 
 Maßgeblich ist der [zentrale Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). v221/SW221 ist auf Main `ecf775f5` veröffentlicht; die vollständige Live-Abnahme bleibt wegen des dokumentierten Firefox-Starttimeouts blockiert. PR209 einschließlich208 ist integriert, seine Freigabe verbraucht.
