@@ -1,3 +1,17 @@
+## PR #228 freigegeben und gemergt · v221-Releaseabnahme läuft · 30.10.2026
+
+Die konkrete Nutzerfreigabe „Freigabe“ wurde nach der Reviewanfrage für PR #228 / HEAD `484ceaf0ca80830202d4a646d366d66e587433d6` erteilt und ist mit dem Merge verbraucht. Vorher Main ecf775f5, HEAD, sämtliche Checks, saubere Working Trees und unveränderte offene Copilot-Drafts erneut geprüft. Nur PR228 mit erwartetem HEAD gemergt.
+
+**Neuer Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d` exakt gleich dem technisch abgenommenen Kandidaten. MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING.** Ausschließlich Testdiagnostik und begrenzter Workflow geändert, Produkt-/Finanz-/SW221-Dateien unverändert. Keine Freigabe für weitere PRs.
+
+Vollständige neue Main-/Pages-/Livepipeline [41080709085](https://github.com/joke0071/foliolab-open/actions/runs/41080709085) läuft auf diesem Main, erster Versuch. Der alte rote Lauf41059923497 und seine Belege bleiben unverändert erhalten. Letzter vollständig akzeptierter Stand bleibt v220; veröffentlichte v221/SW221 bleibt bis erfolgreicher vollständiger Abnahme LIVE_ACCEPTANCE_BLOCKED. Beide vorherigen begrenzten Produktionsproben und komplette PR228-CI grün; Timeout weiterhin NOT_REPRODUCED / ROOT_CAUSE_UNKNOWN, kein Runtimefix behauptet.
+
+**Exakte Fortsetzung:** Lauf41080709085 bis zum Ende prüfen, tatsächliche SHA256-verifizierte Main-/Cross-/Liveartefakte, vollständige Liveberichte und veröffentlichte Asset-/SW-/PWA-Belege sichern. Bei Fehler nun vorhandene Diagnostik auswerten, keine blinden Wiederholungen oder Gate-/Timeoutlockerungen. Erst bei vollständigem Erfolg v221 DONE / LIVE_ACCEPTED dokumentieren. Bis dahin keine weitere UI-Integration. Anschließend bestehende Masterpriorität mit einzelnen Copilot-Kandidaten fortsetzen, jeweils eigene Mergefreigabe.
+
+213/214/218/219/222/225/227 und QA223 unverändert COPILOT_DELIVERED / WORK_INTEGRATION_PENDING. UI-VISUAL06/#217 und nicht delegierte Aufgaben bei Work; nur FLH05/FLH-PROJ01 bewusst PARKED. Sämtliche bisherigen Anforderungen und Belege erhalten; historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## PR #228 reviewbereit · v221-Liveblock bleibt offen · 30.10.2026
 
 **Diagnose-PR #228: TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / RELEASE_APPROVAL_PENDING.** HEAD `484ceaf0ca80830202d4a646d366d66e587433d6`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, Testmerge `6c79d8c06f291e81b13eef66f1268bd3e7907045` mit identischem Tree auf Main `ecf775f5c17ceb301be04f20e1be400567f45261`. Draft aufgehoben, GitHub mergeable/clean. Ausschließlich P-Chain-Fehlerdiagnostik und begrenzter Diagnoseworkflow geändert; alle Produkt-/Finanz-/SW221-Dateien bytegleich, keine Timeout-, Assertion- oder Gate-Lockerung.
