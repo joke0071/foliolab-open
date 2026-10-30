@@ -1,3 +1,11 @@
+## v217 Live-Abnahme BLOCKED · konkreter SW-Registrierungsbefund · 30.10.2026
+
+Main41008536496:957Units/Syntax/Chromium/Firefox/WebKit/Pages SUCCESS; v217/mainc6a07402 veröffentlicht. Livejob123912141099 FAIL in tests/browser-reference-management.mjs:37:30s Timeout auf tatsächliche SW-Aktivierung. Gesicherte initial/final-Baseline zeigt controller=false,keine registration/active/installing/waiting. Vorheriger Live-Kern im selben Job bestätigt121 exakte produktive SHA256-Hashes,SW217,6Kerngruppen/18Axe,Backup/Restore und tatsächlichenWorker/Offline PASS. Ursache **UNGEKLÄRT**, keine Flakiness-/Produktrootcause erfunden. Kein LIVE_ACCEPTED.
+
+[Fehlerbeleg](release-evidence/v217-live-sw-registration-failure.json), fehlgeschlagenes ZIP12956239064 vor Extraktion SHA256-verifiziert. Referenztest und Registrierungsquelle gegenüberv216 unverändert; keine fachliche/finanzielle Mutation vor diesem Testsetupfehler. **Nächster Schritt:** genau einen unveränderten Wiederholungslauf ausschließlich des fehlgeschlagenen Livejobs durchführen, um Wiederholbarkeit des fehlenden frischen Registrierungszustands zu prüfen. Keine Gates/Timeouts/Assertions ändern. Bei Wiederholung Diagnose mit neuen Beobachtungen vor weiterem Retry. Bestehende konkrete PR204-Freigabe gilt für unveränderten Release; keine neue Freigabe nötig. Keine parallele Produktimplementierung. Alle Master-/PARKED-Verträge erhalten.
+
+---
+
 ## v217 veröffentlicht · Main-Gates SUCCESS · Live-Abnahme läuft · 30.10.2026
 
 Freigegebener PR204/mainc6a07402d668c0a5d90d1294be8f72547d1577b0/Tree5fb8176d identisch mit bestandenem Kandidaten. Main41008536496:957/957 Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit und Pages SUCCESS. Deployment123912055006 erfolgreich, **v217/SW217 veröffentlicht, Live-Abnahme noch PENDING**. Livejob123912141099 prüft tatsächliche Produktion; noch kein LIVE_ACCEPTED behauptet.

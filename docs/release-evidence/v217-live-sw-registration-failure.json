@@ -1,0 +1,38 @@
+{
+  "status": "FAILED / ROOT_CAUSE_UNKNOWN",
+  "release": "c6a07402d668c0a5d90d1294be8f72547d1577b0",
+  "run": 41008536496,
+  "attempt": 1,
+  "job": 123912141099,
+  "test": "tests/browser-reference-management.mjs:37",
+  "failure": "Timeout 30000ms waiting for window.__referenceWorkerActivated===true",
+  "baseline": {
+    "initial": {
+      "controller": false,
+      "controllerScript": null,
+      "active": null,
+      "installing": null,
+      "waiting": null
+    },
+    "final": {
+      "controller": false,
+      "controllerScript": null,
+      "active": null,
+      "installing": null,
+      "waiting": null
+    }
+  },
+  "completedEvidence": [
+    "121 exact published SHA256 asset/SW matches, foliolab-open-v217",
+    "Core live acceptance:6 groups,18 Axe scans,backup/restore,actual worker/offline PASS",
+    "Main957Units and Chromium/Firefox/WebKit all PASS"
+  ],
+  "failedArtifact": {
+    "id": 12956239064,
+    "sha256": "0a3a2bae5da39e369d1ff3a4184a03af82a48622d7c3a1a52452f96bc9c47d88",
+    "verifiedBeforeExtraction": true
+  },
+  "decision": "One unchanged retry of failed live job only to test whether missing registration in a fresh context recurs. No root cause or flakiness conclusion. If repeated, diagnose before any further retry.",
+  "productChanges": "None; reference test and registration source unchanged from v216, SW cache revision changed as approved.",
+  "next": "Complete unchanged live rerun, preserve initial failure even on later PASS; do not declare LIVE_ACCEPTED until complete."
+}
