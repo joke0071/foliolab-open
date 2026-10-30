@@ -1,3 +1,15 @@
+## PR220/v220: Main, Pages und Chromium-Live bestanden · Cross-Live läuft · 30.10.2026
+
+Freigegebener PR220 gemergt, Main `537bddc3202dec8025626e8fe8b00797d418d0f7`, identischer Kandidaten-Tree33faa5e2, Produkt/SW220 unverändert. [Release41038554426](https://github.com/joke0071/foliolab-open/actions/runs/41038554426): Main124005337110 SUCCESS mit962Units/0Fail/Skip undChromium, Cross1/124005337077 SUCCESS, Cross2/124005336920 SUCCESS, Pages124010763867 SUCCESS. Drei Test-ZIPs vor Extraktion SHA256-verifiziert und lokal erhalten.
+
+Livejob124010910833 hat den vollständigen Chromium-Schritt einschließlich veröffentlichter Bytes/Kernabläufe und vollständiger sequentieller UI-Abnahme bestanden; aktuell **Firefox/WebKit-Liveprüfungen laufen**. Kein unveränderter Retry und keine Gate-/Timeoutänderung. Frühere v220-Fehlerhistorie bleibt erhalten; genaue ursprüngliche SW-/Netzursache nicht pauschal als behoben behaupten.
+
+**MERGED / DEPLOYED / LIVE_ACCEPTANCE_PENDING. Exakt weiter:** finalen Livejob samt Cross-Engine-Berichten/Asset-/SW-Hashes/Backup-/Offline-/CAS-/A11y-Belegen abnehmen, ZIP vor Extraktion verifizieren, dauerhaftes Releaseartefakt sichern und erst dann LIVE_ACCEPTED dokumentieren. Danach UI-VISUAL01 aus209/208 kontrolliert vorbereiten, keine automatische Folgefreigabe oder Sammelintegration.
+
+Copilot-Draft227 zuVISUAL09 alsgeliefert/Work-Integrationausstehendgesichert;alleanderenLieferungen/QA223/208-Eigenanteileerhalten. KeineparallelevisuelleNeuentwicklung. UI-VISUAL06undübrigenichtdelegierteFach-/UI-AufgabenbeiWork. NurFLH05/FLH-PROJ01bewusstPARKED. HistorischenDokumentationsbranchniemalsalsAppcodemergen.
+
+---
+
 ## UI-VISUAL09 / Draft227 geliefert · v220-Abnahme unverändert zuerst · 30.10.2026
 
 **[PR227](https://github.com/joke0071/foliolab-open/pull/227): COPILOT_DELIVERED / WORK_INTEGRATION_PENDING.** HEAD `485620239228e2770dcf74d24d8423565edea505`, Basis Main `537bddc3202dec8025626e8fe8b00797d418d0f7`; offen, Draft, nicht gemergt/deployt. Tatsächliche Dateiliste geprüft: ausschließlich19 zusätzliche Zeilen in styles.css sowie24 Vorher-/Nachherbilder unter docs/ui-visual09/. Kein HTML, JavaScript, Test oder SW-Bump. Vollständiger Lieferbericht und ursprünglicher Vertrag im [UI-VISUAL09-Vertrag](COPILOT_UI_VISUAL09_VERTRAG_2026-10-30.md) erhalten.
