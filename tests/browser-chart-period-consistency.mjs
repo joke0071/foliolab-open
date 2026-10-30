@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {chromium,firefox,webkit} from 'playwright';
 import {createRequire} from 'node:module';
 import {readFileSync,mkdirSync} from 'node:fs';
@@ -57,7 +58,7 @@ const verifyTargets=async(root,width)=>{
 try{
  await page.route('**/__visual01_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
  await page.goto('http://127.0.0.1:4173/');
- await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ await controlledStorageFixture(page,()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')),record);
  await page.evaluate(async()=>{
   const {blankModel}=await import('/src/model.js');
   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');

@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {chromium,firefox,webkit} from 'playwright';
 import {mkdirSync} from 'node:fs';
 const engine=process.env.UI_PERIOD_ENGINE||'chromium';
@@ -6,9 +7,10 @@ const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,arg
 const page=await browser.newPage({viewport:{width:390,height:850}});
 mkdirSync('artifacts/gates/ui-visual01',{recursive:true});
 const day=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
+const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
 try{
  await page.goto('http://127.0.0.1:4173/');
- await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+ await controlledStorageFixture(page,()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')),record);
  await page.evaluate(async(dates)=>{
   const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');
   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
@@ -29,7 +31,6 @@ try{
  const holding=page.locator('#providerOverview [data-position-id="long-price"]');
  await holding.locator(':scope > summary').click();
  await holding.locator('.position-history-chart .chart-plot').waitFor();
- const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  const before=await record();
  assert.ok(before?.raw&&Number.isInteger(before.revision),'the fixture must have an actual canonical IndexedDB record');
  for(const width of [320,360,390,430,768,1024,1440]){
@@ -65,7 +66,9 @@ try{
  }
  await page.setViewportSize({width:390,height:850});
  const more=holding.locator('.position-period-more > summary');
- await more.focus();
+ await holding.locator('.position-period > button:visible').last().focus();
+ await page.keyboard.press('Tab');
+ assert.equal(await more.evaluate(el=>el===document.activeElement),true,'Tab reaches the extended-range control');
  await page.keyboard.press('Enter');
  assert.equal(await holding.locator('.position-period-more').getAttribute('open'),'');
  const summaryFocus=await more.evaluate(el=>({visible:el.matches(':focus-visible'),width:getComputedStyle(el).outlineWidth}));

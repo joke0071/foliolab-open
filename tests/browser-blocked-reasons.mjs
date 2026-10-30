@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
@@ -28,7 +29,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label+' Axe');
  };
  try{
-  await p.goto(base);await ready();
+  await p.goto(base);const worker=await controlledStorageFixture(p,ready,record);
+  console.log(engine+': BLOCKED REASONS actual controlled worker before fixture '+JSON.stringify(worker));
   await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC blocker test'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC cash',type:'cash'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',name:'SYNTHETIC cash',kind:'cash',quantity:1000,price:1},m));
