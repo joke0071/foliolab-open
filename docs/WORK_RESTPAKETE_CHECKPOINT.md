@@ -1,3 +1,11 @@
+## v226/SW226 LIVE_ACCEPTED · 31.10.2026
+
+Main 3b03f4d98b84bb118d7c16be1b9dfab0c553922a, vollständiger Run41143056998 inklusive Main-CI, Deploy, Live-Chromium/Firefox/WebKit SUCCESS. Produktiv #213/K04 und #214+#227 einschließlich per-PR-Concurrency. Eigener Live-Artefakt13020775375-Download: SHA256 fa0a610816d74faad1d85af64ef2a5801319d2801e72ddd238cca3dbc93cd72b / CRC PASS, commit-/SW-genauer PASS-Bericht, 121 Assetmatches, 18 Axe-Scans, 0 Fehler; Backup/Restore/IDB/Offline-Kerngruppen bestanden. [Vollständiger Releasebeleg](release-evidence/v226-live-acceptance.json). Neue akzeptierte Rückfallbasis v226, keine Datenrücksetzung/Down-Migration.
+
+#219/#218 aktueller HEAD 4bda7bed14cbb7cd88c8563ebb5ebfd5acc4cb60 vollständig CI_ACCEPTED (Run41144284551, Wallet grün), bereit zur kontrollierten nächsten Veröffentlichung. #225/#222 noch letzte Gates offen. #235/#236/#237 blockieren aktuell nur an zu frühem count() im neuen nativen CSV-UI-Test nach lazy toggle; tatsächlich ausgeführter CSV-Import/Lösch-/Bestandsbrowserfall PASS, Details-Template enthält CSV. Konkretes Warten auf sichtbare CSV-Schaltfläche wird ergänzt, keine Existenz-/Funktionsassertion entfernt. Noch keine K01-/Onboarding-/Cache-Livebehauptung.
+
+---
+
 ## SW226 deployed; beabsichtigte Dialogreferenzen kontrolliert erneuert · 31.10.2026
 
 Main 3b03f4d98b84bb118d7c16be1b9dfab0c553922a / SW226 in Run41143056998: vollständige CI SUCCESS und Pages DEPLOYED; Live-Chromium-Kernprüfung erfolgreich, Produktions-Firefox/WebKit noch laufend. **DEPLOYED / LIVE_ACCEPTANCE_PENDING**, letzte vollständige Rückfallbasis v224.
