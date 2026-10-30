@@ -39,6 +39,11 @@ jobs:
       - name: One unchanged reference gate with failure evidence
         if: always()
         run: node tests/browser-reference-management.mjs
+      - name: Reproduce the original complete Chromium UI suite with failure evidence
+        if: always()
+        env:
+          UI_QUALITY_SCREENSHOTS: '1'
+        run: node tests/browser-ui-quality.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
