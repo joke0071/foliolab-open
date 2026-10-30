@@ -1,3 +1,21 @@
+## UI-VISUAL01 / PR209 – gezielte Testkorrektur und Crossbrowser-Erweiterung · 30.10.2026
+
+**Produktion v220/SW220 weiterhin DONE / LIVE_ACCEPTED**, Main `537bddc3202dec8025626e8fe8b00797d418d0f7`. PR220 und sein Release sind abgeschlossen; seine Freigabe ist verbraucht. Keine parallele Integration weiterer Copilot-Drafts.
+
+**PR209 HEAD `86986bda82b6a5624889b9ea121187b844d1f9a5`**, Tree `c5be374dc058e5f5b44bccce795f4263d61f1bb4`, Branch `feature/ui-visual01-compact-periods`. Vorgänger0cd81c97 bewahrt die vollständigen209/208-Historien samt eigenständigen Positionszeiträumen und Bildern. Der Nachschritt ändert ausschließlich drei Browsertests und den bestehenden CI-Workflow. Sämtliche Produktdateien einschließlich SW221 sind bytegleich zu0cd81c97; kein konkurrierender Versionssprung.
+
+Erster Integrationslauf [41042454421](https://github.com/joke0071/foliolab-open/actions/runs/41042454421) bleibt als roter Befund erhalten: Hauptjob124018306835 scheiterte an browser-dashboard-polish.mjs:47 („compact history controls escape card at320px“). Die bisherige Messung erfasste auch eingeklappte Menübuttons mit Null-Rechtecken. Cross1 erfolgreich, Cross2 zuletzt nochlaufend; kein Lauf abgebrochen oder blind wiederholt. Hauptartefakt12970667219 vor Extraktion SHA256-verifiziert (`2d05edc1cf2e1ffbfe0fb0877bc0fffe868d71f27f4cd195e9eb1d2de80b3dfa`);26 vorhandeneJSON-Berichte gelesen. Diese Teilbelege machen den fehlgeschlagenen Gesamtlauf ausdrücklich nicht grün.
+
+Gezielte Anpassung: nur tatsächlich sichtbare Steuerungen geometrisch messen, zusätzlich sichtbare Menüsummary einbeziehen; geöffnetes Menü gesondert auf alle Ziele ≥44×44, Kartenbegrenzung und Seitenüberlauf prüfen. Keine Grenzwerte/Timeouts gelockert. Vorhandene fachliche Wealth-/Positions-Zeitraumszenarien jetzt zusätzlich in Firefox und WebKit ausführen, einschließlich Auswahlzuständen, Keyboard/Escape/Fokus/Axe, tatsächlicher Datenfilterung und exakt unverändertem vollständigem IDB-Record. Engine-getrennte Screenshots bleiben im CI-Artefakt. Syntax/diff-check lokalPASS; vorher963/963Units, endgültige volle CI noch offen.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Neuer vollständiger Pflichtlauf [41043660987](https://github.com/joke0071/foliolab-open/actions/runs/41043660987), Wallet41043660977, auf genau86986bda. Alle vier Remote-Blobs und gesamterTree gegen lokaleGitobjekte verifiziert; Remote-Ref nach Veröffentlichung erneut geprüft.
+
+**Exakt weiter:** beide alten Crossjobs regulär auslaufen lassen und Ergebnisse sichern; neuen vollständigen Lauf auf diesemHEAD abnehmen, konkreten Fehler gegebenenfalls gezielt beheben. Testmerge/Tree, vollständige Pflichtgates, Artefakthashes/Berichte und tatsächliche Bilder/Touchnachweise prüfen. Erst nach vollständiger technischer Abnahme PR209 reviewbereit stellen und **eigene konkrete Nutzerfreigabe für Merge/Deployment** einholen. SW221 bleibt bis dahin unveröffentlicht.
+
+PR227/HEAD48562023 bleibt **COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**. Ebenso213/214/218/219/222/225 undQA223;208 ausdrücklich erhalten, keine doppelte visuelle Implementierung. UI-VISUAL06/#217 und übrige nicht delegierte Masteraufgaben beiWork. NurFLH05/FLH-PROJ01 bewusstPARKED. Alle bestehenden Masteranforderungen/QA-Verträge/Freigabegrenzen gelten fort; historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
 ## UI-VISUAL01/PR209 Integrationskandidat gesichert · Produktion v220 LIVE_ACCEPTED · 30.10.2026
 
 **v220/SW220 DONE / LIVE_ACCEPTED**, Main537bddc3, vollständige Main-/Pages-/Live41038554426 SUCCESS im ersten Versuch,962Units/dreiBrowser/121Hashes/18Axe/37Live-PASS-Berichte. [Releasebelege](release-evidence/v220-pr220-release.json). PR220-Freigabe verbraucht.
