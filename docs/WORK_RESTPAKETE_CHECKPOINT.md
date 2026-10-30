@@ -1,3 +1,11 @@
+## Aktive Releasefortsetzung · 30.10.2026
+
+Nutzerfreigabe für geprüfte Merges und Deployments aktiv genutzt. PR #233 nach Kontrolle grüner Checks auf unverändertem HEAD 4674c8a7 gemergt: 328a4bf8516c4dea5dd4037320804d1b2e716e0e. PR #234 vollständig grün (CI 41137847433, Wallet 41137847347), test-only, gemergt: fb487d204bbcbb9994aeebb42e44e5bd3b03cb4b. Gemeinsame RELEASE-Pipeline https://github.com/joke0071/foliolab-open/actions/runs/41138889787 läuft; SW223 **MERGED / RELEASE_PENDING, noch NICHT LIVE_ACCEPTED**. v222 letzte akzeptierte Rückfallbasis. PR #223 mit aktuellem Main integriert, SW224 vorbereitet, 14 gezielte Allocation/PERF01/K02-Tests PASS; Kandidaten-CI ausstehend.
+
+Effizienz: vorhandene exakte PR-CI und ABBA-/Differenzbelege wiederverwendet; keine redundanten lokalen Vollsuiten/zusätzlichen manuellen Screenshotaudits. Direkte Mergefolge mit bestehender concurrency; Required Checks und Daten-/PWA-Gates unverändert. Rückfall: gezielter Vorwärts-Revert mit neuer SW-Revision, keine Daten-/Schema-Downgrade-Migration. Andere Copilot-Drafts nicht pauschal übernommen. Nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## Neue eindeutige Nutzer-Releasefreigabe und risikobasierte Gate-Verschlankung · 30.10.2026
 
 **Verbindliche jüngste Nutzerentscheidung (supersedes ältere konservative Wochenend-Freeze- und Individualfreigabe-Texte):** „Release ist ok. Was releast werden kann, soll released werden. Wenn Gates reduziert werden können mit geringen Qualitätseinbußen, ist das auch ok.“ **Work soll fertige, verhältnismäßig risikoarme und technisch belastbar geprüfte PRs aktiv mergen und deployen, nicht nur vorbereiten; keine gesonderte Rückfrage für jeden Einzel-Release.** Wochenend-Praxistest v222 ist kein Wartegrund/absolutes Freeze mehr. Keine Sammelmerges ohne Konfliktanalyse; einzelner Kandidat, funktionierende CI/Checks gemäß risikogerechter Tiefe, tatsächliche GitHub-Pages-/SW-/Liveprüfung, gesicherter Rückfall und Fehlerbericht.
