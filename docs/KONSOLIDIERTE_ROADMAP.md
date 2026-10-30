@@ -1,3 +1,15 @@
+## CI-OPT01: Vorhermessung gesichert, Umsetzung offen · 30.10.2026
+
+**Produktion v221/SW221 DONE / LIVE_ACCEPTED**, Main3b00336d. Nach vollständig gesichertem Release ist CI-OPT01/#229 der aktive nächste Masterauftrag vor weiteren umfangreichen Copilot-Integrationen.
+
+[Vorhermessung und Prüfvertrag](CI_OPT01_BASELINE_UND_PRUEFVERTRAG.md), [Originaldaten mit vollständiger Testliste](release-evidence/ci-opt01-before-baseline.json), separate Belegcommits1fd4b2d3 undd34b399b. Vier historische Runs ohne neue Testausführung ausgewertet: v221 Units/Syntax28s, Chromium575s, Cross1/446s, Cross2/740s reine Testzeit; Installationen6/39/71s. Cross2 ist der kritische Pfad. Einzelzeiten Firefox/WebKit und echte Work-Creditabrechnung sind aus diesen Quellen nicht isoliert verfügbar; keine erfundene Kostenersparnis.
+
+**CI-OPT01 bleibt PARTIAL:** Noch kein geänderter Workflow, kein neuer Codebranch, kein Canary-PR und keine Nachhermessung. Nächste Umsetzung: konservatives Datei-/Risikomanifest mit allen bestehenden Prüffällen und sicherem Draft→Integration→Release-Vertrag, dann kleinster geeigneter Kandidat mit Instrumentierung und kontrollierter Aufteilung. Keine Tests entfernen oder notwendige Cross-/Finanz-/Storage-/Backup-/Livebelege reduzieren. Vor Merge des CI-Kandidaten vollständige technische Abnahme und eigene konkrete Nutzerfreigabe.
+
+Issue229 ergänzt getrennte Work-/Actions-Proxys sowie nur die bewertbare Option für maximal zwei bis drei unabhängige CSS-Pakete; keine automatische Sammelfreigabe. Alle Copilot-Drafts unverändert, UI-VISUAL06 und übriger Master aktiv. Nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## v221 vollständig LIVE_ACCEPTED · CI-OPT01 folgt · 30.10.2026
 
 **v221/SW221 DONE / LIVE_ACCEPTED**, Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`. Run41080709085 final SUCCESS, Versuch2 mit genau einem begründeten unveränderten Livejob-Retry nach belegtem HTTP503. Main-/dreiBrowser-/Pages-Gates bestanden;964Units,121 verifizierte veröffentlichteHashes,6Live-Kerngruppen,18Axe-Scans,40vollständigeLive-PASS-Berichte,Firefox/WebKit-P-Chain/Sonic/UI/Transfers erfolgreich. [Dauerhafte Releasebelege](release-evidence/v221-pr228-release.json), tatsächliches Produktionsbild gesichert. ÄltereFehler und503-Befund erhalten; kein pauschaler Rootcausefix behauptet.
