@@ -40,7 +40,7 @@ test('Only precisely matched familiar ETF EUR listings enrich legacy imports wit
   assert.ok(/^IE00/.test(p.isin));
   assert.equal(p.mic,'XETR');
   assert.equal(p.exchange,'Xetra');
-  assert.equal(p.tradingViewSymbol,'XETR:'+p.symbol);
+  assert.equal(p.tradingViewSymbol,'','new imports should not fabricate deprecated widget symbols');
   assert.equal(p.eodhdSymbol,p.symbol+'.XETRA');
  }
 });
