@@ -25,3 +25,8 @@ test('stage policy rejects missing review event, unsafe gate, reduced deploy dep
     assert.notEqual(broken, source); assert.throws(() => validate(broken));
   }
 });
+
+test('superseded PR runs share one concurrency group while main remains separate', () => {
+  assert.ok(source.includes("group: foliolab-open-pages-"+'$'+"{{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}"));
+  assert.match(source, /cancel-in-progress: true/);
+});
