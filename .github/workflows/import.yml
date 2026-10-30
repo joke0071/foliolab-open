@@ -50,6 +50,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Restore pinned Chromium shell cache (FAST)
+        if: needs.plan.outputs.css == 'true' || needs.plan.outputs.ci_contract == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
       - name: Full unit and syntax checks for FAST drafts
         if: needs.plan.outputs.stage == 'FAST'
         run: |
@@ -114,6 +120,11 @@ jobs:
           git rev-parse HEAD > artifacts/gates/tested-sha.txt
           npm test 2>&1 | tee artifacts/gates/unit.log
           npm run check 2>&1 | tee artifacts/gates/syntax.log
+      - name: Restore pinned Chromium shell cache (integration)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: foliolab-pw1.56.1-chromium-shell-v1-${{ runner.os }}-${{ runner.arch }}
       - name: Install browser test tools
         run: |
           npm install --no-save playwright@1.56.1 axe-core@4.10.3 pngjs@7.0.0
@@ -268,6 +279,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Restore pinned Firefox/WebKit cache (integration)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}
       - name: Install Firefox and WebKit for cross-engine regression
         timeout-minutes: 8
         run: |
