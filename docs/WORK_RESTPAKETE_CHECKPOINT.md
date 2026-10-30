@@ -1,3 +1,21 @@
+## Work-eigener P1: Normal-/Verwalten-Bedienung in Arbeit · 30.10.2026
+
+Aktualisierte Priorisierung aus Restaudit/Roadmap/Checkpoint übernommen; Main d6b2a14f / Produktionv221/SW221 bleibt vollständigLIVE_ACCEPTED und unverändert. OffenePRs und fehlende laufendeActions frisch geprüft. **Kein Merge/Deployment autorisiert oder ausgeführt.** Nur ein aktiver Entwicklungsstrang.
+
+Konkreter bestätigter P1-Befund UX10: Positionen/Buchungen heißen im Listenkopf noch„Mehrfachauswahl“ und zeigen permanenteStift-/Archiv-/Löschicons; Referenzen haben bereitsVerwalten/Fertig, zeigenBearbeiten jedoch nur imVerwalten. NeuesterSollvertrag verlangtBearbeiten-TextimNormalmodus undzentraleAktionenimVerwalten. Work-owned, nichtdurchCopilot-CSSabgedeckt.
+
+**Remote-WIP gesichert:** Branch `fix/ui-master28-management-v222`, HEAD `971e825e6c063d86fb02e689dda9dc138eed472b`, Tree `29288a3fe28e1a58faf683f4df066eac9de7c1b6`. NochkeinPR, umkeineunfertigevolleCIauszulösen. Code/Testsu.a.3Renderer, vorhandeneSteuerungen/Fokus undSW222unveröffentlicht; vorhandeneFinanz-/Speicher-/Dialogfunktionen nichtneuimplementiert. Einzel-Wiederherstellung vonPositionen wirdzentral überbestehendenEinzelpfad angeboten; neueSammel-Wiederherstellung bleibtgesonderterFachnachweis. Archivdropdowns/übrigerUX10bleibenoffen.
+
+Copilot-Kollisionsabgleich:213hatIndex/Provider-Rendering/CSS,214und227Styles,225aktuellBilddateien; keineWork-NeuentwicklungdieserVisualpakete. EigeneÄnderung betrifftfunktionaleVerwaltung;CSSnur44pxTouchzielederneuenTextlinks, keinRedesign.
+
+Lokal975/975Units,Syntax/diff-checkPASS. PinnedChromium1.56.1lokalnutzbar; optionalerFFmpeg-DownloadscheiterteamlokalenInfrastrukturpfad, tatsächlicherChromiumstartPASS. ErsterlokalerAufrufverweigerteVerbindungwegengetrennterServerausführung;ServerundTestnunimsellbenTestaufruf. Touchprobe fandTextlinksunter44px, gezieltbehoben,Assertionnichtgelockert.
+
+**Aktuelle Fortsetzungsstelle:** Buchungs-UI-Prüfung erreicht Quota-/Cancelpfad; zentraleArchivaktion bleibt nachdemAbbruchderfehlgeschlagenenSpeicherung deaktiviert. BisherigeAssertion„centralactionsrecoveraftercancelledfailedsave“ bleibtrot undunverändert; jetztkonkretUI-Zustandsaktualisierung nachRollback/Cancelprüfen. KeinDatenintegritäts-PASSbehaupten, nichtüberspringen/Timeoutanheben. DanachgezieltevollständigeBestands-Suites(Buchungsmanagement,Positionslöschung/-archiv,Referenzen/Details)prüfen,CodefortschrittimselbenBranchsichern. ErstfertigenKandidatenvolleINTEGRATION+3BrowserabnehmenunddanacheigeneNutzerfreigabevorlegen.
+
+PrioritätweiterP0→alltäglicheWork-UX/Text/Verwaltung→belegterealePerformance/Copilotabhängigkeiten; keineweitereCI-Feinoptimierung. AlleMasteranforderungenerhalten; nurFLH05/FLH-PROJ01bewusstPARKED. KeinezusätzlichenkostenpflichtigenWork-Credit-Pakete.
+
+---
+
 ## PR231 DONE/LIVE_ACCEPTED – stabile Praxisbasis gesichert · 30.10.2026
 
 **Aktueller Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9`. Anwendung und SW bleiben unverändert v221/SW221, vollständig LIVE_ACCEPTED.** PR231 wurde ausschließlich mit eigener konkreter Nutzerfreigabe auf HEAD9369d6b3 nach vollständiger Review-CI41111739544 gemergt. Diese Freigabe ist verbraucht und gilt nicht für weitere PRs.
