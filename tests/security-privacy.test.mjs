@@ -87,5 +87,5 @@ test('CSP allows only the Google OAuth script alongside same-origin JavaScript',
  assert.doesNotMatch(app,/external-embedding\/embed-widget-advanced-chart/,'No vendor script must run in portfolio origin');
  assert.doesNotMatch(app,/tradingview\\.com|load-tradingview|openPublicTradingView|data-tv-slot/i,'No active third-party chart path remains');
  assert.doesNotMatch(html,/tradingview\\.com/i,'CSP must not allow vendor chart framing');
- assert.match(html,/frame-src https:\/\/accounts\\.google\\.com\/gsi\//,'Google OAuth framing remains available');
+ assert.ok(html.includes('frame-src https://accounts.google.com/gsi/;'),'Google OAuth framing remains available');
 });
