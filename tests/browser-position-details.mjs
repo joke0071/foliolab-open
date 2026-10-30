@@ -65,15 +65,17 @@ try{
  const corrected=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots[0]);
  assert.equal(corrected.totalEURExact,'142.75');assert.equal(corrected.valuationStatus,'manual');assert.equal(corrected.byPosition,null);assert.ok(corrected.revisions.length>=2);
  // New archive replaces the superseded direct dependent-snapshot deletion expectation.
+ await page.locator('#manageReferences').click();assert.equal(await page.locator('#manageReferences').innerText(),'Fertig');
  await list.last().locator('[data-reference-select]').check();await page.locator('[data-reference-manage=archive]').click();await page.locator('[name=confirmReferenceArchive]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  assert.equal(await list.count(),1);await page.locator('#referenceArchiveFilter').selectOption('archived');assert.equal(await list.count(),1);assert.match(await list.innerText(),/142,75/);
  await page.locator('#manageReferences').click();await list.locator('[data-reference-select]').check();await page.locator('[data-reference-manage=archive]').click();await page.locator('[name=confirmReferenceArchive]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});await page.locator('#referenceArchiveFilter').selectOption('active');assert.equal(await list.count(),2);
  await page.locator('#mobileNav [data-page="positions"]').click();
  const remaining=page.locator('.position-entry').first();
  assert.equal(await remaining.locator('[data-action="edit-position"]').count(),1);
- assert.equal(await remaining.locator('[data-action="delete-position"]').count(),1);
+ assert.equal(await remaining.locator('[data-action="delete-position"]').count(),0,'no permanent destructive row icon');
+ await remaining.locator('[data-action="edit-position"]').click();assert.ok(await page.locator('#deletePosition').isVisible(),'the existing permitted individual delete remains reachable through its editor');
  page.once('dialog',dialog=>dialog.accept());
- await remaining.locator('[data-action="delete-position"]').click();
+ await page.locator('#deletePosition').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  await page.waitForFunction(()=>document.querySelectorAll('.position-entry').length===0);
  assert.equal(await page.locator('.position-entry').count(),0);
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));

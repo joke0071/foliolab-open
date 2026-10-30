@@ -113,7 +113,7 @@ async function save(){
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
   throw error;
- }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();}
+ }finally{saving=false;syncPortfolioState();if(page==='history')renderReferences();if(page==='bookings'&&!loadFailure)renderBookingManagement();}
 }
 function notify(message,error=false){const box=$('toast');box.textContent=message;box.style.background=error?'#9f4840':'#1e5037';box.classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.classList.add('hidden'),4600);}
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
@@ -434,7 +434,7 @@ function renderPositions(){
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   const h=historyAction(model,p);
   const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
-  const reviewButtons=reviewActions.map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
+  const reviewButtons=reviewActions.filter(i=>!positionSelecting||i.action!=='edit-position').map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
   const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
   return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+(!positionSelecting?'<div class="position-row-actions"><button type="button" class="link-button" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button></div>':'')+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
@@ -471,13 +471,14 @@ function renderPositionSelection(){
  const archived=model.positions.filter(p=>p.archived),archivedSelected=archived.filter(p=>selectedPositionIds.includes(p.id)).length;
  const disabled=!summary.currentCount||summary.requiresRefresh||otherTabChangedPortfolio;
  const single=summary.currentCount===1&&!summary.hiddenCount?model.positions.find(p=>p.id===summary.currentIds[0]):null;
- const archiveAction=single?'<button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(single.id)+'" '+(disabled?'disabled':'')+'>'+(single.archived?'Wiederherstellen':'Archivieren')+'</button>':'<button type="button" class="btn outline" data-action="archive-selected" '+(disabled?'disabled':'')+'>Alle archivieren</button>';
+ const allArchived=summary.currentCount>1&&summary.currentCount===archivedSelected;
+ const archiveAction=single?'<button type="button" class="btn outline" data-action="archive-position" data-id="'+esc(single.id)+'" '+(disabled?'disabled':'')+'>'+(single.archived?'Wiederherstellen':'Archivieren')+'</button>':'<button type="button" class="btn outline" data-action="archive-selected" '+(disabled||allArchived?'disabled':'')+(allArchived?' aria-describedby="positionSingleRestoreHint"':'')+'>'+(allArchived?'Wiederherstellen':'Alle archivieren')+'</button>';
  tools.innerHTML=selectionMaster('positionSelectFiltered',coverage,!scope.length)+
   '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(disabled?'disabled':'')+'>Alle löschen</button>'+
   archiveAction+
-  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'');
+  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+(allArchived?'<p class="small-help" id="positionSingleRestoreHint">Zum Wiederherstellen jeweils eine archivierte Position auswählen.</p>':'');
  const checkbox=$('positionSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
- status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte abbrechen und neu prüfen.':'');
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte mit „Fertig“ beenden und neu prüfen.':'');
 }
 function focusPositionSelection(){($('positionSelectFiltered')||$('positionListHead').querySelector('button'))?.focus();}
 function openSelectedPositionArchive(){
@@ -486,7 +487,7 @@ function openSelectedPositionArchive(){
  if(!ids.length||ids.length!==selectedPositionIds.length)throw Error('Auswahl fehlt oder ist veraltet.');
  const items=ids.map(id=>model.positions.find(p=>p.id===id)),active=items.filter(p=>!p.archived);
  showDialog('Ausgewählte Positionen archivieren','POSITIONEN',
-  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung über das vorhandene Archivsymbol.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
+  '<p>'+ids.length+' ausgewählt: '+active.length+' werden archiviert, '+(ids.length-active.length)+' sind bereits archiviert und bleiben unverändert. Bestände, Werte, Konten, Buchungen, Importe und Historien bleiben unverändert. Wiederherstellung: archivierte Positionen anzeigen, genau eine auswählen und „Wiederherstellen“ öffnen.</p><details open><summary>Betroffene Positionen</summary><ul>'+items.map(p=>'<li>'+esc(p.name)+' · '+esc(model.accounts.find(a=>a.id===p.accountId)?.name||'Konto unbekannt')+' · '+(p.archived?'bereits archiviert':'wird archiviert')+'</li>').join('')+'</ul></details><label class="selection-check"><input type="checkbox" name="confirmArchive" required>Ich bestätige die Archivierung dieser Auswahl.</label>',async values=>{
    if(values.confirmArchive!=='on')throw Error('Archivierung ausdrücklich bestätigen.');
    if(busy||saving||loadFailure||otherTabChangedPortfolio||JSON.stringify(model)!==expected)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
    await portfolioStore.assertCurrent();

@@ -31,7 +31,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
  try{
   await page.goto(base);await ready();await page.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
   await page.reload();await ready();await page.evaluate(()=>navigator.serviceWorker.ready);await page.reload();await ready();await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));await nav('bookings');
-  const before=await record();assert.equal(await page.locator('[data-booking-select]').count(),0);assert.equal(await page.locator('[data-booking-manage]').count(),1);
+  const before=await record();assert.equal(await page.locator('#bookingsPage .panel-kicker').first().innerText(),'BUCHUNGEN','mixed manual/imported/technical history has a neutral heading');assert.equal(await page.locator('[data-booking-select]').count(),0);assert.equal(await page.locator('[data-booking-manage]').count(),1);
   assert.equal(await row('edit').innerText(),'Bearbeiten');assert.equal(await row('remove').count(),0);assert.equal(await row('archive').count(),0);
   for(const width of [320,390,430,768,1440]){
    await page.setViewportSize({width,height:900});const trigger=page.locator('#bookingListHead [data-booking-manage="select"]');
