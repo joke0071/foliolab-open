@@ -1,3 +1,13 @@
+## PR212 freigegeben und gemergt · Copilot-Lieferstand gesichert · 30.10.2026
+
+Nutzerfreigabe ausdrücklich für PR212/HEAD8ca41c80 erteilt und für diesen PR verbraucht. Frische Prüfung: main6b2f4f2f unverändert, HEAD8ca41c80, Pflicht41025333344/Wallet41025333343 SUCCESS, Testmerge-Tree0dc91647 identisch, beide Working Trees sauber. **PR212 kontrolliert gemergt**, neuer main `af8347054c9e5d50b854494f650e7d7675adcff6`, Tree `0dc916477f07b242fb1f210a95c74e1a13e0f672`. Main-/Pages-/Live [41028863300](https://github.com/joke0071/foliolab-open/actions/runs/41028863300) läuft. **MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING**; zuletzt v219 LIVE_ACCEPTED, v220 noch nicht live abgenommen.
+
+Vollständige neue [Copilot-Übergabe](COPILOT_UI_VISUAL_UEBERGABE_2026-10-30.md) als verbindlicher bestehender Master-Nachtrag gesichert. UI-VISUAL01/#209 HEAD7b3e4d06 (action_required), UI-VISUAL02/#213 HEADe0c4462a (rote Pflicht41027272499), UI-VISUAL03/#214 HEADca9a14c0 (Pflicht41028390404 läuft;SW-Befund prüfen) fertig geliefert, weiterhin Draft/nicht gemergt. #208 HEAD4c4e32bc enthält eigene Positions-Zeitraumwahl und darf ohne Vergleich nicht verworfen werden. Claims und tatsächliche Integrationsbelege unterscheiden. Gemeinsame styles.css/app.js und CSS-Kaskaden prüfen. Keine parallele visuelle Neuentwicklung, keine automatische Sammelintegration, keine vorweggenommene Freigabe. Reihenfolge nach fachlichem Release: UI-VISUAL01 →02 →03, jeweils konkrete Abnahme/Freigabe/Release. Copilot-Nachbesserungen bevorzugen, SW-Version erst passend im Integrationskontext, sämtliche roten Gates erhalten. Keine reale Android-/Screenreaderabnahme behaupten.
+
+**Exakt weiter:** vollständige Main-/Cross-/Pages-/Live-/PWA-Abnahme von PR212, Belege sichern; danach aktuellen209/208-Inhaltsvergleich und ersten UI-VISUAL01-Kandidaten vorbereiten. #213/214 nicht parallel integrieren. Alle Mehr-/Text-/Sicherheits-/Finanz-/Daten-/DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge erhalten, FLH05/FLH-PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## v219 live · PR212 technisch abgenommen · Copilot-Arbeitsteilung gesichert · 30.10.2026
 
 **Produktion: v219/SW219 DONE / LIVE_ACCEPTED.** Main `6b2f4f2f2c7bde7db67860bf73094c1bfd7c0a9b`, PR206 nach eigener ausdrücklicher Freigabe gemergt, vollständiger Main-/Pages-/Live-Lauf41022699651 im ersten Versuch SUCCESS. 959 Units, drei Browser,121 exakte veröffentlichte Hashes,18 Axe-Scans und37 Live-PASS-Berichte. [Dauerhafte Releasebelege](release-evidence/ui-text02-v219-release.json). Frühere Initialisierungs-/WebKit-/IndexedDB-Befunde bleiben ungeklärt erhalten.
