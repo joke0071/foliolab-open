@@ -11,7 +11,7 @@ try{
   const a=createAccount({name:'Investment account',providerId:p.id,type:'securities'},m);m.accounts.push(a);
   m.settings.autoRefresh=false;m.settings.eodhdKey='test-key';
   m.positions.push(createPosition({id:'etf-new',kind:'etf',symbol:'GLBL',name:'Global Dividend ETF',
-    quantity:'123.456789',price:99,currency:'EUR',quoteSource:'Historic backup',quoteAsOf:'2026-10-20',
+    quantity:'123.456789',price:99,currency:'EUR',tradingViewSymbol:'XETR:GLBL',quoteSource:'Historic backup',quoteAsOf:'2026-10-20',
     providerId:p.id,accountId:a.id},m));
   m.positions.push(createPosition({id:'etf-other',kind:'etf',symbol:'QQQ',name:'Other ETF',
     isin:'US0000000001',quantity:1,price:200,currency:'USD',providerId:p.id,accountId:a.id},m));
@@ -47,10 +47,11 @@ try{
  assert.equal(await page.locator('#editorForm [name="symbol"]').inputValue(),'GLBL');
  assert.equal(await page.locator('#editorForm [name="isin"]').inputValue(),'IE00A1234567');
  assert.equal(await page.locator('#editorForm [name="eodhdSymbol"]').inputValue(),'GLBL.XETRA');
- assert.equal(await page.locator('#editorForm [name="tradingViewSymbol"]').inputValue(),'XETR:GLBL');
+ assert.equal(await page.locator('#editorForm [name="tradingViewSymbol"]').count(),0,'deprecated TradingView editor field is absent');
  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  const m=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(m.positions.find(p=>p.id==='etf-new').quantityExact,'123.456789');
+ assert.equal(m.positions.find(p=>p.id==='etf-new').tradingViewSymbol,'XETR:GLBL','hidden legacy symbol survives normal editor save and listing confirmation');
  assert.equal(m.positions.find(p=>p.id==='etf-new').priceExact,'99');
  assert.equal(m.positions.find(p=>p.id==='etf-new').isin,'IE00A1234567');
  assert.equal(m.positions.find(p=>p.id==='etf-new').quoteSource,null);

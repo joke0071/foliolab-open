@@ -67,7 +67,7 @@ export function buildAssetWizardDraft(source,input){
  if(draft.positions.some(same))throw Error('Diese Anlage ist in diesem Konto bereits vorhanden. Bitte den bestehenden Bestand bearbeiten oder eine Buchung erfassen.');
  const position=createPosition({providerId:provider.id,accountId:account.id,kind,name,
   symbol,isin,coinId,exchange:input.exchange||'',mic:input.mic||'',
-  eodhdSymbol:input.eodhdSymbol||'',fmpSymbol:input.fmpSymbol||'',tradingViewSymbol:input.tradingViewSymbol||'',
+  eodhdSymbol:input.eodhdSymbol||'',fmpSymbol:input.fmpSymbol||'',
   currency,fxRate:rate,quantity:mode==='buy'?'0':qty,price,wallet,
   economicRole:role,valuationMode,representedByPositionId:related,
   costBasisEUR:rawBasis||null,

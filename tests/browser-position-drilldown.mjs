@@ -65,9 +65,9 @@ try{
  assert.equal(await etf.locator('.position-history-compact').getAttribute('open'),null,'Missing ETF chart stays collapsed');
  await etf.locator('.position-history-compact>summary').click();
  assert.match(await etf.locator('.position-history-unavailable').innerText(),/Kein nativer Kursverlauf/);
- assert.equal(await etf.locator('[data-action="load-tradingview"]').isVisible(),false,'Optional TradingView must start collapsed');
- await etf.getByText('Weitere Kursoptionen',{exact:true}).click();
- await etf.locator('[data-action="load-tradingview"]').waitFor({state:'visible'});
+ assert.equal(await etf.locator('[data-action="load-tradingview"]').count(),0,'No external TradingView control');
+ assert.equal(await etf.locator('[data-action="import-price-history"]').count(),1,'Local CSV action remains visible and reachable');
+ assert.equal(await etf.locator('.position-chart-options').count(),0,'Single CSV action no longer needs nested disclosure');
  const cash=page.locator('#providerOverview [data-position-id="cash-test"]');
  await cash.locator('summary.provider-holding').click();
  assert.equal(await cash.locator('.position-history-plot').count(),0,'Cash has no meaningless market-price chart');
