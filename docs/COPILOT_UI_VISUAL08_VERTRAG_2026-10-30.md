@@ -1,3 +1,41 @@
+## Geliefert: UI-VISUAL08 / Draft225 · 30.10.2026
+
+**COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**, HEAD `3415af87280b3f7e27a9c9c488cc3f4b40f33d1a`, Basis mainaf834705, Draft/offen/nicht gemergt. Tatsächliche Änderung: styles.css plus30Bilder, keinJS/HTML/Test/SW. Nachstehend vollständiger Lieferbericht aus dem GitHub-PR; Claims und noch offene Prüfungen sind bei Work unabhängig zu verifizieren.
+
+Pflicht41036969216 zumSicherungszeitpunktnochlaufend: Testjob124000066758FAILimSW-Gate,Cross1SUCCESS,Cross2läuft. Wallet41036969100SUCCESS. Keine vollständige Integrationsabnahme.200%Text,Fehlerzustände,Firefox/WebKit/Hardware/Screenreaderoffen. CSS-Append-Blöcke bei späteremMerge erhalten,Kaskade/Bedienung/Fachwerteprüfen;passendeSW-Version undvollePflichtgates/eigeneFreigabeerforderlich.
+
+PR220hatunverändertReleasevorrangundwartetaufseparatekonkreteMergefreigabe;keineUmpriorisierungoderparalleleNeuentwicklung. UI-VISUAL06undübrigeAufgabenbeiWork; nurFLH05/FLH-PROJ01bewusstPARKED. Ursprünglicher vollständigerDelegationsvertrag untenbleibtgültig.
+
+### Gesicherter Lieferbericht
+
+Closes #224. **Draft – kein Merge, kein Deployment, kein SW-Bump** (Gate „Require a service-worker cache revision“ bleibt unverändert und schlägt für diesen CSS-PR erwartungsgemäß an; Releasebehandlung bei Work).
+
+## Änderung
+Nur `styles.css` (angehängter Block, alle Selektoren auf `#historyPage` bzw. `#historyCoverage`, `#performanceDetails`, `#snapshotManager`, `.history-capital-comparison`, `#snapshotList`, `#referenceSelection*`) plus Screenshots in `docs/ui-visual08/`. Kein JS/HTML/Test geändert. Nicht angefasst: Diagramm, `.chart-period`, `.history-controls`, Kalender, `dashboard-ui.js`, Mehr-Reiter (#213), globale `.btn`/`.field`/`.performance-details`.
+
+- Drei Akkordeons als zusammengehörige Gruppe: gleiche Zeilenhöhe (≥48 px), ein Chevron je Titel, gleiche Einrückung/Trennlinien, Fokusring 3 px.
+- Vergleichs-Checkbox: Label-Zeile ≥44 px, Checkbox 20 px (vorher 13 px / 18–36 px Label); „Renditeerfassung beginnen“ ≥44 px.
+- Referenz-Toolbar: mobil Filter volle Breite, „Stichtag hinzufügen“/„Verwalten“ 2-spaltig ≥44 px; Desktop eine Zeile.
+- Referenzliste: kompaktere Zeilen, Umbruch langer Notizen/Dateinamen, tabellarische Beträge rechts, größere Auswahl-Checkbox.
+- Warn-/Qualitätstexte unverändert (keine Farb-/Textänderung).
+
+## Tests (lokal, Chromium = System-Chrome)
+- `npm test` 962/962.
+- Chromium: browser-reference-management, browser-reference-removal (inkl. Mehrfachauswahl, Archiv, Undo, Restore, 5 Breiten, Axe), browser-history-followup, browser-history-ui, browser-ui-quality (inkl. 150 % Text), browser-dashboard-polish, browser-chart-period-consistency, browser-accessibility-audit (0 Verstöße) – alle PASS. Diese Tests decken Vergleichscheckbox, Filter, Verwalten, Auswahl, Stichtag hinzufügen und Beschriftungen funktionsgleich ab.
+- Eigene Messung (synthetische Daten, gefüllt/leer, offen/geschlossen) bei 320/360/390/412/430/768/1024/1440 px: kein horizontaler Überlauf, keine abgeschnittenen Container, keine interaktiven Ziele <44 px, Verwalten-Modus 320/390/1440 ohne Überlauf.
+- Erster Entwurf mit gestapelten Beträgen bei ≤400 px verletzte die vorhandene Assertion „values stay right aligned beside the description“; Regel entfernt, Test unverändert.
+
+## Screenshots
+`docs/ui-visual08/before-*` / `after-*`: gefüllt und leer × alle drei Bereiche geschlossen/geöffnet × 320/390/1440, plus Verwalten-Modus (320/390/1440).
+
+## Kollisionen
+Basis: main af83470. #220 berührt nur Tests/Workflow; #208/#219/#223 mergen konfliktfrei. #209/#213/#214/#218/#222 melden nur den üblichen Append-am-Dateiende-Konflikt in `styles.css` (beide Blöcke behalten); keine Selektorüberschneidung. Erwartung: nach SW-Bump keine weiteren Gate-Probleme.
+
+## Nicht geprüft
+Firefox/WebKit (lokal nicht verfügbar), echte Touch-Hardware/Screenreader, 200 %-Text nur über browser-ui-quality (150 %), keine Fehlerzustände (Quota/Ladefehler) per Screenshot, CI-Lauf dieses PR (Gate-Abbruch erwartet).
+
+---
+
 # UI-VISUAL08 – gesicherter Copilot-Vertrag · 30.10.2026
 
 Quelle: [Issue224](https://github.com/joke0071/foliolab-open/issues/224). Status bei Übernahme: offen, ausdrückliche Delegation; separater Draft noch nicht vorhanden. Kein Merge/Deployment. Bestehender Master und PR220 bleiben vorrangig; UI-VISUAL06 und übrige nicht ausdrücklich delegierte Aufgaben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED.

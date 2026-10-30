@@ -1,3 +1,19 @@
+## UI-VISUAL08 / PR225 geliefert · aktueller Releasepunkt unverändert · 30.10.2026
+
+**[Draft225](https://github.com/joke0071/foliolab-open/pull/225): COPILOT_DELIVERED / WORK_INTEGRATION_PENDING.** HEAD `3415af87280b3f7e27a9c9c488cc3f4b40f33d1a`, Basis Main `af8347054c9e5d50b854494f650e7d7675adcff6`; offen, Draft, nicht gemergt/deployt. Tatsächliche Dateiliste geprüft: ausschließlich46zusätzlicheCSS-Zeilen in styles.css plus30Vorher-/Nachherbilder unter docs/ui-visual08/. Kein JS/HTML/Test/SW geändert. Visuell auf Verlauf/Datenabdeckung/Rendite-Geldflüsse/Referenzwerte-Verwaltung begrenzt; unabhängig zu verifizierende CSS-Kaskaden-/Fachprüfung bleibt offen.
+
+Copilot meldet962Units, relevante System-Chrome-Browsertests einschließlich Accessibility, Referenzverwaltung/-rücknahme, Offline/Undo/Restore und responsive320–1440. Das sind **Lieferclaims, keine vollständige Work-Integrationsabnahme**. Noch offen: vollständige GitHub-Pflichtpipeline, Firefox/WebKit-Abnahme auf endgültigem Integrationstree,200%Schrift (150%getestet), Fehlerzustände/Quota-/Ladefehlerbilder, echteHardware undScreenreader. Gefüllt/leer/offen/geschlossen undVerwalten bei320/390/1440 durch Bilder dokumentiert. Erster Entwurf mit gestapelten Beträgen verletzte Rechtsausrichtungsassertion; Copilot entfernte jeneCSS-Regel,Test blieb unverändert.
+
+Frischer GitHub-Stand: Pflicht41036969216 nochlaufend, Testjob124000066758FAIL amverbindlichenSW-Revisionsgate, Cross1SUCCESS/Cross2läuft; Wallet41036969100SUCCESS. Kein weitererCI-Lauf durch Work gestartet, keine roteGesamtpipeline alsgrüngewertet. PassendeSW-Version erst imtatsächlichenEinzelreleasekontext,keinGateabschwächen.
+
+Bekannte CSS-Append-Konflikte mit209/213/214/218/222: bei spätererEinzelintegration beideRegelblöcke erhalten,engeSelektoren/Kaskade/Darstellung/Bedienung/Fachwerte tatsächlichprüfen. Erwartung„nachSW-BumpkeineweiterenGateprobleme“istkeinAbnahmebeleg. VollständigerVertragunter[UI-VISUAL08](COPILOT_UI_VISUAL08_VERTRAG_2026-10-30.md)erhalten;keinDiagramm-/Finanz-/Daten-/Referenzlebenszyklus-/Lösch-/Archivierungsfixin225.
+
+**PR220 bleibt unverändert TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED**, HEAD520b3ff7. Pflicht41032276589,Wallet41032276580 undinstrumentierteLive-Chromium-Diagnose41032276796frischSUCCESSverifiziert. Mainaf834705/v220deployed,volleLiveabnahmeweiterBLOCKED. „Fortsetzen“undCopilot-Übergabe nichtalsautomatischekonkreteMergefreigabeauslegen;nachbestehenderReleasevorgabeistdieeigeneausdrücklichePR220-FreigabenochdieexaktenächsteGrenze. DanachkontrollierterMerge,volleMain-/Pages-/Live-/PWA-Abnahme,erstanschließendEinzelintegrationderCopilotlieferungen.
+
+SiebenvisuellePakete01–05/07/08geliefert,keineparalleleNeuentwicklung.208eigenePositionszeiträumeundTestsbehalten,QA-Fix223separaterhalten. UI-VISUAL06/#217 undalleübrigennichtdelegiertenAufgabenbleibenbeiWork. **NurFLH05undFLH-PROJ01bewusstPARKED.** BestehenderMaster,PrioritätenundsämtlicheAnforderungenerhalten. DieserCheckpointändertnurDokumentation;keineProdukt-/Test-/CI-/Releaseunterbrechung.
+
+---
+
 ## UI-VISUAL08 ausdrücklich an Copilot delegiert · 30.10.2026
 
 **[Issue224](https://github.com/joke0071/foliolab-open/issues/224): COPILOT_DELEGATED / DRAFT_PENDING / WORK_INTEGRATION_PENDING.** Verbindlicher Nutzerauftrag und vollständiger aktueller Issue-Vertrag sind im [UI-VISUAL08-Vertrag](COPILOT_UI_VISUAL08_VERTRAG_2026-10-30.md) dauerhaft gesichert. Ausschließlich visuelle Optimierung der drei Bereiche unter dem Diagramm im Reiter Verlauf: Datenabdeckung & Abgleich; Rendite & Geldflüsse; historische Referenzwerte einschließlich visueller Verwaltungsoberfläche, jeweils auch geöffnet. Copilot liefert einen separaten Draft ohne Merge/Deployment. Work implementiert diesen klar abgegrenzten visuellen Teil nicht parallel.
