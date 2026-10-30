@@ -41,11 +41,22 @@ try {
    await page.locator(nav+' [data-page="history"]').click();
    const compact=await page.locator('#historyPage .history-controls').evaluate(el=>{
      const parent=el.closest('.panel').getBoundingClientRect();
-     const items=[...el.querySelectorAll('#chartPeriods button,.history-calendar-popover>summary,#addSnapshot')].map(x=>x.getBoundingClientRect());
-     return {within:items.every(x=>x.left>=parent.left-1&&x.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
+     const items=[...el.querySelectorAll('#chartPeriods button,#chartPeriods summary,.history-calendar-popover>summary,#addSnapshot')].map(x=>x.getBoundingClientRect()).filter(r=>r.width>0&&r.height>0);
+     return {within:items.length>0&&items.every(x=>x.left>=parent.left-1&&x.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
    });
    assert.equal(compact.within,true,'compact history controls escape card at '+width+' px');
    assert.ok(compact.scroll<=width+1,'history horizontal overflow at '+width+' px');
+   const more=page.locator('#chartPeriods .period-more>summary');
+   if(await more.isVisible()){
+    await more.click();
+    const expanded=await page.locator('#chartPeriods .period-more-list').evaluate(el=>{
+     const parent=el.closest('.panel').getBoundingClientRect(),buttons=[...el.querySelectorAll('button')].map(b=>b.getBoundingClientRect());
+     return {within:buttons.length>0&&buttons.every(b=>b.width>=44&&b.height>=44&&b.left>=parent.left-1&&b.right<=parent.right+1),scroll:document.documentElement.scrollWidth};
+    });
+    assert.equal(expanded.within,true,'expanded history period targets stay inside card at '+width+' px');
+    assert.ok(expanded.scroll<=width+1,'expanded history periods have no page overflow at '+width+' px');
+    await more.click();
+   }
    assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
    await page.locator(nav+' [data-page="dashboard"]').click();
    assert.ok(await page.locator('#summaryStats .stat').count()===4);

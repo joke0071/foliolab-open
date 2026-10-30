@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {CHART_PERIODS,chartPeriodDays,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from '../src/chart-periods.js';
+import {CHART_PERIODS,chartPeriodDays,renderChartPeriodButtons,groupExtraWealthPeriods,filterChartPeriod,syncChartPeriodButtons} from '../src/chart-periods.js';
 
 test('wealth and market charts share labels, ordering and a coherent preset contract',()=>{
  assert.deepEqual(CHART_PERIODS.wealth.map(x=>x.label),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
@@ -21,6 +21,16 @@ test('controls use exactly one pressed selection and preserve host event attribu
  assert.match(history,/data-range="month" aria-pressed="true" class="selected">1 M/);
  assert.match(position,/data-position-range="30" aria-pressed="true" class="selected">1 M/);
  assert.throws(()=>renderChartPeriodButtons('wealth','onclick','month'),/Ungültiges/);
+});
+test('mobile long-period disclosure names its selected wealth preset and keeps both buttons',()=>{
+ const threeYears=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range','threeYears'));
+ assert.match(threeYears,/aria-label="3 J ausgewählt; weitere Zeiträume: 3 J und 5 J"/);
+ assert.match(threeYears,/<span class="period-more-label">3 J<\/span>/);
+ assert.match(threeYears,/data-range="fiveYears" aria-pressed="false">5 J/);
+ assert.equal((threeYears.match(/<button /g)||[]).length,8);
+ const all=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-mini-range','all'));
+ assert.match(all,/aria-label="Mehr: weitere Zeiträume: 3 J und 5 J"/);
+ assert.match(all,/<span class="period-more-label">Mehr<\/span>/);
 });
 test('period filtering is rolling, inclusive, and leaves the source untouched',()=>{
  const points=[{date:'2026-09-24'},{date:'2026-09-25'},{date:'2026-10-23'},{date:'2026-10-24'}];

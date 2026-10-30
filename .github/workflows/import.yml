@@ -227,6 +227,10 @@ jobs:
             BOOKING_MANAGEMENT_ENGINES=firefox,webkit node tests/browser-booking-management.mjs
             TERM_ENGINES=firefox,webkit node tests/browser-cash-terms.mjs
             node tests/browser-atomic-storage-cross-engine.mjs
+            UI_PERIOD_ENGINE=firefox node tests/browser-chart-period-consistency.mjs
+            UI_PERIOD_ENGINE=firefox node tests/browser-extended-chart-periods.mjs
+            UI_PERIOD_ENGINE=webkit node tests/browser-chart-period-consistency.mjs
+            UI_PERIOD_ENGINE=webkit node tests/browser-extended-chart-periods.mjs
             IDB_ENGINES=firefox,webkit node tests/browser-idb-unmarked-recovery.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-wallet-history-core.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs

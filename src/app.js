@@ -33,7 +33,7 @@ import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
-import {renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
+import {groupExtraWealthPeriods,layoutPeriodMore,bindPeriodMore,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {availablePositionPeriods} from './position-history.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
@@ -2472,8 +2472,8 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
-$('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
-$('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
+$('miniChartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-mini-range',miniRange));
+$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));layoutPeriodMore();bindPeriodMore();
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
  if(!loadFailure)return;
  const control=event.target.closest('button,input,select,textarea,form');

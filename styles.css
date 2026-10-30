@@ -772,8 +772,7 @@
 #historyPage .history-calendar-panel{left:auto;right:0}
 @media(max-width:767px){
  .chart-period button,
- #historyPage .chart-period.history-chart-period button,
- .chart-period.position-period button{min-width:39px;min-height:36px;padding:7px 9px}
+ #historyPage .chart-period.history-chart-period button{min-width:39px;min-height:36px;padding:7px 9px}
  #historyPage .history-actions{gap:7px}
  #historyPage .history-actions .history-add-button{
   background:#26563d;color:#fff;border-color:#26563d
@@ -784,34 +783,51 @@
 }
 @media(max-width:360px){
  .chart-period button,
- #historyPage .chart-period.history-chart-period button,
- .chart-period.position-period button{min-width:35px;min-height:36px;padding:7px 6px;font-size:10px}
+ #historyPage .chart-period.history-chart-period button{min-width:35px;min-height:36px;padding:7px 6px;font-size:10px}
  #historyPage .history-controls{gap:5px}
 }
 
-/* Native six-option market periods: limit phones to 4 presets plus one More menu. */
+/* Keep extended native market periods in a compact responsive selector. */
 .chart-period.position-period{position:relative;flex-wrap:nowrap}
 .chart-period.position-period .position-period-long{display:inline-flex;align-items:center;gap:2px}
 .chart-period.position-period .position-period-more{display:none}
+.chart-period.position-period{padding:0;border:0;border-radius:0;background:transparent}
+.chart-period.position-period button{
+ min-width:44px;min-height:44px;padding:8px 6px;border-radius:8px
+}
+.chart-period.position-period button.selected,
+.chart-period.position-period button[aria-pressed="true"]{
+ background:#e8f1e9;color:#245a3d;box-shadow:none;font-weight:760
+}
+.chart-period.position-period button:focus-visible{outline:3px solid #397f52;outline-offset:2px}
 @media(max-width:767px){
+ .chart-period.position-period{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(44px,1fr));width:100%;max-width:100%
+ }
  .chart-period.position-period:has(.position-period-more) .position-period-long{display:none}
- .chart-period.position-period .position-period-more{display:block;position:relative}
+ .chart-period.position-period .position-period-more{display:block;position:relative;justify-self:stretch}
  .chart-period.position-period .position-period-more>summary{
-  display:flex;align-items:center;justify-content:center;min-width:43px;min-height:36px;
+  display:flex;align-items:center;justify-content:center;width:100%;min-width:44px;min-height:44px;
   padding:7px 8px;border-radius:9px;color:#4d6756;font-size:11px;font-weight:730;
   list-style:none;cursor:pointer
  }
  .chart-period.position-period .position-period-more>summary::-webkit-details-marker{display:none}
- .chart-period.position-period .position-period-more[open]>summary{background:white;color:#245a3d}
+ .chart-period.position-period .position-period-more>summary:focus-visible{outline:3px solid #397f52;outline-offset:2px}
+ .chart-period.position-period .position-period-more:has(.position-period-popover button[aria-pressed="true"])>summary,
+ .chart-period.position-period .position-period-more[open]>summary{background:#e8f1e9;color:#245a3d}
+ .chart-period.position-period .position-period-more>summary::after{
+  content:"";width:6px;height:6px;margin:-3px 0 0 3px;
+  border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)
+ }
  .chart-period.position-period .position-period-popover{
   position:absolute;top:calc(100% + 8px);right:0;z-index:10;
   display:flex;gap:3px;padding:6px;border:1px solid #d8e5db;
   border-radius:11px;background:#fff;box-shadow:0 8px 22px #183b2726
  }
- .chart-period.position-period .position-period-popover button{min-width:48px}
+ .chart-period.position-period .position-period-popover button{min-width:44px;min-height:44px}
 }
-@media(max-width:360px){
- .chart-period.position-period .position-period-more>summary{min-width:39px;padding:7px 6px;font-size:10px}
+@media(max-width:380px){
+ .chart-period.position-period .position-period-popover{left:0;right:auto}
 }
 
 /* Position editor: primary holdings first; optional lookup and technical mapping second. */
@@ -1292,3 +1308,65 @@
 .chart-tooltip-detail{min-height:0;width:100%;overflow:auto;overscroll-behavior:contain}
 .chart-tooltip-detail>span{display:block}
 .chart-tooltip-detail:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
+
+/* Wealth period control: one compact row on phones, 3 J / 5 J (and 1 J on very narrow screens)
+   behind a quiet "Mehr" disclosure. Every touch target is at least 44 x 44 px. */
+.chart-period .period-more{display:contents}
+.chart-period .period-more-list{display:contents}
+.chart-period .period-more>summary{display:none}
+@media(max-width:720px){
+ .chart-period:has(.period-more),
+ #historyPage .chart-period.history-chart-period:has(.period-more){
+  display:flex;flex-wrap:nowrap;position:relative;width:100%;max-width:100%;padding:0;border:0;border-radius:0;
+  background:transparent;gap:0;margin:0 0 12px
+ }
+ #historyPage .history-controls{flex-wrap:wrap;gap:8px 6px}
+ #historyPage .chart-period.history-chart-period:has(.period-more){flex:1 1 100%;margin:0}
+ .chart-period:has(.period-more) button,
+ #historyPage .chart-period.history-chart-period:has(.period-more) button,
+ .chart-period .period-more>summary{
+  flex:1 1 0;min-width:44px;min-height:44px;padding:0 4px;border-radius:10px;font-size:12px;font-weight:730
+ }
+ .chart-period .period-more{display:block;flex:1 1 0;min-width:44px;position:static}
+ .chart-period .period-more>summary{
+  display:flex;align-items:center;justify-content:center;width:100%;color:#4d6756;list-style:none;cursor:pointer;
+  background:#f2f7f2
+ }
+ .chart-period .period-more>summary::-webkit-details-marker{display:none}
+ .chart-period .period-more>summary::after{
+  content:'';width:5px;height:5px;margin:-2px 0 0 5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg)
+ }
+ .chart-period .period-more[open]>summary::after{transform:rotate(225deg);margin-top:2px}
+ .chart-period .period-more>summary:focus-visible{outline:2px solid #397f52;outline-offset:-2px}
+ .chart-period .period-more[open]>summary,
+ .chart-period .period-more.has-active>summary{background:#e3efe6;color:#245a3d;font-weight:760}
+ .chart-period .period-more-list{
+  position:absolute;right:0;top:calc(100% + 4px);z-index:20;display:flex;gap:2px;padding:4px;
+  border:1px solid #d8e5db;border-radius:12px;background:#fff;box-shadow:0 8px 22px #183b2726
+ }
+ .chart-period .period-more-list button,
+ #historyPage .chart-period.history-chart-period:has(.period-more) .period-more-list button{flex:0 0 auto;min-width:48px;background:transparent}
+ .chart-period .period-more:not([open]) .period-more-list{display:none}
+ .chart-period:has(.period-more) button:not(.selected),
+ #historyPage .chart-period.history-chart-period:has(.period-more) button:not(.selected){background:#f2f7f2}
+ .chart-period .period-more-list button:not(.selected),
+ #historyPage .chart-period.history-chart-period:has(.period-more) .period-more-list button:not(.selected){background:transparent}
+ .chart-period:has(.period-more) button.selected,
+ #historyPage .chart-period.history-chart-period:has(.period-more) button.selected{background:#e3efe6;box-shadow:none}
+}
+@media(max-width:374px){
+ /* Keep the row bounded during resize, before the media-query handler moves 1 J into More. */
+ .chart-period:has(.period-more)>button[data-mini-range="year"],
+ #historyPage .chart-period.history-chart-period:has(.period-more)>button[data-range="year"]{display:none}
+ .chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);max-width:none}
+ #historyPage .chart-period.history-chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;flex-basis:calc(100% + 16px);width:calc(100% + 16px);max-width:none}
+}
+@media(min-width:721px){
+ .chart-period.mini-chart-periods,
+ #historyPage .chart-period.history-chart-period{display:flex;flex-wrap:nowrap;grid-template-columns:none;width:max-content;max-width:100%}
+ .chart-period:has(.period-more) button,
+ #historyPage .chart-period.history-chart-period:has(.period-more) button{min-height:44px;min-width:44px}
+ .chart-period.mini-chart-periods button,
+ #historyPage .chart-period.history-chart-period button{padding:0 4px}
+}
