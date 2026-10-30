@@ -1,3 +1,19 @@
+## PR #228 reviewbereit · v221-Liveblock bleibt offen · 30.10.2026
+
+**Diagnose-PR #228: TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / RELEASE_APPROVAL_PENDING.** HEAD `484ceaf0ca80830202d4a646d366d66e587433d6`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, Testmerge `6c79d8c06f291e81b13eef66f1268bd3e7907045` mit identischem Tree auf Main `ecf775f5c17ceb301be04f20e1be400567f45261`. Draft aufgehoben, GitHub mergeable/clean. Ausschließlich P-Chain-Fehlerdiagnostik und begrenzter Diagnoseworkflow geändert; alle Produkt-/Finanz-/SW221-Dateien bytegleich, keine Timeout-, Assertion- oder Gate-Lockerung.
+
+**Alle Prüfungen des Kandidaten grün, jeweils erster Versuch:** Pflicht [41067814989](https://github.com/joke0071/foliolab-open/actions/runs/41067814989), Wallet41067814951 und begrenzte Produktionsdiagnose41067814937. Hauptjob124103777937, Cross1/124103778143, Cross2/124103778300 SUCCESS; 964/964 Units,0Fail/Skip,Syntax und vollständige vorhandene Chromium-/Firefox-/WebKit-/Finanz-/CAS-/Backup-/Restore-/Offline-/PWA-/Axe-/Dialogregression bestanden. Beide unabhängigen Produktionsproben124103777349/Firefox und124103777602/WebKit SUCCESS: veröffentlichter SW221 bytegleich, alle originalen P-Chain-Fälle und exakte IDB-/Einstellungsunverändertheit bestätigt.
+
+Vier reguläre und zwei Diagnose-ZIPs vor Extraktion SHA256-verifiziert,68 reguläre JSON-Berichte/65PASS-Berichte und beide vollständigen Produktionsprobeberichte ausgewertet. [Vollständige PR-Abnahme](release-evidence/v221-pr228-acceptance.json), [Produktionsproben](release-evidence/v221-pr228-pchain-live-probes.json), Belegcommits49b6f56e undfb90bcdd. Der ursprüngliche Firefox-Starttimeout ist **NOT_REPRODUCED / ROOT_CAUSE_UNKNOWN**; kein Runtimefix behauptet. Neue Instrumentierung bewahrt künftig auch frühe Fehlerzustände. Positive Proben ersetzen nicht die fehlgeschlagene gesamte Livepipeline.
+
+**Produktion weiterhin SW221 / DEPLOYED / LIVE_ACCEPTANCE_BLOCKED**, Main ecf775f5. Ursprünglicher Main-/Pages-/Livelauf41059923497 bleibt finalFAIL an Live124082520863/P-Chain-Start inFirefox. Main-/dreiBrowser-/Pages-Gates und tatsächliche Chromium-Live-Teilabnahme121Hashes/6Kerngruppen/18Axe bestanden; [Teilbelege](release-evidence/v221-pr209-live-partial.json) dauerhaft erhalten. Letzter vollständig LIVE_ACCEPTED-Stand bleibtv220. PR209/208 sind integriert, deren Inhalte nicht erneut bearbeiten; Freigabe für209 verbraucht.
+
+**Verbindliche nächste Fortsetzung: eigene konkrete Nutzerfreigabe für PR #228 / HEAD484ceaf0 einholen.** Keine Freigabe aus „Führe diesen Chat weiter“ oder der verbrauchten209-Freigabe ableiten. Erst nach erteilter Freigabe Main/PR-HEAD/Checks/Testmerge/Tree/WorkingTrees erneut prüfen, nur228 mit erwartetemHEAD mergen und vollständige neue Main-/Pages-/Live-/Asset-/SW-/PWA-Abnahme durchführen. Den alten roten Lauf weder blind wiederholen noch umdeuten. Bei erneutem Fehler die nun vorhandenen konkreten Belege auswerten; erst vollständigen Erfolg alsv221 DONE / LIVE_ACCEPTED dokumentieren.
+
+Andere Integrationen bis zum Releaseabschluss nicht beginnen.213 nur lesend vorgeprüft;213/214/218/219/222/225/227 und QA223 weiterhin COPILOT_DELIVERED / WORK_INTEGRATION_PENDING, bekannte CSS-/CSV-nach213-/Dialogbaseline-nach219-Verträge unverändert. UI-VISUAL06/#217 und sämtliche nicht delegierten Masteraufgaben bleiben beiWork. NurFLH05/FLH-PROJ01 bewusstPARKED. Alle bestehenden Anforderungen erhalten; historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
 ## v221 veröffentlicht, Live-Abnahme blockiert · Diagnose-PR228 gesichert · 30.10.2026
 
 **Aktueller Main `ecf775f5c17ceb301be04f20e1be400567f45261`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8`; PR209/208 integriert, SW221 veröffentlicht. MERGED / DEPLOYED / LIVE_ACCEPTANCE_BLOCKED.** Letzter vollständig LIVE_ACCEPTED-Stand bleibtv220. PR209-Freigabe verbraucht, keine Freigabe für neuePRs.
