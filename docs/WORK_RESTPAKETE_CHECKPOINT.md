@@ -1,3 +1,13 @@
+## Verbindlicher Kostenstopp für ChatGPT-Work-Credits · 30.10.2026
+
+**Explizite Nutzerentscheidung:** Keine zusätzlichen Work-Credit-Pakete mehr kaufen; Budget für weitere kostenpflichtige Credit-Zukäufe: **0 €**. Bisher 3 × 20 € Zusatzpakete erworben. Diese Vorgabe bleibt gültig, bis der Nutzer sie ausdrücklich selbst ändert. [CI-OPT01 / Issue #229](https://github.com/joke0071/foliolab-open/issues/229) wurde entsprechend aktualisiert.
+
+**Work-Verhalten:** Bestehendes oder regulär wieder bereitgestelltes Creditkontingent sparsam einsetzen. Keine Zusatzkäufe als Voraussetzung einplanen, keinen automatischen Kauf ausführen. Bei nicht mehr ausreichendem verfügbaren Kontingent einen sicheren Zwischenstand erstellen: laufende externe CI nicht abbrechen; offene Änderungen, Commit/HEAD, PRs, Tests und Fortsetzungspunkt remote absichern. Dann ohne Mehrkosten erst bei regulär verfügbarem Kontingent fortsetzen. Verbrauch/Kontingent nicht erfinden, wenn nicht direkt einsehbar.
+
+**Sicherheitsstandard unverändert:** Keine Finanz-/Speicher-/CAS-/Backup-/PWA-/Release-Gates oder Mergefreigaben lockern, nur um Credits zu sparen. Lieber kontrolliert unterbrechen als unzureichend geprüft mergen. CI-OPT01 nach bestehender Masterpriorität fortsetzen; andere Masterpakete und PARKED-Status unverändert.
+
+---
+
 ## CI-OPT01-Baseline dauerhaft gesichert · v221 vollständig live · 30.10.2026
 
 **Aktuelle Produktion: v221/SW221 DONE / LIVE_ACCEPTED**, Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`. Run41080709085 final SUCCESS nach genau einem begründeten unveränderten Livejob-Retry124160800384. 964/964 Units, drei Browser,121 unabhängig bestätigte veröffentlichte Asset-/SW-Hashes,6 Live-Kerngruppen,18 Axe-Scans,40 vollständige Live-PASS-Berichte. [Vollständige Releasebelege](release-evidence/v221-pr228-release.json) und tatsächliches Produktionsbild separat remote gesichert. Frühere503-/Timeoutfehler bleiben erhalten; kein pauschaler Rootcausefix und keine Hardwareabnahme behauptet. PR209/208/228 abgeschlossen, deren Freigaben verbraucht.
