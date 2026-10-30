@@ -1,3 +1,11 @@
+## PR206 CI_BLOCKED · WebKit-PWA-Cachefehler · 30.10.2026
+
+Aktueller Kandidat69451c8d/Tree44784cf3,SW219 unveröffentlicht;Produktionv218 LIVE_ACCEPTED. Cross2-Job123930890501 in Pflicht41015530552 FAIL:browser-pwa-update.mjs:97 complete matching precache,WebKit0 statt120. Firefox im gleichen Test PASS; WebKit vorherigerWorker/503-Abbruch/Offline/Datenerhalt PASS. Main/Cross1 laufen regulär weiter,keine CI unterbrochen. [Vollständiger initialer Bericht](release-evidence/ui-text02-v219-webkit-precache-failure.json), ZIP12959830261 vor Extraktion SHA256-verifiziert.
+
+Gleichartige Assertion bei v216 dokumentiert,aber **Ursache UNGEKLÄRT**, keine gemeinsameRootcause/Flakiness bewiesen. Bestehender Fehlerbericht enthält keine Worker-/Cachezustände im Fehlermoment. **Nächster Schritt:** ausschließlich Failure-only-Diagnostik im bestehenden PWA-Test ergänzen (Controller,Registrierung,Cache-Inhalte,bisherigeRequests);alleAssertions/Timeouts undProduktcode unverändert lassen. AktuelleJobs regulär abschließen;danach neuer geprüfterTest-only-FolgeHEAD und vollständigeCI. Bei erneutem Fehler zuerst tatsächlicheZustände auswerten,keine blinden weiterenRetries. PR206 nichtreviewbereit/keineFreigabefrage vor vollständigerAbnahme. AlleMaster-/PARKED-Verträge unverändert.
+
+---
+
 ## UI-TEXT02 / 3J Kandidat gesichert · PR206 CI läuft · 30.10.2026
 
 Produktion **v218/PR205 DONE / LIVE_ACCEPTED**, maincbb9e8e9fa58c768c128f304840269313aeae6ba, vollständige Main-/Pages-/Live41012601300 SUCCESS nach genau einem unveränderten Livejob-Retry. Erster Navigationsbefund weiterhin ungeklärt dokumentiert, keine Gates abgeschwächt. [Releasebelege](release-evidence/ui-text01-facts-v218-release.json).
