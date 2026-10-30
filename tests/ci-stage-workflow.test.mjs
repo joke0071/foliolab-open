@@ -27,7 +27,7 @@ const pinnedCacheSteps = [
   "          path: ~/.cache/ms-playwright",
   "          key: foliolab-pw1.64.1-firefox-webkit-v1-${{ runner.os }}-${{ runner.arch }}"
  ]
-].map(lines=>lines.join('\\n')+'\\n');
+].map(lines=>lines.join('\n')+'\n');
 
 /** Only the three pinned cache stanzas are allowed to differ from the previously
  * sealed CI contract. After removing them, the original workflow bodies must
@@ -38,7 +38,7 @@ function originalContractWithOnlyPinnedCaches(source) {
   assert.equal(reduced.split(block).length,2,'Every exact cache stanza must appear once');
   reduced=reduced.replace(block,'');
  }
- assert.doesNotMatch(reduced,/uses: actions\\/cache@v4/,'No other unreviewed cache steps');
+ assert.doesNotMatch(reduced,/uses: actions\/cache@v4/,'No other unreviewed cache steps');
  return reduced;
 }
 function validate(s) {
