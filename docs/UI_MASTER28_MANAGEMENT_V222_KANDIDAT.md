@@ -49,8 +49,9 @@ Dieser Kandidat schließt weder UI-MASTER28 noch DELETE-MASTER28 insgesamt ab.
 ## Copilot-Abgrenzung
 
 Die gelieferten Visual-Drafts werden nicht neu implementiert. Der Work-Schnitt
-ändert die funktionale Listenbedienung. CSS wird nur für die nachgewiesenen
-44px-Ziele der neuen Textschaltflächen ergänzt; keine visuelle Neugestaltung.
+ändert die funktionale Listenbedienung. CSS sichert die nachgewiesenen
+44px-Ziele der neuen Textschaltflächen und den vollständigen Umbruch geschützter
+Buchungshinweise auf schmalen Geräten; keine visuelle Neugestaltung.
 
 Der unveränderte Textpatch von PR213 lässt sich bereits auf Main d6b2a14f nicht
 vollständig anwenden: Kontext am Ende von `app.js` (Zeitrauminitialisierung)
@@ -83,3 +84,13 @@ Die neue Nutzwertpriorisierung bleibt maßgeblich. PERF01/PR200/v213 ist bereits
 abgenommen; weitere reale Großdaten-/Android-Messungen sind ein eigener Rest.
 Nur FLH05 und FLH-PROJ01 bleiben bewusst zurückgestellt. Keine zusätzlichen
 kostenpflichtigen Work-Credit-Pakete kaufen oder einplanen.
+
+Die erste vollständige PR-Prüfung 41121801027 hat auf HEAD 1872114 einen
+realen Seitenüberlauf durch den neuen geschützten Buchungshinweis erkannt
+(320px Viewport, 337px Dokumentbreite). Der Dialog selbst passte. Die Korrektur
+erlaubt dem Hinweiscontainer zu schrumpfen und den vollständigen Text umzubrechen.
+Die ursprüngliche strikte Breitenassertion bleibt erhalten; eine zusätzliche
+Normalmodusprüfung und reine Fehlerdiagnostik sichern diesen Fall ab. Der rote
+Erstlauf bleibt als Fehlernachweis erhalten und wird nicht als Infrastrukturfehler
+umklassifiziert. Die gezielten Flatex-/Buchungsprüfungen bestehen lokal.
+Die vollständige CI muss den korrigierten HEAD erneut prüfen.
