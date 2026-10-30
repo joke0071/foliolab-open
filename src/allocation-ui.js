@@ -6,6 +6,8 @@ export function formatAllocationShare(value){
  return shareFormat.format(value)+' %';
 }
 /** Pie shares represent positive asset values, never net worth after liabilities. */
+/** Accessible name always starts with the visible label and share (WCAG 2.5.3). */
+export function allocationCenterName(label,share,value){return label+', '+share+': '+value+' · Gesamtwert des Portfolios anzeigen';}
 export function allocationBreakdown(model,valueEUR,types){
  const byKind=new Map(Object.keys(types).map(key=>[key,0]));
  let gross=0,liabilities=0;
@@ -44,7 +46,7 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
  const share=chosen?formatAllocationShare(chosen.percent):liabilities>0?'Nettovermögen':'Gesamtwert';
  return {donut:'<svg class="allocation-svg" viewBox="0 0 200 200" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
   '<circle class="allocation-track" cx="100" cy="100" r="84" stroke="#e8efe9" stroke-width="30" fill="none"/>'+segments+'</svg>'+
-  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(label+': '+value+' · Gesamtwert des Portfolios anzeigen')+'" title="'+esc(money(netTotal))+'">'+
+  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value))+'" title="'+esc(money(netTotal))+'">'+
   '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(compactMoney(chosen?chosen.value:netTotal))+'</strong>'+
   '<small id="donutShare">'+esc(share)+'</small></button>',
   legend:rest,activeIndex:chosen?slices.indexOf(chosen):-1};
@@ -69,7 +71,7 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
    el.classList.toggle('active',active);
    el.setAttribute('aria-pressed',String(Number(el.dataset.allocationIndex)===pinned));
   });
-  center.setAttribute('aria-label',(item?'Gesamtwert anzeigen statt '+item.name:'Gesamtwert des Portfolios anzeigen')+' · '+money(item?.value??netTotal));
+  center.setAttribute('aria-label',allocationCenterName(label.textContent,share.textContent,money(item?.value??netTotal)));
  }
  function pin(index){
   pinned=pinned===index?-1:index;
