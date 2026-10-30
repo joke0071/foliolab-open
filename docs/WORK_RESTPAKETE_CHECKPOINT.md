@@ -1,3 +1,13 @@
+## UI-TEXT01 Schlussreview-Korrektur gesichert · PR204 · 30.10.2026
+
+**PARTIAL / CI_RUNNING / NOT_MERGED / NOT_DEPLOYED.** Aktueller einziger Kandidat [PR204](https://github.com/joke0071/foliolab-open/pull/204), HEAD **35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93**, Branch fix/ui-text01-quote-display-v217. Schlussreview fand zusätzliche rein lesende Inkonsistenz: valuationIssues meldete belegte Nullkurse trotz korrekter Detail-/Qualitätsanzeige weiterhin als fehlend. Derselbe Display-Belegvertrag wird jetzt auch dort für Marktpositionen verwendet; andere Arten und echte veraltete/fehlende Kurse behalten ihre Warnungen. Gespeicherte Finanzwerte, Bewertungsrechnung und Snapshot-/Journal-/Import-/Backup-/Syncpfade unverändert. Sechs zusammengehörige Dateien insgesamt, keine Scopeerweiterung auf weitere Masterpakete.
+
+Lokal erneut **957/957 Units, 0 Fail/Skip**, Syntax und diff-check PASS. Zusätzliche Regression verlangt konsistente Fehlwert-/Nullkurs-/veraltete Kurswarnungen. Remote-Blobs und Tree exakt lokal verglichen. Neue [Pflicht40997505773](https://github.com/joke0071/foliolab-open/actions/runs/40997505773) und [Wallet40997505790](https://github.com/joke0071/foliolab-open/actions/runs/40997505790) laufen auf exakt neuem HEAD. Frühere CI40996838356/40996838351 auf c59f776d bleibt Zwischenstand, keine finale Abnahme; keine laufende CI manuell abgebrochen.
+
+**Weiter:** ausschließlich finale Gates auf35f0bb7c und echte Artefakte/Testmerge prüfen, dann reviewbereit machen und eigene ausdrückliche Releasefreigabe für PR204 einholen. Produktion bleibt v216/SW216 LIVE_ACCEPTED, SW217 unveröffentlicht. Keine gültige unverbrauchte Vorabfreigabe dokumentiert; PR203-Freigabe nicht übertragen. Vollständiger Master und alle übrigen Nachträge erhalten, FLH05/FLH-PROJ01 OPEN/PARKED. Keine weitere Produktimplementierung bis zu diesem sicheren Paketabschluss.
+
+---
+
 ## UI-TEXT01 implementiert und remote gesichert · PR204 · 30.10.2026
 
 **PARTIAL / CI_RUNNING / NOT_MERGED / NOT_DEPLOYED.** Einziger aktiver funktionaler Strang: [PR204](https://github.com/joke0071/foliolab-open/pull/204), Branch `fix/ui-text01-quote-display-v217`, HEAD `c59f776d133a1a1e5eeeca4b9f4594133d1e003f`, Tree `ae17cd1ebfb665a8124efa5759cd3c45f048205f`. Sämtliche fünf Remote-Blobs und Tree mit lokal geprüften Gitobjekten identisch; Gitfetch bestätigt Remote-HEAD. Nur generierter node_modules-Symlink untracked, keine ungesicherten Produkt-/Teständerungen. Shell-Push ohne Zugangsdaten nicht möglich; identischen getesteten Tree über vorhandenen GitHub-Connector veröffentlicht und lokalen Branch auf diesen Commit abgeglichen.
