@@ -1,3 +1,15 @@
+## PR232: Nutzerfreigabe erteilt und exakt geprüften Kandidaten gemergt · 30.10.2026
+
+**Neue ausdrückliche Nutzerentscheidung:** PR232 soll **jetzt** produktiv für den Praxistest verfügbar werden; frühere „erst nach Wochenende“-Zurückstellung für **diesen PR** aufgehoben. Keine pauschale Freigabe anderer PRs oder Copilot-Drafts.
+
+**Erfolgreicher kontrollierter Merge nur für PR232**, erwarteter Head `12835f4102af973fc274c2be21973cb5ab8c9feb`: neuer Main `8353a1cab3c528a389d2bd7893df819f3c284225`, Eltern exakt `d6b2a14f2108bc210411054d5f3d7690ba44fd51` + `12835f4102af973fc274c2be21973cb5ab8c9feb`, Main-Tree `b045f340c06b51704c1482ff5685470cd96c09f9` identisch zu vollständig technisch abgenommenem PR-Kandidat. **Keine Produktänderung nach Kandidatenabnahme**. PR232-Freigabe verbraucht.
+
+**Verpflichtende vollständige Main-/Pages-/Live-Releasepipeline [41126514518](https://github.com/joke0071/foliolab-open/actions/runs/41126514518)** wurde automatisch auf dem neuen Main gestartet; beim ersten Check **IN_PROGRESS / LIVE_ACCEPTANCE_PENDING**. Kein weiterer Testlauf oder Deploy manuell gestartet. **Produktiv v222/SW222 erst nach tatsächlicher vollständiger Main-/Cross-/Pages-/Live-/Asset-/PWA-/Backup-/Restore-Abnahme als LIVE_ACCEPTED bezeichnen**; bis dahin letzter tatsächlich abgenommener Produktionsstand v221/SW221. Keine parallele Implementierung, keine weiteren PRs mergen. Bei fehlgeschlagenem Gate konkreten Fehler sauber dokumentieren, keine blinden Retries/Gatelockerungen.
+
+**Exakte Fortsetzung:** Run41126514518 regulär vollständig prüfen, 975 Units, drei Engines, ZIP-SHA256/CRC, echte JSON-/Axe-/Bildberichte, Pages-/Live-SW222 und 121 veröffentlichten Hashes verifizieren; tatsächlichen Produktionsstatus und dauerhaften Releasebeleg sichern. Nur FLH05 und FLH-PROJ01 bewusst PARKED; übrige Nutzwert-/Masteraufträge erhalten. Keine weiteren kostenpflichtigen Work-Credit-Pakete.
+
+---
+
 ## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – PR232 TECHNISCH_ABGENOMMEN / v221 bleibt stabil LIVE_ACCEPTED
 
 **Maßgebliche Fortsetzungsstelle nach vollständiger Belegprüfung am 30.10.2026:** Work-eigener P1-Teilschnitt UX10/UI-TEXT07 in [PR232](https://github.com/joke0071/foliolab-open/pull/232) ist technisch abgenommen, **NICHT GEMERGT / NICHT DEPLOYED / EIGENE KONKRETE FREIGABE ERFORDERLICH**. Main bleibt d6b2a14f2108bc210411054d5f3d7690ba44fd51, Tree033a5de98b2215fd818d127fe7674bee4292e7f9; Produktion v221/SW221 weiterhin LIVE_ACCEPTED und für den Wochenend-Praxistest unverändert. Keine ungeplante Veröffentlichung und kein Übertragen alter Freigaben.
