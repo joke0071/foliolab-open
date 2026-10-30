@@ -1356,6 +1356,9 @@
  #historyPage .chart-period.history-chart-period:has(.period-more) button.selected{background:#e3efe6;box-shadow:none}
 }
 @media(max-width:374px){
+ /* Keep the row bounded during resize, before the media-query handler moves 1 J into More. */
+ .chart-period:has(.period-more)>button[data-mini-range="year"],
+ #historyPage .chart-period.history-chart-period:has(.period-more)>button[data-range="year"]{display:none}
  .chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);max-width:none}
  #historyPage .chart-period.history-chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;flex-basis:calc(100% + 16px);width:calc(100% + 16px);max-width:none}
 }

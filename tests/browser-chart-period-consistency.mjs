@@ -1,4 +1,3 @@
-import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {createRequire} from 'node:module';
@@ -6,7 +5,7 @@ import {readFileSync,mkdirSync} from 'node:fs';
 const axeScript=readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'),'utf8');
 const engine=process.env.UI_PERIOD_ENGINE||'chromium';
 const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
-const page=await legacyPage(browser,{viewport:{width:390,height:850}});
+const page=await browser.newPage({viewport:{width:390,height:850}});
 mkdirSync('artifacts/gates/ui-visual01',{recursive:true});
 const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
 const labels=['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max'];
@@ -42,13 +41,28 @@ const verifyTargets=async(root,width)=>{
  const extraRects=await extra.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return [r.width,r.height];}));
  assert.ok(extraRects.every(([w,h])=>w>=44&&h>=44),'Disclosure targets below 44px at '+width+': '+JSON.stringify(extraRects));
  await summary.click();
+ if(narrow){
+  const transition=await root.evaluate(async root=>{
+   const more=root.querySelector('.period-more'),year=more.querySelector('button[data-range="year"],button[data-mini-range="year"]');
+   // Reproduce the real pre-handler DOM immediately after a wide-to-narrow resize.
+   root.insertBefore(year,more);
+   const result={hidden:getComputedStyle(year).display==='none',scroll:document.documentElement.scrollWidth,viewport:innerWidth};
+   const {layoutPeriodMore}=await import('/src/chart-periods.js');layoutPeriodMore();
+   return {...result,restored:year.parentElement===more.querySelector('.period-more-list')};
+  });
+  assert.ok(transition.hidden&&transition.restored,'1 J stays bounded before resize handling and remains available in More at '+width);
+  assert.ok(transition.scroll<=transition.viewport+1,'no transient page overflow before the resize handler at '+width);
+ }
 };
 try{
  await page.route('**/__visual01_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
  await page.goto('http://127.0.0.1:4173/');
+ await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  await page.evaluate(async()=>{
-  const {blankModel,persist}=await import('/src/model.js');
+  const {blankModel}=await import('/src/model.js');
+  const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
   const model=blankModel();
+  model.settings.autoRefresh=false;
   const iso=days=>new Date(Date.now()-days*864e5).toISOString().slice(0,10);
   model.snapshots=[
    {id:'before',date:iso(2200),total:1000},
@@ -57,11 +71,12 @@ try{
    {id:'within',date:iso(8),total:1100},
    {id:'current',date:iso(1),total:1200}
   ];
-  persist(model);
+  const storage=new PortfolioStorage();await storage.initialize();await storage.save(model);storage.close();
  });
  await page.reload();
  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const before=await record();
+ assert.ok(before?.raw&&Number.isInteger(before.revision),'the fixture must have an actual canonical IndexedDB record');
  await page.addScriptTag({url:'http://127.0.0.1:4173/__visual01_axe.js'});
  const mini=page.locator('#miniChartPeriods');
  assert.deepEqual(await mini.locator('button').allTextContents(),labels);
