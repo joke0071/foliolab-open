@@ -46,7 +46,7 @@
       "verifiedBeforeExtraction": true
     }
   ],
-  "next": "Existing master P1 UI-TEXT02: make already-supported 3-year position period reachable, preserve actual coverage and existing charts. FLH05/PROJ01 remain PARKED.",
+  "next": "Complete PR205 position-facts candidate on03ee0d32, obtain separate explicit release approval, then UI-TEXT02/3J. FLH05/PROJ01 stay PARKED.",
   "preserved": "Entire master; FLH05/FLH-PROJ01 OPEN/PARKED; no real Android hardware claim.",
   "finalJobs": {
     "test": 123913366501,
@@ -818,5 +818,6 @@
     "job": 123912141099,
     "evidence": "v217-live-sw-registration-failure.json",
     "cause": "UNKNOWN; no worker registration in fresh context, unchanged one-job retry passed. Preserve as QA follow-up."
-  }
+  },
+  "scope": "Released provider-detail quote display, quote quality and read-only missing-price warnings. Separate position-list facts renderer found afterward, tracked in PR205; overall UI-TEXT01 remains PARTIAL."
 }

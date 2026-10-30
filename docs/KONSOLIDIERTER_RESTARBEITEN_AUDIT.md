@@ -1,3 +1,15 @@
+## UI-TEXT01 Anschlusskorrektur Positionsfakten · PR205 gesichert · 30.10.2026
+
+**Produktion v217/PR204 DONE / LIVE_ACCEPTED für den freigegebenen Detail-/Qualitäts-/Warnungsschnitt. UI-TEXT01 im Gesamtumfang PARTIAL.** Im anschließenden gezielten Sourceabgleich wurde eine zweite reale Renderstelle in app.js/renderPositions bestätigt: aufgeklappte „Bestand und Kursdetails“ gaben kanonisch fehlenden Kurs weiter als0 EUR aus. Die vorherige pauschale UI-TEXT01-DONE-Zuordnung ist deshalb zu weit und wird hier ausdrücklich präzisiert. Kein neuer Masteraudit; vorhandener Display-Belegvertrag wird wiederverwendet.
+
+Einziger funktionaler Strang [PR205](https://github.com/joke0071/foliolab-open/pull/205), Branch **fix/ui-text01-position-facts-v218**, HEAD **03ee0d329096aca0c7d4bb2ad0da6f83838acb0c**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6**. Alle drei Remote-Blobs/Tree entsprechen den lokal geprüften Gitobjekten. Fehlender Kurs „Nicht verfügbar“, unbekannte Quelle „Unbekannt“; belegte Null, volle Exaktpräzision und belegte Stichtagsherkunft bleiben erhalten. Keine neue Bewertungs-/Finanz-/Persistenzlogik, keine weiteren UI-Pakete. SW218 unveröffentlicht.
+
+Lokal957/957 Units,0Fail/Skip,Syntax/diff-check PASS. Vorhandene reale Positionsdetails-Browsersuite um fehlend/belegteNull/positiveUnbekanntquelle/Exaktpräzision/siebenBreiten und unveränderten vollständigen IndexedDB-Record samtRevision/Einstellungen erweitert. [Pflicht41011181867](https://github.com/joke0071/foliolab-open/actions/runs/41011181867) und [Wallet41011181874](https://github.com/joke0071/foliolab-open/actions/runs/41011181874) laufen auf genau diesem HEAD; kein Browser-PASS vorweggenommen. Keine neue lokale Browserinstallation wiederholt, bekannte ungültige Downloadarchive bleiben Umgebungsgrenze.
+
+**Weiter:** PR205 vollständig technisch abnehmen, tatsächliche Artefakte/Testmerge/Bilder prüfen und eigene ausdrückliche Releasefreigabe einholen. PR204-Freigabe verbraucht und nicht aufPR205 übertragen. Nach freigegebenem Release erst UI-TEXT02/3J und übrige bestehende P1. Keine 3J-/Zeitraum-/TradingViewänderung inPR205. Vollständiger Master,Mehr-/Text-/DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge erhalten; FLH05/FLH-PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
 ## PR204 / UI-TEXT01 · v217 produktiv abgenommen · 30.10.2026
 
 **DONE / LIVE_ACCEPTED für UI-TEXT01.** Freigegebener PR204/main **c6a07402d668c0a5d90d1294be8f72547d1577b0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93** identisch mit geprüftem HEAD35f0bb7c. Produktion **v217/SW217**. [Main-/Pages-/Live41008536496](https://github.com/joke0071/foliolab-open/actions/runs/41008536496) final SUCCESS,Versuch2:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und tatsächliche Produktionsabnahme erfolgreich.

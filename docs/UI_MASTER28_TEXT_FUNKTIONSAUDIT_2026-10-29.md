@@ -1,3 +1,15 @@
+## UI-TEXT01 Anschlusskorrektur Positionsfakten · PR205 gesichert · 30.10.2026
+
+**Produktion v217/PR204 DONE / LIVE_ACCEPTED für den freigegebenen Detail-/Qualitäts-/Warnungsschnitt. UI-TEXT01 im Gesamtumfang PARTIAL.** Im anschließenden gezielten Sourceabgleich wurde eine zweite reale Renderstelle in app.js/renderPositions bestätigt: aufgeklappte „Bestand und Kursdetails“ gaben kanonisch fehlenden Kurs weiter als0 EUR aus. Die vorherige pauschale UI-TEXT01-DONE-Zuordnung ist deshalb zu weit und wird hier ausdrücklich präzisiert. Kein neuer Masteraudit; vorhandener Display-Belegvertrag wird wiederverwendet.
+
+Einziger funktionaler Strang [PR205](https://github.com/joke0071/foliolab-open/pull/205), Branch **fix/ui-text01-position-facts-v218**, HEAD **03ee0d329096aca0c7d4bb2ad0da6f83838acb0c**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6**. Alle drei Remote-Blobs/Tree entsprechen den lokal geprüften Gitobjekten. Fehlender Kurs „Nicht verfügbar“, unbekannte Quelle „Unbekannt“; belegte Null, volle Exaktpräzision und belegte Stichtagsherkunft bleiben erhalten. Keine neue Bewertungs-/Finanz-/Persistenzlogik, keine weiteren UI-Pakete. SW218 unveröffentlicht.
+
+Lokal957/957 Units,0Fail/Skip,Syntax/diff-check PASS. Vorhandene reale Positionsdetails-Browsersuite um fehlend/belegteNull/positiveUnbekanntquelle/Exaktpräzision/siebenBreiten und unveränderten vollständigen IndexedDB-Record samtRevision/Einstellungen erweitert. [Pflicht41011181867](https://github.com/joke0071/foliolab-open/actions/runs/41011181867) und [Wallet41011181874](https://github.com/joke0071/foliolab-open/actions/runs/41011181874) laufen auf genau diesem HEAD; kein Browser-PASS vorweggenommen. Keine neue lokale Browserinstallation wiederholt, bekannte ungültige Downloadarchive bleiben Umgebungsgrenze.
+
+**Weiter:** PR205 vollständig technisch abnehmen, tatsächliche Artefakte/Testmerge/Bilder prüfen und eigene ausdrückliche Releasefreigabe einholen. PR204-Freigabe verbraucht und nicht aufPR205 übertragen. Nach freigegebenem Release erst UI-TEXT02/3J und übrige bestehende P1. Keine 3J-/Zeitraum-/TradingViewänderung inPR205. Vollständiger Master,Mehr-/Text-/DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge erhalten; FLH05/FLH-PROJ01 OPEN/PARKED. Historischen Dokumentationsbranch niemals als Anwendungscode mergen.
+
+---
+
 ## UI-TEXT01 DONE / LIVE_ACCEPTED · v217 · 30.10.2026
 
 PR204/mainc6a07402,957Units/drei Engines/Main/Pages/Live SUCCESS. 121 veröffentlichte Dateihashes,37 finale Liveberichte. Vollständige Belege in release-evidence/ui-text01-v217-release.json; erster SW-Registrierungsbefund weiter ungeklärt dokumentiert. UI-TEXT02 ist der nächste bestehende P1-Schnitt; übriger Audit OPEN/PARTIAL. Historische Kandidaten-/Fehlerstände unten erhalten.
@@ -44,7 +56,7 @@ Ebene1: Name, relevanter Status, wichtigste Aktion und bei Bedarf ein kurzer Sat
 
 | ID | Verbindlicher Prüf- und Korrekturauftrag | Status |
 | --- | --- | --- |
-| UI-TEXT01 / P1 | Fehlender Kurs ist keine0. Fehlende/ungültige Werte als „–“ oder „Kurs nicht verfügbar“; echte0 nur mit tatsächlichem Beleg. Leere Quelle nicht automatisch „Manuell“. Nur Darstellung, gespeicherte Werte unverändert. | DONE / LIVE_ACCEPTED in v217; PR204; fehlend/ungültig als Nicht verfügbar, Quelle Unbekannt, Null nur mit Quellenbeleg; Finanzwerte unverändert |
+| UI-TEXT01 / P1 | Fehlender Kurs ist keine0. Fehlende/ungültige Werte als „–“ oder „Kurs nicht verfügbar“; echte0 nur mit tatsächlichem Beleg. Leere Quelle nicht automatisch „Manuell“. Nur Darstellung, gespeicherte Werte unverändert. | PARTIAL: v217/PR204 Detailansicht LIVE; Positionsfakten PR205 CI_RUNNING; fehlend/ungültig als Nicht verfügbar, Quelle Unbekannt, Null nur mit Quellenbeleg; Finanzwerte unverändert |
 | UI-TEXT02 | availablePositionPeriods und Darstellung abgleichen;3J wird teilweise zugelassen und danach herausgefiltert. Längere Optionen nur mit echter Abdeckung; K02 wiederverwenden, keine Fakehistorie. | OPEN / bestehender Kursoptionenvertrag |
 | UI-TEXT03 | Krypto-CSV-Markup gegen tatsächlich unterstützten Wertpapier-Importpfad und Berechtigungen prüfen. Nur erreichbare unterstützte Funktionen anbieten; keine bloße Freischaltung unvollständiger Pfade. | OPEN; vorbereitete Markups nicht ungeprüft als sichtbar behandeln |
 | UI-TEXT04 | „Vermögensänderung“, Zusatz „Ein- und Auszahlungen enthalten · keine Rendite“, Zeitraum erhalten, fehlende Vergleichswerte konkret erklären. | OPEN / Darstellung ohne Berechnungsänderung |
