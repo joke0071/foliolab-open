@@ -1,3 +1,17 @@
+## PR209 – widersprüchlichen Worker-Zustand instrumentiert · 30.10.2026
+
+**HEAD `4b41bf2b15aaf3982a2c53087da5150ff1e7363a`, Tree `a866e599bb1e5e8f27296debaa17eef424d07ad3`**, remote gesichert, neuer Blob und Gesamtbaum exakt lokal/remote geprüft; Anwendung/SW221 weiterhin bytegleich zum Nutzerfreigabekontext4880cc11. Ausschließlich Testhelfer geändert. Freigabe fürPR209 erfasst, unverbraucht; **BLOCKED / DIAGNOSIS_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED**.
+
+Lauf41055171967 auf3fcf4f3b: Hauptjob124060772129 erneut rot an controlledStorageFixture, scriptURL unmittelbar nach zusätzlicher Bereitschaftsprüfung undefined. Die zusätzliche Post-Reload-Prüfung hat den Befund also nicht behoben. Fehler ausdrücklich nicht umgedeutet; keine weitere Wartebedingung/Retry/Timeoutverlängerung hinzugefügt. Andere Crossjobs zuletzt nochlaufend, Wallet41055172037SUCCESS. Exakte ursprüngliche Worker-/Navigationsursache weiterhin ungeklärt.
+
+Neue Diagnose bewahrt alle bestehenden Prüfungen und protokolliert tatsächliche Navigations-/Load-Ereignisse, Dokumentzeitbasis, Controller/aktive/installierende/wartende Worker, Cache-Namen, Bereitschaftsstatus und den tatsächlichen JSON-Rückgabewert der Playwright-Wartefunktion vor/nachReload. BeiFehler zusätzlich Screenshot und Playwright-Trace, aufErfolg ebenfalls Zustandsbericht. Keine Produkt-/Finanz-/SW-/Zeitraumänderung, keine Gate-/Assertionlockerung. Syntax/diff-checkPASS; letzter vollerUnitlauf964/964,0Fail/Skip. LokaleBrowser nichtinstalliert; keine lokaleBrowserabnahme behaupten.
+
+Aktueller Diagnoselauf: [41056024516](https://github.com/joke0071/foliolab-open/actions/runs/41056024516), Wallet41056024533, auf genau4b41bf2b.
+
+**Exaktweiter:** neuenDiagnoselauf auf4b41bf2b sowie3fcf4f3b-Crossresultate prüfen; SHA-verifizierte Zustandsberichte/gegebenenfalls Trace und tatsächliche Ereignisfolge auswerten, erst danach konkreteKorrektur. Keine blinden Wiederholungen oder weitere spekulativeWartegrenzen. VollständigeAbnahme/Artefakt-/Bildprüfung und geltendePR209-Freigabebedingungen bleiben Mergevoraussetzung. Produktivv220/SW220 weiterhinDONE / LIVE_ACCEPTED aufMain537bddc3.208bewahrt, übrigeCopilot-Drafts einschließlich227 undQA223 unverändert; nurFLH05/FLH-PROJ01bewusstPARKED, UI-VISUAL06 undübrigerMasterbeiWork.
+
+---
+
 ## PR209 – Freigabe erfasst, Post-Reload-Testvoraussetzung korrigiert · 30.10.2026
 
 Nutzerwortlaut: **„Freigabe“**, im unmittelbaren Kontext des zuletzt genannten PR209-Kandidaten4880cc11. Die Freigabe ist für PR209 erfasst und noch nicht verbraucht. Keine Freigabe für andere PRs oder zum Umgehen roter Pflichtgates. Merge/Deployment bleiben bis vollständiger technischer Abnahme gesperrt.
