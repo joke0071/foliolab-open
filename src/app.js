@@ -33,7 +33,7 @@ import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
-import {groupExtraWealthPeriods,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
+import {groupExtraWealthPeriods,layoutPeriodMore,bindPeriodMore,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {availablePositionPeriods} from './position-history.js';
 import {cryptoFallbackQuote,defiLlamaContractKey} from './crypto-fallbacks.js';
@@ -2473,10 +2473,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
 $('miniChartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-mini-range',miniRange));
-$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));syncPeriodMore();
-function syncPeriodMore(){const wide=matchMedia('(min-width:721px)').matches;document.querySelectorAll('.period-more').forEach(d=>{d.open=wide;});}
-matchMedia('(min-width:721px)').addEventListener('change',syncPeriodMore);
-document.addEventListener('click',e=>{const b=e.target.closest('.period-more-list button');if(b&&!matchMedia('(min-width:721px)').matches)b.closest('.period-more').open=false;});
+$('chartPeriods').innerHTML=groupExtraWealthPeriods(renderChartPeriodButtons('wealth','data-range',range));layoutPeriodMore();bindPeriodMore();
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
  if(!loadFailure)return;
  const control=event.target.closest('button,input,select,textarea,form');

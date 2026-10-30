@@ -1293,7 +1293,8 @@
 .chart-tooltip-detail>span{display:block}
 .chart-tooltip-detail:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
 
-/* Wealth period control: one compact row on phones, 3 J / 5 J behind a quiet "Mehr" disclosure. */
+/* Wealth period control: one compact row on phones, 3 J / 5 J (and 1 J on very narrow screens)
+   behind a quiet "Mehr" disclosure. Every touch target is at least 44 x 44 px. */
 .chart-period .period-more{display:contents}
 .chart-period .period-more-list{display:contents}
 .chart-period .period-more>summary{display:none}
@@ -1305,43 +1306,46 @@
  }
  #historyPage .history-controls{flex-wrap:wrap;gap:8px 6px}
  #historyPage .chart-period.history-chart-period:has(.period-more){flex:1 1 100%;margin:0}
+ #historyPage .history-calendar-popover>summary,#historyPage .history-add-button{
+  flex-basis:44px;width:44px;min-width:44px;height:44px;min-height:44px
+ }
  .chart-period:has(.period-more) button,
  #historyPage .chart-period.history-chart-period:has(.period-more) button,
  .chart-period .period-more>summary{
-  flex:1 1 0;min-width:40px;min-height:44px;padding:0 4px;border-radius:10px;font-size:12px;font-weight:730
+  flex:1 1 0;min-width:44px;min-height:44px;padding:0 4px;border-radius:10px;font-size:12px;font-weight:730
  }
- .chart-period .period-more{display:block;flex:1 1 0;min-width:40px;position:static}
+ .chart-period .period-more{display:block;flex:1 1 0;min-width:44px;position:static}
  .chart-period .period-more>summary{
-  display:flex;align-items:center;justify-content:center;width:100%;color:#4d6756;list-style:none;cursor:pointer
+  display:flex;align-items:center;justify-content:center;width:100%;color:#4d6756;list-style:none;cursor:pointer;
+  background:#f2f7f2
  }
- .chart-period .period-more>summary{background:#f2f7f2}
  .chart-period .period-more>summary::-webkit-details-marker{display:none}
+ .chart-period .period-more>summary::after{
+  content:'';width:5px;height:5px;margin:-2px 0 0 5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg)
+ }
+ .chart-period .period-more[open]>summary::after{transform:rotate(225deg);margin-top:2px}
  .chart-period .period-more>summary:focus-visible{outline:2px solid #397f52;outline-offset:-2px}
  .chart-period .period-more[open]>summary,
- .chart-period .period-more:has(button.selected)>summary{background:#fff;color:#245a3d;box-shadow:0 1px 4px #183b2715}
- .chart-period .period-more:has(button.selected)>summary{font-weight:760}
+ .chart-period .period-more.has-active>summary{background:#e3efe6;color:#245a3d;font-weight:760}
  .chart-period .period-more-list{
   position:absolute;right:0;top:calc(100% + 4px);z-index:20;display:flex;gap:2px;padding:4px;
   border:1px solid #d8e5db;border-radius:12px;background:#fff;box-shadow:0 8px 22px #183b2726
  }
- .chart-period .period-more-list button{flex:0 0 auto;min-width:48px}
- .chart-period:has(.period-more) button.selected,
- #historyPage .chart-period.history-chart-period:has(.period-more) button.selected{background:#e3efe6;box-shadow:none}
- .chart-period .period-more-list button.selected{background:#e3efe6}
+ .chart-period .period-more-list button,
+ #historyPage .chart-period.history-chart-period:has(.period-more) .period-more-list button{flex:0 0 auto;min-width:48px;background:transparent}
  .chart-period:has(.period-more) button:not(.selected),
  #historyPage .chart-period.history-chart-period:has(.period-more) button:not(.selected){background:#f2f7f2}
  .chart-period .period-more-list button:not(.selected),
  #historyPage .chart-period.history-chart-period:has(.period-more) .period-more-list button:not(.selected){background:transparent}
-}
-@media(max-width:340px){
- .chart-period:has(.period-more){flex-wrap:nowrap}
- .chart-period:has(.period-more) button,.chart-period .period-more,.chart-period .period-more>summary{min-width:0}
- .chart-period .period-more-list button{min-width:44px}
+ .chart-period:has(.period-more) button.selected,
+ #historyPage .chart-period.history-chart-period:has(.period-more) button.selected{background:#e3efe6;box-shadow:none}
 }
 @media(max-width:374px){
- .chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;width:calc(100% + 16px)}
- #historyPage .chart-period.history-chart-period:has(.period-more){margin-left:0;margin-right:0;width:100%}
+ .chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;width:calc(100% + 16px);max-width:none}
+ #historyPage .chart-period.history-chart-period:has(.period-more){margin-left:-8px;margin-right:-8px;flex-basis:calc(100% + 16px);width:calc(100% + 16px);max-width:none}
 }
 @media(min-width:721px){
- .chart-period:has(.period-more) button{min-height:40px}
+ .chart-period:has(.period-more) button,
+ #historyPage .chart-period.history-chart-period:has(.period-more) button{min-height:44px;min-width:44px}
 }
