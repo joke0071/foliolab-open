@@ -1,3 +1,29 @@
+## P1 Work-UX: PR232 vorbereitet – vollständige Integration läuft · 30.10.2026
+
+**v221/SW221 bleibt die unveränderte LIVE_ACCEPTED-Praxisbasis.** Main d6b2a14f unverändert; keinMerge/Deployment. Neueste Nutzwertpriorisierung/Restaudit/Roadmap übernommen, keineGesamtanalyse oder weitereCI-Feinoptimierung. Nur einEntwicklungsstrang.
+
+**[PR232](https://github.com/joke0071/foliolab-open/pull/232)**, Branch `fix/ui-master28-management-v222`, HEAD `1872114ea1aa0130cc08d3da36afa13d9e34b1ab`, Tree `30cf97f39b8c39e1ffbf7a63cb74331eee75a622`. Remote/lokal identisch undWorkingTree sauber. SW222 ausschließlichKandidat. PR direktreviewbereit eröffnet, umeinenunnötigenweiterenDraft→Ready-Volltestlaufzuvermeiden; **keineMerge-/Deploymentfreigabe** vorhanden. KeineFreigabe231übertragen.
+
+| Paket / Owner | Geprüfter Umfang / verbleibende Grenze |
+| --- | --- |
+| UX10 / Work | Verwalten/Fertig fürdreiListen, normalzulässigesBearbeitenalsText, keinepermanentenStift-/Archiv-/Löschicons, zentraleVerwaltungsaktionen; Auswahl/Fokus/44px erhalten. ListenschnittKandidat, UX10insgesamtPARTIAL. |
+| UI-TEXT07 / Work | TatsächlichgemischteListehatneutralenKickerBUCHUNGENstattMANUELLEERFASSUNG; Kandidat, übrigerTextauditweiteroffen. |
+| Archiv-/DELETE-Fachpfade / Work | NeunMutationsfunktionen undSpeicherkern vorUI-finallybytegleich. VorhandenerEinzelarchiv/-Restorepfadzentral, zulässigeEinzel-LöschungimPositionseditorweitererreichbar. Keine neueSammel-Wiederherstellung oderBerechtigung; Archivfilter/übrigeDELETE-Verträgeoffen. |
+| Copilot-Visual / Work-Integration | KeinVisualpaketneuimplementiert/integriert.213hatbereitsaufMainalteKontextkonflikteApp-Zeitrauminit/CSS-Ende; neuerBuchungskickerändertzusätzlichHTML-Kontext. BeimspäterenAnpassenalleaktuellenFunktionen/CSSundBUCHUNGENerhalten.214/218/219-Abhängigkeitenweiterbeachten. |
+| PERF01 / Work | PR200/v213bereitsLIVE_ACCEPTED; weitererrealerGroßdaten-/Android-/Interaktivitätsrestnurbelegt, keineerneuteGrundoptimierung. |
+
+**Lokal975/975Units,0Fail/Skip,Syntax/diff-check undgezielteChromium-SuitesPASS:** Buchungs-UI/-management, Positionslöschung, Positionsarchiv, Referenzverwaltung/-löschung undPositionsdetails. FünfHauptaufrufe mitbestehendenimportiertenSuites; echteQuota/Abort/CAS/Peer/Offline/Undo/Backup/Restore, exakteRevisionen/Finanz-/RenditewerteundmehrereBreiten/Axe/Fokusgeprüft. [DauerhafterlokalerBeleg](release-evidence/ui-master28-management-v222-local.json). KeinlokalerFirefox-/WebKit-PASSbehauptet.
+
+KonkreteEntwicklungsbefundeerhalten: neueTextlinks zunächstunter44px→gezielteCSS-Mindestgröße; zentraleBuchungsaktionnachQuota/Cancelstale-disabled→UI-Leisteerstnachsaving=falseerneuert, beiLoadFailurekeinNeuaufbau; versteckterBearbeiten-EinstiegimPositions-Prüfbereich→imVerwaltungsmodusausgeblendet. AlteIcon-/Modus-TestannahmenauferforderlicheneueBedienungumgestellt, keineFinanz-/CAS-/Sicherheitsassertiongelockert. LokalerServerstartnunimgleichenTestaufruf; Browserdownload-InfrastrukturfehlergetrenntvonProduktbefunden, tatsächlichgestarteterChromium1.56.1verifiziert.
+
+**PARTIAL / CI_RUNNING / NOT_TECHNICALLY_ACCEPTED / NOT_MERGED / NOT_DEPLOYED.** Vollständige[Integration41121801027](https://github.com/joke0071/foliolab-open/actions/runs/41121801027), Wallet41121801015 undbestehendeBoundedLive-Diagnostik41121800947aufgenaudiesemHEADlaufen. DerStufenbelegmussINTEGRATION/full=true/ciContract=falsezeigen; FASTskipped, alleHaupt-/dreiCross-Pflichtgatesbeibehalten.
+
+**Exaktweiter:** vorhandeneLäuferegulärauswerten, keineblindenRetries. TatsächlicheSHA256-verifizierteArtefakte/Berichte undBilder,alle3Engines,Testmerge/Tree/RemoteHEADprüfen; beiErfolgeigenständigeKandidatenabnahmeundseparatenCheckpoint sichern. DanachkonkreteFreigabegrenzevorlegen. **v221fürWochenendteststabilhalten;keineungeprüften/ungeplantenMergesoderDeployments.** VorproduktiverÜbernahmeeigeneFreigabeundPraxisbefundeabgleichen.
+
+AlleMasteraufgabenerhalten; nurFLH05/FLH-PROJ01bewusstPARKED. CI-RestnachrangigOPEN/DEFERRED. KeinezusätzlichenkostenpflichtigenWork-Credit-Paketekaufenodereinplanen.
+
+---
+
 ## Work-eigener P1: Normal-/Verwalten-Bedienung in Arbeit · 30.10.2026
 
 Aktualisierte Priorisierung aus Restaudit/Roadmap/Checkpoint übernommen; Main d6b2a14f / Produktionv221/SW221 bleibt vollständigLIVE_ACCEPTED und unverändert. OffenePRs und fehlende laufendeActions frisch geprüft. **Kein Merge/Deployment autorisiert oder ausgeführt.** Nur ein aktiver Entwicklungsstrang.
