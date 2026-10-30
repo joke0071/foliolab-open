@@ -1,3 +1,11 @@
+## CI-OPT01 Canary230 in technischer Abnahme · 30.10.2026
+
+Aktiver begrenzter Kandidat [PR230](https://github.com/joke0071/foliolab-open/pull/230), HEAD1ab12f79, Treecded3cb6. Drei isolierte Cross-Shards mit allen37 bisherigen Aufrufen; Haupt-/Releaseworkflow bytegleich, Produktcode und SW221 unverändert. Zwei konkrete PWA-Testvoraussetzungen wurden zusätzlich korrigiert: tatsächliche asynchrone Bereitschaft und geordnete automatische/ausdrückliche Reloads. Alle ursprünglichen Assertionen und Fristen erhalten, zusätzliche echte Bereitschafts-/Navigationsnachweise. Fehlerbelege dauerhaft erhalten.
+
+Vollständiger Lauf41090941790 und Wallet41090941603 laufen. Noch keine Leistungs- oder Mergeabnahme. CI-OPT01 insgesamt PARTIAL; reduzierte FAST-Auswahl, Caching und weitere Teile offen. Nach erfolgreicher Abnahme Vorher/Nachher und Runneraufwand dokumentieren, eigene konkrete Nutzerfreigabe vorMerge. Produktion v221/SW221 LIVE_ACCEPTED. Kostenstopp0€ und alle Masterprioritäten erhalten.
+
+---
+
 ## CI-OPT01: Vorhermessung gesichert, Umsetzung offen · 30.10.2026
 
 **Produktion v221/SW221 DONE / LIVE_ACCEPTED**, Main3b00336d. Nach vollständig gesichertem Release ist CI-OPT01/#229 der aktive nächste Masterauftrag vor weiteren umfangreichen Copilot-Integrationen.
