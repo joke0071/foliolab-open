@@ -1,0 +1,110 @@
+name: "PERF01 real IndexedDB startup A/B diagnostic - no deployment"
+on:
+  push:
+    branches:
+      - perf/perf01-v222-benchmark-runner
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: "Controlled Chromium/IndexedDB ABBA synthetic benchmark"
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      BASE_SHA: "8353a1cab3c528a389d2bd7893df819f3c284225"
+      CANDIDATE_SHA: "4674c8a76f35d5385c01a4cd897663b0ba6e7b7a"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: "Install pinned browser benchmark runtime"
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium --only-shell
+      - name: "Assert exact commits, baseline SW and shared benchmark script"
+        run: |
+          set -euo pipefail
+          git cat-file -e "${BASE_SHA}^{commit}"
+          git cat-file -e "${CANDIDATE_SHA}^{commit}"
+          test "$(git show "${BASE_SHA}:sw.js" | head -n 1)" = "const CACHE='foliolab-open-v222';"
+          test "$(git show "${CANDIDATE_SHA}:sw.js" | head -n 1)" = "const CACHE='foliolab-open-v223';"
+          baseline_script=$(git show "${BASE_SHA}:tests/benchmark-startup.mjs" | sha256sum | awk '{print $1}')
+          candidate_script=$(git show "${CANDIDATE_SHA}:tests/benchmark-startup.mjs" | sha256sum | awk '{print $1}')
+          test "$baseline_script" = "$candidate_script"
+          echo "Both variants use identical startup benchmark script SHA256: $baseline_script"
+      - name: "Measure base / candidate / candidate / base on the same runner"
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/perf01-compare"
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$RUNNER_TEMP/perf01-server.log" 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4173/ >/dev/null
+          for phase in base-1 candidate-1 candidate-2 base-2; do
+            case "$phase" in
+              base-*) commit="$BASE_SHA" ;;
+              candidate-*) commit="$CANDIDATE_SHA" ;;
+              *) exit 2 ;;
+            esac
+            git checkout --detach --force "$commit"
+            echo "START PHASE=$phase SHA=$commit"
+            BENCH_SHA="$commit" BENCH_OUTPUT="$RUNNER_TEMP/perf01-compare/$phase.json" node tests/benchmark-startup.mjs | tee "$RUNNER_TEMP/perf01-compare/$phase.log"
+          done
+          cp "$RUNNER_TEMP/perf01-server.log" "$RUNNER_TEMP/perf01-compare/server.log"
+      - name: "Verify exact unmodified IDB records and summarize per-scenario medians"
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {join} from 'node:path';
+          const root=join(process.env.RUNNER_TEMP,'perf01-compare');
+          const phases=['base-1','candidate-1','candidate-2','base-2'];
+          const data=Object.fromEntries(phases.map(name=>[name,JSON.parse(readFileSync(join(root,name+'.json'),'utf8'))]));
+          const benchmarkSha=data['base-1'].benchmarkScriptSha256;
+          for(const name of phases){
+            const item=data[name];
+            assert.equal(item.benchmarkScriptSha256,benchmarkSha,'same committed benchmark source');
+            assert.equal(item.sha,name.startsWith('base')?process.env.BASE_SHA:process.env.CANDIDATE_SHA,'exact requested source commit');
+            assert.equal(item.runs,5);
+            assert.deepEqual(item.scenarios.map(s=>s.positions),[19,1000]);
+            for(const s of item.scenarios){
+              assert.equal(s.references,1825);
+              assert.equal(s.exactRecordUnchanged,true,'IndexedDB data and revision must remain exact');
+              for(const k of ['coldMs','warmMs','offlineMs']){
+                assert.equal(s[k].length,5,'five fresh-process samples required');
+                assert.ok(s[k].every(x=>Number.isFinite(x)&&x>0),'positive finite millisecond samples');
+              }
+            }
+          }
+          const comparisons=[];
+          for(const positions of [19,1000]){
+            for(const metric of ['coldMedianMs','warmMedianMs','offlineMedianMs']){
+              const sample=(phase)=>data[phase].scenarios.find(s=>s.positions===positions)[metric];
+              const before=[sample('base-1'),sample('base-2')];
+              const after=[sample('candidate-1'),sample('candidate-2')];
+              const m=a=>a.reduce((x,y)=>x+y,0)/a.length;
+              const baseMeanOfMedians=m(before),candidateMeanOfMedians=m(after);
+              comparisons.push({positions,references:1825,metric,base_medians_ms:before,candidate_medians_ms:after,base_mean_of_medians_ms:baseMeanOfMedians,candidate_mean_of_medians_ms:candidateMeanOfMedians,relative_change_percent:Number(((candidateMeanOfMedians/baseMeanOfMedians)-1)*100).toFixed(2)});
+            }
+          }
+          const result={status:'MEASURED_SYNTHETIC_REAL_INDEXEDDB',baseSha:process.env.BASE_SHA,candidateSha:process.env.CANDIDATE_SHA,benchmarkScriptSha256:benchmarkSha,runner:'ubuntu-24.04',node:process.version,playwright:'1.56.1',design:'ABBA 2 complete invocations per variant; 5 fresh Chromium processes, cold/warm/offline, 19 and 1000 position synthetic snapshots',comparisons,limitations:['Synthetic ETF + observed reference fixtures; no realistic wallet/journal mixture or physical Android.','Navigation-to-interactive checked by the benchmark script, but this workflow contains no CPU phase profiler.','No performance threshold or guarantee; runner load and small-fixture noise may affect medians.','No user portfolio data or secrets. No deployment or merge.']};
+          writeFileSync(join(root,'comparison.json'),JSON.stringify(result,null,2)+'\n');
+          console.log(JSON.stringify(result,null,2));
+          NODE
+      - name: "Preserve diagnostic-only benchmark artifacts"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf01-idb-abba-diagnostic
+          path: ${{ runner.temp }}/perf01-compare/
+          retention-days: 14
+          if-no-files-found: warn
