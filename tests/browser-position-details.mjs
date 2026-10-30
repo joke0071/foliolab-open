@@ -78,5 +78,45 @@ try{
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(finalModel.positions.length,0);
  assert.equal(finalModel.snapshots.length,2,'Deleting a position does not erase historical dates');
- console.log('POSITION DETAILS: one quote date, full precision, keyboard-native accordion and seven widths PASS');
+ // The position-list facts are a separate renderer from provider details.
+ // Exercise the real canonical missing-price default in this view as well.
+ await page.evaluate(async()=>{
+  const {blankModel,createProvider,createAccount,createPosition,persist}=await import('/src/model.js');
+  const m=blankModel();m.settings.autoRefresh=false;
+  m.providers.push(createProvider({id:'p',name:'Synthetic quote facts'}));
+  m.accounts.push(createAccount({id:'a',providerId:'p',name:'Synthetic depot',type:'securities'},m));
+  for(const props of [
+   {id:'missing-quote',name:'Missing quote'},
+   {id:'zero-quote',name:'Recorded zero',price:0,quoteSource:'Manuell'},
+   {id:'unknown-source',name:'Positive quote',price:123.45},
+   {id:'exact-quote',name:'Exact quote',price:123.45,priceExact:'123.4567890123456789',quoteSource:'EODHD'}
+  ])m.positions.push(createPosition({...props,providerId:'p',accountId:'a',kind:'etf',symbol:'SYN',quantity:1},m));
+  persist(m);
+ });
+ await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();
+ const record=()=>page.evaluate(async()=>{
+  const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
+  const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
+ });
+ const beforeFacts=await record();
+ const quoteCases=[
+  ['missing-quote','Nicht verfügbar','Unbekannt'],
+  ['zero-quote','0 EUR','Manuell'],
+  ['unknown-source','123.45 EUR','Unbekannt'],
+  ['exact-quote','123.4567890123456789 EUR','EODHD']
+ ];
+ for(const [id,price,source] of quoteCases){
+  const row=page.locator('.position-entry').filter({has:page.locator('[data-action="edit-position"][data-id="'+id+'"]')});
+  await row.locator('summary').click();
+  const fact=label=>row.locator('.holding-facts>div').filter({has:page.getByText(label,{exact:true})}).locator('dd');
+  assert.equal(await fact('Kurs je Einheit').innerText(),price,id+' honest quote with original exact precision');
+  assert.equal(await fact('Kursquelle').innerText(),source,id+' recorded source only');
+ }
+ for(const width of [320,390,430,768,1024,1280,1440]){
+  await page.setViewportSize({width,height:850});
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'quote facts overflow '+width);
+  if(width===320)await page.screenshot({path:'artifacts/gates/position-facts-320.png',fullPage:true});
+ }
+ assert.deepEqual(await record(),beforeFacts,'fact disclosure and viewport changes preserve exact IndexedDB record/settings/revision');
+ console.log('POSITION DETAILS: one quote date, full precision, honest missing/zero/unknown-source facts, exact IndexedDB preservation and seven widths PASS');
 }finally{await browser.close();}
