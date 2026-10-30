@@ -1,3 +1,23 @@
+## v221 veröffentlicht, Live-Abnahme blockiert · Diagnose-PR228 gesichert · 30.10.2026
+
+**Aktueller Main `ecf775f5c17ceb301be04f20e1be400567f45261`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8`; PR209/208 integriert, SW221 veröffentlicht. MERGED / DEPLOYED / LIVE_ACCEPTANCE_BLOCKED.** Letzter vollständig LIVE_ACCEPTED-Stand bleibtv220. PR209-Freigabe verbraucht, keine Freigabe für neuePRs.
+
+Main-/Pages-/Live [41059923497](https://github.com/joke0071/foliolab-open/actions/runs/41059923497), erster Versuch:964Units, MainTest124076779930, Cross1/124076779812, Cross2/124076779134 und Deploy124082348916 jeweilsSUCCESS. Live124082520863FAIL im ersten Firefox-Appstart von browser-pchain-evidence.mjs:14: bestehender30s-Timeout beim Warten auf „IndexedDB aktiv“, vor sämtlichen P-Chain-Fachprüfungen. WebKit-P-Chain, Sonic-Cross, vollständige Cross-UI- und Cross-Transferstufe danach nicht ausgeführt. Konkrete Ursache nochUNKNOWN; kein Beweis für falsche UTXO-/Finanzdaten oder einen behobenen Produktfehler. Keine blinde Wiederholung des roten Release-Laufs.
+
+**Tatsächliche Chromium-Live-Teilabnahme PASS:**121 veröffentlichte Asset-/SW-Hashes exakt zuMain/SW221,6Kerngruppen,18Axe-Scans,keinePageerrors; folgendeChromium-UI-/Import-/Backup-/Restore-/Offline-Prüfungen ebenfalls bestanden. Dies macht die Gesamtpipeline nichtgrün. Produktionsartefakt12980605973 vorExtraktionSHA256-verifiziert:6d2c17c58549faa448ce3fada0b5295167851813a14ec96bdbf2437caa393602;26 vorhandeneJSON-Berichte gelesen. [Dauerhafte Teil-/Fehlerbelege](release-evidence/v221-pr209-live-partial.json), Belegcommitcc48df62d2e51249d8e437e846b6313acdf61d07. Frühere PR-/Main-Abnahmebelege und Fehlerhistorie bleiben erhalten.
+
+**Neuer isolierter [DraftPR228](https://github.com/joke0071/foliolab-open/pull/228)**, Branch `test/v221-live-pchain-initialization-diagnostics`, HEAD `484ceaf0ca80830202d4a646d366d66e587433d6`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`. Auf aktuellemMain aufgebaut, Remote-HEAD und alleBlobs/Gesamtbaum exakt verifiziert, WorkingTree sauber. Ausschließlich tests/browser-pchain-evidence.mjs und vorhandener begrenzter Diagnoseworkflow geändert. Sämtliche Produkt-/Finanz-/SW221-Dateien bytegleich; kein Versionssprung oder paralleler UI-Integrationsstrang.
+
+P-Chain-Test verwendet vorhandenen observeBrowserFailures-Helfer und sichert bei früherException Stage/Zeitpunkte/Pageerrors/Netzwerk-/Worker-/Cache-/Storage-/DOM-Zustand undScreenshot. Originale UTXO-/Identitäts-/Finanzunverändertheits-Assertions, Erfolgsablauf und30s-Timeout unverändert. BestehenderWorkflow erhält zwei unabhängige Firefox-/WebKit-Produktionsproben, fail-fast=false, nur auf diesemBranch, mit passenderPlaywright-Version und bytegleichem veröffentlichtemSW221 alsVoraussetzung. Bestehende v220-Diagnose und volle Pflichtgates erhalten; Diagnoseworkflow besitzt nurLese- undkeineDeploymentrechte.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Lokal964/964Units,0Fail/Skip,Syntax/diff-checkPASS. PR-Pflicht41067814989, Wallet41067814951, begrenzteLive-Diagnose41067814937 aufgenau484ceaf0 laufen. Keine Erfolgs-/Hardwareabnahme vorwegnehmen undkeine Freigabe für228 aus209 übertragen.
+
+**Exakt weiter:** beide begrenzten Produktionsproben und vollePR-CI auswerten, SHA-verifizierte Diagnoseberichte/Bilder sichern und konkrete Ursache anhand derBelege eingrenzen. Bei reproduziertem Fehler kleinste begründeteKorrektur, keineGate-/Timeoutlockerung oderblindenRetries. Bei vollständig grünem, technisch geprüftem Kandidaten konkretenPR228-Review und eigeneNutzerfreigabe vorbereiten. v221 erstnach erfolgreicher vollständiger neuerMain-/Pages-/Live-Abnahme alsLIVE_ACCEPTED markieren. PR213 nurlesend vorgeprüft, nochkeineIntegration; andereCopilot-Drafts/QA223 weiter einzelnvorgemerkt.
+
+UI-VISUAL06 undalle übrigen nichtdelegierten Masteraufgaben bleibenbeiWork, sämtliche Anforderungen erhalten. NurFLH05/FLH-PROJ01 bewusstPARKED. HistorischenDokumentationsbranch niemals alsAnwendungscode mergen.
+
+---
+
 ## PR209 freigegeben und kontrolliert gemergt · v221-Release läuft · 30.10.2026
 
 **PR209 ist nach vollständiger technischer Abnahme und erteilter Nutzerfreigabe gemergt. Freigabe für diesenPR verbraucht.** Geprüfter HEADa61af4c9ecc7dcb4a0aafd871d5884be807a10ae; neuer Main `ecf775f5c17ceb301be04f20e1be400567f45261`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8` exakt gleich dem abgenommenen Kandidaten und Testmerge. Unveränderter Main537bddc3/HEAD/alle Checks/Tree/saubereWorkingTrees vorMerge nochmals geprüft, erwarteter HEAD im Merge-API verwendet. Seit Freigabekontext4880cc11 nur nachgewiesene Testkorrekturen, Produkt-/Finanz-/SW221-Dateien bytegleich. Keine Freigabe für weiterePRs.
