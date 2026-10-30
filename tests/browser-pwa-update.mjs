@@ -46,7 +46,19 @@ try{
   const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
   const context=await browser.newContext({viewport:{width:390,height:700}}),page=await context.newPage();
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
-  const result={engine,result:'RUNNING',checks:[],readiness:[]};report.engines.push(result);
+  const result={engine,result:'RUNNING',checks:[],readiness:[],lifecycle:[]};report.engines.push(result);
+  page.on('framenavigated',frame=>{if(frame===page.mainFrame())result.lifecycle.push({event:'navigation',at:Date.now(),url:frame.url()});});
+  page.on('console',message=>{if(message.text().startsWith('PWA_LIFECYCLE '))result.lifecycle.push({event:'worker',at:Date.now(),message:message.text()});});
+  await context.addInitScript(()=>{
+   const describe=worker=>worker?{scriptURL:worker.scriptURL,state:worker.state}:null;
+   const emit=event=>console.info('PWA_LIFECYCLE '+JSON.stringify({event,timeOrigin:performance.timeOrigin,controller:describe(navigator.serviceWorker.controller)}));
+   const watch=()=>{
+    const worker=navigator.serviceWorker.controller;
+    if(worker)worker.addEventListener('statechange',()=>emit('statechange'));
+   };
+   navigator.serviceWorker.addEventListener('controllerchange',()=>{emit('controllerchange');watch();});
+   emit('document');watch();
+  });
   const wait=async(stage,predicate,arg,options)=>{
    const receipt=await waitForAsyncReadiness(page,predicate,arg,options);
    result.readiness.push({stage,...receipt});assert.equal(receipt.value,true);
@@ -80,9 +92,18 @@ try{
    result.checks.push('previous worker controls actual synthetic IndexedDB portfolio with warm HTTP app/CSS cache');
    // A failed update must leave the old complete worker usable, including offline.
    generation='failed';const rejectedAsset=new Promise(resolve=>{failedAssetRequest=resolve;});
-   await page.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()).catch(()=>{}),0);});
+   await page.evaluate(()=>{
+    const operation=window.__pwaFailedUpdate={settled:false,error:null};
+    setTimeout(async()=>{
+     try{await(await navigator.serviceWorker.getRegistration()).update();}
+     catch(error){operation.error=String(error);}
+     finally{operation.settled=true;}
+    },0);
+   });
    await Promise.race([rejectedAsset,new Promise((_,reject)=>{const timer=setTimeout(()=>reject(Error('Failed-release fixture was not requested')),30000);timer.unref();})]);
-   await wait('failed-install-settled',async()=>{const r=await navigator.serviceWorker.getRegistration();return !r.installing&&!r.waiting;});
+   await wait('failed-install-settled',async()=>{const r=await navigator.serviceWorker.getRegistration();return window.__pwaFailedUpdate?.settled===true&&!r.installing&&!r.waiting;});
+   result.failedUpdateOperation=await page.evaluate(()=>window.__pwaFailedUpdate);
+   assert.equal(result.failedUpdateOperation.settled,true,'failed update operation completed before next generation');
    assert.match(await page.evaluate(async()=>await(await fetch('/src/app.js')).text()),/SYNTHETIC previous release app bytes/);
    await context.setOffline(true);await page.reload({waitUntil:'networkidle'});await ready();
    assert.deepEqual(await record(),before,'failed installation preserves exact offline record');
@@ -142,6 +163,7 @@ try{
       contents.push({name,count:requests.length,paths:requests.map(r=>new URL(r.url).pathname)});
      }
      return {url:location.href,readyState:document.readyState,
+      failedUpdateOperation:window.__pwaFailedUpdate??null,
       storageState:document.getElementById('portfolioStorageState')?.textContent??null,
       controller:worker(navigator.serviceWorker.controller),
       registration:registration?{scope:registration.scope,active:worker(registration.active),installing:worker(registration.installing),waiting:worker(registration.waiting)}:null,
