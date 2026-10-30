@@ -1,3 +1,17 @@
+## PR231 freigegeben und gemergt – vollständige Releaseabnahme läuft · 30.10.2026
+
+Die konkrete heutige Nutzerfreigabe für HEAD9369d6b3 wurde ausschließlich für PR231 verwendet. Reviewübergang regulär ausgeführt, vollständige [Review-CI41111739544](https://github.com/joke0071/foliolab-open/actions/runs/41111739544) Versuch1 SUCCESS; Hauptjob, alle drei Cross-Shards und isolierter FAST-Canary bestanden. Wallet41109599183 auf demselben HEAD weiterhin SUCCESS. Sieben ZIPs vor Extraktion SHA256-verifiziert, alle70JSONs rekursiv geprüft,975Units ohne Fehler/Skip. INTEGRATION/full=true tatsächlich bestätigt; native PWA-Aktivierung/Readiness/120Hashes/Offline/Datenerhalt in allen drei Engines bestanden. [Dauerhafter Reviewbeleg](release-evidence/ci-opt01-pr231-review-acceptance.json), separater Belegcommit00df70ca.
+
+Vor Merge Main7490f243, unveränderten HEAD/Testmerge, sauberen Kandidaten/WorkingTree und fehlende laufende Actions frisch geprüft. Merge mit erwartetem HEAD9369d6b3 erfolgreich. **Neuer Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9` exakt gleich dem freigegebenen Kandidaten.** Lokaler Main synchronisiert und sauber. Keine Produkt-/SW-Datei geändert; Anwendung bleibt v221/SW221.
+
+**MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING.** Vollständiger [Main-/Pages-/Livelauf41113336364](https://github.com/joke0071/foliolab-open/actions/runs/41113336364), Versuch1, auf genau diesem Main. Kein manuell wiederholter Testlauf; dies ist die verpflichtende Main-Releasepipeline.
+
+**Exakte Fortsetzung:** vorhandenen Run regulär vollständig abnehmen. Tatsächlicher Main-Stufenbeleg muss RELEASE/full=true/ciContract=false zeigen; FAST-Job auf Main erwartungsgemäß skipped, vollständige Haupt-/dreiCross-/Pages-/Livejobs verpflichtend. ZIPs vor ExtraktionSHA256 verifizieren,975Units und vollständigeBerichte,121veröffentlichteDateihashes/SW221/PWA/Offline/Backup/Restore/CAS und realeLivebilder prüfen. Erst nach vollständigemErfolg PR231 DONE/LIVE_ACCEPTED dokumentieren und separatenRelease-/Checkpointbeleg sichern. Bei Fehler konkrete Diagnose, keine blindenRetries oder Gateänderungen.
+
+Freigabe für231 ist verbraucht und gilt nicht für weitere PRs. Keine parallele Implementierung oder Copilot-Integration. Nach Abschluss gelten die gesicherten Wochenend-/Praxis-/UX-Prioritäten vor weiteren umfangreichen CI-Feinschnitten; CI-OPT01-Rest bleibt OPEN/DEFERRED, nicht DONE/PARKED. Alle Masteranforderungen erhalten; nur FLH05 und FLH-PROJ01 bewusst OPEN/PARKED. Keine zusätzlichen kostenpflichtigen Work-Credit-Pakete kaufen oder einplanen.
+
+---
+
 ## PR231 ausdrücklich freigegeben – Reviewübergang ausgeführt · 30.10.2026
 
 Die aktuelle Nutzerantwort **„Freigabe“** gilt konkret für PR231 auf HEAD `9369d6b3d880a52effc3ca54214a5fbc76d6113a`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9`, einschließlich anschließendem Merge und vollständiger Releaseabnahme nach grüner Pflicht-CI. Vorher Main7490f243, unveränderten HEAD/Testmerge, alle bestehenden Checks, fehlende laufende Actions und sauberen lokalen Stand erneut geprüft.
