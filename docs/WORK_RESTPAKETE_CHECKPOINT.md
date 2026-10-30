@@ -1,3 +1,17 @@
+## UI-VISUAL01 / PR209 – CI-Vertrag ergänzt, volle Abnahme läuft · 30.10.2026
+
+**Aktueller Kandidat HEAD `9a051895b0f4c871a7ebc5e4b3911a34c58cf3c2`, Tree `4901c234999e6f6b2e35dc3712b8314f3b4c279d`.** Remote-Branch feature/ui-visual01-compact-periods exakt verifiziert, Working Tree sauber. Alle Produktdateien inklusive SW221 weiterhin bytegleich zum integrierten0cd81c97; ausschließlich Test-/CI-Nachschritte. Produktion bleibt v220/SW220 DONE / LIVE_ACCEPTED.
+
+Lauf41043660987 auf86986bda blieb rot: Unitgate962/963 wegen des absichtlich exakt abgesicherten historischen Crossbrowser-Manifests. Die vier neuen Zeitraumaufrufe waren noch nicht als zusätzliche Pflichtaufrufe registriert. Korrektur ergänzt sie ausdrücklich zusätzlich, ohne den unveränderten historischen30er-Vertrag oder PWA/P-Chain/Sonic-Prüfungen zu ersetzen. Neuer Negativtest verwirft jeweils fehlende/doppelte Zeitraumaufrufe; übrige Engine-/Shard-/Abhängigkeitsprüfungen erhalten. Außerdem zwei bereits in208 gelieferte Node-seitige Verwendungen des nur imBrowser existierenden innerWidth korrigiert: Touchbegrenzung gegen die jeweils tatsächlich konfigurierte Viewportbreite, gleiche1px-Toleranz und44×44-Vorgabe. Keine Produktänderung oder Assertlockerung.
+
+**Lokal964/964Units,0Fail/Skip,alleSyntaxprüfungen/diff-checkPASS.** Beide neuen Remote-Blobs und GesamtTree identisch zu lokalenGitobjekten. Neuer vollständiger Pflichtlauf [41043934433](https://github.com/joke0071/foliolab-open/actions/runs/41043934433) auf genau9a051895, Wallet41043934452. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Frühere41042454421/41043660987 bleiben mit ihren konkreten Fehlern erhalten; deren weiterlaufende Crossjobs nicht abgebrochen. Kein blinder Retry.
+
+**Exakt weiter:** vollständige Pflicht-/dreiEngine-Abnahme auf9a051895, tatsächliche Fehler gegebenenfalls gezielt bearbeiten; Testmerge/Tree, Artefakthashes/Berichte/Bilder,44×44bei320/360, Auswahl/Keyboard/Escape/Axe und exakter vollständiger Datenerhalt. Erst dann eigener PR209-Review/Freigabeprozess; vor Merge/Deployment ausdrückliche konkrete Nutzerfreigabe erforderlich. #208-Historie/Positionszeiträume/Bilder bleiben imKandidaten vollständig erhalten und PR208 vorerst offen.
+
+Gelieferte227/209/213/214/218/219/222/225 sowieQA223 weiter kontrolliert einzeln, keine parallele Neuentwicklung. PR227 weiterhin COPILOT_DELIVERED / WORK_INTEGRATION_PENDING. UI-VISUAL06/#217 und übrige nichtdelegierte Masterarbeit beiWork; nurFLH05/FLH-PROJ01 bewusstPARKED. Sämtliche vorhandenen Anforderungen/Freigabegrenzen bleiben bestehen.
+
+---
+
 ## UI-VISUAL01 / PR209 – gezielte Testkorrektur und Crossbrowser-Erweiterung · 30.10.2026
 
 **Produktion v220/SW220 weiterhin DONE / LIVE_ACCEPTED**, Main `537bddc3202dec8025626e8fe8b00797d418d0f7`. PR220 und sein Release sind abgeschlossen; seine Freigabe ist verbraucht. Keine parallele Integration weiterer Copilot-Drafts.
