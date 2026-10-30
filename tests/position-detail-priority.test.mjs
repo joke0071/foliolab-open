@@ -120,3 +120,45 @@ test('Provider share handles multiple holdings within the same account across pr
  assert.match(details[2],/Anteil am Anbieter<\/span><strong>50 %/);
  assert.match(details[3],/Anteil am Anbieter<\/span><strong>100 %/);
 });
+
+test('Missing canonical quote is unavailable, never a manual zero, without model changes',async()=>{
+ const {blankModel,createProvider,createAccount,createPosition,escapeHTML,money,valueEUR}=await import('../src/model.js');
+ const {priceQuality}=await import('../src/quote-quality.js');
+ const m=blankModel();m.providers.push(createProvider({id:'p',name:'Synthetic broker'}));
+ m.accounts.push(createAccount({id:'a',providerId:'p',name:'Synthetic depot',type:'securities'},m));
+ const p=createPosition({id:'asset',providerId:'p',accountId:'a',name:'Synthetic BTC',kind:'crypto',symbol:'BTC',coinId:'bitcoin',quantity:1},m);
+ m.positions.push(p);const before=JSON.stringify(m),valuation=valueEUR(p);
+ const html=positionDetailMarkup(p,m,{esc:escapeHTML,money,quant:String,valueEUR});
+ assert.match(html,/<span>Kurs je Einheit<\/span><strong>Nicht verfügbar<\/strong>/);
+ assert.match(html,/Kursquelle: Unbekannt/);assert.doesNotMatch(html,/Kursquelle: Manuell/);
+ assert.equal(priceQuality(p).state,'missing');assert.equal(valueEUR(p),valuation);assert.equal(JSON.stringify(m),before);
+});
+
+test('Quote display distinguishes invalid, absent, exact and evidenced zero prices',async()=>{
+ const {priceQuality}=await import('../src/quote-quality.js');
+ const {valuationIssues}=await import('../src/valuation-status.js');
+ const now=Date.parse('2026-10-30T12:00:00Z');
+ for(const patch of [{price:undefined},{price:null},{price:''},{price:'  '},{price:NaN},{price:Infinity},{price:'bad'},{price:100,priceExact:''},{price:100,priceExact:'bad'},{price:0},{priceExact:'0'},{price:0,quoteSource:'  '}]){
+  const p={...position(),...patch},m=model(p),before=JSON.stringify(m);
+  assert.match(positionDetailMarkup(p,m,config),/<span>Kurs je Einheit<\/span><strong>Nicht verfügbar<\/strong>/,JSON.stringify(patch));
+  assert.equal(priceQuality(p,now).state,'missing');assert.equal(JSON.stringify(m),before);
+  assert.deepEqual(valuationIssues(m,now),[{id:p.id,type:'missing'}]);
+ }
+ for(const source of ['EODHD','Manuell']){
+  const p={...position(),price:99,priceExact:'0',quoteSource:source,quoteAsOf:'2026-10-29',quoteQuality:source==='EODHD'?'configured-listing':null};
+  const html=positionDetailMarkup(p,model(p),config);
+  assert.match(html,/<span>Kurs je Einheit<\/span><strong>[^<]*0,00[^<]*<\/strong>/);
+  assert.ok(html.includes('Kursquelle: '+source));
+  assert.equal(priceQuality(p,now).state,source==='EODHD'?'confirmed':'unverified');
+  assert.deepEqual(valuationIssues(model(p),now),[],'a recorded zero is not a missing-price warning');
+  assert.deepEqual(valuationIssues(model({...p,quoteAsOf:'2020-01-01'}),now),[{id:p.id,type:'outdated'}]);
+  assert.equal(priceQuality({...p,quoteAsOf:null},now).state,'undated');
+  assert.equal(priceQuality({...p,quoteAsOf:'2020-01-01'},now).state,'stale');
+ }
+ const unknown={...position(),quoteSource:null};
+ assert.match(positionDetailMarkup(unknown,model(unknown),config),/Kursquelle: Unbekannt/);
+ const exact={...position(),price:0,priceExact:'0.000123'};
+ assert.match(positionDetailMarkup(exact,model(exact),config),/0,000123/);
+ const cash={...position(),kind:'cash',price:0};
+ assert.doesNotMatch(positionDetailMarkup(cash,model(cash),config),/<span>Kurs je Einheit<\/span><strong>Nicht verfügbar/);
+});

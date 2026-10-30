@@ -5,6 +5,7 @@ import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {tradingViewIdentifier} from './security-sources.js';
 import {positionBookingTimeline} from './position-bookings.js';
+import {displayQuotePrice} from './quote-quality.js';
 
 /** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
  * Always display a complete, credential-safe explanation rather than a raw
@@ -36,8 +37,9 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const providerTotal=model.positions.filter(x=>providerAccountIds.has(x.accountId)).reduce((sum,x)=>sum+valueEUR(x),0);
  const amount=valueEUR(p),weight=providerTotal>0&&amount>=0?100*amount/providerTotal:null;
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
- const price=quoteCurrency(Number(p.priceExact??p.price)||0,p.currency||'EUR');
- const quote=p.quoteSource?esc(p.quoteSource):'Manuell',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
+ const quotePrice=displayQuotePrice(p);
+ const price=quotePrice===null?'Nicht verfügbar':quoteCurrency(quotePrice,p.currency||'EUR');
+ const quote=String(p.quoteSource||'').trim()?esc(p.quoteSource):'Unbekannt',date=p.quoteAsOf?' · '+esc(p.quoteAsOf):'';
  const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],

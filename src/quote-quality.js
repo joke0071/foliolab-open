@@ -1,9 +1,19 @@
 /** Actual quote provenance must not be confused with a successful refresh attempt. */
 const proven=new Set(['configured-listing','verified-listing','provider-timestamp']);
+/** Read-only display evidence. Legacy/default zeroes have no recorded source,
+ * so they cannot be distinguished from an absent quote. Never change valuation. */
+export function displayQuotePrice(p){
+ const raw=p.priceExact??p.price;
+ if(!['number','string'].includes(typeof raw)||String(raw).trim()==='')return null;
+ const value=Number(raw);
+ if(!Number.isFinite(value)||value<0)return null;
+ if(value===0&&['etf','stock','fund','crypto'].includes(p.kind)&&!String(p.quoteSource||'').trim())return null;
+ return value;
+}
 export function priceQuality(p,now=Date.now()){
  if(!['etf','stock','fund','crypto'].includes(p?.kind)||p.valuationMode==='excluded'||
     Number(p.quantityExact??p.quantity??0)===0)return {state:'ignored',label:'Nicht relevant'};
- if(!(Number(p.priceExact??p.price)>0))return {state:'missing',label:'Kein Kurs'};
+ if(displayQuotePrice(p)===null)return {state:'missing',label:'Kein Kurs'};
  if(/stichtag|abgeleit/i.test(String(p.priceStatus||'')))return {state:'derived',label:'Aus Stichtag abgeleitet'};
  if(p.priceStatus)return {state:'review',label:'Kurs prüfen'};
  const day=String(p.quoteAsOf||'').slice(0,10);
