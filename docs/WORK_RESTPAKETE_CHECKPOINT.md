@@ -1,3 +1,17 @@
+## PR230 ausdrücklich freigegeben und gemergt · vollständige Releaseabnahme läuft · 30.10.2026
+
+Die Nutzerantwort **„Freigabe und Fortsetzung“** gilt konkret für den zuvor vollständig geprüften PR230/HEADc6757318 und wurde jetzt verwendet. Vor Merge aktuellenMain3b00336d, unverändertenPR-HEAD, alleChecks, Testmerge/Tree, offenePRs und saubereWorkingTrees erneut geprüft. NurPR230 mit erwartetemHEAD gemergt; dieseFreigabe ist verbraucht und gilt nicht fürweiterePRs.
+
+**Neuer Main `7490f243ff32c659c418cdf92540fe9ef1cc4189`, Tree `e0bc5ae461e7961c6ecdac09c8da911a56cdb652` exakt gleich dem abgenommenen Kandidaten.** LokalerMain sauber und identisch synchronisiert. MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING. Vollständiger neuer [Main-/Pages-/Livelauf41099688653](https://github.com/joke0071/foliolab-open/actions/runs/41099688653), Versuch1, auf genau diesemMain. Keine zusätzlicheVersionsänderung: Anwendung undSW221 sind bytegleich zur bereits abgenommenen Produktionv221; neueMain-Releaseabnahme trotzdem vollständig ausführen.
+
+BisherigePR-Abnahme41093069551 undWallet41093069306SUCCESS,969Units,3Browser/3Cross-Shards,5SHA256-verifizierteZIPs/68JSONs/65PASS-Berichte sowie nativePWA-Aktivierung/fourReadinessphasen/120Hashes/Offline/exakterDatenerhalt in3Engines bewahrt. [Abnahme/Messdaten](release-evidence/ci-opt01-pr230-acceptance.json). Gemessene Pflichtspanne821→601s(−26,8%),Runner1936→1851s(−4,4%); keineStatistik- oderWork-Credit-/Eurogarantie. SämtlicheFehler-/Entwicklungsbelege erhalten.
+
+**Exakte Fortsetzung:** Lauf41099688653 regulär vollständig abnehmen; keine parallele nächsteCI-/Copilot-Implementierung. Main-/dreiCross-/Pages-/Livebelege, tatsächlicheSHA256-verifizierteArtefakte,121veröffentlichteDateihashes/SW221/PWA/Offline/Backup/Restore/CAS undLivebilder prüfen. Bei Fehler konkreteDiagnose, keineblindenRetries/Gatelockerungen. ErstnachvollständigemErfolg PR230 DONE/LIVE_ACCEPTED undseparateRelease-/Checkpointbelege remote sichern. Danach bestehendenCI-OPT01-Restumfang am nächsten sicherenTeilschnitt fortsetzen; weiterePRs benötigen eigeneFreigabe.
+
+NurFLH05/FLH-PROJ01 bewusstPARKED, übrigerMaster vollständig erhalten. **KeinezusätzlichenkostenpflichtigenWork-Credit-Pakete kaufenodereinplanen;Budget0€.**
+
+---
+
 ## CI-OPT01/PR230 technisch abgenommen · konkrete Nutzerfreigabe ausständig · 30.10.2026
 
 **[PR230](https://github.com/joke0071/foliolab-open/pull/230) TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Draft aufgehoben. HEAD `c6757318f762c873cda7bd9f274dbe761e895033`, Tree `e0bc5ae461e7961c6ecdac09c8da911a56cdb652`, Testmerge `23c7d403a0765c9073b04e75268b599e38926194` mit exakt gleichem Tree auf unverändertemMain `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`. Remote- und lokalerTree identisch, WorkingTree sauber. Kein Merge/Deployment und keine konkrete Freigabe für230 vorhanden; Freigaben für209/228 verbraucht.
