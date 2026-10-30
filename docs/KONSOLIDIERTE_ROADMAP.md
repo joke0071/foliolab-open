@@ -1,3 +1,11 @@
+## CI-OPT01 verbindlich aufgenommen · 30.10.2026
+
+Neuer Nutzerauftrag: [CI-OPT01 – vollständiger Prüf- und Abnahmevertrag](CI_OPT01_AUFTRAG_2026-10-30.md), Belegcommit32828ad0. Zuerst laufende v221-Liveabnahme unverändert abschließen; **nach gesichertem Releaseabschluss und vor weiteren umfangreichen Copilot-Integrationen CI-OPT01 bearbeiten**. Keine parallele Implementierung oder neue Gesamtroadmap.
+
+FAST für Entwicklung/Drafts, INTEGRATION für technisch fertige PRs, RELEASE mit unveränderter vollständiger Pflichtregression und tatsächlicher Liveabnahme. Dateiauswahl muss fachliche Abhängigkeiten und kritische Finanz-/Buchungs-/IDB-/CAS-/Wallet-/Backup-/Restore-/Lösch-/Migrations-/PWA-Pfade konservativ erfassen. Vorher/Nachher und vollständige Zuordnung kritischer Tests beweisen. Separater CI-Kandidat, vollständige technische Abnahme und konkrete Nutzerfreigabe vor Merge. UI-VISUAL06 und alle bisherigen Masteraufgaben bleiben aktiv; ausschließlich FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – 30.10.2026
 
 Maßgeblich ist der neue gleichnamige Abschnitt im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) samt [GitHub-Statusbeleg](release-evidence/chatwechsel-master-handoff-2026-10-30.json). Entwicklung auf ausdrücklichen STOP kontrolliert beendet; keine neue Roadmap oder Priorisierung. Alle folgenden Anforderungen und historischen Abnahmen bleiben erhalten; dieser jüngste Status ersetzt ältere widersprüchliche Statuszeilen.
