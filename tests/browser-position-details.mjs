@@ -43,12 +43,13 @@ try{
  await page.locator('#snapshotManager>summary').click();
  const list=page.locator('#snapshotList .history-row');
  assert.equal(await list.count(),2);
- assert.equal(await list.locator('[data-action="edit-snapshot"],[data-action="delete-snapshot"]').count(),0,'normal reference view has no permanent actions');
+ assert.equal(await list.locator('[data-action="delete-snapshot"],.row-btn,svg').count(),0,'normal references have no destructive or icon actions');assert.equal(await list.last().locator('[data-action="edit-snapshot"]').innerText(),'Bearbeiten');
  const original=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots);
  await page.locator('#manageReferences').click();
  assert.equal(await list.first().locator('[data-action="edit-snapshot"]').count(),0,'observed original is source-protected');
  assert.match(await list.first().innerText(),/Herkunft geschützt/);
  assert.equal(await page.locator('[data-reference-manage=remove]').isDisabled(),true,'dependent references cannot be deleted');
+ assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),0,'editing is hidden during management');await page.locator('#manageReferences').click();
  await list.last().locator('[data-action="edit-snapshot"]').click();
  assert.equal(await page.locator('#dialogTitle').innerText(),'Referenzwert bearbeiten');
  await page.locator('#editorForm [name="note"]').fill('Korrigierte Notiz');

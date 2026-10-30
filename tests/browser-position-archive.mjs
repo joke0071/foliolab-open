@@ -15,7 +15,7 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
  const menu=async()=>{if(await p.locator('[data-action=select-positions]').count())await p.locator('[data-action=select-positions]').click();};
  const cycle=()=>p.locator('#positionSelectFiltered').click();
  const showArchive=async()=>{await menu();if(await p.locator('#positionArchiveToggle').getAttribute('aria-pressed')==='false')await p.locator('#positionArchiveToggle').click();};
- const open=async id=>{const b=p.locator('[data-action="archive-position"][data-id="'+id+'"]');assert.equal(await b.isVisible(),true,'archive is available without opening details');await b.click();await p.locator('#editDialog[open]').waitFor();};
+ const open=async id=>{if(await p.locator('[data-action=cancel-selection]').count())await p.locator('[data-action=cancel-selection]').click();await menu();await p.locator('[data-position-select="'+id+'"]').check();const b=p.locator('#positionSelectionTools [data-action="archive-position"][data-id="'+id+'"]');assert.equal(await b.isVisible(),true,'existing single-position archive dialog is available centrally for exactly the selected row');await b.click();await p.locator('#editDialog[open]').waitFor();};
  const commit=async()=>{await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});};
  const value=()=>p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{totalExactEUR}=await import(new URL('src/model.js',base)),{historicalWealthView}=await import(new URL('src/historical-portfolio-value.js',base));const s=new PortfolioStorage();const m=await s.initialize();s.close();return {total:totalExactEUR(m),history:historicalWealthView(m)};},base);
  const strip=(raw,id)=>{const m=JSON.parse(raw);delete m.positions.find(p=>p.id===id).archived;return m;};
@@ -44,6 +44,7 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
   await open('asset');await commit();const archived=await record();assert.equal(archived.revision,before.revision+1);assert.deepEqual(strip(archived.raw,'asset'),JSON.parse(before.raw));assert.deepEqual(archived.settings,before.settings);assert.deepEqual(await value(),financialBefore);
   assert.equal(await p.locator('[data-action=archive-position][data-id=asset]').count(),0);await showArchive();assert.match(await p.locator('#positionArchiveHint').innerText(),/weiterhin/);
   // Existing editor must preserve the archive flag rather than reactivate identity.
+  await p.locator('[data-action=cancel-selection]').click();
   await p.locator('[data-action=edit-position][data-id=asset]').click();await p.locator('#editorForm [name=name]').fill('Renamed archived ETF');await commit();
   assert.equal(JSON.parse((await record()).raw).positions.find(p=>p.id==='asset').archived,true);
   const edited=await record();await open('asset');await commit();const restored=await record();assert.equal(restored.revision,edited.revision+1);assert.deepEqual(JSON.parse(restored.raw),strip(edited.raw,'asset'));
