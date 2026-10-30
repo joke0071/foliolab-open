@@ -1,3 +1,19 @@
+## CI-OPT01/PR230: tatsächliche Aktivierung und frische Dokumentprüfung getrennt · 30.10.2026
+
+**HEAD `c6757318f762c873cda7bd9f274dbe761e895033`, Tree `e0bc5ae461e7961c6ecdac09c8da911a56cdb652`**, derselbe Branch/DraftPR230, Remote-/lokaler Tree exakt identisch, sauberer WorkingTree. Produkt-/Finanz-/SW-Dateien unverändert; Produktionv221/SW221 LIVE_ACCEPTED. Keine Copilot-Integration oder Freigabeübertragung.
+
+Der Lifecyclebeleg aus41092136641 zeigt erstmals konkret: aktuellerController erreicht im altenDokument native statechange=activated; unmittelbar danach startet die automatischeNavigation, deren neuesWebKit-Dokument weiterhin den davor gültigen activating-Snapshot meldet. FailedUpdateOperation ist bereits settled=true. Vollständiger SHA256-verifizierter [Originalbeleg](release-evidence/ci-opt01-canary230-lifecycle-state.json), Commit e99e712a. Keine frühere Timeoutursache pauschal umdeuten.
+
+Testnachschritt verlangt jetzt parallel den tatsächlichen aktuellenActivated-Beleg und automatischenNavigationscommit, danach neuesDokument sowie unveränderten explizitenReload. **Im unabhängig frisch geladenen Dokument bleibt die ursprüngliche strenge active.state===activated-/Controlleridentitäts-/Cachebedingung unverändert Pflicht**, innerhalb desselben abUpdatebeginn berechneten60s-Fensters. Activating wird nie akzeptiert; nativeAktivierung ist zusätzlich zwingend. Alle ursprünglichenHash-/Offline-/IDB-/Record-/Fehlerassertionen wortgleich erhalten. Keine Runtimeänderung, kein Aktions-/Jobretry, keine verlängerteFrist.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Neuer vollständiger Pflicht-/Walletlauf aufc6757318 gestartet. Letzte lokale Gesamtprüfung969/969Units undSyntaxPASS; nach dem Testnachschritt Syntax/diff-check sowie originalgetreueAssertionen geprüft. Kein unnötiger identischer lokalerGesamtlauf. Alle früheren Fehlbelege erhalten, frühere Jobs regulär auslaufen lassen.
+
+**Exaktweiter:** aktuellenRun auswerten, insbesondere in3Engines nativeActivation.observed=true und event.controller.state=activated, automatischeechteNavigation/neuesDokument, vier strikttrueReadinessreceipts und tatsächliche120Cachehashes/Offline/IDB/Raw+Settings+Revision prüfen. AlleHaupt-/dreiCross-/Wallet-Gates undidentischenTestmerge/Tree sowieSHA256-verifizierteArtefakte abnehmen. Erst erfolgreich gemessenenKandidaten zur eigenenkonkretenMergefreigabe vorlegen. Bei erneutem Fehler keine unbegründeteVolltestschleife; anhand der konkretenLebenszyklusdaten weitereUrsache eingrenzen. Keine Einsparung oderFreigabereife ausrotemLauf.
+
+Kostenstopp zusätzlicheWork-Credits0€, keineKäufe/Kaufplanung. CI-OPT01gesamtPARTIAL, übrigeMaster unverändertaktiv; nurFLH05/FLH-PROJ01 bewusstPARKED.
+
+---
+
 ## CI-OPT01/PR230: WebKit-Aktivierung bleibt echter Prüffall · aktueller Kandidat gesichert · 30.10.2026
 
 **Aktueller HEAD `df7885b252eb3e8501fefba91e9a4defe09e5b43`, Tree `3299c997fc4cac8e148e52d6d2a4b3cbe2652106`**, derselbe Branch und DraftPR230. Remote-/lokaler Gesamtbaum exakt identisch, WorkingTree sauber. Keine Produkt-/Finanz-/SW-Änderung; Produktionv221/SW221 LIVE_ACCEPTED. Alle ursprünglichen PWA-Assertionen und30s/60s-Fristen bleiben bestehen.
