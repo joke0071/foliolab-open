@@ -1,0 +1,48 @@
+name: Bounded v220 live initialization diagnostics
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/live-initialization-diagnostics.yml'
+      - 'tests/browser-failure-diagnostics.mjs'
+      - 'tests/browser-chart-tooltip.mjs'
+      - 'tests/browser-reference-management.mjs'
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    if: github.head_ref == 'test/v220-live-initialization-diagnostics'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      UI_QUALITY_BASE: https://foliolab.unperfekt.at/
+      UI_QUALITY_ENGINES: chromium
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install existing acceptance tools
+        run: |
+          npm install --no-save playwright@1.56.1 axe-core@4.10.3
+          npx playwright install chromium --only-shell
+      - name: Capture published identity
+        run: |
+          mkdir -p artifacts/gates
+          curl --fail --silent --show-error https://foliolab.unperfekt.at/sw.js > artifacts/gates/diagnostic-published-sw.js
+          sha256sum artifacts/gates/diagnostic-published-sw.js
+          head -n 1 artifacts/gates/diagnostic-published-sw.js
+      - name: One unchanged chart gate with failure evidence
+        run: node tests/browser-chart-tooltip.mjs
+      - name: One unchanged reference gate with failure evidence
+        if: always()
+        run: node tests/browser-reference-management.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bounded-live-initialization-${{ github.sha }}
+          path: artifacts/gates/
+          if-no-files-found: error
+          retention-days: 7

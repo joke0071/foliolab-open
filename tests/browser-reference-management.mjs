@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+import {observeBrowserFailures} from './browser-failure-diagnostics.mjs';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
 mkdirSync('artifacts/gates/reference-management',{recursive:true});
 const report={base,scope:'reference visibility/provenance/selection/CAS/restore; synthetic data only',engines:[]};
@@ -8,6 +9,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
  const ctx=await browser.newContext({viewport:{width:390,height:900},ignoreHTTPSErrors:Boolean(proxy)});await ctx.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
  const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('dialog',d=>d.accept());
+ const failureDiagnostics=observeBrowserFailures(p);
  const ready=page=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const record=(page=p)=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  const history=async()=>{await p.locator('#mobileNav [data-page=history]:visible,#sidebarNav [data-page=history]:visible').click();if(!await p.locator('#snapshotManager').evaluate(e=>e.open))await p.locator('#snapshotManager>summary').click();};
@@ -78,7 +80,8 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.locator('#referenceArchiveFilter').selectOption('archived');await p.locator('#referenceSelectVisible').check();await begin();await p.locator('[name=confirmReferenceArchive]').check();await p.locator('#saveDialog').click();await close();const restored=await record();assert.equal(restored.raw,before.raw,'restoring all references returns exact previous canonical bytes and old booking format');assert.equal(JSON.parse(restored.raw).bookingPresentation.version,1);assert.equal(JSON.parse(restored.raw).performanceFlowTrackingSince,'2023-01-01');
   await p.locator('#referenceArchiveFilter').selectOption('active');await manage();await select('manual').check();await begin();await p.locator('[name=confirmReferenceArchive]').check();const peer=await ctx.newPage();await peer.goto(base);await ready(peer);await peer.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.positions[0].notes='SYNTHETIC competing writer';await s.save(m);s.close();});const winner=await record();await p.locator('#editorForm').evaluate(f=>f.requestSubmit());await p.locator('#dialogError:not(.hidden)').waitFor();assert.deepEqual(await record(),winner,'stale confirmed preview cannot replace competing writer');await peer.close();
   assert.deepEqual(errors,[]);report.engines.push({engine,result:'PASS',references:210,widths:[320,390,430,768,1440],checks:['normal/manage/visible page/partial/filter/no hidden selection','source and runtime guards/start/impact correction/add/duplicate','exact original and non-null TWR/XIRR invariance','quota/post-put/cancel/retry/CAS','combined booking/reference archive/restore','plain and fresh password V2 UI restore','actual offline commit/reload','keyboard/focus/axe/44px']});console.log(engine+': REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS');
- }finally{await browser.close();}
+ }catch(error){report.engines.push({engine,result:'FAIL',error:String(error),pageErrors:errors,diagnostics:await failureDiagnostics()});writeFileSync('artifacts/gates/reference-management/report.json',JSON.stringify(report,null,2));throw error;}
+ finally{await browser.close();}
 }
 writeFileSync('artifacts/gates/reference-management/report.json',JSON.stringify(report,null,2));
 
