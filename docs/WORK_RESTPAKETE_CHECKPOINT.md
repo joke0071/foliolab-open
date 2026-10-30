@@ -1,3 +1,11 @@
+## PR233: vollständige drei Browser-Shards + zusätzliche 400-Modell-DifferenzialQA · 30.10.2026
+
+[Verifizierter neuer QA-Beleg](PERF01_PR233_DIFFERENZQA_2026-10-30.md): v222 gegen isolierten Draft-PR233 lokal mit **400 deterministischen synthetischen Portfolios, 1600 Deep-Equality-Vergleichen** für reine Projektion und Wealth-Basis auto/partial/observed, **7449 Dublettenfällen**, 80 Kurslücken und **9837** Stichtagen, 0 Differenzen/0 Modellmutationen. Zusätzliche in GitHub gespeicherte CPU-Rohmessungen bleiben **kein** Browser-/Realgerät-/Startupnachweis. PR233-HEAD unverändert `4674c8a76f35d5385c01a4cd897663b0ba6e7b7a`, Basis-Main unverändert `8353a1cab3c528a389d2bd7893df819f3c284225`.
+
+CI-Gate-Stand bei Nachprüfung: alle **drei Cross-Engine-Shards SUCCESS**; zugehörige ZIPs SHA-256+CRC gegen GitHub geprüft (210, 35 und 269 Einträge; 9+6+22 JSON-Berichte ohne Fehlstatus), UI07-66 Axe-Scans/Engine in Shard 1 ohne Befund, Wallet-Workflow 41134431632 SUCCESS, `ci-stage` FULL INTEGRATION korrekt. **Haupttestjob Run41134431156 noch IN_PROGRESS** – deshalb weiterhin **DRAFT/NOT_MERGED/NOT_DEPLOYED, nicht voll CI-accepted**. Für Merge bleibt zusätzliche echte IDB-Start-Messung + Wochenendpraxis und eigene Nutzerfreigabe erforderlich. Keine neuen Produktcode-Commits/CI-Auslösung durch diesen Audit, v222/SW222 LIVE_ACCEPTED bleibt stabil.
+
+---
+
 ## PERF01 jetzt mit eigenem v222-Codekandidaten: PR #233 DRAFT · 30.10.2026
 
 **Neuer tatsächlicher Entwicklungsfortschritt nach dem Read-only-Audit:** [Draft-PR #233](https://github.com/joke0071/foliolab-open/pull/233) auf `perf/perf01-v222-reconciliation-index` mit geprüftem Basis-Main `8353a1cab3c528a389d2bd7893df819f3c284225` und Kandidaten-HEAD `4674c8a76f35d5385c01a4cd897663b0ba6e7b7a`. Vier isolierte Dateien: `src/historical-portfolio-value.js` hat den **pro Rechenaufruf lokalen Datumsindex** statt `observations.filter` für jeden Tag; `tests/perf01-reconciliation-index.test.mjs` enthält drei neue Finanz-/Dubletten-/Lücken-/No-write-Regressionsfälle; `sw.js` ist für einen **nur vorbereiteten, NICHT veröffentlichten SW223** korrekt erhöht; `docs/release-evidence/perf01-v222-reconciliation-candidate.json` enthält Rohmessungen und Grenzen. Keine Änderungen an Journal/Wallet/FX/IndexedDB/Speicherung/Sicherheitsprüfungen.
