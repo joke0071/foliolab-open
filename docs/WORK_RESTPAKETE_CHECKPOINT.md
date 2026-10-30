@@ -1,3 +1,11 @@
+## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – maßgeblicher PR232-Kandidat 12835f4 / CI_RUNNING
+
+Korrektur zur unmittelbar folgenden Fortschrittsnotiz: Maßgeblicher HEAD ist **12835f4102af973fc274c2be21973cb5ab8c9feb**, vollständiger lokal geprüfter Tree **b045f340c06b51704c1482ff5685470cd96c09f9**, Testmerge 3b1a35b4232d01e91eff777d104d05d7997c10c4. Vollständige CI: https://github.com/joke0071/foliolab-open/actions/runs/41123919291 ; Wallet 41123919378. Status CI_RUNNING / NOT_ACCEPTED.
+
+Beim Übertragen von 04e9bdf wurde Tool-Ausgabe gekürzt und dadurch das Stylesheet unvollständig übertragen. Dieser Zwischenstand ist NICHT der lokal geprüfte Kandidat und niemals abgenommen. Unmittelbar im selben PR korrigiert; alle vier übertragenen Dateien anschließend vollständig in begrenzten Stücken gelesen; Remote-Tree b045 entspricht exakt dem lokal per git write-tree ermittelten Tree. Kein Merge/Deployment, keine produktive Auswirkung. Run 41123781804 gehört ausschließlich zum verworfenen Zwischenstand; keine Aussage über technische Abnahme des aktuellen HEAD daraus ableiten. Kein unveränderter Retry, keine Gateabschwächung.
+
+Nächste Fortsetzung ausschließlich bei Run 41123919291: vollständige Main-/Cross-/Wallet-Ergebnisse und echte SHA-geprüfte Artefakte/Bilder beurteilen, Fehler konkret beheben oder technischen Kandidaten separat abnehmen. v221/SW221 auf Main d6b2a14f bleibt LIVE_ACCEPTED und für den Wochenend-Praxistest stabil. Kein Freigabetransfer, keine automatische Veröffentlichung. Weitere Master-/Copilot-Pakete unverändert offen, nur FLH05/FLH-PROJ01 PARKED. Keine neuen Work-Credit-Pakete.
+
 ## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – UI-MASTER28 PR232 / Breitenkorrektur in vollständiger CI
 
 Produktion bleibt unverändert v221/SW221 LIVE_ACCEPTED, Main d6b2a14f2108bc210411054d5f3d7690ba44fd51. Keine Merge-/Deploymentfreigabe für PR232; Wochenend-Praxistest bleibt geschützt.
