@@ -59,7 +59,7 @@ function validate(s) {
 }
 test('stage workflow preserves every full regression, deployment and live body byte-for-byte', () => validate(source));
 test('stage policy rejects missing review event, unsafe gate, reduced deploy dependency or dropped FAST audit', () => {
-  for (const broken of [source.replace('ready_for_review, ', ''), source.replace("if: needs.plan.outputs.full == 'true'", "if: always()"), source.replace('needs: [test, cross-engine]', 'needs: [test]'), source.replace('node tests/browser-ui07-audit.mjs 2>&1 | tee artifacts/fast/', 'echo removed '), source.replace('foliolab-pw1.64.1-firefox-webkit-v1-', 'unversioned-unsafe-'), source.replace('npx playwright install chromium --only-shell', 'echo skipped-browser-install')]) {
+  for (const broken of [source.replace('ready_for_review, ', ''), source.replace("if: needs.plan.outputs.full == 'true'", "if: always()"), source.replace('needs: [test, cross-engine]', 'needs: [test]'), source.replace('node tests/browser-ui07-audit.mjs 2>&1 | tee artifacts/fast/', 'echo removed '), source.replace('foliolab-pw1.64.1-firefox-webkit-v1-', 'unversioned-unsafe-'), source.replace('DEBUG=pw:install npx playwright install --with-deps firefox webkit', 'echo skipped-browser-install')]) {
     assert.notEqual(broken, source); assert.throws(() => validate(broken));
   }
 });
