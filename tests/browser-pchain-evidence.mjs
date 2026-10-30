@@ -3,15 +3,20 @@ import {mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 import {PCHAIN_UTXO,PCHAIN_EXPECTED,OWNER_A,OWNER_B} from './pchain-evidence-fixture.mjs';
 import {ADDRESS_VECTORS} from './pchain-identity-fixture.mjs';
+import {observeBrowserFailures} from './browser-failure-diagnostics.mjs';
 const base=process.env.PCHAIN_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
 const report={base,startedAt:new Date().toISOString(),scope:'Synthetic pure UTXO evidence only; no wallet query, mutation or financial integration',engines:[]};
 mkdirSync('artifacts/gates',{recursive:true});
 for(const engine of (process.env.PCHAIN_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
+ let page,failureDiagnostics,stage='context';const errors=[];
  try{
-  const context=await browser.newContext({ignoreHTTPSErrors:Boolean(proxy)}),page=await context.newPage(),errors=[];
-  page.on('pageerror',e=>errors.push(e.message));await page.goto(base);
+  const context=await browser.newContext({ignoreHTTPSErrors:Boolean(proxy)});page=await context.newPage();
+  page.on('pageerror',e=>errors.push(e.message));failureDiagnostics=observeBrowserFailures(page);
+  stage='navigation';await page.goto(base);
+  stage='storage-ready';
   await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  stage='evidence-checks';
   const result=await page.evaluate(async({value,a,b,addresses})=>{
    const {decodePchainUTXO,inspectPchainUTXO}=await import('/src/pchain-evidence.js');
    const {decodePchainAddress,pchainUTXOIdentity}=await import('/src/pchain-identity.js');
@@ -50,7 +55,20 @@ for(const engine of (process.env.PCHAIN_ENGINES||'chromium').split(',')){
   assert.equal(result.sameKey,true);assert.equal(result.contextSeparated,true);assert.equal(result.identity.kind,'native');assert.equal(result.identityRejected.length,7);assert.ok(result.identityRejected.every(r=>r.rejected));
   report.engines.push({engine,version:browser.version(),result:'PASS',checks:result});
   console.log(engine+': P-Chain synthetic checked UTXO/exact uint64/owner coverage/locks/address and context identity/negative evidence/zero writes PASS');
- }finally{await browser.close();}
+ }catch(error){
+  const failedAt=new Date().toISOString();
+  const diagnostics=failureDiagnostics?await failureDiagnostics():{captureError:'Page context unavailable'};
+  mkdirSync('artifacts/gates/pchain-initialization',{recursive:true});
+  const screenshot='artifacts/gates/pchain-initialization/'+engine+'-failure.png';
+  let screenshotError=null;
+  if(page)await page.screenshot({path:screenshot,fullPage:true}).catch(e=>{screenshotError=String(e);});
+  report.result='FAIL';report.engines.push({engine,result:'FAIL',stage,failedAt,capturedAt:new Date().toISOString(),error:String(error),stack:error.stack,pageErrors:errors,diagnostics,screenshot,screenshotError});
+  throw error;
+ }finally{
+  report.finishedAt=new Date().toISOString();
+  writeFileSync('artifacts/gates/pchain-evidence-'+(process.env.PCHAIN_ENGINES||'chromium').replaceAll(',','-')+'.json',JSON.stringify(report,null,2));
+  await browser.close();
+ }
 }
 report.finishedAt=new Date().toISOString();report.result='PASS';
 writeFileSync('artifacts/gates/pchain-evidence-'+(process.env.PCHAIN_ENGINES||'chromium').replaceAll(',','-')+'.json',JSON.stringify(report,null,2));
