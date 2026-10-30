@@ -56,7 +56,7 @@ const verifyTargets=async(root,width)=>{
  }
 };
 try{
- await page.route('**/__visual01_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
+ await page.context().addInitScript({content:axeScript});
  await page.goto('http://127.0.0.1:4173/');
  await controlledStorageFixture(page,()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')),record);
  await page.evaluate(async()=>{
@@ -78,7 +78,6 @@ try{
  await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  const before=await record();
  assert.ok(before?.raw&&Number.isInteger(before.revision),'the fixture must have an actual canonical IndexedDB record');
- await page.addScriptTag({url:'http://127.0.0.1:4173/__visual01_axe.js'});
  const mini=page.locator('#miniChartPeriods');
  assert.deepEqual(await mini.locator('button').allTextContents(),labels);
  assert.equal(await mini.locator('[aria-pressed="true"]').count(),1);
