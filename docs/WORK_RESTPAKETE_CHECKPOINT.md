@@ -1,3 +1,15 @@
+## CI-OPT01 verbindlich priorisiert · Credit-/Testeffizienz ohne Sicherheitsabbau · 30.10.2026
+
+**Ausdrückliche Nutzerentscheidung:** [CI-OPT01 / Issue #229](https://github.com/joke0071/foliolab-open/issues/229) ist als aktives, priorisiertes Optimierungs-Arbeitspaket angelegt. Bereits drei zusätzliche Work-Credit-Pakete à 20 € (60 €) gekauft; die **ChatGPT-Work-Credit-Effizienz** ist daher verbindliches und messbares Prozessziel, getrennt von GitHub-Actions-Runner-Minuten. Vollständiger Scope, Ist-Befunde, FAST/INTEGRATION/RELEASE, Sharding/Caching, External-503-Fehlerdiagnose, konservative Impact-Testauswahl und Erfolgsmessung stehen im Issue.
+
+**Zeitpunkt/Kollisionsschutz:** Das laufende v221/SW221-Live-Release und seine dokumentierten Fehler-/Retry-Grenzen **nicht unterbrechen oder umpriorisieren**. Nach vollständig gesichertem v221-Liveabschluss CI-OPT01 möglichst **vor der Serie der übrigen sieben visuellen Copilot-Integrationen** als nächstes priorisiertes technisches Paket prüfen und konfliktfrei umsetzen. Nicht erneut sieben vollständige PR-Analyse-/Releasezyklen starten, ohne das Optimierungspotenzial geprüft zu haben. Keine gleichzeitigen Implementierungsstränge, keine automatische Sammelintegration.
+
+**Verbindliche Sicherheitsgrenze:** Umfangreiche vollständige finanz-, speicher-, backup-, SW-/PWA-, Sicherheits- und Drei-Browser-/Live-Releaseprüfungen bleiben für den finalen Release erhalten. Verkürzte FAST-Gates nur für frühe Draft-/Entwicklungszyklen; Integration nur mit allen erforderlichen Nachweisen. Keine Assertion-, Timeout- oder Gate-Lockerungen, keine verdeckten SKIPs. Maximal 2–3 unabhängige CSS-Pakete dürfen als **Option** für einen gemeinsamen **einzeln explizit freizugebenden** Integrationskandidaten bewertet werden; **keine automatische Freigabe**. CI-OPT01 selbst erst nach messbarem Vorher/Nachher und eigener PR-Freigabe mergen.
+
+**Masterstatus:** UI-VISUAL02/03/04/05/07/08/09 und QA223 behalten ihren bisherigen WORK_INTEGRATION_PENDING-Status, UI-VISUAL06 und alle übrigen Masteraufgaben bleiben bei Work; **nur FLH05 und FLH-PROJ01 bewusst PARKED**. Historischen Dokumentationsbranch niemals als Anwendungscode nach main mergen.
+
+---
+
 ## v221/SW221 DONE / LIVE_ACCEPTED · CI-OPT01 als nächste Fortsetzung · 30.10.2026
 
 **Vollständig abgenommen:** Main `3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce`, Tree `172e887b085acfb4dcf5675207713eda99c2201d`, Produktion **v221/SW221 DONE / LIVE_ACCEPTED**. PR209 einschließlich208 sowie DiagnosePR228 abgeschlossen; konkreteMergefreigaben verbraucht, keineFreigabe fürFolgePRs. Main/Anwendung/SW währendAbnahme unverändert, kein neuesDeployment imRetry.
