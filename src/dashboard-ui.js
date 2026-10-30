@@ -85,6 +85,9 @@ function eurAxisLabels(values){
 
 export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=compactAmount,comparison=null,disjoint=false}){
  if(!samples||samples.length<2) return '<p class="chart-zero">'+(samples?.length?'Ein weiterer belegter Zeitpunkt für den Verlauf fehlt.':'Noch keine Stichtage. Du kannst einen im Reiter „Verlauf“ speichern.')+'</p>';
+ const times=samples.map(s=>Date.parse(s.date));
+ if(times.some((t,i)=>!Number.isFinite(t)||i>0&&t<times[i-1]))return '<p class="chart-zero">Datumsangaben für das Diagramm nicht verfügbar.</p>';
+ const firstTime=times[0],timeSpan=times.at(-1)-firstTime;
  const step=Math.max(1,Math.ceil(samples.length/140));
  const sampled=samples.filter((s,i)=>i===0||i===samples.length-1||i%step===0||disjoint&&(s.breakBefore||samples[i+1]?.breakBefore));
  const values=sampled.map(s=>Number(s.totalEURExact??s.total));
@@ -99,14 +102,14 @@ export function drawInteractiveChart(samples,{money,esc,dateLabel,axisFormat=com
  const yMin=lo-span*.30,yMax=hi+span*.20,range=yMax-yMin;
  const width=600,height=180,pad=5;
  const points=sampled.map((s,i)=>({
-   x:pad+i*(width-pad*2)/(sampled.length-1),
+   x:timeSpan?pad+(Date.parse(s.date)-firstTime)/timeSpan*(width-pad*2):width/2,
    y:pad+(yMax-values[i])/range*(height-pad*2),
    value:money(values[i]),date:dateLabel(s.date),...(s.detail?{detail:String(s.detail)}:{})
  }));
  const path=points.map((p,i)=>(i&&!(disjoint&&sampled[i].breakBefore)?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' ');
  const comparePath=second?points.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+(pad+(yMax-second[i])/range*(height-pad*2)).toFixed(2)).join(' '):'';
  if(second)points.forEach((p,i)=>{p.compareValue='Kapitalreferenz: '+money(second[i]);});
- const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+pad+' '+height+' Z';
+ const fill=path+' L'+points.at(-1).x.toFixed(2)+' '+height+' L'+points[0].x.toFixed(2)+' '+height+' Z';
  const series=esc(JSON.stringify(points));
  const ticks=[yMax,(yMax+yMin)/2,yMin];
  // Labels only: bounds, tick positions, exact point values and custom currency
@@ -159,7 +162,10 @@ export function attachChartInteractions(container) {
    if(event.target.closest?.('.chart-tooltip'))return;
    const bounds=plot.getBoundingClientRect();
    const percent=Math.max(0,Math.min(1,(event.clientX-bounds.left)/bounds.width));
-   select(Math.round(percent*(points.length-1)));
+   const x=percent*600;
+   let index=0;
+   for(let i=1;i<points.length;i++)if(Math.abs(points[i].x-x)<=Math.abs(points[index].x-x))index=i;
+   select(index);
  }
  plot.addEventListener('pointermove',event=>{if(event.pointerType!=='touch')nearest(event);});
  plot.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')touched=true;nearest(event);});
