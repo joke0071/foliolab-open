@@ -1,3 +1,9 @@
+## Releasepipeline: Auch Test-only-Merge nach main deployed · 30.10.2026
+
+**Korrektur für Work-Übernahme:** In `.github/workflows/import.yml` führt **jeder** `main`-Push mit grüner Voll-CI zur `deploy`-Stufe und anschließender `live-acceptance`. Auch [PR #234](https://github.com/joke0071/foliolab-open/pull/234) ist daher **kein automatisch releasefreier Test-Merge**, obwohl nur Tests geändert werden. Risikoproportionale Merge-/Deploybefugnis des Nutzers mit derselben Sicherheitsgrenze anwenden: vollständige CI/Releasebelege, Konfliktschutz, v222-Rückfallbasis und Wochenend-Praxistest beachten; bei unklarer Lage Draft behalten. Frühere Kurzbeschreibung `test-only ohne Pages-Release` ausdrücklich superseded.
+
+---
+
 ## UI-M28-K02: neuer Work-eigener Test-PR #234; K03 in Copilot-#213 bereits abgedeckt · 30.10.2026
 
 **Echter neuer sicherer Testschnitt:** [PR234](https://github.com/joke0071/foliolab-open/pull/234), reiner Test-Draft auf unverändertem v222-Main, 5/5 lokale Node-Tests bestanden; BTC/ETH/SOL, 365/366 und 1800/1801 Tage, 3J/5J/Max nach echtem Backup-/Restore-Roundtrip, unsortierte/duplizierte/ungültige Kursdaten fail-closed, freie Remote-Krypto-365d-Grenze ohne Netzaufrufe. Vollständige GitHub-CI zum Zeitpunkt der Erstellung **noch laufend**. K02 **EXISTING_FEATURE/PARTIAL_IMPLEMENTED + TARGETED_REGRESSION_TESTS_DONE / DRAFT_NOT_MERGED**; weder Kursabrufe erweitert noch lokale Charts neu gebaut. K03-Datenstandrahmen und Singular-/Pluraltext sind schon **Teil des Copilot-#213-Drafts**; keine Doppelimplementierung, sondern nach konfliktfreier v222-Integration konkret visuell abnehmen. K01 TradingView und K04 Informationskonsolidierung weiter offen; Work-P1 und Praxisbefunde priorisieren.
