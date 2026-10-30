@@ -1,3 +1,17 @@
+## UI-TEXT02 / 3J Kandidat gesichert · PR206 CI läuft · 30.10.2026
+
+Produktion **v218/PR205 DONE / LIVE_ACCEPTED**, maincbb9e8e9fa58c768c128f304840269313aeae6ba, vollständige Main-/Pages-/Live41012601300 SUCCESS nach genau einem unveränderten Livejob-Retry. Erster Navigationsbefund weiterhin ungeklärt dokumentiert, keine Gates abgeschwächt. [Releasebelege](release-evidence/ui-text01-facts-v218-release.json).
+
+Einziger funktionaler Strang [PR206](https://github.com/joke0071/foliolab-open/pull/206), Branch **fix/ui-text02-three-year-v219**, HEAD **69451c8ded2dfae19a68d14f12137c4ad1329e72**, Tree **44784cf30786d9981af87fa3f27d9e39fb5793f2**. Vier Remote-Blobs/Tree entsprechen lokal geprüften Gitobjekten. **PARTIAL / CI_RUNNING / NOT_MERGED / NOT_DEPLOYED; SW219 unveröffentlicht.**
+
+Vorhandener bestätigter UI-TEXT02-Fehler begrenzt korrigiert: Renderer übernimmt alle tatsächlich zulässigen längeren Positionszeiträume, einschließlich1096/„3 J“, statt3J herauszufiltern. Bestehende Information zum tatsächlichen Kurstagbereich gilt auch für3J. Beschaffung,Zulässigkeit,Zeitfilter,Finanzwerte,Historie und native Krypto-Einjahres-/CSV-Grenzen unverändert;keine neue Historie/Interpolation. Größere adaptiveZeitraumleiste,Sparse-Achse und Modi bleiben eigene offene Masterpunkte.
+
+Lokal **959/959Units,0Fail/Skip**,Syntax/diff-check PASS. Tests gleichen tatsächlich verfügbare und gerenderte Optionen ab,behalten no-chart/keineQuelle-Verhalten und unsupported-Krypto-CSV-Guard;lokaler3J-Renderer nennt realeDatengrenzen ohne Abruf/Mutation. Initiale neue Testannahme „ETF ohne Quelle hat Controls“ war falsch und wurde auf bestehenden No-Chart-Vertrag korrigiert;kein Produktcode dafür geändert,finaleGates bestanden. Bestehende Browserprüfung ergänzt ummobile3J,tatsächlicheWerte95/100,5J/Max-Kompatibilität,sechsBreiten und exakte vollständigeIndexedDB-Recordgleichheit. [Pflicht41015530552](https://github.com/joke0071/foliolab-open/actions/runs/41015530552) und [Wallet41015530399](https://github.com/joke0071/foliolab-open/actions/runs/41015530399) laufen;kein Browser-PASS vorweggenommen.
+
+**Weiter:** PR206 vollständig technisch abnehmen,Testmerge/Tree/Artefakte/Reports/Bild prüfen und dann eigene ausdrückliche Releasefreigabe einholen. PR205-Freigabe verbraucht und nicht übertragbar. Nach eigener Freigabe kontrollierterMerge und vollständigeMain-/Pages-/Live-/PWA-Abnahme. Kein paralleles Paket. Alle übrigen Master-/Mehr-/Text-/DELETE-/FLH03-/FLH04-/Android-/CI-/PWA-Verträge erhalten;FLH05/FLH-PROJ01 OPEN/PARKED. HistorischenDokumentationsbranch niemals alsAppcode mergen.
+
+---
+
 ## PR205 / Positionsfakten · v218 produktiv abgenommen · 30.10.2026
 
 **DONE / LIVE_ACCEPTED für den freigegebenen Positionsfakten-Schnitt.** PR205/main **cbb9e8e9fa58c768c128f304840269313aeae6ba**, Tree **46b8adf6545c59cc606c9630299f56d21cec86a6** identisch mit geprüftem HEAD03ee0d32. Produktion **v218/SW218**. [Main-/Pages-/Live41012601300](https://github.com/joke0071/foliolab-open/actions/runs/41012601300) final SUCCESS,Versuch2:957/957Units,0Fail/Skip,Syntax,Chromium/Firefox/WebKit,Pages und tatsächliche Produktionsabnahme erfolgreich.
