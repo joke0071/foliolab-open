@@ -1,3 +1,25 @@
+## PR231 DONE/LIVE_ACCEPTED – stabile Praxisbasis gesichert · 30.10.2026
+
+**Aktueller Main `d6b2a14f2108bc210411054d5f3d7690ba44fd51`, Tree `033a5de98b2215fd818d127fe7674bee4292e7f9`. Anwendung und SW bleiben unverändert v221/SW221, vollständig LIVE_ACCEPTED.** PR231 wurde ausschließlich mit eigener konkreter Nutzerfreigabe auf HEAD9369d6b3 nach vollständiger Review-CI41111739544 gemergt. Diese Freigabe ist verbraucht und gilt nicht für weitere PRs.
+
+**Vollständiger [Release41113336364](https://github.com/joke0071/foliolab-open/actions/runs/41113336364), Versuch1 SUCCESS.** Stufenplanung RELEASE/full=true/ciContract=false, Hauptjob, alle drei Cross-Shards, Pages und Live erfolgreich. FAST auf Main erwartungsgemäß skipped; kein reduzierter Releasepfad.975/975Units,0Fehler/Skip, sämtliche bisherigen vollständigen Browser-/Finanz-/Speicher-/CAS-/Backup-/Restore-/Offline-/PWA-/A11y-Gates erhalten. Keine Workflowwiederholung, Assertion-/Fristlockerung oder Produkt-/SW-Änderung.
+
+**Tatsächliche Nachweise:**69Main-/Cross-/PlanJSONs plus40LiveJSONs vollständig geprüft, zusammen109 (105PASS,3Axe-Scanberichte,1Plan). Der vollständige36.677.654Byte-Live-Originalstream wurde vor Auswertung im Speicher streng gegen GitHub-SHA256 `7e853cd1f6e24d17893752e2b0b6a03432acea22f251d09ebb9ad7f377ee0f7d` und alleZIP-CRC geprüft. Alle121veröffentlichtenHashes gegen exakteMainbytes unabhängig verglichen;6Kerngruppen und18Live-Axe-Scans ohneVerstoß. TatsächlicheUI-Speicherung/Reload, echteplain/encryptedBackupdownloads undRestore in frischenProfilen, SW/Offline/IndexedDB sowie sämtlicheFach-/Crossberichte bestanden. TatsächlicheLivebilder390/1440 visuell geprüft; keineHardware-/Screenreaderabnahme behauptet.
+
+[Dauerhafter vollständiger Releasebeleg](release-evidence/ci-opt01-pr231-live-acceptance.json), separaterBelegcommit `2e6683ab90369ed45d343379906281f98b4768f3`; [Mainbelege](release-evidence/ci-opt01-pr231-main-acceptance.json), Commit4bfd0a7f; [echtes geprüftes Livebild390](release-evidence/ci-opt01-pr231-live-390.png), separaterCommit28fe461b. Roadmap und Issue229 auf diesen tatsächlichen Stand aktualisiert.
+
+**Lokale Übertragungsanomalie transparent erhalten:** zweiCross3-ZIP-Kopien waren abgeschnitten; lokaleUrsacheUNKNOWN undnichtalsbehobenbehauptet. Kein falscherHash akzeptiert. Stattdessen vollständigen24.223.052Byte-Originalstream gegen GitHub-SHA256 `7f509bc431ea4af6579050be4805c681436b7f4ab23e0eaa34b88115a3015734` undCRC imSpeicher verifiziert, alle22JSONs ausgenaudiesenBytes gelesen und [separat remote gesichert](release-evidence/ci-opt01-pr231-cross3-source-verification.json), Commit8f56baaf. Vorherigezu frühe69erZwischenbehauptung wurde ausdrücklichkorrigiert; diejetzigeAbnahme beruhtaufvollständiggeprüftenOriginalbytes.
+
+**Messung:** Main-PflichtspanneinklusivePlan590s, volleRunner1634s,Plan9s,Pages22s,Live612s,zusammen2277Runnersekunden. Einzelstichprobe; keinekausaleBeschleunigungdurchFAST fürdiesenunverändertvollenMainpfadbehaupten. EchteFAST-only-Draft-Gesamtlaufzeit undZeitbiszumerstenFehlerweiternichtgemessen;81swarfrühererisolierterBrowser-Canary. KeinegarantierteCredit-/Euroersparnis.
+
+**Exakt nächste Fortsetzung gemäß neuer Nutzerpriorität:** stabileLIVE_ACCEPTED-Praxisbasis v221/SW221 fürdasWochenende31.10.–01.11. beibehalten, realePraxis-/UX-Befunde undgemesseneStartperformancepriorisieren; keineungeplantenUI-Releases währenddesTests. DanachP0/P1-Repros zuerst,gemessenenPERF01-Schnitt#177 vorKosmetik,wennentsprechendbelegt; gelieferteUI-Drafts anhandbestehenderAbhängigkeiten#213→#214→#218→#219undCSS-Konflikte prüfen stattneuentwickeln. KeineautomatischeSammelintegrationoderFreigabe. NeuekonkreteKandidaten nachvollständigerAbnahme jeweilseigensfreigebenlassen.
+
+**CI-OPT01 bleibt insgesamt PARTIAL/OPEN:** PR230 undPR231 sindabgeschlossen; Caching,Versionsangleichung,Chromium-Sharding,breitereImpactzuordnung undRetrypolitik bleibenOPEN/DEFERREDnachUX-Priorität. KeineweiteregroßeCI-Schleife ohnebelegtenunmittelbarenEngpassvorziehen. ProzesshinweisfürkünftigeFULL-only-Vertragskandidaten: nachvollständigerlokalerVorbereitung direktreviewbereitenPReröffnen, wennkeinFAST-Draftnutzenbesteht; dadurchkeinenzusätzlichenreinenStatusübergangslaufvorsorglicherzeugen. Pflichtprüfungenundready_for_review-FULLbleibenunverändert; keinenlaufendenJobabbrechen.
+
+Alle übrigenMasteranforderungenbewahrt. Nur **FLH05 undFLH-PROJ01** bewusstOPEN/PARKED. HistorischenDokumentationsbranchniemalsalsProduktcodenachMainmergen. **KeinezusätzlichenkostenpflichtigenWork-Credit-Pakete kaufenodereinplanen;Budget0€.** AktuellkeineweitereFreigabefürdiesenabgeschlossenenPR231notwendig.
+
+---
+
 ## PR231: vollständiger Originalinhalt verifiziert, Mainbelege gesichert · 30.10.2026
 
 Der zuletzt dokumentierte Integritätsblocker ist für die **Nachweiskette** geklärt, nicht als Behebung einer lokalen Dateisystemursache umgedeutet. Zwei lokale ZIP-Kopien13003959387 blieben abgeschnitten (17.956.864 bzw.23.953.408 statt24.223.052Bytes); ihreHashes/Defekte bleiben erhalten, UrsacheUNKNOWN. Sie wurden nicht als Quelle der Abnahme verwendet.
