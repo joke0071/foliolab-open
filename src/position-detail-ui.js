@@ -60,7 +60,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const nativeAvailable=Boolean(marketHistoryCapability(p,model.settings));
  const needsOwnChart=nativeAvailable||Boolean(imported);
  const periods=availablePositionPeriods(p,model);
- const standard=periods.filter(x=>typeof x==='number'&&x<=365),long=periods.filter(x=>x===1826||x==='max');
+ const standard=periods.filter(x=>typeof x==='number'&&x<=365),long=periods.filter(x=>(typeof x==='number'&&x>365)||x==='max');
  const extra=long.length>1?
   '<span class="position-period-long">'+renderChartPeriodButtons('market','data-position-range',days,long)+'</span>'+
   '<details class="position-period-more"><summary aria-label="Weitere Zeiträume auswählen" title="Weitere Zeiträume">Mehr</summary>'+
@@ -116,7 +116,7 @@ export async function loadPositionDetail(position,model,mount,{days=30,fetcher=g
   target.innerHTML='<div class="position-history-label">'+esc(kind==='market'?'Marktkurs je Einheit':kind==='historical-value'?'Historischer Positionswert (€)':'Gespeicherter Positionswert')+'</div>'+
    '<div class="position-history-chart chart-area">'+drawInteractiveChart(points,{money:fmt,esc,dateLabel,axisFormat})+'</div>'+
    '<p class="position-detail-note">'+esc(kind==='market'?(source==='CSV (selbst geprüft)'?'CSV-Daten vom Nutzer übernommen, nicht unabhängig verifiziert. Kein persönlicher Renditeverlauf.':source+' · Marktpreis, nicht deine persönliche Rendite.'):kind==='historical-value'?source+' · damaliger Bestand × damaliger Kurs. Keine Rendite.':'Lokale Stichtagswerte inkl. Bestandsänderungen, keine bereinigte Rendite.')+'</p>'+
-   (days===1826||days==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(points[0].date))+' bis '+esc(dateLabel(points.at(-1).date))+'. Fehlende frühere Kurse werden nicht ergänzt.</p>':'');
+   (days>365||days==='max'?'<p class="position-detail-note">Tatsächlich verfügbare Kurse: '+esc(dateLabel(points[0].date))+' bis '+esc(dateLabel(points.at(-1).date))+'. Fehlende frühere Kurse werden nicht ergänzt.</p>':'');
   mount.querySelector('.position-period')?.classList.remove('hidden');
   attachChartInteractions(target);
   if(source.startsWith('CoinPaprika')){

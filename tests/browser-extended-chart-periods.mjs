@@ -23,6 +23,8 @@ try{
  const holding=page.locator('#providerOverview [data-position-id="long-price"]');
  await holding.locator(':scope > summary').click();
  await holding.locator('.position-history-chart .chart-plot').waitFor();
+ const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
+ const before=await record();
  for(const width of [320,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const overflowing=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
@@ -30,10 +32,23 @@ try{
   const choices=holding.locator('.position-period button:visible');
   const labels=await choices.allTextContents();
   assert.ok(labels.includes('7 T')&&labels.includes('1 J'));
-  assert.ok(width<=767?labels.length<=5:labels.includes('5 J')&&labels.includes('Max'));
+  assert.ok(width<=767?labels.length<=5:labels.includes('3 J')&&labels.includes('5 J')&&labels.includes('Max'));
   if(width<=767)assert.equal(await holding.locator('.position-period-more > summary').isVisible(),true);
  }
  await page.setViewportSize({width:390,height:850});
+ await holding.locator('.position-period-more > summary').click();
+ await holding.locator('.position-period-popover [data-position-range="1096"]').click();
+ await holding.locator('.position-history-chart .chart-plot').waitFor();
+ const threeYearPoints=JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points'));
+ assert.equal(threeYearPoints.length,2,'three years retains only the two actual in-range observations');
+ assert.match(threeYearPoints[0].value,/95,00/);assert.match(threeYearPoints[1].value,/100,00/);
+ assert.match(await holding.innerText(),/Tatsächlich verfügbare Kurse/);
+ assert.equal(await holding.locator('.position-period-popover [data-position-range="1096"]').getAttribute('aria-pressed'),'true');
+ await holding.locator('.position-period').scrollIntoViewIfNeeded();
+ await holding.locator('.position-period-more > summary').click();
+ assert.equal(await holding.locator('.position-period-popover [data-position-range="1096"]').isVisible(),true);
+ await page.screenshot({path:'artifacts/gates/position-three-years-390.png'});
+ await holding.locator('.position-period-more > summary').click();
  await holding.locator('.position-period-more > summary').click();
  await holding.locator('.position-period-popover [data-position-range="1826"]').click();
  await holding.locator('.position-history-chart .chart-plot').waitFor();
@@ -45,5 +60,6 @@ try{
  assert.equal(JSON.parse(await holding.locator('.chart-plot').getAttribute('data-chart-points')).length,4);
  assert.match(await holding.innerText(),/Fehlende frühere Kurse werden nicht ergänzt/);
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['long-price'].points.length),4);
- console.log('EXTENDED CHART PERIODS: local 5Y/Max coverage, mobile menu, 320-1440px, no portfolio mutations PASS');
+ assert.deepEqual(await record(),before,'period changes preserve exact IndexedDB record/settings/revision');
+ console.log('EXTENDED CHART PERIODS: reachable3Y/5Y/Max, actual in-range values/coverage, mobile menu,320-1440px,exact IndexedDB preservation PASS');
 }finally{await browser.close();}
