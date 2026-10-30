@@ -111,6 +111,18 @@ try{
    await context.setOffline(false);result.checks.push('actual 503 aborts new installation; previous app and offline portfolio survive unchanged');
    generation='current';
    const beforeUpdateDocument=await page.evaluate(()=>performance.timeOrigin);
+   const updateDeadline=performance.now()+60000;
+   // WebKit can expose the pre-activation worker snapshot in the document
+   // created by controllerchange even after the old document observed activated.
+   // Require the real native activation, then verify the strict state again in
+   // the independently reloaded document. Never treat activating as activated.
+   const activatedWorker=page.waitForEvent('console',{
+    predicate:message=>{
+     if(!message.text().startsWith('PWA_LIFECYCLE '))return false;
+     const event=JSON.parse(message.text().slice('PWA_LIFECYCLE '.length));
+     return event.controller?.state==='activated'&&event.controller.scriptURL===new URL('sw.js',base).href;
+    },timeout:60000
+   }).then(message=>({observed:true,event:JSON.parse(message.text().slice('PWA_LIFECYCLE '.length))}),error=>({observed:false,error:String(error)}));
    // Arm before update(): the real app reloads on controllerchange. The new
    // controller can become visible before that navigation has committed.
    const automaticReload=page.waitForEvent('framenavigated',{
@@ -119,16 +131,18 @@ try{
    // update() may trigger the app's intended controllerchange reload before
    // its promise reaches the old document. Observe the new controller below.
    await page.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()).catch(error=>console.error('Worker update failed',error)),0);});
-   await wait('current-controller',async expected=>{
-    const r=await navigator.serviceWorker.getRegistration();
-    return !r.installing&&!r.waiting&&r.active?.state==='activated'&&navigator.serviceWorker.controller===r.active&&(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected;
-   },cache,{timeout:60000});
-   result.automaticReload=await automaticReload;
+   [result.nativeActivation,result.automaticReload]=await Promise.all([activatedWorker,automaticReload]);
+   assert.equal(result.nativeActivation.observed,true,'real current worker reached activated before explicit reload');
    assert.equal(result.automaticReload.observed,true,'real controllerchange reload committed');
    await page.waitForLoadState('networkidle');await ready();
    result.automaticReload.newDocument=await page.evaluate(()=>performance.timeOrigin);
    assert.notEqual(result.automaticReload.newDocument,beforeUpdateDocument,'automatic update created a new document');
    await page.reload({waitUntil:'networkidle'});await ready();
+   assert.ok(performance.now()<updateDeadline,'current-controller check stays inside original60s window');
+   await wait('current-controller',async expected=>{
+    const r=await navigator.serviceWorker.getRegistration();
+    return !r.installing&&!r.waiting&&r.active?.state==='activated'&&navigator.serviceWorker.controller===r.active&&(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected;
+   },cache,{timeout:Math.max(1,updateDeadline-performance.now())});
    // The automatic controllerchange reload may overlap the explicit reload.
    await wait('post-reload-current-cache',async expected=>(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected,cache);
    const hashes=await cachedHashes();assert.equal(hashes.length,assets.length,'complete matching precache');
