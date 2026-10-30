@@ -3,6 +3,31 @@ import assert from 'node:assert/strict';
 import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,compactAmount} from '../src/dashboard-ui.js';
 import {blankModel,createProvider,createAccount,createPosition,valueEUR,money,escapeHTML} from '../src/model.js';
 const labels=d=>d;
+const chartPoints=html=>JSON.parse(html.match(/data-chart-points="([^"]+)"/)[1].replaceAll('&quot;','"'));
+test('Sparse chart coordinates use actual elapsed time, including comparison and disjoint segments',()=>{
+ const rows=[{date:'2026-01-01',total:100},{date:'2026-01-02',total:101},{date:'2026-01-11',total:110,breakBefore:true}];
+ const before=structuredClone(rows);
+ const html=drawInteractiveChart(rows,{money,esc:escapeHTML,dateLabel:labels,comparison:rows.map(r=>({...r,total:r.total-10})),disjoint:true});
+ const points=chartPoints(html);
+ assert.deepEqual(points.map(p=>p.x),[5,64,595]);
+ assert.deepEqual(points.map(p=>[p.date,p.value,p.compareValue]),rows.map(r=>[r.date,money(r.total),'Kapitalreferenz: '+money(r.total-10)]));
+ const paths=[...html.matchAll(/<path d="([^"]+)" fill="none"/g)].map(m=>m[1]);
+ assert.match(paths[0],/^M5\.00 .*L64\.00 .*M595\.00 /);
+ assert.match(paths[1],/^M5\.00 .*L64\.00 .*L595\.00 /);
+ assert.deepEqual(rows,before,'rendering changes no observations or gap evidence');
+});
+test('Chart time coordinates retain UTC leap-day intervals and equal-date observations without inventing time',()=>{
+ const render=rows=>chartPoints(drawInteractiveChart(rows,{money,esc:escapeHTML,dateLabel:labels}));
+ assert.deepEqual(render([{date:'2024-02-28',total:1},{date:'2024-02-29',total:2},{date:'2024-03-02',total:3}]).map(p=>p.x),[5,5+590/3,595]);
+ const same=render([{date:'2024-02-29',total:1},{date:'2024-02-29',total:2}]);
+ assert.deepEqual(same.map(p=>p.x),[300,300]);assert.equal(same.length,2);
+});
+test('Charts never fall back to invented equally spaced dates for invalid or reversed observations',()=>{
+ for(const dates of [['invalid','2026-01-02'],['2026-01-02','2026-01-01']]){
+  const html=drawInteractiveChart(dates.map(date=>({date,total:100})),{money,esc:escapeHTML,dateLabel:labels});
+  assert.match(html,/Datumsangaben für das Diagramm nicht verfügbar/);assert.doesNotMatch(html,/data-chart-points|NaN/);
+ }
+});
 test('Compact money distinguishes audit examples and never turns missing values into zero',()=>{
  const cases=[[983.1,'€ 983,1'],[1000,'€ 1 Tsd.'],[1010,'€ 1,01 Tsd.'],[1059,'€ 1,059 Tsd.'],[9999,'€ 9,999 Tsd.'],[1234567,'€ 1,235 Mio.'],[-1010,'€ -1,01 Tsd.']];
  for(const [value,label]of cases)assert.equal(compactAmount(value),label);
