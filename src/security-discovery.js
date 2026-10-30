@@ -43,9 +43,8 @@ export function normalizeListing(row,source){
  const eodhdSymbol=source==='eodhd'&&suffix&&/^[A-Z0-9]{1,12}$/.test(suffix)?
    symbol+'.'+suffix:source==='twelve'&&mapping?symbol+'.'+mapping[3]:'';
  const fmpSymbol=source==='fmp'?providerSymbol:'';
- const tradingViewSymbol=mapping?mapping[2]+':'+symbol:'';
  return {source,name,symbol,isin,currency,exchange:mapping?mapping[0]:exchange,mic:mic||mapping?.[1]||'',
-   eodhdSymbol,fmpSymbol,tradingViewSymbol,
+   eodhdSymbol,fmpSymbol,
    type:trim(row.instrument_type||row.type||row.Type,40)};
 }
 const cleanTerm=term=>{
@@ -124,6 +123,5 @@ export function mergeConfirmedListing(position,candidate){
  const oldIsin=upper(position.isin),isin=upper(candidate.isin);
  return {...position,symbol:upper(candidate.symbol),isin:oldIsin||isin,currency:upper(candidate.currency),
   exchange:candidate.exchange,mic:candidate.mic||'',
-  eodhdSymbol:candidate.eodhdSymbol||'',fmpSymbol:candidate.fmpSymbol||'',
-  tradingViewSymbol:candidate.tradingViewSymbol||''};
+  eodhdSymbol:candidate.eodhdSymbol||'',fmpSymbol:candidate.fmpSymbol||''};
 }

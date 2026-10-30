@@ -1,19 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';globalThis.crypto??=webcrypto;
-import {fetchSecurityQuote,fetchSecurityHistory,marketSourceOptions,tradingViewIdentifier} from '../src/security-sources.js';
+import {fetchSecurityQuote,fetchSecurityHistory,marketSourceOptions} from '../src/security-sources.js';
 import {blankModel,createProvider,createAccount,createPosition,backup,safeImport} from '../src/model.js';
 const today=new Date().toISOString().slice(0,10);
 const yday=new Date(Date.now()-86400000).toISOString().slice(0,10);
 const older=new Date(Date.now()-2*86400000).toISOString().slice(0,10);
 const ok=body=>({ok:true,status:200,headers:{get:()=>null},json:async()=>body});
 function position(extra={}){return {kind:'etf',name:'Vanguard FTSE All-World',symbol:'VWCE',isin:'IE00BK5BQT80',exchange:'Xetra',mic:'XETR',currency:'EUR',...extra};}
-test('Free TradingView chart is tied to explicit exchange and never guesses a missing MIC',()=>{
- assert.equal(tradingViewIdentifier(position()),'XETR:VWCE');
- assert.equal(tradingViewIdentifier(position({mic:'',exchange:''})),null);
- assert.equal(tradingViewIdentifier(position({mic:'',exchange:'',tradingViewSymbol:'XETR:VWCE'})),'XETR:VWCE');
- assert.equal(tradingViewIdentifier(position({tradingViewSymbol:'NYSE:VWRL'})),null);
- assert.equal(tradingViewIdentifier(position({tradingViewSymbol:'javascript:alert(1)'})),null);
+test('An external TradingView chart API is not exposed; quote sources remain strictly configured',async()=>{
+ const sources=await import('../src/security-sources.js');
+ assert.equal(Object.hasOwn(sources,'tradingViewIdentifier'),false);
+ assert.deepEqual(marketSourceOptions(position(),{}),[]);
+ assert.throws(()=>marketSourceOptions(position({mic:'',exchange:''}),{eodhdKey:'SYNTHETIC'}),/Handelsplatz/);
 });
 test('Provider auto-priority chooses configured EODHD then explicit FMP then Twelve Data',()=>{
  const p=position({fmpSymbol:'VWCE.DE'});

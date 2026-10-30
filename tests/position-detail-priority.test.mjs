@@ -13,15 +13,15 @@ function fakeMount(){
  const mount={isConnected:true,dataset:{},querySelector:selector=>selector==='.position-history-plot'?target:null};
  return {mount,target};
 }
-test('ETF shows native chart first and hides CSV/TradingView in one native disclosure',()=>{
+test('ETF shows native chart first and directly offers local CSV without third-party widget',()=>{
  const p=position(),m=model(p);m.settings.eodhdKey='SYNTHETIC_KEY';
  const html=positionDetailMarkup(p,m,config);
  assert.match(html,/position-history-plot/);
- assert.match(html,/<details class="position-chart-options"><summary>Weitere Kursoptionen<\/summary>/);
- assert.ok(html.indexOf('position-history-plot')<html.indexOf('position-chart-options'));
- assert.ok(html.indexOf('data-position-range')<html.indexOf('position-chart-options'));
+ assert.match(html,/class="position-native-quote-actions"/);
+ assert.ok(html.indexOf('position-history-plot')<html.indexOf('position-native-quote-actions'));
+ assert.ok(html.indexOf('data-position-range')<html.indexOf('position-native-quote-actions'));
  assert.ok(html.includes('CSV-Kursverlauf importieren'));
- assert.ok(html.includes('Öffentliches Diagramm laden'));
+ assert.doesNotMatch(html,/TradingView|load-tradingview|tradingview-slot|public-chart|Weitere Kursoptionen/);
  assert.ok(!html.includes('Gespeicherter Positionswert'));
 });
 test('Without a provider, ETF never charts snapshot value as if it were a market price',()=>{
@@ -30,7 +30,8 @@ test('Without a provider, ETF never charts snapshot value as if it were a market
  const html=positionDetailMarkup(p,m,config);
  assert.doesNotMatch(html,/position-history-plot/);
  assert.match(html,/Kein nativer Kursverlauf/);
- assert.match(html,/Weitere Kursoptionen/);
+ assert.match(html,/CSV-Kursverlauf importieren/);
+ assert.doesNotMatch(html,/TradingView|load-tradingview/);
 });
 test('Configured EODHD key with missing exchange explains the listing problem',()=>{
  const p=position();p.exchange='';p.mic='';

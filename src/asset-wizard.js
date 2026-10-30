@@ -17,7 +17,7 @@ const opts=(items,selected,placeholder='Bitte wählen')=>'<option value="">'+e(p
 const input=(id,label,value='',attrs='')=>'<label class="field"><span>'+e(label)+'</span><input id="'+id+'" value="'+e(value)+'" '+attrs+'></label>';
 const defaultAcc=kind=>kind==='crypto'?['Kryptowallet','wallet']:kind==='cash'?['Guthabenkonto','savings']:['Wertpapierdepot','securities'];
 const defaultProviderType=kind=>kind==='crypto'?'wallet':kind==='cash'?'bank':'broker';
-const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:'',currency:'EUR',exchange:'',mic:'',eodhdSymbol:'',fmpSymbol:'',tradingViewSymbol:'',
+const fresh=()=>({step:1,kind:'etf',query:'',name:'',symbol:'',isin:'',coinId:'',currency:'EUR',exchange:'',mic:'',eodhdSymbol:'',fmpSymbol:'',
  providerId:'',accountId:'',providerName:'',providerType:'broker',accountName:'Wertpapierdepot',accountType:'securities',accountCurrency:'EUR',
  mode:'opening',quantity:'',date:today(),currentPrice:'',unitPrice:'',feeEUR:'',fxRate:'',advancedOpen:false,economicOpen:false,walletOpen:false,notes:'',costBasisEUR:'',economicRole:'standard',valuationMode:'included',representedByPositionId:'',walletEnabled:false,walletChain:'btc',walletAddress:'',walletContract:'',walletDecimals:'18',walletChainId:'1',walletHdType:'auto',results:[],status:'',busy:false,saved:false});
 /**
@@ -180,9 +180,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
     input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+
     input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+
-    input('wizardTV','TradingView-Symbol',state.tradingViewSymbol,'maxlength="48"')+'</details></div>'+catalogTools+'</section>'+holdings+advanced;
+    '</details></div>'+catalogTools+'</section>'+holdings+advanced;
   shell(fields,'Position hinzufügen');
-  const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol',wizardTV:'tradingViewSymbol'};
+  const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
   $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render({resetWalletDisclosure:true});if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);
@@ -192,7 +192,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    const item=state.results[Number(b.dataset.wizardPick)];if(!item)return;
    state.name=item.name;state.symbol=item.symbol||'';state.isin=item.isin||'';state.coinId=item.coinId||'';
    state.exchange=item.exchange||'';state.mic=item.mic||'';
-   state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';state.tradingViewSymbol=item.tradingViewSymbol||'';
+   state.eodhdSymbol=item.eodhdSymbol||'';state.fmpSymbol=item.fmpSymbol||'';
    state.currency=item.currency||'';state.query='';dirty=true;render();
   });
   $('wizardDirectoryImport')?.addEventListener('click',()=>$('wizardDirectoryFile')?.click());

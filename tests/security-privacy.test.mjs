@@ -85,6 +85,7 @@ test('CSP allows only the Google OAuth script alongside same-origin JavaScript',
  assert.equal(html.match(/script-src\s+([^;]+);/)?.[1]?.trim(),"'self' https://accounts.google.com/gsi/client",'No general third-party script execution allowed');
  assert.match(drive,/script\.src='https:\/\/accounts\.google\.com\/gsi\/client'/,'Only Google Identity Services loads on demand');
  assert.doesNotMatch(app,/external-embedding\/embed-widget-advanced-chart/,'No vendor script must run in portfolio origin');
- assert.match(app,/https:\/\/s\.tradingview\.com\/widgetembed\//,'Charts must be isolated in a cross-origin iframe');
- assert.match(app,/allow-scripts allow-same-origin allow-popups/,'iframe must be explicitly sandboxed');
+ assert.ok(!app.toLowerCase().includes('tradingview.com')&&!app.includes('load-tradingview')&&!app.includes('openPublicTradingView')&&!app.includes('data-tv-slot'),'No active third-party chart path remains');
+ assert.ok(!html.toLowerCase().includes('tradingview.com'),'CSP must not allow vendor chart framing');
+ assert.ok(html.includes('frame-src https://accounts.google.com/gsi/;'),'Google OAuth framing remains available');
 });

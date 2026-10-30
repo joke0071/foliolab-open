@@ -131,7 +131,7 @@ async function twelveBars(p,settings,days,fetcher){
 export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalThis.fetch){
  if(![7,30,90,180,365,1096,1826].includes(days))throw Error('Ungültiger Börsenkurszeitraum.');
  const providers=marketSourceOptions(p,settings);
- if(!providers.length)throw Error('Keine konfigurierte historische Kurs-API. Öffentlicher TradingView-Chart oder CSV verfügbar.');
+ if(!providers.length)throw Error('Keine konfigurierte historische Kurs-API. Lokaler CSV-Kursverlauf kann importiert werden.');
  const failures=[];
  for(const source of providers){
   try{
@@ -175,16 +175,4 @@ export async function fetchSecurityQuote(p,settings={},fetcher=globalThis.fetch)
   }catch(e){failures.push(source+': '+String(e.message).slice(0,120));}
  }
  throw Error('Kein sicher zuordenbarer aktueller Börsenkurs: '+failures.join(' · '));
-}
-export function tradingViewIdentifier(p){
- const symbol=cleanSymbol(p?.symbol);
- const raw=String(p?.tradingViewSymbol||'').trim().toUpperCase();
- if(raw){
-  if(!/^[A-Z0-9]{2,12}:[A-Z0-9._/-]{1,35}$/.test(raw)||!symbol||raw.split(':')[1]!==symbol)return null;
-  return raw;
- }
- const mic=String(p?.mic||'').toUpperCase();
- const exchange=String(p?.exchange||'').toUpperCase();
- const tvExchange=mic==='XETR'||exchange==='XETRA'?'XETR':mic==='XNAS'||exchange==='NASDAQ'?'NASDAQ':mic==='XNYS'||exchange==='NYSE'?'NYSE':null;
- return symbol&&tvExchange?tvExchange+':'+symbol:null;
 }
