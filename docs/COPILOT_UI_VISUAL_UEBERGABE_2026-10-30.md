@@ -1,3 +1,17 @@
+## Copilot-Delegation vollständig geliefert · PR220-Diagnose unverändert fortgesetzt · 30.10.2026
+
+**Copilot-Delegation abgeschlossen.** Fünf gelieferte, ungemergte Drafts zur späteren Einzelintegration: UI-VISUAL01/#209 HEAD7b3e4d06,02/#213 HEADe0c4462a,03/#214 HEADca9a14c0,04/#218 HEAD `f90ed7bfce611436e114b860d6dbb3746ef5d5c4`,05/#219 HEAD `1840be28b8fcd3f80c4798c7ceffe4b31530f3cd`. #208 HEAD4c4e32bc weiterhin vor Bereinigung inhaltlich vergleichen und eigene Positions-Zeitraumarbeiten erhalten. Keine der fünf visuellen Änderungen doppelt entwickeln. Integration später einzeln auf aktuellem Main, Konflikt-/CSS-Kaskadenprüfung, passende SW-Version, volle Pflichtgates und eigene konkrete Nutzerfreigabe vor jedem Merge/Deployment.
+
+Für218/219 meldet Copilot962Units,Chromium320–1440,Firefox-Stichproben undBilder; Work-Abnahme **PENDING**. Nicht geprüft:WebKit,realeAndroidgeräte,Screenreader,installiertePWA;219keineechteWalletsuche,lediglichstatischeResultat-Fixture. Claims zu bereits auf unverändertemMain fehlgeschlagenen browser-accessibility-audit und browser-dialog-visual-regression sind **UNVERIFIZIERTE BASELINE-CLAIMS**, vor jeweiligerIntegration mit gleichemBrowser/Umgebung/Daten/Viewport auf frischemMain reproduzieren und neueFehler getrennt ausweisen. KeineBaselinesblindaktualisieren oderPflichtgatesabschwächen.
+
+**UI-VISUAL06/#217 und alle übrigen offenen UI-MASTER28-Aufgaben WORK-OWNED / OPEN**,keineCopilot-Wartephase;reguläreMasterpriorität und Freigabegrenzen erhalten. FLH05/FLH-PROJ01 PARKED.
+
+Laufender fachlicher Prozess unverändert:PR212/mainaf834705/SW220 DEPLOYED / LIVE_ACCEPTANCE_BLOCKED nachzweispezifischgesichertenInitialisierungsfehlern. KeinweitererblinderRetry. Diagnose-Draft [PR220](https://github.com/joke0071/foliolab-open/pull/220) neuer HEAD `abd3abc6b2fa56be7b5fa755b0e39510e05f8946`,Tree `a32ff81e714bea1d92deec932c05652f648c5be8`;Produkt/SW bytegleich. Failure-onlyDaten,Originalassertions/Timeoutsunverändert. ErsteinstrumentierteEinzelprüfungen41031195871 PASS gegenLive,keinRootcausebeweisundkeinevollständigeReleaseabnahme. Deshalb exaktursprünglichevollständigeChromium-UI-Suite zusätzlich imbegrenztenDiagnosejobnachgestellt;derenModule startenmehrereBrowserprüfungennebeneinander. Ressourcen-/HTTP-/Initialisierungshypothese erstanFehlerbelegenbewerten,keinFixbehauptet. KeinealtenPASSesaufneuenTreeübertragen.
+
+Aktuell **DIAGNOSTICS_RUNNING / NOT_REVIEW_READY / NOT_MERGED**:Pflicht41031710791,Diagnose41031710781,Wallet41031710794 aufabd3abc6. AlterPflichtlauf41031195739 durfte regulär weiterlaufen. Lokal962Units/0Fail/Skip sowieSyntax/diff-checkPASS amgleichenTestcode;FolgecommitändertnurDiagnoseworkflowumfang. Exaktweiter:beendeteLäufe/Artefakte/Fehlerzuständeprüfen,belegbarekleinsteKorrekturundvollständigeGates;vorFolgemergeeigeneFreigabe. Copilotlieferungnurgesichert,keineUmpriorisierung/Parallelneuentwicklung. HistorischenDokumentationsbranchniemalsalsAppcodemergen.
+
+---
+
 ## Finale UI-Arbeitsteilung verbindlich korrigiert · v220 Liveprüfung läuft · 30.10.2026
 
 Neue ausdrückliche Nutzerentscheidung hat Vorrang vor älteren Delegations-/Parkierungstexten: **zusätzlich ausschließlich UI-VISUAL04/#215 (Navigation/Header) und UI-VISUAL05/#216 (Anlageassistent/Wallet-Dialoge) bei Copilot, nacheinander, nur Drafts ohne Merge/Deployment.** Work implementiert diese beiden visuellen Pakete nicht parallel. Bereits gelieferte UI-VISUAL01/#209,02/#213,03/#214 bleiben zur einzelnen kontrollierten Integration bei Work; #208 vorher inhaltlich vergleichen.
