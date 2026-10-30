@@ -662,7 +662,7 @@ function renderSettings(){
    '<button type="button" class="row-btn" data-action="delete-account" data-id="'+esc(a.id)+'" aria-label="Konto löschen">'+svg('trash',15)+'</button></div>'+renderAccountEvidence(evidence.get(a.id),a,expandedAccounts.has(a.id))).join('');
   return '<div class="setting-provider provider-settings-row">'+
    '<details class="provider-settings-group" data-provider-settings="'+esc(p.id)+'"'+(expanded.has(p.id)?' open':'')+'>'+
-   '<summary><strong>'+esc(p.name)+'</strong><small>'+esc(types[p.type]||types.other)+' · '+accounts.length+' Konto/Konten</small></summary>'+
+   '<summary><strong>'+esc(p.name)+'</strong><small>'+esc(types[p.type]||types.other)+' · '+accounts.length+(accounts.length===1?' Konto':' Konten')+'</small></summary>'+
    '<div class="provider-settings-accounts">'+(children||'<p class="small-help">Noch keine Konten.</p>')+'</div></details>'+
    '<div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="'+esc(p.id)+'" title="Anbieter bearbeiten" aria-label="Anbieter bearbeiten">'+svg('pencil',15)+'</button>'+
    '<button class="row-btn" data-action="delete-provider" data-id="'+esc(p.id)+'" title="Anbieter löschen" aria-label="Anbieter löschen">'+svg('trash',15)+'</button></div></div>';
@@ -2472,6 +2472,7 @@ const assetWizard=createAssetWizard($('wizardDialog'),{
  lookupPublic:async(term)=>queryPublicInstruments(model.settings.publicInstrumentEndpoint,term),
  lookupListings:async(term)=>(await discoverSecurityListings(term,model.settings)).results
 });
+{const origin=$('driveOriginExample');if(origin&&/^https?:/.test(location.origin))origin.textContent=location.origin;}
 $('miniChartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-mini-range',miniRange);
 $('chartPeriods').innerHTML=renderChartPeriodButtons('wealth','data-range',range);
 for(const type of ['click','input','change','submit'])document.addEventListener(type,event=>{
