@@ -1,3 +1,11 @@
+## v224/SW224 LIVE_ACCEPTED · 31.10.2026
+
+PR #233 (PERF01), #234 (K02-Regression) und #223 (Donut-A11y) sind tatsächlich veröffentlicht und vollständig produktiv abgenommen. Main 02631aba230fb49bbed47e47b6888c3da3f8efe8; Run41140341663 komplett SUCCESS. 984/984 Units, Syntax, Chromium, drei Cross-Shards, Deploy und vollständige Liveprüfung Chromium/Firefox/WebKit PASS. Live-Artefakt13019201722 SHA256 24af6e32bcd5ddad7e43a7bf6e5bc3c9469e05fcaed1b9ba5020b49c9d9aef91 / ZIP-CRC PASS; Bericht commit-/SW-genau, 121 veröffentlichte Asset-Hashes, 6 Kernprüfgruppen, 18 Axe-Scans, 0 Fehler. Eigene direkte Live-Dateihashes ebenfalls exakt. [Dauerhafter vollständiger Releasebeleg](release-evidence/v224-live-acceptance.json). v224 ist neue akzeptierte Rückfallbasis; Daten-/Schema-Downgrade ausdrücklich ausgeschlossen.
+
+#213/K04 und #214+#227 sind inzwischen beide vollständig CI_ACCEPTED auf unveränderten aktuellen HEADs, einschließlich Wallet und aller Browser-/FAST-Canary-Gates. Nächste kontrollierte Mergefolge darf nach aktueller HEAD-/Main-Kontrolle beide integrieren und so eine gemeinsame SW226-Releasepipeline nutzen. SW225 nur Zwischenkandidat, keine zusätzliche Zwischenveröffentlichung nötig. Keine ungeprüfte Übernahme anderer Drafts. Nutzerergänzung zu #235/#236/#237 gelesen und erhalten; keine Doppelimplementierung. Nur FLH05/FLH-PROJ01 PARKED, 0 € Zusatzbudget.
+
+---
+
 ## Produktiv SW224 deployed; Folgeintegrationen abgesichert · 31.10.2026
 
 Main 02631aba230fb49bbed47e47b6888c3da3f8efe8 / SW224 ist über Run41140341663 erfolgreich DEPLOYED: 984/984 Units, Syntax, Chromium und drei Cross-Shards PASS. Direkt produktiv abgerufene sw.js und src/allocation-ui.js stimmen SHA256-genau mit dem Kandidaten überein (72e7a6cc74e3b6612379e51fe0f013bc6cce46760ce367071df7a57751aed629 / a5abb26ad80f0725663190a59b2434c83207393adac5ecc301bd2ed18d47390a). Live-Chromium-Kernabnahme bestanden, Firefox/WebKit-Produktionsprüfung läuft noch; **DEPLOYED / LIVE_ACCEPTANCE_PENDING**, noch kein vollständiger Live-Claim.
