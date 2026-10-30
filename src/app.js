@@ -49,7 +49,7 @@ import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {diagnoseEodhd} from './market-diagnostics.js';
-import {priceQuality,quoteQualitySummary} from './quote-quality.js';
+import {displayQuotePrice,priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {annualOverviewMarkup} from './booking-insights-ui.js';
@@ -417,9 +417,9 @@ function renderPositions(){
    (quality.state==='ignored'?'':'<span class="tag '+(quality.state==='confirmed'?'neutral':'warn')+'">'+esc(quality.label)+'</span>');
   const facts=[
    ['Bestand',String(p.quantityExact??p.quantity)],
-   ['Kurs je Einheit',String(p.priceExact??p.price)+' '+p.currency],
+   ['Kurs je Einheit',displayQuotePrice(p)===null?'Nicht verfügbar':String(p.priceExact??p.price)+' '+p.currency],
    ...(p.currency!=='EUR'?[['EUR je Einheit Kurswährung',String(p.fxRateExact??p.fxRate)]]:[]),
-   ['Kursquelle',p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Gespeicherter Stichtag':'Nicht angegeben')],
+   ['Kursquelle',p.quoteSource||((p.priceStatus&&/stichtag|abgeleit/i.test(p.priceStatus))?'Gespeicherter Stichtag':'Unbekannt')],
    ['Kursstand',quoteDate||'Nicht angegeben'],
    ['Kursqualität',quality.label],
    ...(reviewById.get(p.id)?.issues.some(i=>i.category==='quote')?[['Bewertungshinweis',reviewById.get(p.id).issues.filter(i=>i.category==='quote').map(i=>i.label).join(' · ')]]:[]),
