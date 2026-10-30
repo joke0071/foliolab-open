@@ -1,0 +1,30 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "scope": "reference visibility/provenance/selection/CAS/restore; synthetic data only",
+  "engines": [
+    {
+      "engine": "chromium",
+      "result": "FAIL",
+      "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+      "pageErrors": [],
+      "diagnostics": {
+        "state": {
+          "url": "https://foliolab.unperfekt.at/",
+          "readyState": "complete",
+          "storageState": "Transaktionale IndexedDB aktiv",
+          "bodyText": "Direkt zum Inhalt\nFolioLab.\nBETA\nLokal gespeichert\nÜbersicht\n✧  Gesamtvermögen\n€ 0,00\n0 Positionen bei 0 Anbietern\nWillkommen bei FolioLab Open\n\nStarte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.\n\nAnlage hinzufügen\nAnbieter verwalten\nWallet verbinden\nBackup importieren\nWertpapiere\n€ 0,00\n0 Positionen\nGuthaben\n€ 0,00\n0 Guthabenpositionen\nKryptowährungen\n€ 0,00\n0 Coin-Positionen\nVeränderung\n–\nHistorische Kurse und Bestände ergänzen; manuelle Stichtage sind optional.\nENTWICKLUNG\nVermögensverlauf\nGesamtverlauf →\n7 T\n1 M\n3 M\n6 M\n1 J\n3 J\n5 J\nMax\n\nHistorische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.\n\nHistorische Werte noch nicht belegbar\n\nVERTEILUNG\nNach Anlageklasse\nPortfolio\n€ 0\nGesamtwert\nKeine positiven Anlagen vorhanden.\nANBIETER\nMeine Konten und Depots\nAlle Positionen →\nLege unter „Mehr“ deinen ersten Anbieter an.\nÜbersicht\nVerlauf\nPositionen\nBuchungen\nMehr",
+          "controller": null,
+          "registration": null,
+          "caches": [
+            {
+              "name": "foliolab-open-v220",
+              "count": 0
+            }
+          ]
+        },
+        "network": [],
+        "consoleErrors": []
+      }
+    }
+  ]
+}
