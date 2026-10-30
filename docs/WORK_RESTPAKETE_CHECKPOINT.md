@@ -1,3 +1,19 @@
+## CI-OPT01/PR230: PWA-Testvoraussetzung korrigiert, neuer vollständiger Kandidat · 30.10.2026
+
+**Aktueller HEAD `41a5c35547bd389d1f2a519004516d872b8548e8`, Tree `927351f8a54fdd20f6a90f16e3c1895771a03fff`**, derselbe Branch `ci/ci-opt01-cross-balance-v1` und DraftPR230. Alle Remote-Blobs/Gesamtbaum mit lokalem Commitbaum exakt identisch, WorkingTree sauber. Kein neuer Implementierungsstrang, keine Produkt-/Finanz-/SW-Änderung oder Copilot-Integration. Produktionv221/SW221 unverändert LIVE_ACCEPTED.
+
+Erster Canary41089535516: Cross2/124179489976 FAIL im unveränderten WebKit-PWA-Update,0 statt120Cachedateien. SHA256-verifiziertes Artefakt12993131873 (`db392c46e88aa791afee54195f75484256e3b41e35423f073c28d53309b43210`) zeigt FirefoxPASS, altenCache120/neuenCache0 und erst einen Request der aktuellenGeneration. Vollständiger [Originalbericht und Diagnose](release-evidence/ci-opt01-canary230-pwa-failure.json) im separaten Belegcommit28f9a4cb dauerhaft erhalten. Andere erste Jobs regulär auslaufen lassen, nichts abbrechen. Keine Leistungsabnahme aus rotem Lauf.
+
+Der betreffende Test verwendete noch vier ungeprüfte asynchrone waitForFunction-Prädikate; vorzeitige Rückkehr dieses Pfads wurde bereits im bestehenden Storage-Fixture-Kontext dokumentiert. Begrenzter Testnachschritt: asynchrone, rein lesende Browserbedingungen in Node tatsächlich abwarten; nur strikt booleantrue gilt. Receipt pro Phase mit Pollzahl/Zeit/Frist. Erwartete Dokumentablösung durch controllerchange darf innerhalb derselben Frist erneut beobachtet werden, echte Fehler brechen sofort ab. Keine Aktion oder Job automatisch wiederholt.
+
+**Alle ursprünglichen PWA-Assertionzeilen wortgleich erhalten**, einschließlich120Cachehashes/alteCacheentfernung/echtemOffline/IDB/exaktemRaw+Settings+Revision/Pageerrors. Originale30s-Standardfristen und60s-Controllerfrist unverändert; keine Timeout-/Gate-/Runtimeänderung. Vier neue Unit-Kontrollen beweisen asyncfalse/truthy/true,Timeout,Navigation,sofortigen Fehler und hängende Beobachtung. Lokal **969/969Units,0Fail/Skip**,Syntax undDiffprüfungPASS.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED.** Neuer vollständiger Pflicht- undWalletlauf auf41a5c355 gestartet; nicht bloß altenrotenJob wiederholen. [Kandidatenvertrag](https://github.com/joke0071/foliolab-open/blob/41a5c35547bd389d1f2a519004516d872b8548e8/docs/CI_OPT01_CROSS_BALANCE.md). Exaktweiter: neueCI vollständig abnehmen, inallenEngines tatsächliche vierBereitschaftsreceipts=true undalleoriginalenPWA-Belege prüfen; dann Artefakte/Tree/Vorher-Nachher/Runneraufwand sichern understkonkretgeprüftenPR230 zur eigenenNutzerfreigabevorlegen. FAST/Caching/Versionsangleichung/Chromium-Sharding bleiben eigene offeneCI-OPT01-Teile; keine pauschaleDONE-Markierung.
+
+Kostenstopp0€ und alle bisherigenMaster-/Freigabeverträge unverändert. NurFLH05/FLH-PROJ01 bewusstPARKED. KeineCreditkäufe oderKaufplanung.
+
+---
+
 ## CI-OPT01: begrenzter Canary PR230 remote gesichert · 30.10.2026
 
 **Einziger aktiver Implementierungsstrang:** [Draft PR230](https://github.com/joke0071/foliolab-open/pull/230), Branch `ci/ci-opt01-cross-balance-v1`, HEAD `6e33db126dbd0b09bbf7891d7c8c5395f33fb34f`, Tree `c95b2f10b41f61f029b150c106bec722377a0d61`. Auf unverändertem Main3b00336d aufgebaut; alle vier Remote-Dateien und Gesamtbaum mit lokalem Commitbaum identisch. Working Tree sauber. Keine Copilot-Integration, kein Merge und kein Deployment.
