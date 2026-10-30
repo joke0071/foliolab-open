@@ -27,3 +27,11 @@ Nachher: genau einen vollständigen Canary-PR-Lauf auf dem endgültigen Kandidat
 Jeder tatsächliche Bericht und die Artefakthashes müssen den getesteten Mergebaum belegen. Alle bisherigen Chromium- und drei Cross-Shards müssen erfolgreich sein; zusätzliche Policytests ebenfalls. Bei Fehlern erst Ursache ermitteln, keine blinden Wiederholungen oder Gateänderungen. Neue Artefakte nach Shard-ID getrennt sichern.
 
 Vor Merge eigene konkrete Nutzerfreigabe des abschließend geprüften HEADs. Nach freigegebenem Merge vollständige bisherige Main-/Pages-/Liveabnahme. Produktion bleibt bis dahin v221/SW221 LIVE_ACCEPTED. Keine Freigabeübertragung von209/228 und keine Copilot-Sammelintegration.
+
+## Erster tatsächlicher Canary-Befund
+
+Run41089535516 scheitert im WebKit-PWA-Update vor den weiteren Tests des zweiten Shards: 0 statt120 neue Cachedateien. Der SHA256-verifizierte Originalbericht12993131873 zeigt einen vollständigen alten Cache, leeren neuen Cache und erst einen Request der aktuellen Generation. Keine Leistungsabnahme aus diesem roten Lauf; die übrigen Jobs laufen regulär aus.
+
+Der betroffene Test nutzt noch vier asynchrone waitForFunction-Prädikate ohne Prüfung des tatsächlich zurückgegebenen booleschen Ergebnisses. Die bekannte vorzeitige Rückkehr dieses Wartepfads ist bereits in der bestehenden Storage-Fixture korrigiert worden. Der begrenzte Nachschritt wartet die asynchronen Browserbeobachtungen in Node explizit ab und verlangt ausschließlich boolean true. Er protokolliert pro Phase die echte Bereitschaft, Pollanzahl und verstrichene Zeit. Erwarteter Dokumentwechsel durch controllerchange darf innerhalb derselben Frist erneut beobachtet werden; andere Fehler brechen sofort ab. Keine Testaktion wird wiederholt.
+
+Alle bisherigen Standardfristen30s sowie60s für den neuen Controller bleiben bestehen. Die ursprünglichen120 Cachehashes, vollständige Entfernung des alten Caches, echter Offlinereload und exakt unveränderter Datenrecord bleiben unveränderte Pflichtassertionen. Vier zusätzliche Unit-Kontrollen beweisen false/truthy/true, Timeout, Navigation, sofortigen echten Fehler und hängende Beobachtung. Keine Runtime-, Finanz-, SW- oder Snapshotänderung. Neuer vollständiger Kandidatenlauf erforderlich; kein bloßer Retry des roten Jobs.

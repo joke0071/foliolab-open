@@ -4,6 +4,7 @@ import {createServer} from 'node:http';
 import {readFile,mkdir,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {chromium,firefox,webkit} from 'playwright';
+import {waitForAsyncReadiness} from './browser-async-readiness.mjs';
 
 const sw=await readFile('sw.js','utf8'),cache=sw.match(/const CACHE='([^']+)'/)[1];
 const oldCache='foliolab-open-synthetic-previous';
@@ -45,7 +46,11 @@ try{
   const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
   const context=await browser.newContext({viewport:{width:390,height:700}}),page=await context.newPage();
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
-  const result={engine,result:'RUNNING',checks:[]};report.engines.push(result);
+  const result={engine,result:'RUNNING',checks:[],readiness:[]};report.engines.push(result);
+  const wait=async(stage,predicate,arg,options)=>{
+   const receipt=await waitForAsyncReadiness(page,predicate,arg,options);
+   result.readiness.push({stage,...receipt});assert.equal(receipt.value,true);
+  };
   const ready=()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
   const cachedHashes=()=>page.evaluate(async cacheName=>{
@@ -59,7 +64,7 @@ try{
   },cache);
   try{
    await page.goto(base,{waitUntil:'networkidle'});await ready();
-   await page.waitForFunction(async old=>navigator.serviceWorker.controller&&(await caches.keys()).includes(old),oldCache);
+   await wait('previous-controller',async old=>Boolean(navigator.serviceWorker.controller)&&(await caches.keys()).includes(old),oldCache);
    await page.evaluate(async()=>{
     const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js');
     const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
@@ -77,7 +82,7 @@ try{
    generation='failed';const rejectedAsset=new Promise(resolve=>{failedAssetRequest=resolve;});
    await page.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()).catch(()=>{}),0);});
    await Promise.race([rejectedAsset,new Promise((_,reject)=>{const timer=setTimeout(()=>reject(Error('Failed-release fixture was not requested')),30000);timer.unref();})]);
-   await page.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return !r.installing&&!r.waiting;});
+   await wait('failed-install-settled',async()=>{const r=await navigator.serviceWorker.getRegistration();return !r.installing&&!r.waiting;});
    assert.match(await page.evaluate(async()=>await(await fetch('/src/app.js')).text()),/SYNTHETIC previous release app bytes/);
    await context.setOffline(true);await page.reload({waitUntil:'networkidle'});await ready();
    assert.deepEqual(await record(),before,'failed installation preserves exact offline record');
@@ -87,13 +92,13 @@ try{
    // update() may trigger the app's intended controllerchange reload before
    // its promise reaches the old document. Observe the new controller below.
    await page.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()).catch(error=>console.error('Worker update failed',error)),0);});
-   await page.waitForFunction(async expected=>{
+   await wait('current-controller',async expected=>{
     const r=await navigator.serviceWorker.getRegistration();
     return !r.installing&&!r.waiting&&r.active?.state==='activated'&&navigator.serviceWorker.controller===r.active&&(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected;
    },cache,{timeout:60000});
    await page.waitForLoadState('networkidle');await page.reload({waitUntil:'networkidle'});await ready();
    // The automatic controllerchange reload may overlap the explicit reload.
-   await page.waitForFunction(async expected=>(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected,cache);
+   await wait('post-reload-current-cache',async expected=>(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected,cache);
    const hashes=await cachedHashes();assert.equal(hashes.length,assets.length,'complete matching precache');
    for(const row of hashes)assert.equal(row.sha256,hash(current.get(row.path==='/'?'/index.html':row.path)),'fresh cached bytes '+row.path);
    for(const path of ['/src/app.js','/styles.css']){
