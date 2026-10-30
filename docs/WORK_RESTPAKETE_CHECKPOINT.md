@@ -1,3 +1,13 @@
+## P1 selbstständig übernommen: Copilot-v222-Integrationsvoraudit abgeschlossen · 30.10.2026
+
+**Fertig und remote gesichert:** [Diff-/Datei-/Abhängigkeits- und Regressionsaudit aller acht offenen Copilot-Drafts](COPILOT_V222_INTEGRATIONS_VORAUDIT_2026-10-30.md). Auf Basis von Main `8353a1cab3c528a389d2bd7893df819f3c284225`/PR232, tatsächlichen aktuellen acht PR-HEADs und vollständigen Unified-Diffs: **#213/#214/#218/#219/#222/#223/#225/#227** überprüft; keine neue Produkt-/SW-Änderung, keine CI-Neuausführung, kein Merge/Deploy, keine Work-Credits verbraucht.
+
+**Wichtige neue Befunde:** #213 enthält einen alten langen `bookingsPage`-Hunk-Kontext mit `MANUELLE ERFASSUNG`, während PR232 auf Main korrekt `BUCHUNGEN` eingeführt hat: **bei der Portierung nur `morePage` übernehmen, nie den neuen Buchungskicker zurücksetzen**. #213 erhält `deleteAll` tatsächlich (Button wird in eine neue Danger-Zone verschoben), darf genau einmal vorhanden bleiben und muss gegen bestehende Sicherheitsbestätigungen geprüft werden. #214/#227 sind CSS-semantisch mit den neuen v222-Verwalten/Fertig-Modi zu prüfen; #225 mit v222-Referenzen; sechs visuelle PRs hängen CSS am **alten** Dateiende an, deshalb auf neue Kaskade transplantieren statt blind cherrypicken. #223 ist ein kleiner isolierter A11y-Code-/Testkandidat, aber **ohne** eigene Freigabe nicht automatisch integrieren. Konkrete Testliste, Original-PR-HEADs, Konfliktrisiken und priorisierte Übernahmeschritte siehe Audit; **Work muss diese Vorprüfung nicht erneut von Grund auf ausführen**, sondern nur bei verändertem Stand aktualisieren.
+
+**Sicherheitsgrenze:** Nutzer hat PR232 ausdrücklich für sofortige v222-Veröffentlichung freigegeben und dieser wurde bereits exakt auf Main gemergt; [vollständiger Release41126514518](https://github.com/joke0071/foliolab-open/actions/runs/41126514518) zum Auditzeitpunkt noch laufend. **Dessen tatsächliche Liveabnahme zuerst**, dann Wochenend-Praxistest mit v222, sofern LIVE_ACCEPTED. Keine unautorisierte Nachfolgeintegration, keine automatische Copilot-Sammelfreigabe, keine weiteren kostenpflichtigen Creditpakete. Nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## PR232: Nutzerfreigabe erteilt und exakt geprüften Kandidaten gemergt · 30.10.2026
 
 **Neue ausdrückliche Nutzerentscheidung:** PR232 soll **jetzt** produktiv für den Praxistest verfügbar werden; frühere „erst nach Wochenende“-Zurückstellung für **diesen PR** aufgehoben. Keine pauschale Freigabe anderer PRs oder Copilot-Drafts.
