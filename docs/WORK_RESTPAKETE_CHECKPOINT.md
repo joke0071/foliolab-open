@@ -1,3 +1,11 @@
+## UI-VISUAL01 verbindlich an GitHub Copilot delegiert · 30.10.2026
+
+Ausdrückliche neue Nutzerentscheidung: ausschließlich visuelle/responsive mobile Zeitraumwahl bei Copilot; **keine parallele Work-Implementierung dieses Teilpakets**. Auftrag [Issue207](https://github.com/joke0071/foliolab-open/issues/207) erstellt und Copilot tatsächlich zugewiesen (GitHub bestätigt Assignee Copilot). Erwartet ausschließlich separaten **Draft-PR ohne Merge/Deployment**. Umfang und 320/360/390/430/768/1440-/Touch-/Fokus-/A11y-Nachweise im Issue; alte4×2-Pflicht bleibt SUPERSEDED. Fachliche Logik, Tests, Konfliktprüfung, Integration, Merge, Deployment und vollständige Releaseabnahme bleiben bei Work. Keine andere Masteraufgabe übertragen. Bei vorhandenem Draft frische Ref-/Dateikollisions-/Fachlogik-/Testprüfung und bestehende konkrete PR-Freigaberegeln anwenden. Ältere allgemeine UI-Rückübernahme gilt für übrige Aufgaben weiter; diese ausdrückliche Teildelegation hat Vorrang.
+
+Laufender PR206-Release41022699651 ununterbrochen: Main6b2f4f2f,959Units/Chromium/Cross1/Cross2 SUCCESS, Pages-Deployment läuft, Live noch ausstehend. Kein LIVE_ACCEPTED vor finalem Gate. Danach nächster fachlicher P1: reale zeitliche X-Abstände samt Zeigerauswahl im gemeinsamen src/dashboard-ui.js, getrennt von Copilots Zeitraum-CSS/-Steuerung; vor Writes erneut Konflikte prüfen. Read-only-Repro zeigt Januar1/2/11 bislangx5/300/595 statt5/64/595. Noch keine Produktänderung dieses Folgepakets. Finanz-/Daten-/Sicherheitsverträge und sämtliche übrigen Masteranforderungen erhalten; FLH05/FLH-PROJ01 OPEN/PARKED.
+
+---
+
 ## PR206 freigegeben und gemergt · v219 Release läuft · 30.10.2026
 
 Nutzer hat auf die konkrete Freigabefrage zu PR206/HEAD8743a57c ausdrücklich „freigabe“ erteilt. Freigabe für diesen PR verbraucht. Frisch geprüft: Main cbb9e8e9 unverändert, PR-HEAD8743a57c, Pflicht41016497083 und Wallet41016497049 SUCCESS, Testmerge-Tree c25411e5 identisch, keine fremden aktiven Läufe oder Dateikollisionen, beide Working Trees sauber. **PR206 kontrolliert gemergt**, Main `6b2f4f2f2c7bde7db67860bf73094c1bfd7c0a9b`, Tree `c25411e55f1d3c45d031da404229d6d2d5bb7163` identisch zum geprüften Kandidaten.
