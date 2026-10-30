@@ -1,3 +1,13 @@
+## Finale Lieferung UI-VISUAL07 und QA-MASTER01 · 30.10.2026
+
+UI-VISUAL07/[Draft222](https://github.com/joke0071/foliolab-open/pull/222), HEADd04018a8: **COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**. Ausschließlich Übersicht-CSS plus Vorher-/Nachherbilder. Copilot962Units/320–1440/keinÜberlauf/≥44pxLegendenhöhe;Firefox/WebKit/volleWork-Prüfungoffen. GitHubPflicht41033356715FAILamSW-Gate,beideCrossjobsSUCCESS.
+
+Zusätzlicher [QA-MASTER01-Abschlussbericht](QA_MASTER01_COPILOT_ABSCHLUSS_2026-10-30.md) verbindlich übernommen, [Draft223](https://github.com/joke0071/foliolab-open/pull/223) HEAD8377ed78 separat vorgemerkt. Alle A11y-/CSV-nach213-/Heading-Repro-/Dialog-CI-Baseline-/208-Erhalt-/CSS-Kaskaden-/Integrationskonfliktanforderungen stehen vollständig im verlinkten Master-Nachtrag. Copilots Reihenfolge ist unverbindlicher technischer Vorschlag, keine neue Roadmap/Freigabe.
+
+PR220/HEAD520b3ff7 unverändert reviewbereit; separate Mergefreigabe weiterhin ausstehend. Laufenden v220-Prozess nicht umpriorisieren. Keine Produktänderungen/Tests/neuen CI-Läufe aus dieser Übernahme. Sechs visuelle Lieferungen plus QA-Fix später einzeln kontrolliert integrieren; keine doppelte Entwicklung. UI-VISUAL06 und übrige Aufgaben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## UI-VISUAL07-Draft222 zusätzlich gesichert · PR220 unverändert reviewbereit · 30.10.2026
 
 Bei der abschließenden frischen GitHub-Prüfung ist der separate Copilot-[Draft222](https://github.com/joke0071/foliolab-open/pull/222) zu UI-VISUAL07/#221 vorhanden, HEAD `d04018a808ee4781eb2135c3105132105d6ff014`, offen/ungemergt. Geänderte Dateien: `docs/ui-visual07/after-1440.png`, `docs/ui-visual07/after-320.png`, `docs/ui-visual07/after-390.png`, `docs/ui-visual07/before-1440.png`, `docs/ui-visual07/before-320.png`, `docs/ui-visual07/before-390.png`, `styles.css`. **WORK_REVIEW_PENDING / NOT_INTEGRATED**; keine visuelle Parallelentwicklung und keine Abnahme aus Draft-/Copilot-Claims ableiten. Nach sicherem v220-Abschluss separat nach bestehenden Konflikt-/CSS-/Finanz-/Test-/Freigaberegeln prüfen.

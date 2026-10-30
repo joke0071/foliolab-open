@@ -1,3 +1,19 @@
+## Copilot-Lieferung222 und QA-MASTER01/223 dauerhaft übernommen · 30.10.2026
+
+**UI-VISUAL07 / [Draft222](https://github.com/joke0071/foliolab-open/pull/222): COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**, HEAD `d04018a808ee4781eb2135c3105132105d6ff014`, offen/ungemergt. Produktänderung ausschließlich styles.css auf Übersicht, sechs Vorher-/Nachherbilder. Copilot meldet962Units,320–1440px,keinÜberlauf und≥44pxhoheLegendenaktionen; eigenständige vollständige Fach-/Integrations-/Browsertests offen. Firefox/WebKit durchCopilotnichtgeprüft. Pflicht41033356715 finalFAIL amSW-Revisionsgate,beideCrossjobsSUCCESS;Wallet41033356414SUCCESS. KeinegrüneGesamt-CIbehaupten.
+
+**QA-MASTER01 vollständig als [bestehender Master-Nachtrag](QA_MASTER01_COPILOT_ABSCHLUSS_2026-10-30.md) gesichert.** [Draft223](https://github.com/joke0071/foliolab-open/pull/223), HEAD `8377ed7814437137679c90635c78d968b35ab835`, zwei Dateien allocation-ui.js/Unit-Test, Donut-Accessible-Name-Helfer allocationCenterName. COPILOT_DELIVERED / WORK_INTEGRATION_PENDING,keineÜbernahme/keinMerge.963Units/browser-allocation/A11y-PASS sindCopilot-Claims;Work-AbnahmenochOffen. Pflicht41034682776TestjobimSW-Gaterot,Crossjobsnochlaufend;WalletSUCCESS.
+
+Verbindliche Folgepunkte: CSV-aria-label/title erst **nach213** auf„CSV-Import“ vereinheitlichen,vorherindex.htmlnichtparalleländern. Heading-Order#positionListHead>h3vorÄnderungreproduzieren. System-Chrome-Unterschiededer20DialogreferenzenkeinpauschalerProduktfehler;219lautQA12/20Bildermit4,2–10,4% undWallet+4pxbei390/1440. Nach219 inmaßgeblicherCIbeurteilen,nurakzeptierteBaselinesübernehmen,volleRegression;keineblindenSnapshot-Updates/Gatelockerungen. FehlendeFirefox/WebKit-/A11y-/DialogprüfungenbeiWorknachholen.
+
+Konflikte/CSS-Kaskaden208↔209,213/214/218/222sowieglobaleAbstände218→222beachten. app.js-Konflikt209/213:209erhalten,driveOriginExampleaus213ergänzen.208eigenePositionszeiträumeundTests**ausdrücklicherhalten**. TechnischerVorschlag209→208→219→218→222→214→213→223istunverbindlich,keineUmpriorisierung/Automergerechte;WorkbestimmtbegründeteEinzelreihenfolge.
+
+**PR220 unverändert TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED**, HEAD520b3ff7,vollePflicht41032276589/Wallet41032276580/Live-Chromium-Diagnose41032276796SUCCESS;separatekonkreteMergefreigabeweiterausstehend. KeineFreigabeausdiesenÜbergabenableiten. Mainaf834705/v220 deployed,volleLiveabnahmeweiterBLOCKED,bisherigeBelegeundexakteFortsetzunguntenmaßgeblich. KeineTests/CI/ProduktänderungenfürdieseDokumentationsübernahmegestartetoderunterbrochen.
+
+SechsvisuellePakete01–05/07geliefert,keineparalleleNeuentwicklung. UI-VISUAL06/#217undübrigerUI-MasterbeiWork; **nurFLH05/FLH-PROJ01bewusstPARKED**. AllebisherigenAnforderungenerhalten;historischenDokumentationsbranchniemalsalsAppcodemergen.
+
+---
+
 ## UI-VISUAL07-Draft222 zusätzlich gesichert · PR220 unverändert reviewbereit · 30.10.2026
 
 Bei der abschließenden frischen GitHub-Prüfung ist der separate Copilot-[Draft222](https://github.com/joke0071/foliolab-open/pull/222) zu UI-VISUAL07/#221 vorhanden, HEAD `d04018a808ee4781eb2135c3105132105d6ff014`, offen/ungemergt. Geänderte Dateien: `docs/ui-visual07/after-1440.png`, `docs/ui-visual07/after-320.png`, `docs/ui-visual07/after-390.png`, `docs/ui-visual07/before-1440.png`, `docs/ui-visual07/before-320.png`, `docs/ui-visual07/before-390.png`, `styles.css`. **WORK_REVIEW_PENDING / NOT_INTEGRATED**; keine visuelle Parallelentwicklung und keine Abnahme aus Draft-/Copilot-Claims ableiten. Nach sicherem v220-Abschluss separat nach bestehenden Konflikt-/CSS-/Finanz-/Test-/Freigaberegeln prüfen.

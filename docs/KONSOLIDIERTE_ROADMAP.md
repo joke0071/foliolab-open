@@ -1,3 +1,13 @@
+## Finale Lieferung UI-VISUAL07 und QA-MASTER01 · 30.10.2026
+
+UI-VISUAL07/[Draft222](https://github.com/joke0071/foliolab-open/pull/222), HEADd04018a8: **COPILOT_DELIVERED / WORK_INTEGRATION_PENDING**. Ausschließlich Übersicht-CSS plus Vorher-/Nachherbilder. Copilot962Units/320–1440/keinÜberlauf/≥44pxLegendenhöhe;Firefox/WebKit/volleWork-Prüfungoffen. GitHubPflicht41033356715FAILamSW-Gate,beideCrossjobsSUCCESS.
+
+Zusätzlicher [QA-MASTER01-Abschlussbericht](QA_MASTER01_COPILOT_ABSCHLUSS_2026-10-30.md) verbindlich übernommen, [Draft223](https://github.com/joke0071/foliolab-open/pull/223) HEAD8377ed78 separat vorgemerkt. Alle A11y-/CSV-nach213-/Heading-Repro-/Dialog-CI-Baseline-/208-Erhalt-/CSS-Kaskaden-/Integrationskonfliktanforderungen stehen vollständig im verlinkten Master-Nachtrag. Copilots Reihenfolge ist unverbindlicher technischer Vorschlag, keine neue Roadmap/Freigabe.
+
+PR220/HEAD520b3ff7 unverändert reviewbereit; separate Mergefreigabe weiterhin ausstehend. Laufenden v220-Prozess nicht umpriorisieren. Keine Produktänderungen/Tests/neuen CI-Läufe aus dieser Übernahme. Sechs visuelle Lieferungen plus QA-Fix später einzeln kontrolliert integrieren; keine doppelte Entwicklung. UI-VISUAL06 und übrige Aufgaben bei Work. Nur FLH05/FLH-PROJ01 bewusst PARKED.
+
+---
+
 ## PR220 technisch abgenommen und reviewbereit · v220-Abnahme weiterhin offen · 30.10.2026
 
 **PR212 ist gemergt und v220/SW220 ist deployed.** Main `af8347054c9e5d50b854494f650e7d7675adcff6`. Main962Units/dreiBrowser/Pages bestanden; vollständiger Release41028863300 scheiterte zunächst an der SW-Startbaseline der Referenzverwaltung und beim genau einen geprüften unveränderten Livejob-Retry an der IndexedDB-Bereitschaft nach Chart-Fixture-Reload. Beide Fehler samt signiert geprüften Artefakten bleiben erhalten. **DEPLOYED / LIVE_ACCEPTANCE_BLOCKED, kein DONE/LIVE_ACCEPTED.** Frühere QA-Befunde bleiben offen.
