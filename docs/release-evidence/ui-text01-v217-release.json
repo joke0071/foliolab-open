@@ -812,7 +812,10 @@
   ],
   "visualReview": {
     "path": "history-followup/webkit-history-320.png",
-    "result": "PASS; actually inspected synthetic production screenshot"
+    "result": "PASS; actually inspected synthetic production screenshot",
+    "persistedPath": "ui-text01-v217-webkit-history-320.png",
+    "sha256": "8c35ef0d08128ee675fa61a4cff52433c141961ecdf48f66504f49b587641236",
+    "scope": "Representative unchanged production image; remaining UI/4x2/header deltas stay open."
   },
   "firstFailure": {
     "job": 123912141099,
