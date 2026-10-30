@@ -1292,3 +1292,49 @@
 .chart-tooltip-detail{min-height:0;width:100%;overflow:auto;overscroll-behavior:contain}
 .chart-tooltip-detail>span{display:block}
 .chart-tooltip-detail:focus-visible{outline:2px solid #2d6946;outline-offset:-2px}
+
+/* UI-VISUAL08: unified, compact "Verlauf" detail accordions (CSS only, scoped to #historyPage).
+   Datenabdeckung & Abgleich, Rendite & Geldflüsse, Historische Referenzwerte. */
+#historyPage #historyCoverage,#historyPage .history-insights{min-width:0}
+#historyPage #historyCoverage{margin:12px 0 0;border-top:1px solid #e4ece5}
+#historyPage #historyCoverage>summary,#historyPage #performanceDetails>summary,#historyPage #snapshotManager>summary{min-height:48px;padding:6px 2px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:2px;cursor:pointer}
+#historyPage #historyCoverage>summary{display:grid}
+#historyPage #performanceDetails>summary>small{grid-column:1;grid-row:2;padding-left:25px;font-size:11px;line-height:1.45;color:#4e6955;overflow-wrap:anywhere}
+#historyPage #historyCoverage>summary::after,#historyPage #performanceDetails>summary::after,#historyPage #snapshotManager>summary::after{grid-column:2;grid-row:1 / span 2;align-self:center;justify-self:center;margin:0 4px 3px}
+#historyPage #historyCoverage[open]>summary::after,#historyPage #performanceDetails[open]>summary::after,#historyPage #snapshotManager[open]>summary::after{margin:3px 4px 0}
+#historyPage #historyCoverage>summary:focus-visible,#historyPage #performanceDetails>summary:focus-visible,#historyPage #snapshotManager>summary:focus-visible{outline:3px solid #2d6946;outline-offset:-2px;border-radius:10px}
+#historyPage .history-disclosure-title{font-size:13px;font-weight:750;line-height:1.35;overflow-wrap:anywhere}
+#historyPage #historyCoverageBody,#historyPage #performanceDetails>.performance-details-body{padding:2px 2px 14px 27px;border-top:0;min-width:0;overflow-wrap:anywhere}
+#historyPage #historyCoverageBody p,#historyPage #performanceInfo p{margin:0 0 8px;line-height:1.6;max-width:72ch}
+#historyPage #historyCoverageBody p:last-child,#historyPage #performanceInfo p:last-child{margin-bottom:0}
+#historyPage #historyCoverageBody :where(ul,ol){margin:4px 0 8px;padding-left:18px}
+#historyPage #historyCoverageBody :where(li){margin:3px 0;line-height:1.55}
+#historyPage #performanceDetails>.performance-details-body>p{margin:12px 0 0;line-height:1.6;max-width:72ch}
+#historyPage .history-capital-comparison{padding:0 0 10px;margin:0 0 10px}
+#historyPage .history-capital-comparison .csv-skip{min-height:44px;margin:0;align-items:center;gap:10px;cursor:pointer;font-size:12px;font-weight:650;color:#274535;line-height:1.4}
+#historyPage .history-capital-comparison input{width:20px;height:20px;margin:0;flex:0 0 20px;accent-color:#267044}
+#historyPage .history-capital-comparison .small-help{padding-left:30px}
+#historyPage #performanceInfo{margin:0 0 10px}
+#historyPage #startPerformance{min-height:44px;max-width:100%;white-space:normal;text-align:center}
+#historyPage #snapshotManager .reference-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:10px 12px;flex-wrap:wrap;padding:4px 2px 0 27px}
+#historyPage #snapshotManager .reference-toolbar .reference-filter{flex:0 1 260px;margin:0;min-width:0}
+#historyPage #snapshotManager .reference-filter select{width:100%;min-height:44px}
+#historyPage #snapshotManager .reference-management-head{display:flex;gap:8px;margin:0 0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+#historyPage #snapshotManager .reference-management-head .btn{min-height:44px;min-width:44px;padding:8px 14px;white-space:normal}
+#historyPage #referenceSelectionTools,#historyPage #referenceSelectionStatus,#historyPage #snapshotList{padding-left:27px;padding-right:2px;min-width:0}
+#historyPage #referenceSelectionStatus{margin:6px 0 4px}
+#historyPage #referenceSelectionTools>.settings-actions{margin:10px 0 4px}
+#historyPage #snapshotList .reference-row{gap:10px;padding:12px 0;align-items:center}
+#historyPage #snapshotList .reference-row .history-title{font-weight:750;line-height:1.35}
+#historyPage #snapshotList .reference-row .history-sub,#historyPage #snapshotList .reference-row .reference-protection{overflow-wrap:anywhere;line-height:1.5}
+#historyPage #snapshotList .reference-row .history-amount{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+#historyPage #snapshotList .reference-row>.selection-check{flex:0 0 44px;min-height:44px;margin:0}
+#historyPage #snapshotList .reference-row>.selection-check input{width:22px;height:22px;accent-color:#267044}
+@media(max-width:700px){
+ #historyPage #snapshotManager .reference-toolbar{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+ #historyPage #snapshotManager .reference-toolbar .reference-filter{flex:none;width:100%}
+ #historyPage #snapshotManager .reference-management-head{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:0;width:100%}
+ #historyPage #historyCoverageBody,#historyPage #performanceDetails>.performance-details-body,#historyPage #snapshotManager .reference-toolbar,#historyPage #referenceSelectionTools,#historyPage #referenceSelectionStatus,#historyPage #snapshotList{padding-left:4px}
+ #historyPage .history-capital-comparison .small-help{padding-left:30px}
+ #historyPage #performanceDetails>summary>small{padding-left:25px}
+}
