@@ -1,3 +1,11 @@
+## PERF01 / PR233 – volle Kandidaten-CI bestanden, Performancegate noch offen · 30.10.2026
+
+**Technischer Stand:** [PR233](https://github.com/joke0071/foliolab-open/pull/233) mit exakter v222-Main-Basis `8353a1ca`, HEAD `4674c8a7`, **CI_ACCEPTED / DRAFT / NOT_MERGED / NOT_DEPLOYED**. [Run 41134431156](https://github.com/joke0071/foliolab-open/actions/runs/41134431156) komplett SUCCESS, **978/978 Units**, alle 3 Cross-Engine-Shards und Chromium erfolgreich; Wallet-Run 41134431632 SUCCESS. Alle 6 CI-Artefakte SHA256+CRC verifiziert; 69 parsebare JSON-Belege ohne Fehler, siehe [Dauerhafter Qualitäts- und Belegbericht](PERF01_PR233_DIFFERENZQA_2026-10-30.md). 400 zusätzliche synthetische Differentialmodelle/1600 alte-neue vollständige Ergebnisse exakt gleich; kein finanzieller Eingriff. Produktiv weiterhin **v222/SW222 LIVE_ACCEPTED**, Draft-SW223 noch nicht veröffentlicht, Deploy/Live-Acceptance vom PR korrekt SKIPPED.
+
+**Nächste Grenze:** Reale IndexedDB-Kalt-/Warm-/Offline-Startwirkung auf aktueller Main-/Kandidatenversion **noch ungemessen**; CPU-Mikrobench (19×1825 schneller, 100×365 geringfügig langsamer) nicht zum Appstart hochrechnen. Wochenend-Praxistest 31.10.–01.11. und bestätigte P0/P1-Befunde priorisieren. Erst Performance-/Sicherheitsentscheidung und anschließende **separate explizite Nutzerfreigabe** eröffnen Merge/Release. Keine weiteren Work-Credit-Käufe, Copilot-Drafts nicht integriert, nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## PERF01 #233 – drei Cross-Shards erfolgreich, Zusatz-Differenzial-QA 400 Modelle · 30.10.2026
 
 [Permanent gesicherter PR233-QA-Beleg](PERF01_PR233_DIFFERENZQA_2026-10-30.md): 400 synthetische Fälle × Projektions-/Auto-/Teilportfolio-/Beobachtungs-Vergleich = **1600 exakt identische Ergebnisvergleiche**, 7449 Stichtagsdubletten, 80 Kurslücken, 0 Datenmutationen. Drei Cross-Engine-Shards im GitHub-[Lauf41134431156](https://github.com/joke0071/foliolab-open/actions/runs/41134431156) **SUCCESS**, ZIP-Prüfsummen+CRC und 37 JSON-Berichte überprüft; Wallet-CI SUCCESS. **Haupttest noch laufend**: PR233 bleibt **DRAFT / NOT_MERGED / NOT_DEPLOYED**, v222/SW222 unverändert LIVE_ACCEPTED. 400 Vergleichsmodelle sind kein Ersatz für echte IDB-Startperformance, tatsächliche Browser-Interaktivität und Wochenendtest. Keine CI/Gate-Abschwächung und keine automatische Freigabe.
