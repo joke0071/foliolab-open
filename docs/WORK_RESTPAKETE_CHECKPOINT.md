@@ -1,3 +1,11 @@
+## PR206 freigegeben und gemergt · v219 Release läuft · 30.10.2026
+
+Nutzer hat auf die konkrete Freigabefrage zu PR206/HEAD8743a57c ausdrücklich „freigabe“ erteilt. Freigabe für diesen PR verbraucht. Frisch geprüft: Main cbb9e8e9 unverändert, PR-HEAD8743a57c, Pflicht41016497083 und Wallet41016497049 SUCCESS, Testmerge-Tree c25411e5 identisch, keine fremden aktiven Läufe oder Dateikollisionen, beide Working Trees sauber. **PR206 kontrolliert gemergt**, Main `6b2f4f2f2c7bde7db67860bf73094c1bfd7c0a9b`, Tree `c25411e55f1d3c45d031da404229d6d2d5bb7163` identisch zum geprüften Kandidaten.
+
+**MERGED / RELEASE_RUNNING / LIVE_ACCEPTANCE_PENDING.** Main-/Pages-/Live-Lauf [41022699651](https://github.com/joke0071/foliolab-open/actions/runs/41022699651) läuft. Produktion zuletzt v218 LIVE_ACCEPTED; v219 noch nicht live abgenommen. Exakt weiter: alle Main-/Cross-/Deploy-/Live-/PWA-Gates und tatsächliche Livebelege prüfen; keine Assertion abschwächen. Bei Fehler zuerst Diagnose/Belege sichern. Danach Releasebelege und Roadmap/Textaudit aktualisieren und nächstes bestehendes UI-P1 auswählen. Alle offenen Masteranforderungen und QA-Befunde bleiben erhalten; FLH05/FLH-PROJ01 OPEN/PARKED. Keine Freigabe für einen weiteren PR ableiten.
+
+---
+
 ## PR206 technisch abgenommen und reviewbereit · Produktion v218 · 30.10.2026
 
 **PR205 ist DONE / LIVE_ACCEPTED.** Produktion v218/SW218, Main `cbb9e8e9fa58c768c128f304840269313aeae6ba`. Main-/Pages-/Live-Lauf 41012601300 final erfolgreich: 957 Unit-Tests, drei Browser, 121 exakte produktive Asset-/SW-Hashes, 6 Live-Kerngruppen, 18 Axe-Scans und 37 erfolgreiche Liveberichte. [Releasebelege](release-evidence/ui-text01-facts-v218-release.json). Der erste Navigations-Timeout bleibt als ungeklärter QA-Befund erhalten; genau ein unveränderter Livejob-Retry bestand vollständig. Bestätigte UI-TEXT01-Fehler in Anbieter-Details, Kursqualität/Warnung und Positionsfakten sind produktiv korrigiert. Gesamtmaster und appweiter Textaudit bleiben PARTIAL.
