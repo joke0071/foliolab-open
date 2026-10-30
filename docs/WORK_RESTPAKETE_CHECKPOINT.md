@@ -1,3 +1,14 @@
+## CHATWECHSEL – VERBINDLICHER MASTER-HANDOFF – UI-MASTER28 PR232 / Breitenkorrektur in vollständiger CI
+
+Produktion bleibt unverändert v221/SW221 LIVE_ACCEPTED, Main d6b2a14f2108bc210411054d5f3d7690ba44fd51. Keine Merge-/Deploymentfreigabe für PR232; Wochenend-Praxistest bleibt geschützt.
+
+- PR232: https://github.com/joke0071/foliolab-open/pull/232 . Work-eigener UX10/UI-TEXT07-Teilschnitt, keine Copilot-Integration. Neuer HEAD 04e9bdfdae57f17a3258a9e2793791ee6c7e2149, Tree 0e5c48ab9d304d1fbc0da75adf1449fef38a9f0c.
+- Erstlauf 41121801027 vollständig beendet: FAILURE, Main test und cross-engine(3) fehlgeschlagen, cross-engine(1)/(2) bestanden, Wallet bestanden. INTEGRATION/full=true; keine Live-/Deploymentabnahme. Kein Abbruch, kein unveränderter Retry.
+- Echte Regression: geschützter Buchungshinweis im Hintergrund überbreit (320px Viewport/337px Dokument); Flatex-Dialog selbst passt. Reproduziert auf unverändertem Produktstand 1872114. Präzise CSS-Korrektur erlaubt Schrumpfen und vollständigen Textumbruch. Ursprüngliche strikte Breitenassertion unverändert; zusätzlicher Normalmodus-Regressionscheck und reine Fehlerdiagnostik ergänzt. Keine Assertions/Timeouts/Sicherheitsbedingungen gelockert.
+- Lokal nach Korrektur: Flatex-native-binding einschließlich Amount-UI und Buchungsverwaltung einschließlich Booking-UI bestanden (fünf Breiten/Axe, Zuordnung/Nullschreibnachweis, CAS/Quota/Abort/Offline/Restore). 320px-Bild beurteilt. Vorherige 975 Units und fünf finanz-/speicherkritische lokale Suitebelege bleiben Teilnachweise; keine vollständige Abnahme daraus ableiten.
+- Neuer vollständiger CI-Lauf: https://github.com/joke0071/foliolab-open/actions/runs/41123781804 ; Wallet 41123782387; begrenzte historische Diagnose 41123781923 separat einordnen. Status CI_RUNNING / NOT_ACCEPTED bis alle erforderlichen Jobs und tatsächlichen Artefakte des neuen HEAD geprüft sind.
+- Nächste exakte Fortsetzung: diesen Lauf ohne blinde Wiederholung auswerten, Artefakt-SHA/ZIP-CRC und echte Berichte/Bilder aller drei Engines prüfen; bei grün technische Kandidatenabnahme sichern, keine automatische Veröffentlichung. Bei rot konkrete Ursache beheben. UX10/UI-MASTER28 insgesamt weiterhin PARTIAL; übrige Masterarbeiten bleiben offen. Nur FLH05/FLH-PROJ01 PARKED, CI-Feinoptimierungen nachrangig, Budget zusätzlicher Work-Credit-Pakete 0€.
+
 ## P1 Work-UX: PR232 vorbereitet – vollständige Integration läuft · 30.10.2026
 
 **v221/SW221 bleibt die unveränderte LIVE_ACCEPTED-Praxisbasis.** Main d6b2a14f unverändert; keinMerge/Deployment. Neueste Nutzwertpriorisierung/Restaudit/Roadmap übernommen, keineGesamtanalyse oder weitereCI-Feinoptimierung. Nur einEntwicklungsstrang.
