@@ -1,3 +1,15 @@
+## Neue Nutzerpriorität: Praxiswochenende 31.10.–01.11. · 30.10.2026
+
+**Verbindliche UX-Priorisierung und sicherer Testplan:** [Wochenend-Praxistest/Usability-Prioritäten](WOCHENENDE_PRAXISTEST_UX_PRIORITAETEN_2026-10-31.md) auf diesem Dokumentationsbranch. Nutzer möchte am Samstag/Sonntag eine möglichst umfassende reale Nutzungsprüfung, um ab Montag 02.11.2026 belegte UI-/Performance-/Funktionsoptimierungen zu priorisieren. **Stabilen LIVE_ACCEPTED-Stand als Testbasis verwenden, keine ungeprüften Wochenend-Merges.**
+
+**Kollisionsgrenze:** Aktuell laufenden CI-OPT01/DraftPR231 nicht unterbrechen. Diesen Kandidaten nach vorhandenen Test-/Freigabegrenzen sicher abschließen oder den Blocker exakt sichern. Danach **Usability/Praxisbefunde vor weitere kostenintensive CI-Feinschnitte** stellen. CI-OPT01-Rest (Caching, Chromium-Sharding, Versionen, Retries) bleibt OPEN, nicht gelöscht oder voreilig DONE.
+
+**UX nach Wirkungsgrad:** P0 finanz-/daten-/sicherheitsrelevante Fehlanzeigen oder fehlerhafte Kernhandlungen; dann (1) mobile/Desktop-Navigation #218, (2) Buchungen/Positionen #214 und Filter #227, (3) gemessener Start großer Portfolios #177, (4) „Mehr“/Backup/Einstellungen #213, (5) Anlageassistent/Wallets #219, (6) Übersicht #222 + QA223, (7) Verlauf/Referenzwerte #225, (8) Onboarding/Leerzustände #217. **Rangfolge ist Nutzwert, nicht technisch erzwungene Merge-Reihenfolge:** #213→#214→#218→#219 und CSS-Konflikte/Abnahme beachten; keine automatische Bündelung. Bei real gemessenem PERF01-Problem nach sicherem Checkpoint P1 vor Kosmetik ziehen.
+
+**Status und Kosten:** v221/SW221 LIVE_ACCEPTED, Main7490f243 inklusive PR230 CI-only abgenommen; sieben visuelle Copilot-Drafts/QA223 unverändert unmerged, UI-VISUAL06 Work-owned. Nur FLH05/FLH-PROJ01 PARKED. **Keine weiteren Credit-Pakete kaufen oder einplanen (0 €).** Jede weitere Merge-/Releasefreigabe individuell.
+
+---
+
 ## CI-OPT01 erster Teilschnitt abgenommen · PR230 wartet auf Freigabe · 30.10.2026
 
 [PR230](https://github.com/joke0071/foliolab-open/pull/230) **TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED**. HEADc6757318, Treee0bc5ae4; Testmerge23c7d403 hat denselben Tree auf unverändertem Main3b00336d. 969/969 Units, Chromium, alle drei Cross-Shards und Wallet erfolgreich; fünf ZIPs SHA256-verifiziert,68JSONs/65PASS-Berichte gelesen. [Vollständige Abnahme und Messdaten](release-evidence/ci-opt01-pr230-acceptance.json), Belegcommit73a69c7a.
