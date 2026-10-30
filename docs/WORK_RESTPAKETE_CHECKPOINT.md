@@ -1,3 +1,11 @@
+## PR237: Versionierter Browsercache – 984/984 Unit-/CI-Contract-Tests SUCCESS · 30.10.2026
+
+[Draft-PR #237](https://github.com/joke0071/foliolab-open/pull/237) aktueller HEAD `d3715ea5286c60fb4b30556850cb2440926962d4`: [Wallet-/Node-Prüfung 41141300781](https://github.com/joke0071/foliolab-open/actions/runs/41141300781) **completed SUCCESS, 984/984 Node-Tests, 0 Fehler**. Explizit erhalten: `tests/ci-stage-workflow.test.mjs` bestätigt unveränderte SHA-256-Vergleichswerte für **alle vollständigen Test-/Cross-/Deploy-/Live-Job-Bodies nach Entfernung nur der drei exakt definierten Cache-Insertions**; negative Gate-/Installation-Bypass-Proben erfolgreich. Der neue volle [Integrationslauf 41141300746](https://github.com/joke0071/foliolab-open/actions/runs/41141300746) ist bei letzter Prüfung **QUEUED**, noch **kein Full-CI-PASS**; reale Cache-Hits/Installzeitersparnis noch nicht gemessen. [Issue229-Hand-off](https://github.com/joke0071/foliolab-open/issues/229#issuecomment-6535275895). `main` oder produktive Dateien **nicht** verändert.
+
+[Parallel-PR #236](https://github.com/joke0071/foliolab-open/pull/236) bleibt eigenständiger Onboarding-CSS/Test-Draft. [CI41140971386](https://github.com/joke0071/foliolab-open/actions/runs/41140971386) SUCCESS; Vollintegration `41140971342` mit **bekanntem, bewusst nicht umgangenen SW-Cache-Revision-Gate FAIL**. Work muss bei finalem Merge den dann aktuellen SW-Bump setzen und volle Abnahme durchführen. Kein vorzeitiger FULL-PASS-/Live-Claim. Weitere Releasearbeiten anderer Work-Threads ungehindert.
+
+---
+
 ## Work-Entlastung parallel: zwei weitere implementierte Draft-PRs #236/#237 · 30.10.2026
 
 **Verbindlicher Kollisionsschutz:** [Master-Issue #149 / frische konkrete Work-Übergabe](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6535248538). Der Nutzer bat ausdrücklich um 1–2 neue Pakete parallel zur laufenden Work-Releaseintegration. Beide sind auf unabhängigen Branches vom zum jeweiligen Zeitpunkt aktuellen Main `02631aba230fb49bbed47e47b6888c3da3f8efe8` angelegt; **keine** Main-/Releaseaktion aus diesem Chat.
