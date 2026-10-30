@@ -319,6 +319,25 @@
 
 }
 
+/* UI-VISUAL05: compact, touch-friendly asset wizard and public wallet dialog (visual only). */
+.asset-wizard-dialog .field input,.asset-wizard-dialog .field select,#editDialog:has(#scanWalletButton) .field input,#editDialog:has(#scanWalletButton) .field select{min-height:44px}
+.asset-wizard-dialog .btn,#editDialog:has(#scanWalletButton) .btn{min-height:44px}
+.asset-wizard-dialog summary,.asset-wizard-dialog .advanced-apis>summary,.asset-wizard-dialog .wizard-catalog-tools>summary,#editDialog:has(#scanWalletButton) summary{min-height:44px;padding-top:9px;padding-bottom:9px;cursor:pointer;overflow-wrap:anywhere}
+.wizard-mode label,.asset-wizard-dialog .checkbox-line,#editDialog:has(#scanWalletButton) .checkbox-line{min-height:44px}
+.asset-wizard-dialog .dialog-head h2,#editDialog:has(#scanWalletButton) .dialog-head h2{overflow-wrap:anywhere}
+.asset-wizard-dialog .icon-close,#editDialog:has(#scanWalletButton) .icon-close{min-width:44px;min-height:44px;flex-shrink:0}
+.asset-wizard-dialog .field>span,#editDialog:has(#scanWalletButton) .field>span{overflow-wrap:anywhere}
+.wizard-feedback,.wizard-search-status,#scanWalletStatus,#editDialog:has(#scanWalletButton) .small-help{overflow-wrap:anywhere}
+.wallet-scan-row{min-height:44px}
+.wizard-matches .result-item{min-height:44px}
+.asset-wizard-dialog .dialog-footer{padding:12px 24px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #e8efe8;margin-top:0;flex-wrap:wrap}
+@media(max-width:720px){
+ .asset-wizard-dialog .dialog-footer{padding-left:16px;padding-right:16px}
+ .asset-wizard-dialog .dialog-head{padding:16px 12px 8px 16px}
+ .wizard-mode{gap:4px 14px}
+ .wallet-scan-results{max-height:min(315px,40dvh)}
+}
+
 /* Refresh failures are secondary details, not multiline overlays. */
 #refreshErrorDetails{margin:-4px 0 14px}
 .refresh-error-list{display:grid;gap:10px}
@@ -1530,3 +1549,24 @@
 
 /* Provider and source disclosures share the same chevron dimensions. */
 #morePage .provider-settings-group>summary::after{width:8px;height:8px}
+
+
+/* UI-VISUAL04: harmonised navigation, header and sidebar (visual only). */
+.sidebar{overflow-y:auto;overscroll-behavior:contain}
+.nav button{min-height:44px;position:relative}
+.nav button.active{box-shadow:inset 3px 0 0 #2d6946}
+.nav button:focus-visible,.mobile-nav button:focus-visible{outline:3px solid #2d6946;outline-offset:-3px}
+.nav button:disabled,.mobile-nav button:disabled{opacity:.5;cursor:not-allowed}
+.nav svg,.mobile-nav svg{flex-shrink:0}
+.sidebar-bottom{overflow-wrap:anywhere}
+@media(max-height:620px) and (min-width:721px){.sidebar{padding:18px 14px}.nav{margin-top:12px;gap:4px}}
+@media(max-width:720px){
+ .mobile-header{position:sticky;top:0;z-index:90;gap:10px;padding:8px max(15px,env(safe-area-inset-right)) 8px max(15px,env(safe-area-inset-left));padding-top:calc(8px + env(safe-area-inset-top));min-height:calc(56px + env(safe-area-inset-top))}
+ .mobile-header .logo{flex-shrink:0}
+ .mobile-header .portfolio-status{flex:1 1 0;min-width:0;max-width:none;line-height:1.3;overflow-wrap:anywhere}
+ .mobile-nav button{min-height:52px;font-size:10px;line-height:1.15;gap:3px;padding:5px 2px;overflow-wrap:anywhere;text-align:center}
+ .mobile-nav button.active{box-shadow:inset 0 2px 0 #2d6946}
+ .content{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){.mobile-nav{padding-left:max(4px,env(safe-area-inset-left));padding-right:max(4px,env(safe-area-inset-right))}.mobile-nav button{font-size:10px}}
+@media(display-mode:standalone) and (max-width:720px){.mobile-header{padding-top:calc(8px + env(safe-area-inset-top))}}
