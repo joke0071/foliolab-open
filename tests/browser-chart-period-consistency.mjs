@@ -1,24 +1,65 @@
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
+import {createRequire} from 'node:module';
+import {readFileSync} from 'node:fs';
+const axeScript=readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'),'utf8');
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
+const labels=['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max'];
+const checkAxe=async(root,width,state)=>{
+ const violations=await root.evaluate(async el=>(await window.axe.run(el,{
+  runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
+ })).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
+ assert.deepEqual(violations,[],'Axe period-control violations at '+width+'px ('+state+')');
+};
+const verifyTargets=async(root,width)=>{
+ if(width>720){
+  assert.deepEqual(await root.locator('button:visible').allTextContents(),labels);
+  assert.equal(await root.locator('.period-more > summary').isVisible(),false);
+  const rows=await root.locator('button:visible').evaluateAll(nodes=>new Set(nodes.map(el=>Math.round(el.getBoundingClientRect().top))).size);
+  assert.equal(rows,1,'All wealth periods must stay inline at '+width);
+  await checkAxe(root,width,'desktop');
+  return;
+ }
+ const narrow=width<=374;
+ assert.deepEqual(await root.locator('button:visible').allTextContents(),narrow?
+  ['7 T','1 M','3 M','6 M','Max']:['7 T','1 M','3 M','6 M','1 J','Max']);
+ const targets=root.locator('button:visible, .period-more > summary:visible');
+ const rects=await targets.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height,top:r.top};}));
+ assert.equal(rects.length,narrow?6:7,'inline options and the More disclosure remain reachable');
+ assert.ok(rects.every(r=>r.width>=44&&r.height>=44),'Touch targets below 44px at '+width+': '+JSON.stringify(rects));
+ assert.equal(new Set(rects.map(r=>Math.round(r.top))).size,1,'Adaptive period row at '+width);
+ await checkAxe(root,width,'disclosure closed');
+ const summary=root.locator('.period-more > summary');
+ await summary.click();
+ await checkAxe(root,width,'disclosure open');
+ const extra=root.locator('.period-more-list button:visible');
+ assert.deepEqual(await extra.allTextContents(),narrow?['1 J','3 J','5 J']:['3 J','5 J']);
+ const extraRects=await extra.evaluateAll(nodes=>nodes.map(el=>{const r=el.getBoundingClientRect();return [r.width,r.height];}));
+ assert.ok(extraRects.every(([w,h])=>w>=44&&h>=44),'Disclosure targets below 44px at '+width+': '+JSON.stringify(extraRects));
+ await summary.click();
+};
 try{
+ await page.route('**/__visual01_axe.js',route=>route.fulfill({status:200,contentType:'application/javascript',body:axeScript}));
  await page.goto('http://127.0.0.1:4173/');
  await page.evaluate(async()=>{
   const {blankModel,persist}=await import('/src/model.js');
   const model=blankModel();
   const iso=days=>new Date(Date.now()-days*864e5).toISOString().slice(0,10);
   model.snapshots=[
-   {id:'before',date:iso(120),total:1000},
+   {id:'before',date:iso(2200),total:1000},
+   {id:'long',date:iso(1650),total:1050},
+   {id:'middle',date:iso(120),total:1075},
    {id:'within',date:iso(8),total:1100},
    {id:'current',date:iso(1),total:1200}
   ];
   persist(model);
  });
  await page.reload();
+ await page.addScriptTag({url:'http://127.0.0.1:4173/__visual01_axe.js'});
  const mini=page.locator('#miniChartPeriods');
- assert.deepEqual(await mini.locator('button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
+ assert.deepEqual(await mini.locator('button').allTextContents(),labels);
  assert.equal(await mini.locator('[aria-pressed="true"]').count(),1);
  assert.ok(await mini.locator('[data-mini-range="week"]').isDisabled(),'one recent observation cannot fabricate a weekly curve');
  await mini.locator('[data-mini-range="month"]').click();
@@ -27,8 +68,25 @@ try{
  assert.equal(JSON.parse(monthPoints).length,2);
  for(const width of [320,360,390,430,767,768,1024,1440]){
   await page.setViewportSize({width,height:850});
-  const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
-  await page.locator(nav+' [data-page="history"]').click();
+  await page.locator('#mobileNav [data-page="dashboard"]:visible, #sidebarNav [data-page="dashboard"]:visible').click();
+  await verifyTargets(mini,width);
+  await mini.screenshot({path:'/tmp/foliolab-visual01-dashboard-'+width+'.png'});
+  if(width===390){
+   const more=mini.locator('.period-more > summary');
+   await more.focus();await page.keyboard.press('Enter');
+   assert.equal(await mini.locator('.period-more').evaluate(el=>el.open),true);
+   await page.keyboard.press('Tab');
+   assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('data-mini-range')),'threeYears');
+   await page.keyboard.press('Shift+Tab');
+   assert.equal(await more.evaluate(el=>el.matches(':focus-visible')),true);
+   await page.keyboard.press('Tab');
+   await page.keyboard.press('Enter');
+   assert.equal(await more.innerText(),'3 J');
+   assert.match(await more.getAttribute('aria-label'),/3 J ausgewählt/);
+   assert.equal(await mini.locator('[data-mini-range="threeYears"]').getAttribute('aria-pressed'),'true');
+   assert.equal(JSON.parse(await page.locator('#miniChart [data-chart-points]').getAttribute('data-chart-points')).length,3);
+  }
+  await page.locator('#mobileNav [data-page="history"]:visible, #sidebarNav [data-page="history"]:visible').click();
   const history=page.locator('#chartPeriods');
   assert.deepEqual(await history.locator('button').allTextContents(),['7 T','1 M','3 M','6 M','1 J','3 J','5 J','Max']);
   assert.equal(await history.locator('[aria-pressed="true"]').count(),1);
@@ -42,6 +100,17 @@ try{
   assert.ok(Math.abs(layout.controlsRight-layout.actionsRight)<2,'History buttons not aligned right at '+width+': '+JSON.stringify(layout));
   assert.ok(layout.overflow<=1,'Horizontal overflow at '+width+': '+JSON.stringify(layout));
   assert.ok(layout.actionLeft>0,'Actions clipped at '+width);
+  await verifyTargets(history,width);
+  if(width===390){
+   const more=history.locator('.period-more > summary');
+   await more.click();
+   await history.locator('[data-range="fiveYears"]').click();
+   assert.equal(await more.innerText(),'5 J');
+   assert.match(await more.getAttribute('aria-label'),/5 J ausgewählt/);
+   assert.equal(await history.locator('[data-range="fiveYears"]').getAttribute('aria-pressed'),'true');
+   assert.equal(JSON.parse(await page.locator('#historyChart [data-chart-points]').getAttribute('data-chart-points')).length,4);
+  }
+  await history.screenshot({path:'/tmp/foliolab-visual01-history-'+width+'.png'});
  }
  await page.locator('#chartPeriods [data-range="month"]').click();
  assert.equal(await page.locator('#chartPeriods [data-range="month"]').getAttribute('aria-pressed'),'true');
@@ -63,5 +132,5 @@ try{
   {label:'6 M',pressed:'false',range:'180'},
   {label:'1 J',pressed:'false',range:'365'}
  ]);
- console.log('CHART PERIOD CONSISTENCY: shared presets, period logic, right-alignment and 320–1440px PASS');
+ console.log('CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/focus, Axe, active 3/5-year disclosure, 320/360/390/430/768/1440px screenshots PASS (/tmp/foliolab-visual01-*.png)');
 }finally{await browser.close();}

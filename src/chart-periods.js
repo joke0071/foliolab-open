@@ -52,7 +52,10 @@ export function groupExtraWealthPeriods(html){
  const year=/<button[^>]*data-(?:mini-)?range="year"[^>]*>[^<]*<\/button>/.exec(rest);
  if(!year)return html;
  const close=year.index+year[0].length;
- return rest.slice(0,close)+'<details class="period-more"><summary aria-label="Weitere Zeiträume (3 J, 5 J)" title="Weitere Zeiträume">Mehr</summary><span class="period-more-list">'+moved.join('')+'</span></details>'+rest.slice(close);
+ const selected=moved.find(button=>/aria-pressed="true"/.test(button));
+ const label=selected?.match(/>([^<]*)<\/button>$/)?.[1]||'';
+ const summaryLabel=label?label+' ausgewählt; weitere Zeiträume: 3 J und 5 J':'Mehr: weitere Zeiträume: 3 J und 5 J';
+ return rest.slice(0,close)+'<details class="period-more"><summary aria-label="'+summaryLabel+'" title="Weitere Zeiträume"><span class="period-more-label">'+(label||'Mehr')+'</span></summary><span class="period-more-list">'+moved.join('')+'</span></details>'+rest.slice(close);
 }
 const WIDE='(min-width:721px)',NARROW='(max-width:374px)';
 const rangeOf=el=>el.getAttribute('data-range')||el.getAttribute('data-mini-range');
@@ -71,7 +74,10 @@ export function layoutPeriodMore(doc=document,match=q=>matchMedia(q).matches){
   more.dataset.wasWide=wide?"1":"0";
   const active=[...list.querySelectorAll('button')].find(b=>b.getAttribute('aria-pressed')==='true');
   summary.textContent=active?active.textContent:'Mehr';
-  summary.setAttribute('aria-label',active?'Weitere Zeiträume, aktiv: '+active.textContent:'Weitere Zeiträume');
+  const choices=[...list.querySelectorAll('button')].map(b=>b.textContent.trim()).join(', ');
+  summary.setAttribute('aria-label',active?
+   active.textContent.trim()+' ausgewählt; weitere Zeiträume: '+choices:
+   'Mehr: weitere Zeiträume'+(choices?': '+choices:''));
   more.classList.toggle('has-active',Boolean(active));
  });
 }
@@ -107,4 +113,13 @@ export function syncChartPeriodButtons(root,attribute,selected,canSelect){
   button.setAttribute('aria-pressed',String(active));
   if(typeof canSelect==='function')button.disabled=!active&&!canSelect(button.getAttribute(attribute));
  });
+ const selectedButton=root.querySelector('.period-more-list button[aria-pressed="true"]');
+ const summary=root.querySelector('.period-more>summary');
+ const label=summary?.querySelector('.period-more-label');
+ if(summary&&label){
+  const activeLabel=selectedButton?.textContent.trim()||'';
+  label.textContent=activeLabel||'Mehr';
+  summary.setAttribute('aria-label',activeLabel?
+   activeLabel+' ausgewählt; weitere Zeiträume: 3 J und 5 J':'Mehr: weitere Zeiträume: 3 J und 5 J');
+ }
 }
