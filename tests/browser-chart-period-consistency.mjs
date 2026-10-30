@@ -1,10 +1,11 @@
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
-import {chromium} from 'playwright';
+import {chromium,firefox,webkit} from 'playwright';
 import {createRequire} from 'node:module';
 import {readFileSync,mkdirSync} from 'node:fs';
 const axeScript=readFileSync(createRequire(import.meta.url).resolve('axe-core/axe.min.js'),'utf8');
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const engine=process.env.UI_PERIOD_ENGINE||'chromium';
+const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 mkdirSync('artifacts/gates/ui-visual01',{recursive:true});
 const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
@@ -74,7 +75,7 @@ try{
   await page.setViewportSize({width,height:850});
   await page.locator('#mobileNav [data-page="dashboard"]:visible, #sidebarNav [data-page="dashboard"]:visible').click();
   await verifyTargets(mini,width);
-  await mini.screenshot({path:'artifacts/gates/ui-visual01/wealth-dashboard-'+width+'.png'});
+  await mini.screenshot({path:'artifacts/gates/ui-visual01/'+engine+'-wealth-dashboard-'+width+'.png'});
   if(width===390){
    const more=mini.locator('.period-more > summary');
    await more.focus();await page.keyboard.press('Enter');
@@ -119,7 +120,7 @@ try{
    assert.equal(await history.locator('[data-range="fiveYears"]').getAttribute('aria-pressed'),'true');
    assert.equal(JSON.parse(await page.locator('#historyChart [data-chart-points]').getAttribute('data-chart-points')).length,4);
   }
-  await history.screenshot({path:'artifacts/gates/ui-visual01/wealth-history-'+width+'.png'});
+  await history.screenshot({path:'artifacts/gates/ui-visual01/'+engine+'-wealth-history-'+width+'.png'});
  }
  await page.locator('#chartPeriods [data-range="month"]').click();
  assert.equal(await page.locator('#chartPeriods [data-range="month"]').getAttribute('aria-pressed'),'true');
@@ -142,5 +143,5 @@ try{
   {label:'1 J',pressed:'false',range:'365'}
  ]);
  assert.deepEqual(await record(),before,'period selection, responsive relocation and keyboard preserve the entire raw/settings/revision record');
- console.log('CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/Escape/focus, Axe, active 3/5-year disclosure, 320–1440px, exact IDB preservation and retained screenshots PASS');
+ console.log(engine+': CHART PERIOD CONSISTENCY: filtering, 44px targets, keyboard/Escape/focus, Axe, active 3/5-year disclosure, 320–1440px, exact IDB preservation and retained screenshots PASS');
 }finally{await browser.close();}

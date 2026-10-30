@@ -1,8 +1,9 @@
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
-import {chromium} from 'playwright';
+import {chromium,firefox,webkit} from 'playwright';
 import {mkdirSync} from 'node:fs';
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const engine=process.env.UI_PERIOD_ENGINE||'chromium';
+const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
 const page=await legacyPage(browser,{viewport:{width:390,height:850}});
 mkdirSync('artifacts/gates/ui-visual01',{recursive:true});
 const day=n=>new Date(Date.now()-n*864e5).toISOString().slice(0,10);
@@ -98,7 +99,7 @@ try{
   assert.ok(targets.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=innerWidth+1),
    'Selected period targets must be at least 44×44 and within the viewport at '+width+': '+JSON.stringify(targets));
   await holding.locator('.position-period').scrollIntoViewIfNeeded();
-  await page.screenshot({path:'artifacts/gates/ui-visual01/chromium-emulated-'+width+'.png'});
+  await page.screenshot({path:'artifacts/gates/ui-visual01/'+engine+'-emulated-'+width+'.png'});
   if(width<=767)await holding.locator('.position-period-more > summary').click();
  }
  await page.setViewportSize({width:390,height:850});
@@ -120,5 +121,5 @@ try{
  assert.match(await holding.innerText(),/Fehlende frühere Kurse werden nicht ergänzt/);
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).priceHistories['long-price'].points.length),4);
  assert.deepEqual(await record(),before,'period changes preserve exact IndexedDB record/settings/revision');
- console.log('EXTENDED CHART PERIODS: reachable3Y/5Y/Max, actual in-range values/coverage, mobile menu,320-1440px,exact IndexedDB preservation PASS');
+ console.log(engine+': EXTENDED CHART PERIODS: reachable3Y/5Y/Max, actual in-range values/coverage, mobile menu,320-1440px,exact IndexedDB preservation PASS');
 }finally{await browser.close();}
