@@ -1,6 +1,6 @@
 {
   "kind": "CHATWECHSEL_MASTER_HANDOFF_GITHUB_SNAPSHOT",
-  "capturedAt": "2026-10-30T15:36:18.235Z",
+  "capturedAt": "2026-10-30T15:38:54.863Z",
   "userInstruction": "STOP: documentation and handoff only. Do not start implementation, PR, merge, deploy or extensive tests. Leave existing run unchanged.",
   "main": "3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
   "tree": "172e887b085acfb4dcf5675207713eda99c2201d",
@@ -72,10 +72,10 @@
       {
         "id": 124148731858,
         "name": "test",
-        "status": "in_progress",
-        "conclusion": null,
+        "status": "completed",
+        "conclusion": "success",
         "startedAt": "2026-10-30T15:26:21Z",
-        "completedAt": null,
+        "completedAt": "2026-10-30T15:36:43Z",
         "steps": [
           {
             "name": "Set up job",
@@ -109,33 +109,38 @@
           },
           {
             "name": "Browser smoke tests (320–1440 px)",
-            "status": "in_progress",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
           },
           {
             "name": "Expose bounded synthetic C5 PR review",
-            "status": "pending",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
           },
           {
             "name": "Preserve test evidence",
-            "status": "pending",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
           },
           {
             "name": "Preserve representative dialog screenshots",
-            "status": "pending",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
           },
           {
             "name": "Post Run actions/setup-node@v4",
-            "status": "pending",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
           },
           {
             "name": "Post Run actions/checkout@v4",
-            "status": "pending",
-            "conclusion": null
+            "status": "completed",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success"
           }
         ]
       },
@@ -206,7 +211,23 @@
         "digest": "sha256:478444063c1b8f29edffddf2682e1dc0bb4d6724af27035a57ccbaa0e0851295",
         "downloaded": false,
         "verified": false,
-        "reason": "Handoff snapshot: available artifact not yet reviewed"
+        "reason": "Handoff: available artifacts not yet reviewed"
+      },
+      {
+        "id": 12988804696,
+        "name": "release-gates-3b00336d46c7212b6b1fbaec69fe2f83ff60c5ce",
+        "digest": "sha256:f982f161f9d6c48a0ba30d108f21d07b17f981c7b97fbca083f36abb6d4d135a",
+        "downloaded": false,
+        "verified": false,
+        "reason": "Handoff: available artifacts not yet reviewed"
+      },
+      {
+        "id": 12988654803,
+        "name": "dialog-visual-reference",
+        "digest": "sha256:ff9cc0e47771381dd9dfc8492d807f69f93febbf6d8e7b201dc7619caaa21e12",
+        "downloaded": false,
+        "verified": false,
+        "reason": "Handoff: available artifacts not yet reviewed"
       }
     ]
   },
