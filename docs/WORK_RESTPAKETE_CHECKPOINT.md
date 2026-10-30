@@ -1,3 +1,13 @@
+## PR204 freigegeben und kontrolliert gemergt · v217 RELEASE_PENDING · 30.10.2026
+
+Nutzer hat nach konkreter Releasefrage für PR204/HEAD35f0bb7c ausdrücklich **„Freigabe“** erteilt. Vor Merge main82523b8b, PR-HEAD35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0, Testmerge4382ee58/Tree5fb8176d und finale Pflicht40997505773/Wallet40997505790 SUCCESS erneut verifiziert; keine aktiven Actions. Kontrollierter Merge mit expected_head_sha erfolgreich: **mainc6a07402d668c0a5d90d1294be8f72547d1577b0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93** identisch mit geprüftem Kandidaten.
+
+**MERGED / RELEASE_PENDING / NOT_YET_LIVE_ACCEPTED.** [Main-/Pages-/Live41008536496](https://github.com/joke0071/foliolab-open/actions/runs/41008536496) läuft. SW217 noch nicht vollständig live abgenommen; letzte bestätigte Produktion v216/SW216. Keine erneute Nutzerfreigabe für unveränderten PR204 erforderlich; Freigabe gilt ausschließlich für diesen Kandidaten und ist nicht auf spätere PRs übertragbar.
+
+**Weiter:** vollständige Main-/Crossbrowser-/Deploy-/tatsächliche Livegates abschließen; bei Fehler konkreten Befund sichern und Pflichtgate erhalten. Artefakt-ZIPs vor Extraktion SHA256 prüfen, tatsächliche Reports/Asset-/SW-Belege abnehmen. Erst dann UI-TEXT01 DONE/LIVE_ACCEPTED, danach übrige UI-P1 in bestehender Reihenfolge. Keine parallele Produktimplementierung während dieses Releases. Gesamter Master und Nachträge unverändert, FLH05/FLH-PROJ01 OPEN/PARKED.
+
+---
+
 ## UI-TEXT01 / PR204 technisch abgenommen und reviewbereit · 30.10.2026
 
 **TECHNICALLY_ACCEPTED / REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** [PR204](https://github.com/joke0071/foliolab-open/pull/204), Branch **fix/ui-text01-quote-display-v217**, HEAD **35f0bb7c1bfa46befbdd2dc3e698c1da459bcae0**, Tree **5fb8176d0ea6f1f0792392b9eafebfda665f4b93**. Testmerge **4382ee5843b6b75516cc2ba1c7d7c53140ae2260** auf main82523b8b besitzt exakt denselben Tree. Alle sechs Source-/Test-/SW-Blobs lokal und remote identisch. Produktion bleibt **v216/SW216 LIVE_ACCEPTED**, SW217 unveröffentlicht.
