@@ -136,11 +136,13 @@ test('Missing canonical quote is unavailable, never a manual zero, without model
 
 test('Quote display distinguishes invalid, absent, exact and evidenced zero prices',async()=>{
  const {priceQuality}=await import('../src/quote-quality.js');
+ const {valuationIssues}=await import('../src/valuation-status.js');
  const now=Date.parse('2026-10-30T12:00:00Z');
  for(const patch of [{price:undefined},{price:null},{price:''},{price:'  '},{price:NaN},{price:Infinity},{price:'bad'},{price:100,priceExact:''},{price:100,priceExact:'bad'},{price:0},{priceExact:'0'},{price:0,quoteSource:'  '}]){
   const p={...position(),...patch},m=model(p),before=JSON.stringify(m);
   assert.match(positionDetailMarkup(p,m,config),/<span>Kurs je Einheit<\/span><strong>Nicht verfügbar<\/strong>/,JSON.stringify(patch));
   assert.equal(priceQuality(p,now).state,'missing');assert.equal(JSON.stringify(m),before);
+  assert.deepEqual(valuationIssues(m,now),[{id:p.id,type:'missing'}]);
  }
  for(const source of ['EODHD','Manuell']){
   const p={...position(),price:99,priceExact:'0',quoteSource:source,quoteAsOf:'2026-10-29',quoteQuality:source==='EODHD'?'configured-listing':null};
@@ -148,6 +150,8 @@ test('Quote display distinguishes invalid, absent, exact and evidenced zero pric
   assert.match(html,/<span>Kurs je Einheit<\/span><strong>[^<]*0,00[^<]*<\/strong>/);
   assert.ok(html.includes('Kursquelle: '+source));
   assert.equal(priceQuality(p,now).state,source==='EODHD'?'confirmed':'unverified');
+  assert.deepEqual(valuationIssues(model(p),now),[],'a recorded zero is not a missing-price warning');
+  assert.deepEqual(valuationIssues(model({...p,quoteAsOf:'2020-01-01'}),now),[{id:p.id,type:'outdated'}]);
   assert.equal(priceQuality({...p,quoteAsOf:null},now).state,'undated');
   assert.equal(priceQuality({...p,quoteAsOf:'2020-01-01'},now).state,'stale');
  }

@@ -1,3 +1,5 @@
+import {displayQuotePrice} from './quote-quality.js';
+
 /** Quote provenance and quote freshness are separate concepts. */
 const QUOTE_MAX_AGE_MS=7*864e5;
 export function oldProviderQuote(position,now=Date.now()){
@@ -10,7 +12,8 @@ export function valuationIssues(model,now=Date.now()){
  for(const p of model.positions||[]){
   if(p.valuationMode==='excluded'||Number(p.quantityExact??p.quantity)===0)continue;
   let type=null;
-  if(!(Number(p.priceExact??p.price)>0))type='missing';
+  const market=['etf','stock','fund','crypto'].includes(p.kind);
+  if(market?displayQuotePrice(p)===null:!(Number(p.priceExact??p.price)>0))type='missing';
   else if(p.priceStatus)type=/stichtag|abgeleit/i.test(String(p.priceStatus))?'derived':'review';
   else if(oldProviderQuote(p,now))type='outdated';
   if(type)result.push({id:p.id,type});
