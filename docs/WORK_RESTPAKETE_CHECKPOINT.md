@@ -1,3 +1,19 @@
+## UI-VISUAL09 / Issue226 ausdrücklich delegiert · 30.10.2026
+
+**[Issue226](https://github.com/joke0071/foliolab-open/issues/226): COPILOT_DELEGATED / DRAFT_PENDING / WORK_INTEGRATION_PENDING.** Der vollständige aktuelle [Vertrag](COPILOT_UI_VISUAL09_VERTRAG_2026-10-30.md) ist dauerhaft gesichert. Delegiert sind ausschließlich die konkreten visuellen Bereiche: Such-, Filter-, Sortier- und Aktionsleisten in Positionen; Such-, Filter- und Aktionsleisten in Buchungen; Darstellung der vorhandenen Akkordeons „Interne Transfers“ und „Erträge und Abzüge“ einschließlich geöffneter Inhalte. Copilot liefert einen separaten Draft ohne Merge/Deployment. Keine parallele Work-Implementierung dieser visuellen Teile.
+
+**Alle Fachfunktionen bleiben bei Work:** Buchungsverwaltung, Mehrfachauswahl, Lösch-/Archivierungs-/Undo-Logik, Transfers/Abgleich, Ertrags-/Abzugsberechnungen, Datenqualität, Kursstatus und Finanzdaten. Bei bereits vorbereiteten fachlichen Änderungen im selben DOM-Bereich hat Kollisionsschutz Vorrang: Copilot lässt den betroffenen Bereich aus und dokumentiert den Konflikt.
+
+Möglichst CSS-only und eng auf #positionsPage/#bookingsPage begrenzen, keine globalen btn/field/toolbar-Regeln. Kein Eingriff in Karten/Details aus214 oder andere delegierte Bereiche. Falls JS/HTML unvermeidbar: begründeten minimalen Vorschlag statt eigenständiger Fachänderung liefern. CSV-Import-Label/Attribute in index.html weiterhin erst nach213 durch Work korrigieren. Keine Fachtexte, Warnsemantik, Tests oder SW-Version ändern. Der vollständige Vertrag enthält die konkreten Selektoren und Nachweise.
+
+Nach Lieferung einzeln auf Funktionserhalt, CSS-/DOM-Konflikte, Browser, Accessibility und vollständige Regression prüfen; passende SW-Version und konkrete eigene Nutzerfreigabe vor Merge/Deployment. Bilder mit aktiven Filtern, langen Inhalten und offenen/Fehler-/Leerzuständen;320/360/390/412/430/768/1024/1440px,150–200%Text,44×44-Ziele, Tastatur/Fokus/Axe. Fehlende Engine-/Hardwareprüfungen transparent benennen.
+
+**PR220 und Releasepriorität unverändert.** HEAD520b3ff7 bleibt reviewbereit, offen und ungemergt; separate konkrete Mergefreigabe steht aus. Mainaf834705/v220 deployed, volle Liveabnahme weiterhin BLOCKED bis freigegebenem Folge-Release. Dieser Schritt ändert nur Dokumentation; keine Produktänderungen, Tests, neuen CI-Läufe oder Unterbrechungen.
+
+Alle bisherigen Copilot-Drafts einschließlich225 und QA223 bleiben erhalten;208 eigene Positionszeiträume und Tests vor Bereinigung vergleichen. UI-VISUAL06/#217 und alle übrigen nicht delegierten UI-/Masteraufgaben bleiben bei Work und dürfen selbstständig regulär bearbeitet werden. **Nur FLH05 und FLH-PROJ01 bewusst PARKED.** Alle Masteranforderungen erhalten; historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## UI-VISUAL08 / PR225 geliefert · 30.10.2026
 
 **[Draft225](https://github.com/joke0071/foliolab-open/pull/225): COPILOT_DELIVERED / WORK_INTEGRATION_PENDING.** HEAD `3415af87280b3f7e27a9c9c488cc3f4b40f33d1a`, Basis Main `af8347054c9e5d50b854494f650e7d7675adcff6`; offen, nicht gemergt oder deployt. Die tatsächliche Dateiliste enthält ausschließlich styles.css (46 zusätzliche Zeilen) und30 Vorher-/Nachherbilder unter docs/ui-visual08/. Kein JS, HTML, Test oder SW geändert. Die vollständige Lieferung samt ursprünglichem Vertrag ist im [UI-VISUAL08-Vertrag](COPILOT_UI_VISUAL08_VERTRAG_2026-10-30.md) gesichert.
