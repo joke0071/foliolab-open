@@ -1,0 +1,54 @@
+{
+  "status": "LOCAL_PASS / FULL_CI_PENDING / NOT_MERGED / NOT_DEPLOYED",
+  "head": "1872114ea1aa0130cc08d3da36afa13d9e34b1ab",
+  "tree": "30cf97f39b8c39e1ffbf7a63cb74331eee75a622",
+  "base": "d6b2a14f2108bc210411054d5f3d7690ba44fd51",
+  "production": "v221/SW221 LIVE_ACCEPTED unchanged",
+  "unit": {
+    "tests": 975,
+    "pass": 975,
+    "fail": 0,
+    "skipped": 0
+  },
+  "chromiumVersion": "Playwright1.56.1 / Headless141.0.7390.37",
+  "unchangedMutationFunctionHashes": {
+    "openPositionArchive": "efc9db6663d29c87efe33b933d198be37ec5cb76255cea9e56ec0eb522ef0da9",
+    "openPositionRemoval": "90826861a585c19bc6689ef25531a49e1bf96bc7936e5d9117e7a2c265ed6685",
+    "openBookingArchive": "98d12837c00e0a40cabd752a05d8b423c5d3627f08179e5b1b895c752b9be4eb",
+    "openBookingChange": "60579fbeb5d687936cf9ccffd35c70c354affe0413b564cc2d686b9be45087a6",
+    "openBookingUndo": "b0c289ffd6173585d21e2a75a3c8c446ceb3297d58151edd876c003f99a972f8",
+    "openReferenceArchive": "c8d4d01fa39e6df6ae40245059d0ae23144be64e8526849e6ee44a1a387b2dd7",
+    "openReferenceRemoval": "eae219fe8f22de8e740bad7bf14078e505b469526219406ae1cd4190cf3aa49b",
+    "openReferenceRemovalUndo": "4ae5fadae9d909357216507eb90a12ce8c9db6cb93f7dbbac8d43fe45120b8cc",
+    "confirmDeletePosition": "ed93c77f2a9c0e159c620ea6d86f767a7c2e0118443ca5d36a72e4ccc66e6b9a",
+    "saveBeforeUIFinally": "f2f3eb65a7220413671976157d2de28aa9fbe0b1cfb14a516b5290de314a29f8"
+  },
+  "suiteLogs": [
+    {
+      "name": "browser-booking-management",
+      "sha256": "67aa6662e0b38237a6f2526d006cc2f76239593d3e32546a734502e304595e86",
+      "log": "BOOKING UI chromium: normal edit/central management/archive, shared toolbar/5 widths/Axe/44px,249 scope,metadata-only archive/restore,quota/post-put abort/offline,exact undo,reimport/encrypted restore,stale tab PASS\nchromium: BOOKING MANAGEMENT selection/preview/guards/CAS/quota/abort/offline/undo/restore/5widths/Axe PASS\n"
+    },
+    {
+      "name": "browser-position-removal",
+      "sha256": "3ea99a4afdd64c8d91af44f9767af64ded97dafcae35aa68f6320d73192210f1",
+      "log": "chromium: UI fixture active worker/controller before quota/abort {\"controller\":\"http://127.0.0.1:4173/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v222\"]}\nchromium: selection/preview width 320\nchromium: selection/preview width 390\nchromium: selection/preview width 430\nchromium: selection/preview width 768\nchromium: selection/preview width 1024\nchromium: selection/preview width 1440\nchromium: UI before-offline controller {\"controller\":\"http://127.0.0.1:4173/sw.js\",\"active\":\"activated\",\"caches\":[\"foliolab-open-v222\"]}\nchromium: FLH03-08 UI 201/401 full-filter/hidden/all/cancel/focus, 12 full axe scans at six widths/small heights, quota/actual transaction abort rollback, competing-tab CAS, plain pre-delete/encrypted post-delete UI restore and one revision OFFLINE delete/reload PASS\n"
+    },
+    {
+      "name": "browser-position-archive",
+      "sha256": "04e2b67573e90df9f079217aead16eaaa6eba006e009d3b0e78ada9610940ffa",
+      "log": "chromium: restore begins plain\nchromium: restore result plain {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: restore begins encrypted\nchromium: restore result encrypted {\"positions\":[{\"id\":\"cash\"},{\"id\":\"asset\",\"archived\":true},{\"id\":\"same\"}],\"toast\":\"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.\",\"status\":\"Transaktionale IndexedDB aktiv\",\"record\":{\"revision\":2,\"positions\":[\"cash\",\"asset\",\"same\"]}}\nchromium: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS\n"
+    },
+    {
+      "name": "browser-reference-management",
+      "sha256": "50d40f6716347125aeaf43a5305dac45d486bafd4146a498cd299bab825ca555",
+      "log": "chromium: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS\nchromium: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS\n"
+    },
+    {
+      "name": "browser-position-details",
+      "sha256": "2c88884c98688706c15b7f17a93f215bb51bc8a10f7da567d3dfe3218fa5bcd8",
+      "log": "POSITION DETAILS: one quote date, full precision, honest missing/zero/unknown-source facts, exact IndexedDB preservation and seven widths PASS\n"
+    }
+  ],
+  "limits": "Only localChromium proof; actualFirefox/WebKit/fullINTEGRATION pending. Existing reference-removal imported suite passed. UX10 and broader text/DELETE masters remainPARTIAL; no newbatchrestore. Stable221 notdeployed. Copilot213 context adaptations tracked separately."
+}
