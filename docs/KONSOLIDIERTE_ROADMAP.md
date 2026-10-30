@@ -1,3 +1,21 @@
+## UI-VISUAL01/PR209 Integrationskandidat gesichert · Produktion v220 LIVE_ACCEPTED · 30.10.2026
+
+**v220/SW220 DONE / LIVE_ACCEPTED**, Main537bddc3, vollständige Main-/Pages-/Live41038554426 SUCCESS im ersten Versuch,962Units/dreiBrowser/121Hashes/18Axe/37Live-PASS-Berichte. [Releasebelege](release-evidence/v220-pr220-release.json). PR220-Freigabe verbraucht.
+
+Einziger neuer Implementierungsstrang: bestehender [Draft209](https://github.com/joke0071/foliolab-open/pull/209), Branch `feature/ui-visual01-compact-periods`, **HEAD `0cd81c97e4997d545970cd596606c3dff54e28d2`**, Tree `665c2a864f6d14c00eedece60d9dc85e6799f537`. Echter Merge mit Eltern209/7b3e4d06, akzeptiertemMain537bddc3 und208/4c4e32bc: beide Copilot-Historien/Änderungen/Tests/Bildersätze erhalten. #208 ausdrücklich nicht verworfen und noch offen; Koordinationskommentar dort gesichert. Keine weiteren visuellen Pakete integriert oder neu entwickelt.
+
+Work hat die vorhandenen zwei UI-VISUAL01-Oberflächen lokal konfliktfrei zusammengeführt:209 Übersicht/Verlauf,208 native Positionszeiträume. App/chart-periods exakt wie gelieferter209-Commit, position-detail/extendedUnit-Test exakt wie208; beide CSS-Blöcke erhalten. Periodenlisten/Filter/Beschaffung/Finanzwerte/Bewertung/Persistenz sowie native EUR-Achsen/Tooltips/echte X-Abstände und sämtliche220-Testgates unverändert. SW221 nur im unveröffentlichten Integrationskandidaten.
+
+Bestehende Regressionen gezielt ergänzt: Escape/Fokus bei erweiterter Wealth-Auswahl, exakter vollständiger IDB-Record vor/nach Auswahl/Breitenwechsel,1024px-Nativebreite zusätzlich zu360px wieder erhalten, Wealth-Bilder im normalenCI-Artefakt gespeichert. Keine Assertions/Timeoutlockerung. Lokal **963/963Units,0Fail/Skip,Syntax/diff-checkPASS**. Alle37Remote-Blobs und vollständigerTree mit lokalenGitobjekten identisch; neu erzeugte Styles/SW/Browsertest-Blobs einzeln verifiziert.
+
+**PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Pflicht [41042454421](https://github.com/joke0071/foliolab-open/actions/runs/41042454421) läuft auf genau0cd81c97; Wallet41042454401SUCCESS. Noch kein Browser-/Kaskaden-/Hardwarepass behauptet. Frühere action_required-Läufe hattenCopilot alsActor/0Jobs; kein Produktfehler und keineAbnahme daraus ableiten. Der geprüfte Work-Integrationscommit startet die regulären Gates, keine Schutzgrenzen abgeschaltet.
+
+**Exakt weiter:** volle Pflicht-/Cross-Engine-Gates diesesHEADs,Testmerge/Tree,37Dateien,signierteZIPs/tatsächlicheBerichte/Bilder/44×44bei320/360/Keyboard/Axe/exakteDaten prüfen. BeiFehler konkreteDiagnose/Korrektur,keinblinderRetry oderGatelockerung. Erst vollständig geprüftenKandidaten reviewbereit stellen und **eigene konkrete PR209-Merge-/Deploymentfreigabe** einholen. Danach vollständigeMain-/Pages-/Live-/PWA-Abnahme,erst dann v221 LIVE_ACCEPTED. Keine alte Freigabe übertragen.
+
+Übrige gelieferte213/214/218/219/222/225/227 undQA223 einzeln später; bekannteKaskaden/CSV-nach213/Dialogbaseline-nach219/208-Erhaltverträge erhalten. Keine parallele visuelle Work-Implementierung delegierterBereiche. UI-VISUAL06/#217 undalleanderen nichtdelegierten AufgabenbeiWork. NurFLH05/FLH-PROJ01bewusstPARKED. HistorischenDokumentationsbranchniemalsalsAppcodemergen.
+
+---
+
 ## v220/SW220 DONE / LIVE_ACCEPTED · PR220 vollständig abgeschlossen · 30.10.2026
 
 **Freigegebener PR220 ist gemergt und vollständig live abgenommen.** Main `537bddc3202dec8025626e8fe8b00797d418d0f7`, Tree `33faa5e2947968bbbe58b097fa8bf7ca0e5b86c2` identisch mit geprüftem HEAD520b3ff7. Produktdateien und SW220 unverändert zum fachlichen PR212; dessen tatsächliche Datumsabstände und räumliche Punktauswahl sind damit ebenfalls vollständig produktiv abgenommen.
