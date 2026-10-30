@@ -1,3 +1,19 @@
+## PR209 – Testursache nachgewiesen, korrigierter Kandidat vollständig gesichert · 30.10.2026
+
+**HEAD `a61af4c9ecc7dcb4a0aafd871d5884be807a10ae`, Tree `8d237c705aa687cd14b6de2e4e8ec530fc45d3d8`.** Remote-Branch feature/ui-visual01-compact-periods exakt verifiziert, beide neuen Blobs und Gesamtbaum mit lokalen Gitobjekten identisch, Working Tree sauber. Anwendung und SW221 bytegleich zum Freigabekontext4880cc11. Nachschritte ausschließlich Browsertests. Nutzerfreigabe für PR209 erfasst und unverbraucht, keine Freigabe für anderePRs und kein Umgehen roter Gates.
+
+**Nachgewiesene Ursache des neuen Testhelfers:** Playwright-Wartefunktion mit async-Prädikat lieferte tatsächlich waitResult=false, während WebKit controller=null, active=null und worker=installing meldete. Der Promise wurde vor seiner Auflösung als truthy behandelt. Originalbericht aus SHA-verifiziertem Artefakt12978010256 und Prüfung der primären Playwright-Implementierung belegen dies. Vollständige [Diagnosebelege](release-evidence/v221-pr209-worker-fixture-diagnosis.json), Remote-Belegcommit47a4edcc. Das bisherige spätere Fixture-PASS war keine gültige Bestätigung der früheren Wartephase; der Gesamtlauf blieb rot. Keine pauschale Rootcausebehauptung für alle älteren PWA-/WebKit-/IDB-Folgepunkte.
+
+Fix: reale Registration-/Worker-/Controller-Ereignisse setzen einen synchron abgefragten Bereitschaftsstatus; der tatsächliche Warte-Rückgabewert muss zusätzlich true sein. Alle bisherigen ScriptURL-/activated-/controlled-/exakten Blankrecord-Assertions und Timeouts erhalten. Axe wird wie in vorhandenen Projekt-Audits per context.addInitScript geladen, damit kein künstlicher gerouteter Skriptpfad unter kontrolliertem ServiceWorker erforderlich ist. Sämtliche Axe-Scans bleiben bestehen. Keine Produktions-, Finanz-, Bewertungs-, Zeitraum- oder SW-Änderung.
+
+Lokal964/964Units,0Fail/Skip,alleSyntaxprüfungen/diff-checkPASS. Voriger Diagnoselauf41056024516 final: Hauptjob124063639502SUCCESS, Cross2/124063639880SUCCESS, Cross1/124063639962FAIL am bekannten WebKit-Axe-Skriptpfad; Firefox Wealth und Native vollständigPASS. Alle früheren Fehlerbelege erhalten. **Neuer vollständiger Pflichtlauf [41057477444](https://github.com/joke0071/foliolab-open/actions/runs/41057477444), Wallet41057477627**, auf genaua61af4c9. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.**
+
+**Exakt weiter:** den aktuellen vollständigen Lauf abnehmen; in allen3Engines tatsächliche Bereitschaft=true, Controller aktiviert/kontrolliert, sämtliche Zeitraum-/Touch-/Keyboard-/Axe-/exakten IDB-Prüfungen belegen. Testmerge/Tree und SHA-geprüfte Artefakte/Berichte/Bilder sichern. Erst danach konkrete PR209-Freigabe für den unveränderten Produktumfang unter vollständig erfüllten Bedingungen anwenden; anschließend vollständige Main-/Pages-/Live-/PWA-Abnahme. Bis dahin v221 nicht live akzeptiert. Keine blinden Retries oder Gate-/Timeoutlockerung.
+
+Produktionv220/SW220 weiterhinDONE / LIVE_ACCEPTED, Main537bddc3.208 vollständig bewahrt;227 COPILOT_DELIVERED / WORK_INTEGRATION_PENDING und übrige Copilot-Drafts/QA223 unverändert einzeln vorgemerkt. UI-VISUAL06 und übrige nichtdelegierte Masteraufgaben beiWork, nurFLH05/FLH-PROJ01 bewusstPARKED. Sämtliche bestehenden Anforderungen und Freigabegrenzen erhalten; historischen Dokumentationsbranch niemals als Appcode mergen.
+
+---
+
 ## PR209 – widersprüchlichen Worker-Zustand instrumentiert · 30.10.2026
 
 **HEAD `4b41bf2b15aaf3982a2c53087da5150ff1e7363a`, Tree `a866e599bb1e5e8f27296debaa17eef424d07ad3`**, remote gesichert, neuer Blob und Gesamtbaum exakt lokal/remote geprüft; Anwendung/SW221 weiterhin bytegleich zum Nutzerfreigabekontext4880cc11. Ausschließlich Testhelfer geändert. Freigabe fürPR209 erfasst, unverbraucht; **BLOCKED / DIAGNOSIS_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED**.
