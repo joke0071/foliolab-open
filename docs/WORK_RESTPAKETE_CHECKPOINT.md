@@ -1,3 +1,17 @@
+## UI-VISUAL01 / PR209 – gezielte Firefoxprüfung bestanden, Testvoraussetzungen präzisiert · 30.10.2026
+
+**Aktueller HEAD `8d105e9a8d2c98b95fc17252ff5cab8922f03675`, Tree `3aeb49cdc1a92cebc48a53e9537624d93ceecb6e`**, Remote-Branch und alle vier neuenBlobs/GesamtTree exakt lokal/remote geprüft. WorkingTree sauber. Produktdateien inklusive SW221 bytegleich zumResize-Kandidatenb625151a; ausschließlich vierTestdateien imNachschritt. Produktionv220/SW220 aufMain537bddc3 weiterhin DONE / LIVE_ACCEPTED. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.**
+
+Pflicht41045466087/b625151a bleibt insgesamtrot: Cross1/124028360902 bestätigte **Firefox Wealth-Zeitraumtest vollständigPASS** (44px/Keyboard/Escape/Fokus/Axe/aktive3J5J/320–1440/Resize-Zwischenzustand/exaktervollständigerIDB-Erhalt), danach Native-Test amfokus-visible-PrüfaufbauFAIL. Programmatischesfocus()+Enter nachMausinteraktionen beweist keineTab-Navigation inFirefox. Korrektur erreichtMehr tatsächlich perTab vomvorherigen sichtbarenStandardbutton, prüft wirklichenFokus und behält die bisherige exakte3px-Fokusassertion bei. Kein CSS-/Produktfix dafür.
+
+Cross2/124028361151: FirefoxBlocker-Verwaltung inklusive5Breiten/200%Text/8Originalwerte/100Buchungen/205Limit/Axe/exaktemRecordPASS, danach WebKit beimDatensatzlesen direktnachReload „Execution context was destroyed“. GenaueNavigationsursache weiterhinnichtbewiesen. Neue gemeinsameTestfixture übernimmt die bereits beiPositionsentfernung verwendete realeWorker-/Controller-Voraussetzung **vor** Testdatenbefüllung: aktiviertenWorker und tatsächlich kontrolliertesDokument abwarten, kontrolliert neu laden, exakten ursprünglichenBlankrecord unverändert belegen. DasselbePräambelverfahren für beidegezieltenZeitraumtests; keinSW-/Cache-/IDB-Mock, keinRetry undkeineTimeoutlockerung. Bestehende Inhalts-/Speicher-/Finanzassertionen unverändert. NeuerHelper unddreiAufrufer Syntax/diff-checkPASS; zuletzterUnitlauf964/964 ohneFail/Skip, neuerVollrun bestätigtendgültig.
+
+Aktueller vollerPflichtlauf [41046670839](https://github.com/joke0071/foliolab-open/actions/runs/41046670839), Wallet41046670921, genau8d105e9a. FrühereLäufe nichtabgebrochen/umgedeutet. b625151a-Hauptjob beiVeröffentlichungnochlaufend; keineGesamtabnahmeausTeilbelegen. Testmergefürb625151a war2667da00 mitidentischemTree176b2d62, endgültigenTestmergefür8d105e9a nachprüfen.
+
+**Exaktweiter:** aktuellevollenPflicht-/dreiEngine-Gates abnehmen, allekonkretenFehler gezieltbeheben, Logs/Artefakthashes/Berichte/Bilder/Touchnachweise/exaktenRecord sichern. ErstnachvollständigerAbnahme PR209reviewbereit undeigene konkreteMerge-/Deploymentfreigabe einholen; nochkeineFreigabe.208vollständigbewahrt,keineandereIntegration.227weiterCOPILOT_DELIVERED / WORK_INTEGRATION_PENDING; übrigeCopilotlieferungen/QA223erhalten. UI-VISUAL06 undandere nichtdelegierteMasterarbeitbeiWork; nurFLH05/FLH-PROJ01bewusstPARKED. SämtlicheMasteranforderungen bleibenverbindlich.
+
+---
+
 ## UI-VISUAL01 / PR209 – Resize-Zwischenzustand abgesichert · 30.10.2026
 
 **Aktueller HEAD `b625151a81a74a5f8c86f0f8a7a06576703f15d7`, Tree `176b2d62987eedc5025512097efa46a7815a3a5a`.** Remote-Branch und vollständigerTree/alle drei neuenBlobs gegen lokaleGitobjekte verifiziert, WorkingTree sauber. **PARTIAL / CI_RUNNING / NOT_REVIEW_READY / NOT_MERGED / NOT_DEPLOYED.** Produktion weiterhin v220/SW220 DONE / LIVE_ACCEPTED aufMain537bddc3.
