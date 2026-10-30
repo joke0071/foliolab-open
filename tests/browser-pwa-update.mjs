@@ -89,6 +89,12 @@ try{
    assert.ok((await page.evaluate(()=>caches.keys())).includes(oldCache),'failed install keeps previous complete cache');
    await context.setOffline(false);result.checks.push('actual 503 aborts new installation; previous app and offline portfolio survive unchanged');
    generation='current';
+   const beforeUpdateDocument=await page.evaluate(()=>performance.timeOrigin);
+   // Arm before update(): the real app reloads on controllerchange. The new
+   // controller can become visible before that navigation has committed.
+   const automaticReload=page.waitForEvent('framenavigated',{
+    predicate:frame=>frame===page.mainFrame(),timeout:60000
+   }).then(()=>({observed:true}),error=>({observed:false,error:String(error)}));
    // update() may trigger the app's intended controllerchange reload before
    // its promise reaches the old document. Observe the new controller below.
    await page.evaluate(()=>{setTimeout(()=>navigator.serviceWorker.getRegistration().then(r=>r.update()).catch(error=>console.error('Worker update failed',error)),0);});
@@ -96,7 +102,12 @@ try{
     const r=await navigator.serviceWorker.getRegistration();
     return !r.installing&&!r.waiting&&r.active?.state==='activated'&&navigator.serviceWorker.controller===r.active&&(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected;
    },cache,{timeout:60000});
-   await page.waitForLoadState('networkidle');await page.reload({waitUntil:'networkidle'});await ready();
+   result.automaticReload=await automaticReload;
+   assert.equal(result.automaticReload.observed,true,'real controllerchange reload committed');
+   await page.waitForLoadState('networkidle');await ready();
+   result.automaticReload.newDocument=await page.evaluate(()=>performance.timeOrigin);
+   assert.notEqual(result.automaticReload.newDocument,beforeUpdateDocument,'automatic update created a new document');
+   await page.reload({waitUntil:'networkidle'});await ready();
    // The automatic controllerchange reload may overlap the explicit reload.
    await wait('post-reload-current-cache',async expected=>(await caches.keys()).filter(k=>k.startsWith('foliolab-open-')).join()===expected,cache);
    const hashes=await cachedHashes();assert.equal(hashes.length,assets.length,'complete matching precache');
