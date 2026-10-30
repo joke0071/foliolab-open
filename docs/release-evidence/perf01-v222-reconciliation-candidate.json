@@ -1,0 +1,151 @@
+{
+  "status": "LOCAL_CPU_TESTED__DRAFT_NOT_MERGED_NOT_DEPLOYED",
+  "observed_on": "2026-10-30",
+  "base_main": "8353a1cab3c528a389d2bd7893df819f3c284225",
+  "base_sw": "SW222",
+  "candidate_sw": "SW223_UNPUBLISHED",
+  "related_issue": 177,
+  "scope": "Only date indexing for observed snapshot reconciliation inside projectHistoricalPortfolio; no portfolio/price/FX/backup/IDB writes",
+  "provenance": {
+    "source": "GitHub Pages artifact from release run 41126514518; base src/historical-portfolio-value.js blob SHA 34af6c1caffbfa5617ee435fb83f25b6ab95a146",
+    "node": "v22.16.0",
+    "environment": "container local Node.js; Chromium navigations to localhost blocked by ERR_BLOCKED_BY_ADMINISTRATOR",
+    "browser_startup_measured": false,
+    "real_android_measured": false,
+    "samples_per_variant": 6,
+    "alternating_order": true,
+    "all_comparison_samples_deep_equal": true
+  },
+  "synthetic_projection_cpu_samples": [
+    {
+      "positions": 19,
+      "days": 365,
+      "duplicates": false,
+      "baseline_ms": [
+        8.209,
+        7.359,
+        7.501,
+        7.229,
+        7.019,
+        9.108
+      ],
+      "indexed_ms": [
+        6.278,
+        5.099,
+        7.879,
+        5.849,
+        6.049,
+        7.583
+      ],
+      "baseline_median_ms": 7.501,
+      "indexed_median_ms": 6.278,
+      "improvement_pct": 16.31
+    },
+    {
+      "positions": 19,
+      "days": 1825,
+      "duplicates": false,
+      "baseline_ms": [
+        43.599,
+        36.666,
+        35.73,
+        48.541,
+        34.377,
+        35.185
+      ],
+      "indexed_ms": [
+        21.299,
+        18.511,
+        30.447,
+        15.48,
+        14.983,
+        14.989
+      ],
+      "baseline_median_ms": 36.666,
+      "indexed_median_ms": 18.511,
+      "improvement_pct": 49.52
+    },
+    {
+      "positions": 19,
+      "days": 1825,
+      "duplicates": true,
+      "baseline_ms": [
+        51.135,
+        57.643,
+        40.208,
+        32.085,
+        31.462,
+        49.205
+      ],
+      "indexed_ms": [
+        32.995,
+        18.227,
+        17.16,
+        16.498,
+        15.221,
+        23.499
+      ],
+      "baseline_median_ms": 49.205,
+      "indexed_median_ms": 18.227,
+      "improvement_pct": 62.96
+    },
+    {
+      "positions": 100,
+      "days": 365,
+      "duplicates": true,
+      "baseline_ms": [
+        21.273,
+        17.014,
+        17.301,
+        19.082,
+        31.392,
+        21.822
+      ],
+      "indexed_ms": [
+        17.742,
+        23.358,
+        23.629,
+        23.73,
+        21.029,
+        18.166
+      ],
+      "baseline_median_ms": 21.273,
+      "indexed_median_ms": 23.358,
+      "improvement_pct": -9.8
+    }
+  ],
+  "double_validation_microbench_only": {
+    "note": "Theoretical CPU cost of safeImport(JSON.parse(raw)) called once versus twice; no change to validation included in candidate",
+    "cases": [
+      {
+        "positions": 19,
+        "days": 1825,
+        "bytes": 558321,
+        "once_median_ms": 12.423,
+        "twice_median_ms": 25.465
+      },
+      {
+        "positions": 1000,
+        "days": 1825,
+        "bytes": 1980285,
+        "once_median_ms": 21.782,
+        "twice_median_ms": 43.212
+      }
+    ]
+  },
+  "local_validation": {
+    "existing_tests": "4/4 history projection unit tests PASS (from current main)",
+    "new_regressions": "3/3 PASS (also run against unmodified source before applying candidate)",
+    "node_syntax": "PASS",
+    "strict_equal_result_cases": 4,
+    "scenarios": "complete known cash+ETF with duplicate observed dates and review/agrees; unknown opening; missing price; no snapshots; 19/100 position synthetic long/short series",
+    "no_full_repo_ci_claimed": true
+  },
+  "limitations": [
+    "CPU projection microbench is not an app startup timing or Android benchmark.",
+    "Synthetic long-date fixtures may have incomplete coverage and do not establish real-portfolio business value.",
+    "100-position short-series case regressed ~10% locally; no universal speedup claim.",
+    "Keep source verification, mutation/security gates and three-engine CI before any merge.",
+    "Never merge or deploy without explicit per-candidate approval after weekend test."
+  ]
+}
