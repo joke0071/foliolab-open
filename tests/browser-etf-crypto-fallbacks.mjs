@@ -18,6 +18,7 @@ try{
  await page.locator('#providerOverview .provider-accordion>summary').click();
  const detail=page.locator('#providerOverview [data-position-id="etf-demo"]');
  await detail.locator(':scope > summary').click();
+ await detail.locator('[data-action="import-price-history"]').waitFor({state:'visible'});
  assert.equal(await detail.locator('[data-action="load-tradingview"]').count(),0,'No external chart button');
  assert.equal(await detail.locator('iframe[src*="tradingview"]').count(),0,'No vendor iframe');
  assert.equal(await detail.locator('[data-action="import-price-history"]').count(),1,'Local CSV course import stays accessible');
