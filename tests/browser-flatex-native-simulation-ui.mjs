@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -22,7 +23,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const simulate=async()=>{await p.locator('#flatexSimulationRun').click();await p.locator('#flatexSimulationResult').waitFor();};
  const delay=(call=1)=>p.evaluate(async call=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),original=PortfolioStorage.prototype.assertCurrent;window.releaseSimulationCheck=null;let calls=0;PortfolioStorage.prototype.assertCurrent=function(){if(++calls===call){return new Promise((resolve,reject)=>{window.releaseSimulationCheck=()=>original.call(this).then(resolve,reject);});}return original.call(this);};},call);
  try{
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
   await p.evaluate(async model=>{const {createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');model.settings.autoRefresh=false;model.accounts.push(createAccount({id:'empty',providerId:'provider',name:'Empty synthetic depot',type:'securities'},model));model.positions.push(createPosition({id:'empty-asset',providerId:'provider',accountId:'empty',name:'Synthetic <svg> ETF',isin:'IE00SYNTH001',kind:'etf',quantity:0,price:1},model));const s=new PortfolioStorage();await s.initialize();await s.save(model);s.close();},fixture({quantity:1}).model);
   await p.reload();await ready();const before=await read();ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   await open();await choose();await disclose('flatexNativeSimulation');assert.equal(await p.locator('#flatexSimulationMode').inputValue(),'');assert.ok(await p.locator('#flatexSimulationRun').isDisabled());await mode('append');assert.ok(await p.locator('#flatexSimulationRun').isDisabled());await bind();await simulate();assert.match(await p.locator('#flatexSimulationResult').innerText(),/Simulation gesperrt/);

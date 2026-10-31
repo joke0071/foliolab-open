@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -20,7 +21,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  try{
   await p.goto(base);await ready();const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);const before=await read();
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);const before=await read();
   ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   await open();await p.locator('#csvFile').setInputFiles(file(bitpandaCSV([{'Product ID':'<img src=x onerror=alert(1)>','Amount Asset':'0.000000000000000001','Fee asset':'USD',Fee:'2.5'},{'Transaction Type':'reward',omitTax:true},{'Transaction Type':'future','Tax Fiat':'-'}])));await preview();
   assert.ok(await p.locator('#saveDialog').isDisabled());assert.equal(await p.locator('#csvMap-date').count(),0);assert.equal(await p.locator('#csvReview .performance-details').count(),3);

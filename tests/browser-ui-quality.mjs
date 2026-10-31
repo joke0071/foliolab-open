@@ -1,3 +1,4 @@
+import {browserGateDeadline} from './browser-gate-deadline.mjs';
 // Each imported module owns an isolated browser and awaits its full acceptance
 // suite. Static async imports start those browsers together; keep every gate,
 // but finish one module before starting the next against the same live host.
@@ -21,11 +22,12 @@ for(const check of [
  './browser-flatex-native-projection.mjs',
  './browser-flatex-native-simulation-ui.mjs',
  './browser-flatex-native-commit.mjs'
-])await import(check);
+]){const finish=browserGateDeadline('ui-quality import '+check);try{await import(check);console.log('BROWSER_GATE_PASS '+check);}finally{finish();}}
 import {clickDisclosed} from './browser-disclosures.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
+const finishOwnSuite=browserGateDeadline('ui-quality primary suite',600000);process.once('exit',finishOwnSuite);
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',live=base.startsWith('https:'),proxy=live&&process.env.HTTPS_PROXY;
 const report={base,scope:'presentation only: actions/spacing/liquidity/history/income/coverage',engines:[]};mkdirSync('artifacts/gates',{recursive:true});
 for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
@@ -135,3 +137,5 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   report.engines.push({engine,status:'PASS',scans,textScale:'synthetic 150% computed-text stress,320x360; not physical Android',checks:['all five pages','archive visible without detail disclosure','44px actions,separator and focus clearance,no overlaps','liquidity below providers and closed','mobile labeled history records/desktop table','focused exact decimal disclosure','Escape/focus return','zero exact IndexedDB record mutations']});console.log(engine+': UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS');
  }finally{writeFileSync('artifacts/gates/ui-quality.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}
 }
+
+finishOwnSuite();

@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -20,7 +21,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  try{
   await p.goto(base);await ready();const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);
   // Ready registration alone may predate control of the current navigation.
   // Establish a controlled document before the baseline; retain the later strict offline gate.
   await p.reload();await ready();await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));

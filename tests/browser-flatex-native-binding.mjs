@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -26,7 +27,7 @@ for(const engine of engines){
  const select=async(i,account)=>{await p.locator('#flatexBindingAccount-'+i).selectOption(account);await p.waitForFunction(i=>!document.getElementById('flatexBindingAccount-'+i).disabled,i);};
  const confirm=async i=>{await p.locator('#flatexBindingConfirm-'+i).check();await p.waitForFunction(i=>document.getElementById('flatexBindingConfirm-'+i)?.checked&&!document.getElementById('flatexBindingConfirm-'+i).disabled,i);};
  try{
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
   await p.evaluate(async source=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{parseFlatexNativeCSV}=await import('/src/flatex-native.js'),{inspectNativeFlatexSourceIdentities,bookingOwnership}=await import('/src/import-identity.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'Flatex Synthetic <svg>'}),createProvider({id:'foreign',name:'Other'}));
