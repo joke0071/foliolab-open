@@ -1,3 +1,4 @@
+import {installHeaderStatus} from './header-status.js';
 import {blockedReasonsMarkup} from './blocked-reasons-ui.js';
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
 import {flatexNativeMarkup,reviewNativeFlatexBindings,flatexNativeSimulationMarkup} from './flatex-native-ui.js';
@@ -79,6 +80,7 @@ import {deletePosition,assertPositionDeletable,setPositionArchived} from './port
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
+let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
@@ -106,9 +108,12 @@ async function save(){
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
   await portfolioStore.save(model);
+  lastStorageError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
  }catch(error){
+  if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;
+  lastStorageError=error?.name==='QuotaExceededError'?'Browserspeicher voll. Letzte Änderung nicht gespeichert.':String(error?.message||error);
   if(!loadFailure){try{model=await portfolioStore.reload();}catch(recoveryError){loadFailure=recoveryError;}}
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
@@ -121,14 +126,15 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
-function recoveryControlAllowed(control){return control.matches('[data-page],.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
+function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  document.body.classList.toggle('portfolio-unavailable',unavailable);
  document.body.classList.toggle('portfolio-conflict',conflict);
- const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Portfolio lokal gespeichert';
+ const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Portfolio lokal gespeichert';
  $('localPortfolioStatus').textContent=status;
- $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Lokal gespeichert';
+ $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Lokal gespeichert';
+ headerStatus?.refresh();
  $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
   $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';
@@ -2458,6 +2464,12 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
  event.preventDefault();event.stopImmediatePropagation();
 },true);
 initNav();initEvents();installCredentialVisibility();
+headerStatus=installHeaderStatus({
+ checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
+ readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,indexedDB:portfolioStore.isIndexedDB}),
+ onStorageHelp:()=>{if(!loadFailure){go('more');$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
+ onDriveSettings:()=>{go('more');const panel=$('googleDriveBackupSetup');for(let parent=panel;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;panel.scrollIntoView({block:'start'});panel.querySelector('summary').focus();}
+});
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
 // Existing pre-cutover installations alone get a one-time, consented handover.

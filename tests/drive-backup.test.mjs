@@ -11,8 +11,8 @@ const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 
-function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false}={}){
- const values=new Map(),requests=[],written=[];
+function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false}={}){
+ const values=new Map(),requests=[],written=[],events=[];let oauthRequests=0;
  if(clientId)values.set('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId,retention:3,mode:'off'}));
  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
  const ids=['driveBackupStatus','driveConnect','driveSaveNow','driveRefreshList','driveRestore',
@@ -28,9 +28,9 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false}=
   onclick:null,onchange:null
  }]));
  const document={getElementById:id=>elements[id]||null,addEventListener(){},visibilityState:'visible'};
- const window={addEventListener(){},google:withGoogle?{accounts:{oauth2:{
+ const window={addEventListener(){},dispatchEvent:e=>events.push(e),google:withGoogle?{accounts:{oauth2:{
   initTokenClient(){return {callback:null,error_callback:null,requestAccessToken(){
-   this.callback?.({access_token:'ephemeral-test-token',expires_in:3600});
+   oauthRequests++;if(popupError)this.error_callback?.({type:'popup_closed'});else this.callback?.(oauthResponse??{access_token:'ephemeral-test-token',expires_in:3600});
   }}}}}}:null};
  const backend={
   hasPasswordVault:async()=>vault,
@@ -58,9 +58,9 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false}=
  function response(value){return {ok:true,status:200,json:async()=>value,text:async()=>JSON.stringify(value)}}
  runInNewContext(source,{window,document,google:window.google,localStorage:storage,fetch,Option:class{
   constructor(text,value){this.text=text;this.value=value}},
-  Date,Math,JSON,URL,URLSearchParams,Blob,Error,Number,setTimeout,clearTimeout,
+  Date,Math,JSON,URL,URLSearchParams,Blob,Error,Number,setTimeout,clearTimeout,CustomEvent:class{constructor(type){this.type=type}},
   confirm:()=>true},{filename:'drive-backup.js'});
- return {window,elements,storage,requests,written,backend};
+ return {window,elements,storage,requests,written,backend,events,get oauthRequests(){return oauthRequests}};
 }
 
 test('Drive remains voluntary and cannot upload without a configured password',async()=>{
@@ -152,3 +152,43 @@ test('compact Drive UI preserves all controls but hides help and advanced action
 });
 
 test('Drive connection offers a visible encrypted backup in manual mode, no autonomous-session promise',async()=>{const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true});await t.window.FolioDriveBackup.init(t.backend);await t.elements.driveConnect.onclick();assert.match(t.elements.driveBackupStatus.textContent,/Verbunden.*Jetzt sichern/);assert.equal(t.written.length,0);assert.equal(t.elements.driveSaveNow.disabled,false);await t.elements.driveSaveNow.onclick();assert.equal(t.written.length,1);assert.match(html,/Bei geschlossener App erfolgt keine Sicherung/);});
+
+
+test('header state and direct reconnect reuse one ephemeral OAuth session without duplicate prompts',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true});
+ await t.window.FolioDriveBackup.init(t.backend);
+ assert.equal(t.window.FolioDriveBackup.getStatus().connected,false);
+ const pending=t.window.FolioDriveBackup.connect();
+ assert.equal(t.window.FolioDriveBackup.getStatus().connecting,true);
+ await t.window.FolioDriveBackup.connect();await pending;
+ assert.equal(t.oauthRequests,1);
+ assert.equal(t.window.FolioDriveBackup.getStatus().connected,true);
+ assert.equal(t.window.FolioDriveBackup.getStatus().lastBackupAt,'','authorization never claims an upload');
+ assert.equal(t.written.length,0,'status/reconnect in manual mode never silently uploads');
+ assert.equal(JSON.stringify(t.window.FolioDriveBackup.getStatus()).includes('ephemeral-test-token'),false);
+ assert.ok(t.events.length>0);assert.ok(t.events.every(e=>e.type==='foliolab-drive-status'&&e.detail===undefined));
+ assert.equal(String(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).includes('ephemeral-test-token'),false);
+});
+test('reconnect immediately performs a due encrypted backup once; status reads never trigger another upload',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true});
+ t.storage.setItem('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId:'123456789-abc.apps.googleusercontent.com',mode:'start',retention:3}));
+ await t.window.FolioDriveBackup.init(t.backend);
+ assert.equal(t.window.FolioDriveBackup.getStatus().due,true);
+ await Promise.all([t.window.FolioDriveBackup.connect(),t.window.FolioDriveBackup.connect()]);
+ assert.equal(t.oauthRequests,1);assert.equal(t.written.length,1);
+ const state=t.window.FolioDriveBackup.getStatus();assert.equal(state.due,false);assert.ok(state.lastBackupAt);
+ for(let i=0;i<20;i++)t.window.FolioDriveBackup.getStatus();
+ await t.window.FolioDriveBackup.checkDue();assert.equal(t.written.length,1);
+ assert.equal(JSON.stringify(state).includes('ephemeral-test-token'),false);
+});
+
+test('cancelled OAuth popup exposes an error and never claims authorization or upload',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,popupError:true});
+ await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
+ const state=t.window.FolioDriveBackup.getStatus();assert.equal(state.connected,false);assert.equal(state.connecting,false);assert.equal(state.error,true);assert.match(state.message,/Anmeldefenster geschlossen/);assert.equal(t.written.length,0);
+});
+test('invalid OAuth expiry cannot be presented as an hour of valid authorization',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,oauthResponse:{access_token:'ephemeral-test-token',expires_in:0}});
+ await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
+ const state=t.window.FolioDriveBackup.getStatus();assert.equal(state.connected,false);assert.equal(state.error,true);assert.equal(state.lastBackupAt,'');assert.equal(t.written.length,0);assert.equal(t.requests.length,0);
+});

@@ -1739,3 +1739,18 @@
 @media(max-width:359px){
  #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,1fr)}
 }
+
+/* DRIVE-HEADER01 / UI-HEADER-STATUS02: separate local and remote state. */
+.header-status-actions{display:flex;align-items:center;gap:2px;flex:0 0 auto;margin-left:auto}
+.header-status-button{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:44px;width:44px;height:44px;padding:10px;border:0;border-radius:10px;background:transparent;color:#4d6756}
+.header-status-button:hover{background:#e9f2eb}
+.header-status-button>svg{width:21px;height:21px}
+.header-status-mark{position:absolute;right:1px;bottom:1px;min-width:12px;font-size:11px;line-height:12px;font-weight:700;background:#f7f9f6;border-radius:4px}
+.header-status-button[data-state=error],.header-status-button[data-state=conflict]{color:#90463e}
+.header-status-dialog{width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;padding:20px;border:1px solid #d5e1d7;border-radius:16px;color:#20372a}
+.header-status-dialog::backdrop{background:rgb(20 42 29 / .25)}
+.header-status-dialog .dialog-head h2{margin:0;font-size:20px}
+#headerStatusBody{white-space:pre-line;overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:720px){.desktop-status-actions{display:none}.mobile-header{gap:6px}.mobile-status-actions{margin-left:auto}}
+@media(min-width:721px){.mobile-status-actions{display:none}}
+@media(max-width:359px){.mobile-header{padding-inline:max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-right))}}

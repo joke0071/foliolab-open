@@ -1,0 +1,68 @@
+// All OAuth/Drive responses below are explicitly SYNTHETIC. Real Google consent is EXTERNAL.
+import assert from 'node:assert/strict';
+import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
+import {chromium,firefox,webkit} from 'playwright';
+const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',live=base.startsWith('https:'),proxy=live&&process.env.HTTPS_PROXY;
+const out='artifacts/gates/header-status';mkdirSync(out,{recursive:true});
+const report={scope:'DRIVE-HEADER01 / UI-HEADER-STATUS02',oauth:'SYNTHETIC ONLY; real Google/Android EXTERNAL',engines:[]};
+for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
+ const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
+ const ctx=await browser.newContext({ignoreHTTPSErrors:live,viewport:{width:390,height:560}});
+ await ctx.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
+ const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ const ready=()=>p.waitForFunction(()=>document.querySelector('[data-header-status=storage]')?.dataset.state==='saved');
+ const button=kind=>p.locator('[data-header-status='+kind+']:visible');
+ const openStorage=async()=>{await button('storage').click();await p.locator('#headerStatusDialog[open]').waitFor();};
+ const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
+ const scan=async()=>{assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);};
+ let uploads=0,postBody='';
+ try{
+  await p.goto(base);await ready();
+  await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{blankModel,createProvider}=await import('/src/model.js');const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'synthetic-header',name:'SYNTHETIC header provider'}));await s.save(m);s.close();});
+  await p.reload();await ready();const before=await record();
+  for(const [width,height] of [[320,560],[360,560],[390,560],[412,560],[430,560],[768,560],[1440,900],[740,360]]){
+   await p.setViewportSize({width,height});
+   const g=await p.locator('[data-header-status]:visible').evaluateAll(bs=>bs.map(b=>{const r=b.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height,label:b.getAttribute('aria-label')};}));
+   assert.equal(g.length,2);assert.ok(g.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=width&&r.top>=0&&r.bottom<=height&&r.label));assert.ok(g[0].right<=g[1].left);
+   if(width<=720){assert.ok(await p.locator('.mobile-header').evaluate(e=>e.querySelector('.logo').getBoundingClientRect().right<=e.querySelector('.header-status-actions').getBoundingClientRect().left));assert.equal(await p.locator('#mobilePortfolioStatus').evaluate(e=>e.getBoundingClientRect().height),1,'no persistent mobile text line');}
+   await openStorage();assert.match(await p.locator('#headerStatusBody').innerText(),/IndexedDB gespeichert/);await scan();await p.keyboard.press('Escape');assert.equal(await button('storage').evaluate(e=>e===document.activeElement),true,'Escape restores the invoking status button');
+   await p.screenshot({path:out+'/'+engine+'-'+width+'.png'});
+   assert.deepEqual(await record(),before,'status reads never write the portfolio');
+  }
+  await p.setViewportSize({width:320,height:560});
+  await p.evaluate(()=>{for(const e of document.querySelectorAll('.mobile-header .logo *')){const s=getComputedStyle(e);e.style.fontSize=(parseFloat(s.fontSize)*1.25)+'px';}});
+  assert.ok(await p.locator('.mobile-header').evaluate(e=>e.querySelector('.logo').getBoundingClientRect().right<=e.querySelector('.header-status-actions').getBoundingClientRect().left),'125% logo text remains separate from both touch targets');
+  await p.evaluate(()=>document.querySelectorAll('.mobile-header .logo *').forEach(e=>e.style.removeProperty('font-size')));
+  await button('drive').click();assert.equal(await p.locator('#googleDriveBackupSetup').evaluate(e=>e.open),true);assert.equal(await p.locator('#googleDriveBackupSetup>summary').evaluate(e=>e===document.activeElement),true);
+  assert.deepEqual(await record(),before,'opening Drive settings does not change financial data');
+  // Real local encryption and real application backend; only Google transport is stubbed.
+  await p.evaluate(async()=>{const {configureBackupPassword}=await import('/src/backup-vault.js');await configureBackupPassword('Synthetic header backup 2026!','Synthetic header backup 2026!');localStorage.setItem('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId:'123456789-synthetic.apps.googleusercontent.com',mode:'start',retention:3}));});
+  await ctx.addInitScript(()=>{window.__syntheticOAuthRequests=0;window.google={accounts:{oauth2:{initTokenClient(){return {requestAccessToken(){window.__syntheticOAuthRequests++;this.callback({access_token:'SYNTHETIC-EPHEMERAL-HEADER-TOKEN',expires_in:3600});}};}}}};});
+  await ctx.route('https://www.googleapis.com/**',async route=>{
+   const req=route.request(),url=req.url();let data={files:[]};
+   if(url.includes('upload/drive/v3/files')){uploads++;postBody=req.postData()||'';data={id:'syntheticBackup123456'};}
+   else if(req.method()==='POST')data={id:'syntheticFolder123456',name:'FolioLab Backups'};
+   else if(new URL(url).searchParams.get('q')?.includes('in parents'))data={files:uploads?[{id:'syntheticBackup123456',createdTime:'2026-10-31T08:00:00Z',appProperties:{foliolabBackup:'foliolab-open-v3'}}]:[]};
+   await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(data)});
+  });
+  await p.reload();await ready();assert.equal(await button('drive').getAttribute('data-state'),'auth');
+  await button('drive').click();await p.waitForFunction(()=>window.FolioDriveBackup.getStatus().lastBackupAt&&!window.FolioDriveBackup.getStatus().connecting);
+  assert.equal(await p.evaluate(()=>window.__syntheticOAuthRequests),1);assert.equal(uploads,1);assert.match(postBody,/foliolab-open-encrypted-v2/);assert.ok(!postBody.includes('SYNTHETIC header provider'),'Drive receives encrypted data');
+  assert.deepEqual(await record(),before,'backup cannot mutate portfolio records or revision');
+  await button('drive').click();assert.match(await p.locator('#headerStatusBody').innerText(),/Letzte erfolgreiche Sicherung/);await scan();assert.equal(uploads,1,'status click is not an upload');await p.keyboard.press('Escape');
+  assert.equal(await p.evaluate(()=>document.documentElement.outerHTML.includes('SYNTHETIC-EPHEMERAL-HEADER-TOKEN')),false);assert.equal(await p.evaluate(()=>JSON.stringify({...localStorage}).includes('SYNTHETIC-EPHEMERAL-HEADER-TOKEN')),false);
+  await ctx.setOffline(true);await p.waitForFunction(()=>document.querySelector('[data-header-status=drive]')?.dataset.state==='offline');assert.equal(await button('drive').getAttribute('data-state'),'offline');await openStorage();assert.match(await p.locator('#headerStatusBody').innerText(),/IndexedDB gespeichert/);await p.keyboard.press('Escape');await ctx.setOffline(false);
+  assert.equal(uploads,1,'foreground/online does not repeat completed start backup');
+  // Actual failed IndexedDB write: no successful local status after rollback.
+  await p.locator('#addProvider').click();await p.locator('#editorForm [name=name]').fill('SYNTHETIC failed write');
+  await p.evaluate(()=>{window.__headerPut=IDBObjectStore.prototype.put;window.__headerStates=[];new MutationObserver(()=>window.__headerStates.push(document.querySelector('[data-header-status=storage]').dataset.state)).observe(document.querySelector('[data-header-status=storage]'),{attributes:true,attributeFilter:['data-state']});IDBObjectStore.prototype.put=function(...args){if(this.name==='records')throw new DOMException('SYNTHETIC quota','QuotaExceededError');return window.__headerPut.apply(this,args);};});
+  await p.locator('#saveDialog').click();await p.waitForFunction(()=>document.querySelector('[data-header-status=storage]').dataset.state==='error');
+  assert.match(await button('storage').getAttribute('aria-label'),/nicht gespeichert/);assert.deepEqual(await record(),before);assert.ok(await p.evaluate(()=>window.__headerStates.includes('saving')&&!window.__headerStates.includes('saved')),'pending and failure never announce a completed save');
+  await p.evaluate(()=>{IDBObjectStore.prototype.put=window.__headerPut;});p.once('dialog',d=>d.accept());await p.keyboard.press('Escape');await p.reload();await ready();
+  // A peer commits a new revision: local conflict must not be confused with Drive auth.
+  const peer=await ctx.newPage();await peer.goto(base);await peer.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+  await peer.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.providers[0].name='SYNTHETIC peer revision';await s.save(m);s.close();});
+  await openStorage();await p.waitForFunction(()=>document.querySelector('[data-header-status=storage]')?.dataset.state==='conflict');assert.match(await p.locator('#headerStatusBody').innerText(),/Datenkonflikt/);assert.equal(await p.locator('#headerStatusActions').getByText('Neu laden',{exact:true}).isVisible(),true);await p.keyboard.press('Escape');await peer.close();
+  assert.deepEqual(errors,[]);report.engines.push({engine,result:'PASS',widths:[320,360,390,412,430,768,1440],checks:['44x44/separate logo/no mobile status line','native modal Axe/Escape/focus','125% text','setup navigation','synthetic direct OAuth + real encryption + one due upload','no token in DOM/storage','exact portfolio/revision unchanged','failed IndexedDB put pending/error without false success','offline local versus remote status','real peer CAS conflict']});
+ }finally{writeFileSync(out+'/report.json',JSON.stringify(report,null,2));await ctx.close();await browser.close();}
+}
