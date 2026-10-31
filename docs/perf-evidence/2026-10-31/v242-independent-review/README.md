@@ -1,0 +1,7 @@
+# Independent diagnostic confirmation
+
+Synthetic 19-position/10,000-booking/1,825-reference fixture, Chromium/Playwright 1.56.1, 390x844, CPU4x; five warm navigations and a separate diagnostic profile per variant. No other local browser suite ran during each measurement. This is an additional diagnostic series across sequential checkouts, not an immediately paired statistical experiment or physical Android acceptance. All four reports and both exact scripts are preserved; no best-of-sample selection.
+
+Observed medians: v240 900ms; display-only predecessor 1051ms and 1002ms; final v242 633ms. The primary controlled bundle comparison remains in booking-row-v242; do not add percentages or treat these series as an SLA. Full canonical records/settings/revisions remained unchanged within every run. Candidate source hashes match final PR250 HEAD2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75.
+
+For reproduction, unpack ../render-v238/fixture.json.gz (resolved from the parent 2026-10-31 directory) to /tmp/foliolab-perf-fixture.json; SHA256 1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef. Run each script from the matching repository checkout with Playwright1.56.1 installed and an HTTP server on4183. Set PROBE_OUTPUT to a separate output directory and PROBE_SHA to the checkout SHA. The final script records one additional source hash before browser launch; the timed navigation logic is unchanged. Reports contain only synthetic data and local source URLs.
