@@ -1763,3 +1763,22 @@
 .header-status-dialog summary::after{content:'';margin-left:auto;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
 .header-status-dialog details[open]>summary::after{transform:rotate(225deg)}
 .header-status-dialog button{min-width:44px;min-height:44px}
+
+/* UI-POS02 / UI-BOOK03: independent details and edit targets on one quiet row. */
+.detail-action-row{position:relative;min-width:0}
+.detail-action-row>details{margin:0}
+.detail-action-row>details>summary{width:calc(100% - 100px);min-height:44px;box-sizing:border-box;line-height:1.4}
+.detail-action-row>.detail-edit{position:absolute;right:0;top:0;min-width:88px;min-height:44px;padding:8px 4px;box-sizing:border-box}
+.detail-action-row>.reference-protection{display:block;font-size:11px;margin:0 0 6px}
+#positionList .position-entry>.position-card-tools:empty{display:none}
+#positionList .position-entry>.holding-row{grid-column:1/-1}
+#positionList .position-detail-actions{margin:0 12px 6px 52px}
+#bookingList .booking-management-row{grid-template-columns:minmax(0,1fr)}
+#bookingList .booking-management-row>.booking-compact{grid-column:1/-1;min-width:0}
+#bookingList .booking-management-row>.booking-row-tools{grid-column:1/-1;grid-row:1}
+#bookingList .booking-management-row:has(.selection-check)>.booking-compact{grid-row:2}
+#bookingList .booking-detail-actions>details{margin-top:2px}
+#bookingList .booking-detail-actions .holding-facts{margin-top:8px}
+.booking-delete-action{margin-top:16px;padding-top:12px;border-top:1px solid var(--border,#dce7df)}
+.booking-delete-action>button{min-width:44px;min-height:44px}
+@media(max-width:720px){#positionList .position-detail-actions{margin-left:10px}}

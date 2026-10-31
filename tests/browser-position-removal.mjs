@@ -45,14 +45,16 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   console.log(engine+': UI fixture active worker/controller before quota/abort '+JSON.stringify(await page.evaluate(async()=>({controller:navigator.serviceWorker.controller?.scriptURL,active:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys()}))));
   await page.locator('#sidebarNav [data-page=positions]').click();
   const before=await record();assert.equal(await page.locator('[data-position-select]').count(),0);
-  for(const width of [320,390,430,768,1440]){
+  for(const width of [320,360,390,412,430,768,1440]){
    await page.setViewportSize({width,height:900});
    const trigger=page.locator('#positionListHead [data-action="select-positions"]');
    await trigger.scrollIntoViewIfNeeded();assert.equal(await trigger.innerText(),'Verwalten');
    assert.equal(await page.locator('#positionSelectionTools button,#positionSelectionTools input').count(),0);
    assert.equal(await page.locator('[data-position-select]').count(),0);
    assert.ok(await trigger.evaluate(b=>{const r=b.getBoundingClientRect(),h=b.parentElement.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=h.left&&r.right<=h.right+1;}));
-   assert.equal(await page.locator('.position-entry').first().locator('.position-row-actions button').count(),1);assert.equal(await page.locator('.position-entry').first().locator('.position-row-actions button').innerText(),'Bearbeiten');assert.equal(await page.locator('.position-row-actions svg').count(),0);
+   const card=page.locator('.position-entry').first(),edit=card.locator('.detail-edit');assert.equal(await edit.innerText(),'Bearbeiten');
+   const bounds=await card.evaluate(e=>{const s=e.querySelector('.holding-expand summary').getBoundingClientRect(),b=e.querySelector('.detail-edit').getBoundingClientRect();return {separate:s.right<=b.left,sameRow:Math.abs(s.top-b.top)<=2,summaryHeight:s.height,buttonHeight:b.height,buttonWidth:b.width};});assert.ok(bounds.separate&&bounds.sameRow&&bounds.summaryHeight>=44&&bounds.buttonHeight>=44&&bounds.buttonWidth>=44,'independent details/edit targets: '+JSON.stringify(bounds));
+   assert.equal(await card.locator('.holding-expand').evaluate(e=>e.open),false);await edit.click();assert.equal(await card.locator('.holding-expand').evaluate(e=>e.open),false,'editing does not expand details');assert.equal(await page.locator('#deletePosition').innerText(),'Position löschen');await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.ok(await edit.evaluate(e=>e===document.activeElement));assert.deepEqual(await record(),before,'open/cancel editor is read-only');
    await axe();mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/positions-'+engine+'-'+width+'.png'});
    await trigger.focus();await page.keyboard.press('Enter');
    assert.equal(await page.locator('#positionListHead button').innerText(),'Fertig');assert.equal(await page.locator('#positionListHead button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('.position-row-actions button').count(),0);assert.ok(await page.locator('#positionSelectFiltered').isVisible());
