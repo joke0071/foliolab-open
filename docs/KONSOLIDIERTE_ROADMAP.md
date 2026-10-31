@@ -1,3 +1,23 @@
+## VERBINDLICHER AKTUELLER ROADMAP-OVERRIDE – Nutzerentscheidung 31.10.2026
+
+**Diese Bestimmung ist jünger und hat Vorrang vor allen als historisch erhaltenen Release-/Prioritätsangaben darunter.**
+
+| Projekt | Neuer verbindlicher Status | Nächster Schritt |
+| --- | --- | --- |
+| **FLH05 – universeller CSV-Importkern / #174** | **ACTIVE / P1B (Priorisierungsvorschlag)** | Bestehende native/generische FLH03-/CSV-/Journal-/Reconciliation-Bausteine prüfen, kleinste konfliktfreie Pipeline-/Mapping-/Idempotenz-Etappe implementieren und vollständig abnehmen. Keine zweite Engine; Originalbelege pro Anbieter als konkrete BLOCKED/VERIFY-Evidenz behandeln. |
+| **FLH-PROJ01 – Zukunftsprojektion / #252** | **ACTIVE / P2 (Priorisierungsvorschlag)** | Optionale transparente, ausschließlich hypothetische Rendite-/Spar-/Entnahme-/Inflationsszenarien in separater Präsentationsschicht planen und etappenweise implementieren. Keine Projektion in historische, kanonische oder berechnete Ist-/XIRR-/TWR-Werte einspeisen. |
+| **HIST-VIS01** | **OPEN** | Belegte Kurse/Buchungen/FX zunächst maximal nutzen; danach optional klar markierte rein grafische Best-Guess-Intervalle mit Lücken/Cashflow-Abgrenzung. |
+| **Historische UI (Referenzen, XIRR/TWR, Stichtage, Ladezustand, Diagrammmodi)** | **PARTIAL / OPEN** | Geschlossene Referenz-/Renditeakkordeons erhalten, verbleibende Prominenz prüfen; redundantes `Erfasste Stichtage`-Statuslabel reduzieren (Quelleninfo behalten); Ladeendzustände vervollständigen; Auto/Linie/Punkte als offene Modusentscheidung prüfen. Adaptive Zeitraumleiste bereits vorhanden. |
+| **Aggregierte unbekannte Bewertungen** | **P1 OPEN** | In Dashboard-, Kategorie-, Anbieter- und Kontosummen bekannte Teilsumme und unbekannte Bewertungsanteile deutlich unterscheiden. Einzelpositionen zeigen bereits `Nicht bewertet`; nur fachlich korrekte UI, keine kanonischen Finanzformeln/Kurse/Bestände ändern. |
+| **PERF01 Android/Start** | **ACTIVE / PARTIAL** | Laufenden gemessenen Kalender-/Wallet-Hotspot-Schritt auf `feature/perf-calendar-projection-lookup` nicht unterbrechen; weitere tatsächlich gemessene Android-PWA-/Long-Task-Engpässe. |
+| **FLH03 / FLH04 / DELETE-MASTER28** | **ACTIVE / OPEN beziehungsweise PARTIAL** | Ausführbare fachlich belegte Import-/Wallet-/E2EE-Sync-/Sicherheitsrücknahmeschritte unter ihren vorhandenen Finanz-/Datengates; keine Doppelimplementierung. |
+
+**Aufgehoben:** Frühere pauschale **FLH05/FLH-PROJ01-PARKED**-Markierungen, die alte **0-€-Work-Credit-/Zusatzbudgetbegrenzung** und die **Wochenend-/Praxistest-Releaseblockade** sind als SUPERSEDED zu behandeln. Keine künstliche Creditgrenze für den Masterauftrag festlegen; tatsächliche verfügbare Nutzung nicht als unbegrenzt behaupten. Risikogerechte autonome Routine-Releases mit unveränderten Pflichtgates. Weitere Details im [Wochenaudit](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6547355364) und in `docs/WORK_RESTPAKETE_CHECKPOINT.md` / `docs/MASTER_PRIORITAETEN_RESTAUDIT_2026-10-30.md`.
+
+**Bekannte freigegebene Basis bei dieser Korrektur:** `main=621abf1556b0be87d485fd43943cf521dfc965fb`, SW245 vollständig LIVE_ACCEPTED. Der nächste PERF01-Schnitt befindet sich unabhängig davon in Arbeit und ist **nicht** als veröffentlicht zu deklarieren. Diese Änderung ist rein dokumentarisch und löst keinen Produktcode-/CI-/Deploymentlauf aus. Ältere Abschnitte unten bleiben aus Gründen der Nachvollziehbarkeit erhalten; widersprechende Status- oder Budgetaussagen sind historisch.
+
+---
+
 ## v245 LIVE_ACCEPTED – PR #251 abgeschlossen, nächste gemessene P1-Arbeit · 31.10.2026
 
 Owner: aktueller Work-Chat /root. Produktion https://foliolab.unperfekt.at/ bestätigt. Main `621abf1556b0be87d485fd43943cf521dfc965fb`; SW `foliolab-open-v245`; PR #251 HEAD `5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67`; identischer geprüfter Tree `f067f8f11a698dee953053dcc55a63260fc5faa1`.
@@ -8,7 +28,7 @@ Owner: aktueller Work-Chat /root. Produktion https://foliolab.unperfekt.at/ best
 
 **Aktuelle sichere Basis:** v245 / Main oben / Artefakt 13051661700. Historisches v242 bleibt nur Code-/Backupreferenz: v242 lehnt neue Audit-v2-Portfolios nachweislich ab und darf aktuelle Daten nicht still herabstufen. Nach neuer Rücknahme v245 oder lesekompatible Korrekturversion verwenden; Wiederherstellung mit geprüfter passender Sicherung. Test gegen den tatsächlichen v242-Reader gesichert. Keine Migration und kein Datenverlust.
 
-**Offener Rest:** DELETE-MASTER28 bleibt PARTIAL: Broker-/native-/Walletimporte, Wertpapiergeschäfte, gekoppelte Kosten, Transfers und geänderte/mehrdeutige Quellen sind hier nicht freigegeben. Importierte Bearbeitung bleibt gesperrt. Androidhardware, natives Safari, TalkBack und echtes OAuth weiter extern offen. FLH03 und FLH04 bleiben aktiv; FLH05 und Zukunftsprojektion PARKED.
+**Offener Rest:** DELETE-MASTER28 bleibt PARTIAL: Broker-/native-/Walletimporte, Wertpapiergeschäfte, gekoppelte Kosten, Transfers und geänderte/mehrdeutige Quellen sind hier nicht freigegeben. Importierte Bearbeitung bleibt gesperrt. Androidhardware, natives Safari, TalkBack und echtes OAuth weiter extern offen. FLH03 und FLH04 bleiben aktiv; FLH05 #174 und Zukunftsprojektion #252 inzwischen ACTIVE (siehe neuen bindenden Roadmap-Override oben).
 
 **Nächste P1-Arbeit / PERF01:** aktuelle unprofilierte v245-Basis mit 19 Positionen, 10000 Buchungen/Journalen, 1825 Referenzen (10,58MB), 390px, CPU4x, drei Läufen: Median Kaltstart 4389ms, Warmstart 1747ms; Navigation Positionen 287ms, Buchungen 683ms, Verlauf 650ms, Übersicht 566ms, Mehr 201ms. Längster Startblock ca. 3,7s. Exakter gespeicherter Datensatz in allen Läufen unverändert. Separates CPU-Profil zeigt Journal-/Datumsvalidierung und historische Aufbereitung als konkrete Hotspots. Keine Android-Hardwareabnahme und kein neuer Geschwindigkeitsgewinn behauptet; Profilzeiten nicht mit unprofilierten Laufzeiten vergleichen. Rohdaten und Skripte unter docs/perf-evidence/2026-10-31/v245-current-baseline/. Nächster ausführbarer Schritt: aktuellen Kollisionsschutz/Issue #177 prüfen und eine eng begrenzte, semantisch identische Optimierung der wiederholten reinen Datumsprüfung messen; sämtliche Journal-, Finanz- und Persistenzvalidierungen beibehalten.
 
