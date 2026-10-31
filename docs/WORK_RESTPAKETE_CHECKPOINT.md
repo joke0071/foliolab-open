@@ -1,3 +1,13 @@
+## PR #251 – finaler P1A-HEAD und unabhängiger Gegencheck · IN_PROGRESS
+
+Owner: aktueller Work-Chat /root. HEAD `5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67`, Branch `feature/proven-import-cash-removal`, SW-Kandidat v245. v243/v244 waren ausschließlich ungeprüfte PR-Zwischenstände und wurden nicht veröffentlicht. Produktion weiterhin v242 LIVE_ACCEPTED.
+
+1028/1028 lokale Tests und Syntax erfolgreich. Unabhängiger deterministischer Gegencheck: 360 Rücknahmen über alle sechs Geldtypen mit jeweils 24 nachfolgenden unabhängigen Geldereignissen und separater BigInt-Summenreferenz; außerdem Journal, Restore und unveränderte Vorschau geprüft. Kleinste Menge 0.000000000000000001. Evidenz und ausführbares Prüfskript unter docs/release-evidence/v245-reversal-oracle.*.
+
+Die letzte Korrektur erhält eigenständige neue externe Referenzen auch am selben Datum. Identische gelöschte Referenzen und unklare Überschneidungen ohne externe Referenz bleiben für automatische Übernahme gesperrt. Kein Identitätsbeweis durch Datum/Betrag. Finaler vollständiger CI-Lauf: https://github.com/joke0071/foliolab-open/actions/runs/41223059875 (laufend), Wallet-Lauf 41223059689. Frühere CI-Läufe sind überholt, keine manuelle Umgehung. Vollständiger lokaler Chromium-Buchungsvertrag inklusive Offline/Quota/Abbruch/CAS/verschlüsseltem Restore/Undo/Axe erfolgreich; neue Vorschau visuell bei 320/360/390/412/430/1440px geprüft. Lokale Firefox/WebKit-Abnahme wegen Umgebungsabhängigkeiten nicht behauptet; Pflichtabnahme erfolgt in CI.
+
+Nächster Schritt: exakten finalen CI-HEAD abnehmen, nur bei vollständigem Erfolg mergen/deployen; tatsächliche Produktion und Artefakte überprüfen, dann LIVE_ACCEPTED und Roadmap aktualisieren. DELETE-MASTER28 bleibt PARTIAL. Keine zweite PR eröffnen.
+
 ## P1A importierte EUR-Geldbuchungen – IN_PROGRESS · 31.10.2026
 
 Owner: aktueller Work-Chat /root. Kollisionsschutz: ausschließlich PR #251 auf `feature/proven-import-cash-removal` fortführen; keinen parallelen Implementierungsstrang beginnen.

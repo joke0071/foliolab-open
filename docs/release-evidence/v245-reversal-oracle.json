@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "cases": 360,
+  "types": [
+    "deposit",
+    "withdraw",
+    "dividend",
+    "interest",
+    "fee",
+    "tax"
+  ],
+  "subsequentEventsPerCase": 24,
+  "seed": 20261031,
+  "head": "5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67",
+  "oracle": "Independent signed BigInt sum excluding removed source; exact totals, holdings, surviving event count, ledger, backup/restore and preview immutability",
+  "tinyQuantity": "0.000000000000000001",
+  "hardwareAcceptance": false
+}
