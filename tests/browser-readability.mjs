@@ -26,6 +26,7 @@ for(const engine of (process.env.READABILITY_ENGINES||process.env.BOOKING_MANAGE
     if(tab==='dashboard'){
      const fullAmountVisible=()=>page.locator('#totalValue').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const hero=el.closest('.hero').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=hero.left&&r.right<=hero.right&&r.top>=hero.top&&r.bottom<=hero.bottom);});
      assert.ok(await fullAmountVisible(),engine+' '+width+' complete hero amount is visible, including hidden-overflow ancestors');
+     assert.ok(await page.locator('#summaryStats .stat-value').evaluateAll(nodes=>nodes.every(el=>{const range=document.createRange();range.selectNodeContents(el);const card=el.closest('.stat').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=card.left&&r.right<=card.right&&r.top>=card.top&&r.bottom<=card.bottom);})),engine+' '+width+' complete category amounts remain within their tiles');
      if(width===320||width===390){
       await page.locator('#totalValue').evaluate(el=>{el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*1.25)+'px';});
       assert.ok(await fullAmountVisible(),engine+' '+width+' hero amount remains visible with 125 percent text');
