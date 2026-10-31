@@ -1,3 +1,11 @@
+## v250 – DEPLOYED / LIVE_ACCEPTANCE_PENDING
+
+Main **`0b804f09ff83324898e9f86a021fe1831c71e1d2`**, exakter geprüfter Tree `daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`, SW `foliolab-open-v250`. Mainlauf **[41247930145](https://github.com/joke0071/foliolab-open/actions/runs/41247930145)**: **1042/1042 Tests**, keine Fehler/Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Shards SUCCESS. Deploymentjob **124678238981 SUCCESS**, erzeugt und publiziert exakt denselben Main; nachgelagerter Homepage-/SW-Check SUCCESS. Statisches Artefakt **13060356885**, SHA256 **`1d4c9e3a9945ed96710fe6a5224e2442dd04fb462bc34ac06684837283961b03`** stimmt exakt zwischen Uploadlog und Artefakt-API überein.
+
+**Livejob 124678337448 IN_PROGRESS** gegen `https://foliolab.unperfekt.at/`: tatsächliche HTTPS-Bytes, Kern-/IDB-/Offline-/Backupabläufe und neue Recovery-Größen-/Unicode-/Nichtmutationssuite in Chromium, anschließend Firefox/WebKit. **Noch kein LIVE_ACCEPTED.** Keine zusätzliche unabhängige lokale produktive WebKit-/Android-/Safari-/OAuth-/TalkBack-Abnahme behauptet. V249 bleibt letzte bestätigte Rückfallbasis. #254 bleibt PARTIAL; kein zweiter Implementierungsstrang während Releaseabschluss. Nach tatsächlichem Live-Erfolg Belege/Produktionsstatus abschließen, dann #255 sequenziell.
+
+---
+
 ## v250 – MERGED · Main-/Produktionslauf IN_PROGRESS
 
 [PR #260](https://github.com/joke0071/foliolab-open/pull/260) kontrolliert gemergt. Main **`0b804f09ff83324898e9f86a021fe1831c71e1d2`**, Tree **`daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`**, exakt gleich geprüftem Kandidaten HEAD `f630beee13c330511742fbcef01e9037a4554604` und synthetischem Merge `f20950b840f853cc5c3a05ff59f6ee0bd78542c6` (Git-/API-Treevergleich bestätigt). **Volle PR-CI 41246798523 SUCCESS, Wallet 41246798616 SUCCESS, 1042/1042 Tests/0 Fehler/0 Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Shards PASS.** Neue Recovery-Suite tatsächlich in allen drei Engines bestanden. Reviewkommentare/Reviews leer; Main unmittelbar vor Merge unverändert, keine zweite neue Implementierung. Historischer Checkpoint-Branch nicht integriert.
