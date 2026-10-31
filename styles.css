@@ -1852,3 +1852,5 @@
 #dashboardPage .hero-quality-summary p{font-size:13px;line-height:1.4;margin:0 0 10px}
 #dashboardPage .allocation-note{color:#4d6756;font-size:12px;line-height:1.4}
 #dashboardPage .stat-label{hyphens:auto}
+
+@media(max-width:360px){#dashboardPage .stat-label{font-size:11px}}

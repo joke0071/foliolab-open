@@ -40,7 +40,7 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
   '<span class="alloc-legend-copy"><strong>'+esc(item.name)+'</strong><small>'+esc(money(item.value))+'</small></span></span>'+
   '<b>'+esc(formatAllocationShare(item.percent))+'</b></button>').join('');
  const explanatory=liabilities>0?'<p class="allocation-note">Anteile der positiven Anlagen. Verbindlichkeiten: '+esc(money(-liabilities))+' (vom Netto abgezogen).</p>':'';
- const rest= !slices.length?'<div class="allocation-empty">Keine positiven Anlagen vorhanden.</div>':rows+explanatory;
+ const rest= !slices.length?'<div class="allocation-empty">'+(valuation?.missing?'Keine bekannten positiven Werte.':'Keine positiven Anlagen vorhanden.')+'</div>':rows+explanatory;
  const value=chosen?money(chosen.value):(valuation?.value??money(netTotal));
  const label=chosen?chosen.name:'Portfolio';
  const share=chosen?formatAllocationShare(chosen.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):liabilities>0?'Nettovermögen':'Gesamtwert';
@@ -94,6 +94,6 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
    if(segments.includes(control)&&(e.key==='Enter'||e.key===' ')){e.preventDefault();pin(index);}
   });
  }
- center.addEventListener('click',()=>{pinned=-1;display(-1);});
+ center.addEventListener('click',()=>{pinned=-1;display(-1);center.focus({preventScroll:true});});
  display(pinned);
 }
