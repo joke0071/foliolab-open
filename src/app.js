@@ -248,7 +248,7 @@ function renderReferences(){
  if(referenceSelecting){
   const summary=referenceSelectionSummary(model,selectedReferenceIds,referenceMatchingIds),coverage=selectionCoverage(selectedReferenceIds,referenceVisibleIds,referenceMatchingIds),states=new Set(selectedReferenceIds.map(id=>archived.has(id))),mixed=states.size>1,blocked=!bookingWritable()||!summary.currentCount||summary.requiresRefresh||mixed,allArchived=states.size===1&&states.has(true);
   const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-reference-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
-  tools.innerHTML='<div class="settings-actions">'+selectionMaster('referenceSelectVisible',coverage,!referenceVisibleIds.length)+button('archive',allArchived?'Wiederherstellen':'Archivieren',blocked)+button('remove','Löschen',!bookingWritable()||!selectedReferenceIds.length||summary.requiresRefresh||selectedReferenceIds.some(id=>permissionById.get(id)?.deleteReason),'selection-danger')+button('clear','Auswahl aufheben',!selectedReferenceIds.length)+'</div>'+blockedReasonsMarkup(selectedReferenceIds.map(id=>({id,label:shotById.has(id)?dateLabel(shotById.get(id).date):id,reasons:[permissionById.has(id)?permissionById.get(id).deleteReason:'Stichtag nicht mehr vorhanden. Auswahl aufheben und neu prüfen.']})),{id:'referenceDeleteReason',esc,hint:!blocked?'Archivieren ist möglich.':''})+(mixed?'<p class="small-help">Aktive und archivierte Werte gemeinsam ausgewählt. Bitte eine einheitliche Ansicht wählen; es wird nichts teilweise geändert.</p>':'');
+  tools.innerHTML='<div class="settings-actions">'+selectionMaster('referenceSelectVisible',coverage,!referenceVisibleIds.length)+button('archive',allArchived?'Wiederherstellen':'Archivieren',blocked)+button('remove','Löschen',!bookingWritable()||!selectedReferenceIds.length||summary.requiresRefresh||selectedReferenceIds.some(id=>permissionById.get(id)?.deleteReason),'selection-danger')+button('clear','Auswahl aufheben',!selectedReferenceIds.length)+'</div>'+blockedReasonsMarkup(selectedReferenceIds.map(id=>({id,label:shotById.has(id)?dateLabel(shotById.get(id).date):id,reasons:[permissionById.has(id)?permissionById.get(id).deleteReason:'Stichtag nicht mehr vorhanden. Auswahl aufheben und neu prüfen.']})),{id:'referenceDeleteReason',esc,hint:!blocked?'Archivieren ist möglich.':''})+(mixed?'<p class="small-help">Aktive und archivierte Stichtage gemeinsam ausgewählt. Auswahl aufheben und nur aktive oder nur archivierte Stichtage auswählen.</p>':'');
   const check=$('referenceSelectVisible');check.checked=coverage.checked;check.indeterminate=coverage.partial;if($('referenceDeleteReason'))tools.querySelector('[data-reference-manage="remove"]').setAttribute('aria-describedby','referenceDeleteReasonSummary');
   status.textContent=summary.selectedCount+' ausgewählt · '+rows.length+' gefiltert · '+summary.hiddenCount+' ausgeblendet · '+selectedReferenceIds.filter(id=>archived.has(id)).length+' archiviert · '+selectedReferenceIds.filter(id=>referenceVisibleIds.includes(id)).length+' auf aktueller Seite'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte Auswahl aufheben und neu prüfen.':'');
  }else{tools.innerHTML='';status.textContent=archived.size?archived.size+' archivierte Referenzwerte sind über „Ansicht“ erreichbar. Finanzwerte bleiben enthalten.':'';}
@@ -1916,7 +1916,8 @@ function openSnapshot(s=null){
   field('Stichtag','date',s?.date||new Date().toISOString().slice(0,10),'date','required max="'+new Date().toISOString().slice(0,10)+'"'+(locked?' readonly':''))+
   field(editing?'Gespeicherter Gesamtwert in EUR':'Historischer Gesamtwert in EUR (bei früherem Datum erforderlich)','manualTotalEUR',total,'text','inputmode="decimal"'+(editing?' required':'')+(locked?' readonly':'')+' placeholder="z. B. 12345,67"')+
   field('Notiz (optional)','note',s?.note||'','text','maxlength="180"')+
-  (locked?'<p class="small-help" id="snapshotLocked">Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.</p>':''),
+  (locked?'<p class="small-help" id="snapshotLocked">Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.</p>':'')+
+  (editing?'<div class="booking-delete-action"><button type="button" id="deleteSnapshot" class="btn outline selection-danger" '+(permission.deleteReason?'disabled aria-describedby="referenceEditorDeleteReason"':'')+'>Stichtag löschen</button>'+(permission.deleteReason?'<p class="small-help" id="referenceEditorDeleteReason">'+esc(permission.deleteReason)+'</p>':'')+'</div>':''),
   async v=>{
    assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
    if(editing){
@@ -1927,6 +1928,11 @@ function openSnapshot(s=null){
    }else model=prepareReferenceAdd(model,{date:v.date,note:v.note,manualTotalEUR:v.manualTotalEUR},{expectedModel,confirmed:true});
    await save();renderHistory();notify(editing?'Referenzwert aktualisiert.':'Stichtag gespeichert.');
   });
+ if(editing)$('deleteSnapshot').addEventListener('click',()=>{
+  if(editor?.dirty&&!confirm('Nicht gespeicherte Änderungen verwerfen und die Löschvorschau öffnen?'))return;
+  const opener=dialogOpener;
+  try{openReferenceRemoval([s.id]);dialogOpener=opener;}catch(error){notify(String(error.message||error),true);}
+ });
 }
 
 function confirmDeletePosition(id,{fromDialog=false}={}){

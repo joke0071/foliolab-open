@@ -49,7 +49,7 @@ export function referenceSelectionSummary(model,ids,visibleIds){return positionS
 export function previewReferenceArchive(model,ids,archived){
  safeImport(clone(model));if(typeof archived!=='boolean')throw Error('Ungültige Archivaktion.');
  const shots=selected(model,ids),stored=new Set(model.bookingPresentation?.referenceArchivedIds||[]),states=new Set(shots.map(s=>stored.has(s.id)));
- if(states.size!==1)throw Error('Auswahl enthält aktive und archivierte Werte. Bitte eine einheitliche Ansicht wählen; keine Teiländerung.');
+ if(states.size!==1)throw Error('Auswahl enthält aktive und archivierte Werte. Bitte nur einen Archivstatus auswählen; keine Teiländerung.');
  if(shots.every(s=>stored.has(s.id)===archived))throw Error('Ausgewählte Referenzwerte haben bereits diesen Archivstatus.');
  return {archived,items:shots.map(s=>({id:s.id,date:s.date,totalEURExact:s.totalEURExact,origin:referenceOrigin(s)}))};
 }
