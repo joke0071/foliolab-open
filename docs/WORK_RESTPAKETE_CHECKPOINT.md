@@ -1,3 +1,15 @@
+## P1A importierte EUR-Geldbuchungen – IN_PROGRESS · 31.10.2026
+
+Owner: aktueller Work-Chat /root. Kollisionsschutz: ausschließlich PR #251 auf `feature/proven-import-cash-removal` fortführen; keinen parallelen Implementierungsstrang beginnen.
+
+- Produktion unverändert **v242 LIVE_ACCEPTED**, Main `25ec0bd1cf834fdb129b67fbc12d90fdecbd9196`.
+- PR: https://github.com/joke0071/foliolab-open/pull/251 ; aktueller HEAD `c83a5ac90fc431f489a37e7309f8d03399008a31`, geplanter SW v244 (v243 wurde nie veröffentlicht).
+- Implementiert: bestehende wirtschaftliche Rücknahme für unveränderte generic-csv-EUR-Geldbuchungen mit eindeutiger Referenz; vollständige vorhandene Abhängigkeits-/Journal-/Salden-/Kapitalfluss-/Chronologieprüfung und CAS. Auditversion 2 erhält Originalidentitäten; automatische Wiederimporte und mögliche Überschneidungen bleiben ausdrücklich gesperrt. Exaktes Undo bleibt erhalten. Keine Freigabe komplexer Broker-/Wallet-/Transfer-/Wertpapierimporte oder importierter Bearbeitung.
+- Lokal: **1028/1028 Tests**, keine Fehler/Skips; Syntaxprüfung erfolgreich. Neue Prüfungen für alle sechs Geldtypen, Quellen-/Audit-/Kapitalflussmanipulation, Wiederimport/Namespace, Restore, CAS und Undo. Chromium: neuer tatsächlicher UI-/Persistenz-/Undo-Vertrag, Axe, 320/360/390/412/430/1440 px erfolgreich; 320px visuell geprüft. Lokaler Firefoxstart hängt; keine Abnahme behauptet.
+- Erster CI-HEAD `08d9aa4` verletzte durch zusätzliche Workflowbefehle zwei bestehende Pipelineverträge. Workflow vollständig wiederhergestellt, neuer Browserfall in unveränderten Pflichtlauf integriert; lokale Vertragsprüfungen jetzt erfolgreich. Erste rote Läufe bleiben dokumentiert, keine Umgehung. Neue vollständige CI am aktuellen HEAD läuft/pending.
+- Status **IN_PROGRESS**, weder CI_ACCEPTED noch MERGED/DEPLOYED/LIVE_ACCEPTED. Vollständige drei Browsergates und Produktionsabnahme stehen aus. Androidhardware/Safari/TalkBack/echtes OAuth weiterhin extern offen.
+- Nächster Schritt: aktuelle CI auswerten, eventuelle tatsächliche Fehler beheben; nur bei vollständigem Erfolg exakten HEAD integrieren, produktiv abnehmen und Checkpoint/Roadmap aktualisieren. Umfang: docs/IMPORTED_CASH_REMOVAL.md. DELETE-MASTER28 bleibt PARTIAL.
+
 ## v242 LIVE_ACCEPTED – verbindliche Produktion und nächste Restpakete · 31.10.2026 16:06 UTC
 
 Owner: Codex Work, aktiver Master-/Integrations-/QA-/Releasechat. **v242 ist vollständig LIVE_ACCEPTED**; diese Angabe übersteuert sämtliche älteren LIVE_PENDING-/RELEASE_PENDING-Angaben. Aktuelle bestätigte Produktion und Ausgangs-/Rückfallbasis für weitere Änderungen: **Main25ec0bd1cf834fdb129b67fbc12d90fdecbd9196**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, **foliolab-open-v242**. Zuletzt erneut abgerufenes Main ist identisch; keine neuere Freigabe vorhanden. Vorherige zusätzlich belegte Rückfallversion bleibt **v240/d2193e0baa1feb2b64da23b6a7f5b625ce379c42**. PR249 wurde in PR250 konsolidiert; v241 war ausschließlich Kandidat und wurde nie produktiv veröffentlicht.
