@@ -1,0 +1,8 @@
+{
+  "status": "IN_PROGRESS",
+  "owner": "current Work chat /root",
+  "base": "25ec0bd1cf834fdb129b67fbc12d90fdecbd9196",
+  "branch": "feature/proven-import-cash-removal",
+  "scope": "P1A provable imported EUR cash removal, versioned audit and repeat-import protection. Do not start parallel implementation.",
+  "production": "v242 LIVE_ACCEPTED; no new release claimed"
+}
