@@ -1,3 +1,15 @@
+## #257 / PR #259 – finaler Kandidat IN_PROGRESS, 31.10.2026
+
+Aktueller HEAD **`ce55ba13930022f20daea0208db5b0591e465f94`**, Branch `feature/unified-list-management`, Tree **`14d5af3bb3d0e0be31291378865c423318394908`**, exakt gleich lokalem Index. Vorherige b827/bd437/2b454b-HEADs sind Zwischenstände, keine Freigabe. v248 bleibt LIVE_ACCEPTED und Rückfallbasis; SW249 ist weiterhin nur Kandidat.
+
+**Zusätzlich tatsächlich lokal abgeschlossen:** 1037/1037 Units, Syntax; 66 UI07-Scans inklusive 200%-Zoom; vollständige Buchungs-UI und Buchungs-Fachverwaltung (CAS/Quota/Abort/Offline/Undo/Restore/Import-Rücknahme); bestehende Positions-Archiv/Restore-Suite einschließlich tatsächlicher **100er-Mehrfach-Wiederherstellung in genau einer Revision**, unveränderte übrige Wirtschaftsrecords; P1A-Matrix und manuelle Sichtprüfung der tatsächlichen Listenzeilen; lokaler Kandidaten-Kernlauf sechs Gruppen/18 Axe/122 URL-Hashes. Letzte zusätzliche Ausrichtungsprüfung: Positionsbeträge in sieben Breiten an derselben rechten Wertkante wie Buchungen/Referenzen. Das ist keine neue Produktions- oder Hardwareabnahme.
+
+Erste CI 41238322794 war rot: Firefox-Zoom-Suchfeld durch starre Mindestspalten; korrigiert auf verfügbare Breite reagierendes Raster. Weitere Fehler waren veraltete Status-/Aktionstexte und Tests, die den unverändert wirksamen Dirty-Dialogschutz beim neuen Bestätigungsfeld nicht quittierten. Keine Sicherheitsregel abgeschaltet, keine Axe-Regel entfernt. Nachfolgerläufe werden durch die vorhandene Workflow-Concurrency bei berechtigten Fix-HEADs automatisch ersetzt; keine manuelle Action-Abbruchaktion. Ausschließlich die vollständigen Pflichtgates des aktuellen finalen HEAD zählen.
+
+Unmittelbarer nächster Schritt: aktuellen finalen PR-CI-/Walletlauf prüfen; bei Fehlern konkrete Diagnose, sonst Draft freigeben, gegen unverändertes Main/Tree mergen, deployen und reale produktive drei-Engine-Abnahme abschließen. Checkpoint-/Roadmap-Fortschreibung danach. Keine zweite Implementierung beginnen. Komplexe wirtschaftliche Löschfreigaben, reale Android-Hardware und umfassende 10.000er-UI-Abnahme bleiben separat offen; 10.000 stabile Auswahl-IDs sind als Unitfall bestanden.
+
+---
+
 ## Aktuelle Übernahme / #257 IN_PROGRESS – neuer Work-Chat, 31.10.2026
 
 **Die ältere Executor-BLOCKED-Angabe betrifft ausschließlich die vorige Arbeitsumgebung.** Der neue Work-Chat hat funktionierende lokale Ausführung und Chromium-QA. Einziger funktionaler Strang ist **[PR #259](https://github.com/joke0071/foliolab-open/pull/259)**, Branch `feature/unified-list-management`, HEAD **`b827ca7db5a56d0e182a907d259bab490476fdfe`**, Tree `150904f65a76f393d0367150a6fcf651f6a7bb2f` (exakt gleich dem lokal geprüften Tree). Keine zweite #257-Implementierung starten. Historischer Dokumentationsbranch bleibt getrennt.
