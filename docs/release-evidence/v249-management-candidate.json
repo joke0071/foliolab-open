@@ -1,5 +1,5 @@
 {
-  "status": "IN_PROGRESS",
+  "status": "MERGED",
   "version": "v249",
   "pr": 259,
   "repository": "joke0071/foliolab-open",
@@ -16,8 +16,48 @@
   },
   "currentCI": {
     "run": 41241077889,
-    "status": "IN_PROGRESS",
-    "walletRun": 41241077897
+    "status": "CI_ACCEPTED",
+    "walletRun": 41241077897,
+    "unitTests": 1037,
+    "failures": 0,
+    "skips": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "artifacts": [
+      {
+        "id": 13058160884,
+        "name": "cross-engine-gates-45ceae635d8fbe3618ddfa82402fcce242299c19-1",
+        "digest": "sha256:986f96651c69e73ce7fa9651c143d29c5cfb11a328d77f21be5d46818dc1c6c6"
+      },
+      {
+        "id": 13058066531,
+        "name": "release-gates-45ceae635d8fbe3618ddfa82402fcce242299c19",
+        "digest": "sha256:73a537540a4fb11917e0adccab9931db600e439d1fc18cd71408fe5262e21eb0"
+      },
+      {
+        "id": 13057837116,
+        "name": "dialog-visual-reference",
+        "digest": "sha256:e1743afc30ad8561d9a6826aa59d6b235bf23050df40de4a5053f937bb640ce4"
+      },
+      {
+        "id": 13057711809,
+        "name": "cross-engine-gates-45ceae635d8fbe3618ddfa82402fcce242299c19-3",
+        "digest": "sha256:7dd9026b1618af10e1fa00b08861b43eb6a1aa27b25d7197aa05dd593a932b1a"
+      },
+      {
+        "id": 13057676174,
+        "name": "ci-stage-45ceae635d8fbe3618ddfa82402fcce242299c19",
+        "digest": "sha256:31fe77487973f669f90e9fab50a6878d1bf76e4a6ff9672a1f9beeee7c76c79a"
+      },
+      {
+        "id": 13056994791,
+        "name": "cross-engine-gates-45ceae635d8fbe3618ddfa82402fcce242299c19-2",
+        "digest": "sha256:2e0641df16e9eb9a84abafef4d28c74f1ee0172c4c5009bb21c936e16ff02e9a"
+      }
+    ]
   },
   "acceptedParityPredecessor": {
     "head": "c83d762d9a2cc74e5e21fa922962d1ef7d1ba0f1",
@@ -108,7 +148,11 @@
     "complexEconomicInverses": "OPEN"
   },
   "release": {
-    "merged": false,
+    "merged": true,
+    "main": "3a406db624cb20a457d4886aca31e1ee4eaefe93",
+    "mainTree": "c0e852587a065ec3fa5c2561fa7bc109adcbe03f",
+    "mainTreeMatchesTestedMerge": true,
+    "run": 41242188218,
     "deployed": false,
     "liveAccepted": false
   },
