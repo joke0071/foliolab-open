@@ -1,3 +1,17 @@
+## PR245: UI-Regression bestanden, Firefox-Offlinecontroller noch offen · 31.10.2026
+
+HEAD620bad69d8ff004e119bb0cd6e72c9687e0f7323 / Tree7faf31fa10dc74cecd72f53e475d747504ed7fd3 / SW237 bleibt **IN_PROGRESS / CI_PENDING**, nicht gemergt/deployt. Produktion/Rückfallbasis v236 LIVE_ACCEPTED.
+
+CI41196169974: vollständiges Chromium, Cross1/2 und Wallet41196169972 SUCCESS. Cross3 besteht die vollständige UI-Quality-Kette und weitere Fachgates, scheitert am unveränderten browser-history-worker.mjs:19: Firefox nach aktiviertem App-Worker und Reload30s ohne controller. Kein Offline-Erfolg behauptet. Ein gezielter Wiederholungslauf desselben Jobs124522691683 am unveränderten Commit gestartet; keine App-/Teständerung, keine Zeitlimit-/Gateabschwächung. Bei erneutem Fehler gezielt reproduzieren statt blind weiter wiederholen. Vorheriger Lauf41195467679 hatte Cross3 SUCCESS am Vorgänger, aber ist kein Ersatz für aktuellen Nachweis. Chromium/Cross1-Selektorfehler aus Vorgänger regulär behoben.
+
+Aktuelle Artefakte Cross1/13041182558 SHA256a86e68eb412a40b7e026625a35b47c3936780bd9ee54dfcf7f5997fd21d7ad98, Cross2/13040362312 SHA2565ae4894a874c8480bcb41df42ec49afed86e089644d7f360149a963ef909fa14 eigenständig geladen, Digest/CRC PASS. Firefox-Positionsansicht390 und WebKit-Buchungseditor320 tatsächlich visuell geprüft. GitHub-Mergetree46f32c339c2ea8b41df2536522f01eafda958626 exakt gleicher Tree wie Kandidat.
+
+**PERF01-ANDROID02 zusätzlich gemessen, noch keine Optimierung:** unverändertes v236, fünf Läufe,19 gemischte Positionen/10000 Buchungen+Journal/1825 Stichtage, Chromium141/CPU4x. Kaltmedian6074,2ms (5370,3–6252,9), warm4964,9 (4887,3–5616,9), offline4767,9 (4430,2–5483,4), exakter kanonischer Record inklusive Settings/Revision unverändert. Reiter-Mediane: Positionen278ms/Buchungen1088/Verlauf1500/Mehr183/Übersicht1333. interactiveMs bedeutet geprüftes Dashboard+2Frames; keine Behauptung frühestmöglicher Eingabe oder fertiger asynchroner Charts. PhysischeAndroid/PWA EXTERNAL. Daten und reproduzierbares Skript docs/perf-evidence/2026-10-31/v236-five-run-baseline.*; CPUprofil und Summary v236-startup.cpuprofile/v236-profile-summary.json, gesichert im Commit6f8f740adb8d4d9ce362bcb9e84efc7e6920be3b. Größter abgeleiteter Startpfad: historische Portfolioprojektion~2138ms; wiederholte Datums-/Währungsformatierung~782ms Self. Keine Validierungen auslassen. Nach UI-Release diese belegten Engpässe vor weiterer kosmetischer Arbeit prüfen.
+
+Nächster Schritt aktuelles Cross3-Ergebnis exakt prüfen, bei kompletterAbnahme autonom mergen/deployen und volleProduktion abnehmen. UI-HERO-QUALITY03/Transfer/Sync/wirtschaftlicheImportlöschung weiterOPEN. NurFLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## PR245: sicherer gemeinsamer Einzel-/Sammellöschpfad · 31.10.2026
 
 Owner Codex Work. Aktueller HEAD `620bad69d8ff004e119bb0cd6e72c9687e0f7323`, Tree `7faf31fa10dc74cecd72f53e475d747504ed7fd3`, Branch fix/unified-detail-actions, SW237 **IN_PROGRESS / CI_PENDING**. Produktion/Rückfallbasis weiterhin v236 LIVE_ACCEPTED.
