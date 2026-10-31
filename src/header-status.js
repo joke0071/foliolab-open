@@ -65,7 +65,7 @@ export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{}
   contents();dialog.showModal();document.getElementById('headerStatusClose').focus();
  });
  document.getElementById('headerStatusClose').onclick=()=>dialog.close();
- dialog.addEventListener('close',()=>{opened='';if(returnFocus&&opener?.isConnected)opener.focus({preventScroll:true});});
+ dialog.addEventListener('close',()=>{const kind=opened;opened='';if(returnFocus){const target=opener?.isConnected&&opener.checkVisibility()?opener:[...document.querySelectorAll('[data-header-status]')].find(b=>b.dataset.headerStatus===kind&&b.checkVisibility());target?.focus({preventScroll:true});}});
  window.addEventListener('foliolab-drive-status',refresh);
  window.addEventListener('online',refresh);window.addEventListener('offline',refresh);
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')void checkStorageCurrent().then(refresh);});

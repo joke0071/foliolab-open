@@ -1762,3 +1762,4 @@
 }
 .header-status-dialog summary::after{content:'';margin-left:auto;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
 .header-status-dialog details[open]>summary::after{transform:rotate(225deg)}
+.header-status-dialog button{min-width:44px;min-height:44px}
