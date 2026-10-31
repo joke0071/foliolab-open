@@ -76,7 +76,7 @@ import {ECONOMIC_ROLES,VALUATION_MODES,validateEconomicPosition} from './defi.js
 import {createCompleteBackup,unpackCompleteBackup,portableDrivePreferences,COMPLETE_BACKUP_KIND} from './complete-backup.js';
 import {hasBackupPassword,configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup,isPasswordBackup,adoptBackupPassword} from './backup-vault.js';
 import {openingCashInput} from './account-opening.js';
-import {deletePosition,assertPositionDeletable,setPositionArchived} from './portfolio-edit-actions.js';
+import {setPositionArchived} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
@@ -443,7 +443,7 @@ function renderPositions(){
   const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
   const reviewButtons=reviewActions.filter(i=>!positionSelecting||i.action!=='edit-position').map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
   const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+(!positionSelecting?'<div class="position-row-actions"><button type="button" class="link-button" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button></div>':'')+'</div><div class="holding-row">'+
+  return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
@@ -451,7 +451,7 @@ function renderPositions(){
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+
    '</div></div>'+
-   '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details></div>';
+   '<div class="detail-action-row position-detail-actions"><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(!positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -520,9 +520,9 @@ function openPositionArchive(id){
   });
  $('saveDialog').textContent=archived?'Archivieren':'Wieder einblenden';$('cancelDialog').focus({preventScroll:true});
 }
-function openPositionRemoval(){
+function openPositionRemoval(requestedIds=selectedPositionIds){
  if(loadFailure||saving||otherTabChangedPortfolio)throw Error('Datenstand nicht schreibbar. Bitte neu laden.');
- const selection=[...selectedPositionIds],expectedModel=JSON.stringify(model),preview=previewPositionRemoval(model,selection);
+ const selection=[...requestedIds],expectedModel=JSON.stringify(model),preview=previewPositionRemoval(model,selection);
  const allowed=preview.items.filter(p=>p.classification==='unreferenced').map(p=>p.id);
  const selectionSummary=positionSelectionSummary(model,selection,positionMatchingIds),archivedCount=model.positions.filter(p=>p.archived&&selection.includes(p.id)).length;
  const referenceLabels={snapshots:'Historische Stichtage',bookings:'Buchungen',journalEntries:'Journalbuchungen',positions:'Verknüpfte Positionen',externalCashFlows:'Ein- und Auszahlungen',walletHistory:'Wallet-Verlauf',purchaseEvidence:'Kaufnachweise',accounts:'Kontozuordnung',providers:'Anbieterzuordnung',transferMatches:'Gemeinsame Transfers',openingPositions:'Eröffnungsbestände',priceHistories:'Kursnachweise','opaque-data':'Nicht eindeutig prüfbare Nachweise'};
@@ -581,9 +581,9 @@ function bookingWritable(){return !busy&&!saving&&!loadFailure&&!otherTabChanged
 function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand nicht schreibbar. Abruf abwarten oder neu laden.');}
 function bookingManagementRow(row,archived){
  const checks=bookingRowActionReasons(model,row.id),reason=checks.notes.join(' '),removeReason=checks.remove.join(' '),label=row.date+' · '+(row.positionName||model.positions.find(p=>p.id===row.positionId)?.name||row.positionId);
- const edit=reason?'<span class="reference-protection">Geschützt · Buchungsdetails ansehen.</span>':'<button type="button" class="link-button" data-booking-row-action="edit" data-id="'+esc(row.id)+'" aria-label="'+esc(label+' · Buchung bearbeiten')+'" '+(loadFailure||otherTabChangedPortfolio?'disabled':'')+'>Bearbeiten</button>';
- const controls='<div class="position-card-tools booking-row-tools">'+(bookingSelecting?'<label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label>':'')+(!bookingSelecting?'<div class="position-row-actions">'+edit+'</div>':'')+'</div>';
- return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason})+'</article>';
+ const edit=model.bookings.some(b=>b.id===row.id)?'<button type="button" class="link-button detail-edit" data-booking-row-action="edit" data-id="'+esc(row.id)+'" aria-label="'+esc(label+' · Buchung bearbeiten')+'" '+(loadFailure||otherTabChangedPortfolio?'disabled':'')+'>Bearbeiten</button>':'<span class="reference-protection">Geschützt · Buchungsdetails ansehen.</span>';
+ const controls=bookingSelecting?'<div class="position-card-tools booking-row-tools"><label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label></div>':'';
+ return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?'':edit})+'</article>';
 }
 function renderBookingManagement(){
  const root=$('bookingManagementTools'),head=$('bookingListHead'),rows=bookingHistoryRows(model);
@@ -623,8 +623,8 @@ function openBookingChange(action,requestedIds=selectedBookingIds){
  const opener=document.activeElement;
  showDialog(action==='remove'?'Buchungen löschen':'Buchung bearbeiten','BUCHUNGEN',
   '<p>'+ids.length+' ausgewählt. Die Vorschau prüft Herkunft, Referenzen und Auswirkungen vor dem Speichern.</p>'+field('Belegreferenz oder Begründung','reason','','text','required maxlength="180"')+
-  (action==='edit'?'<p class="small-help">'+esc((TX_TYPES[b.type]||b.type)+' · '+(position?.name||b.positionName)+' · '+(provider?.name||'Anbieter unbekannt')+' / '+(account?.name||'Konto unbekannt'))+'</p>'+field(economic?'Betrag in EUR':'Menge / Betrag (Original)','quantity',b.quantityExact,'text',economic?'required inputmode="decimal"':'disabled')+field('Buchungsdatum','date',b.date,'date',economic?'required':'disabled')+(!economic?'<p class="small-help">Betrag/Datum gesperrt: '+esc(permissions.edit.join(' '))+'</p>':'')+'<details class="performance-details"><summary><span>Weitere Felder und fachliche Grenzen</span></summary><div class="performance-details-body"><p>Typ, Anlage, Anbieter/Konto, Preis/Währung, Gebühren/Steuern und Transferzuordnungen sind für bestehende Vorgänge hier nicht änderbar. Diese Felder können für diese Buchung derzeit nicht sicher geändert werden. Verknüpfte Vorgänge und Originalbelege müssen erhalten bleiben. Uhrzeit und Kategorie sind für diesen Vorgang nicht gespeichert. Externe Originalbelege bleiben unverändert.</p></div></details>':'')+
-  (action!=='remove'?field('Notiz','notes',b.notes||'','text',notesAllowed?'maxlength="180"':'disabled'):''),async values=>{
+  (action==='edit'?'<p class="small-help">'+esc((TX_TYPES[b.type]||b.type)+' · '+(position?.name||b.positionName)+' · '+(provider?.name||'Anbieter unbekannt')+' / '+(account?.name||'Konto unbekannt'))+'</p>'+field(economic?'Betrag in EUR':'Menge / Betrag (Original)','quantity',b.quantityExact,'text',economic?'required inputmode="decimal"':'disabled')+field('Buchungsdatum','date',b.date,'date',economic?'required':'disabled')+(!economic?'<p class="small-help">Betrag und Datum sind geschützt.</p><details class="performance-details"><summary>Grund der Einschränkung</summary><div class="performance-details-body">'+esc(permissions.edit.join(' '))+'</div></details>':'')+'<details class="performance-details"><summary><span>Weitere Felder und fachliche Grenzen</span></summary><div class="performance-details-body"><p>Typ, Anlage, Anbieter/Konto, Preis/Währung, Gebühren/Steuern und Transferzuordnungen sind für bestehende Vorgänge hier nicht änderbar. Diese Felder können für diese Buchung derzeit nicht sicher geändert werden. Verknüpfte Vorgänge und Originalbelege müssen erhalten bleiben. Uhrzeit und Kategorie sind für diesen Vorgang nicht gespeichert. Externe Originalbelege bleiben unverändert.</p></div></details>':'')+
+  (action!=='remove'?field('Notiz','notes',b.notes||'','text',notesAllowed?'maxlength="180"':'disabled'):'')+(action==='edit'?'<div class="booking-delete-action"><button type="button" class="danger-link" id="deleteBooking" '+(permissions.remove.length?'disabled aria-describedby="bookingDeleteReason"':'')+'>Buchung löschen</button>'+(permissions.remove.length?'<p class="small-help" id="bookingDeleteReason">Löschen ist für diese Buchung nicht sicher möglich.</p><details class="performance-details"><summary>Warum ist Löschen gesperrt?</summary><div class="performance-details-body">'+esc(permissions.remove.join(' '))+'</div></details>':'<p class="small-help">Löschen prüft die wirtschaftliche Rücknahme. Archivieren blendet die Buchung nur aus.</p>')+'</div>':''),async values=>{
    assertBookingWritable();if(expectedModel!==JSON.stringify(model))throw Error('Datenstand geändert. Vorschau neu beginnen.');
    const request=action==='edit'?bookingEditRequest(b,values):{ids,action,reason:values.reason,changes:action==='remove'?undefined:{notes:values.notes}};
    const preview=previewBookingChange(model,request),summary=bookingSelectionSummary(model,ids,bookingMatchingIds);
@@ -643,7 +643,7 @@ function openBookingChange(action,requestedIds=selectedBookingIds){
      model=candidate;await save();bookingChangeReceipt=receipt;selectedBookingIds=[];bookingSelecting=false;renderBookings();notify('Buchungsänderung gespeichert.');
     },{readOnly:!preview.ready});
    dialogOpener=opener;$('saveDialog').hidden=!preview.ready;return false;
-  });$('saveDialog').textContent='Vorschau prüfen';if(action!=='remove'&&!notesAllowed){$('saveDialog').hidden=true;$('dialogFields').insertAdjacentHTML('beforeend','<p class="small-help">Bearbeiten gesperrt: '+esc(permissions.notes.join(' '))+'</p>');}
+  });if(action==='edit')$('deleteBooking').addEventListener('click',()=>{if(editor?.dirty&&!confirm('Nicht gespeicherte Änderungen verwerfen und die Löschvorschau öffnen?'))return;try{openBookingChange('remove',ids);dialogOpener=opener;}catch(error){notify(error.message,true);}});$('saveDialog').textContent='Vorschau prüfen';if(action!=='remove'&&!notesAllowed){$('saveDialog').hidden=true;$('dialogFields').insertAdjacentHTML('beforeend','<p class="small-help">Bearbeiten ist für diese Buchung gesperrt.</p><details class="performance-details"><summary>Warum ist Bearbeiten gesperrt?</summary><div class="performance-details-body">'+esc(permissions.notes.join(' '))+'</div></details>');}
 }
 function openBookingUndo(){
  assertBookingWritable();const expected=JSON.stringify(model),receipt=bookingChangeReceipt;
@@ -1885,17 +1885,10 @@ function openSnapshot(s=null){
   });
 }
 
-async function confirmDeletePosition(id,{fromDialog=false}={}){
- let p;
- try{p=assertPositionDeletable(model,id);}catch(error){return notify(String(error.message||error),true);}
- if(!confirm('Position „'+p.name+'“ wirklich löschen? Historische Stichtage bleiben erhalten. Bei bestehenden Buchungen oder DeFi-Verknüpfungen wird das Löschen blockiert.'))return;
- try{
-  deletePosition(model,id);
-  snapshot(model);
-  await save();
-  if(fromDialog)closeDialog({force:true});
-  notify('Position gelöscht. Historische Stichtage wurden nicht gelöscht.');
- }catch(error){notify(String(error.message||error),true);}
+function confirmDeletePosition(id,{fromDialog=false}={}){
+ if(fromDialog&&editor?.dirty&&!confirm('Nicht gespeicherte Änderungen verwerfen und die Löschvorschau öffnen?'))return;
+ const opener=fromDialog?dialogOpener:document.activeElement;
+ try{openPositionRemoval([id]);dialogOpener=opener;}catch(error){notify(String(error.message||error),true);}
 }
 async function startPerformanceTracking(){
  if(model.performanceFlowTrackingSince)return notify('Renditestart bereits festgelegt: '+model.performanceFlowTrackingSince);

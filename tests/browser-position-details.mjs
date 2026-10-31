@@ -74,12 +74,11 @@ try{
  assert.equal(await remaining.locator('[data-action="edit-position"]').count(),1);
  assert.equal(await remaining.locator('[data-action="delete-position"]').count(),0,'no permanent destructive row icon');
  await remaining.locator('[data-action="edit-position"]').click();assert.ok(await page.locator('#deletePosition').isVisible(),'the existing permitted individual delete remains reachable through its editor');
- page.once('dialog',dialog=>dialog.accept());
- await page.locator('#deletePosition').click();await page.locator('#editDialog').waitFor({state:'hidden'});
- await page.waitForFunction(()=>document.querySelectorAll('.position-entry').length===0);
- assert.equal(await page.locator('.position-entry').count(),0);
+ const protectedBefore=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
+ await page.locator('#deletePosition').click();assert.ok(await page.locator('#saveDialog').isDisabled(),'referenced position uses shared conservative removal guard');await page.locator('#positionPreviewBlocked>details>summary').click();assert.match(await page.locator('#positionPreviewBlocked').innerText(),/Historische Stichtage/);await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),protectedBefore,'blocked individual preview preserves exact model');
+ await page.evaluate(async()=>{const {load,persist,createPosition}=await import('/src/model.js');const m=load(),p=m.positions[0];m.positions.push(createPosition({id:'unreferenced-delete',name:'Synthetic unreferenced',kind:'etf',quantity:1,price:10,accountId:p.accountId,providerId:p.providerId},m));persist(m);});await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-action="edit-position"][data-id="unreferenced-delete"]').click();await page.locator('#deletePosition').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
- assert.equal(finalModel.positions.length,0);
+ assert.equal(finalModel.positions.length,1);assert.equal(finalModel.positions.some(p=>p.id==='unreferenced-delete'),false);
  assert.equal(finalModel.snapshots.length,2,'Deleting a position does not erase historical dates');
  // The position-list facts are a separate renderer from provider details.
  // Exercise the real canonical missing-price default in this view as well.

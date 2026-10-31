@@ -1,5 +1,5 @@
 import {browserGateDeadline,waitForAppServiceWorker} from './browser-gate-deadline.mjs';
-import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
+import assert from 'node:assert/strict';import {mkdirSync,writeFileSync} from 'node:fs';import {chromium,firefox,webkit} from 'playwright';
 for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
  const finish=browserGateDeadline('history-worker '+name,180000);
  const browser=await ({chromium,firefox,webkit}[name]).launch({headless:true});
@@ -16,7 +16,18 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   });
   assert.ok(r.heartbeatMs<1500,'main thread blocked '+JSON.stringify(r));assert.equal(r.cancelled,'AbortError');assert.equal(r.last,'1');
   console.log('HISTORY_WORKER_PHASE '+name+' service-worker-activation');
-  await page.goto('http://127.0.0.1:4173/');await waitForAppServiceWorker(page);await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
+  const workerState=()=>page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {url:location.href,timeOrigin:performance.timeOrigin,controller:navigator.serviceWorker.controller?.scriptURL??null,controllerState:navigator.serviceWorker.controller?.state??null,active:r?.active?.state??null,activeURL:r?.active?.scriptURL??null,waiting:r?.waiting?.state??null,installing:r?.installing?.state??null};});
+  const lifecycle={engine:name,expectedScript:'http://127.0.0.1:4173/sw.js'},pageErrors=[];page.on('pageerror',e=>pageErrors.push(e.message));
+  try{
+   await page.goto('http://127.0.0.1:4173/');await waitForAppServiceWorker(page);lifecycle.activated=await workerState();assert.equal(lifecycle.activated.active,'activated');assert.equal(lifecycle.activated.activeURL,lifecycle.expectedScript);
+   // Activation alone does not prove control of this document. Establish the
+   // actual initial controller before testing a controlled reload, then retain
+   // the original post-reload and offline requirements without retries.
+   await page.waitForFunction(()=>navigator.serviceWorker.controller?.scriptURL===new URL('sw.js',location.href).href&&navigator.serviceWorker.controller.state==='activated');lifecycle.beforeReload=await workerState();
+   assert.equal(lifecycle.beforeReload.controller,lifecycle.expectedScript);await page.reload();
+   await page.waitForFunction(()=>navigator.serviceWorker.controller?.scriptURL===new URL('sw.js',location.href).href&&navigator.serviceWorker.controller.state==='activated');lifecycle.afterReload=await workerState();
+   assert.equal(lifecycle.afterReload.controller,lifecycle.expectedScript);assert.notEqual(lifecycle.afterReload.timeOrigin,lifecycle.beforeReload.timeOrigin);lifecycle.result='PASS';
+  }finally{lifecycle.final=await workerState().catch(e=>({error:String(e)}));lifecycle.pageErrors=pageErrors;mkdirSync('artifacts/gates/history-worker',{recursive:true});writeFileSync('artifacts/gates/history-worker/'+name+'-controller.json',JSON.stringify(lifecycle,null,2));}
   await page.evaluate(async()=>{const {event,stream}=await import('/tests/wallet-history-fixtures.mjs');window.offlineHistoryFixture={events:[event({txid:'offline-worker',quantityBaseUnits:'2'})],streams:[stream()]};});
   console.log('HISTORY_WORKER_PHASE '+name+' offline-replay');
   await page.context().setOffline(true);
