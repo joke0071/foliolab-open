@@ -1,4 +1,4 @@
-import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence} from './import-identity.js';
+import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
 import {safeImport,backup} from './model.js';
@@ -40,6 +40,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
  const draft=structuredClone(model),claimedIds=new Set();
  let nativeSeen=model.bookings.some(b=>b.importSource?.sourceId?.startsWith('flatex-native-'));
  const fileDigest=sourceDigest(JSON.stringify([parsed.sourceName||'',parsed.headers,parsed.rows]));
+ const removed=removedImportSources(model);
  const list=[],issues=[],occurrences=new Map(),ignored=new Set(skippedLines.map(Number));let duplicates=0;
  const mapped=parsed.rows.map((data,index)=>({data,index:index+2,date:String(data[mapping.date]||'').trim()})).sort((a,b)=>a.date.localeCompare(b.date)||a.index-b.index);
  for(const item of mapped){
@@ -79,6 +80,8 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
     return JSON.stringify(previous)===JSON.stringify(current);
    };
    const key=importSourceKey(source);
+   if(removed.some(prior=>(prior.accountId===source.accountId&&((source.externalId&&prior.externalId===source.externalId)||prior.fileId===source.fileId||(()=>{const old=JSON.parse(prior.sourcePayload);return old.positionId===row.positionId&&old.date===row.date&&old.type===row.type;})()))))
+    throw sourceConflict('Diese Importbuchung wurde ausdrücklich gelöscht. Kein automatischer Wiederimport; Rücknahme oder geprüfte Sicherung verwenden.');
    const matches=key?draft.bookings.filter(b=>importSourceKey(b.importSource)===key):[];
    if(matches.length){
     if(matches.length!==1||!samePayload(matches[0].importSource))

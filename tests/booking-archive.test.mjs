@@ -31,7 +31,7 @@ test('archived imported booking remains an exact repeat-import duplicate and its
  const m=fixture(),batch=prepareCSVBatch([{name:'synthetic.csv',text:'date,type,position,quantity,price,id\n2025-01-02,deposit,cash,5,1,source-1'}]),mapping=inferMapping(batch.parsed.headers);
  importCSV(m,previewCSV(m,batch.parsed,mapping));const imported=m.bookings.find(b=>b.importSource),candidate=archive(m,[imported.id]).candidate;
  assert.deepEqual(candidate.bookings,m.bookings);const replay=previewCSV(candidate,batch.parsed,mapping);assert.equal(replay.duplicates,1);assert.equal(replay.ready,0);assert.deepEqual(replay.simulated.bookingPresentation,candidate.bookingPresentation);
- assert.equal(previewBookingChange(candidate,{ids:[imported.id],action:'remove',reason:'Not allowed'}).ready,false);
+ assert.equal(previewBookingChange(candidate,{ids:[imported.id],action:'remove',reason:'Verified import removal'}).ready,true);
 });
 test('known display references do not block existing safe corrections; removal cleans display IDs and undo restores them',()=>{
  const m=archive(fixture(),['manual-deposit']).candidate;

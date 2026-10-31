@@ -48,7 +48,7 @@ export function reviewBookingSelection(model,selectedIds,matchingIds){
 import {executeTransaction,validateJournalEntry,nextJournalSequence} from './transactions.js';
 import {units,exact} from './decimal.js';
 import {safeImport,totalExactEUR} from './model.js';
-import {sourceDigest} from './import-identity.js';
+import {sourceDigest,provenCashImport,importSourceKey} from './import-identity.js';
 const cashTypes=new Set(['deposit','withdraw','dividend','interest','fee','tax']);
 const clone=x=>structuredClone(x);
 const raw=x=>JSON.stringify(x);
@@ -78,10 +78,13 @@ function referenceReasons(model,b,e){
  if(references(rest,targets))reasons.push('Weitere gespeicherte Referenzen verhindern eine isolierte Änderung.');
  return reasons;
 }
+const importFileKey=b=>JSON.stringify([b.importSource?.sourceId,b.accountId,b.importSource?.fileId]);
 function eligibility(model,b,action,{checkReferences=true,index=null}={}){
  const e=index?index.journals.get(b?.journalEntryId):model.journalEntries.find(e=>e.id===b?.journalEntryId),p=index?index.positions.get(b?.positionId):model.positions.find(p=>p.id===b?.positionId),reasons=[];
  if(!b||!e||!p)return ['Buchung, Journal oder Position fehlen.'];
- if(e.source!=='manual'||b.importSource||b.importFingerprint)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
+ const imported=e.source!=='manual'||b.importSource||b.importFingerprint;
+ const proven=action==='remove'&&provenCashImport(b,e)&&(index?index.importKeys.get(importSourceKey(b.importSource)):model.bookings.filter(x=>importSourceKey(x.importSource)===importSourceKey(b.importSource)).length)===1&&(index?index.importFiles.get(importFileKey(b)):model.bookings.filter(x=>importFileKey(x)===importFileKey(b)).length)===1;
+ if(imported&&!proven)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
  if(b.transferMatch||b.targetPositionId||e.status==='matched-internal-transfer'||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
  if((index?(index.journalCounts.get(e.id)||0):model.bookings.filter(x=>x.journalEntryId===e.id).length)!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
@@ -90,7 +93,7 @@ function eligibility(model,b,action,{checkReferences=true,index=null}={}){
  else if(Object.keys(b).some(k=>!bookingKeys.has(k))||Object.keys(e).some(k=>!journalKeys.has(k))||e.postings.some(p=>Object.keys(p).some(k=>!postingKeys.has(k))))reasons.push('Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.');
  if(action==='notes')return [...new Set(reasons)];
  if(e.status!=='recorded'||b.external!==['deposit','withdraw'].includes(b.type))reasons.push('Status oder Kapitalflussklassifikation ist nicht belegt.');
- if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für belegte manuelle EUR-Geldbuchungen.');
+ if(!cashTypes.has(b.type)||p.kind!=='cash'||p.currency!=='EUR'||Number(b.fxRate)!==1||units(p.priceExact??p.price)!==units(1))reasons.push('Wirtschaftliche Änderung derzeit nur für vollständig belegte EUR-Geldbuchungen.');
  if(b.cashPositionId||Number(b.feeEUR)!==0||Number(b.taxEUR)!==0)reasons.push('Zusätzliche Gebühren-, Steuer- oder Gegenkontoverknüpfung ist nicht auflösbar.');
  try{
   validateJournalEntry(e);
@@ -154,7 +157,7 @@ export function previewBookingChange(model,request){
  // reviewable after complete business-event removal, including backup/restore.
  const auditId=globalThis.crypto.randomUUID();
  const dates=[...model.journalEntries.map(e=>e.date),...candidate.journalEntries.map(e=>e.date)].sort();
- candidate.journalEntries.push({id:auditId,type:'booking-management-audit',date:dates.at(-1),recordedAt:new Date().toISOString(),sequence:nextJournalSequence(candidate),source:'management-audit',postings:[{id:globalThis.crypto.randomUUID(),role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],managementAudit:{version:1,action,reason,originals,afterBookings}});
+ candidate.journalEntries.push({id:auditId,type:'booking-management-audit',date:dates.at(-1),recordedAt:new Date().toISOString(),sequence:nextJournalSequence(candidate),source:'management-audit',postings:[{id:globalThis.crypto.randomUUID(),role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],managementAudit:{version:originals.some(o=>o.booking.importSource)?2:1,action,reason,originals,afterBookings}});
  safeImport(clone(candidate));
  result.effects=[...new Set(selected.map(b=>b.positionId))].map(positionId=>{
   const before=model.positions.find(p=>p.id===positionId),after=candidate.positions.find(p=>p.id===positionId),group=selected.filter(b=>b.positionId===positionId),groupIds=group.map(b=>b.id),afterGroup=candidate.bookings.filter(b=>groupIds.includes(b.id));
@@ -212,8 +215,11 @@ export function bookingRowActionReasons(model,id){
 export function bookingRowsActionReasons(model,ids){
  if(!ids.length)return new Map();
  const first=(items,key)=>{const map=new Map();for(const item of items)if(!map.has(item[key]))map.set(item[key],item);return map;};
- const bookings=first(model.bookings,'id'),index={journals:first(model.journalEntries,'id'),positions:first(model.positions,'id'),journalCounts:new Map(),flows:new Map()};
- for(const b of model.bookings)index.journalCounts.set(b.journalEntryId,(index.journalCounts.get(b.journalEntryId)||0)+1);
+ const bookings=first(model.bookings,'id'),index={journals:first(model.journalEntries,'id'),positions:first(model.positions,'id'),journalCounts:new Map(),flows:new Map(),importKeys:new Map(),importFiles:new Map()};
+ for(const b of model.bookings){
+  index.journalCounts.set(b.journalEntryId,(index.journalCounts.get(b.journalEntryId)||0)+1);
+  if(b.importSource){const key=importSourceKey(b.importSource),file=importFileKey(b);index.importKeys.set(key,(index.importKeys.get(key)||0)+1);index.importFiles.set(file,(index.importFiles.get(file)||0)+1);}
+ }
  for(const flow of model.externalCashFlows){if(!index.flows.has(flow.id))index.flows.set(flow.id,[]);index.flows.get(flow.id).push(flow);}
  return new Map(ids.map(id=>{const b=bookings.get(id);return [id,{notes:eligibility(model,b,'notes',{checkReferences:false,index}),remove:eligibility(model,b,'remove',{checkReferences:false,index})}];}));
 }

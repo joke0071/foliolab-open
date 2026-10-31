@@ -1,4 +1,5 @@
 /** Versioned provenance, not a second journal. Legacy bookings remain untouched. */
+import {units} from './decimal.js';
 import {FLATEX_NATIVE_COLUMNS} from './flatex-native.js';
 const nativeReference=v=>typeof v==='string'&&v.trim()!==''&&v.trim()!=='-'&&v.length<=200&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
 /** Reserved optional evidence inside the existing sourcePayload, not a new schema. */
@@ -92,4 +93,28 @@ export function sourceDigest(text){
   [a,b,c,d,e,f,g,h].forEach((v,i)=>hash[i]=(hash[i]+v)>>>0);
  }
  return hash.map(n=>n.toString(16).padStart(8,'0')).join('');
+}
+
+/** Narrow provenance proof for removal, never permission to edit or import.
+ * Native/broker/wallet and legacy identities require their own evidence contract.
+ */
+export function provenCashImport(booking,journal){
+ try{
+  const s=validateImportSource(booking.importSource,booking.accountId);
+  if(!s||s.sourceId!=='generic-csv'||!s.externalId||!s.fileId||s.occurrence!==1||journal.source!=='csv'||
+   !sourceUnmodified({journalEntries:[journal]},booking)||
+   !['deposit','withdraw','dividend','interest','fee','tax'].includes(booking.type))return false;
+  const r=JSON.parse(s.sourcePayload),keys='type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId'.split(' ');
+  if(Object.keys(r).length!==keys.length||keys.some(k=>!Object.hasOwn(r,k))||r.externalId!==s.externalId||
+   r.type!==booking.type||r.date!==booking.date||r.positionId!==booking.positionId||r.notes!==(booking.notes||'')||r.cashPositionId||booking.cashPositionId||
+   units(r.quantity)<=0n||units(r.quantity)!==units(booking.quantityExact)||units(r.unitPrice)!==units(1)||units(booking.unitPrice)!==units(1)||
+   units(r.feeEUR)!==0n||units(r.taxEUR)!==0n||units(r.fxRate)!==units(1))return false;
+  const fingerprint=JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId]);
+  return booking.importFingerprint===fingerprint;
+ }catch{return false;}
+}
+/** Retained removal evidence prevents a later CSV from silently resurrecting it. */
+export function removedImportSources(model){
+ return (model.journalEntries||[]).filter(j=>j.type==='booking-management-audit'&&j.managementAudit?.version===2&&j.managementAudit.action==='remove')
+  .flatMap(j=>j.managementAudit.originals.filter(o=>provenCashImport(o.booking,o.journal)).map(o=>o.booking.importSource));
 }
