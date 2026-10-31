@@ -1,3 +1,13 @@
+## Verbindliche Übernahme durch neuen Work-Chat nach Nutzer-Stopauftrag · 31.10.2026
+
+**Aktueller Owner für Integration/QA/Release und weitere Masterarbeit ist ab jetzt dieser Wiederaufnahmechat (/workspace/scratch/87dc5aed8b2a).** Nutzer hat dem Vorgängerchat bereits den Stop-/Übergabeprompt gesendet; dieser reagiert laut Nutzer nicht. Nach erneuter Fortsetzungsanweisung wird vorhandene Arbeit hier kontrolliert übernommen. Der ältere aktive Ownervermerk ist damit übersteuert. Vorgängerarbeit, Einträge und Belege bleiben vollständig erhalten. Keine zweite Implementierung oder konkurrierende PR. Keine laufenden Actions abbrechen.
+
+Übernommener tatsächlicher Stand: Main d2193e0baa1feb2b64da23b6a7f5b625ce379c42/SW240, PR248 gemergt. Main-/Produktionslauf41211510896 läuft, noch kein LIVE_ACCEPTED; bestätigte Rückfallbasis v239. PR249/fix/de-at-displays bereits vorhanden, HEAD4a10aefaf065b8840b14a78d93a3e8e61330d84b/Tree94ed1613a5c7ce175905a0065315718476ede644/SW241-Kandidat; CI41212001576 läuft, Wallet41212001525 SUCCESS. Diese vorhandenen Arbeiten werden übernommen, nicht neu entwickelt.
+
+Unmittelbare Reihenfolge: v240 vollständig tatsächlich abnehmen und sichern; PR249-Diff/aktuellen HEAD/Tests/visuelle Artefakte prüfen; erst nach vollständigen eigenen Gates und bestätigter v240-Produktion PR249 integrieren und v241 separat live abnehmen. Vor jedem Branch-/Main-Schreibvorgang aktuelle SHAs prüfen, Checkpoint nur mit erwarteter Vorgänger-SHA fortschreiben. Neu auftauchende Vorgängeränderungen lesen und bewahren, keine Force-Updates und keine Übertragung alter CI-Ergebnisse auf neue HEADs. Alle Finanz-/Storage-/CAS-/Backup-/PWA-Gates bleiben erhalten. Weitere aktive Masterpakete bleiben offen, nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## de-AT-/Lesbarkeitspaket PR249 IN_PROGRESS · 31.10.2026 14:51 UTC
 
 Owner: derselbe aktive Master-/Transferintegrationschat. Genau ein Folgezweig **fix/de-at-displays**, PR**249**, HEAD**4a10aefaf065b8840b14a78d93a3e8e61330d84b**, Tree**94ed1613a5c7ce175905a0065315718476ede644**, auf tatsächlichem Main d2193e0baa1feb2b64da23b6a7f5b625ce379c42. SW241-Kandidat. CI**41212001576** und Wallet**41212001525** IN_PROGRESS; kein Merge und keine Freigabe aus alten HEADs übertragen. v240/Main-Produktionslauf41211510896 läuft weiter, Rückfallbasis bleibt bestätigt v239.
