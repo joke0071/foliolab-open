@@ -1,0 +1,94 @@
+{
+  "status": "CI_ACCEPTED / MERGED / RELEASE_PENDING",
+  "release": "v236",
+  "head": "db53a64901ec39b1813802868bfeb20b44ef8223",
+  "main": "ee7ee75f2b62d22452d503ae7b0779d51ad68056",
+  "tree": "aaa91e1cedbaf89274b84a3a320cffcbac64eb63",
+  "syntheticMerge": "9852f0db33b2911e774a3cded3e7a0e113b83089",
+  "workflow": 41191980626,
+  "walletWorkflow": 41191980758,
+  "mainWorkflow": 41193055285,
+  "artifacts": [
+    {
+      "id": 13040045091,
+      "sha256": "d478fe9d8b78be79308427173621240a7b11323427e5e7d7b271226b1fd110f7",
+      "crc": "PASS"
+    },
+    {
+      "id": 13038964618,
+      "sha256": "6e6d83219b1a6f37940f2e10101d9d0e98cc266b8f021dfac50543e5fc51902c",
+      "crc": "PASS"
+    }
+  ],
+  "headerReport": {
+    "scope": "DRIVE-HEADER01 / UI-HEADER-STATUS02",
+    "oauth": "SYNTHETIC ONLY; real Google/Android EXTERNAL",
+    "engines": [
+      {
+        "engine": "firefox",
+        "result": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          412,
+          430,
+          768,
+          1440
+        ],
+        "checks": [
+          "44x44/separate logo/no mobile status line",
+          "native modal Axe/Escape/focus",
+          "scrolled status close preserves position",
+          "landscape restores a truly visible focus target",
+          "125% text",
+          "setup navigation",
+          "synthetic OAuth cancellation is visibly explained",
+          "automatic result dialog after explicit reconnect",
+          "synthetic direct OAuth + real encryption + one due upload",
+          "no token in DOM/storage",
+          "exact portfolio/revision unchanged",
+          "failed IndexedDB put pending/error without false success",
+          "offline local versus remote status",
+          "stale canonical backup blocked before upload",
+          "real peer CAS conflict"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "widths": [
+          320,
+          360,
+          390,
+          412,
+          430,
+          768,
+          1440
+        ],
+        "checks": [
+          "44x44/separate logo/no mobile status line",
+          "native modal Axe/Escape/focus",
+          "scrolled status close preserves position",
+          "landscape restores a truly visible focus target",
+          "125% text",
+          "setup navigation",
+          "synthetic OAuth cancellation is visibly explained",
+          "automatic result dialog after explicit reconnect",
+          "synthetic direct OAuth + real encryption + one due upload",
+          "no token in DOM/storage",
+          "exact portfolio/revision unchanged",
+          "failed IndexedDB put pending/error without false success",
+          "offline local versus remote status",
+          "stale canonical backup blocked before upload",
+          "real peer CAS conflict"
+        ]
+      }
+    ]
+  },
+  "external": [
+    "real Google OAuth",
+    "physical Android/PWA/TalkBack"
+  ],
+  "fallbackUntilCompleteLiveAcceptance": "v234"
+}

@@ -1,3 +1,17 @@
+## v236 gemergt – vollständige PR-Abnahme, Produktion noch RELEASE_PENDING · 31.10.2026
+
+**Neue autonome Nutzerfreigabe ausgeführt.** #244 mit enthaltenem #243 regulär und HEAD-gesichert gemergt. Exakter geprüfter PR-HEAD `db53a64901ec39b1813802868bfeb20b44ef8223`; vollständige CI [41191980626](https://github.com/joke0071/foliolab-open/actions/runs/41191980626), Wallet41191980758 und alle drei Cross-Pakete SUCCESS. Synthetischer Merge9852f0db33b2911e774a3cded3e7a0e113b83089 und tatsächlicher Main-Merge `ee7ee75f2b62d22452d503ae7b0779d51ad68056` haben exakt denselben geprüften Tree `aaa91e1cedbaf89274b84a3a320cffcbac64eb63`. #243 auf GitHub automatisch als MERGED bestätigt. Historischer Checkpoint-Branch nicht übernommen.
+
+Cross-Artefakte13040045091 und13038964618 eigenständig geladen, SHA256 gegen GitHub-Digest und ZIP-CRC geprüft. Headerbericht Firefox/WebKit PASS: echte Workersteuerung, kanonischer Konflikt vor Upload, tatsächliche Verschlüsselung, native Dialoge/Scroll/Fokus/Axe, keine Tokens in DOM/Storage. Aktuelle WebKit-Abbruchansicht320px, Drive-Dialog740×360, Firefox-Header390px, Positionsfilter360px und WebKit-Buchungsverwaltung390px visuell geprüft. Dauerhafter CI-Beleg: docs/release-evidence/pr244-ci-acceptance.json; ausgewählte synthetische Bilder unter docs/review-evidence/2026-10-31/.
+
+**SW236 MERGED / RELEASE_PENDING.** [Main-Release41193055285](https://github.com/joke0071/foliolab-open/actions/runs/41193055285) läuft am tatsächlichen Main-Commit. Letzte vollständig bestätigte Produktion und Rückfallbasis bleibt **v234** bis zur kompletten tatsächlichen Live-Abnahme. Erwartetes Manifest umfasst122 Assets einschließlich Service-Worker; Quelle/Tree/Caches später erneut gegen Produktion prüfen.
+
+Implementiert: getrennte Speicher-/Drive-Symbole und ehrliche Status-/Fehlerrückmeldung, direkte vorhandene OAuth-Funktion samt fälliger E2EE-Sicherung, neue kanonische Backup-Guards ohne Finanz-/Schema-/Kryptografieänderung, dauerhaft sichtbare Archivansicht. Lokal/CI 1.008 Unit-Tests; sechs Negativkontrollen plus frischer Aufbewahrungs-Positivfall. Auth-Persistenz über Browserneustarts, weitergehende Remote-CAS/Identität/Idempotenz und echte Google-/Android/PWA/TalkBack-Abnahme bleiben PARTIAL/EXTERNAL. FLH04-Sync getrennt OPEN/ACTIVE. UI-POS02 Details-/Dialogaktionen, UI-BOOK03 und aggregierte unbewertete Summen weiter OPEN. Nur FLH05/FLH-PROJ01 PARKED;0€.
+
+Nächster Schritt: Main-CI, Pages und vollständige Chromium-/Firefox-/WebKit-Produktionsabnahme unverändert abschließen lassen; Live-Artefakt selbst prüfen und dauerhaft sichern; erst danach v236 LIVE_ACCEPTED/Rückfallbasis und Roadmap aktualisieren. Keine erneute Routinefreigabe nötig.
+
+---
+
 ## Header/Archiv + kanonischer Drive-Schnappschuss: aktueller Releasekandidat · 31.10.2026
 
 **Produktion/Rückfallbasis: v234 LIVE_ACCEPTED. Autonome Releasefreigabe unverändert.** Der vorige #244-Stand 36a946930b406865ff4e00f3e08026fb2829bb88 bestand vollständig CI41190135010 und Wallet41190134928; sämtliche drei Cross-Pakete SUCCESS. Keine Pipeline abgebrochen.
