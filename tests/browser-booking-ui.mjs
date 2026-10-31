@@ -49,7 +49,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
     assert.ok(readable.nameWidth>=95,'booking title remains readable without character-wise wrapping: '+JSON.stringify(readable));
    }
    await scan('#bookingsPage');mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/bookings-'+engine+'-'+width+'.png'});
-   await trigger.focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#bookingListHead button').innerText(),'Fertig');assert.equal(await page.locator('#bookingListHead button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-booking-row-action]').count(),0);assert.ok(await page.locator('#bookingSelectFiltered').isVisible());
+   await trigger.focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#bookingListHead [data-booking-manage]').innerText(),'Fertig');assert.equal(await page.locator('#bookingListHead [data-booking-manage]').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-booking-row-action]').count(),0);assert.ok(await page.locator('#bookingSelectFiltered').isVisible());
    await tool('cancel').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
   }
   assert.deepEqual(await record(),before,'header/keyboard selection cycles do not persist');await page.setViewportSize({width:390,height:900});

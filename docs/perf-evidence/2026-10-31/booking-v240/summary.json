@@ -1,0 +1,82 @@
+{
+  "scope": "bounded booking list render; synthetic Chromium CPU4x, not Android hardware",
+  "measurements": {
+    "baseline": {
+      "samplesMs": [
+        1034,
+        1083,
+        947,
+        937,
+        934
+      ],
+      "medianMs": 947,
+      "source": {
+        "src/app.js": "32a36874cc0dd2ffe50bf400bbc453bf4edccd5eb79749518fe4864019e16c19",
+        "src/booking-history-ui.js": "4556b63b619cfb0cf5bc3aa479c8ff55d2cc49c3a93bf5229550e2e82773a86b",
+        "src/transfer-matching-ui.js": "f13b0204f9e25adefcbfef78aba517273f17d7edff7670c30d225d9138026c17",
+        "styles.css": "9c409e4d114c4f3f27d31d1788e10206f90246b6e502f8e699375685c9006368"
+      }
+    },
+    "transfer-only": {
+      "samplesMs": [
+        1057,
+        1000,
+        966,
+        950,
+        973
+      ],
+      "medianMs": 973,
+      "source": {
+        "src/app.js": "597a72ded078e2a346bd3c35c9d0f1f9f093873874c9f850f79c7d97ebefc9bd",
+        "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+        "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+        "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+      }
+    },
+    "intermediate-dedup": {
+      "samplesMs": [
+        883,
+        800,
+        815,
+        934,
+        967
+      ],
+      "medianMs": 883,
+      "source": {
+        "src/app.js": "62fb391c1f6bf342569556574475f0d803b3e54f3745c4a3c2cac8f2bd3bd049",
+        "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+        "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+        "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+      }
+    },
+    "candidate": {
+      "samplesMs": [
+        883,
+        868,
+        916,
+        817,
+        849
+      ],
+      "medianMs": 868,
+      "source": {
+        "src/app.js": "27ef57af71c42bec3e3b95719845a4cbbb3e6334b7224510b1c2fc4381d92aad",
+        "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+        "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+        "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+      }
+    }
+  },
+  "differenceVsBaselinePercent": -8.34,
+  "exactRecordBeforeAfterUnchangedInEveryRun": true,
+  "recordSHA256ByVariant": {
+    "baseline": "5277f2388799b779f0d9095298f1f4f84c3d73e4928eb9840e3e99fb19cdba19",
+    "transfer-only": "2fe13004f5b500f7066144845651a867a8c622100e524097f70e4d78701d05ae",
+    "intermediate-dedup": "566c825db896e96dcef287e214a1abbf081a12d9b952fd5f143ed3d71ce23c77",
+    "candidate": "4a2076971488f4ad24a298db8e0c2f2545dc804a611d5acccb81b8b38f453719"
+  },
+  "recordTimestampNote": "Each fixture save has its own updatedAt. Full exact record hashes are compared before/after within each variant, not equated across separately initialized profiles.",
+  "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+  "method": "5 warm navigations/variant, same synthetic input,100 rendered rows,390x844,CPU4x,two frames; separate profile; ordered variants; no SLA/significance claim",
+  "exploratoryRunExcluded": "Earlier baseline overlapped a local browser regression and is excluded; accepted three variants ran serially without another local browser test.",
+  "intermediateNote": "Intermediate dedup prototype is retained. Final retest follows the booking management focus correction, so accepted runtime hashes match the final source; no best-of-sample selection."
+}

@@ -600,7 +600,7 @@ function renderBookings(){
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date,b.transferMatch?'Interner Transfer '+b.transferMatch.reference:'']
    .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
  const lookups={bookings:new Map(model.bookings.map(b=>[b.id,b])),positions:new Map(model.positions.map(p=>[p.id,p])),accounts:new Map(model.accounts.map(a=>[a.id,a]))};
- bookingMatchingIds=list.map(b=>b.id);renderBookingManagement();
+ bookingMatchingIds=list.map(b=>b.id);renderBookingManagement(historyRows);
  $('bookingList').innerHTML=historyRows.length?(
   list.length?list.slice(0,bookingLimit).map(b=>bookingManagementRow(b,archived.has(b.id),lookups)).join('')+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
@@ -626,8 +626,8 @@ function restoreBookingTransferFocus(button){
  const row=[...$('bookingList').querySelectorAll('[data-booking-id]')].find(el=>el.dataset.bookingId===button?.dataset.id),summary=row?.querySelector('.booking-meta>summary');
  (summary||$('bookingTransferAction'))?.focus({preventScroll:true});
 }
-function renderBookingManagement(){
- const root=$('bookingManagementTools'),head=$('bookingListHead'),rows=bookingHistoryRows(model);
+function renderBookingManagement(rows=bookingHistoryRows(model)){
+ const root=$('bookingManagementTools'),head=$('bookingListHead');
  if(!rows.length&&!canUndoBookingChange(model,bookingChangeReceipt)){bookingSelecting=false;selectedBookingIds=[];head.innerHTML=bookingTransferShortcut();root.innerHTML='';return;}
  const button=(action,label,disabled=false,extra='')=>'<button type="button" class="btn outline '+extra+'" data-booking-manage="'+action+'" '+(disabled?'disabled':'')+'>'+label+'</button>';
  head.innerHTML='<h3>Buchungen</h3>'+bookingTransferShortcut()+(rows.length?'<button type="button" class="btn light" data-booking-manage="'+(bookingSelecting?'cancel':'select')+'" aria-controls="bookingManagementTools bookingList" aria-pressed="'+bookingSelecting+'">'+(bookingSelecting?'Fertig':'Verwalten')+'</button>':'');
@@ -802,7 +802,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(page==='positions'&&qualityReviewOpen){const replacement=[...$('qualityReviewList').querySelectorAll('[data-action]')].find(el=>el.dataset.id===opener?.dataset.id&&el.dataset.action===opener?.dataset.action);(replacement||$('qualityReviewHeading')).focus({preventScroll:true});}else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='history'){const replacement=opener?.dataset.action==='edit-snapshot'?[...$('snapshotList').querySelectorAll('[data-action=edit-snapshot]')].find(el=>el.dataset.id===opener.dataset.id):null;(replacement||$('manageReferences')).focus({preventScroll:true});}else if(page==='bookings')($('bookingListHead').querySelector('button')||$('addBooking')).focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(page==='positions'&&qualityReviewOpen){const replacement=[...$('qualityReviewList').querySelectorAll('[data-action]')].find(el=>el.dataset.id===opener?.dataset.id&&el.dataset.action===opener?.dataset.action);(replacement||$('qualityReviewHeading')).focus({preventScroll:true});}else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='history'){const replacement=opener?.dataset.action==='edit-snapshot'?[...$('snapshotList').querySelectorAll('[data-action=edit-snapshot]')].find(el=>el.dataset.id===opener.dataset.id):null;(replacement||$('manageReferences')).focus({preventScroll:true});}else if(page==='bookings')($('bookingListHead').querySelector('[data-booking-manage]')||$('bookingTransferAction')||$('addBooking')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -2160,7 +2160,7 @@ function initEvents(){
   if(action==='archive'){const archived=new Set(model.bookingPresentation?.archivedIds||[]);openBookingArchive([...selectedBookingIds],!selectedBookingIds.every(id=>archived.has(id)));return;}
   if(action==='select')bookingSelecting=true;
   if(action==='cancel'){bookingSelecting=false;selectedBookingIds=[];}
-   renderBookings();($('bookingSelectFiltered')||$('bookingListHead').querySelector('button'))?.focus();
+   renderBookings();($('bookingSelectFiltered')||$('bookingListHead').querySelector('[data-booking-manage]')||$('bookingTransferAction'))?.focus();
  }catch(error){notify(error.message,true);}};
  $('bookingManagementTools').addEventListener('click',handleBookingManagement);
  $('bookingListHead').addEventListener('click',handleBookingManagement);

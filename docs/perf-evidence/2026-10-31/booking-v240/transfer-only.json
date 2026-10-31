@@ -1,0 +1,115 @@
+{
+  "sha": "d9f6ed5a108a76919dcc7e2aba3c702310ed3aa4",
+  "source": {
+    "src/app.js": "597a72ded078e2a346bd3c35c9d0f1f9f093873874c9f850f79c7d97ebefc9bd",
+    "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+    "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+    "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+  },
+  "samplesMs": [
+    1057,
+    1000,
+    966,
+    950,
+    973
+  ],
+  "medianMs": 973,
+  "positions": 19,
+  "bookings": 10000,
+  "references": 1825,
+  "cpu": 4,
+  "viewport": [
+    390,
+    844
+  ],
+  "recordSHA256": "2fe13004f5b500f7066144845651a867a8c622100e524097f70e4d78701d05ae",
+  "recordUnchanged": true,
+  "scriptSHA256": "2efa1be49643af8a70e3f196ef0fefcd2bafb12268d41c20c97cd299004fb52e",
+  "selfMs": [
+    {
+      "key": "(program)||-1",
+      "ms": 2558.979
+    },
+    {
+      "key": "eligibility|http://127.0.0.1:4173/src/booking-management.js|80",
+      "ms": 156.636
+    },
+    {
+      "key": "validateJournalEntry|http://127.0.0.1:4173/src/transactions.js|65",
+      "ms": 117.311
+    },
+    {
+      "key": "bookingHistoryRows|http://127.0.0.1:4173/src/booking-history.js|32",
+      "ms": 91.643
+    },
+    {
+      "key": "bookedAnnualOverview|http://127.0.0.1:4173/src/booking-insights.js|27",
+      "ms": 78.251
+    },
+    {
+      "key": "scrollTo||-1",
+      "ms": 53.928
+    },
+    {
+      "key": "(idle)||-1",
+      "ms": 46.761
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-management.js|86",
+      "ms": 42.117
+    },
+    {
+      "key": "renderBookings|http://127.0.0.1:4173/src/app.js|589",
+      "ms": 40.809
+    },
+    {
+      "key": "bookingRowMarkup|http://127.0.0.1:4173/src/booking-history-ui.js|21",
+      "ms": 36.39
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-management.js|81",
+      "ms": 34.026
+    },
+    {
+      "key": "bookingRowActionReasons|http://127.0.0.1:4173/src/booking-management.js|204",
+      "ms": 27.303
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-history.js|53",
+      "ms": 20.134
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-management.js|205",
+      "ms": 20.02
+    },
+    {
+      "key": "accountFor|http://127.0.0.1:4173/src/booking-insights.js|30",
+      "ms": 15.503
+    },
+    {
+      "key": "(garbage collector)||-1",
+      "ms": 15.429
+    },
+    {
+      "key": "annualOverviewMarkup|http://127.0.0.1:4173/src/booking-insights-ui.js|3",
+      "ms": 14.635
+    },
+    {
+      "key": "||5116",
+      "ms": 12.272
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-history-ui.js|24",
+      "ms": 11.488
+    },
+    {
+      "key": "|http://127.0.0.1:4173/src/booking-management.js|104",
+      "ms": 8.158
+    }
+  ],
+  "limits": [
+    "Synthetic CPU-throttled Chromium; not physical Android",
+    "Five warm navigation samples, two frames; one separate diagnostic CPU profile",
+    "No startup or financial-computation performance claim"
+  ]
+}
