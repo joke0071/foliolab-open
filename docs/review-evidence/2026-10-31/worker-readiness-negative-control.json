@@ -3,9 +3,10 @@
   "scope": "synthetic controlled transport delay of the real app startup module; unchanged real SW, no replacement worker",
   "oldAsyncPredicateReturnedFalse": true,
   "correctedWaitStayedPendingUntilRealActivation": true,
+  "survivedActualNavigation": true,
   "state": {
     "active": "activated",
     "script": "http://127.0.0.1:4173/sw.js"
   },
-  "helperSHA256": "782cac7ec2cad375884acb9529ea312d902458ba6ced1345aa51847c1a20991a"
+  "helperSHA256": "9d1cc2d847b946c9d9a32a2e9d0ffada2db5aea9f43c5439115daaec5d6fb330"
 }
