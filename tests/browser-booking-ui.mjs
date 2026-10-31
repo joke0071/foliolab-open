@@ -38,6 +38,15 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
    await trigger.scrollIntoViewIfNeeded();assert.equal(await trigger.innerText(),'Verwalten');assert.equal(await trigger.getAttribute('aria-pressed'),'false');assert.equal(await page.locator('#bookingManagementTools button,#bookingManagementTools input,[data-booking-select]').count(),0);
    for(const button of [trigger,row('edit')])assert.ok(await button.evaluate(b=>{const r=b.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=0&&r.right<=innerWidth+1;}),'normal edit/manage touch targets');
    assert.equal(await row('edit').locator('svg').count(),0);assert.equal(await row('remove').count(),0);assert.equal(await row('archive').count(),0);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'normal protected booking hints never overflow the page');
+   if(width<=767){
+    const readable=await page.locator('[data-booking-id="'+imported.id+'"]').evaluate(article=>{
+     const card=article.querySelector('.booking-compact').getBoundingClientRect(),hint=article.querySelector('.reference-protection').getBoundingClientRect(),row=article.getBoundingClientRect(),name=article.querySelector('.booking-main>strong').getBoundingClientRect();
+     return {rowWidth:row.width,cardWidth:card.width,cardBottom:card.bottom,hintTop:hint.top,nameWidth:name.width};
+    });
+    assert.ok(readable.cardWidth>=readable.rowWidth-2,'protected booking card uses full mobile row width: '+JSON.stringify(readable));
+    assert.ok(readable.hintTop>=readable.cardBottom-1,'protected booking hint is below its card on mobile: '+JSON.stringify(readable));
+    assert.ok(readable.nameWidth>=95,'booking title remains readable without character-wise wrapping: '+JSON.stringify(readable));
+   }
    await scan('#bookingsPage');mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/bookings-'+engine+'-'+width+'.png'});
    await trigger.focus();await page.keyboard.press('Enter');assert.equal(await page.locator('#bookingListHead button').innerText(),'Fertig');assert.equal(await page.locator('#bookingListHead button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-booking-row-action]').count(),0);assert.ok(await page.locator('#bookingSelectFiltered').isVisible());
    await tool('cancel').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
