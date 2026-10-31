@@ -1,3 +1,7 @@
+## Übernahme 31.10.2026 – #257 IN_PROGRESS
+
+Neue Arbeitsumgebung wieder verfügbar; frischer Clone von Main `2f309fa3cca92710a4ed367ac42b240ae220bc7e`. Offene PRs ausschließlich #157/#161, keine konkurrierende #257-Implementierung gefunden. Einziger neuer funktionaler Strang: `feature/unified-list-management`, Owner aktueller Work-Chat /root. v248-Deployment und Chromium-Liveprüfung SUCCESS; Firefox/WebKit-Liveprüfung noch IN_PROGRESS, deshalb weiterhin LIVE_ACCEPTANCE_PENDING. Keine laufende Action abgebrochen. Umfang: Sichtbarkeit Bearbeiten/Checkboxen, gleichartige Ansicht-Dropdowns und explizite stabile Auswahl; bestehende Mutations-/CAS-/Undo-Fachlogik erhalten. Noch keine neue Code- oder Releaseabnahme.
+
 ## VERBINDLICHER MASTER-OVERRIDE – Aktivierung & UI-Delta vom 31.10.2026
 
 **Nutzerentscheidung / maßgeblich vor allen älteren Checkpoint- und Roadmap-Zeilen:** **FLH05 #174 = ACTIVE (vorgeschlagen P1B)**; **FLH-PROJ01 #252 = ACTIVE (vorgeschlagen P2)**. Jegliche älteren Aussagen „FLH05 / Zukunftsprojektion PARKED“ sind **SUPERSEDED**. Work darf beide Projekte wieder in sicheren, sequenziellen Implementierungsetappen aufnehmen, sobald der laufende konfliktfreie Vorgängerschritt abgeschlossen ist; keine zweite Import-/Finanzengine und keine parallele Arbeit auf denselben Dateien. [#174](https://github.com/joke0071/foliolab-open/issues/174) · [#252](https://github.com/joke0071/foliolab-open/issues/252).
