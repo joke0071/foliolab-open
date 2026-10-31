@@ -1,3 +1,4 @@
+import {assertLocalBackupFileSize,assertDriveBackupTextSize} from './backup-limits.js';
 import {installHeaderStatus} from './header-status.js';
 import {blockedReasonsMarkup} from './blocked-reasons-ui.js';
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
@@ -2262,8 +2263,8 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   void refreshBackupPasswordStatus();$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{
  const file=e.target.files?.[0];e.target.value='';
  if(!file)return;
- if(file.size>20e6)return notify('Backup ist zu groß (max. 20 MB).',true);
  try{
+  assertLocalBackupFileSize(file.size);
   let parsed=JSON.parse(await file.text()),v2Envelope=null,password='';
   if(isPasswordBackup(parsed)){
     password=prompt('Backup-Passwort für diese Sicherung:');
@@ -2332,6 +2333,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
       hasPasswordVault:hasBackupPassword,
       encryptPasswordBackup:encryptWithBackupPassword,
       decryptPasswordBackup,
+      assertDriveBackupTextSize,
       async adoptPasswordVault(envelope,password){
         await adoptBackupPassword(envelope,password);
         await refreshBackupPasswordStatus();

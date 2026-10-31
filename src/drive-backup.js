@@ -388,7 +388,7 @@ async function inspectSelectedDriveBackup(){
  if(!id)throw Error('Bitte zuerst ein Drive-Backup auswählen.');
  const res=await api('drive/v3/files/'+encodeURIComponent(id)+'?alt=media');
  const text=await res.text();
- if(text.length>15000000)throw Error('Backup ist zu groß.');
+ backend.assertDriveBackupTextSize(text);
  const envelope=JSON.parse(text);
  if(envelope.format!=='foliolab-open-encrypted-v2')throw Error('Diese Sicherung verwendet ein altes Format. Bitte ein neues Passwort-Backup auswählen.');
  const password=get('driveRecoveryInput').value;
