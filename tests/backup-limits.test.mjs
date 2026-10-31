@@ -35,3 +35,12 @@ test('local and Drive readers retain their existing file limits',()=>{
  assert.doesNotThrow(()=>assertDriveBackupTextSize('x'.repeat(15000000)));
  assert.throws(()=>assertDriveBackupTextSize('x'.repeat(15000001)),/15 Millionen.*unverändert/);
 });
+
+test('Unicode envelope bytes must fit the independent unchanged 20-MB local file reader',()=>{
+ // An independently specified UTF-8 envelope fits Drive characters but reaches the local byte boundary.
+ assert.doesNotThrow(()=>preflightBackup('','v2',7000000,20000000-24));
+ assert.throws(()=>preflightBackup('','v2',7000000,20000000-23),/20 MB Dateigröße/);
+ assert.throws(()=>preflightBackup('abc','v2',12000000,24000000),/20 MB Dateigröße/);
+ assert.throws(()=>preflightBackup('abc','v2',300,299),/Dateigröße konnte nicht geprüft/);
+ assert.throws(()=>preflightBackup('abc','v2',300,Infinity),/Dateigröße konnte nicht geprüft/);
+});

@@ -25,6 +25,9 @@ for(const name of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
    for(const [format,run] of [['v1',()=>encryptBackup('€'.repeat(1500000),password)],['v2',()=>encryptWithBackupPassword('😀'.repeat(3000000))]]){
     try{await run();throw Error(format+' unexpectedly accepted');}catch(e){messages.push(e.message);}
    }
+   const {preflightBackup}=await import('./src/backup-limits.js');
+   const header='😀'.repeat(6000000);
+   try{preflightBackup(plain,'v2',header.length,new TextEncoder().encode(header).byteLength);throw Error('Unicode envelope unexpectedly accepted');}catch(e){messages.push(e.message);}
    return {messages,v2:await decryptPasswordBackup(saved,password),v1:await decryptBackup(JSON.parse(await encryptBackup(plain,password)),password),plain};
   });
   assert.ok(result.messages.every(s=>/sichere Wiederherstellung.*unverändert/.test(s)),JSON.stringify(result));
@@ -55,7 +58,7 @@ for(const name of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
   }
   await page.reload();assert.equal(await read(),original);assert.deepEqual(errors,[]);
   report.engines.push({name,result:'PASS',viewports:[320,360,390,412,430,768,1440],unchangedPortfolio:true});
-  console.log(name+': RECOVERY backup size/Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS');
+  console.log(name+': RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS');
  }finally{await context.close();await browser.close();}
 }
 await writeFile('artifacts/gates/recovery-limits/report-'+(process.env.RECOVERY_ENGINES||'chromium').replaceAll(',','-')+'.json',JSON.stringify(report,null,2));

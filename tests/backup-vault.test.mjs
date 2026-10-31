@@ -104,3 +104,20 @@ test('oversized Unicode export fails before encryption and leaves the existing v
  assert.equal(next.keyId,saved.keyId);
  assert.equal(await decryptPasswordBackup(next,password),plain);
 });
+
+test('actual legacy vault adoption with Unicode wrap metadata cannot produce an oversized local file',async()=>{
+ const db=setup(),password='synthetic-envelope-password';
+ const {blankModel,backup,safeImport}=await import('../src/model.js');
+ const {createCompleteBackup,unpackCompleteBackup}=await import('../src/complete-backup.js');
+ const {assertDriveBackupTextSize}=await import('../src/backup-limits.js');
+ await configureBackupPassword(password,password);
+ const plain=JSON.stringify(createCompleteBackup(JSON.parse(backup(blankModel()))));
+ const old=JSON.parse(await encryptWithBackupPassword(plain));old.wrap.extra='😀'.repeat(6000000);
+ assertDriveBackupTextSize(JSON.stringify(old));
+ safeImport(unpackCompleteBackup(JSON.parse(await decryptPasswordBackup(old,password))).data);
+ db.map.clear();assert.equal(await adoptBackupPassword(old,password),true);
+ const before=db.map.get('active');assert.equal(before.wrap.extra,old.wrap.extra);
+ await assert.rejects(encryptWithBackupPassword(plain),/sichere Wiederherstellung.*20 MB/);
+ assert.equal(db.map.get('active'),before,'No metadata stripping, key rewrite or vault replacement');
+ assert.equal(await decryptPasswordBackup(old,password),plain,'The existing backup remains readable');
+});

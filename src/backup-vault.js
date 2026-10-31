@@ -90,7 +90,8 @@ export async function encryptWithBackupPassword(plain){
  if(!validRecord(saved))throw Error('Bitte zuerst unter „Backup-Verschlüsselung“ ein gemeinsames Backup-Passwort einrichten.');
  const nonce=iv();
  const envelope={format:BACKUP_V2,keyId:saved.keyId,wrap:saved.wrap,iv:b64(nonce),data:'',createdAt:new Date().toISOString()};
- const raw=preflightBackup(plain,'v2',JSON.stringify(envelope).length);
+ const envelopeText=JSON.stringify(envelope);
+ const raw=preflightBackup(plain,'v2',envelopeText.length,E.encode(envelopeText).byteLength);
  const ciphertext=new Uint8Array(await crypto.subtle.encrypt(
   {name:'AES-GCM',iv:nonce,additionalData:AAD},saved.key,raw));
  envelope.data=b64(ciphertext);
