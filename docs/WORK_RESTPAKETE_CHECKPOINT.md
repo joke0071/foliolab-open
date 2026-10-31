@@ -1,3 +1,17 @@
+## v234 kontrolliert gemeinsam gemergt – RELEASE_PENDING · 31.10.2026
+
+**Neue autonome Nutzerfreigabe gilt; kein weiterer allgemeiner Freigabestopp.** #242 nach vollständiger CI41184232693 (test/alle3Cross-Pakete SUCCESS) und Wallet41184232711 SUCCESS mit erwartetem HEAD8d8a08bd4420d133c269b6ff810b46d0c9791d31 regulär gemergt. Neue Main-Identität `d28f535e7dc36ec0e2ac4aec8158dbefc3a1f41b`, Tree `feaad0be6b9fee0e6979f3f8ee137bbdcfd5eec6`, exakt gleich dem geprüften GitHub-Merge-Tree b9fa00ca717ebd04c5f6025e8644e250f4af4956. Alle121 Produktdateien unverändert zum bereits freigegebenen #241-v234-Kandidaten; zusätzliche Änderungen ausschließlich Tests/Diagnose.
+
+#239/#240/#241 auf GitHub automatisch als MERGED bestätigt, keine separaten weiteren Merges oder Zwischen-Deployments. Historischer Checkpoint-Branch nicht übernommen. [Main-Release41185004927](https://github.com/joke0071/foliolab-open/actions/runs/41185004927) läuft am exakten Main-Commit. **SW234 MERGED / RELEASE_PENDING, noch nicht LIVE_ACCEPTED.** Letzte vollständig bestätigte Produktion und Rückfallbasis v231.
+
+Nächste Schritte ohne erneute Nutzerfrage: vollständige Main-CI → Pages-Deployment → echte Chromium-/Firefox-/WebKit-Produktionsabnahme und Asset-/Versionsprüfung → Artefakt selbst prüfen und dauerhaft sichern → erst dann v234 LIVE_ACCEPTED/Rückfallbasis. Cloud-Browser-Testfall mit synthetischem Bestand2,5 ohne Kurs vor Update festgehalten; nach Update gleiche Menge und korrekte „Nicht bewertet“-Anzeige prüfen. Reale Android-Hardware bleibt EXTERNAL.
+
+Zusätzlicher alter #241-ready_for_review-Lauf41182528517 war zuletzt weiter in Cross3; er wurde nicht manuell abgebrochen und nicht als bestanden ausgegeben. Maßgeblich für den gemeinsamen Merge ist der vollständig erfolgreiche, verschärft begrenzte #242-Lauf am identischen Produktcode. Neue Diagnoselogik bestätigt alle importierten Phasen und tatsächliche app-eigene Workeraktivierung/Offline-Replay in Firefox/WebKit, keine umgangenen Assertions.
+
+Nach vollständiger v234-Live-Abnahme zuerst UI-POS02/UI-BOOK03 gemäß den verlinkten #149-Nutzerentscheidungen beginnen. Nur FLH05/FLH-PROJ01 PARKED; Zusatzbudget0€.
+
+---
+
 ## v234: Test-Begleitkandidat #242 wegen offenem Readiness-Wartepfad · 31.10.2026
 
 Neue autonome Releaseautorisierung unverändert gültig. Main weiterhin v231 /1617bdd29da585c88fc713be16a19bea0ed55aba. **Noch kein Merge/Deployment.**
