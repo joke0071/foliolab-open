@@ -51,6 +51,12 @@ export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{}
   }
   if(dialog.open)contents();
  }
+ function connectionResult(button,error=null){
+  if([...document.querySelectorAll('dialog[open]')].some(d=>d!==dialog)||(dialog.open&&opened!=='drive'))return;
+  opener=button;opened='drive';returnFocus=true;contents();
+  if(error)body.textContent='Google-Drive-Verbindung fehlgeschlagen. '+String(error?.message||error);
+  if(!dialog.open){dialog.showModal();document.getElementById('headerStatusClose').focus();}
+ }
  for(const b of document.querySelectorAll('[data-header-status]'))b.addEventListener('click',async()=>{
   if(openingStorage)return;
   opener=b;opened=b.dataset.headerStatus;returnFocus=true;
@@ -59,7 +65,7 @@ export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{}
    if(!s.configured||!s.vaultConfigured){onDriveSettings();return;}
    // Call the one existing OAuth entry point directly from this user gesture.
    const local=readStorage();
-   if(!s.connected&&!s.busy&&!s.connecting&&!s.offline&&!local.error&&!local.conflict&&!local.saving&&!local.checking){void window.FolioDriveBackup.connect();return;}
+   if(!s.connected&&!s.busy&&!s.connecting&&!s.offline&&!local.error&&!local.conflict&&!local.saving&&!local.checking){void window.FolioDriveBackup.connect().then(()=>connectionResult(b),error=>connectionResult(b,error));return;}
   }
   if(opened==='storage'){openingStorage=true;try{await checkStorageCurrent();}finally{openingStorage=false;}}
   contents();dialog.showModal();document.getElementById('headerStatusClose').focus();
