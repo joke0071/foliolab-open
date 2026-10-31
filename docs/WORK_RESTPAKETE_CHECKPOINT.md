@@ -1,3 +1,18 @@
+## Ausführbarer nächster P1A-Abschnitt nach v234 – neue Nutzerentscheidungen abgeglichen · 31.10.2026
+
+Die **neue autonome Releaseautorisierung gilt unverändert**; keine allgemeine Wochenend-/Praxistest-Sperre. Aktuell v234-Readiness-CI41182528517 am unveränderten HEAD6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4: Chromium und Cross1/2 SUCCESS, Cross3 läuft. Nicht abbrechen. Erst vollständige v234-Übernahme und Live-Abnahme abschließen, dann nächste Implementierung.
+
+Jüngste verbindliche Nutzerwünsche sind im bestehenden Master-Issue #149 bereits dokumentiert, noch nicht implementiert und ohne parallelen Quell-PR:
+- [UI-POS02](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6540789545): sichtbarer Archiv-Ansichtsdropdown in Normal-/Verwaltenmodus, aktive/archivierte/alle Positionen; Bearbeiten rechts neben Bestand/Kursdetails; sichere Einzel-Löschaktion am Ende des vorhandenen Bearbeiten-Dialogs mit existierender Abhängigkeitsvorschau.
+- [UI-BOOK03](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6540828997): Details/Bearbeiten analog Positionen, Löschvorschau im Bearbeiten-Dialog, Archivfilter-Parität und kompakte Sperrgründe. Importierte Buchungen nur bei nachgewiesener vollständiger sicherer Rücknahme löschbar; vorhandene Fachguards nicht wegen einer Oberfläche umgehen.
+- [UI-TRANSFER04](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6540842010): bestehende Transferzuordnung näher an Buchungen integrieren; direkte Transferereignisse nicht mit nachträglich gematchten Ein-/Auszahlungen verwechseln. Bestehende Match-/Undo-/Cashflow-Engine erhalten.
+
+Owner Work, Status OPEN. Nach v234 zuerst konfliktfreie P1A-Oberflächenparität inklusive Sichtbarkeitsfilter und vorhandener sicherer Vorschau-Einstiege umsetzen; keine zweite Lösch-/Transferengine. Archivierung bleibt rein visuell, Summen unverändert. Neue wirtschaftliche Löschfälle mit Import-/Journal-/Kostenbasis-/Reimport-/CAS-Beweis getrennt, ansonsten präzise BLOCKED. Bei Dialogwechseln Entwurfs-/Fokus-/Abbruchschutz erhalten. 320–1440px, 44px, Tastatur/Axe, Auswahl-/Filter-/Paging-/Restore-/Offline-/Mehrtab-/Nichtmutationsregressionen beibehalten.
+
+Kein Quellcode für diesen Folgeabschnitt begonnen; v234-Release bleibt priorisiert. Die alten allgemein blockierenden Freigabesätze in den ursprünglichen Nachtragskommentaren sind durch die spätere ausdrückliche Nutzerautorisierung übersteuert, fachliche Sicherheitsgrenzen bleiben gültig.
+
+---
+
 ## Verbindliche neue Releaseautorisierung – sofort gültig · 31.10.2026
 
 Der Nutzer hat die bisherige Wochenend-/Praxistest-Releasebeschränkung vollständig aufgehoben. **#241/v234 ist ausdrücklich für Merge und Deployment autorisiert, sobald aktuelle relevante Qualitäts-/Sicherheitsprüfungen bestanden sind.** Main-/HEAD-Identität und Releasegates bleiben verbindlich. Aktueller readiness-Lauf41182528517 läuft am unveränderten HEAD6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4; nicht abbrechen oder unnötig ersetzen.
