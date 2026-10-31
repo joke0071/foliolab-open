@@ -1,3 +1,15 @@
+## Alle 13 unmittelbaren PRs gemergt; finaler SW230-Release läuft · 31.10.2026
+
+Nach vollständiger eigener v228-Live-Artefaktprüfung (Beleg release-evidence/v228-live-acceptance.json, 121 Assetmatches/18 Axe/0 Fehler, alle drei Browser) wurden die unveränderten vollständig grünen Work-Kandidaten kontrolliert gemergt: #235 als 6ba5fc5c3ce54a01199d3d2b28fd5d6920954183, #236 als a78fa5a6493bc457c9994abb5b38eb40325f7e67, #237 als 100a3a480694666468706d333843fc372de03a9a. Alle 13 unmittelbaren Quell-PRs #233/#234/#213/#214/#218/#219/#222/#223/#225/#227/#235/#236/#237 sind jetzt integriert. Kein historischer Dokumentationsbranch gemergt.
+
+Main 100a3a480694666468706d333843fc372de03a9a, Tree 77a9a2b48b228996aebc545bc75c46a05abc6c2a exakt identisch mit dem vollständig abgenommenen gemeinsamen Kandidaten und lokal geprüften Dateibaum. **SW230 / MERGED / RELEASE_PENDING**, noch NICHT als deployed oder LIVE_ACCEPTED ausgeben. Aktuelle Main-Pipeline 41147791060 beobachten, dann echte Produktionsabnahme und Artefaktbeleg sichern. SW229 war nur Zwischenkandidat; normale Main-Concurrency vermeidet zusätzliche Zwischenveröffentlichungen.
+
+Inhalt: aktive TradingView-Oberfläche/Frames/Zuordnung entfernt bei passiv erhaltenen Legacy-Werten und restriktivem Identitätsguard; native CSV/Charts weiter getestet erreichbar. Vorhandene Erststart-/Leerzustandsoptimierung integriert, Recovery-/Datenlogik unverändert. Versionierte Browsercaches und zuverlässige Testbereitschaft bei vollständig erhaltenen Unit-/Browser-/Finanz-/Speicher-/PWA-Gates. Nachgewiesener FF/WebKit-Cachehit214191046B, 50s weiter ausgeführte Install-/Systemprüfung, kein ungemessener Gesamtzeitgewinn behauptet.
+
+Sichere Rückfallbasis bis finaler Abnahme v228; Rückfall nur vorwärts gerichteter Code-Revert mit neuer SW-Revision, keine Datenrücksetzung/Down-Migration. Die übrigen UI-MASTER28-/Fachrestpakete bleiben PARTIAL/OPEN, echte Geräte-/OAuth-/Originalevidenz-Grenzen getrennt; ausschließlich FLH05/FLH-PROJ01 PARKED. 0 € zusätzliche Work-Creditpakete.
+
+---
+
 ## v228/SW228 LIVE_ACCEPTED · 31.10.2026
 
 Main aa2df390d40ee4d2c77fe5dd11e83d8eb99a6b24, vollständiger Run41145529388 einschließlich CI/Deploy/Live-Chromium/Firefox/WebKit SUCCESS. Eigener Live-Artefaktdownload 13020739558 mit GitHub-SHA256 8f840a018f0275e5b868948ad61a9c4306140ddf3b721d89c6c579fbfe279ce8 und ZIP-CRC geprüft; PASS-Bericht mit korrektem Commit und SW, 121 exakten Assetmatches, 18 Axe-Scans, 0 Fehler. Backup/Restore, echte synthetische UI-/IDB-Speicherung, Reload und Offline bestanden. Integrierte PRs: 218, 219, 222, 225. [Dauerhafter vollständiger Releasebeleg](release-evidence/v228-live-acceptance.json). Neue akzeptierte Rückfallbasis; keine Datenrücksetzung/Down-Migration.
