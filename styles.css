@@ -1841,3 +1841,19 @@
 .booking-permission-details[open]>summary::after{transform:rotate(180deg)}
 .booking-permission-details>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
 .booking-permission-details>p{font-size:12px;line-height:1.5;margin:4px 0 12px;overflow-wrap:anywhere}
+
+/* Missing quotes remain explicit at every dashboard aggregation level. */
+#dashboardPage .provider-row{flex-wrap:wrap;row-gap:5px}
+#dashboardPage .aggregate-provider-note{flex:0 0 100%;font-size:11px;font-weight:450;line-height:1.4;color:#4d6756}
+#dashboardPage .aggregate-account-note{margin:5px 0 0;font-size:11px;line-height:1.4;color:#4d6756}
+#dashboardPage .aggregate-account-value{margin-left:auto;text-align:right;max-width:170px;flex-shrink:0}
+#dashboardPage .aggregate-account-value strong{white-space:nowrap}
+#dashboardPage .provider-total{white-space:normal;text-align:right;max-width:48%}
+#dashboardPage .hero-quality-summary p{font-size:13px;line-height:1.4;margin:0 0 10px}
+#dashboardPage .allocation-note{color:#4d6756;font-size:12px;line-height:1.4}
+#dashboardPage .stat-label{hyphens:auto}
+
+@media(max-width:360px){#dashboardPage .stat-label{font-size:11px}}
+
+/* Stable button target while WebKit changes preview text during focus transfer. */
+.allocation-center>*{pointer-events:none}

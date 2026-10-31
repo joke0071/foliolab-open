@@ -38,6 +38,17 @@ export function quoteQualitySummary(positions,now=Date.now()){
 /** Display-only: an absent quote is not evidence of a zero position value.
  * Keep genuine zero holdings, sourced zero quotes and excluded contributions. */
 export function positionValueLabel(position,value,formatMoney){
- return displayQuotePrice(position)===null&&Number(position.quantityExact??position.quantity)!==0&&position.valuationMode!=='excluded'
-  ?'Nicht bewertet':formatMoney(value);
+ return hasMissingPositionValue(position)?'Nicht bewertet':formatMoney(value);
+}
+
+/** Same missing-value rule for individual and aggregate presentation. No valuation math. */
+export function hasMissingPositionValue(position){
+ return displayQuotePrice(position)===null&&Number(position.quantityExact??position.quantity)!==0&&position.valuationMode!=='excluded';
+}
+export function aggregateValuePresentation(positions,value,formatMoney){
+ const included=positions.filter(p=>p.valuationMode!=='excluded');
+ const missing=included.filter(hasMissingPositionValue).length;
+ const allUnknown=missing>0&&missing===included.length;
+ return {missing,allUnknown,value:allUnknown?'Nicht bewertet':formatMoney(value),
+  note:missing?(allUnknown?'':'Bekannte Teilsumme · ')+missing+' Position'+(missing===1?'':'en')+' ohne Kurs':''};
 }

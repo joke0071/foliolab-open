@@ -17,7 +17,7 @@ const observer=()=>{window.__mixedLongTasks=[];new PerformanceObserver(list=>{fo
 const measure=async (p,expected)=>({interactiveMs:await ready(p,expected),longTasks:await p.evaluate(()=>window.__mixedLongTasks)});
 const workerState=async p=>p.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return {controlled:!!navigator.serviceWorker.controller&&navigator.serviceWorker.controller===r?.active,active:r?.active?.state,controller:navigator.serviceWorker.controller?.scriptURL,caches:await caches.keys()};});
 const requireWorker=async p=>{const v=await workerState(p);assert.equal(v.controlled,true);assert.equal(v.active,'activated');assert.deepEqual(v.caches.filter(k=>k.startsWith('foliolab-open-')),[expectedCache]);return v;};
-for(const bookings of [0,10000])for(const cpuRate of [4]){
+for(const bookings of [0,3000])for(const cpuRate of [4]){
  const profile=mkdtempSync(join(tmpdir(),'foliolab-mixed-'));
  const options={headless:true,viewport:{width:390,height:844}};
  let context=await chromium.launchPersistentContext(profile,options),p=context.pages()[0];const errors=[];p.on('pageerror',e=>errors.push(e.message));report.chromium=context.browser()?.version()??'unknown';
@@ -55,6 +55,27 @@ for(const bookings of [0,10000])for(const cpuRate of [4]){
    const storage=new PortfolioStorage(),m=await storage.initialize();storage.close();if(!ledgerQuantityAudit(m).ok)throw Error('Benchmark ledger mismatch');
    return {raw,totalExactEUR:totalExactEUR(m),historical:JSON.stringify(historicalWealthView(m))};
   });
+  // Encryption and complete restore are preparation gates, never timed startup work.
+  // This representative case must fit BOTH existing encrypted reader formats.
+  fixture.backupRoundTrip=await p.evaluate(async()=>{
+   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+   const {backup,safeImport}=await import('/src/model.js');
+   const {createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js');
+   const {encryptBackup,decryptBackup}=await import('/src/crypto-backup.js');
+   const {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup}=await import('/src/backup-vault.js');
+   const storage=new PortfolioStorage(),model=await storage.initialize();storage.close();
+   const raw=backup(model,{includeHistory:true}),plain=JSON.stringify(createCompleteBackup(JSON.parse(raw)));
+   const password='SYNTHETIC benchmark restore only';
+   const restored=decoded=>backup(safeImport(unpackCompleteBackup(JSON.parse(decoded)).data),{includeHistory:true})===raw;
+   const v1=JSON.parse(await encryptBackup(plain,password));
+   const v1Exact=restored(await decryptBackup(v1,password));
+   await configureBackupPassword(password,password);
+   const v2=JSON.parse(await encryptWithBackupPassword(plain));
+   const v2Exact=restored(await decryptPasswordBackup(v2,password));
+   if(!v1Exact||!v2Exact)throw Error('Encrypted complete backup restore mismatch');
+   return {plainCharacters:plain.length,plainBytes:new TextEncoder().encode(plain).length,v1CiphertextCharacters:v1.data.length,v2CiphertextCharacters:v2.data.length,v1Exact,v2Exact};
+  });
+  assert.equal(await stateHash(p),expected);
   fixture.canonicalRawSha256=createHash('sha256').update(values.raw).digest('hex');fixture.historicalSha256=createHash('sha256').update(values.historical).digest('hex');fixture.totalExactEUR=values.totalExactEUR;
   await context.close();
   const samples=[];

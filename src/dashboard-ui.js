@@ -1,4 +1,4 @@
-import {positionValueLabel} from './quote-quality.js';
+import {positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
 import {cashTermsAccountHint} from './cash-terms-ui.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {units,exact} from './decimal.js';
@@ -15,8 +15,9 @@ export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealt
   ];
   const tiles = partitions.map(section => {
     const total = section.items.reduce((sum,p)=>sum+valueEUR(p),0);
-    const note = section.items.length+' '+section.unit;
-    return [section.title,money(total),note];
+    const view=aggregateValuePresentation(section.items,total,money);
+    const note = section.items.length+' '+section.unit+(view.note?' · '+view.note:'');
+    return [section.title,view.value,note];
   });
   const samples=wealth.samples;
   let comparable=samples;
@@ -47,9 +48,11 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
     const accounts=model.accounts.filter(a=>a.providerId===provider.id);
     const items=accounts.flatMap(a=>positionsByAccount.get(a.id)||[]);
     const providerTotal=items.reduce((sum,p)=>sum+valueEUR(p),0);
+    const providerView=aggregateValuePresentation(items,providerTotal,money);
     const rows=accounts.map(account=>{
       const positions=positionsByAccount.get(account.id)||[];
       const sum=positions.reduce((n,p)=>n+valueEUR(p),0);
+      const accountView=aggregateValuePresentation(positions,sum,money);
       const holdings=positions.map(p=>{
         const id=esc(p.id),opened=expandedPositions.has(p.id);
         return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
@@ -57,14 +60,14 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
           '<span class="provider-holding-right"><strong>'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
       }).join('');
-      return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small>'+cashTermsAccountHint(account,esc)+'</div><strong>'+esc(money(sum))+'</strong><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+
-        (holdings?'<div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
+      return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small>'+cashTermsAccountHint(account,esc)+'</div><span class="aggregate-account-value"><strong>'+esc(accountView.value)+'</strong></span><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+
+        (accountView.note?'<p class="aggregate-account-note">'+esc(accountView.note)+'</p>':'')+(holdings?'<div class="provider-holdings">'+holdings+'</div>':'')+'</div>';
     }).join('');
     const open=expanded.has(provider.id)?' open':'';
     return '<details class="provider-accordion" data-provider-id="'+esc(provider.id)+'"'+open+'>'+
       '<summary class="provider-row"><div class="provider-l"><span class="provider-mark">'+esc(provider.name.slice(0,1).toUpperCase())+'</span>'+
       '<div><div class="provider-name">'+esc(provider.name)+'</div><div class="provider-note">'+accounts.length+' Konten · '+items.length+' Positionen</div></div></div>'+
-      '<span class="provider-total">'+esc(money(providerTotal))+'</span><span class="provider-chevron" aria-hidden="true"></span></summary>'+
+      '<span class="provider-total">'+esc(providerView.value)+'</span><span class="provider-chevron" aria-hidden="true"></span>'+(providerView.note?'<span class="aggregate-provider-note">'+esc(providerView.note)+'</span>':'')+'</summary>'+
       '<div class="provider-detail">'+(rows||'<p class="small-help">Noch keine Konten angelegt.</p>')+'</div></details>';
   }).join('');
 }
