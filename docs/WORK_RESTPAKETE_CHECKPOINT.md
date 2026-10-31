@@ -1,3 +1,17 @@
+## v242-Bündel PR250 – verbindlicher aktueller Integrationsplan · 31.10.2026 15:24 UTC
+
+Owner bleibt derselbe aktive Master-/Transferintegrationschat. Bestätigte Produktion/Rückfallbasis: **v240 LIVE_ACCEPTED / d2193e0baa1feb2b64da23b6a7f5b625ce379c42 / SW240**, vollständige unabhängige Quittung und Produktionsbilder nachfolgend. Zusätzliche tatsächliche native Produktionskontaktprüfung aller320/360/390/412/430/1440Breiten für Transferdialog und normale Buchungsliste erledigt.
+
+Die zusammengehörigen de-AT-/Lesbarkeitsänderungen und gemessene Renderoptimierung werden in **PR250** gemeinsam veröffentlicht. **PR249 ist als darin enthalten geschlossen; v241 wurde nie produktiv veröffentlicht.** Dieser neue Plan übersteuert die älteren Vorgaben eines separaten v241-Zwischenreleases. Beide Teilpakete bleiben bis gemeinsamer vollständiger Abnahme **IN_PROGRESS**. Keine wirtschaftliche Importlöschung erweitert, keine Migration oder Finanz-/Persistenzänderung.
+
+Maßgeblicher finaler HEAD **2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75**, Tree **b89661819a2c73be258b9982b35e2d0f758f27e0**, SW242; CI**41214616621 IN_PROGRESS**, Wallet**41214616534**. Letzter roter Chromiumlauf auf8b0995 war der inzwischen präzisierte alte Filtertest: „#bookingList details/summary“ traf auch die neue verschachtelte Hinweis-Offenlegung. Nun exakt äußere booking-meta/direkte Zusammenfassung; alle ursprünglichen Filter-/Notiz-/Datenunverändertheits-Assertions erhalten. Korrigierter TestPASS, anschließend sämtliche restlichen Pflichtbefehle bis Barrierefreiheit/großePortfolios/Offline/PWA-UpdatePASS. Alle100 Befehle des tatsächlichen Chromium-Workflowblocks sind lokal abgearbeitet; geteilte Ausführung um die Selektorkorrektur ehrlich quittiert. Endgültige einzelne vollständige neueCI bleibt Pflicht; alte native grüne Teilgates werden nicht als Gesamtfreigabe übertragen.
+
+Zusätzlicher direkter sequenzieller Bündelvergleich mit tatsächlichem LIVE_ACCEPTED v240-Quellbaum:19Positionen/10000Buchungen/1825Referenzen, identische Fixture/Script, ChromiumCPU4x390×844, je5Proben; **832→567ms Median, beobachtet−31,85%**. Separat bleibt die isolierte Indexmessung884→665ms/−24,77% erhalten. Nicht addieren; keine Hardware-/Kaltstart-/statistische Zusage. Beide Vergleichspaare mit Quellen/Hashes/Rohwerten/separaten Profilen im PR; vollständiger kanonischer Datensatz innerhalb jedes Durchlaufs unverändert.42Fallgruppen/168 Vergleiche gegen unveränderten Elterncode und1020lokaleUnits/0Fail/0Skip bestanden.
+
+Unmittelbar: aktuelle vollständigeCI/Wallet/Artefakte/Mergebaum prüfen; bei vollem Erfolg PR250 autonom mergen; tatsächlichen v242-Main-/Deployment-/Live-Lauf inklusive aller3 Engines,122Assets/SW/Revision und visueller Produktion abnehmen; erst dann LIVE_ACCEPTED/Rückfallbasis aktualisieren. Keine weiteren konkurrierenden Umsetzungen oder separate249-Integration. FLH03/FLH04 aktiv; DELETE-Importwirtschaft/HIST-VIS/echte Gerätesync weiteroffen. Nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## v240 LIVE_ACCEPTED – neue bestätigte Produktion und Rückfallbasis · 31.10.2026 15:11 UTC
 
 Owner: derselbe aktive Master-/Transferintegrationschat. **v240 ist vollständig LIVE_ACCEPTED** und übersteuert alle nachfolgenden älteren RELEASE_PENDING-/DEPLOYED-Angaben. Main**d2193e0baa1feb2b64da23b6a7f5b625ce379c42**, Tree**ebd97055bb7060a571b326b0f296fbdc2c4704a5**, SW**foliolab-open-v240**. PR248 finalerHEAD**5e14895da55fb3258b2069b33bf6b12020da6956**; geprüfter synthetischer Merge und tatsächlicher Main haben denselben vollständigen Quellbaum.
