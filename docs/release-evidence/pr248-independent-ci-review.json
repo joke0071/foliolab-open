@@ -1,0 +1,61 @@
+{
+  "status": "CI_ACCEPTED",
+  "pr": 248,
+  "head": "9972e40867e9f75540b09a1e2489a040d2e58b5b",
+  "testedMerge": "e52832c30bff85884fa9ba4f8ad08deb07cc560a",
+  "tree": "8b3b697a7a973ef23a85282e500d65ddcc7f34cf",
+  "runs": [
+    41207114728,
+    41207114679
+  ],
+  "local": {
+    "units": 1014,
+    "fail": 0,
+    "skip": 0,
+    "syntax": "PASS"
+  },
+  "artifacts": [
+    {
+      "id": 13045735878,
+      "name": "release-gates-e52832c30bff85884fa9ba4f8ad08deb07cc560a",
+      "digest": "sha256:47feae30d6337892669e5f3a8cfab9e03465031224de3d8f62d294cd27a49e37",
+      "independentSHA256Match": true,
+      "zipCRC": "PASS"
+    },
+    {
+      "id": 13045655473,
+      "name": "cross-engine-gates-e52832c30bff85884fa9ba4f8ad08deb07cc560a-1",
+      "digest": "sha256:c047636d04d0664cbf45f5c49514f892b5c19be4b993dcb88fcf4f764dc76480",
+      "independentSHA256Match": true,
+      "zipCRC": "PASS"
+    },
+    {
+      "id": 13045426563,
+      "name": "cross-engine-gates-e52832c30bff85884fa9ba4f8ad08deb07cc560a-3",
+      "digest": "sha256:350d36005051d6d0c2918e3504a72b7558691c879e6ae06ddd5c2373bfed3362",
+      "independentSHA256Match": true,
+      "zipCRC": "PASS"
+    },
+    {
+      "id": 13044802013,
+      "name": "cross-engine-gates-e52832c30bff85884fa9ba4f8ad08deb07cc560a-2",
+      "digest": "sha256:e2ef51ecf9d5a221c291e43134d6719c638eee04a121c004c8238b762a7d903b",
+      "independentSHA256Match": true,
+      "zipCRC": "PASS"
+    }
+  ],
+  "review": {
+    "economicModulesUnchanged": true,
+    "measuredRuntimeHashesAllMatch": true,
+    "visualWidths": [
+      320,
+      360,
+      390,
+      412,
+      430
+    ],
+    "webkit320": true,
+    "realAndroid": false
+  },
+  "next": "Merge after fresh main/head check and v239 acceptance, then separate full production acceptance. No v240 live claim."
+}
