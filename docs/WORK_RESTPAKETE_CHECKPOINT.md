@@ -1,3 +1,13 @@
+## v249 – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 31.10.2026
+
+Main **`3a406db624cb20a457d4886aca31e1ee4eaefe93`**, Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**, SW **`foliolab-open-v249`**. [Release 41242188218](https://github.com/joke0071/foliolab-open/actions/runs/41242188218): Main-Unit/Syntax/Chromium und alle drei Firefox/WebKit-Shards **SUCCESS**, **1037/1037/0 Fehler/0 Skips**. Deploymentjob **124661354448 SUCCESS**, erstellt für exakt denselben Main; Homepage und SW im ersten Nachcheck bestätigt. Statisches Artefakt **13057599260**, API-/Upload-SHA256 exakt **`31c9d487c03f17e231c8cc01d19914037cbfabde4b3acb8b30ab0044826e7838`**.
+
+**Livejob 124661534170 IN_PROGRESS** gegen `https://foliolab.unperfekt.at/`: tatsächliche Produktionsbytes/Kernabläufe/UI in Chromium, anschließend Firefox/WebKit. **Noch kein LIVE_ACCEPTED.** Unabhängiger öffentlicher Cloud-Browser startet die ausgelieferte App mit IndexedDB aktiv und leerem Testprofil; neue Kategorieoptionen sichtbar, Positionsarchivansicht tatsächlich umgestellt. Keine Portfolioeinträge angelegt/gelöscht oder reale Finanzdaten verändert. Kein Android-/nativeSafari-/OAuth-/TalkBack-Beleg. Vollständige eigentliche Live-CI bleibt maßgeblich; v248 bleibt bis zu deren Erfolg letzte bestätigte Rückfallbasis.
+
+Nächste Aktion: exakten Livejob/Artefakte/Produktions-Hash- und Browserbelege abschließen, dann alle drei Planungsdateien und Rückfallbasis aktualisieren. Keine weiteren Codeänderungen während dieses Releaseabschlusses.
+
+---
+
 ## v249 – MERGED / Main-Release läuft · 31.10.2026
 
 [PR #259](https://github.com/joke0071/foliolab-open/pull/259) kontrolliert gemergt: geprüfter finaler HEAD **`4ae8e3ba9c3c03c4e760a296f51984266d2af577`**, Main **`3a406db624cb20a457d4886aca31e1ee4eaefe93`**. Tatsächlicher Main-Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**, exakt gleich lokalem Kandidaten und getestetem synthetischem Merge `45ceae635d8fbe3618ddfa82402fcce242299c19` (frischer Git-Fetch und vollständiger Treevergleich PASS). Keine fremden Main-Änderungen, keine offenen Reviewthreads/Reviews, historischer Checkpoint-Branch nicht integriert.
