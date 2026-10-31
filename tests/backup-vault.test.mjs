@@ -91,3 +91,16 @@ test('malformed backup envelopes fail closed',async()=>{
  await assert.rejects(decryptPasswordBackup({...encrypted,wrap:{...encrypted.wrap,salt:'invalid'}},'testing-password-1234'),/ungültige/);
  await assert.rejects(decryptPasswordBackup({...encrypted,format:'unknown'},'testing-password-1234'),/Backupformat/);
 });
+
+test('oversized Unicode export fails before encryption and leaves the existing vault usable',async()=>{
+ const db=setup(),password='synthetic-boundary-password';
+ await configureBackupPassword(password,password);
+ const before=db.map.get('active'),plain='{"name":"Synthetisch ä 😀 漢字"}';
+ const saved=JSON.parse(await encryptWithBackupPassword(plain));
+ await assert.rejects(encryptWithBackupPassword('😀'.repeat(3000000)),/sichere Wiederherstellung.*15 Millionen/);
+ assert.equal(db.map.get('active'),before);
+ assert.equal(await decryptPasswordBackup(saved,password),plain);
+ const next=JSON.parse(await encryptWithBackupPassword(plain));
+ assert.equal(next.keyId,saved.keyId);
+ assert.equal(await decryptPasswordBackup(next,password),plain);
+});

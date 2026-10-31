@@ -13,16 +13,19 @@ const oldSecond=[pwaCommand,...manifest.shards['2'].flatMap(c=>c==='node tests/b
 const split=oldSecond.indexOf('UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs');
 assert.ok(split>0);
 const expectedShards={'1':manifest.shards['1'].flatMap(c=>c==='node tests/browser-atomic-storage-cross-engine.mjs'?[c,...periodCommands]:[c]),'2':oldSecond.slice(0,split),'3':oldSecond.slice(split)};
+const recoveryCommand='RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs';
 const command=/^(?:[A-Z][A-Z0-9_]*=\S+\s+)?node tests\/browser-[\w-]+\.mjs$/;
 const commands=s=>s.split('\n').map(l=>l.trim()).filter(l=>command.test(l));
 function validate(source){
  const begin=source.indexOf('  cross-engine:'),end=source.indexOf('\n  deploy:',begin);
- assert.ok(begin>=0&&end>begin);const cross=source.slice(begin,end),actual=commands(cross);
+ assert.ok(begin>=0&&end>begin);const cross=source.slice(begin,end),all=commands(cross);
+ assert.equal(all.filter(c=>c===recoveryCommand).length,1,'Recovery suite mandatory exactly once');
+ const actual=all.filter(c=>c!==recoveryCommand);
  assert.equal(manifest.commands.length,30);assert.equal(new Set(actual).size,actual.length);
  assert.deepEqual(actual.slice().sort(),[...manifest.commands,pchainCommand,sonicCommand,pwaCommand,...periodCommands].sort());
  assert.match(cross,/fail-fast: false/);assert.match(cross,/shard: \[1, 2, 3\]/);
  const branches=cross.match(/if \[\[ [^\n]+matrix\.shard[^\n]+ \]\]; then\n([\s\S]+?)\n {10}elif \[\[ [^\n]+matrix\.shard[^\n]+ \]\]; then\n([\s\S]+?)\n {10}else\n([\s\S]+?)\n {10}fi/);
- assert.ok(branches);for(const key of ['1','2','3']){assert.ok(expectedShards[key].length>0);assert.deepEqual(commands(branches[Number(key)]),expectedShards[key]);}
+ assert.ok(branches);for(const key of ['1','2','3']){assert.ok(expectedShards[key].length>0);assert.deepEqual(commands(branches[Number(key)]).filter(c=>c!==recoveryCommand),expectedShards[key]);}
  assert.deepEqual(v221.shards,expectedShards);
  assert.deepEqual(v221.commands,[...expectedShards['1'],...expectedShards['2'],...expectedShards['3']]);
  assert.match(cross,/name: cross-engine-gates-.*matrix\.shard/);

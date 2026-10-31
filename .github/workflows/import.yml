@@ -192,6 +192,7 @@ jobs:
           node tests/browser-valuation-drilldown.mjs
           node tests/browser-settings-backup.mjs
           node tests/browser-corrupt-backup-restore.mjs
+          node tests/browser-recovery-backup-limits.mjs
           node tests/browser-multitab-integrity.mjs
           node tests/browser-p0-storage.mjs
           node tests/browser-atomic-storage.mjs
@@ -327,6 +328,7 @@ jobs:
             PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
+            RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
             SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
             FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
@@ -401,7 +403,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
       UI_QUALITY_BASE: https://foliolab.unperfekt.at/
@@ -428,6 +430,7 @@ jobs:
           test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
           echo "LIVE_QA_SHA $RELEASE_SHA"
           node tests/browser-live-acceptance.mjs 2>&1 | tee artifacts/gates/production-core.log
+          RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-chromium.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-chromium.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-chromium.log
@@ -457,6 +460,7 @@ jobs:
           PCHAIN_BASE="$ACCEPTANCE_BASE" PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-cross.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-cross.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
+          RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log
           cp artifacts/gates/ui-quality.json artifacts/gates/production-ui-cross.json
           node tests/browser-transfer-states.mjs 2>&1 | tee artifacts/gates/production-transfers-cross.log
           cp artifacts/gates/transfer-states.json artifacts/gates/production-transfers-cross.json

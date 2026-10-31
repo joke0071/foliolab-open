@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {assertDriveBackupTextSize} from '../src/backup-limits.js';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
@@ -33,6 +34,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
    oauthRequests++;if(popupError)this.error_callback?.({type:'popup_closed'});else this.callback?.(oauthResponse??{access_token:'ephemeral-test-token',expires_in:3600});
   }}}}}}:null};
  const backend={
+  assertDriveBackupTextSize,
   hasPasswordVault:async()=>vault,
   async backupGuard(){const expected=JSON.stringify(this.readData());return async()=>{if(JSON.stringify(this.readData())!==expected)throw Error('SYNTHETIC snapshot changed');};},
   readData:()=>({version:3,positions:[{id:'p'}],snapshots:[],providers:[{id:'prov'}],accounts:[]}),
@@ -243,4 +245,17 @@ test('acknowledged upload is not automatically repeated when local acknowledgeme
  t.storage.setItem=()=>{throw Error('SYNTHETIC local acknowledgement quota');};await t.window.FolioDriveBackup.connect();
  assert.ok(t.window.FolioDriveBackup.getStatus().lastBackupAt);assert.match(t.elements.driveBackupStatus.textContent,/Backup hochgeladen.*Abschlussprüfung fehlgeschlagen/);assert.equal(t.backedUpCount,0);
  await t.window.FolioDriveBackup.checkDue();await t.window.FolioDriveBackup.checkDue();assert.equal(t.requests.filter(r=>r.url.includes('upload/drive/v3/files')).length,1);
+});
+
+test('export preflight rejection never uploads, prunes or acknowledges a Drive backup',async()=>{
+ const {preflightBackup}=await import('../src/backup-limits.js');
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,oldBackups:true});
+ t.backend.encryptPasswordBackup=async()=>preflightBackup('😀'.repeat(3000000),'v2',400);
+ await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
+ const previous=JSON.parse(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).lastBackupAt;
+ await t.window.FolioDriveBackup.saveNow();
+ assert.equal(t.uploaded,false);assert.equal(t.backedUpCount,0);
+ assert.equal(t.requests.filter(r=>['POST','DELETE'].includes(r.method)).length,0);
+ assert.equal(JSON.parse(t.storage.getItem('foliolab-open-drive-backup-settings-v1')).lastBackupAt,previous);
+ assert.match(t.elements.driveBackupStatus.textContent,/Backup fehlgeschlagen:.*sichere Wiederherstellung.*unverändert/);
 });

@@ -29,11 +29,20 @@ const pinnedCacheSteps = [
  ]
 ].map(lines=>lines.join('\n')+'\n');
 
-/** Only the three pinned cache stanzas are allowed to differ from the previously
- * sealed CI contract. After removing them, the original workflow bodies must
- * STILL match the unchanged baseline SHA-256 hashes byte-for-byte. */
+/** Preserve every sealed historical command; strip only the three pinned cache
+ * stanzas, mandatory additional recovery suites and the increased live timeout.
+ * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
  let reduced=source;
+ const additions=[
+  '          node tests/browser-recovery-backup-limits.mjs\n',
+  '            RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs\n',
+  '          RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log\n',
+  '          RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log\n'
+ ];
+ for(const line of additions){assert.equal(reduced.split(line).length,2,'Each recovery addition is mandatory exactly once');reduced=reduced.replace(line,'');}
+ assert.equal(reduced.split('    timeout-minutes: 25\n').length,2);
+ reduced=reduced.replace('    timeout-minutes: 25\n','    timeout-minutes: 20\n');
  for(const block of pinnedCacheSteps){
   assert.equal(reduced.split(block).length,2,'Every exact cache stanza must appear once');
   reduced=reduced.replace(block,'');

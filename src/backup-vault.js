@@ -1,3 +1,4 @@
+import {preflightBackup,PASSWORD_BACKUP_CIPHER_BYTES} from './backup-limits.js';
 /**
  * FolioLab Open – unified local/Drive backup vault.
  * No password is persisted. A device-local, non-extractable AES-GCM CryptoKey
@@ -82,16 +83,18 @@ export function isPasswordBackup(envelope){return envelope?.format===BACKUP_V2}
 function validateEnvelope(envelope){
  if(!isPasswordBackup(envelope)||typeof envelope.keyId!=='string'||envelope.keyId.length>64||
     typeof envelope.wrap!=='object')throw Error('Unbekanntes Backupformat.');
- return {nonce:bytes(envelope.iv,12,12),ciphertext:bytes(envelope.data,16,15000000)};
+ return {nonce:bytes(envelope.iv,12,12),ciphertext:bytes(envelope.data,16,PASSWORD_BACKUP_CIPHER_BYTES)};
 }
 export async function encryptWithBackupPassword(plain){
  const saved=await record();
  if(!validRecord(saved))throw Error('Bitte zuerst unter „Backup-Verschlüsselung“ ein gemeinsames Backup-Passwort einrichten.');
- if(typeof plain!=='string'||plain.length>10000000)throw Error('Backup ist zu groß.');
  const nonce=iv();
+ const envelope={format:BACKUP_V2,keyId:saved.keyId,wrap:saved.wrap,iv:b64(nonce),data:'',createdAt:new Date().toISOString()};
+ const raw=preflightBackup(plain,'v2',JSON.stringify(envelope).length);
  const ciphertext=new Uint8Array(await crypto.subtle.encrypt(
-  {name:'AES-GCM',iv:nonce,additionalData:AAD},saved.key,E.encode(plain)));
- return JSON.stringify({format:BACKUP_V2,keyId:saved.keyId,wrap:saved.wrap,iv:b64(nonce),data:b64(ciphertext),createdAt:new Date().toISOString()});
+  {name:'AES-GCM',iv:nonce,additionalData:AAD},saved.key,raw));
+ envelope.data=b64(ciphertext);
+ return JSON.stringify(envelope);
 }
 export async function decryptPasswordBackup(envelope,password){
  const {nonce,ciphertext}=validateEnvelope(envelope);
