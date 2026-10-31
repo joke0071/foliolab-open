@@ -1,3 +1,46 @@
+## Verbindlicher Abschluss dieses Abschnitts: v231 LIVE, gemeinsamer Kandidat #241 CI_ACCEPTED · 31.10.2026
+
+**Owner: ChatGPT Work. Produktion und akzeptierte Rückfallbasis bleiben v231. Kein Merge und kein Deployment durchgeführt.**
+
+[PR #241](https://github.com/joke0071/foliolab-open/pull/241) enthält #239 und #240 unverändert. Exakter HEAD `6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4`, Tree `4a59d9f2c0f6bd624f4c1917da7315f4595289b6`, geprüfter GitHub-Merge-Commit `aa6502a86627fd9703828eb4c9af4d9178f9a2f9` mit identischem Tree. SW234 ist **nur CI_ACCEPTED-Kandidat**. Main weiterhin `1617bdd29da585c88fc713be16a19bea0ed55aba`. Frisch geladene produktive sw.js bytegleich mit Main: SHA256 `4e7c1c76ec2b9bc65cdc75910fee6599a39d17b0bece157202d97c034b867da0`, Cache v231.
+
+### Abgeschlossene Teilpakete
+
+| Paket | Status / Owner | Implementierter Umfang | Offener Rest / nächster Schritt |
+| --- | --- | --- | --- |
+| v231 / #238 | LIVE_ACCEPTED / Work | Hotfix, Run41177642328 und Live-Artefakt13034346337 eigenständig verifiziert; dauerhafter Beleg release-evidence/v231-live-acceptance.json | Echte Android-Hardwareabnahme EXTERNAL |
+| Mobile Qualitätsnachbesserung / #239 | CI_ACCEPTED / Work | Lesbare mobile Titel, Zahlen und Archivwerte, Transfer-/Ertragstitel, lange Anbieter, Navigation; Geometrie-/DOM-Range-Regression mit erfolgreicher Negativkontrolle | Teil des #241-Kandidaten; weitere Positionsdichte-/Filter-/Dialog-/A11y-Verträge bleiben PARTIAL |
+| Fehlender Kurs ≠ Nullwert / #240 | CI_ACCEPTED / Work | In Positionsliste und einzelnen Anbieterpositionen „Nicht bewertet“; echte Nullfälle und gespeicherte Werte erhalten; IDB-Nichtmutation geprüft | Weitere Summen-/Detail-/Chart-/Wallet-/UI-TEXT03–10-Fälle OPEN/PARTIAL |
+| PERF01 Parser-Folgefix / #241 | CI_ACCEPTED / Work | Profil zuerst; höchstens128 erfolgreiche kurze primitive Parseergebnisse; 25.000 unabhängige Rechenvergleiche; keinerlei Journalprüfung ausgelassen | Echte Geräte, große Wallet-Historien und verbleibende LongTasks OPEN/EXTERNAL; PERF01 insgesamt PARTIAL |
+
+### Vollständige Kandidatenabnahme
+
+[CI41181354838](https://github.com/joke0071/foliolab-open/actions/runs/41181354838) und Wallet41181354828 SUCCESS am exakten HEAD. **991 Unit-Tests, Syntax, Chromium sowie alle drei Firefox-/WebKit-Pakete grün.** Deploy/Live bei PR korrekt SKIPPED. Referenzbilder und Toleranzen unverändert.
+
+Cross1-Artefakt13034838316: SHA256 `680562dadd7842e7a4c7ff3b31dd3728e41961ff0737590c3364bdae164d2301`; Cross3-Artefakt13034958035: `5ec8ba050481f522d4889f6791c1d7cbac49ddb607c7de81bb716fb626a14e74`. Beide Downloads gegen GitHub-Digest und ZIP-CRC geprüft. Neue Lesbarkeits- und Nullwertberichte Firefox/WebKit PASS. Echte Screenshots von Mobil-/Auswahl-/Detail-/Tablet-/Desktopzuständen visuell kontrolliert. [Maschinenlesbarer vollständiger Beleg](release-evidence/pr241-ci-acceptance.json). Repräsentative endgültige Bilder unter review-evidence/2026-10-31/pr241-*.png.
+
+Cloud-Browser: alle fünf produktiven Hauptreiter, geöffnete Mehr-Unterbereiche und tatsächlicher synthetischer Erststart/Speichern ohne Kurs geprüft. Keine OAuth-Interaktion fingiert und keine privaten Daten verwendet. Größenmatrix 320/360/390/412/430/768/1440 sowie740×360 und125-%-Textsimulation mit tatsächlichen lokalen/CI-Browsern; keine physische Android-Abnahme behauptet.
+
+### PERF01: gemessener Fortschritt
+
+Direkter A/B-Test mit identischem #240-Runtimebaum und gleicher SW233, ausschließlich src/decimal.js unterschiedlich (SHA256-Beleg): 19 gemischte Positionen, 10.000 Buchungen plus Journal, 1.825 Referenzen, CPU4x, je3Proben. Kaltmedian **7,48→5,13s (−31,4%)**, Warm **7,47→5,04s (−32,5%)**, Buchungsnavigation1,35→0,92s. Kleiner Kontrollfall1000Buchungen/CPU1x: kalt644→551ms, warm548→451ms. Vollständiger gespeicherter IDB-Record samt Revision unverändert. Synthetisch; keine Android-Garantie, keine Verrechnung mit früheren49,44%. Rohwerte, Generatoren und Profil dauerhaft in perf-evidence/2026-10-31 sowie im #241-Branch. Keine Speicher-/CAS-/Finanzformeländerung.
+
+### Weiterhin OPEN / BLOCKED / PARKED
+
+- **OPEN/PARTIAL:** verbleibender UI-MASTER28-/16-teiliger Mehr-/Textvertrag, Positionsdichte, Diagrammmodi, DELETE-MASTER28, FLH03, bestehendes Drive-Backup, PERF01-Reste und weitere aktive Fachpakete. Nicht durch diese Teilfixes pauschal abschließen.
+- **Konkreter P2-Rest:** bei Desktop1440 können sehr lange exakte18-Stellen-Mengen noch auf zwei Zeilen umbrechen. Keine abgeschnittenen Werte; mobile Zeilen im neuen Test einzeilig. Dies nicht als appweit vollständig erledigt deklarieren.
+- **BLOCKED/EXTERNAL:** reale Android-/PWA-/Systemschrift-/Tastatur-/TalkBack-/Safari-/Storage-Eviction-Grenzen, echte OAuth- und originalbelegabhängige Fachabnahmen. Bei Blockierung nächsten unabhängigen vorhandenen Schritt nutzen.
+- **PARKED ausschließlich:** FLH05 und FLH-PROJ01. FLH03 bleibt aktiv.
+- Zusatzbudget für kostenpflichtige Work-Creditpakete: **0€**.
+
+### Exakte nächste Freigabegrenze
+
+**Konkrete Nutzerfreigabe für den einmaligen gemeinsamen Release von #241 als SW234 erforderlich** (Nutzerauftrag31.10., Wochenendregel). Keine frühere allgemeine Freigabe als Ersatz anwenden. #239/#240 nicht zusätzlich einzeln veröffentlichen. Draft bleibt absichtlich bis zur Freigabe; ready_for_review löst nach bestehendem Workflow einen neuen vollständigen Lauf aus und wurde vor Zustimmung nicht unnötig erzeugt.
+
+Nach Freigabe: aktuellen Main-/HEAD-/Merge-/CI-Zustand erneut prüfen, regulär zur Übernahme fertigstellen, erforderliche unveränderte Gates abwarten, einmal kontrolliert integrieren und vollständige Produktions-Live-Abnahme durchführen. Erst dann v234 LIVE_ACCEPTED und Rückfallbasis aktualisieren. Bis dahin v231 stabil. Rückfall nur vorwärts gerichteter Code-Revert mit neuer SW, niemals Datenreset/Down-Migration. **Historischen Checkpoint-Branch niemals vollständig nach main mergen.**
+
+---
+
 ## #240 CI_ACCEPTED; kleiner PERF01-Kontrollfall ohne Startnachteil · 31.10.2026
 
 #240 HEAD1c900a78bd7ead4c74c5de28ab3675ec4a872b29: vollständige CI41180685593 einschließlich test und aller3Cross-Engine-Pakete SUCCESS, Wallet41180685558 SUCCESS; Deploy/Live beiPR korrektSKIPPED. Cross3-Artefakt13035086851 eigenständig geladen, ZIP-CRC und SHA256 `b46bc10007cfb61d944941ba851d610cb2184d3d1ee2e5293397957b70678fdf` mitGitHubabgeglichen. missing-position-value/report.json Firefox+WebKitPASS; echteWebKit390px-Aufnahme visuell geprüft: fehlendeETF/Kryptokurse „Nicht bewertet“, echteNullfälle weiterhin€0,00. NurCI_ACCEPTED, nichtLIVE. #241 enthält beideVorläufer; dessen vollständigeCI41181354838 undWallet41181354828 laufen weiter.

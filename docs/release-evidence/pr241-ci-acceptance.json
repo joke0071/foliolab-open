@@ -1,0 +1,225 @@
+{
+  "date": "2026-10-31",
+  "owner": "ChatGPT Work",
+  "status": "CI_ACCEPTED",
+  "candidate": {
+    "pr": 241,
+    "head": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+    "tree": "4a59d9f2c0f6bd624f4c1917da7315f4595289b6",
+    "testedMerge": "aa6502a86627fd9703828eb4c9af4d9178f9a2f9",
+    "base": "1617bdd29da585c88fc713be16a19bea0ed55aba",
+    "sw": "foliolab-open-v234",
+    "includes": [
+      239,
+      240
+    ],
+    "draft": true
+  },
+  "production": {
+    "status": "LIVE_ACCEPTED",
+    "sw": "foliolab-open-v231",
+    "head": "1617bdd29da585c88fc713be16a19bea0ed55aba",
+    "freshSWHash": "4e7c1c76ec2b9bc65cdc75910fee6599a39d17b0bece157202d97c034b867da0",
+    "freshSWMatchesMain": true,
+    "hardwareAcceptance": "EXTERNAL"
+  },
+  "workflow": {
+    "id": 41181354838,
+    "result": "success",
+    "head": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+    "jobs": [
+      {
+        "id": 124479232183,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "status": "completed",
+        "result": "success"
+      },
+      {
+        "id": 124479258453,
+        "name": "test",
+        "status": "completed",
+        "result": "success"
+      },
+      {
+        "id": 124479258467,
+        "name": "cross-engine (3)",
+        "status": "completed",
+        "result": "success"
+      },
+      {
+        "id": 124479258476,
+        "name": "cross-engine (1)",
+        "status": "completed",
+        "result": "success"
+      },
+      {
+        "id": 124479258601,
+        "name": "cross-engine (2)",
+        "status": "completed",
+        "result": "success"
+      },
+      {
+        "id": 124479259097,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "status": "completed",
+        "result": "skipped"
+      },
+      {
+        "id": 124481064956,
+        "name": "deploy",
+        "status": "completed",
+        "result": "skipped"
+      },
+      {
+        "id": 124481065727,
+        "name": "live-acceptance",
+        "status": "completed",
+        "result": "skipped"
+      }
+    ],
+    "wallet": {
+      "id": 41181354828,
+      "result": "success",
+      "head": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4"
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13035216885,
+      "name": "cross-engine-gates-aa6502a86627fd9703828eb4c9af4d9178f9a2f9-2",
+      "digest": "sha256:39247d86dcf0da058e7deda22203933da7f9908bf1e7f5de47875e13e01c4901",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": false
+    },
+    {
+      "id": 13034958035,
+      "name": "cross-engine-gates-aa6502a86627fd9703828eb4c9af4d9178f9a2f9-3",
+      "digest": "sha256:5ec8ba050481f522d4889f6791c1d7cbac49ddb607c7de81bb716fb626a14e74",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": true
+    },
+    {
+      "id": 13034937975,
+      "name": "release-gates-aa6502a86627fd9703828eb4c9af4d9178f9a2f9",
+      "digest": "sha256:fc3ae2e1930a6e4f0fd80f4f85d4b23c0c4e769353b301bb5cfc6c751cc0552f",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": false
+    },
+    {
+      "id": 13034838316,
+      "name": "cross-engine-gates-aa6502a86627fd9703828eb4c9af4d9178f9a2f9-1",
+      "digest": "sha256:680562dadd7842e7a4c7ff3b31dd3728e41961ff0737590c3364bdae164d2301",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": true
+    },
+    {
+      "id": 13034688359,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:54c16ed5f0940d753dc0693d2ece79b10d7c33e5d2dc7f06f9206280a270f6ba",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": false
+    },
+    {
+      "id": 13034474989,
+      "name": "ci-stage-aa6502a86627fd9703828eb4c9af4d9178f9a2f9",
+      "digest": "sha256:5cc2daf6a56c1eda69b8037765dd701600e8b8adf5166db452636fd342409634",
+      "workflowHead": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4",
+      "downloadedAndDigestCRCCrossChecked": false
+    }
+  ],
+  "checks": {
+    "unitTests": 991,
+    "independentParseComparisons": 25000,
+    "viewportWidths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "landscape": [
+      740,
+      360
+    ],
+    "simulatedTextScale": 1.25,
+    "readabilityNegativeControl": "pre238 CSS fails title width at320",
+    "firefoxWebkitReadability": "PASS",
+    "firefoxWebkitMissingValue": "PASS",
+    "exactStoredRecordsUnchanged": true,
+    "baselinesChanged": false,
+    "tolerancesChanged": false,
+    "visualReview": [
+      "mobile booking normal/details/selection",
+      "tablet and desktop bookings",
+      "large amounts and18-place signed quantities",
+      "missing ETF/crypto prices vs true zero cases"
+    ]
+  },
+  "performance": {
+    "large": {
+      "positions": 19,
+      "bookings": 10000,
+      "references": 1825,
+      "cpuRate": 4,
+      "samples": 3,
+      "coldMs": [
+        7479.9,
+        5129
+      ],
+      "warmMs": [
+        7468.2,
+        5041.4
+      ],
+      "coldGainPercent": 31.4296,
+      "warmGainPercent": 32.4951
+    },
+    "small": {
+      "positions": 19,
+      "bookings": 1000,
+      "cpuRate": 1,
+      "samples": 3,
+      "coldMs": [
+        644,
+        551
+      ],
+      "warmMs": [
+        548,
+        451
+      ]
+    },
+    "physicalAndroid": false,
+    "wholePERF01": "PARTIAL"
+  },
+  "remaining": {
+    "open": [
+      "UI-MASTER28 and16-part More contract",
+      "remaining UI-TEXT03–10 and aggregate/detail/chart semantics",
+      "positions information density",
+      "desktop18-place quantity wrap observed at1440, P2",
+      "PERF01 real wallet-history and device limits",
+      "DELETE-MASTER28",
+      "FLH03",
+      "existing Drive backup",
+      "FLH04 and other active specialist packages"
+    ],
+    "external": [
+      "Android/PWA/system font/keyboard/TalkBack/native Safari",
+      "real OAuth and original evidence dependent cases",
+      "storage eviction/OS crash cases"
+    ],
+    "parked": [
+      "FLH05",
+      "FLH-PROJ01"
+    ]
+  },
+  "release": {
+    "mergePerformed": false,
+    "deploymentPerformed": false,
+    "approval": "concrete user approval required by weekend rule",
+    "next": "Approve cumulative PR241 once; do not separately deploy239/240; recheck exact main/head then full production release/live acceptance",
+    "fallback": "v231; forward code revert with a new SW only; no data reset"
+  },
+  "extraCreditBudgetEUR": 0
+}
