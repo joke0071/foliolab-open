@@ -1,3 +1,11 @@
+## P1-Nachtrag UI-HEADER-STATUS02 verbindlich gebündelt · 31.10.2026
+
+Verantwortlich Codex. Neuer direkter Nutzerauftrag: zwei getrennte kompakte Headeraktionen für lokalen Speicher und Drive, gemeinsam mit DRIVE-HEADER01 / DRIVE-AUTH-PERSIST01. Vertragskommentare in #160 (6540946705 / 6541237601 / 6541315641) und #149 abgeglichen. Keine andere aktive Header-/Drive-PR; vorhandene OAuth-/Verschlüsselungs-/Backupfunktion wird wiederverwendet, kein zweiter Entwicklungsstrang. P1 / PARTIAL / Implementierung und synthetische Regression begonnen, noch nicht veröffentlicht. Lokales Arbeitsverzeichnis foliolab-header auf #243-Basis; Folgeintegration nach laufenden Releases. Authentische Zustände, 44×44px, 320–430/768/1440px, keine zusätzliche mobile Textzeile, direkter Ein-Tipp-Aufruf der vorhandenen OAuth-Funktion, keine persistenten Tokens und kein Polling. Getrennte tatsächliche Speicherfehler-/CAS-Zustände; Erfolg erst nach bestätigtem Commit. Realer Google-OAuth-/Android-Nachweis weiterhin EXTERNAL. FLH04-Sync eigenständiges Sicherheitsfolgepaket OPEN/ACTIVE.
+
+v234-Live-Abnahme läuft weiterhin, #243-CI läuft; beide nicht als abgeschlossen umdeuten. Neue autonome Freigabe gilt. Nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## v234 veröffentlicht / vollständige Abnahme läuft; UI-POS02-Teilpaket #243 gesichert · 31.10.2026
 
 **Neue autonome Nutzerfreigabe gilt unverändert.** [Main-Lauf41185004927](https://github.com/joke0071/foliolab-open/actions/runs/41185004927) am Commit `d28f535e7dc36ec0e2ac4aec8158dbefc3a1f41b`: test, alle drei Cross-Browser-Pakete und Pages-Deployment SUCCESS. Live-SW234 frisch perHTTP geprüft (SHA256 `35058d3c2f47974c9586eab5f9201f4c50a1778535010b626a76af922f8515a1`). Im tatsächlichen Cloud-Browser nach App-Update zeigt derselbe synthetische ETF jetzt „Nicht bewertet“ statt €0,00; Bestand2,5, KursquelleUnbekannt und KursNicht verfügbar erhalten. Screenshot lokal gesichert. Vollständige automatisierte Produktionsabnahme noch IN_PROGRESS (Chromium abgeschlossen, Firefox/WebKit-Installation angelaufen); **noch RELEASE_PENDING, Rückfallbasis weiter v231**. Android-Hardware EXTERNAL.
