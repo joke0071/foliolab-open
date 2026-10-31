@@ -58,7 +58,7 @@
       1440
     ],
     "editorOriginReferenceRemoval": "PASS in all three production engines",
-    "positionBatchRestore": "100 explicit selected records, one revision, unchanged other economic records",
+    "positionBatchRestore": "Candidate and main browser CI PASS: 100 explicitly selected records restored in one revision, unchanged other economic records.",
     "sameTestedAndMergedTree": true
   },
   "artifacts": [
@@ -113,7 +113,7 @@
   ],
   "verificationMethods": [
     "exact published HTTPS URL SHA256 matches against release checkout",
-    "CI upload and artifact API digest equality",
+    "CI upload and artifact API digest equality for static-site and production-live bundles",
     "complete actual three-engine production flows",
     "fresh local git verification of current main and tested tree",
     "independent public browser startup/IndexedDB/visible category options/position archive view in empty profile"
