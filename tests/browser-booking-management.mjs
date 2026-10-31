@@ -19,7 +19,7 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
  try{
   await p.goto('http://127.0.0.1:4173/');await ready();
   const dates=await p.evaluate(async()=>{
-   const {validCalendarDate}=await import('/src/calendar-date.js'),{validateJournalEntry}=await import('/src/transactions.js');
+   const {validCalendarDate,validateJournalEntry}=await import('/src/transactions.js');
    const inputs=['2000-02-29','1900-02-29','2024-02-29','2023-02-29','2026-04-31','2026-04-30','2026-00-01','2026-13-01','2026-01-00','2026-01-32','2026-1-01','2026-01-01T00:00:00Z',null,20260101];
    const result=inputs.map(validCalendarDate);
    const j={id:'synthetic-date-check',date:'2024-02-29',postings:[{id:'one',role:'cash',quantityDeltaExact:'1',amountBookEURExact:'1'},{id:'two',role:'external-clearing',quantityDeltaExact:null,amountBookEURExact:'0'}]};

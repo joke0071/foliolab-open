@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {validCalendarDate} from '../src/calendar-date.js';
-import {validateJournalEntry} from '../src/transactions.js';
+import {validateJournalEntry,validCalendarDate} from '../src/transactions.js';
 import {blankModel,createProvider,createPosition,safeImport} from '../src/model.js';
 import {executeTransaction} from '../src/transactions.js';
 test('strict Gregorian month lengths and leap centuries agree across financial calendar boundaries',()=>{

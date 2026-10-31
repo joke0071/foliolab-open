@@ -2,9 +2,8 @@ import {historyDays,rawQuantity} from './wallet-history-days.js';
 import {validateHistorySession} from './wallet-history-state.js';
 /** Read-only EOD projection. Journal dates are trade dates, not settlement or UTC guesses. */
 import {units,exact,mul} from './decimal.js';
-import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
+import {ledgerQuantityAudit,validateJournalEntry,validCalendarDate as validDate} from './transactions.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
-import {validCalendarDate as validDate} from './calendar-date.js';
 const daysBetween=(a,b)=>(Date.parse(b)-Date.parse(a))/864e5;
 /** Pure capability. Unknown entitlements/CORS are not a positive live capability. */
 export function historicalProviderCapability({provider,currency,listingConfirmed=false,browserTransport=false,licenseState='unknown',quotaStatus='unknown',rangeDays=365,availableDays=365,symbolAllowed=false}={}){
