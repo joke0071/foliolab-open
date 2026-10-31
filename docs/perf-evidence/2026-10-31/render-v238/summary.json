@@ -1,0 +1,132 @@
+{
+  "status": "CANDIDATE_NOT_RELEASED",
+  "baselineCommit": "8d3d6c9f34dc1e09b695e3b8eebdb0462fd33034",
+  "baselineCache": "foliolab-open-v237",
+  "candidateCache": "foliolab-open-v238",
+  "scope": "19 mixed positions,10000 bookings+journal,1825 observations,5 samples per variant,Chromium141/Playwright1.56.1/Linux/CPU4x; actual parent main and candidate runtime",
+  "scriptIdentical": true,
+  "results": {
+    "cold": {
+      "baselineMedianMs": 5696.60000000149,
+      "candidateMedianMs": 4319.699999999255,
+      "improvementPercent": 24.170557876661082,
+      "baselineRangeMs": [
+        5352.5,
+        6085.800000000745
+      ],
+      "candidateRangeMs": [
+        4050.900000002235,
+        4399.599999997765
+      ]
+    },
+    "warm": {
+      "baselineMedianMs": 5166.5,
+      "candidateMedianMs": 3747.5,
+      "improvementPercent": 27.465402109745472,
+      "baselineRangeMs": [
+        4865,
+        5281.699999999255
+      ],
+      "candidateRangeMs": [
+        3497.10000000149,
+        4133.5
+      ]
+    },
+    "offline": {
+      "baselineMedianMs": 5015.60000000149,
+      "candidateMedianMs": 3555.699999999255,
+      "improvementPercent": 29.10718558102323,
+      "baselineRangeMs": [
+        4967.599999997765,
+        5407.699999999255
+      ],
+      "candidateRangeMs": [
+        3532.2999999970198,
+        3574.699999999255
+      ]
+    },
+    "positions": {
+      "baselineMedianMs": 260,
+      "candidateMedianMs": 251,
+      "improvementPercent": 3.4615384615384603
+    },
+    "bookings": {
+      "baselineMedianMs": 1150,
+      "candidateMedianMs": 1049,
+      "improvementPercent": 8.782608695652172
+    },
+    "history": {
+      "baselineMedianMs": 1584,
+      "candidateMedianMs": 650,
+      "improvementPercent": 58.964646464646464
+    },
+    "more": {
+      "baselineMedianMs": 183,
+      "candidateMedianMs": 200,
+      "improvementPercent": -9.289617486338809
+    },
+    "dashboard": {
+      "baselineMedianMs": 1406,
+      "candidateMedianMs": 567,
+      "improvementPercent": 59.6728307254623
+    }
+  },
+  "runtimeDifferences": [
+    {
+      "path": "src/app.js",
+      "baselineSHA256": "6ae2a0c8236cfee6e663055cc154b8241c8254bfe578cc8183acd1c82ba8b2af",
+      "candidateSHA256": "c124f6698757bc19f2a0f6f90b4fc705df1722302c79dd42c8c1df9be9d016ac"
+    },
+    {
+      "path": "src/model.js",
+      "baselineSHA256": "f24bd8063306e6f841e24d5ecc9f65cfcc6206482b5e932e5e4537fd6277dd75",
+      "candidateSHA256": "1bf25d8bc1ab0051c43a47731b9d3a86e0b36c74f06e054d5a114dc483b98a91"
+    },
+    {
+      "path": "src/historical-portfolio-value.js",
+      "baselineSHA256": "2cd477343036653c3634cb31a2739f1c5d9cb6bbd67c455ea5043c7b42751334",
+      "candidateSHA256": "7f4b55071aed4ccc7b4ff645b28598716514c82ae058d6baa5f8dd51b5424be7"
+    },
+    {
+      "path": "sw.js",
+      "baselineSHA256": "72468f58640a4fca0ba54d0203b4ff1626149e857b28423004ad9b7043815d8a",
+      "candidateSHA256": "de0e66b240968bc4dba6eef60a866b9ab3144d0acbc1474fedcb63462638e764"
+    }
+  ],
+  "limitations": [
+    "One ordered A/B pair, no hardware or statistical SLA.",
+    "Readiness is validated dashboard plus two frames; navigation is verified separately, not exact earliest safe input or asynchronous chart completion.",
+    "Do not add percentages to earlier releases."
+  ],
+  "contract": {
+    "result": "PASS",
+    "scope": "isolated prototype only; no production release",
+    "formatCases": 331,
+    "projectionScenarios": [
+      "clean",
+      "past-clearing",
+      "future-clearing",
+      "multiple-clearing",
+      "excluded"
+    ],
+    "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+    "fixtureBytes": 10582038,
+    "financialProjectionExactlyEqual": true,
+    "fixtureUnchanged": true
+  },
+  "dateContract": {
+    "result": "PASS",
+    "scope": "actual cached app calendar-date formatter constructed once, device timezone changes afterwards",
+    "zones": [
+      "Europe/Vienna",
+      "Pacific/Kiritimati",
+      "Pacific/Pago_Pago",
+      "America/Adak",
+      "Asia/Tokyo",
+      "UTC"
+    ],
+    "cases": 42,
+    "appSHA256": "c124f6698757bc19f2a0f6f90b4fc705df1722302c79dd42c8c1df9be9d016ac"
+  },
+  "exactRecordsSettingsRevisionsUnchanged": true
+}

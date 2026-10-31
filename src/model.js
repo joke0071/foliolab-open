@@ -295,6 +295,8 @@ export function persist(model,storage=globalThis.localStorage){
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);
 }
-export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
-export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
+// Cache formatting objects only, never amounts; bound the currency-key set.
+const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',{maximumFractionDigits:8});
+export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return formatter.format(Number.isFinite(n)?n:0);};
+export const quant=n=>quantityFormatter.format(n);
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "scope": "actual cached app calendar-date formatter constructed once, device timezone changes afterwards",
+  "zones": [
+    "Europe/Vienna",
+    "Pacific/Kiritimati",
+    "Pacific/Pago_Pago",
+    "America/Adak",
+    "Asia/Tokyo",
+    "UTC"
+  ],
+  "cases": 42,
+  "appSHA256": "c124f6698757bc19f2a0f6f90b4fc705df1722302c79dd42c8c1df9be9d016ac"
+}
