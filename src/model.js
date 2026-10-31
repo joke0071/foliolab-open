@@ -296,7 +296,7 @@ export function persist(model,storage=globalThis.localStorage){
  observedStorage.set(storage,serialized);
 }
 // Cache formatting objects only, never amounts; bound the currency-key set.
-const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',{maximumFractionDigits:8});
+const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}),tinyQuantityFormatter=new Intl.NumberFormat('de-AT',{notation:'scientific',maximumSignificantDigits:8});
 export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return formatter.format(Number.isFinite(n)?n:0);};
-export const quant=n=>quantityFormatter.format(n);
+export const quant=n=>{const value=Number(n);return Number.isFinite(value)&&value!==0&&Math.abs(value)<1e-8?tinyQuantityFormatter.format(n):quantityFormatter.format(n);};
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

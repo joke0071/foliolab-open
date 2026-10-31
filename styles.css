@@ -1831,3 +1831,13 @@
 /* Inherited v239 account touch/clearance correction. */
 #morePage .provider-settings-group>summary{display:grid;padding-right:124px;min-height:48px}
 #morePage .account-evidence>summary,#morePage .account-evidence .btn{min-width:48px;min-height:48px}
+/* Match secondary booking disclosures while preserving their existing hierarchy. */
+.position-booking-history>summary{font-size:12px;font-weight:600;line-height:1.4;color:#4d6756;min-height:44px}
+
+.booking-permission-details{margin:8px 0;min-width:0}
+.booking-permission-details>summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:600;color:#4d6756;list-style:none}
+.booking-permission-details>summary::-webkit-details-marker{display:none}
+.booking-permission-details>summary::after{content:'⌄';margin-left:auto}
+.booking-permission-details[open]>summary::after{transform:rotate(180deg)}
+.booking-permission-details>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
+.booking-permission-details>p{font-size:12px;line-height:1.5;margin:4px 0 12px;overflow-wrap:anywhere}

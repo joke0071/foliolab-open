@@ -35,8 +35,8 @@ test('accessible details show only real position bookings without imaginary prof
   money:x=>'€'+x,quant:x=>String(x),valueEUR:x=>x.quantity*x.price
  });
  assert.match(markup,/Gebuchte Vorgänge \(2\)/);
- assert.match(markup,/2026-10-22 · Verkauf/);
- assert.match(markup,/2026-10-20 · Kauf/);
+ assert.match(markup,/22\.10\.2026 · Verkauf/);
+ assert.match(markup,/20\.10\.2026 · Kauf/);
  assert.doesNotMatch(markup,/2026-10-23 · Kauf/);
  assert.doesNotMatch(markup,/Dividendenzahlung Flatex ETF/);
  assert.match(markup,/kein belegter Nettogewinn/);

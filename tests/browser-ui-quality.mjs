@@ -1,3 +1,4 @@
+import {localeDisplayBrowserContract} from './locale-display-browser-contract.mjs';
 import {structuredQualityBrowserContract} from './structured-quality-browser-contract.mjs';
 import {browserGateDeadline} from './browser-gate-deadline.mjs';
 // Each imported module owns an isolated browser and awaits its full acceptance
@@ -134,6 +135,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.keyboard.press('Escape');assert.equal(await p.evaluate(()=>document.activeElement.dataset.action),'booking-history');assert.deepEqual(await record(),unitBefore,'axis/metric choices leave exact USD evidence and portfolio unchanged');console.log(engine+': quantity/actual USD price axis units, tiny nonzero prices, five widths/Axe and zero writes PASS');
   await nav('bookings');assert.equal(await p.locator('#bookingTransferDetails').count(),0);assert.ok(await p.locator('#bookingTransferAction').isVisible());assert.match(await p.locator('#bookingTransferHint').innerText(),/Guthabenposition auf einem eigenen Geldkonto/,'an existing account without cash position is not falsely called absent');assert.deepEqual(await record(),unitBefore,'support disclosure remains read-only');
   await structuredQualityBrowserContract({p,nav,record,scan,engine,scans});
+  await localeDisplayBrowserContract({p,nav,record,scan,engine,scans});
   assert.deepEqual(errors,[]);
   report.engines.push({engine,status:'PASS',scans,textScale:'synthetic 150% computed-text stress,320x360; not physical Android',checks:['delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress','all five pages','archive visible without detail disclosure','44px actions,separator and focus clearance,no overlaps','liquidity below providers and closed','mobile labeled history records/desktop table','focused exact decimal disclosure','Escape/focus return','zero exact IndexedDB record mutations']});console.log(engine+': UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS');
  }finally{writeFileSync('artifacts/gates/ui-quality.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}
