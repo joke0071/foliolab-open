@@ -1,3 +1,19 @@
+## Header/Archiv + kanonischer Drive-Schnappschuss: aktueller Releasekandidat · 31.10.2026
+
+**Produktion/Rückfallbasis: v234 LIVE_ACCEPTED. Autonome Releasefreigabe unverändert.** Der vorige #244-Stand 36a946930b406865ff4e00f3e08026fb2829bb88 bestand vollständig CI41190135010 und Wallet41190134928; sämtliche drei Cross-Pakete SUCCESS. Keine Pipeline abgebrochen.
+
+**Aktueller #244-HEAD `db53a64901ec39b1813802868bfeb20b44ef8223`, Tree `aaa91e1cedbaf89274b84a3a320cffcbac64eb63`, SW236 – PARTIAL / CI_PENDING.** Vollständige CI [41191980626](https://github.com/joke0071/foliolab-open/actions/runs/41191980626) läuft; Wallet41191980758 SUCCESS. Nach CI erfolgt gemäß Nutzerfreigabe der gemeinsame Merge mit enthaltenem #243 und genau ein Produktivrelease, anschließend vollständige tatsächliche Live-Abnahme.
+
+Zusätzlicher konkreter Backup-Sicherheitsbefund innerhalb DRIVE-AUTH-PERSIST01: bisher nur Save-/Konfliktflags, keine unmittelbare kanonische Revision-/Schnappschussprüfung. Vorhandenes Backend erhält verpflichtende lesende Prüfung vor Uploadübergängen und Aufbewahrungs-DELETEs. Veralteter kanonischer Stand beziehungsweise Änderung während Verschlüsselung stoppt vor Upload. Bei Änderungen während bestätigtem Upload bleiben ältere Backups und neuere ungesicherte Änderungen erhalten; der tatsächliche Upload wird von fehlgeschlagener Abschlussprüfung unterschieden. Bekannter bestätigter Upload wird im gleichen Lauf bei lokaler Metadaten-Quota nicht automatisch wiederholt. Keine Finanzrechnung, kanonische Schreiblogik, Datenstruktur/Migration, Kryptografie oder Tokenpersistenz geändert. Prüfung serialisiert nur während tatsächlicher Sicherung/Bereinigung, nicht pro Status-/Start-Render.
+
+Lokal **1.008/1.008 Unit-Tests und Syntax PASS**, komplette aktuelle Chromium-Headerregression PASS mit echtem unbemerktem konkurrierendem IndexedDB-Commit: null veraltete Uploads, keine Backupzeit, Gewinner-Datensatz/Revision exakt unverändert; nach Reload regulärer fälliger verschlüsselter Upload. Sechs negative Sicherheitstests lehnen den ungeschützten Originalcode reproduzierbar ab; frischer Positivfall erhält normale Aufbewahrung. Dauerhafter lokaler Beleg im Kandidaten: docs/release-evidence/drive-snapshot-guard-local.json. Reale Google-Freigabe ist damit nicht nachgewiesen und bleibt EXTERNAL.
+
+Header-Soll gebündelt: zwei getrennte 44×44px-Symbole, unverändertes Logo/Beta, keine zusätzliche mobile Textzeile, reale Speicher-/CAS-Zustände, direkte bestehende OAuth-Funktion, sichtbare tatsächliche Verbindungs-/Backup-/Abbruchrückmeldung, richtige Scroll-/Fokusrückgabe einschließlich Querformat. Bestehende Tests/Axe-/Bildreferenzen/Toleranzen vollständig erhalten. #243-Archivansicht enthalten, kein SW235-Zwischenrelease.
+
+Nächster Schritt: aktuelle vollständige CI + Cross-Artefakte frisch prüfen, Main/PR-HEAD/Merge-Tree abgleichen, regulär mergen, volle Produktionsabnahme und dauerhafter Releasebeleg/Checkpoint. Weitere Remote-CAS-/Identitäts-/verteilte Idempotenzfragen bleiben PARTIAL; FLH04-Sync eigenständig OPEN. UI-POS02 Detail-/Dialogaktionen, UI-BOOK03 und aggregierte fehlende Bewertungen bleiben offen. Android/PWA/TalkBack und echtes Google OAuth EXTERNAL. Nur FLH05/FLH-PROJ01 PARKED; Zusatzbudget0€; historischen Checkpoint-Branch nie vollständig mergen.
+
+---
+
 ## P1-Header/Archiv: aktueller Nachfolger remote gesichert · 31.10.2026
 
 **Produktion und Rückfallbasis weiterhin v234 LIVE_ACCEPTED. Autonome Releasefreigabe gilt.** Der gemeinsame #244-Vorgänger 1743253 hat die vollständige CI 41188641172 einschließlich aller drei Cross-Pakete bestanden. Sein Header-Artefakt 13037923721 wurde heruntergeladen, CRC geprüft und WebKit-320px visuell kontrolliert. Google-Mock-Isolierung bei aktivem App-Worker ist damit in Firefox/WebKit nachgewiesen; reale Google-Freigabe weiterhin EXTERNAL.
