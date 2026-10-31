@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -21,10 +22,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await p.goto(base);await ready();
   // Finish the first worker claim before seed/re-navigation. Otherwise a late
   // controller handoff can reload the second document during its baseline read.
-  await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await waitForAppServiceWorker(p);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
   const seed=ledgerModel();seed.settings.autoRefresh=false;
   await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);const before=await read();
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);const before=await read();
   ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   await open();await p.locator('#csvFile').setInputFiles(file(krakenCSV([{wallet:'<img src=x onerror=alert(1)>',amount:'0.000000000000000001',feecurrency:'USD',fee:'2.5'},{asset:'EUR',amount:'-500',feecurrency:'EUR'},{type:'future',subtype:'unproved'}])));await preview();
   assert.ok(await p.locator('#saveDialog').isDisabled());assert.equal(await p.locator('#csvMap-date').count(),0);assert.equal(await p.locator('#csvReview .performance-details').count(),3);

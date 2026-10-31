@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -10,7 +11,7 @@ for(const engine of engines){
  try{
   const ctx=await browser.newContext({ignoreHTTPSErrors:Boolean(proxy)}),p=await ctx.newPage(),errors=[],external=[];p.on('pageerror',e=>errors.push(e.message));
   const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
   const read=()=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return {record:await readPortfolioRecord(db),prefs:Object.keys(localStorage).sort().map(k=>[k,localStorage.getItem(k)])};}finally{db.close();}});
   const before=await read();ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   const payload={text:bitpandaCSV([{'Transaction ID':'SYN-EXACT','Amount Asset':'9007199254740993.000000000000000001','Fee asset':'USD',Fee:'0.000000000000000001','Product ID':'<img src=x onerror=alert(1)>'},{'Transaction ID':'SYN-SHORT','Transaction Type':'reward',omitTax:true},{'Transaction ID':'SYN-SAME'},{'Transaction ID':'SYN-SAME'},{'Transaction ID':'SYN-CONFLICT'},{'Transaction ID':'SYN-CONFLICT',Fee:'2'},{'Transaction ID':'SYN-UNKNOWN','Transaction Type':'future','In/Out':'unknown',Timestamp:'1900-02-29T00:00:00+01:00','Tax Fiat':'-',Spread:'1e-3'}],{preamble:['SYNTHETIC PRIVATE PREAMBLE','Owner,SYNTHETIC PRIVATE OWNER']}),bad:[bitpandaCSV([{omitTax:true}]),bitpandaCSV([{}],{headers:bitpandaHeaders.slice(0,-1)}),bitpandaCSV([{}],{preamble:Array(21).fill('SYNTHETIC')})]};

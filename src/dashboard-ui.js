@@ -1,3 +1,4 @@
+import {positionValueLabel} from './quote-quality.js';
 import {cashTermsAccountHint} from './cash-terms-ui.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {units,exact} from './decimal.js';
@@ -53,7 +54,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
         const id=esc(p.id),opened=expandedPositions.has(p.id);
         return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
           '<summary class="provider-holding" aria-label="'+esc(p.name)+': Details '+(opened?'einklappen':'aufklappen')+'"><span class="provider-holding-name">'+esc(p.name)+'</span>'+
-          '<span class="provider-holding-right"><strong>'+esc(money(valueEUR(p)))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
+          '<span class="provider-holding-right"><strong>'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
           '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
       }).join('');
       return '<div class="provider-account"><div class="provider-account-head"><div><strong>'+esc(account.name)+'</strong><small>'+positions.length+' Positionen</small>'+cashTermsAccountHint(account,esc)+'</div><strong>'+esc(money(sum))+'</strong><button class="link-button" type="button" data-action="view-account" data-id="'+esc(account.id)+'" aria-label="Positionen von '+esc(account.name)+' anzeigen">Positionen →</button></div>'+

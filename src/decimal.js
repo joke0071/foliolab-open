@@ -1,5 +1,13 @@
 /** Local fixed-point arithmetic for portfolio ledgers; at most 18 decimal places. */
 export const SCALE=10n**18n;
+// Pure parsing results only: immutable primitives, successful parses, bounded
+// to 128 short inputs. No journal/model/permission validation is cached.
+const parsedUnits=new Map();
+const PARSED_UNITS_LIMIT=128;
+function rememberUnits(key,result){
+ if(key!==null){if(parsedUnits.size>=PARSED_UNITS_LIMIT)parsedUnits.delete(parsedUnits.keys().next().value);parsedUnits.set(key,result);}
+ return result;
+}
 function expand(v){
  const s=String(v).trim().replace(',','.');
  const match=/^([+-]?)(\d+)(?:\.(\d+))?(?:e([+-]?\d+))?$/i.exec(s);
@@ -12,13 +20,15 @@ function expand(v){
 /** @param {string|number|bigint} value @returns {bigint} */
 export function units(value){
  if(typeof value==='bigint')return value*SCALE;
+ const key=(typeof value==='string'&&value.length<=80)||typeof value==='number'?String(value):null;
+ if(key!==null&&parsedUnits.has(key))return parsedUnits.get(key);
  const s=expand(value);
  const match=/^([+-]?)(\d+)(?:\.(\d+))?$/.exec(s);
  const fraction=match[3]||'';
  if(fraction.length>18 && /[1-9]/.test(fraction.slice(18)))throw Error('Mehr als 18 Nachkommastellen können nicht exakt gespeichert werden.');
  if(match[2].length>32)throw Error('Wert überschreitet das unterstützte Größenlimit.');
  const n=BigInt(match[2])*SCALE+BigInt((fraction.slice(0,18)+'0'.repeat(18)).slice(0,18));
- return match[1]==='-'?-n:n;
+ return rememberUnits(key,match[1]==='-'?-n:n);
 }
 /** @param {bigint} n @returns {string} */
 export function exact(n){

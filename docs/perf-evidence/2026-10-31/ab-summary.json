@@ -1,0 +1,28 @@
+{
+  "runtimeDifferences": [
+    {
+      "path": "src/decimal.js",
+      "baseline": "ee4e87eb5b98028a755b7f73d7105cddcb2b6749f4b75f23bb7dbcec992aed6a",
+      "candidate": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611"
+    }
+  ],
+  "runtime": "Chromium 141.0.7390.37 / Playwright 1.56.1 / Node v24.22.1",
+  "scope": "synthetic mixed portfolio, 19 positions, 10000 bookings/journal entries, 1825 references, 4x CPU, 3 samples each; not physical Android",
+  "results": {
+    "baseline": {
+      "coldMedianMs": 7479.899999999907,
+      "warmMedianMs": 7468.200000000186,
+      "bookingsNavigationMedianMs": 1351,
+      "recordUnchanged": true
+    },
+    "candidate": {
+      "coldMedianMs": 5129,
+      "warmMedianMs": 5041.4000000003725,
+      "bookingsNavigationMedianMs": 917,
+      "recordUnchanged": true
+    }
+  },
+  "coldMedianMsImprovementPercent": 31.42956456637035,
+  "warmMedianMsImprovementPercent": 32.495112610799836,
+  "bookingsNavigationMedianMsImprovementPercent": 32.12435233160622
+}

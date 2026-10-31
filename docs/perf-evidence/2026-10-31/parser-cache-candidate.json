@@ -1,0 +1,169 @@
+{
+  "scriptSha256": "663a397888ccc274c5f07a128b43c420cfb8425c121a6ee0f350094b22119b2f",
+  "sha": "experimental-pure-decimal-cache",
+  "scope": "synthetic mixed IndexedDB; fresh Chromium process vs same-dashboard warm reload; 4x CPU emulation is not Android hardware",
+  "runs": 3,
+  "scenarios": [
+    {
+      "positions": 19,
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "references": 1825,
+      "bytes": 10582038,
+      "cpuRate": 4,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 5129,
+            "longTasks": [
+              {
+                "start": 60.700000000186265,
+                "duration": 81
+              },
+              {
+                "start": 368.5,
+                "duration": 62
+              },
+              {
+                "start": 436.20000000018626,
+                "duration": 4547
+              },
+              {
+                "start": 4983.300000000279,
+                "duration": 102
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 5048.200000000186,
+            "longTasks": [
+              {
+                "start": 179,
+                "duration": 57
+              },
+              {
+                "start": 239,
+                "duration": 4574
+              },
+              {
+                "start": 4813,
+                "duration": 87
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 259,
+            "bookings": 900,
+            "history": 1417,
+            "dashboard": 1199
+          },
+          "heap": 81400000
+        },
+        {
+          "cold": {
+            "interactiveMs": 5805.399999999907,
+            "longTasks": [
+              {
+                "start": 67.59999999962747,
+                "duration": 94
+              },
+              {
+                "start": 365.79999999981374,
+                "duration": 54
+              },
+              {
+                "start": 425.59999999962747,
+                "duration": 5221
+              },
+              {
+                "start": 5646.799999999814,
+                "duration": 111
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 5041.4000000003725,
+            "longTasks": [
+              {
+                "start": 175.60000000009313,
+                "duration": 54
+              },
+              {
+                "start": 244.10000000009313,
+                "duration": 4664
+              },
+              {
+                "start": 4908.9000000003725,
+                "duration": 79
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 278,
+            "bookings": 917,
+            "history": 1416,
+            "dashboard": 1183
+          },
+          "heap": 27600000
+        },
+        {
+          "cold": {
+            "interactiveMs": 5071.600000000093,
+            "longTasks": [
+              {
+                "start": 62.10000000009313,
+                "duration": 80
+              },
+              {
+                "start": 346.5,
+                "duration": 62
+              },
+              {
+                "start": 413.79999999981374,
+                "duration": 4497
+              },
+              {
+                "start": 4910.799999999814,
+                "duration": 109
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 4980.299999999814,
+            "longTasks": [
+              {
+                "start": 71,
+                "duration": 50
+              },
+              {
+                "start": 292.79999999981374,
+                "duration": 79
+              },
+              {
+                "start": 375.5,
+                "duration": 4399
+              },
+              {
+                "start": 4775.199999999721,
+                "duration": 91
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 360,
+            "bookings": 1017,
+            "history": 1734,
+            "dashboard": 1266
+          },
+          "heap": 81400000
+        }
+      ],
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "No physical Android device or constrained process memory.",
+    "Navigation timing includes Playwright dispatch and two render frames.",
+    "No comparison against an older release; no performance improvement claimed."
+  ]
+}

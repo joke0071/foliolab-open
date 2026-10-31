@@ -1704,3 +1704,28 @@
  #bookingList .booking-management-row:has(.selection-check)>.booking-row-tools{grid-row:1;justify-content:flex-start}
  #bookingList .booking-management-row:has(.selection-check)>.booking-compact{grid-row:2}
 }
+
+/* Mobile readability follow-up: preserve labels and constrain long provider names. */
+#dashboardPage .provider-l,#dashboardPage .provider-l>div{min-width:0}
+#dashboardPage .provider-l{flex:1}
+#dashboardPage .provider-name{white-space:normal;overflow-wrap:anywhere}
+#dashboardPage .provider-total{flex-shrink:0}
+#bookingTransferDetails>summary>span,#bookingIncomeDetails>summary>span{flex-shrink:0}
+#bookingTransferDetails>summary>small,#bookingIncomeDetails>summary>small{min-width:0}
+@media(max-width:1100px){
+ #bookingsPage .booking-filter-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #bookingsPage .booking-filter-tools>.field:first-child{grid-column:1/-1}
+}
+@media(max-width:767px){
+ #bookingsPage #bookingTransferDetails>summary,#bookingsPage #bookingIncomeDetails>summary{display:grid;row-gap:3px}
+}
+
+@media(max-width:767px){
+ #bookingList .booking-main>strong:first-of-type{grid-column:1/-1;grid-row:1}
+ #bookingList .booking-main>strong:last-of-type{grid-column:1/-1;grid-row:2}
+ #bookingList .booking-main>time{grid-column:1;grid-row:3}
+ #bookingList .booking-main>span:nth-of-type(1){grid-column:2;grid-row:3;text-align:right}
+ #bookingList .booking-main>span:nth-of-type(2){grid-column:1/-1;grid-row:4}
+ #bookingList .booking-main>.booking-origin{grid-column:1/-1;grid-row:5}
+}
+@media(max-width:720px){.mobile-nav button{white-space:nowrap}}

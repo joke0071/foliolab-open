@@ -1,3 +1,4 @@
+import {waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -10,7 +11,7 @@ for(const engine of engines){
  try{
   const ctx=await browser.newContext({ignoreHTTPSErrors:Boolean(proxy)}),p=await ctx.newPage(),errors=[],external=[];p.on('pageerror',e=>errors.push(e.message));
   const ready=()=>p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
-  await p.goto(base);await ready();await p.evaluate(()=>navigator.serviceWorker.ready);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await p.goto(base);await ready();await waitForAppServiceWorker(p);await p.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
   const read=()=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return {record:await readPortfolioRecord(db),prefs:Object.keys(localStorage).sort().map(k=>[k,localStorage.getItem(k)])};}finally{db.close();}});
   const before=await read();ctx.on('request',r=>{const u=new URL(r.url());if(u.origin!==new URL(base).origin&&u.protocol!=='blob:')external.push(r.url());});
   const text=csv('depot',[{4:'Öl, Größe und € <img src=x onerror=alert(1)>',5:'-9.007.199.254.740.993,000000000000000001'},{5:'-',9:'',7:'Thesaurierung'},{5:'0',9:'0',7:'Storno Fusion'},{5:'1,0000000000000000001',1:'29.02.1900',7:'Future'}]);
