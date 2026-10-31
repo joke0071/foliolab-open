@@ -1,3 +1,9 @@
+## Neue verbindliche Releaseautorisierung · 31.10.2026
+
+Die Wochenend-/Praxistest-Releasebeschränkungen sind durch ausdrückliche neue Nutzerentscheidung vollständig aufgehoben. Geprüfte konfliktfreie PRs für routinemäßige UI-/UX-, Performance- und Fehlerkorrekturen selbstständig mergen und veröffentlichen, zusammengehörige Änderungen sinnvoll bündeln. Bestehende CI-/Finanz-/Speicher-/Backup-/Sicherheitsgates beibehalten; jeden Release tatsächlich produktiv abnehmen und im zentralen Checkpoint sichern. Nur bei wesentlichen, nicht ausreichend abgesicherten Finanz-/Daten-/Sicherheitsrisiken konkrete Freigabe einholen. #241/v234 ist ausdrücklich autorisiert; nach dessen Live-Abnahme nächste priorisierte Restpakete fortsetzen. Alle widersprechenden älteren Freigabesätze unten sind historisch. Nur FLH05 und FLH-PROJ01 PARKED; Zusatzbudget0€. Historischen Dokumentationsbranch nicht vollständig nach main mergen.
+
+---
+
 # FolioLab Open – Restpaket-Abgleich und verbindliche neue Nutzwertpriorität · 30.10.2026
 
 Dieser Nachtrag **ergänzt** die vorhandene `KONSOLIDIERTE_ROADMAP.md`, `WORK_RESTPAKETE_CHECKPOINT.md` und `KONSOLIDIERTER_RESTARBEITEN_AUDIT.md`. Keine zweite eigenständige Masterroadmap, keine Produktcodeänderung. Quellenvergleich: tatsächliche Roadmap-Commits vom 26./27./28./29./30.10.2026, vorhandene Fach-/UI- und Sonnet-/Copilot-Übergabeverträge, PR-/Releasebelege. Frühere Statuszeilen bleiben historisch, aber **aktuellste reale Abnahmen haben Vorrang**.
