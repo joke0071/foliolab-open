@@ -1,0 +1,105 @@
+{
+  "scriptSha256": "f317c680dfac6ac67c71807293257184c2c34ba9c9d1794dc67956faa136bfde",
+  "sha": "6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4-runtime-with-baseline-sw",
+  "scope": "synthetic mixed IndexedDB; fresh Chromium process vs same-dashboard warm reload; 4x CPU emulation is not Android hardware",
+  "runs": 3,
+  "scenarios": [
+    {
+      "positions": 19,
+      "bookings": 1000,
+      "journalEntries": 1000,
+      "references": 1825,
+      "bytes": 1403497,
+      "cpuRate": 1,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 554.6000000000931,
+            "longTasks": [
+              {
+                "start": 156.79999999981374,
+                "duration": 351
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 475.29999999981374,
+            "longTasks": [
+              {
+                "start": 38.39999999990687,
+                "duration": 361
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 106,
+            "bookings": 133,
+            "history": 350,
+            "dashboard": 234
+          },
+          "heap": 20500000
+        },
+        {
+          "cold": {
+            "interactiveMs": 550.8000000002794,
+            "longTasks": [
+              {
+                "start": 171.3000000002794,
+                "duration": 346
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 450.70000000018626,
+            "longTasks": [
+              {
+                "start": 39.700000000186265,
+                "duration": 341
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 92,
+            "bookings": 134,
+            "history": 333,
+            "dashboard": 250
+          },
+          "heap": 20500000
+        },
+        {
+          "cold": {
+            "interactiveMs": 543.4000000003725,
+            "longTasks": [
+              {
+                "start": 143.70000000018626,
+                "duration": 360
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 437.29999999981374,
+            "longTasks": [
+              {
+                "start": 41,
+                "duration": 333
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 96,
+            "bookings": 133,
+            "history": 300,
+            "dashboard": 234
+          },
+          "heap": 20500000
+        }
+      ],
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "No physical Android device or constrained process memory.",
+    "Navigation timing includes Playwright dispatch and two render frames.",
+    "No comparison against an older release; no performance improvement claimed."
+  ]
+}
