@@ -1690,3 +1690,17 @@
  #dashboardPage #onboarding>.toolbar-buttons>.btn{padding:10px 7px}
  #bookingsPage #bookingList>.booking-onboarding{padding:15px 10px}
 }
+
+/* BOOKING-MOBILE-231: booking content must never be squeezed beside a long protection hint.
+   Keep the management action/hint on its own line and preserve selection mode. */
+@media(max-width:767px){
+ #bookingList .booking-management-row{grid-template-columns:minmax(0,1fr);row-gap:2px}
+ #bookingList .booking-management-row>.booking-compact{grid-column:1;grid-row:1;min-width:0}
+ #bookingList .booking-main{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #bookingList .booking-management-row>.booking-row-tools{grid-column:1;grid-row:2;display:flex;flex-direction:row;justify-content:flex-end;align-items:center;min-width:0;max-width:100%;width:100%;box-sizing:border-box}
+ #bookingList .booking-management-row>.booking-row-tools .position-row-actions{flex-direction:row;min-width:0;max-width:100%}
+ #bookingList .booking-management-row>.booking-row-tools .reference-protection{display:block;max-width:100%;font-size:11px;line-height:1.4;overflow-wrap:normal}
+ #bookingList .booking-management-row>.booking-row-tools:has(.reference-protection){justify-content:flex-start}
+ #bookingList .booking-management-row:has(.selection-check)>.booking-row-tools{grid-row:1;justify-content:flex-start}
+ #bookingList .booking-management-row:has(.selection-check)>.booking-compact{grid-row:2}
+}
