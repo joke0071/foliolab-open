@@ -27,7 +27,7 @@ try{
  await entry.locator('summary').click();
  assert.equal(await entry.locator('.holding-facts').isVisible(),true);
  const details=await entry.locator('.holding-facts').innerText();
- assert.match(details,/0\.123456789/);
+ assert.match(details,/0,123456789/);
  assert.match(details,/IE0000000001/);
  assert.match(details,/Position zuletzt geändert/);
  for(const width of [320,390,430,768,1024,1280,1440]){
@@ -104,8 +104,8 @@ try{
  const quoteCases=[
   ['missing-quote','Nicht verfügbar','Unbekannt'],
   ['zero-quote','0 EUR','Manuell'],
-  ['unknown-source','123.45 EUR','Unbekannt'],
-  ['exact-quote','123.4567890123456789 EUR','EODHD']
+  ['unknown-source','123,45 EUR','Unbekannt'],
+  ['exact-quote','123,4567890123456789 EUR','EODHD']
  ];
  for(const [id,price,source] of quoteCases){
   const row=page.locator('.position-entry').filter({has:page.locator('[data-action="edit-position"][data-id="'+id+'"]')});
