@@ -3,6 +3,7 @@ import {browserGateDeadline} from './browser-gate-deadline.mjs';
 // suite. Static async imports start those browsers together; keep every gate,
 // but finish one module before starting the next against the same live host.
 for(const check of [
+ './browser-header-status.mjs',
  './browser-missing-position-value.mjs',
  './browser-chart-tooltip.mjs',
  './browser-blocked-reasons.mjs',
@@ -47,7 +48,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(await p.locator('.logo-beta').count(),2,'one badge per original logo');
   assert.equal(await p.locator('#cashTermsOverview').evaluate(e=>!!e.previousElementSibling?.matches('.provider-accordion')),true,'liquidity below providers');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
   for(const width of [320,390,430,768,1440]){
-   await p.setViewportSize({width,height:560});assert.equal(await p.locator('.logo-beta:visible').count(),1);if(width<=720)assert.equal(await p.locator('.mobile-header').evaluate(e=>{const a=e.querySelector('.logo').getBoundingClientRect(),b=e.querySelector('#mobilePortfolioStatus').getBoundingClientRect();return a.right<=b.left;}),true,'Beta logo does not overlap storage status');
+   await p.setViewportSize({width,height:560});assert.equal(await p.locator('.logo-beta:visible').count(),1);if(width<=720)assert.equal(await p.locator('.mobile-header').evaluate(e=>{const a=e.querySelector('.logo').getBoundingClientRect(),b=e.querySelector('.header-status-actions').getBoundingClientRect();return a.right<=b.left;}),true,'Beta logo does not overlap storage status');
    for(const page of ['dashboard','history','positions','bookings','more']){
     await nav(page);
     if(page==='dashboard')await p.locator('#cashTermsOverview').evaluate(e=>e.open=true);

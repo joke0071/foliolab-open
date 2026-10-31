@@ -1,3 +1,4 @@
+import {installHeaderStatus} from './header-status.js';
 import {blockedReasonsMarkup} from './blocked-reasons-ui.js';
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
 import {flatexNativeMarkup,reviewNativeFlatexBindings,flatexNativeSimulationMarkup} from './flatex-native-ui.js';
@@ -79,13 +80,14 @@ import {deletePosition,assertPositionDeletable,setPositionArchived} from './port
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
+let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
 let reviewKind='all',reviewAccount='';
 let otherTabChangedPortfolio=false;
 let referenceSelecting=false,selectedReferenceIds=[],referenceVisibleIds=[],referenceLimit=100,referenceRemovalReceipt=null;
 let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
-let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],includeArchived=false;
+let positionSelecting=false,selectedPositionIds=[],positionMatchingIds=[],positionArchiveView='active';
 let legacyAuditPerformed=false;let page='dashboard',filter='all',range='all',miniRange='all',catalog=POPULAR_COINS.slice(),fullCatalog=false,editor=null,toastTimer=null,installPrompt=null,busy=false,positionLimit=100,bookingLimit=100,listingReviewOpen=false,listingReviewLimit=50;
 const $=id=>document.getElementById(id), esc=escapeHTML;
 const transferMatchingUI=createTransferMatchingUI({getModel:()=>model,assertCurrent:()=>portfolioStore.assertCurrent(),commit:async draft=>{model=draft;await save();},onCreate:kind=>$(kind==='cash'?'addWizard':'addBooking').click(),canCreate:kind=>!$(kind==='cash'?'addWizard':'addBooking').disabled});
@@ -106,9 +108,12 @@ async function save(){
   if(loadFailure)throw Error('Der gespeicherte Datenstand konnte nicht geladen werden. Bitte eine Sicherung wiederherstellen.');
   if(otherTabChangedPortfolio)throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden, bevor du weitere Änderungen speicherst.');
   await portfolioStore.save(model);
+  lastStorageError='';
   try{localStorage.setItem('foliolab-open-unbacked-changes',String(Math.min(9999,backupCounter()+1)));}catch{}
   render();
  }catch(error){
+  if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;
+  lastStorageError=error?.name==='QuotaExceededError'?'Browserspeicher voll. Letzte Änderung nicht gespeichert.':String(error?.message||error);
   if(!loadFailure){try{model=await portfolioStore.reload();}catch(recoveryError){loadFailure=recoveryError;}}
   render();
   notify('Änderung nicht gespeichert: '+(error?.name==='QuotaExceededError'?'Browserspeicher voll. Bitte Backup erstellen.':String(error?.message||error)),true);
@@ -121,14 +126,15 @@ function options(values,selected){return values.map(([id,label])=>`<option value
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
-function recoveryControlAllowed(control){return control.matches('[data-page],.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
+function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
  document.body.classList.toggle('portfolio-unavailable',unavailable);
  document.body.classList.toggle('portfolio-conflict',conflict);
- const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Portfolio lokal gespeichert';
+ const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Portfolio lokal gespeichert';
  $('localPortfolioStatus').textContent=status;
- $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':'Lokal gespeichert';
+ $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Lokal gespeichert';
+ headerStatus?.refresh();
  $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
   $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';
@@ -152,7 +158,7 @@ function syncPortfolioState(){
 }
 function render(){syncPortfolioState();if(loadFailure)return;if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
 function showValuationIssues(){
- includeArchived=valuationIssues(model).some(issue=>model.positions.find(p=>p.id===issue.id)?.archived===true);
+ positionArchiveView=valuationIssues(model).some(issue=>model.positions.find(p=>p.id===issue.id)?.archived===true)?'all':'active';
  reviewKind='quote';reviewAccount='';
  filter='__review';
  positionLimit=100;
@@ -354,6 +360,7 @@ function renderHistory(){
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
   '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
+ $('positionArchiveFilter').value=positionArchiveView;
  $('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
  const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' nicht bestätigt':'Kurse: Noch keine Bewertungen';
@@ -366,8 +373,8 @@ function renderPositions(){
  const tools=$('qualityReviewTools');tools.classList.toggle('hidden',filter!=='__review');
  $('qualityReviewKind').value=reviewKind;
  $('qualityReviewAccount').innerHTML='<option value="">Alle Konten</option>'+model.accounts.map(a=>'<option value="'+esc(a.id)+'"'+(reviewAccount===a.id?' selected':'')+'>'+esc(a.name+' · '+(model.providers.find(p=>p.id===a.providerId)?.name||'Anbieter unbekannt'))+'</option>').join('');
- const hiddenArchiveIssues=includeArchived?0:reviewItems.filter(g=>model.positions.find(p=>p.id===g.id)?.archived).length;
- $('qualityReviewCount').textContent=reviewItems.length+' von '+allReview.length+' betroffenen Positionen. Mehrere Hinweise zählen dieselbe Position nur einmal.'+(hiddenArchiveIssues?' '+hiddenArchiveIssues+' archivierte Positionen sind ausgeblendet. Zum Prüfen archivierte Positionen anzeigen.':'');
+ const hiddenArchiveIssues=reviewItems.filter(g=>{const archived=model.positions.find(p=>p.id===g.id)?.archived===true;return positionArchiveView==='active'?archived:positionArchiveView==='archived'?!archived:false;}).length;
+ $('qualityReviewCount').textContent=reviewItems.length+' von '+allReview.length+' betroffenen Positionen. Mehrere Hinweise zählen dieselbe Position nur einmal.'+(hiddenArchiveIssues?' '+hiddenArchiveIssues+' Positionen sind durch die Archivansicht ausgeblendet. Zum Prüfen unter „Ansicht“ Alle wählen.':'');
  const reviewAction=$('listingReviewAction'),reviewPanel=$('listingReviewPanel'),reviewButton=$('resolveListings');
  if(!unresolved.length)listingReviewOpen=false;
  reviewAction.classList.toggle('hidden',unresolved.length===0);
@@ -401,7 +408,7 @@ function renderPositions(){
  const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
  $('positionFilters').innerHTML=[['all','Alle'],...((allReview.length||filter==='__review')?[['__review','Zu prüfen ('+allReview.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
- const filtered=positionListScope(model.positions,{includeArchived}).filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
+ const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
  positionMatchingIds=visible.map(p=>p.id);renderPositionSelection();
  const list=visible.slice(0,positionLimit).map(p=>{
@@ -448,7 +455,7 @@ function renderPositions(){
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
-  empty(filter==='all'?(model.positions.length?'Keine aktiven Treffer. Bei Bedarf archivierte Positionen anzeigen oder Filter zurücksetzen.':'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
+  empty(filter==='all'?(model.positions.length?(positionArchiveView==='archived'?'Keine archivierten Treffer.':positionArchiveView==='all'?'Keine Treffer in dieser Ansicht.':'Keine aktiven Treffer. Bei Bedarf unter „Ansicht“ archivierte Positionen anzeigen.'):'Noch keine Positionen. Füge eine Anlage hinzu oder importiere vorhandene Daten.'):
    filter==='__review'?'Keine Positionen zu diesem Prüffilter.':'Keine Positionen bei diesem Anbieter.');
 }
 function selectionCoverage(selected,pageIds,scopeIds){
@@ -456,7 +463,7 @@ function selectionCoverage(selected,pageIds,scopeIds){
  return {checked:complete||pageComplete,partial:!complete&&!pageComplete&&scopeIds.some(id=>set.has(id)),next:complete?'Auswahl zurücksetzen':pageComplete||!pageIds.length?'Alle '+scopeIds.length+' im Auswahlbereich auswählen':'Aktuelle Seite auswählen ('+pageIds.length+')'};
 }
 function positionSelectionScope(){
- return filter==='all'&&!$('positionSearch').value.trim()?model.positions.map(p=>p.id):positionMatchingIds;
+ return positionMatchingIds;
 }
 function selectionMaster(id,coverage,disabled){
  return '<label class="selection-master" title="'+coverage.next+'"><input id="'+id+'" type="checkbox" aria-label="'+coverage.next+'" '+(disabled?'disabled':'')+'><span>'+coverage.next+'</span></label>';
@@ -476,9 +483,9 @@ function renderPositionSelection(){
  tools.innerHTML=selectionMaster('positionSelectFiltered',coverage,!scope.length)+
   '<button type="button" class="btn outline selection-danger" data-action="preview-removal" '+(disabled?'disabled':'')+'>Alle löschen</button>'+
   archiveAction+
-  (archived.length?'<button type="button" id="positionArchiveToggle" class="btn outline" data-action="toggle-archives" aria-pressed="'+includeArchived+'">'+(includeArchived?'Archivierte ausblenden':'Archivierte anzeigen')+'</button>':'')+(allArchived?'<p class="small-help" id="positionSingleRestoreHint">Zum Wiederherstellen jeweils eine archivierte Position auswählen.</p>':'');
+  (allArchived?'<p class="small-help" id="positionSingleRestoreHint">Zum Wiederherstellen jeweils eine archivierte Position auswählen.</p>':'');
  const checkbox=$('positionSelectFiltered');checkbox.checked=coverage.checked;checkbox.indeterminate=coverage.partial;
- status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+(scope===positionMatchingIds?'gefilterte Positionen':'alle Positionen, auch archivierte')+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte mit „Fertig“ beenden und neu prüfen.':'');
+ status.textContent=summary.selectedCount+' ausgewählt, davon '+summary.inFilterCount+' im aktuellen Filter · '+summary.hiddenCount+' ausgeblendet · '+archivedSelected+' archiviert · Auswahlbereich: '+'gefilterte Positionen'+' ('+scope.length+')'+(summary.requiresRefresh?' · Auswahl veraltet. Bitte mit „Fertig“ beenden und neu prüfen.':'');
 }
 function focusPositionSelection(){($('positionSelectFiltered')||$('positionListHead').querySelector('button'))?.focus();}
 function openSelectedPositionArchive(){
@@ -2098,7 +2105,7 @@ function openHistoricalPriceCSV(positionId){
  },{once:true});
  input.click();
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'toggle-archives':includeArchived=!includeArchived;positionLimit=100;renderPositions();focusPositionSelection();break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
  $('manageReferences').addEventListener('click',()=>{referenceSelecting=!referenceSelecting;selectedReferenceIds=[];renderReferences();if(referenceSelecting)focusReferences();else $('manageReferences').focus();});
@@ -2158,7 +2165,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
    feedback.scrollIntoView({block:'nearest'});
   }
   finally{editorSubmitting=false;button.disabled=Boolean(loadFailure||editor?.submitBlocked);}
- });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;positionLimit=100;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;positionLimit=100;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
+ });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;positionLimit=100;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;positionLimit=100;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
@@ -2254,6 +2261,20 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   // that package exclusively when the user has enabled full backups.
   if(window.FolioDriveBackup){
     const driveBackend={
+      async backupGuard(){
+        const current=async()=>{
+          if(loadFailure)throw Error('Lokaler Speicher nicht lesbar. Zuerst Originaldaten sichern.');
+          if(busy||saving||otherTabChangedPortfolio)throw Error('Lokaler Vorgang oder Datenkonflikt: zuerst abschließen beziehungsweise neu laden.');
+          try{await portfolioStore.assertCurrent();}catch(error){
+            if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;
+            else lastStorageError=String(error?.message||error);
+            syncPortfolioState();throw error;
+          }
+          if(busy||saving||otherTabChangedPortfolio)throw Error('Lokaler Vorgang oder Datenkonflikt: zuerst abschließen beziehungsweise neu laden.');
+        };
+        await current();const expected=JSON.stringify(model);
+        return async()=>{await current();if(JSON.stringify(model)!==expected)throw Error('Lokaler Datenstand seit Sicherungsbeginn geändert. Bitte erneut sichern.');};
+      },
       readData(){
         if(loadFailure)throw Error('Lokaler Speicher beschädigt. Zuerst die Originaldaten sichern.');
         if(saving||otherTabChangedPortfolio)throw Error('Änderungen in einem anderen Tab oder laufende Speicherung: bitte neu laden beziehungsweise Vorgang abschließen.');
@@ -2457,6 +2478,12 @@ for(const type of ['click','input','change','submit'])document.addEventListener(
  event.preventDefault();event.stopImmediatePropagation();
 },true);
 initNav();initEvents();installCredentialVisibility();
+headerStatus=installHeaderStatus({
+ checkStorageCurrent:async()=>{if(loadFailure||saving)return;try{await portfolioStore.assertCurrent();}catch(error){if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;else lastStorageError=String(error?.message||error);syncPortfolioState();}},
+ readStorage:()=>({saving,conflict:otherTabChangedPortfolio,error:loadFailure?'Gespeicherter Datenstand nicht lesbar. Originaldaten zuerst sichern.':lastStorageError,indexedDB:portfolioStore.isIndexedDB}),
+ onStorageHelp:()=>{if(!loadFailure){go('more');$('exportBackup').focus();return;}const target=$('notice');target.tabIndex=-1;target.scrollIntoView({block:'center'});target.focus();},
+ onDriveSettings:()=>{go('more');const panel=$('googleDriveBackupSetup');for(let parent=panel;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;panel.scrollIntoView({block:'start'});panel.querySelector('summary').focus();}
+});
 $('portfolioStorageState').textContent=loadFailure?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
 $('migrateToIDB').classList.toggle('hidden',portfolioStore.isIndexedDB);
 // Existing pre-cutover installations alone get a one-time, consented handover.

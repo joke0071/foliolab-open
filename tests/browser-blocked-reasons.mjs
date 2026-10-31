@@ -58,7 +58,12 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^100 ausgewählt · 205 gefiltert$/);assert.ok(await p.locator('[data-booking-manage=remove]').isDisabled());
   assert.ok((await p.locator('#bookingBlocked-remove .blocked-reasons-summary').innerText()).length<180);assert.match(await p.locator('#bookingBlocked-remove .blocked-reasons-summary').innerText(),/100 Einträge mit Herkunftsschutz.*100 Einträge mit Stichtagsbezug/);assert.ok(await p.locator('#bookingBlocked-remove .blocked-reasons-summary').evaluate(e=>e.getBoundingClientRect().height<=parseFloat(getComputedStyle(e).lineHeight)*3+1),'booking reasons at most three normal text lines');
   assert.equal(await p.locator('#bookingBlocked-remove>details').evaluate(e=>e.open),false);
-  for(const width of [320,390,430,768,1440]){await p.setViewportSize({width,height:560});await scan('bookings '+width);await p.locator('#bookingBlocked-remove').scrollIntoViewIfNeeded();await p.screenshot({path:out+'/'+engine+'-bookings-'+width+'.png'});}
+  for(const width of [320,390,430,768,1440]){await p.setViewportSize({width,height:560});
+   // Inspect the actionable management heading, rather than a previous tab's
+   // inherited scroll offset leaving this row underneath the sticky header.
+   const done=p.locator('[data-booking-manage=cancel]');await done.evaluate(e=>e.scrollIntoView({block:'center'}));await done.focus();
+   assert.ok(await done.evaluate(e=>{const r=e.getBoundingClientRect(),header=document.querySelector('.mobile-header'),nav=document.getElementById('mobileNav'),top=header.checkVisibility()?header.getBoundingClientRect().bottom:0,bottom=nav.checkVisibility()?nav.getBoundingClientRect().top:innerHeight;return r.top>=top&&r.bottom<=bottom&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)?.closest('button')===e;}),'management action is truly visible and clickable between fixed bars');
+   await scan('bookings '+width);await p.locator('#bookingBlocked-remove').scrollIntoViewIfNeeded();await p.screenshot({path:out+'/'+engine+'-bookings-'+width+'.png'});}
   await p.locator('#bookingSelectFiltered').click();assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^205 ausgewählt/);assert.match(await p.locator('#bookingBlocked-remove').innerText(),/Höchstens 200/);assert.ok(await p.locator('[data-booking-manage=remove]').isDisabled());
   await p.locator('#bookingSelectFiltered').click();assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^0 ausgewählt/);
   await nav('positions');await p.locator('[data-action=select-positions]').click();await p.locator('#positionSelectFiltered').click();await p.locator('[data-action=preview-removal]').click();

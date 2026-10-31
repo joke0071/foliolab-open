@@ -14,7 +14,10 @@ const DEFAULT={mode:'off',clientId:'',retention:3,lastBackupAt:'',folderId:'',fo
 let prefs={...DEFAULT},accessToken='',tokenExpires=0,tokenClient=null,scriptPromise=null;
 let backend=null,busy=false,started=false,initialAutoDone=false;
 let googleClientId='',clientConfigLoaded=false,clientConfigError='';
-let lastKnownBackupCount=null,vaultConfigured=false;
+let lastKnownBackupCount=null,vaultConfigured=false,connecting=false,tokenTimer=null,statusMessage='',statusError=false;
+function getStatus(){return {configured:Boolean(googleClientId),connected:hasToken(),connecting,busy,due:due(),vaultConfigured,lastBackupAt:asDate(prefs.lastBackupAt)?prefs.lastBackupAt:'',offline:window.navigator?.onLine===false,message:statusMessage,error:statusError};}
+function announceStatus(){window.dispatchEvent?.(new CustomEvent('foliolab-drive-status'));}
+function expireTokenAtDeadline(){clearTimeout(tokenTimer);tokenTimer=setTimeout(()=>{accessToken='';updateUi();updateDueStatus();},Math.max(0,tokenExpires-Date.now()));tokenTimer.unref?.();}
 const iso=()=>new Date().toISOString();
 const asDate=value=>Number.isFinite(Date.parse(value||''))?new Date(value):null;
 const day=value=>value.toLocaleDateString('sv-SE');
@@ -26,9 +29,10 @@ function updateBackupOverview(){
  el.textContent=last+count;
 }
 function status(message,error=false){
+ statusMessage=String(message||'');statusError=error;
  const el=get('driveBackupStatus');
  if(el){el.textContent=message;el.hidden=!message;el.classList.toggle('backup-error',error)}
- updateBackupOverview();
+ updateBackupOverview();announceStatus();
 }
 function loadPrefs(){
  try{
@@ -51,16 +55,17 @@ function updateUi(){
  const connectionBadge=get('driveConnectionBadge');
  if(connectionBadge){connectionBadge.textContent=connected?'Verbunden':'Nicht verbunden';connectionBadge.dataset.connected=String(connected)}
  const disconnectButton=get('driveDisconnect');
- if(disconnectButton)disconnectButton.hidden=!connected;
+ if(disconnectButton){disconnectButton.hidden=!connected;disconnectButton.disabled=busy||connecting;}
  const save=get('driveSaveNow');
- if(save)save.disabled=!connected||busy||!vaultConfigured;
+ if(save)save.disabled=!connected||busy||connecting||!vaultConfigured;
  const connect=get('driveConnect');
- if(connect){connect.disabled=busy||!googleClientId;connect.textContent=connected?'Drive erneuern':'Drive verbinden';connect.setAttribute?.('aria-label',connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden');connect.title=connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden'}
+ if(connect){connect.disabled=busy||connecting||!googleClientId;connect.textContent=connected?'Drive erneuern':'Drive verbinden';connect.setAttribute?.('aria-label',connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden');connect.title=connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden'}
  const folderButton=get('openDriveFolderDialog');
- if(folderButton)folderButton.disabled=!connected||busy;
+ if(folderButton)folderButton.disabled=!connected||busy||connecting;
  const folderName=get('driveFolderCurrentName');
  if(folderName)folderName.textContent=prefs.folderName||FOLDER;
- for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate','confirmDriveFolder']){const el=get(id);if(el)el.disabled=!connected||busy;}
+ announceStatus();
+ for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate','confirmDriveFolder']){const el=get(id);if(el)el.disabled=!connected||busy||connecting;}
 }
 function due(){
  if(prefs.mode==='off')return false;
@@ -108,10 +113,11 @@ async function disconnect(){
  updateUi();status('Drive getrennt. Vorhandene Backups bleiben in deinem Google Drive.');
 }
 async function connect(){
- if(busy)return;
+ if(busy||connecting)return;
+ connecting=true;updateUi();
  if(!clientConfigLoaded||!googleClientId)await loadPublicConfig();
- if(!googleClientId)return updateDueStatus();
- try{await loadGoogle()}catch(e){return status(e.message,true)}
+ if(!googleClientId){connecting=false;updateUi();return updateDueStatus();}
+ try{await loadGoogle()}catch(e){connecting=false;updateUi();return status(e.message,true)}
  try{
   if(!tokenClient){
    tokenClient=google.accounts.oauth2.initTokenClient({
@@ -131,14 +137,17 @@ async function connect(){
    try{tokenClient.requestAccessToken({prompt:prefs.lastBackupAt?'':'consent'});}catch(e){finish(e)}
   }).then(response=>{
    accessToken=response.access_token;
-   tokenExpires=Date.now()+Math.max(30,Number(response.expires_in||3600)-90)*1000;
+   const seconds=Number(response.expires_in??3600);
+   if(!Number.isFinite(seconds)||seconds<=0){accessToken='';throw Error('Google hat keine gültige Ablaufzeit geliefert.');}
+   tokenExpires=Date.now()+Math.max(0,seconds-90)*1000;expireTokenAtDeadline();
   });
   updateUi();
   await refreshFolders();
   await refreshList();
   if((prefs.mode!=='off'&&due())||prefs.cleanupPending)await maybeAuto();
   else{status(vaultConfigured?'Verbunden. Jetzt sichern erstellt deine verschlüsselte vollständige Sicherung.':'Verbunden. Zuerst ein Backup-Passwort einrichten, danach Jetzt sichern.');const save=get('driveSaveNow');if(save&&!save.disabled)save.focus?.();}
- }catch(e){status(e.message+' Bitte erneut verbinden.',true);updateUi()}
+ }catch(e){const message=String(e?.message||e);status(message+(/erneut verbinden/.test(message)?'':' Bitte erneut verbinden.'),true);updateUi()}
+ finally{connecting=false;updateUi();}
 }
 async function api(path,options={}){
  if(!hasToken()){accessToken='';updateUi();throw Error('Google-Anmeldung abgelaufen. Bitte erneut verbinden.')}
@@ -310,28 +319,46 @@ async function createFile(parent,encrypted){
  const file=await res.json();if(!file.id)throw Error('Drive hat den Upload nicht bestätigt.');
  return file;
 }
+async function snapshotGuard(){
+ if(typeof backend?.backupGuard!=='function')throw Error('Backupprüfung nicht verfügbar. Anwendung bitte neu laden.');
+ const verify=await backend.backupGuard();
+ if(typeof verify!=='function')throw Error('Backupprüfung nicht verfügbar. Anwendung bitte neu laden.');
+ return verify;
+}
 async function backup(automatic=false){
  if(busy)return;
  if(!hasToken()){updateDueStatus();return}
  if(!vaultConfigured){updateDueStatus();return}
  busy=true;updateUi();status('Verschlüsseltes Backup wird erstellt …');
+ let confirmedUpload=false;
  try{
+  const verify=await snapshotGuard();
   const data=backend.readData();
   if(!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Lokale Bestände sind nicht lesbar.');
   if(data.positions.length===0&&data.providers.length===0&&data.accounts.length===0)throw Error('Portfolio ist leer. Vorhandene Drive-Backups bleiben erhalten.');
   const full=backend.buildCompleteBackup(data,backend.readBackupConfiguration?.()??null);
   const encrypted=await backend.encryptPasswordBackup(JSON.stringify(full));
+  await verify();
   const dir=await folder(true);
-  const uploaded=await createFile(dir,encrypted);
-  prefs.lastBackupAt=iso();savePrefs();
-  backend.onBackedUp?.();
+  await verify();
+  const uploaded=await createFile(dir,encrypted);confirmedUpload=true;
   if(prefs.mode==='start')initialAutoDone=true;
+  prefs.lastBackupAt=iso();savePrefs();
+  try{await verify();}catch{
+   // The confirmed snapshot exists, but newer local data is not in it.
+   // Never mark those changes backed up or prune another useful snapshot.
+   prefs.cleanupPending=false;savePrefs();
+   status('Backup gespeichert. Neuere lokale Änderungen sind noch nicht gesichert. Ältere Drive-Sicherungen bleiben erhalten.',true);
+   return;
+  }
+  backend.onBackedUp?.();
   let removed=0,cleanupError='',verified=false;
   try{
    const saved=await filesInFolder(dir);
    if(!saved.some(f=>f.id===uploaded.id))throw Error('Hochgeladenes Backup fehlt in der Dateiliste; ältere Dateien bleiben erhalten.');
    verified=true;
    for(const old of saved.filter(isCurrentBackup).slice(prefs.retention)){
+    await verify();
     await api('drive/v3/files/'+encodeURIComponent(old.id),{method:'DELETE'});
     removed++;
    }
@@ -345,7 +372,7 @@ async function backup(automatic=false){
     (removed?' · '+removed+' alte gelöscht':'')+
     (cleanupError?(verified?' · Weitere alte Backups werden später bereinigt':' · Bereinigung zur Sicherheit ausgesetzt'):''),
     false);
- }catch(e){status('Backup fehlgeschlagen: '+e.message,true)}
+ }catch(e){status((confirmedUpload?'Backup hochgeladen. Abschlussprüfung fehlgeschlagen: ':'Backup fehlgeschlagen: ')+e.message,true)}
  finally{busy=false;updateUi()}
 }
 async function maybeAuto(){
@@ -404,11 +431,13 @@ async function trimExisting(){
  if(!hasToken()||busy)return;
  busy=true;updateUi();
  try{
+  const verify=await snapshotGuard();
   const dir=await folder(false);
   if(!dir){prefs.cleanupPending=false;savePrefs();status('Noch keine Drive-Backups vorhanden.');return}
   const items=await filesInFolder(dir);
   let removed=0;
   for(const item of items.filter(isCurrentBackup).slice(prefs.retention)){
+   await verify();
    await api('drive/v3/files/'+encodeURIComponent(item.id),{method:'DELETE'});
    removed++;
   }
@@ -469,9 +498,10 @@ async function init(app){
  get('driveFolderCreate').onclick=createFolderFromInput;
  get('driveRestore').onclick=restore;
  const checkButton=get('driveCheck');if(checkButton)checkButton.onclick=checkSelectedDriveBackup;
- window.addEventListener('online',()=>{if(backend)void maybeAuto()});
+ window.addEventListener('online',()=>{updateUi();updateDueStatus();if(backend)void maybeAuto()});
+ window.addEventListener('offline',()=>{updateUi();});
  document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='visible'&&backend){void maybeAuto()}
+  if(document.visibilityState==='visible'&&backend){updateUi();updateDueStatus();void maybeAuto()}
  });
  updateUi();updateDueStatus();
  await loadPublicConfig();
@@ -488,7 +518,7 @@ function reloadRestoredConfiguration(){
  const limit=get('driveRetention');if(limit)limit.value=String(prefs.retention);
  updateUi();updateDueStatus();
 }
-window.FolioDriveBackup={init,checkDue:maybeAuto,reloadRestoredConfiguration,
+window.FolioDriveBackup={init,checkDue:maybeAuto,reloadRestoredConfiguration,getStatus,connect,saveNow:()=>backup(false),
  refreshVaultStatus:async()=>{vaultConfigured=await backend.hasPasswordVault();updateUi();updateDueStatus()}
 };
 })();

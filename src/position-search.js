@@ -19,6 +19,7 @@ export function searchAndSortPositions(positions,model,query='',order='value',va
 }
 
 /** Only the primary list is scoped. Never use this for valuation or import identity. */
-export function positionListScope(positions,{includeArchived=false}={}){
- return positions.filter(p=>includeArchived||p.archived!==true);
+export function positionListScope(positions,{includeArchived=false,view=includeArchived?'all':'active'}={}){
+ if(!['active','archived','all'].includes(view))throw Error('Ungültige Positionsansicht.');
+ return positions.filter(p=>view==='all'||(view==='archived'?p.archived===true:p.archived!==true));
 }

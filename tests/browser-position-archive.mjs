@@ -14,7 +14,7 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
  const record=()=>p.evaluate(async base=>{const {openPortfolioDB,readUnverifiedRecord}=await import(new URL('src/atomic-storage.js',base));const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}},base);
  const menu=async()=>{if(await p.locator('[data-action=select-positions]').count())await p.locator('[data-action=select-positions]').click();};
  const cycle=()=>p.locator('#positionSelectFiltered').click();
- const showArchive=async()=>{await menu();if(await p.locator('#positionArchiveToggle').getAttribute('aria-pressed')==='false')await p.locator('#positionArchiveToggle').click();};
+ const showArchive=async()=>{await p.locator('#positionArchiveFilter').selectOption('all');await menu();};
  const open=async id=>{if(await p.locator('[data-action=cancel-selection]').count())await p.locator('[data-action=cancel-selection]').click();await menu();await p.locator('[data-position-select="'+id+'"]').check();const b=p.locator('#positionSelectionTools [data-action="archive-position"][data-id="'+id+'"]');assert.equal(await b.isVisible(),true,'existing single-position archive dialog is available centrally for exactly the selected row');await b.click();await p.locator('#editDialog[open]').waitFor();};
  const commit=async()=>{await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});};
  const value=()=>p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{totalExactEUR}=await import(new URL('src/model.js',base)),{historicalWealthView}=await import(new URL('src/historical-portfolio-value.js',base));const s=new PortfolioStorage();const m=await s.initialize();s.close();return {total:totalExactEUR(m),history:historicalWealthView(m)};},base);
@@ -76,10 +76,22 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
   // Full archive-aware UI selection, including model rows beyond the first100.
   await p.evaluate(async base=>{const {blankModel,createProvider,createPosition}=await import(new URL('src/model.js',base)),{PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'provider',name:'Synthetic selection'}));for(let i=0;i<401;i++)m.positions.push(createPosition({id:'s'+i,providerId:'provider',name:'Wanted '+i,kind:'etf',quantity:1,price:10,...(i%2?{archived:true}:{})},m));const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},base);
   await p.reload();await ready();await nav('positions');const selectionBefore=await record();if(await p.locator('[data-action=select-positions]').count())await p.locator('[data-action=select-positions]').click();await p.locator('#positionSearch').fill('Wanted');
+  assert.equal(await p.locator('#positionArchiveFilter').inputValue(),'active');
+  await p.locator('[data-action=cancel-selection]').click();
+  await p.locator('#positionArchiveFilter').selectOption('archived');
+  assert.equal(await p.locator('.position-entry').count(),100);
+  assert.ok(await p.locator('.position-entry .tag').allTextContents().then(tags=>tags.includes('Archiviert · Bewertung unverändert')));
+  await p.locator('#positionSearch').fill('Wanted 400');assert.equal(await p.locator('.position-entry').count(),0,'search respects archive-only scope');
+  await p.locator('#positionSearch').fill('Wanted 399');assert.equal(await p.locator('.position-entry').count(),1);
+  await p.locator('#positionSearch').fill('Wanted');
+  await menu();await cycle();await cycle();assert.match(await p.locator('#positionSelectionStatus').innerText(),/200 ausgewählt, davon 200/);
+  await p.locator('[data-action=cancel-selection]').click();
+  await p.locator('#positionArchiveFilter').selectOption('active');await menu();
+  assert.deepEqual(await record(),selectionBefore,'three archive views and selection never write portfolio data');
   assert.equal(await p.locator('[data-position-select]').count(),100);await cycle();await cycle();assert.match(await p.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 201/);
   await showArchive();assert.match(await p.locator('#positionSelectionStatus').innerText(),/201 ausgewählt, davon 201/);assert.match(await p.locator('#positionSelectionStatus').innerText(),/401/);
   await cycle();assert.match(await p.locator('#positionSelectionStatus').innerText(),/250 ausgewählt/);await cycle();assert.match(await p.locator('#positionSelectionStatus').innerText(),/401 ausgewählt/);
-  await menu();await p.locator('#positionArchiveToggle').click();assert.match(await p.locator('#positionSelectionStatus').innerText(),/401 ausgewählt, davon 201.*200 ausgeblendet/);
+  await menu();await p.locator('#positionArchiveFilter').selectOption('active');assert.match(await p.locator('#positionSelectionStatus').innerText(),/401 ausgewählt, davon 201.*200 ausgeblendet/);
   await p.locator('[data-action=preview-removal]').click();assert.equal(await p.locator('#positionRemovalItems').evaluate(e=>e.open),false,'bulk impact details start closed');await p.locator('#positionRemovalItems>summary').click();assert.equal(await p.locator('#dialogFields li').count(),401);assert.match(await p.locator('#dialogFields').innerText(),/Wanted 400/);await p.keyboard.press('Escape');assert.deepEqual(await record(),selectionBefore);
   // Bulk archive: exact selection, explicit consent, no financial changes, real atomic failures.
   await p.locator('[data-action=archive-selected]').click();assert.match(await p.locator('#dialogFields').innerText(),/201 werden archiviert, 200 sind bereits archiviert/);await p.keyboard.press('Escape');assert.deepEqual(await record(),selectionBefore);
@@ -97,11 +109,37 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
   await p.evaluate(async({base,record})=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const s=new PortfolioStorage();await s.initialize();const m=JSON.parse(record.raw);m.settings=record.settings;await s.save(m);s.close();},{base,record:selectionBefore});await p.reload();await ready();await nav('positions');
   // Dashboard valuation drilldown must expose archived holdings that still count.
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const s=new PortfolioStorage(),m=await s.initialize();const item=m.positions.find(p=>p.id==='s1');item.price=0;item.priceExact='0';item.priceStatus='Kurs fehlt';await s.save(m);s.close();},base);
-  await p.reload();await ready();await nav('dashboard');await p.locator('.hero-valuation-link').click();await menu();assert.equal(await p.locator('#positionArchiveToggle').getAttribute('aria-pressed'),'true');assert.ok(await p.locator('[data-position-select=s1]').isVisible());assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),0);await p.locator('[data-action=cancel-selection]').click();assert.ok(await p.locator('.position-row-actions [data-action=edit-position][data-id=s1]').isVisible());
+  await p.reload();await ready();await nav('dashboard');await p.locator('.hero-valuation-link').click();await menu();assert.equal(await p.locator('#positionArchiveFilter').inputValue(),'all');assert.ok(await p.locator('[data-position-select=s1]').isVisible());assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),0);await p.locator('[data-action=cancel-selection]').click();assert.ok(await p.locator('.position-row-actions [data-action=edit-position][data-id=s1]').isVisible());
   // Archive-only portfolios retain an accessible entry and reveal their rows without writes.
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const s=new PortfolioStorage(),m=await s.initialize();m.positions.forEach(p=>p.archived=true);await s.save(m);s.close();},base);
-  await p.reload();await ready();await nav('positions');const onlyArchived=await record();assert.equal(await p.locator('[data-action=edit-position]').count(),0);await menu();assert.equal(await p.locator('#positionSelectFiltered').isDisabled(),false);await showArchive();assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),0);assert.equal(await p.locator('[data-position-select]').count(),100);await cycle();assert.ok(await p.locator('[data-action=archive-selected]').isDisabled(),'no unsupported bulk restoration is offered');assert.equal(await p.locator('[data-action=archive-selected]').innerText(),'Wiederherstellen');assert.match(await p.locator('#positionSingleRestoreHint').innerText(),/jeweils eine/);await p.locator('[data-action=cancel-selection]').click();assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),100);assert.deepEqual(await record(),onlyArchived);
-  for(const width of [320,390,430,768,1440]){await p.setViewportSize({width,height:560});await menu();assert.equal(await p.locator('#positionSelectionTools details').count(),0);await p.locator('#positionArchiveToggle').scrollIntoViewIfNeeded();assert.equal(await p.locator('#positionArchiveToggle').isVisible(),true);await p.keyboard.press('Escape');}assert.deepEqual(await record(),onlyArchived);
+  await p.reload();await ready();await nav('positions');const onlyArchived=await record();assert.equal(await p.locator('[data-action=edit-position]').count(),0);await menu();assert.equal(await p.locator('#positionSelectFiltered').isDisabled(),true,'active view never implicitly selects hidden archived holdings');await showArchive();assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),0);assert.equal(await p.locator('[data-position-select]').count(),100);await cycle();assert.ok(await p.locator('[data-action=archive-selected]').isDisabled(),'no unsupported bulk restoration is offered');assert.equal(await p.locator('[data-action=archive-selected]').innerText(),'Wiederherstellen');assert.match(await p.locator('#positionSingleRestoreHint').innerText(),/jeweils eine/);await p.locator('[data-action=cancel-selection]').click();assert.equal(await p.locator('.position-entry [data-action=edit-position]').count(),100);assert.deepEqual(await record(),onlyArchived);
+  for(const width of [320,360,390,412,430,768,1440]){
+   await p.setViewportSize({width,height:560});
+   for(const selecting of [false,true]){
+    if(await p.locator('[data-action=cancel-selection]').count())await p.locator('[data-action=cancel-selection]').click();
+    if(selecting)await menu();
+    for(const view of ['active','archived','all']){
+     await p.locator('#positionArchiveFilter').selectOption(view);
+     await p.locator('#positionArchiveFilter').evaluate(el=>el.scrollIntoView({block:'center'}));
+     await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+     assert.equal(await p.locator('.position-entry').count(),view==='active'?0:100,'view is independent of selection mode');
+     const geometry=await p.locator('#positionArchiveFilter').evaluate(el=>{const r=el.getBoundingClientRect(),style=getComputedStyle(el),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=style.font;return {width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom,needed:ctx.measureText(el.selectedOptions[0].text).width+parseFloat(style.paddingLeft)+parseFloat(style.paddingRight)+24};});
+     assert.ok(geometry.height>=44&&geometry.width>=geometry.needed&&geometry.left>=0&&geometry.right<=width+1&&geometry.top>=56&&geometry.bottom<=500,'selected archive label is fully readable with 44px touch height: '+JSON.stringify({width,geometry}));
+     assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+    }
+    // Geometry above checks the selected field at its real scrolled location.
+    // Scan the complete page from its initial actionable toolbar position so
+    // off-screen controls are not mistaken for targets inside the sticky header.
+    await p.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
+    await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    assert.ok(await p.locator('#addWizard,#refreshAll,#addWallet').evaluateAll(bs=>bs.every(b=>{const r=b.getBoundingClientRect(),h=document.querySelector('.mobile-header'),n=document.getElementById('mobileNav');return r.width>=44&&r.height>=44&&r.top>=(h.checkVisibility()?h.getBoundingClientRect().bottom:0)&&r.bottom<=(n.checkVisibility()?n.getBoundingClientRect().top:innerHeight);})),engine+' '+width+' position actions remain visible between fixed bars');
+    const viewViolations=await p.evaluate(async()=> (await axe.run(document.getElementById('positionsPage'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)})));
+    assert.deepEqual(viewViolations,[],engine+' '+width+' archive view accessibility in selection mode '+selecting);
+   }
+   await p.locator('#positionArchiveFilter').evaluate(el=>el.scrollIntoView({block:'center'}));
+   if(engine==='chromium')await p.screenshot({path:'artifacts/gates/position-view-'+width+'.png'});
+  }
+  assert.deepEqual(await record(),onlyArchived,'archive view, search and selection never persist UI-only state');
   assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',scans,checks:['linked positive holding visibility only/exact history and totals','cancel/Escape/focus','same ISIN separate accounts','edit retains archive','one revision archive/unarchive','actual quota and post-put transaction abort rollback','401 archive-aware UI selection before pagination','dashboard quality drilldown includes archived valued holdings','peer CAS conflict','offline archive/reload','fresh plain/encrypted UI restore']});
   console.log(engine+': archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS');
  }finally{writeFileSync('artifacts/gates/position-archive.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}

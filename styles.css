@@ -1729,3 +1729,37 @@
  #bookingList .booking-main>.booking-origin{grid-column:1/-1;grid-row:5}
 }
 @media(max-width:720px){.mobile-nav button{white-space:nowrap}}
+
+/* UI-POS02: archive visibility is available before entering selection mode. */
+#positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,2fr) minmax(170px,1fr) minmax(110px,.7fr)}
+@media(max-width:1100px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,1.5fr) minmax(110px,1fr)}
+ #positionsPage .position-search-tools:has(#positionArchiveFilter)>:first-child{grid-column:1/-1}
+}
+@media(max-width:359px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,1fr)}
+}
+
+/* DRIVE-HEADER01 / UI-HEADER-STATUS02: separate local and remote state. */
+.header-status-actions{display:flex;align-items:center;gap:2px;flex:0 0 auto;margin-left:auto}
+.header-status-button{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:44px;width:44px;height:44px;padding:10px;border:0;border-radius:10px;background:transparent;color:#4d6756}
+.header-status-button:hover{background:#e9f2eb}
+.header-status-button>svg{width:21px;height:21px}
+.header-status-mark{position:absolute;right:1px;bottom:1px;min-width:12px;font-size:11px;line-height:12px;font-weight:700;background:#f7f9f6;border-radius:4px}
+.header-status-button[data-state=error],.header-status-button[data-state=conflict]{color:#90463e}
+.header-status-dialog{width:min(440px,calc(100vw - 24px));max-height:calc(100dvh - 32px);overflow:auto;padding:20px;border:1px solid #d5e1d7;border-radius:16px;color:#20372a}
+.header-status-dialog::backdrop{background:rgb(20 42 29 / .25)}
+.header-status-dialog .dialog-head h2{margin:0;font-size:20px}
+#headerStatusBody{white-space:pre-line;overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:720px){.desktop-status-actions{display:none}.mobile-header{gap:6px}.mobile-status-actions{margin-left:auto}}
+@media(min-width:721px){.mobile-status-actions{display:none}}
+@media(max-width:359px){.mobile-header{padding-inline:max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-right))}}
+.header-status-dialog summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:13px;font-weight:650}
+.header-status-dialog details p{overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:720px){
+ .mobile-header{padding-top:calc(5px + env(safe-area-inset-top));padding-bottom:6px}
+ .content :is(button,input,select,textarea,summary){scroll-margin-top:calc(72px + env(safe-area-inset-top));scroll-margin-bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+.header-status-dialog summary::after{content:'';margin-left:auto;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.header-status-dialog details[open]>summary::after{transform:rotate(225deg)}
+.header-status-dialog button{min-width:44px;min-height:44px}
