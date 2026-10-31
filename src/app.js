@@ -284,7 +284,9 @@ function showPositionDetail(id){
   mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days});
   void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
 }
-function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
+// Calendar dates keep their day even if the device time zone changes while the app stays open.
+const dateLabelFormatter=new Intl.DateTimeFormat('de-AT',{day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'});
+function dateLabel(date){const d=new Date(date+'T12:00:00Z');return Number.isNaN(d.getTime())?date:dateLabelFormatter.format(d);}
 let wealthBasis='auto',wealthKey='',wealthCached;
 function wealthView(){const key=JSON.stringify([wealthBasis,model.positions,model.accounts,model.openingPositions,model.journalEntries,model.bookings,model.walletHistory,model.priceHistories,model.snapshots]);if(key!==wealthKey){wealthCached=historicalWealthView(model,wealthBasis);wealthKey=key;}return wealthCached;}
 function drawChart(samples,comparison=null){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}

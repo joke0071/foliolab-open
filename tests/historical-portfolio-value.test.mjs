@@ -5,3 +5,16 @@ test('internally financed ETF conserves 1000 -> 399 cash + 600 ETF = 999, no mut
 test('missing cash opening, orphaned historic positions and unknown accounts forbid complete total',()=>{for(const mutate of [m=>{m.openingPositions.find(p=>p.positionId==='cash').asOf=null;},m=>{m.positions=m.positions.filter(p=>p.id!=='etf');},m=>{m.accounts.push({id:'unknown'});}]){const m=fixture();mutate(m);assert.ok(projectHistoricalPortfolio(m).days.every(d=>d.totalEURExact===null));}});
 test('observed snapshots/revisions never overwritten; discrepancies are independent',()=>{const m=fixture();m.snapshots=[{id:'observed',date:'2023-01-02',total:1000,totalEURExact:'1000',note:'synthetic',revisions:[{date:'2023-01-01',total:900}]}];const before=JSON.stringify(m),r=projectHistoricalPortfolio(m);assert.equal(r.reconciliation[0].differenceEURExact,'-1');assert.equal(r.reconciliation[0].status,'review');assert.equal(JSON.stringify(m),before);});
 test('full disposal retains historic position and known zero without a current price',()=>{const m=fixture();executeTransaction(m,{type:'sell',date:'2023-01-04',positionId:'etf',cashPositionId:'cash',quantity:6,unitPrice:100,feeEUR:0});const day=projectHistoricalPortfolio(m).days.find(d=>d.date==='2023-01-04');assert.equal(day.totalEURExact,'999');assert.equal(day.components.find(p=>p.positionId==='etf').valueEURExact,'0');});
+
+test('unresolved clearing is dated, reported once and cannot rewrite earlier verified totals',()=>{
+ const m=fixture();
+ executeTransaction(m,{positionId:'etf',date:'2023-01-04',type:'buy',quantity:1,unitPrice:10});
+ executeTransaction(m,{positionId:'etf',date:'2023-01-05',type:'buy',quantity:1,unitPrice:10});
+ assert.equal(m.journalEntries.filter(e=>e.status==='unresolved-clearing').length,2);
+ const before=JSON.stringify(m),r=projectHistoricalPortfolio(m,{dates:['2023-01-05','2023-01-02','2023-01-03','2023-01-04']});
+ const clearing=d=>d.missing.filter(x=>x.reason==='Historisches Verrechnungskonto fehlt.');
+ assert.deepEqual(r.days.map(d=>d.date),['2023-01-02','2023-01-03','2023-01-04','2023-01-05']);
+ assert.equal(r.days[0].totalEURExact,'999');assert.equal(clearing(r.days[0]).length,0);assert.equal(clearing(r.days[1]).length,0);
+ assert.equal(clearing(r.days[2]).length,1);assert.equal(clearing(r.days[3]).length,1);assert.equal(r.days[2].totalEURExact,null);assert.equal(r.days[3].totalEURExact,null);
+ assert.equal(JSON.stringify(m),before);
+});

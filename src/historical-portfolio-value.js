@@ -15,6 +15,8 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
  if(calendar.length*model.positions.length>2000000)throw Error('Historie zu groß für eine direkte Übersicht. Zeitraum oder Portfolioumfang eingrenzen.');
  const walletDaysCache=new Map();
  const projections=new Map(model.positions.map(p=>[p.id,projectHistoricalPosition(model,p.id,{dates:calendar,marketHistory:histories[p.id]??null,fxPoints:fxByCurrency[p.currency]??null,walletDaysCache}).rows]));
+ // This index belongs to this pure projection only; dated eligibility and all journal validation remain unchanged.
+ const unresolvedClearing=(model.journalEntries||[]).filter(e=>e.status==='unresolved-clearing');
  const days=calendar.map((date,index)=>{
   let sum=0n;const missing=[...orphaned].map(id=>({positionId:id,reason:'Historische Positionsidentität fehlt.'}));
   missing.push(...emptyAccounts.map(a=>({accountId:a.id,reason:'Historischer Kontoumfang nicht belegt.'})));
@@ -29,7 +31,7 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
    if(row?.valueEURExact===null||!row){missing.push({positionId:p.id,reason:row?.reason||'Historische Bewertung fehlt.'});continue;}
    const signed=units(row.valueEURExact)*BigInt(valueSign(p));sum+=signed;components.push({...row,valueEURExact:exact(signed)});
   }
-  for(const e of model.journalEntries||[])if(e.date<=date&&e.status==='unresolved-clearing'&&!missing.some(x=>x.reason==='Historisches Verrechnungskonto fehlt.'))missing.push({reason:'Historisches Verrechnungskonto fehlt.'});
+  if(unresolvedClearing.some(e=>e.date<=date)&&!missing.some(x=>x.reason==='Historisches Verrechnungskonto fehlt.'))missing.push({reason:'Historisches Verrechnungskonto fehlt.'});
   const complete=model.positions.length>0&&missing.length===0;
   return {date,totalEURExact:complete?exact(sum):null,partialEURExact:components.length?exact(sum):null,coverage:complete?'reconstructed':'partial',components,missing};
  });
