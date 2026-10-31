@@ -1,0 +1,15 @@
+{
+  "status": "IN_PROGRESS",
+  "owner": "current Work chat /root",
+  "base": "621abf1556b0be87d485fd43943cf521dfc965fb",
+  "production": "v245 LIVE_ACCEPTED",
+  "branch": "feature/perf-calendar-projection-lookup",
+  "issue": 177,
+  "scope": [
+    "pure deterministic calendar validation reuse with bounded string cache",
+    "static wallet overlap/alias metadata inside one synchronous historical projection"
+  ],
+  "baseline": "v245-current-baseline/unprofiled.json and separate CPU profiles",
+  "gate": "5+ runs under identical synthetic conditions; exact outputs and records; small portfolios; full CI and live acceptance. No hardware claim.",
+  "collisionProtection": "Do not start a parallel implementation for these hotspots. No optimization published before measured benefit."
+}
