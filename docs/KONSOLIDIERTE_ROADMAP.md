@@ -1,3 +1,46 @@
+## v242 LIVE_ACCEPTED – verbindliche Produktion und nächste Restpakete · 31.10.2026 16:06 UTC
+
+Owner: Codex Work, aktiver Master-/Integrations-/QA-/Releasechat. **v242 ist vollständig LIVE_ACCEPTED**; diese Angabe übersteuert sämtliche älteren LIVE_PENDING-/RELEASE_PENDING-Angaben. Aktuelle bestätigte Produktion und Ausgangs-/Rückfallbasis für weitere Änderungen: **Main25ec0bd1cf834fdb129b67fbc12d90fdecbd9196**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, **foliolab-open-v242**. Zuletzt erneut abgerufenes Main ist identisch; keine neuere Freigabe vorhanden. Vorherige zusätzlich belegte Rückfallversion bleibt **v240/d2193e0baa1feb2b64da23b6a7f5b625ce379c42**. PR249 wurde in PR250 konsolidiert; v241 war ausschließlich Kandidat und wurde nie produktiv veröffentlicht.
+
+### Vollständige Abnahme
+
+- PR250 finalerHEAD**2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75**, geprüfter Merge72958374c7a240ad981fcac89648b7409af834c7: vollständigeCI41214616621/Wallet41214616534SUCCESS. Tatsächlicher Mainbaum exakt identisch. PR250 gemergt, keine fertige PR dieses Strangs offen.
+- **Main-/Produktionslauf41215609885 completed/success**:1020Tests/PASS1020/FAIL0/CANCELLED0/SKIPPED0, Syntax und kompletter Chromiumlauf sowie alle3 Firefox-/WebKit-TeileSUCCESS, DeploymentSUCCESS, tatsächliche Live-AbnahmeSUCCESS.
+- Endgültiges Produktionsartefakt**13048827883**, **54835346Bytes**, SHA256**7c4f93dc2ed74ca3c18e38ad0b07069af6e9eafa7d865aace6dc5d836ee8d940**. Vollständig heruntergeladen, Digest und ZIP-CRC unabhängig geprüft; sämtliche122 tatsächlichen Live-Assethashes gegen exakte Gitobjekte des Main verglichen.
+- Zusätzlicher direkter Produktionsabruf15:51UTC: alle121Precache-Dateien plus Service-Worker exakt identisch. SW-SHA256**f07d0ac02ae79421d10b72817fba8dbfccc71a2e25386eeee3351ec7f018a2de**.
+- Tatsächliche Chromium-Produktion einschließlich Kern-/Backup-/Restore-/Offline-/UI-VerträgenPASS; Firefox/WebKit UIqualität jeweils37ScansPASS, HeaderstatusPASS; Transferzustände je3Engine10Scans plus integrierter6Breiten-/CAS-/Undo-/AktualisierungsvertragPASS.
+- Tatsächliche native Produktionsbilder für Buchungen und Positionsdetails bei**320/360/390/412/430/1440px** visuell geprüft. Vollständige Kontaktübersichten und Originalbeispiele Firefox320/WebKit430 unter **docs/review-evidence/2026-10-31/v242-production-*.png** dauerhaft gesichert.
+- Vollständige eigenständige Quittung: **docs/release-evidence/v242-live-acceptance-primary.json**. PR-CIquittung,42Fallgruppen/168Elternvergleiche und zusätzlicher vollständiger10.000Buchungen-/10.001Abfragen-Vergleich samt unverändertem kanonischen Datensatz sind ebenfalls gesichert. Keine privaten Portfoliodaten; ausschließlich synthetische Profile.
+
+### Produktiv reduzierter Restumfang
+
+Positionen/Buchungen besitzen seitv237 die konsistenten getrennten Detail-/Bearbeitenflächen und gesicherten Löschdialoge innerhalb des vorhandenen erlaubten wirtschaftlichen Umfangs. Der seitv239 eigenständige strukturierte Prüfbereich ersetzt die alte automatische Detailöffnung; normaler Positionsbereich ist entschlackt. Seitv240 sind interne Geldtransfers in normale Buchungsdetails integriert, einschließlich Gegenbuchungen, Belegsuche und bestätigtem Undo; die prominente separate Sektion ist entfernt. Bestehende Finanz-/Eigentums-/Beleg-/Zustimmungs-/CAS-Verträge und die zusätzliche Aktualisierungsschreibschranke bleiben erhalten.
+
+Neu in diesem Bündel: de-AT-Kalendertage in Buchungen/Zeitleiste/Transferauswahl, Suche auch nach sichtbarem Datum, vollständige exakte Dezimalanzeigen und sichtbare Nichtnullkleinstmengen, kompakte native Einschränkungs-Offenlegung sowie konsistente Detailtypografie. Original-ISO/Importidentitäten und gespeicherte Präzision bleiben unverändert. Kurzlebige Indizes je synchroner Anzeigeprüfung beseitigen gemessene Gesamtsuchen; wirtschaftliche Aktionen verwenden weiterhin ihre vollständigen frischen Prüfungen. Keine Migration, keine Finanzberechnungsänderung und keine Ausweitung der wirtschaftlichen Importlöschbarkeit.
+
+Direkter begrenzter synthetischer Vergleich mit tatsächlichv240:19Positionen/10000Buchungen/1825Referenzen, ChromiumCPU4x390×844, je5Proben, warmer Buchungswechsel**832→567ms Median (beobachtet−31,85%)**. Isolierte Indexmessung884→665ms separat erhalten. Nicht addieren; keine statistische/hardwarebezogene/Kaltstartzusage. Rohwerte/Quellhashes/Fixture/exaktes Script/Profile und Grenzen in docs/PERF01_BOOKING_ROW_INDEX_2026-10-31.md bzw. docs/perf-evidence/2026-10-31/booking-row-v242/. Frühere getrennte v238-Kaltstart-/Warmstart-/Offline-Messungen bleiben mit ihren eigenen Grenzen gültig.
+
+### Verbindlicher offener Rest
+
+| Paket | Status | Noch offen |
+|---|---|---|
+| UI-POS02 / UI-BOOK03 Bedienungsbündel | LIVE_ACCEPTED | Keine pauschale Freigabe wirtschaftlich geschützter Vorgänge. |
+| UI-TRANSFER04 integrierte Verwaltung | LIVE_ACCEPTED | Vorhandene Fachgrenzen gelten; Betrag/Datum ersetzen keinen Beleg. |
+| UI-HERO-QUALITY03 | LIVE_ACCEPTED | Weiterhin fachlich getrennte Bewertungs-/Kurs-/Historienkriterien. |
+| PERF01-ANDROID02 / #177 | PARTIAL | Weitere ausschließlich gemessene Engpässe; echte Android-/installiertePWA-/TalkBack-Hardwareabnahme nicht durchgeführt. |
+| DELETE-MASTER28 / wirtschaftliche Importlöschung / #165 | PARTIAL | Sicher rücknehmbare Importfälle einschließlich vollständiger Importidentität/Audit/Abhängigkeiten separat umsetzen; unbekannte Fälle bleiben gesperrt. |
+| DRIVE-AUTH-PERSIST01 / #160 | PARTIAL | v236-Header/Auto-Backup erhalten; echte Google-OAuth-/Android-Szenarien offen. |
+| FLH04 echte Gerätesynchronisierung | OPEN | Sichere gemeinsame Revisions-/Konfliktauflösung; bestehendes Backup ist keine vollständige Synchronisierung. |
+| FLH03 / #148 | OPEN | Ausführbare originale Broker-/Wallet-/Steuer-/Gebühren-/Tax-Lot-Abgleiche weiterführen; keine unbelegten Eigentums-/Steuerannahmen. |
+| HIST-VIS01 | OPEN | Belegte Rekonstruktion und ausschließlich grafische klar markierte Schätzsegmente; keine Schätzwerte in Finanz-/Journal-/Speicherständen. |
+| FLH05 / FLH-PROJ01 | PARKED | Ausschließlich diese beiden Großprojekte bleiben zurückgestellt. |
+
+Weitere UI-TEXT-, Historien-/Wallet-/Staking-, Onboarding-, Offline-/PWA-/Recovery-, Referenz-/Journal- und Mehrtab-Restanforderungen bleiben aktiv und werden nicht durch bestandene Regression pauschal geschlossen. Echte Android-, Safari-, Google-OAuth- und TalkBack-Abnahmen wurden **nicht** als bestanden ausgegeben.
+
+**Nächster unmittelbar ausführbarer Schritt:** separates stärker abgesichertes P1A-Teilpaket für importierte Buchungsrücknahmen beginnen: konkrete sichere EUR-Geldimportfälle und vollständige wirtschaftliche/Referenz-/Importidentitätsvorschau implementieren, den bislang auf manuelle Originale begrenzten Auditvertrag und Wiederimport-/Undo-Verhalten explizit absichern; erst nach vollständig bewiesener Rücknahme Löschbarkeit freigeben. Finanz-/Persistenz-/Sync-Risiken nicht mit UI-Erleichterungen vermischen. Parallel tatsächliche Android-/OAuth-Geräteszenarien nur mit realer Ausführung abnehmen; weitere gemessene Performancearbeit anhand neuer Profile priorisieren. Keine neue Routinefreigabe, keine alte Wochenendsperre und niemals den historischen Checkpointzweig vollständig nachMain mergen.
+
+---
+
 ## v242 LIVE_ACCEPTED – bestätigte Produktion und neue Rückfallbasis · 31.10.2026
 
 **Aktuell vollständig abgenommen: Main25ec0bd1cf834fdb129b67fbc12d90fdecbd9196 / Treeb89661819a2c73be258b9982b35e2d0f758f27e0 / SWfoliolab-open-v242.** Vollständiger Main-/Produktionslauf41215609885 completed/success:1020Unit-Tests/0Fail/0Skip, Chromium, alle3 Firefox-/WebKit-Pakete, Deployment und tatsächliche Live-Abnahme SUCCESS. Dieser Eintrag übersteuert alle früheren v242-DEPLOYED-/LIVE_PENDING-/v240-Rückfallangaben.
