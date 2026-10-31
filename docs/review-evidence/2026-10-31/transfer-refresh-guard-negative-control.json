@@ -1,0 +1,15 @@
+{
+  "scope": "isolated synthetic localhost negative control; deliberately old unguarded transfer callbacks only",
+  "result": "EXPECTED_FAILURE",
+  "exitCode": 1,
+  "assertion": "an open transfer dialog cannot write during an in-flight refresh",
+  "observed": "chromium: synthetic refresh guard revisions 15 -> 16, flows 0",
+  "positiveGuardedContract": "PASS in separate actual candidate Chromium run",
+  "oldCallbacksAppSHA256": "27ef57af71c42bec3e3b95719845a4cbbb3e6334b7224510b1c2fc4381d92aad",
+  "guardedAppSHA256": "dffa700c7307f1e0e47f76310855c479c204a5a0aa1f196da6d24ababd194f77",
+  "limits": [
+    "Synthetic controlled provider latency, no real price or OAuth validation",
+    "No production source edited",
+    "No acceptance assertion disabled in real application gates"
+  ]
+}

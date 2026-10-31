@@ -49,7 +49,7 @@
         "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
       }
     },
-    "candidate": {
+    "pre-guard": {
       "samplesMs": [
         883,
         868,
@@ -64,6 +64,22 @@
         "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
         "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
       }
+    },
+    "candidate": {
+      "samplesMs": [
+        950,
+        915,
+        868,
+        866,
+        867
+      ],
+      "medianMs": 868,
+      "source": {
+        "src/app.js": "dffa700c7307f1e0e47f76310855c479c204a5a0aa1f196da6d24ababd194f77",
+        "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+        "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+        "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+      }
     }
   },
   "differenceVsBaselinePercent": -8.34,
@@ -72,11 +88,12 @@
     "baseline": "5277f2388799b779f0d9095298f1f4f84c3d73e4928eb9840e3e99fb19cdba19",
     "transfer-only": "2fe13004f5b500f7066144845651a867a8c622100e524097f70e4d78701d05ae",
     "intermediate-dedup": "566c825db896e96dcef287e214a1abbf081a12d9b952fd5f143ed3d71ce23c77",
-    "candidate": "4a2076971488f4ad24a298db8e0c2f2545dc804a611d5acccb81b8b38f453719"
+    "pre-guard": "4a2076971488f4ad24a298db8e0c2f2545dc804a611d5acccb81b8b38f453719",
+    "candidate": "23220f47a722492493a0ebf4ffadd21a9af08522dce941491e178faae2783393"
   },
   "recordTimestampNote": "Each fixture save has its own updatedAt. Full exact record hashes are compared before/after within each variant, not equated across separately initialized profiles.",
   "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
   "method": "5 warm navigations/variant, same synthetic input,100 rendered rows,390x844,CPU4x,two frames; separate profile; ordered variants; no SLA/significance claim",
   "exploratoryRunExcluded": "Earlier baseline overlapped a local browser regression and is excluded; accepted three variants ran serially without another local browser test.",
-  "intermediateNote": "Intermediate dedup prototype is retained. Final retest follows the booking management focus correction, so accepted runtime hashes match the final source; no best-of-sample selection."
+  "intermediateNote": "All intermediate diagnostic variants retained. Final retest follows the in-flight refresh write guard, so accepted runtime hashes match final source. No best-of-sample selection."
 }
