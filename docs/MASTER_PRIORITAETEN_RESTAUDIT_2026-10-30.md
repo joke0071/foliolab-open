@@ -1,3 +1,15 @@
+## v250 – MERGED · Main-/Produktionslauf IN_PROGRESS
+
+[PR #260](https://github.com/joke0071/foliolab-open/pull/260) kontrolliert gemergt. Main **`0b804f09ff83324898e9f86a021fe1831c71e1d2`**, Tree **`daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`**, exakt gleich geprüftem Kandidaten HEAD `f630beee13c330511742fbcef01e9037a4554604` und synthetischem Merge `f20950b840f853cc5c3a05ff59f6ee0bd78542c6` (Git-/API-Treevergleich bestätigt). **Volle PR-CI 41246798523 SUCCESS, Wallet 41246798616 SUCCESS, 1042/1042 Tests/0 Fehler/0 Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Shards PASS.** Neue Recovery-Suite tatsächlich in allen drei Engines bestanden. Reviewkommentare/Reviews leer; Main unmittelbar vor Merge unverändert, keine zweite neue Implementierung. Historischer Checkpoint-Branch nicht integriert.
+
+**Main-/Release [41247930145](https://github.com/joke0071/foliolab-open/actions/runs/41247930145) läuft. Noch kein DEPLOYED/LIVE_ACCEPTED. Sichere bestätigte Rückfallbasis bleibt v249.** Geplanter SW `foliolab-open-v250`; Main-Gates, Deployment und zusätzliche tatsächliche v250-Produktionsprüfung müssen erfolgreich enden. Keine weiteren Codeänderungen während dieses Abschlusses.
+
+Produktumfang: #254 erste begrenzte Etappe – gemeinsame Vorprüfung neuer verschlüsselter Exporte gegen bestehende Readergrenzen; UTF-8/GCM/Base64/tatsächliche JSON-Hülle, verständliche Ablehnung ohne neue Sicherungsbestätigung, keine Limiterhöhung/Finanz-/Schema-/CAS-/Kryptovertragsänderung. Bestehende größere lokale v2-Dateien bleiben lesbar: unabhängiger synthetischer Readernachweis 16.000.332 Dateibytes, exakter entschlüsselter Inhalt, unveränderter Vault; Repro/Ergebnis unter `docs/release-evidence/v250-legacy-local-reader.*`. Nur Kryptoreadernachweis, keine vollständige 16-MB-Portfolio-/Hardwareabnahme. Eigene lokalen Screenshots bei 320/1440 tatsächlich angesehen; weitere sieben Breiten/Axe automatisiert, keine physische Android-/Safari-/OAuth-/TalkBack-Abnahme.
+
+**#254 bleibt PARTIAL**, übrige Kompatibilitäts-/alte-Tab-/Crash-/Quota-/Recovery-Matrix und reale Geräte offen. Nach erfolgreichem Release nächster ausführbarer Schritt #255 FIN-E2E01, danach #256 und aktive weitere Fachpakete sequenziell. FLH03/FLH04/FLH05/FLH-PROJ01/HIST-VIS01 ACTIVE; ältere PARKED-/Budget-/Wochenendsperren SUPERSEDED.
+
+---
+
 ## #254 / v250 – IN_PROGRESS · PR #260 gesichert
 
 Owner Work /root (97b37cee055e). Einziger aktiver Implementierungsstrang `feature/recovery-backup-size-preflight`, geprüfter lokaler/remote identischer Tree `daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`, HEAD `f630beee13c330511742fbcef01e9037a4554604`. [PR #260](https://github.com/joke0071/foliolab-open/pull/260), [volle CI 41246798523](https://github.com/joke0071/foliolab-open/actions/runs/41246798523) und Wallet 41246798616 laufen. **Noch kein CI_ACCEPTED/MERGED/DEPLOYED. Produktion bleibt v249 LIVE_ACCEPTED.**

@@ -1,0 +1,24 @@
+{
+  "status": "MERGED",
+  "main": "0b804f09ff83324898e9f86a021fe1831c71e1d2",
+  "head": "f630beee13c330511742fbcef01e9037a4554604",
+  "tree": "daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9",
+  "syntheticMerge": "f20950b840f853cc5c3a05ff59f6ee0bd78542c6",
+  "pr": 260,
+  "ci": 41246798523,
+  "wallet": 41246798616,
+  "unit": {
+    "pass": 1042,
+    "fail": 0,
+    "skip": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "mainRun": 41247930145,
+  "production": "PENDING",
+  "fallback": "v249",
+  "scope": "first bounded stage of REL-RECOVERY01; no limit increase/schema/CAS/financial/cryptographic-contract change"
+}
