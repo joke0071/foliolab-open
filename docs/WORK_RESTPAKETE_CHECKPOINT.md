@@ -19,6 +19,18 @@
 
 ---
 
+## v248 / P1-Aggregate – MERGED · Release läuft (31.10.2026)
+
+Owner /root. [PR #258](https://github.com/joke0071/foliolab-open/pull/258) kontrolliert gemergt, geprüfter finaler HEAD **`aabac9dad98d73b6f7e861b1aa6bf7dd1647a3bb`**. Main **`2f309fa3cca92710a4ed367ac42b240ae220bc7e`**, tatsächlicher Merge-Tree **`2b09741d74eba51ffc8d5c51f117020a4b02f45b`**, exakt gleich dem geprüften synthetischen Merge `29aea9229a2622e548238dc74514f02071fdbe0c`.
+
+- Umfang: fehlende Kurse in Hero-/Kategorie-/Anbieter-/Kontosummen und Donut transparent; bekannte Teilsummen samt fehlender Kursanzahl; vollständig unbekannt „Nicht bewertet“ statt bestätigtem Nullwert. Echte Nullwerte, ausgeschlossene Aliasse und bestehende Finanzarithmetik bleiben erhalten. Keine zusätzliche permanente Hero-Hinweiszeile, keine Schema-/Persistenzänderung.
+- WebKit-Resetregression durch echte Ereignisspur nachgewiesen und korrigiert: stabile Mittenschaltfläche als Pointerziel, unveränderte Vorschautexte nicht erneut ersetzen. Neuer Fall abweichender Hover gegenüber gepinnter Kategorie mit anschließender Rückkehr. Vorherige rote HEADs **nicht** akzeptiert.
+- Finale PR-CI **[41234608609](https://github.com/joke0071/foliolab-open/actions/runs/41234608609) completed / success**, Wallet **41234608694 SUCCESS**: **1036/1036 Tests**, keine Fehler/Skips, Syntax, Chromium und alle Firefox-/WebKit-Shards SUCCESS. Browser-Matrix/Axe, vollständig unbekannte und belegte Nullwerte, Donut-Reset und exakte unveränderte kanonische Records bestanden. Lokale visuelle Prüfung tatsächlich bei 320/360/390/412/430/1440 px; zusätzlich 768 px automatisiert.
+- Supplemental-PERF01-Testergänzung f3df22d enthalten; repräsentative 3.000er-Fixture prüft beide vollständigen verschlüsselten Restores. Keine neuen Verschlüsselungslimits oder Produkt-Finanzänderungen.
+- Main-Release **[41235570258](https://github.com/joke0071/foliolab-open/actions/runs/41235570258)** läuft. Geplanter SW **`foliolab-open-v248`**. Noch **kein DEPLOYED/LIVE_ACCEPTED** behauptet. Letzte vollständig bestätigte Produktions-/Rückfallbasis bleibt **v247**.
+- **Externe Arbeitsumgebung:** lokaler Executor ist nach vollständiger lokaler Implementierung/Test-/Sichtprüfung ausgefallen; alle Produktänderungen und Reproduktionsdaten sind auf GitHub gesichert. GitHub-CI/-Release läuft unabhängig weiter und wird über Connector kontrolliert. Zusätzliche lokale produktive Browser-/ZIP-Prüfungen und weitere neue Implementierung/visuelle QA erst nach wieder verfügbarer Arbeitsumgebung. Keine vorhandenen Abnahmen als neue Produktionsprüfung ausgeben.
+- Nächster Schritt: Main-Gates, Deployment, tatsächliche produktive Chromium-/Firefox-/WebKit-Abnahme, veröffentlichte Commit-/SW-/Assetbelege und Artefakte bestätigen; erst dann LIVE_ACCEPTED. Danach #257 sequenziell (Normalansicht ohne Bearbeiten, Verwaltungsmodus Checkbox **und** Bearbeiten, einheitliche Archiv-/Auswahlsemantik). #254–#256, FLH03/FLH04 und aktive FLH05/#174 sowie FLH-PROJ01/#252 bleiben offen/aktiv.
+
 ## Aktueller Integrationsstand – PR #258 IN_PROGRESS (31.10.2026)
 
 - Owner /root; Branch `feature/ui-known-valuation-totals`; aktueller HEAD **`aabac9dad98d73b6f7e861b1aa6bf7dd1647a3bb`**, CI **[41234608609](https://github.com/joke0071/foliolab-open/actions/runs/41234608609)** läuft; Wallet 41233844366 prüfen. Noch nicht CI_ACCEPTED/MERGED/DEPLOYED.
