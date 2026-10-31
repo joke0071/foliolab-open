@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "scope": "synthetic controlled transport delay of the real app startup module; unchanged real SW, no replacement worker",
+  "oldAsyncPredicateReturnedFalse": true,
+  "correctedWaitStayedPendingUntilRealActivation": true,
+  "state": {
+    "active": "activated",
+    "script": "http://127.0.0.1:4173/sw.js"
+  },
+  "helperSHA256": "782cac7ec2cad375884acb9529ea312d902458ba6ced1345aa51847c1a20991a"
+}
