@@ -1,3 +1,13 @@
+## v231/SW231 LIVE_ACCEPTED – Übergabe und Wochenend-Testbasis · 31.10.2026
+
+Verifizierter Main-HEAD `1617bdd29da585c88fc713be16a19bea0ed55aba`, Tree `774f6e24644e57fe39225a68bf8e120e4535c74c`, Hotfix [#238](https://github.com/joke0071/foliolab-open/pull/238). [Run41177642328](https://github.com/joke0071/foliolab-open/actions/runs/41177642328): test, alle drei cross-engine-Pakete, deploy und live-acceptance SUCCESS. Eigenständig heruntergeladenes Live-Artefakt13034346337: SHA256 `6be792d1b516d1b2e13ec79ff35e7a29394c15a66147ab06b09f48f2a7e35815` stimmt mit GitHub-Digest überein, ZIP-CRC PASS; live/report.json enthält exakten Main-Commit, foliolab-open-v231, result PASS und errors [].
+
+**Neue akzeptierte Rückfallbasis v231. Frühere SW230-PENDING-/v228-Rückfallangaben unten sind historisch übersteuert.** Rückfall ausschließlich vorwärts gerichteter Code-Revert mit neuer SW-Revision, keine Datenrücksetzung. Mobile Buchungsinformationen erhalten durch #238 volle Zeilenbreite; Schutz-/Aktionsbereich darunter. Finanz-/Speicherlogik unverändert. Echte Android-Hardwareabnahme weiterhin EXTERNAL.
+
+Owner ChatGPT Work: risikobasierter Qualitätsnachcheck Buchungen/Positionen/Filter zuerst, echte Cloud-Browser-Prüfung sowie synthetische Geometrie-/Lesbarkeitsregressionen. Bestätigte Restfehler separat beheben; abgeschlossene Copilot-Lieferungen nicht neu implementieren. 31.10.–01.11. stabile v231-Praxistestbasis erhalten; nichtkritische Änderungen als geprüfte separate PRs, kein neuer nichtkritischer Merge/Deploy ohne konkrete Freigabe. Nur FLH05/FLH-PROJ01 PARKED; Zusatzbudget 0 €. Übrige Masterpakete bleiben PARTIAL/OPEN/BLOCKED entsprechend konkreter Evidenz.
+
+---
+
 ## Alle 13 unmittelbaren PRs gemergt; finaler SW230-Release läuft · 31.10.2026
 
 Nach vollständiger eigener v228-Live-Artefaktprüfung (Beleg release-evidence/v228-live-acceptance.json, 121 Assetmatches/18 Axe/0 Fehler, alle drei Browser) wurden die unveränderten vollständig grünen Work-Kandidaten kontrolliert gemergt: #235 als 6ba5fc5c3ce54a01199d3d2b28fd5d6920954183, #236 als a78fa5a6493bc457c9994abb5b38eb40325f7e67, #237 als 100a3a480694666468706d333843fc372de03a9a. Alle 13 unmittelbaren Quell-PRs #233/#234/#213/#214/#218/#219/#222/#223/#225/#227/#235/#236/#237 sind jetzt integriert. Kein historischer Dokumentationsbranch gemergt.
