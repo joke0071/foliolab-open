@@ -1,3 +1,11 @@
+## v245 / PR #251 – MERGED, Produktionsabnahme ausstehend · 31.10.2026
+
+Owner: aktueller Work-Chat /root. PR #251 mit exakt geprüftem HEAD `5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67` gemergt. Main `621abf1556b0be87d485fd43943cf521dfc965fb`; Tree `f067f8f11a698dee953053dcc55a63260fc5faa1` identisch mit geprüftem Merge `f7332b2e17bc08968bd4112a45c1dc1b0b3d4dff`.
+
+Vollständige PR-CI 41223059875 und Wallet-CI 41223059689 erfolgreich: 1028/1028 Tests ohne Fehler/Skips, Syntax, Chromium und alle drei Cross-Engine-Teile. Neue wirtschaftliche Rücknahme tatsächlich in Chromium/Firefox/WebKit mit 320/360/390/412/430/1440px, Axe, Persistenz und exaktem Undo bestanden. Visuell: alle Chromiumbreiten, Firefox320 und WebKit390/1440 geprüft; Cross-Engine-Artefakt CRC und SHA256 bestätigt. 360 unabhängige BigInt-Gegenchecks zusätzlich gesichert.
+
+Produktionslauf: https://github.com/joke0071/foliolab-open/actions/runs/41223848231 (läuft). Noch nicht DEPLOYED oder LIVE_ACCEPTED. Bisher bestätigte Produktion/Rückfallbasis v242, Main `25ec0bd1cf834fdb129b67fbc12d90fdecbd9196`. Nächster Schritt: vollständigen Main-Release, statisches Produktionsartefakt, alle ausgelieferten Dateien und tatsächliche Live-Funktion abnehmen. Danach LIVE_ACCEPTED dokumentieren. Keine parallele Umsetzung. Umfang und offene Grenzen siehe docs/IMPORTED_CASH_REMOVAL.md; DELETE-MASTER28 bleibt PARTIAL.
+
 ## v242 LIVE_ACCEPTED – verbindliche Produktion und nächste Restpakete · 31.10.2026 16:06 UTC
 
 Owner: Codex Work, aktiver Master-/Integrations-/QA-/Releasechat. **v242 ist vollständig LIVE_ACCEPTED**; diese Angabe übersteuert sämtliche älteren LIVE_PENDING-/RELEASE_PENDING-Angaben. Aktuelle bestätigte Produktion und Ausgangs-/Rückfallbasis für weitere Änderungen: **Main25ec0bd1cf834fdb129b67fbc12d90fdecbd9196**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, **foliolab-open-v242**. Zuletzt erneut abgerufenes Main ist identisch; keine neuere Freigabe vorhanden. Vorherige zusätzlich belegte Rückfallversion bleibt **v240/d2193e0baa1feb2b64da23b6a7f5b625ce379c42**. PR249 wurde in PR250 konsolidiert; v241 war ausschließlich Kandidat und wurde nie produktiv veröffentlicht.
