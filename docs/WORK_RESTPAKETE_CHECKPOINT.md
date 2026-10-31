@@ -19,6 +19,15 @@
 
 ---
 
+## Aktueller Integrationsstand – PR #258 IN_PROGRESS (31.10.2026)
+
+- Owner /root; Branch `feature/ui-known-valuation-totals`; aktueller HEAD **`68440de044862b27e5980865008498bcfa31855e`**, CI **[41233844402](https://github.com/joke0071/foliolab-open/actions/runs/41233844402)** läuft; Wallet 41233844366 prüfen. Noch nicht CI_ACCEPTED/MERGED/DEPLOYED.
+- Vorgänger-HEAD `251758cf508168d9ab93c0bbc96a97009bba648d`, CI 41233499619 ist **nicht akzeptiert**: WebKit-Gate fand nach Donut-Rücksetzen noch Kategorieanteil statt Teilsumme. Konkrete Korrektur: Rücksetzaktion setzt Fokus kontrolliert auf die Mitte, Test wartet auf fertige Anzeige **und** Fokus. Zusätzlich bei fehlender Bewertung keine unbelegte Behauptung „keine positiven Anlagen“. Schmale Kategorietitel bei 320 px lesbar angepasst. Lokale fokussierte Tests und vollständige Chromium-Matrix PASS. Pflichtgates nicht umgangen; der neue volle HEAD-Lauf entscheidet.
+- Produktion unverändert **v247 LIVE_ACCEPTED**, Main `b7f8779dba49e16c572fe5430bd282b85e5f9ddb`; vollständige Nachweise im folgenden Eintrag.
+- Neuere vorhandene Fachaufträge **#254 REL-RECOVERY01**, **#255 FIN-E2E01**, **#256 PERF-ANDROID03**, **#257 DELETE-MASTER28-UX01** bleiben ACTIVE/OPEN beziehungsweise EXTERNAL für reale Hardware. Nicht durch v245-/v247-Teilergebnisse schließen.
+- **#257 ersetzt das historische Sichtbarkeitskonzept:** Normalansicht ohne Bearbeiten-Link; Verwalten zeigt Checkbox **und** Bearbeiten für Positionen, Buchungen und Stichtage. Gleicher Ansicht-Dropdown aktiv/archiviert/alle in beiden Modi; explizite stabile Auswahl über Filter/Pagination, keine versteckten Massenmutationen. Vorhandene Edit-/Preview-/CAS-/Undo-Engine wiederverwenden. Nächster sequenzieller P1A-Schritt nach Abschluss #258, keine parallele PR auf denselben App-Dateien.
+- #254: vorhandene verschiedene Modell-/verschlüsselte Backupgrößenlimits sind durch den Performance-Gegencheck belegt. Kein Limit verändert; 10.000er-Stressprofil nicht als vollständige Backup-Abnahme ausgeben. Sichere Nutzerführung/Kompatibilitäts-/Grenztests als gesondertes Recovery-Paket erhalten.
+
 ## v247 / PERF01 – LIVE_ACCEPTED · bestätigte Produktion 31.10.2026
 
 Dieser neue Nachweis übersteuert alle älteren Pending-/v246-WIP-Zeilen. Owner: aktueller Work-Chat /root.
