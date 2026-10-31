@@ -9,13 +9,13 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
  const ctx=await browser.newContext({ignoreHTTPSErrors:live,viewport:{width:390,height:560}});
  await ctx.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
- const p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ const p=await ctx.newPage(),errors=[],transportFailures=[];p.on('requestfailed',r=>{const u=new URL(r.url());transportFailures.push({url:u.origin+u.pathname,error:r.failure()?.errorText});});p.on('pageerror',e=>errors.push(e.message));
  const ready=()=>p.waitForFunction(()=>document.querySelector('[data-header-status=storage]')?.dataset.state==='saved');
  const button=kind=>p.locator('[data-header-status='+kind+']:visible');
  const openStorage=async()=>{await button('storage').click();await p.locator('#headerStatusDialog[open]').waitFor();};
  const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const scan=async()=>{assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);};
- let uploads=0,postBody='';
+ let uploads=0,postBody='',createdFolder=false;
  try{
   await p.goto(base);await ready();
   await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{blankModel,createProvider}=await import('/src/model.js');const s=new PortfolioStorage();await s.initialize();const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'synthetic-header',name:'SYNTHETIC header provider'}));await s.save(m);s.close();});
@@ -40,16 +40,19 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await ctx.addInitScript(()=>{window.__syntheticOAuthRequests=0;window.google={accounts:{oauth2:{initTokenClient(){return {requestAccessToken(){window.__syntheticOAuthRequests++;this.callback({access_token:'SYNTHETIC-EPHEMERAL-HEADER-TOKEN',expires_in:3600});}};}}}};});
   await ctx.route('https://www.googleapis.com/**',async route=>{
    const req=route.request(),url=req.url();let data={files:[]};
+   const cors={'access-control-allow-origin':new URL(base).origin,'access-control-allow-methods':'GET,POST,DELETE,OPTIONS','access-control-allow-headers':'authorization,content-type'};
+   if(req.method()==='OPTIONS'){await route.fulfill({status:204,headers:cors});return;}
    if(url.includes('upload/drive/v3/files')){uploads++;postBody=req.postData()||'';data={id:'syntheticBackup123456'};}
-   else if(req.method()==='POST')data={id:'syntheticFolder123456',name:'FolioLab Backups'};
-   else if(new URL(url).searchParams.get('q')?.includes('in parents'))data={files:uploads?[{id:'syntheticBackup123456',createdTime:'2026-10-31T08:00:00Z',appProperties:{foliolabBackup:'foliolab-open-v3'}}]:[]};
-   await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(data)});
+   else if(req.method()==='POST'){createdFolder=true;data={id:'syntheticFolder123456',name:'FolioLab Backups'};}
+   else if(new URL(url).searchParams.get('q')?.includes('mimeType'))data={files:createdFolder?[{id:'syntheticFolder123456',name:'FolioLab Backups',appProperties:{foliolabFolder:'foliolab-open-v1'}}]:[]};
+   else if(new URL(url).searchParams.get('q')?.includes('in parents'))data={files:uploads?[{id:'syntheticBackup123456',name:'FolioLab-2026-10-31T08-00-00-000Z.encrypted.json',createdTime:'2026-10-31T08:00:00Z',appProperties:{foliolabBackup:'foliolab-open-v3'}}]:[]};
+   await route.fulfill({status:200,headers:cors,contentType:'application/json',body:JSON.stringify(data)});
   });
   await p.reload();await ready();assert.equal(await button('drive').getAttribute('data-state'),'auth');
-  await button('drive').click();await p.waitForFunction(()=>window.FolioDriveBackup.getStatus().lastBackupAt&&!window.FolioDriveBackup.getStatus().connecting);
+  await button('drive').click();await p.waitForFunction(()=>{const s=window.FolioDriveBackup.getStatus();return !s.connecting&&Boolean(s.lastBackupAt||s.error);});const connectedState=await p.evaluate(()=>window.FolioDriveBackup.getStatus());assert.equal(connectedState.error,false,JSON.stringify(connectedState));assert.ok(connectedState.lastBackupAt,'upload is explicitly confirmed');
   assert.equal(await p.evaluate(()=>window.__syntheticOAuthRequests),1);assert.equal(uploads,1);assert.match(postBody,/foliolab-open-encrypted-v2/);assert.ok(!postBody.includes('SYNTHETIC header provider'),'Drive receives encrypted data');
   assert.deepEqual(await record(),before,'backup cannot mutate portfolio records or revision');
-  await button('drive').click();assert.match(await p.locator('#headerStatusBody').innerText(),/Letzte erfolgreiche Sicherung/);await scan();assert.equal(uploads,1,'status click is not an upload');await p.keyboard.press('Escape');
+  await button('drive').click();assert.match(await p.locator('#headerStatusBody').innerText(),/Letzte erfolgreiche Sicherung/);await scan();await p.locator('#headerStatusFeedback>summary').focus();await p.keyboard.press('Enter');assert.equal(await p.locator('#headerStatusFeedback').evaluate(e=>e.open),true);await scan();await p.keyboard.press('Enter');assert.equal(await p.locator('#headerStatusFeedback').evaluate(e=>e.open),false);assert.equal(uploads,1,'status click is not an upload');await p.keyboard.press('Escape');
   assert.equal(await p.evaluate(()=>document.documentElement.outerHTML.includes('SYNTHETIC-EPHEMERAL-HEADER-TOKEN')),false);assert.equal(await p.evaluate(()=>JSON.stringify({...localStorage}).includes('SYNTHETIC-EPHEMERAL-HEADER-TOKEN')),false);
   await ctx.setOffline(true);await p.waitForFunction(()=>document.querySelector('[data-header-status=drive]')?.dataset.state==='offline');assert.equal(await button('drive').getAttribute('data-state'),'offline');await openStorage();assert.match(await p.locator('#headerStatusBody').innerText(),/IndexedDB gespeichert/);await p.keyboard.press('Escape');await ctx.setOffline(false);
   assert.equal(uploads,1,'foreground/online does not repeat completed start backup');
@@ -64,5 +67,5 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await peer.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.providers[0].name='SYNTHETIC peer revision';await s.save(m);s.close();});
   await openStorage();await p.waitForFunction(()=>document.querySelector('[data-header-status=storage]')?.dataset.state==='conflict');assert.match(await p.locator('#headerStatusBody').innerText(),/Datenkonflikt/);assert.equal(await p.locator('#headerStatusActions').getByText('Neu laden',{exact:true}).isVisible(),true);await p.keyboard.press('Escape');await peer.close();
   assert.deepEqual(errors,[]);report.engines.push({engine,result:'PASS',widths:[320,360,390,412,430,768,1440],checks:['44x44/separate logo/no mobile status line','native modal Axe/Escape/focus','125% text','setup navigation','synthetic direct OAuth + real encryption + one due upload','no token in DOM/storage','exact portfolio/revision unchanged','failed IndexedDB put pending/error without false success','offline local versus remote status','real peer CAS conflict']});
- }finally{writeFileSync(out+'/report.json',JSON.stringify(report,null,2));await ctx.close();await browser.close();}
+ }catch(error){report.failure={engine,error:String(error),drive:await p.evaluate(()=>window.FolioDriveBackup?.getStatus?.()).catch(()=>null),transportFailures};await p.screenshot({path:out+'/'+engine+'-failure.png'}).catch(()=>{});throw error;}finally{writeFileSync(out+'/report.json',JSON.stringify(report,null,2));await ctx.close();await browser.close();}
 }

@@ -1754,3 +1754,11 @@
 @media(max-width:720px){.desktop-status-actions{display:none}.mobile-header{gap:6px}.mobile-status-actions{margin-left:auto}}
 @media(min-width:721px){.mobile-status-actions{display:none}}
 @media(max-width:359px){.mobile-header{padding-inline:max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-right))}}
+.header-status-dialog summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:13px;font-weight:650}
+.header-status-dialog details p{overflow-wrap:anywhere;line-height:1.5}
+@media(max-width:720px){
+ .mobile-header{padding-top:calc(5px + env(safe-area-inset-top));padding-bottom:6px}
+ .content :is(button,input,select,textarea,summary){scroll-margin-top:calc(72px + env(safe-area-inset-top));scroll-margin-bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+.header-status-dialog summary::after{content:'';margin-left:auto;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg)}
+.header-status-dialog details[open]>summary::after{transform:rotate(225deg)}

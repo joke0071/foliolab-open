@@ -25,3 +25,13 @@ Screenshots bei 320/1440px manuell visuell kontrolliert. Alle vorhandenen Tests,
 Realer Google-Kontodialog, Ablauf/Revoke unter echten Browser-/Google-Richtlinien und echte Android-/PWA-/TalkBack-Geräte sind EXTERNAL bis tatsächlicher Abnahme. Synthetischer OAuth-Erfolg ist kein Beleg realer Autorisierung. Kein neues persistentes Authmodell, kein eigener OAuth-Server, keine Änderung von Finanz-/Speicherformat-/Verschlüsselungsalgorithmen. DRIVE-AUTH-PERSIST01 bleibt PARTIAL; umfassende Mehrtab-/Netzwerk-/Upload-Idempotenz und sichere FLH04-Mehrgeräte-Synchronisierung benötigen ihre weitergehenden Fach-/Sicherheitsnachweise.
 
 Gemeinsam mit dem unveränderten UI-POS02-Archivpaket #243 integrieren; SW236-Kandidat (SW235 war nur Archiv-Kandidat). Kein Zwischen-Deployment notwendig. Vollständige CI, Live-Abnahme und zentraler Checkpoint vor LIVE_ACCEPTED erforderlich. Neue autonome Nutzerfreigabe gilt.
+
+## Nachprüfung des ersten CI-Kandidaten
+
+Erster HEAD d259b0b45fb1f5362bbed1990bee9dd969e93178, Lauf41186938664: Cross1/2 SUCCESS, Chromium und Cross3 FAILURE; nicht integrationsfähig, kein Deployment. Keine laufende Pipeline abgebrochen.
+
+- Cross3: Timeout beim ausbleibenden synthetischen Backupabschluss in Firefox. Die Testgegenstelle hatte keine vollständige CORS-/OPTIONS-Antwort und keinen vollständig nachgebildeten verwalteten Backupordner/Dateinamen. Fixture auf echte Preflight-/POST-Trennung und korrekte Metadaten ergänzt; kein App-Auth-/Backup-Erfolg als Fallback simuliert. Endzustand/Transportfehler und Fehler-Screenshot werden nun bei Fehlschlag gesichert; die Abschlussassertion meldet tatsächliche Drive-Fehler direkt. Eine alleinige Ursache des ursprünglichen Timeouts wird ohne neuen Cross-Nachweis nicht als bewiesen ausgegeben.
+- Chromium: bisherige Axe-Prüfung bei430px erfasste die Verwaltungsaktion „Fertig“ auf y≈−6px hinter dem sticky Header und dessen neuem Statusbutton. Lokal reproduziert. Bestehende Axe-/Eligibility-/IDB-Assertions vollständig erhalten; vor der Prüfung wird die tatsächlich zu bedienende Verwaltungsaktion in den sichtbaren Bereich gebracht und zusätzlich mit Rechteck und elementFromPoint als zwischen Kopf-/Fußnavigation sichtbar und klickbar belegt. Mobile Fokus-/Scrollabstände ergänzt; Header wieder56px inklusive44px-Zielen. Keine Axe-Ausnahme/Toleranzänderung.
+- Echte visuelle Dialogprüfung zeigte mehrfach wiederholten Sicherungszeitpunkt und unnötige Höhe. Kompakter Status mit ausführlicher letzter Rückmeldung im zugänglichen Akkordeon; Fehler bleibt unmittelbar sichtbar. Neuer lokaler Chromium-Header- und Blocker-Test wieder PASS.
+
+Vollständiger erneuter CI-Nachweis vor Merge erforderlich; reale Google-/Android-Grenzen unverändert EXTERNAL.

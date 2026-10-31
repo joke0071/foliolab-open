@@ -55,17 +55,17 @@ function updateUi(){
  const connectionBadge=get('driveConnectionBadge');
  if(connectionBadge){connectionBadge.textContent=connected?'Verbunden':'Nicht verbunden';connectionBadge.dataset.connected=String(connected)}
  const disconnectButton=get('driveDisconnect');
- if(disconnectButton)disconnectButton.hidden=!connected;
+ if(disconnectButton){disconnectButton.hidden=!connected;disconnectButton.disabled=busy||connecting;}
  const save=get('driveSaveNow');
- if(save)save.disabled=!connected||busy||!vaultConfigured;
+ if(save)save.disabled=!connected||busy||connecting||!vaultConfigured;
  const connect=get('driveConnect');
  if(connect){connect.disabled=busy||connecting||!googleClientId;connect.textContent=connected?'Drive erneuern':'Drive verbinden';connect.setAttribute?.('aria-label',connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden');connect.title=connected?'Google Drive-Verbindung erneuern':'Mit Google Drive verbinden'}
  const folderButton=get('openDriveFolderDialog');
- if(folderButton)folderButton.disabled=!connected||busy;
+ if(folderButton)folderButton.disabled=!connected||busy||connecting;
  const folderName=get('driveFolderCurrentName');
  if(folderName)folderName.textContent=prefs.folderName||FOLDER;
  announceStatus();
- for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate','confirmDriveFolder']){const el=get(id);if(el)el.disabled=!connected||busy;}
+ for(const id of ['driveRefreshList','driveRestore','driveCheck','driveFolderSelect','driveFolderRefresh','driveFolderCreate','confirmDriveFolder']){const el=get(id);if(el)el.disabled=!connected||busy||connecting;}
 }
 function due(){
  if(prefs.mode==='off')return false;

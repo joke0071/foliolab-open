@@ -159,7 +159,7 @@ test('header state and direct reconnect reuse one ephemeral OAuth session withou
  await t.window.FolioDriveBackup.init(t.backend);
  assert.equal(t.window.FolioDriveBackup.getStatus().connected,false);
  const pending=t.window.FolioDriveBackup.connect();
- assert.equal(t.window.FolioDriveBackup.getStatus().connecting,true);
+ assert.equal(t.window.FolioDriveBackup.getStatus().connecting,true);assert.equal(t.elements.driveConnect.disabled,true);assert.equal(t.elements.driveSaveNow.disabled,true);assert.equal(t.elements.driveDisconnect.disabled,true);
  await t.window.FolioDriveBackup.connect();await pending;
  assert.equal(t.oauthRequests,1);
  assert.equal(t.window.FolioDriveBackup.getStatus().connected,true);

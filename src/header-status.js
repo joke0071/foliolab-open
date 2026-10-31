@@ -19,19 +19,23 @@ export function drivePresentation(s={}){
 }
 
 export function installHeaderStatus({readStorage,checkStorageCurrent=async()=>{},onStorageHelp,onDriveSettings}){
- const dialog=document.getElementById('headerStatusDialog'),title=document.getElementById('headerStatusTitle'),body=document.getElementById('headerStatusBody'),actions=document.getElementById('headerStatusActions');
+ const dialog=document.getElementById('headerStatusDialog'),title=document.getElementById('headerStatusTitle'),body=document.getElementById('headerStatusBody'),actions=document.getElementById('headerStatusActions'),feedback=document.getElementById('headerStatusFeedback');
  let opened='',opener=null,returnFocus=true,openingStorage=false;
  const drive=()=>window.FolioDriveBackup?.getStatus?.()||{};
  function action(label,fn,disabled=false){const b=document.createElement('button');b.type='button';b.className='btn outline';b.textContent=label;b.disabled=disabled;b.onclick=fn;actions.append(b);}
  function contents(){
   const focused=actions.contains(document.activeElement)?document.activeElement.textContent:null;
   actions.replaceChildren();
+  feedback.hidden=true;
   if(opened==='storage'){
    const s=readStorage();title.textContent='Lokaler Speicher';body.textContent=storagePresentation(s).label;
    if(s.conflict)action('Neu laden',()=>location.reload());
    else if(s.error)action('Speicherhilfe öffnen',()=>{returnFocus=false;dialog.close();onStorageHelp();});
   }else{
-   const s=drive();title.textContent='Google Drive';body.textContent=drivePresentation(s).label+'\n'+(s.message||'')+'\n'+(s.lastBackupAt?'Letzte erfolgreiche Sicherung: '+new Date(s.lastBackupAt).toLocaleString('de-AT'):'Noch keine erfolgreiche Sicherung.')+'\nDrive-Backup und lokaler Speicher sind getrennt. Dies ist keine Gerätesynchronisierung.';
+   const s=drive(),presentation=drivePresentation(s);title.textContent='Google Drive';
+   body.textContent=presentation.label+(presentation.state==='connected'?'':'\n'+(s.lastBackupAt?'Letzte erfolgreiche Sicherung: '+new Date(s.lastBackupAt).toLocaleString('de-AT'):'Noch keine erfolgreiche Sicherung.'))+'\nDrive-Backup · keine Gerätesynchronisierung.';
+   feedback.hidden=!s.message||s.error;
+   feedback.querySelector('p').textContent=s.message||'';
    const local=readStorage(),blocked=Boolean(local.error||local.conflict||local.saving||local.checking);
    if(blocked)body.textContent+='\nZuerst den lokalen Speicherstatus prüfen. Aktuell ist keine neue Sicherung freigegeben.';
    action('Jetzt sichern',()=>void window.FolioDriveBackup?.saveNow?.(),blocked||!s.connected||!s.vaultConfigured||s.busy||s.connecting||s.offline);
