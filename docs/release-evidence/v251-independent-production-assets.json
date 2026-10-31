@@ -1,0 +1,26 @@
+[
+  {
+    "path": "sw.js",
+    "bytes": 4690,
+    "sha256": "2971f664df5d68819a64f88d190678f5da4a3d68644e4dbd5033479475f16ad4",
+    "exact": true
+  },
+  {
+    "path": "index.html",
+    "bytes": 45664,
+    "sha256": "e64acf26ff6ff6b860b0e1f372173c037d2ffc88668c6a4bbbb9ca4e40e88e25",
+    "exact": true
+  },
+  {
+    "path": "src/backup-limits.js",
+    "bytes": 2661,
+    "sha256": "5c521dc776732c8c332937197df20f12ebcb0f3c5658bcc4b24149ff4ee0000c",
+    "exact": true
+  },
+  {
+    "path": "src/backup-vault.js",
+    "bytes": 6865,
+    "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4",
+    "exact": true
+  }
+]

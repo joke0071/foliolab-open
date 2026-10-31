@@ -1,0 +1,49 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "engines": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "viewports": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "unchangedPortfolio": true
+    },
+    {
+      "name": "firefox",
+      "result": "PASS",
+      "viewports": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "unchangedPortfolio": true
+    }
+  ],
+  "proxyCertificateException": true,
+  "mozillaRuntimeSandboxFlag": true,
+  "candidateSuiteSHA256": "039d183924178d953193cb804ac0e1483971bedd5e2a73faac52ced7e2701c76",
+  "reviewedImages": [
+    {
+      "file": "chromium-320.png",
+      "sha256": "96778a249a234f1ad664be423d1fd88396db06ab5c403f02a9e1d538626c5da3",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "firefox-1440.png",
+      "sha256": "db93dfeef46d50b77c710bfc249e31fe46075818d717cfb417000a12110e4977",
+      "visuallyReviewed": true
+    }
+  ],
+  "scope": "Targeted actual production probe including v251 envelope-byte guard; complete CI live acceptance still pending; no hardware/OAuth/TalkBack/native Safari claim."
+}
