@@ -1,3 +1,13 @@
+## #259 – aktueller Prüf-HEAD c83d762 / IN_PROGRESS, 31.10.2026
+
+**Aktueller HEAD `c83d762d9a2cc74e5e21fa922962d1ef7d1ba0f1`, Tree `1671176493812d4298b9cd529090e9df04c0ef52`**, lokal und remote bytegleich. PR #259 ist inzwischen **ready for review**, noch nicht gemergt. Anwendungscode seit ce55ba1 unverändert. Neuer letzter Commit korrigiert ausschließlich die Scan-Ausgangsposition der neuen P1A-Prüfmatrix und prüft zusätzlich explizit 44px sowie vollständig zwischen den festen Leisten liegende Buchungsbuttons. Ursache im vorherigen Lauf 41239144126: neue Matrix hatte nach Zeilenscreenshots Scrollposition behalten; WebKit sah dadurch primäre Buttons teilweise unter dem Header. Keine Axe-Regel oder Sicherheitsprüfung entfernt. Firefox-P1A-Matrix und sämtliche Referenz-/Löschprüfungen beider Engines waren in diesem roten Zwischenlauf zuvor PASS. Noch keine Gesamtfreigabe aus Teilbelegen.
+
+**Finale Pflicht-CI 41239857221 IN_PROGRESS**, Wallet 41239857208 prüfen. Unit-/Integration/Syntax/SW-Revisionsschritte in der aktuellen CI SUCCESS, Browsergates laufen. Lokaler Kandidaten-Kernlauf (122 Bytehashes/sechs Gruppen/18 Axe), vollständige Chromium-Buchungs-Fachverwaltung und 100er-Positions-Wiederherstellung PASS; echte Produktion bleibt **v248 LIVE_ACCEPTED**. Zusätzliche lokale Firefox-/WebKit-Umgebung liefert bisher keinen abgeschlossenen Nachweis; fehlende WebKit-Hostabhängigkeiten machen die App nicht BLOCKED, vorhandene vollständige CI-Runner weiter verwenden. Direkter lokaler HTTPS-Abruf der Produktion scheitert am Transport-Proxy; kein App-Ausfall behauptet. Reale produktive drei-Engine-CI bleibt zwingend nach Merge.
+
+Nächste Aktion ausschließlich: finalen exakten HEAD vollständig prüfen, dann risikogerecht mergen/releasen und tatsächliche Live-Abnahme sichern. #257-Fachreste/Hardware/10.000er-Gesamt-UI, #254–#256 und übrige aktiven Masterpakete bleiben erhalten. Kein zweiter Strang.
+
+---
+
 ## #257 / PR #259 – finaler Kandidat IN_PROGRESS, 31.10.2026
 
 Aktueller HEAD **`ce55ba13930022f20daea0208db5b0591e465f94`**, Branch `feature/unified-list-management`, Tree **`14d5af3bb3d0e0be31291378865c423318394908`**, exakt gleich lokalem Index. Vorherige b827/bd437/2b454b-HEADs sind Zwischenstände, keine Freigabe. v248 bleibt LIVE_ACCEPTED und Rückfallbasis; SW249 ist weiterhin nur Kandidat.
