@@ -199,29 +199,6 @@
 .position-history-external{display:inline-flex;max-width:100%;margin:10px 2px 0;color:#286c47;font-size:11px;font-weight:650;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
 .position-history-external:focus-visible{outline:2px solid #528c64;outline-offset:3px;border-radius:3px}
 
-/* Opt-in public stock/ETF TradingView panel; never a floating chart or toolbar. */
-.public-chart{margin-top:14px;min-width:0;max-width:100%;border:1px solid #e1eae1;border-radius:12px;padding:10px;overflow:hidden;background:#f7faf7}
-.public-chart>button{display:block;width:100%;margin-top:10px}
-.tradingview-slot{width:100%;min-width:0;max-width:100%;margin-top:10px;overflow:hidden}
-.tradingview-widget-container{position:relative;width:100%;height:340px;min-width:0;max-width:100%}
-.tradingview-widget-container__widget{width:100%;height:305px;overflow:hidden}
-.tradingview-widget-container iframe{width:100%!important;max-width:100%;border:0}
-@media(max-width:430px){.public-chart{padding:7px}.tradingview-widget-container{height:300px}.tradingview-widget-container__widget{height:265px}}
-
-/* TradingView advanced chart: reserve real chart height instead of a clipped quote strip. */
-.public-chart .tradingview-widget-container{height:460px;min-width:0;max-width:100%;width:100%}
-.public-chart .tradingview-widget-container__widget{height:calc(100% - 28px);width:100%;overflow:hidden}
-.public-chart .tradingview-widget-container iframe{height:100%!important;min-height:395px;border:0;max-width:100%}
-@media(max-width:720px){
- .public-chart .tradingview-widget-container{height:410px}
- .public-chart .tradingview-widget-container iframe{min-height:345px}
-}
-@media(max-width:390px){
- .public-chart .tradingview-widget-container{height:370px}
- .public-chart .tradingview-widget-container iframe{min-height:310px}
-}
-
-
 /* Onboarding: offline provider and account suggestions, no floating controls. */
 .onboarding-suggestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;max-height:230px;overflow:auto;margin:8px 0 15px;scrollbar-width:thin}
 .onboarding-suggestions.hidden{display:none}
@@ -443,13 +420,8 @@
 .credential-toggle:focus-visible{outline:2px solid #2d6946;outline-offset:0}
 .credential-toggle svg{pointer-events:none}
 
-/* Optional sources stay collapsed; the native chart is the primary view. */
-.position-chart-options{margin-top:16px;border-top:1px solid #e4ece5;padding-top:10px;min-width:0}
-.position-chart-options>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:650;color:#53715c;padding:5px 2px}
-.position-chart-options>summary::-webkit-details-marker{display:none}
-.position-chart-options>summary::after{content:'⌄';font-size:18px;font-weight:500;line-height:1}
-.position-chart-options[open]>summary::after{transform:rotate(180deg)}
-.position-chart-options>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
+/* Native chart and local CSV actions stay compact without an external widget. */
+.position-native-quote-actions{margin-top:12px;border-top:1px solid #e4ece5;padding:8px 0 2px;min-width:0}
 .position-chart-options-body{min-width:0;padding:4px 0 8px}
 .position-booking-history{margin-top:16px;border-top:1px solid #e4ece5;padding-top:10px;min-width:0}
 .position-booking-history>summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;font-weight:650;color:#53715c;padding:5px 2px}
@@ -457,7 +429,7 @@
 .position-booking-history>summary::after{content:'⌄';font-size:18px;font-weight:500;line-height:1}
 .position-booking-history[open]>summary::after{transform:rotate(180deg)}
 .position-booking-history>summary:focus-visible{outline:2px solid #49885e;outline-offset:2px;border-radius:5px}
-.position-chart-options-body .public-chart{margin-top:12px}
+
 
 /* Native price history: missing data occupies one quiet, closed disclosure. */
 .position-history-compact{margin-top:12px;min-width:0;border-top:1px solid #e4ece5;padding-top:7px}

@@ -2,6 +2,7 @@
 // No bulk-selection UI, delete, commit, new migration or persistent selection is activated.
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
+import {waitForAsyncReadiness} from './browser-async-readiness.mjs';
 const base='http://127.0.0.1:4173/';
 for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
@@ -37,7 +38,8 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const store=new PortfolioStorage();const m=await store.initialize();m.settings.autoRefresh=false;await store.save(m);store.close();});
   await page.reload();await page.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
   const before=await record();assert.deepEqual(await exercise(),expected);assert.deepEqual(await record(),before);
-  await page.waitForFunction(async()=>{const registration=await navigator.serviceWorker.getRegistration();return registration?.active?.state==='activated';});
+  // Wait for activation AND claim in this document; an unresolved browser Promise is not readiness.
+  await waitForAsyncReadiness(page,async()=>{const registration=await navigator.serviceWorker.getRegistration();return registration?.active?.state==='activated'&&navigator.serviceWorker.controller===registration.active;});
   await page.reload();await page.waitForFunction(()=>!!navigator.serviceWorker.controller);
   await page.evaluate(()=>{window.__flh03SelectionRealm='old-document';});
   console.log(engine+': PRE-OFFLINE '+JSON.stringify(await page.evaluate(async()=>({url:location.href,controller:navigator.serviceWorker.controller?.scriptURL,registration:(await navigator.serviceWorker.getRegistration())?.active?.state,caches:await caches.keys(),shells:await Promise.all((await caches.keys()).map(async k=>[k,!!(await (await caches.open(k)).match(new URL('/index.html',location.href).href))]))}))));

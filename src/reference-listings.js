@@ -23,14 +23,14 @@ export function knownReferenceListing(position){
  if(position.tradingViewSymbol&&String(position.tradingViewSymbol).toUpperCase()!=='XETR:'+match.symbol)return null;
  if(position.eodhdSymbol&&String(position.eodhdSymbol).toUpperCase()!==match.symbol+'.XETRA')return null;
  if(position.fmpSymbol&&String(position.fmpSymbol).toUpperCase()!==match.symbol+'.DE')return null;
- return Object.freeze({...match,exchange:'Xetra',mic:'XETR',tradingViewSymbol:'XETR:'+match.symbol,eodhdSymbol:match.symbol+'.XETRA',fmpSymbol:match.symbol+'.DE'});
+ return Object.freeze({...match,exchange:'Xetra',mic:'XETR',eodhdSymbol:match.symbol+'.XETRA',fmpSymbol:match.symbol+'.DE'});
 }
 /** Populate missing identity fields in legacy backups only for a precise match. */
 export function enhanceKnownReferenceListing(position){
  const found=knownReferenceListing(position);
  if(!found)return position;
  const copy={...position};
- for(const key of ['isin','exchange','mic','tradingViewSymbol','eodhdSymbol','fmpSymbol'])
+ for(const key of ['isin','exchange','mic','eodhdSymbol','fmpSymbol'])
   if(!String(copy[key]||'').trim())copy[key]=found[key];
  return copy;
 }
@@ -42,5 +42,5 @@ export function referenceSearch(query=''){
  return KNOWN.filter(x=>[x.label,x.symbol,x.isin].some(v=>v.toUpperCase().includes(q)))
   .map(x=>({source:'local-reference',name:x.label,symbol:x.symbol,isin:x.isin,kind:x.kind,
     currency:'EUR',exchange:'Xetra',mic:'XETR',
-    eodhdSymbol:x.symbol+'.XETRA',fmpSymbol:x.symbol+'.DE',tradingViewSymbol:'XETR:'+x.symbol}));
+    eodhdSymbol:x.symbol+'.XETRA',fmpSymbol:x.symbol+'.DE'}));
 }

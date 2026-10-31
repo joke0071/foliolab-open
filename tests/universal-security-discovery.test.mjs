@@ -15,8 +15,8 @@ test('EODHD supports arbitrary ETFs by ISIN with distinct listing currencies and
  assert.equal(out.length,2);
  assert.equal(out[0].symbol,'SPYY');assert.equal(out[0].isin,'IE00BFY0GT14');
  assert.equal(out[0].currency,'EUR');assert.equal(out[0].mic,'XETR');
- assert.equal(out[0].eodhdSymbol,'SPYY.XETRA');assert.equal(out[0].tradingViewSymbol,'XETR:SPYY');
- assert.equal(out[1].currency,'GBP');assert.equal(out[1].tradingViewSymbol,'LSE:SPYY');
+ assert.equal(out[0].eodhdSymbol,'SPYY.XETRA');assert.equal(out[0].tradingViewSymbol,undefined,'catalog should not generate active legacy widget identifiers');
+ assert.equal(out[1].currency,'GBP');assert.equal(out[1].tradingViewSymbol,undefined);
  assert.match(url[0].pathname,/\/api\/search\/IE00BFY0GT14/);
  assert.equal(url[0].searchParams.get('api_token'),'test-key');
 });
@@ -31,7 +31,7 @@ test('FMP uses ISIN, name and ticker endpoints; missing currency results cannot 
  assert.match(seen[2],/search-symbol\?query=/);
  assert.equal(byIsin[0].symbol,'GLBL');
  assert.equal(byIsin[0].fmpSymbol,'GLBL.DE');
- assert.equal(byIsin[0].tradingViewSymbol,'XETR:GLBL');
+ assert.equal(byIsin[0].tradingViewSymbol,undefined);
  assert.equal(normalizeListing({symbol:'GLBL',name:'Unknown',exchange:'XETRA'},'fmp'),null);
 });
 test('Twelve Data supports general instrument name/ticker with explicit MIC and currency',async()=>{
@@ -73,7 +73,9 @@ test('A confirmed listing updates ONLY identity metadata; backup and exact holdi
    currency:'EUR',quantity:'123.456789',price:100,providerId:provider.id,accountId:account.id},model);
  model.positions.push(p);snapshot(model);
  const amount=totalExactEUR(model),snap=JSON.stringify(model.snapshots);
- const result=mergeConfirmedListing(p,normalizeListing(EOD[0],'eodhd'));
+ const legacy={...p,tradingViewSymbol:'XETR:OLD'};
+ const result=mergeConfirmedListing(legacy,normalizeListing(EOD[0],'eodhd'));
+ assert.equal(result.tradingViewSymbol,'XETR:OLD','legacy-only field must not be silently overwritten by a listing update');
  assert.equal(result.quantityExact,p.quantityExact);
  assert.equal(result.priceExact,p.priceExact);
  assert.equal(result.isin,'IE00BFY0GT14');
