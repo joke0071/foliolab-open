@@ -52,5 +52,5 @@ test('retained imported journal and cash-flow amounts cannot be tampered on rest
 });
 test('reimport protection also marks changed namespace and ambiguous same-day source for review',()=>{
  const {m,b,csv,mapping}=fixture(),next=previewBookingChange(m,request(b)).candidate;
- const changed=structuredClone(csv);changed.rows[0].externalId='new-reference';changed.rows[0].quantity='30';changed.sourceName='changed.csv';const p=previewCSV(next,changed,mapping,{sourceId:'other-source'});assert.equal(p.ready,0);assert.equal(p.issues[0].code,'source-conflict');
+ const changed=structuredClone(csv);changed.rows[0].quantity='30';changed.sourceName='changed.csv';const p=previewCSV(next,changed,mapping,{sourceId:'other-source'});assert.equal(p.ready,0);assert.equal(p.issues[0].code,'source-conflict');changed.rows[0].externalId='';const unproven=previewCSV(next,changed,mapping);assert.equal(unproven.ready,0);changed.rows[0].externalId='independent-new-reference';const independent=previewCSV(next,changed,mapping);assert.equal(independent.ready,1);assert.deepEqual(independent.issues,[]);
 });

@@ -80,8 +80,8 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
     return JSON.stringify(previous)===JSON.stringify(current);
    };
    const key=importSourceKey(source);
-   if(removed.some(prior=>(prior.accountId===source.accountId&&((source.externalId&&prior.externalId===source.externalId)||prior.fileId===source.fileId||(()=>{const old=JSON.parse(prior.sourcePayload);return old.positionId===row.positionId&&old.date===row.date&&old.type===row.type;})()))))
-    throw sourceConflict('Diese Importbuchung wurde ausdrücklich gelöscht. Kein automatischer Wiederimport; Rücknahme oder geprüfte Sicherung verwenden.');
+   if(removed.some(prior=>(prior.accountId===source.accountId&&((source.externalId&&prior.externalId===source.externalId)||prior.fileId===source.fileId||(!source.externalId&&(()=>{const old=JSON.parse(prior.sourcePayload);return old.positionId===row.positionId&&old.date===row.date&&old.type===row.type;})())))))
+    throw sourceConflict('Diese Quelle könnte eine ausdrücklich gelöschte Importbuchung erneut anlegen. Kein automatischer Wiederimport; Rücknahme oder geprüfte Sicherung verwenden.');
    const matches=key?draft.bookings.filter(b=>importSourceKey(b.importSource)===key):[];
    if(matches.length){
     if(matches.length!==1||!samePayload(matches[0].importSource))
