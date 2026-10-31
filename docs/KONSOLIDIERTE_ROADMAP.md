@@ -1,3 +1,15 @@
+## PR250 CI_ACCEPTED und MERGED – v242-Produktion noch offen · 31.10.2026
+
+Owner: aktiver Master-/Integrationschat. Gemeinsamer finaler HEAD**2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, SW242: vollständigeCI**41214616621 completed/success**, Wallet**41214616534 completed/success**. Tatsächlich1020Tests/PASS1020/FAIL0/CANCELLED0/SKIPPED0, gesamter Chromium-Pflichtlauf und alle3 Firefox-/WebKit-TeileSUCCESS. Native UIqualität jeFirefox/WebKit37Scans, Headerstatus und TransferverträgePASS. Artefakte13048000312/13048115577 unabhängig vollständig per Digest/CRC geprüft und neue native Anzeige-/Bestandsbilder visuell angesehen. VollständigeCIquittung: docs/release-evidence/v242-pr-ci-acceptance.json.
+
+Autonom gemergt als **25ec0bd1cf834fdb129b67fbc12d90fdecbd9196**; tatsächlicher Mainbaum exakt identisch mit geprüftem Merge72958374c7a240ad981fcac89648b7409af834c7. **Main-/Produktionslauf41215609885 IN_PROGRESS**. Status **MERGED / RELEASE_PENDING**, ausdrücklich noch kein v242 LIVE_ACCEPTED. Bestätigte Produktion und Rückfallbasis weiterhin **v240/d2193e0baa1feb2b64da23b6a7f5b625ce379c42/SW240**. PR249 als im Bündel enthalten geschlossen; kein v241-Produktionsrelease.
+
+Integrierter Umfang: de-AT-Daten und exakte kleine Mengen, kompakte vollständige Einschränkungs-Offenlegung, konsistente Detailtypografie und gemessen schnellere große Buchungslisten durch kurzlebige Anzeigeindizes. Sämtliche finanziellen Aktionsprüfungen, vollständige Journal-/Referenz-/Importvalidierung und CAS bleiben frisch.42Fallgruppen/168Elternvergleiche plus alle10000synthetischenBuchungen/10001Abfragen gegen unveränderte Elternimplementierung identisch und unverändert; beide Zusatzquittungen im Checkpointzweig. Direkter begrenzter Vergleich tatsächlichesv240→Bündelkandidat832→567ms Median/je5Proben/CPU4x; kein Hardware-/Kaltstart-/statistischer oder kumulierter Anspruch.
+
+Unmittelbar: laufenden vollständigen Main-/Deployment-/Live-Lauf nicht abbrechen; nach Deployment tatsächlich alle122Assets/SW/Mainrevision unabhängig abgleichen, endgültiges Produktionsartefakt per Digest/CRC/Gitobjekten und sämtliche3Engine-Gates sowie visuelle Mobil-/Desktop-Produktion prüfen. Erst dann LIVE_ACCEPTED und Rückfallbasis fortschreiben. FLH03/FLH04, wirtschaftlicheImportlöschung, HIST-VIS und realeAndroid/OAuth/Gerätesync-Abnahmen bleiben offen; ausschließlich FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## v242-Bündel PR250 – verbindlicher aktueller Integrationsplan · 31.10.2026 15:24 UTC
 
 Owner bleibt derselbe aktive Master-/Transferintegrationschat. Bestätigte Produktion/Rückfallbasis: **v240 LIVE_ACCEPTED / d2193e0baa1feb2b64da23b6a7f5b625ce379c42 / SW240**, vollständige unabhängige Quittung und Produktionsbilder nachfolgend. Zusätzliche tatsächliche native Produktionskontaktprüfung aller320/360/390/412/430/1440Breiten für Transferdialog und normale Buchungsliste erledigt.
