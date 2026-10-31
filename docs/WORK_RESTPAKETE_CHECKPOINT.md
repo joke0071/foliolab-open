@@ -1,3 +1,15 @@
+## #244 Nachprüfung: konkrete Fehler erhalten und gezielt korrigiert · 31.10.2026
+
+**v234 bleibt LIVE_ACCEPTED / Rückfallbasis; autonome Releasefreigabe unverändert.** Erster #244-Lauf41186938664 am HEADd259b0b: Cross1/2 SUCCESS, Chromium/Cross3 FAILURE, kein Merge/Deployment. Gesamten Lauf bis Ende unverändert laufen lassen, nicht abgebrochen. Chromiumfehler lokal reproduziert: Axe meldet bei430px „Fertig“ mit y≈−6px hinter festem Header/Statusbutton. Korrektur: Verwaltungsaktion vor Bedienprüfung sichtbar fokussieren, neue echte Rechteck-/elementFromPoint-Prüfung zwischen Navigationen; alle Axe-/Eligibility-/IDB-Assertions erhalten. Header wieder56px inkl44px-Zielen, mobile Fokus-/Scrollabstände. Lokale gesamte Blocker-Suite danach PASS.
+
+Firefox-Timeout beim fehlenden synthetischen Uploadabschluss: Mock-Gegenstelle hatte unvollständige CORS-/OPTIONS-Behandlung und fehlende Ordner-/Dateimetadaten. Fixture vervollständigt, Preflight erzeugt keinen Upload; Fehlerzustand/Transportdiagnose/Screenshot statt bloßem Timeout, unveränderte Erfolg-/Encryption-/No-write-Assertions. Exakte alleinige ursprüngliche Ursache bleibt bis neuem Cross-Beleg unbewiesen. Reales OAuth nicht fingiert. Lokaler WebKit wegen fehlender Systembibliotheken nicht verfügbar; echter CI-WebKit bleibt zwingend.
+
+Reale Dialogsichtprüfung korrigiert doppelte Zeitangaben/unnötige Höhe: kompakter Status, letzte Rückmeldung als zugängliches44px-Akkordeon mit Chevron, Fehler sofort sichtbar; Tastatur/Open/Close/Axe zusätzlich geprüft. Während Autorisierung sind konkurrierende Drive-Aktionen gesperrt. Lokal13gezielteUnit +Syntax und Chromium-Headerregression einschließlich echter Quota/CAS/verschlüsseltem Due-Upload wieder PASS; ursprüngliche1000UnitPASS unverändert durch neue vollständige CI zu bestätigen.
+
+Aktueller #244-HEAD`90b4e84a15321bab45e7b6f4486e6993b430a99e`, Tree`d7c463eb9274d8a79ef2a24cf99ea731b7c10303`, SW236. Neue vollständige CI[41187737896](https://github.com/joke0071/foliolab-open/actions/runs/41187737896), Wallet41187737918. **PARTIAL/CI_PENDING, noch nicht integrationsfähig.** Nächster Schritt neue vollständige exakte CI +manuelle Cross-Screenshots; danach gemeinsamer Merge#243/#244, volle Main-/Produktionsabnahme, Checkpoint. Keine Testtoleranzen/Referenzen/Axe-Ausnahmen verändert. EXTERNAL echtes Google/Android; FLH04 getrennt; nurFLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## Gemeinsamer P1-UI-Kandidat #244 / v236 remote gesichert · 31.10.2026
 
 **v234 bleibt LIVE_ACCEPTED / Rückfallbasis; neue autonome Freigabe gilt.** [#243](https://github.com/joke0071/foliolab-open/pull/243) HEAD272deb98405cd7fb9013fa7a533d329b5ffb6007 mit vollständiger CI41185989774 (test/alle3Cross-Pakete SUCCESS) CI_ACCEPTED. Keine separate Veröffentlichung des SW235-Archivkandidaten. Unveränderter Archivteil jetzt gemeinsam mit gewünschtem Headerpaket in [#244](https://github.com/joke0071/foliolab-open/pull/244), Branch fix/unified-header-status, HEAD`d259b0b45fb1f5362bbed1990bee9dd969e93178`, Tree`986d4503ea21487464085b4687751a71f8d6c526`, SW236. **PARTIAL / CI_PENDING, noch nicht live.** Keine fremde parallele Header-PR und keine abgebrochene Pipeline.
