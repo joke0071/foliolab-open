@@ -146,7 +146,7 @@ async function connect(){
   await refreshList();
   if((prefs.mode!=='off'&&due())||prefs.cleanupPending)await maybeAuto();
   else{status(vaultConfigured?'Verbunden. Jetzt sichern erstellt deine verschlüsselte vollständige Sicherung.':'Verbunden. Zuerst ein Backup-Passwort einrichten, danach Jetzt sichern.');const save=get('driveSaveNow');if(save&&!save.disabled)save.focus?.();}
- }catch(e){status(e.message+' Bitte erneut verbinden.',true);updateUi()}
+ }catch(e){const message=String(e?.message||e);status(message+(/erneut verbinden/.test(message)?'':' Bitte erneut verbinden.'),true);updateUi()}
  finally{connecting=false;updateUi();}
 }
 async function api(path,options={}){

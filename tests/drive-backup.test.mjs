@@ -11,7 +11,7 @@ const source=readFileSync(new URL('../src/drive-backup.js',import.meta.url),'utf
 const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const app=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 
-function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false}={}){
+function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,oauthResponse=null,popupError=false,httpStatus=200}={}){
  const values=new Map(),requests=[],written=[],events=[];let oauthRequests=0;
  if(clientId)values.set('foliolab-open-drive-backup-settings-v1',JSON.stringify({clientId,retention:3,mode:'off'}));
  const storage={getItem:k=>values.get(k)||null,setItem:(k,v)=>values.set(k,String(v))};
@@ -55,7 +55,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
     createdTime:'2026-10-24T15:00:00.000Z'}]:[]});
   return response({files:[]});
  }
- function response(value){return {ok:true,status:200,json:async()=>value,text:async()=>JSON.stringify(value)}}
+ function response(value){return {ok:httpStatus>=200&&httpStatus<300,status:httpStatus,json:async()=>value,text:async()=>JSON.stringify(value)}}
  runInNewContext(source,{window,document,google:window.google,localStorage:storage,fetch,Option:class{
   constructor(text,value){this.text=text;this.value=value}},
   Date,Math,JSON,URL,URLSearchParams,Blob,Error,Number,setTimeout,clearTimeout,CustomEvent:class{constructor(type){this.type=type}},
@@ -191,4 +191,10 @@ test('invalid OAuth expiry cannot be presented as an hour of valid authorization
  const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,oauthResponse:{access_token:'ephemeral-test-token',expires_in:0}});
  await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
  const state=t.window.FolioDriveBackup.getStatus();assert.equal(state.connected,false);assert.equal(state.error,true);assert.equal(state.lastBackupAt,'');assert.equal(t.written.length,0);assert.equal(t.requests.length,0);
+});
+
+test('Drive401 expires the session and gives one reconnect instruction without a false backup',async()=>{
+ const t=fixture({vault:true,clientId:'123456789-abc.apps.googleusercontent.com',withGoogle:true,httpStatus:401});
+ await t.window.FolioDriveBackup.init(t.backend);await t.window.FolioDriveBackup.connect();
+ const state=t.window.FolioDriveBackup.getStatus();assert.equal(state.connected,false);assert.equal(state.error,true);assert.equal(state.lastBackupAt,'');assert.equal((state.message.match(/erneut verbinden/g)||[]).length,1);assert.equal(t.written.length,0);
 });

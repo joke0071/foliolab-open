@@ -14,7 +14,7 @@ Token bleibt ausschließlich flüchtig. Ein einzelner Ablauf-Timer aktualisiert 
 
 ## Gezielte Prüfung
 
-Lokal1000/1000Unit-Prüfungen PASS: vorhandene Prüfungen plus Statuspriorität, keine Erfolgsanzeige bei Pending/Fehler/Konflikt, ein reentrant geschützter OAuth-Aufruf, fälliges verschlüsseltes Startbackup genau einmal, keine Tokens in State/Event/Storage, Popup-Abbruch und ungültige Ablaufzeit. Syntax vollständig prüfen.
+Lokal1001/1001Unit-Prüfungen PASS: vorhandene Prüfungen plus Statuspriorität, keine Erfolgsanzeige bei Pending/Fehler/Konflikt, ein reentrant geschützter OAuth-Aufruf, fälliges verschlüsseltes Startbackup genau einmal, keine Tokens in State/Event/Storage, Popup-Abbruch und ungültige Ablaufzeit. Syntax vollständig prüfen.
 
 Neue Browserprüfung in der vorhandenen seriellen UI-Quality-Kette; daher regulär Chromium/Firefox/WebKit und nach Deployment echte Produktions-UI. 320/360/390/412/430/768/1440px und 740×360, 44px-Flächen, Logoabstand, keine sichtbare mobile Textzeile, 125% Textsimulation, native Dialog-Axe-/Escape-/Fokusprüfung und Settings-Fokus. Synthetische Google-Antworten ausdrücklich gekennzeichnet; echte bestehende lokale Verschlüsselung und App-Backupbackend, genau ein fälliger Upload, verschlüsselter Transportkörper, kompletter IDB-Record samt Revision unverändert. Echter fehlgeschlagener IDB-put: Pending→Fehler, niemals Saved. Echte konkurrierende IDB-Revision wird beim Statusaufruf als Konflikt erkannt. Offline bleibt lokaler Speicher unabhängig von Drive.
 
@@ -45,3 +45,9 @@ Ausschließlich der ausdrücklich synthetische Google-Transport wird deshalb im 
 WebKit-Archivscan meldete noch zwei Positionsaktionen hinter dem Header bei aus voriger Feldgeometrieprüfung übernommener Scrolllage. Die unveränderte vollständige Axe-Prüfung läuft nun vom tatsächlichen Einstieg mit zusätzlich nachgewiesenen44px-/Kopf-/Fußleisten-Abständen aller drei Positionsaktionen. Die separate native Textbreiten-/Sichtbarkeitsprüfung am gescrollten Ansichtsfilter bleibt vollständig erhalten. Keine Axe-Ausnahme/Regelabschaltung oder Toleranzänderung.
 
 Zusätzlicher echter Geometriebefund: Statusdialog-Schließen sowie einzeilige Dialogaktionen erhielten explizit44×44px. Eine Drehung bei geöffnetem Drive-Dialog wird bei740×360 geprüft; Schließen fokussiert die jetzt sichtbare äquivalente Headeraktion statt einer inzwischen ausgeblendeten mobilen Aktion. Bestehende Fokus-/Axe-Prüfungen bleiben erhalten.
+
+## Tatsächliche Fokusgeometrie nach Rotation
+
+Zusätzlicher negativer Kontrollfall bei700px Scrollstand: Vorgängerkandidat fokussierte nach Mobile→Desktop-Wechsel eine Aktion auf y≈−654px. activeElement allein hätte diesen Fehler übersehen. Korrektur: Bei weiterhin sichtbarem ursprünglichem Auslöser bleibt preventScroll erhalten; bei ausgeblendeter/außerhalb liegender Aktion wird das jetzt verfügbare Äquivalent sichtbar fokussiert. Neue Regression prüft realen positiven Scrollstand, unveränderte Scrollposition beim normalen Schließen und nach Formatwechsel Rechteck sowie elementFromPoint. Keine App-/Finanz-/Speicherdatenänderung.
+
+Ein tatsächlich beobachteter401-Fehlertext enthielt die Wiederverbindungsaufforderung doppelt. Die vorhandene Fehlerbehandlung hängt diese nun nur an, wenn sie fehlt. Neue401-Regression belegt Token-Verfall, genau eine verständliche Aufforderung, keinen Upload und keine fälschlich gesetzte letzte Backupzeit.
