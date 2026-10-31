@@ -1,3 +1,11 @@
+## v236 LIVE_ACCEPTED · 31.10.2026
+
+Owner: Codex Work. Tatsächlicher Main `ee7ee75f2b62d22452d503ae7b0779d51ad68056`, SW `foliolab-open-v236`. Release41193055285 vollständig SUCCESS: Test, alle drei Cross-Pakete, Deployment und Live-Acceptance. Produktionsartefakt13039274206 eigenständig heruntergeladen; SHA256 `286642e10205b98f2da7caac714ae3feed4cf5cb418afec40d05c45ec80aea0c` entspricht GitHub-Digest, ZIP-CRC PASS. Livebericht PASS, errors[], exakter Main/SW; alle122 Assethashes gegen lokalen Main unabhängig verglichen: identisch. Produktions-UI-Berichte Chromium/Firefox/WebKit PASS. Plain/encrypted Restore, tatsächliche Workersteuerung, Offline/IDB und Coreflows im Produktionsbericht bestanden. Echte Android-/PWA-/TalkBack-/Google-OAuth-Abnahme bleibt EXTERNAL. Neue bestätigte Rückfallbasis: v236; v234 ist Vorgänger. Kein Datenreset/Downmigration bei Rückfall.
+
+Offene PRs nur157/161; keine konkurrierende UI-Implementierung. Nächster Hauptstrang UI-POS02/UI-BOOK03 Detail-/Bearbeiten-Aktionen und separat geprüfte bestehende Löschbarkeit, anschließend UI-HERO-QUALITY03. Finanzmutationsvertrag unverändert lassen. Aktuelle autonome Merge-/Releasefreigabe gilt. Nur FLH05 und FLH-PROJ01 PARKED. Historischen Checkpoint-Branch nicht vollständig mergen.
+
+---
+
 ## v236 gemergt – vollständige PR-Abnahme, Produktion noch RELEASE_PENDING · 31.10.2026
 
 **Neue autonome Nutzerfreigabe ausgeführt.** #244 mit enthaltenem #243 regulär und HEAD-gesichert gemergt. Exakter geprüfter PR-HEAD `db53a64901ec39b1813802868bfeb20b44ef8223`; vollständige CI [41191980626](https://github.com/joke0071/foliolab-open/actions/runs/41191980626), Wallet41191980758 und alle drei Cross-Pakete SUCCESS. Synthetischer Merge9852f0db33b2911e774a3cded3e7a0e113b83089 und tatsächlicher Main-Merge `ee7ee75f2b62d22452d503ae7b0779d51ad68056` haben exakt denselben geprüften Tree `aaa91e1cedbaf89274b84a3a320cffcbac64eb63`. #243 auf GitHub automatisch als MERGED bestätigt. Historischer Checkpoint-Branch nicht übernommen.
