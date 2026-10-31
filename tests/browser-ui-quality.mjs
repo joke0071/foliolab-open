@@ -2,6 +2,7 @@
 // suite. Static async imports start those browsers together; keep every gate,
 // but finish one module before starting the next against the same live host.
 for(const check of [
+ './browser-missing-position-value.mjs',
  './browser-chart-tooltip.mjs',
  './browser-blocked-reasons.mjs',
  './browser-ui-small-rests.mjs',

@@ -34,3 +34,10 @@ export function quoteQualitySummary(positions,now=Date.now()){
   (counts.stale?' · '+counts.stale+' veraltet':'')+(counts.derived?' · '+counts.derived+' aus Stichtag':'')+
   (counts.missing?' · '+counts.missing+' ohne Kurs':'')};
 }
+
+/** Display-only: an absent quote is not evidence of a zero position value.
+ * Keep genuine zero holdings, sourced zero quotes and excluded contributions. */
+export function positionValueLabel(position,value,formatMoney){
+ return displayQuotePrice(position)===null&&Number(position.quantityExact??position.quantity)!==0&&position.valuationMode!=='excluded'
+  ?'Nicht bewertet':formatMoney(value);
+}

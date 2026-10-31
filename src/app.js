@@ -49,7 +49,7 @@ import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {diagnoseEodhd} from './market-diagnostics.js';
-import {displayQuotePrice,priceQuality,quoteQualitySummary} from './quote-quality.js';
+import {displayQuotePrice,priceQuality,quoteQualitySummary,positionValueLabel} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {annualOverviewMarkup} from './booking-insights-ui.js';
@@ -442,7 +442,7 @@ function renderPositions(){
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
    (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
    '</div></div>'+
-   '<div class="holding-r"><strong class="holding-money">'+money(valueEUR(p))+'</strong>'+
+   '<div class="holding-r"><strong class="holding-money">'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+
    '</div></div>'+
    '<details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details></div>';
  });
