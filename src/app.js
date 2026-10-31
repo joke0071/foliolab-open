@@ -438,7 +438,7 @@ function renderPositions(){
     Math.min(50,ordered.length-listingReviewLimit)+' Positionen anzeigen</button>':'');
  }else reviewPanel.replaceChildren();
  const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
- $('positionFilters').innerHTML=[['all','Alle'],...(allReview.length?[['__review','Prüfbereich ('+allReview.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
+ $('positionFilters').innerHTML=[['all','Alle'],['__review','Prüfbereich'+(allReview.length?' ('+allReview.length+')':'')],...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
  const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
