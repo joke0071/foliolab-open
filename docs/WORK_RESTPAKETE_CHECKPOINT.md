@@ -1,3 +1,19 @@
+## v234: Test-Begleitkandidat #242 wegen offenem Readiness-Wartepfad · 31.10.2026
+
+Neue autonome Releaseautorisierung unverändert gültig. Main weiterhin v231 /1617bdd29da585c88fc713be16a19bea0ed55aba. **Noch kein Merge/Deployment.**
+
+Der zusätzliche #241-Readiness-Lauf41182528517 steht seit über20Minuten in Cross3, während Chromium und Cross1/2 SUCCESS sind. Derselbe HEAD6baa5bc war im vollständigen Lauf41181354838 bereits SUCCESS. Kein aktueller Fehlerlog verfügbar: APIlog404/BlobNotFound solange aktiv, öffentliche Browseransicht verlangt Login. **Konkrete blockierende Zeile deshalb nicht als bewiesen ausgeben.** Alter Lauf bleibt unverändert aktiv, nicht als bestanden deklarieren und nicht abbrechen.
+
+Nachgewiesen: in den betroffenen UI-Quality-Testmodulen sind unbefristete page.evaluate(serviceWorker.ready)-Wartepfade vorhanden; dynamische Suiteimporte hatten keine Phasenzeitgrenze. Gezielter test-only Begleitfix [#242](https://github.com/joke0071/foliolab-open/pull/242), Branch `test/bounded-cross-engine-readiness`, HEAD `8d8a08bd4420d133c269b6ff810b46d0c9791d31`, enthält #241/#240/#239 unverändert. Status PARTIAL / CI_PENDING.
+
+Alle121 ausgelieferten Assets perSHA256 **bytegleich zu freigegebenem v234**; kein Produkt-/Finanz-/SW-/Schema-/Speichercode geändert. Ziel bleibt SW234, kein neuer Produktversionssprung. Nur Tests beobachten nun die tatsächliche app-eigene aktivierte Workerregistrierung begrenzt(60s), UI-Quality-Importe melden Start/Pass und scheitern explizit nach5Minuten pro Phase, eigener Suiteabschnitt10Minuten, History-Worker3Minuten/Engine mit genauer Phase. Kein manueller Testworker, kein erfolgreicher Fallback, keine Assertion oder Controller-/Offline-/Finanz-/CAS-/Backup-Prüfung entfernt. Neue Unitfälle beweisen Fehlersignal und Erhalt späterer Fehler. Lokal993/993Unit+SyntaxPASS, Chromium-History-Worker sowie nativeKraken-Suite inkl.Offline/Axe/Fokus/exakterNichtmutationPASS.
+
+**Nächster Schritt:** vollständige reguläre CI am exakten #242-HEAD bestehen lassen; dann einmalig den kumulativen gemeinsamen Dateibaum alsv234 übernehmen, Main-Pipeline und tatsächliche vollständige Live-Abnahme verfolgen. #241/#240/#239 nicht zusätzlich einzeln deployen. Der ausstehende alte Wiederholungslauf bleibt transparent dokumentiert und wird nicht als erfolgreich umgedeutet. Diese routinemäßige reine Testabsicherung ist durch die neue globale Nutzerautorisierung gedeckt; keine zusätzliche Rückfrage.
+
+Nach erfolgreicher v234-Live-Abnahme UI-POS02/UI-BOOK03 beginnen; vorher keine funktionale Folgeimplementierung. Nur FLH05/FLH-PROJ01 PARKED, Budget0€, historischen Checkpoint-Branch nie vollständig nachmain.
+
+---
+
 ## Ausführbarer nächster P1A-Abschnitt nach v234 – neue Nutzerentscheidungen abgeglichen · 31.10.2026
 
 Die **neue autonome Releaseautorisierung gilt unverändert**; keine allgemeine Wochenend-/Praxistest-Sperre. Aktuell v234-Readiness-CI41182528517 am unveränderten HEAD6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4: Chromium und Cross1/2 SUCCESS, Cross3 läuft. Nicht abbrechen. Erst vollständige v234-Übernahme und Live-Abnahme abschließen, dann nächste Implementierung.
