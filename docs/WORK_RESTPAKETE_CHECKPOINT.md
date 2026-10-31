@@ -1,3 +1,15 @@
+## UI-MASTER28: echter Nullwert-Anzeigefehler reproduziert, Folgepaket #240 · 31.10.2026
+
+Owner ChatGPT Work. Echte v231-Cloud-UI: Erststart → synthetischen ETF mit Bestand2,5 ohne Kurs angelegt/gespeichert. „Kein Kurs“ steht neben „€0,00“; Anzeigefehler bestätigt. [PR #240](https://github.com/joke0071/foliolab-open/pull/240), Branch `fix/missing-position-value`, HEAD `1c900a78bd7ead4c74c5de28ab3675ec4a872b29`, SW233 nur Kandidat, **PARTIAL / CI_PENDING**.
+
+Anzeige in Positionsliste und Einzelpositionen des Anbieter-Akkordeons wird „Nicht bewertet“, unter Wiederverwendung der bestehenden displayQuotePrice-Evidenz. Nullbestand, Nullkurs mit Quelle, ausgeschlossene Beiträge und positive gespeicherte Werte bleiben erhalten. Kein Eingriff in valueEUR/totalEUR/Finanzjournal/Storage. Lokal988/988 Unit + Syntax PASS, echter Chromium-UI-/IDB-Nichtmutationsfall in320/390/768/1440 PASS, auch mit #239-Layout kombiniert und visuell kontrolliert. Weitere Summen-/Detail-/Chart-/Wallet-/Textverträge bleiben OPEN/PARTIAL.
+
+#240 enthält unverändert #239-HEAD1d57804fc565e3665b65a088f4a31895048b468f. Zielmain ist für bestehende CI-Trigger nötig. Bei späterer konkreter Freigabe kann #240 beide Korrekturen gemeinsam veröffentlichen; #239 dann nicht separat nochmals releasen. #239-CI läuft unverändert weiter. Keine Pipeline abgebrochen, kein Merge/Deployment. v231 LIVE_ACCEPTED bleibt stabile Testbasis.
+
+PERF01: zusätzlicher Mischdaten-Benchmark auf unverändertem v231 läuft separat (19ETF/Cash/Walletpositionen,1000/10000Buchungen,1825Referenzen, CPU1x/4x, je3Kalt-/Warmstarts, Navigation, LongTasks, exakter IDB-Recordhash). Vorläufige1000er-Mediane: kalt574ms/warm482ms; CPU4x kalt2669ms/warm2417ms. Noch kein vollständiger Bericht/Optimierungsgewinn,10000erTeil läuft. Script und endgültige Rohwerte nach Abschluss remote sichern. Keine Finanz-/Storage-/Cacheänderung daraus ableiten.
+
+---
+
 ## Qualitätsnachcheck v231: mobiler P1-Kandidat #239 · 31.10.2026
 
 Owner ChatGPT Work. v231 bleibt LIVE_ACCEPTED und Wochenend-Testbasis; vollständiger verifizierter Releasebeleg dauerhaft unter [release-evidence/v231-live-acceptance.json](release-evidence/v231-live-acceptance.json).
