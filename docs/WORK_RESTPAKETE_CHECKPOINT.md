@@ -1,3 +1,9 @@
+## Konkrete Releasefreigabe erteilt · 31.10.2026
+
+Der Nutzer hat im Anschluss an die konkrete Frage nach Merge und einmaliger Veröffentlichung von #241 als v234 ausdrücklich **„Freigabe“** erteilt. Diese Freigabe gilt für den kumulativen Kandidaten #241 inklusive #239/#240, HEAD `6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4`. Main frisch geprüft unverändert `1617bdd29da585c88fc713be16a19bea0ed55aba`; bestehende vollständige CI41181354838 SUCCESS, PR mergefähig. Draft regulär auf ready_for_review gesetzt; der dadurch vorgesehene neue vollständige CI-Lauf bleibt erhalten und wird vor Integration abgewartet. Keine Quelländerung und keine Gate-Abschwächung. Danach einmaliger Merge mit erwartetem HEAD, vollständiges Main-Deployment und echte Live-Abnahme. Bis dahin v231 LIVE_ACCEPTED / Rückfallbasis, v234 noch nicht live. Keine zusätzliche Nutzerfreigabe für diese bereits autorisierten Schritte erforderlich. Historischen Checkpoint-Branch nicht nach main mergen.
+
+---
+
 ## Verbindlicher Abschluss dieses Abschnitts: v231 LIVE, gemeinsamer Kandidat #241 CI_ACCEPTED · 31.10.2026
 
 **Owner: ChatGPT Work. Produktion und akzeptierte Rückfallbasis bleiben v231. Kein Merge und kein Deployment durchgeführt.**
