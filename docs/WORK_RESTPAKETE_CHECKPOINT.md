@@ -1,3 +1,13 @@
+## #240 CI_ACCEPTED; kleiner PERF01-Kontrollfall ohne Startnachteil · 31.10.2026
+
+#240 HEAD1c900a78bd7ead4c74c5de28ab3675ec4a872b29: vollständige CI41180685593 einschließlich test und aller3Cross-Engine-Pakete SUCCESS, Wallet41180685558 SUCCESS; Deploy/Live beiPR korrektSKIPPED. Cross3-Artefakt13035086851 eigenständig geladen, ZIP-CRC und SHA256 `b46bc10007cfb61d944941ba851d610cb2184d3d1ee2e5293397957b70678fdf` mitGitHubabgeglichen. missing-position-value/report.json Firefox+WebKitPASS; echteWebKit390px-Aufnahme visuell geprüft: fehlendeETF/Kryptokurse „Nicht bewertet“, echteNullfälle weiterhin€0,00. NurCI_ACCEPTED, nichtLIVE. #241 enthält beideVorläufer; dessen vollständigeCI41181354838 undWallet41181354828 laufen weiter.
+
+Zusätzlicher kleiner matchedA/B-Kontrollfall auf identischemRuntimebaum und gleicherSW233:19Positionen/1000Buchungen+Journal/1825Referenzen,CPU1x,je3Proben. Kaltmedian644→551ms (−14,4%), Warm548→451ms (−17,7%); kein Startnachteil sichtbar. Navigation außerhalbBuchungen schwankt imMessrauschen, kein pauschalerGewinn behauptet. ExakterIDB-Record/Revision unverändert. Rohwerte+Generator unter perf-evidence/2026-10-31/small-*.json bzw.benchmark-small-ab.mjs remote. Keine nachträgliche Änderung am laufenden#241-HEAD nur für Zusatzbelege.
+
+Neue Freigabegrenze bleibt der vollständig abgenommene kumulative#241/SW234-Kandidat. v231 bleibt unverändert LIVE_ACCEPTED. KeineMerges/Deployments, keineaktivenPipelinesabgebrochen, keineTestabschwächung.
+
+---
+
 ## PERF01: belegte Parseroptimierung als kumulativer Kandidat #241 · 31.10.2026
 
 Owner ChatGPT Work. [PR #241](https://github.com/joke0071/foliolab-open/pull/241), Branch `perf/bounded-decimal-parsing`, HEAD `6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4`, SW234 ausschließlich Kandidat, **PARTIAL / CI_PENDING**. Enthält #240-HEAD1c900a78bd7ead4c74c5de28ab3675ec4a872b29 und #239 unverändert. Keine parallele Neuimplementierung oder Änderung dieser Vorläufer.
