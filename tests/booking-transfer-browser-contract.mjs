@@ -33,8 +33,35 @@ export async function bookingTransferBrowserContract({p,engine,record,scan,base}
  // Exercise the real refresh handler with controlled provider latency. No
  // real provider data or OAuth result is asserted by this synthetic fixture.
  await seed();await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{createPosition}=await import('/src/model.js');const s=new PortfolioStorage(),m=await s.initialize();m.positions.push(createPosition({id:'busy-crypto',providerId:m.providers[0].id,accountId:m.accounts[0].id,name:'SYNTHETIC refresh latency',kind:'crypto',coinId:'ethereum',quantity:1,price:1},m));await s.save(m);s.close();});await p.reload();await nav();await openRow('out');await choose();
- let release,finishResponse,routingError=null,routeStarted=false,refreshRecord;const responseDone=new Promise(resolve=>{finishResponse=resolve;}),pending=new Promise(resolve=>{release=resolve;}),pattern='https://api.coingecko.com/**',respond=async route=>{routeStarted=true;try{await pending;await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ethereum:{eur:2,last_updated_at:Math.floor(Date.now()/1000)}})});}catch(error){routingError=error;}finally{finishResponse();}};await p.context().route(pattern,respond);
- try{const requested=p.waitForRequest(pattern,{timeout:10000});await p.locator('#refreshAll').evaluate(el=>el.click());await requested;console.log(engine+': synthetic refresh pending, source disabled='+await p.locator('#refreshAll').isDisabled());const during=await record();refreshRecord=during;await el('accept').click();await p.waitForFunction(()=>/^(Nicht gespeichert|Zuordnung gespeichert)/.test(document.querySelector('[data-transfer=status]').textContent));const blocked=await record();console.log(engine+': synthetic refresh guard revisions '+during.revision+' -> '+blocked.revision+', flows '+JSON.parse(blocked.raw).externalCashFlows.length);assert.deepEqual(blocked,during,'an open transfer dialog cannot write during an in-flight refresh');assert.match(await el('status').innerText(),/^Nicht gespeichert/);assert.equal(JSON.parse(during.raw).externalCashFlows.length,3);}finally{release();if(routeStarted)await responseDone;await p.context().unroute(pattern,respond);}assert.equal(routingError,null,'synthetic provider response must be delivered without a routing error');
+ // Hold only the external quote boundary. The prior routing fixture let WebKit
+ // finish before confirmation; the real client/parser/storage/guards
+ // still run, and no worker registration or acceptance assertion is replaced.
+ await p.evaluate(()=>{
+  const key=Symbol.for('foliolab.test.held-quote'),native=globalThis.fetch;
+  const gate={native,pending:false,requests:0,release:null};globalThis[key]=gate;
+  globalThis.fetch=(input,options)=>{
+   const url=new URL(typeof input==='string'?input:(input?.url??String(input)),location.href);
+   if(url.hostname!=='api.coingecko.com')return native.call(globalThis,input,options);
+   gate.pending=true;gate.requests++;
+   return new Promise((resolve,reject)=>{
+    const aborted=()=>{gate.pending=false;reject(options?.signal?.reason||new DOMException('Aborted','AbortError'));};
+    if(options?.signal?.aborted){aborted();return;}
+    options?.signal?.addEventListener('abort',aborted,{once:true});
+    gate.release=()=>{options?.signal?.removeEventListener('abort',aborted);gate.pending=false;resolve(new Response(JSON.stringify({ethereum:{eur:2,last_updated_at:Math.floor(Date.now()/1000)}}),{status:200,headers:{'content-type':'application/json'}}));};
+   });
+  };
+ });
+ let refreshRecord;
+ try{
+  await p.locator('#refreshAll').evaluate(el=>el.click());
+  await p.waitForFunction(()=>globalThis[Symbol.for('foliolab.test.held-quote')]?.pending===true,null,{timeout:10000});
+  assert.ok(await p.locator('#refreshAll').isDisabled(),'fixture must actually hold an in-flight refresh');assert.equal(await p.evaluate(()=>globalThis[Symbol.for('foliolab.test.held-quote')].requests),1,'one explicitly held synthetic provider request');
+  refreshRecord=await record();await el('accept').click();await p.waitForFunction(()=>/^(Nicht gespeichert|Zuordnung gespeichert)/.test(document.querySelector('[data-transfer=status]').textContent));
+  const blocked=await record();console.log(engine+': synthetic refresh guard revisions '+refreshRecord.revision+' -> '+blocked.revision+', flows '+JSON.parse(blocked.raw).externalCashFlows.length);
+  assert.deepEqual(blocked,refreshRecord,'an open transfer dialog cannot write during an in-flight refresh');assert.match(await el('status').innerText(),/^Nicht gespeichert/);assert.equal(JSON.parse(blocked.raw).externalCashFlows.length,3);
+ }finally{
+  await p.evaluate(()=>{const key=Symbol.for('foliolab.test.held-quote'),gate=globalThis[key];if(gate){gate.release?.();globalThis.fetch=gate.native;delete globalThis[key];}});
+ }
  await p.waitForFunction(()=>!document.getElementById('refreshAll').disabled);const refreshed=await record(),refreshedModel=JSON.parse(refreshed.raw),refreshOriginal=JSON.parse(refreshRecord.raw);assert.equal(refreshed.revision,refreshRecord.revision+1,'only one quote refresh commit');assert.equal(refreshedModel.positions.find(p=>p.id==='busy-crypto').priceExact,'2','only the explicitly triggered synthetic quote refresh commits');for(const key of ['bookings','journalEntries','externalCashFlows','openingPositions'])assert.deepEqual(refreshedModel[key],refreshOriginal[key],'quote refresh leaves '+key+' intact');await p.keyboard.press('Escape');
  await seed();await openRow('out');await choose();
  await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.bookings[0].notes='SYNTHETIC newer tab';await s.save(m);s.close();});const newer=await record();await el('accept').click();await p.waitForFunction(()=>document.querySelector('[data-transfer=status]').textContent.startsWith('Nicht gespeichert'));assert.deepEqual(await record(),newer,'row entry cannot bypass stale revision protection');await p.keyboard.press('Escape');
