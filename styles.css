@@ -564,9 +564,9 @@
 .action-group .action-icon,#historyPage .history-add-button .action-icon{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;flex:0 0 19px}
 .action-group .action-icon svg,.action-group .action-svg,#historyPage .history-add-button .action-icon svg{display:block;width:19px;height:19px;stroke:currentColor}
 .action-group .action-label{display:inline;white-space:nowrap}
-#positionsPage>.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
-#positionsPage>.toolbar>.filter-list{flex:1 1 250px;min-width:0}
-#positionsPage>.toolbar>.action-group{flex:0 0 auto;width:auto}
+#positionOverview>.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
+#positionOverview>.toolbar>.filter-list{flex:1 1 250px;min-width:0}
+#positionOverview>.toolbar>.action-group{flex:0 0 auto;width:auto}
 #positionsPage .position-review-action:not(:has(.hidden)){display:flex;justify-content:flex-end;margin:0 0 10px}
 #positionsPage .position-review-action:has(.hidden){display:none}
 #bookingsPage .panel-head-actions .panel-actions.action-group{display:flex;flex:0 0 auto;width:auto;flex-wrap:nowrap;justify-content:flex-end}
@@ -575,16 +575,16 @@
 #historyPage .history-add-button:hover{background:#173b2d;color:#fff;border-color:#173b2d}
 #historyPage .history-add-label{display:inline;white-space:nowrap}
 @media(max-width:1023px) and (min-width:768px){
- #positionsPage>.toolbar{align-items:flex-start}
- #positionsPage>.toolbar>.filter-list{flex:1 1 100%;width:100%}
- #positionsPage>.toolbar>.action-group{margin-left:auto}
+ #positionOverview>.toolbar{align-items:flex-start}
+ #positionOverview>.toolbar>.filter-list{flex:1 1 100%;width:100%}
+ #positionOverview>.toolbar>.action-group{margin-left:auto}
  #positionsPage .action-group .responsive-action{padding:10px 11px;font-size:11px}
  #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action{padding:9px 10px;font-size:11px}
 }
 @media(max-width:767px){
- #positionsPage>.toolbar{flex-direction:column;align-items:stretch;gap:10px}
- #positionsPage>.toolbar>.filter-list{flex:0 1 auto;width:100%}
- #positionsPage>.toolbar>.action-group{width:100%;margin:0;justify-content:flex-end;display:flex;flex-wrap:nowrap;gap:7px}
+ #positionOverview>.toolbar{flex-direction:column;align-items:stretch;gap:10px}
+ #positionOverview>.toolbar>.filter-list{flex:0 1 auto;width:100%}
+ #positionOverview>.toolbar>.action-group{width:100%;margin:0;justify-content:flex-end;display:flex;flex-wrap:nowrap;gap:7px}
  .action-group .action-label,#historyPage .history-add-label{display:none}
  #positionsPage .action-group .responsive-action,
  #bookingsPage .panel-head-actions .panel-actions.action-group .responsive-action,
@@ -618,7 +618,7 @@
 .page-description:empty{display:none}
 .heading-row:has(.page-description:not(:empty)){margin-bottom:16px}
 #historyPage .history-panel>.panel-head,#bookingsPage .panel-head-actions{margin-bottom:12px}
-#positionsPage>.toolbar{margin-bottom:12px}
+#positionOverview>.toolbar{margin-bottom:12px}
 .action-group .action-icon svg,.action-group .action-svg,
 #historyPage .history-add-button .action-icon svg,
 #historyPage .history-calendar-popover>summary svg{stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
@@ -1784,3 +1784,43 @@
 @media(max-width:720px){#positionList .position-detail-actions{margin-left:10px}}
 
 .detail-action-row:not(:has(>.detail-edit))>details>summary{width:100%}
+
+/* Dedicated data-quality review: ordinary position controls keep their state. */
+#positionOverview[hidden],#qualityReviewPanel[hidden],#heroQualitySummary[hidden]{display:none!important}
+.hero-content{max-width:100%;width:100%;min-width:0}
+.hero .total{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+.hero .total.hero-value-long{font-size:clamp(22px,5vw,36px);letter-spacing:-.6px}
+.hero-valuation-link{min-height:44px;display:inline-flex;align-items:center;gap:7px;max-width:100%}
+.hero-valuation-link svg{flex:none;transition:transform .15s}
+.hero-valuation-link[aria-expanded="true"] svg{transform:rotate(180deg)}
+.hero-quality-summary{margin-top:8px;position:relative;z-index:1;max-width:540px}
+.hero-quality-counts{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 0 12px;font-size:14px;color:var(--white,#fff)}
+.hero-quality-summary .btn{min-height:44px;background:#fff;color:#245b3f;border-color:#fff}
+.quality-review-panel{padding:24px;overflow-wrap:anywhere}
+.quality-review-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.quality-review-head h2{margin:4px 0 12px}
+.quality-review-head .btn,.quality-review-actions .btn,#qualityReviewMore .btn{min-height:44px}
+.quality-review-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.quality-review-summary>div{background:var(--bg,#f5f7f4);padding:16px;border-radius:12px}
+.quality-review-summary h3,.quality-review-card h3{font-size:16px;margin:0 0 8px}
+.quality-review-summary p{margin:0;font-size:14px;line-height:1.5}
+.quality-review-counts{display:grid;gap:6px;font-size:14px}
+.quality-review-list{display:grid;gap:12px;margin:16px 0}
+.quality-review-card{border:1px solid var(--line,#d9e1da);border-radius:12px;padding:18px;min-width:0}
+.quality-review-card ul{padding-left:20px;display:grid;gap:10px}
+.quality-review-card li strong,.quality-review-card li span{display:block}
+.quality-review-card li span{font-size:13px;color:var(--muted,#536458);margin-top:3px}
+.quality-review-actions{display:flex;gap:8px;flex-wrap:wrap}
+.quality-review-method>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+.quality-review-method p{font-size:14px;line-height:1.6}
+@media(max-width:720px){.quality-review-panel{padding:16px}.quality-review-summary{grid-template-columns:1fr}.quality-review-card{padding:14px}.quality-review-actions .btn{flex:1 1 auto}}
+
+.quality-review-source-actions .btn,.quality-review-actions .btn{min-height:44px;white-space:normal;max-width:100%;text-align:center}
+.quality-review-method>summary::after{content:'';display:block;flex:0 0 8px;width:8px;height:8px;margin:-3px 5px 0 auto;border-right:1.8px solid #6b8c73;border-bottom:1.8px solid #6b8c73;transform:rotate(45deg)}
+.quality-review-method[open]>summary::after{transform:rotate(225deg)}
+@media(prefers-reduced-motion:reduce){.hero-valuation-link svg{transition:none}}
+/* Keep the complete amount visible even when a category tile is very narrow. */
+#dashboardPage .stat-value{overflow-wrap:anywhere}
+/* Preserve provider text clearance after the shared More disclosure styles. */
+#morePage .provider-settings-group>summary{display:grid;padding-right:124px;min-height:48px}
+#morePage .account-evidence>summary,#morePage .account-evidence .btn{min-width:48px;min-height:48px}

@@ -1,6 +1,6 @@
 import {legacyQuoteDiscrepancies} from './legacy-quote-audit.js';
 import {valuationIssues} from './valuation-status.js';
-import {priceQuality} from './quote-quality.js';
+import {priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {historyAction} from './booking-history.js';
 const quoteLabels={missing:'Kurs fehlt',derived:'Zuletzt gespeicherter Wert',review:'Kursstatus unklar',outdated:'Kurs älter als 7 Tage'};
 const timestamp=v=>typeof v==='string'&&Number.isFinite(Date.parse(v))?v:null;
@@ -27,4 +27,20 @@ export function positionQualityReview(model,now=Date.now()){
 }
 export function filterQualityReview(groups,{kind='all',accountId=''}={}){
  return groups.filter(g=>(!accountId||g.accountId===accountId)&&(kind==='all'||g.issues.some(i=>i.category===kind)));
+}
+
+/** Presentation scopes remain separate: the hero is not a provenance counter.
+ * Include archived identities and never assign evidence or update a quote. */
+export function structuredQualityReview(model,now=Date.now()){
+ const valuation=valuationIssues(model,now),valuationIds=new Set(valuation.map(i=>i.id));
+ const counts={missing:0,derived:0,review:0,outdated:0};for(const item of valuation)counts[item.type]++;
+ const groups=new Map(positionQualityReview(model,now).map(g=>[g.id,{...g,issues:g.issues.slice()}]));
+ for(const p of model.positions||[]){
+  const quality=priceQuality(p,now);
+  if(valuationIds.has(p.id)||quality.state==='confirmed'||quality.state==='ignored')continue;
+  const group=groups.get(p.id)||{id:p.id,accountId:p.accountId,issues:[]};
+  group.issues.push({key:'position:'+p.id+':provenance',category:'quote',label:quality.label,source:'Kursquellenprüfung',quality:quality.state,asOf:timestamp(p.quoteAsOf),severity:'warning',action:'edit-position',actionLabel:'Kursdaten prüfen'});
+  groups.set(p.id,group);
+ }
+ return {valuation,counts,groups:[...groups.values()],quoteSummary:quoteQualitySummary(model.positions,now),affectedCount:groups.size};
 }
