@@ -1,0 +1,54 @@
+{
+  "scope": "warm booking tab, synthetic Chromium CPU4x, not Android hardware",
+  "baseline": {
+    "commit": "d56d0ba428f827bd91b773d2f4b24a93430b510e",
+    "samplesMs": [
+      884,
+      850,
+      916,
+      983,
+      800
+    ],
+    "medianMs": 884,
+    "source": {
+      "src/app.js": "4afe9cb1d0f200bd4477f90463b93aada9a956f9d964e12fe7f933831e3044c0",
+      "src/booking-management.js": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe",
+      "src/booking-history-ui.js": "234226ceddece464be5dcecde8741938487f3e24af11e9a54548cfb343901371",
+      "src/transfer-matching-ui.js": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d",
+      "styles.css": "82fbc0dd7256b24e84811f8c6f6d2ad93109b0de8e130036f66056068a2aa556"
+    }
+  },
+  "candidate": {
+    "samplesMs": [
+      665,
+      697,
+      672,
+      630,
+      603
+    ],
+    "medianMs": 665,
+    "source": {
+      "src/app.js": "f529b7304aa8c868dd0ab09b945d044b9f6d08725aa164c74eaf5901672c54f8",
+      "src/booking-management.js": "8187bc57f883bfb96db4f5b81f22c753e5be785434284dbea486e8dd94ccc547",
+      "src/booking-history-ui.js": "234226ceddece464be5dcecde8741938487f3e24af11e9a54548cfb343901371",
+      "src/transfer-matching-ui.js": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d",
+      "styles.css": "82fbc0dd7256b24e84811f8c6f6d2ad93109b0de8e130036f66056068a2aa556"
+    }
+  },
+  "differencePercent": -24.77,
+  "positions": 19,
+  "bookings": 10000,
+  "references": 1825,
+  "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+  "scriptSHA256": "6f975aeb056e9ac76ec814c87b132ec5273346e1faef12b80e27f6af6cb374b5",
+  "recordUnchangedWithinEachRun": true,
+  "crossRunRecordHashesNeedNotMatch": "PortfolioStorage initialization timestamps differ; each exact canonical record is compared within its own run.",
+  "frozenParentCases": 42,
+  "frozenParentComparisons": 168,
+  "limits": [
+    "Five warm navigation samples and one separate diagnostic CPU profile per variant",
+    "Exploratory reports retained but excluded from the final comparison",
+    "No real Android/PWA or startup measurement; no cumulative percentage with prior releases",
+    "Independent local source variants run sequentially without parallel local browser suites"
+  ]
+}

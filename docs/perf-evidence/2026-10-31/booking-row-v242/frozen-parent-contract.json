@@ -1,0 +1,220 @@
+{
+  "baselineCommit": "4a10aefaf065b8840b14a78d93a3e8e61330d84b",
+  "priorSourceSHA256": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe",
+  "candidateSourceSHA256": "8187bc57f883bfb96db4f5b81f22c753e5be785434284dbea486e8dd94ccc547",
+  "cases": [
+    {
+      "case": "healthy",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "missing booking",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "missing journal",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "missing position",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "duplicate booking id",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "shared journal",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "first duplicate journal wins",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "first duplicate position wins",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "import fingerprint",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "import source",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "unknown source",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "matched booking",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "target position",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "matched journal",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "wallet enabled",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "wallet xpub",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "represented position",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "liability",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "journal date conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "journal type conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "unknown booking field",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "unknown journal field",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "unknown posting field",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "missing recorded state",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "external classification",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "foreign currency",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "noncash",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "fee",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "tax",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "countercash",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "invalid exact amount",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "zero quantity",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "quantity conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "account conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "posting conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "missing cash flow",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "duplicate cash flow",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "flow date conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "flow amount conflict",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "later checkpoint",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "legacy journal link absent",
+      "ids": 4,
+      "result": "PASS"
+    },
+    {
+      "case": "undefined journal identity",
+      "ids": 4,
+      "result": "PASS"
+    }
+  ],
+  "comparisons": 168,
+  "result": "PASS",
+  "readOnly": true
+}

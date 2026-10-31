@@ -13,7 +13,7 @@ import {ledgerLiveMarkup} from './ledger-live-ui.js';
 import {looksLikeKrakenLedgerCSV,parseKrakenLedgerCSV} from './kraken-ledger.js';
 import {krakenLedgerMarkup} from './kraken-ledger-ui.js';
 import {accountEvidenceRows} from './account-evidence.js';
-import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowActionReasons} from './booking-management.js';
+import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowsActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
@@ -599,10 +599,11 @@ function renderBookings(){
  const list=historyRows.filter(b=>(archiveFilter==='all'||archived.has(b.id)===(archiveFilter==='archived'))).filter(b=>(!type||b.type===type||(type==='transfer'&&b.transferMatch))&&(!query||
   [b.positionName,model.positions.find(p=>p.id===b.positionId)?.name,b.notes,b.type,TX_TYPES[b.type],b.date,calendarDateLabel(b.date),b.transferMatch?'Interner Transfer '+b.transferMatch.reference:'']
    .some(x=>String(x||'').toLocaleLowerCase('de').includes(query))));
- const lookups={bookings:new Map(model.bookings.map(b=>[b.id,b])),positions:new Map(model.positions.map(p=>[p.id,p])),accounts:new Map(model.accounts.map(a=>[a.id,a]))};
+ const visible=list.slice(0,bookingLimit),rowReasons=bookingRowsActionReasons(model,visible.map(b=>b.id));
+ const lookups={rowReasons,bookings:new Map(model.bookings.map(b=>[b.id,b])),positions:new Map(model.positions.map(p=>[p.id,p])),accounts:new Map(model.accounts.map(a=>[a.id,a]))};
  bookingMatchingIds=list.map(b=>b.id);renderBookingManagement(historyRows);
  $('bookingList').innerHTML=historyRows.length?(
-  list.length?list.slice(0,bookingLimit).map(b=>bookingManagementRow(b,archived.has(b.id),lookups)).join('')+
+  list.length?visible.map(b=>bookingManagementRow(b,archived.has(b.id),lookups)).join('')+
    (list.length>bookingLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-bookings">Weitere '+Math.min(100,list.length-bookingLimit)+' Vorgänge anzeigen</button></div>':''):
    empty('Keine Buchungen zu diesem Filter gefunden.')):
   '<div class="empty booking-onboarding"><strong>Noch keine Buchungen erfasst</strong><p>Neue Buchungen und CSV-Importe erscheinen hier.</p></div>';
@@ -610,7 +611,7 @@ function renderBookings(){
 function bookingWritable(){return !busy&&!saving&&!loadFailure&&!otherTabChangedPortfolio;}
 function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand nicht schreibbar. Abruf abwarten oder neu laden.');}
 function bookingManagementRow(row,archived,lookups){
- const checks=bookingRowActionReasons(model,row.id),reason=checks.notes.join(' '),removeReason=checks.remove.join(' '),label=calendarDateLabel(row.date)+' · '+(row.positionName||model.positions.find(p=>p.id===row.positionId)?.name||row.positionId);
+ const checks=lookups.rowReasons.get(row.id),reason=checks.notes.join(' '),removeReason=checks.remove.join(' '),label=calendarDateLabel(row.date)+' · '+(row.positionName||model.positions.find(p=>p.id===row.positionId)?.name||row.positionId);
  const edit=lookups.bookings.has(row.id)?'<button type="button" class="link-button detail-edit" data-booking-row-action="edit" data-id="'+esc(row.id)+'" aria-label="'+esc(label+' · Buchung bearbeiten')+'" '+(loadFailure||otherTabChangedPortfolio?'disabled':'')+'>Bearbeiten</button>':'<span class="reference-protection">Geschützt · Buchungsdetails ansehen.</span>';
  const controls=bookingSelecting?'<div class="position-card-tools booking-row-tools"><label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label></div>':'';
  const original=lookups.bookings.get(row.id),position=lookups.positions.get(row.positionId),account=position&&lookups.accounts.get(position.accountId);
@@ -635,7 +636,8 @@ function renderBookingManagement(rows=bookingHistoryRows(model)){
  else{
   const summary=bookingSelectionSummary(model,selectedBookingIds,bookingMatchingIds),blocked=!bookingWritable()||summary.requiresRefresh||!summary.currentCount;
   const coverage=selectionCoverage(selectedBookingIds,bookingMatchingIds.slice(0,bookingLimit),bookingMatchingIds),selected=new Set(selectedBookingIds),archiveIds=new Set(model.bookingPresentation?.archivedIds||[]),allArchived=selectedBookingIds.length>0&&selectedBookingIds.every(id=>archiveIds.has(id));
-  const blocks=summary.currentCount<=200?rows.filter(b=>selected.has(b.id)).map(b=>({id:b.id,label:dateLabel(b.date)+' · '+(b.positionName||b.positionId),reasons:bookingRowActionReasons(model,b.id).remove})).filter(b=>b.reasons.length):[];
+  const selectedRows=summary.currentCount<=200?rows.filter(b=>selected.has(b.id)):[],rowReasons=bookingRowsActionReasons(model,selectedRows.map(b=>b.id));
+  const blocks=selectedRows.map(b=>({id:b.id,label:dateLabel(b.date)+' · '+(b.positionName||b.positionId),reasons:rowReasons.get(b.id).remove})).filter(b=>b.reasons.length);
   const removeReason=blocked?'Zuerst eine aktuelle Auswahl treffen; Datenstand muss schreibbar sein.':summary.currentCount>200?'Höchstens 200 Buchungen je wirtschaftlicher Prüfung.':blocks.length?'Löschen gesperrt: geschützte Herkunft oder Abhängigkeiten.':'';
   root.innerHTML='<div class="settings-actions">'+selectionMaster('bookingSelectFiltered',coverage,!bookingMatchingIds.length)+button('remove','Alle löschen',!!removeReason,'selection-danger')+button('archive',allArchived?'Alle wiederherstellen':'Alle archivieren',blocked||summary.currentCount>5000)+'</div><p class="small-help" role="status" id="bookingSelectionStatus">'+summary.selectedCount+' ausgewählt · '+bookingMatchingIds.length+' gefiltert'+(summary.hiddenCount?' · '+summary.hiddenCount+' ausgeblendet':'')+(summary.requiresRefresh?' · Auswahl veraltet. Bitte neu prüfen.':'')+'</p>'+(removeReason&&summary.selectedCount?(blocked||summary.currentCount>200?'<p class="small-help" id="bookingBlocked-remove">'+esc(removeReason)+'</p>':blockedReasonsMarkup(blocks,{id:'bookingBlocked-remove',esc})):'' );
   const remove=root.querySelector('[data-booking-manage="remove"]');remove.title=removeReason;if(removeReason&&summary.selectedCount)remove.setAttribute('aria-describedby',$('bookingBlocked-removeSummary')?'bookingBlocked-removeSummary':'bookingBlocked-remove');
