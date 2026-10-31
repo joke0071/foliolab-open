@@ -1,3 +1,15 @@
+## PR245: sicherer gemeinsamer Einzel-/Sammellöschpfad · 31.10.2026
+
+Owner Codex Work. Aktueller HEAD `620bad69d8ff004e119bb0cd6e72c9687e0f7323`, Tree `7faf31fa10dc74cecd72f53e475d747504ed7fd3`, Branch fix/unified-detail-actions, SW237 **IN_PROGRESS / CI_PENDING**. Produktion/Rückfallbasis weiterhin v236 LIVE_ACCEPTED.
+
+Zusätzlich zu nebeneinanderliegenden Detail-/Bearbeiten-Aktionen und unabhängig geprüfter Buchungslöschung verwendet jetzt auch die Einzelpositionslöschung die bestehende vollständige Sammellöschvorschau: Referenzen, Historien, Backupoption, Bestätigung, CAS und atomarer Kandidat mit Rollback. Der frühere vereinfachte Direktpfad entfällt. Keine neue wirtschaftliche Löschkategorie. Nicht gespeicherte Editoränderungen werden vor Wechsel in Löschvorschau ausdrücklich abgefragt. Kompakte Sperrhinweise mit aufklappbaren Gründen. Lokale vollständige Buchungs-, Positionslösch-, Archiv-, Einzelpositions- und Auditprüfungen PASS inklusive echter IDB/Quota/Abort/CAS/Offline/Restore/Undo und Draft-Abbruch. Voller lokaler Baum exakt mit Remote-Tree verglichen.
+
+Vorgängerlauf41195467679 vollständig beendet, nicht abgebrochen: Cross2/3 SUCCESS; Chromium/Cross1 FAILURE am gleichen zu breiten Archivtestselektor (Bearbeiten und vorhandene Kursdaten-prüfen-Aktion). Direkten detail-edit-Button präzisiert; kein Gate/Assertion/Toleranz entfernt. Nach Ende aller Jobs Branch regulär auf obigen neuen Stand gesetzt; komplette neueCI erforderlich. Keine Integration/kein Deployment erfolgt. Nächster Schritt neue exakteCI vollständig abnehmen, Cross-Bilder prüfen, autonom mergen, tatsächlicheProduktion vollständig prüfen und erst dann LIVE_ACCEPTED.
+
+UI-HERO-QUALITY03, Transferintegration, weitere Androidperformance, echteSync und wirtschaftlicheImportlöschung weiter OPEN. Echte Android/Google/TalkBack EXTERNAL. Nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## UI-POS02 / UI-BOOK03 · PR245 IN_PROGRESS / CI_PENDING · 31.10.2026
 
 Owner Codex Work. Branch fix/unified-detail-actions, HEAD29c87faf4a73a08cd887643e0985f3dd0aec649a, Tree6f9013627dff77c3175f2844d1b0de30c630c3cb, SW237-Kandidat. PR https://github.com/joke0071/foliolab-open/pull/245. Produktion und Rückfallbasis v236 LIVE_ACCEPTED.
