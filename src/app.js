@@ -2261,6 +2261,20 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   // that package exclusively when the user has enabled full backups.
   if(window.FolioDriveBackup){
     const driveBackend={
+      async backupGuard(){
+        const current=async()=>{
+          if(loadFailure)throw Error('Lokaler Speicher nicht lesbar. Zuerst Originaldaten sichern.');
+          if(busy||saving||otherTabChangedPortfolio)throw Error('Lokaler Vorgang oder Datenkonflikt: zuerst abschließen beziehungsweise neu laden.');
+          try{await portfolioStore.assertCurrent();}catch(error){
+            if(/anderen Tab|Speichermodus/.test(String(error?.message)))otherTabChangedPortfolio=true;
+            else lastStorageError=String(error?.message||error);
+            syncPortfolioState();throw error;
+          }
+          if(busy||saving||otherTabChangedPortfolio)throw Error('Lokaler Vorgang oder Datenkonflikt: zuerst abschließen beziehungsweise neu laden.');
+        };
+        await current();const expected=JSON.stringify(model);
+        return async()=>{await current();if(JSON.stringify(model)!==expected)throw Error('Lokaler Datenstand seit Sicherungsbeginn geändert. Bitte erneut sichern.');};
+      },
       readData(){
         if(loadFailure)throw Error('Lokaler Speicher beschädigt. Zuerst die Originaldaten sichern.');
         if(saving||otherTabChangedPortfolio)throw Error('Änderungen in einem anderen Tab oder laufende Speicherung: bitte neu laden beziehungsweise Vorgang abschließen.');

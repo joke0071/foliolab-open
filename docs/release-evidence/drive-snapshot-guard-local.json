@@ -1,0 +1,33 @@
+{
+  "status": "LOCAL_ACCEPTED / CI_PENDING",
+  "date": "2026-10-31",
+  "owner": "Codex",
+  "baselineCommit": "36a946930b406865ff4e00f3e08026fb2829bb88",
+  "unguardedDriveSHA256": "00670e736a2729b9a1e129420af54c8aca6b3a2461d91c9c8d7cbae03662bc09",
+  "guardedDriveSHA256": "cd11eab7ea09d76c8f9881027c7949a2cbacb2f0a9f4650a684f3aaf26caf144",
+  "negativeControl": {
+    "expectedFailures": 6,
+    "actualFailures": 6,
+    "result": "PASS: original code rejected by all6 new safety regressions"
+  },
+  "protectedTargetedUnitTests": 21,
+  "fullUnitTests": 1008,
+  "fullUnitResult": "PASS",
+  "syntax": "PASS",
+  "chromiumRealIDBCanonicalConflict": "PASS: zero stale uploads, winning exact record/revision unchanged, successful upload only after reload",
+  "realGoogleOAuth": "EXTERNAL",
+  "changes": [
+    "mandatory read-only canonical/model-snapshot guard",
+    "pre-upload checks",
+    "confirmed upload with newer local changes never clears unbacked marker or prunes old backups",
+    "read-only guard before retention DELETE"
+  ],
+  "unchanged": [
+    "finance calculations",
+    "canonical storage writes and format",
+    "encryption algorithms",
+    "OAuth token storage policy"
+  ],
+  "freshSnapshotAuthorizedRetention": "PASS: one confirmed backup and two authorized older-file DELETEs",
+  "confirmedUploadLocalAckFailure": "PASS: one upload, no automatic repeat in this session, honest partial-success message"
+}

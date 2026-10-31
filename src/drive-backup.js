@@ -319,28 +319,46 @@ async function createFile(parent,encrypted){
  const file=await res.json();if(!file.id)throw Error('Drive hat den Upload nicht bestätigt.');
  return file;
 }
+async function snapshotGuard(){
+ if(typeof backend?.backupGuard!=='function')throw Error('Backupprüfung nicht verfügbar. Anwendung bitte neu laden.');
+ const verify=await backend.backupGuard();
+ if(typeof verify!=='function')throw Error('Backupprüfung nicht verfügbar. Anwendung bitte neu laden.');
+ return verify;
+}
 async function backup(automatic=false){
  if(busy)return;
  if(!hasToken()){updateDueStatus();return}
  if(!vaultConfigured){updateDueStatus();return}
  busy=true;updateUi();status('Verschlüsseltes Backup wird erstellt …');
+ let confirmedUpload=false;
  try{
+  const verify=await snapshotGuard();
   const data=backend.readData();
   if(!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Lokale Bestände sind nicht lesbar.');
   if(data.positions.length===0&&data.providers.length===0&&data.accounts.length===0)throw Error('Portfolio ist leer. Vorhandene Drive-Backups bleiben erhalten.');
   const full=backend.buildCompleteBackup(data,backend.readBackupConfiguration?.()??null);
   const encrypted=await backend.encryptPasswordBackup(JSON.stringify(full));
+  await verify();
   const dir=await folder(true);
-  const uploaded=await createFile(dir,encrypted);
-  prefs.lastBackupAt=iso();savePrefs();
-  backend.onBackedUp?.();
+  await verify();
+  const uploaded=await createFile(dir,encrypted);confirmedUpload=true;
   if(prefs.mode==='start')initialAutoDone=true;
+  prefs.lastBackupAt=iso();savePrefs();
+  try{await verify();}catch{
+   // The confirmed snapshot exists, but newer local data is not in it.
+   // Never mark those changes backed up or prune another useful snapshot.
+   prefs.cleanupPending=false;savePrefs();
+   status('Backup gespeichert. Neuere lokale Änderungen sind noch nicht gesichert. Ältere Drive-Sicherungen bleiben erhalten.',true);
+   return;
+  }
+  backend.onBackedUp?.();
   let removed=0,cleanupError='',verified=false;
   try{
    const saved=await filesInFolder(dir);
    if(!saved.some(f=>f.id===uploaded.id))throw Error('Hochgeladenes Backup fehlt in der Dateiliste; ältere Dateien bleiben erhalten.');
    verified=true;
    for(const old of saved.filter(isCurrentBackup).slice(prefs.retention)){
+    await verify();
     await api('drive/v3/files/'+encodeURIComponent(old.id),{method:'DELETE'});
     removed++;
    }
@@ -354,7 +372,7 @@ async function backup(automatic=false){
     (removed?' · '+removed+' alte gelöscht':'')+
     (cleanupError?(verified?' · Weitere alte Backups werden später bereinigt':' · Bereinigung zur Sicherheit ausgesetzt'):''),
     false);
- }catch(e){status('Backup fehlgeschlagen: '+e.message,true)}
+ }catch(e){status((confirmedUpload?'Backup hochgeladen. Abschlussprüfung fehlgeschlagen: ':'Backup fehlgeschlagen: ')+e.message,true)}
  finally{busy=false;updateUi()}
 }
 async function maybeAuto(){
@@ -413,11 +431,13 @@ async function trimExisting(){
  if(!hasToken()||busy)return;
  busy=true;updateUi();
  try{
+  const verify=await snapshotGuard();
   const dir=await folder(false);
   if(!dir){prefs.cleanupPending=false;savePrefs();status('Noch keine Drive-Backups vorhanden.');return}
   const items=await filesInFolder(dir);
   let removed=0;
   for(const item of items.filter(isCurrentBackup).slice(prefs.retention)){
+   await verify();
    await api('drive/v3/files/'+encodeURIComponent(item.id),{method:'DELETE'});
    removed++;
   }
