@@ -1,3 +1,13 @@
+## Verbindliche neue Releaseautorisierung – sofort gültig · 31.10.2026
+
+Der Nutzer hat die bisherige Wochenend-/Praxistest-Releasebeschränkung vollständig aufgehoben. **#241/v234 ist ausdrücklich für Merge und Deployment autorisiert, sobald aktuelle relevante Qualitäts-/Sicherheitsprüfungen bestanden sind.** Main-/HEAD-Identität und Releasegates bleiben verbindlich. Aktueller readiness-Lauf41182528517 läuft am unveränderten HEAD6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4; nicht abbrechen oder unnötig ersetzen.
+
+Für den gesamten fortgesetzten FolioLab-Masterauftrag gilt: geprüfte konfliktfreie PRs selbstständig mergen und produktiv veröffentlichen; keine erneuten Rückfragen für routinemäßige UI-/UX-, Performance- und Fehlerkorrekturen. Zusammengehörige Änderungen sinnvoll bündeln. CI-, Finanz-, Speicher-, Backup- und Sicherheitsprüfungen vollständig beibehalten. Nach jedem Release tatsächliche Produktionsabnahme und Checkpoint-Aktualisierung. Nur bei wesentlichen, nicht ausreichend abgesicherten Finanz-/Daten-/Sicherheitsrisiken konkrete Freigabe einholen.
+
+Diese ausdrückliche Nutzerentscheidung übersteuert sämtliche historischen allgemeinen Wochenend-/Praxistest-Freigabesätze unten und in anderen Dokumenten. Nach vollständiger v234-Live-Abnahme nächste priorisierte konfliktfreie Arbeitspakete selbstständig fortsetzen. Nur FLH05/FLH-PROJ01 bleiben PARKED; Zusatzbudget0€. Historischen Dokumentationsbranch niemals vollständig nachmain mergen.
+
+---
+
 ## Konkrete Releasefreigabe erteilt · 31.10.2026
 
 Der Nutzer hat im Anschluss an die konkrete Frage nach Merge und einmaliger Veröffentlichung von #241 als v234 ausdrücklich **„Freigabe“** erteilt. Diese Freigabe gilt für den kumulativen Kandidaten #241 inklusive #239/#240, HEAD `6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4`. Main frisch geprüft unverändert `1617bdd29da585c88fc713be16a19bea0ed55aba`; bestehende vollständige CI41181354838 SUCCESS, PR mergefähig. Draft regulär auf ready_for_review gesetzt; der dadurch vorgesehene neue vollständige CI-Lauf bleibt erhalten und wird vor Integration abgewartet. Keine Quelländerung und keine Gate-Abschwächung. Danach einmaliger Merge mit erwartetem HEAD, vollständiges Main-Deployment und echte Live-Abnahme. Bis dahin v231 LIVE_ACCEPTED / Rückfallbasis, v234 noch nicht live. Keine zusätzliche Nutzerfreigabe für diese bereits autorisierten Schritte erforderlich. Historischen Checkpoint-Branch nicht nach main mergen.
