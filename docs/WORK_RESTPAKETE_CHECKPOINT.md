@@ -1,3 +1,15 @@
+## #254 / v251 – IN_PROGRESS · Unicode-Dateihülle als kleine Folgekorrektur
+
+Owner Work /root, 97b37cee055e. Nach vollständig beendeter v250-Abnahme frischer Kollisionscheck: Main `0b804f09ff83324898e9f86a021fe1831c71e1d2` unverändert, nur alte Drafts #157/#161 offen, keine laufende fremde Umsetzung. Einziger aktiver Strang **`feature/recovery-envelope-utf8-size`**, **[PR #261](https://github.com/joke0071/foliolab-open/pull/261)**, HEAD **`c674165f378cc6a174ff4e22287584310d3dacb1`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, exakt gleich lokalem geprüften Tree. **Volle CI 41250344634 / Wallet 41250344570 laufen; noch kein CI_ACCEPTED/MERGED/DEPLOYED für v251. V250 bleibt LIVE_ACCEPTED.**
+
+Belegter Grund für unmittelbare #254-Folge vor #255: tatsächliche Adoption eines gültigen alten vollständigen Backups mit unbekannten Unicode-Wrap-Zusatzfeldern kann neue lokal zu große Exportdatei erzeugen (Repro unter v250-Eintrag). Korrektur prüft zusätzlich tatsächliche UTF-8-Hüllenbytes + ASCII-Base64 gegen unveränderte 20.000.000 lokale Dateibytes vor AES. Keine Readerlimitänderung, kein Abschneiden unbekannter Felder, keine Schema-/KDF-/AES-/Finanz-/CAS-Änderung. SW v251 nur für den geänderten ausgelieferten Guard.
+
+**Lokal 1044/1044 Tests, 0 Fehler/Skips, Syntax PASS**, gezielt neue inklusive Bytegrenze/+1 und tatsächliche alte Vault-Adoption: neuer Export abgelehnt, Quelle weiterhin entschlüsselbar, Vault/Metadaten unverändert. Erweiterte Chromium-/Firefox-Suite (neuer Hüllenfall zusätzlich zu Klartext/Datei/Roundtrip/IDB-Nichtmutation), sieben Breiten/Axe PASS. Lokales WebKit unverändert mangels Hostbibliotheken nicht abgenommen; notwendiger Runtime-Paketinstallversuch scheiterte an Container-UID-Grenzen, keine Sicherheitsumgehung/Produktänderung. Vollständiges WebKit-Gate bleibt in GitHub-CI und echter Produktionsabnahme Pflicht.
+
+Nächster Schritt: exakten HEAD bis vollständiger CI verfolgen, dann kontrolliert mergen und v251 tatsächlich produktiv abnehmen. #254 bleibt insgesamt PARTIAL; danach #255 und #256 sequenziell, übrige aktiven Masterpakete unverändert.
+
+---
+
 ## v250 – LIVE_ACCEPTED · begrenzte #254-Exportvorprüfung produktiv abgenommen
 
 Main **`0b804f09ff83324898e9f86a021fe1831c71e1d2`**, Tree `daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`, SW **`foliolab-open-v250`**, PR #260. **Main-/Produktionslauf [41247930145](https://github.com/joke0071/foliolab-open/actions/runs/41247930145) completed / success.** 1042/1042 Tests/0 Fehler/0 Skips, Syntax, Chromium und alle Firefox-/WebKit-Shards, Deployment und echte vollständige Live-Abnahme SUCCESS. Livejob **124678337448**: exakter RELEASE_SHA, **123 HTTPS-Assetmatches**, 6 Kernprüfgruppen/18 Core-Axe-Scans, neue Recovery-/Unicode-/Nichtmutationssuite auf Produktion in allen drei Engines PASS (je sieben Breiten/Axe), weitere unveränderte produktive UI-/Transfer-/Offline-/Speicher-/Backup-Gates PASS.
