@@ -2,6 +2,21 @@ import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
 import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
 
+/** Existing canonical-day check shared by readers and journal validation.
+ * Validity depends only on the primitive day, never on portfolio or clock.
+ * Bound page-local boolean reuse; no financial results or write permissions.
+ */
+const dateValidity=new Map(),DATE_VALIDITY_LIMIT=16384;
+export function validCalendarDate(value){
+ if(typeof value!=='string'||!/^\d{4}-\d\d-\d\d$/.test(value))return false;
+ if(dateValidity.has(value))return dateValidity.get(value);
+ const date=new Date(value+'T12:00:00Z');
+ const valid=Number.isFinite(date.getTime())&&date.toISOString().slice(0,10)===value;
+ if(dateValidity.size>=DATE_VALIDITY_LIMIT)dateValidity.clear();
+ dateValidity.set(value,valid);
+ return valid;
+}
+
 /** @typedef {'buy'|'sell'|'deposit'|'withdraw'|'deliver_in'|'deliver_out'|'transfer'|'dividend'|'interest'|'reward'|'airdrop'|'fee'|'tax'|'adjust'|'correction'|'split'|'swap'|'merger'|'ticker_change'|'isin_change'|'delist'} TransactionType */
 /** @typedef {{id:string,type:TransactionType,date:string,positionId:string,quantity:number,feeEUR:number,taxEUR:number,notes:string}} Transaction */
 export const TX_TYPES={
@@ -14,7 +29,7 @@ export const TX_TYPES={
 };
 const words=(s,len=200)=>String(s??'').trim().slice(0,len);
 const amount=(v,min=0n)=>{const x=units(v);if(x<min||x>10n**45n)throw Error('Ungültige Menge oder Betrag.');return x;};
-const dateOk=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+const dateOk=validCalendarDate;
 const pos=(m,id)=>{const p=m.positions.find(p=>p.id===id);if(!p)throw Error('Position nicht gefunden.');if(p.wallet?.enabled)throw Error('Automatisch gescannte Wallet-Bestände sind nicht manuell buchbar.');return p;};
 const q=p=>units(p.quantityExact??p.quantity);
 const setQ=(p,u)=>{p.quantityExact=exact(u);p.quantity=Number(p.quantityExact);};
@@ -64,7 +79,7 @@ export function captureOpenings(model){
 }
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
- if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||Number.isNaN(Date.parse(entry.date))||new Date(entry.date+'T12:00:00Z').toISOString().slice(0,10)!==entry.date||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
+ if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!validCalendarDate(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
  const ids=new Set(),sum=entry.postings.reduce((n,p)=>{
   if(!p.id||ids.has(p.id)||!p.role||p.amountBookEURExact==null)throw Error('Journal-Buchung ungültig.');
   ids.add(p.id);if(p.quantityDeltaExact!=null)units(p.quantityDeltaExact);

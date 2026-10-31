@@ -18,6 +18,15 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
  const undo=async()=>{await button('undo').click();await p.locator('[name=confirmUndo]').check();await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});};
  try{
   await p.goto('http://127.0.0.1:4173/');await ready();
+  const dates=await p.evaluate(async()=>{
+   const {validCalendarDate,validateJournalEntry}=await import('/src/transactions.js');
+   const inputs=['2000-02-29','1900-02-29','2024-02-29','2023-02-29','2026-04-31','2026-04-30','2026-00-01','2026-13-01','2026-01-00','2026-01-32','2026-1-01','2026-01-01T00:00:00Z',null,20260101];
+   const result=inputs.map(validCalendarDate);
+   const j={id:'synthetic-date-check',date:'2024-02-29',postings:[{id:'one',role:'cash',quantityDeltaExact:'1',amountBookEURExact:'1'},{id:'two',role:'external-clearing',quantityDeltaExact:null,amountBookEURExact:'0'}]};
+   let blocked=false;try{validateJournalEntry(j);}catch{blocked=true;}
+   return {result,unbalancedJournalBlocked:blocked};
+  });assert.deepEqual(dates,{result:[true,false,true,false,false,true,false,false,false,false,false,false,false,false],unbalancedJournalBlocked:true});
+
   target=await p.evaluate(async()=>{const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'Synthetic'}));for(const id of ['a','b'])m.accounts.push(createAccount({id:'account-'+id,providerId:'p',name:'Account '+id,type:'cash'},m));for(const id of ['a','b'])m.positions.push(createPosition({id,providerId:'p',accountId:'account-'+id,name:'Cash '+id,kind:'cash',quantity:1000,price:1},m));let first;for(let i=0;i<205;i++){const b=executeTransaction(m,{id:'synthetic-booking-'+String(204-i).padStart(3,'0'),positionId:i%2?'b':'a',type:'deposit',date:'2026-01-02',quantity:1,unitPrice:1,notes:(i%2?'Other ':'Wanted ')+i});if(i===0)first=b.id;}const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();return first;});
   await p.reload();await ready();await p.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';});await p.reload();await ready();await p.waitForFunction(()=>!!navigator.serviceWorker.controller);await nav();const before=await record();
   const cycle=()=>p.locator('#bookingSelectFiltered').click();

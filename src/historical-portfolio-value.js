@@ -13,6 +13,15 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
  for(const e of model.journalEntries??[])for(const p of e.postings)if(p.positionId&&!positions.has(p.positionId))orphaned.add(p.positionId);
  const emptyAccounts=model.accounts.filter(a=>!model.positions.some(p=>p.accountId===a.id));
  if(calendar.length*model.positions.length>2000000)throw Error('Historie zu groß für eine direkte Übersicht. Zeitraum oder Portfolioumfang eingrenzen.');
+ // Position metadata is stable during this synchronous pure projection. Only
+ // quantity equality and dated valuation remain inside the daily loop.
+ const walletSignatures=new Map(model.positions.filter(p=>p.wallet?.enabled).map(p=>[p,JSON.stringify([p.wallet.chain,p.wallet.chainId,p.wallet.contract||''])]));
+ const walletRules=new Map(model.positions.map(p=>{
+  const target=p.valuationMode==='excluded'?model.positions.find(x=>x.id===p.representedByPositionId):null;
+  const alias=Boolean(p.wallet?.enabled&&target?.wallet?.enabled&&p.accountId===target.accountId&&walletSignatures.get(p)===walletSignatures.get(target));
+  const overlap=Boolean(p.wallet?.enabled&&model.positions.some(other=>other.id!==p.id&&other.valuationMode!=='excluded'&&other.accountId===p.accountId&&other.wallet?.enabled&&walletSignatures.get(other)===walletSignatures.get(p)));
+  return [p,{target,alias,overlap}];
+ }));
  const walletDaysCache=new Map();
  const projections=new Map(model.positions.map(p=>[p.id,projectHistoricalPosition(model,p.id,{dates:calendar,marketHistory:histories[p.id]??null,fxPoints:fxByCurrency[p.currency]??null,walletDaysCache}).rows]));
  // This index belongs to this pure projection only; dated eligibility and all journal validation remain unchanged.
@@ -25,8 +34,8 @@ export function projectHistoricalPortfolio(model,{dates=null,histories={},fxByCu
    const row=projections.get(p.id)[index];
    // Wallet facts and staking/LST accounting need their explicit ownership
    // contract before inclusion. Do not fall back to a second journal balance.
-   if(p.valuationMode==='excluded'){const target=model.positions.find(x=>x.id===p.representedByPositionId),other=target&&projections.get(target.id)?.[index];const alias=p.wallet?.enabled&&target?.wallet?.enabled&&p.accountId===target.accountId&&JSON.stringify([p.wallet.chain,p.wallet.chainId,p.wallet.contract||''])===JSON.stringify([target.wallet.chain,target.wallet.chainId,target.wallet.contract||''])&&row.quantityExact!==null&&row.quantityExact===other?.quantityExact;if(alias||row?.quantityExact==='0')continue;missing.push({positionId:p.id,reason:'Historischer Umfang der wirtschaftlichen Repräsentation nicht belegt. Keine doppelte oder rückwirkende Anrechnung.'});continue;}
-   if(p.wallet?.enabled&&model.positions.some(other=>other.id!==p.id&&other.valuationMode!=='excluded'&&other.accountId===p.accountId&&other.wallet?.enabled&&JSON.stringify([other.wallet.chain,other.wallet.chainId,other.wallet.contract||''])===JSON.stringify([p.wallet.chain,p.wallet.chainId,p.wallet.contract||'']))){missing.push({positionId:p.id,reason:'Überlappende Wallet-Positionen: Eigentümer-/Assetzuordnung prüfen.'});continue;}
+   if(p.valuationMode==='excluded'){const rule=walletRules.get(p),other=rule.target&&projections.get(rule.target.id)?.[index];const alias=rule.alias&&row.quantityExact!==null&&row.quantityExact===other?.quantityExact;if(alias||row?.quantityExact==='0')continue;missing.push({positionId:p.id,reason:'Historischer Umfang der wirtschaftlichen Repräsentation nicht belegt. Keine doppelte oder rückwirkende Anrechnung.'});continue;}
+   if(walletRules.get(p).overlap){missing.push({positionId:p.id,reason:'Überlappende Wallet-Positionen: Eigentümer-/Assetzuordnung prüfen.'});continue;}
 
    if(row?.valueEURExact===null||!row){missing.push({positionId:p.id,reason:row?.reason||'Historische Bewertung fehlt.'});continue;}
    const signed=units(row.valueEURExact)*BigInt(valueSign(p));sum+=signed;components.push({...row,valueEURExact:exact(signed)});

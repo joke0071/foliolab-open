@@ -5,7 +5,7 @@ import {validatePurchaseEvidence} from './purchase-evidence.js';
 import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
-import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches} from './transactions.js';
+import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches,validCalendarDate} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
@@ -143,7 +143,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
 export function addBooking(model,v){const entry=executeTransaction(model,{...v,type:v.type||'buy'});if(v.date===new Date().toISOString().slice(0,10))snapshot(model,v.date);return model.positions.find(p=>p.id===entry.positionId);}
 
 // Do not accept normalized dates like 2026-02-30 as valid financial records.
-const validCalendarDate=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d+'T12:00:00Z'))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+// Shared pure calendar validation retains exact financial-day semantics.
 // Reject contradictory financial representations before restoring a portfolio.
 // Both fields originate from the same 18-decimal fixed-point value; comparing their\n// numeric representations catches even a one-wei discrepancy.
 const exactMatchesDisplay=(display,precise)=>{

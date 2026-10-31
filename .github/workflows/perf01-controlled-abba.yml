@@ -1,0 +1,69 @@
+name: PERF01 controlled mixed startup ABBA - no deployment
+on:
+  push:
+    branches: [feature/perf-calendar-projection-lookup]
+permissions:
+  contents: read
+jobs:
+  compare:
+    name: Same-runner Chromium IDB/PWA cold-warm-offline ABBA
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PERF_BASE_SHA: 621abf1556b0be87d485fd43943cf521dfc965fb
+      PERF_PRODUCT_SHA: 99420b8e9d8c29ef025ecd452a6cad56e6a0797b
+      PERF_CANDIDATE_SHA: ${{ github.sha }}
+      PERF_OUTPUT: artifacts/gates/perf247-controlled-abba
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install the existing pinned Chromium runtime
+        run: |
+          set -euo pipefail
+          npm install --no-save playwright@1.56.1
+          npx playwright install chromium --only-shell
+      - name: Verify exact source variants and freeze the shared benchmark helpers
+        run: |
+          set -euo pipefail
+          git cat-file -e "${PERF_BASE_SHA}^{commit}"
+          git cat-file -e "${PERF_CANDIDATE_SHA}^{commit}"
+          git diff --exit-code "$PERF_PRODUCT_SHA" "$PERF_CANDIDATE_SHA" -- src icons index.html styles.css manifest.webmanifest sw.js
+          test "$(git show "${PERF_BASE_SHA}:sw.js" | head -n 1)" = "const CACHE='foliolab-open-v245';"
+          test "$(git show "${PERF_CANDIDATE_SHA}:sw.js" | head -n 1)" = "const CACHE='foliolab-open-v247';"
+          mkdir -p node_modules/.cache/foliolab-perf "$PERF_OUTPUT"
+          cp tests/benchmark-controlled-abba.mjs tests/browser-controlled-storage-fixture.mjs node_modules/.cache/foliolab-perf/
+      - name: Measure A1-B1-B2-A2 with fixed seeds and real controlled workers
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 > "$PERF_OUTPUT/server.log" 2>&1 &
+          foliolab_server_pid=$!
+          trap 'kill "$foliolab_server_pid" 2>/dev/null || true' EXIT
+          for foliolab_attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:4173/ >/dev/null
+          for foliolab_phase in A1 B1 B2 A2; do
+            case "$foliolab_phase" in
+              A*) foliolab_commit="$PERF_BASE_SHA" ;;
+              B*) foliolab_commit="$PERF_CANDIDATE_SHA" ;;
+            esac
+            git checkout --detach --force "$foliolab_commit"
+            BENCH_SHA="$foliolab_commit" BENCH_SEED_FILE="$PERF_OUTPUT/seed" BENCH_OUTPUT="$PERF_OUTPUT/$foliolab_phase" node node_modules/.cache/foliolab-perf/benchmark-controlled-abba.mjs 2>&1 | tee "$PERF_OUTPUT/$foliolab_phase.log"
+          done
+          git checkout --detach --force "$PERF_CANDIDATE_SHA"
+          cp -R artifacts/gates/storage-fixture "$PERF_OUTPUT/worker-fixture"
+      - name: Assert identical values, scopes and scripts; retain medians and dispersion
+        run: node tests/summarize-controlled-abba.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: perf247-controlled-abba-${{ github.sha }}
+          path: artifacts/gates/perf247-controlled-abba/
+          retention-days: 30
+          if-no-files-found: error
