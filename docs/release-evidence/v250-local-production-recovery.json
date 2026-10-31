@@ -1,0 +1,59 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "engines": [
+    {
+      "name": "chromium",
+      "result": "PASS",
+      "viewports": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "unchangedPortfolio": true
+    },
+    {
+      "name": "firefox",
+      "result": "PASS",
+      "viewports": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "unchangedPortfolio": true
+    }
+  ],
+  "proxyCertificateException": true,
+  "mozillaRuntimeSandboxFlag": true,
+  "independentHttpsAssets": {
+    "count": 4,
+    "allExact": true,
+    "paths": [
+      "sw.js",
+      "index.html",
+      "src/backup-limits.js",
+      "src/backup-vault.js"
+    ]
+  },
+  "candidateSuiteSHA256": "96a8f3412e91e0cfbef3116ac7e2400d151c03bd34c6a9e3e19b78058c7c533e",
+  "reviewedImages": [
+    {
+      "file": "chromium-320.png",
+      "sha256": "eb4819c39ba7204435e84f37fed79dd5575e22d55b05fd7996f0fb1c9ab4d0e9",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "firefox-1440.png",
+      "sha256": "112eaa22517cdcc39e19a91c58f56e14c3adea7925bbfc6e7b1a7d4c019950d8",
+      "visuallyReviewed": true
+    }
+  ],
+  "scope": "Targeted production probe only; complete CI live acceptance still pending; no hardware/OAuth/TalkBack/native Safari claim."
+}
