@@ -1,0 +1,67 @@
+{
+  "status": "MERGED_RELEASE_PENDING",
+  "owner": "Codex Work",
+  "pr": 245,
+  "head": "dd61f68ad30de81f791c2f2043556a9952d0b3fd",
+  "testedMerge": "65c026e8a4770d86ef3772dcf52f15ab4b6520c4",
+  "tree": "2a06f733a01aa1f7146788f3771087e3461306bc",
+  "actualMain": "8d3d6c9f34dc1e09b695e3b8eebdb0462fd33034",
+  "actualMainTreeMatches": true,
+  "cache": "foliolab-open-v237",
+  "ci": 41198813480,
+  "wallet": 41198813476,
+  "unit": {
+    "pass": 1008,
+    "fail": 0,
+    "skip": 0
+  },
+  "chromium": "PASS",
+  "cross": [
+    "PASS",
+    "PASS",
+    "PASS"
+  ],
+  "artifacts": [
+    {
+      "id": 13041927656,
+      "digest": "sha256:7aa4f1e92022cd7518c710e4d6dc6a64be6391537624b5aea756e5b4c36994cc",
+      "sha256Verified": true,
+      "zipCRC": "PASS"
+    },
+    {
+      "id": 13041867795,
+      "digest": "sha256:8ce7dec1450747a81f98d03ccb1449648bed8e2cbd3fdcfab97db698760cf964",
+      "sha256Verified": true,
+      "zipCRC": "PASS"
+    },
+    {
+      "id": 13041628051,
+      "digest": "sha256:1ba493cf0f9f47a6d9a7f1b3cbc19e320f4291dcc98bb5f0d694f3fe0c477577",
+      "sha256Verified": true,
+      "zipCRC": "PASS"
+    }
+  ],
+  "visualReview": [
+    {
+      "path": "docs/review-evidence/2026-10-31/pr245-webkit-booking-edit-320.png",
+      "sha256": "b7470f2dd28e1655c69b1943113b2b85b8386f15e37ffa1b5d11b14b139fa912"
+    },
+    {
+      "path": "docs/review-evidence/2026-10-31/pr245-webkit-positions-430.png",
+      "sha256": "37f8d682d6450e762044b00223cd06a3654754838493aa8d9a0be5cef8ffadbf"
+    }
+  ],
+  "workerControllerEvidence": [
+    "pr245-firefox-controller.json",
+    "pr245-webkit-controller.json"
+  ],
+  "workerNegativeControl": "../review-evidence/2026-10-31/worker-readiness-negative-control.json",
+  "productionRun": 41199698291,
+  "productionAcceptance": "PENDING",
+  "acceptedFallback": "v236",
+  "external": [
+    "Physical Android/PWA/TalkBack",
+    "Real Google OAuth"
+  ],
+  "scope": "UI detail/edit/delete entry points and shared conservative position-removal preview; no new economic removal category"
+}

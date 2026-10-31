@@ -1,0 +1,46 @@
+{
+  "engine": "firefox",
+  "expectedScript": "http://127.0.0.1:4173/sw.js",
+  "activated": {
+    "url": "http://127.0.0.1:4173/",
+    "timeOrigin": 1793448211958,
+    "controller": "http://127.0.0.1:4173/sw.js",
+    "controllerState": "activated",
+    "active": "activated",
+    "activeURL": "http://127.0.0.1:4173/sw.js",
+    "waiting": null,
+    "installing": null
+  },
+  "beforeReload": {
+    "url": "http://127.0.0.1:4173/",
+    "timeOrigin": 1793448211958,
+    "controller": "http://127.0.0.1:4173/sw.js",
+    "controllerState": "activated",
+    "active": "activated",
+    "activeURL": "http://127.0.0.1:4173/sw.js",
+    "waiting": null,
+    "installing": null
+  },
+  "afterReload": {
+    "url": "http://127.0.0.1:4173/",
+    "timeOrigin": 1793448212601,
+    "controller": "http://127.0.0.1:4173/sw.js",
+    "controllerState": "activated",
+    "active": "activated",
+    "activeURL": "http://127.0.0.1:4173/sw.js",
+    "waiting": null,
+    "installing": null
+  },
+  "result": "PASS",
+  "final": {
+    "url": "http://127.0.0.1:4173/",
+    "timeOrigin": 1793448212601,
+    "controller": "http://127.0.0.1:4173/sw.js",
+    "controllerState": "activated",
+    "active": "activated",
+    "activeURL": "http://127.0.0.1:4173/sw.js",
+    "waiting": null,
+    "installing": null
+  },
+  "pageErrors": []
+}
