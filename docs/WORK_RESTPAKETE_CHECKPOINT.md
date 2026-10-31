@@ -1,3 +1,24 @@
+## VERBINDLICHER MASTER-OVERRIDE – Aktivierung & UI-Delta vom 31.10.2026
+
+**Nutzerentscheidung / maßgeblich vor allen älteren Checkpoint- und Roadmap-Zeilen:** **FLH05 #174 = ACTIVE (vorgeschlagen P1B)**; **FLH-PROJ01 #252 = ACTIVE (vorgeschlagen P2)**. Jegliche älteren Aussagen „FLH05 / Zukunftsprojektion PARKED“ sind **SUPERSEDED**. Work darf beide Projekte wieder in sicheren, sequenziellen Implementierungsetappen aufnehmen, sobald der laufende konfliktfreie Vorgängerschritt abgeschlossen ist; keine zweite Import-/Finanzengine und keine parallele Arbeit auf denselben Dateien. [#174](https://github.com/joke0071/foliolab-open/issues/174) · [#252](https://github.com/joke0071/foliolab-open/issues/252).
+
+**Alte 0-€-Work-Credit-/Zusatzbudgetbegrenzung aufgehoben.** Keine künstliche Budget-/Credit-Schranke für den Masterauftrag; verfügbare reale Produktkontingente nicht als unbegrenzt annehmen. Risikogerecht autonome Merge-/Deployfreigabe gilt, Wochenend-/Praxistestsperre bleibt aufgehoben, Sicherheits-/Finanz-/IndexedDB-/CAS-/Backup-/Offline-/3-Engine-/Live-Gates bleiben Pflicht.
+
+**Verifizierte UI-/Fachrestpunkte gegen v245 LIVE_ACCEPTED (Main `621abf1556b0be87d485fd43943cf521dfc965fb`):**
+
+| Wunsch | Status / geprüfter Code | Nächster fachlicher Schritt |
+| --- | --- | --- |
+| Historische Referenzwerte und XIRR/TWR weniger prominent | **PARTIAL**: jeweils bereits in geschlossenen `details` im Reiter Verlauf (`index.html`, `src/app.js`); nicht entfernt. | Weitere nutzwertorientierte Zurückstufung/„Erweitert“-Einordnung ohne Funktionsverlust prüfen. |
+| HIST-VIS01: nach Buchungen/Kursen rekonstruieren; nur grafische Best-Guess-Segmente | **OPEN / PARTIAL**: `src/historical-portfolio-value.js` verwendet belegte rekonstruierte Kurse, Stichtage oder explizites Teilportfolio, lässt unbekannte Tage lückenhaft. Kontrollierte optisch ausgezeichnete Schätzintervalle fehlen. | Nur Darstellungsschicht mit Qualitätslabels, Cashflow-Gates und Lückentests; keine Schätzwerte in Finanzrechnung, XIRR/TWR, Journal, IDB, bestätigte Werte, Backup oder Exporte. |
+| „Erfasste Stichtage“ unter Chart | **OPEN (UI)**: `renderHistory()` schreibt `wealth.label` nach `#historySourceStatus`; observed-Ansicht `Erfasste Stichtage`. | Redundante Zeile im Normalverlauf entfernen/verkürzen; Quellenstatus im aufklappbaren Bereich Datenabdeckung und A11y/Tooltip erhalten. Die Datenbasis-Option im erweiterten Modus nicht versehentlich löschen. |
+| Historische Ladezustände | **PARTIAL**: `src/position-detail-ui.js` zeigt initial `Historische Daten werden geprüft …`, hat Erfolge und Fallbacks. | Allgemeine sync-/async-Ausnahme-/Abbruch-/Timeout-/Offline-/Providerfall-Abnahme, finaler Zustand/Retry, kompakte Typografie. |
+| Diagrammmodi Auto/Linie/Punkte | **OPEN / VERIFY**: adaptive Zeitraumwahl ist vorhanden, gemeinsame nutzerseitige Moduswahl derzeit nicht belegt. | Gesonderte Modus-/Präferenz-/Responsive-/Backup-Frage gegen aktuellen Code prüfen, ohne Zeitraumsteuerung erneut zu entwickeln. |
+| Unbekannte Kurse in aggregierten Vermögenssummen | **P1 OPEN:** `src/quote-quality.js/positionValueLabel` kennzeichnet Einzelposition korrekt als `Nicht bewertet`, aber `src/app.js/renderDashboard` und `src/dashboard-ui.js/renderSummaryTiles/renderProviderAccounts` summieren numerisch bekannte Teile ohne genügenden Aggregat-Hinweis. | Aggregat **„bekannte bewertete Teilsumme; X Position(en) ohne belegten Kurs“** anzeigen und unbekannte Vollständigkeit kennzeichnen; echte Nullwerte erhalten. Niemals unbekannte Werte heimlich mit 0 als bestätigt ausgeben; kanonische Finanzarithmetik unverändert. |
+
+**Aktive laufende PERF01-Arbeit nicht unterbrechen:** Letzter Vorgängereintrag zum Branch `feature/perf-calendar-projection-lookup` unten bleibt eigenständige Quelle für dessen HEAD/Tests. Hier nur Dokumentation aktualisiert, kein produktiver Code, kein CI- oder Deploymentlauf ausgelöst. Vor weiteren neuen Arbeiten den aktuellen Main/Checkpoint frisch abgleichen. [Wochenaudit](https://github.com/joke0071/foliolab-open/issues/149#issuecomment-6547355364).
+
+---
+
 ## PERF01 Kalender-/Wallet-Metadaten – IN_PROGRESS · Produktion v245 LIVE_ACCEPTED
 
 Owner: aktueller Work-Chat /root. Separater main-basierter Branch `feature/perf-calendar-projection-lookup`, HEAD `403862ed42140c08cf47aaf75daa953b777720e1`, Tree `fb80d3ab688eb4689391411d5235545cd68750bf`, geplanter SW v246. Noch kein PR und keine CI-/Merge-/Releasefreigabe als Ergebnis behauptet. Produktion bleibt vollständig abgenommenes v245 / Main `621abf1556b0be87d485fd43943cf521dfc965fb`.
