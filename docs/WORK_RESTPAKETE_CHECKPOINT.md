@@ -19,6 +19,15 @@
 
 ---
 
+## v248 – DEPLOYED / LIVE_ACCEPTANCE_PENDING (31.10.2026)
+
+Dieser Eintrag übersteuert den älteren MERGED-Stand unten. Owner /root; Main `2f309fa3cca92710a4ed367ac42b240ae220bc7e`, SW `foliolab-open-v248`; Tree `2b09741d74eba51ffc8d5c51f117020a4b02f45b`.
+
+- Main-Release **[41235570258](https://github.com/joke0071/foliolab-open/actions/runs/41235570258)**: Unit-/Integration/Syntax/Chromium und **alle drei Firefox-/WebKit-Shards SUCCESS**, Deployment **SUCCESS**. Produktiver Live-Job **124641271747** läuft gegen **https://foliolab.unperfekt.at/**; **noch kein LIVE_ACCEPTED**.
+- Deployjob 124641178663 bestätigt Commit `2f309fa3cca92710a4ed367ac42b240ae220bc7e`, veröffentlichte Homepage und SW beim ersten Nachcheck. Statisches Produktionsartefakt **13056200528**, Upload-berechnete SHA256 **`22225c17cd58edc7212ee2172be10bc04fff7732582d1df0910f14a4f189e225`**, exakt gleich Artefakt-API-Digest. Manifest unverändert 121 eindeutige Dateien / 122 Live-Prüf-URLs.
+- **Nachweisgrenze:** lokaler Executor weiterhin nicht verfügbar; zusätzlicher direkter Abruf über das allgemeine Webwerkzeug ist ebenfalls nicht möglich (kein Beleg für einen Ausfall der App). Kein unabhängiger lokaler ZIP-CRC-/Download-/Produktionsbrowser-Nachcheck für v248 behauptet. Die vorhandene separate Live-CI prüft alle tatsächlichen veröffentlichten Bytes per HTTPS gegen den exakten Release-Checkout, reale UI-/IndexedDB-/Offline-/Backup-/Axe-Abläufe sowie Chromium/Firefox/WebKit. Ihr vollständiger erfolgreicher Abschluss bleibt zwingend.
+- V247 bleibt bis zur erfolgreichen vollständigen Live-Abnahme letzte LIVE_ACCEPTED-Rückfallbasis. Neue Implementierung/visuelle QA (#257) ist durch die nicht verfügbare lokale Arbeitsumgebung **BLOCKED**; aktueller Release wird über GitHub zu Ende kontrolliert.
+
 ## v248 / P1-Aggregate – MERGED · Release läuft (31.10.2026)
 
 Owner /root. [PR #258](https://github.com/joke0071/foliolab-open/pull/258) kontrolliert gemergt, geprüfter finaler HEAD **`aabac9dad98d73b6f7e861b1aa6bf7dd1647a3bb`**. Main **`2f309fa3cca92710a4ed367ac42b240ae220bc7e`**, tatsächlicher Merge-Tree **`2b09741d74eba51ffc8d5c51f117020a4b02f45b`**, exakt gleich dem geprüften synthetischen Merge `29aea9229a2622e548238dc74514f02071fdbe0c`.

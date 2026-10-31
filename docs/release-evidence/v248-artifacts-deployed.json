@@ -1,0 +1,137 @@
+{
+  "artifacts": [
+    {
+      "id": 13056200528,
+      "name": "github-pages",
+      "size_in_bytes": 403306,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13056200528",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13056200528/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:55:40Z",
+      "expires_at": "2026-11-01T19:55:39Z",
+      "updated_at": "2026-10-31T19:55:40Z",
+      "digest": "sha256:22225c17cd58edc7212ee2172be10bc04fff7732582d1df0910f14a4f189e225",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13056130604,
+      "name": "release-gates-2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "size_in_bytes": 42247769,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13056130604",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13056130604/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:55:24Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:55:24Z",
+      "digest": "sha256:39a5ec9fbe71810130f3f5e07fe9c71822f15aa101b17f277327e4e688768109",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13055905358,
+      "name": "cross-engine-gates-2f309fa3cca92710a4ed367ac42b240ae220bc7e-2",
+      "size_in_bytes": 2735432,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055905358",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055905358/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:48:47Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:48:47Z",
+      "digest": "sha256:074a1434730dbc8692677d105c4e36ce770c923a93ed83f93fbe180420e10c74",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13055646618,
+      "name": "cross-engine-gates-2f309fa3cca92710a4ed367ac42b240ae220bc7e-1",
+      "size_in_bytes": 48176520,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055646618",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055646618/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:51:52Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:51:52Z",
+      "digest": "sha256:6c52ad0068c7213828fdc724d590c74c6868e398150e31645b9be8c049b032c9",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13055431291,
+      "name": "cross-engine-gates-2f309fa3cca92710a4ed367ac42b240ae220bc7e-3",
+      "size_in_bytes": 34505634,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055431291",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055431291/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:54:11Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:54:11Z",
+      "digest": "sha256:b1680653a20c6c25e4a464876079033edeb8ee534a950fb51d7dbd8a3ae55f6b",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13055148740,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 937124,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055148740",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13055148740/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:55:26Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:55:26Z",
+      "digest": "sha256:e666d7bef36374013b40daebe9d865e043c492028a99735abc4b43605369a3ca",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    },
+    {
+      "id": 13054429517,
+      "name": "ci-stage-2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "size_in_bytes": 352,
+      "url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13054429517",
+      "archive_download_url": "https://api.github.com/repos/joke0071/foliolab-open/actions/artifacts/13054429517/zip",
+      "expired": false,
+      "created_at": "2026-10-31T19:43:53Z",
+      "expires_at": "2027-01-29T19:43:47Z",
+      "updated_at": "2026-10-31T19:43:53Z",
+      "digest": "sha256:8ddbcd0165021f53259b5fec85d5a4c5bbc6f10fc1e2c8a57a24fb87b44d987c",
+      "workflow_run": {
+        "id": 41235570258,
+        "repository_id": 1428407144,
+        "head_repository_id": 1428407144,
+        "head_branch": "main",
+        "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+      }
+    }
+  ]
+}

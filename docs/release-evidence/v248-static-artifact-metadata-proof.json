@@ -1,0 +1,6 @@
+{
+  "id": 13056200528,
+  "sha256": "22225c17cd58edc7212ee2172be10bc04fff7732582d1df0910f14a4f189e225",
+  "verified": "Upload-computed SHA256 equals GitHub artifact API digest; deployment commit exact; independent local ZIP/CRC download unavailable",
+  "main": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+}
