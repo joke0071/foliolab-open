@@ -1,3 +1,15 @@
+## #254 / v250 – IN_PROGRESS · PR #260 gesichert
+
+Owner Work /root (97b37cee055e). Einziger aktiver Implementierungsstrang `feature/recovery-backup-size-preflight`, geprüfter lokaler/remote identischer Tree `daa52c3e1bac7dbef1cd00f441ebd31cc74c61b9`, HEAD `f630beee13c330511742fbcef01e9037a4554604`. [PR #260](https://github.com/joke0071/foliolab-open/pull/260), [volle CI 41246798523](https://github.com/joke0071/foliolab-open/actions/runs/41246798523) und Wallet 41246798616 laufen. **Noch kein CI_ACCEPTED/MERGED/DEPLOYED. Produktion bleibt v249 LIVE_ACCEPTED.**
+
+Kleine belegte #254-Etappe: gemeinsame Vorprüfung von UTF-8, AES-GCM-Tag, gepaddetem Base64 und tatsächlicher v2-JSON-Hülle vor Verschlüsselung/Datei/Drive-Upload. Keine Erhöhung bestehender v1/v2/Drive/lokaler Readerlimits; bestehende größere lokale v2-Dateien bleiben unter bisherigen Grenzen lesbar. Verständliche Ablehnung ohne neuen Backup-Erfolg, kein unverschlüsselter Fallback. Kein Finanz-/Schema-/CAS-/Kryptografievertragswechsel. Offline-Precache v250 enthält neue Prüfhilfe.
+
+Lokal vollständige **1041 Tests/0 Fehler/0 Skips** und Syntax PASS; danach zusätzlich neuer Drive-Nichtmutationsfall (20/20 Driveunits PASS). Tatsächliche neue Chromium-/Firefox-Browserprüfung PASS: Unicode v1/v2 exakt, Übergröße abgelehnt, echte verschlüsselte UI-Datei, unveränderte IDB-Bytes/Revision, Reload, 320/360/390/412/430/768/1440 und je sieben Axe-Scans. Chromium-320 und Firefox-1440 Screenshots tatsächlich angesehen. Firefox lokal benötigt Runtime-Umgebungsflag MOZ_DISABLE_CONTENT_SANDBOX=1; keine Produkt-/CI-Änderung daran. Lokales WebKit fehlt an Hostbibliotheken; keine lokale WebKit-Abnahme behauptet. Alle drei Engines bleiben verpflichtend in CI und neuer tatsächlicher Produktionssuite. Alle historischen CI-Kommandos/Manifeste/Hashes bleiben erhalten; ausschließlich explizite Ergänzungen und Live-Job-Laufzeitreserve 20→25 Minuten.
+
+Umfang/Restgrenzen: `docs/REL_RECOVERY01_BACKUP_PREFLIGHT.md` im Kandidaten. #254 insgesamt **PARTIAL**, historische Kompatibilitäts-/Unterbrechungs-/Quota-/alte-Tab-Matrix und echte Android-/OS-/OAuth-/TalkBack-Abnahmen bleiben offen. Nächster Schritt: exakte HEAD-CI bis zum Ergebnis; nur bei vollständig grünen Gates kontrolliert mergen und v250 tatsächlich produktiv abnehmen. Keine zweite Implementierung parallel. Danach #255/#256 und aktive FLH03/FLH04/FLH05/FLH-PROJ01/HIST-VIS01 sequenziell; alte Budget-/Wochenend-/PARKED-Sperren weiter SUPERSEDED.
+
+---
+
 ## v249 – LIVE_ACCEPTED · verbindlicher aktueller Stand 31.10.2026
 
 **Dieser abgeschlossene Stand übersteuert alle älteren Pending-, MERGED-, DEPLOYED- und Executor-BLOCKED-Zeilen darunter.** Aktuelle Produktion **[v249](https://foliolab.unperfekt.at/)**, Main **`3a406db624cb20a457d4886aca31e1ee4eaefe93`**, SW **`foliolab-open-v249`**, Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**. [PR #259](https://github.com/joke0071/foliolab-open/pull/259), finaler geprüfter HEAD `4ae8e3ba9c3c03c4e760a296f51984266d2af577`. Aktueller Main frisch nach Abschluss gefetcht; unverändert und exakt gleich dem geprüften Kandidaten-/Merge-Tree.
