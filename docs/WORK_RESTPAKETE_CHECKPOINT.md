@@ -1,3 +1,17 @@
+## v249 – MERGED / Main-Release läuft · 31.10.2026
+
+[PR #259](https://github.com/joke0071/foliolab-open/pull/259) kontrolliert gemergt: geprüfter finaler HEAD **`4ae8e3ba9c3c03c4e760a296f51984266d2af577`**, Main **`3a406db624cb20a457d4886aca31e1ee4eaefe93`**. Tatsächlicher Main-Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**, exakt gleich lokalem Kandidaten und getestetem synthetischem Merge `45ceae635d8fbe3618ddfa82402fcce242299c19` (frischer Git-Fetch und vollständiger Treevergleich PASS). Keine fremden Main-Änderungen, keine offenen Reviewthreads/Reviews, historischer Checkpoint-Branch nicht integriert.
+
+**Finale Kandidaten-CI 41241077889 SUCCESS**, Wallet 41241077897 SUCCESS: 1037/1037, 0 Fehler/Skips, Syntax, Chromium und alle Firefox/WebKit-Teile. Neue P1A-Matrix und Stichtag-Editor-Löschweg tatsächlich in allen drei Engines PASS; sichere vorhandene Rücknahme-/CAS-/Backup-/Undo-Engine unverändert. Statische Assets erfordern SW `foliolab-open-v249`.
+
+**Main-/Produktionslauf [41242188218](https://github.com/joke0071/foliolab-open/actions/runs/41242188218) IN_PROGRESS**, noch kein DEPLOYED/LIVE_ACCEPTED für v249. Der GitHub-Connector findet nur PR-Workflows; der konkrete Main-Lauf wurde deshalb über die öffentliche Actions-Oberfläche `branch:main` gelesen und danach per Connector kontrolliert. Kein Login/keine neuen Berechtigungen erforderlich. Vollständige eigene Main-Gates, Deployment, tatsächliche produktive drei-Engine-/Asset-/SW-Abnahme bleiben Pflicht. Letzte bestätigte Rückfallbasis **v248 LIVE_ACCEPTED**.
+
+Umfang: Verwalten/Fertig mit Checkbox UND Bearbeiten in Positionen/Buchungen/Stichtagen, immer verfügbare kategorisierte Ansicht, stabile explizite Seite/Filter-Auswahl samt Aufheben und verborgenem Umfang, einheitliche zentrale Aktionsreihenfolge und Status-Trennung, atomare bestätigte 100er-Wiederherstellung von Positionen, direkter Stichtag-Editorzugang zur vorhandenen sicheren Vorschau, lesbare mobile/Zoom-Filter und rechte Wertkante. Keine neue wirtschaftliche Quellenfreigabe oder Schemaänderung. Kandidat-/Artefaktnachweise in `docs/release-evidence/v249-management-candidate.json`.
+
+Nächste Aktion ausschließlich: Main-Release bis zum tatsächlichen Live-Ergebnis verfolgen, bei Erfolg Produktion/Rückfallbasis und alle drei Planungsdateien abschließen. #257/DELETE-MASTER28 bleiben für komplexe wirtschaftliche Inversen PARTIAL; reale Android-/Safari-/OAuth-/TalkBack-Abnahme EXTERNAL, 10.000er-Gesamt-UI offen. Andere aktive Masterpakete unverändert erhalten.
+
+---
+
 ## #257 / PR #259 – vollständiger verlangter Lösch-Einstieg ergänzt · IN_PROGRESS
 
 Aktueller finaler HEAD **`4ae8e3ba9c3c03c4e760a296f51984266d2af577`**, Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**, lokal/remote exakt gleich. PR ready, noch kein Merge/Deploy. Vorheriger HEAD c83d762 ist tatsächlich **CI_ACCEPTED**: volle CI **41239857221 SUCCESS**, Wallet **41239857208 SUCCESS**, 1037 Tests/Syntax/Chromium/alle drei Firefox-WebKit-Shards; zuletzt auch korrigierte P1A-Matrix in WebKit PASS. Nicht als CI-Freigabe des erweiterten neuen HEAD ausgeben.
