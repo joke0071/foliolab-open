@@ -1,0 +1,116 @@
+{
+  "status": "IN_PROGRESS",
+  "version": "v249",
+  "pr": 259,
+  "repository": "joke0071/foliolab-open",
+  "head": "4ae8e3ba9c3c03c4e760a296f51984266d2af577",
+  "tree": "c0e852587a065ec3fa5c2561fa7bc109adcbe03f",
+  "syntheticMerge": "45ceae635d8fbe3618ddfa82402fcce242299c19",
+  "syntheticMergeTreeMatchesLocal": true,
+  "baseline": {
+    "version": "v248",
+    "status": "LIVE_ACCEPTED",
+    "main": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "run": 41235570258,
+    "sw": "foliolab-open-v248"
+  },
+  "currentCI": {
+    "run": 41241077889,
+    "status": "IN_PROGRESS",
+    "walletRun": 41241077897
+  },
+  "acceptedParityPredecessor": {
+    "head": "c83d762d9a2cc74e5e21fa922962d1ef7d1ba0f1",
+    "run": 41239857221,
+    "status": "CI_ACCEPTED",
+    "unitTests": 1037,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "artifacts": [
+      {
+        "id": 13057710304,
+        "name": "release-gates-fbbf03a94cdd59515f679e949b5f30a4841a5194",
+        "digest": "sha256:76f2cda22bb9e476070d3a2327901fee6f038d29ee4bf7bb6f8ebab5784fdfb8"
+      },
+      {
+        "id": 13057501356,
+        "name": "cross-engine-gates-fbbf03a94cdd59515f679e949b5f30a4841a5194-1",
+        "digest": "sha256:58e61adf4a2decb2b88f03c1b1a104bca3b09487b18383ec3708ad28b89d39a7"
+      },
+      {
+        "id": 13057321715,
+        "name": "dialog-visual-reference",
+        "digest": "sha256:618e455c287d4ba430f61eddb7cedb6472efa6bc1b6836b43416c6e42e6e634b"
+      },
+      {
+        "id": 13057187065,
+        "name": "cross-engine-gates-fbbf03a94cdd59515f679e949b5f30a4841a5194-3",
+        "digest": "sha256:31a071a939683e3e5ae970c159b3cbd4addf931237b627b710169dd8bc574277"
+      },
+      {
+        "id": 13056948034,
+        "name": "cross-engine-gates-fbbf03a94cdd59515f679e949b5f30a4841a5194-2",
+        "digest": "sha256:b9ead39b7312988adf8300c79e566c7ab82af807a39cc3174c2740c86bf1b189"
+      },
+      {
+        "id": 13056767883,
+        "name": "ci-stage-fbbf03a94cdd59515f679e949b5f30a4841a5194",
+        "digest": "sha256:981e59c13fe82ff506f6d9536400094010290368d36e9685d5ee60e72769174a"
+      }
+    ]
+  },
+  "implementation": [
+    "management-only editing alongside checkboxes",
+    "always-available active/archived/all views",
+    "stable explicit page/filter selection without view writes",
+    "mixed archive-state mutation guard",
+    "explicit atomically confirmed batch position restoration",
+    "reference editor entry into unchanged removal preview with dirty-draft protection",
+    "right-aligned position values",
+    "responsive native select labels including zoom"
+  ],
+  "localTargetedChecks": {
+    "result": "PASS",
+    "engines": [
+      "chromium"
+    ],
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "checks": [
+      "reference editor accessibility and 44px targets",
+      "protected start/new-record controls",
+      "declining discard retains draft and exact records",
+      "accepting discard opens existing preview only",
+      "actual offline editor-origin single removal",
+      "backup and separate consent",
+      "quota and post-put abort retain records",
+      "freshness and actual CAS race preserve winning record",
+      "same-session exact undo",
+      "fresh plain and encrypted restore"
+    ]
+  },
+  "bounds": {
+    "newEconomicRemovalPermission": false,
+    "newSchema": false,
+    "physicalAndroid": "EXTERNAL",
+    "full10000RowUI": "OPEN",
+    "stable10000ReferenceIDsUnit": "PASS",
+    "complexEconomicInverses": "OPEN"
+  },
+  "release": {
+    "merged": false,
+    "deployed": false,
+    "liveAccepted": false
+  },
+  "sourcePolicy": "Synthetic tests only; no private portfolio records or real credentials."
+}
