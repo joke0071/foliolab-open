@@ -1,3 +1,17 @@
+## Qualitätsnachcheck v231: mobiler P1-Kandidat #239 · 31.10.2026
+
+Owner ChatGPT Work. v231 bleibt LIVE_ACCEPTED und Wochenend-Testbasis; vollständiger verifizierter Releasebeleg dauerhaft unter [release-evidence/v231-live-acceptance.json](release-evidence/v231-live-acceptance.json).
+
+[PR #239](https://github.com/joke0071/foliolab-open/pull/239), Branch `fix/v231-mobile-readability`, HEAD `1d57804fc565e3665b65a088f4a31895048b468f`, SW232 nur Kandidat. Status **PARTIAL / lokale Chromium-Abnahme PASS / CI_PENDING**. Gezielte Nachbesserungen: vollständige Archivfilterwerte, zweizeilige mobile Transfer-/Ertragstitel, lange Anbieternamen ohne Seitenüberlauf, volle mobile Zeilen für Buchungstitel/Handelswert/Dezimalmenge und einzeilige untere Navigation. Keine Finanz-/Storage-/Import-/Berechtigungsänderung. [Umfang und genaue Grenzen](https://github.com/joke0071/foliolab-open/blob/fix/v231-mobile-readability/docs/QA_V231_MOBILE_READABILITY_2026-10-31.md).
+
+Neue synthetische Browserregression im vorhandenen Buchungsverwaltungs-Gate: 320/360/390/412/430/768/1440 und 740×360, alle fünf Reiter, DOM-Range-Wortumbrüche, einzeilige lange Zahlen, Inhaltsbreiten, Archivwerte, Auswahlmodus, Details, geöffnete Mehr-Unterbereiche, 125-%-Textsimulation. Negativkontrolle mit CSS vor #238 scheitert bei 320 px an zusammengedrückten Titeln. Lokale Matrix + vorhandene Buchungs-UI inklusive Axe/44px/Quota/Abort/CAS/Offline/Undo/Reimport/verschlüsseltem Restore PASS. Unit985/985 + Syntax PASS. Keine Baselines ersetzt/Toleranzen geändert. Voll-CI [41180221423](https://github.com/joke0071/foliolab-open/actions/runs/41180221423) und Wallet41180221429 laufen; noch KEIN CI_ACCEPTED/LIVE.
+
+Cloud-Browser: alle fünf produktiven Reiter sowie Backup-/Drive-/API-/Verbindungs-/Blockchain-/Datenschutzakkordeons geöffnet und visuell kontrolliert. Exakte Viewports mit lokalem/CI-Playwright (kein dokumentierter Cloud-Viewportwechsel). Android-Systemschrift, Tastatur, reale PWA/Safari/TalkBack und OAuth bleiben EXTERNAL. Lokale Firefox/WebKit-Systembibliotheken im Container nicht installierbar; vollständige CI muss die drei Engines belegen.
+
+Nächster Schritt: exakte CI-Ergebnisse + erzeugte Screenshots prüfen, Kandidat fertigstellen und konkrete Freigabe einholen. **Kein nichtkritischer Merge/Deploy ohne Freigabe.** Gesamter UI-MASTER28-/Mehr-/Wallet-/Chartvertrag bleibt PARTIAL; weitere aktive Fach-/PERF01-/Drive-/FLH03-Reste nicht pauschal schließen. Nur FLH05/FLH-PROJ01 PARKED, Budget0 €.
+
+---
+
 ## v231/SW231 LIVE_ACCEPTED – Übergabe und Wochenend-Testbasis · 31.10.2026
 
 Verifizierter Main-HEAD `1617bdd29da585c88fc713be16a19bea0ed55aba`, Tree `774f6e24644e57fe39225a68bf8e120e4535c74c`, Hotfix [#238](https://github.com/joke0071/foliolab-open/pull/238). [Run41177642328](https://github.com/joke0071/foliolab-open/actions/runs/41177642328): test, alle drei cross-engine-Pakete, deploy und live-acceptance SUCCESS. Eigenständig heruntergeladenes Live-Artefakt13034346337: SHA256 `6be792d1b516d1b2e13ec79ff35e7a29394c15a66147ab06b09f48f2a7e35815` stimmt mit GitHub-Digest überein, ZIP-CRC PASS; live/report.json enthält exakten Main-Commit, foliolab-open-v231, result PASS und errors [].
