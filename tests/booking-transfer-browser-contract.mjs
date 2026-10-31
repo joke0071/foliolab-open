@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {mkdir} from 'node:fs/promises';
+import {transferFixture} from './transfer-matching-fixture.mjs';
+/** UI integration only; every economic operation runs through delivered preview,
+ * evidence, explicit consent, CAS and Undo. Also runs at the actual live URL. */
+export async function bookingTransferBrowserContract({p,engine,record,scan,base}){
+ const nav=()=>p.locator('#mobileNav [data-page=bookings]:visible,#sidebarNav [data-page=bookings]:visible').click();
+ const d=p.locator('#transferMatchingDialog'),el=k=>d.locator('[data-transfer="'+k+'"]');
+ const row=id=>p.locator('[data-booking-id="'+id+'"]'),action=id=>row(id).locator('[data-action=booking-transfer]');
+ const openRow=async id=>{const details=row(id).locator('.booking-meta');if(!await details.evaluate(e=>e.open))await details.locator('summary').click();await action(id).click();await d.waitFor({state:'visible'});};
+ const seed=async()=>{await p.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},transferFixture());await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await nav();await p.locator('#bookingSearch').fill('');await p.locator('#bookingFilterType').selectOption('');};
+ const choose=async()=>{await d.locator('[data-transfer-in][value=in]').check();await d.locator('[data-transfer-in][value=in2]').check();await el('reference').fill('SYNTHETIC direct booking proof');assert.ok(await el('accept').isDisabled());await el('consent').check();assert.ok(await el('accept').isEnabled());};
+ await seed();const before=await record();assert.equal(await p.locator('#bookingTransferDetails').count(),0);assert.equal(await p.locator('[data-action=transfer-matching]').count(),1);
+ for(const width of [320,360,390,412,430,1440]){
+  await p.setViewportSize({width,height:900});await nav();
+  await openRow('out');assert.equal(await el('out').inputValue(),'out');assert.equal(await d.locator('[data-transfer-in]:checked').count(),0,'outgoing context never auto-pairs amount/date');assert.ok(await el('accept').isDisabled());
+  await choose();await scan('booking direct outgoing '+width);await mkdir('artifacts/gates/booking-transfers',{recursive:true});await p.screenshot({path:'artifacts/gates/booking-transfers/'+engine+'-out-'+width+'.png'});await p.keyboard.press('Escape');assert.ok(await action('out').evaluate(e=>e===document.activeElement));
+  await openRow('in');assert.equal(await el('out').inputValue(),'','incoming context still requires an explicit outgoing choice');await el('out').selectOption('out');assert.ok(await d.locator('[data-transfer-in][value=in]').isChecked(),'the chosen booking is visible and selected');assert.equal(await d.locator('[data-transfer-in][value=in2]').isChecked(),false);assert.ok(await el('accept').isDisabled());await scan('booking direct incoming '+width);await p.keyboard.press('Escape');assert.ok(await action('in').evaluate(e=>e===document.activeElement));
+  assert.deepEqual(await record(),before,'row navigation and candidate previews never write');
+ }
+ await openRow('out');await choose();await el('accept').click();await p.waitForFunction(()=>document.querySelector('[data-transfer=status]').textContent.startsWith('Zuordnung gespeichert'));
+ const matched=await record(),m=JSON.parse(matched.raw),original=JSON.parse(before.raw);assert.equal(matched.revision,before.revision+1);assert.equal(m.externalCashFlows.length,0);assert.deepEqual(m.positions,original.positions);assert.deepEqual(m.snapshots,original.snapshots);assert.ok(m.bookings.every(b=>b.transferMatch));
+ await p.keyboard.press('Escape');assert.ok(await row('out').locator('.booking-meta>summary').evaluate(e=>e===document.activeElement),'save returns to a replacement row summary');
+ await p.locator('#bookingFilterType').selectOption('transfer');assert.equal(await p.locator('.booking-management-row').count(),3);await p.locator('#bookingSearch').fill('intern');assert.equal(await p.locator('.booking-management-row').count(),3);await p.locator('#bookingSearch').fill('SYNTHETIC direct booking proof');assert.equal(await p.locator('.booking-management-row').count(),3,'confirmed reference is searchable');
+ await openRow('in');assert.equal(await el('form').isVisible(),false);assert.equal(await el('confirmed-section').evaluate(e=>e.open),true);assert.equal(await d.locator('[data-transfer-undo]').count(),1);assert.match(await el('confirmed').innerText(),/SYNTHETIC direct booking proof/);assert.match(await el('confirmed').innerText(),/ursprünglichen externen/);await scan('booking direct confirmed group');
+ assert.deepEqual(await record(),matched,'opening confirmed details is read-only');p.once('dialog',x=>x.dismiss());await d.locator('[data-transfer-undo]').click();assert.deepEqual(await record(),matched,'cancel Undo leaves exact record');
+ p.once('dialog',x=>x.accept());await d.locator('[data-transfer-undo]').click();await p.waitForFunction(()=>document.querySelector('[data-transfer=status]').textContent.startsWith('Zuordnung aufgehoben'));
+ const undone=await record();assert.equal(undone.revision,before.revision+2);assert.deepEqual(JSON.parse(undone.raw),original,'Undo restores exact economic model');assert.deepEqual(undone.settings,before.settings);await p.keyboard.press('Escape');assert.ok(await p.locator('#bookingTransferAction').evaluate(e=>e===document.activeElement),'filtered-away row returns focus to the ordinary toolbar');
+ await seed();await openRow('out');await choose();
+ await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();m.bookings[0].notes='SYNTHETIC newer tab';await s.save(m);s.close();});const newer=await record();await el('accept').click();await p.waitForFunction(()=>document.querySelector('[data-transfer=status]').textContent.startsWith('Nicht gespeichert'));assert.deepEqual(await record(),newer,'row entry cannot bypass stale revision protection');await p.keyboard.press('Escape');
+ console.log(engine+': integrated booking transfers '+base+',6 widths/Axe/row contexts/read-only previews/reference+consent/one CAS commit/counterparts/filter/search/Undo cancellation+exact restore/focus/stale CAS PASS');
+}
