@@ -1,0 +1,15 @@
+{
+  "artifactId": 13053974581,
+  "sha256": "afea7dfd1cec60a14db36a9904640147f23dcd8cfb7a5b48c9e69b6cb7384095",
+  "zipCRC": "PASS",
+  "seeds": [
+    {
+      "bookings": 0,
+      "exactHash": true
+    },
+    {
+      "bookings": 3000,
+      "exactHash": true
+    }
+  ]
+}

@@ -19,6 +19,18 @@
 
 ---
 
+## P1 unbewertete Aggregate – IN_PROGRESS · PR #258 · v247 Live-Abnahme ausstehend
+
+Owner: aktueller Work-Chat /root; ausschließlich Branch `feature/ui-known-valuation-totals`, HEAD `251758cf508168d9ab93c0bbc96a97009bba648d`, [PR #258](https://github.com/joke0071/foliolab-open/pull/258). Main unverändert `b7f8779dba49e16c572fe5430bd282b85e5f9ddb`; keine zweite Implementierung dieses Pakets beginnen.
+
+- Hero-/Kategorie-/Anbieter-/Kontosummen und Allokationshinweise kennzeichnen bekannte Teilsummen samt fehlender Kursanzahl. Vollständig unbekannte Gruppen „Nicht bewertet“ statt bestätigter 0; echte Nullbestände/belegte Nullkurse und ausgeschlossene Wallet-Aliasse bleiben erhalten. Reine Darstellung, Finanzarithmetik/Journal/IndexedDB/CAS/Backups unverändert. Keine zusätzliche permanente Hero-Hinweiszeile.
+- Lokal 1036 Unit-/Integrationstests, Syntax sowie Chromium/Axe und exakter unveränderter IndexedDB-Datensatz bei 320/360/390/412/430/768/1440 px PASS; sämtliche geforderten mobilen Breiten/Desktop visuell geprüft. Schmale Anbieterbeschriftung behoben; Zusatzfälle vollständig unbekannt/belegter Nullwert geprüft. Vollständige PR-Browsergates laufen/stehen aus. **Noch kein Merge/Deployment/LIVE_ACCEPTED für v248.**
+- PERF01 ergänzender qualifizierter Vergleich [41232799162](https://github.com/joke0071/foliolab-open/actions/runs/41232799162) SUCCESS: 3.000 Buchungen/Journale, 19 Positionen, 1.825 Referenzen, 3.443.174 Byte Seed; beide vollständigen verschlüsselten Restore-Formate vor jedem Pass exakt. Gleicher Runner je A1/B1/B2/A2, CPU4x/390px/steuernder SW/je Variante zehn Starts. Kalt 2092,05→1811,35 ms (−13,42 %), warm 915,60→821,45 ms (−10,28 %), offline 943,05→808,30 ms (−14,29 %). Größter Kaltstartblock 1471→1188,5 ms. Kleinprofil ebenfalls ohne Regression. Daten-/Projektions-/Seedhashes identisch.
+- Qualifiziertes Artefakt 13053974581, SHA256 `afea7dfd1cec60a14db36a9904640147f23dcd8cfb7a5b48c9e69b6cb7384095`, ZIP-CRC und komprimierte Seedhashes unabhängig PASS. Rohdaten/Script/Seeds dauerhaft unter `docs/perf-evidence/2026-10-31/perf247/supported/`; 10.000er-Profil separat ausschließlich `stress-only/`. Host AMD EPYC 9V74; keine Addition/Vermischung mit älterem Stresslauf auf anderem Host. Keine Android-Hardwareabnahme.
+- Supplemental-Testcommit `f3df22d577c30843194fb269acf143517f77dd10` verändert keine Produktbytes und ist in #258 enthalten; vorhandene Verschlüsselungsgrenzen bleiben unverändert.
+- v247 Main-Release [41231426767](https://github.com/joke0071/foliolab-open/actions/runs/41231426767): alle lokalen/PR/Main-Finanz-/Browser-/Deploygates und produktive Chromium-Kernprüfung SUCCESS; produktive Firefox-/WebKit-Gates noch laufend. Statisches Artefakt und sämtliche 121 Produktionsdateien exakt Main; zusätzliche produktive Löschung/Undo/Backup v1+v2/Axe/6 visuelle Breiten PASS. **v247 noch nicht LIVE_ACCEPTED**, bis der vollständige Main-Live-Lauf und dessen Artefakte abschließend bestätigt sind.
+- Nächster Schritt: v247-Live-Abnahme dokumentieren; danach #258 nur bei grünen exakten HEAD-Gates mergen, deployen, tatsächliche Produktion abnehmen. Keine laufende CI abbrechen.
+
 ## PERF01 / v247 – MERGED · DEPLOYED · Live-Abnahme noch offen (31.10.2026)
 
 Owner: aktueller Work-Chat /root. Dieser Eintrag übersteuert den älteren PERF01-WIP v246 unten; der MASTER-OVERRIDE bleibt unverändert.
