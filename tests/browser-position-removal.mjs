@@ -61,6 +61,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
    if(width<=700)assert.equal(await page.locator('#positionSelectionTools').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),2);
    await button('cancel-selection').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
   }
+  const singleEdit=page.locator('.position-entry').first().locator('.detail-edit');await singleEdit.click();await page.locator('[name=name]').fill('SYNTHETIC unsaved position');page.once('dialog',d=>d.dismiss());await page.locator('#deletePosition').click();assert.equal(await page.locator('[name=name]').inputValue(),'SYNTHETIC unsaved position');page.once('dialog',d=>d.accept());await page.locator('#deletePosition').click();assert.equal(await page.locator('#positionRemovalItems').count(),1);assert.deepEqual(await record(),before,'single-position delete preview preserves canonical record');await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.ok(await singleEdit.evaluate(e=>e===document.activeElement));
   assert.deepEqual(await record(),before,'header/keyboard selection cycles are transient');await page.setViewportSize({width:1440,height:850});
   await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
   assert.equal(await page.locator('[data-position-select]').count(),100);

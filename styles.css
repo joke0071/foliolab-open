@@ -1782,3 +1782,5 @@
 .booking-delete-action{margin-top:16px;padding-top:12px;border-top:1px solid var(--border,#dce7df)}
 .booking-delete-action>button{min-width:44px;min-height:44px}
 @media(max-width:720px){#positionList .position-detail-actions{margin-left:10px}}
+
+.detail-action-row:not(:has(>.detail-edit))>details>summary{width:100%}

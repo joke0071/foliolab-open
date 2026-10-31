@@ -64,11 +64,10 @@ try{
  await page.locator('#sidebarNav [data-page="positions"]').click();
  await page.locator('[data-action="edit-position"][data-id="test-0"]').click();
  await page.locator('#deletePosition').click();
- assert.match(await page.locator('#toast').innerText(),/kann nicht gelöscht/);
+ assert.ok(await page.locator('#saveDialog').isDisabled());await page.locator('#positionPreviewBlocked>details>summary').click();assert.match(await page.locator('#positionPreviewBlocked').innerText(),/Buchungen|Journal/);
  await page.locator('#closeDialog').click();
- page.once('dialog',d=>d.accept());
  await page.locator('[data-action="edit-position"][data-id="test-1"]').click();
- await page.locator('#deletePosition').click();
+ await page.locator('#deletePosition').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  await page.evaluate(async()=>{
   const {safeImport}=await import('/src/model.js');
   safeImport(JSON.parse(localStorage.getItem('foliolab-open-v1')));
