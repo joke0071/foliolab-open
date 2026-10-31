@@ -1,6 +1,6 @@
 # de-AT-Anzeigen und sehr kleine Mengen
 
-Teilpaket zu UI-TEXT / Android-Lesbarkeit nach UI-TRANSFER04. SW241-Kandidat; kein Abschluss aller UI- oder Finanzpakete.
+Teilpaket zu UI-TEXT / Android-Lesbarkeit nach UI-TRANSFER04. Anzeige-Teilpaket im gemeinsamen SW242-Bündelkandidaten mit der Renderoptimierung; kein eigenständiger v241-Produktionsrelease. Kein Abschluss aller UI- oder Finanzpakete.
 
 ## Verhalten
 

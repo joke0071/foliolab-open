@@ -1,6 +1,6 @@
 # PERF01 – kurzlebige Indizes für Buchungszeilen
 
-SW242-Kandidat nach PR249; Status und endgültige Produktionszuordnung im zentralen Checkpoint. Kein Abschluss aller Android-Performancepakete.
+SW242-Bündelkandidat einschließlich der getrennt geprüften de-AT-Anzeigen aus PR249; Status und endgültige Produktionszuordnung im zentralen Checkpoint. Kein Abschluss aller Android-Performancepakete.
 
 ## Gemessener Engpass und Änderung
 
@@ -12,7 +12,16 @@ Keine Freigabe wirtschaftlicher Aktionen aus Anzeigeindizes: `bookingChangePermi
 
 ## Ergebnis und Grenzen
 
-Identische synthetische Fixture mit19Positionen/10.000Buchungen/1.825Referenzen, Chromium, CPU4x,390×844px, je5 warme Navigationen mit zwei anschließenden Animationsframes:
+Direkter zusätzlicher Vergleich des vollständigen Bündels mit tatsächlich LIVE_ACCEPTED v240 (Main d2193e0baa1feb2b64da23b6a7f5b625ce379c42, identischer Quellbaum ebd97055bb7060a571b326b0f296fbdc2c4704a5):
+
+| Quellbaum | Einzelwerte ms | Median ms |
+|---|---|---|
+| Tatsächliches v240 | 883 / 884 / 832 / 767 / 734 | 832 |
+| Vollständiger v242-Kandidat | 599 / 600 / 500 / 567 / 450 | 567 |
+
+Beobachteter Unterschied **−31,85%** für das vollständige Bündel in einem separaten sequenziellen Versuch. Beide Rohberichte und Profile stehen unter release-v240-baseline / release-v242-candidate. Dieser Vergleich enthält die Anzeigeänderungen mit und ist von der folgenden isolierten Indexmessung zu unterscheiden. Keine Addition der Prozentwerte.
+
+Isolierte Indexmessung: identische synthetische Fixture mit19Positionen/10.000Buchungen/1.825Referenzen, Chromium, CPU4x,390×844px, je5 warme Navigationen mit zwei anschließenden Animationsframes:
 
 | Quellbaum | Einzelwerte ms | Median ms |
 |---|---|---|

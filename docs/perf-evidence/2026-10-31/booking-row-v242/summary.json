@@ -50,5 +50,47 @@
     "Exploratory reports retained but excluded from the final comparison",
     "No real Android/PWA or startup measurement; no cumulative percentage with prior releases",
     "Independent local source variants run sequentially without parallel local browser suites"
-  ]
+  ],
+  "releaseBundleComparison": {
+    "scope": "complete bundled release versus actual LIVE_ACCEPTED v240 tree, separate sequential five-sample runs",
+    "baselineCommit": "d2193e0baa1feb2b64da23b6a7f5b625ce379c42",
+    "baselineSamplesMs": [
+      883,
+      884,
+      832,
+      767,
+      734
+    ],
+    "baselineMedianMs": 832,
+    "candidateSamplesMs": [
+      599,
+      600,
+      500,
+      567,
+      450
+    ],
+    "candidateMedianMs": 567,
+    "differencePercent": -31.85,
+    "baselineSource": {
+      "src/app.js": "dffa700c7307f1e0e47f76310855c479c204a5a0aa1f196da6d24ababd194f77",
+      "src/booking-management.js": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe",
+      "src/booking-history-ui.js": "2a6e1f3f5864e7abdb31ceb43530d22b4a61d6aade24e4600c5a3f1b5f3ad383",
+      "src/transfer-matching-ui.js": "cbe095ebac643fbd1f33f235d52f6c4a31a1e700c313b7390c904bcfc0eabb4a",
+      "styles.css": "b013d547c65beb8c04bab06929cf5705fb29d95aa414db5b040e1d4e34c196da"
+    },
+    "candidateSource": {
+      "src/app.js": "f529b7304aa8c868dd0ab09b945d044b9f6d08725aa164c74eaf5901672c54f8",
+      "src/booking-management.js": "8187bc57f883bfb96db4f5b81f22c753e5be785434284dbea486e8dd94ccc547",
+      "src/booking-history-ui.js": "234226ceddece464be5dcecde8741938487f3e24af11e9a54548cfb343901371",
+      "src/transfer-matching-ui.js": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d",
+      "styles.css": "82fbc0dd7256b24e84811f8c6f6d2ad93109b0de8e130036f66056068a2aa556"
+    },
+    "scriptSHA256": "6f975aeb056e9ac76ec814c87b132ec5273346e1faef12b80e27f6af6cb374b5",
+    "sameFixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+    "recordUnchangedWithinBothRuns": true,
+    "limits": [
+      "Includes both display and read-only index changes; separate from the isolated index comparison",
+      "Observed synthetic medians only; no physical Android or significance claim; do not add percentages"
+    ]
+  }
 }
