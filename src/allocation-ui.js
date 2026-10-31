@@ -7,7 +7,7 @@ export function formatAllocationShare(value){
 }
 /** Pie shares represent positive asset values, never net worth after liabilities. */
 /** Accessible name always starts with the visible label and share (WCAG 2.5.3). */
-export function allocationCenterName(label,share,value){return label+', '+share+': '+value+' · Gesamtwert des Portfolios anzeigen';}
+export function allocationCenterName(label,share,value,incomplete=false){return label+', '+share+': '+value+' · '+(incomplete?'Bekannte Werte anzeigen':'Gesamtwert des Portfolios anzeigen');}
 export function allocationBreakdown(model,valueEUR,types){
  const byKind=new Map(Object.keys(types).map(key=>[key,0]));
  let gross=0,liabilities=0;
@@ -25,7 +25,7 @@ export function allocationBreakdown(model,valueEUR,types){
  }));
  return {slices,gross,liabilities};
 }
-export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKey=null}){
+export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKey=null,valuation=null}){
  const {slices,liabilities,gross}=data;
  const chosen=slices.find(x=>x.key===selectedKey);
  let offset=0;
@@ -41,17 +41,17 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
   '<b>'+esc(formatAllocationShare(item.percent))+'</b></button>').join('');
  const explanatory=liabilities>0?'<p class="allocation-note">Anteile der positiven Anlagen. Verbindlichkeiten: '+esc(money(-liabilities))+' (vom Netto abgezogen).</p>':'';
  const rest= !slices.length?'<div class="allocation-empty">Keine positiven Anlagen vorhanden.</div>':rows+explanatory;
- const value=chosen?money(chosen.value):money(netTotal);
+ const value=chosen?money(chosen.value):(valuation?.value??money(netTotal));
  const label=chosen?chosen.name:'Portfolio';
- const share=chosen?formatAllocationShare(chosen.percent):liabilities>0?'Nettovermögen':'Gesamtwert';
+ const share=chosen?formatAllocationShare(chosen.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):liabilities>0?'Nettovermögen':'Gesamtwert';
  return {donut:'<svg class="allocation-svg" viewBox="0 0 200 200" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
   '<circle class="allocation-track" cx="100" cy="100" r="84" stroke="#e8efe9" stroke-width="30" fill="none"/>'+segments+'</svg>'+
-  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value))+'" title="'+esc(money(netTotal))+'">'+
-  '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(compactMoney(chosen?chosen.value:netTotal))+'</strong>'+
+  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value,Boolean(valuation?.missing)))+'" title="'+esc(valuation?.value??money(netTotal))+'">'+
+  '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal))+'</strong>'+
   '<small id="donutShare">'+esc(share)+'</small></button>',
   legend:rest,activeIndex:chosen?slices.indexOf(chosen):-1};
 }
-export function attachAllocationInteractions(root,{slices,money,netTotal,initialIndex=-1}){
+export function attachAllocationInteractions(root,{slices,money,netTotal,initialIndex=-1,valuation=null}){
  const donut=root.querySelector('#donut'),legend=root.querySelector('#allocationLegend');
  if(!donut||!legend)return;
  const center=donut.querySelector('.allocation-center');
@@ -63,15 +63,15 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
  function display(index){
   const item=slices[index];
   label.textContent=item?.name||'Portfolio';
-  value.textContent=compactMoney(item?.value??netTotal);
-  value.title=money(item?.value??netTotal);
-  share.textContent=item?formatAllocationShare(item.percent):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert');
+  value.textContent=!item&&valuation?.allUnknown?'–':compactMoney(item?.value??netTotal);
+  value.title=!item&&valuation?.allUnknown?'Nicht bewertet':money(item?.value??netTotal);
+  share.textContent=item?formatAllocationShare(item.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert');
   controls.forEach(el=>{
    const active=Number(el.dataset.allocationIndex)===index;
    el.classList.toggle('active',active);
    el.setAttribute('aria-pressed',String(Number(el.dataset.allocationIndex)===pinned));
   });
-  center.setAttribute('aria-label',allocationCenterName(label.textContent,share.textContent,money(item?.value??netTotal)));
+  center.setAttribute('aria-label',allocationCenterName(label.textContent,share.textContent,!item&&valuation?.allUnknown?'Nicht bewertet':money(item?.value??netTotal),Boolean(valuation?.missing)));
  }
  function pin(index){
   pinned=pinned===index?-1:index;

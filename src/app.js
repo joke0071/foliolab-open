@@ -50,7 +50,7 @@ import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {diagnoseEodhd} from './market-diagnostics.js';
-import {displayQuotePrice,priceQuality,positionValueLabel} from './quote-quality.js';
+import {displayQuotePrice,priceQuality,positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
 import {annualOverviewMarkup} from './booking-insights-ui.js';
@@ -152,7 +152,9 @@ function syncPortfolioState(){
    if(!recoveryControlAllowed(control)&&!control.disabled){control.dataset.recoveryDisabled='true';control.disabled=true;}
   });
  }else{
-  $('totalValue').textContent=money(totalEUR(model));
+  const aggregate=aggregateValuePresentation(model.positions,totalEUR(model),money);
+  $('totalValue').textContent=aggregate.value;
+  $('heroValueLabel').textContent='✧ '+(aggregate.allUnknown?'Vermögen nicht bewertet':aggregate.missing?'Bekannte Teilsumme':'Gesamtvermögen');
   document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
   document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
  }
@@ -198,7 +200,7 @@ function renderQualityReview(review,items){
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
-function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);$('totalValue').textContent=money(total);
+function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);const aggregate=aggregateValuePresentation(model.positions,total,money);$('totalValue').textContent=aggregate.value;
   const issues=valuationIssues(model),hint=$('totalHint'),summary=$('heroQualitySummary');
   $('totalValue').classList.toggle('hero-value-long',money(total).length>16);
   summary.replaceChildren();summary.hidden=!heroReviewExpanded;
@@ -211,7 +213,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
    review.title=valuationHeadline(valuationWarnings(model))||'Betroffene Positionen ansehen';
    review.setAttribute('aria-label',`${issues.length} Position${issues.length===1?'':'en'} mit eingeschränkter Bewertung anzeigen`);
    review.addEventListener('click',()=>{heroReviewExpanded=!heroReviewExpanded;review.setAttribute('aria-expanded',String(heroReviewExpanded));summary.hidden=!heroReviewExpanded;});
-   summary.innerHTML='<div class="hero-quality-counts">'+reviewCountsMarkup(valuationWarnings(model))+'</div><button type="button" class="btn outline" data-action="open-quality-review">Prüfbereich öffnen</button>';
+   summary.innerHTML=(aggregate.note?'<p>'+esc(aggregate.note)+'</p>':'')+'<div class="hero-quality-counts">'+reviewCountsMarkup(valuationWarnings(model))+'</div><button type="button" class="btn outline" data-action="open-quality-review">Prüfbereich öffnen</button>';
    hint.append(review);
   }else{heroReviewExpanded=false;summary.hidden=true;hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;}
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
@@ -219,11 +221,11 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel,wealth);
   const alloc=allocationBreakdown(model,valueEUR,TYPES);
   const previousKey=$('allocationLegend').querySelector('[data-allocation-key][aria-pressed="true"]')?.dataset.allocationKey||null;
-  const pie=renderAllocationDonut(alloc,{money,esc,colors,netTotal:total,selectedKey:previousKey});
+  const pie=renderAllocationDonut(alloc,{money,esc,colors,netTotal:total,selectedKey:previousKey,valuation:aggregate});
   $('donut').innerHTML=pie.donut;
-  $('allocationLegend').innerHTML=pie.legend;
+  $('allocationLegend').innerHTML=pie.legend+(aggregate.missing?'<p class="allocation-note">'+esc(aggregate.note)+'. Anteile beziehen sich auf bekannte bewertete Werte.</p>':'');
   $('dashboardPage').dataset.hasLiabilities=String(alloc.liabilities>0);
-  attachAllocationInteractions($('dashboardPage'),{slices:alloc.slices,money,netTotal:total,initialIndex:pie.activeIndex});
+  attachAllocationInteractions($('dashboardPage'),{slices:alloc.slices,money,netTotal:total,initialIndex:pie.activeIndex,valuation:aggregate});
   const expanded=new Set([...$('providerOverview').querySelectorAll('details[open][data-provider-id]')].map(x=>x.dataset.providerId));
   const expandedPositions=new Set([...$('providerOverview').querySelectorAll('details[open][data-position-id]')].map(x=>x.dataset.positionId));
   const cashOverviewOpen=Boolean($('cashTermsOverview')?.open);
