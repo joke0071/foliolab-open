@@ -1,3 +1,11 @@
+## #254 REL-RECOVERY01 – IN_PROGRESS · Übernahme nach v249
+
+Owner: neuer Work-Chat /root, Arbeitsverzeichnis 97b37cee055e. Main frisch bestätigt `3a406db624cb20a457d4886aca31e1ee4eaefe93`, v249 LIVE_ACCEPTED durch vollständigen Mainlauf 41242188218/alle Jobs erneut bestätigt. Keine neue Implementierungs-PR oder laufende neuere Action; nur historische Drafts #157/#161. Aktiver einziger Strang: `feature/recovery-backup-size-preflight` ab exakt Main. Keine parallele Umsetzung von #255/#256 beginnen.
+
+Belegte Lücke: v1-Export ohne Vorprüfung gegen 6.000.000 Base64-Zeichen des Readers; v2-Export prüft 10.000.000 JS-Zeichen, aber nicht UTF-8/AES-GCM/Base64/15.000.000 Zeichen Drive-Dateigrenze. Dadurch erzeugbare nicht wiederherstellbare Exporte. Kleine Etappe: gemeinsame transparente Vorprüfung gegen unveränderte vorhandene Limits vor Verschlüsselung/Upload/Download; Unicode-/Grenz-/Roundtrip-/Nichtmutationsfälle. Keine Limits still erhöhen, keine Verschlüsselungs-/Schema-/CAS-Änderung. Vollständige Gates und eigene Produktionsabnahme vor LIVE_ACCEPTED. #254 insgesamt bleibt PARTIAL, insbesondere reale Android-/OS-Abbruch-/OAuth-Matrix separat offen.
+
+---
+
 ## v249 – LIVE_ACCEPTED · verbindlicher aktueller Stand 31.10.2026
 
 **Dieser abgeschlossene Stand übersteuert alle älteren Pending-, MERGED-, DEPLOYED- und Executor-BLOCKED-Zeilen darunter.** Aktuelle Produktion **[v249](https://foliolab.unperfekt.at/)**, Main **`3a406db624cb20a457d4886aca31e1ee4eaefe93`**, SW **`foliolab-open-v249`**, Tree **`c0e852587a065ec3fa5c2561fa7bc109adcbe03f`**. [PR #259](https://github.com/joke0071/foliolab-open/pull/259), finaler geprüfter HEAD `4ae8e3ba9c3c03c4e760a296f51984266d2af577`. Aktueller Main frisch nach Abschluss gefetcht; unverändert und exakt gleich dem geprüften Kandidaten-/Merge-Tree.
