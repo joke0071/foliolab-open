@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -21,7 +22,7 @@ try{
  });
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
- await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
  await page.locator('#defiPosition > summary').click();
  const role=page.locator('#defiRole'),mode=page.locator('#defiValuation'),target=page.locator('#defiRepresented'),hint=page.locator('#defiGuidance');
  assert.equal(await target.isRequired?.(),undefined);
@@ -43,7 +44,7 @@ try{
  assert.equal(m.positions.find(p=>p.id===ids.st).valuationMode,'excluded');
  assert.equal(m.positions.find(p=>p.id===ids.st).representedByPositionId,ids.eth);
  // A mismatched liability role must never silently rewrite the model or persist.
- await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
  await page.locator('#defiPosition > summary').click();
  await page.locator('#defiValuation').selectOption('liability');
  assert.equal(await page.locator('#defiRole').getAttribute('aria-invalid'),'true');
@@ -88,7 +89,7 @@ try{
   await page.setViewportSize({width,height:820});
   const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
   await page.locator(nav+' [data-page="positions"]').click();
-  await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
+  await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+ids.st+'"]').click();
   await page.locator('#defiPosition > summary').click();
   const rect=await page.locator('#editDialog').evaluate(el=>{const x=el.getBoundingClientRect();return {left:x.left,right:x.right};});
   assert.ok(rect.left>=-1&&rect.right<=width+1,'DeFi dialog viewport '+width);

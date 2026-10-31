@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 // Manual release gate: actual published bytes, isolated synthetic profiles, no API credentials.
 // Run from the matching release checkout: RELEASE_SHA=<sha> node tests/browser-live-acceptance.mjs
@@ -44,7 +45,7 @@ try{
  // Actual UI account and position creation, edit and reload in a new installation.
  await nav(p,'positions');await p.locator('#addWizard').click();await p.locator('#wizardProvider').selectOption('__new__');await p.locator('#wizardProviderName').fill('SYNTHETIC Live Broker');await p.locator('#wizardAccountName').fill('SYNTHETIC Live Depot');await p.locator('#wizardName').fill('SYNTHETIC Live ETF');await p.locator('#wizardSymbol').fill('SYN');await p.locator('#wizardQuantity').fill('2.5');await p.locator('#wizardNext').click();await p.waitForFunction(()=>document.getElementById('wizardTitle')?.textContent==='Anlage hinzugefügt');await p.locator('#wizardPortfolio').click();
  let created=await state(p);assert.equal(created.positions[0].quantityExact,'2.5');assert.equal(created.accounts[0].name,'SYNTHETIC Live Depot');
- await p.locator('[data-action="edit-position"]').first().click();await p.locator('#dialogFields [name="name"]').fill('SYNTHETIC Live ETF edited');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});await p.reload();assert.equal((await state(p)).positions[0].name,'SYNTHETIC Live ETF edited');
+ await manageList(p,'positions');await p.locator('[data-action="edit-position"]').first().click();await p.locator('#dialogFields [name="name"]').fill('SYNTHETIC Live ETF edited');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});await p.reload();assert.equal((await state(p)).positions[0].name,'SYNTHETIC Live ETF edited');
  report.checks.push('real UI provider/account/position creation, edit, IndexedDB commit and reload');
  const h=historyFixture(),m=h.model;m.settings.autoRefresh=false;
  for(const other of [annualFixture().model,transferFixture()])for(const key of ['providers','accounts','positions','bookings','journalEntries','openingPositions','externalCashFlows','snapshots'])m[key].push(...other[key]);

@@ -40,7 +40,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   });
   await p.reload();await ready();const before=await record();
   await nav('history');await p.locator('#snapshotManager').evaluate(e=>e.open=true);await p.locator('#manageReferences').click();await p.locator('#referenceSelectVisible').click();
-  assert.match(await p.locator('#referenceSelectionStatus').innerText(),/^8 ausgewählt · 8 gefiltert$/);
+  assert.match(await p.locator('#referenceSelectionStatus').innerText(),/^8 ausgewählt · 8 gefiltert · 0 ausgeblendet · 0 archiviert · 8 auf aktueller Seite$/);
   assert.match(await p.locator('#referenceDeleteReason').innerText(),/8 geschützte Originalwerte/);
   assert.equal(await p.locator('#referenceDeleteReason>details').evaluate(e=>e.open),false);assert.ok(await p.locator('[data-reference-manage=remove]').isDisabled());assert.equal(await p.locator('[data-reference-manage=remove]').getAttribute('aria-describedby'),'referenceDeleteReasonSummary');
   const scans=[];
@@ -55,7 +55,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(await p.locator('#referenceDeleteReason section>p').count(),1,'eight exact reasons appear once');
   await p.locator('#referenceDeleteReason .blocked-reason-identities>summary').click();assert.match(await p.locator('#referenceDeleteReason').innerText(),/legacy-7/);await scan('expanded references');
   await nav('bookings');await p.locator('[data-booking-manage=select]').click();await p.locator('#bookingSelectFiltered').click();
-  assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^100 ausgewählt · 205 gefiltert$/);assert.ok(await p.locator('[data-booking-manage=remove]').isDisabled());
+  assert.match(await p.locator('#bookingSelectionStatus').innerText(),/^100 ausgewählt · 205 gefiltert · 0 archiviert · 100 auf aktueller Seite$/);assert.ok(await p.locator('[data-booking-manage=remove]').isDisabled());
   assert.ok((await p.locator('#bookingBlocked-remove .blocked-reasons-summary').innerText()).length<180);assert.match(await p.locator('#bookingBlocked-remove .blocked-reasons-summary').innerText(),/100 Einträge mit Herkunftsschutz.*100 Einträge mit Stichtagsbezug/);assert.ok(await p.locator('#bookingBlocked-remove .blocked-reasons-summary').evaluate(e=>e.getBoundingClientRect().height<=parseFloat(getComputedStyle(e).lineHeight)*3+1),'booking reasons at most three normal text lines');
   assert.equal(await p.locator('#bookingBlocked-remove>details').evaluate(e=>e.open),false);
   for(const width of [320,390,430,768,1440]){await p.setViewportSize({width,height:560});

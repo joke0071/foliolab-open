@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -37,7 +38,7 @@ try{
  page.once('dialog',d=>d.accept()); // Discard the staged duplicate CSV preview.
  await page.locator('#cancelDialog').click();
  await page.locator('#sidebarNav [data-page="positions"]').click();
- await page.locator('[data-action="edit-position"][data-id="'+ids.staking+'"]').click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+ids.staking+'"]').click();
  await page.locator('#defiPosition').evaluate(el=>el.open=true);
  await page.locator('#editorForm [name="economicRole"]').selectOption('liquid-staking');
  await page.locator('#editorForm [name="valuationMode"]').selectOption('excluded');

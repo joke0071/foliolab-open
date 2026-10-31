@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -43,13 +44,13 @@ try{
  await page.locator('#snapshotManager>summary').click();
  const list=page.locator('#snapshotList .history-row');
  assert.equal(await list.count(),2);
- assert.equal(await list.locator('[data-action="delete-snapshot"],.row-btn,svg').count(),0,'normal references have no destructive or icon actions');assert.equal(await list.last().locator('[data-action="edit-snapshot"]').innerText(),'Bearbeiten');
+ assert.equal(await list.locator('[data-action="delete-snapshot"],.row-btn,svg').count(),0,'normal references have no destructive or icon actions');assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),0,'normal mode hides editing');
  const original=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots);
  await page.locator('#manageReferences').click();
  assert.equal(await list.first().locator('[data-action="edit-snapshot"]').count(),0,'observed original is source-protected');
  assert.match(await list.first().innerText(),/Herkunft geschützt/);
  assert.equal(await page.locator('[data-reference-manage=remove]').isDisabled(),true,'dependent references cannot be deleted');
- assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),0,'editing is hidden during management');await page.locator('#manageReferences').click();
+ assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),1,'editable references show edit and checkbox together');
  await list.last().locator('[data-action="edit-snapshot"]').click();
  assert.equal(await page.locator('#dialogTitle').innerText(),'Referenzwert bearbeiten');
  await page.locator('#editorForm [name="note"]').fill('Korrigierte Notiz');
@@ -65,18 +66,18 @@ try{
  const corrected=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots[0]);
  assert.equal(corrected.totalEURExact,'142.75');assert.equal(corrected.valuationStatus,'manual');assert.equal(corrected.byPosition,null);assert.ok(corrected.revisions.length>=2);
  // New archive replaces the superseded direct dependent-snapshot deletion expectation.
- await page.locator('#manageReferences').click();assert.equal(await page.locator('#manageReferences').innerText(),'Fertig');
+ await manageList(page,'references');assert.equal(await page.locator('#manageReferences').innerText(),'Fertig');
  await list.last().locator('[data-reference-select]').check();await page.locator('[data-reference-manage=archive]').click();await page.locator('[name=confirmReferenceArchive]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  assert.equal(await list.count(),1);await page.locator('#referenceArchiveFilter').selectOption('archived');assert.equal(await list.count(),1);assert.match(await list.innerText(),/142,75/);
  await page.locator('#manageReferences').click();await list.locator('[data-reference-select]').check();await page.locator('[data-reference-manage=archive]').click();await page.locator('[name=confirmReferenceArchive]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});await page.locator('#referenceArchiveFilter').selectOption('active');assert.equal(await list.count(),2);
  await page.locator('#mobileNav [data-page="positions"]').click();
- const remaining=page.locator('.position-entry').first();
+ await manageList(page,'positions');const remaining=page.locator('.position-entry').first();
  assert.equal(await remaining.locator('[data-action="edit-position"]').count(),1);
  assert.equal(await remaining.locator('[data-action="delete-position"]').count(),0,'no permanent destructive row icon');
  await remaining.locator('[data-action="edit-position"]').click();assert.ok(await page.locator('#deletePosition').isVisible(),'the existing permitted individual delete remains reachable through its editor');
  const protectedBefore=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  await page.locator('#deletePosition').click();assert.ok(await page.locator('#saveDialog').isDisabled(),'referenced position uses shared conservative removal guard');await page.locator('#positionPreviewBlocked>details>summary').click();assert.match(await page.locator('#positionPreviewBlocked').innerText(),/Historische Stichtage/);await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),protectedBefore,'blocked individual preview preserves exact model');
- await page.evaluate(async()=>{const {load,persist,createPosition}=await import('/src/model.js');const m=load(),p=m.positions[0];m.positions.push(createPosition({id:'unreferenced-delete',name:'Synthetic unreferenced',kind:'etf',quantity:1,price:10,accountId:p.accountId,providerId:p.providerId},m));persist(m);});await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-action="edit-position"][data-id="unreferenced-delete"]').click();await page.locator('#deletePosition').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
+ await page.evaluate(async()=>{const {load,persist,createPosition}=await import('/src/model.js');const m=load(),p=m.positions[0];m.positions.push(createPosition({id:'unreferenced-delete',name:'Synthetic unreferenced',kind:'etf',quantity:1,price:10,accountId:p.accountId,providerId:p.providerId},m));persist(m);});await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="unreferenced-delete"]').click();await page.locator('#deletePosition').click();await page.locator('[name=confirmRemoval]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
  const finalModel=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(finalModel.positions.length,1);assert.equal(finalModel.positions.some(p=>p.id==='unreferenced-delete'),false);
  assert.equal(finalModel.snapshots.length,2,'Deleting a position does not erase historical dates');
@@ -108,7 +109,7 @@ try{
   ['exact-quote','123,4567890123456789 EUR','EODHD']
  ];
  for(const [id,price,source] of quoteCases){
-  const row=page.locator('.position-entry').filter({has:page.locator('[data-action="edit-position"][data-id="'+id+'"]')});
+  const row=page.locator('.position-entry[data-position-id="'+id+'"]');
   await row.locator('summary').click();
   const fact=label=>row.locator('.holding-facts>div').filter({has:page.getByText(label,{exact:true})}).locator('dd');
   assert.equal(await fact('Kurs je Einheit').innerText(),price,id+' honest quote with original exact precision');

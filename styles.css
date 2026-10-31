@@ -1857,3 +1857,19 @@
 
 /* Stable button target while WebKit changes preview text during focus transfer. */
 .allocation-center>*{pointer-events:none}
+
+/* #257: full category labels stay readable in each always-available view filter. */
+#positionsPage .position-search-tools:has(#positionArchiveFilter),
+#bookingsPage .booking-filter-tools{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+@media(max-width:1100px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter),
+ #bookingsPage .booking-filter-tools{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+ #positionsPage .position-search-tools:has(#positionArchiveFilter)>:first-child,
+ #bookingsPage .booking-filter-tools>.field:first-child{grid-column:1/-1}
+}
+@media(max-width:767px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter),
+ #bookingsPage .booking-filter-tools{grid-template-columns:minmax(0,1fr)}
+}
+/* All three management lists keep their monetary column at the trailing edge. */
+#positionList .position-entry .holding-r{justify-content:flex-end;text-align:right}
