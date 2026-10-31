@@ -1,3 +1,13 @@
+## PR245: falsche Worker-Testbereitschaft konkret nachgewiesen und korrigiert · 31.10.2026
+
+Aktueller HEADd15da835a58104d66aec01f55356a359f788fb35, Branch fix/unified-detail-actions, SW237 bleibt IN_PROGRESS/CI_PENDING. Unveränderte ausgelieferte App gegenüber620bad69. Zusätzliche Test-/Evidenzkorrektur: gemeinsame waitForAppServiceWorker-Hilfe wartet jetzt auf echte native ready/statechange-Aktivierung statt async waitForFunction-Prädikat. Letzteres konnteFALSE zurückgeben und trotzdem fertig sein: lokale kontrollierte Negativprüfung mit blockiertem echten Startmodul bestätigt alterFALSE-vorAktivierung versus korrigiertpending-bisAktivierung. Gleiches Prädikatverhalten in Playwright1.56.1 und1.64.1-Quellcode bestätigt. Keine neuen Worker, kein Erfolgfallback, kein erhöhtes60s-Limit, keine Gateabschwächung. Zusätzliche strenge Controller-/Scriptidentität vor und nachReload sowie neue timeOrigin und Zustandsberichte; exakteOfflineberechnung erhalten. Chromium-History-Worker PASS.
+
+Voriger vollständiger Stand620bad69: Chromium/Cross1/Cross2/Wallet und alleUI-/HeaderprüfungenFirefox/WebKit SUCCESS. Cross3-Versuch1 Firefoxcontroller30sfehlend; gezielter unveränderterRerun FirefoxPASS, WebKitgleicherControllerfehler. Nicht weiter blind wiederholt. Konkreter Testhilfenbefund erklärt zu frühe Aktivierungsfreigabe; neue vollständige3Engine-CI muss die tatsächlicheBehebung erst bestätigen. Keine Integration/keinDeployment; Produktion/Rückfallbasis bleibtv236LIVE_ACCEPTED. Vorbereiteter unreferenzierter532baca-Commit ist SUPERSEDED, nicht zusätzlich übernehmen.
+
+DauerhafteNegativkontrolle im aktuellenPR: docs/review-evidence/2026-10-31/worker-readiness-negative-control.*. Fünf-Läufe-Performancebaseline undCPUprofil unverändertgesichert (6074ms kalt/4965warm/4768offline, synthetischCPU4x, keinAndroidhardwarebeleg). NächsterSchritt exakteaktuelleCI abnehmen, aktuelleCross-Bilder/Tree prüfen, autonommergen undvolleProduktion abnehmen. KeineRoutinefreigabe erforderlich. WeiterePakete unverändertOPEN; nurFLH05/FLH-PROJ01PARKED.
+
+---
+
 ## PR245: UI-Regression bestanden, Firefox-Offlinecontroller noch offen · 31.10.2026
 
 HEAD620bad69d8ff004e119bb0cd6e72c9687e0f7323 / Tree7faf31fa10dc74cecd72f53e475d747504ed7fd3 / SW237 bleibt **IN_PROGRESS / CI_PENDING**, nicht gemergt/deployt. Produktion/Rückfallbasis v236 LIVE_ACCEPTED.
