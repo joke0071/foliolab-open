@@ -1,3 +1,11 @@
+## v236 LIVE_ACCEPTED · 31.10.2026
+
+Produktion und Rückfallbasis: main `ee7ee75f2b62d22452d503ae7b0779d51ad68056`, SW236. Release41193055285 einschließlich Test/3Cross/Deploy/Live SUCCESS. Artefakt13039274206 SHA256 `286642e10205b98f2da7caac714ae3feed4cf5cb418afec40d05c45ec80aea0c`, CRC PASS; unabhängiger Vergleich aller122 Assethashes gegen main identisch. Produktionsberichte3Engines PASS. Echte Android/Google/TalkBack-Abnahme weiterhin EXTERNAL. Frühere v234-Rückfallbasis und v236-RELEASE_PENDING historisch übersteuert.
+
+Owner Codex Work: UI-POS02/UI-BOOK03 Detail-/Bearbeiten-/bestehende Löschaktionen IN_PROGRESS, keine Finanzmutationsausweitung; danach UI-HERO-QUALITY03 und gemessene Android-Performance. FLH03/FLH04 ACTIVE; nur FLH05/FLH-PROJ01 PARKED. Autonome geprüfte Releases autorisiert, keine Credit-/Zeitbeschränkung. Historischen Checkpoint-Branch nie vollständig mergen.
+
+---
+
 ## v234 LIVE_ACCEPTED – neue bestätigte Produktions- und Rückfallbasis · 31.10.2026
 
 **Neue autonome Releasefreigabe gilt unverändert.** Main `d28f535e7dc36ec0e2ac4aec8158dbefc3a1f41b`, Tree `feaad0be6b9fee0e6979f3f8ee137bbdcfd5eec6`, Service-Worker234. [Vollständiger Release41185004927](https://github.com/joke0071/foliolab-open/actions/runs/41185004927): Unit/Syntax, Chromium, alle drei Firefox-/WebKit-Cross-Pakete, Pages und vollständige Produktions-Live-Abnahme SUCCESS. #239–#242 integriert; keine separaten Zwischenreleases.
