@@ -1,5 +1,5 @@
 {
-  "status": "MERGED",
+  "status": "LIVE_ACCEPTED",
   "version": "v249",
   "pr": 259,
   "repository": "joke0071/foliolab-open",
@@ -153,8 +153,9 @@
     "mainTree": "c0e852587a065ec3fa5c2561fa7bc109adcbe03f",
     "mainTreeMatchesTestedMerge": true,
     "run": 41242188218,
-    "deployed": false,
-    "liveAccepted": false
+    "deployed": true,
+    "liveAccepted": true,
+    "liveEvidence": "docs/release-evidence/v249-live-acceptance.json"
   },
   "sourcePolicy": "Synthetic tests only; no private portfolio records or real credentials."
 }
