@@ -1,0 +1,142 @@
+2026-10-31T19:56:11.6900677Z LIVE_QA_SHA 2f309fa3cca92710a4ed367ac42b240ae220bc7e
+2026-10-31T19:56:15.4887698Z LIVE published bytes: 122 exact SHA-256 matches, foliolab-open-v248
+2026-10-31T19:56:33.0664553Z LIVE acceptance PASS: 6 groups, 18 Axe scans, 122 asset matches
+2026-10-31T19:56:33.9457113Z chromium: P-Chain synthetic checked UTXO/exact uint64/owner coverage/locks/address and context identity/negative evidence/zero writes PASS
+2026-10-31T19:56:34.7361329Z chromium: Sonic synthetic uint256/dual waiting periods/deactivation/empty-not-paid/mixed-pin rejection/zero writes PASS
+2026-10-31T19:56:40.1324276Z BROWSER_GATE_PASS ./browser-header-status.mjs
+2026-10-31T19:56:46.6418668Z BROWSER_GATE_PASS ./browser-missing-position-value.mjs
+2026-10-31T19:56:51.4224650Z chromium: CHART TOOLTIP actual time spacing/nearest real observation/readable axes/bounds/exact values/full details/7widths/Axe/zero writes PASS
+2026-10-31T19:56:51.4494304Z BROWSER_GATE_PASS ./browser-chart-tooltip.mjs
+2026-10-31T19:57:04.9012216Z chromium: BLOCKED REASONS counted categories/8legacy/100bookings/205cap/closed details/5widths/Axe/zero writes PASS
+2026-10-31T19:57:04.9482655Z BROWSER_GATE_PASS ./browser-blocked-reasons.mjs
+2026-10-31T19:57:12.6719608Z chromium: UI small rests provider/account success/cancel/discard/quota/focus,5 widths/Axe,7-day independent boundaries/shared views/partial/empty/zero writes PASS
+2026-10-31T19:57:12.7122172Z BROWSER_GATE_PASS ./browser-ui-small-rests.mjs
+2026-10-31T19:57:25.7387415Z chromium: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS
+2026-10-31T19:57:25.7778903Z BROWSER_GATE_PASS ./browser-ui-audit-controls.mjs
+2026-10-31T19:57:39.8850631Z chromium: history follow-up 5 widths, keyboard/axe/icons/basis/provenance/provider separators/liquidity/empty/zero writes PASS
+2026-10-31T19:57:39.9236187Z BROWSER_GATE_PASS ./browser-history-followup.mjs
+2026-10-31T19:57:57.1624160Z chromium: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS
+2026-10-31T19:58:04.4862917Z chromium: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS
+2026-10-31T19:58:04.5253797Z BROWSER_GATE_PASS ./browser-reference-management.mjs
+2026-10-31T19:58:07.4185785Z chromium: KRAKEN LEDGER native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T19:58:07.4477670Z BROWSER_GATE_PASS ./browser-kraken-ledger.mjs
+2026-10-31T19:58:08.3133036Z chromium: BITPANDA pure native parser/preamble/18-17/exact decimals/unknown tax/guards/offline/exact zero writes PASS
+2026-10-31T19:58:08.3423653Z BROWSER_GATE_PASS ./browser-bitpanda-evidence.mjs
+2026-10-31T19:58:11.2851831Z chromium: BITPANDA native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T19:58:11.3159598Z BROWSER_GATE_PASS ./browser-bitpanda-preview.mjs
+2026-10-31T19:58:12.1990943Z chromium: FLATEX NATIVE pure 12/10/CP1252/exact decimals/references/guards/offline/exact zero writes PASS
+2026-10-31T19:58:12.2277956Z BROWSER_GATE_PASS ./browser-flatex-native.mjs
+2026-10-31T19:58:19.8513103Z chromium: FLATEX NATIVE UI native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T19:58:19.8873647Z BROWSER_GATE_PASS ./browser-flatex-native-ui.mjs
+2026-10-31T19:58:20.7684156Z chromium: FLATEX ORDER LINKS pure references/multiple legs/conflicts/storno/bounds/offline/exact zero writes PASS
+2026-10-31T19:58:20.7976915Z BROWSER_GATE_PASS ./browser-flatex-order-links.mjs
+2026-10-31T19:58:21.6691257Z chromium: FLATEX NATIVE IDENTITY source evidence/replay/manual/legacy/bounds/offline/exact zero writes PASS
+2026-10-31T19:58:21.6968969Z BROWSER_GATE_PASS ./browser-flatex-native-identity.mjs
+2026-10-31T19:58:29.2745807Z chromium: FLATEX NATIVE BINDING explicit scope/account/source/manual/reset/paging/5widths/Axe/CAS/offline/exact zero writes PASS
+2026-10-31T19:58:29.2746817Z chromium: FLATEX AMOUNT UI both confirmations/exact evidence/manual/withdrawal/async/stale/5widths PASS
+2026-10-31T19:58:29.3114583Z BROWSER_GATE_PASS ./browser-flatex-native-binding.mjs
+2026-10-31T19:58:30.1768349Z chromium: FLATEX NATIVE AMOUNTS exact documentary comparison/precision/review/offline/exact zero writes PASS
+2026-10-31T19:58:30.2049612Z BROWSER_GATE_PASS ./browser-flatex-native-amounts.mjs
+2026-10-31T19:58:31.3445413Z chromium: FLATEX NATIVE PROJECTION shared preview/backfill/replay/manual/undo/offline/primary zero writes/separate synthetic CAS PASS
+2026-10-31T19:58:31.3750441Z BROWSER_GATE_PASS ./browser-flatex-native-projection.mjs
+2026-10-31T19:58:37.1834471Z chromium: NATIVE FLATEX SIMULATION UI modes/bindings/generation/batch/stale/offline/5widths/Axe/zero-writes PASS
+2026-10-31T19:58:37.2226427Z BROWSER_GATE_PASS ./browser-flatex-native-simulation-ui.mjs
+2026-10-31T19:58:42.4726138Z chromium: NATIVE FLATEX COMMIT append backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T19:58:47.5512705Z chromium: NATIVE FLATEX COMMIT backfill backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T19:58:47.5891716Z BROWSER_GATE_PASS ./browser-flatex-native-commit.mjs
+2026-10-31T19:59:06.2330827Z chromium: history evidence partial, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T19:59:06.7658070Z chromium: history evidence gap, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T19:59:07.1333862Z chromium: history evidence missing, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T19:59:07.7212340Z chromium: metric-specific quantity continuity, EUR gap, no synthetic price and zero writes PASS
+2026-10-31T19:59:09.5333208Z chromium: quantity/actual USD price axis units, tiny nonzero prices, five widths/Axe and zero writes PASS
+2026-10-31T19:59:13.4961674Z chromium: actual delivered quality review,6 widths/Axe/archived/source scopes/focus/offline/no writes; explicit editor correction/progress/one revision PASS
+2026-10-31T19:59:22.0448790Z chromium: de-AT dates/exact decimal quantities/tiny nonzero holdings,6 widths/Axe/transfer/ISO search/unchanged canonical record PASS
+2026-10-31T19:59:22.0449948Z chromium: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS
+2026-10-31T19:59:38.6186986Z chromium: integrated booking transfers https://foliolab.unperfekt.at/,6 widths/Axe/row contexts/read-only previews/reference+consent/one CAS commit/counterparts/filter/search/Undo cancellation+exact restore/focus/stale CAS PASS
+2026-10-31T19:59:38.7717360Z chromium: transfer empty/choose/missing/confirmed/split states,5widths/short/Axe/focus,existing actions,Recovery and zero writes PASS
+2026-10-31T20:00:20.6222427Z firefox: P-Chain synthetic checked UTXO/exact uint64/owner coverage/locks/address and context identity/negative evidence/zero writes PASS
+2026-10-31T20:00:26.2935583Z webkit: P-Chain synthetic checked UTXO/exact uint64/owner coverage/locks/address and context identity/negative evidence/zero writes PASS
+2026-10-31T20:00:29.7224121Z firefox: Sonic synthetic uint256/dual waiting periods/deactivation/empty-not-paid/mixed-pin rejection/zero writes PASS
+2026-10-31T20:00:31.0493876Z webkit: Sonic synthetic uint256/dual waiting periods/deactivation/empty-not-paid/mixed-pin rejection/zero writes PASS
+2026-10-31T20:00:48.7318177Z BROWSER_GATE_PASS ./browser-header-status.mjs
+2026-10-31T20:01:08.3442327Z BROWSER_GATE_PASS ./browser-missing-position-value.mjs
+2026-10-31T20:01:16.8591443Z firefox: CHART TOOLTIP actual time spacing/nearest real observation/readable axes/bounds/exact values/full details/7widths/Axe/zero writes PASS
+2026-10-31T20:01:23.4934555Z webkit: CHART TOOLTIP actual time spacing/nearest real observation/readable axes/bounds/exact values/full details/7widths/Axe/zero writes PASS
+2026-10-31T20:01:23.5645466Z BROWSER_GATE_PASS ./browser-chart-tooltip.mjs
+2026-10-31T20:01:40.6243644Z firefox: BLOCKED REASONS counted categories/8legacy/100bookings/205cap/closed details/5widths/Axe/zero writes PASS
+2026-10-31T20:01:54.8925689Z webkit: BLOCKED REASONS counted categories/8legacy/100bookings/205cap/closed details/5widths/Axe/zero writes PASS
+2026-10-31T20:01:54.9709278Z BROWSER_GATE_PASS ./browser-blocked-reasons.mjs
+2026-10-31T20:02:06.8246615Z firefox: UI small rests provider/account success/cancel/discard/quota/focus,5 widths/Axe,7-day independent boundaries/shared views/partial/empty/zero writes PASS
+2026-10-31T20:02:17.7689044Z webkit: UI small rests provider/account success/cancel/discard/quota/focus,5 widths/Axe,7-day independent boundaries/shared views/partial/empty/zero writes PASS
+2026-10-31T20:02:17.8410285Z BROWSER_GATE_PASS ./browser-ui-small-rests.mjs
+2026-10-31T20:02:36.5626473Z firefox: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS
+2026-10-31T20:02:51.5617621Z webkit: UI audit precision/44px/calendar/periods/contrast/focus/50views/Axe/zero writes PASS
+2026-10-31T20:02:51.6464309Z BROWSER_GATE_PASS ./browser-ui-audit-controls.mjs
+2026-10-31T20:03:10.2773415Z firefox: history follow-up 5 widths, keyboard/axe/icons/basis/provenance/provider separators/liquidity/empty/zero writes PASS
+2026-10-31T20:03:26.3566900Z webkit: history follow-up 5 widths, keyboard/axe/icons/basis/provenance/provider separators/liquidity/empty/zero writes PASS
+2026-10-31T20:03:26.4323530Z BROWSER_GATE_PASS ./browser-history-followup.mjs
+2026-10-31T20:03:52.2223660Z firefox: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS
+2026-10-31T20:04:13.4579976Z webkit: REFERENCE MANAGEMENT normal/selection/provenance/edit/add/archive/restore/CAS/quota/abort/offline/fresh plain+V2 restore/5widths/Axe PASS
+2026-10-31T20:04:27.1844899Z firefox: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS
+2026-10-31T20:04:38.3445347Z webkit: REFERENCE REMOVAL backup/consent/metrics/quota/abort/offline/undo/restore/CAS/5widths/Axe PASS
+2026-10-31T20:04:38.4530910Z BROWSER_GATE_PASS ./browser-reference-management.mjs
+2026-10-31T20:04:44.1825970Z firefox: KRAKEN LEDGER native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:04:48.4284960Z webkit: KRAKEN LEDGER native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:04:48.4975374Z BROWSER_GATE_PASS ./browser-kraken-ledger.mjs
+2026-10-31T20:04:51.0462561Z firefox: BITPANDA pure native parser/preamble/18-17/exact decimals/unknown tax/guards/offline/exact zero writes PASS
+2026-10-31T20:04:52.6184164Z webkit: BITPANDA pure native parser/preamble/18-17/exact decimals/unknown tax/guards/offline/exact zero writes PASS
+2026-10-31T20:04:52.6734668Z BROWSER_GATE_PASS ./browser-bitpanda-evidence.mjs
+2026-10-31T20:04:58.3063629Z firefox: BITPANDA native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:05:02.6992246Z webkit: BITPANDA native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:05:02.7588356Z BROWSER_GATE_PASS ./browser-bitpanda-preview.mjs
+2026-10-31T20:05:05.4777073Z firefox: FLATEX NATIVE pure 12/10/CP1252/exact decimals/references/guards/offline/exact zero writes PASS
+2026-10-31T20:05:07.1101734Z webkit: FLATEX NATIVE pure 12/10/CP1252/exact decimals/references/guards/offline/exact zero writes PASS
+2026-10-31T20:05:07.1637928Z BROWSER_GATE_PASS ./browser-flatex-native.mjs
+2026-10-31T20:05:19.3206600Z firefox: FLATEX NATIVE UI native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:05:29.4562400Z webkit: FLATEX NATIVE UI native preview/declared fees/guards/5widths/Axe/focus/offline/exact zero writes PASS
+2026-10-31T20:05:29.5375690Z BROWSER_GATE_PASS ./browser-flatex-native-ui.mjs
+2026-10-31T20:05:32.2779091Z firefox: FLATEX ORDER LINKS pure references/multiple legs/conflicts/storno/bounds/offline/exact zero writes PASS
+2026-10-31T20:05:33.8904312Z webkit: FLATEX ORDER LINKS pure references/multiple legs/conflicts/storno/bounds/offline/exact zero writes PASS
+2026-10-31T20:05:33.9506671Z BROWSER_GATE_PASS ./browser-flatex-order-links.mjs
+2026-10-31T20:05:36.5056576Z firefox: FLATEX NATIVE IDENTITY source evidence/replay/manual/legacy/bounds/offline/exact zero writes PASS
+2026-10-31T20:05:38.0838326Z webkit: FLATEX NATIVE IDENTITY source evidence/replay/manual/legacy/bounds/offline/exact zero writes PASS
+2026-10-31T20:05:38.1354341Z BROWSER_GATE_PASS ./browser-flatex-native-identity.mjs
+2026-10-31T20:05:50.9490746Z firefox: FLATEX NATIVE BINDING explicit scope/account/source/manual/reset/paging/5widths/Axe/CAS/offline/exact zero writes PASS
+2026-10-31T20:05:50.9492514Z firefox: FLATEX AMOUNT UI both confirmations/exact evidence/manual/withdrawal/async/stale/5widths PASS
+2026-10-31T20:06:00.7881563Z webkit: FLATEX NATIVE BINDING explicit scope/account/source/manual/reset/paging/5widths/Axe/CAS/offline/exact zero writes PASS
+2026-10-31T20:06:00.7883754Z webkit: FLATEX AMOUNT UI both confirmations/exact evidence/manual/withdrawal/async/stale/5widths PASS
+2026-10-31T20:06:00.8698785Z BROWSER_GATE_PASS ./browser-flatex-native-binding.mjs
+2026-10-31T20:06:03.6325874Z firefox: FLATEX NATIVE AMOUNTS exact documentary comparison/precision/review/offline/exact zero writes PASS
+2026-10-31T20:06:05.2752453Z webkit: FLATEX NATIVE AMOUNTS exact documentary comparison/precision/review/offline/exact zero writes PASS
+2026-10-31T20:06:05.3309070Z BROWSER_GATE_PASS ./browser-flatex-native-amounts.mjs
+2026-10-31T20:06:08.8279196Z firefox: FLATEX NATIVE PROJECTION shared preview/backfill/replay/manual/undo/offline/primary zero writes/separate synthetic CAS PASS
+2026-10-31T20:06:11.1900387Z webkit: FLATEX NATIVE PROJECTION shared preview/backfill/replay/manual/undo/offline/primary zero writes/separate synthetic CAS PASS
+2026-10-31T20:06:11.2933106Z BROWSER_GATE_PASS ./browser-flatex-native-projection.mjs
+2026-10-31T20:06:21.4856804Z firefox: NATIVE FLATEX SIMULATION UI modes/bindings/generation/batch/stale/offline/5widths/Axe/zero-writes PASS
+2026-10-31T20:06:28.9163667Z webkit: NATIVE FLATEX SIMULATION UI modes/bindings/generation/batch/stale/offline/5widths/Axe/zero-writes PASS
+2026-10-31T20:06:29.0081214Z BROWSER_GATE_PASS ./browser-flatex-native-simulation-ui.mjs
+2026-10-31T20:06:38.3224288Z firefox: NATIVE FLATEX COMMIT append backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T20:06:46.5243180Z firefox: NATIVE FLATEX COMMIT backfill backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T20:06:53.6236638Z webkit: NATIVE FLATEX COMMIT append backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T20:07:00.4156472Z webkit: NATIVE FLATEX COMMIT backfill backup/confirmation/quantity/unknown-costs/quota/abort/CAS/replay/undo/restore/offline PASS
+2026-10-31T20:07:00.5041520Z BROWSER_GATE_PASS ./browser-flatex-native-commit.mjs
+2026-10-31T20:07:25.9645538Z firefox: history evidence partial, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:07:27.1062133Z firefox: history evidence gap, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:07:27.9899976Z firefox: history evidence missing, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:07:29.1239603Z firefox: metric-specific quantity continuity, EUR gap, no synthetic price and zero writes PASS
+2026-10-31T20:07:32.3336202Z firefox: quantity/actual USD price axis units, tiny nonzero prices, five widths/Axe and zero writes PASS
+2026-10-31T20:07:37.8666660Z firefox: actual delivered quality review,6 widths/Axe/archived/source scopes/focus/offline/no writes; explicit editor correction/progress/one revision PASS
+2026-10-31T20:07:49.1002150Z firefox: de-AT dates/exact decimal quantities/tiny nonzero holdings,6 widths/Axe/transfer/ISO search/unchanged canonical record PASS
+2026-10-31T20:07:49.1003698Z firefox: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS
+2026-10-31T20:08:10.5119827Z webkit: history evidence partial, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:08:11.4120033Z webkit: history evidence gap, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:08:12.1011493Z webkit: history evidence missing, concrete cause/single notice/segments/dates/zero writes PASS
+2026-10-31T20:08:13.0138271Z webkit: metric-specific quantity continuity, EUR gap, no synthetic price and zero writes PASS
+2026-10-31T20:08:15.3377941Z webkit: quantity/actual USD price axis units, tiny nonzero prices, five widths/Axe and zero writes PASS
+2026-10-31T20:08:19.8456204Z webkit: actual delivered quality review,6 widths/Axe/archived/source scopes/focus/offline/no writes; explicit editor correction/progress/one revision PASS
+2026-10-31T20:08:29.7167112Z webkit: de-AT dates/exact decimal quantities/tiny nonzero holdings,6 widths/Axe/transfer/ISO search/unchanged canonical record PASS
+2026-10-31T20:08:29.7169659Z webkit: UI presentation,5pages/5widths/Axe,actions/spacing,history responsive/exact focus,150% text stress,zero IDB writes PASS
+2026-10-31T20:08:58.0406600Z firefox: integrated booking transfers https://foliolab.unperfekt.at/,6 widths/Axe/row contexts/read-only previews/reference+consent/one CAS commit/counterparts/filter/search/Undo cancellation+exact restore/focus/stale CAS PASS
+2026-10-31T20:08:58.5648857Z firefox: transfer empty/choose/missing/confirmed/split states,5widths/short/Axe/focus,existing actions,Recovery and zero writes PASS
+2026-10-31T20:09:20.5523899Z webkit: integrated booking transfers https://foliolab.unperfekt.at/,6 widths/Axe/row contexts/read-only previews/reference+consent/one CAS commit/counterparts/filter/search/Undo cancellation+exact restore/focus/stale CAS PASS
+2026-10-31T20:09:20.8052699Z webkit: transfer empty/choose/missing/confirmed/split states,5widths/short/Axe/focus,existing actions,Recovery and zero writes PASS

@@ -1,0 +1,643 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+  "serviceWorker": "foliolab-open-v248",
+  "tree": "2b09741d74eba51ffc8d5c51f117020a4b02f45b",
+  "pr": 258,
+  "prHead": "aabac9dad98d73b6f7e861b1aa6bf7dd1647a3bb",
+  "run": {
+    "id": 41235570258,
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "updated_at": "2026-10-31T20:09:27Z",
+    "url": "https://github.com/joke0071/foliolab-open/actions/runs/41235570258"
+  },
+  "jobs": [
+    {
+      "id": 124638514280,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Classify exact base/head changes conservatively",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Preserve explicit stage and impact receipt",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        }
+      ]
+    },
+    {
+      "id": 124638549914,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Require a service-worker cache revision for shipped asset changes",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify standalone application",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Restore pinned Chromium shell cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Install browser test tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Browser smoke tests (320–1440 px)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Expose bounded synthetic C5 PR review",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Preserve test evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Preserve representative dialog screenshots",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Restore pinned Chromium shell cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        }
+      ]
+    },
+    {
+      "id": 124638549918,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test portfolio workflows on Firefox and WebKit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Preserve cross-engine evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 124638549970,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test portfolio workflows on Firefox and WebKit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Preserve cross-engine evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 124638549979,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Test portfolio workflows on Firefox and WebKit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Preserve cross-engine evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Restore pinned Firefox/WebKit cache (integration)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 124638550847,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 124641178663,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Prepare static site",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Run actions/configure-pages@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run actions/upload-pages-artifact@v3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run actions/deploy-pages@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Verify published homepage and matching service-worker version",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        }
+      ]
+    },
+    {
+      "id": 124641271747,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 41235570258,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install existing Chromium acceptance tools",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify published bytes, core flows and targeted UI in Chromium",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Install Firefox and WebKit for cross-engine regression",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Verify targeted production UI in Firefox and WebKit",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Expose bounded synthetic screenshots for visual review",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Preserve actual production acceptance evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    }
+  ],
+  "staticArtifact": {
+    "id": 13056200528,
+    "sha256": "22225c17cd58edc7212ee2172be10bc04fff7732582d1df0910f14a4f189e225",
+    "verified": "Upload-computed SHA256 equals GitHub artifact API digest; deployment commit exact; independent local ZIP/CRC download unavailable",
+    "main": "2f309fa3cca92710a4ed367ac42b240ae220bc7e"
+  },
+  "liveArtifact": {
+    "id": 13055918803,
+    "sha256": "32f3a7b72c5002020e3fcb48c42b36db6cd1d719a93bce7d4e95b8693c793582",
+    "verification": "Upload-computed SHA256 matches GitHub artifact API digest; full live job SUCCESS",
+    "independentLocalZIPCRC": "UNAVAILABLE: local executor unavailable"
+  },
+  "production": {
+    "base": "https://foliolab.unperfekt.at/",
+    "assetURLs": 122,
+    "uniqueFiles": 121,
+    "coreGroups": 6,
+    "axeScans": 18,
+    "scope": "Actual production, exact matching release checkout, Chromium/Firefox/WebKit; all gates SUCCESS"
+  },
+  "premergeVisualWidths": [
+    320,
+    360,
+    390,
+    412,
+    430,
+    1440
+  ],
+  "actualProductionCaptures": [
+    {
+      "id": "c5-positions",
+      "path": "artifacts/gates/ui-positions-390.png",
+      "bytes": 94886,
+      "sha256": "2b901bcf598cd4aff0ed3e8fde90ba78a2e137c0839574971c376d3ff570cf48",
+      "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "width": 390,
+      "height": 1315,
+      "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "visuallyReviewed": true
+    },
+    {
+      "id": "c5-bookings",
+      "path": "artifacts/gates/c5-bookings-390.png",
+      "bytes": 39105,
+      "sha256": "20ca3f03e093a1b7af91dce32b48faabb5401490e62aaba5c96c059433056695",
+      "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "width": 360,
+      "height": 616,
+      "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "visuallyReviewed": true
+    },
+    {
+      "id": "c5-connections",
+      "path": "artifacts/gates/c5-connections-390.png",
+      "bytes": 128435,
+      "sha256": "cf229fe097822e9ca26a93a18676863f294cec20d28b91d37312c67a336dbd63",
+      "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "width": 330,
+      "height": 1310,
+      "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "visuallyReviewed": true
+    },
+    {
+      "id": "c5-connections-viewport",
+      "path": "artifacts/gates/c5-connections-viewport-390.png",
+      "bytes": 53165,
+      "sha256": "8fbd315a70af6fe348e28f795ee9ae1a6b80c77b716d2934b940b514d857abb3",
+      "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+      "width": 390,
+      "height": 560,
+      "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "visuallyReviewed": true
+    }
+  ],
+  "limitations": [
+    "Local executor unavailable after local QA; no independent local ZIP CRC/download or additional local production browser claimed.",
+    "Production images were reconstructed from bounded CI logs and SHA256 checked; image crops are not represented as viewport sizes.",
+    "Physical Android/native Safari/OAuth/TalkBack remain external."
+  ],
+  "next": {
+    "issue": 257,
+    "status": "OPEN / BLOCKED_EXECUTOR_UNAVAILABLE"
+  },
+  "syntheticOnly": true
+}

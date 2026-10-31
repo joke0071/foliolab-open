@@ -1,0 +1,42 @@
+[
+  {
+    "id": "c5-positions",
+    "path": "artifacts/gates/ui-positions-390.png",
+    "bytes": 94886,
+    "sha256": "2b901bcf598cd4aff0ed3e8fde90ba78a2e137c0839574971c376d3ff570cf48",
+    "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "width": 390,
+    "height": 1315,
+    "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS"
+  },
+  {
+    "id": "c5-bookings",
+    "path": "artifacts/gates/c5-bookings-390.png",
+    "bytes": 39105,
+    "sha256": "20ca3f03e093a1b7af91dce32b48faabb5401490e62aaba5c96c059433056695",
+    "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "width": 360,
+    "height": 616,
+    "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS"
+  },
+  {
+    "id": "c5-connections",
+    "path": "artifacts/gates/c5-connections-390.png",
+    "bytes": 128435,
+    "sha256": "cf229fe097822e9ca26a93a18676863f294cec20d28b91d37312c67a336dbd63",
+    "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "width": 330,
+    "height": 1310,
+    "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS"
+  },
+  {
+    "id": "c5-connections-viewport",
+    "path": "artifacts/gates/c5-connections-viewport-390.png",
+    "bytes": 53165,
+    "sha256": "8fbd315a70af6fe348e28f795ee9ae1a6b80c77b716d2934b940b514d857abb3",
+    "release": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "width": 390,
+    "height": 560,
+    "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS"
+  }
+]
