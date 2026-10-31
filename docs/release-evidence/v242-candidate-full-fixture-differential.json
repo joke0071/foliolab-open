@@ -1,0 +1,11 @@
+{
+  "scope": "entire synthetic large fixture, exact ordered read-only row reasons against frozen parent",
+  "baselineRuntimeSHA256": "edfc1bab2930f6857258cfb7ecc5e11547816bf93c3f96b55acc3f8509c96ebe",
+  "candidateRuntimeSHA256": "8187bc57f883bfb96db4f5b81f22c753e5be785434284dbea486e8dd94ccc547",
+  "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+  "positions": 19,
+  "bookings": 10000,
+  "comparisons": 10001,
+  "recordUnchanged": true,
+  "result": "PASS"
+}
