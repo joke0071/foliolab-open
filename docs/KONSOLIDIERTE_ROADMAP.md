@@ -1,3 +1,17 @@
+## Qualitätsnachcheck v231: mobiler P1-Kandidat #239 · 31.10.2026
+
+Owner ChatGPT Work. v231 bleibt LIVE_ACCEPTED und Wochenend-Testbasis; vollständiger verifizierter Releasebeleg dauerhaft unter [release-evidence/v231-live-acceptance.json](release-evidence/v231-live-acceptance.json).
+
+[PR #239](https://github.com/joke0071/foliolab-open/pull/239), Branch `fix/v231-mobile-readability`, HEAD `1d57804fc565e3665b65a088f4a31895048b468f`, SW232 nur Kandidat. Status **PARTIAL / lokale Chromium-Abnahme PASS / CI_PENDING**. Gezielte Nachbesserungen: vollständige Archivfilterwerte, zweizeilige mobile Transfer-/Ertragstitel, lange Anbieternamen ohne Seitenüberlauf, volle mobile Zeilen für Buchungstitel/Handelswert/Dezimalmenge und einzeilige untere Navigation. Keine Finanz-/Storage-/Import-/Berechtigungsänderung. [Umfang und genaue Grenzen](https://github.com/joke0071/foliolab-open/blob/fix/v231-mobile-readability/docs/QA_V231_MOBILE_READABILITY_2026-10-31.md).
+
+Neue synthetische Browserregression im vorhandenen Buchungsverwaltungs-Gate: 320/360/390/412/430/768/1440 und 740×360, alle fünf Reiter, DOM-Range-Wortumbrüche, einzeilige lange Zahlen, Inhaltsbreiten, Archivwerte, Auswahlmodus, Details, geöffnete Mehr-Unterbereiche, 125-%-Textsimulation. Negativkontrolle mit CSS vor #238 scheitert bei 320 px an zusammengedrückten Titeln. Lokale Matrix + vorhandene Buchungs-UI inklusive Axe/44px/Quota/Abort/CAS/Offline/Undo/Reimport/verschlüsseltem Restore PASS. Unit985/985 + Syntax PASS. Keine Baselines ersetzt/Toleranzen geändert. Voll-CI [41180221423](https://github.com/joke0071/foliolab-open/actions/runs/41180221423) und Wallet41180221429 laufen; noch KEIN CI_ACCEPTED/LIVE.
+
+Cloud-Browser: alle fünf produktiven Reiter sowie Backup-/Drive-/API-/Verbindungs-/Blockchain-/Datenschutzakkordeons geöffnet und visuell kontrolliert. Exakte Viewports mit lokalem/CI-Playwright (kein dokumentierter Cloud-Viewportwechsel). Android-Systemschrift, Tastatur, reale PWA/Safari/TalkBack und OAuth bleiben EXTERNAL. Lokale Firefox/WebKit-Systembibliotheken im Container nicht installierbar; vollständige CI muss die drei Engines belegen.
+
+Nächster Schritt: exakte CI-Ergebnisse + erzeugte Screenshots prüfen, Kandidat fertigstellen und konkrete Freigabe einholen. **Kein nichtkritischer Merge/Deploy ohne Freigabe.** Gesamter UI-MASTER28-/Mehr-/Wallet-/Chartvertrag bleibt PARTIAL; weitere aktive Fach-/PERF01-/Drive-/FLH03-Reste nicht pauschal schließen. Nur FLH05/FLH-PROJ01 PARKED, Budget0 €.
+
+---
+
 ## Alle 13 unmittelbaren PRs gemergt; finaler SW230-Release läuft · 31.10.2026
 
 Nach vollständiger eigener v228-Live-Artefaktprüfung (Beleg release-evidence/v228-live-acceptance.json, 121 Assetmatches/18 Axe/0 Fehler, alle drei Browser) wurden die unveränderten vollständig grünen Work-Kandidaten kontrolliert gemergt: #235 als 6ba5fc5c3ce54a01199d3d2b28fd5d6920954183, #236 als a78fa5a6493bc457c9994abb5b38eb40325f7e67, #237 als 100a3a480694666468706d333843fc372de03a9a. Alle 13 unmittelbaren Quell-PRs #233/#234/#213/#214/#218/#219/#222/#223/#225/#227/#235/#236/#237 sind jetzt integriert. Kein historischer Dokumentationsbranch gemergt.
