@@ -1,0 +1,16 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "release": "8d3d6c9f34dc1e09b695e3b8eebdb0462fd33034",
+  "scope": "actual production, fresh ephemeral synthetic-only profile; no real account or OAuth",
+  "proxyCertificateException": true,
+  "checks": [
+    "published sw.js matches exact v237 source",
+    "published src/app.js matches exact v237 source",
+    "referenced cash position blocked through shared preview without writes",
+    "unreferenced individual position uses safe preview without writes",
+    "actual booking editor delete opens exact preview, Axe PASS, no write before consent",
+    "real synthetic cash reversal commits once and UI Undo restores complete original model/settings"
+  ],
+  "result": "PASS",
+  "errors": []
+}
