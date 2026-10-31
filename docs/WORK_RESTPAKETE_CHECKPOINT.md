@@ -1,3 +1,11 @@
+## v242 DEPLOYED – tatsächliche Live-Abnahme läuft · 31.10.2026
+
+Main**25ec0bd1cf834fdb129b67fbc12d90fdecbd9196**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, SW242. Produktionslauf**41215609885**: tatsächlich1020Tests/PASS1020/FAIL0/CANCELLED0/SKIPPED0; gesamter Chromiumlauf und alle3 Firefox-/WebKit-TeileSUCCESS; **DeploymentSUCCESS**. Tatsächliche Live-Abnahme, Job**124582203018**, noch IN_PROGRESS. Status **DEPLOYED / LIVE_PENDING**, noch kein v242 LIVE_ACCEPTED. Unabhängiger direkter Abgleich allerPrecache-Dateien und Service-Worker auf tatsächlichem Main läuft ebenfalls. Aktueller Runtimecode unverändert zum vollständig geprüften PR250-HEAD2f556b41...; native CIbilder aller320/360/390/412/430/1440Breiten für neue Buchungsanzeigen/Positionsdetails zusätzlich visuell geprüft.
+
+Owner bleibt aktiver Master-/Integrationschat. Unmittelbar endgültige Produktionsgates aller3Engines, Asset-/SW-/Mainidentität, vollständiges Produktionsartefakt mit Digest/CRC/Gitobjektvergleich und tatsächliche visuelle Produktion abnehmen; danach erst LIVE_ACCEPTED und Rückfallbasis aktualisieren. Bis dahin bleibt **v240/d2193e0baa1feb2b64da23b6a7f5b625ce379c42/SW240** die bestätigte Rückfallbasis. Kein separater v241-Release. Offene Finanz-/Sync-/Historien-/echteHardwarepakete bleiben offen; nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## PR250 CI_ACCEPTED und MERGED – v242-Produktion noch offen · 31.10.2026
 
 Owner: aktiver Master-/Integrationschat. Gemeinsamer finaler HEAD**2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75**, Tree**b89661819a2c73be258b9982b35e2d0f758f27e0**, SW242: vollständigeCI**41214616621 completed/success**, Wallet**41214616534 completed/success**. Tatsächlich1020Tests/PASS1020/FAIL0/CANCELLED0/SKIPPED0, gesamter Chromium-Pflichtlauf und alle3 Firefox-/WebKit-TeileSUCCESS. Native UIqualität jeFirefox/WebKit37Scans, Headerstatus und TransferverträgePASS. Artefakte13048000312/13048115577 unabhängig vollständig per Digest/CRC geprüft und neue native Anzeige-/Bestandsbilder visuell angesehen. VollständigeCIquittung: docs/release-evidence/v242-pr-ci-acceptance.json.
