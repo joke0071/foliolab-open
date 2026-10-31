@@ -1,0 +1,12 @@
+{
+  "result": "REPRODUCED",
+  "scope": "synthetic valid complete backup with valid wrap plus unknown Unicode metadata accepted by reader and actual cross-device vault adoption",
+  "fileChars": 12001191,
+  "fileUtf8Bytes": 24001191,
+  "driveCharacterLimitPass": true,
+  "validPortfolio": true,
+  "actualVaultAdoption": true,
+  "localFileLimitRejected": true,
+  "writerReturnedFile": true,
+  "ciphertextDecrypts": true
+}
