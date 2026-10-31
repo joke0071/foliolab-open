@@ -1,0 +1,378 @@
+{
+  "main": "ee7ee75f2b62d22452d503ae7b0779d51ad68056",
+  "scope": "one diagnostic cold startup, CPU4x, 19 mixed positions /10000 bookings /1825 observations; separate from five-run baseline",
+  "selfTime": [
+    {
+      "function": "validateJournalEntry",
+      "file": "src/transactions.js",
+      "line": 66,
+      "ms": 841.5
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "line": 0,
+      "ms": 577.6
+    },
+    {
+      "function": "dateLabel",
+      "file": "src/app.js",
+      "line": 287,
+      "ms": 497.5
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-portfolio-value.js",
+      "line": 18,
+      "ms": 385.5
+    },
+    {
+      "function": "money",
+      "file": "src/model.js",
+      "line": 298,
+      "ms": 284.1
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/model.js",
+      "line": 200,
+      "ms": 265.0
+    },
+    {
+      "function": "projectHistoricalPortfolio",
+      "file": "src/historical-portfolio-value.js",
+      "line": 5,
+      "ms": 262.3
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-portfolio-value.js",
+      "line": 32,
+      "ms": 232.3
+    },
+    {
+      "function": "wealthView",
+      "file": "src/app.js",
+      "line": 289,
+      "ms": 189.6
+    },
+    {
+      "function": "ledgerQuantityAudit",
+      "file": "src/transactions.js",
+      "line": 92,
+      "ms": 169.4
+    },
+    {
+      "function": "validCalendarDate",
+      "file": "src/model.js",
+      "line": 146,
+      "ms": 140.9
+    },
+    {
+      "function": "structuredClone",
+      "file": "",
+      "line": 0,
+      "ms": 137.9
+    },
+    {
+      "function": "assertRecord",
+      "file": "src/atomic-storage.js",
+      "line": 54,
+      "ms": 132.7
+    },
+    {
+      "function": "safeImport",
+      "file": "src/model.js",
+      "line": 160,
+      "ms": 118.9
+    },
+    {
+      "function": "restored",
+      "file": "src/browser-portfolio-storage.js",
+      "line": 18,
+      "ms": 116.0
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-position-value.js",
+      "line": 37,
+      "ms": 108.7
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/transactions.js",
+      "line": 68,
+      "ms": 104.9
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "line": 0,
+      "ms": 101.2
+    },
+    {
+      "function": "units",
+      "file": "src/decimal.js",
+      "line": 21,
+      "ms": 92.2
+    },
+    {
+      "function": "historicalQuantityRows",
+      "file": "src/historical-position-value.js",
+      "line": 32,
+      "ms": 78.8
+    },
+    {
+      "function": "renderDashboard",
+      "file": "src/app.js",
+      "line": 174,
+      "ms": 76.5
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-position-value.js",
+      "line": 35,
+      "ms": 62.2
+    },
+    {
+      "function": "exact",
+      "file": "src/decimal.js",
+      "line": 34,
+      "ms": 57.5
+    },
+    {
+      "function": "request.onsuccess",
+      "file": "src/atomic-storage.js",
+      "line": 76,
+      "ms": 55.9
+    },
+    {
+      "function": "(idle)",
+      "file": "",
+      "line": 0,
+      "ms": 37.3
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/allocation-ui.js",
+      "line": 1,
+      "ms": 35.1
+    },
+    {
+      "function": "uniqueIds",
+      "file": "src/model.js",
+      "line": 158,
+      "ms": 33.8
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/model.js",
+      "line": 216,
+      "ms": 33.5
+    },
+    {
+      "function": "validDate",
+      "file": "src/historical-position-value.js",
+      "line": 10,
+      "ms": 18.8
+    },
+    {
+      "function": "scrollTo",
+      "file": "",
+      "line": 0,
+      "ms": 18.8
+    }
+  ],
+  "inclusiveTime": [
+    {
+      "function": "(root)",
+      "file": "",
+      "line": 0,
+      "ms": 5553.9
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/app.js",
+      "line": 1,
+      "ms": 3308.4
+    },
+    {
+      "function": "initNav",
+      "file": "src/app.js",
+      "line": 128,
+      "ms": 3277.8
+    },
+    {
+      "function": "go",
+      "file": "src/app.js",
+      "line": 127,
+      "ms": 3274.5
+    },
+    {
+      "function": "render",
+      "file": "src/app.js",
+      "line": 159,
+      "ms": 3251.4
+    },
+    {
+      "function": "renderDashboard",
+      "file": "src/app.js",
+      "line": 174,
+      "ms": 3244.3
+    },
+    {
+      "function": "wealthView",
+      "file": "src/app.js",
+      "line": 289,
+      "ms": 2336.8
+    },
+    {
+      "function": "historicalWealthView",
+      "file": "src/historical-portfolio-value.js",
+      "line": 45,
+      "ms": 2147.2
+    },
+    {
+      "function": "projectHistoricalPortfolio",
+      "file": "src/historical-portfolio-value.js",
+      "line": 5,
+      "ms": 2138.3
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-portfolio-value.js",
+      "line": 17,
+      "ms": 1245.8
+    },
+    {
+      "function": "projectHistoricalPosition",
+      "file": "src/historical-position-value.js",
+      "line": 81,
+      "ms": 1240.5
+    },
+    {
+      "function": "historicalQuantityRows",
+      "file": "src/historical-position-value.js",
+      "line": 32,
+      "ms": 1210.5
+    },
+    {
+      "function": "safeImport",
+      "file": "src/model.js",
+      "line": 160,
+      "ms": 1160.5
+    },
+    {
+      "function": "validateJournalEntry",
+      "file": "src/transactions.js",
+      "line": 66,
+      "ms": 1033.7
+    },
+    {
+      "function": "ledgerQuantityAudit",
+      "file": "src/transactions.js",
+      "line": 92,
+      "ms": 1020.6
+    },
+    {
+      "function": "drawInteractiveChart",
+      "file": "src/dashboard-ui.js",
+      "line": 87,
+      "ms": 797.3
+    },
+    {
+      "function": "drawChart",
+      "file": "src/app.js",
+      "line": 290,
+      "ms": 797.3
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/dashboard-ui.js",
+      "line": 105,
+      "ms": 769.0
+    },
+    {
+      "function": "assertRecord",
+      "file": "src/atomic-storage.js",
+      "line": 54,
+      "ms": 759.5
+    },
+    {
+      "function": "tx.oncomplete",
+      "file": "src/atomic-storage.js",
+      "line": 77,
+      "ms": 759.5
+    },
+    {
+      "function": "initialize",
+      "file": "src/browser-portfolio-storage.js",
+      "line": 37,
+      "ms": 652.5
+    },
+    {
+      "function": "restored",
+      "file": "src/browser-portfolio-storage.js",
+      "line": 18,
+      "ms": 649.6
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-portfolio-value.js",
+      "line": 18,
+      "ms": 626.9
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "line": 0,
+      "ms": 577.6
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/model.js",
+      "line": 200,
+      "ms": 505.2
+    },
+    {
+      "function": "dateLabel",
+      "file": "src/app.js",
+      "line": 287,
+      "ms": 497.5
+    },
+    {
+      "function": "money",
+      "file": "src/model.js",
+      "line": 298,
+      "ms": 284.1
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-portfolio-value.js",
+      "line": 32,
+      "ms": 232.3
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/transactions.js",
+      "line": 68,
+      "ms": 175.6
+    },
+    {
+      "function": "(anonymous)",
+      "file": "src/historical-position-value.js",
+      "line": 37,
+      "ms": 172.7
+    }
+  ],
+  "findings": [
+    "Historical portfolio projection is the largest derived rendering path (~2138 ms inclusive).",
+    "Repeated date/currency formatting costs ~782 ms self time in this diagnostic run.",
+    "Per-calendar-day scans over all journal entries are a concrete review candidate.",
+    "Validation remains required; no validation skip proposed."
+  ],
+  "limitations": [
+    "Profiling overhead: these are diagnostic shares, not improvement estimates.",
+    "Physical Android/PWA hardware acceptance remains external."
+  ]
+}
