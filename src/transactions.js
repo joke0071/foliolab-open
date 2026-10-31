@@ -1,3 +1,4 @@
+import {validCalendarDate} from './calendar-date.js';
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
 import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
@@ -14,7 +15,7 @@ export const TX_TYPES={
 };
 const words=(s,len=200)=>String(s??'').trim().slice(0,len);
 const amount=(v,min=0n)=>{const x=units(v);if(x<min||x>10n**45n)throw Error('Ungültige Menge oder Betrag.');return x;};
-const dateOk=d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&!Number.isNaN(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
+const dateOk=validCalendarDate;
 const pos=(m,id)=>{const p=m.positions.find(p=>p.id===id);if(!p)throw Error('Position nicht gefunden.');if(p.wallet?.enabled)throw Error('Automatisch gescannte Wallet-Bestände sind nicht manuell buchbar.');return p;};
 const q=p=>units(p.quantityExact??p.quantity);
 const setQ=(p,u)=>{p.quantityExact=exact(u);p.quantity=Number(p.quantityExact);};
@@ -64,7 +65,7 @@ export function captureOpenings(model){
 }
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
- if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||Number.isNaN(Date.parse(entry.date))||new Date(entry.date+'T12:00:00Z').toISOString().slice(0,10)!==entry.date||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
+ if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!validCalendarDate(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
  const ids=new Set(),sum=entry.postings.reduce((n,p)=>{
   if(!p.id||ids.has(p.id)||!p.role||p.amountBookEURExact==null)throw Error('Journal-Buchung ungültig.');
   ids.add(p.id);if(p.quantityDeltaExact!=null)units(p.quantityDeltaExact);

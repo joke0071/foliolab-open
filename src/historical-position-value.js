@@ -4,16 +4,7 @@ import {validateHistorySession} from './wallet-history-state.js';
 import {units,exact,mul} from './decimal.js';
 import {ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
-// Canonical-day validity is independent of portfolio, prices and the current
-// clock. Bound page-local boolean reuse; never cache financial results.
-const dateValidity=new Map(),DATE_VALIDITY_LIMIT=16384;
-const validDate=d=>{
- if(typeof d!=='string'||!/^\d{4}-\d\d-\d\d$/.test(d))return false;
- if(dateValidity.has(d))return dateValidity.get(d);
- const valid=Number.isFinite(Date.parse(d))&&new Date(d+'T12:00:00Z').toISOString().slice(0,10)===d;
- if(dateValidity.size>=DATE_VALIDITY_LIMIT)dateValidity.clear();
- dateValidity.set(d,valid);return valid;
-};
+import {validCalendarDate as validDate} from './calendar-date.js';
 const daysBetween=(a,b)=>(Date.parse(b)-Date.parse(a))/864e5;
 /** Pure capability. Unknown entitlements/CORS are not a positive live capability. */
 export function historicalProviderCapability({provider,currency,listingConfirmed=false,browserTransport=false,licenseState='unknown',quotaStatus='unknown',rangeDays=365,availableDays=365,symbolAllowed=false}={}){
