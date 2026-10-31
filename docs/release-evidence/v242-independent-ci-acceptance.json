@@ -1,0 +1,1608 @@
+{
+  "status": "CI_ACCEPTED",
+  "pr": 250,
+  "head": "2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75",
+  "testedMerge": "72958374c7a240ad981fcac89648b7409af834c7",
+  "tree": "b89661819a2c73be258b9982b35e2d0f758f27e0",
+  "main": "25ec0bd1cf834fdb129b67fbc12d90fdecbd9196",
+  "mainTreeMatches": true,
+  "ci": 41214616621,
+  "wallet": 41214616534,
+  "localUnits": 1020,
+  "localSyntax": "PASS",
+  "artifacts": [
+    {
+      "verifiedAt": "2026-10-31T15:33:37.896345+00:00",
+      "artifactSHA256": "8ca46a0c347c922b8655604f0804f59c6e1bd6285cfd92f7d386ceda212575a7",
+      "zipCRC": "PASS",
+      "expectedCommit": "2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75",
+      "reports": {
+        "booking-management.json": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          }
+        ],
+        "position-archive.json": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          }
+        ],
+        "transfer-states.json": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "integrated booking row contexts/filter/search/counterparts/explicit proof/CAS/Undo/6 widths",
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "integrated booking row contexts/filter/search/counterparts/explicit proof/CAS/Undo/6 widths",
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "verifiedAt": "2026-10-31T15:29:52.299031+00:00",
+      "artifactSHA256": "36eda7f44dc3e3e72f5b59286db519cf9a4f046416f2e12b044ee4df519a4a40",
+      "zipCRC": "PASS",
+      "expectedCommit": "2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75",
+      "reports": {
+        "flh03-abce.json": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "A startup/runtime rescue+restore",
+              "B proven/partial history",
+              "C expanded contrast",
+              "E empty history",
+              "baseline local discard+saved navigation"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "A startup/runtime rescue+restore",
+              "B proven/partial history",
+              "C expanded contrast",
+              "E empty history",
+              "baseline local discard+saved navigation"
+            ]
+          }
+        ],
+        "pchain-evidence-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "sonic-evidence-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "verifiedAt": "2026-10-31T15:33:36.494979+00:00",
+      "artifactSHA256": "83d9ce89bbf6140b37fef65a65cda2ff0a9d1cfa3c9953d6e3638eb58a7900b9",
+      "zipCRC": "PASS",
+      "expectedCommit": "2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75",
+      "reports": {
+        "bitpanda-evidence-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          }
+        ],
+        "flatex-native-amounts-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          }
+        ],
+        "flatex-native-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          }
+        ],
+        "flatex-native-identity-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          }
+        ],
+        "flatex-native-projection-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          }
+        ],
+        "flatex-order-links-firefox-webkit.json": [
+          {
+            "engine": "firefox",
+            "status": null,
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": null,
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "ui-quality.json": [
+          {
+            "engine": "firefox",
+            "status": "PASS",
+            "checks": [
+              "delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress",
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          },
+          {
+            "engine": "webkit",
+            "status": "PASS",
+            "checks": [
+              "delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress",
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "verifiedAt": "2026-10-31T15:35:47.885634+00:00",
+      "artifactSHA256": "6b84d8d7938200b47405d8ccd0d8207ae246a90f0ea8e22d39fe9c62e78f98d0",
+      "zipCRC": "PASS",
+      "expectedCommit": "2f556b41d3d7a79ac65d9c82bbf2bf8c818edf75",
+      "reports": {
+        "bitpanda-evidence-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "native preamble/18-17 schema",
+              "exact 18-digit amounts and declared fee asset",
+              "absent tax stays unknown",
+              "all duplicate/conflicting/unknown rows retained",
+              "hostile strings are data/preamble not exposed",
+              "negative schemas/generic strictness",
+              "deep immutability/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB record/revision/settings zero mutation",
+              "no external parser requests"
+            ]
+          }
+        ],
+        "booking-management.json": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "205/all/103filtered/hidden/stableIDs",
+              "five widths/Axe/preview/Escape/exact no writes",
+              "actual quota and post-put abort",
+              "one CAS revision offline correction",
+              "UI removal and exact undo",
+              "UI metadata and exact undo",
+              "blocked source and programmatic bypass",
+              "exact undo",
+              "plain/encrypted fresh restore",
+              "competing tab stale preview"
+            ]
+          }
+        ],
+        "flatex-native-amounts-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "exact buy/sell/large/tiny/foreign-currency reference values",
+              "product precision/units/direction/source/currency guards",
+              "multi-leg/overlap/conflict/storno/missing guards",
+              "all locators/immutability/no financial DTO or writes",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external requests"
+            ]
+          }
+        ],
+        "flatex-native-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "native 12/10 positional blank headers",
+              "actual UTF8/Windows1252 byte decoding/all 32 C1 mappings/euro/umlauts",
+              "exact signed 18-digit quantities/unknown versus zero",
+              "separate bank/order/account references",
+              "documentary cancellation/unknown/date guards",
+              "no generic header relaxation",
+              "deep immutable result/no import API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external projection requests"
+            ]
+          }
+        ],
+        "flatex-native-identity-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "direct native parser/exact independent SHA256",
+              "side/scope/bank/order identity separation",
+              "ordinal-independent evidence/overlap/conflict/all locators kept",
+              "existing preview replay/source conflict/manual protection/legacy guard",
+              "pure backup restore/replay/stale preview guard",
+              "immutable input/output/no write API",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external identity requests"
+            ]
+          }
+        ],
+        "flatex-native-projection-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "native direct parser/shared preview/backfill/no fictional costs or external flows",
+              "explicit binding/stale/source/manual/baseline guards",
+              "only ETF/stock/fund targets; crypto/cash/other targets rejected",
+              "synthetic commit/backup/replay/exact undo in memory",
+              "actual SW offline reload/module import",
+              "primary profile exact IDB/revision/settings zero mutation",
+              "separate synthetic IDB CAS profile: exactly one accepted revision, competing native simulation rejected",
+              "no external requests"
+            ]
+          }
+        ],
+        "flatex-order-links-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": [
+              "independent bank/order references",
+              "possible 1:1 reuses legacy matcher",
+              "multiple cash/depot legs stay review",
+              "overlap/conflict/storno/currency/scope/missing/unassigned guards",
+              "tiny exact decimal direction",
+              "all source rows retained/immutable/no writes",
+              "legacy and input/horizon bounds",
+              "actual SW offline reload/module import",
+              "exact IDB/revision/settings zero mutation",
+              "no external relationship requests"
+            ]
+          }
+        ],
+        "flh03-abce.json": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "A startup/runtime rescue+restore",
+              "B proven/partial history",
+              "C expanded contrast",
+              "E empty history",
+              "baseline local discard+saved navigation"
+            ]
+          }
+        ],
+        "pchain-evidence-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": {
+              "decoded": {
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                "amountAtomic": "9007199254740993",
+                "locktime": "100",
+                "stakeableLocktime": null,
+                "threshold": 1,
+                "ownerIds": [
+                  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                ]
+              },
+              "inspected": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "locked": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": "101",
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                  ]
+                },
+                "ownerCoverage": "declared-all",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "locked-stakeable",
+                "atTimeSeconds": "100"
+              },
+              "shared": {
+                "utxo": {
+                  "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                  "outputIndex": 3,
+                  "assetId": "2222222222222222222222222222222222222222222222222222222222222222",
+                  "amountAtomic": "9007199254740993",
+                  "locktime": "100",
+                  "stakeableLocktime": null,
+                  "threshold": 1,
+                  "ownerIds": [
+                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  ]
+                },
+                "ownerCoverage": "shared",
+                "matchedOwners": 1,
+                "thresholdCovered": true,
+                "lockState": "unlocked",
+                "atTimeSeconds": "100"
+              },
+              "rejected": [
+                {
+                  "label": "corrupt checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "unsupported codec",
+                  "rejected": true
+                },
+                {
+                  "label": "trailing byte",
+                  "rejected": true
+                },
+                {
+                  "label": "missing explicit encoding",
+                  "rejected": true
+                }
+              ],
+              "owner": {
+                "address": "P-avax142424242424242424242424242424242gukazp",
+                "networkID": "1",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "fuji": {
+                "address": "P-fuji142424242424242424242424242424242ywjzw7",
+                "networkID": "5",
+                "chainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "ownerId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ownerKey": "[\"avalanche-owner-v1\",\"5\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"]"
+              },
+              "identity": {
+                "networkID": "1",
+                "sourceChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "destinationChainId": "0000000000000000000000000000000000000000000000000000000000000000",
+                "kind": "native",
+                "transactionId": "1111111111111111111111111111111111111111111111111111111111111111",
+                "outputIndex": 3,
+                "key": "[\"avalanche-utxo-observation-v1\",\"1\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"0000000000000000000000000000000000000000000000000000000000000000\",\"1111111111111111111111111111111111111111111111111111111111111111\",3]"
+              },
+              "sameKey": true,
+              "contextSeparated": true,
+              "identityRejected": [
+                {
+                  "label": "network mismatch",
+                  "rejected": true
+                },
+                {
+                  "label": "bad checksum",
+                  "rejected": true
+                },
+                {
+                  "label": "EVM is not P address",
+                  "rejected": true
+                },
+                {
+                  "label": "wrong chain",
+                  "rejected": true
+                },
+                {
+                  "label": "Bech32m",
+                  "rejected": true
+                },
+                {
+                  "label": "missing chain context",
+                  "rejected": true
+                },
+                {
+                  "label": "unsafe output index",
+                  "rejected": true
+                }
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "position-archive.json": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "linked positive holding visibility only/exact history and totals",
+              "cancel/Escape/focus",
+              "same ISIN separate accounts",
+              "edit retains archive",
+              "one revision archive/unarchive",
+              "actual quota and post-put transaction abort rollback",
+              "401 archive-aware UI selection before pagination",
+              "dashboard quality drilldown includes archived valued holdings",
+              "peer CAS conflict",
+              "offline archive/reload",
+              "fresh plain/encrypted UI restore"
+            ]
+          }
+        ],
+        "sonic-evidence-chromium.json": [
+          {
+            "engine": "chromium",
+            "status": null,
+            "checks": {
+              "waiting": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "timeOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": false
+                }
+              },
+              "epochOnly": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": true
+                }
+              },
+              "mature": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "110"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "deactivated": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "9007199254740993",
+                "paymentEvidence": "not-assessed",
+                "status": "mature-pending",
+                "maturity": {
+                  "base": "earlier-validator-deactivation",
+                  "releaseTime": "100",
+                  "releaseEpoch": "10",
+                  "timeSatisfied": true,
+                  "epochSatisfied": true
+                }
+              },
+              "empty": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "0",
+                "paymentEvidence": "not-assessed",
+                "status": "no-current-request",
+                "maturity": null
+              },
+              "huge": {
+                "sourceVersion": "4.0.5",
+                "atBlock": {
+                  "number": "123",
+                  "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+                  "timestamp": "109"
+                },
+                "locator": {
+                  "owner": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "validatorId": "1",
+                  "requestId": "0"
+                },
+                "requestAmountAtomic": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "paymentEvidence": "not-assessed",
+                "status": "waiting",
+                "maturity": {
+                  "base": "request",
+                  "releaseTime": "110",
+                  "releaseEpoch": "12",
+                  "timeSatisfied": false,
+                  "epochSatisfied": false
+                }
+              },
+              "rejected": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "idbUnchanged": true,
+              "prefsUnchanged": true,
+              "inputUnchanged": true,
+              "immutable": true
+            }
+          }
+        ],
+        "transfer-states.json": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "integrated booking row contexts/filter/search/counterparts/explicit proof/CAS/Undo/6 widths",
+              "compact no-cash/no-outgoing and short heights",
+              "correct existing wizard/booking entry without nested modals and zero writes",
+              "same-currency/other-account/seven-day choices",
+              "confirmed group/Undo retained",
+              "no automatic amount pairing",
+              "unchanged split proof/reference/consent",
+              "Recovery shortcut disabled and programmatic bypass denied",
+              "exact records unchanged"
+            ]
+          }
+        ],
+        "ui-quality.json": [
+          {
+            "engine": "chromium",
+            "status": "PASS",
+            "checks": [
+              "delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress",
+              "all five pages",
+              "archive visible without detail disclosure",
+              "44px actions,separator and focus clearance,no overlaps",
+              "liquidity below providers and closed",
+              "mobile labeled history records/desktop table",
+              "focused exact decimal disclosure",
+              "Escape/focus return",
+              "zero exact IndexedDB record mutations"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "visualWidths": [
+    320,
+    360,
+    390,
+    412,
+    430,
+    1440
+  ],
+  "realAndroid": false,
+  "productionRun": 41215609885,
+  "productionStatus": "QUEUED_NOT_ACCEPTED",
+  "artifactMetadata": [
+    {
+      "id": 13048305130,
+      "name": "release-gates-72958374c7a240ad981fcac89648b7409af834c7",
+      "digest": "sha256:6b84d8d7938200b47405d8ccd0d8207ae246a90f0ea8e22d39fe9c62e78f98d0"
+    },
+    {
+      "id": 13048115577,
+      "name": "cross-engine-gates-72958374c7a240ad981fcac89648b7409af834c7-3",
+      "digest": "sha256:83d9ce89bbf6140b37fef65a65cda2ff0a9d1cfa3c9953d6e3638eb58a7900b9"
+    },
+    {
+      "id": 13048110185,
+      "name": "cross-engine-gates-72958374c7a240ad981fcac89648b7409af834c7-2",
+      "digest": "sha256:36eda7f44dc3e3e72f5b59286db519cf9a4f046416f2e12b044ee4df519a4a40"
+    },
+    {
+      "id": 13048000312,
+      "name": "cross-engine-gates-72958374c7a240ad981fcac89648b7409af834c7-1",
+      "digest": "sha256:8ca46a0c347c922b8655604f0804f59c6e1bd6285cfd92f7d386ceda212575a7"
+    }
+  ]
+}
