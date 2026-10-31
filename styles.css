@@ -1821,6 +1821,13 @@
 @media(prefers-reduced-motion:reduce){.hero-valuation-link svg{transition:none}}
 /* Keep the complete amount visible even when a category tile is very narrow. */
 #dashboardPage .stat-value{overflow-wrap:anywhere}
-/* Preserve provider text clearance after the shared More disclosure styles. */
+
+.booking-transfer-actions{padding:12px 0 4px;min-width:0}
+.booking-transfer-actions .btn{min-height:44px;max-width:100%;white-space:normal}
+.transfer-counterparts{padding-left:20px;overflow-wrap:anywhere;font-size:14px;line-height:1.6}
+.transfer-booking-context{overflow-wrap:anywhere;font-weight:600}
+#bookingListHead{flex-wrap:wrap}
+#bookingListHead h3{margin-right:auto}
+/* Inherited v239 account touch/clearance correction. */
 #morePage .provider-settings-group>summary{display:grid;padding-right:124px;min-height:48px}
 #morePage .account-evidence>summary,#morePage .account-evidence .btn{min-width:48px;min-height:48px}
