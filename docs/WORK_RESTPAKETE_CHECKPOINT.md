@@ -1,3 +1,17 @@
+## PERF01: belegte Parseroptimierung als kumulativer Kandidat #241 · 31.10.2026
+
+Owner ChatGPT Work. [PR #241](https://github.com/joke0071/foliolab-open/pull/241), Branch `perf/bounded-decimal-parsing`, HEAD `6baa5bc478b00a7dc77cbc3a4b1c21841234f0e4`, SW234 ausschließlich Kandidat, **PARTIAL / CI_PENDING**. Enthält #240-HEAD1c900a78bd7ead4c74c5de28ab3675ec4a872b29 und #239 unverändert. Keine parallele Neuimplementierung oder Änderung dieser Vorläufer.
+
+Identischer #240-Runtime-Dateibaum im direkten A/B-Test, allein src/decimal.js unterschiedlich (SHA256 nachgewiesen), gleiche SW233 während beider Messungen. 19gemischtePositionen/10000Buchungen+Journal/1825Referenzen/CPU4x/je3Proben: Kaltmedian7479,9→5129ms (−31,43%), Warm7468,2→5041,4ms (−32,50%), Buchungsnavigation1351→917ms (−32,12%). Vollständiger IDB-Record/Revision vor/nach Start/Navigation unverändert. Keine Android-Hardware-/Gesamtportfolio-Garantie und keine Verrechnung mit dem früheren49,44%-Gewinn.
+
+Reine erfolgreiche Dezimal-Parsergebnisse in begrenztem128-Eingaben-Speicher; unveränderlicheBigInts, höchstens80Zeichen, Fehler/Objekte nicht gespeichert. Journalprüfung weiterhin vollständig jeEintrag; kein Modell-/Freigabe-/IDB-/CAS-/Schema-/Backupcache. Lokal991/991Unit+SyntaxPASS,25.000unabhängigeParsevergleiche inkl.Vorzeichen/18Stellen/Exponenten/Komma/Fehler/Objekt-/BigInt-Grenzen. Vollständige CI am exaktenHEAD weiterhin erforderlich. [Messbeleg und Grenzen](https://github.com/joke0071/foliolab-open/blob/perf/bounded-decimal-parsing/docs/PERF01_DECIMAL_PARSING_2026-10-31.md).
+
+**Nur ein gemeinsamer Release nach konkreter Freigabe:** Wenn #241 vollständig abgenommen, kann sein Dateibaum #239+#240+#241 gemeinsam alsSW234 übernehmen; Vorläufer nicht zusätzlich einzeln veröffentlichen. Bis dahin v231 unverändert LIVE_ACCEPTED. #239 bereits CI_ACCEPTED, #240 weiterlaufend. Keine Pipeline abgebrochen, kein Merge/Deploy, historischeDocsbranch nie vollständig nachmain.
+
+PERF01 bleibt PARTIAL: echteAndroid-/Speicherbedingungen, großeWallet-Historien und weitereLongTasksOPEN/EXTERNAL. ÜbrigeMasterfachpakete bleiben erhalten; nurFLH05/FLH-PROJ01PARKED, Zusatzbudget0€.
+
+---
+
 ## #239 CI_ACCEPTED; PERF01-Mischdatenmessung vollständig gesichert · 31.10.2026
 
 #239 unveränderter HEAD `1d57804fc565e3665b65a088f4a31895048b468f`: Run41180221423 vollständig SUCCESS, test und alle3Cross-Engine-Pakete SUCCESS, Wallet41180221429 SUCCESS. Deploy/live bei PR korrekt SKIPPED. Eigener Download/CRC und SHA256 `fa311be1ef698c5c70ef031b26467e181f0ace4650e0b39e41f0194bf437d447` von Cross-Artefakt13033854963 geprüft; readability/report.json Firefox+WebKit PASS/0Fehler. Echte neue390px-Firefox-/WebKit-Bilder visuell kontrolliert: Titel/Werte/Dezimalmengen/Transfertexte lesbar. Kein Merge/Deployment. #240 kumulativer Kandidat weiter CI_PENDING.
