@@ -1729,3 +1729,13 @@
  #bookingList .booking-main>.booking-origin{grid-column:1/-1;grid-row:5}
 }
 @media(max-width:720px){.mobile-nav button{white-space:nowrap}}
+
+/* UI-POS02: archive visibility is available before entering selection mode. */
+#positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,2fr) minmax(170px,1fr) minmax(110px,.7fr)}
+@media(max-width:1100px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,1.5fr) minmax(110px,1fr)}
+ #positionsPage .position-search-tools:has(#positionArchiveFilter)>:first-child{grid-column:1/-1}
+}
+@media(max-width:359px){
+ #positionsPage .position-search-tools:has(#positionArchiveFilter){grid-template-columns:minmax(0,1fr)}
+}

@@ -79,3 +79,13 @@ test('archiving preserves excluded representations and liabilities without doubl
  for(const p of m.positions)setPositionArchived(m,p.id,false);
  assert.equal(JSON.stringify(m),before);
 });
+
+test('explicit active/archived/all views partition identities without modifying the portfolio',()=>{
+ const m=fixture();setPositionArchived(m,m.positions[0].id,true);const before=JSON.stringify(m),historyPrototype=Object.getPrototypeOf(m.priceHistories);
+ assert.deepEqual(positionListScope(m.positions,{view:'active'}).map(p=>p.id),[m.positions[1].id]);
+ assert.deepEqual(positionListScope(m.positions,{view:'archived'}).map(p=>p.id),[m.positions[0].id]);
+ assert.deepEqual(positionListScope(m.positions,{view:'all'}),m.positions);
+ assert.deepEqual(positionListScope(m.positions,{view:'active',includeArchived:true}).map(p=>p.id),[m.positions[1].id]);
+ assert.throws(()=>positionListScope(m.positions,{view:'unknown'}),/Positionsansicht/);
+ assert.equal(JSON.stringify(m),before);assert.equal(Object.getPrototypeOf(m.priceHistories),historyPrototype);
+});
