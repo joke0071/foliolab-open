@@ -1,0 +1,64 @@
+{
+  "version": "v239",
+  "status": "MERGED",
+  "productionAcceptance": "PENDING",
+  "owner": "Codex Work",
+  "pr": 247,
+  "prHead": "547adba5d50dda817efe7db83584069c04d692dc",
+  "ciRun": 41205199282,
+  "walletRun": 41205199466,
+  "ci": "SUCCESS",
+  "unit": {
+    "tests": 1012,
+    "pass": 1012,
+    "fail": 0,
+    "skip": 0
+  },
+  "engines": [
+    "Chromium",
+    "Firefox",
+    "WebKit"
+  ],
+  "testedMerge": "8cd450df653007a541762b4e734ca5f332799a6b",
+  "testedTree": "d08ec0cb1f89b9e726d3d41cfa393a933a4bceb1",
+  "actualMain": "4c575f2b1a4bc4b5b268b87ed596697e6b1ae7cc",
+  "actualMainTree": "d08ec0cb1f89b9e726d3d41cfa393a933a4bceb1",
+  "treeVerifiedEqual": true,
+  "productionRun": 41206507500,
+  "confirmedFallback": "v238 / 1adf2a817bc7784e05e3c5a90b89adfa15452a8a",
+  "artifacts": [
+    {
+      "id": 13044650319,
+      "name": "cross-engine-gates-8cd450df653007a541762b4e734ca5f332799a6b-1",
+      "digest": "sha256:90c3fa832b66287968177a771b8ae0156fea91bbc5fc894866230ed5dde9c57c",
+      "independentlyDownloaded": true,
+      "zipCRC": "PASS",
+      "digestMatch": "PASS"
+    },
+    {
+      "id": 13044054528,
+      "name": "cross-engine-gates-8cd450df653007a541762b4e734ca5f332799a6b-2",
+      "digest": "sha256:447e62e8246f3f63a63ceb1c0d747f8e6298b24474b32d1b793d3919b4bafc00",
+      "independentlyDownloaded": true,
+      "zipCRC": "PASS",
+      "digestMatch": "PASS"
+    },
+    {
+      "id": 13043858618,
+      "name": "cross-engine-gates-8cd450df653007a541762b4e734ca5f332799a6b-3",
+      "digest": "sha256:5216d224dff9aa04bc0a695ac5d7c409cb4b304da185677b3fc2c23bbed7f97e",
+      "independentlyDownloaded": true,
+      "zipCRC": "PASS",
+      "digestMatch": "PASS"
+    }
+  ],
+  "visual": [
+    "actual local320/360/390/412/430 and desktop reviewed",
+    "actual CI Firefox360 and WebKit412 reviewed",
+    "all native CI hero/review width screenshots archived"
+  ],
+  "limits": [
+    "No physical Android/Safari/TalkBack/OAuth acceptance",
+    "No LIVE_ACCEPTED before completed actual production proof"
+  ]
+}
