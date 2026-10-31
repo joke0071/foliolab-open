@@ -1,3 +1,13 @@
+## v245 – DEPLOYED, direkte Produktionsprüfung erfolgreich · 31.10.2026
+
+Owner: aktueller Work-Chat /root. Main `621abf1556b0be87d485fd43943cf521dfc965fb`, SW `foliolab-open-v245`. Main-Unit-/Syntax-/Chromium-/Firefox-/WebKit-Gates und Deployment erfolgreich im Lauf 41223848231. Reguläre Live-Abnahme läuft noch; **noch kein LIVE_ACCEPTED**.
+
+Produktionsartefakt 13051661700: SHA256 `7ec22ccf2693e93b3bc16a482366cbec1341d1af9218ef99508a6727c522f8a3`, ZIP-CRC erfolgreich; exakte Menge aller 121 eindeutigen Dateien und sämtliche Bytes stimmen mit Main und Manifest überein. Unabhängig direkt geladen: alle 121 Dateien plus Root-Alias (122 URLs), sämtliche Hashes passend. Die Root-/index.html-Aliase erklären die URL-/Dateizahldifferenz.
+
+Neue Rücknahme zusätzlich direkt auf https://foliolab.unperfekt.at/ geprüft: Chromium bei 320/360/390/412/430/1440px, Axe, bestätigte wirtschaftliche Rücknahme mit persistiertem Audit v2, vollständiger verschlüsselter Restore über beide bestehenden Backupformate und exaktes Undo bestanden. Alle sechs Produktionsbreiten visuell geprüft; ausschließlich synthetische Daten. Screenshots und reproduzierbarer Prüfcode/Evidenz unter docs/review-evidence/2026-10-31/v245-production-import-removal-* und docs/release-evidence/v245-*.
+
+Nächster Schritt: vollständige reguläre Produktionsabnahme einschließlich Firefox/WebKit im laufenden Main-Workflow auswerten; danach LIVE_ACCEPTED dokumentieren. Rückfallbasis unverändert v242. DELETE-MASTER28 bleibt PARTIAL; keine Freigabe der ausgenommenen komplexen Importfälle oder echter Hardware-/OAuth-Szenarien.
+
 ## v245 / PR #251 – MERGED, Produktionsabnahme ausstehend · 31.10.2026
 
 Owner: aktueller Work-Chat /root. PR #251 mit exakt geprüftem HEAD `5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67` gemergt. Main `621abf1556b0be87d485fd43943cf521dfc965fb`; Tree `f067f8f11a698dee953053dcc55a63260fc5faa1` identisch mit geprüftem Merge `f7332b2e17bc08968bd4112a45c1dc1b0b3d4dff`.

@@ -1,0 +1,89 @@
+{
+  "status": "DEPLOYED",
+  "liveAcceptance": "PENDING_PIPELINE_COMPLETION",
+  "main": "621abf1556b0be87d485fd43943cf521dfc965fb",
+  "head": "5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67",
+  "sw": "foliolab-open-v245",
+  "releaseRun": 41223848231,
+  "productionArtifact": {
+    "id": 13051661700,
+    "sha256": "7ec22ccf2693e93b3bc16a482366cbec1341d1af9218ef99508a6727c522f8a3",
+    "crc": "PASS",
+    "all121FilesMatchMainAndManifest": true
+  },
+  "direct": {
+    "files": 121,
+    "rootAlias": true,
+    "urls": 122,
+    "allMatch": true
+  },
+  "feature": {
+    "base": "https://foliolab.unperfekt.at/",
+    "engine": "chromium",
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      1440
+    ],
+    "axe": "PASS",
+    "persistedRemoval": "PASS",
+    "exactUndo": "PASS",
+    "completeEncryptedBackupRestoreV1": "PASS",
+    "completeEncryptedBackupRestoreV2": "PASS",
+    "auditVersion": 2,
+    "errors": [],
+    "syntheticOnly": true,
+    "proxyCertificateException": true,
+    "transportNote": "Local browser uses the existing HTTPS inspection proxy setup; certificate acceptance is not an SSL audit. Independent direct byte check uses normal TLS validation."
+  },
+  "visualReview": {
+    "localAllSixWidths": true,
+    "productionAllSixWidths": true,
+    "prCrossEngine": [
+      "firefox320",
+      "webkit390",
+      "webkit1440"
+    ]
+  },
+  "screenshots": [
+    {
+      "width": 320,
+      "blob": "94f01ec9bcad7ce5380e7169b3d90ab8bcc9a4bb",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-320.png"
+    },
+    {
+      "width": 360,
+      "blob": "eab3a090317447c4acce5bef5e1a8756c4ebb1f0",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-360.png"
+    },
+    {
+      "width": 390,
+      "blob": "192704912aabca544610af986bcf541bd0b92b15",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-390.png"
+    },
+    {
+      "width": 412,
+      "blob": "63746168db9e16e66f4306f605a34b69000c4b7c",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-412.png"
+    },
+    {
+      "width": 430,
+      "blob": "e98e89359f82b8361db11873cb0e2b7c8d9eaa04",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-430.png"
+    },
+    {
+      "width": 1440,
+      "blob": "e3bdf38de75632465624297508f7830e8a396ca9",
+      "path": "docs/review-evidence/2026-10-31/v245-production-import-removal-1440.png"
+    }
+  ],
+  "externalOpen": [
+    "Android hardware",
+    "native Safari",
+    "TalkBack",
+    "real Google OAuth"
+  ]
+}
