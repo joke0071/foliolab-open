@@ -1,3 +1,9 @@
+## Neue verbindliche Releaseautorisierung · 31.10.2026
+
+Die Wochenend-/Praxistest-Releasebeschränkungen sind durch ausdrückliche neue Nutzerentscheidung vollständig aufgehoben. Geprüfte konfliktfreie PRs für routinemäßige UI-/UX-, Performance- und Fehlerkorrekturen selbstständig mergen und veröffentlichen, zusammengehörige Änderungen sinnvoll bündeln. Bestehende CI-/Finanz-/Speicher-/Backup-/Sicherheitsgates beibehalten; jeden Release tatsächlich produktiv abnehmen und im zentralen Checkpoint sichern. Nur bei wesentlichen, nicht ausreichend abgesicherten Finanz-/Daten-/Sicherheitsrisiken konkrete Freigabe einholen. #241/v234 ist ausdrücklich autorisiert; nach dessen Live-Abnahme nächste priorisierte Restpakete fortsetzen. Alle widersprechenden älteren Freigabesätze unten sind historisch. Nur FLH05 und FLH-PROJ01 PARKED; Zusatzbudget0€. Historischen Dokumentationsbranch nicht vollständig nach main mergen.
+
+---
+
 ## Verbindlicher Abschluss dieses Abschnitts: v231 LIVE, gemeinsamer Kandidat #241 CI_ACCEPTED · 31.10.2026
 
 **Owner: ChatGPT Work. Produktion und akzeptierte Rückfallbasis bleiben v231. Kein Merge und kein Deployment durchgeführt.**
