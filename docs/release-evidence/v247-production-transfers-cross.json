@@ -1,0 +1,140 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "scope": "C1 transfer choice and empty states; financial matching unchanged",
+  "engines": [
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "scans": [
+        {
+          "label": "no cash account",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 1440,
+          "height": 560
+        }
+      ],
+      "checks": [
+        "integrated booking row contexts/filter/search/counterparts/explicit proof/CAS/Undo/6 widths",
+        "compact no-cash/no-outgoing and short heights",
+        "correct existing wizard/booking entry without nested modals and zero writes",
+        "same-currency/other-account/seven-day choices",
+        "confirmed group/Undo retained",
+        "no automatic amount pairing",
+        "unchanged split proof/reference/consent",
+        "Recovery shortcut disabled and programmatic bypass denied",
+        "exact records unchanged"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "scans": [
+        {
+          "label": "no cash account",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "label": "no cash account",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "label": "cash without outgoing",
+          "width": 1440,
+          "height": 560
+        }
+      ],
+      "checks": [
+        "integrated booking row contexts/filter/search/counterparts/explicit proof/CAS/Undo/6 widths",
+        "compact no-cash/no-outgoing and short heights",
+        "correct existing wizard/booking entry without nested modals and zero writes",
+        "same-currency/other-account/seven-day choices",
+        "confirmed group/Undo retained",
+        "no automatic amount pairing",
+        "unchanged split proof/reference/consent",
+        "Recovery shortcut disabled and programmatic bypass denied",
+        "exact records unchanged"
+      ]
+    }
+  ]
+}

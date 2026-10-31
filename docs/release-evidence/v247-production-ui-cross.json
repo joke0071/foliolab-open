@@ -1,0 +1,412 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "scope": "presentation only: actions/spacing/liquidity/history/income/coverage",
+  "engines": [
+    {
+      "engine": "firefox",
+      "status": "PASS",
+      "scans": [
+        {
+          "page": "dashboard",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "structured-quality",
+          "width": 320,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 360,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 390,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 412,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 430,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 320,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 360,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 390,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 412,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 430,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 1440,
+          "height": 900
+        }
+      ],
+      "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+      "checks": [
+        "delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress",
+        "all five pages",
+        "archive visible without detail disclosure",
+        "44px actions,separator and focus clearance,no overlaps",
+        "liquidity below providers and closed",
+        "mobile labeled history records/desktop table",
+        "focused exact decimal disclosure",
+        "Escape/focus return",
+        "zero exact IndexedDB record mutations"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "status": "PASS",
+      "scans": [
+        {
+          "page": "dashboard",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 320,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 390,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 430,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 768,
+          "height": 560
+        },
+        {
+          "page": "dashboard",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "history",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "positions",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "bookings",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "more",
+          "width": 1440,
+          "height": 560
+        },
+        {
+          "page": "structured-quality",
+          "width": 320,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 360,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 390,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 412,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 430,
+          "height": 900
+        },
+        {
+          "page": "structured-quality",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 320,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 360,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 390,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 412,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 430,
+          "height": 900
+        },
+        {
+          "page": "locale-display",
+          "width": 1440,
+          "height": 900
+        }
+      ],
+      "textScale": "synthetic 150% computed-text stress,320x360; not physical Android",
+      "checks": [
+        "delivered hero disclosure/dedicated quality review/6 widths/archived scopes/no writes/offline/real editor progress",
+        "all five pages",
+        "archive visible without detail disclosure",
+        "44px actions,separator and focus clearance,no overlaps",
+        "liquidity below providers and closed",
+        "mobile labeled history records/desktop table",
+        "focused exact decimal disclosure",
+        "Escape/focus return",
+        "zero exact IndexedDB record mutations"
+      ]
+    }
+  ]
+}

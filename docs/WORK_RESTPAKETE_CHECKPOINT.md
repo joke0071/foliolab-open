@@ -19,6 +19,18 @@
 
 ---
 
+## v247 / PERF01 – LIVE_ACCEPTED · bestätigte Produktion 31.10.2026
+
+Dieser neue Nachweis übersteuert alle älteren Pending-/v246-WIP-Zeilen. Owner: aktueller Work-Chat /root.
+
+- PR #253, geprüfter HEAD `1f2b60b77f347ec6476e32b6a64a0fb2c08e3357`; Main `b7f8779dba49e16c572fe5430bd282b85e5f9ddb`, Merge-Tree `921cb8976985abbd0505486e1ac7d6778b64b8d7`, SW `foliolab-open-v247`.
+- Main-Release [41231426767](https://github.com/joke0071/foliolab-open/actions/runs/41231426767) **completed / success**: 1034 Unit-/Integrationstests, Syntax, Chromium und alle Firefox-/WebKit-Gates, Deploy und vollständige tatsächliche Live-Acceptance SUCCESS. Produktive Kernprüfung 6 Gruppen, 18 Axe-Scans, 122 exakte URL-Hashes, keine Laufzeitfehler; produktive UI-/Transfer-/Offline-/Finanz-/CAS-/Undo-Gates in drei Engines PASS.
+- Statisches Artefakt **13053843767**, SHA256 `61b834375e17a5bc7e0c14347fbb1a0b1cc3994dc97665d9b1ec58fae2cf744d`: ZIP-CRC, exakter SW-Manifestumfang und sämtliche 121 eindeutigen Dateien gegen Git PASS. Zusätzlich alle 121 direkt von Produktion abgerufenen Dateien bytegleich mit Main. Live-Artefakt **13055011057**, SHA256 `94cdeb1986406fdcdb78f313b140166837484857d36681630671c6f8ced8ea6f`: ZIP-CRC und enthaltene Kern-/Firefox-/WebKit-Berichte unabhängig geprüft.
+- Zusätzliche tatsächliche Produktionsprüfung: belegte importierte Geldbuchung löschen/vollständiger verschlüsselter Backup-Restore v1+v2/exakte persistierte Rücknahme und Undo/Axe PASS. Visuelle Screenshots tatsächlich bei **320, 360, 390, 412, 430 und 1440 px** geprüft und gespeichert. Lokale Zusatzprobe verwendet Transport-Proxy-Zertifikatsausnahme; direkte Hashabfrage und CI-Live-Kernprüfung ohne diese Ausnahme. Keine Android-/native Safari-/OAuth-/TalkBack-Abnahme behauptet.
+- Qualifizierter Performancevergleich innerhalb beider verschlüsselten Backupgrenzen: Lauf **41232799162 SUCCESS**, Artefakt 13053974581/SHA256 `afea7dfd1cec60a14db36a9904640147f23dcd8cfb7a5b48c9e69b6cb7384095`. 3.000 Buchungen/19 Positionen/1.825 Stichtage; gleicher Runner, ABBA/zehn Läufe je Variante, steuernder SW, exakte Seeds/Finanzwerte/Historien/Records, beide verschlüsselten vollständigen Restores PASS. Kalt **2092,05→1811,35 ms (−13,42 %)**, warm **−10,28 %**, offline **−14,29 %**. Reproduktionsskripte/Rohwerte/komprimierte synthetische Seeds dauerhaft in `docs/perf-evidence/2026-10-31/perf247/supported/`. 10.000er-Messung getrennt nur Stressfall außerhalb der verschlüsselten Backupgrenzen. Keine Addition zu früheren Releases; #177 bleibt PARTIAL und echte Hardwareprüfung offen.
+- Aktuelle sichere Release-/Rückfallbasis **v247**; vorherige ebenfalls Audit-v2-kompatible Basis **v245**. Kein Daten-/Schemaschritt durch diesen Performancepatch. Ältere Reader vor v245 dürfen Audit-v2-Portfolios nicht ungeprüft übernehmen.
+- Nächster ausführbarer Schritt: **PR #258 / P1-Aggregate IN_PROGRESS**, HEAD `251758cf508168d9ab93c0bbc96a97009bba648d`, CI 41233499619 läuft, Wallet 41233499513 SUCCESS. 1036 lokale Tests/Syntax/Chromium/Axe/exakte Datensätze PASS. Erst nach vollständigen exakten HEAD-Gates mergen und v248 gesondert produktiv abnehmen. Keine parallele zweite Umsetzung. FLH05/#174 und FLH-PROJ01/#252 bleiben ACTIVE.
+
 ## P1 unbewertete Aggregate – IN_PROGRESS · PR #258 · v247 Live-Abnahme ausstehend
 
 Owner: aktueller Work-Chat /root; ausschließlich Branch `feature/ui-known-valuation-totals`, HEAD `251758cf508168d9ab93c0bbc96a97009bba648d`, [PR #258](https://github.com/joke0071/foliolab-open/pull/258). Main unverändert `b7f8779dba49e16c572fe5430bd282b85e5f9ddb`; keine zweite Implementierung dieses Pakets beginnen.
