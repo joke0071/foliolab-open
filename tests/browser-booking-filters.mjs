@@ -26,8 +26,8 @@ try{
  assert.equal(await page.locator('#bookingList .history-row').count(),2);
  await page.locator('#bookingFilterType').selectOption('buy');
  assert.equal(await page.locator('#bookingList .history-row').count(),1);
- assert.equal(await page.locator('#bookingList details').evaluate(el=>el.open),false);
- await page.locator('#bookingList summary').click();
+ assert.equal(await page.locator('#bookingList .booking-meta').evaluate(el=>el.open),false);
+ await page.locator('#bookingList .booking-meta>summary').click();
  assert.match(await page.locator('#bookingList').innerText(),/Brokerausführung/);
  await page.locator('#bookingSearch').fill('nomatch');
  assert.match(await page.locator('#bookingList').innerText(),/Keine Buchungen/);

@@ -78,13 +78,13 @@ function referenceReasons(model,b,e){
  if(references(rest,targets))reasons.push('Weitere gespeicherte Referenzen verhindern eine isolierte Änderung.');
  return reasons;
 }
-function eligibility(model,b,action,{checkReferences=true}={}){
- const e=model.journalEntries.find(e=>e.id===b?.journalEntryId),p=model.positions.find(p=>p.id===b?.positionId),reasons=[];
+function eligibility(model,b,action,{checkReferences=true,index=null}={}){
+ const e=index?index.journals.get(b?.journalEntryId):model.journalEntries.find(e=>e.id===b?.journalEntryId),p=index?index.positions.get(b?.positionId):model.positions.find(p=>p.id===b?.positionId),reasons=[];
  if(!b||!e||!p)return ['Buchung, Journal oder Position fehlen.'];
  if(e.source!=='manual'||b.importSource||b.importFingerprint)reasons.push('Importierte oder unbekannte Herkunft: den beleggebundenen Import-/Undo-Weg verwenden.');
  if(b.transferMatch||b.targetPositionId||e.status==='matched-internal-transfer'||['transfer','swap','merger'].includes(b.type))reasons.push('Verknüpfter Vorgang: Gegenbuchungen müssen gemeinsam fachlich geprüft werden.');
  if(p.wallet?.enabled||p.wallet?.address||p.wallet?.xpub)reasons.push('Wallet-/Blockchain-Ereignisse sind hier gesperrt.');
- if(model.bookings.filter(x=>x.journalEntryId===e.id).length!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
+ if((index?(index.journalCounts.get(e.id)||0):model.bookings.filter(x=>x.journalEntryId===e.id).length)!==1||e.type!==b.type||e.date!==b.date)reasons.push('Buchungs-/Journalzuordnung ist nicht eindeutig.');
  if(p.representedByPositionId||(p.economicRole&&p.economicRole!=='standard')||(p.valuationMode&&p.valuationMode!=='included'))reasons.push('Wirtschaftlich zugeordnete Position: gemeinsame Auswirkungen ungeklärt.');
  if(checkReferences)reasons.push(...referenceReasons(model,b,e));
  else if(Object.keys(b).some(k=>!bookingKeys.has(k))||Object.keys(e).some(k=>!journalKeys.has(k))||e.postings.some(p=>Object.keys(p).some(k=>!postingKeys.has(k))))reasons.push('Unbekannte Buchungs- oder Journalfelder: Referenzkette zuerst klären.');
@@ -102,7 +102,7 @@ function eligibility(model,b,action,{checkReferences=true}={}){
    own[0].accountId!==p.accountId||b.accountId!==p.accountId||own[0].quantityDeltaExact==null||
    units(own[0].quantityDeltaExact)!==sign*q||units(own[0].amountBookEURExact)!==sign*q||units(other[0].amountBookEURExact)!==-sign*q||other[0].quantityDeltaExact!=null||other[0].accountId!=null)
     reasons.push('Mengen, EUR-Beträge oder Kontobelege widersprechen dem Geldvorgang.');
-  const flows=model.externalCashFlows.filter(f=>f.id===b.id);
+  const flows=index?(index.flows.get(b.id)||[]):model.externalCashFlows.filter(f=>f.id===b.id);
   if(['deposit','withdraw'].includes(b.type)?flows.length!==1||units(flows[0].amountExactEUR)!==sign*q||units(flows[0].amountEUR)!==sign*q||flows[0].date!==b.date:flows.length!==0)
     reasons.push('Externer Kapitalfluss ist nicht eindeutig belegt.');
  }catch{reasons.push('Exakte Mengen- oder Journalnachweise sind ungültig.');}
@@ -205,4 +205,15 @@ export function prepareBookingArchive(model,{ids,archived},{expectedModel,confir
 export function bookingRowActionReasons(model,id){
  const b=model.bookings.find(b=>b.id===id);
  return {notes:eligibility(model,b,'notes',{checkReferences:false}),remove:eligibility(model,b,'remove',{checkReferences:false})};
+}
+
+/** One synchronous read-only row review. Indices never escape this call or grant
+ * economic permissions; all action previews retain their fresh full checks. */
+export function bookingRowsActionReasons(model,ids){
+ if(!ids.length)return new Map();
+ const first=(items,key)=>{const map=new Map();for(const item of items)if(!map.has(item[key]))map.set(item[key],item);return map;};
+ const bookings=first(model.bookings,'id'),index={journals:first(model.journalEntries,'id'),positions:first(model.positions,'id'),journalCounts:new Map(),flows:new Map()};
+ for(const b of model.bookings)index.journalCounts.set(b.journalEntryId,(index.journalCounts.get(b.journalEntryId)||0)+1);
+ for(const flow of model.externalCashFlows){if(!index.flows.has(flow.id))index.flows.set(flow.id,[]);index.flows.get(flow.id).push(flow);}
+ return new Map(ids.map(id=>{const b=bookings.get(id);return [id,{notes:eligibility(model,b,'notes',{checkReferences:false,index}),remove:eligibility(model,b,'remove',{checkReferences:false,index})}];}));
 }

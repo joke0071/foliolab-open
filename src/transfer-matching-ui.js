@@ -1,3 +1,4 @@
+import {calendarDateLabel,exactQuantityLabel} from './format.js';
 import {previewTransferMatch,confirmTransferMatch,undoTransferMatch} from './transactions.js';
 import {escapeHTML as esc} from './model.js';
 /** UI choices only; previewTransferMatch remains the sole financial proof gate. */
@@ -14,7 +15,7 @@ export function transferDialogChoices(model,outgoingId='',incomingId=''){
 export function createTransferMatchingUI({getModel,assertCurrent,commit,onCreate,canCreate=()=>true,restoreFocus=button=>button?.focus()}){
  let dialog,trigger,preview=null,running=false,incomingLimit=200,anchorIncomingId='',contextMatchId='';
  const el=k=>dialog.querySelector('[data-transfer="'+k+'"]');
- function label(b){const m=getModel(),p=m.positions.find(p=>p.id===b.positionId),a=m.accounts.find(a=>a.id===p?.accountId),provider=m.providers.find(x=>x.id===p?.providerId);return [b.date,provider?.name,a?.name,b.quantityExact??b.quantity,p?.currency,b.id].filter(x=>x!=null).join(' · ');}
+ function label(b){const m=getModel(),p=m.positions.find(p=>p.id===b.positionId),a=m.accounts.find(a=>a.id===p?.accountId),provider=m.providers.find(x=>x.id===p?.providerId);return [calendarDateLabel(b.date),provider?.name,a?.name,exactQuantityLabel(b.quantityExact??b.quantity),p?.currency,b.id].filter(x=>x!=null).join(' · ');}
  function selected(){return [...dialog.querySelectorAll('[data-transfer-in]:checked')].map(x=>x.value);}
  function updatePreview(){
   preview=previewTransferMatch(getModel(),el('out').value,selected());

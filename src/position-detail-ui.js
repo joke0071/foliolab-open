@@ -1,3 +1,4 @@
+import {calendarDateLabel,exactQuantityLabel} from './format.js';
 import {projectHistoricalPosition} from './historical-position-value.js';
 import {marketHistoryCapability,fetchPositionMarketHistory,availablePositionPeriods} from './position-history.js';
 import {renderChartPeriodButtons} from './chart-periods.js';
@@ -76,8 +77,8 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   dividend:'Dividende',interest:'Zinsen',reward:'Staking-Reward',airdrop:'Airdrop',
   transfer:'Transfer',adjust:'Bestandszugang',correction:'Korrektur',fee:'Gebühr',tax:'Steuer'};
  const events=timeline.events.map(e=>{
-  const date=/^\d{4}-\d{2}-\d{2}$/.test(e.date)?e.date:'Unbekanntes Datum';
-  const qty=e.quantityExact!=null?' · '+esc(e.quantityExact)+' '+esc(p.symbol||'Stk.'):'';
+  const date=/^\d{4}-\d{2}-\d{2}$/.test(e.date)?calendarDateLabel(e.date):'Unbekanntes Datum';
+  const qty=e.quantityExact!=null?' · '+esc(exactQuantityLabel(e.quantityExact))+' '+esc(p.symbol||'Stk.'):'';
   const source=e.source==='csv'?' · CSV-Import':'';
   const role=e.isTarget?' · Zielposition':'';
   return '<div class="history-row"><div><strong>'+esc(date)+' · '+esc(eventLabels[e.type]||e.type)+'</strong>'+
