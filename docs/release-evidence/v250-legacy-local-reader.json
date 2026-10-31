@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "fixture": "synthetic old v2 writer; above Drive limit, below unchanged local/cipher limits",
+  "plainChars": 6000016,
+  "plainUtf8Bytes": 12000016,
+  "cipherBytes": 12000032,
+  "fileChars": 16000332,
+  "fileBytes": 16000332,
+  "restoredExact": true,
+  "newExportRejected": true,
+  "vaultUnchanged": true,
+  "sha256": "83bc600d087b6de4f7f0326f232a0bec045d6988a4e4e78da4faa081acd9b828",
+  "candidateHead": "f630beee13c330511742fbcef01e9037a4554604",
+  "scope": "Node crypto reader compatibility only; not a full portfolio/UI/hardware restore acceptance",
+  "ciRecovery": {
+    "run": 41246798523,
+    "job": 124671835825,
+    "firefox": "PASS",
+    "webkit": "PASS",
+    "fullCI": "IN_PROGRESS"
+  }
+}
