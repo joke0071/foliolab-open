@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "cases": 240,
+  "baseline": "621abf1556b0be87d485fd43943cf521dfc965fb",
+  "candidate": "b7f8779dba49e16c572fe5430bd282b85e5f9ddb",
+  "scope": "Exact full dated projection, components, unknowns, overlaps, aliases, chain/account scope, changing dated quantities, known zero, observations and reconciliation; model unchanged before/after each call",
+  "digest": "9b9bb79ad2d77bf11d475c3eeb1afa11a57929552bb5e06a68a55566d166a412",
+  "syntheticOnly": true
+}

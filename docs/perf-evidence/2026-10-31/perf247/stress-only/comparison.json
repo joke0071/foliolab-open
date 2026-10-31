@@ -1,0 +1,934 @@
+{
+  "status": "MEASURED_VALID_SYNTHETIC_DATA",
+  "base": "621abf1556b0be87d485fd43943cf521dfc965fb",
+  "candidate": "1f2b60b77f347ec6476e32b6a64a0fb2c08e3357",
+  "order": [
+    "A1",
+    "B1",
+    "B2",
+    "A2"
+  ],
+  "runsPerPass": 5,
+  "runsPerVariantAndScenario": 10,
+  "runner": "ubuntu-24.04",
+  "host": {
+    "cpuModel": "AMD EPYC 9V45 96-Core Processor",
+    "cpuCount": 4,
+    "totalMemory": 16760340480
+  },
+  "node": "v22.23.4",
+  "playwright": "1.56.1",
+  "chromium": "141.0.7390.37",
+  "scriptSha256": "a2b847bfc2bb5ec317e690944c04d1e7bb1f23e6c3ab57bc0ac1bb11730c61e1",
+  "workerHelperSha256": "4ac3233bd65bb2cd7d3ad26273733c0c3db759cd7edefeac39664fc67c6cf5fb",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "cpuRate": 4,
+  "comparisons": [
+    {
+      "positions": 3,
+      "bookings": 0,
+      "journalEntries": 0,
+      "references": 30,
+      "bytes": 9520,
+      "seedSha256": "00177f9ea90b61b443504ddddec9097a6ff0bbfa1f870a4e030254c42c4e355d",
+      "canonicalRawSha256": "66e431dabd316528cb0d1ebf11ed1a3637b7c7d5f3d2fe2791ea8373a4356cae",
+      "historicalSha256": "311a0147e9fd4285808703197ce54db3d9d8db2b2c1f223cf1088184599ef13d",
+      "totalExactEUR": "2010",
+      "dashboardLabel": "€ 2.010,00",
+      "startup": {
+        "cold": {
+          "passMedians": {
+            "A1": 454.6000000000058,
+            "B1": 447.80000000001746,
+            "B2": 457.1000000000058,
+            "A2": 444.5
+          },
+          "baselineMeanOfMedians": 449.5500000000029,
+          "candidateMeanOfMedians": 452.45000000001164,
+          "deltaMs": 2.900000000008731,
+          "changePercent": 0.6450895339803697,
+          "baselineSpread": {
+            "count": 10,
+            "min": 435.3999999999651,
+            "median": 447.3000000000102,
+            "max": 503.8999999999942,
+            "p25": 440.5249999999978,
+            "p75": 454.9749999999949,
+            "sampleSD": 21.277899332407053
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 430.19999999998254,
+            "median": 452.45000000001164,
+            "max": 509.79999999998836,
+            "p25": 439.59999999999127,
+            "p75": 466.5500000000029,
+            "sampleSD": 24.007776517897828
+          }
+        },
+        "warm": {
+          "passMedians": {
+            "A1": 249,
+            "B1": 182.60000000000582,
+            "B2": 166.20000000001164,
+            "A2": 182.20000000001164
+          },
+          "baselineMeanOfMedians": 215.60000000000582,
+          "candidateMeanOfMedians": 174.40000000000873,
+          "deltaMs": -41.19999999999709,
+          "changePercent": -19.109461966602957,
+          "baselineSpread": {
+            "count": 10,
+            "min": 166,
+            "median": 223.90000000000146,
+            "max": 265.59999999999127,
+            "p25": 186.375,
+            "p75": 249,
+            "sampleSD": 36.667418174120385
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 166,
+            "median": 182.3000000000029,
+            "max": 182.70000000001164,
+            "p25": 169.85000000000582,
+            "p75": 182.67499999998836,
+            "sampleSD": 7.862152659697732
+          }
+        },
+        "offline": {
+          "passMedians": {
+            "A1": 254.5,
+            "B1": 173.10000000000582,
+            "B2": 172.09999999997672,
+            "A2": 171.5
+          },
+          "baselineMeanOfMedians": 213,
+          "candidateMeanOfMedians": 172.59999999999127,
+          "deltaMs": -40.40000000000873,
+          "changePercent": -18.96713615023884,
+          "baselineSpread": {
+            "count": 10,
+            "min": 170.89999999996508,
+            "median": 206.150000000016,
+            "max": 269.3000000000029,
+            "p25": 171.8000000000029,
+            "p75": 250.72500000000218,
+            "sampleSD": 40.91291021452999
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 156.20000000001164,
+            "median": 172.5,
+            "max": 238.10000000000582,
+            "p25": 171.9499999999898,
+            "p75": 182.5500000000102,
+            "sampleSD": 22.03222135368672
+          }
+        }
+      },
+      "navigation": {
+        "positions": {
+          "passMedians": {
+            "A1": 155,
+            "B1": 154,
+            "B2": 155,
+            "A2": 153
+          },
+          "baselineMeanOfMedians": 154,
+          "candidateMeanOfMedians": 154.5,
+          "deltaMs": 0.5,
+          "changePercent": 0.32467532467532756,
+          "baselineSpread": {
+            "count": 10,
+            "min": 138,
+            "median": 154,
+            "max": 156,
+            "p25": 151.5,
+            "p75": 155,
+            "sampleSD": 6.5396228229666775
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 137,
+            "median": 154.5,
+            "max": 157,
+            "p25": 154,
+            "p75": 155,
+            "sampleSD": 6.95141872010471
+          }
+        },
+        "bookings": {
+          "passMedians": {
+            "A1": 100,
+            "B1": 99,
+            "B2": 100,
+            "A2": 100
+          },
+          "baselineMeanOfMedians": 100,
+          "candidateMeanOfMedians": 99.5,
+          "deltaMs": -0.5,
+          "changePercent": -0.5000000000000004,
+          "baselineSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 101,
+            "p25": 99.25,
+            "p75": 100,
+            "sampleSD": 0.7378647873726218
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 98,
+            "median": 100,
+            "max": 118,
+            "p25": 99.25,
+            "p75": 100,
+            "sampleSD": 5.854722690083432
+          }
+        },
+        "history": {
+          "passMedians": {
+            "A1": 100,
+            "B1": 100,
+            "B2": 100,
+            "A2": 100
+          },
+          "baselineMeanOfMedians": 100,
+          "candidateMeanOfMedians": 100,
+          "deltaMs": 0,
+          "changePercent": 0,
+          "baselineSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 118,
+            "p25": 100,
+            "p75": 100,
+            "sampleSD": 5.755190893638735
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 101,
+            "p25": 100,
+            "p75": 100,
+            "sampleSD": 0.6666666666666666
+          }
+        },
+        "dashboard": {
+          "passMedians": {
+            "A1": 100,
+            "B1": 100,
+            "B2": 100,
+            "A2": 100
+          },
+          "baselineMeanOfMedians": 100,
+          "candidateMeanOfMedians": 100,
+          "deltaMs": 0,
+          "changePercent": 0,
+          "baselineSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 116,
+            "p25": 100,
+            "p75": 100,
+            "sampleSD": 5.126185499743233
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 116,
+            "p25": 100,
+            "p75": 100.75,
+            "sampleSD": 5.056349144063003
+          }
+        },
+        "more": {
+          "passMedians": {
+            "A1": 100,
+            "B1": 100,
+            "B2": 100,
+            "A2": 101
+          },
+          "baselineMeanOfMedians": 100.5,
+          "candidateMeanOfMedians": 100,
+          "deltaMs": -0.5,
+          "changePercent": -0.497512437810943,
+          "baselineSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 117,
+            "p25": 100,
+            "p75": 100.75,
+            "sampleSD": 5.370702416299421
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 99,
+            "median": 100,
+            "max": 150,
+            "p25": 100,
+            "p75": 100.75,
+            "sampleSD": 15.825436627292293
+          }
+        }
+      },
+      "longTasks": {
+        "cold": {
+          "max": {
+            "passMedians": {
+              "A1": 86,
+              "B1": 84,
+              "B2": 83,
+              "A2": 84
+            },
+            "baselineMeanOfMedians": 85,
+            "candidateMeanOfMedians": 83.5,
+            "deltaMs": -1.5,
+            "changePercent": -1.764705882352946,
+            "baselineSpread": {
+              "count": 10,
+              "min": 81,
+              "median": 84.5,
+              "max": 89,
+              "p25": 83.25,
+              "p75": 87.5,
+              "sampleSD": 2.70801280154532
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 79,
+              "median": 83.5,
+              "max": 102,
+              "p25": 82,
+              "p75": 84.75,
+              "sampleSD": 7.888106377466155
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 154,
+              "B1": 156,
+              "B2": 150,
+              "A2": 146
+            },
+            "baselineMeanOfMedians": 150,
+            "candidateMeanOfMedians": 153,
+            "deltaMs": 3,
+            "changePercent": 2.0000000000000018,
+            "baselineSpread": {
+              "count": 10,
+              "min": 143,
+              "median": 147.5,
+              "max": 210,
+              "p25": 143.75,
+              "p75": 154.75,
+              "sampleSD": 20.17726993976693
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 140,
+              "median": 151,
+              "max": 203,
+              "p25": 147.25,
+              "p75": 171.75,
+              "sampleSD": 20.817994353176505
+            }
+          }
+        },
+        "warm": {
+          "max": {
+            "passMedians": {
+              "A1": 0,
+              "B1": 0,
+              "B2": 0,
+              "A2": 0
+            },
+            "baselineMeanOfMedians": 0,
+            "candidateMeanOfMedians": 0,
+            "deltaMs": 0,
+            "changePercent": null,
+            "baselineSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 0,
+              "B1": 0,
+              "B2": 0,
+              "A2": 0
+            },
+            "baselineMeanOfMedians": 0,
+            "candidateMeanOfMedians": 0,
+            "deltaMs": 0,
+            "changePercent": null,
+            "baselineSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            }
+          }
+        },
+        "offline": {
+          "max": {
+            "passMedians": {
+              "A1": 0,
+              "B1": 0,
+              "B2": 0,
+              "A2": 0
+            },
+            "baselineMeanOfMedians": 0,
+            "candidateMeanOfMedians": 0,
+            "deltaMs": 0,
+            "changePercent": null,
+            "baselineSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 0,
+              "B1": 0,
+              "B2": 0,
+              "A2": 0
+            },
+            "baselineMeanOfMedians": 0,
+            "candidateMeanOfMedians": 0,
+            "deltaMs": 0,
+            "changePercent": null,
+            "baselineSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 0,
+              "median": 0,
+              "max": 0,
+              "p25": 0,
+              "p75": 0,
+              "sampleSD": 0
+            }
+          }
+        }
+      },
+      "compressedSeed": {
+        "file": "seed-0.json.gz",
+        "sha256": "22007d7ec6ddd7befcd283776dbd1498319f4f4f4023b9205726a222554574e9"
+      }
+    },
+    {
+      "positions": 19,
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "references": 1825,
+      "bytes": 10582038,
+      "seedSha256": "addd33fe82514bc83a7f9be9375425cc7101514a72fba69762159399aadce5da",
+      "canonicalRawSha256": "988b06c427606fe4ea310105f2c68d64cbc53eaf747a03e4cb5650e1a96fb50f",
+      "historicalSha256": "a9610ad591aba7c2e59c3d6b6fb0aca8fa35ab732764cf74858450ce331240fc",
+      "totalExactEUR": "18491.15",
+      "dashboardLabel": "€ 18.491,15",
+      "startup": {
+        "cold": {
+          "passMedians": {
+            "A1": 2584.600000000006,
+            "B1": 2012.7999999999884,
+            "B2": 2037.2999999999884,
+            "A2": 2496.7000000000116
+          },
+          "baselineMeanOfMedians": 2540.6500000000087,
+          "candidateMeanOfMedians": 2025.0499999999884,
+          "deltaMs": -515.6000000000204,
+          "changePercent": -20.294019247043813,
+          "baselineSpread": {
+            "count": 10,
+            "min": 2440.4000000000233,
+            "median": 2574.9999999999854,
+            "max": 2654.0999999999767,
+            "p25": 2507.3250000000116,
+            "p75": 2585.05000000001,
+            "sampleSD": 72.79575766025957
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 1985.5,
+            "median": 2026.3500000000058,
+            "max": 2089.600000000035,
+            "p25": 2012.0500000000102,
+            "p75": 2063.0000000000073,
+            "sampleSD": 34.82782412574252
+          }
+        },
+        "warm": {
+          "passMedians": {
+            "A1": 1166.5,
+            "B1": 934.3999999999942,
+            "B2": 923.2000000000116,
+            "A2": 1132.899999999965
+          },
+          "baselineMeanOfMedians": 1149.6999999999825,
+          "candidateMeanOfMedians": 928.8000000000029,
+          "deltaMs": -220.89999999997963,
+          "changePercent": -19.213707923804733,
+          "baselineSpread": {
+            "count": 10,
+            "min": 1072.2999999999884,
+            "median": 1137.699999999997,
+            "max": 1203,
+            "p25": 1133.2749999999724,
+            "p75": 1168.0750000000044,
+            "sampleSD": 35.771821622924556
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 867.2999999999884,
+            "median": 934.1000000000058,
+            "max": 1006.1000000000058,
+            "p25": 925.1750000000102,
+            "p75": 997.8249999999753,
+            "sampleSD": 46.25028648559549
+          }
+        },
+        "offline": {
+          "passMedians": {
+            "A1": 1143.6999999999825,
+            "B1": 934.8999999999942,
+            "B2": 917.2999999999884,
+            "A2": 1071.1999999999534
+          },
+          "baselineMeanOfMedians": 1107.449999999968,
+          "candidateMeanOfMedians": 926.0999999999913,
+          "deltaMs": -181.34999999997672,
+          "changePercent": -16.37545713124583,
+          "baselineSpread": {
+            "count": 10,
+            "min": 1058.4000000000233,
+            "median": 1097.4000000000087,
+            "max": 1282.2999999999884,
+            "p25": 1073.274999999965,
+            "p75": 1140.2249999999913,
+            "sampleSD": 79.10352991139976
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 893.1000000000349,
+            "median": 925.25,
+            "max": 1074.2000000000116,
+            "p25": 903.7499999999927,
+            "p75": 972.025000000016,
+            "sampleSD": 59.91884233416892
+          }
+        }
+      },
+      "navigation": {
+        "positions": {
+          "passMedians": {
+            "A1": 176,
+            "B1": 170,
+            "B2": 175,
+            "A2": 171
+          },
+          "baselineMeanOfMedians": 173.5,
+          "candidateMeanOfMedians": 172.5,
+          "deltaMs": -1,
+          "changePercent": -0.5763688760806907,
+          "baselineSpread": {
+            "count": 10,
+            "min": 151,
+            "median": 174,
+            "max": 190,
+            "p25": 160.5,
+            "p75": 181.25,
+            "sampleSD": 13.416821945271208
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 160,
+            "median": 172.5,
+            "max": 204,
+            "p25": 170,
+            "p75": 188.75,
+            "sampleSD": 15.358312986059955
+          }
+        },
+        "bookings": {
+          "passMedians": {
+            "A1": 383,
+            "B1": 350,
+            "B2": 349,
+            "A2": 367
+          },
+          "baselineMeanOfMedians": 375,
+          "candidateMeanOfMedians": 349.5,
+          "deltaMs": -25.5,
+          "changePercent": -6.799999999999995,
+          "baselineSpread": {
+            "count": 10,
+            "min": 333,
+            "median": 375,
+            "max": 434,
+            "p25": 367,
+            "p75": 412.75,
+            "sampleSD": 31.117876248584544
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 332,
+            "median": 349.5,
+            "max": 417,
+            "p25": 336.75,
+            "p75": 367,
+            "sampleSD": 26.787434865374227
+          }
+        },
+        "history": {
+          "passMedians": {
+            "A1": 434,
+            "B1": 417,
+            "B2": 417,
+            "A2": 416
+          },
+          "baselineMeanOfMedians": 425,
+          "candidateMeanOfMedians": 417,
+          "deltaMs": -8,
+          "changePercent": -1.8823529411764683,
+          "baselineSpread": {
+            "count": 10,
+            "min": 400,
+            "median": 425,
+            "max": 450,
+            "p25": 416,
+            "p75": 434,
+            "sampleSD": 14.391355429948602
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 417,
+            "median": 417,
+            "max": 433,
+            "p25": 417,
+            "p75": 420.25,
+            "sampleSD": 6.600505031182589
+          }
+        },
+        "dashboard": {
+          "passMedians": {
+            "A1": 367,
+            "B1": 367,
+            "B2": 367,
+            "A2": 367
+          },
+          "baselineMeanOfMedians": 367,
+          "candidateMeanOfMedians": 367,
+          "deltaMs": 0,
+          "changePercent": 0,
+          "baselineSpread": {
+            "count": 10,
+            "min": 350,
+            "median": 367,
+            "max": 384,
+            "p25": 367,
+            "p75": 382.75,
+            "sampleSD": 11.077504733066517
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 365,
+            "median": 367,
+            "max": 383,
+            "p25": 366,
+            "p75": 383,
+            "sampleSD": 8.710785141293394
+          }
+        },
+        "more": {
+          "passMedians": {
+            "A1": 133,
+            "B1": 133,
+            "B2": 133,
+            "A2": 133
+          },
+          "baselineMeanOfMedians": 133,
+          "candidateMeanOfMedians": 133,
+          "deltaMs": 0,
+          "changePercent": 0,
+          "baselineSpread": {
+            "count": 10,
+            "min": 117,
+            "median": 133,
+            "max": 166,
+            "p25": 133,
+            "p75": 134,
+            "sampleSD": 13.343329586143199
+          },
+          "candidateSpread": {
+            "count": 10,
+            "min": 133,
+            "median": 133,
+            "max": 167,
+            "p25": 133,
+            "p75": 158.75,
+            "sampleSD": 16.357465166298436
+          }
+        }
+      },
+      "longTasks": {
+        "cold": {
+          "max": {
+            "passMedians": {
+              "A1": 2100,
+              "B1": 1548,
+              "B2": 1576,
+              "A2": 2016
+            },
+            "baselineMeanOfMedians": 2058,
+            "candidateMeanOfMedians": 1562,
+            "deltaMs": -496,
+            "changePercent": -24.101068999028186,
+            "baselineSpread": {
+              "count": 10,
+              "min": 1995,
+              "median": 2096.5,
+              "max": 2216,
+              "p25": 2033,
+              "p75": 2131.25,
+              "sampleSD": 73.79430872364074
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 1516,
+              "median": 1567.5,
+              "max": 1626,
+              "p25": 1539.75,
+              "p75": 1583.5,
+              "sampleSD": 36.37825968594124
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 2315,
+              "B1": 1732,
+              "B2": 1766,
+              "A2": 2205
+            },
+            "baselineMeanOfMedians": 2260,
+            "candidateMeanOfMedians": 1749,
+            "deltaMs": -511,
+            "changePercent": -22.61061946902655,
+            "baselineSpread": {
+              "count": 10,
+              "min": 2179,
+              "median": 2303.5,
+              "max": 2410,
+              "p25": 2222,
+              "p75": 2320.25,
+              "sampleSD": 76.15488603278628
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 1707,
+              "median": 1756,
+              "max": 1813,
+              "p25": 1726.75,
+              "p75": 1772,
+              "sampleSD": 34.0295623114831
+            }
+          }
+        },
+        "warm": {
+          "max": {
+            "passMedians": {
+              "A1": 866,
+              "B1": 660,
+              "B2": 668,
+              "A2": 844
+            },
+            "baselineMeanOfMedians": 855,
+            "candidateMeanOfMedians": 664,
+            "deltaMs": -191,
+            "changePercent": -22.339181286549703,
+            "baselineSpread": {
+              "count": 10,
+              "min": 800,
+              "median": 857,
+              "max": 925,
+              "p25": 841.75,
+              "p75": 878.5,
+              "sampleSD": 35.030304340987705
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 601,
+              "median": 664,
+              "max": 693,
+              "p25": 636,
+              "p75": 679.75,
+              "sampleSD": 30.763614872118005
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 921,
+              "B1": 714,
+              "B2": 724,
+              "A2": 895
+            },
+            "baselineMeanOfMedians": 908,
+            "candidateMeanOfMedians": 719,
+            "deltaMs": -189,
+            "changePercent": -20.814977973568283,
+            "baselineSpread": {
+              "count": 10,
+              "min": 853,
+              "median": 911,
+              "max": 982,
+              "p25": 895.5,
+              "p75": 944,
+              "sampleSD": 38.66896544890862
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 653,
+              "median": 719,
+              "max": 764,
+              "p25": 691.25,
+              "p75": 753,
+              "sampleSD": 38.66149390687214
+            }
+          }
+        },
+        "offline": {
+          "max": {
+            "passMedians": {
+              "A1": 844,
+              "B1": 643,
+              "B2": 646,
+              "A2": 809
+            },
+            "baselineMeanOfMedians": 826.5,
+            "candidateMeanOfMedians": 644.5,
+            "deltaMs": -182,
+            "changePercent": -22.020568663036897,
+            "baselineSpread": {
+              "count": 10,
+              "min": 801,
+              "median": 833.5,
+              "max": 924,
+              "p25": 809.25,
+              "p75": 843.75,
+              "sampleSD": 36.54662167089533
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 617,
+              "median": 644.5,
+              "max": 753,
+              "p25": 633.5,
+              "p75": 682.25,
+              "sampleSD": 44.60455881035779
+            }
+          },
+          "total": {
+            "passMedians": {
+              "A1": 901,
+              "B1": 694,
+              "B2": 699,
+              "A2": 861
+            },
+            "baselineMeanOfMedians": 881,
+            "candidateMeanOfMedians": 696.5,
+            "deltaMs": -184.5,
+            "changePercent": -20.94211123723042,
+            "baselineSpread": {
+              "count": 10,
+              "min": 853,
+              "median": 886.5,
+              "max": 982,
+              "p25": 861.75,
+              "p75": 900.25,
+              "sampleSD": 37.9350321822279
+            },
+            "candidateSpread": {
+              "count": 10,
+              "min": 671,
+              "median": 696.5,
+              "max": 816,
+              "p25": 686.25,
+              "p75": 744,
+              "sampleSD": 48.573426662917015
+            }
+          }
+        }
+      },
+      "compressedSeed": {
+        "file": "seed-10000.json.gz",
+        "sha256": "b36386e1909fa2d10cfcdb451bf6f27ad81e2d4cc7dc2bff2764d6c1a426d278"
+      }
+    }
+  ],
+  "limitations": [
+    "Not physical Android, native Safari, native installed-PWA launch or constrained memory.",
+    "Startup measures navigation-to-validated-dashboard plus two frames; process-launch overhead excluded.",
+    "Tab navigation includes Playwright dispatch and two frames.",
+    "This is a measurement/data-integrity gate, not automatic performance or release approval.",
+    "No percentages may be added to earlier releases. Only synthetic generated portfolios; no credentials."
+  ]
+}
