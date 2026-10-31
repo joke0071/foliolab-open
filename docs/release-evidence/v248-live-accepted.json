@@ -594,6 +594,8 @@
       "width": 390,
       "height": 1315,
       "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "gitBlobSHA": "690543ced8f859647a2e0b27354eccee8bb14f26",
+      "gitReadback": "PASS: exact base64 byte match after commit",
       "visuallyReviewed": true
     },
     {
@@ -605,6 +607,8 @@
       "width": 360,
       "height": 616,
       "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "gitBlobSHA": "b2366b14918bf84bcf76f2ef586061cc40a97d78",
+      "gitReadback": "PASS: exact base64 byte match after commit",
       "visuallyReviewed": true
     },
     {
@@ -616,6 +620,8 @@
       "width": 330,
       "height": 1310,
       "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "gitBlobSHA": "ec06568a69bb2de6ab0a72ace0d9a4e434701a8c",
+      "gitReadback": "PASS: exact base64 byte match after commit",
       "visuallyReviewed": true
     },
     {
@@ -627,6 +633,8 @@
       "width": 390,
       "height": 560,
       "reconstruction": "all chunks/byte length/PNG signature/SHA256 PASS",
+      "gitBlobSHA": "3df3dfd9220716d2646dca287b2b8993356529c9",
+      "gitReadback": "PASS: exact base64 byte match after commit",
       "visuallyReviewed": true
     }
   ],
@@ -639,5 +647,17 @@
     "issue": 257,
     "status": "OPEN / BLOCKED_EXECUTOR_UNAVAILABLE"
   },
-  "syntheticOnly": true
+  "syntheticOnly": true,
+  "screenshotIntegrity": {
+    "standardSHA256VerifierVectors": 3,
+    "allCapturesMatchSHA256": true,
+    "allPNGSignatureAndByteCounts": true,
+    "allCommittedPNGBase64ReadbacksExact": true
+  },
+  "externalBlocker": {
+    "status": "BLOCKED",
+    "component": "local execution environment",
+    "observed": "No usable execution environment is available",
+    "affectedNextPackage": 257
+  }
 }
