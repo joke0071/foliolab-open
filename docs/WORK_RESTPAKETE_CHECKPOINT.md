@@ -1,3 +1,15 @@
+## de-AT-/Lesbarkeitspaket PR249 IN_PROGRESS · 31.10.2026 14:51 UTC
+
+Owner: derselbe aktive Master-/Transferintegrationschat. Genau ein Folgezweig **fix/de-at-displays**, PR**249**, HEAD**4a10aefaf065b8840b14a78d93a3e8e61330d84b**, Tree**94ed1613a5c7ce175905a0065315718476ede644**, auf tatsächlichem Main d2193e0baa1feb2b64da23b6a7f5b625ce379c42. SW241-Kandidat. CI**41212001576** und Wallet**41212001525** IN_PROGRESS; kein Merge und keine Freigabe aus alten HEADs übertragen. v240/Main-Produktionslauf41211510896 läuft weiter, Rückfallbasis bleibt bestätigt v239.
+
+Implementiert: de-AT-Kalendertage in Buchungen/Zeitleiste/Transferauswahl ohne Änderung originaler ISO-Evidenz, beide Suchformate; vollständige exakte Dezimalanzeige ohne Number-Konvertierung, kleine Nichtnullmengen sichtbar als1E-18; unveränderte technische Sperrgründe gesammelt unter nativer tastaturbedienbarer44px-Offenlegung; konsistente „Gebuchte Vorgänge“-Typografie. Finanz-/Transfer-/Speicher-/CAS-Verträge unverändert. Dokumentation und ausschließlich synthetische visuelle Belege im PR.
+
+Lokal1018Tests/0Fehler/0Skip, Syntax, sechs Zeitzonen/DST/Decimal-Units-Rückvergleich, sechs Breiten/Axe/Datumssuche/Original-datetime/exakte lange Mengen/Transferauswahl/Zeitleiste/native Offenlegung/exakt unveränderter IndexedDB-Datensatz bestanden. Chromium-Lesbarkeit und Transferzustände bestanden. Erster kompletter UIlauf bestanden; finaler kompletter Lauf nach letzter kompakter Offenlegungsanpassung noch aktiv. Neuer gemeinsamer Browservertrag ist in bestehenden verpflichtenden UI- und tatsächlichen Produktionsgates aller3 Engines enthalten. Vollständiger Remote-Quellbaum vor Branchanlage exakt mit lokalem Index verglichen. Keine echte Android-/TalkBack-/Safari-/Google-OAuth-Hardwareabnahme behauptet.
+
+Unmittelbar: v240-Main/Deploy/Live vollständig abnehmen und sichern; parallel PR249-Finalgates prüfen, erst nach bestätigter v240-Produktion konfliktfrei mergen, eigene v241-Produktion vollständig prüfen und Checkpoint aktualisieren. Keine konkurrierende zweite de-AT-Implementierung. FLH03/FLH04 aktiv; nur FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## v240 / PR248 MERGED – Produktionslauf noch offen · 31.10.2026 14:45 UTC
 
 Owner: derselbe aktive Transferimplementierungs-/Integrationschat. Finaler PR248-HEAD **5e14895da55fb3258b2069b33bf6b12020da6956** ist mit vollständiger CI41210204312 und Wallet41210204239 SUCCESS abgenommen: 1014 Tests, 0 Fehler, 0 Abbrüche; Chromium sowie Firefox/WebKit einschließlich Transferüberlappung, Headerstatus und UIqualität bestanden. Finale Artefakte13046585223/13046232777/13045184471 unabhängig per SHA256 und ZIP-CRC geprüft, native mobile Zeilen-/Dialogbilder angesehen. Header-Test wartet jetzt nach konfiguriertem Neustart auf die tatsächliche asynchrone Vaultinitialisierung; keine erzwungenen Zustände oder ausgelassenen Assertions.
