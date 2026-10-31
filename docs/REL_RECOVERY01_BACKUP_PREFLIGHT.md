@@ -26,3 +26,9 @@ Die gemeinsame Prüfung liegt in `src/backup-limits.js` und ist im Offline-Preca
 - Tatsächliche Ergebnisse/HEAD/CI/Merge/Deployment erst nach Abschluss im zentralen Checkpoint dokumentieren. Noch kein LIVE_ACCEPTED allein durch dieses Dokument.
 
 Weiter offen: vollständige historische Reader-/Writer-Kompatibilitätsmatrix, alle alten Tabs/Updateunterbrechungen, gezielte erweiterte Restore-/Quota-/Crashketten, Hardware-Android/OS-Eviction, Safari/TalkBack und echtes Drive-OAuth. Bereits vorhandene v249-/v247-Nachweise wiederverwenden und die übrigen Teilaufträge #255/#256 sequenziell fortsetzen.
+
+## v251: tatsächliche UTF-8-Dateigröße der Hülle
+
+Zusätzlicher nachgewiesener Randfall: Ein gültiges vollständiges synthetisches Backup mit unbekannten großen Unicode-Feldern im Wrap wird vom bisherigen Reader und der echten geräteübergreifenden Vault-Adoption akzeptiert. Nach erneutem Export passen 12.001.191 JS-Zeichen in die Drive-Zeichengrenze, während 24.001.191 UTF-8-Bytes die lokale 20-MB-Dateigrenze überschreiten. Regulär konfigurierte Wraps enthalten diese Zusatzfelder nicht. Repro/Ergebnis dauerhaft im zentralen Checkpoint-Branch: `docs/release-evidence/v250-envelope-utf8-repro.*`.
+
+Die Folgekorrektur prüft vor AES zusätzlich die UTF-8-Bytes der tatsächlichen JSON-Hülle plus das ASCII-Base64-Datenfeld gegen die unveränderten 20.000.000 Dateibytes. Keine Leselimits werden erhöht oder reduziert. Vorhandene alte Dateien bleiben unter ihren bisherigen jeweiligen Readergrenzen lesbar. Kein Abschneiden unbekannter Metadaten, kein Schlüssel-/Schema-/Finanz-/CAS-Vertragswechsel. Exakte inklusive 20-MB-Grenze/+1, tatsächliche Adoption, unveränderte Quelle/Vault und alte Entschlüsselung werden geprüft. Die bestehende Browser-/Produktionssuite prüft den Unicode-Hüllenfall zusätzlich in allen drei Engines.
