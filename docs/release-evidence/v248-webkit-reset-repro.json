@@ -1,0 +1,99 @@
+{
+  "status": "REPRODUCED_PRE_FIX",
+  "head": "74efed5bce9561393bfd978c87b35b84d8640fbe",
+  "run": 41234204081,
+  "fixHead": "aabac9dad98d73b6f7e861b1aa6bf7dd1647a3bb",
+  "syntheticOnly": true,
+  "trace": {
+    "engine": "webkit",
+    "width": 320,
+    "trace": [
+      {
+        "type": "pointerover",
+        "target": "alloc-legend-row",
+        "index": "0",
+        "share": "Teilsumme",
+        "active": "provider-row"
+      },
+      {
+        "type": "pointerdown",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": "provider-row"
+      },
+      {
+        "type": "focusin",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "pointerup",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "click",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "pointerout",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "pointerover",
+        "target": "donut-inner allocation-center",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "pointerdown",
+        "target": "donut-inner allocation-center",
+        "share": "100 %",
+        "active": "alloc-legend-row active"
+      },
+      {
+        "type": "focusout",
+        "target": "alloc-legend-row active",
+        "index": "0",
+        "share": "100 %",
+        "active": ""
+      },
+      {
+        "type": "focusin",
+        "target": "donut-inner allocation-center",
+        "share": "100 %",
+        "active": "donut-inner allocation-center"
+      },
+      {
+        "type": "pointerup",
+        "target": "donut-inner allocation-center",
+        "share": "100 %",
+        "active": "donut-inner allocation-center"
+      }
+    ],
+    "share": "100 %",
+    "active": "<button class=\"donut-inner allocation-center\" type=\"button\" aria-label=\"Guthaben, 100 %: €&nbsp;3,00 · Bekannte Werte anzeigen\" title=\"€&nbsp;3,00\"><span id=\"donutLabel\">Guthaben</span><strong id=\"donutTotal\" title=\"€&nbsp;3,00\">€ 3</strong><small id=\"donutShare\">100 %</small></button>",
+    "pressed": [
+      {
+        "tag": "circle",
+        "index": "0"
+      },
+      {
+        "tag": "BUTTON",
+        "index": "0"
+      }
+    ],
+    "center": "<button class=\"donut-inner allocation-center\" type=\"button\" aria-label=\"Guthaben, 100 %: €&nbsp;3,00 · Bekannte Werte anzeigen\" title=\"€&nbsp;3,00\"><span id=\"donutLabel\">Guthaben</span><strong id=\"donutTotal\" title=\"€&nbsp;3,00\">€ 3</strong><small id=\"donutShare\">100 %</small></button>"
+  }
+}
