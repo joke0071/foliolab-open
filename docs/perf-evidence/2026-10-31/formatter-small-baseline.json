@@ -1,0 +1,154 @@
+{
+  "scriptSha256": "124c0dade2eed99bb5c82f0e4c26080fa65535ee76dcf87ed6734b0531b78fb3",
+  "sha": "ee7ee75f2b62d22452d503ae7b0779d51ad68056",
+  "scope": "synthetic mixed IndexedDB; fresh Chromium process vs same-dashboard warm reload; configured CPU emulation is not Android hardware",
+  "runs": 5,
+  "scenarios": [
+    {
+      "positions": 19,
+      "bookings": 10,
+      "journalEntries": 10,
+      "references": 30,
+      "bytes": 35275,
+      "cpuRate": 1,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 778.1999999992549,
+            "longTasks": [
+              {
+                "start": 573.5,
+                "duration": 190
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 148.19999999925494,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 102.80000000074506,
+            "longTasks": []
+          },
+          "navigation": {
+            "positions": 141,
+            "bookings": 83,
+            "history": 83,
+            "more": 84,
+            "dashboard": 83
+          },
+          "heap": 10600000
+        },
+        {
+          "cold": {
+            "interactiveMs": 276,
+            "longTasks": [
+              {
+                "start": 19.5,
+                "duration": 54
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 98.59999999776483,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 88.30000000074506,
+            "longTasks": []
+          },
+          "navigation": {
+            "positions": 93,
+            "bookings": 83,
+            "history": 83,
+            "more": 84,
+            "dashboard": 83
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 230.80000000074506,
+            "longTasks": [
+              {
+                "start": 33.5,
+                "duration": 53
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 82.09999999776483,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 88.89999999850988,
+            "longTasks": []
+          },
+          "navigation": {
+            "positions": 95,
+            "bookings": 83,
+            "history": 83,
+            "more": 83,
+            "dashboard": 83
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 267.5,
+            "longTasks": [
+              {
+                "start": 36.30000000074506,
+                "duration": 100
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 98.5,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 101.39999999850988,
+            "longTasks": []
+          },
+          "navigation": {
+            "positions": 94,
+            "bookings": 84,
+            "history": 83,
+            "more": 84,
+            "dashboard": 83
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 238.10000000149012,
+            "longTasks": []
+          },
+          "warm": {
+            "interactiveMs": 98.09999999776483,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 91.19999999925494,
+            "longTasks": []
+          },
+          "navigation": {
+            "positions": 94,
+            "bookings": 83,
+            "history": 83,
+            "more": 84,
+            "dashboard": 83
+          },
+          "heap": 10000000
+        }
+      ],
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "No physical Android device or constrained process memory.",
+    "Navigation timing includes Playwright dispatch and two render frames.",
+    "No comparison against an older release; no performance improvement claimed."
+  ]
+}

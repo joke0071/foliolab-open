@@ -1,0 +1,56 @@
+{
+  "scope": "small control: isolated prototype, 19 positions /10 bookings /30 references, CPU1x, five samples each, identical synthetic fixture",
+  "results": {
+    "cold": {
+      "baseline": {
+        "medianMs": 267.5,
+        "rangeMs": [
+          230.80000000074506,
+          778.1999999992549
+        ]
+      },
+      "candidate": {
+        "medianMs": 231.19999999925494,
+        "rangeMs": [
+          214.39999999850988,
+          252.69999999925494
+        ]
+      }
+    },
+    "warm": {
+      "baseline": {
+        "medianMs": 98.5,
+        "rangeMs": [
+          82.09999999776483,
+          148.19999999925494
+        ]
+      },
+      "candidate": {
+        "medianMs": 81.89999999850988,
+        "rangeMs": [
+          81.30000000074506,
+          131.90000000223517
+        ]
+      }
+    },
+    "offline": {
+      "baseline": {
+        "medianMs": 91.19999999925494,
+        "rangeMs": [
+          88.30000000074506,
+          102.80000000074506
+        ]
+      },
+      "candidate": {
+        "medianMs": 91.69999999925494,
+        "rangeMs": [
+          90.5,
+          106.80000000074506
+        ]
+      }
+    }
+  },
+  "fixtureSHA256": "21e0e29449a5a0ded4f9647f897a8cd73a49236fff7aebc32498b1c8ee9f9c25",
+  "recordUnchanged": true,
+  "limitation": "One ordered A/B pair, no physical Android or statistical SLA; first baseline cold sample is an outlier and all samples are preserved."
+}
