@@ -1,3 +1,13 @@
+## #239 CI_ACCEPTED; PERF01-Mischdatenmessung vollständig gesichert · 31.10.2026
+
+#239 unveränderter HEAD `1d57804fc565e3665b65a088f4a31895048b468f`: Run41180221423 vollständig SUCCESS, test und alle3Cross-Engine-Pakete SUCCESS, Wallet41180221429 SUCCESS. Deploy/live bei PR korrekt SKIPPED. Eigener Download/CRC und SHA256 `fa311be1ef698c5c70ef031b26467e181f0ace4650e0b39e41f0194bf437d447` von Cross-Artefakt13033854963 geprüft; readability/report.json Firefox+WebKit PASS/0Fehler. Echte neue390px-Firefox-/WebKit-Bilder visuell kontrolliert: Titel/Werte/Dezimalmengen/Transfertexte lesbar. Kein Merge/Deployment. #240 kumulativer Kandidat weiter CI_PENDING.
+
+PERF01-Messfortschritt (keine Optimierungsbehauptung): auf v23119gemischteETF/Cash/Walletpositionen,1825Referenzen und1000bzw10000vollständig validierte Buchungen+Journalposten. Je3Kalt-/Warmstarts,CPU1x/4x; vor/nach Navigation exakter IDB-Recordhash unverändert. Datenbanken1,40/10,58MB. Mediane1000CPU1x:596/488ms;1000CPU4x:2471/2144ms;10000CPU1x:1633/1582ms;10000CPU4x:7821/7698ms. Synthetische Orientierung, keine reale Android-/Speicherlimit-Abnahme. Profilierter Zusatzlauf getrennt von unprofilierten Messwerten; kein Vergleich zu PR200-Gewinn abgeleitet.
+
+Dauerhafte Rohdaten/Generator/CPU-Profil unter [perf-evidence/2026-10-31](perf-evidence/2026-10-31). Profil zeigt hohe Selbstzeit in exakter Dezimalumwandlung/Journalprüfung; diese Sicherheitsprüfungen bleiben vollständig. Begrenzte Wiederverwendung erfolgreicher reiner Parsergebnisse wird experimentell in identischem A/B-Dateibaum geprüft, noch kein freigegebener Runtime-Fix. Nur bei belegtem Nutzen + exakter Rechengleichheit als eigener geprüfter Kandidat übernehmen. UI-MASTER28/PERF01 insgesamt PARTIAL.
+
+---
+
 ## UI-MASTER28: echter Nullwert-Anzeigefehler reproduziert, Folgepaket #240 · 31.10.2026
 
 Owner ChatGPT Work. Echte v231-Cloud-UI: Erststart → synthetischen ETF mit Bestand2,5 ohne Kurs angelegt/gespeichert. „Kein Kurs“ steht neben „€0,00“; Anzeigefehler bestätigt. [PR #240](https://github.com/joke0071/foliolab-open/pull/240), Branch `fix/missing-position-value`, HEAD `1c900a78bd7ead4c74c5de28ab3675ec4a872b29`, SW233 nur Kandidat, **PARTIAL / CI_PENDING**.
