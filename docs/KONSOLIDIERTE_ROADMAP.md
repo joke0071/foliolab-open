@@ -1,3 +1,17 @@
+## v234 LIVE_ACCEPTED – neue bestätigte Produktions- und Rückfallbasis · 31.10.2026
+
+**Neue autonome Releasefreigabe gilt unverändert.** Main `d28f535e7dc36ec0e2ac4aec8158dbefc3a1f41b`, Tree `feaad0be6b9fee0e6979f3f8ee137bbdcfd5eec6`, Service-Worker234. [Vollständiger Release41185004927](https://github.com/joke0071/foliolab-open/actions/runs/41185004927): Unit/Syntax, Chromium, alle drei Firefox-/WebKit-Cross-Pakete, Pages und vollständige Produktions-Live-Abnahme SUCCESS. #239–#242 integriert; keine separaten Zwischenreleases.
+
+Live-Artefakt `13036849322` eigenständig heruntergeladen, ZIP-SHA256 `3a27149aabf36fbf1d571a132af2ebe2501ec57445dbb0d4e8e0d663c81ec751` gegen GitHub-Digest geprüft, CRC PASS. Livebericht exakter Main-SHA / foliolab-open-v234 / PASS / errors[]; alle121 veröffentlichten Asset-Hashes exakt mit freigegebenem v234-Manifest verglichen. Tatsächliche UI-, IndexedDB-, Plain/Encrypted-Backup-/Restore-, SW-/Offline-Prüfungen sowie gezielte Produktionsprüfungen in Chromium/Firefox/WebKit erfolgreich. Vollständiger dauerhafter Beleg: `docs/release-evidence/v234-live-acceptance.json`.
+
+Cloud-Browser nach echtem App-Update: bestehender synthetischer ETF behält Bestand2,5, fehlender Kurs jetzt „Nicht bewertet“ statt irreführendem €0,00. Screenshot `docs/review-evidence/2026-10-31/v234-live-values.jpg`. Reale Android-/PWA-/TalkBack- und Google-OAuth-Nutzerabnahme bleiben EXTERNAL; nicht aus synthetischen Prüfungen ableiten.
+
+**Letzte vollständig bestätigte Rückfallbasis jetzt v234.** Frühere v231-Rückfallbasis / SW230-PENDING / SW234-RELEASE_PENDING sind durch diesen neuen datierten Eintrag historisch übersteuert.
+
+Weiterarbeit: UI-POS02-Archivansicht #243 HEAD272deb98405cd7fb9013fa7a533d329b5ffb6007 in regulärer CI41185989774. Gemeinsames P1-Headerpaket DRIVE-HEADER01 / DRIVE-AUTH-PERSIST01 / UI-HEADER-STATUS02 wird im einzigen vorhandenen Arbeitsstrang ergänzt; lokal998Unit+Syntax sowie synthetische Chromium-Headerprüfung erfolgreich (reale Verschlüsselung, ein Due-Upload, echter Quota-Fehler/CAS, keine Tokens in DOM/Storage). Noch keine Header-CI-/Live-Abnahme. Zusammengehörige UI-Folgeänderungen möglichst einmal gemeinsam prüfen/integreren, keine unnötige Deploymentserie. UI-POS02 Details-/Dialogaktionen und UI-BOOK03 bleiben offen; FLH04-Sync eigenständig OPEN/ACTIVE. Nur FLH05/FLH-PROJ01 PARKED, Zusatzbudget0€, historischen Checkpoint-Branch niemals vollständig mergen.
+
+---
+
 ## Neue verbindliche Releaseautorisierung · 31.10.2026
 
 Die Wochenend-/Praxistest-Releasebeschränkungen sind durch ausdrückliche neue Nutzerentscheidung vollständig aufgehoben. Geprüfte konfliktfreie PRs für routinemäßige UI-/UX-, Performance- und Fehlerkorrekturen selbstständig mergen und veröffentlichen, zusammengehörige Änderungen sinnvoll bündeln. Bestehende CI-/Finanz-/Speicher-/Backup-/Sicherheitsgates beibehalten; jeden Release tatsächlich produktiv abnehmen und im zentralen Checkpoint sichern. Nur bei wesentlichen, nicht ausreichend abgesicherten Finanz-/Daten-/Sicherheitsrisiken konkrete Freigabe einholen. #241/v234 ist ausdrücklich autorisiert; nach dessen Live-Abnahme nächste priorisierte Restpakete fortsetzen. Alle widersprechenden älteren Freigabesätze unten sind historisch. Nur FLH05 und FLH-PROJ01 PARKED; Zusatzbudget0€. Historischen Dokumentationsbranch nicht vollständig nach main mergen.
