@@ -22,8 +22,10 @@ function current(model,expectedModel,confirmed){
  if(confirmed!==true||expectedModel!==raw(model))throw Error('Bestätigung fehlt oder Referenzvorschau ist veraltet.');
  safeImport(clone(model));
 }
-export function referencePermissions(model,id){
- const s=selected(model,[id])[0];
+export function referencePermissions(model,id){return permissionsFor(model,selected(model,[id])[0]);}
+/** One validated index for large selection renders; the mutation gates still recheck originals. */
+export function referencePermissionIndex(model){return new Map(rows(model).map(s=>[s.id,permissionsFor(model,s)]));}
+function permissionsFor(model,s){
  const manual=s.source==='manual'&&s.valuationStatus==='manual'&&s.byAccount==null&&s.byPosition==null&&Array.isArray(s.quoteTimes)&&s.quoteTimes.length===0;
  return {editReason:manual?'':'Herkunft geschützt: automatische, migrierte oder ungeklärte Originalwerte nur über die zuständige Quelle prüfen.',deleteReason:removalReason(model,s),startProtected:model.performanceFlowTrackingSince===s.date};
 }
@@ -35,13 +37,13 @@ export function referenceRows(model,filter='active'){
  const archived=new Set(model.bookingPresentation?.referenceArchivedIds||[]);
  return rows(model).filter(s=>filter==='all'||archived.has(s.id)===(filter==='archived')).slice().reverse();
 }
-/** Same stable-ID engine as positions/bookings, strictly bounded to the rendered view. */
-export function updateReferenceSelection(model,ids,action,visibleIds){
+/** Complete filter scope before pagination; hidden/stale selections remain explicit. */
+export function updateReferenceSelection(model,ids,action,matchingIds){
  const shots=rows(model),known=new Set(shots.map(s=>s.id));
- if(!Array.isArray(visibleIds)||new Set(visibleIds).size!==visibleIds.length||visibleIds.some(id=>!known.has(id))||ids.some(id=>!visibleIds.includes(id)))throw Error('Auswahl liegt außerhalb der sichtbaren Referenzen.');
- if(!['toggle','filtered','unselect-filtered'].includes(action?.type))throw Error('Nur sichtbare Referenzwerte können ausgewählt werden.');
- if(action.type==='toggle'&&!visibleIds.includes(action.id)||action.matchingIds&&raw(action.matchingIds)!==raw(visibleIds))throw Error('Auswahl liegt außerhalb der sichtbaren Referenzen.');
- return updatePositionSelection({positions:shots.filter(s=>visibleIds.includes(s.id))},ids,action);
+ if(!Array.isArray(matchingIds)||new Set(matchingIds).size!==matchingIds.length||matchingIds.some(id=>!known.has(id)))throw Error('Auswahlbereich ist veraltet.');
+ if(!['toggle','cycle','clear','filtered','unselect-filtered'].includes(action?.type))throw Error('Nur ausdrücklich gefilterte Referenzwerte können ausgewählt werden.');
+ if(action.type==='toggle'&&!matchingIds.includes(action.id)||action.matchingIds&&raw(action.matchingIds)!==raw(matchingIds))throw Error('Auswahl liegt außerhalb der gefilterten Referenzen.');
+ return updatePositionSelection({positions:shots},ids,action);
 }
 export function referenceSelectionSummary(model,ids,visibleIds){return positionSelectionSummary({positions:rows(model)},ids,visibleIds);}
 export function previewReferenceArchive(model,ids,archived){

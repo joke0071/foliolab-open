@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -78,7 +79,7 @@ try{
   assert.ok(overflow<=1,'horizontal overflow at '+width+': '+overflow);
  }
  // Existing holdings must stay valid after reopening and filtering selection.
- await page.locator('[data-action="edit-position"]').first().click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"]').first().click();
  const previousProvider=await page.locator('#positionProvider').inputValue();
  const previousAccount=await page.locator('#positionAccount').inputValue();
  await page.locator('#positionPickerSearch > summary').click();

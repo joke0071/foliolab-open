@@ -24,7 +24,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   for(const width of [320,360,390,412,430,768,1440]){
    await p.setViewportSize({width,height:900});await nav('positions');
    for(const id of ['missing-etf','missing-crypto','zero-holding','sourced-zero','positive']){
-    const row=p.locator('.position-entry').filter({has:p.locator('[data-action="edit-position"][data-id="'+id+'"]')});
+    const row=p.locator('.position-entry[data-position-id="'+id+'"]');
     assert.equal(await row.locator('.holding-money').innerText(),id.startsWith('missing-')?'Nicht bewertet':money(id==='positive'?3:0));
    }
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.screenshot({path:`${out}/${engine}-${width}-positions.png`,fullPage:true});

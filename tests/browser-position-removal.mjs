@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 mkdirSync('artifacts/gates',{recursive:true});
@@ -52,18 +53,17 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
    assert.equal(await page.locator('#positionSelectionTools button,#positionSelectionTools input').count(),0);
    assert.equal(await page.locator('[data-position-select]').count(),0);
    assert.ok(await trigger.evaluate(b=>{const r=b.getBoundingClientRect(),h=b.parentElement.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.left>=h.left&&r.right<=h.right+1;}));
-   const card=page.locator('.position-entry').first(),edit=card.locator('.detail-edit');assert.equal(await edit.innerText(),'Bearbeiten');
+   assert.equal(await page.locator('.position-entry .detail-edit').count(),0,'normal mode hides editing');await trigger.focus();await page.keyboard.press('Enter');const card=page.locator('.position-entry').first(),edit=card.locator('.detail-edit');assert.equal(await edit.innerText(),'Bearbeiten');assert.ok(await card.locator('[data-position-select]').isVisible(),'checkbox and edit coexist');
    const bounds=await card.evaluate(e=>{const s=e.querySelector('.holding-expand summary').getBoundingClientRect(),b=e.querySelector('.detail-edit').getBoundingClientRect();return {separate:s.right<=b.left,sameRow:Math.abs(s.top-b.top)<=2,summaryHeight:s.height,buttonHeight:b.height,buttonWidth:b.width};});assert.ok(bounds.separate&&bounds.sameRow&&bounds.summaryHeight>=44&&bounds.buttonHeight>=44&&bounds.buttonWidth>=44,'independent details/edit targets: '+JSON.stringify(bounds));
    assert.equal(await card.locator('.holding-expand').evaluate(e=>e.open),false);await edit.click();assert.equal(await card.locator('.holding-expand').evaluate(e=>e.open),false,'editing does not expand details');assert.equal(await page.locator('#deletePosition').innerText(),'Position löschen');await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.ok(await edit.evaluate(e=>e===document.activeElement));assert.deepEqual(await record(),before,'open/cancel editor is read-only');
    await axe();mkdirSync('artifacts/gates/selection-head',{recursive:true});await page.screenshot({path:'artifacts/gates/selection-head/positions-'+engine+'-'+width+'.png'});
-   await trigger.focus();await page.keyboard.press('Enter');
    assert.equal(await page.locator('#positionListHead button').innerText(),'Fertig');assert.equal(await page.locator('#positionListHead button').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('.position-row-actions button').count(),0);assert.ok(await page.locator('#positionSelectFiltered').isVisible());
    if(width<=700)assert.equal(await page.locator('#positionSelectionTools').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),2);
    await button('cancel-selection').click();assert.ok(await trigger.evaluate(b=>b===document.activeElement));
   }
-  const singleEdit=page.locator('.position-entry').first().locator('.detail-edit');await singleEdit.click();await page.locator('[name=name]').fill('SYNTHETIC unsaved position');page.once('dialog',d=>d.dismiss());await page.locator('#deletePosition').click();assert.equal(await page.locator('[name=name]').inputValue(),'SYNTHETIC unsaved position');page.once('dialog',d=>d.accept());await page.locator('#deletePosition').click();assert.equal(await page.locator('#positionRemovalItems').count(),1);assert.deepEqual(await record(),before,'single-position delete preview preserves canonical record');await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.ok(await singleEdit.evaluate(e=>e===document.activeElement));
+  await manageList(page,'positions');const singleEdit=page.locator('.position-entry').first().locator('.detail-edit');await singleEdit.click();await page.locator('[name=name]').fill('SYNTHETIC unsaved position');page.once('dialog',d=>d.dismiss());await page.locator('#deletePosition').click();assert.equal(await page.locator('[name=name]').inputValue(),'SYNTHETIC unsaved position');page.once('dialog',d=>d.accept());await page.locator('#deletePosition').click();assert.equal(await page.locator('#positionRemovalItems').count(),1);assert.deepEqual(await record(),before,'single-position delete preview preserves canonical record');await page.keyboard.press('Escape');await page.locator('#editDialog').waitFor({state:'hidden'});assert.ok(await singleEdit.evaluate(e=>e===document.activeElement));
   assert.deepEqual(await record(),before,'header/keyboard selection cycles are transient');await page.setViewportSize({width:1440,height:850});
-  await button('select-positions').click();await page.locator('#positionSearch').fill('Wanted');
+  await manageList(page,'positions');await page.locator('#positionSearch').fill('Wanted');
   assert.equal(await page.locator('[data-position-select]').count(),100);
   await cycle();assert.match(await page.locator('#positionSelectionStatus').innerText(),/100 ausgewählt/);
   await page.locator('[data-position-select="p-0"]').uncheck();assert.equal(await page.locator('#positionSelectFiltered').evaluate(e=>e.indeterminate),true);

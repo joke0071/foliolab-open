@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -52,7 +53,7 @@ try{
  assert.equal(await page.locator('#editDialog').isVisible(),false);
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),old,'Abandoning a reviewed CSV changes no financial data');
  await page.locator('#mobileNav [data-page="positions"]').click();
- await page.locator('[data-action="edit-position"][data-id="'+ids.token+'"]').click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+ids.token+'"]').click();
  await page.locator('#coinQuery').fill('bitcoin');
  const results=page.locator('#coinResults [data-coin]');
  if(await results.count()){

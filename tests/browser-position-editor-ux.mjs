@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -20,7 +21,7 @@ try {
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
  const edit=page.locator('[data-action="edit-position"][data-id="'+id.etf+'"]');
- await edit.click();
+ await manageList(page,'positions');await edit.click();
  assert.equal(await page.locator('#dialogTitle').innerText(),'Position bearbeiten');
  assert.equal(await page.locator('#saveDialog').innerText(),'Position speichern');
  assert.equal(await page.locator('#positionProvider').inputValue(),id.provider);
@@ -66,7 +67,7 @@ try {
  page.once('dialog',d=>d.accept());
  await page.locator('#cancelDialog').click();
  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before,'Rejected edited draft never mutates portfolio');
- await edit.click();
+ await manageList(page,'positions');await edit.click();
  await page.locator('[name="name"]').fill('Überarbeiteter Themen-ETF');
  await page.locator('#saveDialog').click();
  await page.locator('#editDialog').waitFor({state:'hidden'});
@@ -82,7 +83,7 @@ try {
   await page.setViewportSize({width,height:760});
   const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
   await page.locator(nav+' [data-page="positions"]').click();
-  await page.locator('[data-action="edit-position"][data-id="'+id.etf+'"]').click();
+  await manageList(page,'positions');await page.locator('[data-action="edit-position"][data-id="'+id.etf+'"]').click();
   const geom=await page.locator('#editDialog').evaluate(el=>{
    const d=el.getBoundingClientRect(),f=el.querySelector('.dialog-footer').getBoundingClientRect();
    return {left:d.left,right:d.right,top:d.top,bottom:d.bottom,footer:f.bottom,scroll:document.documentElement.scrollWidth};
@@ -92,7 +93,7 @@ try {
   await page.locator('#cancelDialog').click();
  }
  await page.setViewportSize({width:390,height:820});
- await edit.click();
+ await manageList(page,'positions');await edit.click();
  await page.locator('#positionKind').selectOption('crypto');
  assert.equal(await page.locator('#securityGroup').isVisible(),false);
  assert.equal(await page.locator('#positionMarketMore').isVisible(),false);

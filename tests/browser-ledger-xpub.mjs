@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -20,7 +21,7 @@ try{
  },X);
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
- await page.locator('[data-action="edit-position"]').first().click();
+ await manageList(page,'positions');await page.locator('[data-action="edit-position"]').first().click();
  await page.locator('#walletHdType').waitFor({state:'visible'});
  assert.equal(await page.locator('#walletHdType').inputValue(),'auto','Older backups select safe automatic detection');
  assert.match(await page.locator('#walletGroup').innerText(),/Native SegWit/);
