@@ -1,3 +1,13 @@
+## UI-POS02 / UI-BOOK03 · PR245 IN_PROGRESS / CI_PENDING · 31.10.2026
+
+Owner Codex Work. Branch fix/unified-detail-actions, HEAD29c87faf4a73a08cd887643e0985f3dd0aec649a, Tree6f9013627dff77c3175f2844d1b0de30c630c3cb, SW237-Kandidat. PR https://github.com/joke0071/foliolab-open/pull/245. Produktion und Rückfallbasis v236 LIVE_ACCEPTED.
+
+Implementiert: Bearbeiten direkt neben den Positions-/Buchungsdetails mit separaten44px-Zielen; geschützte bestehende Buchungen öffnen den eingeschränkten Editor; unabhängige vollständige remove-Berechtigung im Editor, Buchung löschen über bestehende Begründung/Vorschau/Bestätigung/CAS/Undo. Keine neue Finanzmutation, keine Persistenz-/Finanzformeländerung. Bestehendes Archiv und Positionslöschung nicht neu entwickelt. Lokale1008Unit/Syntax und vollständigeChromium-Buchungs-/Positionslöschsuiten PASS (7Normalbreiten/Axe/Fokus/Quota/Abort/Offline/CAS/Undo/Restore). Tatsächliche320px-Listen und Editor visuell geprüft. VollständigeCI/3Engines sowie tatsächlicheProduktion vor Integration/LIVE_ACCEPTED erforderlich.
+
+Nächster Schritt unverändertePR-CI vollständig abschließen, aktuelleHEAD/Main/Tree und Cross-Bilder prüfen; nach Abnahme autonom mergen/deployen und volleProduktion prüfen. Noch offen: UI-HERO-QUALITY03, Transferintegration, gemesseneAndroidperformance, echteSync und wirtschaftlicheImportlöschung. Keine paralleleImplementierung starten. NurFLH05/FLH-PROJ01 PARKED; Hardware/Google/TalkBack EXTERNAL.
+
+---
+
 ## v236 LIVE_ACCEPTED · 31.10.2026
 
 Owner: Codex Work. Tatsächlicher Main `ee7ee75f2b62d22452d503ae7b0779d51ad68056`, SW `foliolab-open-v236`. Release41193055285 vollständig SUCCESS: Test, alle drei Cross-Pakete, Deployment und Live-Acceptance. Produktionsartefakt13039274206 eigenständig heruntergeladen; SHA256 `286642e10205b98f2da7caac714ae3feed4cf5cb418afec40d05c45ec80aea0c` entspricht GitHub-Digest, ZIP-CRC PASS. Livebericht PASS, errors[], exakter Main/SW; alle122 Assethashes gegen lokalen Main unabhängig verglichen: identisch. Produktions-UI-Berichte Chromium/Firefox/WebKit PASS. Plain/encrypted Restore, tatsächliche Workersteuerung, Offline/IDB und Coreflows im Produktionsbericht bestanden. Echte Android-/PWA-/TalkBack-/Google-OAuth-Abnahme bleibt EXTERNAL. Neue bestätigte Rückfallbasis: v236; v234 ist Vorgänger. Kein Datenreset/Downmigration bei Rückfall.
