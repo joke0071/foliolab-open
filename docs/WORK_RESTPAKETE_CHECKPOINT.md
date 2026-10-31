@@ -1,3 +1,15 @@
+## v237 MERGED / RELEASE_PENDING – exakter freigegebener Main-Tree · 31.10.2026
+
+Owner: Codex Work. PR245 nach vollständiger exakter Abnahme autonom gemergt. Main `8d3d6c9f34dc1e09b695e3b8eebdb0462fd33034`, Tree `2a06f733a01aa1f7146788f3771087e3461306bc` identisch mit geprüftem synthetischem Merge65c026e8 und PR-HEADdd61f68. SW237. PR-CI41198813480 und Wallet41198813476 vollständig SUCCESS:1008 Unit-Tests,0Fail/0Skip, Chromium und alle3Cross-Pakete. Sämtliche drei Cross-Artefakte eigenständig per SHA256/CRC geprüft; finale WebKit-Editoransicht320 und Positionsansicht430 visuell geprüft. Native Aktivierung, echte Controlleridentität vor/nachReload und neue timeOrigin in Firefox/WebKit aus finalen Berichten unabhängig bestätigt. Dauerhafte Belege: docs/release-evidence/pr245-ci-acceptance.json und pr245-*-controller.json; finale Bilder unter docs/review-evidence/2026-10-31/pr245-*.png. Evidenzcommitfb8a6c389421dc139ebf43c52e69a28f42d32643.
+
+**Produktionslauf41199698291 läuft. Kein LIVE_ACCEPTED vor vollständiger tatsächlicher Abnahme. Letzte bestätigte Rückfallbasis bleibt v236.** Historischen Checkpoint-Branch nicht gemergt. UI-POS02/UI-BOOK03 Detail-/Bearbeiten-/bestehende sichere Löschvorschauen umgesetzt; weitere wirtschaftliche Importlöschung bleibt separat OPEN. Keine Finanzformel-, Schema- oder Kryptografieänderung.
+
+Nächster funktionaler Strang: `perf/measured-render-startup` auf aktuellem Main, SW238-Kandidat noch nicht integriert. Gemessener Prototyp wird kontrolliert übernommen: identische begrenzte Intl-Formatierer und ein projektionslokaler Clearing-Statusindex; vollständige Journalvalidierung bleibt erhalten. Bisher lokal1009 Units/Syntax und neue datierte Clearing-Regression bestanden. Datumsformatierer verwendet expliziteUTC-Kalendertage, damit Geräte-Zeitzonenwechsel bei lange geöffneter App keine Datumsverschiebung erzeugen;42 Vergleiche mit alter Anzeige über6 Zeitzonen bestanden. Frischer Vorher-/Nachhervergleich auf tatsächlicher v237-Basis folgt vor der Integrationsabnahme. Kein weiterer Merge, bevor v237 LIVE_ACCEPTED und die eigenen vollständigen Gates bestanden sind.
+
+Großer Prototyp:−22–24% Startmedian; kleiner Kontrollfall kalt267,5→231,2ms, warm98,5→81,9ms, offline91,2→91,7ms. Exakte synthetische Eingaben/Rohwerte/Skripte dauerhaft formatter-* unter docs/perf-evidence/2026-10-31; kleiner Kontrollfall Commit2f356643ab3305990a87e4321082e56a6673e297. Nicht als physischeAndroid- oder Produktivabnahme ausgeben. UI-HERO-QUALITY03, Transferintegration, FLH04-Sync und wirtschaftliche Importlöschung weiter OPEN. Nur FLH05/FLH-PROJ01 PARKED; Android/Google/TalkBack EXTERNAL.
+
+---
+
 ## PR245 / dd61f68: navigationsfeste echte Testbereitschaft; Performance-Prototyp gesichert · 31.10.2026
 
 Owner: Codex Work. Aktueller UI-HEAD `dd61f68ad30de81f791c2f2043556a9952d0b3fd`, Tree `2a06f733a01aa1f7146788f3771087e3461306bc`, Branch `fix/unified-detail-actions`, SW237. **IN_PROGRESS / CI_PENDING**, kein Merge oder Deployment. Produktion und Rückfallbasis bleiben **v236 LIVE_ACCEPTED**.
