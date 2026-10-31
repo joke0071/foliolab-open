@@ -13,7 +13,7 @@ jobs:
       PERF_BASE_SHA: 621abf1556b0be87d485fd43943cf521dfc965fb
       PERF_PRODUCT_SHA: 99420b8e9d8c29ef025ecd452a6cad56e6a0797b
       PERF_CANDIDATE_SHA: ${{ github.sha }}
-      PERF_OUTPUT: ${{ runner.temp }}/perf247-controlled-abba
+      PERF_OUTPUT: artifacts/gates/perf247-controlled-abba
     steps:
       - uses: actions/checkout@v4
         with:
@@ -64,6 +64,6 @@ jobs:
         if: always()
         with:
           name: perf247-controlled-abba-${{ github.sha }}
-          path: ${{ runner.temp }}/perf247-controlled-abba/
+          path: artifacts/gates/perf247-controlled-abba/
           retention-days: 30
           if-no-files-found: error
