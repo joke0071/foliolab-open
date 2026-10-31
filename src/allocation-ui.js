@@ -60,12 +60,14 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
  const buttons=[...legend.querySelectorAll('[data-allocation-index]')];
  const controls=[...segments,...buttons];
  let pinned=initialIndex>=0?initialIndex:-1;
+ // Keep the pointer's text node stable through focus/blur (WebKit click dispatch).
+ const text=(node,next)=>{if(node.textContent!==next)node.textContent=next;};
  function display(index){
   const item=slices[index];
-  label.textContent=item?.name||'Portfolio';
-  value.textContent=!item&&valuation?.allUnknown?'–':compactMoney(item?.value??netTotal);
+  text(label,item?.name||'Portfolio');
+  text(value,!item&&valuation?.allUnknown?'–':compactMoney(item?.value??netTotal));
   value.title=!item&&valuation?.allUnknown?'Nicht bewertet':money(item?.value??netTotal);
-  share.textContent=item?formatAllocationShare(item.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert');
+  text(share,item?formatAllocationShare(item.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):(root.dataset.hasLiabilities==='true'?'Nettovermögen':'Gesamtwert'));
   controls.forEach(el=>{
    const active=Number(el.dataset.allocationIndex)===index;
    el.classList.toggle('active',active);

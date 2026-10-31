@@ -1854,3 +1854,6 @@
 #dashboardPage .stat-label{hyphens:auto}
 
 @media(max-width:360px){#dashboardPage .stat-label{font-size:11px}}
+
+/* Stable button target while WebKit changes preview text during focus transfer. */
+.allocation-center>*{pointer-events:none}
