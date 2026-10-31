@@ -1871,3 +1871,5 @@
  #positionsPage .position-search-tools:has(#positionArchiveFilter),
  #bookingsPage .booking-filter-tools{grid-template-columns:minmax(0,1fr)}
 }
+/* All three management lists keep their monetary column at the trailing edge. */
+#positionList .position-entry .holding-r{justify-content:flex-end;text-align:right}
