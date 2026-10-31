@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "scope": "isolated prototype only; no production release",
+  "formatCases": 331,
+  "projectionScenarios": [
+    "clean",
+    "past-clearing",
+    "future-clearing",
+    "multiple-clearing",
+    "excluded"
+  ],
+  "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+  "fixtureBytes": 10582038,
+  "financialProjectionExactlyEqual": true,
+  "fixtureUnchanged": true
+}

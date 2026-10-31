@@ -1,0 +1,43 @@
+--- a/src/app.js
++++ b/src/app.js
+@@ -284,7 +284,8 @@
+   mount.innerHTML=positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days});
+   void loadPositionDetail(p,model,mount,{days,esc,money,quant,valueEUR,dateLabel});
+ }
+-function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:d.toLocaleDateString('de-AT',{day:'2-digit',month:'short',year:'numeric'});}
++const dateLabelFormatter=new Intl.DateTimeFormat('de-AT',{day:'2-digit',month:'short',year:'numeric'});
++function dateLabel(date){const d=new Date(date+'T12:00:00');return Number.isNaN(d.getTime())?date:dateLabelFormatter.format(d);}
+ let wealthBasis='auto',wealthKey='',wealthCached;
+ function wealthView(){const key=JSON.stringify([wealthBasis,model.positions,model.accounts,model.openingPositions,model.journalEntries,model.bookings,model.walletHistory,model.priceHistories,model.snapshots]);if(key!==wealthKey){wealthCached=historicalWealthView(model,wealthBasis);wealthKey=key;}return wealthCached;}
+ function drawChart(samples,comparison=null){return samples.length?drawInteractiveChart(samples,{money,esc,dateLabel,comparison,disjoint:samples.some(s=>s.breakBefore)}):'<p class="chart-zero">Historische Kurse oder Bestandsnachweise fehlen. Historie einer Position öffnen; manuelle Kontrollpunkte bleiben optional.</p>';}
+--- a/src/model.js
++++ b/src/model.js
+@@ -295,6 +295,7 @@
+  storage.setItem(STORE_KEY,serialized);
+  observedStorage.set(storage,serialized);
+ }
+-export const money=(n,c='EUR')=>new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2}).format(Number.isFinite(n)?n:0);
+-export const quant=n=>new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}).format(n);
++const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',{maximumFractionDigits:8});
++export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return formatter.format(Number.isFinite(n)?n:0);};
++export const quant=n=>quantityFormatter.format(n);
+ export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+--- a/src/historical-portfolio-value.js
++++ b/src/historical-portfolio-value.js
+@@ -15,6 +15,7 @@
+  if(calendar.length*model.positions.length>2000000)throw Error('Historie zu groß für eine direkte Übersicht. Zeitraum oder Portfolioumfang eingrenzen.');
+  const walletDaysCache=new Map();
+  const projections=new Map(model.positions.map(p=>[p.id,projectHistoricalPosition(model,p.id,{dates:calendar,marketHistory:histories[p.id]??null,fxPoints:fxByCurrency[p.currency]??null,walletDaysCache}).rows]));
++ const unresolvedClearing=(model.journalEntries||[]).filter(e=>e.status==='unresolved-clearing');
+  const days=calendar.map((date,index)=>{
+   let sum=0n;const missing=[...orphaned].map(id=>({positionId:id,reason:'Historische Positionsidentität fehlt.'}));
+   missing.push(...emptyAccounts.map(a=>({accountId:a.id,reason:'Historischer Kontoumfang nicht belegt.'})));
+@@ -29,7 +30,7 @@
+    if(row?.valueEURExact===null||!row){missing.push({positionId:p.id,reason:row?.reason||'Historische Bewertung fehlt.'});continue;}
+    const signed=units(row.valueEURExact)*BigInt(valueSign(p));sum+=signed;components.push({...row,valueEURExact:exact(signed)});
+   }
+-  for(const e of model.journalEntries||[])if(e.date<=date&&e.status==='unresolved-clearing'&&!missing.some(x=>x.reason==='Historisches Verrechnungskonto fehlt.'))missing.push({reason:'Historisches Verrechnungskonto fehlt.'});
++  if(unresolvedClearing.some(e=>e.date<=date)&&!missing.some(x=>x.reason==='Historisches Verrechnungskonto fehlt.'))missing.push({reason:'Historisches Verrechnungskonto fehlt.'});
+   const complete=model.positions.length>0&&missing.length===0;
+   return {date,totalEURExact:complete?exact(sum):null,partialEURExact:components.length?exact(sum):null,coverage:complete?'reconstructed':'partial',components,missing};
+  });

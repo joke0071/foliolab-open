@@ -1,0 +1,116 @@
+{
+  "scope": "isolated prototype only; v236 baseline and only three runtime files changed; same stored synthetic input, five samples per variant, CPU4x; not physical Android",
+  "scriptIdentical": true,
+  "contract": {
+    "result": "PASS",
+    "scope": "isolated prototype only; no production release",
+    "formatCases": 331,
+    "projectionScenarios": [
+      "clean",
+      "past-clearing",
+      "future-clearing",
+      "multiple-clearing",
+      "excluded"
+    ],
+    "fixtureSHA256": "1df791bf0273a265679fe3dff09a84d25716ed2a1f0872a349a434ed9e7378ef",
+    "fixtureBytes": 10582038,
+    "financialProjectionExactlyEqual": true,
+    "fixtureUnchanged": true
+  },
+  "results": {
+    "cold": {
+      "baselineMedianMs": 5446.099999997765,
+      "candidateMedianMs": 4214.5,
+      "improvementPercent": 22.614347881938823,
+      "baselineRangeMs": [
+        5344,
+        5932.300000000745
+      ],
+      "candidateRangeMs": [
+        4165.900000002235,
+        4376.5
+      ]
+    },
+    "warm": {
+      "baselineMedianMs": 5186.199999999255,
+      "candidateMedianMs": 4019.900000002235,
+      "improvementPercent": 22.488527245327738,
+      "baselineRangeMs": [
+        4968.10000000149,
+        5214.699999999255
+      ],
+      "candidateRangeMs": [
+        3666.2000000029802,
+        4131.599999997765
+      ]
+    },
+    "offline": {
+      "baselineMedianMs": 4785.60000000149,
+      "candidateMedianMs": 3643.39999999851,
+      "improvementPercent": 23.867435640308944,
+      "baselineRangeMs": [
+        4462.300000000745,
+        4845.300000000745
+      ],
+      "candidateRangeMs": [
+        3443.199999999255,
+        3955.900000002235
+      ]
+    },
+    "positions": {
+      "baselineMedianMs": 302,
+      "candidateMedianMs": 265,
+      "improvementPercent": 12.25165562913907
+    },
+    "bookings": {
+      "baselineMedianMs": 1099,
+      "candidateMedianMs": 1033,
+      "improvementPercent": 6.0054595086442175
+    },
+    "history": {
+      "baselineMedianMs": 1594,
+      "candidateMedianMs": 650,
+      "improvementPercent": 59.222082810539526
+    },
+    "more": {
+      "baselineMedianMs": 189,
+      "candidateMedianMs": 200,
+      "improvementPercent": -5.820105820105814
+    },
+    "dashboard": {
+      "baselineMedianMs": 1300,
+      "candidateMedianMs": 580,
+      "improvementPercent": 55.38461538461539
+    }
+  },
+  "runtimeDifferences": [
+    {
+      "path": "src/app.js",
+      "baselineSHA256": "efdc2430dbc89036e143bef749009810a4ca59538baef82e9813c36104b53fcf",
+      "candidateSHA256": "40da0381ee701a772d6c315e8095fa265f4178c86802f09e087510ec9622e9d2"
+    },
+    {
+      "path": "src/model.js",
+      "baselineSHA256": "f24bd8063306e6f841e24d5ecc9f65cfcc6206482b5e932e5e4537fd6277dd75",
+      "candidateSHA256": "f64deddfee95e0e97944629f2d5ac5a7aaa370d092decf4e7982fb4a6272799a"
+    },
+    {
+      "path": "src/historical-portfolio-value.js",
+      "baselineSHA256": "2cd477343036653c3634cb31a2739f1c5d9cb6bbd67c455ea5043c7b42751334",
+      "candidateSHA256": "004c5a434ddb1d39ab1f63d39858cc9baba8d2af6db62889ae3c95594513e0d3"
+    }
+  ],
+  "status": "EXPERIMENT_ONLY_NOT_RELEASED",
+  "unitTests": {
+    "pass": 1008,
+    "fail": 0,
+    "skip": 0
+  },
+  "runtime": "Chromium141 / Playwright1.56.1 / Node24.22.1 / Linux, CPU4x",
+  "limits": [
+    "One ordered A/B pair with five samples each, no hardware acceptance or statistical SLA.",
+    "The small More navigation changed189 to200ms; no gain claimed there.",
+    "No comparison with or addition to earlier v213/v234 improvement percentages.",
+    "Input gzip is wholly synthetic; fixture SHA256 and uncompressed byte length are in contract."
+  ]
+}
