@@ -1,3 +1,15 @@
+## v240 / PR248 MERGED – Produktionslauf noch offen · 31.10.2026 14:45 UTC
+
+Owner: derselbe aktive Transferimplementierungs-/Integrationschat. Finaler PR248-HEAD **5e14895da55fb3258b2069b33bf6b12020da6956** ist mit vollständiger CI41210204312 und Wallet41210204239 SUCCESS abgenommen: 1014 Tests, 0 Fehler, 0 Abbrüche; Chromium sowie Firefox/WebKit einschließlich Transferüberlappung, Headerstatus und UIqualität bestanden. Finale Artefakte13046585223/13046232777/13045184471 unabhängig per SHA256 und ZIP-CRC geprüft, native mobile Zeilen-/Dialogbilder angesehen. Header-Test wartet jetzt nach konfiguriertem Neustart auf die tatsächliche asynchrone Vaultinitialisierung; keine erzwungenen Zustände oder ausgelassenen Assertions.
+
+Autonom gemergt: **d2193e0baa1feb2b64da23b6a7f5b625ce379c42**, tatsächlich identischer geprüfter Mergebaum **ebd97055bb7060a571b326b0f296fbdc2c4704a5**, SW240. Produktionslauf **41211510896 IN_PROGRESS**. Status **MERGED / RELEASE_PENDING**, ausdrücklich noch kein LIVE_ACCEPTED. Bestätigte Rückfallbasis bleibt v239/4c575f2b1a4bc4b5b268b87ed596697e6b1ae7cc. Unmittelbar: vollständige Main-/Deployment-/Live-Gates sowie Produktionsartefakt/122 Assets/SW/reale Produktionsrevision abnehmen, erst danach Rückfallbasis fortschreiben.
+
+Umfang: Transferverwaltung in normalen Buchungsdetails, Gegenbuchungen/Belegsuche/Undo und separater kompakter Einstieg; alte prominente Transfersektion entfernt. Bestehende finanzielle Vorschau-/Eigentums-/Journal-/Beleg-/Zustimmungs-/CAS-/Undo-Verträge erhalten. Zusätzliche Schreibschranke während Kursaktualisierung mit Positiv-/Negativkontrolle abgesichert. Doppelprojektion innerhalb eines synchronen Renderaufrufs beseitigt; begrenzte synthetische Buchungsreiter-Messung947→868ms/je5Proben, kein Hardwareversprechen.
+
+**Folgepaket de-AT-Anzeigen IN_PROGRESS, Owner derselbe aktive Chat**: isolierter lokaler Zweig fix/de-at-displays auf finalem PR248-Quellbaum; noch keine zweite Remote-PR. Kalenderdaten ohne Zeitzonenverschiebung, exakte lokalisierte Mengen und winzige Nichtnullmengen sowie „Gebuchte Vorgänge“-Typografie werden bearbeitet. Keine Finanz-/Speicherdatenänderung beabsichtigt. Bitte keine konkurrierende Implementierung beginnen. Ein Folgemerge erst nach bestätigtem v240. FLH03/FLH04 und wirtschaftliche Importlöschung bleiben offen; ausschließlich FLH05/FLH-PROJ01 PARKED.
+
+---
+
 ## PR248 finale deterministische Aktualisierungsprüfung – aktueller HEAD zählt · 31.10.2026
 
 Owner bleibt der bereits aktive Transferimplementierungs-/Integrationschat. Aktueller HEAD5df01e6fd94899f0ae1ed267af30fbddc18874e6, Treeaa2eacadf076a69d1b23c988041532de3b086042, SW240-Kandidat. Vollständige aktuelleCI41209202932 IN_PROGRESS, Wallet41209202944 SUCCESS. Status IN_PROGRESS/CI_PENDING; keine alten9972-/01ffd-Gates auf diesen HEAD übertragen und noch nicht mergen. Bestätigte Produktion/Rückfallbasis unverändert v239/4c575f2b.../SW239, vollständige Belege nachfolgend und in beiden bewahrten unabhängigen Produktionsquittungen.
