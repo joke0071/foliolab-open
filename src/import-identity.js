@@ -101,7 +101,7 @@ export function sourceDigest(text){
 export function provenCashImport(booking,journal){
  try{
   const s=validateImportSource(booking.importSource,booking.accountId);
-  if(!s||s.sourceId!=='generic-csv'||!s.externalId||!s.fileId||s.occurrence!==1||journal.source!=='csv'||
+  if(!s||Object.keys(booking.importSource).some(k=>!Object.hasOwn(s,k))||s.sourceId!=='generic-csv'||!s.externalId||!s.fileId||s.occurrence!==1||journal.source!=='csv'||
    !sourceUnmodified({journalEntries:[journal]},booking)||
    !['deposit','withdraw','dividend','interest','fee','tax'].includes(booking.type))return false;
   const r=JSON.parse(s.sourcePayload),keys='type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId'.split(' ');
@@ -109,6 +109,14 @@ export function provenCashImport(booking,journal){
    r.type!==booking.type||r.date!==booking.date||r.positionId!==booking.positionId||r.notes!==(booking.notes||'')||r.cashPositionId||booking.cashPositionId||
    units(r.quantity)<=0n||units(r.quantity)!==units(booking.quantityExact)||units(r.unitPrice)!==units(1)||units(booking.unitPrice)!==units(1)||
    units(r.feeEUR)!==0n||units(r.taxEUR)!==0n||units(r.fxRate)!==units(1))return false;
+  const q=units(r.quantity),sign=['deposit','dividend','interest'].includes(booking.type)?1n:-1n;
+  const own=journal.postings?.filter(p=>p.positionId===booking.positionId),other=journal.postings?.filter(p=>p.positionId==null);
+  const role=['deposit','withdraw'].includes(booking.type)?'external-clearing':['fee','tax'].includes(booking.type)?booking.type:'income';
+  if(journal.id!==booking.journalEntryId||journal.type!==booking.type||journal.date!==booking.date||journal.status!=='recorded'||journal.cashPositionId||
+   booking.external!==['deposit','withdraw'].includes(booking.type)||booking.targetPositionId||booking.transferMatch||
+   units(booking.quantity)!==q||units(booking.amountExactEUR)!==q||units(booking.amountEUR)!==q||units(booking.feeEUR)!==0n||units(booking.taxEUR)!==0n||units(booking.fxRate)!==units(1)||
+   journal.postings.length!==2||own.length!==1||other.length!==1||own[0].role!=='cash'||own[0].accountId!==booking.accountId||
+   units(own[0].quantityDeltaExact)!==sign*q||units(own[0].amountBookEURExact)!==sign*q||other[0].role!==role||other[0].quantityDeltaExact!=null||other[0].accountId!=null||units(other[0].amountBookEURExact)!==-sign*q)return false;
   const fingerprint=JSON.stringify([r.date,r.type,r.positionId,r.quantity,r.unitPrice,r.feeEUR,r.taxEUR,r.fxRate,r.externalId]);
   return booking.importFingerprint===fingerprint;
  }catch{return false;}

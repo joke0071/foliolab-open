@@ -82,6 +82,10 @@ export function validateJournalEntry(entry){
    const o=a.originals[i],b=o?.booking,j=o?.journal,after=a.afterBookings[i];
    if(!b?.id||auditIds.has(b.id)||(b.importSource?!(a.version===2&&provenCashImport(b,j)):j?.source!=='manual'||!!b.importFingerprint)||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
     (a.action==='remove'?after!==null:!after||after.id!==b.id))throw Error('Unvollständiger Buchungsänderungsnachweis.');
+   if(a.version===2&&b.importSource){
+    const external=['deposit','withdraw'].includes(b.type),signed=units(b.quantityExact)*(b.type==='deposit'?1n:-1n);
+    if(external?o.flows.length!==1||o.flows[0].date!==b.date||units(o.flows[0].amountExactEUR)!==signed||units(o.flows[0].amountEUR)!==signed:o.flows.length!==0)throw Error('Ungültiger importierter Kapitalflussnachweis.');
+   }
    auditIds.add(b.id);validateJournalEntry(j);
   }
  }

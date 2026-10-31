@@ -44,3 +44,13 @@ test('audit version cannot be downgraded or used for imported edits; source evid
 test('changed source payload and renamed file cannot bypass deleted external identity',()=>{
  const {m,b,csv,mapping}=fixture(),next=previewBookingChange(m,request(b)).candidate;const changed=structuredClone(csv);changed.sourceName='new-file.csv';changed.rows[0].quantity='30';const p=previewCSV(next,changed,mapping);assert.equal(p.ready,0);assert.equal(p.issues[0].code,'source-conflict');
 });
+test('retained imported journal and cash-flow amounts cannot be tampered on restore',()=>{
+ const {m,b}=fixture(),next=previewBookingChange(m,request(b)).candidate;
+ for(const mutate of [o=>o.flows[0].amountExactEUR='21',o=>o.flows=[],o=>o.journal.postings[0].accountId='wrong',o=>o.journal.status='other',o=>o.booking.external=false,o=>o.booking.importSource.futureReference='unknown']){
+  const invalid=structuredClone(next);mutate(invalid.journalEntries.at(-1).managementAudit.originals[0]);assert.throws(()=>safeImport(invalid));
+ }
+});
+test('reimport protection also marks changed namespace and ambiguous same-day source for review',()=>{
+ const {m,b,csv,mapping}=fixture(),next=previewBookingChange(m,request(b)).candidate;
+ const changed=structuredClone(csv);changed.rows[0].externalId='new-reference';changed.rows[0].quantity='30';changed.sourceName='changed.csv';const p=previewCSV(next,changed,mapping,{sourceId:'other-source'});assert.equal(p.ready,0);assert.equal(p.issues[0].code,'source-conflict');
+});
