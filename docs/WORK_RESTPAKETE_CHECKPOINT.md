@@ -1,3 +1,15 @@
+## PERF01 Kalender-/Wallet-Metadaten – IN_PROGRESS · Produktion v245 LIVE_ACCEPTED
+
+Owner: aktueller Work-Chat /root. Separater main-basierter Branch `feature/perf-calendar-projection-lookup`, HEAD `403862ed42140c08cf47aaf75daa953b777720e1`, Tree `fb80d3ab688eb4689391411d5235545cd68750bf`, geplanter SW v246. Noch kein PR und keine CI-/Merge-/Releasefreigabe als Ergebnis behauptet. Produktion bleibt vollständig abgenommenes v245 / Main `621abf1556b0be87d485fd43943cf521dfc965fb`.
+
+Nach gemessener Basis und CPU-Profil ausschließlich zwei Hotspots umgesetzt: vorhandene begrenzte reine Kalenderprüfung als gemeinsame Utility für Modell/Journal/Historie nutzen (keine Finanz-/Persistenz-/Berechtigungscaches); konstante Wallet-Signatur-/Overlap-/Aliasmetadaten nur für einen synchronen Historienaufruf aufbauen. Dynamische Tagesmengen, Bewertungen und sämtliche Journal-/CAS-Prüfungen bleiben frisch. Kein Persistenzschema, keine Migration oder Finanzformel geändert.
+
+Lokal 1034/1034 Tests ohne Fehler/Skips und Syntax erfolgreich. Neue unabhängige Gregorian-/Schaltjahr-/Jahrhundert-/Cachegrenzen-/Korruptionsprüfungen sowie dynamische Alias-/Overlap-/Nullbestandsfälle. Zusätzlich **240 vollständige Projektionen gegen den tatsächlichen v245-Code bytegenau gleich**, einschließlich aller Komponenten, Unbekannten, Eigentums-/Kontozuordnungen, Tagesmengen, Beobachtungen und Abgleichdaten; Modelle unverändert. Evidenz und reproduzierbarer Gegencheck unter docs/perf-evidence/2026-10-31/perf246/.
+
+Erste getrennte 3er-Messprobe am großen Profil: Median Kaltstart ca. 3239ms gegenüber vorher 4389ms; **nur vorläufig, keine abschließende Gewinnbehauptung**. Verbindlicher ABBA-Vergleich (A1/B1/B2/A2, je fünf Starts, CPU4x/390px, identische gespeicherte Seeds, großer und kleiner Fall) läuft derzeit. Kein Android-Hardwarebeleg. Initiale ungültige leere Eröffnungslisten-Fixture wurde vom unveränderten Storage-Vertrag abgelehnt und vor jeder Timingmessung korrigiert; keine Validierung abgeschwächt.
+
+Nächster Schritt: vollständige ABBA-Rohdaten, Streuung, identische kanonische Werte/Projektionen und Kleinportfolio prüfen. Nur bei belegtem Vorteil PR erstellen, vollständige unveränderte Drei-Engine-/Finanz-/Storage-/PWA-Gates, Merge und tatsächliche Live-Abnahme. Keine parallele Umsetzung dieser Hotspots beginnen.
+
 ## v245 LIVE_ACCEPTED – PR #251 abgeschlossen, nächste gemessene P1-Arbeit · 31.10.2026
 
 Owner: aktueller Work-Chat /root. Produktion https://foliolab.unperfekt.at/ bestätigt. Main `621abf1556b0be87d485fd43943cf521dfc965fb`; SW `foliolab-open-v245`; PR #251 HEAD `5ac54b4dc0f77c48ef6ba4e0ce822c8216f08a67`; identischer geprüfter Tree `f067f8f11a698dee953053dcc55a63260fc5faa1`.
