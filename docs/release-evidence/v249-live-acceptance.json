@@ -1,0 +1,137 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": "v249",
+  "date": "2026-10-31",
+  "repository": "joke0071/foliolab-open",
+  "production": "https://foliolab.unperfekt.at/",
+  "pr": 259,
+  "head": "4ae8e3ba9c3c03c4e760a296f51984266d2af577",
+  "main": "3a406db624cb20a457d4886aca31e1ee4eaefe93",
+  "tree": "c0e852587a065ec3fa5c2561fa7bc109adcbe03f",
+  "serviceWorker": "foliolab-open-v249",
+  "candidateCI": {
+    "run": 41241077889,
+    "wallet": 41241077897,
+    "status": "SUCCESS"
+  },
+  "release": {
+    "run": 41242188218,
+    "status": "SUCCESS",
+    "overallStateObservedOnGitHub": "completed successfully",
+    "deployJob": 124661354448,
+    "liveJob": 124661534170
+  },
+  "checks": {
+    "unitTests": 1037,
+    "unitFailures": 0,
+    "unitSkips": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "productionAssetUrls": 122,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "managementCounts": [
+      0,
+      1,
+      100,
+      101
+    ],
+    "managementViews": [
+      "active",
+      "archived",
+      "all"
+    ],
+    "managementModes": [
+      "normal",
+      "manage"
+    ],
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "editorOriginReferenceRemoval": "PASS in all three production engines",
+    "positionBatchRestore": "100 explicit selected records, one revision, unchanged other economic records",
+    "sameTestedAndMergedTree": true
+  },
+  "artifacts": [
+    {
+      "id": 13059216516,
+      "name": "production-live-acceptance-3a406db624cb20a457d4886aca31e1ee4eaefe93",
+      "digest": "sha256:6a2264fd943385303566dd73ac784e3daa1b7fbb198cb83bda553bf907f86a01",
+      "size": 78135622
+    },
+    {
+      "id": 13058421608,
+      "name": "cross-engine-gates-3a406db624cb20a457d4886aca31e1ee4eaefe93-3",
+      "digest": "sha256:c5cd59c828446182985699ff669dee2744af753155b6002302a0503fb86b19b8",
+      "size": 48534743
+    },
+    {
+      "id": 13058101527,
+      "name": "ci-stage-3a406db624cb20a457d4886aca31e1ee4eaefe93",
+      "digest": "sha256:0364103fddb2944076a54209bc274ca902df7fd255b8d28a48cc4a50924269ba",
+      "size": 352
+    },
+    {
+      "id": 13057958322,
+      "name": "cross-engine-gates-3a406db624cb20a457d4886aca31e1ee4eaefe93-1",
+      "digest": "sha256:0f2ecec07ecd413ed9b9bb5fe817a07f9e996e6b4fc2f61e6f0b982582a10fdf",
+      "size": 47874701
+    },
+    {
+      "id": 13057912787,
+      "name": "cross-engine-gates-3a406db624cb20a457d4886aca31e1ee4eaefe93-2",
+      "digest": "sha256:b63ddc34ce858b023e4ebcf2486d01ce64c6faa882db3f6ed30c0e094bc7ca22",
+      "size": 2654586
+    },
+    {
+      "id": 13057608802,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:c96a0985482bf1a8480643267841b25ca0a869c42162d12389c96b6219644324",
+      "size": 937343
+    },
+    {
+      "id": 13057599260,
+      "name": "github-pages",
+      "digest": "sha256:31c9d487c03f17e231c8cc01d19914037cbfabde4b3acb8b30ab0044826e7838",
+      "size": 403754
+    },
+    {
+      "id": 13057149740,
+      "name": "release-gates-3a406db624cb20a457d4886aca31e1ee4eaefe93",
+      "digest": "sha256:1b9649bd134f99e6270ba375c332d914b277ef420dbad3bfb03f15b288b4f566",
+      "size": 48236144
+    }
+  ],
+  "verificationMethods": [
+    "exact published HTTPS URL SHA256 matches against release checkout",
+    "CI upload and artifact API digest equality",
+    "complete actual three-engine production flows",
+    "fresh local git verification of current main and tested tree",
+    "independent public browser startup/IndexedDB/visible category options/position archive view in empty profile"
+  ],
+  "rollback": {
+    "current": "v249",
+    "previous": "v248",
+    "previousMain": "2f309fa3cca92710a4ed367ac42b240ae220bc7e",
+    "newSchema": false
+  },
+  "boundaries": {
+    "physicalAndroid": "EXTERNAL",
+    "nativeSafari": "EXTERNAL",
+    "realGoogleOAuth": "EXTERNAL",
+    "talkBack": "EXTERNAL",
+    "full10000RowUI": "OPEN",
+    "stable10000ReferenceIDsUnit": "PASS",
+    "complexEconomicInverses": "PARTIAL / OPEN"
+  },
+  "operationalNote": "Production live job used almost the existing 20-minute budget; preserve all checks and allow adequate runtime headroom when adding future cases."
+}
