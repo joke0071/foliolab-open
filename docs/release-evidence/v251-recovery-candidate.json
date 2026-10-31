@@ -1,0 +1,24 @@
+{
+  "status": "MERGED",
+  "main": "7c720dddd5450fd4c2342deae9c7d91427ee01e7",
+  "tree": "1e16eb23f2c80f83ccfa36c987e517985240ff55",
+  "head": "c674165f378cc6a174ff4e22287584310d3dacb1",
+  "syntheticMerge": "6af05d66042ac63e9b4152a317ef1110ce82a3bd",
+  "pr": 261,
+  "ci": 41250344634,
+  "wallet": 41250344570,
+  "units": {
+    "pass": 1044,
+    "fail": 0,
+    "skip": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "mainRun": 41251425999,
+  "production": "PENDING",
+  "fallback": "v250",
+  "scope": "UTF-8 envelope bytes checked before encryption against unchanged local file reader limit"
+}

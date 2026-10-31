@@ -1,3 +1,13 @@
+## v251 – MERGED · Main-/Produktionslauf IN_PROGRESS
+
+[PR #261](https://github.com/joke0071/foliolab-open/pull/261) kontrolliert gemergt: Main **`7c720dddd5450fd4c2342deae9c7d91427ee01e7`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, exakt gleich geprüftem HEAD `c674165f378cc6a174ff4e22287584310d3dacb1` und synthetischem Merge `6af05d66042ac63e9b4152a317ef1110ce82a3bd` (API/Git-Treevergleich PASS). **Volle PR-CI 41250344634 SUCCESS, Wallet 41250344570 SUCCESS: 1044/1044 Tests/0 Fehler/0 Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Shards.** Neuer Unicode-Hüllenfall in allen drei Engines tatsächlich PASS. Keine Revieweinwände; aktueller Main/PR/Actions/Checkpoint unmittelbar vor Merge unverändert, keine fremde parallele Implementierung. Historischen Checkpoint-Branch nicht integriert.
+
+**Main-/Release [41251425999](https://github.com/joke0071/foliolab-open/actions/runs/41251425999) läuft; noch kein DEPLOYED/LIVE_ACCEPTED für v251. Bestätigte Produktions-/Rückfallbasis v250.** Geplanter SW `foliolab-open-v251`. Eigene vollständige Main-Gates, Deployment, tatsächlich veröffentlichte Bytes/Kernabläufe/erweiterte Recovery und Chromium/Firefox/WebKit bleiben Pflicht. Keine weiteren Produktänderungen während dieses Releaseabschlusses.
+
+Umfang: tatsächliche UTF-8-Hüllenbytes zusätzlich vor AES gegen bestehende lokale 20-MB-Dateigrenze. Keine Readerlimitänderung/Metadatenkürzung/Schema-/Finanz-/CAS-/Kryptovertragsänderung. Alle detaillierten Repros/Restgrenzen unter den v250/v251-Einträgen und `docs/REL_RECOVERY01_BACKUP_PREFLIGHT.md` im Main. #254 insgesamt PARTIAL, übrige Versions-/alte-Tab-/Crash-/Quota-/Hardware-/OAuth-/TalkBack-Fälle offen. Nach tatsächlichem Live-Abschluss #255-Finanzketten, danach #256 und weitere aktive Masterpakete sequenziell.
+
+---
+
 ## #254 / v251 – IN_PROGRESS · Unicode-Dateihülle als kleine Folgekorrektur
 
 Owner Work /root, 97b37cee055e. Nach vollständig beendeter v250-Abnahme frischer Kollisionscheck: Main `0b804f09ff83324898e9f86a021fe1831c71e1d2` unverändert, nur alte Drafts #157/#161 offen, keine laufende fremde Umsetzung. Einziger aktiver Strang **`feature/recovery-envelope-utf8-size`**, **[PR #261](https://github.com/joke0071/foliolab-open/pull/261)**, HEAD **`c674165f378cc6a174ff4e22287584310d3dacb1`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, exakt gleich lokalem geprüften Tree. **Volle CI 41250344634 / Wallet 41250344570 laufen; noch kein CI_ACCEPTED/MERGED/DEPLOYED für v251. V250 bleibt LIVE_ACCEPTED.**
