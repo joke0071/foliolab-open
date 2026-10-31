@@ -19,6 +19,19 @@
 
 ---
 
+## PERF01 / v247 – MERGED · DEPLOYED · Live-Abnahme noch offen (31.10.2026)
+
+Owner: aktueller Work-Chat /root. Dieser Eintrag übersteuert den älteren PERF01-WIP v246 unten; der MASTER-OVERRIDE bleibt unverändert.
+
+- PR [#253](https://github.com/joke0071/foliolab-open/pull/253) gemergt; geprüfter HEAD `1f2b60b77f347ec6476e32b6a64a0fb2c08e3357`, Main `b7f8779dba49e16c572fe5430bd282b85e5f9ddb`, exakter Merge-Tree `921cb8976985abbd0505486e1ac7d6778b64b8d7`, SW `foliolab-open-v247`.
+- Umfang: begrenzter Cache ausschließlich für reine Kalenderdatumsvalidierung im bestehenden Transaktionsmodul; statische Wallet-Signaturen/Regeln einmal je historischer Projektion. Tagesabhängige Mengen-/Overlap-Gates bleiben im Tagesloop; keine gespeicherten Finanz-/Berechtigungs-/Ergebniscaches. 240 vollständige Projektionsvarianten exakt gegen v245 gleich, keine Modellmutation.
+- PR-CI [41230295556](https://github.com/joke0071/foliolab-open/actions/runs/41230295556) und Wallet-Gate 41230295620 SUCCESS; 1034 Unit-/Integrationstests, Syntax, Chromium/Firefox/WebKit-Gates bestanden.
+- Main-Release [41231426767](https://github.com/joke0071/foliolab-open/actions/runs/41231426767): Unit-/Integration und alle Browsergates SUCCESS; Deployment SUCCESS; Live-Acceptance zum Zeitpunkt dieses Eintrags noch laufend. **Noch kein LIVE_ACCEPTED für v247**. v245 bleibt letzte vollständig belegte Rückfallbasis (Audit-v2-kompatibel).
+- Kontrollierte synthetische ABBA-Stressmessung [41230293005](https://github.com/joke0071/foliolab-open/actions/runs/41230293005), Artefakt 13053611797, SHA256 `94c41010470c7562402c34b62b3e6af7e399ed6bec6fc4b6958e528bac58c275`: 19 Positionen, 10.000 Buchungen/Journale, 1.825 Stichtage; CPU4x, kontrollierter SW, je Variante 10 Kalt-/Warm-/Offline-Läufe. Kaltstart 2540,65→2025,05 ms (−20,29 %), Warmstart −19,21 %, Offline −16,38 %; Werte/Records/Projektionen exakt gleich.
+- **Messgrenzenkorrektur:** Dieser 10,58-MB-Stressfall überschreitet vorhandene verschlüsselte Backupgrenzen. Diese Zahlen sind ausschließlich Stressmesswerte, keine qualifizierte Abnahme eines innerhalb aller Backupgrenzen liegenden Großportfolios. Kein Verschlüsselungslimit wurde verändert. Aktuell ergänzter Test verwendet 4.000 Buchungen und prüft vor der Messung echte vollständige verschlüsselte Backups samt Entschlüsselung/Restore in v1 und v2. Supplemental-Diagnostik auf demselben Branch, kein paralleler Produktpatch.
+- Nächster Schritt: repräsentativen Vergleich innerhalb beider Backupgrenzen abschließen; Main-Live-Gate, Produktionsrevision, Asset-/Artefakthashes, bestehende Finanz-/Undo-/Backup- und visuelle Abnahme prüfen. Erst danach LIVE_ACCEPTED. #177 bleibt PARTIAL; CPU-Emulation ist keine echte Android-/installierte-PWA-Hardwareabnahme. Ergebnisse früherer Releases nicht addieren.
+- Anschließend kollisionsfrei P1-Aggregathinweise für unbewertete Positionen (MASTER-OVERRIDE) fortsetzen; keine zweite Implementierung bestehender Pakete.
+
 ## PERF01 Kalender-/Wallet-Metadaten – IN_PROGRESS · Produktion v245 LIVE_ACCEPTED
 
 Owner: aktueller Work-Chat /root. Separater main-basierter Branch `feature/perf-calendar-projection-lookup`, HEAD `403862ed42140c08cf47aaf75daa953b777720e1`, Tree `fb80d3ab688eb4689391411d5235545cd68750bf`, geplanter SW v246. Noch kein PR und keine CI-/Merge-/Releasefreigabe als Ergebnis behauptet. Produktion bleibt vollständig abgenommenes v245 / Main `621abf1556b0be87d485fd43943cf521dfc965fb`.
