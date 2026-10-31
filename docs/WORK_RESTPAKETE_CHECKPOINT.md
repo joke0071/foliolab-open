@@ -1,3 +1,9 @@
+## v228/SW228 LIVE_ACCEPTED · 31.10.2026
+
+Main aa2df390d40ee4d2c77fe5dd11e83d8eb99a6b24, vollständiger Run41145529388 einschließlich CI/Deploy/Live-Chromium/Firefox/WebKit SUCCESS. Eigener Live-Artefaktdownload 13020739558 mit GitHub-SHA256 8f840a018f0275e5b868948ad61a9c4306140ddf3b721d89c6c579fbfe279ce8 und ZIP-CRC geprüft; PASS-Bericht mit korrektem Commit und SW, 121 exakten Assetmatches, 18 Axe-Scans, 0 Fehler. Backup/Restore, echte synthetische UI-/IDB-Speicherung, Reload und Offline bestanden. Integrierte PRs: 218, 219, 222, 225. [Dauerhafter vollständiger Releasebeleg](release-evidence/v228-live-acceptance.json). Neue akzeptierte Rückfallbasis; keine Datenrücksetzung/Down-Migration.
+
+---
+
 ## K01, Onboarding und Browsercache vollständig CI_ACCEPTED · 31.10.2026
 
 Alle aktuellen Kandidaten nach konkreter Reparatur der Tests und erneuter Vollprüfung grün: #235 4ea044294a78de83ffaef301bebd40efd09ffeb9 / Run41145829748; #236 960cdd30e324e1468badfa606dafed036b52d73d / Run41145833449; #237 9d94d86369115843a3e986f28d97977aab24947e / Run41145841727. Jeweils Unit/Wallet, Canary und alle Chromium-/Firefox-/WebKit-Gates SUCCESS; deploy/live bei PRs korrekt SKIPPED. HEAD-Identität und Mergefähigkeit aktuell geprüft. Gemeinsamer lokal geprüfter Dateibaum stimmt exakt mit finalem GitHub-Tree 77a9a2b48b228996aebc545bc75c46a05abc6c2a überein.
