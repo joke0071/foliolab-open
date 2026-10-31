@@ -1,0 +1,73 @@
+{
+  "scriptSha256": "eb7638dd6029cffe092832acb781379186c28c461bc8c3eb6bf0e39003374a79",
+  "sha": "621abf1556b0be87d485fd43943cf521dfc965fb",
+  "profiler": true,
+  "scope": "CPU PROFILING DIAGNOSTIC ONLY, timings are not comparable to unprofiled runs; synthetic mixed IndexedDB; fresh Chromium process vs same-dashboard warm reload; 4x CPU emulation is not Android hardware",
+  "runs": 1,
+  "scenarios": [
+    {
+      "positions": 19,
+      "bookings": 10000,
+      "journalEntries": 10000,
+      "references": 1825,
+      "bytes": 10582038,
+      "cpuRate": 4,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 4199.5,
+            "longTasks": [
+              {
+                "start": 65.89999999850988,
+                "duration": 87
+              },
+              {
+                "start": 299.5,
+                "duration": 54
+              },
+              {
+                "start": 403.79999999701977,
+                "duration": 54
+              },
+              {
+                "start": 461.6000000014901,
+                "duration": 3621
+              },
+              {
+                "start": 4083.10000000149,
+                "duration": 104
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 1938.6000000014901,
+            "longTasks": [
+              {
+                "start": 212.30000000447035,
+                "duration": 56
+              },
+              {
+                "start": 273.5,
+                "duration": 1609
+              }
+            ]
+          },
+          "navigation": {
+            "positions": 264,
+            "bookings": 650,
+            "history": 650,
+            "dashboard": 583,
+            "more": 234
+          },
+          "heap": 97400000
+        }
+      ],
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "No physical Android device or constrained process memory.",
+    "Navigation timing includes Playwright dispatch and two render frames.",
+    "No comparison against an older release; no performance improvement claimed."
+  ]
+}

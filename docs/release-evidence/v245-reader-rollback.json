@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "oldVersion": "v242",
+  "currentVersion": "v245",
+  "oldReaderRejectsNewAudit": true,
+  "error": "Ungültiger Buchungsänderungsnachweis.",
+  "canonicalDataOverwritten": false,
+  "rollbackRule": "Use v245 or a reader-compatible repair for portfolios containing audit v2. v242 is only a historical code/backup fallback with a pre-v245 compatible portfolio; never downgrade current data silently."
+}

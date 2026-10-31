@@ -1,0 +1,312 @@
+{
+  "cold": {
+    "sampledMs": 4234.88,
+    "topSelf": [
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 568.43
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "selfMs": 415.08
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/historical-portfolio-value.js",
+        "line": 20,
+        "selfMs": 309.25
+      },
+      {
+        "function": "wealthView",
+        "url": "http://127.0.0.1:4173/src/app.js",
+        "line": 322,
+        "selfMs": 222.15
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 200,
+        "selfMs": 151.77
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/historical-portfolio-value.js",
+        "line": 34,
+        "selfMs": 141.36
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 200,
+        "selfMs": 130.59
+      },
+      {
+        "function": "ledgerQuantityAudit",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 96,
+        "selfMs": 126.37
+      },
+      {
+        "function": "restored",
+        "url": "http://127.0.0.1:4173/src/browser-portfolio-storage.js",
+        "line": 18,
+        "selfMs": 123.44
+      },
+      {
+        "function": "assertRecord",
+        "url": "http://127.0.0.1:4173/src/atomic-storage.js",
+        "line": 54,
+        "selfMs": 109.61
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 109.24
+      },
+      {
+        "function": "historicalQuantityRows",
+        "url": "http://127.0.0.1:4173/src/historical-position-value.js",
+        "line": 32,
+        "selfMs": 76.93
+      },
+      {
+        "function": "renderDashboard",
+        "url": "http://127.0.0.1:4173/src/app.js",
+        "line": 201,
+        "selfMs": 72.62
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 68,
+        "selfMs": 65.05
+      },
+      {
+        "function": "safeImport",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 160,
+        "selfMs": 61.61
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/historical-position-value.js",
+        "line": 37,
+        "selfMs": 58.38
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 57.43
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 55.99
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 55.36
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "selfMs": 53.08
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 52.84
+      },
+      {
+        "function": "request.onsuccess",
+        "url": "http://127.0.0.1:4173/src/atomic-storage.js",
+        "line": 76,
+        "selfMs": 50.83
+      },
+      {
+        "function": "units",
+        "url": "http://127.0.0.1:4173/src/decimal.js",
+        "line": 21,
+        "selfMs": 47.25
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/historical-position-value.js",
+        "line": 37,
+        "selfMs": 45.45
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 45.22
+      }
+    ]
+  },
+  "warm": {
+    "sampledMs": 2157.17,
+    "topSelf": [
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "selfMs": 422.17
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 200,
+        "selfMs": 161.48
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 200,
+        "selfMs": 154.67
+      },
+      {
+        "function": "restored",
+        "url": "http://127.0.0.1:4173/src/browser-portfolio-storage.js",
+        "line": 18,
+        "selfMs": 139.98
+      },
+      {
+        "function": "assertRecord",
+        "url": "http://127.0.0.1:4173/src/atomic-storage.js",
+        "line": 54,
+        "selfMs": 120.99
+      },
+      {
+        "function": "safeImport",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 160,
+        "selfMs": 94.12
+      },
+      {
+        "function": "safeImport",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 160,
+        "selfMs": 71.33
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 62.06
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 61.15
+      },
+      {
+        "function": "request.onsuccess",
+        "url": "http://127.0.0.1:4173/src/atomic-storage.js",
+        "line": 76,
+        "selfMs": 54.81
+      },
+      {
+        "function": "validCalendarDate",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 146,
+        "selfMs": 50.89
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 49.02
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 41.97
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 41.62
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "selfMs": 37.62
+      },
+      {
+        "function": "validCalendarDate",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 146,
+        "selfMs": 36.26
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "selfMs": 36.22
+      },
+      {
+        "function": "validateJournalEntry",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 66,
+        "selfMs": 34.62
+      },
+      {
+        "function": "validCalendarDate",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 146,
+        "selfMs": 26.98
+      },
+      {
+        "function": "uniqueIds",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 158,
+        "selfMs": 26.22
+      },
+      {
+        "function": "ledgerQuantityAudit",
+        "url": "http://127.0.0.1:4173/src/transactions.js",
+        "line": 96,
+        "selfMs": 23.28
+      },
+      {
+        "function": "structuredClone",
+        "url": "",
+        "line": 0,
+        "selfMs": 23.26
+      },
+      {
+        "function": "validCalendarDate",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 146,
+        "selfMs": 22.49
+      },
+      {
+        "function": "scrollTo",
+        "url": "",
+        "line": 0,
+        "selfMs": 21.65
+      },
+      {
+        "function": "(anonymous)",
+        "url": "http://127.0.0.1:4173/src/model.js",
+        "line": 216,
+        "selfMs": 18.95
+      }
+    ]
+  }
+}
