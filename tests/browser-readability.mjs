@@ -23,6 +23,16 @@ for(const engine of (process.env.READABILITY_ENGINES||process.env.BOOKING_MANAGE
    await page.setViewportSize({width,height});
    for(const tab of ['dashboard','history','positions','bookings','more']){
     await nav(tab);await page.screenshot({path:`${out}/${engine}-${width}-${height}-${tab}.png`,fullPage:tab==='more'});
+    if(tab==='dashboard'){
+     const fullAmountVisible=()=>page.locator('#totalValue').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const hero=el.closest('.hero').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=hero.left&&r.right<=hero.right&&r.top>=hero.top&&r.bottom<=hero.bottom);});
+     assert.ok(await fullAmountVisible(),engine+' '+width+' complete hero amount is visible, including hidden-overflow ancestors');
+     if(width===320||width===390){
+      await page.locator('#totalValue').evaluate(el=>{el.style.fontSize=(parseFloat(getComputedStyle(el).fontSize)*1.25)+'px';});
+      assert.ok(await fullAmountVisible(),engine+' '+width+' hero amount remains visible with 125 percent text');
+      await page.screenshot({path:`${out}/${engine}-${width}-hero-text125.png`});
+      await page.locator('#totalValue').evaluate(el=>el.style.removeProperty('font-size'));
+     }
+    }
     const overflow=await page.evaluate(()=>({page:document.documentElement.scrollWidth,viewport:innerWidth,items:[...document.querySelectorAll('main *')].filter(e=>e.getBoundingClientRect().right>innerWidth+1&&e.getBoundingClientRect().width>0).slice(0,8).map(e=>({tag:e.tagName,id:e.id,cls:e.className,text:e.textContent.slice(0,100)}))}));if(overflow.page>width+1)report.failures.push({engine,width,tab,issue:'overflow',...overflow});
    }
    await nav('bookings');

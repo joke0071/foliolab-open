@@ -16,7 +16,7 @@ import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
-import {positionQualityReview,filterQualityReview} from './position-quality-review.js';
+import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
 import {bookingRowMarkup,createBookingHistoryUI} from './booking-history-ui.js';
@@ -83,7 +83,8 @@ let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e)
 let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
-let reviewKind='all',reviewAccount='';
+let reviewKind='all',reviewAccount='',qualityReviewOpen=false,qualityReviewOrigin='positions',heroReviewExpanded=false,qualityReviewLimit=50;
+let qualityReviewInitialIds=new Set();
 let otherTabChangedPortfolio=false;
 let referenceSelecting=false,selectedReferenceIds=[],referenceVisibleIds=[],referenceLimit=100,referenceRemovalReceipt=null;
 let bookingSelecting=false,selectedBookingIds=[],bookingMatchingIds=[],bookingChangeReceipt=null;
@@ -124,7 +125,7 @@ function notify(message,error=false){const box=$('toast');box.textContent=messag
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
-function go(next){if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
+function go(next,{review=false}={}){qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
@@ -157,32 +158,62 @@ function syncPortfolioState(){
  }
 }
 function render(){syncPortfolioState();if(loadFailure)return;if($('optionalConnectionStatus')){const n=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=n?n+' eingerichtet':'Nicht eingerichtet';}switch(page){case 'dashboard':renderDashboard();break;case 'history':renderHistory();break;case 'positions':renderPositions();break;case 'bookings':renderBookings();break;case 'more':renderSettings();break;}syncPortfolioState();}
-function showValuationIssues(){
- positionArchiveView=valuationIssues(model).some(issue=>model.positions.find(p=>p.id===issue.id)?.archived===true)?'all':'active';
- reviewKind='quote';reviewAccount='';
- filter='__review';
- positionLimit=100;
- $('positionSearch').value='';
- go('positions');
- $('positionQuoteDetails').open=true;
- const first=$('positionList').querySelector('.position-entry .holding-expand');
- if(first)first.open=true;
- const active=$('positionFilters').querySelector('[data-filter="__review"]');
- active?.scrollIntoView({block:'start',behavior:'instant'});
- active?.focus({preventScroll:true});
+function openQualityReview(){
+ if(!qualityReviewOpen){qualityReviewOrigin=page;qualityReviewInitialIds=new Set(valuationIssues(model).map(i=>i.id));reviewKind='all';reviewAccount='';qualityReviewLimit=50;}
+ go('positions',{review:true});
+ $('qualityReviewHeading').focus({preventScroll:true});
+}
+function closeQualityReview(){
+ const origin=qualityReviewOrigin==='dashboard'?'dashboard':'positions';go(origin);
+ const target=origin==='dashboard'?$('heroReviewToggle'):$('positionFilters').querySelector('[data-filter="__review"]');
+ if(target)target.focus({preventScroll:true});else{$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
+}
+const reviewLabels={missing:'Fehlende Kurse',outdated:'Veraltete Kursdaten',derived:'Abgeleitete Bewertungen',review:'Unklare Kursstände'};
+function reviewCountsMarkup(counts){return Object.entries(reviewLabels).filter(([key])=>counts[key]).map(([key,label])=>'<span><strong>'+counts[key]+'</strong> '+label+'</span>').join('');}
+function renderQualityReview(review,items){
+ $('positionOverview').hidden=qualityReviewOpen;$('qualityReviewPanel').hidden=!qualityReviewOpen;
+ if(!qualityReviewOpen){$('qualityReviewList').replaceChildren();$('qualityReviewMore').replaceChildren();return;}
+ $('qualityReviewIntro').textContent=review.affectedCount+' betroffene Position'+(review.affectedCount===1?'':'en')+' · aktive und archivierte Anlagen. Jede Position zählt einmal, auch bei mehreren Hinweisen.';
+ const historyCount=review.groups.filter(g=>g.issues.some(i=>i.category==='history')).length;
+ const exactCount=review.groups.filter(g=>g.issues.some(i=>i.action==='review-legacy-quote')).length;
+ $('qualityReviewSummary').innerHTML='<div><h3>Aktuelle Bewertung: '+review.valuation.length+' Positionen</h3><div class="quality-review-counts">'+(reviewCountsMarkup(review.counts)||'<span>Keine Bewertungshinweise</span>')+'</div></div>'+
+  '<div><h3>Kursquellen</h3><p>'+review.quoteSummary.counts.confirmed+' von '+review.quoteSummary.total+' relevanten Wertpapier- und Kryptopositionen bestätigt. '+(review.quoteSummary.total-review.quoteSummary.counts.confirmed)+' nicht bestätigt.</p></div>'+
+  '<div><h3>Historie und Präzision</h3><p>'+(historyCount||exactCount?historyCount+' Positionen mit Historienhinweisen · '+exactCount+' mit abweichenden Anzeige- und Exaktkursen.':'Keine zusätzlichen Hinweise.')+'</p></div>';
+ const remaining=new Set(review.valuation.map(i=>i.id)),resolved=[...qualityReviewInitialIds].filter(id=>!remaining.has(id)).length,newCount=[...remaining].filter(id=>!qualityReviewInitialIds.has(id)).length;
+ const configuredSecurity=Boolean(model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken));
+ const canRefresh=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)))||(['etf','stock','fund'].includes(p.kind)&&p.symbol&&configuredSecurity)||p.currency!=='EUR');
+ $('qualityReviewSourceActions').innerHTML=canRefresh?'<button type="button" class="btn outline" data-action="refresh-quality-sources" '+(busy||saving||editorSubmitting||otherTabChangedPortfolio||!navigator.onLine?'disabled':'')+'>Kurse und Wallet-Bestände aktualisieren</button><p class="small-help">Verwendet die eingerichteten Quellen für das gesamte Portfolio. Bestätigte Kurse und öffentliche Wallet-Bestände werden wie in der Positionsübersicht gespeichert.</p>':'<p class="small-help">Keine automatische Quelle eingerichtet. Kursdaten an der Position prüfen; Kurszugänge findest du unter „Mehr“.</p>';
+ $('qualityReviewRefreshStatus').textContent=busy?'Kurse und Wallet-Bestände werden abgefragt …':$('priceInfo').textContent;
+ $('qualityReviewRefreshErrors').hidden=$('refreshErrorDetails').classList.contains('hidden');
+ $('qualityReviewRefreshErrorText').textContent=$('refreshErrorDetails').textContent;
+ $('qualityReviewProgress').textContent=resolved+' von '+qualityReviewInitialIds.size+' Positionen haben seit Öffnen keinen Bewertungshinweis mehr.'+(newCount?' '+newCount+' neue Bewertungshinweise.':'')+' Änderungen werden nach dem Speichern neu geprüft.';
+ const positions=new Map(model.positions.map(p=>[p.id,p])),issuesById=new Map(review.valuation.map(i=>[i.id,i.type]));
+ const ordered=items.slice().sort((a,b)=>Number(issuesById.has(b.id))-Number(issuesById.has(a.id))||positions.get(a.id).name.localeCompare(positions.get(b.id).name,'de-AT'));
+ $('qualityReviewList').innerHTML=ordered.length?ordered.slice(0,qualityReviewLimit).map(group=>{
+  const p=positions.get(group.id),account=model.accounts.find(a=>a.id===p.accountId),provider=model.providers.find(a=>a.id===p.providerId);
+  const issues=group.issues.filter(i=>reviewKind==='all'||i.category===reviewKind);
+  const actions=[...new Map(issues.map(i=>[i.action,i])).values()];
+  return '<article class="quality-review-card" data-review-position="'+esc(p.id)+'"><h3>'+esc(p.name)+'</h3><p class="small-help">'+esc([provider?.name,account?.name,p.archived?'Archiviert':null].filter(Boolean).join(' · '))+'</p><ul>'+issues.map(i=>'<li><strong>'+esc(i.label)+'</strong><span>'+esc(i.source)+(i.asOf?' · '+esc(dateLabel(i.asOf.slice(0,10))):' · Kein belegter Zeitpunkt')+'</span></li>').join('')+'</ul>'+
+   '<p class="small-help">Kursquelle: '+esc(p.quoteSource||'Nicht angegeben')+' · Kursstand: '+esc(p.quoteAsOf?dateLabel(p.quoteAsOf.slice(0,10)):'Nicht angegeben')+'</p><div class="quality-review-actions">'+actions.map(i=>'<button type="button" class="btn outline" data-action="'+esc(i.action)+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+esc(i.actionLabel)+'</button>').join('')+'</div></article>';
+ }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
+ $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
 function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);$('totalValue').textContent=money(total);
-  const issues=valuationIssues(model),hint=$('totalHint');
+  const issues=valuationIssues(model),hint=$('totalHint'),summary=$('heroQualitySummary');
+  $('totalValue').classList.toggle('hero-value-long',money(total).length>16);
+  summary.replaceChildren();summary.hidden=!heroReviewExpanded;
   hint.replaceChildren();
   if(issues.length){
    const review=document.createElement('button');
-   review.type='button';review.className='hero-valuation-link';
-   review.textContent=`${issues.length} Position${issues.length===1?'':'en'} prüfen ›`;
+   review.type='button';review.id='heroReviewToggle';review.className='hero-valuation-link';
+   review.innerHTML=`${issues.length} Position${issues.length===1?'':'en'} prüfen <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>`;
+   review.setAttribute('aria-expanded',String(heroReviewExpanded));review.setAttribute('aria-controls','heroQualitySummary');
    review.title=valuationHeadline(valuationWarnings(model))||'Betroffene Positionen ansehen';
    review.setAttribute('aria-label',`${issues.length} Position${issues.length===1?'':'en'} mit eingeschränkter Bewertung anzeigen`);
-   review.addEventListener('click',showValuationIssues);
+   review.addEventListener('click',()=>{heroReviewExpanded=!heroReviewExpanded;review.setAttribute('aria-expanded',String(heroReviewExpanded));summary.hidden=!heroReviewExpanded;});
+   summary.innerHTML='<div class="hero-quality-counts">'+reviewCountsMarkup(valuationWarnings(model))+'</div><button type="button" class="btn outline" data-action="open-quality-review">Prüfbereich öffnen</button>';
    hint.append(review);
-  }else hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;
+  }else{heroReviewExpanded=false;summary.hidden=true;hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;}
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    const wealth=wealthView();
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel,wealth);
@@ -364,19 +395,18 @@ function renderHistory(){
 function renderPositions(){
  $('positionArchiveFilter').value=positionArchiveView;
  $('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
- const quality=quoteQualitySummary(model.positions),q=quality.counts,uncertain=quality.total-q.confirmed;
+ const review=structuredQualityReview(model),quality=review.quoteSummary,q=quality.counts,uncertain=quality.total-q.confirmed;
  $('quoteQualitySummary').textContent=quality.total?'Kurse: '+q.confirmed+' bestätigt · '+uncertain+' nicht bestätigt':'Kurse: Noch keine Bewertungen';
  const breakdown=[q.stale&&q.stale+' älter als 7 Tage',q.derived&&q.derived+' aus Stichtagen',q.missing&&q.missing+' ohne Kurs',q.review&&q.review+' mit Prüfhinweis',q.undated&&q.undated+' ohne Kursdatum',q.unverified&&q.unverified+' ohne bestätigte Quelle'].filter(Boolean);
  $('quoteQualityBreakdown').textContent=breakdown.length?breakdown.join(' · '):quality.total?'Alle berücksichtigten Kurse sind aktuell bestätigt.':'Hier werden später Kursquellen und Einschränkungen erklärt.';
- const unresolved=unresolvedListings(),allReview=positionQualityReview(model),reviewItems=filterQualityReview(allReview,{kind:reviewKind,accountId:reviewAccount}),reviewIds=new Set(reviewItems.map(x=>x.id));
- const reviewReasons=new Map(allReview.map(g=>[g.id,g.issues.map(i=>i.label).join(' · ')]));
+ const unresolved=unresolvedListings(),allReview=review.groups,reviewItems=filterQualityReview(allReview,{kind:reviewKind,accountId:reviewAccount});
  const reviewById=new Map(allReview.map(g=>[g.id,g]));
  $('legacyQuoteAudit').hidden=legacyQuoteDiscrepancies(model).length===0&&!legacyAuditPerformed;
- const tools=$('qualityReviewTools');tools.classList.toggle('hidden',filter!=='__review');
+ const tools=$('qualityReviewTools');tools.classList.toggle('hidden',!qualityReviewOpen);
  $('qualityReviewKind').value=reviewKind;
  $('qualityReviewAccount').innerHTML='<option value="">Alle Konten</option>'+model.accounts.map(a=>'<option value="'+esc(a.id)+'"'+(reviewAccount===a.id?' selected':'')+'>'+esc(a.name+' · '+(model.providers.find(p=>p.id===a.providerId)?.name||'Anbieter unbekannt'))+'</option>').join('');
- const hiddenArchiveIssues=reviewItems.filter(g=>{const archived=model.positions.find(p=>p.id===g.id)?.archived===true;return positionArchiveView==='active'?archived:positionArchiveView==='archived'?!archived:false;}).length;
- $('qualityReviewCount').textContent=reviewItems.length+' von '+allReview.length+' betroffenen Positionen. Mehrere Hinweise zählen dieselbe Position nur einmal.'+(hiddenArchiveIssues?' '+hiddenArchiveIssues+' Positionen sind durch die Archivansicht ausgeblendet. Zum Prüfen unter „Ansicht“ Alle wählen.':'');
+ $('qualityReviewCount').textContent=reviewItems.length+' von '+allReview.length+' betroffenen Positionen. Mehrere Hinweise zählen dieselbe Position nur einmal. Archivierte Positionen sind eingeschlossen.';
+ renderQualityReview(review,reviewItems);
  const reviewAction=$('listingReviewAction'),reviewPanel=$('listingReviewPanel'),reviewButton=$('resolveListings');
  if(!unresolved.length)listingReviewOpen=false;
  reviewAction.classList.toggle('hidden',unresolved.length===0);
@@ -408,9 +438,9 @@ function renderPositions(){
     Math.min(50,ordered.length-listingReviewLimit)+' Positionen anzeigen</button>':'');
  }else reviewPanel.replaceChildren();
  const providers=model.providers.map(p=>[p.id,p.name]);const accountFilter=filter.startsWith('account:')?model.accounts.find(a=>a.id===filter.slice(8)):null;
- $('positionFilters').innerHTML=[['all','Alle'],...((allReview.length||filter==='__review')?[['__review','Zu prüfen ('+allReview.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
+ $('positionFilters').innerHTML=[['all','Alle'],...(allReview.length?[['__review','Prüfbereich ('+allReview.length+')']]:[]),...(accountFilter?[[filter,'Konto: '+accountFilter.name]]:[]),...providers]
   .map(([id,label])=>'<button class="filter '+(filter===id?'active':'')+'" data-filter="'+esc(id)+'">'+esc(label)+'</button>').join('');
- const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(filter==='__review'?reviewIds.has(p.id):accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
+ const filtered=positionListScope(model.positions,{view:positionArchiveView}).filter(p=>filter==='all'||(accountFilter?p.accountId===accountFilter.id:p.providerId===filter));
  const visible=searchAndSortPositions(filtered,model,$('positionSearch').value,$('positionSort').value,valueEUR);
  positionMatchingIds=visible.map(p=>p.id);renderPositionSelection();
  const list=visible.slice(0,positionLimit).map(p=>{
@@ -442,14 +472,11 @@ function renderPositions(){
   ];
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   const h=historyAction(model,p);
-  const reviewActions=filter==='__review'&&reviewReasons.has(p.id)?[...new Map(reviewById.get(p.id).issues.map(i=>[i.action,i])).values()]:[];
-  const reviewButtons=reviewActions.filter(i=>!positionSelecting||i.action!=='edit-position').map(i=>'<button type="button" class="btn outline" data-action="'+i.action+'" data-id="'+esc(p.id)+'" aria-label="'+esc(i.actionLabel+' für '+p.name)+'">'+i.actionLabel+'</button>').join('');
-  const secondaryActions=reviewButtons+(p.kind==='cash'&&!reviewActions.some(i=>i.action==='check-cash-balance')?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h&&!reviewActions.some(i=>i.action===h.action)?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
+  const secondaryActions=(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
   return '<div class="position-entry"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'</div><div class="holding-row">'+
    '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
-   (filter==='__review'&&reviewReasons.has(p.id)?'<div class="position-review-reason">'+esc(reviewReasons.get(p.id))+'</div>':'')+
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+
    '</div></div>'+
@@ -763,7 +790,7 @@ const editorDiscardGuard=createDialogDiscardGuard($('editDialog'),{
  onClose:()=>{
   editor=null;
   const opener=dialogOpener;dialogOpener=null;
-  if(opener?.isConnected)opener.focus({preventScroll:true});else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='history'){const replacement=opener?.dataset.action==='edit-snapshot'?[...$('snapshotList').querySelectorAll('[data-action=edit-snapshot]')].find(el=>el.dataset.id===opener.dataset.id):null;(replacement||$('manageReferences')).focus({preventScroll:true});}else if(page==='bookings')($('bookingListHead').querySelector('button')||$('addBooking')).focus({preventScroll:true});
+  if(opener?.isConnected)opener.focus({preventScroll:true});else if(page==='positions'&&qualityReviewOpen){const replacement=[...$('qualityReviewList').querySelectorAll('[data-action]')].find(el=>el.dataset.id===opener?.dataset.id&&el.dataset.action===opener?.dataset.action);(replacement||$('qualityReviewHeading')).focus({preventScroll:true});}else if(positionSelecting)$('positionSelectionTools').querySelector('[data-action=preview-removal]')?.focus({preventScroll:true});else if(page==='positions')($('positionListHead').querySelector('button')||$('addWizard')).focus({preventScroll:true});else if(page==='history'){const replacement=opener?.dataset.action==='edit-snapshot'?[...$('snapshotList').querySelectorAll('[data-action=edit-snapshot]')].find(el=>el.dataset.id===opener.dataset.id):null;(replacement||$('manageReferences')).focus({preventScroll:true});}else if(page==='bookings')($('bookingListHead').querySelector('button')||$('addBooking')).focus({preventScroll:true});
  }
 });
 const dialogSaveLabel=title=>title.startsWith('Anbieter')?'Anbieter speichern'
@@ -2100,7 +2127,7 @@ function openHistoricalPriceCSV(positionId){
  },{once:true});
  input.click();
 }
-async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'review-legacy-quote':filter='__review';go('positions');$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';$('positionSearch').value='';positionLimit=100;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
+async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'refresh-quality-sources':{const pending=refreshAll();renderPositions();await pending;if(page==='positions'&&qualityReviewOpen){renderPositions();$('qualityReviewSourceActions').querySelector('button')?.focus({preventScroll:true});}break;}case 'open-quality-review':openQualityReview();break;case 'close-quality-review':closeQualityReview();break;case 'more-quality-review':qualityReviewLimit+=50;renderPositions();$('qualityReviewMore').querySelector('button')?.focus({preventScroll:true});break;case 'review-legacy-quote':if(!qualityReviewOpen)openQualityReview();$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';qualityReviewLimit=50;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
  $('manageReferences').addEventListener('click',()=>{referenceSelecting=!referenceSelecting;selectedReferenceIds=[];renderReferences();if(referenceSelecting)focusReferences();else $('manageReferences').focus();});
@@ -2160,7 +2187,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
    feedback.scrollIntoView({block:'nearest'});
   }
   finally{editorSubmitting=false;button.disabled=Boolean(loadFailure||editor?.submitBlocked);}
- });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;positionLimit=100;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;positionLimit=100;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
+ });document.addEventListener('click',e=>{void handleActions(e).catch(err=>notify(String(err.message||err),true));});$('positionFilters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){if(b.dataset.filter==='__review'){openQualityReview();return;}filter=b.dataset.filter;reviewKind='all';reviewAccount='';positionLimit=100;renderPositions();}});$('qualityReviewKind').addEventListener('change',e=>{reviewKind=e.target.value;qualityReviewLimit=50;renderPositions();});$('qualityReviewAccount').addEventListener('change',e=>{reviewAccount=e.target.value;qualityReviewLimit=50;renderPositions();$('qualityReviewAccount').focus({preventScroll:true});});$('positionSearch').addEventListener('input',()=>{positionLimit=100;renderPositions();});$('positionSort').addEventListener('change',()=>{positionLimit=100;renderPositions();});$('positionArchiveFilter').addEventListener('change',e=>{positionArchiveView=e.target.value;positionLimit=100;renderPositions();});$('bookingIncome').addEventListener('change',e=>{const id=e.target.id;if(id==='incomeYear'||id==='incomeAccount'){if(id==='incomeYear')incomeYear=e.target.value;else incomeAccount=e.target.value;incomeLimit=100;renderBookings();$(id).focus({preventScroll:true});}});$('bookingSearch').addEventListener('input',()=>{bookingLimit=100;renderBookings();});$('bookingFilterType').addEventListener('change',()=>{bookingLimit=100;renderBookings();});$('miniChartPeriods').addEventListener('click',e=>{const btn=e.target.closest('[data-mini-range]');if(btn&&!btn.disabled){miniRange=btn.dataset.miniRange;renderDashboard();}});$('chartPeriods').addEventListener('click',e=>{const b=e.target.closest('[data-range]');if(b){range=b.dataset.range;calendarSelection=[];$('historyCalendarDisclosure').open=false;renderHistory();}});
  $('historyCalendarDisclosure').addEventListener('toggle',()=>{if($('historyCalendarDisclosure').open)renderSnapshotCalendar();});
  $('historyCalendarPrev').addEventListener('click',()=>shiftSnapshotCalendar(-1));
  $('historyCalendarNext').addEventListener('click',()=>shiftSnapshotCalendar(1));
