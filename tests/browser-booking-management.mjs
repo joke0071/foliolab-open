@@ -43,3 +43,6 @@ for(const engine of (process.env.BOOKING_MANAGEMENT_ENGINES||'chromium').split('
   assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',checks:['205/all/103filtered/hidden/stableIDs','five widths/Axe/preview/Escape/exact no writes','actual quota and post-put abort','one CAS revision offline correction','UI removal and exact undo','UI metadata and exact undo','blocked source and programmatic bypass','exact undo','plain/encrypted fresh restore','competing tab stale preview']});console.log(engine+': BOOKING MANAGEMENT selection/preview/guards/CAS/quota/abort/offline/undo/restore/5widths/Axe PASS');
  }finally{writeFileSync('artifacts/gates/booking-management.json',JSON.stringify(report,null,2));await ctx.close();await browser.close();}
 }
+
+// Exercise imported economic removal through every existing required engine gate.
+import "./browser-import-cash-removal.mjs";

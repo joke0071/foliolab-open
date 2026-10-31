@@ -1,6 +1,6 @@
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
-import {bookingOwnership,sourceDigest} from './import-identity.js';
+import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
 
 /** @typedef {'buy'|'sell'|'deposit'|'withdraw'|'deliver_in'|'deliver_out'|'transfer'|'dividend'|'interest'|'reward'|'airdrop'|'fee'|'tax'|'adjust'|'correction'|'split'|'swap'|'merger'|'ticker_change'|'isin_change'|'delist'} TransactionType */
 /** @typedef {{id:string,type:TransactionType,date:string,positionId:string,quantity:number,feeEUR:number,taxEUR:number,notes:string}} Transaction */
@@ -75,13 +75,17 @@ export function validateJournalEntry(entry){
   const a=entry.managementAudit;
   const entryKeys=new Set('id type date recordedAt sequence source postings managementAudit'.split(' ')),auditKeys=new Set('version action reason originals afterBookings'.split(' '));
   if(Object.keys(entry).some(k=>!entryKeys.has(k))||!a||Object.keys(a).some(k=>!auditKeys.has(k))||!Number.isSafeInteger(entry.sequence)||entry.sequence<1||entry.source!=='management-audit'||entry.postings.length!==1||entry.postings[0].role!=='documentation'||entry.postings[0].positionId!=null||entry.postings[0].accountId!=null||entry.postings[0].quantityDeltaExact!=null||units(entry.postings[0].amountBookEURExact)!==zero||
-   !a||a.version!==1||!['notes','edit','remove'].includes(a.action)||typeof a.reason!=='string'||!a.reason.trim()||a.reason.length>180||!Array.isArray(a.originals)||a.originals.length<1||a.originals.length>200||!Array.isArray(a.afterBookings)||a.afterBookings.length!==a.originals.length||JSON.stringify(a).length>512000)
+   !a||![1,2].includes(a.version)||(a.version===2&&(a.action!=='remove'||!a.originals?.some(o=>o?.booking?.importSource)))||!['notes','edit','remove'].includes(a.action)||typeof a.reason!=='string'||!a.reason.trim()||a.reason.length>180||!Array.isArray(a.originals)||a.originals.length<1||a.originals.length>200||!Array.isArray(a.afterBookings)||a.afterBookings.length!==a.originals.length||JSON.stringify(a).length>512000)
     throw Error('Ungültiger Buchungsänderungsnachweis.');
   const auditIds=new Set();
   for(let i=0;i<a.originals.length;i++){
    const o=a.originals[i],b=o?.booking,j=o?.journal,after=a.afterBookings[i];
-   if(!b?.id||auditIds.has(b.id)||j?.source!=='manual'||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
+   if(!b?.id||auditIds.has(b.id)||(b.importSource?!(a.version===2&&provenCashImport(b,j)):j?.source!=='manual'||!!b.importFingerprint)||j?.type==='booking-management-audit'||b.journalEntryId!==j?.id||b.type!==j.type||b.date!==j.date||!j.postings?.some(p=>p.positionId===b.positionId)||!Array.isArray(o.flows)||o.flows.length>1||o.flows.some(f=>f.id!==b.id)||
     (a.action==='remove'?after!==null:!after||after.id!==b.id))throw Error('Unvollständiger Buchungsänderungsnachweis.');
+   if(a.version===2&&b.importSource){
+    const external=['deposit','withdraw'].includes(b.type),signed=units(b.quantityExact)*(b.type==='deposit'?1n:-1n);
+    if(external?o.flows.length!==1||o.flows[0].date!==b.date||units(o.flows[0].amountExactEUR)!==signed||units(o.flows[0].amountEUR)!==signed:o.flows.length!==0)throw Error('Ungültiger importierter Kapitalflussnachweis.');
+   }
    auditIds.add(b.id);validateJournalEntry(j);
   }
  }
