@@ -1,0 +1,418 @@
+diff --git a/docs/ETH_HISTORY_CURSOR_268.md b/docs/ETH_HISTORY_CURSOR_268.md
+new file mode 100644
+index 00000000..18ae18a
+--- /dev/null
++++ b/docs/ETH_HISTORY_CURSOR_268.md
+@@ -0,0 +1,16 @@
++# ETH-HISTORY-CURSOR01 — bounded cursor and recovery fix
++
++Issue #268. Candidate v260, based on v259/main `6c339c0ea502781f155d209b6443a6c02db8182d`.
++
++The previous validator rejected Blockscout transaction pagination fields `fee`, `value`, `inserted_at`, `hash` and token-batch `index_in_batch`. The official implementations were read directly on 2026-11-01:
++
++- https://github.com/blockscout/blockscout/blob/master/apps/explorer/lib/explorer/chain/transaction.ex (`address_transactions_next_page_params`)
++- https://github.com/blockscout/blockscout/blob/master/apps/block_scout_web/lib/block_scout_web/chain.ex (`token_transfers_next_page_params`)
++
++The adapter now validates an endpoint-specific allowlist, exact bounded numeric strings, safe integers, hashes, timestamps and supported null fields. It forwards values through URLSearchParams without numeric coercion. Unknown fields, cycles, changed retained pages, changed scope or tip require a restart rather than an import preview. Completed pages are still fetched again and compared before resuming; receipt/block/scanner reconciliation remains mandatory. Existing ETH protocol-credit and token-model coverage limitations remain explicit.
++
++Jobs exist before the first network request. An old empty checkpoint is rebuilt only when its exact scope, empty evidence and absent tip prove that no progress exists. Transient network/timeout/abort/page-budget/429/server failures can retain their checkpoint; unsupported or inconsistent cursors cannot. The dialog offers a focused “Neu abrufen” action, disables misleading resume after raw-cache loss, and removes only the affected pending marker. Accepted events and financial records remain intact. Observed reorgs retain existing invalidation behavior rather than asserting verified coverage.
++
++Validation on the final local candidate: 1,070 unit tests, zero failures/skips; syntax and diff checks; adapter and expanded actual dialog suite in Chromium and Firefox. The dialog exercises official transaction and batch-only cursors, successful transient resume, unsupported cursor recovery, reload/cache loss, unchanged accepted sessions/financial fields, seven widths 320–1440 px, WCAG axe scans and focus, existing BTC/SOL/SPL handling, cross-tab conflict and encrypted history roundtrip/download. Full mandatory GitHub CI, WebKit and actual production acceptance are still required before release acceptance. No private wallets, credentials or provider payloads are in fixtures or evidence. No physical Android/native Safari claim.
++
++The precise cause of the user's private request remains unproven; the two demonstrated code defects are fixed. No missing balance is treated as zero and no accepted history is automatically replaced.
+diff --git a/src/ethereum-history.js b/src/ethereum-history.js
+index a23071c..21e0562 100644
+--- a/src/ethereum-history.js
++++ b/src/ethereum-history.js
+@@ -13,6 +13,31 @@ const identity=(accountId,token)=>({network:'ethereum',chainId:'1',accountId,ass
+ const time=v=>{if(typeof v!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?Z$/.test(v))throw Error('invalid-time');return new Date(v).toISOString();};
+ const abort=s=>{if(s?.aborted){const e=Error('aborted');e.name='AbortError';throw e;}};
+ const canonical=v=>JSON.stringify(v,(_,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.entries(x).sort(([a],[b])=>a.localeCompare(b))):x);
++const cursorFields=Object.freeze({
++ transactions:['block_number','index','items_count','fee','value','inserted_at','hash'],
++ 'token-transfers':['block_number','index','items_count','log_index','batch_log_index','batch_block_hash','batch_transaction_hash','index_in_batch'],
++ 'internal-transactions':['block_number','index','items_count','transaction_index']
++});
++/** Exact endpoint cursor values, never an arbitrary query map or URL. */
++export function validateEthereumCursor(cursor,kind){
++ if(cursor===null)return null;
++ const allowed=cursorFields[kind],numeric=v=>Number.isSafeInteger(v)&&v>=0||typeof v==='string'&&/^\d{1,100}$/.test(v);
++ if(!allowed||!cursor||typeof cursor!=='object'||Array.isArray(cursor)||!Object.keys(cursor).length||Object.keys(cursor).length>12)throw Error('provider-cursor-format-changed');
++ for(const [key,value]of Object.entries(cursor)){
++  if(!allowed.includes(key))throw Error('provider-cursor-format-changed');
++  const nullable=kind==='transactions'&&['fee','value','block_number','index'].includes(key)||kind==='token-transfers'&&key.startsWith('batch_')||key==='index_in_batch';
++  if(value===null&&nullable)continue;
++  let valid;
++  if(key==='hash'||key.endsWith('_hash'))valid=typeof value==='string'&&/^0x[0-9a-f]{64}$/i.test(value);
++  else if(key==='inserted_at')valid=typeof value==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?Z$/.test(value)&&Number.isFinite(Date.parse(value));
++  else if(['fee','value'].includes(key))valid=numeric(value)||typeof value==='string'&&/^\d{1,80}\.\d{1,18}$/.test(value);
++  else valid=numeric(value);
++  if(!valid)throw Error('provider-cursor-format-changed');
++ }
++ if(!Object.entries(cursor).some(([k,v])=>v!==null&&['block_number','index','hash','batch_block_hash','batch_transaction_hash','batch_log_index','index_in_batch'].includes(k)))throw Error('provider-cursor-format-changed');
++ return cursor;
++}
++export const ethereumHistoryRestartRequired=code=>!['page-limit','aborted','timeout','network','http-429','http-500','http-502','http-503','http-504','rate-limit-wait-required'].includes(code);
+ /** Receipt-backed normalization; raw provider payloads are never journal entries. */
+ export function ethereumHistoryEvents({wallets,tokens=[],transactions=[],transfers=[],internals=[],evidence={},source=PUBLIC_EVM_NETWORKS[1].host,observedAt=new Date().toISOString()}){
+  const owners=new Map(),aliases=[];
+@@ -95,7 +120,9 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
+  if(!Number.isInteger(maxPages)||maxPages<1||maxPages>10000||!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>60000||!Number.isInteger(retries)||retries<0||retries>2||!Number.isInteger(retryDelayMs)||retryDelayMs<0||retryDelayMs>5000)throw Error('invalid-limits');
+  const host=PUBLIC_EVM_NETWORKS[1].host,scope=canonical([1,host,wallets,tokens,openings]);
+  if(resume?.scope!==undefined&&resume.scope!==scope)throw Error('cursor-scope-mismatch');
+- let state=resume?structuredClone(resume):{schema:1,scope,tip:null,jobs:[],evidence:{}};let pages=0;
++ const expected=wallets.flatMap(w=>['transactions','token-transfers','internal-transactions'].map(kind=>({address:w.address,kind})));
++ const emptyJobs=()=>expected.map(j=>({...j,cursor:null,done:false,items:[],cursors:[]}));
++ let state=resume?structuredClone(resume):{schema:1,scope,tip:null,jobs:emptyJobs(),evidence:{}};let pages=0,section='chain';
+  const issues=new Set(),snapshot=()=>structuredClone(state);
+  async function read(url,body){
+   for(let attempt=0;;attempt++){
+@@ -106,23 +133,27 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
+     const r=await Promise.race([fetcher(url,{method:body?'POST':'GET',...(body?{headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{}),signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error'}),expired]);
+     if(!r.ok){const e=Error('http-'+r.status);e.retryable=r.status===429||r.status>=500;e.delay=r.headers?.get('Retry-After');throw e;}
+     const d=await Promise.race([r.json(),expired]);if(d?.error)throw Error('rpc-error');return d;
+-   }catch(e){abort(signal);if(!e.retryable||attempt>=retries)throw e;
++   }catch(e){abort(signal);if(e instanceof TypeError&&/fetch|CORS|network|load failed/i.test(e.message))e.network=true;if(!e.retryable||attempt>=retries)throw e;
+     const wait=e.delay==null?retryDelayMs:Number(e.delay)*1000;if(!Number.isFinite(wait)||wait>5000)throw Error('rate-limit-wait-required');await new Promise(r=>setTimeout(r,Math.max(0,wait)));
+    }finally{clearTimeout(timer);signal?.removeEventListener('abort',listener);}
+   }
+  }
+  const rpc=async(method,params)=>{const d=await read(ETH_RPC,{jsonrpc:'2.0',id:1,method,params});if(d.result===undefined||d.result===null)throw Error('rpc-missing');return d.result;};
+  try{
++  if(state.schema!==1||state.scope!==scope||!Array.isArray(state.jobs)||!state.evidence||typeof state.evidence!=='object'||Array.isArray(state.evidence))throw Error('invalid-cursor');
++  // Older early-network checkpoints had no jobs and no tip/progress. Rebuild
++  // only that empty, scope-bound initial state; never discard retained pages.
++  if(resume&&!state.jobs.length&&!state.tip&&!Object.keys(state.evidence).length)state.jobs=emptyJobs();
++  if(canonical(state.jobs.map(({address,kind})=>({address,kind})))!==canonical(expected))throw Error('invalid-cursor');
+   if(hex(await rpc('eth_chainId',[]))!==1n)throw Error('wrong-chain');
+   const tip=await rpc('eth_getBlockByNumber',['finalized',false]);hash(tip.hash);hex(tip.number);
+   if(state.schema!==1||state.scope!==scope||state.tip&&canonical(state.tip)!==canonical(tip))throw Error('tip-changed-restart-required');state.tip=tip;
+-  const expected=wallets.flatMap(w=>['transactions','token-transfers','internal-transactions'].map(kind=>({address:w.address,kind})));
+-  if(!resume)state.jobs=expected.map(j=>({...j,cursor:null,done:false,items:[],cursors:[]}));
+-  if(canonical(state.jobs.map(({address,kind})=>({address,kind})))!==canonical(expected))throw Error('invalid-cursor');
+   // Re-fetch completed pages to validate untrusted checkpoints, then continue the
+   // retained cursor. Validation reads do not consume the NEW-page budget.
+   if(resume)for(const job of state.jobs){
++   section=job.kind;
+    if(!Array.isArray(job.items)||!Array.isArray(job.cursors)||job.cursors.length>10000||typeof job.done!=='boolean')throw Error('invalid-cursor');
++   try{validateEthereumCursor(job.cursor,job.kind);}catch{throw Error('invalid-cursor');}
+    let cursor=null;const items=[],seen=[];
+    const length=job.cursors.length+(job.done?1:0);
+    for(let i=0;i<length;i++){
+@@ -130,7 +161,7 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
+     if(cursor)for(const [k,v] of Object.entries(cursor))query.set(k,String(v));
+     const page=await read(host+'/api/v2/addresses/'+job.address+'/'+job.kind+'?'+query);
+     if(!Array.isArray(page.items)||page.items.length>100||!Object.hasOwn(page,'next_page_params'))throw Error('invalid-page');
+-    items.push(...page.items);cursor=page.next_page_params;
++    items.push(...page.items);cursor=validateEthereumCursor(page.next_page_params,job.kind);
+     if(cursor!==null){const id=canonical(cursor);if(id!==job.cursors[i]||seen.includes(id))throw Error('invalid-cursor');seen.push(id);}
+     else if(i!==length-1||!job.done)throw Error('cursor-provider-changed');
+    }
+@@ -138,20 +169,21 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
+   }
+   state.evidence={};
+   for(const job of state.jobs){
++   section=job.kind;
+    while(!job.done){
+     abort(signal);if(pages>=maxPages)throw Error('page-limit');
+     const query=new URLSearchParams(job.kind==='token-transfers'?{type:'ERC-20'}:{});
+     if(job.cursor)for(const [k,v] of Object.entries(job.cursor))query.set(k,String(v));
+     const page=await read(host+'/api/v2/addresses/'+job.address+'/'+job.kind+'?'+query);
+     if(!Array.isArray(page.items)||page.items.length>100||!Object.hasOwn(page,'next_page_params'))throw Error('invalid-page');
+-    const next=page.next_page_params;
++    const next=validateEthereumCursor(page.next_page_params,job.kind);
+     if(next!==null){
+-     if(!next||Array.isArray(next)||typeof next!=='object'||!Object.keys(next).length||Object.keys(next).length>12||Object.entries(next).some(([k,v])=>!['block_number','index','items_count','transaction_index','batch_log_index','batch_block_hash','batch_transaction_hash','log_index'].includes(k)||!(typeof v==='string'||Number.isSafeInteger(v))||String(v).length>100))throw Error('invalid-cursor');
+      const id=canonical(next);if(job.cursors.includes(id)||!page.items.length)throw Error('nonadvancing-cursor');job.cursors.push(id);
+     }
+     job.items.push(...page.items);job.cursor=next;job.done=next===null;pages++;onCheckpoint(snapshot());
+    }
+   }
++  section='chain';
+   const txs=state.jobs.filter(j=>j.kind==='transactions').flatMap(j=>j.items),transfers=state.jobs.filter(j=>j.kind==='token-transfers').flatMap(j=>j.items),internals=state.jobs.filter(j=>j.kind==='internal-transactions').flatMap(j=>j.items);
+   const ids=[...new Set([...txs.map(t=>t.hash),...transfers.map(t=>t.transaction_hash),...internals.map(t=>t.transaction_hash)])];
+   for(const id of ids){
+@@ -202,5 +234,8 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
+   for(const s of candidates)if(reconciliation.some(r=>r.accountId===s.accountId&&r.contract===s.contract&&r.status!=='verified'))s.coverage.status='partial';
+   replay=replayWalletHistory({events:normalized.events,streams:candidates});
+   return {...normalized,issues:[...issues].sort(),coverage:replay.balances.every(b=>b.coverage==='verified')?'verified':'partial',replay,reconciliation,observations,tip:{height:hex(tip.number).toString(),hash:hash(tip.hash),finality:'finalized'},oldestReached:true,resume:null};
+- }catch(e){return {coverage:'partial',issues:[e.name==='AbortError'?'aborted':/^[a-z][a-z0-9-]{1,70}$/.test(e.message)?e.message:'provider-or-schema-error'],replay:null,oldestReached:false,resume:snapshot()};}
++ }catch(e){
++  const code=e.name==='AbortError'?'aborted':e.network?'network':/^[a-z][a-z0-9-]{1,70}$/.test(e.message)?e.message:'provider-or-schema-error',restartRequired=ethereumHistoryRestartRequired(code);
++  return {coverage:'partial',issues:[code],replay:null,oldestReached:false,resume:restartRequired?null:snapshot(),restartRequired,sourceSection:section,pagesRead:pages};
++ }
+ }
+diff --git a/src/wallet-history-state.js b/src/wallet-history-state.js
+index 2fd8aeb..68e45bc 100644
+--- a/src/wallet-history-state.js
++++ b/src/wallet-history-state.js
+@@ -38,6 +38,12 @@ export function checkpointHistory(model,metadata){
+  state.pending=state.pending.filter(p=>p.id!==metadata.id);state.pending.push(metadata);
+  return {...model,walletHistory:validateWalletHistory(state)};
+ }
++/** Drop only temporary resume metadata; retain every accepted session/event. */
++export function clearHistoryCheckpoint(model,id){
++ const state=validateWalletHistory(model.walletHistory??emptyWalletHistory());
++ state.pending=state.pending.filter(p=>p.id!==label(id));
++ return {...model,walletHistory:validateWalletHistory(state)};
++}
+ /** Adapter results are projected; accepted events never retain raw provider pages/credentials. */
+ export function historyPreview(result,{id,chain,walletKey,acceptedAt=new Date().toISOString()}){
+  if(!result.replay)throw Error('Keine rekonstruierte Vorschau vorhanden.');
+diff --git a/src/wallet-history-ui.js b/src/wallet-history-ui.js
+index 614bada..2c6fcbb 100644
+--- a/src/wallet-history-ui.js
++++ b/src/wallet-history-ui.js
+@@ -6,7 +6,7 @@ import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+ import {fetchSolanaHistory} from './solana-history.js';
+ import {fetchBitcoinHistory} from './bitcoin-history.js';
+ import {fetchEthereumHistory} from './ethereum-history.js';
+-import {acceptHistory,checkpointHistory,historyPreview,invalidateHistory} from './wallet-history-state.js';
++import {acceptHistory,checkpointHistory,clearHistoryCheckpoint,historyPreview,invalidateHistory} from './wallet-history-state.js';
+ import {historyDays,rawQuantity} from './wallet-history-days.js';
+ import {replayWalletHistory} from './wallet-history-core.js';
+ import {CHART_PERIODS,chartPeriodDays} from './chart-periods.js';
+@@ -15,19 +15,26 @@ const cache=new Map(); // raw provider pages only; not portfolio state or backup
+ const supported=p=>p.wallet?.enabled&&(['btc','btc-hd','sol','spl'].includes(p.wallet.chain)||['evm','erc20'].includes(p.wallet.chain)&&Number(p.wallet.chainId||1)===1);
+ const link=(chain,id)=>chain==='btc'?'https://blockstream.info/tx/'+encodeURIComponent(id):chain==='eth'?'https://etherscan.io/tx/'+encodeURIComponent(id):'https://solscan.io/tx/'+encodeURIComponent(id);
+ function issueLabel(code){
++ const recovery={'provider-cursor-format-changed':'Der Explorer hat einen nicht unterstützten Seitenzeiger geliefert.','invalid-cursor':'Der temporäre Abrufstand ist nicht mehr verwendbar.','nonadvancing-cursor':'Der Explorer wiederholt denselben Seitenzeiger.','cursor-provider-changed':'Bereits gelesene Explorer-Seiten haben sich verändert.','cursor-scope-mismatch':'Die Wallet-Zuordnung des Abrufstands passt nicht mehr.','page-limit':'Das Abrufbudget für diesen Schritt ist erreicht.','network':'Die Datenquelle ist vorübergehend nicht erreichbar.','timeout':'Die Datenquelle hat nicht rechtzeitig geantwortet.','aborted':'Der Abruf wurde abgebrochen.'};
++ if(recovery[code])return recovery[code];
+  const labels={'closed-token-accounts-may-be-missing':'Früher geschlossene Tokenkonten können fehlen.','token-account-open-close-unknown':'Eröffnung oder Schließung eines Tokenkontos ist nicht vollständig belegt.','unknown-token-owner':'Ein Tokenkonto kann keiner eigenen Wallet sicher zugeordnet werden.','token-program-or-extension-unknown':'Token-2022 oder unbekannte Erweiterungen: vollständiger Verlauf nicht belegt.','archive-gap':'Das Archiv liefert nicht alle früheren Transaktionen.','native-protocol-credits-uncovered':'Bestimmte ETH-Gutschriften, etwa Beacon-Auszahlungen, sind nicht vollständig abgedeckt.','missing-opening':'Ein belegter Anfangsbestand fehlt.','unsupported-token-model':'Für Rebase-, Staking- oder komplexe Token ist kein vollständiger Mengenverlauf belegt.','fee-allocation-unknown':'Die Gebühr einer gemeinsam finanzierten Transaktion lässt sich nicht eindeutig zuordnen.','sol-reconciliation-partial':'Solana-Bestand ist nicht vollständig abgeglichen.','reconciliation-mismatch':'Rekonstruierter und abgeglichener Blockchain-Bestand weichen ab.','history-count-mismatch':'Der Provider meldet mehr Transaktionen als im Verlauf vorliegen.','missing-prevout':'Angaben zu früheren Bitcoin-Ausgängen fehlen.'};
+  return labels[code]??(/reorg|tip-changed|conflict/.test(code)?'Blockchain-Stand oder Quelldaten widersprüchlich. Neuer Abruf erforderlich.':code==='http-403'?'Datenquelle verweigert den Zugriff. Quelle und Konfiguration prüfen.':code==='http-429'?'Ratenlimit erreicht. Bitte später erneut versuchen.':'Ein erforderlicher Nachweis fehlt; der Bestand bleibt unbekannt oder teilweise belegt.');
+ }
+ export function createWalletHistoryUI({getModel,commit}){
+  let evidenceUI;
+- let dialog,selected,preview=null,running=false,controller=null,trigger=null,limit=100,calculating=false,calculation=0,calculationController=null;
++ let dialog,selected,preview=null,running=false,controller=null,trigger=null,limit=100,calculating=false,calculation=0,calculationController=null,restartNeeded=false;
+  const id=()=> 'wallet-history:'+selected.id;
+  const el=name=>dialog.querySelector('[data-history="'+name+'"]');
+  const setStatus=text=>{el('status').textContent=text;};
+  const model=()=>getModel();
+  const source=()=>selected.wallet.chain.startsWith('btc')?'blockstream.info':['sol','spl'].includes(selected.wallet.chain)?new URL(model().settings.solanaRpc).hostname:'eth.blockscout.com';
+  const chain=()=>selected.wallet.chain.startsWith('btc')?'btc':['sol','spl'].includes(selected.wallet.chain)?'sol':'eth';
+- function busy(value){running=value;const blocked=value||calculating;for(const field of dialog.querySelectorAll('select,input'))field.disabled=blocked;el('start').disabled=blocked;el('accept').disabled=blocked||!preview;el('discard').disabled=blocked;el('cancel').disabled=!blocked;el('resume').disabled=blocked||!cache.has(id())&&!model().walletHistory?.pending.some(p=>p.id===id());}
++ function busy(value){running=value;const blocked=value||calculating;for(const field of dialog.querySelectorAll('select,input'))field.disabled=blocked;el('start').disabled=blocked;el('accept').disabled=blocked||!preview;el('discard').disabled=blocked;el('cancel').disabled=!blocked;
++  const entry=cache.get(id()),pending=model().walletHistory?.pending.some(p=>p.id===id()),eth=chain()==='eth';
++  const compatible=entry?.identity===JSON.stringify([selected.wallet,model().settings.solanaRpc]);
++  el('resume').disabled=blocked||(eth?!(compatible&&Array.isArray(entry.state?.jobs)&&entry.state.jobs.length):!entry&&!pending);
++  el('start').textContent=eth&&(restartNeeded||entry||pending||stored())?'Neu abrufen':'Historie abrufen';
++ }
+  function cutoff(){const days=chartPeriodDays('wealth',el('period').value);return el('from').value||(days?new Date(Date.now()-(days-1)*864e5).toISOString().slice(0,10):'0000-01-01');}
+  async function show(session,isPreview=false){
+   const generation=++calculation;calculationController?.abort();calculationController=new AbortController();
+@@ -61,7 +68,7 @@ export function createWalletHistoryUI({getModel,commit}){
+  function stored(){return model().walletHistory?.sessions.find(s=>s.id===id());}
+  async function pending(){const cached=cache.get(id()),scope=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(cached?.identity??JSON.stringify(selected.wallet))))).map(n=>n.toString(16).padStart(2,'0')).join('');await commit(checkpointHistory(model(),{id:id(),chain:chain(),walletKey:selected.id,provider:source(),filter:el('period').value+':'+el('from').value,tip:cached?.state?.tip?.hash??cached?.state?.tip?.blockhash??null,scope,status:'re-fetch-needed',updatedAt:new Date().toISOString()}));}
+  async function run(resume=false){
+-  preview=null;el('accept').hidden=true;controller=new AbortController();busy(true);setStatus('Historie wird abgerufen. Es werden keine Wallet-Signaturen angefordert.');
++  preview=null;restartNeeded=false;el('accept').hidden=true;controller=new AbortController();busy(true);setStatus('Historie wird abgerufen. Es werden keine Wallet-Signaturen angefordert.');
+   const key=id(),p=selected,w=p.wallet;
+   try{
+    const onCheckpoint=state=>{cache.set(key,{state,identity:JSON.stringify([w,model().settings.solanaRpc])});if(cache.size>3)cache.delete(cache.keys().next().value);const count=state.transactions?.length??state.jobs?.reduce((n,j)=>n+j.items.length,0)??state.transactions?.length??0;setStatus(count+' Datensätze abgerufen; Blockchain-Stand wird geprüft.');};
+@@ -75,15 +82,30 @@ export function createWalletHistoryUI({getModel,commit}){
+     const tokens=[...new Map(positions.map(x=>[x.wallet.contract.toLowerCase(),{contract:x.wallet.contract,decimals:Number(x.wallet.decimals),balanceModel:'unknown'}])).values()];
+     result=await fetchEthereumHistory({wallets:[{accountId:p.accountId,address:w.address}],tokens,settings:model().settings,signal:controller.signal,onCheckpoint,resume:resume&&compatible?entry.state:null});
+    }
+-   if(result.resume){cache.set(key,{state:result.resume,identity:JSON.stringify([w,model().settings.solanaRpc])});await pending();setStatus((result.issues||[]).includes('aborted')?'Abgebrochen. Fortsetzen ist möglich; Cacheverlust erfordert erneuten Abruf.':'Abruf unvollständig: '+(result.issues||[]).join(', ')+'. Fortsetzen oder neu beginnen.');
++   if(result.restartRequired){
++    restartNeeded=true;
++    cache.delete(key);if(model().walletHistory?.pending.some(p=>p.id===key))await commit(clearHistoryCheckpoint(model(),key));
++    if(result.issues?.some(x=>/reorg|tip-changed|conflict/.test(x))&&stored())await commit(invalidateHistory(model(),key,'observed-chain-conflict'));
++    await show(stored());
++    const section={transactions:'Transaktionen','token-transfers':'ERC-20','internal-transactions':'Interne Transfers',chain:'Blockchain-Abgleich'}[result.sourceSection]||'Blockchain-Abgleich';
++    setStatus('Quelle: Blockscout · '+section+' · '+(result.pagesRead||0)+' neue Seiten. '+(result.issues||[]).map(issueLabel).join(' ')+' Bisherige Daten bleiben erhalten. Bitte neu abrufen.');return;
++   }
++   if(result.resume){cache.set(key,{state:result.resume,identity:JSON.stringify([w,model().settings.solanaRpc])});await pending();setStatus((result.issues||[]).includes('aborted')?'Abgebrochen. Fortsetzen ist möglich; Cacheverlust erfordert erneuten Abruf.':'Abruf unvollständig. '+(result.issues||[]).map(issueLabel).join(' ')+' Fortsetzen ist möglich oder du kannst neu abrufen.');
+     if(result.issues?.some(x=>/reorg|tip-changed|conflict/.test(x))&&stored())await commit(invalidateHistory(model(),key,'observed-chain-conflict'));
+     show(stored());return;
+    }
+    preview=historyPreview(result,{id:key,chain:chain(),walletKey:p.id});cache.delete(key);limit=100;if(await show(preview,true))setStatus('Vorschau bereit. Erst „Historie übernehmen“ speichert diese Daten dauerhaft.');else setStatus('Abgebrochen. Keine neue Historie gespeichert.');
+-  }catch(e){setStatus('Keine Übernahme: '+String(e.message||e));}
+-  finally{busy(false);}
++  }catch(e){
++   if(chain()==='eth'&&/^(?:invalid-cursor|cursor-scope-mismatch|provider-cursor-format-changed|cursor-provider-changed|tip-changed-restart-required)$/.test(e.message)){
++    restartNeeded=true;cache.delete(key);
++    try{if(model().walletHistory?.pending.some(p=>p.id===key))await commit(clearHistoryCheckpoint(model(),key));
++     await show(stored());setStatus(issueLabel(e.message)+' Bisherige Daten bleiben erhalten. Bitte neu abrufen.');
++    }catch{setStatus('Neuer Abruf erforderlich. Der temporäre Status konnte nicht gespeichert werden; bisherige Daten bleiben erhalten.');}
++   }else setStatus('Keine Übernahme: '+String(e.message||e));
++  }
++  finally{busy(false);if(restartNeeded&&dialog.open)el('start').focus();}
+  }
+- function choose(positionId){selected=model().positions.find(p=>p.id===positionId&&supported(p));preview=null;limit=100;if(!selected)return;el('wallet').value=selected.id;evidenceUI?.refresh();show(stored());busy(false);setStatus('Quelle: '+source()+'. '+(model().walletHistory?.pending.some(p=>p.id===id())?'Vorheriger Abruf kann neu aufgenommen werden.':'Zum Starten Historie abrufen.'));}
++ function choose(positionId){selected=model().positions.find(p=>p.id===positionId&&supported(p));preview=null;restartNeeded=false;limit=100;if(!selected)return;el('wallet').value=selected.id;evidenceUI?.refresh();show(stored());busy(false);setStatus('Quelle: '+source()+'. '+(model().walletHistory?.pending.some(p=>p.id===id())?(chain()==='eth'&&!cache.has(id())?'Temporäre Seiten fehlen. Bitte neu abrufen.':'Vorheriger Abruf kann neu aufgenommen werden.'):'Zum Starten Historie abrufen.'));}
+  function mount(){
+   dialog=document.createElement('dialog');dialog.className='edit-dialog wallet-history-dialog';dialog.id='walletHistoryDialog';dialog.setAttribute('aria-labelledby','walletHistoryTitle');
+   dialog.innerHTML='<div class="dialog-head"><h2 id="walletHistoryTitle" tabindex="-1">Wallet-Historie</h2><button type="button" class="icon-close" data-history="close" aria-label="Historie schließen">×</button></div><div class="wallet-history-body"><p>Öffentliche Blockchain-Daten werden beim Indexer abgefragt. Ein xpub legt zusammengehörige Adressen offen. Keine Seeds, privaten Schlüssel oder Signaturen eingeben. Eigene Transfers sind keine Einzahlungen. Solana-Archive können Lücken enthalten; einen optionalen Archiv-RPC oder Helius-Zugang kannst du unter Mehr → Datenquellen hinterlegen. Keine Pflichtregistrierung.</p><div class="wallet-history-controls"><label class="field"><span>Wallet</span><select data-history="wallet"></select></label><label class="field"><span>Ansicht</span><select data-history="view"><option value="eur">Wert (€)</option><option value="price">Kurs</option><option value="balances">Bestand</option><option value="events">Transaktionen</option></select></label><label class="field"><span>Anzeigezeitraum</span><select data-history="period">'+CHART_PERIODS.wealth.map(p=>'<option value="'+p.value+'"'+(p.value==='all'?' selected':'')+'>'+p.label+'</option>').join('')+'</select></label><label class="field"><span>Optional anzeigen ab</span><input data-history="from" type="date"></label></div><p class="small-help">Für belegte Anfangsbestände kann der Abruf den Gesamtverlauf benötigen. Die Auswahl begrenzt die Anzeige.</p><div class="wallet-history-controls"><button class="btn primary" type="button" data-history="start">Historie abrufen</button><button class="btn outline" type="button" data-history="resume">Fortsetzen</button><button class="btn light" type="button" data-history="cancel" disabled>Abruf abbrechen</button></div><p role="status" aria-live="polite" data-history="status"></p><section data-history="output" aria-label="Historienvorschau"></section></div><div class="dialog-footer"><button type="button" class="btn light" data-history="discard">Vorschau verwerfen</button><button type="button" class="btn primary" data-history="accept" hidden>Historie übernehmen</button></div>';
+diff --git a/sw.js b/sw.js
+index 34a83d2..3e89a54 100644
+--- a/sw.js
++++ b/sw.js
+@@ -1,4 +1,4 @@
+-const CACHE='foliolab-open-v259';
++const CACHE='foliolab-open-v260';
+ const ASSETS=['./','./src/alpha-vantage.js','./src/backup-limits.js','./src/header-status.js','./src/blocked-reasons-ui.js','./src/flatex-native-ui.js','./src/flatex-native.js','./src/bitpanda-preview-ui.js','./src/csv-records.js','./src/bitpanda-preview.js','./src/kraken-ledger.js','./src/kraken-ledger-ui.js','./src/pchain-identity.js','./src/reference-management.js','./src/sonic-staking-evidence.js','./src/pchain-evidence.js','./src/ledger-live.js','./src/ledger-live-ui.js','./src/account-evidence.js','./src/booking-management.js','./src/csv-batch.js','./src/history-evidence-cache.js','./src/historical-portfolio-value.js','./src/historical-position-value.js','./src/purchase-evidence.js','./src/purchase-evidence-ui.js','./src/interest-ui.js','./src/interest-account.js','./src/interest-scenario.js','./src/cash-reconciliation.js','./src/cash-terms.js','./src/cash-terms-ui.js','./src/wallet-history-calculation.js','./src/wallet-history-days-worker.js','./src/wallet-history-valuation.js','./src/solana-history.js','./src/wallet-history-days.js','./src/wallet-history-ui.js','./src/wallet-history-state.js','./src/ethereum-history.js','./src/bitcoin-history.js','./src/wallet-history-core.js','./src/import-identity.js','./index.html','./styles.css','./src/credential-visibility.js','./src/economic-form-ui.js','./src/dialog-discard.js','./src/app.js','./src/drive-backup.js','./src/backup-vault.js','./src/complete-backup.js','./src/account-opening.js','./src/portfolio-edit-actions.js','./src/position-selection.js','./src/coin-identity.js','./src/position-search.js','./src/asset-wizard.js','./src/asset-wizard-core.js','./src/public-instruments-client.js','./src/refresh-ui.js','./src/market-diagnostics.js','./src/quote-quality.js','./src/dashboard-ui.js','./src/chart-periods.js','./src/position-history.js','./src/eodhd-transport.js','./src/eodhd-worker-client.js','./src/security-sources.js','./src/security-discovery.js','./src/onboarding-suggestions.js','./src/reference-listings.js','./src/instrument-catalog.js','./src/security-catalog.js','./src/crypto-fallbacks.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/position-bookings.js','./src/flatex-review-export.js','./src/allocation-ui.js','./src/position-quality-review.js','./src/valuation-status.js','./src/legacy-quote-audit.js','./src/atomic-storage.js','./src/browser-portfolio-storage.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transfer-matching-ui.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/staking-discovery.js','./src/bnb-token-scanner.js','./src/solana-rpc.js','./src/wallet-scan-update.js','./src/ethereum-fallback.js','./src/native-staking-networks.js','./src/staking-catalog.js','./src/wallet-visibility.js','./src/request-cache.js','./src/csv-import.js','./src/flatex-import.js','./src/flatex-reconciliation.js','./src/flatex-backfill.js','./src/flatex-cost-basis.js','./src/flatex-settlements.js','./src/flatex-settlement-audit.js','./src/flatex-cash-audit.js','./src/booking-history.js','./src/booking-history-ui.js','./src/booking-insights-ui.js','./src/booking-insights.js','./src/capital-flows.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/position-icons.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+ self.addEventListener('install',event=>{
+   // A new version must not inherit still-fresh HTTP-cache bytes from the old
+diff --git a/tests/browser-history-ui.mjs b/tests/browser-history-ui.mjs
+index fc43392..5d838df 100644
+--- a/tests/browser-history-ui.mjs
++++ b/tests/browser-history-ui.mjs
+@@ -4,13 +4,15 @@ import {provider as solanaProvider,transaction as solTransaction,A as SOL,M as S
+ import assert from 'node:assert/strict';import {chromium,firefox,webkit} from 'playwright';
+ import {readFile} from 'node:fs/promises';
+ import {provider as bitcoinProvider,tx,A,H as BH} from './bitcoin-history-fixtures.mjs';
+-import {provider as ethereumProvider,A as ETH} from './ethereum-history-fixtures.mjs';
++import {provider as ethereumProvider,A as ETH,H as EH} from './ethereum-history-fixtures.mjs';
++const ethereumCursors={transactions:{block_number:10,index:1,items_count:50,fee:null,value:'900719925474099300000000001',inserted_at:'2023-11-14T22:13:20.123456Z',hash:EH(1)},'token-transfers':{batch_log_index:0,batch_block_hash:EH(10),batch_transaction_hash:EH(1),index_in_batch:'2'}};
+ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
+  const browser=await ({chromium,firefox,webkit}[engine]).launch({headless:true});
+  try{
+-  const context=await legacyContext(browser,{viewport:{width:390,height:844},serviceWorkers:'block'});const page=await context.newPage();let slow=false;const second={...tx(2),status:{...tx(2).status,block_height:11,block_hash:BH(11),block_time:1700086400}};const btc=bitcoinProvider([tx(1),second],{override:(p,d)=>p==='/blocks/tip/hash'?BH(11):p==='/block/'+BH(11)?{id:BH(11),height:11}:p==='/block-height/11'?BH(11):d}),eth=ethereumProvider(),sol=solanaProvider({transactions:[solTransaction(1,{tokens:true,version0:true})]});
++  const context=await legacyContext(browser,{viewport:{width:390,height:844},serviceWorkers:'block'});const page=await context.newPage();let slow=false;const second={...tx(2),status:{...tx(2).status,block_height:11,block_hash:BH(11),block_time:1700086400}};const btc=bitcoinProvider([tx(1),second],{override:(p,d)=>p==='/blocks/tip/hash'?BH(11):p==='/block/'+BH(11)?{id:BH(11),height:11}:p==='/block-height/11'?BH(11):d}),sol=solanaProvider({transactions:[solTransaction(1,{tokens:true,version0:true})]});
++  let eth=ethereumProvider({cursors:ethereumCursors}),ethNetworkFailure=false;
+   await page.context().route('https://blockstream.info/**',async route=>{if(slow)await new Promise(r=>setTimeout(r,700));const r=await btc.fetcher(route.request().url(),{method:'GET'});let data;try{data=await r.json();}catch{}await route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'},status:r.status,contentType:typeof data==='string'?'text/plain':'application/json',body:typeof data==='string'?data:JSON.stringify(data)});});
+-  for(const host of ['eth.blockscout.com','ethereum-rpc.publicnode.com'])await page.context().route('https://'+host+'/**',async route=>{if(route.request().method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'}});return;}const req=route.request(),r=await eth.fetcher(req.url(),{method:req.method(),body:req.postData()});await route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'},status:r.status,contentType:'application/json',body:JSON.stringify(await r.json())});});
++  for(const host of ['eth.blockscout.com','ethereum-rpc.publicnode.com'])await page.context().route('https://'+host+'/**',async route=>{if(route.request().method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'}});return;}if(ethNetworkFailure){await route.abort('failed');return;}const req=route.request(),r=await eth.fetcher(req.url(),{method:req.method(),body:req.postData()});await route.fulfill({headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'GET, POST, OPTIONS'},status:r.status,contentType:'application/json',body:JSON.stringify(await r.json())});});
+   await page.context().route('https://solana-rpc.publicnode.com/**',async route=>{if(route.request().method()==='OPTIONS'){await route.fulfill({status:204,headers:{'access-control-allow-origin':'*','access-control-allow-headers':'content-type','access-control-allow-methods':'POST, OPTIONS'}});return;}const r=await sol.fetcher(route.request().url(),{body:route.request().postData(),method:'POST'});await route.fulfill({status:r.status,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify(await r.json())});});
+   await context.route('https://api.coingecko.com/**',async route=>{await new Promise(r=>setTimeout(r,700));await route.fulfill({status:200,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify({prices:[[1700000000000,20000],[1700086400000,21000]]})});});
+   await page.goto('http://127.0.0.1:4173/tests/');
+@@ -31,6 +33,45 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
+   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions[0].quotes.length),2);const finance=await page.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));return [m.journalEntries.length,m.snapshots.length,m.positions.map(p=>p.quantity)];});assert.deepEqual(finance,[0,0,[1,1,1,1]]);
+   await d.locator('[data-history="wallet"]').selectOption('evm');await d.locator('[data-history="start"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});assert.match(await d.innerText(),/Teilweise|unbekannt/);
+   await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions.length===2);
++  // A transient failure can resume; a provider-format failure cannot. Accepted
++  // events/financial fields stay byte-equivalent until explicit new acceptance.
++  const retained=await page.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));return JSON.stringify({...m,walletHistory:{...m.walletHistory,pending:[]}});});
++  ethNetworkFailure=true;await d.locator('[data-history="start"]').click();
++  await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Fortsetzen ist möglich'));
++  assert.equal(await d.locator('[data-history="resume"]').isEnabled(),true);
++  ethNetworkFailure=false;eth=ethereumProvider({cursors:ethereumCursors});
++  await d.locator('[data-history="resume"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000});
++  await d.locator('[data-history="discard"]').click();
++  ethNetworkFailure=true;await d.locator('[data-history="start"]').click();
++  await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Fortsetzen ist möglich'));
++  ethNetworkFailure=false;eth=ethereumProvider({cursors:{'token-transfers':{index:1,unsupported:'SYNTHETIC_UNTRUSTED_CURSOR'}}});
++  await d.locator('[data-history="resume"]').click();
++  await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Bitte neu abrufen'));
++  assert.equal(await d.locator('[data-history="resume"]').isDisabled(),true);
++  assert.equal(await d.locator('[data-history="start"]').innerText(),'Neu abrufen');
++  assert.match(await d.locator('[data-history="status"]').innerText(),/Blockscout.*ERC-20.*Seiten/);
++  assert.equal(await d.locator('[data-history="accept"]').isVisible(),false);
++  assert.equal(await d.locator('[data-history="start"]').evaluate(el=>el===document.activeElement),true);
++  for(const width of [320,360,390,412,430,768,1440]){
++   await page.setViewportSize({width,height:900});
++   assert.equal(await d.evaluate(el=>el.scrollWidth>el.clientWidth+1||el.getBoundingClientRect().right>innerWidth+1),false,'cursor recovery overflow '+width);
++   assert.deepEqual(await page.evaluate(async()=> (await axe.run(document.getElementById('walletHistoryDialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id)),[]);
++  }
++  const afterRestart=await page.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));return {value:JSON.stringify({...m,walletHistory:{...m.walletHistory,pending:[]}}),pending:m.walletHistory.pending.length};});
++  assert.equal(afterRestart.value,retained);assert.equal(afterRestart.pending,0);
++  eth=ethereumProvider({cursors:ethereumCursors});await d.locator('[data-history="start"]').click();
++  await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000});
++  assert.ok(eth.calls.some(c=>new URL(c.url).searchParams.get('index_in_batch')==='2'),'official batch-only cursor followed');
++  await d.locator('[data-history="discard"]').click();
++  // A reload loses in-memory raw pages: persisted metadata must never promise resume.
++  ethNetworkFailure=true;await d.locator('[data-history="start"]').click();
++  await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Fortsetzen ist möglich'));
++  await d.locator('[data-history="close"]').click();await page.reload();
++  await clickDisclosed(page.locator('[data-action="wallet-history"][data-id="evm"]'));
++  assert.equal(await d.locator('[data-history="resume"]').isDisabled(),true);
++  assert.equal(await d.locator('[data-history="start"]').innerText(),'Neu abrufen');
++  assert.match(await d.locator('[data-history="status"]').innerText(),/Temporäre Seiten fehlen/);
++  ethNetworkFailure=false;
+   await d.locator('[data-history="wallet"]').selectOption('spl');await d.locator('[data-history="start"]').click();await d.locator('[data-history="accept"]').waitFor({state:'visible',timeout:7000});await d.locator('details').first().evaluate(el=>el.open=true);assert.match(await d.innerText(),/geschlossene Tokenkonten/);await d.locator('[data-history="records"]').evaluate(el=>el.open=true);assert.match(await d.innerText(),/0.000000000000000000000007/);await d.locator('[data-history="accept"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions.length===3);
+   const roundtrip=await page.evaluate(async()=>{const {backup,safeImport}=await import('/src/model.js');const {createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js');const {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup}=await import('/src/backup-vault.js');await configureBackupPassword('cross-chain-test-password','cross-chain-test-password');const m=safeImport(JSON.parse(localStorage.getItem('foliolab-open-v1'))),payload=createCompleteBackup(JSON.parse(backup(m)),null,m.walletHistory);const encrypted=await encryptWithBackupPassword(JSON.stringify(payload));const restored=safeImport(unpackCompleteBackup(JSON.parse(await decryptPasswordBackup(JSON.parse(encrypted),'cross-chain-test-password'))).data);return restored.walletHistory.sessions.map(s=>s.chain).sort();});assert.deepEqual(roundtrip,['btc','eth','sol']);
+   await d.locator('[data-history="wallet"]').selectOption('btc');slow=true;await d.locator('[data-history="start"]').click();await d.locator('[data-history="cancel"]').click();await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history="status"]').textContent.includes('Abgebrochen'));slow=false;
+diff --git a/tests/ethereum-history-fixtures.mjs b/tests/ethereum-history-fixtures.mjs
+index 5d75c68..3c604a5 100644
+--- a/tests/ethereum-history-fixtures.mjs
++++ b/tests/ethereum-history-fixtures.mjs
+@@ -15,7 +15,7 @@ export function transfer(n=0,{from=B,to=A,value='7',contract=T}={}){
+  return {item:{transaction_hash:H(1),block_hash:block.hash,log_index:n,from:{hash:from},to:{hash:to},token:{address_hash:contract,decimals:'18',type:'ERC-20'},token_type:'ERC-20',total:{decimals:'18',value}},log:{transactionHash:H(1),blockHash:block.hash,logIndex:'0x'+n.toString(16),address:contract,topics,data:'0x'+BigInt(value).toString(16).padStart(64,'0'),removed:false}};
+ }
+ export function fixture(){const t=transaction(),l=transfer();t.evidence.receipt.logs.push(l.log);return {wallets:structuredClone(wallets),tokens:structuredClone(tokens),transactions:[t.tx],transfers:[l.item],internals:[],evidence:{[H(1)]:t.evidence},observedAt:now};}
+-export function provider({pages=false,status=null,reorg=false,mismatch=false,internalsFail=false}={}){
++export function provider({pages=false,status=null,reorg=false,mismatch=false,internalsFail=false,cursors={}}={}){
+  const f=fixture(),calls=[];let failed=false;
+  const fetcher=async(url,options={})=>{
+   calls.push({url,method:options.method});let data;
+@@ -35,9 +35,9 @@ export function provider({pages=false,status=null,reorg=false,mismatch=false,int
+    if(internalsFail&&p.endsWith('/internal-transactions'))return {ok:false,status:403};
+    if(p.includes('/tokens/'))data={address_hash:T,type:'ERC-20',decimals:'18'};
+    else if(p.endsWith('/token-balances'))data=[{token:{address_hash:T,decimals:'18'},value:mismatch?'8':'7'}];
+-   else if(p.endsWith('/token-transfers'))data={items:u.searchParams.has('index')?[]:f.transfers,next_page_params:pages&&!u.searchParams.has('index')?{index:1,block_number:10}:null};
++   else if(p.endsWith('/token-transfers'))data={items:(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transfers,next_page_params:(pages||cursors['token-transfers'])&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors['token-transfers']||{index:1,block_number:10}:null};
+    else if(p.endsWith('/internal-transactions'))data={items:[],next_page_params:null};
+-   else if(p.endsWith('/transactions'))data={items:f.transactions,next_page_params:null};
++   else if(p.endsWith('/transactions'))data={items:cursors.transactions&&(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transactions,next_page_params:cursors.transactions&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors.transactions:null};
+    else if(p.includes('/transactions/'))data=f.transactions[0];
+    else if(p.includes('/addresses/'))data={coin_balance:'100'};
+    else throw Error('unexpected '+p);
+diff --git a/tests/ethereum-history.test.mjs b/tests/ethereum-history.test.mjs
+index 9fb8f9b..25a8037 100644
+--- a/tests/ethereum-history.test.mjs
++++ b/tests/ethereum-history.test.mjs
+@@ -1,7 +1,37 @@
+ import test from 'node:test';import assert from 'node:assert/strict';
+-import {ethereumHistoryEvents,fetchEthereumHistory} from '../src/ethereum-history.js';
++import {ethereumHistoryEvents,fetchEthereumHistory,validateEthereumCursor} from '../src/ethereum-history.js';
+ import {A,B,T,H,now,wallets,tokens,fixture,transaction,transfer,provider,openings} from './ethereum-history-fixtures.mjs';
+ const options={wallets,tokens,openings,observedAt:now,retryDelayMs:0};
++const cursors={transactions:{index:1,block_number:10,items_count:50,fee:null,value:'900719925474099300000000001',inserted_at:'2023-11-14T22:13:20.123456Z',hash:H(1)},'token-transfers':{items_count:50,batch_log_index:0,batch_block_hash:H(10),batch_transaction_hash:H(1),index_in_batch:'2'}};
++test('Official transaction and token-batch cursors retain exact large strings/nulls without changing events',async()=>{
++ const p=provider({cursors}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});
++ assert.ok(r.replay);assert.equal(r.replay.balances.find(b=>b.contract===T).quantityBaseUnits,'7');assert.equal(r.events.length,2);
++ const next=p.calls.map(c=>new URL(c.url)).find(u=>u.pathname.endsWith('/transactions')&&u.searchParams.has('index'));
++ assert.equal(next.searchParams.get('fee'),'null');assert.equal(next.searchParams.get('value'),cursors.transactions.value);assert.equal(next.searchParams.get('inserted_at'),cursors.transactions.inserted_at);
++ assert.ok(p.calls.some(c=>new URL(c.url).searchParams.get('index_in_batch')==='2'));
++ let resumed=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({cursors}).fetcher});let rounds=0;
++ while(resumed.resume&&rounds++<8)resumed=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({cursors}).fetcher,resume:resumed.resume});
++ assert.deepEqual(resumed.events,r.events);assert.ok(resumed.replay);
++});
++test('Cursor endpoint/type limits reject unknown fields, unsafe numbers, query strings and wrong hashes',()=>{
++ for(const [kind,cursor]of [['transactions',{index:1,index_in_batch:2}],['internal-transactions',{index:1,fee:'2'}],['token-transfers',{index:1,redirect:'https://untrusted.invalid'}],['transactions',{index:-1}],['transactions',{index:Number.MAX_SAFE_INTEGER+1}],['transactions',{index:'1&apikey=secret'}],['transactions',{index:1,hash:'0x123'}],['transactions',{index:1,fee:{value:'1'}}],['transactions',{index:1,inserted_at:'invalid'}],['token-transfers',{index_in_batch:'9'.repeat(101)}]])assert.throws(()=>validateEthereumCursor(cursor,kind),/provider-cursor-format-changed/);
++ assert.deepEqual(validateEthereumCursor({index:'1',block_number:null,fee:null,value:'0',hash:H(1),inserted_at:cursors.transactions.inserted_at},'transactions').fee,null);
++});
++test('An early network checkpoint has initialized jobs; an old empty checkpoint safely restarts in the same scope',async()=>{
++ const first=await fetchEthereumHistory({...options,fetcher:async()=>{throw TypeError('Failed to fetch');}});
++ assert.deepEqual(first.issues,['network']);assert.equal(first.restartRequired,false);assert.equal(first.resume.jobs.length,3);
++ const old=structuredClone(first.resume);old.jobs=[];
++ const recovered=await fetchEthereumHistory({...options,fetcher:provider().fetcher,resume:old});assert.ok(recovered.replay);
++ const bad=structuredClone(first.resume);bad.jobs=[];bad.tip={hash:H(10),number:'0xa'};
++ const rejected=await fetchEthereumHistory({...options,fetcher:provider().fetcher,resume:bad});assert.equal(rejected.restartRequired,true);assert.equal(rejected.resume,null);
++});
++test('Unsupported or cycling cursors and changed retained pages are restart-only, never partial import previews',async()=>{
++ const p=provider({cursors:{'token-transfers':{index:1,unexpected:'SYNTHETIC_PRIVATE_VALUE'}}}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});
++ assert.equal(r.resume,null);assert.equal(r.restartRequired,true);assert.equal(r.replay,null);assert.deepEqual(r.issues,['provider-cursor-format-changed']);assert.equal(r.sourceSection,'token-transfers');
++ assert.ok(!JSON.stringify(r).includes('SYNTHETIC_PRIVATE_VALUE'));assert.ok(!p.calls.some(c=>c.url.includes('unexpected=')));
++ const first=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({pages:true}).fetcher});first.resume.jobs[0].items[0].value='999';
++ const mutated=await fetchEthereumHistory({...options,fetcher:provider({pages:true}).fetcher,resume:first.resume});assert.equal(mutated.resume,null);assert.equal(mutated.restartRequired,true);
++});
+ test('ETH plus ERC20 use exact receipt-backed values and preserve two log indices',()=>{
+  const f=fixture(),l=transfer(1,{value:'123456789012345678901234567890'});f.transfers.push(l.item);f.evidence[H(1)].receipt.logs.push(l.log);
+  const r=ethereumHistoryEvents(f);assert.deepEqual(r.issues,[]);assert.equal(r.events.length,3);assert.ok(r.events.some(e=>e.quantityBaseUnits===l.item.total.value));assert.deepEqual(JSON.parse(JSON.stringify(r)),r);
+diff --git a/tests/wallet-history-state.test.mjs b/tests/wallet-history-state.test.mjs
+index 098882e..d103340 100644
+--- a/tests/wallet-history-state.test.mjs
++++ b/tests/wallet-history-state.test.mjs
+@@ -1,11 +1,18 @@
+ import test from 'node:test';import assert from 'node:assert/strict';
+ import {blankModel,backup,safeImport,createProvider,createPosition,addBooking,snapshot} from '../src/model.js';
+-import {acceptHistory,historyPreview,checkpointHistory,validateWalletHistory,portableWalletHistory} from '../src/wallet-history-state.js';
++import {acceptHistory,historyPreview,checkpointHistory,clearHistoryCheckpoint,validateWalletHistory,portableWalletHistory} from '../src/wallet-history-state.js';
+ import {createCompleteBackup,unpackCompleteBackup} from '../src/complete-backup.js';
+ import {encryptBackup,decryptBackup} from '../src/crypto-backup.js';
+ import {replayWalletHistory} from '../src/wallet-history-core.js';
+ import {event,stream,NOW} from './wallet-history-fixtures.mjs';
+ const preview=()=>historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream()]}),issues:[]},{id:'a',chain:'eth',walletKey:'public-wallet',acceptedAt:NOW});
++test('Clearing a broken resume marker keeps accepted sessions and every financial field unchanged',()=>{
++ let m=acceptHistory(blankModel(),preview());
++ for(const id of ['a','other'])m=checkpointHistory(m,{id,chain:'eth',walletKey:id,provider:'https://fixture.test',filter:'all',tip:null,updatedAt:NOW});
++ const before=JSON.stringify(m),next=clearHistoryCheckpoint(m,'a');assert.equal(JSON.stringify(m),before);
++ assert.deepEqual(next.walletHistory.sessions,m.walletHistory.sessions);assert.deepEqual(next.walletHistory.pending.map(x=>x.id),['other']);
++ for(const key of Object.keys(m).filter(k=>k!=='walletHistory'))assert.deepEqual(next[key],m[key]);
++});
+ test('WH04 accepted projection is idempotent, isolated and credential-free',()=>{
+  const m=blankModel(),provider=createProvider({name:'Protected financial fixture',type:'broker'});m.providers.push(provider);m.positions.push(createPosition({providerId:provider.id,name:'Manual ETF',kind:'etf',quantity:4,price:100},m));addBooking(m,{positionId:m.positions[0].id,date:'2026-10-20',type:'buy',quantity:2,unitPrice:110,feeEUR:2});snapshot(m,'2026-10-20','Manually confirmed amount',{manualTotalEUR:'612.34'});
+  const original=JSON.stringify(m),p=preview();p.password='secret';p.events[0].source='https://rpc.test/path?apikey=secret';
