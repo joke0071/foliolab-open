@@ -1,3 +1,15 @@
+## v252 – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 01.11.2026
+
+Main `28903ff201bf0c942851874dc118f3699e0a5d43`, geprüfter Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, Cache `foliolab-open-v252`, PR #263. **Main-Gates vollständig SUCCESS**, 1050 Tests ohne Fehler/Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Gruppen. Neue Klartext-/Restore-/UTF8-/Referenzsicherheitsfälle und FIN-E2E-Kette ausdrücklich bestanden. Kein Retry oder Abbruch in diesem v252-Lauf.
+
+**Deploymentjob 124801411339 SUCCESS**: exakten Main veröffentlicht, Homepage/SW bestätigt. Statisches Artefakt **13076623002**, SHA256 `3c9ee9d0cda6aa911bdc5e1791e50562d19a6192a0ec593f2af7aa56dd556509`; Pages **13077391372**, SHA256 `ec682fb0a6131455e8bf055ce429f55936f595ce8dc0f221bea79a238cc1073a`. API-Digests und tatsächliche Uploadlogs kontrolliert.
+
+**Livejob 124801472928 läuft im Main-/Produktionslauf [41289946551](https://github.com/joke0071/foliolab-open/actions/runs/41289946551). Noch kein LIVE_ACCEPTED für v252.** Tatsächliche HTTPS-Assets, Kernabläufe, alte Recovery-/UI-/Transferverträge, neue Klartext-Reader/Writer-Fälle und Finanzkette müssen auf Produktion in allen drei Engines erfolgreich enden. Letzte vollständig bestätigte Rückfallbasis bleibt v251/Main87d4669. Keine weitere Implementierung während dieses Abschlusses.
+
+Owner Work /root, Sitzung 50f1560a1a9f. #254 insgesamt PARTIAL; #255 erster Kettenschnitt produktiv abgenommen; #256 aktuelle EMULATED-Messungen samt exakten Seeds gesichert. Physisches Android bleibt EXTERNAL. Die kurze isolierte Geräteanleitung ist jetzt `docs/PERF_ANDROID03_REAL_DEVICE_CHECKLIST.md` im Checkpoint-Branch; bestehende TalkBack-Checkliste bleibt verlinkt. Keine echten Hardwarewerte behauptet. Übrige ACTIVE-Masterpakete unverändert; historischen Checkpoint-Branch niemals nach Main mergen.
+
+---
+
 ## v252 / #254 Klartext-Backups – MERGED, Produktionsabnahme ausstehend · 01.11.2026
 
 Main: `28903ff201bf0c942851874dc118f3699e0a5d43`. Tree: `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, identisch mit geprüftem PR-HEAD `3f24881458e58a1345b424491bb4ad8e5a8840bc` und synthetischem Merge `a24c9cfa7384b152db40aa0df27eacb3d17cc97d`. [PR #263](https://github.com/joke0071/foliolab-open/pull/263) kontrolliert integriert. Main war unmittelbar vorher unverändert; keine parallele Umsetzung, nur historische Drafts #157/#161. Der historische Checkpoint-Branch wurde nicht integriert.
