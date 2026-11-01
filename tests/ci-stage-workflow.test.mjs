@@ -30,11 +30,15 @@ const pinnedCacheSteps = [
 ].map(lines=>lines.join('\n')+'\n');
 
 /** Preserve every sealed historical command; strip only the three pinned cache
- * stanzas, mandatory additional recovery suites and the increased live timeout.
+ * stanzas, mandatory additional recovery/finance/ETF suites and the increased live timeout.
  * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
  let reduced=source;
  const additions=[
+  '          node tests/browser-etf-source-recovery.mjs\n',
+  '            ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs\n',
+  '          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log\n',
+  '          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-cross.log\n',
   '          node tests/browser-fin-e2e.mjs\n',
   '            FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs\n',
   '          FIN_E2E_BASE="$ACCEPTANCE_BASE" node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-chromium.log\n',
