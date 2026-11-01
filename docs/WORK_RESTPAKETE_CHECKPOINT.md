@@ -1,3 +1,17 @@
+## v260 / PR #272 — finale CI läuft · 01.11.2026
+
+Einziger aktiver Integrationsstrang `fix/eth-history-cursor-268`, Owner Work/root `b1399897b0ba`. Veröffentlichter HEAD **`a4be28851ad7c85bfc096823d20d0a205b5d7b7f`**, Tree **`36f29d0cfdece25f3d02809f4ec6bd95da83038a`** exakt lokal geprüft. Parent ist der erhaltene #268-WIP `ca1a6cb`, keine fremden Änderungen überschrieben. Vorlauf `41318483990` endete regulär: Cross-Engine-Gruppen erfolgreich, test wegen fehlender SW-Revision fehlgeschlagen; vollständiger Fehlerbeleg erhalten. Keine Action abgebrochen. Erst danach denselben Branch per expected_sha vorgezogen.
+
+Gemeinsamer Umfang: kleiner Alpha-Antwortabstandsfix aus bestätigter Übergabe plus endpointbezogene ETH-Cursor-/Neustartlogik und erweiterte vorhandene Dialogtests. SW **v260**. Lokal **1.071/1.071 Tests, 0 Fehler/Skips**, Syntax/Diff und ETF-/Alpha-/ETH-Adapter-/Dialogtests in Chromium und Firefox PASS. Finale Pflicht-CI **`41319486511`**, Wallet **`41319486556`** gestartet; noch kein Merge, Deployment oder LIVE_ACCEPTED des Kandidaten. Marketstack-Adapter und API-Bereinigung sind nicht Teil dieses Deltas; unmittelbar folgende P1A-Etappe.
+
+**v259/Main `6c339c0`: vollständiger automatisierter Main-/Produktionslauf `41316381886` completed/success.** 1.065 Tests, alle Pflichtgruppen, Deployment `124880600234` und Livejob **`124880732298 SUCCESS`**. Tatsächliche Produktion: **124 HTTPS-Assetmatches, sechs Kerngruppen/18 Axe-Scans**, neue Alpha-Suite in Chromium/Firefox/WebKit sowie bestehende FIN-/CAS-/Offline-/PWA-/Recovery-/verschlüsselte Backup-/Restoreketten PASS. Logs tatsächlich gelesen. Liveartefakt `13088239135`, Digest `sha256:21113a6531e5a01b58a744b3c0de016534a4c011504e2c4a63d5667c3e6ad5b3` exakt API/Uploadlog. Eigene reguläre HTTPS-Probe vier Kernfiles bytegleich. Dauerhaft `docs/release-evidence/v259-automated-live-and-real-provider-status.json`.
+
+**Bewusste Statusgrenze:** Die echte private Vier-ETF-Appkette auf v259 bleibt wegen der beobachteten Limitantwort PARTIAL. Automatischer Produktions-PASS ist kein echter 4/4-Anbieterbeleg; deshalb hier kein uneingeschränktes v259 LIVE_ACCEPTED. Letzte vollständig bestätigte Rückfallbasis v258. Der v260-Pacingfix adressiert den nachgewiesenen Zeitabstandsfehler, erklärt aber ohne Anbieterzähler nicht zwingend jede Limitantwort.
+
+Nächster Schritt: exakten finalen PR-HEAD vollständig grün prüfen, kontrolliert integrieren, echte Produktion und sparsame autorisierte Vier-ETF-Appkette abnehmen. Danach Marketstack gemäß vorhandenem 4/4-Realbeleg integrieren und alte Schlüssel über Modell/IDB/Save/Migration/neue Backups/Restore entfernen; Suche/FX zuvor ablösen. #257 und übrige Masterpakete einschließlich FLH05/FLH-PROJ01 ACTIVE. Keine weitere Kandidatenänderung während dieser finalen CI und kein historischer Checkpointbranch-Merge.
+
+---
+
 ## Übergabe abgeschlossen / ein Kandidat PR #272 · 01.11.2026
 
 Die alte Sitzung hat unten ausdrücklich ihre Arbeit beendet und die Verantwortung an Work/root `b1399897b0ba` abgegeben. Keine weitere konkurrierende Integration. Der neuere Stand übersteuert die zwischenzeitliche Kollisionssperre nur im Umfang dieser bestätigten Abgabe.
