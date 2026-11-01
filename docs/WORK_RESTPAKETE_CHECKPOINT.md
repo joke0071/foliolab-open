@@ -1,3 +1,15 @@
+## INTEGRATION_HOLD – Owner-Konflikt / 01.11.2026
+
+**v262 bleibt vollständig LIVE_ACCEPTED.** Main `89095774ad605261a293c4b7bc049580f1f91deb`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`; Run `41330819283`, Deployment `124923974833`, Livejob `124924156880` SUCCESS. Abschlusslogs und Artefaktdigest von übernehmender Sitzung cab7b49c3d16 unabhängig bestätigt; zusätzliche sieben reguläre HTTPS-Bytevergleiche PASS. Bestehende Belege darunter unverändert bewahrt.
+
+**Konkrete Konkurrenz:** Nach ausdrücklicher Nutzerübernahme und Owner-Eintrag `3111daa` hat Vorgängersitzung b1399897b0ba erneut den Abnahmebeleg (`0ea9280`) und anschließend einen Checkpointkopf mit eigenem aktivem Owner geschrieben. Das ist kein aus bloßer GitHub-Aktivität abgeleiteter Stillstandsbeweis, sondern ein widersprüchlicher aktueller Ownership-Vertrag. Deshalb **keine neue Produktimplementierung, PR, Integration oder Veröffentlichung**, bis die alte Sitzung STOP/Abgabe bestätigt. Laufende Actions unverändert lassen. Nutzerauftrag benennt cab7b49c3d16 als Nachfolger; Vorgänger bitte ausschließlich WIP sichern und STOPPED/HANDOVER_READY bestätigen, keine Folgearbeit beginnen.
+
+Übernehmende Sitzung hat keine Produktänderungen und keinen Produktbranch/PR erzeugt. Main unverändert, offen nur historische Drafts #157/#161. Lokaler Hauptcheckout `/workspace/scratch/cab7b49c3d16/foliolab-open` auf Main, getrackter Diff leer. Privater Originaldateiabgleich lesend erfolgt; alle fünf Anbieterdateien und früherer Analysebericht zugänglich, keine erneute Dateianforderung nötig. Keine Originaldaten in GitHub übernommen. Lokaler Dokumentationscommit `462ab7f` wurde mangels CLI-Schreibauth **nicht gepusht**, ist durch diesen frischen SHA-geschützten Checkpoint ersetzt und darf nicht unbesehen gepusht werden; vorhandener fremder Releasebeleg bleibt maßgeblich.
+
+Nächster ausführbarer Schritt nach bestätigter alleiniger Ownership: P1A #266 Suche/FX und Alt-API-/Backupbereinigung; danach UH01–UH05 gemäß bestehenden Plänen. EFF01/HND01 gelten. Zähler Nachfolger: 1 abgeschlossene Releaseabnahme / 0 neue Produktpakete. Keine fachlichen Gates reduziert.
+
+---
+
 ## v262 LIVE_ACCEPTED – 01.11.2026 / Owner Work/root b1399897b0ba
 
 **Aktuelle vollständig abgenommene Produktion: v262.** Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, geprüfter Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`**, Arbeitsbranch `fix/marketstack-history-gaps-266` mit HEAD **`39f00a3456346476f5b151f964dae676161ec66a`**, SW **`foliolab-open-v262`**. PR #273 brachte Marketstack und Secret-Eingaben; PR #274 behob den real nachgewiesenen Historienblocker. Kein unveröffentlichter Codekandidat mehr offen.
