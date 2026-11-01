@@ -62,7 +62,7 @@ test('FMP failure safely falls back to direct Twelve Data; no key-bearing error 
  });
  assert.equal(quote.price,105);assert.equal(quote.source,'Twelve Data');
  assert.deepEqual(calls,['financialmodelingprep.com','api.twelvedata.com']);
- await assert.rejects(()=>fetchSecurityQuote(position(),{fmpKey:secret},async url=>{throw Error('Failed to fetch '+url);}),error=>!error.message.includes(secret)&&/CORS/.test(error.message));
+ await assert.rejects(()=>fetchSecurityQuote(position(),{fmpKey:secret,eodhdKey:secret},async url=>{throw Error('Failed to fetch '+url);}),error=>!error.message.includes(secret)&&/CORS/.test(error.message)&&error.message.indexOf('fmp:')<error.message.indexOf('eodhd:'));
 });
 test('Optional authenticated EODHD worker is a safe first-class market source without local EODHD key',async()=>{
  const token='SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012';

@@ -144,7 +144,7 @@ export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalT
  p=enhanceKnownReferenceListing(p);
  const providers=marketSourceOptions(p,settings);
  if(!providers.length)throw Error('Keine konfigurierte historische Kurs-API. Lokaler CSV-Kursverlauf kann importiert werden. '+initialFailures(p,settings).join(' · '));
- const failures=initialFailures(p,settings);
+ const failures=[];
  for(const source of providers){
   try{
    let r;
@@ -157,13 +157,13 @@ export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalT
    return {...r,kind:'market',currency:p.currency,priceType:'close',points,coverage:{from:points[0].date,to:points.at(-1).date,requestedDays:days}};
   }catch(e){failures.push(source+': '+String(e.message).slice(0,100));}
  }
- throw Error('Historische Börsenkurse nicht abrufbar: '+failures.join(' · '));
+ throw Error('Historische Börsenkurse nicht abrufbar: '+failures.concat(initialFailures(p,settings)).join(' · '));
 }
 export async function fetchSecurityQuote(p,settings={},fetcher=globalThis.fetch){
  p=enhanceKnownReferenceListing(p);
  const providers=marketSourceOptions(p,settings);
  if(!providers.length)throw Error('Kein konfigurierter Kursanbieter mit gültiger Börsenzuordnung. '+initialFailures(p,settings).join(' · '));
- const failures=initialFailures(p,settings);
+ const failures=[];
  for(const source of providers){
   try{
    const l=listingInfo(p);
@@ -187,5 +187,5 @@ export async function fetchSecurityQuote(p,settings={},fetcher=globalThis.fetch)
    return {price:priceNumber(item.price),asOf:verifiedDate(item.timestamp||item.date),source:'FMP',quality:'configured-listing'};
   }catch(e){failures.push(source+': '+String(e.message).slice(0,120));}
  }
- throw Error('Kein sicher zuordenbarer aktueller Börsenkurs: '+failures.join(' · '));
+ throw Error('Kein sicher zuordenbarer aktueller Börsenkurs: '+failures.concat(initialFailures(p,settings)).join(' · '));
 }

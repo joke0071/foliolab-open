@@ -1,4 +1,4 @@
-# ETF-QUOTE #266 – browser source recovery (v256 candidate)
+# ETF-QUOTE #266 – browser source recovery (v257 candidate)
 
 Status: IN_PROGRESS; no release or live-provider approval implied.
 Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
@@ -9,7 +9,7 @@ Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
 - FMP direct browser requests are first, Twelve Data next, optional owned EODHD worker last. No direct EODHD quote/history request, including legacy eodhd-only selection. Existing direct keys are retained in local settings and encrypted configuration backups. Absent fields cannot clear keys on save; explicit credential revocation still clears them.
 - FMP mapping is resolved read-only at the request boundary. A configured source with missing mapping is visible in diagnosis rather than silently absent. Invalid optional worker settings do not prevent usable direct providers.
 - XETR/XETRA exchange aliases are equivalent, while Frankfurt/XFRA, USD or another ticker remain unacceptable substitutes. Provider date freshness is retained. No synthetic valuation or FX substitution.
-- General read-only diagnosis covers at most four holdings and each selected configured provider (up to 12 requests), stops further calls per provider on access/network/rate failure, and reports skipped mapping/transport, 404, tariff, stale data or successful dated identity separately. It never commits quotes or financial data. Twelve quote attempts are bounded to one to avoid repeated billable 429 requests.
+- Failure summaries prioritize actually attempted direct sources before skipped legacy EODHD, so compact error text does not imply EODHD was the main attempted provider. General read-only diagnosis covers at most four holdings and each selected configured provider (up to 12 requests), stops further calls per provider on access/network/rate failure, and reports skipped mapping/transport, 404, tariff, stale data or successful dated identity separately. It never commits quotes or financial data. Twelve quote attempts are bounded to one to avoid repeated billable 429 requests.
 - The main data-source panel reports prior confirmed quote evidence, actual source/date, coverage and concrete next action before the compact credential setup. This is not a real-time connectivity promise.
 
 ## Evidence boundary / external blockers
