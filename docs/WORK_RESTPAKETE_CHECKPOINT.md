@@ -1,3 +1,13 @@
+## #266 / PR #269 – SW255 / vollständige Browser-CI läuft · 01.11.2026
+
+Finaler aktueller Kandidat HEAD `2bcee7ccb5b7e4276b4e264e397a541f764b03b3`, Tree `f0238438e3fb1f772ca9c390921480230d5a504f` lokal/remote gleich; einziger Strang `fix/etf-browser-sources-266`, Owner /root d72ece214a83. App/SW255, SW253/254 nie veröffentlicht. Main512d935/ProduktionSW252 weiterhin unverändert.
+
+Lauf **41302113946 IN_PROGRESS**, Wallet **41302113975 SUCCESS**, öffentlicher Informationsaudit **41302113950 SUCCESS**. FAST-UI-Vertragskanarien SUCCESS; volle Chromium-/Firefox-/WebKit-Gruppen noch nicht abgenommen. 1050 vollständige lokale Units PASS; aktuelle Diagnose-/CI-Verträge und Syntax PASS. Kein CI_ACCEPTED/MERGED/DEPLOYED.
+
+Neue Vier-ETF-Real-IDB-Prüfung hat in Vorläufen echte direkte FMP-Kursübernahmen mit synthetischem Netz, unveränderte exakte Mengen, alte EODHD-Keybewahrung, schreibfreie Diagnoserevision, 404-Erklärungen, sieben Breiten und Axe bis zur letzten Retryphase geprüft. Sie fand einen realen leeren Status beim direkten Öffnen von Mehr: durch Berechnung in renderSettings behoben. Danach reiner Testfehler (nach 1440px-Matrix unsichtbare mobileNav verwendet) durch Rückkehr zu390px korrigiert. Diese roten/supersedierten Vorläufe sind keine vollständige Abnahme. ETF-Prüfung läuft nun früh in den Gates, historische Tests unverändert erhalten. Nächster Schritt: neue komplette exakte CI, danach sicherer Routine-Merge/Deployment/echte Produktionsabnahme; externe autorisierte Vier-ETF-Kurs-/CORS-/Tarifprüfung weiterhin offen, #266 PARTIAL. Dann #267+#264 seriell.
+
+---
+
 ## #266 / PR #269 – Kandidat v254, genaue externe Grenze · 01.11.2026
 
 HEAD `0137c6f49600015a67382a033f686d0710cdaa74`, Tree `bbddb79cc466797e634594659c7d510cc2f02d1e` lokal/remote exakt gleich. Einziger Produktstrang weiterhin `fix/etf-browser-sources-266`, Owner Work /root d72ece214a83. Main512d935 / tatsächliche HTTPS-Produktion SW252 unverändert. **1050 vollständige lokale Unit-Tests/0 Fehler/0 Skips**, Syntax/Diffcheck PASS. Kandidat SW254; SW253 war unveröffentlichtes Zwischenstadium. Vollständige PR-CI **41301658239**, Wallet **41301658244**, Informationsaudit41301658251 laufen. Noch kein CI_ACCEPTED/MERGED/DEPLOYED.
