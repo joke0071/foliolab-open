@@ -1,3 +1,11 @@
+## Main87d4669 / FIN-E2E01 – ein gezielter Chromium-Retry läuft · 01.11.2026
+
+**Alle drei Main-Crossgruppen SUCCESS**: Cross1 124777895325, Cross2 124777895275, Cross3 124777895271. Lauf41282762467 Versuch1 regulär abgeschlossen; kein CI-Cancel. Einzig bestehender sofortiger Fokuscheck in Chromium fehlgeschlagen, Befund/3 unveränderte lokale Gegenprüfungen unten. Main per API frisch unverändert `87d4669c217e5a9f7362e50239d3f85f83bcaa3b` / Treee2f6670.
+
+**Einmaliger gezielter Wiederholungsauftrag für fehlgeschlagenen Job124777895226 per GitHub-Job-Rerun erfolgreich angenommen**; Lauf41282762467 Versuch2 folgt, andere erfolgreiche Gruppen nicht erneut beauftragt. Keine Assertions/Produkte/Gates verändert. Neue Jobs/Ergebnis frisch verfolgen. Bei erneutem Fehler kein weiterer blinder Retry; konkreter kleinster Repro/Lifecyclefix. Deployment und tatsächliche neue Produktionskette weiterhin Pflicht und PENDING. Produktion weiterhin bestätigte v251/Main7c720dd, neuer Main noch nicht deployed/liveaccepted. Owner Work/root50f1560a1a9f, ein Releaseabschlussstrang, #255 fachlich PARTIAL; danach#256seriell.
+
+---
+
 ## PR262 / Main87d4669 – Releaseabschluss BLOCKED durch bestehenden Fokus-Zeitlauf · 01.11.2026
 
 Main `87d4669c217e5a9f7362e50239d3f85f83bcaa3b`, geprüfter Tree `e2f6670913e353bfc7828822470c33b58aac8da0`, Test-/CI-Änderung ohne Appassetdelta; PR262 nach voller grüner finaler CI gemergt. Mainlauf **41282762467**: Testjob **124777895226 FAILED** am unveränderten `structured-quality-browser-contract.mjs:40` (`focus returns to the matching refreshed card`, tatsächliches activeElement.dataset.id undefined statt quality-missing). Fehler vor neuer Chromium-FIN-Kette im Mainlauf; finale PR-Kette in allen3Engines bestand. **Kein Deployment dieses Mainstands erfolgt**, Produktion/Rückfall weiterhin vollständig bestätigte v251/Main7c720dd. Main-Cross2 **124777895275 SUCCESS**, inklusive neuer FIN-Kette/PWA/Recovery in Firefox/WebKit; Cross1/3 noch laufend und nicht abgebrochen.
