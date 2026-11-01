@@ -1,0 +1,157 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "date": "2026-11-01",
+  "production": "https://foliolab.unperfekt.at/",
+  "repository": "joke0071/foliolab-open",
+  "main": "512d935098e2d31366b861352d94684cae7582cb",
+  "tree": "ddb910797eec6484417992d860460eee724e558e",
+  "serviceWorker": "foliolab-open-v252",
+  "shippedAssetsChanged": false,
+  "pr": 265,
+  "prHead": "52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e",
+  "syntheticMerge": "dbb08326fdf1c706ac5d4ab30fa9c4ad257c7be3",
+  "runs": {
+    "pr": 41292228905,
+    "wallet": 41292228903,
+    "mainAndProduction": 41293317485,
+    "attempt": 1,
+    "conclusion": "success",
+    "deployJob": 124811800498,
+    "liveJob": 124811872366,
+    "retries": 0,
+    "cancelledRuns": 0
+  },
+  "tests": {
+    "total": 1052,
+    "failed": 0,
+    "skipped": 0,
+    "syntax": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "production": {
+      "assetMatches": 123,
+      "coreGroups": 6,
+      "coreAxeScans": 18,
+      "finE2E16Steps": "PASS in all three engines",
+      "plainBackupReaderWriterFreshRestore": "PASS in all three engines",
+      "encryptedRecovery": "PASS in all three engines",
+      "errorMarkers": []
+    }
+  },
+  "scope": {
+    "fixture": "Same synthetic portfolio continues after the accepted 11-step cash chain; two independent equal USD fills with historical FX .8, sale at .9, current valuation FX remains .85.",
+    "foreignFinal": {
+      "quantity": "0.5",
+      "costBasisEUR": "40.8",
+      "realizedPnLEUR": "7.8",
+      "cashAEUR": "793.000000000000000001",
+      "portfolioTotalEUR": "1035.500000000000000001",
+      "allPortfolioFeesEUR": "5.1",
+      "allPortfolioTaxesEUR": "3.4",
+      "externalFlows": [
+        [
+          "deposit",
+          "12"
+        ]
+      ]
+    },
+    "checks": [
+      "exact independent quantities/basis/profit/fees/taxes/journal postings after each FX step",
+      "distinct source/booking/journal identities despite equal partial fills",
+      "2/1 duplicate reimports do not write or increase CAS revision",
+      "historical references and original opening evidence stay unchanged",
+      "missing FX and changed source payload rejected; coupled FX removal remains blocked",
+      "quota and post-put abort preserve exact bytes/revision at both buy and sale",
+      "archive/restore plus second-tab CAS, seven widths/Axe, offline reload",
+      "actual v2 UI export/fresh context UI restore includes retained removed cash source and all FX receipt deduplication",
+      "authenticated v1 complete-backup equality in Node"
+    ],
+    "implementation": "Only tests/documentation changed; existing production modules execute finance, import, storage and crypto. Candidate fixture helper is intercepted from checkout on production, not deployed. Financial actions are not all UI clicks."
+  },
+  "artifacts": [
+    {
+      "id": 13079375146,
+      "name": "production-live-acceptance-512d935098e2d31366b861352d94684cae7582cb",
+      "sizeBytes": 79528221,
+      "digest": "sha256:8a37c5030932001441e00b2926799ac11a42471faf8d45f2930f504c8c858f9b",
+      "expired": false
+    },
+    {
+      "id": 13078861993,
+      "name": "cross-engine-gates-512d935098e2d31366b861352d94684cae7582cb-3",
+      "sizeBytes": 48527112,
+      "digest": "sha256:7f6fe7522466cf9edd8fdeb71c0c4bc080e16d63f9cd5c7dd8c3c8aab604d6cf",
+      "expired": false
+    },
+    {
+      "id": 13078791443,
+      "name": "dialog-visual-reference",
+      "sizeBytes": 934366,
+      "digest": "sha256:8994602a7571c2bc71e771881cd1d374e04aadbb522296078ccc36eae75e45f2",
+      "expired": false
+    },
+    {
+      "id": 13078561776,
+      "name": "github-pages",
+      "sizeBytes": 405382,
+      "digest": "sha256:3bde4e30b8c58e714d5d620efa29f62bfd31fdae83293bcf6739d036fb03196c",
+      "expired": false
+    },
+    {
+      "id": 13078442711,
+      "name": "cross-engine-gates-512d935098e2d31366b861352d94684cae7582cb-1",
+      "sizeBytes": 47885228,
+      "digest": "sha256:bd135eb0a7badfba1ca1ae7c9ffa5cf087baa5b15c605a112c21cc9a2faadbac",
+      "expired": false
+    },
+    {
+      "id": 13078377127,
+      "name": "cross-engine-gates-512d935098e2d31366b861352d94684cae7582cb-2",
+      "sizeBytes": 3605067,
+      "digest": "sha256:5a76e80cce3ec4335f6818f0ea9562e5ede312425ceed0eec3cb992a607e9853",
+      "expired": false
+    },
+    {
+      "id": 13078371878,
+      "name": "release-gates-512d935098e2d31366b861352d94684cae7582cb",
+      "sizeBytes": 48675247,
+      "digest": "sha256:3c36c8dec0e22e0455da8e743787b505391089ab68b2bc48548e7d5127457831",
+      "expired": false
+    },
+    {
+      "id": 13077824294,
+      "name": "ci-stage-512d935098e2d31366b861352d94684cae7582cb",
+      "sizeBytes": 355,
+      "digest": "sha256:ca7b80a37f7a6006c8e031c691de84c49516a6e292852b9eb1424e3a409e4706",
+      "expired": false
+    }
+  ],
+  "artifactVerification": "Main/Pages/live IDs and SHA256 digests checked against GitHub API and completed upload logs. No independent ZIP/CRC examination claimed.",
+  "proofLines": [
+    "2026-11-01T09:43:29.7487184Z LIVE acceptance PASS: 6 groups, 18 Axe scans, 123 asset matches",
+    "2026-11-01T09:43:35.3601836Z chromium: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+    "2026-11-01T09:43:45.7222475Z chromium: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T09:43:51.5765317Z FIN-E2E01 chromium: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+    "2026-11-01T09:57:58.0158964Z firefox: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+    "2026-11-01T09:58:02.6372736Z webkit: RECOVERY backup size/plaintext+envelope Unicode preflight, v1+v2 exact, real encrypted download, oversized restore, unchanged IDB/revision, reload, 7 widths/Axe PASS",
+    "2026-11-01T09:58:11.7541695Z firefox: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T09:58:18.8553216Z webkit: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T09:58:27.3824300Z FIN-E2E01 firefox: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+    "2026-11-01T09:58:33.8147613Z FIN-E2E01 webkit: exact cash/flows/basis/PnL/fees/taxes, source identity, 16 steps including USD partial fills/historical FX, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+    "2026-11-01T09:59:19.5591700Z SHA256 digest of uploaded artifact zip is 8a37c5030932001441e00b2926799ac11a42471faf8d45f2930f504c8c858f9b",
+    "2026-11-01T09:59:19.9993232Z Artifact production-live-acceptance-512d935098e2d31366b861352d94684cae7582cb.zip successfully finalized. Artifact ID 13079375146",
+    "2026-11-01T09:59:19.9994869Z Artifact production-live-acceptance-512d935098e2d31366b861352d94684cae7582cb has been successfully uploaded! Final size is 79528221 bytes. Artifact ID is 13079375146"
+  ],
+  "remaining": [
+    "#255 remains OPEN/PARTIAL: further UI sequences, broker split-receipt grouping/FX transfers, wallet/staking histories, return/XIRR/TWR and additional fault interleavings.",
+    "#254 overall PARTIAL: historical reader/writer/version/old-tab/downgrade/update/recovery matrix.",
+    "#256 baseline is EMULATED; real Android/OS/OAuth/TalkBack remains EXTERNAL.",
+    "#264 is a newly observed OPEN/PLANNED sequential UI candidate; not implemented concurrently.",
+    "FLH05 and FLH-PROJ01 remain ACTIVE; remaining master roadmap retained."
+  ],
+  "nextExecutable": "#264 account/data-state nesting after fresh collision check; then continue bounded priority finance/recovery/performance residuals.",
+  "owner": "Work /root; session50f1560a1a9f"
+}
