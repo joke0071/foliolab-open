@@ -1,0 +1,69 @@
+{
+  "version": "v260",
+  "test": "Actual published UI four-ETF refresh",
+  "main": "ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+  "sw": "foliolab-open-v260",
+  "actualPrivateProvider": true,
+  "isolatedSyntheticPortfolio": true,
+  "originalPortfolioAccessed": false,
+  "workerUsed": false,
+  "allFour": true,
+  "rows": [
+    {
+      "symbol": "VWCE",
+      "isin": "IE00BK5BQT80",
+      "providerSymbol": "VWCE.DEX",
+      "mic": "XETR",
+      "currency": "EUR",
+      "quantityUnchanged": true,
+      "positiveRawClose": true,
+      "asOf": "2026-10-30",
+      "source": "Alpha Vantage · Xetra EOD"
+    },
+    {
+      "symbol": "XDEM",
+      "isin": "IE00BL25JP72",
+      "providerSymbol": "XDEM.DEX",
+      "mic": "XETR",
+      "currency": "EUR",
+      "quantityUnchanged": true,
+      "positiveRawClose": true,
+      "asOf": "2026-10-30",
+      "source": "Alpha Vantage · Xetra EOD"
+    },
+    {
+      "symbol": "XDEQ",
+      "isin": "IE00BL25JL35",
+      "providerSymbol": "XDEQ.DEX",
+      "mic": "XETR",
+      "currency": "EUR",
+      "quantityUnchanged": true,
+      "positiveRawClose": true,
+      "asOf": "2026-10-30",
+      "source": "Alpha Vantage · Xetra EOD"
+    },
+    {
+      "symbol": "5MVL",
+      "isin": "IE00BG0SKF03",
+      "providerSymbol": "5MVL.DEX",
+      "mic": "XETR",
+      "currency": "EUR",
+      "quantityUnchanged": true,
+      "positiveRawClose": true,
+      "asOf": "2026-10-30",
+      "source": "Alpha Vantage · Xetra EOD"
+    }
+  ],
+  "providerRequests": 4,
+  "providerLimitResponses": 0,
+  "pageErrors": 0,
+  "createdJournalEntries": 0,
+  "createdBookings": 0,
+  "createdExternalCashFlows": 0,
+  "normalSyntheticValuationSnapshotCount": 1,
+  "credentialInCanonicalRaw": false,
+  "privacy": "Own key only inside isolated browser configuration; no screenshots or original portfolio; no key/provider payload in public artifact",
+  "environment": "Real production UI and network with active browser CORS, explicit local proxy/TLS exception. Separate regular-TLS asset check and mandatory production CI remain required.",
+  "fullLiveAcceptance": "pending",
+  "budget": "At least 23 known authorized Alpha requests across old/new sessions today. No further real Alpha requests planned."
+}
