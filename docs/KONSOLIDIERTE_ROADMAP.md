@@ -1,3 +1,13 @@
+## v262 MERGED / Produktionsabnahme ausstehend – 01.11.2026
+
+[PR #274](https://github.com/joke0071/foliolab-open/pull/274) kontrolliert squash-integriert. Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`** exakt gleich geprüftem HEAD `39f00a3456346476f5b151f964dae676161ec66a` und synthetischem Merge `21bd5a5d`. SW **v262**. Vollständige PR-CI **41329491478 SUCCESS**, Wallet **41329491433 SUCCESS**: **1.082 Tests/0 Fehler/Skips**, Syntax, Chromium und alle Firefox-/WebKit-Gruppen. Neue Fälle beweisen gültige Quote trotz älterer Null-/Fehlwerte, weiterhin gesperrte Historie, fehlenden jüngsten Schlusskurs als harten Blocker sowie unveränderte Secret-, Finanz-, CAS-, Offline- und Backup-Verträge. Abschlusslogs gelesen, Artefaktdigests gegen Uploadlogs bestätigt, keine offenen Reviews und Main/HEAD unverändert. Beleg `docs/release-evidence/v262-pr274-acceptance.json`.
+
+Vorgänger-Main-/Live-Lauf 41326923454 vollständig abgeschlossen, bevor v262 integriert wurde; keine laufende CI abgebrochen. **Neuer Main-/Produktionslauf 41330819283 gestartet**, noch kein v262 DEPLOYED oder LIVE_ACCEPTED. Echte Kandidatenkette 4/4 ist nur Vorabbeleg; veröffentlichte unveränderte App und vollständige Live-Gates müssen folgen. Historische Providerlücken bleiben dokumentierte Grenze, kein Nullkurs und keine lückenhafte Historie werden übernommen.
+
+Owner Work/root b1399897b0ba, ein Strang. Nächster Schritt: Main-CI/Deployment, reguläre HTTPS-Assetgleichheit, sparsame echte Vier-ETF-Appkette mit Reload und expliziter Historienbegrenzung, vollständige Produktionsabnahme. Danach verbindlich P1A Suche/FX/Alt-API-/Backupbereinigung, gemeinsamer CSV-/Blockchain-Import UH01–UH05, #257 und übrige aktive Master. Keine Keys oder Originaldaten in öffentlichen Belegen, kein Merge des historischen Checkpointbranches.
+
+---
+
 ## v261 automatischer Live-Lauf abgeschlossen / Gesamtfreigabe wegen Realblocker verweigert – 01.11.2026
 
 Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`, PR #273, SW v261. **Run 41326923454, Deployment 124912114636 und Live-Abnahme 124912201845 SUCCESS.** 1.079 Tests, Chromium/Firefox/WebKit und alle vorhandenen Finanz-, Speicher-, Offline-, Backup-, Recovery- und PWA-Gates erfolgreich. Zusätzlich 125 reguläre HTTPS-Assetmatches. Abschlusslog gelesen, Liveartefakt **13092413702**, SHA256 `88ecf6d505543f2f425d1abb8323f4782a89eacd4c530832916f6238ac396e40` gegen API/Uploadlog bestätigt. Beleg: `docs/release-evidence/v261-automated-live-real-provider-blocker.json`.
