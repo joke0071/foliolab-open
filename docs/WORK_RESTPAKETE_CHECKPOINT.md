@@ -1,3 +1,59 @@
+## #271 – zusätzliche Cache-Sanitierung vorbereitet / bestehende CI unverändert · 01.11.2026
+
+Remote PR-HEAD bleibt9b3e325554090accfabd60675da747d9558556fd, Pflichtlauf41313611363 läuft (Cross1+Cross2SUCCESS; Chromium/Cross3 noch offen), keineAction abgebrochen. Produktumfangsonst eingefroren. Abschließende realePrivacy-Negativkontrolle: Antwortzusatzfelder könnten theoretisch einen zurückgegebenen Key enthalten; deshalb cachet der vorbereitete Folgeschritt ausschließlich validiertesSymbol/Datum/Rohschlusskurse statt gesamterProviderJSON. Keine echtenSchlüssel wurden imCache oder imRepo nachgewiesen; Repro ausschließlich synthetisch.
+
+**GesichertesCommitobjekt7f1d5dd00629183df9907b193685754bc20f3602**, Parent9b3e325, Treee37cba420e6fbf685bd1e1d77f8d4514d2102f9a, noch NICHT anBranch gehängt, damit laufendeCI vollständig endet. Drei lokaleDateien entsprechen diesemDelta. Lokal erneut1065Units/0Fehler/Skips und ChromiumAlpha-IDB/UI-SuitePASS mit tatsächlich eingefügtem synthetischem echoedKey und Nachweis seiner Abwesenheit imKurscache. Unten vollständigerPatch als dauerhafterFallback. NächsterSchritt: aktuellenLauf regulär abschließen, danach exakt dieseKorrektur aufbestehendenPR übernehmen, finaleCI abnehmen; keinen zweitenBranch starten.
+
+ZusatzQA des bisherigenCache/Budgetcodes: zwei echteIndexedDB-Tabs konkurrieren beiused24, genau eine25.Reservierung akzeptiert, zweite abgewiesen, persistedused25, keineAnbieteranfrage; PASS. v258-Produktion separat isoliert/synthetisch bei320px geprüft: eineKontokarte/keinPositionslink/keinÜberlauf, Screenshot angesehen (Hostproxy/TLS-Ausnahme/ServiceWorkerblock, ZusatzUIprobe keinneuerPWAbeleg). VollständigeechteLiveabnahme124868146278 läuft, ChromiumSUCCESS, FF/WKnochinProgress; v258nichtvoreiligLIVE_ACCEPTED nennen. Owner/root8e5a26892934 unverändert.
+
+```diff
+diff --git a/src/alpha-vantage.js b/src/alpha-vantage.js
+index f3f60af..0b058f3 100644
+--- a/src/alpha-vantage.js
++++ b/src/alpha-vantage.js
+@@ -105,7 +105,11 @@ export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause
+    try{
+     const data=await requestJSON(url.toString(),{fetcher,ttlMs:0,attempts:1});
+     const result=parseAlphaDaily(data,symbol);
+-    await store.update(cacheKey,()=>({day:day(clock()),data}));
++    // Never persist arbitrary provider fields (an upstream payload could echo a
++    // credential). Retain only validated public symbol/date/raw-close values.
++    const cachedData={'Meta Data':{'2. Symbol':symbol,'3. Last Refreshed':result.points.at(-1).date},
++     'Time Series (Daily)':Object.fromEntries(result.points.map(p=>[p.date,{'4. close':String(p.total)}]))};
++    await store.update(cacheKey,()=>({day:day(clock()),data:cachedData}));
+     return {...result,cached:false};
+    }catch(error){
+     if(error.cooldown)await store.update(budgetKey,old=>({...old,blockedUntil:Math.min(dayEnd(clock()),clock()+error.cooldown)}));
+diff --git a/tests/alpha-vantage.test.mjs b/tests/alpha-vantage.test.mjs
+index 007d8c9..92a4e34 100644
+--- a/tests/alpha-vantage.test.mjs
++++ b/tests/alpha-vantage.test.mjs
+@@ -31,7 +31,7 @@ test('Budget reservations are bounded at 25/day, spaced 2.5 seconds and reset on
+ });
+ test('Concurrent quote/history reads coalesce; new client reuses IDB-shaped daily cache without storing the key',async()=>{
+  const store=memory();let calls=0,time=now;const key='SYNTHETIC_PRIVATE_KEY';
+- const fetcher=async url=>{calls++;const u=new URL(url);assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');assert.equal(u.searchParams.get('apikey'),key);return {ok:true,status:200,json:async()=>daily(u.searchParams.get('symbol'))};};
++ const fetcher=async url=>{calls++;const u=new URL(url);assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');assert.equal(u.searchParams.get('apikey'),key);return {ok:true,status:200,json:async()=>({...daily(u.searchParams.get('symbol')),untrustedDiagnostics:{echoedKey:key}})};};
+  const deps={store,clock:()=>time,pause:async ms=>{time+=ms;},fetcher},a=createAlphaClient(deps);
+  const result=await Promise.all([a.load(position('VWCE'),key),a.load(position('VWCE'),key),a.load(position('XDEM'),key)]);
+  assert.equal(calls,2);assert.ok(time>=now+2500);assert.equal(result[0].points.at(-1).total,123.4567);
+diff --git a/tests/browser-alpha-vantage.mjs b/tests/browser-alpha-vantage.mjs
+index 797a2db..8606b47 100644
+--- a/tests/browser-alpha-vantage.mjs
++++ b/tests/browser-alpha-vantage.mjs
+@@ -19,7 +19,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
+   if(u.hostname==='www.alphavantage.co'){
+    assert.equal(u.searchParams.get('apikey'),'SYNTHETIC_ALPHA_KEY');assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');
+    const index=pairs.findIndex(([symbol])=>symbol+'.DEX'===u.searchParams.get('symbol'));assert.ok(index>=0);
+-   return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
++   return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},untrustedDiagnostics:{echoedKey:'SYNTHETIC_ALPHA_KEY'},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
+   }
+   if(u.hostname==='financialmodelingprep.com')return fulfill(402,{message:'Synthetic plan denial'});
+   if(u.hostname==='api.twelvedata.com')return fulfill(404,{code:404,status:'error',message:'This symbol is available starting with the Grow or Venture plan. SYNTHETIC_PRIVATE_RESPONSE'});
+```
+
+---
+
 ## #266 Alpha Vantage / PR#271 – v259 CI_PENDING · 01.11.2026
 
 Einziger aktiver Entwicklungsstrang fix/alpha-vantage-direct-266, PR#271, HEAD9b3e325554090accfabd60675da747d9558556fd, Treed33c3538585f904344c88b8cb062300d23de1b45, BasisMain04f294f/v258. Alle14 lokalen Blobhashes gegen GitHub geprüft, lokaler stagedTree exakt gleich, keine ungesicherten Produktdateien. Lokale1065/1065 Units, Syntax/Diff PASS; Chromium alteETF-Suite plus neueAlpha-Suite PASS. Neue Suite ist zusätzlich über bestehendes obligatorisches ETF-Gate in PR/Main/echterProduktion/allen3Engines eingebunden; kein historisches Gate ersetzt. Lokale FF-Zusatzprobe vor Implementierung einer180s-Schranke hing in Hostumgebung und wurde ausschließlich lokal beendet; kein FF-PASS daraus behauptet, vollständige CI erforderlich.
