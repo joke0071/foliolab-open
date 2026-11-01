@@ -1,3 +1,15 @@
+## #266 / PR #269 – Kandidat v254, genaue externe Grenze · 01.11.2026
+
+HEAD `0137c6f49600015a67382a033f686d0710cdaa74`, Tree `bbddb79cc466797e634594659c7d510cc2f02d1e` lokal/remote exakt gleich. Einziger Produktstrang weiterhin `fix/etf-browser-sources-266`, Owner Work /root d72ece214a83. Main512d935 / tatsächliche HTTPS-Produktion SW252 unverändert. **1050 vollständige lokale Unit-Tests/0 Fehler/0 Skips**, Syntax/Diffcheck PASS. Kandidat SW254; SW253 war unveröffentlichtes Zwischenstadium. Vollständige PR-CI **41301658239**, Wallet **41301658244**, Informationsaudit41301658251 laufen. Noch kein CI_ACCEPTED/MERGED/DEPLOYED.
+
+**Tatsächlicher neuer Anbieternachweis:** Öffentliche Twelve-Data-HTTPS-Katalogabfragen `/etfs?symbol=VWCE|XDEM|XDEQ|5MVL&mic_code=XETR&show_plan=true` mit FolioLab-Origin-Header liefern für alle vier HTTP200, ACAO `*`, passende vollständige Fondsnamen, EUR, exchange/MIC XETR, access.plan/global Grow und business Venture. ISIN ist durch Anbieter als add-on maskiert. Das belegt Katalogabdeckung/angegebene Zugangsstufe, ausdrücklich keine echte Browser-CORS-Kurs-/Tarif-/ISIN-Abnahme. Bestätigte MIC wird jetzt ohne redundanten Anzeigenamenfilter exchange=Xetra abgefragt. Nutzerspezifische 404-Ursache bleibt offen, keine Schlüssel aus privaten Quellen extrahiert.
+
+Frühere Kandidaten scheiterten an bewusst versiegelten CI-Snapshots für die **zusätzlichen** ETF-Prüfungen bzw. veralteter Mindestzahl sieben Hilfetexte nach Entfernen des EODHD-Feldes. Korrigiert: historische CI-Hashes bleiben unverändert, neue Kommandos zusätzlich exakt einmal Pflicht; UI-Test verlangt fehlendes altes Keyfeld und sechs verbliebene geöffnete/kontrastgeprüfte Hilfetexte. Vorläufe wurden durch die vorhandene Workflow-Concurrency bei notwendiger Korrektur automatisch übersteuert; keine manuelle CI-Stornierung oder als bestanden deklarierte rote Zwischenstände.
+
+Next: exakten HEAD vollständig browserprüfen, verbleibende Fehler beheben und bei sicheren Gates Routine-Release/echte Produktionsabnahme. #266 insgesamt PARTIAL bis autorisierter direkter Vier-ETF-Kursnachweis. Danach #267+#264 seriell, anschließend #268/#257 und übrige ACTIVE-Projekte. Kein historischer Branchmerge.
+
+---
+
 ## #266 ETF-Browserquellen – PR #269 IN_PROGRESS · 01.11.2026
 
 Neue Masterübernahme durch Work /root, Sitzung d72ece214a83. Main `512d935098e2d31366b861352d94684cae7582cb`, v252 bleibt bestätigte LIVE_ACCEPTED-Basis. Frischer Abgleich: nur historische Drafts #157/#161 vor Übernahme; keine neuere Produktarbeit/CI. Einziger neuer Strang `fix/etf-browser-sources-266`, [PR #269](https://github.com/joke0071/foliolab-open/pull/269), HEAD `c3bb63c668b6fd7c79de7991b0450125f4df39df`, Tree `ce65302f2533c9dd7f1ea42a324683130a4b07e8` lokal/remote identisch. Kandidat SW253; noch kein Merge/Deployment/CI_ACCEPTED.
