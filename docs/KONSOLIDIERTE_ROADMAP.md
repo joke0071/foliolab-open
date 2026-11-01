@@ -1,3 +1,17 @@
+## v252 / #254 Klartext-Backups – MERGED, Produktionsabnahme ausstehend · 01.11.2026
+
+Main: `28903ff201bf0c942851874dc118f3699e0a5d43`. Tree: `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, identisch mit geprüftem PR-HEAD `3f24881458e58a1345b424491bb4ad8e5a8840bc` und synthetischem Merge `a24c9cfa7384b152db40aa0df27eacb3d17cc97d`. [PR #263](https://github.com/joke0071/foliolab-open/pull/263) kontrolliert integriert. Main war unmittelbar vorher unverändert; keine parallele Umsetzung, nur historische Drafts #157/#161. Der historische Checkpoint-Branch wurde nicht integriert.
+
+**Finale PR-CI 41288637775 und Wallet-CI 41288637864 SUCCESS.** 1050 Tests, keine Fehler oder Skips; Syntax, vollständiges Chromium und alle drei Firefox-/WebKit-Gruppen bestanden. Neue Klartext-Fälle in allen drei Engines ausdrücklich PASS: akzeptierter alter Input, lesbarer tatsächlicher JSON-Export, frischer UI-Restore mit allen Revisionsdaten, UTF-8-Ablehnung ohne Download/Erfolg und weiterhin gesperrte Referenzlöschung nach fehlendem Sicherheitsbackup. Die neue FIN-Kette bleibt ebenfalls in allen drei Engines PASS. Der bestehende Fokusvertrag wartet nun begrenzt auf das native close-Ereignis; seine genaue Fokusassertion bleibt erhalten.
+
+**Main-/Produktionslauf 41289946551 läuft. Für v252 noch kein DEPLOYED oder LIVE_ACCEPTED.** Geplanter Cache `foliolab-open-v252`. Letzte vollständig bestätigte Produktion/Rückfallbasis bleibt v251 auf Main `87d4669c217e5a9f7362e50239d3f85f83bcaa3b`.
+
+Umfang: gemeinsam geprüfte reguläre Klartext-Backups für JSON-Export, Referenz-/Positionssicherungen, beide Flatex-Wege und Plain-Migration. Normale Formatierung bleibt unverändert; nur bei Bedarf kompakte JSON-Serialisierung ohne Datenkürzung. Die bisherigen Reader-/Krypto-/Schema-/Finanz-/CAS-Verträge und die bytegetreue Rohdatenrettung bleiben bestehen. Scope: `docs/REL_RECOVERY01_PLAIN_JSON_LIMITS.md`.
+
+Nächster Schritt: eigene Main-Gates, Deployment und tatsächliche v252-Produktionsabnahme mit neuen Klartextfällen in allen drei Engines vollständig verfolgen. Keine weitere Implementierung während dieses Abschlusses. #254 insgesamt bleibt PARTIAL. #255 erster Kettenschnitt ist produktiv abgenommen; #256 aktuelle EMULATED-Baseline samt exakten synthetischen Seeds ist remote gesichert, echte Android-/TalkBack-Abnahme bleibt EXTERNAL. Owner: Work /root, Sitzung 50f1560a1a9f. Übrige ACTIVE-Masterpakete unverändert.
+
+---
+
 ## #254 Klartext-Reader/Writer – v252 Kandidat / PR263 IN_PROGRESS · 01.11.2026
 
 Einziger aktiver Strang **`fix/plain-json-backup-reader-limits`**, OwnerWork/root50f1560a1a9f. [PR263](https://github.com/joke0071/foliolab-open/pull/263), HEAD **`3f24881458e58a1345b424491bb4ad8e5a8840bc`**, Tree **`96fa344a84e2c5325f17cc279b32d4558dfe95fa`** exakt gleich lokalem Index. Frischer Kollisionscheck Main87d4669/unverändert, nuralteDrafts157/161, vorheriger Main-/Livelauf beendet/SUCCESS. Pflicht-PR-CI **41288637775**, Wallet **41288637864** gestartet. **Noch kein CI_ACCEPTED/MERGED/DEPLOYED fürv252. Produktion bleibt v251/Main87d4669 vollständig LIVE_ACCEPTED.**
