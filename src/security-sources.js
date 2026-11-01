@@ -4,7 +4,7 @@
  * EODHD: confirmed SYMBOL.EXCHANGE, EOD close; FMP: explicit feed symbol and
  * matching exchange; Twelve Data: existing strict listing verification.
  */
-import {marketstackBars,marketstackListing} from './marketstack.js';
+import {marketstackBars,marketstackQuoteBars,marketstackListing} from './marketstack.js';
 import {requestJSON,TTL} from './request-cache.js';
 import {enhanceKnownReferenceListing,referenceSearch} from './reference-listings.js';
 import {configuredMarketWorker,fetchWorkerEodhdBars} from './eodhd-worker-client.js';
@@ -183,7 +183,7 @@ export async function fetchSecurityQuote(p,settings={},fetcher=globalThis.fetch)
    return await withProviderAccess(source,p,settings,fetcher,'quote',async()=>{
    const l=listingInfo(p);
    if(source==='alpha'||source==='marketstack'){
-    const result=await (source==='alpha'?alphaVantageBars(p,settings.alphaVantageKey,fetcher):marketstackBars(p,settings.marketstackKey,fetcher)),last=result.points.at(-1);
+    const result=await (source==='alpha'?alphaVantageBars(p,settings.alphaVantageKey,fetcher):marketstackQuoteBars(p,settings.marketstackKey,fetcher)),last=result.points.at(-1);
     return {price:priceNumber(last.total),asOf:verifiedDate(last.date),source:result.source,quality:result.quality,cached:result.cached};
    }
    if(source==='twelve'){
