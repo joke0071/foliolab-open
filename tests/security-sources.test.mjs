@@ -108,7 +108,7 @@ test('five year Twelve Data requests explicit dates instead of truncated outputs
  const p=position(),calls=[];
  const data={meta:{symbol:'VWCE',currency:'EUR',exchange:'Xetra',mic_code:'XETR'},
   values:[{datetime:older,close:'103'},{datetime:yday,close:'104'}]};
- const mock=async url=>{calls.push(new URL(url));return ok(data);};
+ const mock=async url=>{const u=new URL(url);calls.push(u);assert.equal(u.searchParams.get('exchange'),null);assert.equal(u.searchParams.get('mic_code'),'XETR');return ok(data);};
  const result=await fetchSecurityHistory(p,{securitySource:'twelve',twelveKey:'test'},1826,mock);
  assert.equal(result.points.length,2);
  assert.equal(calls[0].searchParams.get('outputsize'),null);

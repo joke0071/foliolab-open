@@ -1,4 +1,4 @@
-# ETF-QUOTE #266 – browser source recovery (v253 candidate)
+# ETF-QUOTE #266 – browser source recovery (v254 candidate)
 
 Status: IN_PROGRESS; no release or live-provider approval implied.
 Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
@@ -17,6 +17,7 @@ Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
 The fresh development environment contains no authorized user FMP/Twelve/Alpha Vantage keys. Do not extract keys from private screenshots, connected accounts or logs. The new four-ETF browser/IDB/UI test uses only synthetic mocked financial-provider responses; it proves app behavior, not provider coverage, rate entitlement, licensing or actual origin CORS.
 
 - FMP: existing stable `/quote` and historical EOD paths retained. All-four actual EUR/XETR responses with an authorized tariff remain unverified.
+- Twelve Data public catalog observation (01.11.2026): actual HTTPS `GET /etfs?symbol=SYMBOL&mic_code=XETR&show_plan=true` with the FolioLab Origin header returned HTTP 200 and `Access-Control-Allow-Origin: *` for **all four**. Rows match their full ETF names, EUR, exchange XETR and MIC XETR; access.plan/global = Grow, access.plan_business = Venture. ISIN is masked as `request_access_via_add_ons`. This is public reference-data evidence, not an actual browser quote or authorized tariff/ISIN verification. Quote/history now send the confirmed MIC without the redundant display exchange alias; response identity validation stays mandatory. Exact user 404 cause is still unproved.
 - Twelve Data: official `/quote` and `/time_series` paths exist. HTTP/body 404 now survives as a safe numeric diagnostic; it is not sufficient evidence to blame a key or symbol. The user's exact 404 cause remains BLOCKED pending an authorized origin request. Official Xetra page identifies XETR/EOD and Grow+/Venture+; entitlement is not inferred from a generic free ETF advertisement.
 - Alpha Vantage: `.DEX` documented (example MBG.DEX), but this does not establish VWCE/XDEM/XDEQ/5MVL coverage. No adapter added. Required positive authorized origin CORS, four listings/EUR/venue/date, suitable quota and applicable data-use rights remain unproved. Free standard limit documented as 25 requests/day; no automatic signup or paid plan purchased.
 - yfp/Yahoo scraping and Alpaca: no new adapter or alternate-market substitution. Existing issue #266 candidate review remains applicable.

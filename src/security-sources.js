@@ -118,7 +118,7 @@ function parseBars(input,currency,expectedSymbol=null){
 }
 async function twelveBars(p,settings,days,fetcher){
  const l=listingInfo(p),url=new URL('https://api.twelvedata.com/time_series');
- const params={symbol:l.symbol,exchange:p.exchange||'',mic_code:p.mic||'',interval:'1day',adjust:'none',apikey:settings.twelveKey};
+ const params={symbol:l.symbol,exchange:l.mic?'':p.exchange||'',mic_code:p.mic||'',interval:'1day',adjust:'none',apikey:settings.twelveKey};
  if(days>365){
   params.start_date=new Date(Date.now()-(days+12)*864e5).toISOString().slice(0,10);
   params.end_date=new Date().toISOString().slice(0,10);

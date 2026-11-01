@@ -56,7 +56,8 @@ export async function securityQuote(listing,key,fetcher=globalThis.fetch){
  if(!symbol||!expectedCurrency||(!exchange&&!mic))throw Error('Handelsplatz (oder MIC) und Kurswährung müssen für automatische Kurse bestätigt sein.');
  const url=new URL('https://api.twelvedata.com/quote');
  url.searchParams.set('symbol',symbol);
- if(exchange)url.searchParams.set('exchange',exchange);
+ // Prefer the confirmed ISO MIC over a broker/display exchange alias.
+ if(exchange&&!mic)url.searchParams.set('exchange',exchange);
  if(mic)url.searchParams.set('mic_code',mic);
  url.searchParams.set('apikey',key);
  const data=await json(url.toString(),{ttlMs:TTL.security,attempts:1},fetcher);
