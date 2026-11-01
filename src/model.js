@@ -1,3 +1,4 @@
+import {validateUnifiedBitcoinEconomics} from './unified-bitcoin.js';
 import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
@@ -261,11 +262,12 @@ export function safeImport(raw){
    const audit=ledgerQuantityAudit(m);
    if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');
   }
+  validateUnifiedBitcoinEconomics(m);
   if(raw.bookingPresentation!==undefined)m.bookingPresentation=validateBookingArchive(raw.bookingPresentation,m);
   if(archiveFormat)m.version=4;
   return m;
 }
-export function backup(model,{includeHistory=false}={}){if((model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Archivmetadaten und Datenversion widersprechen sich.');if(model.version===4)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){validateUnifiedBitcoinEconomics(model);if((model.version===4)!==(model.bookingPresentation!==undefined))throw Error('Archivmetadaten und Datenversion widersprechen sich.');if(model.version===4)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){

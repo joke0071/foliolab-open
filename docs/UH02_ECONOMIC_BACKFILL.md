@@ -1,0 +1,27 @@
+# UH02 – Bittr / Ledger / verified Bitcoin economic backfill
+
+Status: IMPLEMENTED CANDIDATE, NOT RELEASE ACCEPTED. Base: v263 / main `10103d6253ff544b383099c6a631035f67be7025`. Owner: cac084687058. No private originals, wallet identities or transaction identifiers in this document or public tests.
+
+## Economic contract
+
+The existing scanned position and observed opening remain the authoritative current quantity. A verified purchase is backfilled into the existing bookings/journal, with asset cost, explicit Bittr service fee and an externally funded clearing posting. Its journal quantity delta is null because those BTC are already in the scan. Receipt net quantities remain visible as acquisition evidence. The existing wallet-history replay supplies dated quantities; this adapter does not create a second history or accounting engine. Manual transactions on scanned wallets remain blocked.
+
+Confirmation explicitly requires payment outside every recorded portfolio account, with no previously recorded deposit. An already recorded bank/cash payment cannot be silently treated as fresh external capital. No fictitious portfolio cash account is created. Unproved source funding, residual cost basis, realized profits and tax classification are not inferred. Existing position cost basis is preserved; historical purchase expenditure does not establish the basis of today's remaining coins. No complete performance-flow coverage is asserted.
+
+Identity: Bitcoin/mainnet, one configured BTC ownership scope, accepted verified history, exact current scan reconciliation, complete txid, native own incoming vouts and exact N:M satoshi sums. Incoming change/internal transfers cannot be classified as purchases. All receipts in a transaction group must share their UTC purchase day; multiple-day groups remain blocked rather than being assigned a false financial date. Receipt-level native parsing and fees are reused. Bittr's BTC mining deduction is already reflected in net BTC, never an additional quantity debit; the entire batch miner fee is never allocated to one recipient.
+
+Ledger IN observations require exact configured ownership identity and native vout quantities. Ledger countervalues never become costs. Unassigned accounts, non-BTC, failed and non-IN operations are excluded only with explicit scope consent; they do not acquire economic classifications. Minimal allowlisted Ledger evidence persists within the existing purchase-evidence envelope. Ledger-first, Bittr-first and combined receipt order converge to the same economic facts and source links.
+
+## Boundaries and persistence
+
+Read-only preview followed by one current revision/CAS commit through existing PortfolioStorage. Repeated sources cannot add quantity, purchase expenditure or external funding again. A later Ledger source enriches provenance only. Existing unrelated or manually edited wallet bookings, ambiguous ownership/overlaps, partial history, dated wallet openings, changed receipt groups and stale revisions stay blocked. An observed undated scan opening can track subsequent rescans only when this adapter owns all related null-quantity postings; quantity-managed journals are never rebased.
+
+Backup/reload validation cross-checks receipts, deterministic IDs, source ownership, balanced economic postings and actual external cashflows, including when optional chain history is absent from a plain export. Reimport then requires accepted history again. Selective economic undo retains independent receipt/history evidence and a permanent journal tombstone, suppressing automatic resurrection. Changed or dependent purchases cannot be undone in isolation. Archive presentation is adjusted only when necessary.
+
+## Validation and remaining gates
+
+Synthetic unit and browser coverage includes N:1/N:M, original-format parsing, independent fixed financial expectations, same economic effect across source order, preview nonmutation, zero quantity double effect, stale plan/funding guards, quota rollback, CAS conflicts, reload/reimport, offline loaded-session processing, encrypted restore, seven viewport widths, axe and undo/tombstones. New Chromium and Firefox/WebKit integration and production commands supplement every existing gate; sealed historical manifests/hashes are retained with explicit mandatory additions and negative checks.
+
+Both private original files are accessible and parsable. Previous independent Python Decimal original-source arithmetic remains valid; it is not proof of blockchain output ownership. The real wallet-history request to Blockstream was rejected by automatic approval review because transmission of the private-source public wallet identity to that destination was not considered explicitly authorized. No workaround or substitute invented vout is used. Further private-source outbound requests are paused pending explicit user authorization for Blockstream and the public wallet/address/xpub data it receives.
+
+No original-backed full economic acceptance, final three-engine CI, deployment or LIVE_ACCEPTED is claimed here. Local Firefox context creation stalled; local WebKit reports missing system libraries. Actual Android hardware has not been tested. Before release: authorized real native ownership/current-balance proof plus independent original financial check, full final CI on frozen tree, merge/deployment and actual production acceptance. UI-LOAD01 and UH03–UH05 remain serial follow-ups.
