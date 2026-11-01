@@ -1,3 +1,13 @@
+## #255 FX-/Teilfüllungen – PR #265 MERGED, eigene Produktionsabnahme ausstehend · 01.11.2026
+
+Main `512d935098e2d31366b861352d94684cae7582cb`, Tree `ddb910797eec6484417992d860460eee724e558e` identisch mit geprüftem PR-HEAD `52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e` und synthetischem Merge `dbb08326fdf1c706ac5d4ab30fa9c4ad257c7be3`. [PR #265](https://github.com/joke0071/foliolab-open/pull/265) kontrolliert integriert: unmittelbar zuvor Main unverändert, Owner/Checkpoint bestätigt, keine konkurrierende Implementierung, keine Reviews/Inline-Einwände. Historische Drafts unangetastet. Keine Gates abgeschwächt, kein Retry/Abbruch.
+
+PR-Pflicht-CI **41292228905 SUCCESS**, Wallet **41292228903 SUCCESS**. 1052 Tests ohne Fehler/Skips, Syntax, vollständiges Chromium und alle drei Firefox-/WebKit-Gruppen bestanden. Erweiterte 16-Schritt-FIN-Kette ausdrücklich in allen drei Engines PASS; unabhängige EUR-Verrechnungs-/Journal-/FX-/Partialfill-/Kosten-/Identitäts-/Restoreorakel.
+
+Main-/Produktionslauf 41293317485 läuft. **Noch kein LIVE_ACCEPTED für diesen Testkandidaten.** Ausgelieferte App bleibt v252; letzte vollständig akzeptierte Mainbasis28903ff. Vollständige Main-Gates, Deployment und tatsächliche Produktionsprüfung der erweiterten Kette abwarten. Kein neuer Implementierungsstrang währenddessen. #255 bleibt PARTIAL, reale Androidfälle EXTERNAL. #264 Konten-/Datenstandhierarchie als nächster konkreter serieller UX-Kandidat vorgemerkt. Owner Work /root, Sitzung50f1560a1a9f.
+
+---
+
 ## #255 FX-/Teilfüllungen – PR #265 / Pflicht-CI läuft · 01.11.2026
 
 Einziger Implementierungsstrang [PR #265](https://github.com/joke0071/foliolab-open/pull/265), Branch `test/fin-e2e01-fx-partial-fills`, HEAD `52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e`, Tree `ddb910797eec6484417992d860460eee724e558e` lokal/remote identisch. Basis Main28903ff/v252 LIVE_ACCEPTED. 1052 lokale Tests (1041 Root +11 Worker), keine Fehler/Skips; Syntax/Diffcheck PASS. Gesamte erweiterte 16-Schritt-Kette lokal Chromium und Firefox PASS: zwei getrennte USD-Teilfüllungen, historische FX .8/.9 versus aktuelle Bewertung .85, EUR-Cash, Kostenbasis40.8/Ertrag7.8, exakte Journalpostings, kein zusätzlicher externer Cashflow, Archiv/Restore, Konflikt-/Missing-FX-/Löschsperren, tatsächliches Quota/post-put Abort, CAS/Offline/sieben Breiten/Axe und verschlüsselter Fresh-UI-Restore einschließlich FX-Dedupe. Keine Produkt-/Cache-/Schema-/Finanzvertragsänderung.
