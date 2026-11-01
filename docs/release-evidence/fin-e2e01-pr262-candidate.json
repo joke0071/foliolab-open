@@ -1,0 +1,116 @@
+{
+  "chromium": {
+    "base": "https://foliolab.unperfekt.at/",
+    "scope": "FIN-E2E01 oracle v1: production APIs + actual IDB + UI encrypted export/fresh restore; no hardware claim",
+    "engines": [
+      {
+        "engine": "chromium",
+        "status": "PASS",
+        "steps": [
+          "import",
+          "correct",
+          "match",
+          "remove",
+          "undo",
+          "reimport",
+          "archive",
+          "restore-archive",
+          "trade",
+          "remove-again",
+          "history"
+        ],
+        "checks": [
+          "exact oracle after every CAS commit",
+          "cancel/stale/quota/post-put abort preserve bytes+revision",
+          "delete/reimport/undo",
+          "actual second tab CAS",
+          "7 widths/Axe",
+          "offline reload",
+          "UI v2 download + fresh context UI restore + deleted identity"
+        ]
+      }
+    ]
+  },
+  "firefox": {
+    "base": "https://foliolab.unperfekt.at/",
+    "scope": "FIN-E2E01 oracle v1: production APIs + actual IDB + UI encrypted export/fresh restore; no hardware claim",
+    "engines": [
+      {
+        "engine": "firefox",
+        "status": "PASS",
+        "steps": [
+          "import",
+          "correct",
+          "match",
+          "remove",
+          "undo",
+          "reimport",
+          "archive",
+          "restore-archive",
+          "trade",
+          "remove-again",
+          "history"
+        ],
+        "checks": [
+          "exact oracle after every CAS commit",
+          "cancel/stale/quota/post-put abort preserve bytes+revision",
+          "delete/reimport/undo",
+          "actual second tab CAS",
+          "7 widths/Axe",
+          "offline reload",
+          "UI v2 download + fresh context UI restore + deleted identity"
+        ]
+      }
+    ]
+  },
+  "httpsAssets": [
+    {
+      "path": "sw.js",
+      "match": true,
+      "sha256": "2971f664df5d68819a64f88d190678f5da4a3d68644e4dbd5033479475f16ad4"
+    },
+    {
+      "path": "index.html",
+      "match": true,
+      "sha256": "e64acf26ff6ff6b860b0e1f372173c037d2ffc88668c6a4bbbb9ca4e40e88e25"
+    },
+    {
+      "path": "src/transactions.js",
+      "match": true,
+      "sha256": "93b33fa9adc643f8207fcbae072ea7accae7be60bfbeff36f1ee15a995394132"
+    },
+    {
+      "path": "src/booking-management.js",
+      "match": true,
+      "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9"
+    },
+    {
+      "path": "src/import-identity.js",
+      "match": true,
+      "sha256": "02eb68b60b44aa42cd926764952a2565ab446eb07b43235731440535ac4af089"
+    },
+    {
+      "path": "src/atomic-storage.js",
+      "match": true,
+      "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+    },
+    {
+      "path": "src/backup-vault.js",
+      "match": true,
+      "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+    }
+  ],
+  "scriptSHA256": "47a263c8a60ed501925fed6737a552bdc201ebbb85265f1842b34759676e5a67",
+  "issue": 255,
+  "pr": 262,
+  "head": "70400c3ac42c2663757a2cf6c1b195c924a0729d",
+  "tree": "e2f6670913e353bfc7828822470c33b58aac8da0",
+  "baseMain": "7c720dddd5450fd4c2342deae9c7d91427ee01e7",
+  "status": "CANDIDATE_CI_PENDING",
+  "requiredRun": 41282037334,
+  "walletRun": 41282037355,
+  "unitTests": 1047,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "localTransportNotes": "Supplemental production probes used installed Playwright1.56.1 with managed HTTPS proxy, context certificate exception; Chromium --ignore-certificate-errors needed for proxy SW control, Firefox MOZ_DISABLE_CONTENT_SANDBOX=1 only locally. Original committed suite/CI unchanged. Seven assets separately retrieved with normal TLS verification and matched exact workspace bytes. No own WebKit/hardware/OAuth evidence; required CI/production gates pending."
+}
