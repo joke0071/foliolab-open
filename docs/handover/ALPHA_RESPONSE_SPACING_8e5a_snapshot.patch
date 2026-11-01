@@ -1,0 +1,105 @@
+diff --git a/docs/ALPHA_VANTAGE_266.md b/docs/ALPHA_VANTAGE_266.md
+index cf9168b..83f9207 100644
+--- a/docs/ALPHA_VANTAGE_266.md
++++ b/docs/ALPHA_VANTAGE_266.md
+@@ -9,7 +9,7 @@ Ein eigener Schlüssel wird unter Mehr → Kurse & API-Schlüssel lokal gespeich
+ ## Limit- und Speichervertrag
+ 
+ - Geteilte Tagesreihe für Quote/History/Diagnose, deduplizierte laufende Abfragen und dauerhafter Tagescache in separater IndexedDB `foliolab-open-market-cache`. Keine Finanzdaten/Walletadressen/Zugangsdaten im Kurscache. Budgetkennungen enthalten ausschließlich SHA-256-Fingerprints, keine Keys oder vollständigen Request-URLs.
+-- Seriell, 2,5 Sekunden Abstand zwischen reservierten Requests; persistierte atomare Budgetreservierungen schützen auch mehrere Tabs. Höchstens 25 Versuche je UTC-Tag/Keyfingerprint auf diesem Browser. Fehlversuche verbrauchen ebenfalls Budget. Andere Geräte/Programme desselben Keys sind nicht messbar; echte Limitantworten bleiben maßgeblich.
++- Serielle Queue mit mindestens 2,5 Sekunden Pause nach Ende jeder Antwort; Antwortlatenz darf die Pause nicht aufbrauchen. Der Abstand bleibt im Budgetdatensatz auch nach Neuladen erhalten. Atomare Budgetreservierungen begrenzen die Gesamtzahl auch über mehrere Tabs. Höchstens 25 Versuche je UTC-Tag/Keyfingerprint auf diesem Browser. Fehlversuche verbrauchen ebenfalls Budget. Andere Geräte/Programme desselben Keys sind nicht messbar; echte Limitantworten bleiben maßgeblich.
+ - HTTP200 Information/Note ist ein Fehler, niemals ein Preis. Burstlimit führt zu kurzer Sperre; Tageslimit bis Tageswechsel. Kein automatisches kostenpflichtiges Upgrade, kein Full-History-Premiumendpoint, kein Worker für Alpha Vantage.
+ - IndexedDB für Budget/Cache muss verfügbar sein, sonst keine unkontrollierten AV-Anfragen. Vorhandene Portfoliokurse bleiben bei Limit, falscher Identität, altem Datum oder Netzfehler erhalten.
+ - Cachewerte werden in der Diagnose ausdrücklich als lokale Tageskurse bezeichnet; daraus folgt kein neuer Browser-/Key-/Verbindungsnachweis. Der kanonische Portfoliorecord und seine CAS-Revision bleiben bei Diagnose unverändert.
+@@ -22,4 +22,8 @@ Neue Unitprüfungen: vier eindeutige Zuordnungen und Widersprüche; Rohschlussku
+ 
+ Die bestehende verpflichtende ETF-Browser-Suite importiert zusätzlich `browser-alpha-vantage.mjs`; keine historischen Gates ersetzt. Reale IndexedDB, synthetisches Netz: vier UI-Kursupdates/exakte Mengen, Quell-/Kursdatum, Quote+History mit vier statt acht Abfragen, Cache nach Reload, atomarer persistierter Budgetstopp ohne Preisänderung, Diagnose ohne Finanzwrites, persistierte FMP/Twelve-Sperre mit Recheck, sieben Breiten/Axe. Läuft damit in Chromium/Firefox/WebKit auf PR, Main und tatsächlicher Produktion. Synthetische Antworten sind kein echter Anbieterbeleg; dieser ist separat verlinkt.
+ 
+-Status: Kandidat v259, vollständige CI und tatsächliche Produktionsabnahme vor Release erforderlich. Kein physischer Android-/Safari-/unabhängiger Browser-TLS-Beleg behauptet.
++Status: Kandidat v260 (Antwortabstand-Korrektur), vollständige CI und tatsächliche Produktionsabnahme vor Release erforderlich. Kein physischer Android-/Safari-/unabhängiger Browser-TLS-Beleg behauptet.
++
++## v260: Abstand nach langsamen Antworten
++
++Die echte isolierte v259-Appprüfung erhielt zuerst einen Kurs, dann eine HTTP200-Limitantwort. Nach mehrminütigem Abstand lieferte derselbe Zugang wieder einen gültigen XDEM-Tageskurs. Im bisherigen Client konnte eine Antwortdauer über 2,5 Sekunden den gesamten Abstand ab Anfragestart aufbrauchen. Der nächste Aufruf begann dann unmittelbar nach der Antwort. V260 setzt den nächsten zulässigen Termin zusätzlich nach Abschluss von Antwort und Cacheverarbeitung. Neue Unitkontrolle mit simulierten 5-Sekunden-Antworten und die bestehende obligatorische Browser-Suite mit absichtlich langsamer erster Antwort prüfen den vollständigen Abstand nach Antwortende. Keine zusätzliche automatische Anbieter-Wiederholung oder Limitaufweichung. Der exakte serverseitige Zähler ist nicht zugänglich; kein vollständiger Vier-ETF-Produktionserfolg allein aus synthetischen Tests abgeleitet.
+diff --git a/src/alpha-vantage.js b/src/alpha-vantage.js
+index 0b058f3..d5c0e94 100644
+--- a/src/alpha-vantage.js
++++ b/src/alpha-vantage.js
+@@ -114,6 +114,14 @@ export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause
+    }catch(error){
+     if(error.cooldown)await store.update(budgetKey,old=>({...old,blockedUntil:Math.min(dayEnd(clock()),clock()+error.cooldown)}));
+     throw error;
++   }finally{
++    // A slow response must not consume the inter-request gap. The next queued
++    // request (including after reload) waits from completion, not from start.
++    const finishedAt=clock();
++    await store.update(budgetKey,old=>{
++     if(!old||!Number.isFinite(old.nextAt))throw failure();
++     return {...old,nextAt:Math.max(old.nextAt,finishedAt+2500)};
++    });
+    }
+   });
+   tail=job;pending.set(activeKey,job);
+diff --git a/sw.js b/sw.js
+index 34a83d2..3e89a54 100644
+--- a/sw.js
++++ b/sw.js
+@@ -1,4 +1,4 @@
+-const CACHE='foliolab-open-v259';
++const CACHE='foliolab-open-v260';
+ const ASSETS=['./','./src/alpha-vantage.js','./src/backup-limits.js','./src/header-status.js','./src/blocked-reasons-ui.js','./src/flatex-native-ui.js','./src/flatex-native.js','./src/bitpanda-preview-ui.js','./src/csv-records.js','./src/bitpanda-preview.js','./src/kraken-ledger.js','./src/kraken-ledger-ui.js','./src/pchain-identity.js','./src/reference-management.js','./src/sonic-staking-evidence.js','./src/pchain-evidence.js','./src/ledger-live.js','./src/ledger-live-ui.js','./src/account-evidence.js','./src/booking-management.js','./src/csv-batch.js','./src/history-evidence-cache.js','./src/historical-portfolio-value.js','./src/historical-position-value.js','./src/purchase-evidence.js','./src/purchase-evidence-ui.js','./src/interest-ui.js','./src/interest-account.js','./src/interest-scenario.js','./src/cash-reconciliation.js','./src/cash-terms.js','./src/cash-terms-ui.js','./src/wallet-history-calculation.js','./src/wallet-history-days-worker.js','./src/wallet-history-valuation.js','./src/solana-history.js','./src/wallet-history-days.js','./src/wallet-history-ui.js','./src/wallet-history-state.js','./src/ethereum-history.js','./src/bitcoin-history.js','./src/wallet-history-core.js','./src/import-identity.js','./index.html','./styles.css','./src/credential-visibility.js','./src/economic-form-ui.js','./src/dialog-discard.js','./src/app.js','./src/drive-backup.js','./src/backup-vault.js','./src/complete-backup.js','./src/account-opening.js','./src/portfolio-edit-actions.js','./src/position-selection.js','./src/coin-identity.js','./src/position-search.js','./src/asset-wizard.js','./src/asset-wizard-core.js','./src/public-instruments-client.js','./src/refresh-ui.js','./src/market-diagnostics.js','./src/quote-quality.js','./src/dashboard-ui.js','./src/chart-periods.js','./src/position-history.js','./src/eodhd-transport.js','./src/eodhd-worker-client.js','./src/security-sources.js','./src/security-discovery.js','./src/onboarding-suggestions.js','./src/reference-listings.js','./src/instrument-catalog.js','./src/security-catalog.js','./src/crypto-fallbacks.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/position-bookings.js','./src/flatex-review-export.js','./src/allocation-ui.js','./src/position-quality-review.js','./src/valuation-status.js','./src/legacy-quote-audit.js','./src/atomic-storage.js','./src/browser-portfolio-storage.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transfer-matching-ui.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/staking-discovery.js','./src/bnb-token-scanner.js','./src/solana-rpc.js','./src/wallet-scan-update.js','./src/ethereum-fallback.js','./src/native-staking-networks.js','./src/staking-catalog.js','./src/wallet-visibility.js','./src/request-cache.js','./src/csv-import.js','./src/flatex-import.js','./src/flatex-reconciliation.js','./src/flatex-backfill.js','./src/flatex-cost-basis.js','./src/flatex-settlements.js','./src/flatex-settlement-audit.js','./src/flatex-cash-audit.js','./src/booking-history.js','./src/booking-history-ui.js','./src/booking-insights-ui.js','./src/booking-insights.js','./src/capital-flows.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/position-icons.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+ self.addEventListener('install',event=>{
+   // A new version must not inherit still-fresh HTTP-cache bytes from the old
+diff --git a/tests/alpha-vantage.test.mjs b/tests/alpha-vantage.test.mjs
+index 92a4e34..c2ca726 100644
+--- a/tests/alpha-vantage.test.mjs
++++ b/tests/alpha-vantage.test.mjs
+@@ -47,6 +47,17 @@ test('Provider limit response is not cached as a price; cooldown prevents repeat
+  await assert.rejects(()=>a.load(position('VWCE'),'test'),/limit/);
+  assert.equal(calls,1);assert.equal(await store.read('daily:VWCE.DEX'),undefined);
+ });
++test('Slow provider responses leave a complete 2.5-second gap after completion, also for a new client',async()=>{
++ const store=memory(),starts=[],finishes=[];let time=now;
++ const deps={store,clock:()=>time,pause:async ms=>{time+=ms;},fetcher:async url=>{
++  starts.push(time);time+=5000;finishes.push(time);
++  return {ok:true,status:200,json:async()=>daily(new URL(url).searchParams.get('symbol'))};
++ }};
++ await createAlphaClient(deps).load(position('VWCE'),'test');
++ await createAlphaClient(deps).load(position('XDEM'),'test');
++ assert.ok(starts[1]-finishes[0]>=2500,'Response latency cannot consume the free-tier pacing gap');
++ assert.equal((await store.read('budget:'+await alphaKeyId('test'))).used,2);
++});
+ test('Confirmed FMP402 and Twelve plan404 suppress repeated automatic requests but allow explicit recheck',async()=>{
+  for(const source of ['fmp','twelve']){
+   let calls=0;const key='SYNTHETIC_SECRET',settings={[source==='fmp'?'fmpKey':'twelveKey']:key,securitySource:source};
+diff --git a/tests/browser-alpha-vantage.mjs b/tests/browser-alpha-vantage.mjs
+index 8606b47..8352c88 100644
+--- a/tests/browser-alpha-vantage.mjs
++++ b/tests/browser-alpha-vantage.mjs
+@@ -12,13 +12,15 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
+  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'}),p=await context.newPage(),calls=[],errors=[];
+  p.on('pageerror',e=>errors.push(e.message));
+  await p.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});
+- await context.route('**/*',route=>{
++ await context.route('**/*',async route=>{
+   const u=new URL(route.request().url());if(u.origin===new URL(base).origin)return route.continue();
+-  calls.push({host:u.hostname,function:u.searchParams.get('function'),symbol:u.searchParams.get('symbol'),time:Date.now()});
++  const call={host:u.hostname,function:u.searchParams.get('function'),symbol:u.searchParams.get('symbol'),time:Date.now()};calls.push(call);
+   const fulfill=(status,body)=>route.fulfill({status,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify(body)});
+   if(u.hostname==='www.alphavantage.co'){
+    assert.equal(u.searchParams.get('apikey'),'SYNTHETIC_ALPHA_KEY');assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');
+    const index=pairs.findIndex(([symbol])=>symbol+'.DEX'===u.searchParams.get('symbol'));assert.ok(index>=0);
++   if(index===0)await new Promise(resolve=>setTimeout(resolve,3000));
++   call.respondedAt=Date.now();
+    return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},untrustedDiagnostics:{echoedKey:'SYNTHETIC_ALPHA_KEY'},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
+   }
+   if(u.hostname==='financialmodelingprep.com')return fulfill(402,{message:'Synthetic plan denial'});
+@@ -43,7 +45,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
+   await refresh();const first=await record(),model=JSON.parse(first.raw);
+   assert.deepEqual(model.positions.map(x=>x.price),[110,111,112,113]);assert.ok(model.positions.every(x=>x.quantityExact==='3.141592653589793238'&&x.quoteSource==='Alpha Vantage · Xetra EOD'&&x.quoteAsOf===date));
+   assert.deepEqual(model.bookings,[]);assert.deepEqual(model.journalEntries,[]);assert.deepEqual(model.externalCashFlows,[]);
+-  assert.equal(calls.length,4);for(let i=1;i<4;i++)assert.ok(calls[i].time-calls[i-1].time>=2300,'Requests must be serially throttled');
++  assert.equal(calls.length,4);for(let i=1;i<4;i++)assert.ok(calls[i].time-calls[i-1].respondedAt>=2300,'Requests must leave the complete gap after a slow response');
+   const history=await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js');const s=new PortfolioStorage();try{const m=await s.initialize();return await fetchSecurityHistory(m.positions[0],m.settings,30);}finally{s.close();}});
+   assert.equal(history.priceType,'close');assert.equal(history.points.at(-1).total,110);assert.equal(calls.length,4,'Quote/history share daily data');
+   await p.reload();await refresh();assert.equal(calls.length,4,'Cache survives reload');
