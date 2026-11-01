@@ -1,3 +1,17 @@
+## v257 – LIVE_ACCEPTED · 01.11.2026
+
+**Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, Service Worker `foliolab-open-v257`.** [PR #269](https://github.com/joke0071/foliolab-open/pull/269) integriert. [Main-/Produktionslauf41304484412](https://github.com/joke0071/foliolab-open/actions/runs/41304484412) **completed / success**, run_attempt2. Alle Main-Gates zuvor im ersten Versuch SUCCESS: 1052 Tests/0 Fehler/0 Skips, Syntax, vollständiges Chromium und drei Firefox-/WebKit-Gruppen. Deployment124845081657 SUCCESS.
+
+**Tatsächlicher Livejob124845972664 SUCCESS:** 123 genaue veröffentlichte Assetmatches, sechs Kerngruppen/18 Axe-Scans. Neue Vier-ETF-Quelle/Real-IDB-Kette in Chromium, Firefox und WebKit PASS: gemockte direkte FMP-Kurse/datiertes Persistieren/exakte Mengen, altes EODHD-Key trotz fehlendem Feld behalten, Diagnose identische Bytes/Revision,404 bewahrt Kursdaten, sieben Breiten/Axe, kein EODHD-/Cloudflare-Aufruf. Bestehende echte SW/PWA/Offline-/Update-/Finanz-/CAS-/Recovery-/Backup-/UI-/Transfergates unverändert PASS. 16-Schritt-FIN-Kette mit historischen FX/Teilfüllungen und echtem verschlüsseltem UI-Restore in allen drei Engines PASS. Neue Auswahl/Statuszeile zusätzlich im echten Cloudbrowser sichtbar; sieben HTTPS-Kerndateien unabhängig mit regulärer TLS-Prüfung identisch.
+
+Erster Livejob124845141944 mit initialem30s-Store-Ready-Timeout vor Fixture/Anbietern fehlgeschlagen, Ursache nicht sicher bewiesen. Nach positiver aktueller Asset-/UI-Prüfung **genau der fehlgeschlagene Livejob einmal erneut ausgeführt**; keine neue Main-CI/Deployment-/Produktänderung und keine abgeschwächte Assertion. Fehlgeschlagene Artefakte erhalten. Finale Live-ArtefaktID **13083951591**, SHA256 `595fc24780091fbdf1da186acf6b80916fc808cafb67863bd7fa2ebac8dcb59f`; IDs/Digests gegen API und echte Uploadlogs geprüft, kein eigener ZIP-/CRC-Beleg. Dauerhafte Evidenz `docs/release-evidence/v257-etf-source-live-acceptance.json`.
+
+**#266 bleibt fachlich PARTIAL / echte Anbieterabnahme EXTERNAL:** keine autorisierten Nutzerkeys hier; tatsächliche vier direkte Preise/Origin-CORS/Tarifrechte nicht bewiesen. Public-Twelve-Katalog bestätigt vier EUR/XETR-Einträge/Grow/Venture/ACAO*, keine Quote-/ISIN-/Lizenzabnahme daraus ableiten. Kein Alpha-Vantage-/Yahoo-/Alpaca-Adapter ohne geforderte Evidenz. EODHD-Worker optional, direkte EODHD-Kursquelle und Standard-Keyfeld entfernt; alte Keys/Backupkonfiguration erhalten. Manuelle Kurse/CSV verfügbar. Keine echten Android-Hardwarewerte behauptet.
+
+**Nächster unmittelbar ausführbarer serieller Schritt:** **#267 CASH-UX01 + #264 UX-MORE-ACCOUNT01 gemeinsam** – ein Name bei neuem einfachem Geldkonto, nur eine Guthabenkarte; Anbieter→Konto→Datenstand verschachteln. Konto/Position/Journal fachlich getrennt; keine bestehende Umbenennung/Migration. Vor Start frischer Main-/PR-/Owner-Abgleich. Danach #268, #257 inklusive Erstauswahl-Long-Press und übrige ACTIVE-Masterprojekte. Owner Work /root d72ece214a83. Historischen Checkpoint-Branch nie vollständig nach Main mergen.
+
+---
+
 ## v257 – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 01.11.2026
 
 Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, SW257. Mainlauf **41304484412**: 1052 Tests/0 Fehler/Skips, Syntax, gesamtes Chromium und alle drei Firefox-/WebKit-Gruppen SUCCESS. **Deployment124845081657 SUCCESS**, Homepage/SW bestätigt. Noch kein LIVE_ACCEPTED.
