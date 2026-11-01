@@ -5,7 +5,7 @@
  * matching exchange; Twelve Data: existing strict listing verification.
  */
 import {requestJSON,TTL} from './request-cache.js';
-import {enhanceKnownReferenceListing} from './reference-listings.js';
+import {enhanceKnownReferenceListing,referenceSearch} from './reference-listings.js';
 import {configuredMarketWorker,fetchWorkerEodhdBars} from './eodhd-worker-client.js';
 import {securityQuote} from './market.js';
 
@@ -32,6 +32,10 @@ function listingInfo(p){
  const symbol=cleanSymbol(p?.symbol),currency=String(p?.currency||'').trim().toUpperCase();
  const exchange=String(p?.exchange||'').trim().toUpperCase(),mic=String(p?.mic||'').trim().toUpperCase();
  if(!symbol||!/^[A-Z]{3}$/.test(currency)||(!exchange&&!mic))throw Error('Ticker, bestätigter Handelsplatz und Kurswährung fehlen.');
+ const xetra=value=>['XETR','XETRA'].includes(value);
+ if(mic&&exchange&&xetra(mic)!==xetra(exchange))throw Error('Handelsplatz und Börsen-MIC widersprechen sich.');
+ const reference=currency==='EUR'&&(xetra(mic)||xetra(exchange))&&p.kind==='etf'?referenceSearch(symbol).find(x=>x.symbol===symbol):null;
+ if(reference&&p.isin&&String(p.isin).trim().toUpperCase()!==reference.isin)throw Error('ISIN widerspricht der bestätigten Xetra-Referenznotierung.');
  return {symbol,currency,exchange,mic};
 }
 function configuredEodhd(p){

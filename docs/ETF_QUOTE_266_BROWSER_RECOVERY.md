@@ -1,11 +1,11 @@
-# ETF-QUOTE #266 – browser source recovery (v255 candidate)
+# ETF-QUOTE #266 – browser source recovery (v256 candidate)
 
 Status: IN_PROGRESS; no release or live-provider approval implied.
 Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
 
 ## Product delta
 
-- Four curated EUR/XETR reference identities (VWCE, XDEM, XDEQ, 5MVL) can be hydrated from exact ISIN + ticker + MIC + explicit currency despite abbreviated broker names. Every conflicting ISIN, venue, provider symbol and currency continues to reject hydration. Legacy full-name matching remains. No amounts, names, bookings, financial engine, schema or write contracts changed.
+- Four curated EUR/XETR reference identities (VWCE, XDEM, XDEQ, 5MVL) can be hydrated from exact ISIN + ticker + MIC + explicit currency despite abbreviated broker names. Every conflicting ISIN, venue, provider symbol and currency continues to reject hydration. A conflicting Xetra MIC/exchange or curated ISIN also rejects an explicitly mapped provider request before network access. Legacy full-name matching remains. No amounts, names, bookings, financial engine, schema or write contracts changed.
 - FMP direct browser requests are first, Twelve Data next, optional owned EODHD worker last. No direct EODHD quote/history request, including legacy eodhd-only selection. Existing direct keys are retained in local settings and encrypted configuration backups. Absent fields cannot clear keys on save; explicit credential revocation still clears them.
 - FMP mapping is resolved read-only at the request boundary. A configured source with missing mapping is visible in diagnosis rather than silently absent. Invalid optional worker settings do not prevent usable direct providers.
 - XETR/XETRA exchange aliases are equivalent, while Frankfurt/XFRA, USD or another ticker remain unacceptable substitutes. Provider date freshness is retained. No synthetic valuation or FX substitution.

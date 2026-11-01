@@ -22,7 +22,7 @@ test('Direct browser providers precede optional worker; direct EODHD keys never 
  let calls=0;
  for(const source of ['auto','eodhd'])await assert.rejects(()=>fetchSecurityQuote(p,{eodhdKey:'PRIVATE',securitySource:source},()=>{calls++;throw Error('unexpected');}),/deaktiviert/);
  assert.equal(calls,0);
- assert.match(marketSourcePlan({...p,isin:'WRONG',fmpSymbol:''},{fmpKey:'b'})[0].reason,/FMP-Börsenticker fehlt/);
+ assert.match(marketSourcePlan({...p,symbol:'OTHER',fmpSymbol:''},{fmpKey:'b'})[0].reason,/FMP-Börsenticker fehlt/);
 });
 test('FMP validated explicitly mapped ticker and actual exchange, rejects identity mismatch',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'}),settings={fmpKey:'local-test',securitySource:'fmp'};
@@ -32,7 +32,7 @@ test('FMP validated explicitly mapped ticker and actual exchange, rejects identi
  for(const wrong of [{symbol:'OTHER.DE'},{exchange:'NYSE'},{currency:'USD'},{price:0},{timestamp:Date.parse('2020-01-01')/1000}]){
   await assert.rejects(()=>fetchSecurityQuote(p,settings,async()=>ok([{...(await good().json())[0],...wrong}])));
  }
- await assert.rejects(()=>fetchSecurityQuote(position({name:'short',isin:'IE0000000000'}),settings,good),/FMP-Börsenticker fehlt/);
+ await assert.rejects(()=>fetchSecurityQuote(position({name:'short',isin:'IE0000000000'}),settings,good),/ISIN widerspricht/);
 });
 test('FMP historical endpoint uses stable slash path and validates symbol, dates, currency',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'});
@@ -122,4 +122,16 @@ test('five year EODHD chart extends real upstream date boundaries without invent
  assert.equal(result.points.length,2);
  assert.ok(Date.parse(calls[0].from)<Date.now()-1700*864e5);
  assert.equal(result.points[0].date,older);
+});
+
+test('Explicit provider mapping cannot override conflicting Xetra venue or curated ISIN',async()=>{
+ let calls=0;const fetcher=async()=>{calls++;throw Error('must not request');};
+ for(const patch of [{exchange:'NYSE'},{exchange:'Frankfurt'},{mic:'XNYS'},{isin:'IE0000000000'}])
+  await assert.rejects(()=>fetchSecurityQuote(position({fmpSymbol:'VWCE.DE',...patch}),{fmpKey:'SYNTHETIC'},fetcher),/widerspr/);
+ assert.equal(calls,0);
+});
+test('Broken optional worker cannot prevent configured direct browser sources',()=>{
+ const settings={fmpKey:'SYNTHETIC',twelveKey:'SYNTHETIC',eodhdWorkerEndpoint:'http://invalid.example',eodhdWorkerAccessToken:'short'};
+ assert.deepEqual(marketSourceOptions(position(),settings),['fmp','twelve']);
+ assert.equal(marketSourcePlan(position(),settings).find(x=>x.source==='eodhd').ready,false);
 });
