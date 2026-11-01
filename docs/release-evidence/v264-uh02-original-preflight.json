@@ -60,7 +60,7 @@
     "src/app.js": "d6aa42d0b7e311d695e3fae509ada220b9a2516b3689da9fc51c1ec0f1782609",
     "src/model.js": "691fcacda19edec24efef6ce2a50987b7945007a077441f210246e3c526d3403",
     "src/purchase-evidence.js": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43",
-    "src/unified-bitcoin.js": "c499bffbd4d1db5d426e4b69b94bbd8761a0c176a8c45bf3db9cedd40a7d0717",
+    "src/unified-bitcoin.js": "df9cc6d28ed162e7a79d7cf6ad9136214698beabb9cdb694981ffaed4f3b5ac5",
     "src/unified-bitcoin-ui.js": "ab965deb3715fa29b1746702c111e2eaea976956e7fdb5a291e3a6c5050bd55e",
     "src/wallet-history-state.js": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c",
     "src/wallet-history-ui.js": "5a99767607752dd257b8fed356fe04d325ef4075b28e2413aa3414575abf2f41",

@@ -36,6 +36,7 @@ test('UH02 safe economic undo retains independent sources and tombstone; manual 
  const u=undoUnifiedBitcoin(d,id,{baseline:previewUnifiedBitcoin(d,i,'wallet').baseline,confirmed:true,at});assert.equal(u.bookings.length,0);assert.equal(u.externalCashFlows.length,0);assert.deepEqual(u.positions,m.positions);assert.deepEqual(u.purchaseEvidence,d.purchaseEvidence);assert.equal(u.journalEntries[0].type,'uh02-undo');assert.equal(previewUnifiedBitcoin(u,i,'wallet').groups[0].status,'removed');assert.deepEqual(confirm(u,i),u);assert.equal(safeImport(u).journalEntries[0].type,'uh02-undo');
  const edited=structuredClone(d);edited.bookings[0].notes='manual';assert.throws(()=>undoUnifiedBitcoin(edited,id,{baseline:previewUnifiedBitcoin(edited,i,'wallet').baseline,confirmed:true}),/geändert/);
  const dependent=structuredClone(d);dependent.bookings.push({...d.bookings[0],id:'dependency',targetPositionId:id});assert.throws(()=>undoUnifiedBitcoin(dependent,id,{baseline:(awaitDigest(dependent)),confirmed:true}),/Abhängige/);
+ dependent.bookings.at(-1).targetPositionId=null;dependent.bookings.at(-1).notes=JSON.stringify({reference:id});assert.throws(()=>undoUnifiedBitcoin(dependent,id,{baseline:awaitDigest(dependent),confirmed:true}),/Abhängige/);
 });
 test('UH02 encrypted backup/restore reimport retains financial effect once, without history opt-in',async()=>{
  const m=model(),i=input(m),d=confirm(m,i),full=createCompleteBackup(JSON.parse(backup(d)),null,d.walletHistory);

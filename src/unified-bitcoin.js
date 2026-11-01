@@ -125,7 +125,7 @@ export function undoUnifiedBitcoin(model,id,{confirmed=false,baseline,at=new Dat
  if(!confirmed||baseline!==digest(model))throw Error('Rücknahme erneut prüfen und bestätigen.');
  const b=model.bookings.find(b=>b.id===id),j=model.journalEntries.find(j=>j.id===id);
  if(!id.startsWith(PREFIX)||!b||j?.source!=='unified-bitcoin'||!sourceUnmodified(model,b))throw Error('Kauf wurde geändert oder ist nicht sicher rücknehmbar.');
- const targets=[id,...j.postings.map(p=>p.id)],references=value=>typeof value==='string'?targets.includes(value):value&&typeof value==='object'?Object.entries(value).some(([k,v])=>targets.includes(k)||references(v)):false;
+ const targets=[id,...j.postings.map(p=>p.id)],references=value=>typeof value==='string'?targets.some(id=>value.includes(id)):value&&typeof value==='object'?Object.entries(value).some(([k,v])=>targets.includes(k)||references(v)):false;
  const rest={...model,bookings:model.bookings.filter(x=>x.id!==id),journalEntries:model.journalEntries.filter(x=>x.id!==id),externalCashFlows:model.externalCashFlows.filter(x=>x.id!==id),bookingPresentation:undefined};
  if(references(rest))throw Error('Abhängige Nachweise verhindern die isolierte Rücknahme.');
  const draft=structuredClone(model);draft.bookings=draft.bookings.filter(x=>x.id!==id);draft.externalCashFlows=draft.externalCashFlows.filter(x=>x.id!==id);
