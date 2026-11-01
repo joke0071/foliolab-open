@@ -1,3 +1,13 @@
+## PR262 / Main87d4669 – Releaseabschluss BLOCKED durch bestehenden Fokus-Zeitlauf · 01.11.2026
+
+Main `87d4669c217e5a9f7362e50239d3f85f83bcaa3b`, geprüfter Tree `e2f6670913e353bfc7828822470c33b58aac8da0`, Test-/CI-Änderung ohne Appassetdelta; PR262 nach voller grüner finaler CI gemergt. Mainlauf **41282762467**: Testjob **124777895226 FAILED** am unveränderten `structured-quality-browser-contract.mjs:40` (`focus returns to the matching refreshed card`, tatsächliches activeElement.dataset.id undefined statt quality-missing). Fehler vor neuer Chromium-FIN-Kette im Mainlauf; finale PR-Kette in allen3Engines bestand. **Kein Deployment dieses Mainstands erfolgt**, Produktion/Rückfall weiterhin vollständig bestätigte v251/Main7c720dd. Main-Cross2 **124777895275 SUCCESS**, inklusive neuer FIN-Kette/PWA/Recovery in Firefox/WebKit; Cross1/3 noch laufend und nicht abgebrochen.
+
+Gezielte Diagnose: `createDialogDiscardGuard` ruft native dialog.close(); eigentliche Fokuswiederherstellung im asynchronen close-Handler. Bestehender Test prüft nach bloßem Verbergen sofort activeElement, ohne diesen Lifecycle abzuwarten. Produktbytes unverändert gegenüber v251; zwei grüne vollständige PR-Chromiumläufe und unabhängige Produktionskette Chromium+Firefox vorhanden. **Unveränderter bestehender Fokusvertrag lokal dreimal nacheinander PASS**, 6Breiten/Axe/Archiv-/Editor-/Finanz-Nullmutation je Lauf. Kein Weglassen/Abschwächen einer Assertion. Plausibler vorhandener Timingbefund, keine pauschale Appfehlerfreiheit behauptet.
+
+Nächster begrenzter Schritt: übrige Main-Gruppen regulär abschließen lassen, dann **einmal nur fehlgeschlagenen Main-Testjob** gezielt wiederholen; bestandene Cross-Gruppen erhalten. Bei erneutem Fokusfehler kein blinder Retryloop, sondern kleinster Lifecycle-/Repro-Fix mit vollständigem Gate. Danach Deployment und tatsächliche 3Engine-Produktionskettenabnahme Pflicht. Noch kein neuer LIVE_ACCEPTED-Status für PR262. Owner Work/root50f1560a1a9f, kein zweiter Kandidat begonnen; #255 insgesamt PARTIAL, #256 danach seriell.
+
+---
+
 ## #255 FIN-E2E01 / PR262 – MERGED · Produktionsabnahme PENDING · 01.11.2026
 
 **Main `87d4669c217e5a9f7362e50239d3f85f83bcaa3b`**, Tree `e2f6670913e353bfc7828822470c33b58aac8da0` = exakt geprüftem HEAD `70400c3ac42c2663757a2cf6c1b195c924a0729d` und synthetischem Merge `49f1be8db6560eeecfb05e77fe23cb1f5dbefe0b`. [PR262](https://github.com/joke0071/foliolab-open/pull/262) kontrolliert gemergt, erwarteter HEAD bestätigt, Main unmittelbar davor unverändert; nur historische Drafts157/161 daneben offen, Reviews/Inlinekommentare leer. Keine Integration des historischen Checkpoint-Branches.
