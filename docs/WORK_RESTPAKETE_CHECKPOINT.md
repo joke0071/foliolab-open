@@ -1,3 +1,13 @@
+## #255 FX-/Teilfüllungen – PR #265 / Pflicht-CI läuft · 01.11.2026
+
+Einziger Implementierungsstrang [PR #265](https://github.com/joke0071/foliolab-open/pull/265), Branch `test/fin-e2e01-fx-partial-fills`, HEAD `52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e`, Tree `ddb910797eec6484417992d860460eee724e558e` lokal/remote identisch. Basis Main28903ff/v252 LIVE_ACCEPTED. 1052 lokale Tests (1041 Root +11 Worker), keine Fehler/Skips; Syntax/Diffcheck PASS. Gesamte erweiterte 16-Schritt-Kette lokal Chromium und Firefox PASS: zwei getrennte USD-Teilfüllungen, historische FX .8/.9 versus aktuelle Bewertung .85, EUR-Cash, Kostenbasis40.8/Ertrag7.8, exakte Journalpostings, kein zusätzlicher externer Cashflow, Archiv/Restore, Konflikt-/Missing-FX-/Löschsperren, tatsächliches Quota/post-put Abort, CAS/Offline/sieben Breiten/Axe und verschlüsselter Fresh-UI-Restore einschließlich FX-Dedupe. Keine Produkt-/Cache-/Schema-/Finanzvertragsänderung.
+
+Pflicht-CI **41292228905**, Wallet **41292228903** laufen; vollständiges WebKit, Main-CI/Deployment und tatsächliche Produktionsabnahme noch ausstehend. Noch nicht gemergt oder LIVE_ACCEPTED für diesen Kandidaten. #255 bleibt PARTIAL. Umfang `docs/FIN_E2E01_FX_PARTIAL_FILLS.md` im Kandidaten. Keine neue Änderung während laufender CI.
+
+**Neuer GitHub-Auftrag #264 UX-MORE-ACCOUNT01** gelesen: Konto→Datenstand verschachteln, doppelte Trennlinien entfernen, Status/Aktionen/Schutzregeln unverändert. Issue ist OPEN/PLANNED, kein Implementierungsbranch/PR dazu; erst seriell nach diesem Abschluss und erneutem Konfliktcheck angehen. Nur alte Drafts #157/#161 daneben offen. Owner Work /root, Sitzung 50f1560a1a9f.
+
+---
+
 ## #255 FX-/Teilfüllungsfolge – IN_PROGRESS · 01.11.2026
 
 Basis v252 LIVE_ACCEPTED, Main `28903ff201bf0c942851874dc118f3699e0a5d43`, Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`. Frischer Abgleich: nur historische Drafts #157/#161, alle letzten Actions abgeschlossen, kein konkurrierender Implementierungsstrang. Einziger Kandidat `test/fin-e2e01-fx-partial-fills`, Owner Work /root, Sitzung 50f1560a1a9f. Noch kein PR/Release. Bestehende historische FX-Unit-Orakel werden um eine fortgesetzte FIN-Kette mit zwei eigenständigen synthetischen USD-Teilfüllungen, EUR-Verrechnung, Teilverkauf, Archiv/Restore, Dubletten-/Konfliktsperre und abschließendem echtem verschlüsseltem UI-Restore erweitert. Ausschließlich Tests; keine neue Finanzengine und keine erweiterten Löschrechte. Next: kleinen Kandidaten lokal prüfen, dann vollständige Pflicht-CI und reale Produktionsabnahme; v252 bleibt bestätigte Produktion. #255 insgesamt PARTIAL.
