@@ -1,0 +1,85 @@
+{
+  "status": "HANDOVER_READY_CI_IN_PROGRESS_NOT_RELEASE_ACCEPTED",
+  "at": "2026-11-01T22:13:15.621Z",
+  "owner": "cac084687058",
+  "pr": 276,
+  "head": "63622f42e3fa91b1abbebab541a17e3ee10fbfb7",
+  "tree": "ab0111e68a6af96937eb81ca4de2aaa780cc7f25",
+  "testedMergeCommit": "8cb432326fdb576a95ae1606519de2ab61966558",
+  "testedMergeTreeMatches": true,
+  "production": {
+    "version": 263,
+    "main": "10103d6253ff544b383099c6a631035f67be7025",
+    "unchanged": true
+  },
+  "workflowRun": 41354191091,
+  "jobs": [
+    {
+      "id": 124990619039,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 124990659452,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 124990659468,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 124990659482,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 124990659493,
+      "name": "cross-engine (1)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 124990659498,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "unitTests": {
+    "pass": 1084,
+    "fail": 0,
+    "skipped": 0
+  },
+  "newUH02ThreeEngineFlow": "PASS including actual offline protected-v5 PWA reload",
+  "mainLogRead": true,
+  "cross2LogRead": true,
+  "cross3LogRead": true,
+  "cross1LogAvailable": false,
+  "walletWorkflow": {
+    "run": 41354191219,
+    "result": "success"
+  },
+  "informationalWalletAudit": {
+    "run": 41354191023,
+    "result": "success"
+  },
+  "verifiedArtifactDigests": {
+    "releaseGates": "878bec54db8c9122a40a711db4783b6c64e8cabb0f5040512d4ff5b7699558f8",
+    "dialogVisualReference": "6688a2244c955c7158b1f27b80d028e663a0ab24ca028c895f40be9f041e0760"
+  },
+  "privateOriginalsPublished": false,
+  "originalIndependentPreflight": "PASS; see v264-uh02-original-preflight.json in candidate",
+  "protectedDataVersion": 5,
+  "legacyV263RollbackForbiddenForOptedInPortfolios": true,
+  "fullFinalCI": "PENDING cross-engine (1) job 124990659493",
+  "mergePerformed": false,
+  "deploymentPerformed": false,
+  "physicalAndroid": false,
+  "next": "Keep candidate frozen; wait for existing final run, read last logs/artifacts and reviews, then guarded merge/deploy/full live acceptance. Do not rerun successful jobs or use the superseded first tree."
+}
