@@ -1,0 +1,94 @@
+{
+  "version": "v260",
+  "status": "LIVE_ACCEPTED",
+  "main": "ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+  "tree": "36f29d0cfdece25f3d02809f4ec6bd95da83038a",
+  "sw": "foliolab-open-v260",
+  "pr": 272,
+  "prRun": 41319486511,
+  "walletRun": 41319486556,
+  "mainRun": 41320750171,
+  "deployJob": 124893733517,
+  "liveJob": 124893808484,
+  "allRequiredJobs": "success",
+  "units": {
+    "pass": 1071,
+    "fail": 0,
+    "skip": 0
+  },
+  "production": {
+    "assetMatches": 124,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "alphaSyntheticGate": "all three PASS",
+    "financeCASOfflineBackupRecovery": "all required production gates PASS"
+  },
+  "artifacts": [
+    {
+      "id": 13089845560,
+      "name": "github-pages",
+      "digest": "sha256:a0ed2b62cc864369aaa3337688bcf40ff70d96dea7032c2fe0be4edb9651be72"
+    },
+    {
+      "id": 13089843774,
+      "name": "production-live-acceptance-ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+      "digest": "sha256:e631b569cb4e70941674f1e3a14671988103257754376510df450cb17e7c434c"
+    },
+    {
+      "id": 13089686975,
+      "name": "cross-engine-gates-ca99237f8cbe40490d360dd0bd57f9df76dcf584-3",
+      "digest": "sha256:1e6f9de9e33d83b63ccbe20b25d0d8e6ef6b2b484e92eda7dd052f748d8241d5"
+    },
+    {
+      "id": 13089428015,
+      "name": "cross-engine-gates-ca99237f8cbe40490d360dd0bd57f9df76dcf584-2",
+      "digest": "sha256:9013ccb3e43ebe247d370cc63a62bc22be4e573fc470bd74ac5bcb356d4855d8"
+    },
+    {
+      "id": 13089174290,
+      "name": "cross-engine-gates-ca99237f8cbe40490d360dd0bd57f9df76dcf584-1",
+      "digest": "sha256:f3ad33d1b89e4168db066d73dd309d15dd134053ec3765f80355bb93a073271c"
+    },
+    {
+      "id": 13089023423,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:c33644ca2234b3a50bbdfe8fa287c20e253288351f1a6bbd99fe6ca69c439ace"
+    },
+    {
+      "id": 13088637977,
+      "name": "ci-stage-ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+      "digest": "sha256:c45d8aefc1d951e9017123c685e27f9eb5143947648c50620c182b6d3390c0ac"
+    },
+    {
+      "id": 13088549896,
+      "name": "release-gates-ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+      "digest": "sha256:7f71506bbaf6110950d66184cc1c66a1225c9f4ddd997f8efb6782c3046f690c"
+    }
+  ],
+  "liveDigestMatchesReadUploadLog": true,
+  "actualAlphaFourETFUI": "PASS with own private key and real shipped UI; four requests, no limit, EUR/XETR/2026-10-30; details v260-real-alpha-ui-four-etf.json",
+  "additionalETHProductionProbe": "PASS in Chromium with synthetic provider responses; seven widths/axe/focus/retained accepted history; details v260-production-eth-result.json",
+  "independentRegularTLSAssets": {
+    "paths": [
+      "sw.js",
+      "src/alpha-vantage.js",
+      "src/ethereum-history.js",
+      "src/wallet-history-state.js",
+      "src/wallet-history-ui.js"
+    ],
+    "allByteEqual": true
+  },
+  "limits": [
+    "No original portfolio modified",
+    "No private keys/wallets/original files in public evidence",
+    "No further Alpha requests today; at least 23 known across sessions",
+    "No ZIP CRC or physical Android/native Safari/OAuth proof claimed",
+    "Local supplemental browsers used explicit proxy TLS exception; separate HTTPS and CI proofs retained"
+  ],
+  "next": "#266 Marketstack + complete retired API/IDB/backup/restore cleanup; unified secret-input UI included as requested. Then unified CSV/blockchain import P1 under UH01-UH05."
+}
