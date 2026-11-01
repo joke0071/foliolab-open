@@ -184,7 +184,7 @@ function renderQualityReview(review,items){
   '<div><h3>Kursquellen</h3><p>'+review.quoteSummary.counts.confirmed+' von '+review.quoteSummary.total+' relevanten Wertpapier- und Kryptopositionen bestätigt. '+(review.quoteSummary.total-review.quoteSummary.counts.confirmed)+' nicht bestätigt.</p></div>'+
   '<div><h3>Historie und Präzision</h3><p>'+(historyCount||exactCount?historyCount+' Positionen mit Historienhinweisen · '+exactCount+' mit abweichenden Anzeige- und Exaktkursen.':'Keine zusätzlichen Hinweise.')+'</p></div>';
  const remaining=new Set(review.valuation.map(i=>i.id)),resolved=[...qualityReviewInitialIds].filter(id=>!remaining.has(id)).length,newCount=[...remaining].filter(id=>!qualityReviewInitialIds.has(id)).length;
- const configuredSecurity=Boolean(model.settings.alphaVantageKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken));
+ const configuredSecurity=Boolean(model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken));
  const canRefresh=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)))||(['etf','stock','fund'].includes(p.kind)&&p.symbol&&configuredSecurity)||p.currency!=='EUR');
  $('qualityReviewSourceActions').innerHTML=canRefresh?'<button type="button" class="btn outline" data-action="refresh-quality-sources" '+(busy||saving||editorSubmitting||otherTabChangedPortfolio||!navigator.onLine?'disabled':'')+'>Kurse und Wallet-Bestände aktualisieren</button><p class="small-help">Verwendet die eingerichteten Quellen für das gesamte Portfolio. Bestätigte Kurse und öffentliche Wallet-Bestände werden wie in der Positionsübersicht gespeichert.</p>':'<p class="small-help">Keine automatische Quelle eingerichtet. Kursdaten an der Position prüfen; Kurszugänge findest du unter „Mehr“.</p>';
  $('qualityReviewRefreshStatus').textContent=busy?'Kurse und Wallet-Bestände werden abgefragt …':$('priceInfo').textContent;
@@ -1991,7 +1991,7 @@ async function refreshAll(){
    }
    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
   }
-  if(securities.length&&(model.settings.alphaVantageKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
+  if(securities.length&&(model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
     for(const p of securities){
      try{
       const q=await fetchSecurityQuote(p,model.settings);
@@ -2392,7 +2392,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
 });
-  const apiCredentialFields=['alphaVantageKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
+  const apiCredentialFields=['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
 $('clearApiKeys').addEventListener('click',async ()=>{
  if(!confirm('Alle gespeicherten API-Schlüssel und den privaten Solana-RPC-Zugang auf diesem Gerät entfernen? Portfolio und Konten bleiben erhalten.'))return;
  try{
@@ -2477,7 +2477,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    throw Error('Der Worker-Zugriffsschlüssel muss 24 bis 128 Zeichen aus Buchstaben, Zahlen, _ oder - enthalten.');
   const changes={publicInstrumentEndpoint,eodhdWorkerEndpoint,eodhdWorkerAccessToken,
    securitySource:String(f.get('securitySource')||'auto')};
-  for(const key of ['alphaVantageKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
+  for(const key of ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
    if(f.has(key))changes[key]=String(f.get(key)||'').trim();
   Object.assign(model.settings,changes);
   await save();$('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);notify('Datenquellen und Zugänge lokal gespeichert.');
@@ -2506,7 +2506,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    }finally{button.disabled=false;}
   });
   $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',async e=>{model.settings.autoRefresh=e.target.checked;await save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
-  for(const k of ['alphaVantageKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
+  for(const k of ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
@@ -2629,7 +2629,7 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
-  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
+  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
 }
 

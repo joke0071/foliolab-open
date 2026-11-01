@@ -67,7 +67,7 @@ export function unpackCompleteBackup(raw){
 /** Local unencrypted JSON exports remain intentionally credential-free. */
 export function hasPortableCredentials(config){
  if(!config?.settings)return false;
- return ['alphaVantageKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey',
+ return ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey',
  'eodhdWorkerAccessToken'].some(k=>Boolean(config.settings[k]))
  || /(?:[?&](?:api[_-]?key|token|secret)=|\/api\/)/i.test(config.settings.solanaRpc||'');
 }

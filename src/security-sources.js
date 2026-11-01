@@ -4,6 +4,7 @@
  * EODHD: confirmed SYMBOL.EXCHANGE, EOD close; FMP: explicit feed symbol and
  * matching exchange; Twelve Data: existing strict listing verification.
  */
+import {marketstackBars,marketstackListing} from './marketstack.js';
 import {requestJSON,TTL} from './request-cache.js';
 import {enhanceKnownReferenceListing,referenceSearch} from './reference-listings.js';
 import {configuredMarketWorker,fetchWorkerEodhdBars} from './eodhd-worker-client.js';
@@ -64,6 +65,10 @@ export function marketSourcePlan(position,settings={}){
   let reason='';try{alphaListing(p);}catch(e){reason=e.message;}
   plan.push({source:'alpha',ready:!reason,reason});
  }
+ if(settings.marketstackKey){
+  let reason='';try{marketstackListing(p);}catch(e){reason=e.message;}
+  plan.push({source:'marketstack',ready:!reason,reason});
+ }
  if(settings.fmpKey){
   let reason='';try{if(!configuredFmp(p))reason='FMP-Börsenticker fehlt. Notierung in der Position bestätigen.';}catch(e){reason=e.message;}
   plan.push({source:'fmp',ready:!reason,reason});
@@ -78,7 +83,7 @@ export function marketSourcePlan(position,settings={}){
  }
  const preferred=String(settings.securitySource||'auto');
  if(preferred==='auto')return plan;
- if(!['alpha','eodhd','fmp','twelve'].includes(preferred))throw Error('Ungültige Wertpapier-Datenquelle.');
+ if(!['alpha','marketstack','eodhd','fmp','twelve'].includes(preferred))throw Error('Ungültige Wertpapier-Datenquelle.');
  return plan.filter(x=>x.source===preferred);
 }
 export function marketSourceOptions(p,settings={}){return marketSourcePlan(p,settings).filter(x=>x.ready).map(x=>x.source);}
@@ -155,6 +160,7 @@ export async function fetchSecurityHistory(p,settings={},days=30,fetcher=globalT
    return await withProviderAccess(source,p,settings,fetcher,'history',async()=>{
    let r;
    if(source==='alpha')r=await alphaVantageBars(p,settings.alphaVantageKey,fetcher);
+   else if(source==='marketstack')r=await marketstackBars(p,settings.marketstackKey,fetcher);
    else if(source==='eodhd')r=await eodhdBars(p,settings,days,fetcher);
    else if(source==='fmp')r=await fmpBars(p,settings,days,fetcher);
    else r=await twelveBars(p,settings,days,fetcher);
@@ -176,8 +182,8 @@ export async function fetchSecurityQuote(p,settings={},fetcher=globalThis.fetch)
   try{
    return await withProviderAccess(source,p,settings,fetcher,'quote',async()=>{
    const l=listingInfo(p);
-   if(source==='alpha'){
-    const result=await alphaVantageBars(p,settings.alphaVantageKey,fetcher),last=result.points.at(-1);
+   if(source==='alpha'||source==='marketstack'){
+    const result=await (source==='alpha'?alphaVantageBars(p,settings.alphaVantageKey,fetcher):marketstackBars(p,settings.marketstackKey,fetcher)),last=result.points.at(-1);
     return {price:priceNumber(last.total),asOf:verifiedDate(last.date),source:result.source,quality:result.quality,cached:result.cached};
    }
    if(source==='twelve'){
