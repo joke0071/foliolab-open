@@ -1,3 +1,13 @@
+## #266 / PR #269 – SW256, Produktcode eingefroren / CI_PENDING · 01.11.2026
+
+Aktueller HEAD `12197fe862019d3e283bb3c929dd67f9ca1c21b9`, Tree `5941acced6af1b70fe592527f913229dae410509`; lokal/remote gleich. Einziger Produktstrang unverändert. Kandidat SW256, Zwischenstände SW253–255 nie veröffentlicht; Main512d935 und echte ProduktionSW252 bleiben Basis. **1052 lokale Tests PASS, 0 Fehler/Skips**, Syntax/Diffcheck PASS. Letzte tatsächliche vollständige lokale Ausgabe `/tmp/etf-final2-units.log` (nur reproduzierbare Scratch-Evidenz, remote CI liefert dauerhafte Prüfung). Aktueller vollständiger Lauf **41302825001 IN_PROGRESS**, Wallet41302825005, Info41302824979. Keine neue Funktionsarbeit während Abnahme.
+
+Zusätzliche abgesicherte Grenze: FMP-Explicit-Mapping übergeht weder Xetra-MIC/Handelsplatzwiderspruch noch falsche bekannte ISIN; vor Netz blockiert. Ungültiger optionaler Worker lässt direkte Quellen erreichbar (eigene Units). Neue Testdiagnose fand WebKit-Service-Worker-Routing als Mock-Bypass: künstliche Keys führten zu echten401 statt Interception. Isolierte Anbieterregression blockiert deshalb SW-Registrierung; eigene echte SW/PWA/Offline/Update-Gates bleiben unverändert Pflicht. Keine echten Nutzerkeys oder privaten Daten verwendet. Vier-ETF-Firefox-Schnitt zuvor vollständig PASS, letzte Gesamt-CI/alle Engines noch offen; rote/supersedierte Vorläufe bleiben historische Fehler und keine Abnahme.
+
+PR-Beschreibung und `docs/ETF_QUOTE_266_BROWSER_RECOVERY.md` auf finalen Umfang aktualisiert. Noch kein CI_ACCEPTED/MERGED/DEPLOYED/LIVE_ACCEPTED. Autorisierte reale direkte Vier-ETF-Kurse/Origin-CORS/Tarif bleiben extern offen, #266 PARTIAL; öffentlicher Twelve-Katalogbeleg EUR/XETR/Grow/Venture im Scope-Dokument. Next: vollständige exakte CI, bei sicheren Gates autonom Routine-Merge/Deployment/Produktionsabnahme, dann #267+#264, #268, #257 und übrige ACTIVE-Masterpakete seriell. Owner /root d72ece214a83; historischen Checkpoint-Branch nie vollständig mergen.
+
+---
+
 ## #266 / PR #269 – SW255 / vollständige Browser-CI läuft · 01.11.2026
 
 Finaler aktueller Kandidat HEAD `2bcee7ccb5b7e4276b4e264e397a541f764b03b3`, Tree `f0238438e3fb1f772ca9c390921480230d5a504f` lokal/remote gleich; einziger Strang `fix/etf-browser-sources-266`, Owner /root d72ece214a83. App/SW255, SW253/254 nie veröffentlicht. Main512d935/ProduktionSW252 weiterhin unverändert.
