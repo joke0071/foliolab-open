@@ -1873,3 +1873,18 @@
 }
 /* All three management lists keep their monetary column at the trailing edge. */
 #positionList .position-entry .holding-r{justify-content:flex-end;text-align:right}
+
+/* Each account owns its evidence and actions; one separator per account. */
+#providerSettings .account-entry.account-evidence{display:block;padding:0;margin:0;border:0;border-bottom:1px solid #e7eee7;border-radius:0;background:transparent}
+#providerSettings .account-entry.account-evidence:last-child{border-bottom:0}
+#providerSettings .account-entry.account-evidence>summary{display:flex;align-items:center;min-height:48px;padding:12px 36px 12px 9px;gap:8px}
+#providerSettings .account-entry.account-evidence .account-own-actions{padding:0 12px 8px;gap:8px}
+#providerSettings .account-entry.account-evidence .account-evidence-body{padding-top:0}
+.account-evidence-body h3{font-size:13px;margin:4px 0 8px}
+.simple-cash-account>.provider-holding{align-items:flex-start;gap:12px}
+.simple-cash-label{min-width:0;flex:1;overflow-wrap:anywhere}
+.simple-cash-label>strong,.simple-cash-label>small{display:block}
+.simple-cash-label>small{font-size:12px;color:#4d6756;margin-top:4px}
+.simple-cash-actions{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0}
+.simple-cash-actions .btn{min-height:44px;min-width:44px;white-space:normal}
+.simple-cash-account .simple-cash-label span{white-space:normal;overflow-wrap:anywhere}

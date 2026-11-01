@@ -41,7 +41,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   const before=await financial();
   const open=async id=>{
    await page.setViewportSize({width:390,height:844});await page.locator('#mobileNav [data-page="more"]').click();
-   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);await page.locator('#providerSettings [data-action="edit-account"][data-id="'+id+'"]').click();
+   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);await clickDisclosed(page.locator('#providerSettings [data-action="edit-account"][data-id="'+id+'"]'));
    assert.equal(await page.locator('#interestDisclosure').getAttribute('open'),null);
    await page.locator('#interestDisclosure').evaluate(e=>e.open=true);
   };
@@ -83,7 +83,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   await preview();assert.match(await page.locator('#interestResult').innerText(),/Festgeld/);await page.locator('#cancelDialog').click();
   assert.equal(await financial(),before);
   // Existing AT03-A path with new interest metadata stays read-only.
-  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('[data-action="check-cash-balance"][data-id="one-cash"]');
+  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('#positionList [data-action="check-cash-balance"][data-id="one-cash"]');
   for(const d of await check.locator('xpath=ancestor::details').all())await d.evaluate(e=>e.open=true);
   await clickDisclosed(check);await page.locator('#cashReference').fill('10005');await page.locator('#cashReferenceCurrent').check();await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch/);await page.locator('#cancelDialog').click();
   // Current password-vault encrypted full backup, then real UI restore of old/new data.

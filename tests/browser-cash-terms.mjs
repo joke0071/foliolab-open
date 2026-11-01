@@ -65,7 +65,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   const compare=async()=>{
    await page.setViewportSize({width:390,height:844});
    await page.locator('#mobileNav [data-page="positions"]').click();
-   const check=page.locator('[data-action="check-cash-balance"][data-id="term-one-cash"]');
+   const check=page.locator('#positionList [data-action="check-cash-balance"][data-id="term-one-cash"]');
    const raw=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
    await clickDisclosed(check);await page.locator('#cashReference').fill('101');await page.locator('#cashReferenceCurrent').check();
    await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/1 EUR/);
@@ -74,7 +74,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   };
   await page.locator('#mobileNav [data-page="more"]').click();
   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);
-  const edit=page.locator('[data-action="edit-account"][data-id="term-one"]');await edit.click();
+  const edit=page.locator('#providerSettings [data-action="edit-account"][data-id="term-one"]');await clickDisclosed(edit);
   assert.equal(await page.locator('#cashTermsDisclosure').getAttribute('open'),null);
   await page.locator('#cashTermsDisclosure').evaluate(e=>e.open=true);await page.locator('#cashTermsEnabled').check();
   await page.locator('#fixedTerm').check();await page.locator('#liquidityStatus').selectOption('bound');
