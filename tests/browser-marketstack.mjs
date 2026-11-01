@@ -18,7 +18,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   if(u.hostname!=='api.marketstack.com')return route.abort();
   assert.equal(u.pathname,'/v2/eod');assert.equal(u.searchParams.get('access_key'),'SYNTHETIC_MARKETSTACK_KEY');assert.equal(u.searchParams.get('exchange'),'XETR');
   const symbol=u.searchParams.get('symbols'),index=pairs.findIndex(([s])=>s+'.DE'===symbol);assert.ok(index>=0);calls.push(symbol);
-  await route.fulfill({status:200,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify({pagination:{count:2,total:2},untrustedDiagnostics:{echoedKey:'SYNTHETIC_MARKETSTACK_KEY'},data:[previous,date].map((d,i)=>({symbol,name:referenceSearch(pairs[index][0])[0].name,exchange:'XETR',price_currency:'EUR',date:d+'T00:00:00+0000',close:100+index+i*10,adj_close:9999}))})});
+  await route.fulfill({status:200,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify({pagination:{count:4,total:4},untrustedDiagnostics:{echoedKey:'SYNTHETIC_MARKETSTACK_KEY'},data:[new Date(Date.now()-4*864e5).toISOString().slice(0,10),new Date(Date.now()-3*864e5).toISOString().slice(0,10),previous,date].map((d,i)=>({symbol,name:referenceSearch(pairs[index][0])[0].name,exchange:'XETR',price_currency:'EUR',date:d+'T00:00:00+0000',close:i===0?0:i===1?null:100+index+(i-2)*10,adj_close:9999}))})});
  });
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js'),db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  const nav=tab=>page.locator((page.viewportSize().width<720?'#mobileNav':'#sidebarNav')+' [data-page="'+tab+'"]').click();
@@ -64,6 +64,11 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   const settings=await record();assert.equal(settings.settings.marketstackKey,'SYNTHETIC_MARKETSTACK_KEY');assert.ok(!settings.raw.includes('SYNTHETIC_MARKETSTACK_KEY'));
   await refresh();const fetched=await record(),model=JSON.parse(fetched.raw);
   assert.deepEqual(model.positions.map(p=>p.price),[110,111,112,113]);assert.ok(model.positions.every(p=>p.quantityExact==='3.141592653589793238'&&p.quoteSource==='Marketstack · Xetra EOD'&&p.quoteAsOf===date));assert.equal(calls.length,4);
+  const gapError=await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js'),s=new PortfolioStorage();try{const m=await s.initialize();try{await fetchSecurityHistory(m.positions[0],m.settings,30);return '';}catch(e){return e.message;}}finally{s.close();}});
+  assert.match(gapError,/2 fehlende oder Null-Schlusskurse/);assert.equal(calls.length,4);
+  // Repair only this synthetic disposable cache to also verify the complete
+  // history path. Production never silently repairs provider gaps.
+  await page.evaluate(async()=>{const {alphaCache}=await import('/src/alpha-vantage.js');for(const symbol of ['VWCE','XDEM','XDEQ','5MVL'])await alphaCache().update('daily:marketstack:'+symbol+'.DE',old=>({...old,data:{data:old.data.data.filter(row=>row.close!==null)}}));});
   const history=await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js');const s=new PortfolioStorage();try{const m=await s.initialize();return await fetchSecurityHistory(m.positions[0],m.settings,30);}finally{s.close();}});
   assert.equal(history.priceType,'close');assert.equal(history.points.at(-1).total,110);assert.equal(calls.length,4);
   await page.reload();await refresh();assert.equal(calls.length,4);
@@ -91,7 +96,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   const beforeRace=await record();
   await page.evaluate(async()=>{const {alphaCache,alphaKeyId}=await import('/src/alpha-vantage.js');await alphaCache().update('budget:marketstack:'+await alphaKeyId('SYNTHETIC_MARKETSTACK_KEY'),old=>({...old,used:99,nextAt:0,blockedUntil:0}));});
   const other=await context.newPage();await other.goto(base);await other.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
-  const race=(target,symbol)=>target.evaluate(async symbol=>{const {referenceSearch}=await import('/src/reference-listings.js'),{marketstackBars}=await import('/src/marketstack.js');try{await marketstackBars(referenceSearch(symbol)[0],'SYNTHETIC_MARKETSTACK_KEY');return 'reserved';}catch(e){if(!/Monatskontingent/.test(e.message))throw e;return 'blocked';}},symbol);
+  const race=(target,symbol)=>target.evaluate(async symbol=>{const {referenceSearch}=await import('/src/reference-listings.js'),{marketstackQuoteBars}=await import('/src/marketstack.js');try{await marketstackQuoteBars(referenceSearch(symbol)[0],'SYNTHETIC_MARKETSTACK_KEY');return 'reserved';}catch(e){if(!/Monatskontingent/.test(e.message))throw e;return 'blocked';}},symbol);
   assert.deepEqual((await Promise.all([race(page,'VWCE'),race(other,'XDEM')])).sort(),['blocked','reserved']);assert.equal(calls.length,5);assert.deepEqual(await record(),beforeRace);await other.close();
   if(engine==='chromium'){
    const touchContext=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'});
@@ -102,8 +107,8 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   await nav('more');await page.locator('#blockchainSettings').evaluate(el=>el.open=true);await page.locator('#solanaRpcSetup').evaluate(el=>el.open=true);
   const beforeRPC=await record(),rpc=page.locator('#solanaRpc');await rpc.fill('SYNTHETIC_UNFINISHED_RPC');
   await page.locator('#solanaRpc + button').click();assert.equal(await rpc.inputValue(),'SYNTHETIC_UNFINISHED_RPC');assert.deepEqual(await record(),beforeRPC);
-  assert.deepEqual(errors,[]);report.engines.push({engine,pass:true,secretFields:secretCount,secretTogglesPreserveValuesEventsFormDataAndIDB:true,keyboard:true,fourQuotes:true,sharedHistory:true,persistentCache:true,monthlyBudget:true,widths:7,axeScans:7});
-  console.log(engine+': MARKETSTACK + SECRET INPUTS: four raw EOD quotes/IDB/shared history/reload/month budget; all secret fields value+FormData+event+record preservation/keyboard/7 widths/44px/Axe PASS');
+  assert.deepEqual(errors,[]);report.engines.push({engine,pass:true,secretFields:secretCount,secretTogglesPreserveValuesEventsFormDataAndIDB:true,keyboard:true,fourQuotes:true,sharedHistory:true,persistentCache:true,monthlyBudget:true,historicalGapsBlocked:true,widths:7,axeScans:7});
+  console.log(engine+': MARKETSTACK + SECRET INPUTS: four raw EOD quotes despite historical zero/null gaps/strict history rejection/IDB/shared history/reload/month budget; all secret fields value+FormData+event+record preservation/keyboard/7 widths/44px/Axe PASS');
  }catch(error){await page.screenshot({path:'artifacts/gates/marketstack/'+engine+'-failure.png',fullPage:true}).catch(()=>{});throw error;}
  finally{writeFileSync('artifacts/gates/marketstack.json',JSON.stringify(report,null,2));await context.close();await browser.close();}
 }

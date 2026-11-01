@@ -70,3 +70,24 @@ test('Marketstack key is opt-in encrypted configuration, never canonical financi
  assert.equal(restored.configuration.settings.marketstackKey,'SYNTHETIC_PRIVATE_MARKETSTACK');
  assert.equal(safeImport(restored.data).settings.marketstackKey,'');
 });
+test('Historical zero/null observations never become prices: latest quote works, history remains blocked across reload and either request order',async()=>{
+ for(const first of ['quote','history']){
+  const store=memory();let calls=0;const p=position('VWCE'),response=daily(p);
+  response.data.unshift({...response.data[0],date:'2026-10-27T00:00:00+0000',close:0},{...response.data[0],date:'2026-10-28T00:00:00+0000',close:null});response.pagination={count:4,total:4};
+  const deps={store,clock:()=>now,fetcher:async()=>{calls++;return {ok:true,status:200,json:async()=>response};}},client=createMarketstackClient(deps);
+  if(first==='history')await assert.rejects(client.load(p,'test'),/2 fehlende oder Null-Schlusskurse/);
+  const quote=await client.quote(p,'test');assert.equal(quote.points.at(-1).total,101);assert.deepEqual(quote.historyGaps,['2026-10-27','2026-10-28']);assert.ok(quote.points.every(point=>point.total>0));
+  const reloaded=createMarketstackClient(deps);await assert.rejects(reloaded.load(p,'test'),/Keine lückenhafte Historie übernommen/);assert.equal((await reloaded.quote(p,'test')).cached,true);assert.equal(calls,1);
+ }
+});
+test('A missing or zero latest close cannot fall back to an older observation, even for quote-only use',async()=>{
+ for(const close of [null,0,'0']){const store=memory(),response=daily(position('VWCE'));response.data.at(-1).close=close;
+  const client=createMarketstackClient({store,clock:()=>now,fetcher:async()=>({ok:true,status:200,json:async()=>response})});await assert.rejects(client.quote(position('VWCE'),'test'),/jüngste Schlusskurs/);assert.equal([...store.values.keys()].filter(k=>k.startsWith('daily:')).length,0);
+ }
+});
+test('Quote-only mode still rejects wrong identity, invalid dates, malformed prices and contradictory missing/valid observations',async()=>{
+ for(const change of [{symbol:'XDEM.DE',close:null},{price_currency:'USD',close:0},{exchange:'XFRA',close:null},{date:'2026-02-31T00:00:00+0000',close:0},{close:''},{close:false},{close:-1}]){
+  const response=daily(position('VWCE'));Object.assign(response.data[0],change);const client=createMarketstackClient({store:memory(),clock:()=>now,fetcher:async()=>({ok:true,status:200,json:async()=>response})});await assert.rejects(client.quote(position('VWCE'),'test'));
+ }
+ const response=daily(position('VWCE'));response.data.push({...response.data[0],close:null});delete response.pagination;const client=createMarketstackClient({store:memory(),clock:()=>now,fetcher:async()=>({ok:true,status:200,json:async()=>response})});await assert.rejects(client.quote(position('VWCE'),'test'),/Widersprüchliche/);
+});

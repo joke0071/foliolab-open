@@ -28,7 +28,12 @@ export function reserveMarketstackBudget(old,now){
  if(scheduledAt-now>10000)throw failure('Marketstack ist bereits ausgelastet. Bitte später erneut versuchen.');
  return {...current,used:current.used+1,scheduledAt,nextAt:scheduledAt+250};
 }
-export function parseMarketstackDaily(data,position,now=Date.now()){
+function requireCompleteHistory(result){
+ if(result.historyGaps.length)throw failure('Marketstack-Historie enthält '+result.historyGaps.length+' fehlende oder Null-Schlusskurse. Keine lückenhafte Historie übernommen; der jüngste geprüfte Tageskurs bleibt separat nutzbar.');
+ return result;
+}
+export function parseMarketstackDaily(data,position,now=Date.now()){return requireCompleteHistory(parseMarketstackResponse(data,position,now));}
+function parseMarketstackResponse(data,position,now){
  const {symbol,reference}=marketstackListing(position);
  if(data?.error){
   const limited=/limit|quota|too_many_requests/.test(String(data.error.code||''));
@@ -41,12 +46,17 @@ export function parseMarketstackDaily(data,position,now=Date.now()){
   if(row.symbol!==symbol||row.exchange!=='XETR'||row.price_currency!=='EUR'||typeof row.name!=='string'||row.name.length>250||!reference.name.test(row.name)||row.isin&&row.isin!==reference.isin)
    throw failure('Marketstack-Symbol, Fondsidentität, Handelsplatz oder Kurswährung weicht von der bestätigten Notierung ab.');
   const date=typeof row.date==='string'?row.date.slice(0,10):'',total=Number(row.close);
-  if(!/^\d{4}-\d\d-\d\d$/.test(date)||!Number.isFinite(Date.parse(row.date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date||date>day(now)||!['string','number'].includes(typeof row.close)||!Number.isFinite(total)||total<=0||total>1e9)
+  if(!/^\d{4}-\d\d-\d\d$/.test(date)||!Number.isFinite(Date.parse(row.date))||new Date(date+'T12:00:00Z').toISOString().slice(0,10)!==date||date>day(now))
    throw failure('Marketstack liefert ungültige Kursdaten.');
-  if(dates.has(date)&&dates.get(date)!==total)throw failure('Widersprüchliche Marketstack-Schlusskurse am '+date+'.');
-  dates.set(date,total);
+  const gap=row.close===null||(['string','number'].includes(typeof row.close)&&String(row.close).trim()!==''&&total===0);
+  if(!gap&&(!['string','number'].includes(typeof row.close)||String(row.close).trim()===''||!Number.isFinite(total)||total<=0||total>1e9))throw failure('Marketstack liefert ungültige Kursdaten.');
+  const value=gap?null:total;
+  if(dates.has(date)&&dates.get(date)!==value)throw failure('Widersprüchliche Marketstack-Schlusskurse am '+date+'.');
+  dates.set(date,value);
  }
- return {points:[...dates].sort(([a],[b])=>a.localeCompare(b)).map(([date,total])=>({date,total})),source:'Marketstack · Xetra EOD',quality:'configured-listing',verifiedSymbol:symbol};
+ const sorted=[...dates].sort(([a],[b])=>a.localeCompare(b));
+ if(sorted.at(-1)[1]===null)throw failure('Marketstack: Der jüngste Schlusskurs fehlt oder ist Null. Vorhandene Kurse bleiben erhalten.');
+ return {historyGaps:sorted.filter(([,value])=>value===null).map(([date])=>date),points:sorted.filter(([,value])=>value!==null).map(([date,total])=>({date,total})),source:'Marketstack · Xetra EOD',quality:'configured-listing',verifiedSymbol:symbol};
 }
 export function createMarketstackClient({store=alphaCache(),clock=()=>Date.now(),pause=ms=>new Promise(r=>setTimeout(r,ms)),fetcher=globalThis.fetch}={}){
  const pending=new Map();let tail=Promise.resolve();
@@ -54,7 +64,7 @@ export function createMarketstackClient({store=alphaCache(),clock=()=>Date.now()
  const update=async(key,fn)=>{try{return await store.update(key,fn);}catch(e){if(e.marketstack)throw e;throw cacheFailure();}};
  async function cached(position,key){
   const record=await read(key);if(!record?.data)return null;
-  let result;try{result=parseMarketstackDaily(record.data,position,clock());}catch{return null;}
+  let result;try{result=parseMarketstackResponse(record.data,position,clock());}catch{return null;}
   const expected=expectedMarketstackDate(clock());
   return record.target===expected||result.points.at(-1).date>=expected?{...result,cached:true}:null;
  }
@@ -75,9 +85,9 @@ export function createMarketstackClient({store=alphaCache(),clock=()=>Date.now()
    url.search=new URLSearchParams({access_key:key,symbols:symbol,exchange:'XETR',date_from:day(clock()-330*864e5),date_to:day(clock()),sort:'ASC',limit:'1000'});
    try{
     const data=await requestJSON(url.toString(),{fetcher,ttlMs:0,attempts:1});
-    const result=parseMarketstackDaily(data,position,clock());
+    const result=parseMarketstackResponse(data,position,clock());
     // Retain validated public fields only; never arbitrary echoed credentials.
-    const rows=result.points.map(p=>({symbol,exchange:'XETR',price_currency:'EUR',name:reference.label,date:p.date+'T00:00:00+0000',close:p.total}));
+    const rows=[...result.points,...result.historyGaps.map(date=>({date,total:null}))].sort((a,b)=>a.date.localeCompare(b.date)).map(p=>({symbol,exchange:'XETR',price_currency:'EUR',name:reference.label,date:p.date+'T00:00:00+0000',close:p.total}));
     await update(cacheKey,()=>({day:day(clock()),target,data:{data:rows}}));
     return {...result,cached:false};
    }catch(error){
@@ -90,10 +100,16 @@ export function createMarketstackClient({store=alphaCache(),clock=()=>Date.now()
   tail=job;pending.set(activeKey,job);
   try{return structuredClone(await job);}finally{pending.delete(activeKey);}
  }
- return {load};
+ return {load:async(position,key)=>requireCompleteHistory(await load(position,key)),quote:load};
 }
 const clients=new WeakMap();
 export async function marketstackBars(position,key,fetcher=globalThis.fetch){
  if(!clients.has(fetcher))clients.set(fetcher,createMarketstackClient({fetcher}));
  return clients.get(fetcher).load(position,key);
+}
+
+/** Quote permission never grants permission to import a gapped history. */
+export async function marketstackQuoteBars(position,key,fetcher=globalThis.fetch){
+ if(!clients.has(fetcher))clients.set(fetcher,createMarketstackClient({fetcher}));
+ return clients.get(fetcher).quote(position,key);
 }
