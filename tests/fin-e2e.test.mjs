@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {seed,steps,advance,financialState,oracle,cashCSV,transferCSV,previewFile,removeRequest,correctRequest,imported,password} from './fin-e2e-scenario.mjs';
+import {seed,steps,advance,financialState,oracle,cashCSV,transferCSV,previewFile,removeRequest,correctRequest,imported,password,fxSteps,advanceFX,financialStateFX,fxOracle,fxCSV,fxSaleCSV} from './fin-e2e-scenario.mjs';
 import {safeImport,backup} from '../src/model.js';
 import {prepareBookingChange,previewBookingChange,prepareBookingUndo} from '../src/booking-management.js';
 import {previewPositionRemoval} from '../src/position-selection.js';
@@ -66,5 +66,43 @@ test('FIN-E2E01 precision evidence remains fail-closed rather than granting broa
  importCSV(m,previewFile(m,csv));const before=JSON.stringify(m);
  assert.equal(imported(m,'SYN-INTEREST').quantityExact,'2.000000000000000001');
  assert.equal(previewBookingChange(m,removeRequest(m)).ready,false,'rounded numeric mirrors do not prove the exact inverse');
+ assert.equal(JSON.stringify(m),before);
+});
+
+function cashChain(){let m=seed(),receipt;for(const step of steps){const result=advance(m,step,receipt);m=result.model;receipt=result.receipt;}return m;}
+test('FIN-E2E01 FX continuation: distinct equal partial fills, historical FX, partial sale, archive and encrypted restore',async()=>{
+ let m=cashChain();const history=JSON.stringify(m.snapshots),openings=structuredClone(m.openingPositions);
+ for(const step of fxSteps){
+  const before=JSON.stringify(m);m=advanceFX(m,step);
+  assert.deepEqual(financialStateFX(m),fxOracle[step],step);
+  assert.equal(JSON.stringify(m.snapshots),history,'later trades never rewrite historical reference evidence');
+  assert.deepEqual(m.openingPositions.filter(p=>p.positionId!=='usd'),openings,'original opening evidence remains exact');
+  assert.equal(m.openingPositions.find(p=>p.positionId==='usd').quantityExact,'0');
+  assert.equal(new Set(m.journalEntries.map(j=>j.sequence)).size,m.journalEntries.length);
+  assert.deepEqual(financialStateFX(safeImport(JSON.parse(backup(m)))),fxOracle[step],step+' portable read');
+  if(step==='fx-reimport')assert.equal(JSON.stringify(m),before,'both original files remain complete no-ops');
+ }
+ const fills=['SYN-FX-FILL-1','SYN-FX-FILL-2'].map(id=>imported(m,id));
+ assert.equal(new Set(fills.map(b=>b.id)).size,2);assert.equal(new Set(fills.map(b=>b.journalEntryId)).size,2);
+ const before=JSON.stringify(m),plain=JSON.stringify(createCompleteBackup(JSON.parse(backup(m))));
+ const decoded=await decryptBackup(JSON.parse(await encryptBackup(plain,password)),password);assert.equal(decoded,plain);
+ const restored=safeImport(unpackCompleteBackup(JSON.parse(decoded)).data);
+ assert.deepEqual(financialStateFX(restored),fxOracle['fx-reimport']);
+ assert.deepEqual(restored,safeImport(JSON.parse(backup(m))));
+ assert.equal(previewFile(restored,fxCSV).duplicates,2);assert.equal(previewFile(restored,fxSaleCSV).duplicates,1);
+ assert.equal(JSON.stringify(m),before);
+});
+
+test('FIN-E2E01 FX continuation: conflicting identity/missing historical FX/guarded removal never mutate',()=>{
+ const m=advanceFX(advanceFX(cashChain(),'fx-import'),'fx-sell'),before=JSON.stringify(m);
+ for(const csv of [fxCSV.replace('usd,0.5,100','usd,0.6,100'),fxCSV.replaceAll(',0.8,a,',',,a,')]){
+  const p=previewFile(m,csv);assert.ok(p.issues.length);assert.throws(()=>importCSV(m,p));assert.equal(JSON.stringify(m),before);
+ }
+ assert.equal(previewFile(m,fxCSV.replace('usd,0.5,100','usd,0.6,100')).issues[0].code,'source-conflict');
+ const p=previewFile(m,fxSaleCSV);assert.throws(()=>importCSV({...structuredClone(m),notes:'Synthetic stale preimage'},p));
+ for(const id of ['SYN-FX-FILL-1','SYN-FX-FILL-2','SYN-FX-SALE']){
+  const request={ids:[imported(m,id).id],action:'remove',reason:'Unproven coupled FX inverse'};
+  assert.equal(previewBookingChange(m,request).ready,false);assert.throws(()=>prepareBookingChange(m,request,{expectedModel:before,confirmed:true}));
+ }
  assert.equal(JSON.stringify(m),before);
 });

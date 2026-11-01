@@ -1,5 +1,7 @@
 # FIN-E2E01 · oracle v1 · bounded cash/trade chain
 
+The accepted first slice below remains the cash-chain baseline. Its subsequent v252-based FX/partial-fill continuation is documented in [FIN_E2E01_FX_PARTIAL_FILLS.md](FIN_E2E01_FX_PARTIAL_FILLS.md); the shared browser gate now finishes with both slices before encrypted UI export/restore.
+
 Issue #255, base v251. Test-only candidate; no shipped asset, schema, decimal, journal, import, CAS, cryptography or deletion-permission change. Application cache remains v251. This is a first executable slice, not completion of #255.
 
 `tests/fin-e2e-scenario.mjs` calls existing production APIs. The oracle consists of independently hand-calculated decimal strings; generated booking/journal IDs are checked for provenance and uniqueness rather than frozen. No test engine calculates replacement financial results. Synthetic opening cash is 1000.000000000000000001 EUR; cash B and ETF start at zero.

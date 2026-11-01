@@ -65,3 +65,42 @@ const traded={...matched,quantities:['828.000000000000000001','100','1'],total:'
 export const oracle={seed:initial,import:importedState,correct:corrected,match:matched,remove:removed,undo:matched,reimport:matched,
  archive:{...matched,archived:1,positionArchived:true},'restore-archive':matched,trade:traded,
  'remove-again':{...traded,quantities:['826.000000000000000001','100','1'],total:'1026.000000000000000001',bookings:5},history:{...traded,quantities:['826.000000000000000001','100','1'],total:'1026.000000000000000001',bookings:5}};
+
+// Continuation of the same portfolio, not an alternative finance engine.
+// Two economically equal fills have distinct original receipt identities.
+export const fxCSV='date,type,position,quantity,price,fee,tax,fx,cashPosition,id\n2026-01-08,buy,usd,0.5,100,0.8,0,0.8,a,SYN-FX-FILL-1\n2026-01-08,buy,usd,0.5,100,0.8,0,0.8,a,SYN-FX-FILL-2';
+export const fxSaleCSV='date,type,position,quantity,price,fee,tax,fx,cashPosition,id\n2026-01-09,sell,usd,0.5,110,0.5,0.4,0.9,a,SYN-FX-SALE';
+export const fxSteps=['fx-import','fx-sell','fx-archive','fx-restore','fx-reimport'];
+export function advanceFX(m,step){
+ let next=structuredClone(m);
+ if(step==='fx-import'){
+  next.positions.push(createPosition({id:'usd',providerId:'p',accountId:'account-etf',name:'Synthetic USD partial fills',kind:'stock',symbol:'SYNUSD',quantity:'0',price:'100',currency:'USD',fxRate:'0.85'},next));
+  importCSV(next,previewFile(next,fxCSV));
+ }else if(step==='fx-sell')importCSV(next,previewFile(next,fxSaleCSV));
+ else if(step==='fx-archive'||step==='fx-restore'){
+  const archived=step==='fx-archive';
+  next=prepareBookingArchive(next,{ids:['SYN-FX-FILL-1','SYN-FX-FILL-2'].map(id=>imported(next,id).id),archived},{expectedModel:JSON.stringify(next),confirmed:true}).candidate;
+  setPositionArchived(next,'usd',archived);
+ }else if(step==='fx-reimport'){
+  importCSV(next,previewFile(next,fxCSV));importCSV(next,previewFile(next,fxSaleCSV));
+ }else throw Error('Unknown FIN-E2E FX step '+step);
+ return next;
+}
+export function financialStateFX(m){
+ const usd=m.positions.find(p=>p.id==='usd');
+ const ids=['SYN-FX-FILL-1','SYN-FX-FILL-2','SYN-FX-SALE'];
+ return {...financialState(m),foreign:{basis:usd.costBasisExact,realized:usd.realizedPnLExact??null,quote:usd.priceExact,quoteFX:usd.fxRateExact,archived:usd.archived===true,
+  receipts:ids.filter(id=>imported(m,id)).map(id=>{
+   const b=imported(m,id),j=m.journalEntries.find(j=>j.id===b.journalEntryId);
+   return {source:id,quantity:b.quantityExact,fx:String(b.fxRate),amount:b.amountExactEUR,postings:j.postings.map(p=>[p.role,p.positionId,p.quantityDeltaExact,p.amountBookEURExact])};
+  })}};
+}
+// Hand calculation: each buy costs .5*100*.8+.8 = 40.8 EUR.
+// Sale proceeds .5*110*.9-.5-.4 = 48.6, basis consumed 40.8, profit 7.8.
+// Current valuation stays 100 USD * .85; it must not replace historical FX.
+const fill=id=>({source:id,quantity:'0.5',fx:'0.8',amount:'40',postings:[['asset','usd','0.5','40'],['cash','a','-40.8','-40.8'],['fee',null,null,'0.8']]});
+const boughtFX={...oracle.history,quantities:['744.400000000000000001','100','1','1'],total:'1029.400000000000000001',fees:'4.6',bookings:7,journals:9,
+ foreign:{basis:'81.6',realized:null,quote:'100',quoteFX:'0.85',archived:false,receipts:[fill('SYN-FX-FILL-1'),fill('SYN-FX-FILL-2')]}};
+const soldFX={...boughtFX,quantities:['793.000000000000000001','100','1','0.5'],total:'1035.500000000000000001',fees:'5.1',taxes:'3.4',bookings:8,journals:10,
+ foreign:{...boughtFX.foreign,basis:'40.8',realized:'7.8',receipts:[...boughtFX.foreign.receipts,{source:'SYN-FX-SALE',quantity:'0.5',fx:'0.9',amount:'49.5',postings:[['asset','usd','-0.5','-49.5'],['cash','a','48.6','48.6'],['fee',null,null,'0.5'],['tax',null,null,'0.4']]}]}};
+export const fxOracle={'fx-import':boughtFX,'fx-sell':soldFX,'fx-archive':{...soldFX,archived:2,foreign:{...soldFX.foreign,archived:true}},'fx-restore':soldFX,'fx-reimport':soldFX};
