@@ -1,6 +1,6 @@
 ## v262 PR #274 / Pflicht-CI gestartet – 01.11.2026
 
-Einziger Korrekturkandidat: [PR #274](https://github.com/joke0071/foliolab-open/pull/274), Branch `fix/marketstack-history-gaps-266`, HEAD `39f00a3456346476f5b151f964dae676161ec66a`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`, Basis Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`. Pflicht-CI/Walletläufe **41329491433 / 41329491478** gestartet. Noch kein Merge oder Deployment von v262. Vollständige lokale und echte Kandidatennachweise im vorherigen Eintrag bleiben gültig.
+Einziger Korrekturkandidat: [PR #274](https://github.com/joke0071/foliolab-open/pull/274), Branch `fix/marketstack-history-gaps-266`, HEAD `39f00a3456346476f5b151f964dae676161ec66a`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`, Basis Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`. Pflicht-CI **41329491478**, Wallet **41329491433** gestartet. Noch kein Merge oder Deployment von v262. Vollständige lokale und echte Kandidatennachweise im vorherigen Eintrag bleiben gültig.
 
 Der v261-Main-/Live-Lauf **41326923454 / 124912201845** läuft unverändert weiter; keine CI abgebrochen. **Merge von #274 erst nach dessen Abschluss und vollständigem Erfolg der Korrektur-CI.** V261 bleibt wegen des separat nachgewiesenen realen Historienblockers nicht LIVE_ACCEPTED, unabhängig vom noch offenen automatischen Live-Ergebnis. Owner: Work/root b1399897b0ba, ein Implementierungs-/Integrationsstrang.
 
