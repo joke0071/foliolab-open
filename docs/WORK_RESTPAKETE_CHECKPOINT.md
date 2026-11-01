@@ -1,3 +1,9 @@
+## #255 FX-/Teilfüllungsfolge – IN_PROGRESS · 01.11.2026
+
+Basis v252 LIVE_ACCEPTED, Main `28903ff201bf0c942851874dc118f3699e0a5d43`, Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`. Frischer Abgleich: nur historische Drafts #157/#161, alle letzten Actions abgeschlossen, kein konkurrierender Implementierungsstrang. Einziger Kandidat `test/fin-e2e01-fx-partial-fills`, Owner Work /root, Sitzung 50f1560a1a9f. Noch kein PR/Release. Bestehende historische FX-Unit-Orakel werden um eine fortgesetzte FIN-Kette mit zwei eigenständigen synthetischen USD-Teilfüllungen, EUR-Verrechnung, Teilverkauf, Archiv/Restore, Dubletten-/Konfliktsperre und abschließendem echtem verschlüsseltem UI-Restore erweitert. Ausschließlich Tests; keine neue Finanzengine und keine erweiterten Löschrechte. Next: kleinen Kandidaten lokal prüfen, dann vollständige Pflicht-CI und reale Produktionsabnahme; v252 bleibt bestätigte Produktion. #255 insgesamt PARTIAL.
+
+---
+
 ## v252 – LIVE_ACCEPTED · 01.11.2026
 
 Main `28903ff201bf0c942851874dc118f3699e0a5d43`, geprüfter Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, Service Worker `foliolab-open-v252`. [PR #263](https://github.com/joke0071/foliolab-open/pull/263) integriert; [Main-/Produktionslauf 41289946551](https://github.com/joke0071/foliolab-open/actions/runs/41289946551) **completed / success**, erster Versuch ohne Retry/Abbruch. 1050 Tests, keine Fehler oder Skips, Syntax und sämtliche Chromium-/Firefox-/WebKit-Gates erfolgreich. Deployment **124801411339** und echte Live-Abnahme **124801472928 SUCCESS**.
