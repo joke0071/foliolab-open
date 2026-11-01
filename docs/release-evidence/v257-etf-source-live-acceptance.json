@@ -1,0 +1,113 @@
+{
+  "release": "v257",
+  "status": "LIVE_ACCEPTED",
+  "scope": "ETF source mapping / browser provider routing / source UX; real authorized provider prices remain outside this acceptance",
+  "date": "2026-11-01",
+  "main": "6c9edaab2daf26ce5d018a048c3cf79aa98cf90d",
+  "tree": "a66aa486615071bc5a0f597e78fb14a5349994a4",
+  "serviceWorker": "foliolab-open-v257",
+  "pr": 269,
+  "prHead": "4fcede5735870522f19418cc9659e17ecdf69f16",
+  "prRun": 41303334450,
+  "mainRun": 41304484412,
+  "runAttempt": 2,
+  "unitTests": {
+    "total": 1052,
+    "failed": 0,
+    "skipped": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "live": {
+    "job": 124845972664,
+    "status": "success",
+    "assetMatches": 123,
+    "coreGroups": 6,
+    "axeScans": 18,
+    "etfContracts": "All four synthetic EUR/XETR listings, real production app/fresh IDB, source routing, dates, legacy-key preservation, read-only diagnostic revision, 404 retention, seven widths, Axe PASS in all engines",
+    "finance": "16-step FX/partial-fill FIN-E2E01 and encrypted fresh restore PASS in all engines",
+    "providerMocks": "Service Workers blocked only in isolated provider mock suite; separate real SW/PWA/offline/update gates unchanged",
+    "independentHttpsFiles": 7
+  },
+  "initialLiveFailure": {
+    "job": 124845141944,
+    "reason": "30s initial store-ready timeout before provider fixture/network; exact root cause unproved",
+    "followup": "Seven actual HTTPS files matched checkout and live UI was confirmed. Only failed live job rerun once; main CI and deployment not rerun. Prior failed artifact retained.",
+    "artifactId": 13082938521
+  },
+  "artifacts": [
+    {
+      "id": 13083951591,
+      "name": "production-live-acceptance-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d",
+      "digest": "sha256:595fc24780091fbdf1da186acf6b80916fc808cafb67863bd7fa2ebac8dcb59f",
+      "size": 79569474
+    },
+    {
+      "id": 13083486076,
+      "name": "release-gates-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d",
+      "digest": "sha256:18a367a6cae9826164581c337f515ae107506eabcc592a987a19c1e9cd79cfe9",
+      "size": 48878414
+    },
+    {
+      "id": 13083116085,
+      "name": "cross-engine-gates-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d-2",
+      "digest": "sha256:5440aefeab0bbd295f5140f9c63ce5869623df00cc283e8fe6040d9a75c8955d",
+      "size": 3630675
+    },
+    {
+      "id": 13082938521,
+      "name": "production-live-acceptance-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d",
+      "digest": "sha256:891227f416b303bc5199e84037a81e694c206ebc7034989e1d9a72f00321a134",
+      "size": 298659
+    },
+    {
+      "id": 13082718420,
+      "name": "cross-engine-gates-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d-1",
+      "digest": "sha256:02c3f506585bf3cdd3ac0f227440e3974ab586ee47880a19e15a9e2cacee8d75",
+      "size": 48316130
+    },
+    {
+      "id": 13082678895,
+      "name": "github-pages",
+      "digest": "sha256:0b895d6768a526bce33f0332c94ed3a17a938dda65b455034c9c8be6c2958e0f",
+      "size": 406868
+    },
+    {
+      "id": 13082642072,
+      "name": "ci-stage-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d",
+      "digest": "sha256:33e73728da2cb966cd0fdf9233736722cd34b66b0135cdd47e9f9dc956cc13d7",
+      "size": 352
+    },
+    {
+      "id": 13082389566,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:bdbaa4121ae33eae0a8033b3f0c713a13c1c51a84ed3f466d3a64a94fdb8f2ac",
+      "size": 934269
+    },
+    {
+      "id": 13082337923,
+      "name": "cross-engine-gates-6c9edaab2daf26ce5d018a048c3cf79aa98cf90d-3",
+      "digest": "sha256:684b32f2e808ca21dfc75d517b3d5d5e3732f50310628d3f0ef9da8d683ffb43",
+      "size": 48537338
+    }
+  ],
+  "digestBoundary": "Artifact IDs/digests verified against GitHub API and actual upload logs; no separate local ZIP/CRC proof claimed",
+  "external": {
+    "issue266": "PARTIAL",
+    "authorizedRealFourEtfQuotes": false,
+    "actualOriginProviderQuoteCors": false,
+    "providerEntitlementVerified": false,
+    "physicalAndroidVerified": false,
+    "publicTwelveCatalog": "All four EUR/XETR entries observed with Grow/Venture access and ACAO *; masked ISIN. Catalog is not quote/license evidence.",
+    "alphaVantage": "No adapter without positive authorized four-ETF/CORS/rights/plan proof."
+  },
+  "next": [
+    "#267 CASH-UX01 + #264 account/data-status hierarchy, one serial implementation",
+    "#268 ETH cursor",
+    "#257 remaining management UX",
+    "Remaining ACTIVE master projects unchanged"
+  ]
+}
