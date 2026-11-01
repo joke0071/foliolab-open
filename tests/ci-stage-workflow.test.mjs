@@ -35,6 +35,10 @@ const pinnedCacheSteps = [
 function originalContractWithOnlyPinnedCaches(source) {
  let reduced=source;
  const additions=[
+  '          node tests/browser-fin-e2e.mjs\n',
+  '            FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs\n',
+  '          FIN_E2E_BASE="$ACCEPTANCE_BASE" node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-chromium.log\n',
+  '          FIN_E2E_BASE="$ACCEPTANCE_BASE" FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-cross.log\n',
   '          node tests/browser-recovery-backup-limits.mjs\n',
   '            RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs\n',
   '          RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log\n',
