@@ -1,3 +1,13 @@
+## #266 ETF-Browserquellen – PR #269 IN_PROGRESS · 01.11.2026
+
+Neue Masterübernahme durch Work /root, Sitzung d72ece214a83. Main `512d935098e2d31366b861352d94684cae7582cb`, v252 bleibt bestätigte LIVE_ACCEPTED-Basis. Frischer Abgleich: nur historische Drafts #157/#161 vor Übernahme; keine neuere Produktarbeit/CI. Einziger neuer Strang `fix/etf-browser-sources-266`, [PR #269](https://github.com/joke0071/foliolab-open/pull/269), HEAD `c3bb63c668b6fd7c79de7991b0450125f4df39df`, Tree `ce65302f2533c9dd7f1ea42a324683130a4b07e8` lokal/remote identisch. Kandidat SW253; noch kein Merge/Deployment/CI_ACCEPTED.
+
+Kuratiertes ISIN+Ticker+XETR+EUR-Mapping unabhängig von Brokernamen, direkte FMP/Twelve-Quellen vor freiwilligem EODHD-Worker; kein direkter EODHD-Kursabruf und kein Standard-Keyfeld. Alte Schlüssel beim Formularspeichern erhalten. Allgemeine schreibfreie Quellen-/Mapping-/404-/Limitdiagnose und sichtbare tatsächliche Quell-/Datumsbelege. Neue Vier-ETF-Browserregression mit frischer IDB, Schlüsselbewahrung, unverändertem Diagnose-Record, Fehlerretention, sieben Breiten/Axe in PR/Main/Produktion und allen drei Engines. Bestehende Finanz-/Speicher-/Backup-/CI-/Livegates beibehalten. Details und externe Nachweisgrenzen `docs/ETF_QUOTE_266_BROWSER_RECOVERY.md` im Kandidaten.
+
+**#266 bleibt PARTIAL:** In frischer Umgebung keine autorisierten Anbieterkeys; echte Origin-CORS-/Tarif-/Vier-ETF-Abdeckung nicht belegt. Keine Alpha-Vantage-Integration ohne Positivnachweis; manuelle Kurse/CSV bleiben. Lokaler Browserdownload liefert leeres/defektes Archiv; keine lokale Browser- oder physische Android-Abnahme behauptet. Unit-/Syntaxprüfung lokal, Browsernachweise in laufender vollständiger CI. Nächster Schritt: exakten PR-HEAD vollständig abnehmen, Fehler beheben, bei sicheren Gates autonom integrieren/deployen/Produktion abnehmen. Danach #267+#264, #268, #257 einschließlich neuester Long-Press-Erstauswahl-Nachträge seriell; alle weiteren Masterprojekte ACTIVE. Historischen Checkpoint-Branch niemals vollständig nach Main mergen.
+
+---
+
 ## STOP / KONTROLLIERTE ÜBERGABE – alleinige Verantwortung an neuen Work-Chat · 01.11.2026
 
 **Verbindlicher Nutzer-STOP übernommen. Dieser bisherige Work-Chat gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine Folgeimplementierung, kein neuer Arbeitsbranch/PR, kein Merge/Deployment und kein umfangreicher Testlauf begonnen. Nach diesem abschließenden Checkpoint-Commit führt dieser Chat keine weiteren GitHub-Schreibaktionen aus.** Vorherige Owner-/Next-#264-/Fortsetzen-Einträge unten sind historisch und durch diese Übergabe übersteuert. Der neue Work-Chat bestimmt den nächsten Umfang anhand der aktuellen Issues/Nutzerprioritäten und eines eigenen frischen Kollisionschecks.
