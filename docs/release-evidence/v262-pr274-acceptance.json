@@ -1,0 +1,58 @@
+{
+  "version": "v262",
+  "status": "MERGED_PRODUCTION_PENDING",
+  "pr": 274,
+  "main": "89095774ad605261a293c4b7bc049580f1f91deb",
+  "head": "39f00a3456346476f5b151f964dae676161ec66a",
+  "tree": "86e7067a801fa16da049907a4f49b6a2bf856b62",
+  "syntheticMerge": "21bd5a5d92ca72edf5129a53907fb1144381fd30",
+  "fullCI": 41329491478,
+  "walletCI": 41329491433,
+  "mainRun": 41330819283,
+  "tests": 1082,
+  "fail": 0,
+  "skips": 0,
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "logsRead": true,
+  "artifactDigestsMatched": true,
+  "previousMainAndLiveCompletedBeforeMerge": true,
+  "realCandidateProviderFourETFs": true,
+  "realProductionStillPending": true,
+  "providerHistoriesLimited": true,
+  "artifacts": [
+    {
+      "id": 13093730289,
+      "name": "release-gates-21bd5a5d92ca72edf5129a53907fb1144381fd30",
+      "digest": "sha256:13d71706f35fe4a9738a1cd5cbebaddf09acc269d9677e9c93e19cecbc615d21"
+    },
+    {
+      "id": 13093610492,
+      "name": "cross-engine-gates-21bd5a5d92ca72edf5129a53907fb1144381fd30-3",
+      "digest": "sha256:729c76770b45c4257c5f4575499c3345a79f3ebac7baaa162dda1564448ee946"
+    },
+    {
+      "id": 13093100417,
+      "name": "cross-engine-gates-21bd5a5d92ca72edf5129a53907fb1144381fd30-2",
+      "digest": "sha256:0b64339383c34daae018ad12dea10b7ad4ab1f497532b7e2a2aab5d789290bda"
+    },
+    {
+      "id": 13092970618,
+      "name": "ci-stage-21bd5a5d92ca72edf5129a53907fb1144381fd30",
+      "digest": "sha256:e8e6056fadcbae3278f2ee50f1e7b16321f11eff99c4c0376997389c6c47164c"
+    },
+    {
+      "id": 13092933280,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:b00de3e4d096c4426c3cc1cc4394139bb3cc4bc02e86b70f48778e92b8f79dcb"
+    },
+    {
+      "id": 13092619699,
+      "name": "cross-engine-gates-21bd5a5d92ca72edf5129a53907fb1144381fd30-1",
+      "digest": "sha256:a7342d87b35e14894e18af2e52c1f6172d3d6d0faff7900f90a627d471240b13"
+    }
+  ]
+}
