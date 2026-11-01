@@ -1,0 +1,59 @@
+{
+  "candidateBase": "10103d6253ff544b383099c6a631035f67be7025",
+  "runtimeTreeBeforeEvidenceOnlyUpdate": "8aad8cdca3985f56d1132fcd78258b156ec27486",
+  "status": "ORIGINAL_PREFLIGHT_PASS_NOT_RELEASE_ACCEPTED",
+  "privateOriginalsPublished": false,
+  "realNetwork": "blockstream.info",
+  "explicitUserAuthorization": true,
+  "xpubTransmitted": false,
+  "nativeOracle": {
+    "pass": true,
+    "independent": "Python cryptography BIP32 public derivation + raw vin/vout integer sums",
+    "nativeOutputOwnership": true,
+    "exactCurrentBalance": true,
+    "receiptGroupVouts": true,
+    "noAdditionalRequests": true
+  },
+  "financialOracle": {
+    "pass": true,
+    "oracle": "independent Python Decimal",
+    "actualBlockchainOwnership": true,
+    "originalFinancialStateUnchanged": true,
+    "scenario": "isolated explicitly external-funded acquisitions",
+    "realInputUsedPrivately": true,
+    "previewNonmutation": true,
+    "exactQuantitiesCostsFeesFlows": true,
+    "reimport": true,
+    "sourceOrder": true,
+    "encryptedRestore": true,
+    "undoTombstone": true,
+    "physicalAndroid": false,
+    "fullProviderRoadmapComplete": false
+  },
+  "originalUI": {
+    "pass": true,
+    "actualLocalUI": true,
+    "realOriginalFilesPrivate": true,
+    "independentPythonOracle": true,
+    "previewNoWrite": true,
+    "oneCASCommit": true,
+    "currentScanUnchanged": true,
+    "reload": true,
+    "noExternalBrowserRequests": true,
+    "noScreenshots": true,
+    "isolatedScenario": true
+  },
+  "localSynthetic": {
+    "unitPass": 1082,
+    "unitFail": 0,
+    "skips": 0,
+    "syntax": true,
+    "chromiumSharedImport": true,
+    "sevenWidthsAxe": true,
+    "quotaRollback": true,
+    "staleCAS": true
+  },
+  "fullCI": "PENDING",
+  "production": "UNCHANGED_v263",
+  "physicalAndroid": false
+}
