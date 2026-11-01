@@ -1,3 +1,15 @@
+## v260 LIVE_ACCEPTED · 01.11.2026 / Work b1399897b0ba
+
+**Main ca99237f8cbe40490d360dd0bd57f9df76dcf584**, geprüfter Tree36f29d0cfdece25f3d02809f4ec6bd95da83038a, SW **foliolab-open-v260**, PR272. **Vollständiger Main-/Produktionslauf41320750171 completed/success**, 1.071 Tests/0Fehler/Skips, Syntax/Chromium/alleFirefox-/WebKit-Gruppen, Deployment124893733517 und echte Live-Abnahme124893808484 SUCCESS. Produktion:124HTTPS-Assetmatches,6Kerngruppen/18Axe-Scans, neueAlpha-/bestehendeFinanz-/CAS-/Offline-/Backup-/Recoverygatesinallen3EnginesPASS. Logs gelesen; Liveartefakt13089843774, SHA256e631b569cb4e70941674f1e3a14671988103257754376510df450cb17e7c434c gegenAPI/Uploadlog bestätigt. Fünf geänderteKernfiles zusätzlichregulärHTTPSbytegleich. Details `docs/release-evidence/v260-live-acceptance.json`.
+
+**Echte workerfreie Alpha-UI-Kette 4/4 PASS:** VWCE/XDEM/XDEQ/5MVL, bestätigteISIN/EUR/XETR/Datum2026-10-30, genau4echteRequests/keineLimits. Synthetisches isoliertesPortfolio; keineursprünglichenNutzerdaten verändert, keine neuenKäufe/Buchungen/externenFlüsse, Mengenunverändert. Zusätzliche tatsächlicheETH-Produktionsdialogprobe mitsynthetischenExplorerantwortenPASS: Cursor/Fortsetzung/Neustart/Fokus/7Breiten/Axe/gespeicherteHistorieundFinanzenunverändert. KeinephysischeAndroid-/nativeSafari-/OAuthabnahme. V260ist aktuellevollständigbestätigteBasis; v259spezifische4/4Limitgrenze durchNachfolgerabnahmeüberholt.
+
+**NächsteP1A#266-Etappe:** vorhandenen echtenMarketstack4/4Beleg inoptionalenworkerfreienAdapterüberführen undalteAPI-SchlüsselvollständigüberKonfiguration/IDB/Save/Migration/neueBackups/Legacy-Restorebereinigen; benötigteSuche/FXvorherablösen. **NeuerSecret-UI-Auftrag:** Alpha-AugefehltwegenstatischerLabel-Allowlist in `credential-visibility.js`. AlleAPI-/Token-/weiterengeheimenFelder einheitlichmaskiert/Auge/Wertunverändert/Keyboard/Aria/Mobil/Desktop behandeln; TogglesdürfenkeineSpeicher-/Backupänderungauslösen. MarketstackalsfunktionierendeQuelleintegrieren, keinfunktionslosesEingabefeld.
+
+DanachgemeinsamerCSV-/Blockchain-ImportP1 gemäß `IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md` undgelesenen174/119-Nachträgen: UH01kurzerOriginal-/Deltabgleich, UH02vollständigeBittr+Ledger+BTC-KettebisÜbernahme/Wiederimport/Undo/Restore, dannweitereQuellen. Alle5bereitgestelltenDateienprivatwiedergefunden; Flatex-Konsolidierungengetrennt, keineOriginal-/GesamtfinanzabnahmealleinausDateifund. #257undübrigeMasterACTIVE. EinOwner/einStrang, keineCIabgebrochen/keineGatesreduziert, keinMergehistorischerCheckpointbranchnachMain.
+
+---
+
 ## Verbindlicher Import-/Historiennachtrag übernommen · 01.11.2026
 
 Der aktive Masterowner Work/root `b1399897b0ba` hat den aktuellen Plan `docs/IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md` sowie die neuesten Nachträge **#174 / Kommentar 6559985292** und **#119 / Kommentar 6559989156** ausdrücklich gelesen. Keine zweite Entwicklungsübernahme und kein neuer Implementierungsbranch.
