@@ -1,3 +1,9 @@
+## ACTIVE – UH02 / Blockstream ausdrücklich freigegeben – 01.11.2026
+
+Owner **cac084687058**, unveränderter Kandidat `249f63a75bd062c248c5aaef495d2cc70c8644ad` auf `feature/uh02-unified-bitcoin`; Main v263 unverändert. Nutzer hat auf die konkrete Frage nach Übermittlung der öffentlichen zugehörigen BTC-Adressen und Transaktionskennungen an **blockstream.info** ausdrücklich **„Ja“** geantwortet. Der xpub bleibt lokal, keine Original-CSV/Seeds/privaten Schlüssel werden gesendet. Der darunter dokumentierte externe Approval-Blocker ist damit für diese eng begrenzte reale Prüfung aufgehoben. Jetzt reale native vout-/Eigentums-/Bestandsprüfung, unabhängige Original-Finanzabnahme; danach vollständige Pflicht-CI auf eingefrorenem Kandidaten. Keine neue parallele Implementierung/PR, keine Gates reduziert. Noch kein UH02 LIVE_ACCEPTED.
+
+---
+
 ## BLOCKED_EXTERNAL_APPROVAL – UH02 gesichert / cac084687058 – 01.11.2026
 
 Alleiniger Owner **cac084687058**. Produktion unverändert **v263 LIVE_ACCEPTED**, Main `10103d6253ff544b383099c6a631035f67be7025`. **UH02 ist ausdrücklich NICHT abgeschlossen und nicht produktiv abgenommen.** Einziger Produktbranch [feature/uh02-unified-bitcoin](https://github.com/joke0071/foliolab-open/tree/feature/uh02-unified-bitcoin), Remotecommit **`249f63a75bd062c248c5aaef495d2cc70c8644ad`**, Tree **`8aad8cdca3985f56d1132fcd78258b156ec27486`** exakt identisch zu lokalem Sicherungscommit `2552631`. Keine neue Produkt-PR/finale CI gestartet, kein Merge/Deploy und keine Action abgebrochen. Historische Drafts #157/#161 unverändert. Checkpointbranch niemals nach Main mergen.
