@@ -1887,3 +1887,4 @@
 .simple-cash-label>small{font-size:12px;color:#4d6756;margin-top:4px}
 .simple-cash-actions{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0}
 .simple-cash-actions .btn{min-height:44px;min-width:44px;white-space:normal}
+.simple-cash-account .simple-cash-label span{white-space:normal;overflow-wrap:anywhere}

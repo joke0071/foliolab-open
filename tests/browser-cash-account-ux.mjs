@@ -93,7 +93,8 @@ for(const engine of (process.env.CASH_UX_ENGINES||'chromium').split(',')){
   assert.deepEqual(await record(),baseline,'export does not rewrite portfolio');
   const restoreContext=await browser.newContext(),rp=await restoreContext.newPage();
   try{
-   await rp.goto(base);rp.on('dialog',d=>d.accept());await rp.locator('#backupFile').setInputFiles({name:'synthetic-cash-accounts.json',mimeType:'application/json',buffer:Buffer.from(text)});
+   await rp.goto(base);await rp.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
+   rp.on('dialog',d=>d.accept());await rp.locator('#backupFile').setInputFiles({name:'synthetic-cash-accounts.json',mimeType:'application/json',buffer:Buffer.from(text)});
    await rp.waitForFunction(()=>document.getElementById('toast')?.textContent.includes('Backup wiederhergestellt'));
    const restored=await rp.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();try{return await s.initialize();}finally{s.close();}});
    assert.deepEqual(restored.accounts,expected.accounts);assert.deepEqual(finance(restored),finance(expected));
