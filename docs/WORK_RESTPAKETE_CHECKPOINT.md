@@ -1,3 +1,19 @@
+## Übergabe abgeschlossen / ein Kandidat PR #272 · 01.11.2026
+
+Die alte Sitzung hat unten ausdrücklich ihre Arbeit beendet und die Verantwortung an Work/root `b1399897b0ba` abgegeben. Keine weitere konkurrierende Integration. Der neuere Stand übersteuert die zwischenzeitliche Kollisionssperre nur im Umfang dieser bestätigten Abgabe.
+
+**P1A Marketstack:** Alle vier realen V2-EOD-Abrufe (VWCE.DE, XDEM.DE, XDEQ.DE, 5MVL.DE) liefern bestätigte Fondsidentität, EUR/XETR, positive Raw-close-Werte und Datum 2026-10-30; Browser-CORS auf FolioLab-Origin lesbar. Beleg `docs/MARKETSTACK_266_REAL_PROVIDER_PROOF_2026-11-01.md`. Noch kein produktiver Adapter. Eigener privater Key zugänglich, niemals im Repo/CI. Freikontingent konservativ 100 Einheiten/Monat, vier Symbole kosten vier Einheiten. Lokale nichtkommerzielle Nutzung mit eigenem Key, keine zentrale Datenverteilung. Vollständige API-/IDB-/Backup-/Restore-Bereinigung bleibt unmittelbar danach P1A; keine alten Backupfiles verändern.
+
+**Einziger aktueller Kandidat bleibt PR #272** auf `fix/eth-history-cursor-268`, veröffentlichter WIP-HEAD `ca1a6cbb5440c96495c271b7f60d0141f1fc6853`. Testjob `124883534813` scheitert laut gelesenem Log am fehlenden PWA-Cachebump; weitere Jobs in `41318483990` noch regulär laufend. Vor deren Abschluss keine Refbewegung/Neustart, keine Action abbrechen.
+
+Für denselben PR wird der bereits geprüfte erweiterte #268-Stand mit dem vom alten Owner übergebenen Alpha-Antwortabstandsfix kombiniert; beide kleine Korrekturen verwenden SW v260. Kein zweiter PR/Integrationsbranch. Die vier Alpha-Dateien wurden unverändert aus dem gesicherten alten Stand übernommen. Noch keine CI-/Produktionsabnahme des kombinierten Kandidaten; lokale Gesamt-/ETF-Prüfung läuft. #268-Erweiterung separat vollständig gesichert als Commitobjekt `92c16e0` und Patch `docs/handover/ETH268_b139_extended_candidate.patch`; Alpha-Fix als Commitobjekt `86838b7` und vollständiger alter Übergabetext. Frühere reine #268-SW260-Vormerkung wird durch gemeinsame Version ersetzt.
+
+**v259:** Main `6c339c0`, Deployment erfolgreich, vollständige Live-Abnahme `41316381886 / 124880732298` noch laufend. Chromium bestanden; Firefox/WebKit ausstehend. Vier wesentliche Produktivdateien zusätzlich über reguläres HTTPS bytegleich bestätigt. Reale ausgelieferte Alpha-Appkette bleibt wegen Anbieterlimit PARTIAL, keine vollständige 4/4-Erfolgsbehauptung. Bekannte eigene Alpha-Requests aus beiden Sitzungen zusammen mindestens 19; globales Kontingent nicht einsehbar. Keine unnötigen zusätzlichen Realabfragen.
+
+Nächster Schritt: beide laufenden CIs regulär abschließen lassen; exakten kombinierten Kandidaten auf demselben PR sichern, vollständige finale CI und tatsächliche Produktion prüfen. Danach Marketstack integrieren und alte Schlüssel vollständig bereinigen; anschließend #257 und weitere ACTIVE-Masterpakete. Bestehende Finanz-/Speicher-/Backup-/PWA-/Coverage-Gates unverändert. Historischen Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## Übergabenachtrag der abgebenden Sitzung 8e5a26892934 · 01.11.2026
 
 **Aktive Verantwortung bleibt bei der neueren Sitzung `/root b1399897b0ba`.** Diese abgebende Sitzung hat die tatsächliche Kollision mit deren Checkpoint-Übernahme und PR #272 erkannt und beendet hier ihre Entwicklungs-, Integrations- und Releasearbeit. Keine GitHub Action abgebrochen. Keine weitere PR, kein Remote-Hotfixbranch, Merge oder Deployment gestartet.
