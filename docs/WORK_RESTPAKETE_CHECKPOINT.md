@@ -1,3 +1,11 @@
+## #255 / PR262 – erster CI-Lauf, gezielter Testharnessfix · 01.11.2026
+
+Weiterhin ein Strang / Owner Work /root 50f1560a1a9f. PR-HEAD `02bc4a174ece00f08df76bc1396dbda6afa026b5`; volle CI **41281116451** noch laufend, Wallet **41281116367 SUCCESS**. Cross2/Job **124773104890 FAILED**: neue Kette besteht bis Offlinephase; Firefox `page.reload: NS_ERROR_OFFLINE` bei noch aktiver Playwright-Netzwerkumleitung. Bestehende PWA-/Recovery-Suiten unmittelbar davor beide Engines PASS. Keine Produktregression behauptet.
+
+Gezielter Fix im neuen Test: echte aktive SW-Registrierung/Controller abwarten und danach Fixture-Netzwerkumleitungen vor echtem Offline-Reload entfernen. **Korrigierte volle neue Kette lokal Chromium und Firefox PASS**, inklusive aller Finanz-/CAS-/Rollback-/UI-v2-Restore-Gates. Firefox1.56.1 lokal mit Laufzeitflag MOZ_DISABLE_CONTENT_SANDBOX=1; keine Produkt- oder CI-Sandboxänderung. Remote Gitobjekt **`70400c3ac42c2663757a2cf6c1b195c924a0729d`**, Tree **`e2f6670913e353bfc7828822470c33b58aac8da0`** = lokaler Index, noch NICHT als PR-HEAD veröffentlicht. Dies vermeidet automatisches Abbrechen noch laufender erster CI-Gruppen. Kein manuelles CI-Cancel. Nächster Schritt: ersten Lauf abschließen lassen, dann unverändertem PR-Ref den getesteten Nachfolgecommit per expected_sha vorziehen; volle finale Pflicht-CI und Produktionsabnahme bleiben erforderlich. Produktion unverändert v251 LIVE_ACCEPTED. Kein Merge/Deployment für PR262 bisher.
+
+---
+
 ## #255 FIN-E2E01 – PR #262 / IN_PROGRESS · 01.11.2026
 
 Owner Work /root, Sitzung 50f1560a1a9f; einziger Strang `test/fin-e2e01-cash-chain`. [PR #262](https://github.com/joke0071/foliolab-open/pull/262), HEAD `02bc4a174ece00f08df76bc1396dbda6afa026b5`, Tree `3826012e0e08a4cc6695346a597b387f7fc4db18` exakt gleich lokalem Index. Basis Main unverändert `7c720dddd5450fd4c2342deae9c7d91427ee01e7` / v251 LIVE_ACCEPTED. Keine ausgelieferten Appassets geändert; SW bleibt v251. Vollständige Pflicht-CI für PR gestartet, noch kein MERGED/Produktionsketten-PASS.
