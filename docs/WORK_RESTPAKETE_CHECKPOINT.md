@@ -1,3 +1,17 @@
+## Übergabenachtrag der abgebenden Sitzung 8e5a26892934 · 01.11.2026
+
+**Aktive Verantwortung bleibt bei der neueren Sitzung `/root b1399897b0ba`.** Diese abgebende Sitzung hat die tatsächliche Kollision mit deren Checkpoint-Übernahme und PR #272 erkannt und beendet hier ihre Entwicklungs-, Integrations- und Releasearbeit. Keine GitHub Action abgebrochen. Keine weitere PR, kein Remote-Hotfixbranch, Merge oder Deployment gestartet.
+
+**Wichtiger neuer P1A-Befund:** Die echte v259-Appkette mit privatem Alpha-Key in isoliertem synthetischem Portfolio brachte zunächst VWCE, danach eine Limitantwort bei XDEM; folgende Anfragen wurden korrekt unterdrückt. Damit ist die reale Vier-ETF-Appabnahme noch nicht vollständig bestanden. Ein einzelner XDEM-Aufruf nach mehrminütigem Abstand war wieder erfolgreich. Bisher 17 eigene echte Alpha-Anfragen einschließlich Limitantworten; keine weitere echte Abfrage für den letzten Patch. Keine vollständige Providerabnahme allein aus synthetisch grüner CI behaupten.
+
+Der vorhandene Client konnte bei langsamen Antworten die ab Anfragestart berechnete Pause aufbrauchen. Vorbereiteter Fix setzt den nächsten Termin zusätzlich auf Antwortende + 2,5 Sekunden. **Lokal 1.066 Tests und Chromium mit bewusst langsamer Antwort PASS; noch keine vollständige CI/Veröffentlichung dieses Deltas.** Unattached Commit `86838b7144b6afd14aa5f0d71c372b2a728934f9`, Parent Main `6c339c0ea502781f155d209b6443a6c02db8182d`, Tree `f840847dc100dfca5381c0ea797f1a69e3ad95cb`. Kein Branch angehängt, um keinen zweiten Integrationsstrang zu starten. SW260-Zeile mit der Versionsfolge von PR #272 abgleichen.
+
+**Dauerhafte vollständige Übergabe inklusive exaktem Patch, Nachweisen, lokalen Pfaden und #268-WIP-Grenzen:** [ALPHA_RESPONSE_SPACING_HANDOVER_8e5a26892934.md](ALPHA_RESPONSE_SPACING_HANDOVER_8e5a26892934.md). Alle fünf Hotfix-Blobs lokal/GitHub SHA-identisch. #268-WIP `ca1a6cbb5440c96495c271b7f60d0141f1fc6853` ist bereits auf dem bestehenden Branch gesichert und von der neuen Sitzung als PR #272 übernommen; diese Sitzung hatte dafür nur 27 gezielte Unit-PASS, noch keine Browser-/Releaseabnahme und keinen SW-Bump.
+
+Nach diesem abschließenden Sicherungscommit keine weiteren GitHub-Schreibaktionen dieser Sitzung. Neuere Owner-Einträge darunter bleiben uneingeschränkt erhalten.
+
+---
+
 ## Kollisionsschutz: alter Chat noch aktiv / neue Übernahme maßgeblich · 01.11.2026 14:56 UTC
 
 **An Sitzung 8e5a26892934: Nutzer hat den Masterauftrag ausdrücklich an Sitzung b1399897b0ba übergeben. Bitte keine weiteren Implementierungen, Branches, PRs, Merges oder Deployments starten; bereits begonnene Alpha-Pacing-Arbeit sicher dokumentieren/remote sichern und Verantwortung abgeben. Keine laufenden CI-Läufe abbrechen.** Der neue Owner überschreibt keine aktive fremde Arbeit.
