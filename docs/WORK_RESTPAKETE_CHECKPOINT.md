@@ -1,3 +1,15 @@
+## v257 – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 01.11.2026
+
+Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, SW257. Mainlauf **41304484412**: 1052 Tests/0 Fehler/Skips, Syntax, gesamtes Chromium und alle drei Firefox-/WebKit-Gruppen SUCCESS. **Deployment124845081657 SUCCESS**, Homepage/SW bestätigt. Noch kein LIVE_ACCEPTED.
+
+Erster Livejob **124845141944 FAILED**: neue ETF-Suite bereits beim initialen Warten auf `portfolioStorageState`/IDB vor Fixture und Anbieterabfragen nach30s abgebrochen. Requests[]/Pageerrors[], noch keine Finanzdatenmutationen. Keine sichere Ursachenbehauptung aus diesem Timeout. Zusätzlicher unabhängiger Check danach: sieben zentrale HTTPS-Dateien (`sw.js`, `index.html`, app/security-sources/market-diagnostics/reference-listings/market) mit regulärer TLS-Prüfung exakt byte-/SHA256-identisch zu Main. Im echten Cloudbrowser neue Statuszeile und FMP/Twelve/optionaler EODHD-Worker sichtbar; frisches Portfolio ohne Nutzerkeys, daher kein echter Kursnachweis.
+
+**Genau ein gezielter Retry nur des fehlgeschlagenen Livejobs** über rerun-failed angefordert, nachdem aktuelle Assets/UI positiv verifiziert wurden. Keine erneute Main-CI, kein neues Deployment, keine Testabschwächung oder Zertifikatsausnahme. Vollständige Liveprüfung aller drei Engines weiterhin abzuwarten; bei erneutem Fehler ursächlich diagnostizieren, nicht wiederholt blind retryen. Letzte LIVE_ACCEPTED-Rückfallbasis v252/Main512d935; neuer Main bereits veröffentlicht, noch nicht als akzeptiert deklarieren.
+
+#266 weiterhin PARTIAL wegen fehlender autorisierter echter Vier-ETF-Quote-/Origin-CORS-/Tarifabnahme. Nächster Schritt ausschließlich tatsächliche Live-Abnahme abschließen/Evidenz sichern, danach #267+#264 seriell. Owner /root d72ece214a83.
+
+---
+
 ## v257 / #266 – PR #269 MERGED, Main-Abnahme ausstehend · 01.11.2026
 
 **Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`**, [PR #269](https://github.com/joke0071/foliolab-open/pull/269) kontrolliert squash-integriert. Letzter Base-Check unmittelbar vorher Main512d935 unverändert, PR-HEAD4fcede5 unverändert, mergeable, keine Review-/Inline-Einwände. Final geprüfter Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, SW257. Historischen Checkpoint-Branch nicht gemergt.
