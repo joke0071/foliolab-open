@@ -1,0 +1,77 @@
+{
+  "version": "v263",
+  "status": "LIVE_ACCEPTED",
+  "owner": "faf2f3956a11",
+  "main": "10103d6253ff544b383099c6a631035f67be7025",
+  "tree": "cbb7da411edb9dabdd07fb857e33061caa97e369",
+  "serviceWorker": "foliolab-open-v263",
+  "pr": 275,
+  "prRun": 41340303087,
+  "mainRun": 41341667782,
+  "mainRunAttempt": 2,
+  "deploymentJob": 124956414928,
+  "liveJob": 124958810877,
+  "units": {
+    "tests": 1073,
+    "passed": 1073,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "chromium": "PASS",
+  "firefox": "PASS",
+  "webkit": "PASS",
+  "productionCore": {
+    "groups": 6,
+    "axeScans": 18,
+    "assetMatches": 126
+  },
+  "productionTargeted": {
+    "physicalIDBCleanup": true,
+    "unchangedFinancialBytes": true,
+    "staleRevisionRejected": true,
+    "quotaRollback": true,
+    "legacyEncryptedUIRestore": true,
+    "actualUIEncryptedReexport": true,
+    "offline": true,
+    "widths": 7,
+    "alpha": true,
+    "marketstackAndSecretInputs": true,
+    "financeE2EAllEngines": true,
+    "transferAndRecoveryAllEngines": true
+  },
+  "artifact": {
+    "id": 13098623465,
+    "name": "production-live-acceptance-10103d6253ff544b383099c6a631035f67be7025",
+    "digest": "sha256:d4707f345a37d5e2763087a68dc3e89f1b5f59eaeba4769fa1f715ee210dec74",
+    "digestMatchedUploadLog": true
+  },
+  "independentRegularHTTPS": {
+    "file": "v263-regular-https-assets.json",
+    "matches": 126,
+    "total": 126,
+    "normalCertificateAndHostnameValidation": true
+  },
+  "firstAttempt": {
+    "job": 124956490078,
+    "result": "Firefox page.reload NS_ERROR_ABORT",
+    "record": "v263-live-first-attempt.json",
+    "targetedUnchangedRetryCount": 1
+  },
+  "visualReview": {
+    "productionScreenshot": "c5-connections-viewport",
+    "release": "10103d6253ff544b383099c6a631035f67be7025",
+    "observed": true
+  },
+  "newLiveProviderRequests": 0,
+  "gatesWeakened": false,
+  "remaining": [
+    "UH02 economic import implementation and full acceptance",
+    "UI-LOAD01 loader implementation and acceptance",
+    "UH03-UH05 original variants and remaining master roadmap"
+  ],
+  "limitations": [
+    "No real Android hardware acceptance claimed",
+    "No new provider entitlement requests; v262 real provider proof retained for unchanged semantics"
+  ]
+}
