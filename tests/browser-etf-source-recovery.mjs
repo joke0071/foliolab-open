@@ -77,3 +77,5 @@ for(const engine of engines){
  }finally{await context.close();await browser.close();}
 }
 mkdirSync('artifacts/gates',{recursive:true});writeFileSync('artifacts/gates/etf-source-recovery.json',JSON.stringify({base,liveProviderVerification:false,results},null,2));
+// The existing mandatory ETF gate also verifies the additional direct provider.
+await import('./browser-alpha-vantage.mjs');
