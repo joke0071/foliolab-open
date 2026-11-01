@@ -38,7 +38,7 @@ function fixture({vault=false,clientId='',withGoogle=false,includeConfig=false,o
   hasPasswordVault:async()=>vault,
   async backupGuard(){const expected=JSON.stringify(this.readData());return async()=>{if(JSON.stringify(this.readData())!==expected)throw Error('SYNTHETIC snapshot changed');};},
   readData:()=>({version:3,positions:[{id:'p'}],snapshots:[],providers:[{id:'prov'}],accounts:[]}),
-  readBackupConfiguration:()=>includeConfig?{settings:{eodhdKey:'test-private-key'},drive:{clientId,mode:'daily',retention:5}}:null,
+  readBackupConfiguration:()=>includeConfig?{settings:{alphaVantageKey:'test-private-key'},drive:{clientId,mode:'daily',retention:5}}:null,
   buildCompleteBackup:(data,configuration)=>({kind:'FolioLabCompleteBackup',backupVersion:1,data,configuration}),
   unpackCompleteBackup:payload=>({data:payload.data,configuration:payload.configuration}),
   encryptPasswordBackup:async plain=>{written.push(JSON.parse(plain));return '{"format":"foliolab-open-encrypted-v2","fake":true}'},
@@ -128,7 +128,7 @@ test('the optional full Drive payload includes validated history and configurati
  await t.elements.driveConnect.onclick();
  await t.elements.driveSaveNow.onclick();
  assert.equal(t.written[0]?.kind,'FolioLabCompleteBackup',t.elements.driveBackupStatus.textContent);
- assert.equal(t.written[0]?.configuration.settings.eodhdKey,'test-private-key');
+ assert.equal(t.written[0]?.configuration.settings.alphaVantageKey,'test-private-key');
  assert.equal(t.written[0]?.configuration.drive.mode,'daily');
  assert.deepEqual(safeImport(unpackCompleteBackup(t.written[0]).data).walletHistory,m.walletHistory);
  assert.equal(t.written[0].walletHistory.pending.length,0);

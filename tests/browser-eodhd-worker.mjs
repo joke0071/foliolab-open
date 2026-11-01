@@ -54,7 +54,7 @@ try{
  await page.locator('#optionalConnections > button[type="submit"]').click();
  // Wait for the successful settings write before inspecting stored worker access.
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
- assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdKey),'','Never require local EODHD token');
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.alphaVantageKey),'','Never require local EODHD token');
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdWorkerEndpoint),'https://my-owned-worker.workers.dev');
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#refreshAll').click();

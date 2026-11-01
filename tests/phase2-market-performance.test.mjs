@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequestCache} from '../src/request-cache.js';
-import {securityQuote,historicalExchangeRate,exchangeRateQuote} from '../src/market.js';
+import {historicalExchangeRate,exchangeRateQuote} from '../src/market.js';
 import {assetKey,listingId,rebuildAssets} from '../src/assets.js';
 import {portfolioTwr,performanceIssues,portfolioXirr} from '../src/performance.js';
 import {blankModel,createProvider,createAccount,createPosition,snapshot,safeImport,backup} from '../src/model.js';
@@ -43,17 +43,6 @@ test('Persistent token secrecy: only memory cache, separated by key and fetch fu
  await cache.request('https://api.example.test/quote',{fetcher:f,headers:{authorization:'my-key-2'},ttlMs:10000});
  assert.equal(calls,2);assert.deepEqual(Object.keys(cache.stats()).sort(),['active','entries','pending','queued']);
  cache.clear();assert.equal(cache.stats().entries,0);
-});
-test('Security quotes require confirmed exchange, ticker, currency and MIC',async()=>{
- const good=()=>ok({symbol:'VWCE',exchange:'Xetra',mic_code:'XETR',currency:'EUR',close:'125.25',datetime:'2026-10-21'});
- const listing={symbol:'VWCE',exchange:'Xetra',mic:'XETR',currency:'EUR',isin:'IE00BK5BQT80'};
- const quote=await securityQuote(listing,'USER',async url=>{const q=new URL(url);assert.equal(q.pathname,'/quote');assert.equal(q.searchParams.get('exchange'),null);assert.equal(q.searchParams.get('mic_code'),'XETR');return good();});
- assert.equal(quote.price,125.25);assert.equal(quote.quality,'verified-listing');
- await assert.rejects(()=>securityQuote({...listing,exchange:'',mic:''},'USER',async()=>good()),/Handelsplatz/);
- for(const wrong of [{currency:'USD'},{symbol:'VWRL'},{exchange:'NYSE'},{mic_code:'XNYS'},{isin:'US1234567890'}]){
-  const f=async()=>ok({...await good().json(),...wrong});
-  await assert.rejects(()=>securityQuote(listing,'USER',f),/abweicht|weicht ab|Ticker|Handelsplatz|MIC|ISIN/);
- }
 });
 test('Historical reference FX uses exact request date and reports prior working day',async()=>{
  const f=async url=>{const u=new URL(url);assert.equal(u.pathname,'/v1/2026-10-18');assert.equal(u.searchParams.get('base'),'USD');return ok(fxPayload('2026-10-16',0.86));};

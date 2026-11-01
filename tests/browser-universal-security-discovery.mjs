@@ -9,7 +9,7 @@ try{
   const {blankModel,createProvider,createAccount,createPosition,snapshot,persist}=await import('/src/model.js');
   const m=blankModel(),p=createProvider({name:'Random community broker'});m.providers.push(p);
   const a=createAccount({name:'Investment account',providerId:p.id,type:'securities'},m);m.accounts.push(a);
-  m.settings.autoRefresh=false;m.settings.eodhdKey='test-key';
+  m.settings.autoRefresh=false;m.settings.alphaVantageKey='test-key';
   m.positions.push(createPosition({id:'etf-new',kind:'etf',symbol:'GLBL',name:'Global Dividend ETF',
     quantity:'123.456789',price:99,currency:'EUR',tradingViewSymbol:'XETR:GLBL',quoteSource:'Historic backup',quoteAsOf:'2026-10-20',
     providerId:p.id,accountId:a.id},m));
@@ -18,13 +18,9 @@ try{
   snapshot(m,'2026-10-21','Reference total',{manualTotalEUR:'9999'});
   persist(m);
  });
- await page.route('https://eodhd.com/api/search/**',route=>route.fulfill({
-  status:200,contentType:'application/json',body:JSON.stringify([
-   {Code:'GLBL',Exchange:'XETRA',Name:'Global Dividend ETF UCITS',Type:'ETF',Currency:'EUR',ISIN:'IE00A1234567'},
-   {Code:'GLBL',Exchange:'LSE',Name:'Global Dividend ETF UCITS',Type:'ETF',Currency:'GBP',ISIN:'IE00A1234567'},
-   {Code:'GLBL',Exchange:'XETRA',Name:'Not the same fund',Type:'ETF',Currency:'EUR',ISIN:'IE00B1234567'}
-  ])
- }));
+ await page.route('https://www.alphavantage.co/query**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({bestMatches:[
+ {'1. symbol':'GLBL.DEX','2. name':'Global Dividend ETF UCITS','3. type':'ETF','4. region':'XETRA','8. currency':'EUR'},
+ {'1. symbol':'GLBL.DEX','2. name':'Global Dividend ETF UCITS','3. type':'ETF','4. region':'XETRA','8. currency':'GBP'}]})}));
  await page.reload();
  await page.locator('#mobileNav [data-page="positions"]').click();
  const review=page.locator('#resolveListings');
@@ -38,14 +34,15 @@ try{
  await page.locator('#securitySearch').click();
  await page.locator('#securityResults [data-security]').first().waitFor();
  const choices=page.locator('#securityResults [data-security]');
- assert.equal(await choices.count(),3);
+ assert.equal(await choices.count(),2);
  const gbpChoice=page.locator('#securityResults [data-security]').filter({hasText:'GBP'});
  assert.equal(await gbpChoice.isDisabled(),true,'GBP listing cannot silently alter EUR quoted holdings');
  assert.match(await choices.first().innerText(),/XETR/);
- page.once('dialog',dialog=>{assert.match(dialog.message(),/IE00A1234567/);return dialog.accept();});
+ page.once('dialog',dialog=>{assert.match(dialog.message(),/ISIN/);return dialog.accept();});
  await choices.first().click();
  assert.equal(await page.locator('#editorForm [name="symbol"]').inputValue(),'GLBL');
- assert.equal(await page.locator('#editorForm [name="isin"]').inputValue(),'IE00A1234567');
+ assert.equal(await page.locator('#editorForm [name="isin"]').inputValue(),'');
+ await page.locator('#editorForm [name="isin"]').fill('IE00A1234567');
  assert.equal(await page.locator('#editorForm [name="eodhdSymbol"]').inputValue(),'GLBL.XETRA');
  assert.equal(await page.locator('#editorForm [name="tradingViewSymbol"]').count(),0,'deprecated TradingView editor field is absent');
  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);

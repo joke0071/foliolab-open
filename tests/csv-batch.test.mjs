@@ -60,7 +60,7 @@ test('A later bad document, stale model and explicit skip cannot partially commi
 test('Session undo restores exact pre-import data including snapshots and blocks every later mutation',()=>{
  const m=fixture(),before=JSON.stringify(m);importCSV(m,batch(m,[file('january.csv')]));snapshot(m);
  const receipt=csvUndoReceipt(before,m);assert.ok(canUndoCSV(m,receipt));
- for(const mutate of [n=>n.settings.eodhdKey='SYNTHETIC',n=>n.positions[0].price=22,n=>n.bookings[0].notes='edited']){
+ for(const mutate of [n=>n.settings.alphaVantageKey='SYNTHETIC',n=>n.positions[0].price=22,n=>n.bookings[0].notes='edited']){
   const changed=structuredClone(m);mutate(changed);const state=JSON.stringify(changed);assert.throws(()=>undoCSV(changed,receipt),/gesperrt/);assert.equal(JSON.stringify(changed),state);
  }
  undoCSV(m,receipt);assert.equal(JSON.stringify(m),before);assert.equal(canUndoCSV(m,receipt),false);
@@ -82,10 +82,10 @@ test('Two documents settle trades exactly once and feed the existing FLH02 proje
  m.openingPositions.find(p=>p.positionId==='cash').asOf='2023-01-01';
  m.priceHistories.etf={currency:'EUR',source:'CSV (selbst geprüft)',points:[{date:'2023-01-02',total:100},{date:'2023-01-03',total:110}]};
  const projected=projectHistoricalPortfolio(m);assert.equal(projected.days.find(d=>d.date==='2023-01-02').totalEURExact,'999');assert.equal(projected.days.find(d=>d.date==='2023-01-03').totalEURExact,'1058');
- m.settings.eodhdKey='SYNTHETIC_SECRET_CANARY';const plain=backup(m);assert.ok(!plain.includes('SYNTHETIC_SECRET_CANARY'));
+ m.settings.alphaVantageKey='SYNTHETIC_SECRET_CANARY';const plain=backup(m);assert.ok(!plain.includes('SYNTHETIC_SECRET_CANARY'));
  const payload=createCompleteBackup(JSON.parse(plain),{settings:m.settings,drive:{}});
  const encrypted=await encryptBackup(JSON.stringify(payload),'synthetic-test-password');assert.ok(!encrypted.includes('SYNTHETIC_SECRET_CANARY'));
  const recovered=unpackCompleteBackup(JSON.parse(await decryptBackup(JSON.parse(encrypted),'synthetic-test-password'))),restored=safeImport(recovered.data);
- assert.equal(recovered.configuration.settings.eodhdKey,'SYNTHETIC_SECRET_CANARY');assert.deepEqual(restored.bookings,m.bookings);
+ assert.equal(recovered.configuration.settings.alphaVantageKey,'SYNTHETIC_SECRET_CANARY');assert.deepEqual(restored.bookings,m.bookings);
  assert.equal(batch(restored,files.reverse()).duplicates,2);assert.equal(batch(restored,files).ready,0);
 });

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {alphaListing,parseAlphaDaily,reserveAlphaBudget,createAlphaClient,alphaKeyId,withProviderAccess} from '../src/alpha-vantage.js';
+import {alphaListing,parseAlphaDaily,reserveAlphaBudget,createAlphaClient,alphaKeyId} from '../src/alpha-vantage.js';
 import {referenceSearch} from '../src/reference-listings.js';
 import {marketSourceOptions,fetchSecurityQuote} from '../src/security-sources.js';
 import {blankModel,backup} from '../src/model.js';
@@ -11,9 +11,9 @@ const daily=(symbol='VWCE.DEX',value='123.4567')=>({'Meta Data':{'2. Symbol':sym
 function memory(){const values=new Map();let tail=Promise.resolve();return {values,read:async key=>structuredClone(values.get(key)),update(key,change){const job=tail.then(()=>{const next=change(structuredClone(values.get(key)));values.set(key,structuredClone(next));return structuredClone(next);});tail=job.catch(()=>{});return job;}};}
 test('Only four proven ETF ISIN/EUR/XETR identities map to DEX; contradictory venues never substitute',()=>{
  for(const s of ['VWCE','XDEM','XDEQ','5MVL'])assert.equal(alphaListing(position(s)),s+'.DEX');
- for(const patch of [{isin:'IE00WRONG000'},{isin:''},{currency:'USD'},{mic:'XFRA'},{exchange:'Frankfurt'},{kind:'stock'},{symbol:'OTHER'},{fmpSymbol:'VWCE.L'}])
+ for(const patch of [{isin:'IE00WRONG000'},{isin:''},{currency:'USD'},{mic:'XFRA'},{exchange:'Frankfurt'},{kind:'stock'},{symbol:'OTHER'}])
   assert.throws(()=>alphaListing({...position('VWCE'),...patch}));
- assert.deepEqual(marketSourceOptions(position('VWCE'),{alphaVantageKey:'test',fmpKey:'test',twelveKey:'test'}),['alpha','fmp','twelve']);
+ assert.deepEqual(marketSourceOptions(position('VWCE'),{alphaVantageKey:'test',fmpKey:'test',twelveKey:'test'}),['alpha']);
  assert.deepEqual(marketSourceOptions(position('VWCE'),{alphaVantageKey:'test',securitySource:'alpha'}),['alpha']);
 });
 test('Daily raw close is used; exact symbol, currency, calendar, finite price and provider date are checked',()=>{
@@ -57,20 +57,6 @@ test('Slow provider responses leave a complete 2.5-second gap after completion, 
  await createAlphaClient(deps).load(position('XDEM'),'test');
  assert.ok(starts[1]-finishes[0]>=2500,'Response latency cannot consume the free-tier pacing gap');
  assert.equal((await store.read('budget:'+await alphaKeyId('test'))).used,2);
-});
-test('Confirmed FMP402 and Twelve plan404 suppress repeated automatic requests but allow explicit recheck',async()=>{
- for(const source of ['fmp','twelve']){
-  let calls=0;const key='SYNTHETIC_SECRET',settings={[source==='fmp'?'fmpKey':'twelveKey']:key,securitySource:source};
-  const fetcher=async()=>{calls++;return {ok:false,status:source==='fmp'?402:404,json:async()=>({code:404,message:'This symbol is available starting with the Grow or Venture plan. SECRET'})};};
-  await assert.rejects(()=>fetchSecurityQuote(position('VWCE'),settings,fetcher),e=>/Tarif|tarif/.test(e.message)&&!e.message.includes(key)&&!e.message.includes('SECRET'));
-  await assert.rejects(()=>fetchSecurityQuote(position('VWCE'),settings,fetcher));assert.equal(calls,1);
-  await assert.rejects(()=>fetchSecurityQuote(position('VWCE'),{...settings,recheckProviderAccess:true},fetcher));assert.equal(calls,2);
- }
-});
-test('A generic 404 is not guessed to be a tariff denial or permanently suppressed',async()=>{
- let calls=0;const fetcher=async()=>{calls++;return {ok:false,status:404,json:async()=>({code:404,message:'No such symbol'})};};
- for(let i=0;i<2;i++)await assert.rejects(()=>fetchSecurityQuote(position('VWCE'),{twelveKey:'test'},fetcher));
- assert.equal(calls,2);
 });
 test('Alpha key is retained only in opted-in complete configuration and never in plain portfolio export',()=>{
  const m=blankModel();m.settings.alphaVantageKey='SYNTHETIC_ALPHA_SECRET';m.settings.securitySource='alpha';

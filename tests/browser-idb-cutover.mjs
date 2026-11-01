@@ -11,7 +11,7 @@ try{
  await page.evaluate(async()=>{
   const {blankModel,createProvider,persist}=await import('/src/model.js');
   const model=blankModel();model.providers.push(createProvider({name:'Legacy Bank',type:'bank'}));
-  model.settings.eodhdKey='SYNTHETIC_LOCAL_SECRET_FOR_TEST';
+  model.settings.alphaVantageKey='SYNTHETIC_LOCAL_SECRET_FOR_TEST';
   model.settings.autoRefresh=false;
   persist(model);
  });
@@ -24,6 +24,7 @@ try{
  page.on('dialog',async dialog=>{dialogLabels.push(dialog.message());await dialog.accept();});
  await Promise.all([
   page.waitForEvent('download'),
+  page.waitForNavigation({waitUntil:'load'}),
   page.locator('#migrateToIDB').click()
  ]);
  await page.waitForFunction(()=>localStorage.getItem('foliolab-open-storage-mode')==='idb-v1');
@@ -39,7 +40,7 @@ try{
   const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
  });
  assert.equal(first.revision,1);
- assert.equal(first.settings.eodhdKey,'SYNTHETIC_LOCAL_SECRET_FOR_TEST');
+ assert.equal(first.settings.alphaVantageKey,'SYNTHETIC_LOCAL_SECRET_FOR_TEST');
  assert.ok(!first.raw.includes('SYNTHETIC_LOCAL_SECRET_FOR_TEST'),'No credentials inside exportable portfolio snapshot');
  await page.locator('#addProvider').click();
  await page.locator('#providerName').fill('IndexedDB Bank');
@@ -90,7 +91,7 @@ try{
  await page.waitForFunction(()=>localStorage.getItem('foliolab-open-storage-mode')===null);
  await page.reload();
  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).providers.some(p=>p.name==='Tab A')),true);
- assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.eodhdKey),'SYNTHETIC_LOCAL_SECRET_FOR_TEST');
+ assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).settings.alphaVantageKey),'SYNTHETIC_LOCAL_SECRET_FOR_TEST');
  // A deliberate rollback leaves a tombstone. A new consented migration must
  // be able to supersede the exact tombstone revision without stale resurrection.
  await page.locator('#mobileNav [data-page="more"]').click();

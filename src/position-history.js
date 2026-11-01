@@ -15,7 +15,7 @@ export function availablePositionPeriods(position,model,now=Date.now()){
  if(!['etf','stock','fund'].includes(position?.kind))return result;
  let providers=[];
  try{providers=marketSourceOptions(position,model?.settings||{});}catch{}
- const longProvider=providers.some(x=>['eodhd','fmp','twelve'].includes(x));
+ const longProvider=providers.some(x=>['eodhd'].includes(x));
  const points=model?.priceHistories?.[position.id]?.points;
  const first=Array.isArray(points)&&points.length>=2?String(points[0]?.date||''):'';
  const last=Array.isArray(points)&&points.length>=2?String(points.at(-1)?.date||''):'';
@@ -133,26 +133,7 @@ export async function fetchPositionMarketHistory(p,settings={},days=30,fetcher=g
     throw Error(cause+'. CoinPaprika-Fallback: '+String(fallbackError.message||fallbackError).slice(0,105));
    }
   }
- }else{
-  const url=new URL('https://api.twelvedata.com/time_series');
-  url.searchParams.set('symbol',capability.symbol);
-  if(capability.exchange)url.searchParams.set('exchange',capability.exchange);
-  if(capability.mic)url.searchParams.set('mic_code',capability.mic);
-  url.searchParams.set('interval','1day');url.searchParams.set('adjust','none');
-  url.searchParams.set('outputsize',String(Math.min(500,days+12)));
-  url.searchParams.set('apikey',settings.twelveKey);
-  const data=await requestJSON(url.toString(),{fetcher,ttlMs:TTL.history});
-  if(data?.status==='error'||data?.code)throw Error(String(data.message||'Twelve Data nicht verfügbar.').slice(0,140));
-  const meta=data?.meta||{};
-  if(String(meta.symbol||'').trim().toUpperCase()!==capability.symbol)throw Error('Ticker der historischen Kurse stimmt nicht überein.');
-  if(String(meta.currency||'').trim().toUpperCase()!==capability.currency)throw Error('Währung der historischen Kurse stimmt nicht überein.');
-  if(capability.exchange&&String(meta.exchange||'').trim().toUpperCase()!==capability.exchange.toUpperCase())throw Error('Handelsplatz der historischen Kurse nicht bestätigt.');
-  if(capability.mic&&String(meta.mic_code||meta.mic||'').trim().toUpperCase()!==capability.mic)throw Error('Börsen-MIC der historischen Kurse nicht bestätigt.');
-  if(p.isin&&meta.isin&&String(meta.isin).trim().toUpperCase()!==String(p.isin).trim().toUpperCase())throw Error('ISIN der historischen Kurse weicht von der Position ab.');
-  if(!Array.isArray(data.values)||data.values.length<2)throw Error('Keine historischen Schlusskurse geliefert.');
-  rows=data.values.map(v=>({timestamp:Date.parse(String(v.datetime)+'T12:00:00Z'),price:Number(v.close)}));
-  source='Twelve Data · bestätigter Handelsplatz';currency=capability.currency;
- }
+ }else throw Error('Keine unterstützte historische Kursquelle.');
  const from=isoFromMs(Date.now()-((capability.kind==='crypto'?days-1:days+2))*864e5);
  const today=isoFromMs(Date.now());
  const byDay=new Map();

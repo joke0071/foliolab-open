@@ -1,3 +1,4 @@
+import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
 import {validateWalletHistory} from './wallet-history-state.js';
@@ -32,7 +33,7 @@ export function purgeLegacySnapshots(storage=globalThis.localStorage){
 
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
-export const defaultSettings=()=>({currency:'EUR',alphaVantageKey:'',marketstackKey:'',twelveKey:'',eodhdKey:'',fmpKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
+export const defaultSettings=()=>({currency:'EUR',alphaVantageKey:'',marketstackKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
 export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],priceHistories:Object.create(null),performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -277,7 +278,7 @@ export function load(storage=globalThis.localStorage){
   const input=parsed.settings||{},settings=defaultSettings();
   for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
   if(settings.solanaRpc==='https://api.mainnet-beta.solana.com')settings.solanaRpc='https://solana-rpc.publicnode.com';
-  result.settings=settings;
+  result.settings=withoutRetiredSettings(settings);
   observedStorage.set(storage,raw);
   return result;
 }
@@ -291,7 +292,7 @@ export function persist(model,storage=globalThis.localStorage){
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
- const serialized=JSON.stringify(model.walletHistory?{...model,walletHistory:validateWalletHistory(model.walletHistory)}:model);
+ const serialized=JSON.stringify({...model,settings:withoutRetiredSettings(model.settings),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);
 }
@@ -300,3 +301,13 @@ const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',
 export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return formatter.format(Number.isFinite(n)?n:0);};
 export const quant=n=>{const value=Number(n);return Number.isFinite(value)&&value!==0&&Math.abs(value)<1e-8?tinyQuantityFormatter.format(n):quantityFormatter.format(n);};
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+/** Called under the existing legacy Web Lock; preserve every financial field. */
+export function retireLegacyProviderCredentials(storage=globalThis.localStorage){
+ const raw=storage.getItem(STORE_KEY);if(raw===null)return false;
+ const parsed=JSON.parse(raw);
+ if(!retiredSettingsPresent(parsed.settings))return false;safeImport(parsed);
+ const cleaned=JSON.stringify({...parsed,settings:withoutRetiredSettings(parsed.settings)});
+ if(storage.getItem(STORE_KEY)!==raw)throw Error('Datenstand in einem anderen Tab geändert. Bitte neu laden.');
+ storage.setItem(STORE_KEY,cleaned);observedStorage.set(storage,cleaned);return true;
+}

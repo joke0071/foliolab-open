@@ -11,12 +11,12 @@ async function testStaleSource(){
    const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
    const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
    const starting=blankModel();starting.providers.push(createProvider({name:'Initial'}));
-   starting.settings.autoRefresh=false;starting.settings.eodhdKey='SYNTHETIC_A';
+   starting.settings.autoRefresh=false;starting.settings.alphaVantageKey='SYNTHETIC_A';
    persist(starting);
    const service=new PortfolioStorage();const stale=await service.initialize();
    const changed=JSON.parse(localStorage.getItem(STORE_KEY));
    changed.providers.push(createProvider({name:'Committed in another tab'}));
-   changed.settings.eodhdKey='SYNTHETIC_B';
+   changed.settings.alphaVantageKey='SYNTHETIC_B';
    localStorage.setItem(STORE_KEY,JSON.stringify(changed));
    const original=localStorage.getItem(STORE_KEY);
    let blocked=false;
@@ -35,7 +35,7 @@ async function testStaleSource(){
    const verified=await reloadedService.reload();
    reloadedService.close();service.close();
    return {blocked,noMarker,noPartialWrite,activated,preserved,
-    names:verified.providers.map(x=>x.name),key:verified.settings.eodhdKey};
+    names:verified.providers.map(x=>x.name),key:verified.settings.alphaVantageKey};
   });
   assert.deepEqual(result,{blocked:true,noMarker:true,noPartialWrite:true,activated:true,preserved:true,
    names:['Initial','Committed in another tab'],key:'SYNTHETIC_B'});
@@ -106,7 +106,7 @@ async function testLegacyFormats(){
     const {PortfolioStorage,MODE_KEY}=await import('/src/browser-portfolio-storage.js');
     const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');
     const old=blankModel();
-    old.version=version;old.settings.eodhdKey='SYNTHETIC_V'+version;old.providers.push(createProvider({name:'Legacy v'+version}));
+    old.version=version;old.settings.alphaVantageKey='SYNTHETIC_V'+version;old.providers.push(createProvider({name:'Legacy v'+version}));
     if(version===1)delete old.accounts;
     localStorage.setItem(STORE_KEY,JSON.stringify(old));
     const raw=localStorage.getItem(STORE_KEY);
@@ -117,7 +117,7 @@ async function testLegacyFormats(){
     const record=await readPortfolioRecord(db);
     db.close();service.close();
     return {mode:localStorage.getItem(MODE_KEY),bytesPreserved:localStorage.getItem(STORE_KEY)===raw,
-     revision:record.revision,version:JSON.parse(record.raw).version,key:record.settings.eodhdKey,
+     revision:record.revision,version:JSON.parse(record.raw).version,key:record.settings.alphaVantageKey,
      accounts:JSON.parse(record.raw).accounts.length,name:JSON.parse(record.raw).providers[0].name};
    },version);
    assert.equal(result.mode,'idb-v1');
@@ -145,7 +145,7 @@ async function testVerifiedCutover(){
     const put=IDBObjectStore.prototype.put;
     IDBObjectStore.prototype.put=function(record,key){
      if(fault==='portfolio'){const data=JSON.parse(record.raw);data.providers[0].name='Altered';record={...record,raw:JSON.stringify(data)};}
-     if(fault==='settings')record={...record,settings:{...record.settings,eodhdKey:'SYNTHETIC_ALTERED'}};
+     if(fault==='settings')record={...record,settings:{...record.settings,alphaVantageKey:'SYNTHETIC_ALTERED'}};
      if(fault==='source-during-commit')localStorage.setItem(STORE_KEY,source+' ');
      return put.call(this,record,key);
     };

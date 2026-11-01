@@ -5,8 +5,8 @@
 import {svg} from './format.js';
 const labels=Object.freeze({
  alphaVantageKey:'Alpha Vantage API-Schlüssel',marketstackKey:'Marketstack API-Schlüssel',
- eodhdKey:'EODHD API-Schlüssel',eodhdWorkerAccessToken:'Worker-Zugriffsschlüssel',fmpKey:'FMP API-Schlüssel',
- twelveKey:'Twelve Data API-Schlüssel',coinGeckoKey:'CoinGecko API-Schlüssel',
+ eodhdWorkerAccessToken:'Worker-Zugriffsschlüssel',
+ coinGeckoKey:'CoinGecko API-Schlüssel',
  etherscanKey:'Etherscan API-Schlüssel',binplorerKey:'Binplorer API-Schlüssel',
  solanaRpc:'Solana RPC-Adresse'
 });

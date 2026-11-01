@@ -87,28 +87,31 @@ export function parseAlphaDaily(data,symbol){
 }
 export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause=wait,fetcher=globalThis.fetch}={}){
  const pending=new Map();let tail=Promise.resolve();
- async function load(position,key){
-  const symbol=alphaListing(position);
+ async function load(position,key,search=false){
+  const symbol=search?String(position).trim():alphaListing(position);
+  if(search&&(symbol.length<2||symbol.length>120||/[<>\\\u0000-\u001f]/.test(symbol)))throw Error('Ungültige Wertpapiersuche.');
+  const parse=search?parseAlphaSearch:parseAlphaDaily;
   if(typeof key!=='string'||!key.trim())throw Error('Eigener Alpha-Vantage-Schlüssel fehlt.');
-  const id=await alphaKeyId(key),cacheKey='daily:'+symbol,budgetKey='budget:'+id;
+  const id=await alphaKeyId(key),cacheKey=(search?'search:':'daily:')+symbol,budgetKey='budget:'+id;
   const existing=await store.read(cacheKey);
-  if(existing?.day===day(clock()))return {...parseAlphaDaily(existing.data,symbol),cached:true};
-  const activeKey=id+':'+symbol;
+  if(existing?.day===day(clock()))return {...parse(existing.data,symbol),cached:true};
+  const activeKey=id+':'+cacheKey;
   if(pending.has(activeKey))return structuredClone(await pending.get(activeKey));
   const job=tail.catch(()=>{}).then(async()=>{
    const saved=await store.read(cacheKey);
-   if(saved?.day===day(clock()))return {...parseAlphaDaily(saved.data,symbol),cached:true};
+   if(saved?.day===day(clock()))return {...parse(saved.data,symbol),cached:true};
    const reservation=await store.update(budgetKey,old=>reserveAlphaBudget(old,clock()));
    const delay=reservation.scheduledAt-clock();if(delay>0)await pause(delay);
    const url=new URL('https://www.alphavantage.co/query');
-   url.search=new URLSearchParams({function:'TIME_SERIES_DAILY',symbol,outputsize:'compact',apikey:key});
+   url.search=new URLSearchParams(search?{function:'SYMBOL_SEARCH',keywords:symbol,apikey:key}:{function:'TIME_SERIES_DAILY',symbol,outputsize:'compact',apikey:key});
    try{
     const data=await requestJSON(url.toString(),{fetcher,ttlMs:0,attempts:1});
-    const result=parseAlphaDaily(data,symbol);
+    const result=parse(data,symbol);
     // Never persist arbitrary provider fields (an upstream payload could echo a
     // credential). Retain only validated public symbol/date/raw-close values.
-    const cachedData={'Meta Data':{'2. Symbol':symbol,'3. Last Refreshed':result.points.at(-1).date},
+    const cachedData=search?{bestMatches:result.results.map(p=>({'1. symbol':p.symbol+'.DEX','2. name':p.name,'3. type':p.type,'4. region':'XETRA','8. currency':p.currency}))}:{'Meta Data':{'2. Symbol':symbol,'3. Last Refreshed':result.points.at(-1).date},
      'Time Series (Daily)':Object.fromEntries(result.points.map(p=>[p.date,{'4. close':String(p.total)}]))};
+    if(JSON.stringify(cachedData).includes(key))throw Error('Unerwartete Zugangsdaten in der Anbieterantwort.');
     await store.update(cacheKey,()=>({day:day(clock()),data:cachedData}));
     return {...result,cached:false};
    }catch(error){
@@ -127,7 +130,7 @@ export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause
   tail=job;pending.set(activeKey,job);
   try{return structuredClone(await job);}finally{pending.delete(activeKey);}
  }
- return {load};
+ return {load:(position,key)=>load(position,key),search:(term,key)=>load(term,key,true)};
 }
 const clients=new WeakMap();
 export async function alphaVantageBars(position,key,fetcher=globalThis.fetch){
@@ -135,28 +138,25 @@ export async function alphaVantageBars(position,key,fetcher=globalThis.fetch){
  return clients.get(fetcher).load(position,key);
 }
 
-// A confirmed plan denial is scoped to key fingerprint, listing and operation.
-// Other markets/endpoints/credentials remain available. Manual diagnosis can
-// explicitly recheck after an upgrade; automatic refresh uses a one-day hold.
-const denials=new WeakMap();
-export async function withProviderAccess(source,position,settings,fetcher,operation,request){
- if(!['fmp','twelve'].includes(source))return request();
- const credential=settings[source==='fmp'?'fmpKey':'twelveKey'];
- const identity=['symbol','mic','exchange','currency','isin',source==='fmp'?'fmpSymbol':'symbol'].map(k=>String(position[k]||''));
- const id='denied:'+source+':'+operation+':'+JSON.stringify(identity)+':'+await alphaKeyId(credential);
- if(!denials.has(fetcher))denials.set(fetcher,new Map());
- const memory=denials.get(fetcher),cache=globalThis.indexedDB?alphaCache():null;
- let saved=memory.get(id);if(!saved&&cache)try{saved=await cache.read(id);}catch{}
- if(!settings.recheckProviderAccess&&saved?.until>Date.now())throw Error(saved.message+' Weitere automatische Anfragen sind vorübergehend ausgesetzt; „Kursversorgung prüfen“ kann erneut testen.');
- try{
-  const result=await request();memory.delete(id);
-  if(saved&&cache)try{await cache.update(id,()=>({until:0}));}catch{}
-  return result;
- }catch(error){
-  if(error.code==='provider-plan'){
-   const record={until:Date.now()+86400000,message:error.message};memory.set(id,record);
-   if(cache)try{await cache.update(id,()=>record);}catch{}
-  }
-  throw error;
+
+/** Only explicit XETRA + .DEX + currency evidence establishes this venue.
+ * Other regional hits do not establish a MIC and are not guessed. */
+export function parseAlphaSearch(data){
+ if(data?.Information||data?.Note||data?.['Error Message'])parseAlphaDaily(data,'');
+ if(!Array.isArray(data?.bestMatches)||data.bestMatches.length>100)throw Error('Alpha Vantage liefert keine gültige Suchliste.');
+ const seen=new Map();
+ for(const row of data.bestMatches){
+  const providerSymbol=String(row?.['1. symbol']||'').trim(),name=String(row?.['2. name']||'').trim(),type=String(row?.['3. type']||'').trim();
+  const currency=String(row?.['8. currency']||'').trim();
+  if(String(row?.['4. region']||'').trim()!=='XETRA'||!/^([A-Z0-9_-]{1,30})\.DEX$/.test(providerSymbol)||!name||name.length>140||/[\u0000-\u001f<>]/.test(name)||!/^[A-Z]{3}$/.test(currency)||!['ETF','Equity','Mutual Fund'].includes(type))continue;
+  const p={source:'alpha',symbol:providerSymbol.slice(0,-4),name,type,currency,exchange:'Xetra',mic:'XETR',isin:'',eodhdSymbol:providerSymbol.slice(0,-4)+'.XETRA',fmpSymbol:''};
+  const id=p.symbol+'|'+p.currency;
+  if(seen.has(id)&&JSON.stringify(seen.get(id))!==JSON.stringify(p))throw Error('Widersprüchliche Alpha-Vantage-Suchtreffer.');
+  seen.set(id,p);
  }
+ return {results:[...seen.values()]};
+}
+export async function alphaVantageSearch(term,key,fetcher=globalThis.fetch){
+ if(!clients.has(fetcher))clients.set(fetcher,createAlphaClient({fetcher}));
+ return clients.get(fetcher).search(term,key);
 }

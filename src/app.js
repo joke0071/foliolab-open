@@ -29,7 +29,7 @@ import {cashTermsFromForm,localToday} from './cash-terms.js';
 import {cashTermsFormMarkup,bindCashTermsForm,cashTermsAccountHint,renderCashTermsOverview} from './cash-terms-ui.js';
 import {createWalletHistoryUI} from './wallet-history-ui.js';
 import {blankModel,load,persist,createProvider,createPosition,totalEUR,valueEUR,snapshot,addBooking,gainSummary,backup,safeImport,defaultSettings,purgeLocalAppData,purgeLegacySnapshots,createAccount,suggestedAccountType,money,quant,escapeHTML,TYPES,uid,safeNumber} from './model.js';
-import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,searchSecurities,securityQuote,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
+import {POPULAR_COINS,coinCatalog,searchCatalog,cryptoPrices,exchangeRateQuote,historicalExchangeRate,walletBalance,discoverWallet,PUBLIC_EVM_NETWORKS,evmContractPrices,walletBalanceExact,coinQuoteFreshness} from './market.js';
 import {svg,calendarDateLabel,exactQuantityLabel} from './format.js';
 import {positionIconName} from './position-icons.js';
 import {installCredentialVisibility} from './credential-visibility.js';
@@ -184,7 +184,7 @@ function renderQualityReview(review,items){
   '<div><h3>Kursquellen</h3><p>'+review.quoteSummary.counts.confirmed+' von '+review.quoteSummary.total+' relevanten Wertpapier- und Kryptopositionen bestätigt. '+(review.quoteSummary.total-review.quoteSummary.counts.confirmed)+' nicht bestätigt.</p></div>'+
   '<div><h3>Historie und Präzision</h3><p>'+(historyCount||exactCount?historyCount+' Positionen mit Historienhinweisen · '+exactCount+' mit abweichenden Anzeige- und Exaktkursen.':'Keine zusätzlichen Hinweise.')+'</p></div>';
  const remaining=new Set(review.valuation.map(i=>i.id)),resolved=[...qualityReviewInitialIds].filter(id=>!remaining.has(id)).length,newCount=[...remaining].filter(id=>!qualityReviewInitialIds.has(id)).length;
- const configuredSecurity=Boolean(model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken));
+ const configuredSecurity=Boolean(model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken));
  const canRefresh=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)))||(['etf','stock','fund'].includes(p.kind)&&p.symbol&&configuredSecurity)||p.currency!=='EUR');
  $('qualityReviewSourceActions').innerHTML=canRefresh?'<button type="button" class="btn outline" data-action="refresh-quality-sources" '+(busy||saving||editorSubmitting||otherTabChangedPortfolio||!navigator.onLine?'disabled':'')+'>Kurse und Wallet-Bestände aktualisieren</button><p class="small-help">Verwendet die eingerichteten Quellen für das gesamte Portfolio. Bestätigte Kurse und öffentliche Wallet-Bestände werden wie in der Positionsübersicht gespeichert.</p>':'<p class="small-help">Keine automatische Quelle eingerichtet. Kursdaten an der Position prüfen; Kurszugänge findest du unter „Mehr“.</p>';
  $('qualityReviewRefreshStatus').textContent=busy?'Kurse und Wallet-Bestände werden abgefragt …':$('priceInfo').textContent;
@@ -981,7 +981,7 @@ function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);
 <details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Mit eigenem EODHD-, FMP- oder Twelve-Data-Schlüssel nach ISIN, Ticker oder Name suchen. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
 <div class="field-row"><label class="field"><span>Anlageklasse</span><select name="kind" id="positionKind">${options(Object.entries(TYPES),kind)}</select></label>${field('Name / Bezeichnung','name',p?.name||'','text','required maxlength="110" placeholder="Oder selbst eintippen"')}</div>
 <div class="field-row">${field('Ticker / Symbol','symbol',p?.symbol||'','text','maxlength="32"')}${field('ISIN (optional)','isin',p?.isin||'','text','maxlength="20"')}</div><div id="exchangeField"><div class="field-row">${field('Handelsplatz (z. B. Xetra)','exchange',p?.exchange||'','text','maxlength="60"')}${field('Börsen-MIC (optional, z. B. XETR)','mic',p?.mic||'','text','maxlength="8"')}</div></div>
-<div id="marketIdentifiers"><details class="advanced-apis"><summary>Externe Börsenkürzel (optional)</summary><p class="small-help">Nur den Ticker derselben ISIN, Handelswährung und Börsennotierung verwenden. Ein falsches Kürzel kann falsche Kurse liefern.</p><div class="field-row">${field('EODHD (z. B. VWCE.XETRA)','eodhdSymbol',p?.eodhdSymbol||'','text','maxlength="45"')}${field('FMP (z. B. VWCE.DE)','fmpSymbol',p?.fmpSymbol||'','text','maxlength="45"')}</div></details></div>
+<div id="marketIdentifiers"><details class="advanced-apis"><summary>Externe Börsenkürzel (optional)</summary><p class="small-help">Nur den Ticker derselben ISIN, Handelswährung und Börsennotierung verwenden. Ein falsches Kürzel kann falsche Kurse liefern.</p><div class="field-row">${field('EODHD (z. B. VWCE.XETRA)','eodhdSymbol',p?.eodhdSymbol||'','text','maxlength="45"')}</div></details></div>
 <div class="field-row three">${field('Stückzahl / Bestand','quantity',p?.quantityExact??p?.quantity??0,'text',p?.managementSource==='transactions'?'readonly aria-label="Über Buchungen verwalteter Bestand"':'inputmode="decimal" required')}${field('Kurs pro Stück','price',p?.price??0,'number','step="any" min="0" required')}<label class="field"><span>Kurswährung</span><select name="currency" id="positionCurrency">${options(['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].map(x=>[x,x]),curr)}</select></label></div>
 <div id="fxWrap">${field('EUR je Einheit Kurswährung (z. B. USD → EUR)','fxRate',p?.fxRate??1,'number','step="any" min="0.00000001"')}</div>
 <div class="dialog-group" id="coinGroup"><strong>CoinGecko-Zuordnung (für automatische Kryptokurse)</strong>${field('CoinGecko-ID','coinId',coin,'text','placeholder="z. B. bitcoin, ethereum, solana"')}<div class="inline-actions"><label class="field"><span>Coin suchen</span><input type="search" id="coinQuery" placeholder="Name oder Symbol"></label><button type="button" class="btn outline" id="coinCatalogLoad">Alle Coins laden</button></div><div class="coin-results hidden" id="coinResults"></div></div>
@@ -1076,7 +1076,7 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
    quoteAsOf:!listingChanged&&p&&String(v.price)===String(p.price)?p.quoteAsOf:null,
    quoteFetchedAt:!listingChanged&&p&&String(v.price)===String(p.price)?p.quoteFetchedAt:null,
    quoteQuality:!listingChanged&&p&&String(v.price)===String(p.price)?p.quoteQuality:null,
-   fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
+   fmpSymbol:p?.fmpSymbol||'',fxRateExact:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateExact:undefined,
    fxSource:p&&String(v.fxRate)===String(p.fxRate)?p.fxSource:null,
    fxRateDate:p&&String(v.fxRate)===String(p.fxRate)?p.fxRateDate:null,
    fxUpdatedAt:p&&String(v.fxRate)===String(p.fxRate)?p.fxUpdatedAt:null},model);if(p&&model.priceHistories?.[p.id]&&(pos.symbol!==p.symbol||pos.isin!==p.isin||pos.currency!==p.currency||pos.kind!==p.kind||pos.exchange!==p.exchange||pos.mic!==p.mic))throw Error('Für diese Position ist ein CSV-Kursverlauf gespeichert. Bitte den Kursverlauf vor Änderung von Symbol, ISIN, Börse oder Währung entfernen.');validateEconomicPosition(pos,{positions:p?model.positions.map(a=>a.id===p.id?pos:a):[...model.positions,pos]});if(p)model.positions=model.positions.map(a=>a.id===p.id?pos:a);else model.positions.push(pos);model.settings.lastAccountId=pos.accountId;snapshot(model);await save();notify('Position gespeichert.');});polishPositionEditorLayout(p);['positionKind','positionCurrency','walletEnabled','walletChain'].forEach(id=>$(id).addEventListener('change',()=>{if(id==='positionKind')refreshPositionAccounts();refreshPosForm();}));$('positionProvider').dataset.selectedProviderId=$('positionProvider').value;
@@ -1093,7 +1093,7 @@ function openPosition(p){++lookupSequence;securityCache.clear();if(!model.provid
  refreshPositionAccounts();refreshPosForm();
  ['defiRole','defiValuation','defiRepresented'].forEach(id=>$(id).addEventListener('change',syncEconomicPositionForm));
  syncEconomicPositionForm();
- $('coinQuery').addEventListener('input',showCoinResults);$('coinCatalogLoad').addEventListener('click',loadCoins);$('securitySearch').addEventListener('click',lookupSecurity);$('securityQuery').addEventListener('input',()=>{clearTimeout(securityDebounce);const q=$('securityQuery').value.trim();if(q.length>=3&&(model.settings.eodhdKey||model.settings.fmpKey||model.settings.twelveKey))securityDebounce=setTimeout(lookupSecurity,650);});$('securityQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupSecurity();}});if(p)$('deletePosition').addEventListener('click',()=>confirmDeletePosition(p.id,{fromDialog:true}));}
+ $('coinQuery').addEventListener('input',showCoinResults);$('coinCatalogLoad').addEventListener('click',loadCoins);$('securitySearch').addEventListener('click',lookupSecurity);$('securityQuery').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();lookupSecurity();}});if(p)$('deletePosition').addEventListener('click',()=>confirmDeletePosition(p.id,{fromDialog:true}));}
 function showCoinResults(){const area=$('coinResults');const term=$('coinQuery').value;const results=searchCatalog(catalog,term);area.classList.remove('hidden');area.innerHTML=results.length?results.map(c=>`<button class="result-item" data-coin="${esc(c.id)}" data-symbol="${esc(c.symbol)}" data-name="${esc(c.name)}" type="button"><span><strong>${esc(c.symbol)}</strong> · ${esc(c.name)}</span><small>${esc(c.id)}</small></button>`).join(''):empty('Kein Treffer. CoinGecko-ID kann auch manuell eingetragen werden.');area.querySelectorAll('[data-coin]').forEach(b=>b.addEventListener('click',()=>{const form=$('editorForm');form.elements.coinId.value=b.dataset.coin;if(!form.elements.name.value)form.elements.name.value=b.dataset.name;form.elements.symbol.value=b.dataset.symbol;form.elements.currency.value='EUR';if(editor)editor.dirty=true;refreshPosForm();area.classList.add('hidden');}));}
 async function loadCoins(){const button=$('coinCatalogLoad');button.disabled=true;button.textContent='Lade Katalog …';try{catalog=await coinCatalog(model.settings.coinGeckoKey);fullCatalog=true;notify(`${catalog.length} Kryptowährungen verfügbar.`);showCoinResults();}catch(e){notify(`Katalog nicht erreichbar: ${e.message}`,true);}finally{button.disabled=false;button.textContent=fullCatalog?'Katalog aktualisieren':'Alle Coins laden';}}
 const securityCache=new Map();let lookupSequence=0,securityDebounce=null;
@@ -1103,7 +1103,7 @@ async function lookupSecurity(){
  area.classList.remove('hidden');area.innerHTML=empty('Suche läuft …');
  try{
   // Cache only per current editor opening, never store secret keys or query responses in backups.
-  const cacheKey=term.toUpperCase()+'|'+['eodhdKey','fmpKey','twelveKey'].map(k=>Boolean(model.settings[k])).join('-');
+  const cacheKey=term.toUpperCase()+'|'+['alphaVantageKey'].map(k=>Boolean(model.settings[k])).join('-');
   let lookup=securityCache.get(cacheKey);
   if(!lookup){
    lookup=await discoverSecurityListings(term,model.settings);
@@ -1137,7 +1137,7 @@ async function lookupSecurity(){
    f.symbol.value=entry.symbol;f.name.value=entry.name;
    if(entry.isin)f.isin.value=entry.isin;
    f.exchange.value=entry.exchange;f.mic.value=entry.mic;
-   f.eodhdSymbol.value=entry.eodhdSymbol;f.fmpSymbol.value=entry.fmpSymbol;
+   f.eodhdSymbol.value=entry.eodhdSymbol;
    if(entry.currency!==f.currency.value){
     if(Number(f.price.value)>0)return notify('Bitte Kurswährung und aktuellen Kurs zuerst manuell abstimmen.',true);
     f.currency.value=entry.currency;
@@ -1991,7 +1991,7 @@ async function refreshAll(){
    }
    if(quotes.partialFailures?.length)errors.push('CoinGecko-Teilabruf: '+quotes.partialFailures[0]);
   }
-  if(securities.length&&(model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
+  if(securities.length&&(model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))){
     for(const p of securities){
      try{
       const q=await fetchSecurityQuote(p,model.settings);
@@ -2063,7 +2063,7 @@ function fullBackupPayload(data=JSON.parse(backup(model))){
 }
 function decideImportedConfiguration(config){
  if(!config)return null;
- if(!confirm('Diese verschlüsselte Sicherung enthält auch Einstellungen und möglicherweise API-Schlüssel. Sollen diese Einstellungen und Schlüssel auf diesem Gerät wiederhergestellt werden? Vorhandene Einstellungen werden ersetzt.'))return null;
+ if(!confirm('Diese verschlüsselte Sicherung enthält auch Einstellungen und möglicherweise API-Schlüssel. Sollen diese Einstellungen und Schlüssel auf diesem Gerät wiederhergestellt werden? Vorhandene Einstellungen werden ersetzt. Entfernte FMP-, Twelve-Data- und direkte EODHD-Schlüssel werden nicht wiederhergestellt.'))return null;
  return config;
 }
 function applyImportedDriveConfiguration(configuration){
@@ -2392,7 +2392,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
 });
-  const apiCredentialFields=['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
+  const apiCredentialFields=['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken'];
 $('clearApiKeys').addEventListener('click',async ()=>{
  if(!confirm('Alle gespeicherten API-Schlüssel und den privaten Solana-RPC-Zugang auf diesem Gerät entfernen? Portfolio und Konten bleiben erhalten.'))return;
  try{
@@ -2477,7 +2477,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    throw Error('Der Worker-Zugriffsschlüssel muss 24 bis 128 Zeichen aus Buchstaben, Zahlen, _ oder - enthalten.');
   const changes={publicInstrumentEndpoint,eodhdWorkerEndpoint,eodhdWorkerAccessToken,
    securitySource:String(f.get('securitySource')||'auto')};
-  for(const key of ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
+  for(const key of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey'])
    if(f.has(key))changes[key]=String(f.get(key)||'').trim();
   Object.assign(model.settings,changes);
   await save();$('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);notify('Datenquellen und Zugänge lokal gespeichert.');
@@ -2506,7 +2506,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    }finally{button.disabled=false;}
   });
   $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',async e=>{model.settings.autoRefresh=e.target.checked;await save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
-  for(const k of ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
+  for(const k of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
@@ -2629,7 +2629,7 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
-  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||model.settings.twelveKey||model.settings.eodhdKey||model.settings.fmpKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
+  const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
 }
 

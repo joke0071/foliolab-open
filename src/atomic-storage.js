@@ -1,3 +1,4 @@
+import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {backup, safeImport, STORE_KEY,defaultSettings} from './model.js';
 
 // Transactional canonical portfolio storage; legacy staging remains explicit.
@@ -41,7 +42,7 @@ function portableSettings(settings) {
    throw Error('Ungültige Einstellung: '+key);
   values[key]=value;
  }
- return values;
+ return withoutRetiredSettings(values);
 }
 
 function portablePortfolio(raw) {
@@ -190,5 +191,26 @@ export function restoreDamagedRecord(db,{expected,raw,settings}){
   };
   tx.oncomplete=()=>resolve(record);
   tx.onabort=()=>reject(failure||tx.error||Error('Wiederherstellung abgebrochen.'));
+ });
+}
+
+/** Atomic credential-only retirement. A revision bump invalidates pre-update tabs.
+ * Never reserialize valid financial bytes unless their settings contain old keys. */
+export function retirePortfolioCredentials(db,expectedRevision){
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction(STORE,'readwrite'),store=tx.objectStore(STORE),request=store.get(KEY);let result,failure;
+  request.onsuccess=()=>{try{
+   const current=request.result;assertRecord(current);
+   if(!current||current.revision!==expectedRevision)throw Error('Datenstand in einem anderen Tab geändert. Bitte neu laden.');
+   const data=current.raw===null?null:JSON.parse(current.raw);
+   const prefsChanged=retiredSettingsPresent(current.settings),rawChanged=retiredSettingsPresent(data?.settings);
+   if(!prefsChanged&&!rawChanged){result=current;return;}
+   if(current.revision===Number.MAX_SAFE_INTEGER)throw Error('Speicherrevision kann nicht weiter erhöht werden.');
+   result={...current,revision:current.revision+1,updatedAt:new Date().toISOString(),
+    ...(prefsChanged?{settings:withoutRetiredSettings(current.settings)}:{}),
+    ...(rawChanged?{raw:JSON.stringify({...data,settings:withoutRetiredSettings(data.settings)})}:{})};
+   store.put(result,KEY);
+  }catch(error){failure=error;tx.abort();}};
+  tx.oncomplete=()=>resolve(result);tx.onabort=()=>reject(failure||tx.error||Error('Zugangsbereinigung abgebrochen.'));tx.onerror=()=>{};
  });
 }

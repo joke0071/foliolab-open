@@ -11,7 +11,7 @@ try{
  await page.locator('#editorForm [name="name"]').fill('Audit Depot');
  await page.locator('#saveDialog').click();await page.waitForFunction(()=>!document.getElementById('saveDialog').disabled);
  await page.locator('#apiSettings').evaluate(el=>el.closest('details').open=true);
- await page.locator('[name="fmpKey"]').fill('SYNTHETIC_SECRET_FOR_TEST');
+ await page.locator('[name="marketstackKey"]').fill('SYNTHETIC_SECRET_FOR_TEST');
  await page.locator('#apiSettings button[type="submit"]').click();
  // The storage controller saves under an asynchronous Web Lock.
  // A click completion does not mean credentials are durably written.
@@ -23,7 +23,7 @@ try{
   return JSON.parse(localStorage.getItem('foliolab-open-v1'));
  });
  assert.equal(before.providers.length,1);
- assert.equal(before.settings.fmpKey,'SYNTHETIC_SECRET_FOR_TEST');
+ assert.equal(before.settings.marketstackKey,'SYNTHETIC_SECRET_FOR_TEST');
  const removeKeysHelp=page.locator('#marketSettings > .more-panel-help');
  assert.equal(await removeKeysHelp.evaluate(el=>el.open),false,'Destructive key removal is collapsed by default');
  await removeKeysHelp.evaluate(el=>el.open=true);
@@ -36,11 +36,11 @@ try{
   unrelated:localStorage.getItem('other-app-settings')
  }));
  assert.equal(after.data.providers.length,1,'Credential removal must preserve portfolio');
- assert.equal(after.data.settings.fmpKey,'','API key must be removed from storage');
+ assert.equal(after.data.settings.marketstackKey,'','API key must be removed from storage');
  assert.equal(after.old1,null);
  assert.equal(after.old2,null);
  assert.equal(after.unrelated,'untouched');
- assert.equal(await page.locator('[name="fmpKey"]').inputValue(),'','Password input must also be cleared');
+ assert.equal(await page.locator('[name="marketstackKey"]').inputValue(),'','Password input must also be cleared');
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.equal(await page.locator('#providerSettings').innerText().then(s=>s.includes('Audit Depot')),true);

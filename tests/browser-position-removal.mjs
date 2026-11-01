@@ -96,7 +96,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   }
   await button('preview-removal').click();
   const downloadPromise=page.waitForEvent('download');await page.locator('#removalBackup').click();const dl=await downloadPromise;
-  const backup=JSON.parse(readFileSync(await dl.path(),'utf8'));assert.equal(backup.positions.length,401);assert.equal(backup.settings.eodhdKey,'');
+  const backup=JSON.parse(readFileSync(await dl.path(),'utf8'));assert.equal(backup.positions.length,401);assert.equal(backup.settings.alphaVantageKey,'');
   // Exercise the real readwrite transaction: quota before put AND abort after put.
   await page.evaluate(()=>{window.originalRemovalPut=IDBObjectStore.prototype.put;});
   await page.locator('[name=confirmRemoval]').check();
