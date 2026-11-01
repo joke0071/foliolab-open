@@ -1,3 +1,13 @@
+## v260 MERGED / Main- und Produktionsabnahme ausstehend · 01.11.2026
+
+PR #272 nach vollständiger finaler CI kontrolliert squash-integriert. **Main `ca99237f8cbe40490d360dd0bd57f9df76dcf584`**, Tree `36f29d0cfdece25f3d02809f4ec6bd95da83038a` exakt gleich geprüftem HEAD `a4be2885` und synthetischem Merge `94262fed`. SW `foliolab-open-v260`. Finale Pflicht-CI **41319486511 SUCCESS**, Wallet **41319486556 SUCCESS**: 1.071 Tests, 0 Fehler/Skips, Syntax, Chromium und sämtliche Firefox-/WebKit-Gruppen. Neue Alpha-Abstands- und ETH-Cursor-/Dialogtests in allen drei Engines tatsächlich PASS; Abschlusslogs gelesen, Artefaktdigests gegen Uploadlogs bestätigt. Keine Review-/Inlineeinwände, Main/HEAD unmittelbar vor Merge unverändert. Keine CI abgebrochen, keine Gates reduziert.
+
+**Main-/Produktionslauf 41320750171 gestartet. Noch kein DEPLOYED oder LIVE_ACCEPTED für v260.** Kanonische Finanz-/Speicher-/Offline-/Backup-/PWA-Verträge bleiben Pflicht. Tatsächliche Auslieferung und sparsame echte Vier-ETF-Appkette nach Deployment prüfen. V259 hat vollständige automatische Produktionsgates PASS, seine reale Vier-ETF-Appkette bleibt wegen Anbieterlimit PARTIAL; vollständig bestätigte Rückfallbasis bleibt v258. Dauerhaft `docs/release-evidence/v260-pr272-candidate.json` und v259-Nachweis.
+
+Owner Work/root b1399897b0ba; alte Sitzung hat Verantwortung abgegeben. Kein weiterer Produktkandidat während dieses Releaseabschlusses. Nächste P1A-Etappe nach erfolgreicher Abnahme: Marketstack (echter 4/4-EUR/XETR/CORS-Beleg vorhanden) integrieren, danach ungenutzte API-Schlüssel vollständig über Konfiguration/IDB/Migration/Save/neue Backups/Legacy-Restore bereinigen; benötigte Suche/FX zuvor ablösen. Anschließend #257 Long-Press und übrige ACTIVE-Masterpakete. Kein historischer Checkpointbranch-Merge.
+
+---
+
 ## v260 / PR #272 — finale CI läuft · 01.11.2026
 
 Einziger aktiver Integrationsstrang `fix/eth-history-cursor-268`, Owner Work/root `b1399897b0ba`. Veröffentlichter HEAD **`a4be28851ad7c85bfc096823d20d0a205b5d7b7f`**, Tree **`36f29d0cfdece25f3d02809f4ec6bd95da83038a`** exakt lokal geprüft. Parent ist der erhaltene #268-WIP `ca1a6cb`, keine fremden Änderungen überschrieben. Vorlauf `41318483990` endete regulär: Cross-Engine-Gruppen erfolgreich, test wegen fehlender SW-Revision fehlgeschlagen; vollständiger Fehlerbeleg erhalten. Keine Action abgebrochen. Erst danach denselben Branch per expected_sha vorgezogen.
