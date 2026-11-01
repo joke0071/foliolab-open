@@ -38,6 +38,12 @@ export function checkpointHistory(model,metadata){
  state.pending=state.pending.filter(p=>p.id!==metadata.id);state.pending.push(metadata);
  return {...model,walletHistory:validateWalletHistory(state)};
 }
+/** Drop only temporary resume metadata; retain every accepted session/event. */
+export function clearHistoryCheckpoint(model,id){
+ const state=validateWalletHistory(model.walletHistory??emptyWalletHistory());
+ state.pending=state.pending.filter(p=>p.id!==label(id));
+ return {...model,walletHistory:validateWalletHistory(state)};
+}
 /** Adapter results are projected; accepted events never retain raw provider pages/credentials. */
 export function historyPreview(result,{id,chain,walletKey,acceptedAt=new Date().toISOString()}){
  if(!result.replay)throw Error('Keine rekonstruierte Vorschau vorhanden.');
