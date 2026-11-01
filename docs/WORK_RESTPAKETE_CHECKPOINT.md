@@ -1,3 +1,13 @@
+## v257 / #266 – PR #269 MERGED, Main-Abnahme ausstehend · 01.11.2026
+
+**Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`**, [PR #269](https://github.com/joke0071/foliolab-open/pull/269) kontrolliert squash-integriert. Letzter Base-Check unmittelbar vorher Main512d935 unverändert, PR-HEAD4fcede5 unverändert, mergeable, keine Review-/Inline-Einwände. Final geprüfter Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, SW257. Historischen Checkpoint-Branch nicht gemergt.
+
+**PR-Pflicht-CI 41303334450 SUCCESS**, Wallet41303334485 und Info41303334489 SUCCESS. 1052 Tests/0 Fehler/Skips, Syntax, vollständiges Chromium/alle drei Firefox-/WebKit-Gruppen/FAST-Kanarien erfolgreich. Neuer Vier-ETF-Schnitt ausdrücklich Chromium/Firefox/WebKit PASS: direkte gemockte Anbieterabfrage, frische echte IDB, exakte Mengen/datiertes Preis-Persistieren, alte Keybewahrung durch echtes Formular, Diagnose unveränderte Bytes/Revision, Retention bei404, sieben Breiten/Axe, kein EODHD-/Worker-Aufruf. Bestehende echte SW/PWA/Offline-/Update- und Finanz-/Recovery-/Backup-/CAS-Gates unverändert und PASS; 16-Schritt-FX-/Teilfüllungskette in allen drei Engines PASS. Buchungsfokus nach native-close mit unveränderter exakter Zielassertion bestätigt. Synthetischen C5-Verbindungs-Screenshot tatsächlich gesichtet.
+
+**Noch kein DEPLOYED/LIVE_ACCEPTED für v257.** Main-/Pages-/tatsächliche Produktionsabnahme des exakten Releases vollständig abwarten. Letzte LIVE_ACCEPTED Rückfallbasis bleibt SW252/Main512d935. #266 insgesamt PARTIAL bis echte autorisierte direkte Vier-ETF-Kurs-/Origin-CORS-/Tarifabnahme; kein neuer Anbieterkey in dieser Umgebung, kein Alpha-Vantage-Adapter ohne Evidenz. Kein Kurs oder FX erfunden. Next: Main-CI/Deployment/Produktion verfolgen, Evidence sichern; danach #267+#264 seriell, übrige ACTIVE-Projekte unverändert. Owner /root d72ece214a83.
+
+---
+
 ## #266 / PR #269 – v257, abschließender Kandidat / CI_PENDING · 01.11.2026
 
 HEAD `4fcede5735870522f19418cc9659e17ecdf69f16`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4` lokal/remote exakt; App/SW257. Alle früheren SW253–256 nur unveröffentlichte Kandidaten. Einziger Strang/Owner unverändert Work /root d72ece214a83. Main512d935 / ProduktionSW252 unverändert. **1052 vollständige lokale Tests/0 Fehler/0 Skips**, Syntax/Diffcheck PASS nach letztem Produktdelta. Aktuelle Pflicht-CI **41303334450 IN_PROGRESS**, Wallet **41303334485 SUCCESS**, Info **41303334489 SUCCESS**, FAST-Kanarien SUCCESS. Vollständiges Chromium und drei Firefox-/WebKit-Gruppen noch nicht abgeschlossen.
