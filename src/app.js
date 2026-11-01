@@ -1,4 +1,4 @@
-import {assertLocalBackupFileSize,assertDriveBackupTextSize} from './backup-limits.js';
+import {assertLocalBackupFileSize,assertDriveBackupTextSize,localJSONBackupFile} from './backup-limits.js';
 import {installHeaderStatus} from './header-status.js';
 import {blockedReasonsMarkup} from './blocked-reasons-ui.js';
 import {looksLikeFlatexNativeCSV,readFlatexNativeBytes} from './flatex-native.js';
@@ -295,7 +295,7 @@ function openReferenceRemoval(ids=[...selectedReferenceIds]){
   try{
    assertBookingWritable();await portfolioStore.assertCurrent();if(!active())return;assertBookingWritable();
    if(JSON.stringify(model)!==expectedModel)throw Error('Vorschau veraltet. Bitte erneut öffnen.');
-   const href=URL.createObjectURL(new Blob([backup(model,{includeHistory:true})],{type:'application/json'})),link=document.createElement('a');link.href=href;link.download='foliolab-vor-referenzloeschung.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),1000);
+   const href=URL.createObjectURL(localJSONBackupFile(backup(model,{includeHistory:true}))),link=document.createElement('a');link.href=href;link.download='foliolab-vor-referenzloeschung.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),1000);
    backupBaseline=expectedModel;$('referenceRemovalBackupStatus').textContent='Backup dieser Vorschau erstellt.';
   }catch(error){if(active())$('referenceRemovalBackupStatus').textContent=error.message;}
  });
@@ -583,9 +583,11 @@ function openPositionRemoval(requestedIds=selectedPositionIds){
  $('saveDialog').textContent=allowed.length+' Positionen endgültig löschen';
  $('saveDialog').disabled=!allowed.length;$('saveDialog').classList.remove('primary');$('saveDialog').classList.add('outline','selection-danger');
  $('removalBackup').addEventListener('click',()=>{
+  try{
   if(JSON.stringify(model)!==expectedModel)return notify('Vorschau veraltet. Bitte erneut öffnen.',true);
-  const file=new Blob([backup(model,{includeHistory:true})],{type:'application/json'}),href=URL.createObjectURL(file),link=document.createElement('a');
+  const file=localJSONBackupFile(backup(model,{includeHistory:true})),href=URL.createObjectURL(file),link=document.createElement('a');
   link.href=href;link.download='foliolab-vor-positionsloeschung.json';link.click();setTimeout(()=>URL.revokeObjectURL(href),1000);
+  }catch(error){notify(String(error.message||error),true);}
  });
  $('cancelDialog').focus({preventScroll:true});
 }
@@ -1578,12 +1580,13 @@ function openCSVImport(){
      if(saving||busy||loadFailure||otherTabChangedPortfolio||flatexBindingStale)throw Error('Datenstand nicht aktuell.');
      await portfolioStore.assertCurrent();if(!current())return;
      if(saving||busy||loadFailure||otherTabChangedPortfolio||result.preview.baseline!==JSON.stringify(model))throw Error('Datenstand geändert.');
-     const href=URL.createObjectURL(new Blob([backup(model,{includeHistory:true})],{type:'application/json'})),link=document.createElement('a');
+     const href=URL.createObjectURL(localJSONBackupFile(backup(model,{includeHistory:true}))),link=document.createElement('a');
      link.href=href;link.download='FolioLab-Backup-vor-Flatex-'+new Date().toISOString().slice(0,10)+'.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),500);
      flatexNativeBackupBaseline=result.preview.baseline;
-    }catch{
+    }catch(error){
      if(!current())return;
      clearNativeApproval();flatexSimulation=null;flatexBindings={};flatexBindingStale=true;
+     notify(String(error.message||error),true);
     }
     if(generation!==selectionGeneration||action!==flatexBindingAction||editor!==importEditor||!$('editDialog').open)return;
     flatexSimulationBusy=false;renderFlatexNative();$('flatexNativeSimulation').open=true;($('flatexNativeAccept')||$('flatexNativeSimulation')).focus();
@@ -1738,13 +1741,16 @@ function openCSVImport(){
       '<div id="csvBrokerReconcile" role="status"></div>'+
       '<p class="small-help">Wertpapiere werden nur innerhalb des ausgewählten Depots über ihre ISIN zugeordnet. Andere Broker und Depots bleiben geschützt.</p>';
     $('csvBackupNow').addEventListener('click',()=>{
-     const json=backup(model),blob=new Blob([json],{type:'application/json'});
+     brokerBackupDownloaded=false;
+     try{
+     const blob=localJSONBackupFile(backup(model));
      const href=URL.createObjectURL(blob),a=document.createElement('a');
      a.href=href;a.download='FolioLab-Backup-vor-Flatex-'+new Date().toISOString().slice(0,10)+'.json';
      document.body.append(a);a.click();a.remove();
      setTimeout(()=>URL.revokeObjectURL(href),500);
      brokerBackupDownloaded=true;
      $('csvBackupStatus').textContent='Backup-Download gestartet. Die Datei lokal aufbewahren.';
+     }catch(error){$('csvBackupStatus').textContent=String(error.message||error);notify(String(error.message||error),true);}
      review();
     });
     $('csvBrokerAccount').addEventListener('change',()=>{positionOverrides={};backfillRequested=false;review();});
@@ -2068,7 +2074,7 @@ function applyImportedDriveConfiguration(configuration){
  }));
  window.FolioDriveBackup?.reloadRestoredConfiguration?.();
 }
-function downloadBackup(){const file=new Blob([backup(model)],{type:'application/json'});const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Backup ohne API-Schlüssel erstellt.');}
+function downloadBackup(){const file=localJSONBackupFile(backup(model));const a=document.createElement('a');const url=URL.createObjectURL(file);a.href=url;a.download=`foliolab-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);backupDone();notify('Backup ohne API-Schlüssel erstellt.');}
 async function exportEncryptedFile(){
  const json=await encryptWithBackupPassword(JSON.stringify(fullBackupPayload()));
  const url=URL.createObjectURL(new Blob([json],{type:'application/json'}));
@@ -2224,7 +2230,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  document.addEventListener('click',e=>{const popup=$('historyCalendarDisclosure');if(popup.open&&!e.composedPath().includes(popup))popup.open=false;});
  document.addEventListener('keydown',e=>{const popup=$('historyCalendarDisclosure');if(e.key==='Escape'&&popup.open){popup.open=false;popup.querySelector('summary')?.focus();}});
 
-  $('exportBackup').addEventListener('click',downloadBackup);$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);
+  $('exportBackup').addEventListener('click',()=>{try{downloadBackup();}catch(error){notify(String(error.message||error),true);}});$('exportEncryptedBackup').addEventListener('click',downloadEncryptedBackup);
   $('backupChangeToggle').addEventListener('click',async()=>{
     backupPasswordEditing=!backupPasswordEditing;
     for(const id of ['backupPassword','backupPasswordConfirm','backupOldPassword'])$(id).value='';
@@ -2425,7 +2431,8 @@ async function downloadMigrationBackup(draft){
  const payload=withConfiguration
   ?await encryptWithBackupPassword(JSON.stringify(createCompleteBackup(data,{settings:draft.settings,drive:readDriveConfig()})))
   :JSON.stringify(data,null,2);
- const url=URL.createObjectURL(new Blob([payload],{type:'application/json'}));
+ const file=withConfiguration?new Blob([payload],{type:'application/json'}):localJSONBackupFile(payload);
+ const url=URL.createObjectURL(file);
  const link=document.createElement('a');link.href=url;
  link.download=`foliolab-migration-${withConfiguration?'verschluesselt-':''}${new Date().toISOString().slice(0,10)}.json`;
  document.body.append(link);
