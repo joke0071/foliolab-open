@@ -1,3 +1,13 @@
+## #256 – aktuelle EMULATED-Baseline gesichert · #254 Klartext-Writergrenze als nächster begrenzter Fix
+
+Main87d4669/v251 bleibt vollständig LIVE_ACCEPTED (PR262/#255ersterKettenschnitt). Bestehenden kontrollierten IDB/SW-Benchmark wiederverwendet, CPU4x/390px, je5frischeBrowserprozesse+Warm-/OfflineReloads. Median3Positionen/0Buchungen: kalt582ms/warm264ms/offline269ms;19Positionen/3000Buchungen:1688/699/639ms;19Positionen/10000Buchungen:3209/1401/1479ms. Navigation10kMedian Positionen243ms/Buchungen549ms/Verlauf549ms/Übersicht566ms/Mehr200ms. Alle kanonischen Daten/Revisionen bytegleich, kontrollierteSWs aktiv. 0/3000 beide verschlüsseltenFormate exakt restored;10k Klartextpayload10.620.249Zeichen/Bytes, beide verschlüsseltenFormate korrekt vorExport abgelehnt. Keine neueGeschwindigkeitsverbesserung behauptet; HauptthreadCPU-Drosselung ist keineAndroidhardwareabnahme. RealeAndroid-/OS-/TalkBack-/Netzwerk-/Leak-/1000Positionsprüfungen offen/EXTERNAL;#256PARTIAL.
+
+**Dauerhaft `docs/perf-evidence/2026-11-01/android03-v251/`**: Rohsamples/normalisierteMetadaten/Summary/10k-Repro und alle3exakten synthetischen Seeds verlustfrei gzip (Hashes in Reports), damit echte zukünftige gepaarteVergleiche möglich sind. ABBA-Label des alten Skripttemplates transparent alsTemplateLabel erhalten, hier keinA/B-Lauf.
+
+**Konkreter zusätzlicher #254Repro:** gültiger vom aktuellenReader akzeptierter kompakter v3Stichtags-/Revisionsfall19.999.830Bytes wird durch unverändertes `backup()`/Klartext-UIWriter zu20.000.170Bytes;derselbeDateireader lehnt diesenExport ab. Revisionsdaten bleibenvalid/erhalten. Nächster einziger Implementierungskandidat: alle regulären Klartext-PortfoliobackupWriter gemeinsam prüfen, nurWhitespace bei Bedarf kompakt serialisieren, weiterhin zu große Dateien vorURL/Download/Backup-Erfolg/Import-Freigabe abweisen. Leser-/Krypto-/Schema-/Finanzverträge unverändert lassen, keineMetadatenkürzung/keineunverschlüsselteFallbackänderung fürverschlüsselteExporte. Unverifizierte Rohdatenrettung separat bytegetreu erhalten. VorBranch/Main/PR/Actions/Checkpoint frisch abgleichen;nochkein neuer PR. OwnerWork/root50f1560a1a9f.
+
+---
+
 ## FIN-E2E01 erster Kettenschnitt – LIVE_ACCEPTED · 01.11.2026
 
 **Aktueller Main `87d4669c217e5a9f7362e50239d3f85f83bcaa3b`**, Tree **`e2f6670913e353bfc7828822470c33b58aac8da0`**, [PR262](https://github.com/joke0071/foliolab-open/pull/262). App/SW **`foliolab-open-v251` unverändert**, ausschließlich Tests/CI/Scope ergänzt. Main nach tatsächlichem Produktionsabschluss frisch unverändert bestätigt; nur historische Drafts157/161 offen. Keine neue Finanzengine, App-/Schema-/Krypto-/CAS-/Löschrechte geändert.

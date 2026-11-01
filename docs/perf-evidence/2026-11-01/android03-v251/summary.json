@@ -1,0 +1,104 @@
+{
+  "issue": 256,
+  "status": "PARTIAL_EMULATED_BASELINE_DONE",
+  "main": "87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+  "cache": "foliolab-open-v251",
+  "cpuRate": 4,
+  "runs": 5,
+  "scenarios": [
+    {
+      "positions": 3,
+      "bookings": 0,
+      "references": 30,
+      "seedSha256": "00177f9ea90b61b443504ddddec9097a6ff0bbfa1f870a4e030254c42c4e355d",
+      "canonicalRawSha256": "66e431dabd316528cb0d1ebf11ed1a3637b7c7d5f3d2fe2791ea8373a4356cae",
+      "coldMedianMs": 582.0999999996275,
+      "warmMedianMs": 263.8999999994412,
+      "offlineMedianMs": 268.5,
+      "navMedianMs": {
+        "positions": 183,
+        "bookings": 116,
+        "history": 118,
+        "dashboard": 132,
+        "more": 134
+      },
+      "backup": {
+        "plainCharacters": 11268,
+        "plainBytes": 11268,
+        "v1CiphertextCharacters": 15048,
+        "v2CiphertextCharacters": 15048,
+        "v1Exact": true,
+        "v2Exact": true
+      },
+      "exactRecordUnchanged": true
+    },
+    {
+      "positions": 19,
+      "bookings": 3000,
+      "references": 1825,
+      "seedSha256": "d214abbea34e1988d2c8949283a8805adcf47ffec85fe48c1bac8fdd9236ab2a",
+      "canonicalRawSha256": "aeb3cf5801da0e42c3580f7cbea53cd4ed75eea8440a567707da01897da4c126",
+      "coldMedianMs": 1688.2999999998137,
+      "warmMedianMs": 698.7000000001863,
+      "offlineMedianMs": 639.3999999994412,
+      "navMedianMs": {
+        "positions": 284,
+        "bookings": 349,
+        "history": 400,
+        "dashboard": 400,
+        "more": 183
+      },
+      "backup": {
+        "plainCharacters": 3481385,
+        "plainBytes": 3481385,
+        "v1CiphertextCharacters": 4641868,
+        "v2CiphertextCharacters": 4641868,
+        "v1Exact": true,
+        "v2Exact": true
+      },
+      "exactRecordUnchanged": true
+    },
+    {
+      "positions": 19,
+      "bookings": 10000,
+      "references": 1825,
+      "seedSha256": "fa7f3cef1792354534475637675b37bbc6a0a7657db5a16ae65991dfd6740fae",
+      "canonicalRawSha256": "9a12e6e600422688cab7b5e293845421306682ade50f7201c801420b614a2570",
+      "coldMedianMs": 3208.7000000001863,
+      "warmMedianMs": 1401.0999999996275,
+      "offlineMedianMs": 1479.1000000005588,
+      "navMedianMs": {
+        "positions": 243,
+        "bookings": 549,
+        "history": 549,
+        "dashboard": 566,
+        "more": 200
+      },
+      "backup": {
+        "plainCharacters": 10620249,
+        "plainBytes": 10620249,
+        "results": [
+          {
+            "format": "v1",
+            "accepted": false,
+            "guardMessage": "Backup ist zu groß für die sichere Wiederherstellung (Altformat: max. 6 Millionen Base64-Zeichen). Es wurde keine neue Sicherung erstellt; vorhandene Daten und Backups bleiben unverändert. Bitte vorhandene Sicherungen behalten und den Umfang prüfen."
+          },
+          {
+            "format": "v2",
+            "accepted": false,
+            "guardMessage": "Backup ist zu groß für die sichere Wiederherstellung (max. 10 Millionen Textzeichen). Es wurde keine neue Sicherung erstellt; vorhandene Daten und Backups bleiben unverändert. Bitte vorhandene Sicherungen behalten und den Umfang prüfen."
+          }
+        ]
+      },
+      "exactRecordUnchanged": true
+    }
+  ],
+  "limitations": [
+    "Current single source variant; no new optimization or before/after speedup claim.",
+    "CPU4 applies page main thread only, viewport390; desktop Chromium is not a physical Android device or installed-PWA launch.",
+    "End timing is validated dashboard label +2frames; browser-process creation excluded.",
+    "No 100/1000-position, physical background-resume, TalkBack, battery-saver, leak trend or financial request-count acceptance claimed.",
+    "10k encrypted backup correctly rejected by both existing reader limits; no limit relaxed."
+  ],
+  "next": "Bounded #254 plaintext writer compatibility fix: current accepted compact19,999,830-byte model serializes to20,000,170-byte plain export exceeding unchanged20MB reader; preserve all semantic JSON and size-check before acknowledgement. #256 hardware remains EXTERNAL."
+}

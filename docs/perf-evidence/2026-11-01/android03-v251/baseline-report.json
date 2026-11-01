@@ -1,0 +1,796 @@
+{
+  "host": {
+    "cpuModel": "AMD EPYC 9V74 80-Core Processor",
+    "cpuCount": 9,
+    "totalMemory": 10451427328
+  },
+  "node": "v24.22.1",
+  "playwright": "1.56.1",
+  "platform": "linux",
+  "arch": "x64",
+  "cache": "foliolab-open-v251",
+  "workerHelperSha256": "4ac3233bd65bb2cd7d3ad26273733c0c3db759cd7edefeac39664fc67c6cf5fb",
+  "scriptSha256": "127af09c8258a220c218799f10dd1a31562a4024165414b95d9748c48e219548",
+  "sha": "87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+  "scope": "synthetic IndexedDB; service-worker-controlled persistent Chromium profiles; fresh-process cold vs same-page warm/offline; CPU4x is not Android hardware or native installed-PWA launch",
+  "runs": 5,
+  "scenarios": [
+    {
+      "positions": 3,
+      "bookings": 0,
+      "journalEntries": 0,
+      "references": 30,
+      "bytes": 9520,
+      "seedSha256": "00177f9ea90b61b443504ddddec9097a6ff0bbfa1f870a4e030254c42c4e355d",
+      "dashboardLabel": "€ 2.010,00",
+      "initialWorker": {
+        "controlled": true,
+        "active": "activated",
+        "controller": "http://127.0.0.1:4173/sw.js",
+        "caches": [
+          "foliolab-open-v251"
+        ]
+      },
+      "backupRoundTrip": {
+        "plainCharacters": 11268,
+        "plainBytes": 11268,
+        "v1CiphertextCharacters": 15048,
+        "v2CiphertextCharacters": 15048,
+        "v1Exact": true,
+        "v2Exact": true
+      },
+      "canonicalRawSha256": "66e431dabd316528cb0d1ebf11ed1a3637b7c7d5f3d2fe2791ea8373a4356cae",
+      "historicalSha256": "311a0147e9fd4285808703197ce54db3d9d8db2b2c1f223cf1088184599ef13d",
+      "totalExactEUR": "2010",
+      "cpuRate": 4,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 644.2000000001863,
+            "longTasks": [
+              {
+                "start": 61.40000000037253,
+                "duration": 84
+              },
+              {
+                "start": 309.6000000005588,
+                "duration": 52
+              },
+              {
+                "start": 402.40000000037253,
+                "duration": 139
+              },
+              {
+                "start": 541.6000000005588,
+                "duration": 59
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 263.8999999994412,
+            "longTasks": [
+              {
+                "start": 145.79999999981374,
+                "duration": 61
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 284.40000000037253,
+            "longTasks": []
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 198,
+            "bookings": 117,
+            "history": 118,
+            "dashboard": 132,
+            "more": 117
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 639.7000000001863,
+            "longTasks": [
+              {
+                "start": 60.700000000186265,
+                "duration": 84
+              },
+              {
+                "start": 300.40000000037253,
+                "duration": 61
+              },
+              {
+                "start": 413.29999999981374,
+                "duration": 141
+              },
+              {
+                "start": 554.4000000003725,
+                "duration": 62
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 231.09999999962747,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 234.5,
+            "longTasks": []
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 224,
+            "bookings": 117,
+            "history": 133,
+            "dashboard": 133,
+            "more": 151
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 582.0999999996275,
+            "longTasks": [
+              {
+                "start": 57.09999999962747,
+                "duration": 99
+              },
+              {
+                "start": 353.09999999962747,
+                "duration": 111
+              },
+              {
+                "start": 464.79999999981374,
+                "duration": 57
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 281,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 268.5,
+            "longTasks": []
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 168,
+            "bookings": 101,
+            "history": 117,
+            "dashboard": 132,
+            "more": 134
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 556.2999999998137,
+            "longTasks": [
+              {
+                "start": 56.59999999962747,
+                "duration": 77
+              },
+              {
+                "start": 251.09999999962747,
+                "duration": 56
+              },
+              {
+                "start": 348.5,
+                "duration": 118
+              },
+              {
+                "start": 466.8999999994412,
+                "duration": 66
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 297.79999999981374,
+            "longTasks": []
+          },
+          "offline": {
+            "interactiveMs": 284.40000000037253,
+            "longTasks": []
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 183,
+            "bookings": 116,
+            "history": 134,
+            "dashboard": 117,
+            "more": 150
+          },
+          "heap": 10000000
+        },
+        {
+          "cold": {
+            "interactiveMs": 549.1999999992549,
+            "longTasks": [
+              {
+                "start": 54.299999999813735,
+                "duration": 78
+              },
+              {
+                "start": 315.19999999925494,
+                "duration": 137
+              },
+              {
+                "start": 452.19999999925494,
+                "duration": 68
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 248.3999999994412,
+            "longTasks": [
+              {
+                "start": 154.5,
+                "duration": 53
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 235.3999999994412,
+            "longTasks": []
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 183,
+            "bookings": 100,
+            "history": 117,
+            "dashboard": 117,
+            "more": 116
+          },
+          "heap": 10000000
+        }
+      ],
+      "exactRecordUnchanged": true,
+      "errors": []
+    },
+    {
+      "positions": 19,
+      "bookings": 3000,
+      "journalEntries": 3000,
+      "references": 1825,
+      "bytes": 3443174,
+      "seedSha256": "d214abbea34e1988d2c8949283a8805adcf47ffec85fe48c1bac8fdd9236ab2a",
+      "dashboardLabel": "€ 14.688,85",
+      "initialWorker": {
+        "controlled": true,
+        "active": "activated",
+        "controller": "http://127.0.0.1:4173/sw.js",
+        "caches": [
+          "foliolab-open-v251"
+        ]
+      },
+      "backupRoundTrip": {
+        "plainCharacters": 3481385,
+        "plainBytes": 3481385,
+        "v1CiphertextCharacters": 4641868,
+        "v2CiphertextCharacters": 4641868,
+        "v1Exact": true,
+        "v2Exact": true
+      },
+      "canonicalRawSha256": "aeb3cf5801da0e42c3580f7cbea53cd4ed75eea8440a567707da01897da4c126",
+      "historicalSha256": "a9610ad591aba7c2e59c3d6b6fb0aca8fa35ab732764cf74858450ce331240fc",
+      "totalExactEUR": "14688.85",
+      "cpuRate": 4,
+      "samples": [
+        {
+          "cold": {
+            "interactiveMs": 1688.2999999998137,
+            "longTasks": [
+              {
+                "start": 61.40000000037253,
+                "duration": 96
+              },
+              {
+                "start": 295.59999999962747,
+                "duration": 57
+              },
+              {
+                "start": 428.20000000018626,
+                "duration": 1117
+              },
+              {
+                "start": 1545.7999999998137,
+                "duration": 110
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 731.9000000003725,
+            "longTasks": [
+              {
+                "start": 224.40000000037253,
+                "duration": 452
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 708,
+            "longTasks": [
+              {
+                "start": 275.70000000018626,
+                "duration": 390
+              }
+            ]
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 297,
+            "bookings": 366,
+            "history": 400,
+            "dashboard": 417,
+            "more": 201
+          },
+          "heap": 42100000
+        },
+        {
+          "cold": {
+            "interactiveMs": 1704,
+            "longTasks": [
+              {
+                "start": 77.20000000018626,
+                "duration": 80
+              },
+              {
+                "start": 445.40000000037253,
+                "duration": 1112
+              },
+              {
+                "start": 1557.5,
+                "duration": 113
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 698.7000000001863,
+            "longTasks": [
+              {
+                "start": 211.1000000005588,
+                "duration": 435
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 619.7000000001863,
+            "longTasks": [
+              {
+                "start": 200,
+                "duration": 359
+              }
+            ]
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 284,
+            "bookings": 349,
+            "history": 400,
+            "dashboard": 417,
+            "more": 183
+          },
+          "heap": 42100000
+        },
+        {
+          "cold": {
+            "interactiveMs": 1662.300000000745,
+            "longTasks": [
+              {
+                "start": 58.10000000055879,
+                "duration": 95
+              },
+              {
+                "start": 317.1000000005588,
+                "duration": 56
+              },
+              {
+                "start": 447.70000000018626,
+                "duration": 1081
+              },
+              {
+                "start": 1529.4000000003725,
+                "duration": 108
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 698.0999999996275,
+            "longTasks": [
+              {
+                "start": 182.09999999962747,
+                "duration": 480
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 681,
+            "longTasks": [
+              {
+                "start": 98.20000000018626,
+                "duration": 51
+              },
+              {
+                "start": 266.79999999981374,
+                "duration": 369
+              }
+            ]
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 290,
+            "bookings": 350,
+            "history": 400,
+            "dashboard": 384,
+            "more": 183
+          },
+          "heap": 42100000
+        },
+        {
+          "cold": {
+            "interactiveMs": 1737,
+            "longTasks": [
+              {
+                "start": 70.3999999994412,
+                "duration": 88
+              },
+              {
+                "start": 320.3999999994412,
+                "duration": 53
+              },
+              {
+                "start": 447.3999999994412,
+                "duration": 1157
+              },
+              {
+                "start": 1605.7000000001863,
+                "duration": 105
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 699.3999999994412,
+            "longTasks": [
+              {
+                "start": 203.3999999994412,
+                "duration": 446
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 639.3999999994412,
+            "longTasks": [
+              {
+                "start": 197.8999999994412,
+                "duration": 397
+              }
+            ]
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 244,
+            "bookings": 299,
+            "history": 384,
+            "dashboard": 400,
+            "more": 183
+          },
+          "heap": 42100000
+        },
+        {
+          "cold": {
+            "interactiveMs": 1573.5,
+            "longTasks": [
+              {
+                "start": 68.5,
+                "duration": 82
+              },
+              {
+                "start": 300,
+                "duration": 51
+              },
+              {
+                "start": 418.6000000005588,
+                "duration": 1022
+              },
+              {
+                "start": 1441,
+                "duration": 98
+              }
+            ]
+          },
+          "warm": {
+            "interactiveMs": 681.6000000005588,
+            "longTasks": [
+              {
+                "start": 207.40000000037253,
+                "duration": 438
+              }
+            ]
+          },
+          "offline": {
+            "interactiveMs": 625.3999999994412,
+            "longTasks": [
+              {
+                "start": 225.5,
+                "duration": 348
+              }
+            ]
+          },
+          "workers": {
+            "cold": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "warm": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            },
+            "offline": {
+              "controlled": true,
+              "active": "activated",
+              "controller": "http://127.0.0.1:4173/sw.js",
+              "caches": [
+                "foliolab-open-v251"
+              ]
+            }
+          },
+          "navigation": {
+            "positions": 260,
+            "bookings": 333,
+            "history": 434,
+            "dashboard": 400,
+            "more": 183
+          },
+          "heap": 42100000
+        }
+      ],
+      "exactRecordUnchanged": true,
+      "errors": []
+    }
+  ],
+  "comparison": "Single source-variant baseline only; no ABBA/A-B or speedup comparison performed.",
+  "limitations": [
+    "CPU4x applies to the page main thread; workers/native I/O are not a physical Android device, installed-PWA launch or constrained memory.",
+    "Startup timer begins at navigation, excludes process-launch overhead and ends after validated dashboard label plus two frames.",
+    "Tab navigation includes Playwright dispatch and two frames; exact source variants and raw samples retained."
+  ],
+  "chromium": "141.0.7390.37",
+  "templateComparisonLabel": "ABBA; exact persisted seed reused across variants; profile preparation excluded from timing",
+  "classification": "EMULATED_NOT_ANDROID_HARDWARE"
+}
