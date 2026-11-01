@@ -1,0 +1,102 @@
+{
+  "version": "v262",
+  "actualProductionApp": false,
+  "candidateOverlay": true,
+  "base": "https://foliolab.unperfekt.at/",
+  "actualOwnKeyProvider": true,
+  "isolatedSyntheticPortfolio": true,
+  "originalUserPortfolioAccessed": false,
+  "proxyBrowserTLSException": true,
+  "regularHTTPSAssetVerificationSeparate": true,
+  "requests": [
+    {
+      "symbol": "VWCE.DE",
+      "path": "/v2/eod"
+    },
+    {
+      "symbol": "XDEM.DE",
+      "path": "/v2/eod"
+    },
+    {
+      "symbol": "XDEQ.DE",
+      "path": "/v2/eod"
+    },
+    {
+      "symbol": "5MVL.DE",
+      "path": "/v2/eod"
+    }
+  ],
+  "positions": [
+    {
+      "symbol": "VWCE",
+      "isin": "IE00BK5BQT80",
+      "currency": "EUR",
+      "mic": "XETR",
+      "quantity": "1",
+      "positive": true,
+      "source": "Marketstack · Xetra EOD",
+      "date": "2026-10-30"
+    },
+    {
+      "symbol": "XDEM",
+      "isin": "IE00BL25JP72",
+      "currency": "EUR",
+      "mic": "XETR",
+      "quantity": "1",
+      "positive": true,
+      "source": "Marketstack · Xetra EOD",
+      "date": "2026-10-30"
+    },
+    {
+      "symbol": "XDEQ",
+      "isin": "IE00BL25JL35",
+      "currency": "EUR",
+      "mic": "XETR",
+      "quantity": "1",
+      "positive": true,
+      "source": "Marketstack · Xetra EOD",
+      "date": "2026-10-30"
+    },
+    {
+      "symbol": "5MVL",
+      "isin": "IE00BG0SKF03",
+      "currency": "EUR",
+      "mic": "XETR",
+      "quantity": "1",
+      "positive": true,
+      "source": "Marketstack · Xetra EOD",
+      "date": "2026-10-30"
+    }
+  ],
+  "journal": 0,
+  "bookings": 0,
+  "externalFlows": 0,
+  "historyCache": true,
+  "histories": [
+    {
+      "symbol": "VWCE",
+      "allowed": false,
+      "gapsExplicit": true
+    },
+    {
+      "symbol": "XDEM",
+      "allowed": false,
+      "gapsExplicit": true
+    },
+    {
+      "symbol": "XDEQ",
+      "allowed": false,
+      "gapsExplicit": true
+    },
+    {
+      "symbol": "5MVL",
+      "allowed": false,
+      "gapsExplicit": true
+    }
+  ],
+  "reloadCache": true,
+  "alphaEye": true,
+  "marketstackEyePreservesValue": true,
+  "physicalAndroid": false,
+  "pass": true
+}
