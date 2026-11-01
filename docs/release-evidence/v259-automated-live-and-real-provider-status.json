@@ -1,0 +1,56 @@
+{
+  "version": "v259",
+  "main": "6c339c0ea502781f155d209b6443a6c02db8182d",
+  "sw": "foliolab-open-v259",
+  "run": 41316381886,
+  "runConclusion": "success",
+  "deployJob": 124880600234,
+  "liveJob": 124880732298,
+  "automatedProductionAcceptance": "PASS",
+  "core": {
+    "groups": 6,
+    "axeScans": 18,
+    "httpsAssetMatches": 124
+  },
+  "unitTests": 1065,
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "newAlphaGate": "synthetic: PASS in all three engines against actual production",
+  "financialRecoveryBackupCASOffline": "existing production suites PASS; logs read",
+  "liveArtifact": {
+    "id": 13088239135,
+    "digest": "sha256:21113a6531e5a01b58a744b3c0de016534a4c011504e2c4a63d5667c3e6ad5b3"
+  },
+  "independentHttps": {
+    "files": [
+      "sw.js",
+      "src/alpha-vantage.js",
+      "src/reference-listings.js",
+      "src/security-sources.js"
+    ],
+    "allByteEqual": true,
+    "regularTLS": true
+  },
+  "actualPrivateProviderAcceptance": {
+    "isolated": true,
+    "originalPortfolioChanged": false,
+    "financialRecordUnchanged": true,
+    "VWCE": "real shipped adapter positive",
+    "XDEM": "provider limit during four-instrument app chain; separate old-session later request positive",
+    "XDEQ": "not reached after limit",
+    "fiveMVL": "not reached after limit",
+    "fourInstrumentAppChain": "PARTIAL",
+    "hotfix": "response-based gap staged in sole PR272 candidate"
+  },
+  "formalStatus": "DEPLOYED / AUTOMATED_LIVE_GATES_PASS / P1A_REAL_APP_ACCEPTANCE_PARTIAL",
+  "limits": [
+    "No complete real four-ETF app acceptance claimed",
+    "No private keys/wallets/source portfolio in evidence",
+    "No independent ZIP CRC verification",
+    "No physical Android/native Safari/OAuth proof",
+    "Private test browser used explicit proxy TLS exception; separate direct HTTPS checks used regular TLS"
+  ]
+}
