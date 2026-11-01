@@ -6,6 +6,45 @@ Umfang: bestehende Engines als deterministische Kette orchestrieren; EUR-Import/
 
 ---
 
+## STOP / Übergabe des abgebenden Chats abgeschlossen · 01.11.2026
+
+**Ausschließlich der alte Work-Chat /root in Sitzung `97b37cee055e` ist gestoppt.** Die Entwicklungs-, Integrations-, QA- und Releaseverantwortung ist vollständig an den neuen Work-Chat übergeben. Dessen neuerer Übernahmeeintrag oben hat Vorrang und bleibt unverändert. **Dieser STOP blockiert nicht den neuen Chat.**
+
+### Kollisionsschutz und bereits erfolgte Übernahme
+
+Der erste reine Dokumentationsversuch des alten Chats wurde mit HTTP 409 wegen zwischenzeitlich geänderter Checkpoint-Blob-SHA abgewiesen. Es wurde nichts überschrieben. Danach frisch gelesen: **neuer aktiver Owner Sitzung `50f1560a1a9f`**, #255 FIN-E2E01 **IN_PROGRESS**, Kandidat `test/fin-e2e01-cash-chain`, Basis v251/Main `7c720dddd5450fd4c2342deae9c7d91427ee01e7`. Dieser neue Strang wird vom alten Chat weder übernommen noch doppelt implementiert. Der STOP-Vermerk wird nur unterhalb des erhaltenen neuen Übernahmeeintrags eingefügt und unter aktueller Datei-SHA gesichert.
+
+### Frisch geprüfter Stand dieses Übergabeabschlusses
+
+- Main unverändert **`7c720dddd5450fd4c2342deae9c7d91427ee01e7`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, SW **`foliolab-open-v251`**. Bestehender Status **v251 LIVE_ACCEPTED**, Main-/Produktionslauf **41251425999 completed / success**. Vorhandene 1044/1044 Tests, Chromium/Firefox/WebKit und tatsächliche Produktionsabnahme mit 123 URL-Byteprüfungen bleiben gültige Nachweise. Jetzt keine neuen Produkt-/Browser-/Lasttests gestartet.
+- Actions-Statusfilter separat geprüft: **0 in_progress, 0 queued** zum Snapshot. Neuere vom neuen Chat ausgelöste Läufe haben Vorrang. Keine Actions abgebrochen, verändert oder erneut gestartet.
+- Offene historische Drafts: **#157** `feature/flh03-d-native-guard`, HEAD `08714cc602110bae479083b3d38fa1adc9be280c`; **#161** `feature/flh04-sync-design`, HEAD `0d980c2f43f28fd06ef9a7403b2144b6099fbc74`. Bestehende Blocker/Abnahmegrenzen in ihren PR-Bodies beachten; keine Integration im Rahmen dieses STOPs.
+- Abgeschlossene eigene Quellbranches noch vorhanden: **#260 MERGED** / `feature/recovery-backup-size-preflight`, HEAD `f630beee13c330511742fbcef01e9037a4554604`; **#261 MERGED** / `feature/recovery-envelope-utf8-size`, HEAD `c674165f378cc6a174ff4e22287584310d3dacb1`. Keine ungemergten eigenen Produktänderungen dort, keine Wiederholung von Merge/Deployment.
+- Seit v251-Abschluss **keine Folgeimplementierung durch den alten Chat**, insbesondere kein eigener Beginn von #255. Der neue Chat hat #255 bereits selbst übernommen.
+
+### Exakter lokaler Zustand des alten Chats
+
+Checkout `/workspace/scratch/97b37cee055e/foliolab-open`, detached HEAD auf oben genanntem Main; getrackter Diff **leer**. Keine ungesicherten Produktänderungen oder eigenen laufenden Implementierungen.
+
+Ungetrackt ausschließlich synthetische QA-Ausgaben in:
+- `artifacts/gates/recovery-limits/`
+- `artifacts/gates/recovery-limits-local-production/`
+- `artifacts/gates/recovery-limits-v251-production/`
+
+Jeder Ordner enthält `chromium-320.png`, `chromium-1440.png`, `firefox-320.png`, `firefox-1440.png`, `report-chromium-firefox.json` (insgesamt 12 PNG + 3 JSON). Lokale Zwischenartefakte, keine ausstehenden Produktänderungen; nicht versehentlich in Produkt-PRs aufnehmen. Relevante Reproskripte, Ergebnisse, kontrollierte Bildhashes und Abnahmegrenzen sind bereits remote unter `docs/release-evidence/v250-*` und `v251-*` gesichert; vollständige CI-/Live-Artefakte über dokumentierte Actions-IDs. Keine Behauptung, dass diese zusätzlichen lokalen PNG selbst im Repo gespeichert seien.
+
+Außerdem ungetrackt: `node_modules` als lokaler Abhängigkeits-Symlink auf `/workspace/scratch/8511ad112518/foliolab-open/node_modules`. Nicht committen; bei fehlender Umgebung im neuen Chat die Workflow-fixierten Testabhängigkeiten neu einrichten. Temporäre produktive Probe-Skripte im Testordner wurden bereits vor diesem STOP entfernt; Repros/Ergebnisse remote gesichert.
+
+### Offene Grenzen / Verantwortung ausschließlich im neuen Chat
+
+#254 bleibt PARTIAL für weitere historische Format-/Reader-/Writer-/alte-Tab-/Versions-/Crash-/Quota-/Recoveryketten. Physisches Android, native Safari, echtes OAuth und TalkBack nicht abgenommen. Lokales WebKit scheiterte hier an fehlenden Hostbibliotheken/Container-UID-Grenzen; die erforderlichen WebKit-Gates in GitHub-CI und Produktion sind für v251 tatsächlich erfolgreich. Kein Hardwarebeleg daraus ableiten.
+
+Der neue Owner führt den bereits übernommenen #255-Strang fort, danach #256 und weitere aktive Masterpakete. FLH05/#174 und FLH-PROJ01/#252 bleiben ACTIVE; alte Budget-/Wochenend-/PARKED-Sperren bleiben SUPERSEDED. Der historische Checkpoint-Branch darf weiterhin **niemals vollständig nach Main gemergt** werden.
+
+**STOP endgültig für diesen alten Chat: nach Sicherung keine weiteren Entwicklungsschritte, Implementierungen, PRs, Merges, Deployments oder Folgepakete. Keine laufende fremde Arbeit anfassen.**
+
+---
+
 ## v251 – LIVE_ACCEPTED · bestätigte aktuelle Produktion / 01.11.2026
 
 **Dieser abgeschlossene Stand übersteuert alle älteren Pending-/MERGED-/DEPLOYED-Zeilen darunter.** Main **`7c720dddd5450fd4c2342deae9c7d91427ee01e7`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, SW **`foliolab-open-v251`**, [PR #261](https://github.com/joke0071/foliolab-open/pull/261). Main zum Abschluss per GitHub frisch bestätigt und unverändert. Kandidat `c674165f378cc6a174ff4e22287584310d3dacb1`/synthetischer Merge `6af05d66042ac63e9b4152a317ef1110ce82a3bd` besitzen exakt denselben geprüften Tree.
