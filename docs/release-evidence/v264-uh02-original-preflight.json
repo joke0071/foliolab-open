@@ -1,6 +1,5 @@
 {
   "candidateBase": "10103d6253ff544b383099c6a631035f67be7025",
-  "runtimeTreeBeforeEvidenceOnlyUpdate": "8aad8cdca3985f56d1132fcd78258b156ec27486",
   "status": "ORIGINAL_PREFLIGHT_PASS_NOT_RELEASE_ACCEPTED",
   "privateOriginalsPublished": false,
   "realNetwork": "blockstream.info",
@@ -44,16 +43,44 @@
     "isolatedScenario": true
   },
   "localSynthetic": {
-    "unitPass": 1082,
+    "unitPass": 1084,
     "unitFail": 0,
     "skips": 0,
     "syntax": true,
     "chromiumSharedImport": true,
     "sevenWidthsAxe": true,
     "quotaRollback": true,
-    "staleCAS": true
+    "staleCAS": true,
+    "actualOfflinePWAProtectedV5Reload": true
   },
   "fullCI": "PENDING",
   "production": "UNCHANGED_v263",
-  "physicalAndroid": false
+  "physicalAndroid": false,
+  "runtimeSourceSHA256": {
+    "src/app.js": "d6aa42d0b7e311d695e3fae509ada220b9a2516b3689da9fc51c1ec0f1782609",
+    "src/model.js": "691fcacda19edec24efef6ce2a50987b7945007a077441f210246e3c526d3403",
+    "src/purchase-evidence.js": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43",
+    "src/unified-bitcoin.js": "c499bffbd4d1db5d426e4b69b94bbd8761a0c176a8c45bf3db9cedd40a7d0717",
+    "src/unified-bitcoin-ui.js": "ab965deb3715fa29b1746702c111e2eaea976956e7fdb5a291e3a6c5050bd55e",
+    "src/wallet-history-state.js": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c",
+    "src/wallet-history-ui.js": "5a99767607752dd257b8fed356fe04d325ef4075b28e2413aa3414575abf2f41",
+    "src/wallet-scan-update.js": "00b7c5beb98cf0cc3c639c9747c60646ffe38e4bcb8cf4ce1b1bb1c8a7203acf",
+    "src/booking-history.js": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93",
+    "src/complete-backup.js": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4",
+    "src/asset-wizard-core.js": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c"
+  },
+  "walletConfigurationBinding": {
+    "queriedConfigDigest": true,
+    "unboundLegacyHistoryCannotPost": true,
+    "sameQuantityDifferentAddressRejected": true,
+    "saveRestoreRebindingRejected": true,
+    "oldReadOnlyHistoryStillReadable": true
+  },
+  "protectedDataVersion": 5,
+  "publishedV263Guard": {
+    "pass": true,
+    "actualPublishedV263Validator": true,
+    "rejectsUnifiedFormatV5": true,
+    "notALegacyGuardReplica": true
+  }
 }

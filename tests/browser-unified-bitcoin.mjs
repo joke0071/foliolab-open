@@ -15,7 +15,7 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await context.route('**/tests/ledger-live-fixture.mjs',async route=>route.fulfill({contentType:'text/javascript',body:await fs.readFile(new URL('./ledger-live-fixture.mjs',import.meta.url),'utf8')}));
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'__uh02-fixture.html');
-  await page.evaluate(async()=>{const {ledgerModel,ledgerEvidence}=await import('/tests/ledger-live-fixture.mjs'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=ledgerEvidence(ledgerModel());delete m.purchaseEvidence;const s=new PortfolioStorage();await s.initialize();await s.save(m);});
+  await page.evaluate(async()=>{const {ledgerModel,ledgerEvidence}=await import('/tests/ledger-live-fixture.mjs'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=ledgerEvidence(ledgerModel());m.settings.autoRefresh=false;delete m.purchaseEvidence;const s=new PortfolioStorage();await s.initialize();await s.save(m);});
   const read=()=>page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{readPortfolioRecord}=await import('/src/atomic-storage.js');const s=new PortfolioStorage(),m=await s.initialize();return {model:m,revision:(await readPortfolioRecord(s.db)).revision};});
   const original=await read();
   await page.goto(base+'?page=bookings');await page.locator('#addBooking').waitFor();
@@ -46,6 +46,14 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
    const put=IDBObjectStore.prototype.put;let quota=false;IDBObjectStore.prototype.put=function(){throw new DOMException('synthetic quota','QuotaExceededError');};try{await a.save(draft);}catch(e){quota=e.name==='QuotaExceededError';}finally{IDBObjectStore.prototype.put=put;}const unchanged=JSON.stringify(await a.reload())===beforeQuota;
    await a.save(draft);let stale=false;try{await b.save(draft);}catch(e){stale=/anderen Tab/.test(e.message);}return {quota,unchanged,stale,count:(await a.reload()).bookings.length};
   });assert.deepEqual(failures,{quota:true,unchanged:true,stale:true,count:1});assert.deepEqual(errors,[]);
-  await context.close();console.log('UH02 '+name+': actual shared CSV entry, single CAS commit, no quantity double effect, reload/reimport, source proof, seven widths/axe, offline, encrypted restore, undo/tombstone, quota rollback and stale CAS PASS');
+  await context.close();
+  const offlineContext=await browser.newContext({viewport:{width:390,height:900},serviceWorkers:'allow'}),offlinePage=await offlineContext.newPage();offlinePage.setDefaultTimeout(20000);
+  await offlinePage.goto(base+'?page=bookings');await offlinePage.evaluate(()=>navigator.serviceWorker.ready.then(()=>true));await offlinePage.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  await offlinePage.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const store=new PortfolioStorage();await store.initialize();await store.save(m);},saved.model);
+  await offlinePage.reload();await offlinePage.locator('#bookingList').filter({hasText:'Bittr'}).waitFor();await offlineContext.setOffline(true);await offlinePage.reload();
+  await offlinePage.locator('#bookingList').filter({hasText:'Bittr'}).waitFor();
+  const offlineState=await offlinePage.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=await new PortfolioStorage().initialize();return {version:m.version,bookings:m.bookings.length,flows:m.externalCashFlows.length,scope:m.walletHistory.sessions[0].walletScopeDigest,ledger:m.purchaseEvidence.bitcoinLedger.length};});
+  assert.deepEqual(offlineState,{version:5,bookings:1,flows:1,scope:saved.model.walletHistory.sessions[0].walletScopeDigest,ledger:1});await offlineContext.close();
+  console.log('UH02 '+name+': actual shared CSV entry, single CAS commit, no quantity double effect, reload/reimport, source proof, seven widths/axe, offline, encrypted restore, undo/tombstone, quota rollback, stale CAS and actual offline PWA reload of protected v5 data PASS');
  }finally{await browser.close();}
 }

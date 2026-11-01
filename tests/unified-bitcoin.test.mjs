@@ -66,3 +66,25 @@ test('UH02 restore rejects missing/changed source, fees, cashflow and orphan eco
   const bad=structuredClone(d);mutate(bad);assert.throws(()=>safeImport(bad));assert.throws(()=>backup(bad));
  }
 });
+
+test('UH02 rejects stale/unbound wallet ownership even with identical position, account and quantity',()=>{
+ const m=model(),i=input(m);
+ for(const mutate of [m=>delete m.walletHistory.sessions[0].walletScopeDigest,m=>m.positions[0].wallet.address='1BitcoinEaterAddressDontSendf59kuE',m=>m.walletHistory.sessions[0].walletScopeDigest='a'.repeat(64)]){
+  const changed=structuredClone(m);mutate(changed);assert.throws(()=>confirm(changed,i),/Walletkonfiguration/);
+ }
+ const committed=confirm(m,i),rebound=structuredClone(committed);rebound.positions[0].wallet.address='1BitcoinEaterAddressDontSendf59kuE';assert.throws(()=>safeImport(rebound),/Walletidentität/);assert.throws(()=>backup(rebound),/Walletidentität/);
+ const bad=structuredClone(m);bad.walletHistory.sessions[0].walletScopeDigest='not-a-digest';assert.throws(()=>safeImport(bad),/Walletbezug/);
+ const normalized=safeImport(JSON.parse(backup(m,{includeHistory:true})));assert.equal(normalized.walletHistory.sessions[0].walletScopeDigest,m.walletHistory.sessions[0].walletScopeDigest);
+});
+
+test('UH02 opts into v5 and cannot be silently downgraded by backup, archive, undo or a later wizard operation',async()=>{
+ const {setArchivePresentation}=await import('../src/booking-history.js'),{buildAssetWizardDraft}=await import('../src/asset-wizard-core.js');
+ const d=confirm(model()),id=d.bookings[0].id;assert.equal(d.version,5);assert.equal(JSON.parse(backup(d)).version,5);
+ for(const version of [3,4,6]){const old={...structuredClone(d),version};if(version===4)old.bookingPresentation={version:1,archivedIds:[id]};assert.throws(()=>safeImport(old));assert.throws(()=>backup(old));assert.throws(()=>createCompleteBackup(old));}
+ assert.throws(()=>safeImport({...ledgerModel(),version:5}));
+ const a=setArchivePresentation(structuredClone(d),{bookingIds:[id]});assert.equal(a.version,5);assert.equal(safeImport(a).version,5);
+ setArchivePresentation(a,{bookingIds:[],referenceIds:[]});assert.equal(a.version,5);assert.equal(a.bookingPresentation,undefined);assert.equal(safeImport(a).version,5);
+ const u=undoUnifiedBitcoin(d,id,{confirmed:true,baseline:awaitDigest(d),at});assert.equal(u.version,5);assert.equal(safeImport(u).version,5);
+ const wizard=buildAssetWizardDraft(d,{kind:'etf',name:'Synthetic new ETF',symbol:'SYN',isin:'IE0000000001',currency:'EUR',quantity:'1',date:'2025-01-02',mode:'opening',currentPrice:'0',providerId:'__new__',providerName:'New synthetic broker',providerType:'broker',accountId:'__new__',accountName:'Depot',accountType:'securities'});
+ assert.equal(wizard.draft.version,5);assert.equal(safeImport(wizard.draft).bookings.filter(b=>b.id===id).length,1);
+});

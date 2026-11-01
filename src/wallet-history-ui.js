@@ -1,3 +1,4 @@
+import {bitcoinHistoryScope} from './wallet-history-state.js';
 import {createUnifiedBitcoinUI} from './unified-bitcoin-ui.js';
 import {walletStreamMatches} from './historical-position-value.js';
 import {createPurchaseEvidenceUI} from './purchase-evidence-ui.js';
@@ -96,7 +97,7 @@ export function createWalletHistoryUI({getModel,commit}){
     if(result.issues?.some(x=>/reorg|tip-changed|conflict/.test(x))&&stored())await commit(invalidateHistory(model(),key,'observed-chain-conflict'));
     show(stored());return;
    }
-   preview=historyPreview(result,{id:key,chain:chain(),walletKey:p.id});cache.delete(key);limit=100;if(await show(preview,true))setStatus('Vorschau bereit. Erst „Historie übernehmen“ speichert diese Daten dauerhaft.');else setStatus('Abgebrochen. Keine neue Historie gespeichert.');
+   preview=historyPreview(result,{id:key,chain:chain(),walletKey:p.id,...(chain()==='btc'?{walletScopeDigest:bitcoinHistoryScope(w)}:{})});cache.delete(key);limit=100;if(await show(preview,true))setStatus('Vorschau bereit. Erst „Historie übernehmen“ speichert diese Daten dauerhaft.');else setStatus('Abgebrochen. Keine neue Historie gespeichert.');
   }catch(e){
    if(chain()==='eth'&&/^(?:invalid-cursor|cursor-scope-mismatch|provider-cursor-format-changed|cursor-provider-changed|tip-changed-restart-required)$/.test(e.message)){
     restartNeeded=true;cache.delete(key);

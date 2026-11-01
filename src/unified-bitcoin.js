@@ -2,12 +2,13 @@
 import {parseCSV} from './csv-import.js';
 import {parseBittrEvidence,validatePurchaseEvidence,emptyPurchaseEvidence,previewPurchaseEvidence,confirmPurchaseEvidence} from './purchase-evidence.js';
 import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV} from './ledger-live.js';
-import {validateHistorySession} from './wallet-history-state.js';
+import {validateHistorySession,bitcoinHistoryScope} from './wallet-history-state.js';
 import {replayWalletHistory} from './wallet-history-core.js';
 import {sourceDigest,bookingOwnership,sourceUnmodified} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {validateJournalEntry,nextJournalSequence,ledgerQuantityAudit} from './transactions.js';
 const PREFIX='uh02:';
+export const hasUnifiedBitcoinState=model=>Boolean(model?.purchaseEvidence?.bitcoinLedger?.length||(model?.journalEntries||[]).some(j=>j.source==='unified-bitcoin'||j.id?.startsWith(PREFIX))||(model?.bookings||[]).some(b=>b.importSource?.sourceId==='unified-bitcoin-v1'||b.id?.startsWith(PREFIX)));
 const key=(p,txid)=>PREFIX+sourceDigest(JSON.stringify(['bitcoin','mainnet',p.id,txid]));
 const digest=value=>sourceDigest(JSON.stringify(value));
 const fingerprint=e=>digest([e.id,e.blockHash,e.blockHeight,e.timestamp,e.quantityBaseUnits,e.status,e.finality,e.type,e.coverage]);
@@ -37,6 +38,7 @@ function scope(model,positionId){
  const candidates=(model.walletHistory?.sessions||[]).filter(s=>s.walletKey===p.id&&s.chain==='btc');
  if(candidates.length!==1)throw Error('Zuerst die Bitcoin-Historie abrufen und übernehmen.');
  const session=validateHistorySession(candidates[0]);
+ if(session.walletScopeDigest!==bitcoinHistoryScope(p.wallet))throw Error('Walletkonfiguration geändert oder alter Historiennachweis ohne Eigentumsbindung. Bitcoin-Historie neu abrufen und übernehmen.');
  if(session.streams.length!==1||session.streams[0].accountId!==p.accountId||session.streams[0].coverage.status!=='verified'||session.events.some(e=>e.accountId!==p.accountId||e.status!=='confirmed'||e.finality!=='confirmed'||e.coverage!=='verified'))throw Error('Vollständig bestätigte, eindeutige Wallet-Historie erforderlich.');
  const replay=replayWalletHistory({events:session.events,streams:session.streams}),balance=replay.balances[0];
  if(balance?.quantityBaseUnits==null||BigInt(balance.quantityBaseUnits)*10n**10n!==units(p.quantityExact??p.quantity))throw Error('Historie und gescannter aktueller Walletbestand stimmen nicht exakt überein. Wallet und Historie erneut prüfen.');
@@ -102,7 +104,7 @@ export function confirmUnifiedBitcoin(model,input,positionId,{baseline,confirmed
    const entry=entryFor(p,g,at,nextJournalSequence(draft));draft.journalEntries.push(entry);
    const fee=g.receipts.reduce((n,r)=>n+units(r.serviceFeeEUR),0n),net=units(g.netBTC),trade=units(g.fiatEUR)-fee;
    const b={id:g.id,journalEntryId:g.id,type:'buy',date:entry.date,positionId:p.id,accountId:p.accountId,positionName:p.name,quantity:Number(g.netBTC),quantityExact:g.netBTC,unitPrice:null,feeEUR:Number(exact(fee)),taxEUR:0,fxRate:1,amountEUR:Number(exact(trade)),amountExactEUR:exact(trade),external:false,costsVerified:false,notes:'Bittr-Kauf; BTC bereits im Walletbestand. Aktuelle Restkostenbasis unbekannt.'};
-   b.importSource={version:1,sourceId:'unified-bitcoin-v1',accountId:p.accountId,externalId:g.id,sourcePayload:JSON.stringify({facts:g.facts,ledgerRefs:g.ledgerRefs}),ownedSnapshot:bookingOwnership(draft,b),fileId:'native-bittr',occurrence:1,ownership:'imported'};
+   b.importSource={version:1,sourceId:'unified-bitcoin-v1',accountId:p.accountId,externalId:g.id,sourcePayload:JSON.stringify({walletScopeDigest:bitcoinHistoryScope(p.wallet),facts:g.facts,ledgerRefs:g.ledgerRefs}),ownedSnapshot:bookingOwnership(draft,b),fileId:'native-bittr',occurrence:1,ownership:'imported'};
    if(b.importSource.sourcePayload.length>4000)throw Error('Kaufgruppe überschreitet das sichere Herkunftslimit.');
    draft.bookings.unshift(b);
    draft.externalCashFlows.push({id:g.id,date:b.date,amountEUR:Number(g.fiatEUR),amountExactEUR:g.fiatEUR});
@@ -112,6 +114,7 @@ export function confirmUnifiedBitcoin(model,input,positionId,{baseline,confirmed
    if(b.importSource.sourcePayload.length>4000)throw Error('Zu viele zusätzliche Ledger-Belege.');
   }
  }
+ if(hasUnifiedBitcoinState(draft))draft.version=5;
  if(JSON.stringify(draft)===JSON.stringify(model))return model;
  validateUnifiedBitcoinEconomics(draft);
  if(!ledgerQuantityAudit(draft).ok)throw Error('Bestandsabgleich fehlgeschlagen.');
@@ -128,7 +131,7 @@ export function undoUnifiedBitcoin(model,id,{confirmed=false,baseline,at=new Dat
  const draft=structuredClone(model);draft.bookings=draft.bookings.filter(x=>x.id!==id);draft.externalCashFlows=draft.externalCashFlows.filter(x=>x.id!==id);
  draft.journalEntries=draft.journalEntries.filter(x=>x.id!==id);
  draft.journalEntries.push(validateJournalEntry({id,type:'uh02-undo',date:at.slice(0,10),recordedAt:at,sequence:nextJournalSequence(draft),source:'unified-bitcoin',status:'removed',postings:[{id:id+':undo',role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}]}));
- if(draft.bookingPresentation){draft.bookingPresentation.archivedIds=draft.bookingPresentation.archivedIds.filter(x=>x!==id);if(draft.bookingPresentation.version===1&&!draft.bookingPresentation.archivedIds.length){delete draft.bookingPresentation;draft.version=3;}}
+ if(draft.bookingPresentation){draft.bookingPresentation.archivedIds=draft.bookingPresentation.archivedIds.filter(x=>x!==id);if(draft.bookingPresentation.version===1&&!draft.bookingPresentation.archivedIds.length){delete draft.bookingPresentation;draft.version=5;}}
  return draft;
 }
 /** Validate the economic/source contract on reload/restore, even when optional chain history is omitted. */
@@ -147,7 +150,7 @@ export function validateUnifiedBitcoinEconomics(model){
   const receiptIds=payload?.facts?.receipts,events=payload?.facts?.events;
   if(!b||j.type!=='buy'||b.type!=='buy'||b.journalEntryId!==j.id||j.status!=='scan-reflected-acquisition'||!sourceUnmodified(model,b)||b.importSource.sourceId!=='unified-bitcoin-v1'||!Array.isArray(receiptIds)||!receiptIds.length||new Set(receiptIds).size!==receiptIds.length||!Array.isArray(events)||!events.length||events.some(e=>typeof e.id!=='string'||!e.id||!/^[a-f0-9]{64}$/.test(e.fingerprint))||new Set(events.map(e=>e.id)).size!==events.length||!Array.isArray(payload.ledgerRefs)||new Set(payload.ledgerRefs).size!==payload.ledgerRefs.length||payload.ledgerRefs.some(id=>!state.bitcoinLedger?.some(r=>r.id===id)))throw Error('Bitcoin-Kaufnachweis oder Importherkunft unvollständig.');
   const receipts=receiptIds.map(id=>state.receipts.find(r=>r.id===id)),p=model.positions.find(p=>p.id===b.positionId);
-  if(receipts.some(r=>!r)||!p?.wallet?.enabled||!['btc','btc-hd'].includes(p.wallet.chain)||receipts.some(r=>r.txid!==receipts[0].txid)||key(p,receipts[0].txid)!==j.id||b.accountId!==p.accountId||b.external!==false||b.costsVerified!==false)throw Error('Bitcoin-Kauf und Walletidentität widersprechen sich.');
+  if(receipts.some(r=>!r)||!p?.wallet?.enabled||!['btc','btc-hd'].includes(p.wallet.chain)||receipts.some(r=>r.txid!==receipts[0].txid)||key(p,receipts[0].txid)!==j.id||b.accountId!==p.accountId||payload.walletScopeDigest!==bitcoinHistoryScope(p.wallet)||b.external!==false||b.costsVerified!==false)throw Error('Bitcoin-Kauf und Walletidentität widersprechen sich.');
   const total=receipts.reduce((n,r)=>n+units(r.fiatEUR),0n),fee=receipts.reduce((n,r)=>n+units(r.serviceFeeEUR),0n),quantity=receipts.reduce((n,r)=>n+units(r.netBTC),0n),expected=entryFor(p,{id:j.id,receipts},j.recordedAt,j.sequence);
   if(JSON.stringify(expected)!==JSON.stringify(j)||units(b.quantityExact)!==quantity||units(b.amountExactEUR)!==total-fee||units(b.feeEUR)!==fee||flows.length!==1||flows[0].date!==b.date||b.date!==j.date||units(flows[0].amountExactEUR)!==total)throw Error('Bitcoin-Kauf, Gebühren und Finanzierung widersprechen sich.');
  }
