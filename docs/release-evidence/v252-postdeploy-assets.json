@@ -1,0 +1,42 @@
+{
+  "main": "28903ff201bf0c942851874dc118f3699e0a5d43",
+  "normalTLSVerification": true,
+  "checkedAt": "2026-11-01T08:55:36.864206+00:00",
+  "assets": [
+    {
+      "path": "sw.js",
+      "match": true,
+      "sha256": "f029d6002f3839d3aa631e06b6cd35038a20724094b360949e57df0c336ad015"
+    },
+    {
+      "path": "index.html",
+      "match": true,
+      "sha256": "e64acf26ff6ff6b860b0e1f372173c037d2ffc88668c6a4bbbb9ca4e40e88e25"
+    },
+    {
+      "path": "src/app.js",
+      "match": true,
+      "sha256": "7685703e580edf28a37dac8b0b56dfde68feda21f7f10653f0cfa0bc286b0b89"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "match": true,
+      "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f"
+    },
+    {
+      "path": "src/transactions.js",
+      "match": true,
+      "sha256": "93b33fa9adc643f8207fcbae072ea7accae7be60bfbeff36f1ee15a995394132"
+    },
+    {
+      "path": "src/atomic-storage.js",
+      "match": true,
+      "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+    },
+    {
+      "path": "src/backup-vault.js",
+      "match": true,
+      "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+    }
+  ]
+}

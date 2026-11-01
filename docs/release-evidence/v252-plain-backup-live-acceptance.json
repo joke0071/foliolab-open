@@ -1,0 +1,193 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "date": "2026-11-01",
+  "production": "https://foliolab.unperfekt.at/",
+  "repository": "joke0071/foliolab-open",
+  "main": "28903ff201bf0c942851874dc118f3699e0a5d43",
+  "tree": "96fa344a84e2c5325f17cc279b32d4558dfe95fa",
+  "serviceWorker": "foliolab-open-v252",
+  "pr": 263,
+  "prHead": "3f24881458e58a1345b424491bb4ad8e5a8840bc",
+  "syntheticMerge": "a24c9cfa7384b152db40aa0df27eacb3d17cc97d",
+  "runs": {
+    "pr": 41288637775,
+    "wallet": 41288637864,
+    "mainAndProduction": 41289946551,
+    "attempt": 1,
+    "conclusion": "success",
+    "deployJob": 124801411339,
+    "liveJob": 124801472928,
+    "retries": 0,
+    "cancelledRuns": 0
+  },
+  "tests": {
+    "total": 1050,
+    "failed": 0,
+    "skipped": 0,
+    "syntax": "PASS",
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "production": {
+      "assetMatches": 123,
+      "coreGroups": 6,
+      "coreAxeScans": 18,
+      "plainJSONReaderWriterFreshUIRestore": "PASS in all three engines",
+      "finE2E11StepChain": "PASS in all three engines",
+      "existingRecoveryAndTransferAndUIContracts": "PASS",
+      "errorMarkers": []
+    }
+  },
+  "change": {
+    "reproduction": {
+      "acceptedLegacyCompactBytes": 19999830,
+      "oldFormattedUIExportBytes": 20000170,
+      "unchangedReaderByteLimit": 20000000
+    },
+    "behavior": "Keep readable formatting when it fits; compact JSON without discarding fields when needed; reject before download/backup acknowledgement if still above the unchanged reader limit.",
+    "coveredPlainWriterPaths": [
+      "explicit JSON",
+      "reference removal safety backup",
+      "position removal safety backup",
+      "native Flatex safety backup",
+      "CSV Flatex safety backup",
+      "plaintext migration"
+    ],
+    "assertions": [
+      "fresh UI restore retains complete revision metadata",
+      "UTF8 over-limit rejection leaves canonical record/revision and backup markers unchanged",
+      "failed mandatory reference backup does not authorize deletion"
+    ],
+    "unchanged": [
+      "encrypted formats",
+      "reader limits",
+      "schema",
+      "financial calculations",
+      "CAS",
+      "raw unverified rescue"
+    ]
+  },
+  "artifacts": [
+    {
+      "id": 13077685201,
+      "name": "cross-engine-gates-28903ff201bf0c942851874dc118f3699e0a5d43-1",
+      "sizeBytes": 47879869,
+      "digest": "sha256:8b4623f1132bf9f2dd8692eb9968c92eb848aa10733bcc5a48216813aa17028c",
+      "expired": false
+    },
+    {
+      "id": 13077527871,
+      "name": "production-live-acceptance-28903ff201bf0c942851874dc118f3699e0a5d43",
+      "sizeBytes": 79538064,
+      "digest": "sha256:7e5eb7b9c0d618b5defbc3331f41a6c22e530821ca83cc0492c6cb38b09cd62d",
+      "expired": false
+    },
+    {
+      "id": 13077391372,
+      "name": "github-pages",
+      "sizeBytes": 405386,
+      "digest": "sha256:ec682fb0a6131455e8bf055ce429f55936f595ce8dc0f221bea79a238cc1073a",
+      "expired": false
+    },
+    {
+      "id": 13077295729,
+      "name": "cross-engine-gates-28903ff201bf0c942851874dc118f3699e0a5d43-2",
+      "sizeBytes": 3605480,
+      "digest": "sha256:8cbfdee06e6d5cd671cec43a19619224f9e10b4ebec4a95f6ae7e6e4350d8c08",
+      "expired": false
+    },
+    {
+      "id": 13077255313,
+      "name": "ci-stage-28903ff201bf0c942851874dc118f3699e0a5d43",
+      "sizeBytes": 355,
+      "digest": "sha256:a838f296f078a4c2f6322c139a58fee29d23d086a30645de981dd38dd64eff18",
+      "expired": false
+    },
+    {
+      "id": 13076857605,
+      "name": "dialog-visual-reference",
+      "sizeBytes": 934363,
+      "digest": "sha256:8047154f6a1d05c61645e54ac90d48404ca9afaba0711a6ba8d3e9c2c388ba00",
+      "expired": false
+    },
+    {
+      "id": 13076754004,
+      "name": "cross-engine-gates-28903ff201bf0c942851874dc118f3699e0a5d43-3",
+      "sizeBytes": 48533987,
+      "digest": "sha256:e3671b65038ccd5d3e84843895291226fcd65175f09116940e37c7cfe8acd97c",
+      "expired": false
+    },
+    {
+      "id": 13076623002,
+      "name": "release-gates-28903ff201bf0c942851874dc118f3699e0a5d43",
+      "sizeBytes": 48669920,
+      "digest": "sha256:3c9ee9d0cda6aa911bdc5e1791e50562d19a6192a0ec593f2af7aa56dd556509",
+      "expired": false
+    }
+  ],
+  "artifactVerification": "GitHub API artifact IDs/digests checked against completed job upload logs; not an independent ZIP/CRC examination.",
+  "independentPostdeployHTTPS": {
+    "main": "28903ff201bf0c942851874dc118f3699e0a5d43",
+    "normalTLSVerification": true,
+    "checkedAt": "2026-11-01T08:55:36.864206+00:00",
+    "assets": [
+      {
+        "path": "sw.js",
+        "match": true,
+        "sha256": "f029d6002f3839d3aa631e06b6cd35038a20724094b360949e57df0c336ad015"
+      },
+      {
+        "path": "index.html",
+        "match": true,
+        "sha256": "e64acf26ff6ff6b860b0e1f372173c037d2ffc88668c6a4bbbb9ca4e40e88e25"
+      },
+      {
+        "path": "src/app.js",
+        "match": true,
+        "sha256": "7685703e580edf28a37dac8b0b56dfde68feda21f7f10653f0cfa0bc286b0b89"
+      },
+      {
+        "path": "src/backup-limits.js",
+        "match": true,
+        "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f"
+      },
+      {
+        "path": "src/transactions.js",
+        "match": true,
+        "sha256": "93b33fa9adc643f8207fcbae072ea7accae7be60bfbeff36f1ee15a995394132"
+      },
+      {
+        "path": "src/atomic-storage.js",
+        "match": true,
+        "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+      },
+      {
+        "path": "src/backup-vault.js",
+        "match": true,
+        "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+      }
+    ]
+  },
+  "proofLines": [
+    "2026-11-01T08:54:49.9451043Z Asset hashes verified: 25/123",
+    "2026-11-01T08:54:49.9977192Z Asset hashes verified: 50/123",
+    "2026-11-01T08:54:50.0503550Z Asset hashes verified: 75/123",
+    "2026-11-01T08:54:50.1034127Z Asset hashes verified: 100/123",
+    "2026-11-01T08:55:00.5565524Z LIVE acceptance PASS: 6 groups, 18 Axe scans, 123 asset matches",
+    "2026-11-01T08:55:13.3692991Z chromium: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T08:55:17.0586529Z FIN-E2E01 chromium: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+    "2026-11-01T09:06:56.9961832Z firefox: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T09:07:02.5230904Z webkit: PLAIN BACKUP accepted old input/whitespace-only portable export/fresh UI restore/UTF8 rejection/no false success/exact IDB PASS",
+    "2026-11-01T09:07:08.6876854Z FIN-E2E01 firefox: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+    "2026-11-01T09:07:13.4608279Z FIN-E2E01 webkit: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS"
+  ],
+  "scopeLimits": [
+    "Issue #254 overall PARTIAL: historical versions/old tabs/downgrades/interrupted updates/recovery remain.",
+    "Issue #255 first cash-chain slice LIVE_ACCEPTED; complete finance matrix remains PARTIAL.",
+    "Android baseline is EMULATED, not physical hardware; OAuth/OS/TalkBack/real-device cases not accepted."
+  ],
+  "nextExecutable": "Continue #255 with one bounded existing-engine FX/split-receipt oracle after fresh collision check; use isolated external Android checklist when hardware is accessible.",
+  "owner": "Work /root; session 50f1560a1a9f"
+}

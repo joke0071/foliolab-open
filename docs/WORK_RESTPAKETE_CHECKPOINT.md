@@ -1,3 +1,19 @@
+## v252 – LIVE_ACCEPTED · 01.11.2026
+
+Main `28903ff201bf0c942851874dc118f3699e0a5d43`, geprüfter Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, Service Worker `foliolab-open-v252`. [PR #263](https://github.com/joke0071/foliolab-open/pull/263) integriert; [Main-/Produktionslauf 41289946551](https://github.com/joke0071/foliolab-open/actions/runs/41289946551) **completed / success**, erster Versuch ohne Retry/Abbruch. 1050 Tests, keine Fehler oder Skips, Syntax und sämtliche Chromium-/Firefox-/WebKit-Gates erfolgreich. Deployment **124801411339** und echte Live-Abnahme **124801472928 SUCCESS**.
+
+**Produktion tatsächlich geprüft:** 123 Assetmatches; sechs Kerngruppen/18 Axe-Scans. Neuer Klartext-Export samt frischem UI-Restore, vollständigen Revisionsdaten und UTF-8-Ablehnung ohne falsche Erfolgsmeldung besteht in allen drei Engines. Pflichtbackup-Fehler lässt Referenzlöschung gesperrt und Daten unverändert. Die elfteilige FIN-E2E-Kette mit exakten Beständen, Cashflows, Kostenbasis, realisiertem Ertrag, Gebühren/Steuern, CAS/Quota/Abort/Offline und frischem verschlüsseltem Restore besteht ebenfalls in allen drei Engines. Bestehende Recovery-/Transfer-/UI-Verträge bestanden.
+
+**Behobener Reader/Writer-Fehler:** Ein akzeptierter alter Input mit 19.999.830 Bytes erzeugte zuvor einen formatierten 20.000.170-Byte-Export, den derselbe Reader ablehnte. Alle sechs regulären Klartextwriter verwenden jetzt die gemeinsame Vorbereitung: normale Formatierung beibehalten, bei Bedarf verlustfrei kompakt serialisieren, verbleibende Überschreitung vor Download/Bestätigung ablehnen. Unveränderte 20-MB-Readergrenze; keine abgeschnittenen Metadaten, keine Änderung von Verschlüsselung, Schema, Finanzengine oder CAS.
+
+**Nachweise:** `docs/release-evidence/v252-plain-backup-live-acceptance.json` und `v252-postdeploy-assets.json` in diesem Branch. Main-Artefakt **13076623002**, Pages **13077391372**, Live **13077527871**; IDs/SHA256 gegen API und tatsächliche Uploadlogs kontrolliert. Live-SHA256 `7e5eb7b9c0d618b5defbc3331f41a6c22e530821ca83cc0492c6cb38b09cd62d`. Zusätzlich sieben relevante Produktivdateien unabhängig per HTTPS mit regulärer TLS-Prüfung identisch. Kein eigener ZIP-/CRC- oder Hardwarebeleg daraus abgeleitet.
+
+**Gesamtstand:** #254 PARTIAL, #255 erster begrenzter Kettenschnitt aus [PR #262](https://github.com/joke0071/foliolab-open/pull/262) LIVE_ACCEPTED; übrige Finanzmatrix offen. #256 reproduzierbare EMULATED-Baselines samt Rohwerten/exakten Seeds gesichert; physisches Android/TalkBack/OS/OAuth weiter EXTERNAL. Geräteanleitung `docs/PERF_ANDROID03_REAL_DEVICE_CHECKLIST.md`. FLH05 und FLH-PROJ01 bleiben ACTIVE, ebenso übrige offene Masterpakete.
+
+**Nächster ausführbarer Schritt:** Nach frischem Kollisionsschutz einen kleinen #255-Folgekandidaten für FX/Teilfüllungs-/Belegorakel mit vorhandener Engine wählen. Hardwarecheck separat bei Gerätezugang. Kein weiterer aktiver Implementierungs-PR, nur historische Drafts #157/#161. Owner Work /root, Sitzung 50f1560a1a9f. Frühere Pending-Einträge unten sind historisch. Historischen Checkpoint-Branch niemals vollständig nach Main mergen.
+
+---
+
 ## v252 – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 01.11.2026
 
 Main `28903ff201bf0c942851874dc118f3699e0a5d43`, geprüfter Tree `96fa344a84e2c5325f17cc279b32d4558dfe95fa`, Cache `foliolab-open-v252`, PR #263. **Main-Gates vollständig SUCCESS**, 1050 Tests ohne Fehler/Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Gruppen. Neue Klartext-/Restore-/UTF8-/Referenzsicherheitsfälle und FIN-E2E-Kette ausdrücklich bestanden. Kein Retry oder Abbruch in diesem v252-Lauf.
