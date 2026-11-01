@@ -59,6 +59,8 @@ for(const engine of engines){
   }
   const axe=await page.evaluate(()=>axe.run(document.querySelector('#morePage'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}}));
   assert.deepEqual(axe.violations.map(v=>v.id),[]);
+  // Return to mobile before using its navigation; the width matrix ends at desktop.
+  await page.setViewportSize({width:390,height:844});
   failing=true;await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('#refreshAll').click();
   await page.waitForFunction(()=>!document.getElementById('refreshAll').disabled);
   const failed=JSON.parse((await record()).raw);
