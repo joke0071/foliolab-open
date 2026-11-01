@@ -35,7 +35,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   // Every real secret field, including opt-in backup passwords and worker/RPC
   // inputs, receives the same local-only button. No value/event/storage effects.
   const beforeEyes=await record();
-  const secretCount=await page.locator('.credential-control input').count();assert.ok(secretCount>=13);
+  const secretCount=await page.locator('.credential-control input').count();assert.ok(secretCount>=11);
   for(let i=0;i<secretCount;i++){
    const input=page.locator('.credential-control input').nth(i);
    await input.evaluate(el=>{for(const d of el.closest('section')?.querySelectorAll('details')||[])d.open=true;for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
@@ -80,7 +80,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   for(const width of [320,360,390,412,430,768,1440]){
    await page.setViewportSize({width,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
    const violations=await page.evaluate(async()=> (await axe.run('#morePage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations);assert.deepEqual(violations.map(v=>v.id),[]);
-   for(const name of ['alphaVantageKey','marketstackKey','fmpKey','twelveKey','coinGeckoKey']){
+   for(const name of ['alphaVantageKey','marketstackKey','coinGeckoKey']){
     const button=page.locator('[name="'+name+'"] + button'),box=await button.boundingBox(),style=await button.evaluate(el=>({width:getComputedStyle(el).width,height:getComputedStyle(el).height}));
     // Firefox subtracts fractional transformed coordinates (43.9999389 for
     // exactly 44 CSS px). Keep the 44px CSS contract and only allow float noise.

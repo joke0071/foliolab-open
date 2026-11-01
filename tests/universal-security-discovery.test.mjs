@@ -1,97 +1,36 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {webcrypto} from 'node:crypto';globalThis.crypto??=webcrypto;
-import {discoverSecurityListings,queryProviderListings,normalizeListing,rankListings,listingCompatibility,mergeConfirmedListing} from '../src/security-discovery.js';
-import {blankModel,createProvider,createAccount,createPosition,snapshot,backup,safeImport,totalExactEUR} from '../src/model.js';
-const mockOK=body=>({ok:true,status:200,headers:{get:()=>null},json:async()=>body});
-const EOD=[
- {Code:'SPYY',Exchange:'XETRA',Name:'SPDR MSCI World UCITS ETF',Type:'ETF',Currency:'EUR',ISIN:'IE00BFY0GT14'},
- {Code:'SPYY',Exchange:'LSE',Name:'SPDR MSCI World UCITS ETF',Type:'ETF',Currency:'GBP',ISIN:'IE00BFY0GT14'}
-];
-test('EODHD supports arbitrary ETFs by ISIN with distinct listing currencies and venue-specific ticker',async()=>{
- const url=[];
- const mock=async x=>{url.push(new URL(x));return mockOK(EOD);};
- const out=await queryProviderListings('eodhd','IE00BFY0GT14',{eodhdKey:'test-key'},mock);
- assert.equal(out.length,2);
- assert.equal(out[0].symbol,'SPYY');assert.equal(out[0].isin,'IE00BFY0GT14');
- assert.equal(out[0].currency,'EUR');assert.equal(out[0].mic,'XETR');
- assert.equal(out[0].eodhdSymbol,'SPYY.XETRA');assert.equal(out[0].tradingViewSymbol,undefined,'catalog should not generate active legacy widget identifiers');
- assert.equal(out[1].currency,'GBP');assert.equal(out[1].tradingViewSymbol,undefined);
- assert.match(url[0].pathname,/\/api\/search\/IE00BFY0GT14/);
- assert.equal(url[0].searchParams.get('api_token'),'test-key');
+import {parseAlphaSearch,createAlphaClient,alphaKeyId} from '../src/alpha-vantage.js';
+import {discoverSecurityListings,queryProviderListings,rankListings,listingCompatibility,mergeConfirmedListing} from '../src/security-discovery.js';
+const hit=(patch={})=>({'1. symbol':'GLBL.DEX','2. name':'Global Dividend ETF','3. type':'ETF','4. region':'XETRA','8. currency':'EUR',...patch});
+function memory(){const values=new Map();return {values,read:async k=>structuredClone(values.get(k)),update:async(k,fn)=>{const v=fn(structuredClone(values.get(k)));values.set(k,v);return structuredClone(v);}};}
+test('Local name, ISIN and ticker references require neither key nor request',async()=>{
+ for(const q of ['VWCE','IE00BK5BQT80','Vanguard FTSE']){const r=await discoverSecurityListings(q,{fmpKey:'OLD'},()=>assert.fail('No request'));assert.equal(r.results[0].isin,'IE00BK5BQT80');}
 });
-test('FMP uses ISIN, name and ticker endpoints; missing currency results cannot become price listings',async()=>{
- const seen=[];
- const fetcher=async url=>{seen.push(url);return mockOK([{symbol:'GLBL.DE',name:'Another Global ETF',currency:'EUR',exchange:'XETRA'}]);};
- const key={fmpKey:'demo'};
- const byIsin=await queryProviderListings('fmp','IE00TEST1234',key,fetcher);
- await queryProviderListings('fmp','global ETF',key,fetcher);
- await queryProviderListings('fmp','GLBL',key,fetcher);
- assert.match(seen[0],/search-isin\?isin=/);assert.match(seen[1],/search-name\?query=/);
- assert.match(seen[2],/search-symbol\?query=/);
- assert.equal(byIsin[0].symbol,'GLBL');
- assert.equal(byIsin[0].fmpSymbol,'GLBL.DE');
- assert.equal(byIsin[0].tradingViewSymbol,undefined);
- assert.equal(normalizeListing({symbol:'GLBL',name:'Unknown',exchange:'XETRA'},'fmp'),null);
+test('Removed search adapters cannot use credentials from old callers',async()=>{
+ for(const source of ['fmp','twelve','eodhd'])await assert.rejects(()=>queryProviderListings(source,'GLBL',{[source+'Key']:'OLD'},()=>assert.fail('No retired request')),/entfernt/);
+ await assert.rejects(()=>discoverSecurityListings('Unknown',{}),/manuell/);
 });
-test('Twelve Data supports general instrument name/ticker with explicit MIC and currency',async()=>{
- const mock=async()=>mockOK({data:[{symbol:'CSPX',instrument_name:'iShares S&P 500 ETF',exchange:'London Stock Exchange',mic_code:'XLON',currency:'USD',instrument_type:'ETF'}]});
- const found=await queryProviderListings('twelve','CSPX',{twelveKey:'demo'},mock);
- assert.equal(found.length,1);assert.equal(found[0].mic,'XLON');
- assert.equal(found[0].currency,'USD');assert.equal(found[0].isin,'');
+test('Alpha search needs explicit XETRA, DEX suffix, type and currency; no inferred ISIN',()=>{
+ const result=parseAlphaSearch({bestMatches:[hit(),hit({'4. region':'Germany'}),hit({'1. symbol':'GLBL.FRK'}),hit({'8. currency':''}),hit({'3. type':'Unknown'})]});
+ assert.equal(result.results.length,1);const p=result.results[0];assert.equal(p.symbol,'GLBL');assert.equal(p.mic,'XETR');assert.equal(p.currency,'EUR');assert.equal(p.isin,'');assert.equal(p.eodhdSymbol,'GLBL.XETRA');
+ assert.throws(()=>parseAlphaSearch({bestMatches:[hit(),hit({'2. name':'Contradictory identity'})]}),/Widersprüchliche/);
+ assert.throws(()=>parseAlphaSearch({Information:'25 requests per day PRIVATE'}),e=>/limit/.test(e.message)&&!e.message.includes('PRIVATE'));
 });
-test('Provider priority falls back on API errors or missing results without guessing source',async()=>{
- const calls=[];
- const mock=async url=>{
-  calls.push(url);
-  if(url.includes('eodhd'))return {ok:false,status:403,headers:{get:()=>null},json:async()=>({})};
-  if(url.includes('financialmodelingprep'))return mockOK(EOD.map(x=>({symbol:x.Code,name:x.Name,exchange:x.Exchange,currency:x.Currency,isin:x.ISIN})));
-  return mockOK({data:[]});
- };
- const result=await discoverSecurityListings('SPYY',{eodhdKey:'bad',fmpKey:'good',twelveKey:'ok'},mock);
- assert.equal(result.provider,'fmp');
- assert.equal(result.results[0].symbol,'SPYY');
- assert.ok(result.failures.some(x=>x.startsWith('eodhd:')));
- assert.equal(calls.length,2);
- await assert.rejects(()=>discoverSecurityListings('ETF',{},mock),/API-Schlüssel/);
+test('Search and daily requests share atomic free budget, completion pacing, cache and secrecy',async()=>{
+ const store=memory();let time=Date.parse('2026-11-01T12:00:00Z');const calls=[],secret='SYNTHETIC_SEARCH_KEY';
+ const deps={store,clock:()=>time,pause:async ms=>{time+=ms;},fetcher:async url=>{const u=new URL(url);calls.push({function:u.searchParams.get('function'),time});time+=3000;return {ok:true,status:200,json:async()=>u.searchParams.get('function')==='TIME_SERIES_DAILY'?{'Meta Data':{'2. Symbol':'VWCE.DEX','3. Last Refreshed':'2026-10-30'},'Time Series (Daily)':{'2026-10-30':{'4. close':'100'}}}:{bestMatches:[{...hit(),echo:secret}],echo:secret}};}};
+ const a=createAlphaClient(deps);assert.equal((await a.search('GLBL',secret)).results.length,1);
+ await a.search('OTHER',secret);assert.equal(calls.length,2);assert.ok(calls[1].time-calls[0].time>=5500);
+ await a.load({kind:'etf',symbol:'VWCE',name:'Vanguard FTSE All-World',isin:'IE00BK5BQT80',currency:'EUR',mic:'XETR',exchange:'Xetra'},secret);assert.equal(calls.length,3);
+ await createAlphaClient(deps).search('GLBL',secret);assert.equal(calls.length,3);assert.equal((await store.read('budget:'+await alphaKeyId(secret))).used,3);assert.ok(!JSON.stringify([...store.values]).includes(secret));
+ await store.update('budget:'+await alphaKeyId(secret),old=>({...old,used:25}));await assert.rejects(()=>a.search('NEW',secret),/limit/);assert.equal(calls.length,3);
 });
-test('Same symbol with different ISIN or currency cannot overwrite an existing holding',()=>{
- const c={...normalizeListing(EOD[0],'eodhd')},existing={isin:'IE00ANOTHER01',currency:'EUR',price:100,quantityExact:'250'};
- assert.equal(listingCompatibility(c,existing).ok,false);
- assert.throws(()=>mergeConfirmedListing(existing,c),/ISIN/);
- const other={...c,isin:existing.isin,currency:'USD'};
- assert.equal(listingCompatibility(other,existing).ok,false);
- const unverified={...c,isin:''};
- const check=listingCompatibility(unverified,existing);
- assert.equal(check.ok,true);assert.equal(check.identityConfirmed,false);
- assert.match(check.warning,/ISIN/);
-});
-test('A confirmed listing updates ONLY identity metadata; backup and exact holdings remain stable',()=>{
- const model=blankModel(),provider=createProvider({name:'Testbank'});model.providers.push(provider);
- const account=createAccount({providerId:provider.id,name:'Depot',type:'securities'},model);model.accounts.push(account);
- const p=createPosition({kind:'etf',symbol:'OLD',name:'SPDR MSCI World UCITS ETF',
-   currency:'EUR',quantity:'123.456789',price:100,providerId:provider.id,accountId:account.id},model);
- model.positions.push(p);snapshot(model);
- const amount=totalExactEUR(model),snap=JSON.stringify(model.snapshots);
- const legacy={...p,tradingViewSymbol:'XETR:OLD'};
- const result=mergeConfirmedListing(legacy,normalizeListing(EOD[0],'eodhd'));
- assert.equal(result.tradingViewSymbol,'XETR:OLD','legacy-only field must not be silently overwritten by a listing update');
- assert.equal(result.quantityExact,p.quantityExact);
- assert.equal(result.priceExact,p.priceExact);
- assert.equal(result.isin,'IE00BFY0GT14');
- assert.equal(result.eodhdSymbol,'SPYY.XETRA');
- assert.equal(totalExactEUR({...model,positions:[result]}),amount);
- assert.equal(JSON.stringify(model.snapshots),snap);
- model.positions[0]=createPosition(result,model);
- const next=safeImport(JSON.parse(backup(model)));
- assert.equal(next.positions[0].mic,'XETR');
- assert.equal(next.positions[0].isin,'IE00BFY0GT14');
- assert.equal(next.positions[0].quantityExact,'123.456789');
-});
-test('Result ordering prioritizes confirmed ISIN over popularity and unrelated ticker',()=>{
- const out=rankListings([
- {symbol:'SAME',isin:'US0000000001',currency:'USD',name:'Other',mic:'XNAS'},
- {symbol:'SPYY',isin:'IE00BFY0GT14',currency:'EUR',name:'SPDR',mic:'XETR'}
- ],'SAME',{isin:'IE00BFY0GT14',currency:'EUR'});
- assert.equal(out[0].isin,'IE00BFY0GT14');
+test('Listing confirmation changes metadata only, preserves exact financial fields and rejects currency/ISIN conflicts',()=>{
+ const candidate=parseAlphaSearch({bestMatches:[hit()]}).results[0];
+ const p={isin:'IE00A1234567',currency:'EUR',price:100,quantityExact:'123.456789',costBasisExact:'4567',quoteSource:'Historic source'};
+ assert.equal(listingCompatibility(candidate,p).identityConfirmed,false);assert.match(listingCompatibility(candidate,p).warning,/ISIN/);
+ const result=mergeConfirmedListing(p,candidate);for(const k of ['quantityExact','costBasisExact','quoteSource','price','isin'])assert.equal(result[k],p[k]);
+ assert.equal(listingCompatibility({...candidate,currency:'GBP'},p).ok,false);assert.equal(listingCompatibility({...candidate,isin:'IE00B1234567'},p).ok,false);
+ assert.equal(rankListings([{...candidate,symbol:'OTHER'},candidate],'GLBL')[0].symbol,'GLBL');
 });

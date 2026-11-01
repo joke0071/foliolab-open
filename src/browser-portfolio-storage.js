@@ -1,10 +1,11 @@
+import {portableSettings} from './complete-backup.js';
 /**
  * Canonical IndexedDB for new installations; consented legacy migration.
  * No background legacy migration. Storage switching retains local credentials.
  * Encrypted complete backups may optionally include user-approved credentials.
  */
-import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData} from './model.js';
-import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord} from './atomic-storage.js';
+import {blankModel,defaultSettings,load,persist,backup,safeImport,STORE_KEY,purgeLocalAppData,retireLegacyProviderCredentials} from './model.js';
+import {openPortfolioDB,readPortfolioRecord,commitPortfolioRecord,readUnverifiedRecord,restoreDamagedRecord,retirePortfolioCredentials} from './atomic-storage.js';
 export const MODE_KEY='foliolab-open-storage-mode';
 export const MODE_VALUE='idb-v1';
 export const REVERT_INTENT_KEY='foliolab-open-idb-revert-intent';
@@ -38,9 +39,7 @@ export class PortfolioStorage {
   if(this.storage.getItem(MODE_KEY)!==MODE_VALUE){
    if(this.storage.getItem(MODE_KEY)!==null)throw Error('Unbekannter Speichermodus. Keine Daten automatisch übernommen.');
    if(this.storage.getItem(STORE_KEY)===null)return this.initializeNew();
-   const m=load(this.storage);
-   this.legacyRaw=this.storage.getItem(STORE_KEY);
-   return m;
+   return this.withLocalLock(()=>{retireLegacyProviderCredentials(this.storage);const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;});
   }
   this.mode='idb'; // marker decides canonical store, even if opening IndexedDB fails
   this.db=await openPortfolioDB(); // never fall back to stale localStorage on error
@@ -68,7 +67,8 @@ export class PortfolioStorage {
     }
    }
   }
-  return restored(record);
+  const clean=await retirePortfolioCredentials(this.db,record.revision);
+  this.revision=clean.revision;return restored(clean);
  }
  /** New installations never write a portfolio to localStorage. The marker is
   * last; an interrupted identical blank commit can be resumed, not overwritten. */
@@ -82,7 +82,7 @@ export class PortfolioStorage {
     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
    const db=await openPortfolioDB();
    try{
-    const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=clone(model.settings);
+    const model=blankModel(),raw=backup(model,{includeHistory:true}),settings=portableSettings(model.settings);
     const existing=await readPortfolioRecord(db);
     let record=existing;
     if(existing){
@@ -101,11 +101,11 @@ export class PortfolioStorage {
   });
  }
  async reload(){
-  if(!this.isIndexedDB){const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;}
+  if(!this.isIndexedDB)return this.withLocalLock(()=>{retireLegacyProviderCredentials(this.storage);const m=load(this.storage);this.legacyRaw=this.storage.getItem(STORE_KEY);return m;});
   const current=await readPortfolioRecord(this.db);
   if(!current)throw Error('Der aktive IndexedDB-Datensatz fehlt.');
-  this.revision=current.revision;
-  return restored(current);
+  const clean=await retirePortfolioCredentials(this.db,current.revision);this.revision=clean.revision;
+  return restored(clean);
  }
  /** Read-only freshness check; never adopts a newer revision for stale writes. */
  async assertCurrent(){
@@ -152,7 +152,7 @@ export class PortfolioStorage {
   const db=await openPortfolioDB();
   try{
    const existing=await readPortfolioRecord(db);
-   const portable=backup(model,{includeHistory:true}),preferences=clone(model.settings);
+   const portable=backup(model,{includeHistory:true}),preferences=portableSettings(model.settings);
    let record;
    if(existing?.deleted&&existing.raw===null){
     // A deliberate prior rollback/reset leaves an IDB tombstone. Only a NEW,
@@ -192,7 +192,7 @@ export class PortfolioStorage {
    const mode=this.storage.getItem(MODE_KEY),legacy=this.storage.getItem(STORE_KEY);
    if(mode!==MODE_VALUE&&(mode!==null||legacy!==null))
     throw Error('Speichermodus wurde geändert. Bitte neu laden.');
-   const raw=backup(model,{includeHistory:true}),settings=clone(model.settings);
+   const raw=backup(model,{includeHistory:true}),settings=portableSettings(model.settings);
    const recovered=await restoreDamagedRecord(this.db,{expected,raw,settings});
    const check=await readPortfolioRecord(this.db);
    if(check?.revision!==recovered.revision||check.raw!==raw||JSON.stringify(check.settings)!==JSON.stringify(settings))

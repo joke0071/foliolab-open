@@ -8,7 +8,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
   await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   const expected=await page.evaluate(async()=>{
    const {openPortfolioDB}=await import('/src/atomic-storage.js');const {blankModel,createProvider,backup}=await import('/src/model.js');
-   const db=await openPortfolioDB();const damaged={schemaVersion:1,revision:7,raw:'{damaged',settings:{eodhdKey:'SYNTHETIC_RECOVERY_KEY'},deleted:false,updatedAt:'2026-10-25'};
+   const db=await openPortfolioDB();const damaged={schemaVersion:1,revision:7,raw:'{damaged',settings:{alphaVantageKey:'SYNTHETIC_RECOVERY_KEY'},deleted:false,updatedAt:'2026-10-25'};
    await new Promise((resolve,reject)=>{const tx=db.transaction('records','readwrite');tx.objectStore('records').put(damaged,'portfolio');tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);});db.close();
    const m=blankModel();m.providers.push(createProvider({name:'Explicit recovery'}));m.settings.autoRefresh=false;
    return {damaged,raw:backup(m,{includeHistory:true})};
@@ -25,7 +25,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
   await page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
   const result=await page.evaluate(async()=>{
    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();
-   try{return {revision:s.revision,names:m.providers.map(x=>x.name),key:m.settings.eodhdKey,legacy:localStorage.getItem('foliolab-open-v1'),mode:localStorage.getItem('foliolab-open-storage-mode')};}finally{s.close();}
+   try{return {revision:s.revision,names:m.providers.map(x=>x.name),key:m.settings.alphaVantageKey,legacy:localStorage.getItem('foliolab-open-v1'),mode:localStorage.getItem('foliolab-open-storage-mode')};}finally{s.close();}
   });
   assert.deepEqual(result,{revision:8,names:['Explicit recovery'],key:'',legacy:null,mode:'idb-v1'});
   console.log(engine+': unmarked damaged record fail-closed, original download, ordinary saves denied, consented recovery/cutover PASS');

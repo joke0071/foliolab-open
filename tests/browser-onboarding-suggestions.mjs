@@ -38,7 +38,7 @@ try{
  assert.equal(noApiCalls.length,0,'Onboarding suggestions are fully offline');
  await page.evaluate(()=>{
   const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));
-  m.settings.eodhdKey='test-key';m.settings.autoRefresh=false;
+  m.settings.alphaVantageKey='test-key';m.settings.autoRefresh=false;
   localStorage.setItem('foliolab-open-v1',JSON.stringify(m));
  });
  await page.route('https://eodhd.com/api/search/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([

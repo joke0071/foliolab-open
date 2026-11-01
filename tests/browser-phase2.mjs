@@ -25,7 +25,7 @@ try{
   m.positions.push(createPosition({providerId:provider.id,accountId:dep.id,kind:'etf',name:'VWCE',symbol:'VWCE',isin:'IE00BK5BQT80',exchange:'Xetra',mic:'XETR',quantity:1,price:100,currency:'EUR'},m));
   m.positions.push(createPosition({providerId:provider.id,accountId:dep.id,kind:'stock',name:'Unsicherer Titel',symbol:'ABC',exchange:'NYSE',mic:'XNYS',quantity:1,price:200,currency:'USD',fxRate:1},m));
   m.positions.push(createPosition({providerId:provider.id,accountId:dep.id,kind:'stock',name:'Stale synthetic quote',symbol:'STALE',exchange:'Xetra',mic:'XETR',quantity:1,price:50,currency:'EUR'},m));
-  m.settings.twelveKey='TEST_USER_KEY';persist(m);
+  m.settings.etherscanKey='TEST_USER_KEY';persist(m);
  });
  await page.reload();
  await page.locator('#sidebarNav [data-page="positions"]').click();

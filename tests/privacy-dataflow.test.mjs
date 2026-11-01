@@ -23,12 +23,12 @@ test('Deleting all app data purges portfolio, migration copies and refresh metad
 });
 
 test('Credential revocation clears old pre-migration snapshots without deleting portfolio',()=>{
- const model=blankModel();model.settings.eodhdKey='KEY_REVOKED';
+ const model=blankModel();model.settings.alphaVantageKey='KEY_REVOKED';
  const st=makeStorage({[STORE_KEY]:JSON.stringify(model),
   [STORE_KEY+'-premigration-v1']:'KEY_OLD','other-app-prefs':'preserve'});
  purgeLegacySnapshots(st);
  assert.equal(st.getItem(STORE_KEY+'-premigration-v1'),null);
- assert.equal(JSON.parse(st.getItem(STORE_KEY)).settings.eodhdKey,'KEY_REVOKED');
+ assert.equal(JSON.parse(st.getItem(STORE_KEY)).settings.alphaVantageKey,'KEY_REVOKED');
  assert.equal(st.getItem('other-app-prefs'),'preserve');
 });
 
@@ -58,6 +58,6 @@ test('Optional public instrument search does not transmit browser credentials or
 test('Unencrypted backups do not retain private RPC tokens or API credentials',()=>{
  const model=blankModel();
  model.settings.solanaRpc='https://rpc.example.test/?api-key=SECRET';
- model.settings.eodhdKey='SECRET';
+ model.settings.alphaVantageKey='SECRET';
  assert.doesNotMatch(backup(model),/SECRET|rpc.example.test/);
 });

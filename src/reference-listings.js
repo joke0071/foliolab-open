@@ -26,7 +26,7 @@ export function knownReferenceListing(position){
  if(exchange&&!['XETRA','XETR'].includes(exchange))return null;
  if(position.tradingViewSymbol&&String(position.tradingViewSymbol).toUpperCase()!=='XETR:'+match.symbol)return null;
  if(position.eodhdSymbol&&String(position.eodhdSymbol).toUpperCase()!==match.symbol+'.XETRA')return null;
- if(position.fmpSymbol&&String(position.fmpSymbol).toUpperCase()!==match.symbol+'.DE')return null;
+ // Retired FMP mapping remains historical metadata, never an active identity gate.
  return Object.freeze({...match,exchange:'Xetra',mic:'XETR',eodhdSymbol:match.symbol+'.XETRA',fmpSymbol:match.symbol+'.DE'});
 }
 /** Populate missing identity fields in legacy backups only for a precise match. */

@@ -1,3 +1,4 @@
+import {withoutRetiredSettings} from './retired-providers.js';
 import {portableWalletHistory} from './wallet-history-state.js';
 /**
  * A portable, encrypted FolioLab backup contains all financial data and,
@@ -26,7 +27,7 @@ export function portableSettings(input){
   else throw Error('Unbekannter Einstellungstyp '+key);
   result[key]=candidate;
  }
- return result;
+ return withoutRetiredSettings(result);
 }
 export function portableDrivePreferences(input){
  if(!plain(input))throw Error('Drive-Einstellungen sind beschädigt.');
@@ -42,7 +43,7 @@ export function portableDrivePreferences(input){
 }
 export function createCompleteBackup(data,configuration=null,history=null){
  if(!plain(data)||(![3,4].includes(data.version)||(data.version===4)!==(data.bookingPresentation!==undefined))||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
- const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data};
+ const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data:{...data,settings:defaultSettings()}};
  if(configuration!==null){
   if(!plain(configuration))throw Error('Backup-Konfiguration ungültig.');
   copy.configuration={
@@ -62,12 +63,13 @@ export function unpackCompleteBackup(raw){
   if(!plain(configuration))throw Error('Backup-Konfiguration beschädigt.');
   validated={settings:portableSettings(configuration.settings),drive:portableDrivePreferences(configuration.drive)};
  }
- return {data:raw.walletHistory?{...raw.data,walletHistory:portableWalletHistory(raw.walletHistory)}:raw.data,configuration:validated};
+ const data={...raw.data,...(raw.data.settings?{settings:withoutRetiredSettings(raw.data.settings)}:{})};
+ return {data:raw.walletHistory?{...data,walletHistory:portableWalletHistory(raw.walletHistory)}:data,configuration:validated};
 }
 /** Local unencrypted JSON exports remain intentionally credential-free. */
 export function hasPortableCredentials(config){
  if(!config?.settings)return false;
- return ['alphaVantageKey','marketstackKey','twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey',
+ return ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey',
  'eodhdWorkerAccessToken'].some(k=>Boolean(config.settings[k]))
  || /(?:[?&](?:api[_-]?key|token|secret)=|\/api\/)/i.test(config.settings.solanaRpc||'');
 }

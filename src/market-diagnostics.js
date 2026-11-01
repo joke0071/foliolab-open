@@ -23,7 +23,7 @@ export function marketSupplySummary(settings={},positions=[]){
  const state=current.length===list.length&&usable.length===list.length?'funktioniert (zuletzt bestätigt)':usable.length?'eingeschränkt':'nicht verfügbar';
  const evidence=confirmed.slice(0,4).map(p=>p.symbol+': '+p.quoteSource+' · '+p.quoteAsOf.slice(0,10)).join(' · ');
  return 'Automatische Wertpapierkurse: '+state+'. '+current.length+' von '+list.length+' Notierungen mit aktuellem bestätigtem Kurs. '+
-  (evidence?'Gespeicherte Kursstände: '+evidence+'. ':'')+(usable.length?'Verbindung bei Bedarf prüfen; Zugang und Börsenabdeckung hängen vom Tarif ab.':'Alpha Vantage, Marketstack, FMP/Twelve Data oder optionalen EODHD-Worker einrichten. Manuelle Kurse und CSV bleiben verfügbar.');
+  (evidence?'Gespeicherte Kursstände: '+evidence+'. ':'')+(usable.length?'Verbindung bei Bedarf prüfen; Zugang und Börsenabdeckung hängen vom Tarif ab.':'Alpha Vantage, Marketstack oder optionalen EODHD-Worker einrichten. Manuelle Kurse und CSV bleiben verfügbar.');
 }
 export async function diagnoseMarketSources(settings={},positions=[],fetcher=globalThis.fetch){
  const list=positions.filter(active).slice(0,4);
@@ -32,9 +32,9 @@ export async function diagnoseMarketSources(settings={},positions=[],fetcher=glo
  for(const p of list){
   const symbol=String(p.symbol).slice(0,40);
   let plan;try{plan=marketSourcePlan(p,settings);}catch(e){rows.push({symbol,status:'error',...classifyMarketFailure(e)});continue;}
-  if(!plan.length){rows.push({symbol,status:'skipped',label:'Kein Kurszugang gespeichert',help:'Alpha Vantage, Marketstack, FMP/Twelve Data oder optionalen EODHD-Worker einrichten. Eingaben zuerst speichern.'});continue;}
+  if(!plan.length){rows.push({symbol,status:'skipped',label:'Kein Kurszugang gespeichert',help:'Alpha Vantage, Marketstack oder optionalen EODHD-Worker einrichten. Eingaben zuerst speichern.'});continue;}
   for(const entry of plan){
-   const provider={alpha:'Alpha Vantage',marketstack:'Marketstack',fmp:'FMP',twelve:'Twelve Data',eodhd:'EODHD-Worker'}[entry.source];
+   const provider={alpha:'Alpha Vantage',marketstack:'Marketstack',eodhd:'EODHD-Worker'}[entry.source];
    if(!entry.ready||blocked.has(entry.source)){
     rows.push({symbol,provider,status:'skipped',label:'Nicht versucht',help:entry.reason||'Weitere Anfragen nach Verbindungs-, Zugangs- oder Limitfehler für diese Quelle vermieden.'});continue;
    }

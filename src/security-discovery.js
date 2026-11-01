@@ -1,78 +1,14 @@
-/**
- * General on-demand security lookup. Results are EXCHANGE LISTINGS, not holdings
- * or valuations. No symbol-only guessing, auto-selection, built-in keys or proxy.
- *
- * EODHD search supports ISIN, fund name, ticker. FMP has separate name/symbol
- * and ISIN endpoints. Twelve symbol_search supports ticker/name; ISIN access
- * may require a separate paid data add-on.
- */
-import {requestJSON,TTL} from './request-cache.js';
-import {requestEodhdJSON} from './eodhd-transport.js';
-const isinPattern=/^[A-Z]{2}[A-Z0-9]{10}$/;
-const currencyPattern=/^[A-Z]{3}$/;
-const tickerPattern=/^[A-Z0-9^._/-]{1,40}$/;
-const marketMappings=Object.freeze({
- XETRA:['Xetra','XETR','XETR','XETRA'],
- XETR:['Xetra','XETR','XETR','XETRA'],
- NASDAQ:['NASDAQ','XNAS','NASDAQ','US'],
- XNAS:['NASDAQ','XNAS','NASDAQ','US'],
- NYSE:['NYSE','XNYS','NYSE','US'],
- XNYS:['NYSE','XNYS','NYSE','US'],
- FRANKFURT:['Frankfurt','XFRA','FWB','F'],XFRA:['Frankfurt','XFRA','FWB','F'],
- XAMS:['Euronext Amsterdam','XAMS','EURONEXT','AS'],AMSTERDAM:['Euronext Amsterdam','XAMS','EURONEXT','AS'],
- XPAR:['Euronext Paris','XPAR','EURONEXT','PA'],PARIS:['Euronext Paris','XPAR','EURONEXT','PA'],
- XLON:['London Stock Exchange','XLON','LSE','LSE'],LSE:['London Stock Exchange','XLON','LSE','LSE']
-});
-const trim=(s,max=120)=>String(s??'').trim().slice(0,max);
-const upper=s=>trim(s).toUpperCase();
-const validIsin=s=>isinPattern.test(upper(s));
-export function normalizeListing(row,source){
- const providerSymbol=upper(row.symbol||row.Code),rawExchange=upper(row.exchange||row.Exchange),
-  symbol=source==='fmp'&&/^[A-Z0-9_-]+\.(DE|F|AS|PA|L|MI)$/.test(providerSymbol)&&['XETRA','FRANKFURT','AMSTERDAM','PARIS','LSE'].includes(rawExchange)?providerSymbol.split('.')[0]:providerSymbol,
-  currency=upper(row.currency||row.Currency),
-  name=trim(row.name||row.Name||row.instrument_name||row.companyName,140),
-  isin=upper(row.isin||row.ISIN),exchange=trim(row.exchangeFullName||row.exchange||row.Exchange,65),
-  mic=upper(row.mic_code||row.mic);
- if(!tickerPattern.test(symbol)||!currencyPattern.test(currency)||!name)return null;
- if(isin&&!validIsin(isin))return null;
- if(mic&&!/^[A-Z0-9]{4}$/.test(mic))return null;
- const suffix=source==='eodhd'?upper(row.Exchange):'';
- const mapping=marketMappings[mic]||marketMappings[upper(row.exchange||row.Exchange)]||marketMappings[upper(exchange)]||null;
- // Provider-specific identifiers must be returned or uniquely known by mapping.
- // Never derive an EODHD exchange from an unverified place name or a ticker.
- const eodhdSymbol=source==='eodhd'&&suffix&&/^[A-Z0-9]{1,12}$/.test(suffix)?
-   symbol+'.'+suffix:source==='twelve'&&mapping?symbol+'.'+mapping[3]:'';
- const fmpSymbol=source==='fmp'?providerSymbol:'';
- return {source,name,symbol,isin,currency,exchange:mapping?mapping[0]:exchange,mic:mic||mapping?.[1]||'',
-   eodhdSymbol,fmpSymbol,
-   type:trim(row.instrument_type||row.type||row.Type,40)};
-}
-const cleanTerm=term=>{
- const t=trim(term,120);
- if(t.length<2||/[<>\\]/.test(t))throw Error('Bitte mindestens zwei Zeichen des Namens, Tickers oder der ISIN angeben.');
- return t;
-};
-const urlWith=(base,params)=>{const u=new URL(base);for(const [k,v] of Object.entries(params))u.searchParams.set(k,String(v));return u.toString();};
-export async function queryProviderListings(provider,term,settings,fetcher=globalThis.fetch){
- const t=cleanTerm(term),key=trim(settings?.[provider==='eodhd'?'eodhdKey':provider==='fmp'?'fmpKey':'twelveKey'],250);
- if(!key)throw Error('Kein eigener '+provider.toUpperCase()+'-API-Schlüssel hinterlegt.');
- let url;
- if(provider==='eodhd')url=urlWith('https://eodhd.com/api/search/'+encodeURIComponent(t),{api_token:key,fmt:'json',limit:50});
- else if(provider==='fmp')url=urlWith('https://financialmodelingprep.com/stable/'+(validIsin(t)?'search-isin':/^[A-Z0-9.^/-]{1,12}$/i.test(t)?'search-symbol':'search-name'),
-  validIsin(t)?{isin:t,apikey:key}:{query:t,limit:50,apikey:key});
- else if(provider==='twelve')url=urlWith('https://api.twelvedata.com/symbol_search',{symbol:t,outputsize:50,apikey:key});
- else throw Error('Unbekannter Suchanbieter.');
- const raw=await (provider==='eodhd'?requestEodhdJSON(url,{fetcher,ttlMs:TTL.catalog,attempts:1}):requestJSON(url,{fetcher,ttlMs:TTL.catalog,attempts:1}));
- if(raw?.status==='error'||raw?.['Error Message'])throw Error(trim(raw.message||raw['Error Message'],150));
- const list=provider==='twelve'?raw?.data:raw;
- if(!Array.isArray(list))throw Error('Suchanbieter liefert keine gültige Trefferliste.');
- const clean=list.map(item=>normalizeListing(item,provider)).filter(Boolean);
- // Providers may return several listings for the same ETF. Preserve each venue.
- const seen=new Set();
- return clean.filter(p=>{
-  const id=[p.source,p.symbol,p.currency,p.mic||p.exchange,p.isin].join('|');
-  if(seen.has(id))return false;seen.add(id);return true;
- }).slice(0,50);
+/** Explicit listing suggestions; never prices, automatic ISIN binding or holdings. */
+import {referenceSearch} from './reference-listings.js';
+import {alphaVantageSearch} from './alpha-vantage.js';
+const trim=(s,max=120)=>String(s??'').trim().slice(0,max),upper=s=>trim(s).toUpperCase();
+const tickerPattern=/^[A-Z0-9^._/-]{1,40}$/,currencyPattern=/^[A-Z]{3}$/;
+const validIsin=s=>/^[A-Z]{2}[A-Z0-9]{10}$/.test(upper(s));
+const cleanTerm=term=>{const t=String(term??'').trim();if(t.length<2||t.length>120||/[<>\\\u0000-\u001f]/.test(t))throw Error('Bitte zwei bis 120 Zeichen des Namens, Tickers oder der ISIN angeben.');return t;};
+export async function queryProviderListings(provider,term,settings={},fetcher=globalThis.fetch){
+ if(provider!=='alpha')throw Error('Dieser Suchanbieter wurde entfernt. Alpha Vantage oder lokale Referenzen verwenden.');
+ const result=await alphaVantageSearch(cleanTerm(term),settings.alphaVantageKey,fetcher);
+ return result.results;
 }
 export function rankListings(results,term,existing={}){
  const t=upper(term),isin=upper(existing.isin),currency=upper(existing.currency);
@@ -92,18 +28,11 @@ export function rankListings(results,term,existing={}){
  });
 }
 export async function discoverSecurityListings(term,settings={},fetcher=globalThis.fetch){
- const t=cleanTerm(term),order=['eodhd','fmp','twelve'];
- const available=order.filter(p=>settings[p==='eodhd'?'eodhdKey':p==='fmp'?'fmpKey':'twelveKey']);
- if(!available.length)throw Error('Für die universelle Wertpapiersuche bitte einen eigenen EODHD-, FMP- oder Twelve-Data-API-Schlüssel unter „Mehr“ eintragen.');
- const errors=[];
- for(const provider of available){
-  try{
-   const hits=await queryProviderListings(provider,t,settings,fetcher);
-   if(hits.length)return {results:hits,provider,failures:errors};
-   errors.push(provider+': Keine Treffer');
-  }catch(error){errors.push(provider+': '+trim(error.message,125));}
- }
- throw Error('Keine verifizierbaren Börsennotierungen gefunden. '+errors.join(' · ').slice(0,280));
+ const t=cleanTerm(term),local=referenceSearch(t);
+ if(local.length)return {results:local,provider:'Lokale Referenzliste',failures:[]};
+ if(!settings.alphaVantageKey)throw Error('Kein lokaler Referenztreffer. Für die Xetra-Suche einen eigenen Alpha-Vantage-API-Schlüssel eintragen oder Notierung manuell erfassen.');
+ const results=await queryProviderListings('alpha',t,settings,fetcher);
+ return {results,provider:'Alpha Vantage',failures:[],warning:'Nur ausdrücklich bestätigte Xetra-Treffer. Alpha Vantage liefert keine ISIN; Identität selbst prüfen. Andere Börsen können manuell erfasst werden.'};
 }
 /** A source listing must not overwrite an existing instrument with a different ISIN.
  * A missing provider ISIN is explicitly unverified, never treated as a match. */

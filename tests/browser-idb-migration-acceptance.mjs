@@ -12,7 +12,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     const {acceptHistory,historyPreview,checkpointHistory}=await import('/src/wallet-history-state.js');
     const {replayWalletHistory}=await import('/src/wallet-history-core.js');
     const {event,stream,NOW}=await import('/tests/wallet-history-fixtures.mjs');
-    let m=blankModel();m.settings.autoRefresh=false;m.settings.eodhdKey='SYNTHETIC_MIGRATION_KEY';
+    let m=blankModel();m.settings.autoRefresh=false;m.settings.alphaVantageKey='SYNTHETIC_MIGRATION_KEY';
     m.settings.solanaRpc='https://example.test/api/SYNTHETIC_PRIVATE_RPC';
     const provider=createProvider({name:'Migration Bank',type:'bank'});m.providers.push(provider);
     const a=createAccount({providerId:provider.id,name:'Savings one',type:'savings'},m),b=createAccount({providerId:provider.id,name:'Fixed two',type:'savings',currency:'USD',cashTerms:{version:1,fixedTerm:true,status:'bound',outcome:'unconfirmed',startDate:'2026-01-01',maturityDate:'2027-01-01'}},m);m.accounts.push(a,b);
@@ -54,7 +54,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
    if(encrypted){
     assert.ok(!bytes.includes('SYNTHETIC_MIGRATION_KEY'));
     decoded=await page.evaluate(async envelope=>{const {decryptPasswordBackup}=await import('/src/backup-vault.js');return JSON.parse(await decryptPasswordBackup(envelope,'migration-test-password'));},decoded);
-    assert.equal(decoded.configuration.settings.eodhdKey,expected.settings.eodhdKey);
+    assert.equal(decoded.configuration.settings.alphaVantageKey,expected.settings.alphaVantageKey);
     assert.deepEqual(decoded.data.walletHistory,expected.portable.walletHistory);
     assert.deepEqual(decoded.data,expected.portable);
    }else{

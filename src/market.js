@@ -36,49 +36,11 @@ export async function cryptoPrices(ids,key='',fetcher=globalThis.fetch){
  if(failures.length)Object.defineProperty(result,'partialFailures',{value:failures,enumerable:false});
  return result;
 }
-export async function searchSecurities(term,key,fetcher=globalThis.fetch){if(!key)throw Error('Für die Wertpapiersuche bitte in „Mehr“ einen eigenen Twelve-Data-Schlüssel hinterlegen.');const url=new URL('https://api.twelvedata.com/symbol_search');url.searchParams.set('symbol',term);url.searchParams.set('apikey',key);const res=await json(url.toString(),{ttlMs:TTL.catalog},fetcher);if(!Array.isArray(res.data))return [];
-  const ranking=x=>{const exchange=String(x.exchange||'').toLowerCase(),type=String(x.instrument_type||x.type||'').toLowerCase();
-    return (type.includes('etf')?0:10)+(exchange.includes('xetra')?0:exchange.includes('vienna')||exchange.includes('wien')?1:exchange.includes('euronext')?2:exchange.includes('nasdaq')||exchange.includes('nyse')?8:4);
-  };
-  return res.data.slice().sort((a,b)=>ranking(a)-ranking(b)).slice(0,30);}
-export async function securityPrice(symbol,key,fetcher=globalThis.fetch){if(!key)throw Error('Twelve-Data-Schlüssel fehlt.');const url=new URL('https://api.twelvedata.com/price');url.searchParams.set('symbol',symbol);url.searchParams.set('apikey',key);const res=await json(url.toString(),{ttlMs:TTL.security},fetcher);const price=Number(res.price);if(!Number.isFinite(price)||price<0)throw Error('Kein gültiger Kurs geliefert.');return price;}
-/**
- * A strictly matched Twelve Data quote. Ticker alone must never certify a listing.
- * /quote supplies symbol, exchange, currency, datetime and usually a close price.
- * Returns a rejected promise rather than quietly applying a different listing.
- */
-export async function securityQuote(listing,key,fetcher=globalThis.fetch){
- if(!key)throw Error('Twelve-Data-Schlüssel fehlt.');
- const symbol=String(listing?.symbol||'').trim().toUpperCase();
- const expectedCurrency=String(listing?.currency||'').trim().toUpperCase();
- const exchange=String(listing?.exchange||'').trim();
- const mic=String(listing?.mic||'').trim().toUpperCase();
- if(!symbol||!expectedCurrency||(!exchange&&!mic))throw Error('Handelsplatz (oder MIC) und Kurswährung müssen für automatische Kurse bestätigt sein.');
- const url=new URL('https://api.twelvedata.com/quote');
- url.searchParams.set('symbol',symbol);
- // Prefer the confirmed ISO MIC over a broker/display exchange alias.
- if(exchange&&!mic)url.searchParams.set('exchange',exchange);
- if(mic)url.searchParams.set('mic_code',mic);
- url.searchParams.set('apikey',key);
- const data=await json(url.toString(),{ttlMs:TTL.security,attempts:1},fetcher);
- const price=Number(data.close??data.price);
- if(!Number.isFinite(price)||price<=0)throw Error('Kein gültiger Wertpapierkurs.');
- if(String(data.symbol||'').trim().toUpperCase()!==symbol)throw Error('Ticker der Kursantwort passt nicht zur Position.');
- if(String(data.currency||'').trim().toUpperCase()!==expectedCurrency)throw Error('Kurswährung weicht ab; Aktualisierung nicht übernommen.');
- const returnedMIC=String(data.mic_code||data.mic||'').trim().toUpperCase();
- const returnedExchange=String(data.exchange||'').trim().toUpperCase();
- if(mic&&returnedMIC!==mic)throw Error('Börsen-MIC konnte nicht eindeutig bestätigt werden.');
- if(exchange&&(!returnedExchange||!(returnedExchange===exchange.toUpperCase()||(['XETR','XETRA'].includes(returnedExchange)&&['XETR','XETRA'].includes(exchange.toUpperCase())))))throw Error('Handelsplatz stimmt nicht mit der Kursantwort überein.');
- const reportedIsin=String(data.isin||'').trim().toUpperCase();
- if(reportedIsin&&listing.isin&&reportedIsin!==String(listing.isin).toUpperCase())throw Error('ISIN der Kursantwort weicht ab.');
- return {price,currency:expectedCurrency,exchange:data.exchange||exchange,mic:returnedMIC||mic,
-  asOf:String(data.datetime||data.timestamp||data.date||'')||null,source:'Twelve Data',quality:'verified-listing'};
-}
 /** Daily reference rate with its actual publication date; not a broker execution rate. */
 export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
  if(from==='EUR')return {rate:1,date:new Date().toISOString().slice(0,10),source:'identity',reference:true};
  if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
- if(!key){
+ {
    const url=new URL('https://api.frankfurter.dev/v1/latest');
    url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
    const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
@@ -86,18 +48,12 @@ export async function exchangeRateQuote(from,key='',fetcher=globalThis.fetch){
    if(!(rate>0)||!/^(?:19|20)\d{2}-\d{2}-\d{2}$/.test(String(data.date||'')))throw Error('Kein datierter kostenloser Tageswechselkurs verfügbar.');
    return {rate,date:data.date,source:'Frankfurter',reference:true};
  }
- const url=new URL('https://api.twelvedata.com/exchange_rate');
- url.searchParams.set('symbol',`${from}/EUR`);url.searchParams.set('apikey',key);
- const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
- const rate=Number(data.rate);
- if(!(rate>0))throw Error(`Kein Wechselkurs für ${from}/EUR.`);
- return {rate,date:String(data.datetime||data.date||'')||null,source:'Twelve Data',reference:false};
 }
 export async function exchangeRate(from,key='',fetcher=globalThis.fetch){
  // The numeric compatibility method remains available for v1/v2 clients/tests.
  if(from==='EUR')return 1;
  if(!/^[A-Z]{3}$/.test(from))throw Error('Ungültige Währung.');
- if(!key){
+ {
   const url=new URL('https://api.frankfurter.dev/v1/latest');
   url.searchParams.set('base',from);url.searchParams.set('symbols','EUR');
   const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
@@ -105,12 +61,6 @@ export async function exchangeRate(from,key='',fetcher=globalThis.fetch){
   if(!(rate>0))throw Error('Kein kostenloser Tageswechselkurs verfügbar.');
   return rate;
  }
- const url=new URL('https://api.twelvedata.com/exchange_rate');
- url.searchParams.set('symbol',`${from}/EUR`);url.searchParams.set('apikey',key);
- const data=await json(url.toString(),{ttlMs:TTL.fx},fetcher);
- const rate=Number(data.rate);
- if(!(rate>0))throw Error(`Kein Wechselkurs für ${from}/EUR.`);
- return rate;
 }
 /** Uses Frankfurter historical DAILY reference rate, including previous workday fallback. */
 export async function historicalExchangeRate(from,date,fetcher=globalThis.fetch){

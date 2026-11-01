@@ -12,7 +12,7 @@ try{
   for(const symbol of ['VWCE','5MVL','XDEM','XDEQ'])
    m.positions.push(createPosition({providerId:provider.id,accountId:account.id,kind:'etf',name:symbol,
     symbol,mic:'XETR',exchange:'Xetra',currency:'EUR',quantity:1,price:100,eodhdSymbol:symbol+'.XETRA'},m));
-  m.settings.twelveKey='SYNTHETIC_ONLY_FOR_TEST';m.settings.autoRefresh=false;persist(m);
+  m.settings.etherscanKey='SYNTHETIC_ONLY_FOR_TEST';m.settings.autoRefresh=false;persist(m);
  });
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();

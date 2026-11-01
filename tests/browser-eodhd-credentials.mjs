@@ -8,7 +8,7 @@ try{
  await page.locator('#mobileNav [data-page="more"]').click();
  for(const section of ['marketSettings','blockchainSettings'])
   await page.locator('#'+section).evaluate(el=>el.open=true);
- const fields=['fmpKey','twelveKey','coinGeckoKey','etherscanKey','binplorerKey'];
+ const fields=['marketstackKey','etherscanKey','coinGeckoKey','etherscanKey','binplorerKey'];
  for(const name of fields){
   const input=page.locator('[name="'+name+'"]');
   assert.equal(await input.getAttribute('type'),'password',name+' must start masked');
@@ -39,8 +39,8 @@ try{
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
- assert.equal(await page.locator('[name="fmpKey"]').getAttribute('type'),'password');
- assert.equal(await page.locator('[name="fmpKey"]').inputValue(),'SYNTHETIC_fmpKey');
+ assert.equal(await page.locator('[name="marketstackKey"]').getAttribute('type'),'password');
+ assert.equal(await page.locator('[name="marketstackKey"]').inputValue(),'SYNTHETIC_marketstackKey');
 
  // Direct EODHD is no longer a supported automatic browser source. The
  // worker transport and quote/history are covered in browser-eodhd-worker.
@@ -56,9 +56,9 @@ try{
   await touch.goto('http://127.0.0.1:4173/');
   await touch.locator('#mobileNav [data-page="more"]').click();
   await touch.locator('#marketSettings').evaluate(el=>el.open=true);
-  const eye=touch.locator('[name="fmpKey"] + .credential-toggle');
+  const eye=touch.locator('[name="marketstackKey"] + .credential-toggle');
   await eye.click();
-  assert.equal(await touch.locator('[name="fmpKey"]').getAttribute('type'),'text');
+  assert.equal(await touch.locator('[name="marketstackKey"]').getAttribute('type'),'text');
   const bg=await eye.evaluate(el=>getComputedStyle(el).backgroundColor);
   assert.ok(bg==='rgba(0, 0, 0, 0)'||bg==='transparent','Touch toggle retained colored hover background: '+bg);
  }finally{await touchContext.close();}

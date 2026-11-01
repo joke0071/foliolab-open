@@ -27,6 +27,6 @@ test('Fehlerhafte Speicherstände überschreiben keine Daten',()=>{
  assert.throws(()=>load(storage));assert.equal(writes,0);
 });
 test('Backups enthalten beide Konten und keine API-Schlüssel',()=>{
- const m=src();m.settings.twelveKey='MY_PERSONAL_SECRET';
- const restored=safeImport(JSON.parse(backup(m)));assert.equal(restored.accounts.length,2);assert.equal(restored.settings.twelveKey,'');
+ const m=src();m.settings.etherscanKey='MY_PERSONAL_SECRET';
+ const restored=safeImport(JSON.parse(backup(m)));assert.equal(restored.accounts.length,2);assert.equal(restored.settings.etherscanKey,'');
 });

@@ -100,7 +100,7 @@ try {
     m.version = 1;
     delete m.accounts;
     m.providers.push(createProvider({name: 'Legacy Broker'}));
-    m.settings.eodhdKey = 'SECRET_DO_NOT_COPY';
+    m.settings.alphaVantageKey = 'SECRET_DO_NOT_COPY';
     m.settings.solanaRpc = 'https://private.example.invalid/SECRET_RPC';
     const raw = JSON.stringify(m);
     localStorage.setItem(STORE_KEY, raw);

@@ -80,19 +80,6 @@ test('Never fabricate market chart for missing IDs or unavailable API',async()=>
  p.coinId='bitcoin';
  await assert.rejects(()=>fetchPositionMarketHistory(p,{},30,async()=>response({prices:[]})),/keine ausreichenden/);
 });
-test('Twelve Data time-series checks symbol currency and exchange before displaying',async()=>{
- const {add}=fixture(),p=add({symbol:'VWCE',exchange:'Xetra',currency:'EUR'});
- const settings={twelveKey:'test-only-not-a-real-key'};
- const mk=(meta)=>async()=>response({meta,values:[{datetime:yesterday,close:'100'},{datetime:today,close:'102'}]});
- const expected={symbol:'VWCE',exchange:'Xetra',currency:'EUR'};
- const result=await fetchPositionMarketHistory(p,settings,30,mk(expected));
- assert.equal(result.points.length,2);assert.equal(result.points[1].total,102);
- await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,currency:'USD'})),/Währung/);
- await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,exchange:'Wrong'})),/Handelsplatz/);
- p.isin='IE00BK5BQT80';
- await assert.rejects(()=>fetchPositionMarketHistory(p,settings,30,mk({...expected,isin:'INVALID'})),/ISIN/);
- assert.equal(marketHistoryCapability({...p,exchange:'',mic:''},settings),null);
-});
 test('Range and data quality filters reject invalid periods',async()=>{
  const {add}=fixture(),p=add({});
  assert.throws(()=>recordedPositionHistory({snapshots:[]},p.id,366),/Zeitraum/);

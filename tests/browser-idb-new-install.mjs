@@ -42,12 +42,12 @@ for(const name of (process.env.IDB_ENGINES||'chromium').split(',')){
     const {openPortfolioDB,commitPortfolioRecord,readPortfolioRecord,readUnverifiedRecord}=await import('/src/atomic-storage.js');
     const originalPut=IDBObjectStore.prototype.put,originalOpen=indexedDB.open;
     if(fault==='orphan'){
-     const db=await openPortfolioDB(),m=blankModel();m.settings.eodhdKey='SYNTHETIC_UNCONFIRMED';
+     const db=await openPortfolioDB(),m=blankModel();m.settings.alphaVantageKey='SYNTHETIC_UNCONFIRMED';
      await commitPortfolioRecord(db,{expectedRevision:null,raw:backup(m),settings:m.settings});db.close();
     }
     if(fault==='quota')IDBObjectStore.prototype.put=function(){throw new DOMException('simulated quota','QuotaExceededError');};
     if(['changed-settings','invalid-settings'].includes(fault))IDBObjectStore.prototype.put=function(record,key){
-     return originalPut.call(this,{...record,settings:{...record.settings,eodhdKey:fault==='invalid-settings'?42:'SYNTHETIC_CHANGED'}},key);
+     return originalPut.call(this,{...record,settings:{...record.settings,alphaVantageKey:fault==='invalid-settings'?42:'SYNTHETIC_CHANGED'}},key);
     };
     if(fault==='unavailable')indexedDB.open=()=>{throw Error('simulated unavailable IndexedDB');};
     const storage={getItem:k=>localStorage.getItem(k),removeItem:k=>localStorage.removeItem(k),setItem:(k,v)=>{

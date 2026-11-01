@@ -179,11 +179,11 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
     (state.kind==='crypto'?'':('<label class="field"><span>'+(cash?'Kontowährung':'Kurswährung')+'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen')+'</select></label>'))+
     (!cash?'<details class="advanced-apis"><summary>Weitere Angaben zur Börsennotierung</summary>'+
       input('wizardExchange','Handelsplatz',state.exchange,'maxlength="60"')+input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
-      input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+'</details>':'')+
+      input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+'</details>':'')+
     (singleName?'<p class="small-help">Der Kontoname bezeichnet auch dein Guthaben. Zinsen, Verfügbarkeit und Fälligkeit kannst du anschließend am Konto ergänzen.</p>':'')+
     '</div>'+catalogTools+'</section>'+holdings+advanced;
   shell(fields,'Position hinzufügen');
-  const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol'};
+  const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
   $('wizardKind').addEventListener('change',x=>{const accountName=state.accountName,oldDefault=defaultAcc(state.kind)[0];state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);if(accountName&&accountName!==oldDefault)state.accountName=accountName;render({resetWalletDisclosure:true});if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);

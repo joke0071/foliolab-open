@@ -10,7 +10,7 @@ try{
   const {blankModel,createProvider,persist,backup}=await import('/src/model.js');
   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
   const m=blankModel();m.providers.push(createProvider({name:'Recovery broker'}));
-  m.settings.eodhdKey='SYNTHETIC_RECOVERY_SECRET';m.settings.autoRefresh=false;
+  m.settings.alphaVantageKey='SYNTHETIC_RECOVERY_SECRET';m.settings.autoRefresh=false;
   persist(m);const raw=backup(m);
   const storage=new PortfolioStorage();await storage.migrate(m);storage.close();
   return raw;
@@ -21,7 +21,7 @@ try{
   await new Promise((resolve,reject)=>{
    const tx=db.transaction('records','readwrite');
    tx.objectStore('records').put({
-    schemaVersion:1,revision:1,raw:'{corrupt',settings:{eodhdKey:'SYNTHETIC_RECOVERY_SECRET'},
+    schemaVersion:1,revision:1,raw:'{corrupt',settings:{alphaVantageKey:'SYNTHETIC_RECOVERY_SECRET'},
     deleted:false,updatedAt:'2026-10-23'
    },'portfolio');
    tx.oncomplete=resolve;tx.onabort=()=>reject(tx.error);
@@ -45,7 +45,7 @@ try{
  });
  assert.equal(state.revision,2);
  assert.equal(JSON.parse(state.raw).providers[0].name,'Recovery broker');
- assert.equal(state.settings.eodhdKey,'');
+ assert.equal(state.settings.alphaVantageKey,'');
  assert.ok(!state.raw.includes('SYNTHETIC_RECOVERY_SECRET'));
  await page.locator('#mobileNav [data-page="more"]').click();
  assert.match(await page.locator('#portfolioStorageState').textContent(),/IndexedDB aktiv/);

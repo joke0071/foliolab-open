@@ -1,0 +1,16 @@
+# #266 – retired provider credentials (v263 candidate)
+
+Goal: remove unusable FMP/Twelve ETF access and direct EODHD credentials without losing portfolio data or optional worker access. No new financial engine, schema bump, paid service or change to encrypted formats/KDF/AAD.
+
+- Active direct ETF sources: Alpha Vantage and Marketstack. Existing strict four-reference EUR/XETR quote/history validation remains. Gapped Marketstack history stays rejected.
+- Search: free offline reference matches first; explicit Alpha SYMBOL_SEARCH otherwise, only explicit XETRA + DEX + currency/type evidence. Missing ISIN stays unknown; other venues are entered manually. Search shares the existing hashed-key 25/day reservations, completion pacing and persistent public-data cache with quotes. Typing alone does not consume requests.
+- FX: existing keyless Frankfurter reference rates. No replacement of historical execution FX.
+- Removed fmpKey/twelveKey/eodhdKey and obsolete source selectors across defaults, active selection, forms, physical canonical settings, save/migration, complete encrypted backup and legacy restore. Existing source labels and listing metadata remain readable. Active keys/worker/RPC/Drive stay under the existing opt-in backup rules.
+- Startup cleanup uses one validated revision-checked IDB transaction, increments revision, preserves canonical financial bytes when only preferences change and invalidates stale writers. Abort/quota does not partially clean. Legacy cleanup uses the existing Web Lock/CAS; original premigration backup copies are retained unchanged. Repeated clean startup does not write a new record. This does not claim universal protection against deliberately running arbitrary old binaries after reload.
+- Financial unencrypted exports remain credential-free. New complete data sections also use credential-free defaults; settings are optional separately. Legacy encrypted files remain readable; retired keys are ignored, not reactivated or exported. Original files are never automatically deleted or overwritten.
+
+Acceptance: unchanged financial bytes/exact quantities and provenance; physical cleanup plus stale/quota rejection; actual UI encrypted legacy restore and re-export; retained Alpha/Marketstack/worker/search and Frankfurter paths; full mandatory finance/IDB/CAS/offline/backup/PWA/three-engine CI and production gates. Existing real provider proofs on the checkpoint branch remain valid for unchanged four-reference quote semantics. No new live provider requests are required solely for key/UI retirement; Alpha daily quota was already nearly exhausted at handover.
+
+Existing tests tied to removed adapters are replaced by exclusion and retained-provider contracts. Generic credential-retention fixtures now use active credentials; their financial/backup/CAS assertions are preserved. A migration fixture now awaits its actual automatic reload before deliberately reloading again, removing a demonstrated navigation race without changing product behavior.
+
+Local validation and exact candidate/CI receipts are recorded in the central checkpoint. Browser mocks are not real-provider, CORS, physical Android, native Safari or Google OAuth acceptance. After the next fully accepted release, HND01 requires handover; UH01/UH02 follows without a second implementation branch.
