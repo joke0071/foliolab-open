@@ -62,7 +62,15 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
          // A browser/provider exception can include a full key-bearing request URL.
          // Never forward that untrusted diagnostic to UI, error history or logs.
          if(requestError)throw Error(safeNetworkDiagnostic(requestError,url,headers));
-         if(!response?.ok)throw Error(status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${status||'unbekannt'})`);
+         if(!response?.ok){
+          let plan=status===402&&new URL(String(url)).hostname==='financialmodelingprep.com';
+          if(status===404&&new URL(String(url)).hostname==='api.twelvedata.com'){
+           try{const denied=await response.json();plan=Number(denied?.code)===404&&/available starting with.*(?:Grow|Venture).*plan/i.test(String(denied?.message||''));}catch{}
+          }
+          const error=Error(plan?`Anbietertarif deckt diese Abfrage nicht ab (HTTP ${status}).`:status===429?'Ratenlimit erreicht – später erneut versuchen.':`Abruf fehlgeschlagen (HTTP ${status||'unbekannt'})`);
+          if(plan)error.code='provider-plan';
+          throw error;
+         }
          let data;
          try{data=await response.json();}catch{throw Error('API lieferte keine gültigen JSON-Daten.');}
          // Upstream messages sometimes echo credentials. Provide a stable, safe status.

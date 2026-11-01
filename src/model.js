@@ -32,7 +32,7 @@ export function purgeLegacySnapshots(storage=globalThis.localStorage){
 
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
-export const defaultSettings=()=>({currency:'EUR',twelveKey:'',eodhdKey:'',fmpKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
+export const defaultSettings=()=>({currency:'EUR',alphaVantageKey:'',twelveKey:'',eodhdKey:'',fmpKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
 export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],priceHistories:Object.create(null),performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
