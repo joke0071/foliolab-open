@@ -1,3 +1,11 @@
+## #255 FIN-E2E01 – Übernahme 01.11.2026 / IN_PROGRESS
+
+Aktiver Owner: Work /root, Sitzung 50f1560a1a9f. Einziger Kandidat `test/fin-e2e01-cash-chain`, Basis Main `7c720dddd5450fd4c2342deae9c7d91427ee01e7` / v251. Frisch geprüft: nur historische Drafts #157/#161 offen, letzte Main-/PR-Läufe erfolgreich und beendet, keine neuere Implementierung im Checkpoint. GitHub-Aktivität allein beweist keine Chat-Inaktivität; vor weiteren Remote-Schreibschritten frischen Stand prüfen. Keine laufende CI abgebrochen.
+
+Umfang: bestehende Engines als deterministische Kette orchestrieren; EUR-Import/erlaubte manuelle Korrektur/Transferzuordnung/belegbare Importlöschung/Undo/Reimport/Archiv/verschlüsseltes Restore, exakte Sollwerte und IDB-CAS-/Fehler-Nichtmutation. Ausschließlich synthetisch. Keine neue Finanzengine und keine Erweiterung wirtschaftlicher Löschrechte. #255 insgesamt bleibt PARTIAL bis seine übrige Fachmatrix tatsächlich abgenommen ist. Produktion unverändert v251 LIVE_ACCEPTED. Danach #256 seriell.
+
+---
+
 ## v251 – LIVE_ACCEPTED · bestätigte aktuelle Produktion / 01.11.2026
 
 **Dieser abgeschlossene Stand übersteuert alle älteren Pending-/MERGED-/DEPLOYED-Zeilen darunter.** Main **`7c720dddd5450fd4c2342deae9c7d91427ee01e7`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, SW **`foliolab-open-v251`**, [PR #261](https://github.com/joke0071/foliolab-open/pull/261). Main zum Abschluss per GitHub frisch bestätigt und unverändert. Kandidat `c674165f378cc6a174ff4e22287584310d3dacb1`/synthetischer Merge `6af05d66042ac63e9b4152a317ef1110ce82a3bd` besitzen exakt denselben geprüften Tree.
