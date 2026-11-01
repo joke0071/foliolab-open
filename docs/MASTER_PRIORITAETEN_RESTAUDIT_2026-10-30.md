@@ -1,3 +1,23 @@
+## Verbindlicher Import-/Historiennachtrag übernommen · 01.11.2026
+
+Der aktive Masterowner Work/root `b1399897b0ba` hat den aktuellen Plan `docs/IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md` sowie die neuesten Nachträge **#174 / Kommentar 6559985292** und **#119 / Kommentar 6559989156** ausdrücklich gelesen. Keine zweite Entwicklungsübernahme und kein neuer Implementierungsbranch.
+
+**Serielle Reihenfolge:** laufenden v260-Release sicher abschließen → #266 mit echter Kursversorgung, Marketstack und vollständiger API-/IDB-/Backup-/Restore-Schlüsselbereinigung → gemeinsamer CSV-/Blockchain-Import als **P1-Kernpaket vor neuer reiner Kosmetik**. #257 Long-Press und alle übrigen aktiven Masterpakete bleiben erhalten; abgeschlossene #268-Korrekturen wiederverwenden.
+
+**Verbindlicher Umfang:** Flatex AT, Bitpanda, Bittr, Ledger Live und Kraken plus bestehende BTC/HD-, ETH/ERC20- und SOL/SPL-Historien. Ein gemeinsamer Einstieg, sichere automatische Erkennung und wiederverwendete bestätigte Konten-/Walletzuordnungen, quellenübergreifender Abgleich, kompakte Auswirkungen und einmal „Geprüfte Änderungen übernehmen“. Zusätzliche Belege verändern eine bereits erfasste wirtschaftliche Wirkung nicht nochmals. Kauf bleibt vom späteren internen Transfer getrennt; beide Transferseiten und verschiedene tatsächlich angefallene Gebühren bleiben erhalten. Starke native Referenzen/Locators und exakte Mengen prüfen; Zeit/Betrag allein erzeugt nur Vorschläge. Fehlende Kostenbasis bleibt unbekannt.
+
+**UH01:** kurzer Deltaabgleich bestehender Originalanalysen, Formatprofile, Belege und vorhandener Module; private Originale zuerst wiederfinden, nicht pauschal erneut anfordern. Anbieteroriginale, Rekonstruktionen und konsolidierte Dateien unterscheiden. Kein neuer Gesamtaudit und keine zweite Import-/Journal-/Bestandsengine.
+**UH02:** kleinste vollständige **Bittr + Ledger Live + Bitcoin**-Kette bis atomarem persistentem Ergebnis, Reload, Wiederimport, Undo und verschlüsseltem Backup/Restore. Keine erneute Preview-only-Abnahme.
+**UH03:** Kraken/Bitpanda und ETH/ERC20/SOL/SPL mit denselben Regeln, belegten Käufen/Transfers/Gebühren/Rewards und Originalformatkorrekturen.
+**UH04:** Flatex Depot-/Kontodateien im selben Assistenten bis zur geprüften Übernahme und Historie führen; vorhandene native Simulation nutzen.
+**UH05:** alle fünf Anbieter/Quellreihenfolgen, Mehrfachereignisse/N:M, HD-Overlap, gelöschte/korrigierte Daten, Lücken/Reorgs, CAS/Abbruch/Offline/Restore sowie große mobile Stapel gemeinsam abnehmen und sichere Inkremente veröffentlichen.
+
+Öffentliche Tests ausschließlich synthetisch, Originalprüfungen isoliert und privat. Bestehende Anfangsbestände, manuelle Buchungen, Stichtage, Lösch-/Wiederimportschutz und unabhängige Finanz-Sollwerte erhalten. Kein halber oder stiller Teilimport. Vor Übernahme aktuelle Revision/Abhängigkeiten prüfen; keine Finanz-/Speicher-/Backup-/Sicherheitsgates reduzieren. Kein physischer Android-Beleg aus Emulation ableiten.
+
+**Status:** Auftrag und Priorität verbindlich in den Master übernommen. UH-Produktimplementierung und erneute private Originalprüfung noch nicht begonnen, da v260/#266 zuerst abzuschließen sind. Aktueller Release und Owner bleiben unverändert. Nach #266 UH01 kurz durchführen und UH02 tatsächlich implementieren, ohne zusätzliche Freigabeschleife. Historischen Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v251 – LIVE_ACCEPTED · bestätigte aktuelle Produktion / 01.11.2026
 
 **Dieser abgeschlossene Stand übersteuert alle älteren Pending-/MERGED-/DEPLOYED-Zeilen darunter.** Main **`7c720dddd5450fd4c2342deae9c7d91427ee01e7`**, Tree **`1e16eb23f2c80f83ccfa36c987e517985240ff55`**, SW **`foliolab-open-v251`**, [PR #261](https://github.com/joke0071/foliolab-open/pull/261). Main zum Abschluss per GitHub frisch bestätigt und unverändert. Kandidat `c674165f378cc6a174ff4e22287584310d3dacb1`/synthetischer Merge `6af05d66042ac63e9b4152a317ef1110ce82a3bd` besitzen exakt denselben geprüften Tree.
