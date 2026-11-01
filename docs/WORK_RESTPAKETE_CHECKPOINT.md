@@ -1,3 +1,9 @@
+## ACTIVE – cab7b49c3d16 / Owner-Konflikt gelöst – 01.11.2026
+
+STOP/Abgabe der Vorgängersitzung ausdrücklich bestätigt (Eintrag darunter). Alleiniger Owner **cab7b49c3d16**. Main v262 `89095774ad605261a293c4b7bc049580f1f91deb` LIVE_ACCEPTED, keine neue offene Produkt-PR/laufende Main-CI. Jetzt #266: FMP/Twelve/direct-EODHD aus Runtime/UI/Config und neuen Backups entfernen; Suche über lokale Referenzen + streng bestätigte Alpha-Xetra-Treffer, FX über vorhandenes Frankfurter. Physische IDB-Bereinigung mit Revision/CAS, Legacy-Restore und neue Exporte prüfen. Worker/CoinGecko/Wallet/RPC/Drive und Finanz-/Kursdaten erhalten. Ein Produktkandidat; finale CI einfrieren. EFF01/HND01: bisher 1 akzeptierte Releaseabnahme, nach nächstem LIVE_ACCEPTED Übergabe.
+
+---
+
 ## STOPPED / HANDOVER_READY – Verantwortung an cab7b49c3d16 abgegeben – 01.11.2026
 
 **Explizite STOP-Bestätigung der Vorgängersitzung b1399897b0ba auf unmittelbaren Nutzerauftrag.** Die Entwicklungs-, Integrations-, QA- und Releaseverantwortung ist vollständig an **Work-Chat cab7b49c3d16** abgegeben. b1399897b0ba ist **STOPPED**, beansprucht keine aktive Ownership mehr und beginnt keine Implementierung, keinen Branch, keine PR, keinen Merge, kein Deployment und keinen weiteren Testlauf. Laufende GitHub Actions werden unverändert gelassen. Der neuere INTEGRATION_HOLD-/Übernahmeeintrag von cab7b49c3d16 und sämtliche weiteren vorhandenen Einträge bleiben darunter vollständig erhalten. Die dort geforderte explizite Abgabebestätigung ist damit erfolgt; historische eigene Owner-Zeilen darunter sind überholt.
