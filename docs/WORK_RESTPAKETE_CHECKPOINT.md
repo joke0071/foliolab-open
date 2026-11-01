@@ -1,3 +1,13 @@
+## Masterübernahme /root b1399897b0ba · 01.11.2026
+
+Auf ausdrücklichen Nutzerauftrag alleiniger aktiver Entwicklungs-, Integrations-, QA- und Releaseverantwortlicher: Work /root Sitzung `b1399897b0ba`. Main frisch bestätigt `6c339c0ea502781f155d209b6443a6c02db8182d` / v259. Produktionslauf `41316381886`: alle Pflichtgruppen und Deployment `124880600234` SUCCESS; Livejob `124880732298` noch IN_PROGRESS. Kein LIVE_ACCEPTED vor vollständiger Abnahme. Keine Action abgebrochen.
+
+Nur historische Drafts #157/#161 offen; keine remote #268-Implementierung. Vorhandene sechs lokale Änderungen von Sitzung `8e5a26892934` auf `fix/eth-history-cursor-268` unverändert in eigenen Checkout übernommen; alter Checkout bleibt unangetastet. Kein zweiter Entwicklungsbranch. Vor jeder Integration frischen Stand prüfen; keine Integration vor v259-Abschluss. Die konkrete private Fehlerursache bleibt unbewiesen. Nächster Schritt: übernommene Cursor-/Restartlogik prüfen, synthetische Browser-/Finanz-Nichtmutation nachweisen und remote sichern.
+
+**P1A #266 verbindlich:** Marketstack mit eigenem privaten Nutzerkey real für vier EUR/XETR-ETFs prüfen (Identität, Datum, CORS, Tarif, Kontingent/Mehrsymbol, Rechte). Schlüssel noch nicht in dieser Sitzung verifiziert. Danach nicht mehr nutzbare FMP-/Twelve-/direkte EODHD-Keys über Konfiguration, IDB-Migration, Speichern und neue verschlüsselte Backups/Restore vollständig entfernen; benötigte Suche/FX vorher ablösen. Eigener EODHD-Worker, CoinGecko/Wallet/RPC/Drive, historische Kursbelege und Finanzdaten erhalten; alte Backupdateien unverändert. Keine funktionslosen Quellen integrieren. Danach #257 Long-Press/Erstauswahl/Symbolcheckbox; weitere Master inklusive #174/#252 ACTIVE. Historischen Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v259 MERGED – Produktionsabnahme ausstehend · 01.11.2026
 
 Main `6c339c0ea502781f155d209b6443a6c02db8182d`, Tree `e37cba420e6fbf685bd1e1d77f8d4514d2102f9a`, SW `foliolab-open-v259`. PR #271 nach frischem Main-/HEAD-/Tree-/Reviewabgleich squash-integriert. Finale Pflicht-CI `41314821732` und Wallet `41314821774` erfolgreich: 1.065 Tests, 0 Fehler/Skips, Chromium und alle Firefox-/WebKit-Gruppen. Neue Alpha-Suite in beiden Engines mit Cache-Minimierung erfolgreich; bestehende Finanz-/PWA-/Offline-/CAS-/Backup-Gates unverändert. Main-/Produktionslauf `41316381886` läuft. Noch kein DEPLOYED oder LIVE_ACCEPTED für v259; bestätigte Rückfallbasis bleibt v258.
