@@ -62,3 +62,6 @@ for(const name of (process.env.RECOVERY_ENGINES||'chromium').split(',')){
  }finally{await context.close();await browser.close();}
 }
 await writeFile('artifacts/gates/recovery-limits/report-'+(process.env.RECOVERY_ENGINES||'chromium').replaceAll(',','-')+'.json',JSON.stringify(report,null,2));
+// Keep the additional real plaintext writer/reader contract sequential in all
+// existing local and production Chromium/Firefox/WebKit recovery gates.
+await import('./browser-plain-backup-limits.mjs');

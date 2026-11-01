@@ -35,7 +35,12 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
  await p.locator('#heroReviewToggle').click();await p.locator('[data-action=open-quality-review]').click();
  await p.context().setOffline(true);await nav('positions');await p.locator('[data-filter=__review]').click();assert.ok(await p.locator('[data-action=refresh-quality-sources]').isDisabled(),'offline source action is disabled');await p.context().setOffline(false);
  assert.deepEqual(await record(),before,'offline navigation does not write');
- await p.locator('[data-review-position=quality-missing] [data-action=edit-position]').click();await p.locator('#dialogFields [name=price]').fill('42');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});
+ await p.locator('[data-review-position=quality-missing] [data-action=edit-position]').click();await p.locator('#dialogFields [name=price]').fill('42');
+ // Native close queues its close event after hiding the dialog. Focus restoration
+ // belongs to that event; wait for it, then retain the exact focus assertion below.
+ await p.evaluate(()=>{window.__qualityEditorClosed=false;document.getElementById('editDialog').addEventListener('close',()=>{window.__qualityEditorClosed=true;},{once:true});});
+ await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});
+ await p.waitForFunction(()=>window.__qualityEditorClosed===true,null,{timeout:5000});
  assert.match(await p.locator('#qualityReviewProgress').innerText(),/1 von 3 Positionen/);assert.match(await p.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 2 Positionen/);assert.equal(await p.locator('.quality-review-card').count(),4,'manual price does not invent source confirmation');
  assert.equal(await p.evaluate(()=>document.activeElement.dataset.id),'quality-missing','focus returns to the matching refreshed card');
  const after=await record(),old=JSON.parse(before.raw),updated=JSON.parse(after.raw);assert.equal(after.revision,before.revision+1);assert.equal(updated.positions.find(x=>x.id==='quality-missing').priceExact,'42');assert.ok(!updated.positions.find(x=>x.id==='quality-missing').quoteQuality);

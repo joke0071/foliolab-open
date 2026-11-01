@@ -9,6 +9,19 @@ const tooLarge=limit=>Error('Backup ist zu groß für die sichere Wiederherstell
 export function assertLocalBackupFileSize(bytes){
  if(bytes>LOCAL_BACKUP_FILE_BYTES)throw Error('Backup ist zu groß (max. 20 MB). Vorhandene Daten bleiben unverändert.');
 }
+/** Prepare already serialized portfolio JSON for the unchanged local reader.
+ * Normal exports retain their readable formatting. At the size boundary only
+ * JSON whitespace is removed; legacy revision/history metadata is never cut.
+ * An unportable file throws before any download URL or success acknowledgement.
+ */
+export function localJSONBackupFile(json){
+ if(typeof json!=='string')throw Error('Backup enthält ungültige Dateidaten.');
+ const options={type:'application/json'};
+ let file=new Blob([json],options);
+ if(file.size>LOCAL_BACKUP_FILE_BYTES)file=new Blob([JSON.stringify(JSON.parse(json))],options);
+ assertLocalBackupFileSize(file.size);
+ return file;
+}
 export function assertDriveBackupTextSize(text){
  if(typeof text!=='string')throw Error('Backup enthält ungültige Dateidaten.');
  if(text.length>DRIVE_BACKUP_FILE_CHARS)throw Error('Drive-Backup ist zu groß (max. 15 Millionen Zeichen). Vorhandene Daten bleiben unverändert.');
