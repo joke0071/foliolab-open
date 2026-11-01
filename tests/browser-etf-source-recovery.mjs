@@ -20,9 +20,9 @@ for(const engine of engines){
   if(u.hostname==='financialmodelingprep.com'&&!failing){
    const index=pairs.findIndex(([s])=>s+'.DE'===u.searchParams.get('symbol'));
    assert.ok(index>=0,'No guessed symbol or foreign venue');
-   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([{symbol:pairs[index][0]+'.DE',exchange:'XETR',currency:'EUR',date,price:101+index}])});
+   return route.fulfill({status:200,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify([{symbol:pairs[index][0]+'.DE',exchange:'XETR',currency:'EUR',date,price:101+index}])});
   }
-  return route.fulfill({status:404,contentType:'application/json',body:JSON.stringify({status:'error',code:404,message:'Not available'})});
+  return route.fulfill({status:404,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify({status:'error',code:404,message:'Not available'})});
  });
  const record=()=>page.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
  try{
@@ -43,7 +43,8 @@ for(const engine of engines){
   await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
   assert.equal((await record()).settings.eodhdKey,'SYNTHETIC_LEGACY_PRESERVE','Absent form field cannot erase old secret');
   await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('#refreshAll').click();
-  await page.waitForFunction(()=>document.querySelector('#priceInfo')?.textContent.includes('4 Datenupdates'));
+  await page.waitForFunction(()=>!document.getElementById('refreshAll').disabled);
+  assert.match(await page.locator('#priceInfo').innerText(),/4 Datenupdates/,'Four source updates required; '+await page.locator('#refreshErrorDetails').innerText());
   const after=await record(),m=JSON.parse(after.raw);
   assert.deepEqual(m.positions.map(p=>p.price),[101,102,103,104]);
   assert.ok(m.positions.every(p=>p.quoteAsOf===date&&p.quoteSource==='FMP'&&p.quantityExact==='3.14159'));
@@ -68,6 +69,9 @@ for(const engine of engines){
   assert.ok(requests.every(r=>!r.host.includes('eodhd')&&!r.host.includes('eodhistoricaldata')&&!r.host.includes('workers.dev')),'Worker-free path only');
   assert.deepEqual(errors,[]);results.push({engine,synthetic:true,holdings:4,source:'FMP direct',asOf:date,legacyKeyPreserved:true,diagnosisReadOnly:true,failedRefreshPreservesQuotes:true,widths:[320,360,390,412,430,768,1440],axeViolations:0});
   console.log(engine+': ETF-SOURCE-266 synthetic four-listing direct fetch, IDB, old-key preservation, 404 fallback, diagnostics, widths/Axe PASS');
+ }catch(error){
+  console.log('ETF_SOURCE_SYNTHETIC_FAILURE '+JSON.stringify({engine,requests,errors,state:await page.evaluate(()=>({priceInfo:document.getElementById('priceInfo')?.textContent,errors:document.getElementById('refreshErrorDetails')?.textContent,toast:document.getElementById('toast')?.textContent})).catch(()=>null)}));
+  throw error;
  }finally{await context.close();await browser.close();}
 }
 mkdirSync('artifacts/gates',{recursive:true});writeFileSync('artifacts/gates/etf-source-recovery.json',JSON.stringify({base,liveProviderVerification:false,results},null,2));
