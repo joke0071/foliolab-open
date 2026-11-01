@@ -1,3 +1,15 @@
+## STOPPED / HANDOVER_READY – Verantwortung an cab7b49c3d16 abgegeben – 01.11.2026
+
+**Explizite STOP-Bestätigung der Vorgängersitzung b1399897b0ba auf unmittelbaren Nutzerauftrag.** Die Entwicklungs-, Integrations-, QA- und Releaseverantwortung ist vollständig an **Work-Chat cab7b49c3d16** abgegeben. b1399897b0ba ist **STOPPED**, beansprucht keine aktive Ownership mehr und beginnt keine Implementierung, keinen Branch, keine PR, keinen Merge, kein Deployment und keinen weiteren Testlauf. Laufende GitHub Actions werden unverändert gelassen. Der neuere INTEGRATION_HOLD-/Übernahmeeintrag von cab7b49c3d16 und sämtliche weiteren vorhandenen Einträge bleiben darunter vollständig erhalten. Die dort geforderte explizite Abgabebestätigung ist damit erfolgt; historische eigene Owner-Zeilen darunter sind überholt.
+
+**WIP-Sicherung:** Kein getrackter oder gestagter Quellcode-Diff im bisherigen Checkout `/workspace/scratch/b1399897b0ba/foliolab-open`. Lokaler Branch `fix/marketstack-history-gaps-266`, HEAD `39f00a3456346476f5b151f964dae676161ec66a`, vollständig remote gesichert und bereits durch PR #274 integriert. Letzter von dieser Sitzung bestätigter Produktstand: v262 LIVE_ACCEPTED, Main `89095774ad605261a293c4b7bc049580f1f91deb`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`; Run 41330819283, Deployment 124923974833 und Livejob 124924156880 SUCCESS. Maßgeblich bleiben neuere Feststellungen des Nachfolgers.
+
+Ungetrackt vorhanden sind ausschließlich erzeugte lokale Prüfberichte/-bilder unter `artifacts/gates/`, der bereits remote gesicherte `docs/release-evidence/v260-production-eth-repro.mjs` und der lokale `node_modules`-Verweis. Keine ungesicherte Produktimplementierung. Öffentliche relevante Releasebelege sind auf dem Checkpoint-Branch unter `docs/release-evidence/v262-*.json` gesichert. Private Originaldatei-Locatoren und Hilfsproben liegen außerhalb des Repos unter `/workspace/scratch/b1399897b0ba/private/`; nicht veröffentlichen. Temporäre Klartext-Testschlüsseldatei bereits entfernt, Originaldateien/Backups unverändert. Keine erneuten Provideranfragen erforderlich.
+
+**Ab jetzt alleiniger aktiver Verantwortlicher: cab7b49c3d16.** Diese Vorgängersitzung führt keine Folgearbeit aus. Die bestehenden P1A-/Import-/UI-Prioritäten bleiben unverändert in der Hand des Nachfolgers.
+
+---
+
 ## INTEGRATION_HOLD – Owner-Konflikt / 01.11.2026
 
 **v262 bleibt vollständig LIVE_ACCEPTED.** Main `89095774ad605261a293c4b7bc049580f1f91deb`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`; Run `41330819283`, Deployment `124923974833`, Livejob `124924156880` SUCCESS. Abschlusslogs und Artefaktdigest von übernehmender Sitzung cab7b49c3d16 unabhängig bestätigt; zusätzliche sieben reguläre HTTPS-Bytevergleiche PASS. Bestehende Belege darunter unverändert bewahrt.
