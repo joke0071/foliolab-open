@@ -1,3 +1,113 @@
+## STOP / kontrollierte Übergabe · 01.11.2026, 13:11 UTC
+
+**Aktive Entwicklungs-, Integrations- und Releaseverantwortung abgegeben.** Auf ausdrücklichen Nutzer-STOP keine Folgeimplementierung, kein neuer Branch/PR/Merge/Deployment und kein weiterer umfangreicher Testlauf. Keine Action abgebrochen oder erneut gestartet.
+
+### Tatsächlicher Stand
+
+- **v257 bleibt LIVE_ACCEPTED.** Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, SW `foliolab-open-v257`. Produktionslauf [41304484412](https://github.com/joke0071/foliolab-open/actions/runs/41304484412) erneut geprüft: completed/success, attempt 2. Die vorherigen Nachweise und Grenzen unten bleiben erhalten.
+- **v258 / #267+#264: IN_PROGRESS, vollständige CI BLOCKED, nicht gemergt/deployt/live abgenommen.** [PR #270](https://github.com/joke0071/foliolab-open/pull/270), Branch `fix/cash-account-ux-267-264`, veröffentlichter HEAD `894e8c4a20ce81582ba23921d2c14021fc13838b`, Tree `e41f52234eebc310bec5c0204634dcfa255566d3`. Keine neuere konkurrierende Implementierung gefunden.
+- [CI 41309013522](https://github.com/joke0071/foliolab-open/actions/runs/41309013522) ist inzwischen **completed/failure**, nicht mehr IN_PROGRESS. Plan und FAST erfolgreich; Cross-Engine 2 erfolgreich. Chromium/test sowie Cross-Engine 1 und 3 fehlgeschlagen. Deployment und Live-Abnahme skipped. Wallet-Scan [41309013600](https://github.com/joke0071/foliolab-open/actions/runs/41309013600) completed/success. Alle Jobs sind abgeschlossen; keine Action wurde für die Übergabe abgebrochen.
+- Weitere offene PRs ausschließlich historische Drafts #157 (HEAD `08714cc602110bae479083b3d38fa1adc9be280c`) und #161 (HEAD `0d980c2f43f28fd06ef9a7403b2144b6099fbc74`). Nicht ungeprüft integrieren.
+
+### Umfang und tatsächlich vorhandene Nachweise von #270
+
+Ein Name/eine Währung bei neuen einfachen Geldkonten, separate exakte Guthabenposition; konservative einzelne Dashboard-Kontokarte; Anbieter→Konto→Datenstand mit zugehörigen Aktionen und Fokuswiederherstellung. Keine Migration, Zusammenführung oder automatische Änderung bestehender Namen. Umfang: `docs/CASH_UX_267_264.md` auf dem PR-Branch.
+
+1.057 lokale Unit-Tests erfolgreich; Syntax/Diff sauber. Neue zusätzliche CASH-UX/ACCOUNT-Suite besteht in Chromium, Firefox und WebKit (echte UI/IDB-Anlage, Vertragsbearbeitung ohne Finanzmutation, getrennte Verträge, Fokus, 0/1/2 Konten, sieben Breiten 320–1440 px, Axe und UI-Backup/Restore). ETF-Regression in allen Engines erfolgreich. Cross-Engine 2 umfasst erfolgreiche Finanzkette mit USD-Teilfüllungen/historischen FX und realem verschlüsseltem Restore. Kein physischer Android-Test behauptet.
+
+Synthetische Cross-Engine-2-Screenshots bei 320 px und Desktop visuell geprüft. Artefakt `13084761951`, SHA-256 `de09f53e396a938db700f02ede08e8d4c8b88df7895f088f8039b380e7cb8c4f`: heruntergeladen, Hash stimmt, ZIP-CRC vollständig fehlerfrei. Fehlgeschlagene Originalnachweise bleiben im CI-Lauf erhalten.
+
+### Exakte CI-Blocker und noch nicht auf den PR-Branch übernommene Korrektur
+
+Die neue Dashboard-Aktion verwendet dieselbe fachliche Action-ID wie vorhandene Positionen-/Kontenaktionen. Zwei ältere Suites suchen seitenübergreifend und treffen zusätzlich die versteckte andere Seite:
+- test/Chromium, Job `124855336414`, und Cross-Engine 3, Job `124855336394`: `browser-cash-reconciliation.mjs:56`, strict-mode violation für `check-cash-balance / first-cash` (Dashboard plus Positionsliste).
+- Cross-Engine 1, Job `124855336450`: `browser-cash-terms.mjs:77`, globales `edit-account / term-one` trifft Dashboard plus Anbieter/Konten; der Disclosure-Helfer hat dadurch zwei Treffer.
+- Cross-Engine 2, Job `124855336442`, erfolgreich; durch die obigen Stopps sind nachfolgende Suites der anderen Jobs nicht vollständig nachgewiesen.
+
+**Vor STOP bereits vorbereitet:** Testkorrektur-Commit `ec8f6b1b5ee8c7007047ca291636290f7506c446` wurde als GitHub-Commitobjekt erstellt, Parent `894e8c4a20ce81582ba23921d2c14021fc13838b`, Tree `98573c8fdf0d0341eabeba387139f5413bacba6c`. Er ist absichtlich **nicht an einen Branch angehängt**, damit kein neuer CI-Lauf entsteht. Nicht als CI-geprüften HEAD behandeln. Drei lokale gestagte Testdateien entsprechen exakt diesem Tree; keine weiteren lokalen Produktänderungen. Syntax/Diff für die sechs Selektorkorrekturen sauber; kein Browserlauf auf dieser Korrektur. Kein neuer SW erforderlich, weil ausschließlich Tests geändert wurden. Der vollständige Patch steht unten dauerhaft im Checkpoint, falls das nicht referenzierte Commitobjekt später nicht mehr abrufbar ist.
+
+Lokaler Arbeitsordner zum Übergabezeitpunkt: `/workspace/scratch/d72ece214a83/foliolab-open`; lokaler HEAD `894e8c4a20ce81582ba23921d2c14021fc13838b`. Nicht auf Verfügbarkeit dieses Scratch-Ordners vertrauen; der Patch ist unten vollständig gesichert.
+
+### Nächster Schritt ausschließlich im neuen Work-Chat
+
+Frische Main-/PR-/Branch-/Checkpoint-/CI-Prüfung vor jeder Mutation. Danach die unten gesicherte reine Selektorkorrektur auf #270 übernehmen (oder identisches vorbereitetes Commit nach frischer Parent-Prüfung an den Branch anhängen), vollständige Pflicht-CI erneut ausführen und erst danach Merge/Deployment/echte Live-Abnahme. Keine reduzierten Gates und kein Weglassen der vorhandenen Finanz-/Offline-/Fokusprüfungen. **Dieser Chat startet das nicht mehr.**
+
+#266 bleibt **P1A / PARTIAL / externer Realnachweis offen**: v257 repariert Zuordnung, Quellenplan und Diagnostik, belegt aber keine autorisierten echten vier ETF-Schlusskurse auf FolioLab-Origin. Private verschlüsselte Backups/API-Zugänge sind laut neuer Nutzerfreigabe für reale Anbieterprüfungen freigegeben; in diesem Änderungsschnitt noch nicht verwendet. Private Zugänge, Backupinhalte, Passwörter, Wallets oder Originalscreenshots niemals in öffentliche Artefakte kopieren. Keine Wiederholung bereits erledigter v257-Arbeit.
+
+#268: ausschließlich lesende Voranalyse/synthetische Einmalreproduktion, **keine Implementierung**. Aktueller Adapter lehnt sowohl Token-Batch-Cursor mit `index_in_batch` als auch ETH-Transaktionscursor mit `fee,value,inserted_at,hash` ab. Offizieller Blockscout-Quellcode bestätigt die Felder: `apps/block_scout_web/lib/block_scout_web/chain.ex:token_transfers_next_page_params` und `apps/explorer/lib/explorer/chain/transaction.ex:address_transactions_next_page_params`. Synthetischer früher Netzfehler erzeugt Resume mit 0 Jobs und anschließend `invalid-cursor`. Keine privaten Anfragen/Adressen benutzt; konkrete Ursache der privaten Android-Anfrage bleibt unbewiesen. Nach Kontenabnahme endpointbezogen validieren, sichere Neustartlogik, vorhandene bestätigte Historien schützen. Danach #257 samt aktuellen Zusatzwünschen; alle übrigen aktiven Masterpakete bleiben aktiv.
+
+### Vollständig gesicherter lokaler Patch
+
+```diff
+diff --git a/tests/browser-cash-reconciliation.mjs b/tests/browser-cash-reconciliation.mjs
+index 3127da3..eb6e670 100644
+--- a/tests/browser-cash-reconciliation.mjs
++++ b/tests/browser-cash-reconciliation.mjs
+@@ -50,7 +50,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
+   });
+   await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();
+   // Use the app's existing account and position disclosure, just like a user.
+-  const button=page.locator('[data-action="check-cash-balance"][data-id="first-cash"]');
++  const button=page.locator('#positionList [data-action="check-cash-balance"][data-id="first-cash"]');
+   for(const details of await button.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
+   const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
+   await clickDisclosed(button);assert.match(await page.locator('#dialogFields').innerText(),/Testbank.*first.*EUR/s);
+@@ -80,7 +80,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
+   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before,'comparison cannot persist a correction');
+   // Selected foreign-currency account, no conversion; reset label on normal editors.
+   await page.setViewportSize({width:390,height:844});
+-  const usd=page.locator('[data-action="check-cash-balance"][data-id="usd-cash"]');
++  const usd=page.locator('#positionList [data-action="check-cash-balance"][data-id="usd-cash"]');
+   for(const details of await usd.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
+   await clickDisclosed(usd);await page.locator('#cashReference').fill('-1');await page.locator('#cashReferenceCurrent').check();
+   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/-21,1 USD/);
+@@ -92,7 +92,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
+   await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Service worker not ready')),15000))]);});
+   await page.waitForFunction(()=>navigator.serviceWorker.controller);
+   server=await stopServer(server);await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
+-  const offline=page.locator('[data-action="check-cash-balance"][data-id="second-cash"]');
++  const offline=page.locator('#positionList [data-action="check-cash-balance"][data-id="second-cash"]');
+   for(const details of await offline.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
+   await clickDisclosed(offline);await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
+   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
+diff --git a/tests/browser-cash-terms.mjs b/tests/browser-cash-terms.mjs
+index 93eaa8c..96e2d2a 100644
+--- a/tests/browser-cash-terms.mjs
++++ b/tests/browser-cash-terms.mjs
+@@ -65,7 +65,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
+   const compare=async()=>{
+    await page.setViewportSize({width:390,height:844});
+    await page.locator('#mobileNav [data-page="positions"]').click();
+-   const check=page.locator('[data-action="check-cash-balance"][data-id="term-one-cash"]');
++   const check=page.locator('#positionList [data-action="check-cash-balance"][data-id="term-one-cash"]');
+    const raw=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
+    await clickDisclosed(check);await page.locator('#cashReference').fill('101');await page.locator('#cashReferenceCurrent').check();
+    await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/1 EUR/);
+@@ -74,7 +74,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
+   };
+   await page.locator('#mobileNav [data-page="more"]').click();
+   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);
+-  const edit=page.locator('[data-action="edit-account"][data-id="term-one"]');await clickDisclosed(edit);
++  const edit=page.locator('#providerSettings [data-action="edit-account"][data-id="term-one"]');await clickDisclosed(edit);
+   assert.equal(await page.locator('#cashTermsDisclosure').getAttribute('open'),null);
+   await page.locator('#cashTermsDisclosure').evaluate(e=>e.open=true);await page.locator('#cashTermsEnabled').check();
+   await page.locator('#fixedTerm').check();await page.locator('#liquidityStatus').selectOption('bound');
+diff --git a/tests/browser-interest-scenario.mjs b/tests/browser-interest-scenario.mjs
+index b41c706..5f2b339 100644
+--- a/tests/browser-interest-scenario.mjs
++++ b/tests/browser-interest-scenario.mjs
+@@ -83,7 +83,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
+   await preview();assert.match(await page.locator('#interestResult').innerText(),/Festgeld/);await page.locator('#cancelDialog').click();
+   assert.equal(await financial(),before);
+   // Existing AT03-A path with new interest metadata stays read-only.
+-  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('[data-action="check-cash-balance"][data-id="one-cash"]');
++  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('#positionList [data-action="check-cash-balance"][data-id="one-cash"]');
+   for(const d of await check.locator('xpath=ancestor::details').all())await d.evaluate(e=>e.open=true);
+   await clickDisclosed(check);await page.locator('#cashReference').fill('10005');await page.locator('#cashReferenceCurrent').check();await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch/);await page.locator('#cancelDialog').click();
+   // Current password-vault encrypted full backup, then real UI restore of old/new data.
+```
+
+---
 ## CASH-UX01 #267 / UX-MORE-ACCOUNT01 #264 – IN_PROGRESS · 01.11.2026
 
 Ein gemeinsamer aktiver Integrationsstrang: [PR #270](https://github.com/joke0071/foliolab-open/pull/270), Branch `fix/cash-account-ux-267-264`, HEAD `894e8c4a20ce81582ba23921d2c14021fc13838b`, Tree `e41f52234eebc310bec5c0204634dcfa255566d3`, Basis Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d` (v257 LIVE_ACCEPTED). Kandidat v258, noch nicht veröffentlicht.
