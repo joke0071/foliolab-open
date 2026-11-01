@@ -7,10 +7,12 @@ const pairs=[['VWCE','IE00BK5BQT80'],['XDEM','IE00BL25JP72'],['XDEQ','IE00BL25JL
 const date=new Date(Date.now()-864e5).toISOString().slice(0,10),results=[];
 for(const engine of engines){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
- const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage();
+ const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'}),page=await context.newPage();
  const errors=[],requests=[];let failing=false;
  page.on('pageerror',e=>errors.push(e.message));
  await page.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});
+ // Isolate provider mocks from Service Worker routing (WebKit otherwise bypasses
+ // Playwright routes). Separate mandatory PWA/offline/update suites retain real SW.
  // All financial data and access tokens are synthetic. This is a contract/UI
  // regression, explicitly not live-provider coverage, CORS or hardware evidence.
  await context.route('**/*',route=>{
