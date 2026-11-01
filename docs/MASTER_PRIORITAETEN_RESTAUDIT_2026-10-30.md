@@ -1,3 +1,15 @@
+## v262 Korrekturkandidat gesichert / echte Vier-ETF-Probe PASS – 01.11.2026
+
+Basis Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9` (v261 deployt, wegen realer Historienlücken weiterhin nicht LIVE_ACCEPTED). Einziger Korrekturbranch `fix/marketstack-history-gaps-266`, HEAD **`39f00a3456346476f5b151f964dae676161ec66a`**, Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`**, SW v262. Owner Work/root b1399897b0ba.
+
+Korrektur: jüngster strikt validierter Schlusskurs separat nutzbar; Null-/Fehlwerte älterer Anbieterbeobachtungen explizit als Lücken im getrennten Kurscache erhalten. Lückenhafte Historie bleibt gesperrt, jüngster Null-/Fehlwert blockiert auch die Quote. Identität, EUR/XETR, Datum, Widersprüche und positive Preise unverändert geschützt. Gemeinsamer Cache und atomare Kontingente verhindern erneute Anfragen allein wegen derselben Historienlücken. Kein Finanz-/Konfigurations-/Backup-Migrationswechsel.
+
+**Vorab echte Kandidaten-Appkette 4/4 PASS**: Produktion als isolierte Appbasis mit ausdrücklich lokal überlagerten Kandidatenmodulen, realer privater Marketstack-Zugang, VWCE/XDEM/XDEQ/5MVL, EUR/XETR und Datum 30.10.2026. Genau vier tatsächliche Requests, Reload und Historienprüfung ohne Zusatzabruf, Mengen unverändert, keine Journal-/sonstigen Buchungen oder externen Flüsse. **Alle vier langen Anbieterreihen sind lückenhaft und werden explizit zurückgewiesen.** Keine vollständige historische Abdeckung behauptet. Beleg `docs/release-evidence/v262-real-marketstack-candidate.json`; ausdrücklich noch kein unveränderter Produktionscode-Nachweis für v262. Lokaler Loopback-Test mit Prüfproxy scheiterte vor Providerabruf an der Testumgebung; die erfolgreiche Kandidatenüberlagerung verwendet unveränderte CSP und echten Browser-CORS. Keine Originalportfoliodaten verwendet.
+
+Lokal **1.082 Tests/0 Fehler/Skips**, Syntax, Chromium/Firefox einschließlich historischer Null-/Fehlwerte, Quote-vs-Historie, Reload, Monatsgrenze, Mehrtab-CAS und sämtlicher Secret-Eingaben PASS. V261-Produktionslauf 41326923454 / Livejob 124912201845 läuft unverändert weiter; nicht abgebrochen. Nächster Schritt: dessen Abschluss dokumentieren, vollständige Korrektur-PR-CI starten, danach kontrolliert deployen und erneut vollständige tatsächliche Produktionsabnahme samt sparsamer Vier-ETF-Appkette. P1A-Alt-API-/Backupbereinigung, gemeinsamer CSV-/Blockchain-Import und #257 bleiben offen und priorisiert wie zuvor.
+
+---
+
 ## v261 DEPLOYED / reale Marketstack-Historienlücken blockieren LIVE_ACCEPTED – 01.11.2026
 
 Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`, SW v261, PR #273. Mainlauf **41326923454**: 1.079 Tests, Syntax, Chromium und alle Firefox-/WebKit-Gruppen SUCCESS. Deployment **124912114636 SUCCESS**, echte Live-Abnahme **124912201845 läuft**. Alle **125 ausgelieferten Dateien** zusätzlich mit regulärer HTTPS-Zertifikatsprüfung bytegleich bestätigt.
