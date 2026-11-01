@@ -1,3 +1,224 @@
+## STOP / KONTROLLIERTE ÜBERGABE – alleinige Verantwortung an neuen Work-Chat · 01.11.2026
+
+**Verbindlicher Nutzer-STOP übernommen. Dieser bisherige Work-Chat gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine Folgeimplementierung, kein neuer Arbeitsbranch/PR, kein Merge/Deployment und kein umfangreicher Testlauf begonnen. Nach diesem abschließenden Checkpoint-Commit führt dieser Chat keine weiteren GitHub-Schreibaktionen aus.** Vorherige Owner-/Next-#264-/Fortsetzen-Einträge unten sind historisch und durch diese Übergabe übersteuert. Der neue Work-Chat bestimmt den nächsten Umfang anhand der aktuellen Issues/Nutzerprioritäten und eines eigenen frischen Kollisionschecks.
+
+### Frisch verifizierter Remote-Stand
+
+- Main **`512d935098e2d31366b861352d94684cae7582cb`**, Tree **`ddb910797eec6484417992d860460eee724e558e`**; App/SW **`foliolab-open-v252` LIVE_ACCEPTED**.
+- [PR #265](https://github.com/joke0071/foliolab-open/pull/265) abgeschlossen. Quellbranch `test/fin-e2e01-fx-partial-fills` bleibt auf **`52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e`**; bereits integriert, nicht erneut übernehmen.
+- [Main-/Produktionslauf 41293317485](https://github.com/joke0071/foliolab-open/actions/runs/41293317485) **completed/success**. Testjob124808940377, Cross-Engine124808940416/428/454, Deployment124811800498, Live124811872366 erfolgreich. FAST-Job regulär übersprungen, keine Unit-Test-Skips. Bisherige Abnahme: **1052/1052 Tests**, Syntax, Chromium/Firefox/WebKit, tatsächliche 16-Schritt-FIN-Kette, 123 Assetmatches, sechs Kerngruppen/18 Axe-Scans. Keine neue Testausführung für diesen STOP.
+- Explizite GitHub-Abfragen `status=in_progress` und `status=queued`: jeweils **0 Läufe**. Laufende CI wurde weder abgebrochen noch verändert.
+- Vollbeleg `docs/release-evidence/fin-e2e01-pr265-live-acceptance.json`; vorheriger Checkpoint-/Roadmap-/Evidenzcommit **`f95a0b4487ac456052ebf4adfb8273428bdcc4d3`**. Live-Artefakt13079375146, SHA256 `8a37c5030932001441e00b2926799ac11a42471faf8d45f2930f504c8c858f9b`.
+- Weitere bereits integrierte Quellbranches: `fix/plain-json-backup-reader-limits` **`3f24881458e58a1345b424491bb4ad8e5a8840bc`** (#263, Main28903ff201bf0c942851874dc118f3699e0a5d43 / Tree96fa344a84e2c5325f17cc279b32d4558dfe95fa) und `test/fin-e2e01-cash-chain` **`70400c3ac42c2663757a2cf6c1b195c924a0729d`** (#262, Main87d4669c217e5a9f7362e50239d3f85f83bcaa3b). Keine Branchlöschungen vorgenommen.
+- **Einzige offene PRs:** historischer Draft **#157**, `feature/flh03-d-native-guard`, HEAD **`08714cc602110bae479083b3d38fa1adc9be280c`**; historischer Draft **#161**, `feature/flh04-sync-design`, HEAD **`0d980c2f43f28fd06ef9a7403b2144b6099fbc74`**. Keiner ist ein aktueller Implementierungsauftrag; nicht ohne eigene Fachprüfung mergen.
+- Alle 235 sichtbaren Remote-Branches über drei API-Seiten gelesen; historische Branches bleiben erhalten. Checkpoint-Branch **`feature/flh05-import-foundation` niemals vollständig nach Main mergen**.
+
+### Neue verbindliche Nutzerentscheidungen – gelesen, ausdrücklich NICHT implementiert
+
+- **#266 / P1A ETF-Kurse ohne Worker:** workerfreier Browserbetrieb als Standard nur mit real belegter Listing-/CORS-/Tarif-/Lizenzfähigkeit. Direkten EODHD-Adapter in Auto nicht weiter als erste/ständige Quelle versuchen; prominentes direktes EODHD-Keyfeld entfernen/depriorisieren, jedoch vorhandene Keys bei fehlenden Formularfeldern keinesfalls löschen/überschreiben. Laut Nutzer funktionierenden eigenen EODHD-Worker als **freiwilliges erweitertes Backup nach nutzbaren direkten Quellen** erhalten. FMP/Twelve pro konkreter EUR-Xetra-Notierung prüfen, Mapping/fehlende Konfiguration/temporäre Fehler/dauerhafte Nichtabdeckung unterscheiden; legitime andere Funktionen wie FX erhalten. Automatische Kurse/Status benutzerzentriert, Providerdetails unter Erweitert. Keine Blindintegration von yfp/Yahoo/Alpaca oder neuer Quelle ohne positiven Beleg. Bei externer Daten-/Tarif-/CORS-Sperre ehrliche Meldung und praktikabler manueller/CSV-Kursweg. Tatsächlicher Providererfolg wurde in diesem STOP nicht geprüft oder behauptet. Neuester Override in Issue #266 hat Vorrang vor alten EODHD-Priorisierungen.
+- **#267 / CASH-UX01 P1A/P1B Tages-/Festgeld:** ein nutzerdefinierter Name und eine kompakte sichtbare Produkt-/Kontozeile im einfachen 1:1-Cash-Fall; kein redundanter Positionstitel, `1 Positionen` oder `Positionen →` dort. Cash-Wizard semantisch passend, Konto/technische Cash-Position weiterhin korrekt atomar verknüpft. Unterschiedliche Festgeldverträge/Fälligkeiten sichtbar getrennt; Altbestände niemals automatisch mergen/umbenennen/löschen. Bei gemischten/mehrpositionigen Konten Positionsnavigation erhalten. Kontosummen, Originalbelege, IDs, Cash-/Zinskonditionen, Historie, CAS/Backup unverändert. Mit #264 abstimmen; ausschließlich synthetische Beispielnamen/-beträge.
+- **#264 / UX-MORE-ACCOUNT01 P1B Kontenverwaltung:** Anbieter→Konto→dessen Datenstand sauber verschachteln; Datenstand nicht als gleichrangige Geschwisterzeile, nur eine Trennlinie. Getrennte Edit-/Löschbuttons, Open-State nach stabilen IDs, Fokus/Touch/A11y/Schutzregeln und fachliche Evidenzinhalte erhalten. **Nicht mehr pauschal alleiniger nächster Kandidat** – der neue Work-Chat priorisiert gemeinsam mit #266/#267/#268.
+- **#268 / ETH-HISTORY-CURSOR01 P1B:** Blockscout-Cursor pro Endpunkt mit belegten Schemas und synthetischen Fixtures validieren, insbesondere `index_in_batch`; keine pauschale Lockerung der Cursor-/Scope-/Tip-/Fortschrittsprüfung. Frühen Resume mit `jobs:[]`, ungültige/veränderte/zyklische Cursor sicher behandeln: echter Neustart statt unbelegtem Fortsetzen, bestätigte Historie bis zur geprüften neuen Übernahme erhalten. Anbieterformatfehler verständlich klassifizieren. Genaue Ursache des privaten Nutzerfalls ist noch nicht abschließend nachgewiesen. Keine Wallet-Adressen/Keys/Transaktionshashes oder privaten Screenshots in öffentliche Artefakte übernehmen.
+
+Alle vier Issues sind OPEN/PLANNED; dieser Chat hat dafür **keine Implementierungsbranches oder PRs** erstellt. Ältere Memory-/Roadmap-Angaben über PARKED oder Wochenendsperren sind überholt: **FLH05 und FLH-PROJ01 bleiben ACTIVE**. Die weiteren Masterpakete bleiben erhalten, ihre Übernahme erfolgt ausschließlich durch den neuen Chat.
+
+### Offene fachliche/externe Punkte
+
+#255 bleibt PARTIAL trotz zweier produktiv abgenommener Kettenschnitte: weitere Broker-Split-/FX-Transfer-/Wallet-/Staking-/Rendite-/XIRR-/TWR-/Fehlerorakel. #254 bleibt PARTIAL für weitere historische Reader-/Writer-/Versions-/Alt-Tab-/Downgrade-/Update-/Recoveryketten. #256 hat reproduzierbare **EMULATED**-Baselines; reale Android-/OS-/OAuth-/TalkBack-/Hardwareabnahme bleibt EXTERNAL. Keine Hardware-/Providerberechtigung aus synthetischen Tests ableiten. Weiterhin local-first, IDB/CAS/Journal/Decimal/Import-/Backupverträge und konservative Löschsperren erhalten.
+
+### Tatsächlich jetzt vorgefundener lokaler Stand – kein neuer Produktkandidat
+
+Arbeitsverzeichnis `/workspace/scratch/50f1560a1a9f/foliolab-open`. Der sichtbare lokale Checkout ist **älter als der maßgebliche Remote-Main**: Branch `fix/plain-json-backup-reader-limits`, HEAD **`87d4669c217e5a9f7362e50239d3f85f83bcaa3b`**, Index-Tree **`96fa344a84e2c5325f17cc279b32d4558dfe95fa`**. Keine nicht vorgemerkten Änderungen an getrackten Dateien. Die neun vorgemerkten Dateien sind **exakt vollständig bereits remote veröffentlicht**: Index-Tree stimmt mit GitHub-Tree des PR-#263-HEAD3f24881458e58a1345b424491bb4ad8e5a8840bc überein. **Nicht als neue oder ungemergte Arbeit pushen/erneut releasen.** Für die Fortsetzung frischen aktuellen Remote-Main verwenden; die FX-Folge #265 ist remote maßgeblich. Lokalen Index/Branch nicht zurückgesetzt oder bereinigt.
+
+Vorgemerkte Pfade:
+- `docs/REL_RECOVERY01_PLAIN_JSON_LIMITS.md`
+- `src/app.js`
+- `src/backup-limits.js`
+- `sw.js`
+- `tests/browser-plain-backup-limits.mjs`
+- `tests/browser-recovery-backup-limits.mjs`
+- `tests/plain-backup-fixture.mjs`
+- `tests/plain-backup-limits.test.mjs`
+- `tests/structured-quality-browser-contract.mjs`
+
+Daneben **33 ungetrackte Einträge**: regenerierbare synthetische Prüfberichte/-screens, eingefrorene synthetische Performance-Seeds, drei lokale Diagnoseprobes und ein `node_modules`-Symlink. Kein unveröffentlichtes Produktfeature festgestellt. Diese lokalen Diagnoseartefakte wurden beim STOP nicht zusätzlich hochgeladen; ihr exakter Pfad-/Byte-/SHA256-Stand steht im Inventar unten. Historische lokale Reports sind **kein neuerer Abnahmenachweis** als der Remote-Livebeleg #265.
+
+Wichtige reproduzierbare Performance-Quellen/Rohwerte/komprimierte Seeds liegen bereits remote unter `docs/perf-evidence/2026-11-01/android03-v251/` im Checkpoint-Branch; Anleitung `docs/PERF_ANDROID03_REAL_DEVICE_CHECKLIST.md`. Lokale `tests/.android03-10k-probe.mjs` ist bytegleich mit dem dortigen `capacity-10k-probe.mjs` (Git-Blob **`1f4eecee729445fa07c91a57397bad32fbd25d61`**). `tests/.fin-e2e-local-proxy.mjs` ist lediglich eine lokale synthetische Transportdiagnose, kein Produkt-/Releasekandidat und keine normale TLS-/Hardwareabnahme. `tests/.focus-close-probe.mjs` ist eine temporäre Reproprobe; die abgenommene Fokusvertragskorrektur liegt bereits in #263. Keine dieser Dateien ungeprüft in Main übernehmen.
+
+Exaktes lokales Inventar (Metadaten, keine privaten Inhalte):
+```json
+[
+  {
+    "path": "artifacts/gates/android03-v251-10k/report.json",
+    "bytes": 14440,
+    "sha256": "a027a383fc5fe682709dbb4ae8f7cb60c5a21482ec825db89d1e7635d0e898d4"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-10k/seed-10000.json",
+    "bytes": 10582038,
+    "sha256": "fa7f3cef1792354534475637675b37bbc6a0a7657db5a16ae65991dfd6740fae"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-10k/seed-10000.json.gz",
+    "bytes": 698861,
+    "sha256": "963bbc09f00bb1354e496f3ed0dddb4dcaebde34666d2ad6aba394bcfa6baea2"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-baseline/report.json",
+    "bytes": 22177,
+    "sha256": "a7c301e58c5c494ce426af3625965264b5eefdfbe2443422dae18b5cea5cdb17"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-baseline/seed-0.json",
+    "bytes": 9520,
+    "sha256": "00177f9ea90b61b443504ddddec9097a6ff0bbfa1f870a4e030254c42c4e355d"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-baseline/seed-0.json.gz",
+    "bytes": 1145,
+    "sha256": "4cfc068e2b62a20a382c848a5b9a68bce0d5eb3d27806327e552951d631c32e8"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-baseline/seed-3000.json",
+    "bytes": 3443174,
+    "sha256": "d214abbea34e1988d2c8949283a8805adcf47ffec85fe48c1bac8fdd9236ab2a"
+  },
+  {
+    "path": "artifacts/gates/android03-v251-baseline/seed-3000.json.gz",
+    "bytes": 218959,
+    "sha256": "47fc8075ccde6498cfd8ac7512af86703108dd225de6fe68956b88f7fe3a834c"
+  },
+  {
+    "path": "artifacts/gates/fin-e2e/chromium.json",
+    "bytes": 816,
+    "sha256": "c15747aaf82a497f4bda2e81aca9d8b09cc44b3419f4919c22352f0c051abc18"
+  },
+  {
+    "path": "artifacts/gates/fin-e2e/firefox.json",
+    "bytes": 815,
+    "sha256": "409a820d4b3c53f6fb9caf60eb741dbf97cf678855d43e6455b308ae5fc9c40f"
+  },
+  {
+    "path": "artifacts/gates/fin-e2e/independent-assets.json",
+    "bytes": 998,
+    "sha256": "23e8334d1c285caf5bb0e2d37b1cd1ecb0441195128d8ba3c1b8c04ba6fdd55c"
+  },
+  {
+    "path": "artifacts/gates/fin-e2e/postdeploy-assets.json",
+    "bytes": 1224,
+    "sha256": "4ae7745009fc3f5216b146edf80a36a8285f49338810c35c851e645ba22d09b4"
+  },
+  {
+    "path": "artifacts/gates/plain-backup-limits/chromium.json",
+    "bytes": 591,
+    "sha256": "4bdac030acccd351a3e8691c7a699abcc819702e0272b549e02e99dd85a5d236"
+  },
+  {
+    "path": "artifacts/gates/plain-backup-limits/firefox.json",
+    "bytes": 1071,
+    "sha256": "69fbc3f492a0b5a425a02f297994126438b3c84fd793ce45326b63d8890cdaf6"
+  },
+  {
+    "path": "artifacts/gates/plain-backup-limits/postdeploy-assets.json",
+    "bytes": 1207,
+    "sha256": "aeb753bbd98e809cade0edf9a97c81525a32c065814b0b6697573154475a1de6"
+  },
+  {
+    "path": "artifacts/gates/recovery-limits/chromium-1440.png",
+    "bytes": 246536,
+    "sha256": "19334fc8213467e67dc9019060853948ff90da1dea967a43ac70f5f731e73216"
+  },
+  {
+    "path": "artifacts/gates/recovery-limits/chromium-320.png",
+    "bytes": 204841,
+    "sha256": "6e8b4540c3eb8f1ec80bc9ba349f414e9c720d94c185c757ccbc92034a8479ac"
+  },
+  {
+    "path": "artifacts/gates/recovery-limits/firefox-1440.png",
+    "bytes": 334440,
+    "sha256": "63b0aaca7df7f025bdba0775ae63c8bc6bde81a2bc865362469ad5a7c12f053a"
+  },
+  {
+    "path": "artifacts/gates/recovery-limits/firefox-320.png",
+    "bytes": 229071,
+    "sha256": "a2433e8bcb553384c2212a60dafc7dade423183f2456ae081c62c0a89ced265a"
+  },
+  {
+    "path": "artifacts/gates/recovery-limits/report-chromium-firefox.json",
+    "bytes": 490,
+    "sha256": "4436429ba2df10994f3ec1443309b6539f91fdc89bb580ab3112f91efc3671b7"
+  },
+  {
+    "path": "artifacts/gates/storage-fixture/chromium-1793519131459.json",
+    "bytes": 3473,
+    "sha256": "ed05ac98d5984632f30de6d6362540df4818638af99ba2ec5020cc7d0c29dc25"
+  },
+  {
+    "path": "artifacts/gates/storage-fixture/chromium-1793519142627.json",
+    "bytes": 3473,
+    "sha256": "e2bb5de4c0a0e88856013b2549105544da033bff3dc72676a208a0634dba2d99"
+  },
+  {
+    "path": "artifacts/gates/storage-fixture/chromium-1793519333334.json",
+    "bytes": 3464,
+    "sha256": "c18e50a765e4dde8b9d7a53528c4d2c91fc00d5c465f2b1a2f5ef3e281b8abbc"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-1440.png",
+    "bytes": 197833,
+    "sha256": "665705caf853e61cbcd32fc08cec73e093a6a66cb39b526d1808d3ab1e5e4852"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-320.png",
+    "bytes": 170823,
+    "sha256": "871c2abd28b76e6d72a303d45b384b931931f123a1a881d29fcb564da0013506"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-360.png",
+    "bytes": 173179,
+    "sha256": "57d7c01be294c66ad858ceb2f67488209087ec1aae17410d6c0d0916a56dcea1"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-390.png",
+    "bytes": 176181,
+    "sha256": "039af54ef6d71c55664b83809a9502a33304c60612d4365f886210595bacc1ca"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-412.png",
+    "bytes": 176564,
+    "sha256": "62a8723681faf1461a094a8af59c85db2491bdabb9aee1386cf03a1e26f2f709"
+  },
+  {
+    "path": "artifacts/gates/structured-quality/chromium-430.png",
+    "bytes": 175303,
+    "sha256": "411b24c60943990d9043cade26bf3e6b6df47feedd94bb05da47f0649d067116"
+  },
+  {
+    "path": "node_modules",
+    "symlink": "/tmp/fin-e2e-tools/node_modules"
+  },
+  {
+    "path": "tests/.android03-10k-probe.mjs",
+    "bytes": 12930,
+    "sha256": "4116141a304a991257db3a5ed66aa705b36c6754e11ce79ef1eb10a3e5799359"
+  },
+  {
+    "path": "tests/.fin-e2e-local-proxy.mjs",
+    "bytes": 11553,
+    "sha256": "f2baa0efa247fafefed2f2892e74002c9bfa749380d9af1609d9b33beb537aa1"
+  },
+  {
+    "path": "tests/.focus-close-probe.mjs",
+    "bytes": 1639,
+    "sha256": "ebf493c24dad759c9a09c513b745d01887369bad0f5a61bfdbcad013e214b8de"
+  }
+]
+```
+
+**Übergabe abgeschlossen mit diesem Checkpoint-Update auf dem bestehenden Branch. Dieser bisherige Chat bleibt STOPPED und schreibt danach nicht mehr auf GitHub. Alleinige aktive Verantwortung liegt beim neuen Work-Chat.** Kein zusätzlicher Audit-/Feature-/Releaseauftrag an diesen Chat; keine weitere Freigabe angefordert.
+
+---
+
 ## #255 FX-/Teilfüllungen – LIVE_ACCEPTED · 01.11.2026
 
 **Aktueller Main `512d935098e2d31366b861352d94684cae7582cb`, geprüfter Tree `ddb910797eec6484417992d860460eee724e558e`.** [PR #265](https://github.com/joke0071/foliolab-open/pull/265) integriert; [Main-/Produktionslauf 41293317485](https://github.com/joke0071/foliolab-open/actions/runs/41293317485) **completed / success**, erster Versuch ohne Retry oder CI-Abbruch. App/Service Worker bleiben **`foliolab-open-v252`**, da ausschließlich Tests/Dokumentation geändert wurden. 1052 Tests, keine Fehler/Skips, Syntax, vollständiges Chromium und alle drei Firefox-/WebKit-Gruppen erfolgreich.
