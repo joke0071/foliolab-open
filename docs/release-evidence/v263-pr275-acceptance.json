@@ -1,0 +1,72 @@
+{
+  "version": "v263",
+  "status": "PR_ACCEPTED_MAIN_IN_PROGRESS",
+  "owner": "faf2f3956a11",
+  "pr": 275,
+  "head": "cafa37d4352a8a48bb27f076957715de4fcd5e0d",
+  "tree": "cbb7da411edb9dabdd07fb857e33061caa97e369",
+  "prRunnerMerge": "6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc",
+  "prRunnerTree": "cbb7da411edb9dabdd07fb857e33061caa97e369",
+  "main": "10103d6253ff544b383099c6a631035f67be7025",
+  "prRun": 41340303087,
+  "mainRun": 41341667782,
+  "units": {
+    "total": 1073,
+    "passed": 1073,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "chromium": "PASS",
+  "firefoxWebkitAllThreeGroups": "PASS",
+  "walletRun": 41340303089,
+  "walletAuditInformational": 41340303088,
+  "reviewThreads": 0,
+  "reviews": 0,
+  "gatesWeakened": false,
+  "productChangesAfterOriginalCandidate": false,
+  "testCorrections": {
+    "providerFixtures": "5376a9d36051e35512526cf7b2a9da7ec43e7f00",
+    "asyncDialogSynchronization": "cafa37d4352a8a48bb27f076957715de4fcd5e0d",
+    "localBeforeAfterReproduced": true,
+    "canonicalBytesAndConflictAssertionsPreserved": true
+  },
+  "artifacts": [
+    {
+      "id": 13098035130,
+      "name": "release-gates-6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc",
+      "digest": "sha256:063622fa43c54b022d50eb213b30f4f4b145fab6441072fdf16c34774be90e66"
+    },
+    {
+      "id": 13097276353,
+      "name": "ci-stage-6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc",
+      "digest": "sha256:85d664bc7bf8138c7019967510266d3e833fd204ff00fef8b97017aa2c23e2af"
+    },
+    {
+      "id": 13097243755,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:f6bdeffd312ef48150cde86dee6e2897821328197f38e0d1c2925964fcc1708c"
+    },
+    {
+      "id": 13096849391,
+      "name": "cross-engine-gates-6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc-1",
+      "digest": "sha256:b73a244c293df200615f7d33e5818278c8cd89351d2448e8c54ceff2a5360a52"
+    },
+    {
+      "id": 13096639102,
+      "name": "cross-engine-gates-6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc-3",
+      "digest": "sha256:cb380566855e81cd05679ba46feaa18be946a6845bd574346fa6936e945080ef"
+    },
+    {
+      "id": 13096394126,
+      "name": "cross-engine-gates-6bdf7e434d6cc8653b1a44ad30bd97a78ee45cbc-2",
+      "digest": "sha256:67bafd086aeb965e486465efa658050d99218ed5711b71ff95152dc2bcb94203"
+    }
+  ],
+  "providerRequestsByThisSession": 0,
+  "limitations": [
+    "No new live provider entitlement proof; unchanged v262 real provider receipts retained",
+    "No physical Android hardware acceptance claimed",
+    "Deployment and real production acceptance still required"
+  ]
+}
