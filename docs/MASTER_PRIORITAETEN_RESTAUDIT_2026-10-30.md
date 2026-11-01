@@ -1,3 +1,13 @@
+## v261 MERGED / Produktionsabnahme ausstehend – 01.11.2026
+
+[PR #273](https://github.com/joke0071/foliolab-open/pull/273) nach vollständiger CI kontrolliert squash-integriert. Main **`87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`**, Tree **`f2e0637d5179c1314bd0b5e60d05d6666793ab64`** exakt gleich geprüftem Branch-HEAD `25281b47f68340df85edf5facd1f7c680cac7c85` und synthetischem Merge `d927d0e`. SW v261. PR-CI **41325666386 SUCCESS**, Wallet **41325666505 SUCCESS**: **1.079 Tests, 0 Fehler/Skips**, Syntax, Chromium und alle Firefox-/WebKit-Gruppen. Neue Marketstack-/Secret-Input-Fälle in allen drei Engines PASS. Abschlusslogs gelesen, Artefaktdigests gegen Uploadlogs bestätigt; Main/HEAD unverändert und keine offenen Revieweinwände. Beleg: `docs/release-evidence/v261-pr273-acceptance.json`.
+
+Main-/Produktionslauf **41326923454 gestartet**. Noch kein DEPLOYED oder LIVE_ACCEPTED für v261. Aktuelle LIVE_ACCEPTED-Basis bleibt v260. Nächster Schritt: Main-CI, Deployment, tatsächliche Auslieferung, isolierte echte Vier-ETF-Marketstack-Appkette und vollständige Produktionsabnahme auswerten.
+
+Danach P1A #266 mit gesicherter Suche/FX und vollständiger Alt-API-/Schlüsselbereinigung über Konfiguration, physische IDB, Migration/Save und neue Backups/Legacy-Restore. Anschließend gemeinsamer CSV-/Blockchain-Import UH01–UH05 mit vollständiger Bittr+Ledger+BTC-Kette; #257 und übrige Master ACTIVE. Ein Owner/ein Strang: Work/root b1399897b0ba. Keine laufende CI abgebrochen, keine Gates reduziert, kein historischer Checkpointbranch-Merge.
+
+---
+
 ## v261 Kandidat / PR #273 – 01.11.2026
 
 Aktuelle LIVE_ACCEPTED-Basis: **v260**, Main `ca99237f8cbe40490d360dd0bd57f9df76dcf584`, Produktionslauf 41320750171, Deployment 124893733517, Live-Abnahme 124893808484 SUCCESS. Einziger aktiver Kandidat: `feature/marketstack-secret-inputs-266`, HEAD `25281b47f68340df85edf5facd1f7c680cac7c85`, Tree `f2e0637d5179c1314bd0b5e60d05d6666793ab64`, SW v261, [PR #273](https://github.com/joke0071/foliolab-open/pull/273). Owner: Work/root b1399897b0ba; alter Owner hat STOP bestätigt.
