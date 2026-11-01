@@ -150,6 +150,7 @@ jobs:
           node tests/browser-history-storage.mjs
           node tests/browser-history-ui.mjs
           node tests/browser-purchase-evidence.mjs
+          node tests/browser-unified-bitcoin.mjs
           node tests/browser-historical-position-value.mjs
           node tests/browser-flh02-release.mjs
           node tests/browser-history-worker.mjs
@@ -348,6 +349,7 @@ jobs:
             HISTORY_ENGINES=firefox,webkit node tests/browser-bitcoin-history.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-storage.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-purchase-evidence.mjs
+            HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-historical-position-value.mjs
             FLH02_ENGINES=firefox,webkit node tests/browser-flh02-release.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
@@ -440,6 +442,7 @@ jobs:
           ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log
           RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log
           FIN_E2E_BASE="$ACCEPTANCE_BASE" node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-chromium.log
+          UH02_BASE="$ACCEPTANCE_BASE" node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-chromium.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-chromium.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-chromium.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-chromium.log
@@ -466,6 +469,7 @@ jobs:
           TRANSFER_STATE_ENGINES: firefox,webkit
         run: |
           set -euo pipefail
+          UH02_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-cross.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-cross.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-cross.log
           CASH_UX_BASE="$ACCEPTANCE_BASE" CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs 2>&1 | tee artifacts/gates/production-cash-ux-cross.log

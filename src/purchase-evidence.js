@@ -54,7 +54,16 @@ export function validatePurchaseEvidence(value){
    for(const id of d.receiptIds)active.delete(id);
   }
  }
- const result={schema:1,receipts,decisions};if(new TextEncoder().encode(JSON.stringify(result)).length>3e6)throw Error('Kaufbelege überschreiten das sichere Speicherlimit.');return result;
+ const bitcoinLedger=value.bitcoinLedger===undefined?null:value.bitcoinLedger;
+ if(bitcoinLedger!==null&&(!Array.isArray(bitcoinLedger)||bitcoinLedger.length>5000))fail();
+ const ledger=bitcoinLedger?.map(v=>{
+  if(!v||!hash(v.id)||!hash(v.ownerDigest)||!hash(v.txid)||!Array.isArray(v.events)||!v.events.length||v.events.length>100)fail();
+  const events=v.events.map(e=>{if(!hash(e.fingerprint)||typeof e.id!=='string'||!e.id||e.id.length>16384)fail();return {id:e.id,fingerprint:e.fingerprint};});
+  if(new Set(events.map(e=>e.id)).size!==events.length)fail();
+  return {id:v.id,ownerDigest:v.ownerDigest,txid:v.txid,timestamp:utc(v.timestamp),amountBTC:decimal(v.amountBTC,8,true),events};
+ });
+ if(ledger&&new Set(ledger.map(v=>v.id)).size!==ledger.length)fail();
+ const result={schema:1,receipts,decisions,...(ledger?{bitcoinLedger:ledger}:{})};if(new TextEncoder().encode(JSON.stringify(result)).length>3e6)throw Error('Kaufbelege überschreiten das sichere Speicherlimit.');return result;
 }
 const fingerprint=e=>sourceDigest(JSON.stringify([e.id,e.blockHash,e.blockHeight,e.timestamp,e.quantityBaseUnits,e.status,e.finality,e.type,e.coverage]));
 function eligible(session,accountId){
