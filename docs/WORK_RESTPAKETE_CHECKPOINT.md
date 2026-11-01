@@ -1,3 +1,13 @@
+## v258 LIVE_ACCEPTED / #266 PR#271 finale CI · 01.11.2026
+
+**Main04f294f044ed8d4825d32ca4e17d4c282adce8a4, Treeb68fecaa576449a8b5e6c0539fe5fe27e9031b74, SWfoliolab-open-v258. PR#270 abgeschlossen.** Main-/Produktionslauf41312214949 completed/SUCCESS,1057Units/0Fehler/0Skips, Syntax/Chromium/alle3FF-WK-Gruppen/Deploy124868069758/Live124868146278SUCCESS. EchtesLive:123exakteAssetmatches,6Kerngruppen/18Axe-Scans, neueCash-UX/ETF-IDB-Suite inallen3EnginesPASS, Finanz16Schritte inklusivehistorischenFX/Teilfüllungen undverschlüsseltemUI-Restore, bestehendeOffline/PWA/CAS/Recovery/TransfergatesPASS. Liveartefakt13085924420 SHA256b05302b630c305b62919f78d703414a0ff2e144713c701ceada8a1700d93681a exaktAPI/Uploadlog; kein eigenerZIP/CRC-Nachweis behauptet. VierDateien überreguläresHTTPS zusätzlichbytegleich, isolierte320px-Produktionskontokarte visuellgesehen, keinphysischerAndroid-Nachweis. Dauerhaft docs/release-evidence/v258-cash-ux-live-acceptance.json. V258 ist aktuellebestätigteRückfallbasis, V257historisch.
+
+EinzigeaktiveUmsetzung #266/PR#271, finalerHEAD7f1d5dd00629183df9907b193685754bc20f3602, Treee37cba420e6fbf685bd1e1d77f8d4514d2102f9a exaktlokal/remote. Vorlauf41313611363 vollständigSUCCESS mit1065Tests/allen3Engines; erstnachdessenreguläremEnde vorbereiteteCache-Minimierung übernommen, keineActionabgebrochen. FinalePflichtCI41314821732 undWallet41314821774 laufen; nochkeinMerge/v259-Deployment/Liveacceptance. AllehistorischenGateserhalten. Lokal1065UnitsundChromiumAlpha-SuiteauchaufletztemDeltaPASS. KeineweiterenProduktänderungenwährendfinalerAbnahme.
+
+Next: finale271CIauswerten, beiGrünexactHEADintegrieren/veröffentlichen, echteProduktionundautorisiertenVier-ETF-Appabrufisoliertabnehmen. Bisher14autorisierteAlpha-Testrequests, eigeneKeynichtimRepo/CI; weitereAnfragennurfürendgültigeRealabnahme. Danach#268/#257undübrigeACTIVEpaketeseriell. Owner/root8e5a26892934; keinCheckpoint-Branchmerge.
+
+---
+
 ## #271 – zusätzliche Cache-Sanitierung vorbereitet / bestehende CI unverändert · 01.11.2026
 
 Remote PR-HEAD bleibt9b3e325554090accfabd60675da747d9558556fd, Pflichtlauf41313611363 läuft (Cross1+Cross2SUCCESS; Chromium/Cross3 noch offen), keineAction abgebrochen. Produktumfangsonst eingefroren. Abschließende realePrivacy-Negativkontrolle: Antwortzusatzfelder könnten theoretisch einen zurückgegebenen Key enthalten; deshalb cachet der vorbereitete Folgeschritt ausschließlich validiertesSymbol/Datum/Rohschlusskurse statt gesamterProviderJSON. Keine echtenSchlüssel wurden imCache oder imRepo nachgewiesen; Repro ausschließlich synthetisch.
