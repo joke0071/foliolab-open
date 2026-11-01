@@ -1,0 +1,27 @@
+{
+  "main": "10103d6253ff544b383099c6a631035f67be7025",
+  "tree": "cbb7da411edb9dabdd07fb857e33061caa97e369",
+  "run": 41341667782,
+  "attempt": 1,
+  "job": 124956490078,
+  "status": "FAILURE",
+  "failureClass": "Firefox navigation abort; no failed financial or storage assertion",
+  "originalError": "page.reload: NS_ERROR_ABORT\n2026-11-01T19:48:08.7112749Z Call log:\n2026-11-01T19:48:08.7113046Z   - waiting for navigation until \"load\"\n2026-11-01T19:48:08.7113240Z \n2026-11-01T19:48:08.7113507Z     at /home/runner/work/foliolab-open/foliolab-open/tests/browser-marketstack.mjs:74:14 {\n2026-11-01T19:48:08.7113952Z   log: [ '  - waiting for navigation until \"load\"' ],\n2026-11-01T19:48:08.7114206Z   name: 'Error'\n2026-11-01T19:48:08.7114374Z }\n2026-11-01T19:48:08.7114464Z \n2026-11-01T19:48:08.7114537Z Node.js v22.23.4\n2026-11-01T19:48:08.7292806Z ##[error]Process completed with exit code 1.\n2026-11-01T19:48:08.7377493Z ##[group]Run actions/upload-artifact@v4\n2026-11-01T19:48:08.7377729Z with:\n2",
+  "chromiumProductionStep": "SUCCESS",
+  "firefoxWebkitRetirementAndAlpha": "PASS before navigation abort in Marketstack",
+  "assetProof": "v263-regular-https-assets.json",
+  "targetedRetry": {
+    "count": 1,
+    "job": 124958810877,
+    "unchangedMain": true,
+    "unchangedGates": true
+  },
+  "originalArtifact": [
+    {
+      "id": 13098487137,
+      "name": "production-live-acceptance-10103d6253ff544b383099c6a631035f67be7025",
+      "digest": "sha256:811cc891207754f4b9f4da9cfdfc82e83e39c7d1010b0d969c8f196d319a492a"
+    }
+  ],
+  "acceptance": "NOT_ACCEPTED_PENDING_RETRY"
+}
