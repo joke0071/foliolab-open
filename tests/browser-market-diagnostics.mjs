@@ -12,16 +12,16 @@ try{
   for(const symbol of ['VWCE','5MVL','XDEM','XDEQ'])
    m.positions.push(createPosition({providerId:provider.id,accountId:account.id,kind:'etf',name:symbol,
     symbol,mic:'XETR',exchange:'Xetra',currency:'EUR',quantity:1,price:100,eodhdSymbol:symbol+'.XETRA'},m));
-  m.settings.eodhdKey='SYNTHETIC_ONLY_FOR_TEST';m.settings.autoRefresh=false;persist(m);
+  m.settings.twelveKey='SYNTHETIC_ONLY_FOR_TEST';m.settings.autoRefresh=false;persist(m);
  });
  await page.reload();
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
  let calls=0;
- await page.route('https://eodhd.com/api/eod/**',route=>{
+ await page.route('https://api.twelvedata.com/quote**',route=>{
   calls++;
-  if(calls===1)return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([{date:new Date(Date.now()-864e5).toISOString().slice(0,10),close:111.25}])});
+  if(calls===1)return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({symbol:'VWCE',currency:'EUR',exchange:'Xetra',mic_code:'XETR',datetime:new Date(Date.now()-864e5).toISOString().slice(0,10),close:111.25})});
   return route.fulfill({status:429,contentType:'application/json',body:'{}'});
  });
  await page.locator('#checkMarketSources').click();

@@ -30,7 +30,7 @@ try{
  assert.equal(await page.locator('#legacyQuoteAudit').isVisible(),false,'No everyday precision card without concrete discrepancies');
  assert.ok((await page.locator('#dataPrivacyNotes').innerText()).includes('verschlüsselte Vollbackups'));
  assert.doesNotMatch(await page.locator('#dataPrivacyNotes').innerText(),/Backups enthalten keine API-Schlüssel/);
- await page.locator('[name="eodhdKey"]').fill('TEST_MARKET_KEY');
+ await page.locator('[name="fmpKey"]').fill('TEST_MARKET_KEY');
  await page.locator('[name="publicInstrumentEndpoint"]').fill('https://test-worker.workers.dev');
  await page.locator('[name="binplorerKey"]').fill('TEST_BSC_KEY');
  await page.locator('[name="etherscanKey"]').fill('TEST_ETH_KEY');
@@ -38,7 +38,7 @@ try{
  // Shared settings are committed asynchronously under the portfolio Web Lock.
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
  let settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
- assert.equal(settings.eodhdKey,'TEST_MARKET_KEY');
+ assert.equal(settings.fmpKey,'TEST_MARKET_KEY');
  assert.equal(settings.binplorerKey,'TEST_BSC_KEY');
  assert.equal(settings.etherscanKey,'TEST_ETH_KEY');
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev');
@@ -52,7 +52,7 @@ try{
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
  assert.equal(settings.binplorerKey,'','Credential removal must clear blockchain keys');
- assert.equal(settings.eodhdKey,'','Credential removal must clear market data keys');
+ assert.equal(settings.fmpKey,'','Credential removal must clear market data keys');
  assert.equal(settings.publicInstrumentEndpoint,'https://test-worker.workers.dev','Non-secret endpoint can remain configured');
  for(const id of ['optionalConnections','blockchainSettings']){
   await page.locator('#'+id).evaluate(el=>{for(let p=el;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});

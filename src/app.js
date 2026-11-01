@@ -50,7 +50,7 @@ import {searchAndSortPositions,positionListScope} from './position-search.js';
 import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
-import {diagnoseEodhd} from './market-diagnostics.js';
+import {diagnoseMarketSources,marketSupplySummary} from './market-diagnostics.js';
 import {displayQuotePrice,priceQuality,positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
 import {PortfolioStorage,MODE_KEY,MODE_VALUE} from './browser-portfolio-storage.js';
 import {executeTransaction,TX_TYPES} from './transactions.js';
@@ -396,6 +396,7 @@ function renderHistory(){
   (model.positions.length?'Historische Werte fehlen. '+esc(wealth.reason)+' Bestandsnachweise, Tageskurse und EUR-Wechselkurse der Positionen prüfen.':'Noch keine Positionen erfasst. Lege zuerst eine Anlage an; vorhandene Buchungen und Kursdaten kannst du danach importieren.')+
   '</p><button type="button" class="btn outline" data-action="'+(model.positions.length?'history-positions':'start-wizard')+'">'+(model.positions.length?'Positionen und Historie prüfen':'Anlage hinzufügen')+'</button></div>':drawChart(data,comparisonToggle.checked?reference:null);attachChartInteractions($('historyChart'));syncChartPeriodButtons($('chartPeriods'),'data-range',range,period=>period==='all'||filterChartPeriod(wealth.samples,'wealth',period).length>=2);renderReferences();renderSnapshotCalendar();}
 function renderPositions(){
+ $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  $('positionArchiveFilter').value=positionArchiveView;
  $('positionArchiveHint').textContent=model.positions.some(p=>p.archived)?'Archivierte Positionen behalten weiterhin ihre bisherigen Bewertungsregeln in Vermögen, Konten und Verlauf.':'';
  const review=structuredQualityReview(model),quality=review.quoteSummary,q=quality.counts,uncertain=quality.total-q.confirmed;
@@ -2397,7 +2398,7 @@ $('clearApiKeys').addEventListener('click',async ()=>{
   await save();
   purgeLegacySnapshots(localStorage);
   if(portfolioStore.isIndexedDB)localStorage.removeItem('foliolab-open-v1');
-  for(const key of apiCredentialFields)$('apiSettings').elements[key].value='';
+  for(const key of apiCredentialFields)if($('apiSettings').elements[key])$('apiSettings').elements[key].value='';
   $('solanaRpc').value=model.settings.solanaRpc;
   notify('API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  }catch(error){
@@ -2408,14 +2409,14 @@ $('checkMarketSources').addEventListener('click',async()=>{
  const button=$('checkMarketSources'),status=$('marketDiagnosticStatus');
  if(button.disabled)return;
  button.disabled=true;
- status.textContent='Prüfe höchstens vier vorhandene Notierungen über den gespeicherten EODHD-Zugang …';
+ status.textContent='Prüfe gespeicherte Kursquellen für höchstens vier vorhandene Notierungen …';
  try{
-  const result=await diagnoseEodhd(model.settings,model.positions);
+  const result=await diagnoseMarketSources(model.settings,model.positions);
   status.replaceChildren();
   const headline=document.createElement('p');headline.textContent=result.message;status.append(headline);
   for(const item of result.rows){
    const row=document.createElement('p');row.className='diagnostic-row';
-   const strong=document.createElement('strong');strong.textContent=item.symbol+' · '+item.label;
+   const strong=document.createElement('strong');strong.textContent=item.symbol+' · '+(item.provider?item.provider+' · ':'')+item.label;
    const hint=document.createElement('span');hint.textContent=' '+item.help;
    row.append(strong,hint);status.append(row);
   }
@@ -2474,9 +2475,9 @@ $('apiSettings').addEventListener('submit',async e=>{
   const changes={publicInstrumentEndpoint,eodhdWorkerEndpoint,eodhdWorkerAccessToken,
    securitySource:String(f.get('securitySource')||'auto')};
   for(const key of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])
-   changes[key]=String(f.get(key)||'').trim();
+   if(f.has(key))changes[key]=String(f.get(key)||'').trim();
   Object.assign(model.settings,changes);
-  await save();notify('Datenquellen und Zugänge lokal gespeichert.');
+  await save();$('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);notify('Datenquellen und Zugänge lokal gespeichert.');
  }catch(error){notify(error.message,true);}
 });$('solanaRpc').addEventListener('change',async e=>{try{const url=new URL(e.target.value);if(url.protocol!=='https:'||url.username||url.password)throw Error('Der Solana-RPC muss eine HTTPS-Adresse ohne Zugangsdaten im Benutzernamen verwenden.');model.settings.solanaRpc=url.toString();await save();$('solanaRpcTestStatus').textContent='RPC-Adresse gespeichert. Mit „Verbindung & Staking prüfen“ kannst du den Zugang testen.';notify('Solana-RPC aktualisiert.');}catch(error){e.target.value=model.settings.solanaRpc;notify(error.message,true);}});
   $('testSolanaRpc').addEventListener('click',async()=>{
@@ -2502,7 +2503,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    }finally{button.disabled=false;}
   });
   $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',async e=>{model.settings.autoRefresh=e.target.checked;await save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
-  for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])$('apiSettings').elements[k].value=model.settings[k]||'';
+  for(const k of ['twelveKey','eodhdKey','fmpKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';

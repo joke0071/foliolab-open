@@ -79,7 +79,8 @@ test('Security ISIN is stable while listings at different exchanges have distinc
 test('Position quote source, exact conversion, listing identity survives backup roundtrip',()=>{
  const {m,p}=sample();p.fxRateExact='1';rebuildAssets(m);
  const first=JSON.parse(backup(m)),second=JSON.parse(backup(safeImport(first)));
- assert.deepEqual(second,first);
+ assert.deepEqual(second,{...first,positions:first.positions.map(p=>({...p,eodhdSymbol:'VWCE.XETRA',fmpSymbol:'VWCE.DE'}))});
+ assert.deepEqual(JSON.parse(backup(safeImport(second))),second,'hydration is idempotent; all other data and listing IDs survive unchanged');
  assert.equal(second.positions[0].mic,'XETR');
  assert.equal(second.positions[0].quoteSource,'Twelve Data');
  assert.equal(second.positions[0].quoteAsOf,'2026-10-21');

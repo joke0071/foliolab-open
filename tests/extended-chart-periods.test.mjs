@@ -12,15 +12,15 @@ test('Free crypto histories stay capped at one year even when keys are configure
 });
 test('Long periods are conditional on a verified listing and actual CSV history',()=>{
  assert.deepEqual(availablePositionPeriods(security,{settings:{}}),[7,30,90,180,365]);
- assert.deepEqual(availablePositionPeriods(security,{settings:{eodhdKey:'synthetic'}}),[7,30,90,180,365,1096,1826]);
+ assert.deepEqual(availablePositionPeriods(security,{settings:{twelveKey:'synthetic'}}),[7,30,90,180,365,1096,1826]);
  const csv={points:[{date:ago(2200),total:50},{date:ago(1600),total:80},{date:ago(1),total:100}]};
  assert.deepEqual(availablePositionPeriods(security,{settings:{},priceHistories:{etf:csv}}),[7,30,90,180,365,1096,1826,'max']);
  const shorter={points:[{date:ago(700),total:50},{date:ago(1),total:100}]};
  assert.deepEqual(availablePositionPeriods(security,{settings:{},priceHistories:{etf:shorter}}),[7,30,90,180,365,'max']);
- assert.deepEqual(availablePositionPeriods({...security,exchange:'',mic:''},{settings:{eodhdKey:'synthetic'}}),[7,30,90,180,365]);
+ assert.deepEqual(availablePositionPeriods({...security,exchange:'',mic:''},{settings:{twelveKey:'synthetic'}}),[7,30,90,180,365]);
 });
 test('Max cannot be fabricated from a partial remote feed',async()=>{
- await assert.rejects(()=>fetchPositionMarketHistory(security,{eodhdKey:'key'},'max',async()=>{throw Error('Never called');}),/nur für lokal importierte/);
+ await assert.rejects(()=>fetchPositionMarketHistory(security,{twelveKey:'key'},'max',async()=>{throw Error('Never called');}),/nur für lokal importierte/);
 });
 
 function detailModel(kind='etf'){
@@ -55,7 +55,7 @@ test('Actual supported presets remain reachable in detail controls, including th
   m.priceHistories[p.id]={source:'CSV (selbst geprüft)',currency:'EUR',points:[{date:ago(700),total:80},{date:ago(2),total:100}]};
   assert.doesNotMatch(rendered(30),/data-position-range="1096"/);
   if(kind==='etf'){
-   m.priceHistories={};m.settings.eodhdKey='SYNTHETIC';
+   m.priceHistories={};m.settings.twelveKey='SYNTHETIC';
    assert.match(rendered(1096),/data-position-range="1096" aria-pressed="true"/);
   }
  }

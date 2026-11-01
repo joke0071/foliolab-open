@@ -231,6 +231,7 @@ jobs:
           node tests/browser-security-sources.mjs
           node tests/browser-eodhd-worker.mjs
           node tests/browser-market-diagnostics.mjs
+          node tests/browser-etf-source-recovery.mjs
           node tests/live-probes.mjs
           node tests/browser-accessibility-audit.mjs
           node tests/browser-portfolio-scale.mjs
@@ -329,6 +330,7 @@ jobs:
             PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
+            ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs
             RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs
             FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs
@@ -431,6 +433,7 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$RELEASE_SHA"
           echo "LIVE_QA_SHA $RELEASE_SHA"
+          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log
           node tests/browser-live-acceptance.mjs 2>&1 | tee artifacts/gates/production-core.log
           RECOVERY_BASE="$ACCEPTANCE_BASE" node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-chromium.log
           FIN_E2E_BASE="$ACCEPTANCE_BASE" node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-chromium.log
@@ -462,6 +465,7 @@ jobs:
           set -euo pipefail
           PCHAIN_BASE="$ACCEPTANCE_BASE" PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-cross.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-cross.log
+          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-cross.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-cross.log
           RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log
           FIN_E2E_BASE="$ACCEPTANCE_BASE" FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs 2>&1 | tee artifacts/gates/production-fin-e2e-cross.log

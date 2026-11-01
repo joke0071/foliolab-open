@@ -66,7 +66,7 @@ export function createRequestCache({maxEntries=300,maxConcurrent=4,clock=()=>Dat
          let data;
          try{data=await response.json();}catch{throw Error('API lieferte keine gültigen JSON-Daten.');}
          // Upstream messages sometimes echo credentials. Provide a stable, safe status.
-         if(data?.status==='error'||data?.status==='ERROR')throw Error('Datenanbieter meldet einen Fehler. API-Zugang und Tarif prüfen.');
+         if(data?.status==='error'||data?.status==='ERROR')throw Error(Number.isInteger(Number(data.code))&&Number(data.code)>=400&&Number(data.code)<=599?'Datenanbieter meldet HTTP '+Number(data.code)+'. API-Zugang, Notierungsabdeckung und Tarif prüfen.':'Datenanbieter meldet einen Fehler. API-Zugang und Tarif prüfen.');
          if(ttlMs>0){entries.set(key,{data:structuredClone(data),expires:clock()+ttlMs});while(entries.size>maxEntries)entries.delete(entries.keys().next().value);}
          return data;
        }

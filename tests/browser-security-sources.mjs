@@ -27,19 +27,21 @@ try{
  assert.equal(await row.locator('.position-chart-options').count(),0,'No extra nested disclosure for one local action');
  await page.locator('#mobileNav [data-page="more"]').click();
  await page.locator('#marketSettings > summary').click();
- await page.locator('[name="eodhdKey"]').fill('TESTONLY');
- await page.locator('[name="securitySource"]').selectOption('eodhd');
+ await page.locator('[name="fmpKey"]').fill('TESTONLY');
+ await page.locator('[name="securitySource"]').selectOption('fmp');
  await page.locator('#apiSettings button[type="submit"]').click();
- await page.route('https://eodhd.com/api/eod/**',route=>{
-  assert.match(route.request().url(),/VWCE.XETRA/);
-  return route.fulfill({status:200,contentType:'application/json',
-   body:JSON.stringify([{date:previous,close:102.5},{date:today,close:103.3}])});
+ await page.route('https://financialmodelingprep.com/stable/**',route=>{
+  assert.equal(new URL(route.request().url()).searchParams.get('symbol'),'VWCE.DE');
+  const history=route.request().url().includes('historical-price');
+  return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(history?
+   [{symbol:'VWCE.DE',date:previous,close:102.5},{symbol:'VWCE.DE',date:today,close:103.3}]:
+   [{symbol:'VWCE.DE',currency:'EUR',exchange:'XETR',date:today,price:103.3}])});
  });
  await page.locator('#mobileNav [data-page="positions"]').click();
  await page.locator('#refreshAll').click();
  await page.waitForFunction(()=>document.querySelector('#priceInfo').textContent.includes('Datenupdates'));
  const p=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).positions[0]);
- assert.equal(p.price,103.3);assert.equal(p.quoteSource,'EODHD · Tagesschluss');
+ assert.equal(p.price,103.3);assert.equal(p.quoteSource,'FMP');
  assert.equal(p.quoteAsOf,today);
  assert.equal(p.quantityExact,'10');
  await page.locator('#mobileNav [data-page="dashboard"]').click();
@@ -48,11 +50,11 @@ try{
  const refreshed=page.locator('#providerOverview [data-position-id="etf-test"]');
  if(await refreshed.getAttribute('open')===null)await refreshed.locator(':scope > summary').click();
  await refreshed.locator('.position-history-chart .chart-plot').waitFor();
- assert.match(await refreshed.innerText(),/EODHD/);
+ assert.match(await refreshed.innerText(),/FMP/);
  for(const width of [320,360,390,430,768,1024,1440]){
   await page.setViewportSize({width,height:850});
   const r=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(r<=1,'Horizontal overflow at '+width);
  }
- console.log('SECURITY SOURCES: no third-party chart, local CSV, EODHD quote/history, strict listing, persistent settings, 320-1440px PASS');
+ console.log('SECURITY SOURCES: no third-party chart, local CSV, FMP direct quote/history, strict listing, persistent settings, 320-1440px PASS');
 }finally{await browser.close();}

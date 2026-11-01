@@ -59,7 +59,7 @@ export async function securityQuote(listing,key,fetcher=globalThis.fetch){
  if(exchange)url.searchParams.set('exchange',exchange);
  if(mic)url.searchParams.set('mic_code',mic);
  url.searchParams.set('apikey',key);
- const data=await json(url.toString(),{ttlMs:TTL.security},fetcher);
+ const data=await json(url.toString(),{ttlMs:TTL.security,attempts:1},fetcher);
  const price=Number(data.close??data.price);
  if(!Number.isFinite(price)||price<=0)throw Error('Kein gültiger Wertpapierkurs.');
  if(String(data.symbol||'').trim().toUpperCase()!==symbol)throw Error('Ticker der Kursantwort passt nicht zur Position.');
@@ -67,7 +67,7 @@ export async function securityQuote(listing,key,fetcher=globalThis.fetch){
  const returnedMIC=String(data.mic_code||data.mic||'').trim().toUpperCase();
  const returnedExchange=String(data.exchange||'').trim().toUpperCase();
  if(mic&&returnedMIC!==mic)throw Error('Börsen-MIC konnte nicht eindeutig bestätigt werden.');
- if(exchange&&(!returnedExchange||returnedExchange!==exchange.toUpperCase()))throw Error('Handelsplatz stimmt nicht mit der Kursantwort überein.');
+ if(exchange&&(!returnedExchange||!(returnedExchange===exchange.toUpperCase()||(['XETR','XETRA'].includes(returnedExchange)&&['XETR','XETRA'].includes(exchange.toUpperCase())))))throw Error('Handelsplatz stimmt nicht mit der Kursantwort überein.');
  const reportedIsin=String(data.isin||'').trim().toUpperCase();
  if(reportedIsin&&listing.isin&&reportedIsin!==String(listing.isin).toUpperCase())throw Error('ISIN der Kursantwort weicht ab.');
  return {price,currency:expectedCurrency,exchange:data.exchange||exchange,mic:returnedMIC||mic,
