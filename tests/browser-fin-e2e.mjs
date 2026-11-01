@@ -77,7 +77,13 @@ for(const engine of engines){
    const violations=await page.evaluate(async()=>{for(let i=0;i<3;i++){const animations=document.getAnimations().filter(a=>a.playState==='running'&&Number.isFinite(a.effect?.getComputedTiming().endTime));if(!animations.length)break;await Promise.all(animations.map(a=>a.finished.catch(()=>{})));}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return (await axe.run('#bookingsPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));});
    assert.deepEqual(violations,[],engine+' '+width+' Axe');
   }
+  await page.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';},null,{timeout:60000});
+  await page.reload();await ready(page);await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller));
+  // Firefox network interception can bypass offline navigation before its worker sees it.
+  // Fixture routing is no longer needed; remove it, then exercise the real worker transport.
+  await context.unrouteAll({behavior:'wait'});
   await context.setOffline(true);await page.reload();await ready(page);assert.deepEqual(await record(page),winner);await context.setOffline(false);
+  await context.route('**/*',r=>new URL(r.request().url()).origin===origin?r.continue():r.abort());
   await page.evaluate(async password=>{const {configureBackupPassword}=await import('/src/backup-vault.js');await configureBackupPassword(password,password);},password);
   await page.reload();await ready(page);await page.setViewportSize({width:390,height:844});await page.locator('#mobileNav [data-page="more"]').click();
   await page.waitForFunction(()=>!document.getElementById('exportEncryptedBackup').disabled);
