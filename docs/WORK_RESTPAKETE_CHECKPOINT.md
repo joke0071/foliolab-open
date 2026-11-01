@@ -1,3 +1,9 @@
+## Nachtrag UI-LOAD01 / aktiver Kandidat unverändert – 01.11.2026
+
+Nutzerverfeinerung: eigener dezent animierter FolioLab-Kolben mit Flüssigkeit/kleinen aufsteigenden Bläschen, ruhig und hochwertig, eigenständiges Design. Leichtgewichtiges CSS/SVG, Android-flüssig, statisch bei prefers-reduced-motion. App-Start/IndexedDB zuerst; längere Vorgänge mit kurzen tatsächlichen Statusmeldungen. Hintergrundupdates blockieren die übrige App möglichst nicht. In bestehendes UI-LOAD01 integrieren, keinen parallelen Kandidaten öffnen. Owner faf2f3956a11; PR #275 bleibt eingefroren bis Lauf 41338709010 vollständig beendet. Hauptjob neuer konkreter Fehler, Cross2/3 PASS, Cross1 läuft; Diagnose aktiv, noch kein Merge. UH01-Delta siehe [gesicherter Abgleich](UH01_UH02_DELTA_2026-11-01.md).
+
+---
+
 ## ACTIVE – Übernahme faf2f3956a11 – 01.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **faf2f3956a11** nach ausdrücklicher Nutzerübernahme; cab7b49c3d16 ist STOPPED. Main unverändert v262 LIVE_ACCEPTED `89095774ad605261a293c4b7bc049580f1f91deb`. Einziger Kandidat PR #275, HEAD `9c030c2a9cb28c6fbd824a4f7ab50b798ebfc194`. Lauf 41335785966 vollständig beendet/failure: Crossgruppen 1/3 PASS, Hauptjob und Gruppe 2 scheitern an den exakt gesicherten Altanbieter-Testfixtures. Kein Lauf abgebrochen. Drei-Test-Korrektur `5376a9d36051e35512526cf7b2a9da7ec43e7f00`, Parent/Tree unabhängig bestätigt; als nächstes SHA-geschützter Fast-forward desselben PR-Branches und vollständige neue CI, danach bei Erfolg Merge/Deployment/Produktionsabnahme. Keine Gateabschwächung, keine redundanten Providerabrufe. Danach UH01/UH02. EFF01/HND01 gelten; Zähler dieser Sitzung 0 akzeptierte Releases / 0 abgeschlossene Produktpakete. Historischen Checkpointbranch niemals nach Main mergen.
