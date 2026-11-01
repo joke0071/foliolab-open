@@ -1,3 +1,13 @@
+## #255 FX-/Teilfüllungen – DEPLOYED / LIVE_ACCEPTANCE_PENDING · 01.11.2026
+
+Main `512d935098e2d31366b861352d94684cae7582cb`, Tree `ddb910797eec6484417992d860460eee724e558e`, App/Service Worker unverändert `foliolab-open-v252`, PR #265. [Main-/Produktionslauf 41293317485](https://github.com/joke0071/foliolab-open/actions/runs/41293317485): sämtliche Main-Gates SUCCESS, 1052 Tests/0 Fehler/0 Skips, Syntax, Chromium und alle drei Firefox-/WebKit-Gruppen. Erweiterte 16-Schritt-Finanzkette einschließlich USD-Teilfüllungen/historischer FX ausdrücklich PASS. Kein Retry oder CI-Abbruch.
+
+Deployment **124811800498 SUCCESS**, exakten Main veröffentlicht, Homepage/SW verifiziert. Main-Artefakt **13078371878**, SHA256 `3c36c8dec0e22e0455da8e743787b505391089ab68b2bc48548e7d5127457831`; Pages **13078561776**, SHA256 `3bde4e30b8c58e714d5d620efa29f62bfd31fdae83293bcf6739d036fb03196c`. IDs/Digests gegen API und tatsächliche Uploadlogs geprüft.
+
+**Livejob 124811872366 läuft; noch kein LIVE_ACCEPTED für #265.** Tatsächliche Produktionsassets/Kernabläufe/Backup-/Recovery-/UI-/Finanzketten in Chromium, Firefox und WebKit vollständig abwarten. Letzte bestätigte Mainbasis28903ff/v252 bleibt Rückfallbeleg. #255 insgesamt PARTIAL; #264 seriell vorgemerkt. Keine parallele Implementierung. Owner Work /root, Sitzung50f1560a1a9f.
+
+---
+
 ## #255 FX-/Teilfüllungen – PR #265 MERGED, eigene Produktionsabnahme ausstehend · 01.11.2026
 
 Main `512d935098e2d31366b861352d94684cae7582cb`, Tree `ddb910797eec6484417992d860460eee724e558e` identisch mit geprüftem PR-HEAD `52d3d1f878ea2b3dc96ae93ab91ce0dd9816761e` und synthetischem Merge `dbb08326fdf1c706ac5d4ab30fa9c4ad257c7be3`. [PR #265](https://github.com/joke0071/foliolab-open/pull/265) kontrolliert integriert: unmittelbar zuvor Main unverändert, Owner/Checkpoint bestätigt, keine konkurrierende Implementierung, keine Reviews/Inline-Einwände. Historische Drafts unangetastet. Keine Gates abgeschwächt, kein Retry/Abbruch.
