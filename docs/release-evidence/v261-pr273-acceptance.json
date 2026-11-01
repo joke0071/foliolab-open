@@ -1,0 +1,57 @@
+{
+  "version": "v261",
+  "status": "MERGED_NOT_YET_LIVE_ACCEPTED",
+  "main": "87ab27bf4a48f9c2a72d1b249ff83888dd6782a9",
+  "head": "25281b47f68340df85edf5facd1f7c680cac7c85",
+  "tree": "f2e0637d5179c1314bd0b5e60d05d6666793ab64",
+  "syntheticMerge": "d927d0e42459f7e8b746d8149a819563cb8307bc",
+  "pr": 273,
+  "prCI": 41325666386,
+  "walletCI": 41325666505,
+  "mainRun": 41326923454,
+  "units": 1079,
+  "failures": 0,
+  "skippedTests": 0,
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "newSecretAndMarketstackCasesAllEngines": true,
+  "logsRead": true,
+  "artifactDigestsMatched": true,
+  "privateDataPublished": false,
+  "owner": "Work/root b1399897b0ba",
+  "artifacts": [
+    {
+      "id": 13091676777,
+      "name": "cross-engine-gates-d927d0e42459f7e8b746d8149a819563cb8307bc-3",
+      "digest": "sha256:37c5d1fa095db9f5ba6dcc929b904eea76aea3c0f1a8316fedb2cf24efe126fe"
+    },
+    {
+      "id": 13091507161,
+      "name": "cross-engine-gates-d927d0e42459f7e8b746d8149a819563cb8307bc-1",
+      "digest": "sha256:daaf5fde5321fc0879bd3311dcddb48b5cef452138917aeee658fd76bc3b14a0"
+    },
+    {
+      "id": 13091398067,
+      "name": "release-gates-d927d0e42459f7e8b746d8149a819563cb8307bc",
+      "digest": "sha256:7038c4d811b2e3ac2fc2cfbd82570b7e8bb5bf06c6e736daec4461bd1fb958c4"
+    },
+    {
+      "id": 13091203914,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:35341d296c1903425d609120e5424a0b02403b476af6747aeabe0561074e69c5"
+    },
+    {
+      "id": 13091116846,
+      "name": "ci-stage-d927d0e42459f7e8b746d8149a819563cb8307bc",
+      "digest": "sha256:64eee865af19356d9f8b91bf8ff93a0870722dc653041c838a39da04a0290616"
+    },
+    {
+      "id": 13090369651,
+      "name": "cross-engine-gates-d927d0e42459f7e8b746d8149a819563cb8307bc-2",
+      "digest": "sha256:bf68e727f9bbc3f693d1d2181ed96002a2fdfa1d0ccf1ef642977f66b1b79933"
+    }
+  ]
+}
