@@ -134,6 +134,7 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/foliolab-http.log 2>&1 &
           for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break || sleep 1; done
+          node tests/browser-etf-source-recovery.mjs
           node tests/browser-smoke.mjs
           node tests/browser-pwa-update.mjs
           node tests/browser-extended.mjs
@@ -231,7 +232,6 @@ jobs:
           node tests/browser-security-sources.mjs
           node tests/browser-eodhd-worker.mjs
           node tests/browser-market-diagnostics.mjs
-          node tests/browser-etf-source-recovery.mjs
           node tests/live-probes.mjs
           node tests/browser-accessibility-audit.mjs
           node tests/browser-portfolio-scale.mjs
@@ -327,10 +327,10 @@ jobs:
             HISTORY_ENGINES=firefox,webkit node tests/browser-ethereum-history.mjs
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-ui.mjs
           elif [[ "${{ matrix.shard }}" == "2" ]]; then
+            ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs
             PWA_UPDATE_ENGINES=firefox,webkit node tests/browser-pwa-update.mjs
             FLH_ENGINES=firefox,webkit node tests/browser-booking-history.mjs
             node tests/browser-cross-engine.mjs
-            ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs
             RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs
             FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs
             PCHAIN_ENGINES=firefox,webkit node tests/browser-pchain-evidence.mjs

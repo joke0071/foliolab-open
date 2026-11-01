@@ -707,6 +707,7 @@ function renderAccountEvidence(row,account,expanded){
  return '<details class="account-evidence advanced-apis" data-account-evidence="'+esc(account.id)+'"'+(expanded?' open':'')+'><summary>Datenstand · '+esc(account.name)+'</summary><div class="account-evidence-body"><ul>'+facts.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul><p class="small-help">Kein vollständiger Bank- oder Walletabgleich bestätigt. Eröffnungsdatum, historische Kurse, Wechselkurse und Anschaffungswerte müssen für den jeweiligen Zeitraum belegt sein. Importherkunft allein belegt keine vollständige Historie. Nicht zugeordnete Ein-/Auszahlungen können externe Geldflüsse sein.</p><div class="settings-actions"><button type="button" class="btn outline" data-action="view-account" data-id="'+esc(account.id)+'">Positionen prüfen</button>'+(row.unmatchedCashMovements?'<button type="button" class="btn outline" data-action="account-transfer-review">Transferzuordnung prüfen</button>':'')+'</div></div></details>';
 }
 function renderSettings(){
+ $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
  const evidence=new Map(accountEvidenceRows(model).map(row=>[row.accountId,row]));

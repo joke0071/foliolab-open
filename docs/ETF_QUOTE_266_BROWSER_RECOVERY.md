@@ -1,4 +1,4 @@
-# ETF-QUOTE #266 – browser source recovery (v254 candidate)
+# ETF-QUOTE #266 – browser source recovery (v255 candidate)
 
 Status: IN_PROGRESS; no release or live-provider approval implied.
 Base: main 512d935098e2d31366b861352d94684cae7582cb / v252 LIVE_ACCEPTED.
