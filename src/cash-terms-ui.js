@@ -69,3 +69,12 @@ export function bindCashTermsForm(root){
  for(const id of ['cashTermsEnabled','fixedTerm','termOutcome'])get(id).addEventListener('change',sync);
  sync();
 }
+
+/** Presentation-only 1:1 cash account. Never merge or rename persisted entities. */
+export function simpleCashHolding(account,positions=[]){
+ if(account?.type!=='savings'||positions.length!==1)return null;
+ const p=positions[0];
+ return p.accountId===account.id&&p.kind==='cash'&&p.currency===account.currency&&String(p.priceExact??p.price)==='1'&&
+  (!p.economicRole||p.economicRole==='standard')&&(!p.valuationMode||p.valuationMode==='included')&&
+  !p.representedByPositionId&&!p.wallet?.enabled?p:null;
+}

@@ -105,7 +105,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    });
   }
  };
+ const simpleCashSetup=()=>state.kind==='cash'&&state.accountId==='__new__'&&state.accountType==='savings';
  const renderOne=()=>{
+  const cash=state.kind==='cash',singleName=simpleCashSetup();
   const kindChoices=opts(kinds,state.kind,'Anlageklasse wählen').replace('<option value="">Anlageklasse wählen</option>','');
   const catalogTools=(['etf','fund','stock','other'].includes(state.kind)?
     '<details id="wizardCatalogTools" class="wizard-catalog-tools"><summary>Wertpapierkatalog importieren (CSV/TXT)</summary><div class="wizard-catalog-content">'+
@@ -124,9 +126,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   if(state.providerId)storage+='<label class="field"><span>Konto oder Depot</span><select id="wizardAccount">'+opts(accountChoices,state.accountId)+'</select></label>';
   if(state.accountId==='__new__')storage+='<div class="wizard-inline-new">'+input('wizardAccountName','Kontoname',state.accountName,'maxlength="100"')+
     '<label class="field"><span>Kontotyp</span><select id="wizardAccountType">'+opts(accountKinds,state.accountType)+'</select></label>'+
-    '<label class="field"><span>Kontowährung</span><select id="wizardAccountCurrency">'+opts(currencies.map(x=>[x,x]),state.accountCurrency)+'</select></label></div>';
+    (!singleName?'<label class="field"><span>Kontowährung</span><select id="wizardAccountCurrency">'+opts(currencies.map(x=>[x,x]),state.accountCurrency)+'</select></label>':'')+'</div>';
   storage+='</section>';
-  const buy=state.mode==='buy',cash=state.kind==='cash';
+  const buy=state.mode==='buy';
   const holdings='<section class="wizard-group"><h3>Bestand erfassen</h3>'+
     '<fieldset class="wizard-mode"><legend>Art der Erfassung</legend>'+
     '<label><input type="radio" name="wizardMode" value="opening"'+(!buy?' checked':'')+'> Aktueller Bestand</label>'+
@@ -164,30 +166,29 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
      '<div id="wizardWalletChainIdWrap">'+input('wizardWalletChainId','EVM Chain-ID',state.walletChainId,'type="number" min="1" step="1"')+'</div>'+
      '<div id="wizardWalletHdWrap"><label class="field"><span>Bitcoin-HD-Adresstyp</span><select id="wizardWalletHdType">'+opts([['auto','Automatisch erkennen'],['p2wpkh','Native SegWit (bc1q)'],['p2sh-p2wpkh','Nested SegWit (3)'],['p2pkh','Legacy (1)']],state.walletHdType).replace('<option value="">Bitte wählen</option>','')+'</select></label></div>'+
     '</div></details>':'')+'</details></section>';
-  const fields=storage+'<section class="wizard-group"><h3>Anlage auswählen</h3>'+
-    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+
-    '<label class="field"><span>Anlage suchen (optional)</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN oder Ticker"></label>'+
-    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>'+
+  const search=!cash?'<label class="field"><span>Anlage suchen (optional)</span><input type="search" id="wizardQuery" value="'+e(state.query)+'" autocomplete="off" placeholder="Name, ISIN oder Ticker"></label>'+
+    '<div id="wizardMatches" role="region" aria-label="Suchergebnisse">'+resultsMarkup()+'</div>':'';
+  const fields=storage+'<section class="wizard-group"><h3>'+(cash?'Guthaben':'Anlage auswählen')+'</h3>'+
+    '<label class="field"><span>Anlageklasse</span><select id="wizardKind">'+kindChoices+'</select></label>'+search+
     (['etf','stock','fund'].includes(state.kind)?'<button type="button" class="btn outline wizard-lookup" id="wizardExternalSearch">Online suchen</button>':'')+
-    '<div class="wizard-manual"><strong>Anlagedaten</strong><div class="field-row">'+
-    input('wizardName','Bezeichnung',state.name,'required maxlength="110"')+
-    input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"')+'</div>'+
+    '<div class="wizard-manual">'+(!cash?'<strong>Anlagedaten</strong>':'')+
+    (!singleName?'<div class="field-row">'+input('wizardName',cash?'Bezeichnung des Guthabens':'Bezeichnung',state.name,'required maxlength="110"')+
+      (!cash?input('wizardSymbol','Ticker / Symbol',state.symbol,'maxlength="32"'):'')+'</div>':'')+
     (state.kind==='crypto'?input('wizardCoinId','CoinGecko-ID (optional)',state.coinId,'maxlength="110"'):
      ['etf','stock','fund'].includes(state.kind)?input('wizardIsin','ISIN (optional)',state.isin,'maxlength="20"'):'')+
-    (state.kind==='crypto'?'':('<label class="field"><span>'+ (state.kind==='cash'?'Kontowährung':'Kurswährung') +'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen')+'</select></label>'))+
-    '<details class="advanced-apis"><summary>Weitere Angaben zur Börsennotierung</summary>'+
-    input('wizardExchange','Handelsplatz',state.exchange,'maxlength="60"')+
-    input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
-    input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+
-    input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+
-    '</details></div>'+catalogTools+'</section>'+holdings+advanced;
+    (state.kind==='crypto'?'':('<label class="field"><span>'+(cash?'Kontowährung':'Kurswährung')+'</span><select id="wizardCurrency">'+opts(currencies.map(x=>[x,x]),state.currency,'Währung wählen')+'</select></label>'))+
+    (!cash?'<details class="advanced-apis"><summary>Weitere Angaben zur Börsennotierung</summary>'+
+      input('wizardExchange','Handelsplatz',state.exchange,'maxlength="60"')+input('wizardMic','Börsen-MIC',state.mic,'maxlength="8"')+
+      input('wizardEodhd','EODHD-Börsenkürzel',state.eodhdSymbol,'maxlength="45"')+input('wizardFmp','FMP-Börsenkürzel',state.fmpSymbol,'maxlength="45"')+'</details>':'')+
+    (singleName?'<p class="small-help">Der Kontoname bezeichnet auch dein Guthaben. Zinsen, Verfügbarkeit und Fälligkeit kannst du anschließend am Konto ergänzen.</p>':'')+
+    '</div>'+catalogTools+'</section>'+holdings+advanced;
   shell(fields,'Position hinzufügen');
   const bind={wizardName:'name',wizardSymbol:'symbol',wizardIsin:'isin',wizardCoinId:'coinId',wizardExchange:'exchange',wizardMic:'mic',wizardEodhd:'eodhdSymbol',wizardFmp:'fmpSymbol'};
   Object.entries(bind).forEach(([id,key])=>$(id)?.addEventListener('input',x=>updateValue(key,x.target.value)));
-  $('wizardKind').addEventListener('change',x=>{state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);render({resetWalletDisclosure:true});if(state.kind==='crypto')loadCoins();});
+  $('wizardKind').addEventListener('change',x=>{const accountName=state.accountName,oldDefault=defaultAcc(state.kind)[0];state.kind=x.target.value;state.currency='EUR';state.walletEnabled=false;state.walletOpen=false;state.query='';state.results=[];state.name='';state.isin='';state.coinId='';state.symbol='';state.providerType=defaultProviderType(state.kind);[state.accountName,state.accountType]=defaultAcc(state.kind);if(accountName&&accountName!==oldDefault)state.accountName=accountName;render({resetWalletDisclosure:true});if(state.kind==='crypto')loadCoins();});
   $('wizardCurrency')?.addEventListener('change',x=>state.currency=x.target.value);
-  $('wizardQuery').addEventListener('input',x=>{state.query=x.target.value;updateResults();if(state.kind==='crypto'&&state.query.trim().length>=2)loadCoins({all:true});});
-  $('wizardMatches').addEventListener('click',x=>{
+  $('wizardQuery')?.addEventListener('input',x=>{state.query=x.target.value;updateResults();if(state.kind==='crypto'&&state.query.trim().length>=2)loadCoins({all:true});});
+  $('wizardMatches')?.addEventListener('click',x=>{
    const b=x.target.closest('[data-wizard-pick]');if(!b)return;
    const item=state.results[Number(b.dataset.wizardPick)];if(!item)return;
    state.name=item.name;state.symbol=item.symbol||'';state.isin=item.isin||'';state.coinId=item.coinId||'';
@@ -256,6 +257,7 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
    $(id)?.addEventListener('input',event=>state[key]=event.target.value);
    $(id)?.addEventListener('change',event=>state[key]=event.target.value);
   }
+  $('wizardAccountType')?.addEventListener('change',()=>render());
   dialog.querySelectorAll('[name=wizardMode]').forEach(el=>el.addEventListener('change',()=>{state.mode=el.value;render();}));
   for(const [id,key] of Object.entries({wizardQuantity:'quantity',wizardDate:'date',wizardUnitPrice:'unitPrice',wizardFee:'feeEUR',wizardCurrentPrice:'currentPrice',wizardFX:'fxRate'})){
    $(id)?.addEventListener('input',event=>state[key]=event.target.value);
@@ -288,9 +290,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
   }
  };
  const renderSuccess=()=>{
-  shell('<div class="wizard-success"><strong>Position gespeichert</strong><p>Bestand und Zuordnung wurden übernommen. Die Kursbewertung bleibt überprüfbar und verwendet keine erfundenen Kurse.</p><div class="toolbar-buttons"><button id="wizardMore" type="button" class="btn outline">Weitere Position hinzufügen</button><button id="wizardPortfolio" type="button" class="btn primary">Zum Portfolio</button></div></div>','Anlage hinzugefügt');
+  shell('<div class="wizard-success"><strong>'+(simpleCashSetup()?'Konto gespeichert':'Position gespeichert')+'</strong><p>'+(simpleCashSetup()?'Kontostand und Kontowährung wurden gespeichert. Verfügbarkeit, Fälligkeit und Zinsen kannst du am Konto ergänzen.':'Bestand und Zuordnung wurden übernommen. Die Kursbewertung bleibt überprüfbar und verwendet keine erfundenen Kurse.')+'</p><div class="toolbar-buttons"><button id="wizardMore" type="button" class="btn outline">'+(simpleCashSetup()?'Weiteres Konto hinzufügen':'Weitere Position hinzufügen')+'</button><button id="wizardPortfolio" type="button" class="btn primary">Zum Portfolio</button></div></div>',simpleCashSetup()?'Konto hinzugefügt':'Anlage hinzugefügt');
   $('wizardPrev').classList.add('hidden');
-  $('wizardMore').addEventListener('click',()=>{state=fresh();dirty=false;sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';render();});
+  $('wizardMore').addEventListener('click',()=>{const anotherCash=simpleCashSetup();state=fresh();dirty=false;sequence++;const m=getModel();const last=m.accounts.find(a=>a.id===m.settings?.lastAccountId);state.providerId=m.providers.find(p=>p.id===last?.providerId)?.id||(m.providers.length?'':'__new__');state.accountId=state.providerId==='__new__'?'__new__':last&&last.providerId===state.providerId?last.id:'';if(anotherCash){state.kind='cash';state.accountId='__new__';[state.accountName,state.accountType]=defaultAcc('cash');state.providerType='bank';}render();});
   $('wizardPortfolio').addEventListener('click',close);
   $('wizardPortfolio').focus();
  };
@@ -335,7 +337,9 @@ export function createAssetWizard(dialog,{getModel,onCommit,lookupListings,looku
  dialog.addEventListener('change',ev=>{if(ev.target.getAttribute('aria-invalid')==='true')clearError();});
  const advance=async ()=>{
   if(state.busy||state.saved)return;
-  if(!state.name.trim())return error('Bitte eine Anlage auswählen oder benennen.','wizardName');
+  if(simpleCashSetup()){state.name=state.accountName.trim();state.accountCurrency=state.currency;}
+  if(state.kind==='cash'){state.symbol=state.currency;for(const key of ['isin','exchange','mic','eodhdSymbol','fmpSymbol'])state[key]='';}
+  if(!state.name.trim())return error(simpleCashSetup()?'Bitte das Konto benennen.':'Bitte eine Anlage auswählen oder benennen.',simpleCashSetup()?'wizardAccountName':'wizardName');
   if(state.kind!=='crypto'&&!state.currency)return error('Bitte die Währung auswählen.','wizardCurrency');
   if(['etf','fund','stock'].includes(state.kind)&&!state.isin&&!state.symbol)return error('Bitte ISIN oder Ticker angeben.','wizardSymbol');
   if(!state.providerId)return error('Bitte einen Anbieter auswählen.','wizardProvider');

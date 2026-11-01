@@ -1,5 +1,5 @@
 import {positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
-import {cashTermsAccountHint} from './cash-terms-ui.js';
+import {cashTermsAccountHint,simpleCashHolding} from './cash-terms-ui.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {units,exact} from './decimal.js';
 import {compactMoney as compactAmount} from './format.js';
@@ -53,6 +53,18 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
       const positions=positionsByAccount.get(account.id)||[];
       const sum=positions.reduce((n,p)=>n+valueEUR(p),0);
       const accountView=aggregateValuePresentation(positions,sum,money);
+      const cash=simpleCashHolding(account,positions);
+      if(cash){
+        const id=esc(cash.id),opened=expandedPositions.has(cash.id),balance=money(Number(cash.quantityExact??cash.quantity),cash.currency);
+        return '<details class="provider-account provider-position-accordion simple-cash-account" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
+          '<summary class="provider-holding" aria-label="'+esc(account.name)+': Kontodetails '+(opened?'einklappen':'aufklappen')+'"><span class="simple-cash-label"><strong>'+esc(account.name)+'</strong>'+
+          '<small>'+esc(cash.currency)+(cash.archived?' · Archiviert':'')+'</small>'+(cashTermsAccountHint(account,esc)||'<span class="liquidity-status liquidity-unknown">Verfügbarkeit nicht hinterlegt</span>')+'</span>'+
+          '<span class="provider-holding-right"><strong>'+esc(balance)+'</strong><span class="provider-position-chevron" aria-hidden="true"></span></span></summary>'+
+          (cash.currency!=='EUR'?'<p class="small-help">Bewertung: '+esc(accountView.value)+'</p>':'')+
+          '<div class="simple-cash-actions settings-actions"><button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+id+'">Kontostand prüfen</button>'+
+          '<button type="button" class="btn outline" data-action="edit-account" data-id="'+esc(account.id)+'">Konditionen bearbeiten</button></div>'+
+          '<div class="provider-position-detail" data-position-detail="'+id+'"></div></details>';
+      }
       const holdings=positions.map(p=>{
         const id=esc(p.id),opened=expandedPositions.has(p.id);
         return '<details class="provider-position-accordion" data-position-id="'+id+'"'+(opened?' open':'')+'>'+
@@ -66,7 +78,7 @@ export function renderProviderAccounts(model, money, valueEUR, esc, expanded=new
     const open=expanded.has(provider.id)?' open':'';
     return '<details class="provider-accordion" data-provider-id="'+esc(provider.id)+'"'+open+'>'+
       '<summary class="provider-row"><div class="provider-l"><span class="provider-mark">'+esc(provider.name.slice(0,1).toUpperCase())+'</span>'+
-      '<div><div class="provider-name">'+esc(provider.name)+'</div><div class="provider-note">'+accounts.length+' Konten · '+items.length+' Positionen</div></div></div>'+
+      '<div><div class="provider-name">'+esc(provider.name)+'</div><div class="provider-note">'+accounts.length+(accounts.length===1?' Konto':' Konten')+(accounts.length&&accounts.every(a=>simpleCashHolding(a,positionsByAccount.get(a.id)||[]))?'':' · '+items.length+' Positionen')+'</div></div></div>'+
       '<span class="provider-total">'+esc(providerView.value)+'</span><span class="provider-chevron" aria-hidden="true"></span>'+(providerView.note?'<span class="aggregate-provider-note">'+esc(providerView.note)+'</span>':'')+'</summary>'+
       '<div class="provider-detail">'+(rows||'<p class="small-help">Noch keine Konten angelegt.</p>')+'</div></details>';
   }).join('');

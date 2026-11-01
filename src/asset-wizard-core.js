@@ -14,7 +14,8 @@ export function buildAssetWizardDraft(source,input){
  const kinds=['etf','stock','fund','crypto','cash','other'];
  const kind=String(input?.kind||'');
  if(!kinds.includes(kind))throw Error('Anlageklasse fehlt.');
- const name=String(input.name||'').trim();
+ const simpleCash=kind==='cash'&&(input.accountId==='__new__'||input.providerId==='__new__')&&input.accountType==='savings';
+ const name=String((simpleCash?input.accountName:input.name)||'').trim();
  if(!name)throw Error('Bitte eine Anlagenbezeichnung angeben.');
  const mode=input.mode==='buy'?'buy':'opening';
  if(kind==='cash'&&mode==='buy')throw Error('Guthaben werden als Bestand oder Einzahlung, nicht als Kauf erfasst.');
@@ -30,7 +31,7 @@ export function buildAssetWizardDraft(source,input){
  let account=draft.accounts.find(a=>a.id===input.accountId&&a.providerId===provider.id);
  if(!account){
   if(input.accountId!=='__new__'&&input.providerId!=='__new__')throw Error('Bitte ein Konto dieses Anbieters auswählen oder neu erstellen.');
-  account=createAccount({providerId:provider.id,name:input.accountName,type:input.accountType||'other',currency:input.accountCurrency||'EUR'},draft);
+  account=createAccount({providerId:provider.id,name:input.accountName,type:input.accountType||'other',currency:(simpleCash?input.currency:input.accountCurrency)||'EUR'},draft);
   if(draft.accounts.some(a=>a.providerId===provider.id&&a.name.toLocaleLowerCase('de')===account.name.toLocaleLowerCase('de')))throw Error('Konto existiert bereits; bitte auswählen.');
   draft.accounts.push(account);
  }

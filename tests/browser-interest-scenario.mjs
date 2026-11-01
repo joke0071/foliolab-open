@@ -41,7 +41,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   const before=await financial();
   const open=async id=>{
    await page.setViewportSize({width:390,height:844});await page.locator('#mobileNav [data-page="more"]').click();
-   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);await page.locator('#providerSettings [data-action="edit-account"][data-id="'+id+'"]').click();
+   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);await clickDisclosed(page.locator('#providerSettings [data-action="edit-account"][data-id="'+id+'"]'));
    assert.equal(await page.locator('#interestDisclosure').getAttribute('open'),null);
    await page.locator('#interestDisclosure').evaluate(e=>e.open=true);
   };

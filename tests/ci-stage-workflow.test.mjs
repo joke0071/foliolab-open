@@ -35,6 +35,10 @@ const pinnedCacheSteps = [
 function originalContractWithOnlyPinnedCaches(source) {
  let reduced=source;
  const additions=[
+  '          node tests/browser-cash-account-ux.mjs\n',
+  '            CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs\n',
+  '          CASH_UX_BASE="$ACCEPTANCE_BASE" node tests/browser-cash-account-ux.mjs 2>&1 | tee artifacts/gates/production-cash-ux-chromium.log\n',
+  '          CASH_UX_BASE="$ACCEPTANCE_BASE" CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs 2>&1 | tee artifacts/gates/production-cash-ux-cross.log\n',
   '          node tests/browser-etf-source-recovery.mjs\n',
   '            ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs\n',
   '          ETF_SOURCE_BASE="$ACCEPTANCE_BASE" node tests/browser-etf-source-recovery.mjs 2>&1 | tee artifacts/gates/production-etf-source-chromium.log\n',

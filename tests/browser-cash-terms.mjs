@@ -74,7 +74,7 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   };
   await page.locator('#mobileNav [data-page="more"]').click();
   await page.locator('[data-provider-settings="bank"]').evaluate(e=>e.open=true);
-  const edit=page.locator('[data-action="edit-account"][data-id="term-one"]');await edit.click();
+  const edit=page.locator('[data-action="edit-account"][data-id="term-one"]');await clickDisclosed(edit);
   assert.equal(await page.locator('#cashTermsDisclosure').getAttribute('open'),null);
   await page.locator('#cashTermsDisclosure').evaluate(e=>e.open=true);await page.locator('#cashTermsEnabled').check();
   await page.locator('#fixedTerm').check();await page.locator('#liquidityStatus').selectOption('bound');
