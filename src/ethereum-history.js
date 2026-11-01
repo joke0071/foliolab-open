@@ -13,6 +13,31 @@ const identity=(accountId,token)=>({network:'ethereum',chainId:'1',accountId,ass
 const time=v=>{if(typeof v!=='string'||!/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?Z$/.test(v))throw Error('invalid-time');return new Date(v).toISOString();};
 const abort=s=>{if(s?.aborted){const e=Error('aborted');e.name='AbortError';throw e;}};
 const canonical=v=>JSON.stringify(v,(_,x)=>x&&typeof x==='object'&&!Array.isArray(x)?Object.fromEntries(Object.entries(x).sort(([a],[b])=>a.localeCompare(b))):x);
+const cursorFields=Object.freeze({
+ transactions:['block_number','index','items_count','fee','value','inserted_at','hash'],
+ 'token-transfers':['block_number','index','items_count','log_index','batch_log_index','batch_block_hash','batch_transaction_hash','index_in_batch'],
+ 'internal-transactions':['block_number','index','items_count','transaction_index']
+});
+/** Exact endpoint cursor values, never an arbitrary query map or URL. */
+export function validateEthereumCursor(cursor,kind){
+ if(cursor===null)return null;
+ const allowed=cursorFields[kind],numeric=v=>Number.isSafeInteger(v)&&v>=0||typeof v==='string'&&/^\d{1,100}$/.test(v);
+ if(!allowed||!cursor||typeof cursor!=='object'||Array.isArray(cursor)||!Object.keys(cursor).length||Object.keys(cursor).length>12)throw Error('provider-cursor-format-changed');
+ for(const [key,value]of Object.entries(cursor)){
+  if(!allowed.includes(key))throw Error('provider-cursor-format-changed');
+  const nullable=kind==='transactions'&&['fee','value','block_number','index'].includes(key)||kind==='token-transfers'&&key.startsWith('batch_')||key==='index_in_batch';
+  if(value===null&&nullable)continue;
+  let valid;
+  if(key==='hash'||key.endsWith('_hash'))valid=typeof value==='string'&&/^0x[0-9a-f]{64}$/i.test(value);
+  else if(key==='inserted_at')valid=typeof value==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d{1,6})?Z$/.test(value)&&Number.isFinite(Date.parse(value));
+  else if(['fee','value'].includes(key))valid=numeric(value)||typeof value==='string'&&/^\d{1,80}\.\d{1,18}$/.test(value);
+  else valid=numeric(value);
+  if(!valid)throw Error('provider-cursor-format-changed');
+ }
+ if(!Object.entries(cursor).some(([k,v])=>v!==null&&['block_number','index','hash','batch_block_hash','batch_transaction_hash','batch_log_index','index_in_batch'].includes(k)))throw Error('provider-cursor-format-changed');
+ return cursor;
+}
+export const ethereumHistoryRestartRequired=code=>!['page-limit','aborted','timeout','network','http-429','http-500','http-502','http-503','http-504','rate-limit-wait-required'].includes(code);
 /** Receipt-backed normalization; raw provider payloads are never journal entries. */
 export function ethereumHistoryEvents({wallets,tokens=[],transactions=[],transfers=[],internals=[],evidence={},source=PUBLIC_EVM_NETWORKS[1].host,observedAt=new Date().toISOString()}){
  const owners=new Map(),aliases=[];
@@ -95,7 +120,9 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
  if(!Number.isInteger(maxPages)||maxPages<1||maxPages>10000||!Number.isInteger(timeoutMs)||timeoutMs<1||timeoutMs>60000||!Number.isInteger(retries)||retries<0||retries>2||!Number.isInteger(retryDelayMs)||retryDelayMs<0||retryDelayMs>5000)throw Error('invalid-limits');
  const host=PUBLIC_EVM_NETWORKS[1].host,scope=canonical([1,host,wallets,tokens,openings]);
  if(resume?.scope!==undefined&&resume.scope!==scope)throw Error('cursor-scope-mismatch');
- let state=resume?structuredClone(resume):{schema:1,scope,tip:null,jobs:[],evidence:{}};let pages=0;
+ const expected=wallets.flatMap(w=>['transactions','token-transfers','internal-transactions'].map(kind=>({address:w.address,kind})));
+ const emptyJobs=()=>expected.map(j=>({...j,cursor:null,done:false,items:[],cursors:[]}));
+ let state=resume?structuredClone(resume):{schema:1,scope,tip:null,jobs:emptyJobs(),evidence:{}};let pages=0,section='chain';
  const issues=new Set(),snapshot=()=>structuredClone(state);
  async function read(url,body){
   for(let attempt=0;;attempt++){
@@ -106,23 +133,27 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
     const r=await Promise.race([fetcher(url,{method:body?'POST':'GET',...(body?{headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{}),signal:controller.signal,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',redirect:'error'}),expired]);
     if(!r.ok){const e=Error('http-'+r.status);e.retryable=r.status===429||r.status>=500;e.delay=r.headers?.get('Retry-After');throw e;}
     const d=await Promise.race([r.json(),expired]);if(d?.error)throw Error('rpc-error');return d;
-   }catch(e){abort(signal);if(!e.retryable||attempt>=retries)throw e;
+   }catch(e){abort(signal);if(e instanceof TypeError&&/fetch|CORS|network|load failed/i.test(e.message))e.network=true;if(!e.retryable||attempt>=retries)throw e;
     const wait=e.delay==null?retryDelayMs:Number(e.delay)*1000;if(!Number.isFinite(wait)||wait>5000)throw Error('rate-limit-wait-required');await new Promise(r=>setTimeout(r,Math.max(0,wait)));
    }finally{clearTimeout(timer);signal?.removeEventListener('abort',listener);}
   }
  }
  const rpc=async(method,params)=>{const d=await read(ETH_RPC,{jsonrpc:'2.0',id:1,method,params});if(d.result===undefined||d.result===null)throw Error('rpc-missing');return d.result;};
  try{
+  if(state.schema!==1||state.scope!==scope||!Array.isArray(state.jobs)||!state.evidence||typeof state.evidence!=='object'||Array.isArray(state.evidence))throw Error('invalid-cursor');
+  // Older early-network checkpoints had no jobs and no tip/progress. Rebuild
+  // only that empty, scope-bound initial state; never discard retained pages.
+  if(resume&&!state.jobs.length&&!state.tip&&!Object.keys(state.evidence).length)state.jobs=emptyJobs();
+  if(canonical(state.jobs.map(({address,kind})=>({address,kind})))!==canonical(expected))throw Error('invalid-cursor');
   if(hex(await rpc('eth_chainId',[]))!==1n)throw Error('wrong-chain');
   const tip=await rpc('eth_getBlockByNumber',['finalized',false]);hash(tip.hash);hex(tip.number);
   if(state.schema!==1||state.scope!==scope||state.tip&&canonical(state.tip)!==canonical(tip))throw Error('tip-changed-restart-required');state.tip=tip;
-  const expected=wallets.flatMap(w=>['transactions','token-transfers','internal-transactions'].map(kind=>({address:w.address,kind})));
-  if(!resume)state.jobs=expected.map(j=>({...j,cursor:null,done:false,items:[],cursors:[]}));
-  if(canonical(state.jobs.map(({address,kind})=>({address,kind})))!==canonical(expected))throw Error('invalid-cursor');
   // Re-fetch completed pages to validate untrusted checkpoints, then continue the
   // retained cursor. Validation reads do not consume the NEW-page budget.
   if(resume)for(const job of state.jobs){
+   section=job.kind;
    if(!Array.isArray(job.items)||!Array.isArray(job.cursors)||job.cursors.length>10000||typeof job.done!=='boolean')throw Error('invalid-cursor');
+   try{validateEthereumCursor(job.cursor,job.kind);}catch{throw Error('invalid-cursor');}
    let cursor=null;const items=[],seen=[];
    const length=job.cursors.length+(job.done?1:0);
    for(let i=0;i<length;i++){
@@ -130,7 +161,7 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
     if(cursor)for(const [k,v] of Object.entries(cursor))query.set(k,String(v));
     const page=await read(host+'/api/v2/addresses/'+job.address+'/'+job.kind+'?'+query);
     if(!Array.isArray(page.items)||page.items.length>100||!Object.hasOwn(page,'next_page_params'))throw Error('invalid-page');
-    items.push(...page.items);cursor=page.next_page_params;
+    items.push(...page.items);cursor=validateEthereumCursor(page.next_page_params,job.kind);
     if(cursor!==null){const id=canonical(cursor);if(id!==job.cursors[i]||seen.includes(id))throw Error('invalid-cursor');seen.push(id);}
     else if(i!==length-1||!job.done)throw Error('cursor-provider-changed');
    }
@@ -138,20 +169,21 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
   }
   state.evidence={};
   for(const job of state.jobs){
+   section=job.kind;
    while(!job.done){
     abort(signal);if(pages>=maxPages)throw Error('page-limit');
     const query=new URLSearchParams(job.kind==='token-transfers'?{type:'ERC-20'}:{});
     if(job.cursor)for(const [k,v] of Object.entries(job.cursor))query.set(k,String(v));
     const page=await read(host+'/api/v2/addresses/'+job.address+'/'+job.kind+'?'+query);
     if(!Array.isArray(page.items)||page.items.length>100||!Object.hasOwn(page,'next_page_params'))throw Error('invalid-page');
-    const next=page.next_page_params;
+    const next=validateEthereumCursor(page.next_page_params,job.kind);
     if(next!==null){
-     if(!next||Array.isArray(next)||typeof next!=='object'||!Object.keys(next).length||Object.keys(next).length>12||Object.entries(next).some(([k,v])=>!['block_number','index','items_count','transaction_index','batch_log_index','batch_block_hash','batch_transaction_hash','log_index'].includes(k)||!(typeof v==='string'||Number.isSafeInteger(v))||String(v).length>100))throw Error('invalid-cursor');
      const id=canonical(next);if(job.cursors.includes(id)||!page.items.length)throw Error('nonadvancing-cursor');job.cursors.push(id);
     }
     job.items.push(...page.items);job.cursor=next;job.done=next===null;pages++;onCheckpoint(snapshot());
    }
   }
+  section='chain';
   const txs=state.jobs.filter(j=>j.kind==='transactions').flatMap(j=>j.items),transfers=state.jobs.filter(j=>j.kind==='token-transfers').flatMap(j=>j.items),internals=state.jobs.filter(j=>j.kind==='internal-transactions').flatMap(j=>j.items);
   const ids=[...new Set([...txs.map(t=>t.hash),...transfers.map(t=>t.transaction_hash),...internals.map(t=>t.transaction_hash)])];
   for(const id of ids){
@@ -202,5 +234,8 @@ export async function fetchEthereumHistory({wallets,tokens=[],openings=[],chainI
   for(const s of candidates)if(reconciliation.some(r=>r.accountId===s.accountId&&r.contract===s.contract&&r.status!=='verified'))s.coverage.status='partial';
   replay=replayWalletHistory({events:normalized.events,streams:candidates});
   return {...normalized,issues:[...issues].sort(),coverage:replay.balances.every(b=>b.coverage==='verified')?'verified':'partial',replay,reconciliation,observations,tip:{height:hex(tip.number).toString(),hash:hash(tip.hash),finality:'finalized'},oldestReached:true,resume:null};
- }catch(e){return {coverage:'partial',issues:[e.name==='AbortError'?'aborted':/^[a-z][a-z0-9-]{1,70}$/.test(e.message)?e.message:'provider-or-schema-error'],replay:null,oldestReached:false,resume:snapshot()};}
+ }catch(e){
+  const code=e.name==='AbortError'?'aborted':e.network?'network':/^[a-z][a-z0-9-]{1,70}$/.test(e.message)?e.message:'provider-or-schema-error',restartRequired=ethereumHistoryRestartRequired(code);
+  return {coverage:'partial',issues:[code],replay:null,oldestReached:false,resume:restartRequired?null:snapshot(),restartRequired,sourceSection:section,pagesRead:pages};
+ }
 }

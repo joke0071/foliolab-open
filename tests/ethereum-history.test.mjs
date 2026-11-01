@@ -1,7 +1,37 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {ethereumHistoryEvents,fetchEthereumHistory} from '../src/ethereum-history.js';
+import {ethereumHistoryEvents,fetchEthereumHistory,validateEthereumCursor} from '../src/ethereum-history.js';
 import {A,B,T,H,now,wallets,tokens,fixture,transaction,transfer,provider,openings} from './ethereum-history-fixtures.mjs';
 const options={wallets,tokens,openings,observedAt:now,retryDelayMs:0};
+const cursors={transactions:{index:1,block_number:10,items_count:50,fee:null,value:'900719925474099300000000001',inserted_at:'2023-11-14T22:13:20.123456Z',hash:H(1)},'token-transfers':{items_count:50,batch_log_index:0,batch_block_hash:H(10),batch_transaction_hash:H(1),index_in_batch:'2'}};
+test('Official transaction and token-batch cursors retain exact large strings/nulls without changing events',async()=>{
+ const p=provider({cursors}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});
+ assert.ok(r.replay);assert.equal(r.replay.balances.find(b=>b.contract===T).quantityBaseUnits,'7');assert.equal(r.events.length,2);
+ const next=p.calls.map(c=>new URL(c.url)).find(u=>u.pathname.endsWith('/transactions')&&u.searchParams.has('index'));
+ assert.equal(next.searchParams.get('fee'),'null');assert.equal(next.searchParams.get('value'),cursors.transactions.value);assert.equal(next.searchParams.get('inserted_at'),cursors.transactions.inserted_at);
+ assert.ok(p.calls.some(c=>new URL(c.url).searchParams.get('index_in_batch')==='2'));
+ let resumed=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({cursors}).fetcher});let rounds=0;
+ while(resumed.resume&&rounds++<8)resumed=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({cursors}).fetcher,resume:resumed.resume});
+ assert.deepEqual(resumed.events,r.events);assert.ok(resumed.replay);
+});
+test('Cursor endpoint/type limits reject unknown fields, unsafe numbers, query strings and wrong hashes',()=>{
+ for(const [kind,cursor]of [['transactions',{index:1,index_in_batch:2}],['internal-transactions',{index:1,fee:'2'}],['token-transfers',{index:1,redirect:'https://untrusted.invalid'}],['transactions',{index:-1}],['transactions',{index:Number.MAX_SAFE_INTEGER+1}],['transactions',{index:'1&apikey=secret'}],['transactions',{index:1,hash:'0x123'}],['transactions',{index:1,fee:{value:'1'}}],['transactions',{index:1,inserted_at:'invalid'}],['token-transfers',{index_in_batch:'9'.repeat(101)}]])assert.throws(()=>validateEthereumCursor(cursor,kind),/provider-cursor-format-changed/);
+ assert.deepEqual(validateEthereumCursor({index:'1',block_number:null,fee:null,value:'0',hash:H(1),inserted_at:cursors.transactions.inserted_at},'transactions').fee,null);
+});
+test('An early network checkpoint has initialized jobs; an old empty checkpoint safely restarts in the same scope',async()=>{
+ const first=await fetchEthereumHistory({...options,fetcher:async()=>{throw TypeError('Failed to fetch');}});
+ assert.deepEqual(first.issues,['network']);assert.equal(first.restartRequired,false);assert.equal(first.resume.jobs.length,3);
+ const old=structuredClone(first.resume);old.jobs=[];
+ const recovered=await fetchEthereumHistory({...options,fetcher:provider().fetcher,resume:old});assert.ok(recovered.replay);
+ const bad=structuredClone(first.resume);bad.jobs=[];bad.tip={hash:H(10),number:'0xa'};
+ const rejected=await fetchEthereumHistory({...options,fetcher:provider().fetcher,resume:bad});assert.equal(rejected.restartRequired,true);assert.equal(rejected.resume,null);
+});
+test('Unsupported or cycling cursors and changed retained pages are restart-only, never partial import previews',async()=>{
+ const p=provider({cursors:{'token-transfers':{index:1,unexpected:'SYNTHETIC_PRIVATE_VALUE'}}}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});
+ assert.equal(r.resume,null);assert.equal(r.restartRequired,true);assert.equal(r.replay,null);assert.deepEqual(r.issues,['provider-cursor-format-changed']);assert.equal(r.sourceSection,'token-transfers');
+ assert.ok(!JSON.stringify(r).includes('SYNTHETIC_PRIVATE_VALUE'));assert.ok(!p.calls.some(c=>c.url.includes('unexpected=')));
+ const first=await fetchEthereumHistory({...options,maxPages:1,fetcher:provider({pages:true}).fetcher});first.resume.jobs[0].items[0].value='999';
+ const mutated=await fetchEthereumHistory({...options,fetcher:provider({pages:true}).fetcher,resume:first.resume});assert.equal(mutated.resume,null);assert.equal(mutated.restartRequired,true);
+});
 test('ETH plus ERC20 use exact receipt-backed values and preserve two log indices',()=>{
  const f=fixture(),l=transfer(1,{value:'123456789012345678901234567890'});f.transfers.push(l.item);f.evidence[H(1)].receipt.logs.push(l.log);
  const r=ethereumHistoryEvents(f);assert.deepEqual(r.issues,[]);assert.equal(r.events.length,3);assert.ok(r.events.some(e=>e.quantityBaseUnits===l.item.total.value));assert.deepEqual(JSON.parse(JSON.stringify(r)),r);

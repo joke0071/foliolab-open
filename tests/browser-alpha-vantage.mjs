@@ -12,13 +12,15 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'}),p=await context.newPage(),calls=[],errors=[];
  p.on('pageerror',e=>errors.push(e.message));
  await p.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});
- await context.route('**/*',route=>{
+ await context.route('**/*',async route=>{
   const u=new URL(route.request().url());if(u.origin===new URL(base).origin)return route.continue();
-  calls.push({host:u.hostname,function:u.searchParams.get('function'),symbol:u.searchParams.get('symbol'),time:Date.now()});
+  const call={host:u.hostname,function:u.searchParams.get('function'),symbol:u.searchParams.get('symbol'),time:Date.now()};calls.push(call);
   const fulfill=(status,body)=>route.fulfill({status,headers:{'access-control-allow-origin':'*'},contentType:'application/json',body:JSON.stringify(body)});
   if(u.hostname==='www.alphavantage.co'){
    assert.equal(u.searchParams.get('apikey'),'SYNTHETIC_ALPHA_KEY');assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');
    const index=pairs.findIndex(([symbol])=>symbol+'.DEX'===u.searchParams.get('symbol'));assert.ok(index>=0);
+   if(index===0)await new Promise(resolve=>setTimeout(resolve,3000));
+   call.respondedAt=Date.now();
    return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},untrustedDiagnostics:{echoedKey:'SYNTHETIC_ALPHA_KEY'},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
   }
   if(u.hostname==='financialmodelingprep.com')return fulfill(402,{message:'Synthetic plan denial'});
@@ -43,7 +45,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   await refresh();const first=await record(),model=JSON.parse(first.raw);
   assert.deepEqual(model.positions.map(x=>x.price),[110,111,112,113]);assert.ok(model.positions.every(x=>x.quantityExact==='3.141592653589793238'&&x.quoteSource==='Alpha Vantage · Xetra EOD'&&x.quoteAsOf===date));
   assert.deepEqual(model.bookings,[]);assert.deepEqual(model.journalEntries,[]);assert.deepEqual(model.externalCashFlows,[]);
-  assert.equal(calls.length,4);for(let i=1;i<4;i++)assert.ok(calls[i].time-calls[i-1].time>=2300,'Requests must be serially throttled');
+  assert.equal(calls.length,4);for(let i=1;i<4;i++)assert.ok(calls[i].time-calls[i-1].respondedAt>=2300,'Requests must leave the complete gap after a slow response');
   const history=await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js');const s=new PortfolioStorage();try{const m=await s.initialize();return await fetchSecurityHistory(m.positions[0],m.settings,30);}finally{s.close();}});
   assert.equal(history.priceType,'close');assert.equal(history.points.at(-1).total,110);assert.equal(calls.length,4,'Quote/history share daily data');
   await p.reload();await refresh();assert.equal(calls.length,4,'Cache survives reload');

@@ -15,7 +15,7 @@ export function transfer(n=0,{from=B,to=A,value='7',contract=T}={}){
  return {item:{transaction_hash:H(1),block_hash:block.hash,log_index:n,from:{hash:from},to:{hash:to},token:{address_hash:contract,decimals:'18',type:'ERC-20'},token_type:'ERC-20',total:{decimals:'18',value}},log:{transactionHash:H(1),blockHash:block.hash,logIndex:'0x'+n.toString(16),address:contract,topics,data:'0x'+BigInt(value).toString(16).padStart(64,'0'),removed:false}};
 }
 export function fixture(){const t=transaction(),l=transfer();t.evidence.receipt.logs.push(l.log);return {wallets:structuredClone(wallets),tokens:structuredClone(tokens),transactions:[t.tx],transfers:[l.item],internals:[],evidence:{[H(1)]:t.evidence},observedAt:now};}
-export function provider({pages=false,status=null,reorg=false,mismatch=false,internalsFail=false}={}){
+export function provider({pages=false,status=null,reorg=false,mismatch=false,internalsFail=false,cursors={}}={}){
  const f=fixture(),calls=[];let failed=false;
  const fetcher=async(url,options={})=>{
   calls.push({url,method:options.method});let data;
@@ -35,9 +35,9 @@ export function provider({pages=false,status=null,reorg=false,mismatch=false,int
    if(internalsFail&&p.endsWith('/internal-transactions'))return {ok:false,status:403};
    if(p.includes('/tokens/'))data={address_hash:T,type:'ERC-20',decimals:'18'};
    else if(p.endsWith('/token-balances'))data=[{token:{address_hash:T,decimals:'18'},value:mismatch?'8':'7'}];
-   else if(p.endsWith('/token-transfers'))data={items:u.searchParams.has('index')?[]:f.transfers,next_page_params:pages&&!u.searchParams.has('index')?{index:1,block_number:10}:null};
+   else if(p.endsWith('/token-transfers'))data={items:(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transfers,next_page_params:(pages||cursors['token-transfers'])&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors['token-transfers']||{index:1,block_number:10}:null};
    else if(p.endsWith('/internal-transactions'))data={items:[],next_page_params:null};
-   else if(p.endsWith('/transactions'))data={items:f.transactions,next_page_params:null};
+   else if(p.endsWith('/transactions'))data={items:cursors.transactions&&(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transactions,next_page_params:cursors.transactions&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors.transactions:null};
    else if(p.includes('/transactions/'))data=f.transactions[0];
    else if(p.includes('/addresses/'))data={coin_balance:'100'};
    else throw Error('unexpected '+p);

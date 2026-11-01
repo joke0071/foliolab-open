@@ -1,11 +1,18 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {blankModel,backup,safeImport,createProvider,createPosition,addBooking,snapshot} from '../src/model.js';
-import {acceptHistory,historyPreview,checkpointHistory,validateWalletHistory,portableWalletHistory} from '../src/wallet-history-state.js';
+import {acceptHistory,historyPreview,checkpointHistory,clearHistoryCheckpoint,validateWalletHistory,portableWalletHistory} from '../src/wallet-history-state.js';
 import {createCompleteBackup,unpackCompleteBackup} from '../src/complete-backup.js';
 import {encryptBackup,decryptBackup} from '../src/crypto-backup.js';
 import {replayWalletHistory} from '../src/wallet-history-core.js';
 import {event,stream,NOW} from './wallet-history-fixtures.mjs';
 const preview=()=>historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream()]}),issues:[]},{id:'a',chain:'eth',walletKey:'public-wallet',acceptedAt:NOW});
+test('Clearing a broken resume marker keeps accepted sessions and every financial field unchanged',()=>{
+ let m=acceptHistory(blankModel(),preview());
+ for(const id of ['a','other'])m=checkpointHistory(m,{id,chain:'eth',walletKey:id,provider:'https://fixture.test',filter:'all',tip:null,updatedAt:NOW});
+ const before=JSON.stringify(m),next=clearHistoryCheckpoint(m,'a');assert.equal(JSON.stringify(m),before);
+ assert.deepEqual(next.walletHistory.sessions,m.walletHistory.sessions);assert.deepEqual(next.walletHistory.pending.map(x=>x.id),['other']);
+ for(const key of Object.keys(m).filter(k=>k!=='walletHistory'))assert.deepEqual(next[key],m[key]);
+});
 test('WH04 accepted projection is idempotent, isolated and credential-free',()=>{
  const m=blankModel(),provider=createProvider({name:'Protected financial fixture',type:'broker'});m.providers.push(provider);m.positions.push(createPosition({providerId:provider.id,name:'Manual ETF',kind:'etf',quantity:4,price:100},m));addBooking(m,{positionId:m.positions[0].id,date:'2026-10-20',type:'buy',quantity:2,unitPrice:110,feeEUR:2});snapshot(m,'2026-10-20','Manually confirmed amount',{manualTotalEUR:'612.34'});
  const original=JSON.stringify(m),p=preview();p.password='secret';p.events[0].source='https://rpc.test/path?apikey=secret';
