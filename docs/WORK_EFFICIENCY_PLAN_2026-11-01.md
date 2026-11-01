@@ -106,3 +106,35 @@ Offizielle OpenAI-Dokumentation, geprüft 01.11.2026:
 - https://openai.com/index/introducing-gpt-6-1-sol/ — Modellverfügbarkeit und Positionierung; API-Preisvergleich ist keine Garantie einer proportionalen Abo-Ersparnis.
 - https://help.openai.com/en/articles/20001516-managing-usage-with-gpt-6-astra-in-work-and-codex — Verbrauch hängt von Modell, Kontext, Reasoning, Geschwindigkeit und Aufgabe ab; tatsächliche Modellauswahl über verfügbare Einstellungen.
 - https://help.openai.com/en/articles/11369540-using-codex-with-your-chatgpt-plan — verfügbare Nutzung und Kontingentanzeige; keine feste Zahl von Aufgaben aus einer Roadmap ableiten.
+
+
+## 10. HND01 – verbindliche Work-Sitzungsrotation
+
+**Nutzerentscheidung vom 01.11.2026:** Um wiederholt nicht mehr reagierenden überlangen Work-Chats vorzubeugen, wird die sichere, gitbasierte **Chat-Rotation als organisatorischer Standard** eingeführt. Sie darf laufende Releases und sicherheitskritische Arbeit weder unterbrechen noch einen konkurrierenden Integrationsstrang erzeugen. Sie ist eine Ablaufregel, **keine Behauptung einer technischen automatischen Chat-Neuerstellung oder eines Kontingentresets**.
+
+### Auslöser und Zeitpunkt
+
+- **Spätestens nach zwei tatsächlich LIVE_ACCEPTED Releases oder drei fachlich abgeschlossenen Arbeitspaketen pro Work-Chat – je nachdem, was zuerst eintritt – eine Übergabe vorbereiten.** Release- und Paketzähler gelten ab Übernahme durch den jeweiligen Work-Chat, nicht ab Projektbeginn. Eine reine Dokumentationsänderung zählt nicht als fertiges Produktpaket.
+- **Früher**, wenn der Kontext zunehmend unübersichtlich wird, viele wiederholte Tool-/Logausgaben entstehen, Antworten instabil werden oder der Nutzer eine Übergabe verlangt.
+- **Nur am sicheren Integrationspunkt beenden:** erst laufende CI-/Deployment-/Live-Prüfungen abgleichen und ihren Status wahrheitsgemäß dokumentieren; keine GitHub Action zur Rotation abbrechen, keine ungeprüfte PR mergen, keine laufende Mutation einfach vergessen. Wenn CI noch läuft, ist eine kontrollierte Übergabe mit ausdrücklich *IN_PROGRESS* dokumentiertem Lauf zulässig; der Nachfolger wartet/sichtet die bestehende CI statt sie zu duplizieren.
+
+### Minimaler, nachvollziehbarer Abschluss
+
+1. Frisch GitHub-Main/Tree, offene PRs/Branches, Actions und aktuellem Checkpointkopf abgleichen. Bereits dokumentierte Nachweise nicht erneut vollständig lesen.
+2. Ein einzelner kompakter **HANDOVER_READY**-Block am **Anfang des zentralen Checkpoints** (bestehender Checkpoint-Branch) enthält: Zeitpunkt, abgebenden Owner/Sitzung sofern bekannt, Main-SHA/letzte wirklich abgenommene Version, aktive Branch-/PR-/HEAD-IDs, CI-/Release-/Livejob mit präzisem Status, nicht remote gesicherte lokale Änderungen mit reproduzierbarem Patch oder ausdrücklich „keine“, tatsächliche Blocker, priorisierter nächster Schritt und alleinige Schreibverantwortung. Neuere fremde Einträge mittels SHA-/Versionsabgleich nie überschreiben; den historischen Checkpointbranch niemals komplett nach Main mergen.
+3. Zusätzlich einen **kurzen, vollständig kopierbaren Startprompt für einen frischen Work-Chat** bereitstellen, **ohne private Daten**. Prompt nur auf Repo, Checkpoint, aktuelle relevante Issue-/PR-Links, Übernahmesicherheit und nächste Aufgabe stützen. Keine alten Masterprompts oder gesamte Roadmap erneut hinein kopieren. Diesen Prompt möglichst auch dauerhaft im Checkpoint-Handover-Block oder als dort verlinkte kleine Datei sichern, damit er bei einem hängenden Chat rekonstruierbar bleibt.
+4. Am Abschluss den Nutzer ausdrücklich informieren: **„Übergabe bereit – neuen Work-Chat mit diesem Prompt öffnen“**. Nach bestätigter Abgabe keine neuen Implementierungen/PRs/Merges/Deployments mehr starten. Laufende GitHub Actions unverändert lassen.
+5. Neuer Chat prüft vor seinem ersten Schreibvorgang aktuellen Main/PR/CI/Checkpoint und mögliche aktive alte Owner. GitHub-Status allein beweist nie, dass eine vorherige Chat-Sitzung beendet ist. Bei nachgewiesener Kollision keine parallele Umsetzung; gegebenenfalls erst STOP/Abgabe aus dem alten Chat oder einen eindeutigen kollisionsfreien Stand herstellen.
+
+### Notfall, falls der alte Chat nicht mehr antwortet
+
+Der Nutzer kann **jederzeit** manuell einen frischen Work-Chat mit einem kurzen GitHub-Übernahmeprompt starten. Der neue Chat nimmt eine **read-only Übernahmeprüfung** vor, sichert/dokumentiert vorhandene WIP-Zustände ohne fremde Branches zu überschreiben, lässt CI unverändert auslaufen und führt erst bei belegter Kollisionsfreiheit Produktänderungen aus. **Nicht** auf eine Antwort des hängenden Chats oder auf einen künstlichen Zeitablauf als Beweis für Stillstand vertrauen.
+
+### Technische und Produktgrenzen
+
+- **ChatGPT Work kann nicht durch ein GitHub-Dokument oder GitHub Action automatisch einen neuen Chat öffnen.** Die eigentliche neue Chat-Erstellung ist ein expliziter Nutzerschritt. Kein automatisches Senden von Zugangsdaten zwischen Chats; erforderliche Secrets nur über den privaten neuen Chat bzw. autorisierte sichere Verbindungen.
+- Keine zusätzlichen GitHub-Actions/PRs nur für die Rotation, kein neuer Bot/Workflow, kein Hintergrund-Watcher ohne eigenständigen Nutzwertbeleg. Nutze bestehenden Checkpoint und bestehende Issues. Keine wiederholten Gesamtprojekt-Audits beim Wiedereinstieg.
+- Modell-, Kosten- und Kontextgrenzen nicht spekulativ behaupten. Eine Rotation reduziert typischerweise die Chatkomplexität, garantiert aber weder Schutz vor Plattformproblemen noch eine konkrete Kontingentersparnis.
+- Erfolgskriterium: Ein neuer Work-Chat kann **ohne erneute Projektanalyse** anhand des aktuellen GitHub-Checkpoints den richtigen einzelnen Integrationsstrang weiterführen; kein WIP-Verlust, kein doppelter Release, keine abgebrochene CI und kein Verlust privater Zugangsdaten.
+
+**Operative Standard-Startformel für den Nutzer:** „Übernimm FolioLab Open anhand von `docs/WORK_RESTPAKETE_CHECKPOINT.md` auf `feature/flh05-import-foundation`. Aktuellen Main, offene PRs, CI und aktiven Owner vor jeder Mutation abgleichen. Letzten HANDOVER_READY-Block lesen und den dort genannten nächsten Arbeitsschritt seriell ausführen. Laufende CI nicht abbrechen; keine parallele Implementierung. EFF01/HND01-Regeln anwenden, bei erfolgreicher Abnahme veröffentlichen und neu checkpointen.“
