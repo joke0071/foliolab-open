@@ -34,3 +34,7 @@ Separate echte CoinGecko-token_price/ethereum-Kontrolle mit öffentlichem stETH-
 - https://www.alphavantage.co/terms_of_service/ (persönliche private Nutzung; kein gemeinsamer Key/Weiterverteilungsdienst)
 
 Nächster serieller Schritt: PR#270 vollständig sicher abschließen; dann AV als zusätzliches BYO-Key-Direktangebot integrieren, FMP/Twelve-Sperr-/Tarifdiagnostik verbessern, optionalen EODHD-Worker erhalten. Keine Finanz-/IDB-/Backup-/Offline-Gates auslassen.
+
+## Abschließende Token-Kontrolle
+
+Nach dem ersten Timeout derselbe öffentliche stETH-token_price-Aufruf sowohl per regulärem Node-HTTPS (ACAO*) als auch durch Chromium-fetch auf Produktionsorigin jeweils mit und ohne Nutzer-Demo-Key HTTP200, positiver EUR-Kurs. Kein Produktivportfolio gelesen oder geändert. Für diesen Kontrollfall ist damit kein dauerhafter Key-/Tarif-/CORS-Fehler reproduziert. Die Ursache des früheren Android-Fehlers bleibt ungeklärt; nicht als behoben oder als falscher Zugang deklarieren. Keine weiteren Schlüsseltests oder automatische unsichere Proxy-Fallbacks daraus ableiten.
