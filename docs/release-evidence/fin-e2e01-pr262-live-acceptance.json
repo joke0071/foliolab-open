@@ -1,0 +1,129 @@
+{
+  "status": "LIVE_ACCEPTED_FIRST_FIN_E2E01_SLICE",
+  "overallIssue255": "PARTIAL",
+  "main": "87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+  "tree": "e2f6670913e353bfc7828822470c33b58aac8da0",
+  "appCache": "foliolab-open-v251",
+  "testOnly": true,
+  "pr": 262,
+  "head": "70400c3ac42c2663757a2cf6c1b195c924a0729d",
+  "prCi": 41282037334,
+  "walletCi": 41282037355,
+  "mainRun": 41282762467,
+  "mainAttempt": 2,
+  "mainRunConclusion": "success",
+  "tests": {
+    "total": 1047,
+    "pass": 1047,
+    "fail": 0,
+    "skip": 0
+  },
+  "deploymentJob": 124783614915,
+  "liveJob": 124783670236,
+  "live": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "assetMatches": 123,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "financeWidths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "financeProductionPassLines": [
+      "2026-11-01T07:26:35.4229395Z FIN-E2E01 chromium: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+      "2026-11-01T07:42:29.9895094Z FIN-E2E01 firefox: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS",
+      "2026-11-01T07:42:36.8804457Z FIN-E2E01 webkit: exact cash/flows/basis/PnL/fees/taxes, source identity, 11 steps, CAS/quota/abort/offline, UI encrypted fresh restore PASS"
+    ],
+    "targetedQualityFocusInProduction": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "results": "All new eleven finance steps and exact oracle; source identities/deleted-source reimport, trade cost basis/PnL/fees/tax, CAS/declined/stale/quota/post-put abort, real peer tab, offline worker reload, actual v2 UI download/fresh UI restore/reload passed."
+  },
+  "artifacts": [
+    {
+      "id": 13074706767,
+      "name": "release-gates-87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+      "digest": "sha256:276efe73df12823add03cde7083dde713d41305deb7842727e0674c382ff15e6",
+      "uploadLogMatchesApi": true
+    },
+    {
+      "id": 13075092301,
+      "name": "production-live-acceptance-87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+      "digest": "sha256:dc3d341d295f678922b1ba21759acaf137727a2cde732819d1ad543b4f0d31a2",
+      "uploadLogMatchesApi": true
+    },
+    {
+      "id": 13074663182,
+      "name": "github-pages",
+      "digest": "sha256:b0ffb2c4678d4361bfd773ad889f7e2b69555cca2f56848d10ea09010de428c4",
+      "uploadLogMatchesApi": true
+    }
+  ],
+  "postDeploymentIndependentTLS": {
+    "checkedAt": "2026-11-01T07:42:38.027643+00:00",
+    "normalTLSVerification": true,
+    "main": "87d4669c217e5a9f7362e50239d3f85f83bcaa3b",
+    "assets": [
+      {
+        "path": "sw.js",
+        "match": true,
+        "sha256": "2971f664df5d68819a64f88d190678f5da4a3d68644e4dbd5033479475f16ad4"
+      },
+      {
+        "path": "index.html",
+        "match": true,
+        "sha256": "e64acf26ff6ff6b860b0e1f372173c037d2ffc88668c6a4bbbb9ca4e40e88e25"
+      },
+      {
+        "path": "src/transactions.js",
+        "match": true,
+        "sha256": "93b33fa9adc643f8207fcbae072ea7accae7be60bfbeff36f1ee15a995394132"
+      },
+      {
+        "path": "src/booking-management.js",
+        "match": true,
+        "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9"
+      },
+      {
+        "path": "src/import-identity.js",
+        "match": true,
+        "sha256": "02eb68b60b44aa42cd926764952a2565ab446eb07b43235731440535ac4af089"
+      },
+      {
+        "path": "src/atomic-storage.js",
+        "match": true,
+        "sha256": "284839357a45c5f7e5a3e717a0bc45d81dfea627e68042255eebb9ace2cd83bd"
+      },
+      {
+        "path": "src/backup-vault.js",
+        "match": true,
+        "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+      }
+    ]
+  },
+  "failureHistory": {
+    "firstPrRun": 41281116451,
+    "newHarnessFailure": "Firefox offline reload with intercepted transport; fixed solely in new test by requiring active controller and removing fixture routing before real offline transport",
+    "firstMainJob": 124777895226,
+    "oldFocusAssertion": "unchanged immediate focus assertion intermittently failed; 3 unchanged local focused probes passed; one targeted job retry124780788272 passed unchanged and retained all successful cross groups; no repeated blind retry or gate reduction",
+    "cancelledRuns": 0
+  },
+  "limits": [
+    "Financial actions orchestrated through actual production APIs and IDB; not every action is a UI click.",
+    "Issue255 overall remains PARTIAL: more FX/partial fills/staking/wallet/return/failure oracles remain.",
+    "No real Android/native Safari/OAuth/TalkBack/OS-crash evidence.",
+    "Artifact digests matched API to upload logs; no separately downloaded ZIP CRC claim."
+  ],
+  "next": "Serial #256 current EMULATED baseline using existing controlled worker benchmark; real Android EXTERNAL."
+}
