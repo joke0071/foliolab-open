@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import {ethereumHistoryEvents,fetchEthereumHistory,validateEthereumCursor} from '../src/ethereum-history.js';
 import {A,B,T,H,now,wallets,tokens,fixture,transaction,transfer,provider,openings} from './ethereum-history-fixtures.mjs';
 const options={wallets,tokens,openings,observedAt:now,retryDelayMs:0};
-const cursors={transactions:{index:1,block_number:10,items_count:50,fee:null,value:'900719925474099300000000001',inserted_at:'2023-11-14T22:13:20.123456Z',hash:H(1)},'token-transfers':{index:'1',block_number:10,items_count:50,batch_log_index:0,batch_block_hash:H(10),batch_transaction_hash:H(1),index_in_batch:'2'}};
+const cursors={transactions:{index:1,block_number:10,items_count:50,fee:null,value:'900719925474099300000000001',inserted_at:'2023-11-14T22:13:20.123456Z',hash:H(1)},'token-transfers':{items_count:50,batch_log_index:0,batch_block_hash:H(10),batch_transaction_hash:H(1),index_in_batch:'2'}};
 test('Official transaction and token-batch cursors retain exact large strings/nulls without changing events',async()=>{
  const p=provider({cursors}),r=await fetchEthereumHistory({...options,fetcher:p.fetcher});
  assert.ok(r.replay);assert.equal(r.replay.balances.find(b=>b.contract===T).quantityBaseUnits,'7');assert.equal(r.events.length,2);

@@ -47,6 +47,17 @@ test('Provider limit response is not cached as a price; cooldown prevents repeat
  await assert.rejects(()=>a.load(position('VWCE'),'test'),/limit/);
  assert.equal(calls,1);assert.equal(await store.read('daily:VWCE.DEX'),undefined);
 });
+test('Slow provider responses leave a complete 2.5-second gap after completion, also for a new client',async()=>{
+ const store=memory(),starts=[],finishes=[];let time=now;
+ const deps={store,clock:()=>time,pause:async ms=>{time+=ms;},fetcher:async url=>{
+  starts.push(time);time+=5000;finishes.push(time);
+  return {ok:true,status:200,json:async()=>daily(new URL(url).searchParams.get('symbol'))};
+ }};
+ await createAlphaClient(deps).load(position('VWCE'),'test');
+ await createAlphaClient(deps).load(position('XDEM'),'test');
+ assert.ok(starts[1]-finishes[0]>=2500,'Response latency cannot consume the free-tier pacing gap');
+ assert.equal((await store.read('budget:'+await alphaKeyId('test'))).used,2);
+});
 test('Confirmed FMP402 and Twelve plan404 suppress repeated automatic requests but allow explicit recheck',async()=>{
  for(const source of ['fmp','twelve']){
   let calls=0;const key='SYNTHETIC_SECRET',settings={[source==='fmp'?'fmpKey':'twelveKey']:key,securitySource:source};

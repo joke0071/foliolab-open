@@ -114,6 +114,14 @@ export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause
    }catch(error){
     if(error.cooldown)await store.update(budgetKey,old=>({...old,blockedUntil:Math.min(dayEnd(clock()),clock()+error.cooldown)}));
     throw error;
+   }finally{
+    // A slow response must not consume the inter-request gap. The next queued
+    // request (including after reload) waits from completion, not from start.
+    const finishedAt=clock();
+    await store.update(budgetKey,old=>{
+     if(!old||!Number.isFinite(old.nextAt))throw failure();
+     return {...old,nextAt:Math.max(old.nextAt,finishedAt+2500)};
+    });
    }
   });
   tail=job;pending.set(activeKey,job);

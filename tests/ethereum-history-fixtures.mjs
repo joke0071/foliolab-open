@@ -35,9 +35,9 @@ export function provider({pages=false,status=null,reorg=false,mismatch=false,int
    if(internalsFail&&p.endsWith('/internal-transactions'))return {ok:false,status:403};
    if(p.includes('/tokens/'))data={address_hash:T,type:'ERC-20',decimals:'18'};
    else if(p.endsWith('/token-balances'))data=[{token:{address_hash:T,decimals:'18'},value:mismatch?'8':'7'}];
-   else if(p.endsWith('/token-transfers'))data={items:u.searchParams.has('index')?[]:f.transfers,next_page_params:(pages||cursors['token-transfers'])&&!u.searchParams.has('index')?cursors['token-transfers']||{index:1,block_number:10}:null};
+   else if(p.endsWith('/token-transfers'))data={items:(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transfers,next_page_params:(pages||cursors['token-transfers'])&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors['token-transfers']||{index:1,block_number:10}:null};
    else if(p.endsWith('/internal-transactions'))data={items:[],next_page_params:null};
-   else if(p.endsWith('/transactions'))data={items:cursors.transactions&&u.searchParams.has('index')?[]:f.transactions,next_page_params:cursors.transactions&&!u.searchParams.has('index')?cursors.transactions:null};
+   else if(p.endsWith('/transactions'))data={items:cursors.transactions&&(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?[]:f.transactions,next_page_params:cursors.transactions&&!(u.searchParams.has('index')||u.searchParams.has('index_in_batch'))?cursors.transactions:null};
    else if(p.includes('/transactions/'))data=f.transactions[0];
    else if(p.includes('/addresses/'))data={coin_balance:'100'};
    else throw Error('unexpected '+p);

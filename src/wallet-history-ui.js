@@ -103,7 +103,7 @@ export function createWalletHistoryUI({getModel,commit}){
     }catch{setStatus('Neuer Abruf erforderlich. Der temporäre Status konnte nicht gespeichert werden; bisherige Daten bleiben erhalten.');}
    }else setStatus('Keine Übernahme: '+String(e.message||e));
   }
-  finally{busy(false);}
+  finally{busy(false);if(restartNeeded&&dialog.open)el('start').focus();}
  }
  function choose(positionId){selected=model().positions.find(p=>p.id===positionId&&supported(p));preview=null;restartNeeded=false;limit=100;if(!selected)return;el('wallet').value=selected.id;evidenceUI?.refresh();show(stored());busy(false);setStatus('Quelle: '+source()+'. '+(model().walletHistory?.pending.some(p=>p.id===id())?(chain()==='eth'&&!cache.has(id())?'Temporäre Seiten fehlen. Bitte neu abrufen.':'Vorheriger Abruf kann neu aufgenommen werden.'):'Zum Starten Historie abrufen.'));}
  function mount(){
