@@ -1,3 +1,13 @@
+## #255 / PR262 – finaler Testkandidat IN_PROGRESS · 01.11.2026
+
+**Aktueller PR-HEAD `70400c3ac42c2663757a2cf6c1b195c924a0729d`**, Tree `e2f6670913e353bfc7828822470c33b58aac8da0` = lokalem Index, Branch `test/fin-e2e01-cash-chain`. Owner Work /root 50f1560a1a9f. Vollständiger neuer PR-Lauf **41282037334**, Wallet **41282037355** gestartet. **Noch kein CI_ACCEPTED/MERGED/Produktionsketten-PASS**. Produktion bleibt v251 auf Main7c720dd; keine Appassets geändert.
+
+Erster Lauf **41281116451 regulär beendet**: Chromiumvollsuite/1047Tests/Syntax, Cross1 und Cross3/FAST SUCCESS; ausschließlich Cross2 wegen neuem Firefox-Offline-Testtransport FAILED. Bestehende PWA-/Recoveryfälle davor Firefox+WebKit PASS. Kein CI-Cancel. Nach vollständigem Abschluss Testharnessfix per expected_sha auf denselben PR veröffentlicht. Lokale korrigierte ganze Kette Chromium+Firefox PASS; aktive SW/Controller explizit abwarten und Testnetzwerkumleitungen vor echtem Offline-Reload entfernen. Keine Produkt-/Sandbox-/Sicherheitsgateänderung.
+
+Nächster Schritt: exakte finale Pflicht-CI bis zum Ergebnis, dann kontrollierter Merge und echte zusätzliche Produktionskette in Chromium/Firefox/WebKit. Vor Schreibschritten erneut Main/PR/Checkpoint abgleichen. #255 bleibt fachlich PARTIAL gemäß Scope-Dokument; danach #256 seriell. Alle historischen Gates/Hashes erhalten, keine zweite Implementation/keine Integration des historischen Checkpoint-Branches.
+
+---
+
 ## #255 / PR262 – erster CI-Lauf, gezielter Testharnessfix · 01.11.2026
 
 Weiterhin ein Strang / Owner Work /root 50f1560a1a9f. PR-HEAD `02bc4a174ece00f08df76bc1396dbda6afa026b5`; volle CI **41281116451** noch laufend, Wallet **41281116367 SUCCESS**. Cross2/Job **124773104890 FAILED**: neue Kette besteht bis Offlinephase; Firefox `page.reload: NS_ERROR_OFFLINE` bei noch aktiver Playwright-Netzwerkumleitung. Bestehende PWA-/Recovery-Suiten unmittelbar davor beide Engines PASS. Keine Produktregression behauptet.
