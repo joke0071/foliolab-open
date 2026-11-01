@@ -1,3 +1,13 @@
+## #266 / PR #269 – v257, abschließender Kandidat / CI_PENDING · 01.11.2026
+
+HEAD `4fcede5735870522f19418cc9659e17ecdf69f16`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4` lokal/remote exakt; App/SW257. Alle früheren SW253–256 nur unveröffentlichte Kandidaten. Einziger Strang/Owner unverändert Work /root d72ece214a83. Main512d935 / ProduktionSW252 unverändert. **1052 vollständige lokale Tests/0 Fehler/0 Skips**, Syntax/Diffcheck PASS nach letztem Produktdelta. Aktuelle Pflicht-CI **41303334450 IN_PROGRESS**, Wallet **41303334485 SUCCESS**, Info **41303334489 SUCCESS**, FAST-Kanarien SUCCESS. Vollständiges Chromium und drei Firefox-/WebKit-Gruppen noch nicht abgeschlossen.
+
+Letzte Produktkorrektur: kompakte Fehlertexte priorisieren tatsächlich versuchte FMP-/Twelve-Fehler vor übersprungenem Alt-EODHD; andernfalls verdrängte dessen langer Hinweis den eigentlichen Fehler im kompakten Text. Gesonderte Reihenfolge-/Redaktionsassertion PASS. Produktcode danach eingefroren. Zusätzlich bestehender Buchungsfokus-Test wartet begrenzt auf denselben exakten Fokus nach tatsächlichem native-close; vorher rote Assertion nach hidden war ein Event-Rennen, keine Finanzänderung. Keine Gates/Assertions entfernt. Neuer Vier-ETF-Chromium-Schnitt in Vorlauf vollständig PASS; Firefox ebenfalls; WebKit-Mock-Bypass durch SW-Block ausschließlich in isolierter Anbietersuite korrigiert, echte PWA/SW/Offline-Gates unverändert Pflicht. Rote/supersedierte Läufe keine Abnahme.
+
+PR-Beschreibung aktualisiert, finaler Umfang in `docs/ETF_QUOTE_266_BROWSER_RECOVERY.md`. Noch **kein CI_ACCEPTED/MERGED/DEPLOYED/LIVE_ACCEPTED**. #266 bleibt PARTIAL bis autorisierter echter direkter Vier-ETF-Kurs-/Origin-CORS-/Tarifnachweis; Public-Katalog EUR/XETR/Grow/Venture ist kein Kursbeleg. Nächster Schritt ausschließlich genaue aktuelle CI abschließen, sicher routinemäßig integrieren/veröffentlichen/Produktion abnehmen; dann #267+#264 seriell. Kein historischer Checkpoint-Branchmerge.
+
+---
+
 ## #266 / PR #269 – SW256, Produktcode eingefroren / CI_PENDING · 01.11.2026
 
 Aktueller HEAD `12197fe862019d3e283bb3c929dd67f9ca1c21b9`, Tree `5941acced6af1b70fe592527f913229dae410509`; lokal/remote gleich. Einziger Produktstrang unverändert. Kandidat SW256, Zwischenstände SW253–255 nie veröffentlicht; Main512d935 und echte ProduktionSW252 bleiben Basis. **1052 lokale Tests PASS, 0 Fehler/Skips**, Syntax/Diffcheck PASS. Letzte tatsächliche vollständige lokale Ausgabe `/tmp/etf-final2-units.log` (nur reproduzierbare Scratch-Evidenz, remote CI liefert dauerhafte Prüfung). Aktueller vollständiger Lauf **41302825001 IN_PROGRESS**, Wallet41302825005, Info41302824979. Keine neue Funktionsarbeit während Abnahme.
