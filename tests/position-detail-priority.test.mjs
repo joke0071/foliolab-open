@@ -14,7 +14,7 @@ function fakeMount(){
  return {mount,target};
 }
 test('ETF shows native chart first and directly offers local CSV without third-party widget',()=>{
- const p=position(),m=model(p);m.settings.eodhdKey='SYNTHETIC_KEY';
+ const p=position(),m=model(p);m.settings.twelveKey='SYNTHETIC_KEY';
  const html=positionDetailMarkup(p,m,config);
  assert.match(html,/position-history-plot/);
  assert.match(html,/class="position-native-quote-actions"/);
@@ -33,15 +33,15 @@ test('Without a provider, ETF never charts snapshot value as if it were a market
  assert.match(html,/CSV-Kursverlauf importieren/);
  assert.doesNotMatch(html,/TradingView|load-tradingview/);
 });
-test('Configured EODHD key with missing exchange explains the listing problem',()=>{
- const p=position();p.exchange='';p.mic='';
- const m=model(p);m.settings.eodhdKey='SYNTHETIC_KEY';
+test('Configured Twelve Data key with missing exchange explains the listing problem',()=>{
+ const p=position();p.exchange='';p.mic='';p.name='Unconfirmed';p.isin='';
+ const m=model(p);m.settings.twelveKey='SYNTHETIC_KEY';
  const html=positionDetailMarkup(p,m,config);
  assert.match(html,/Handelsplatz/);
  assert.doesNotMatch(html,/position-history-plot/);
 });
 test('Confirmed local history precedes remote providers without unnecessary requests',async()=>{
- const p=position(),m=model(p);m.settings.eodhdKey='SYNTHETIC_KEY';m.priceHistories[p.id]=csvData();
+ const p=position(),m=model(p);m.settings.twelveKey='SYNTHETIC_KEY';m.priceHistories[p.id]=csvData();
  const {mount,target}=fakeMount();
  let calls=0;
  const fetcher=async()=>{calls++;return {ok:true,status:200,headers:{get:()=>null},json:async()=>[{date:daysAgo(2),close:99},{date:daysAgo(1),close:103}]};};
@@ -53,10 +53,10 @@ test('Confirmed local history precedes remote providers without unnecessary requ
  assert.match(failMount.target.innerHTML,/CSV-Daten vom Nutzer/);
 });
 
-test('Failed EODHD request collapses its chart, hides periods and never exposes the key',async()=>{
+test('Failed direct Twelve Data request collapses its chart, hides periods and never exposes the key',async()=>{
  const p=position(),m=model(p);
  const secret='SYNTHETIC_SECRET_TEST_ONLY';
- m.settings.eodhdKey=secret;
+ m.settings.twelveKey=secret;
  const period={classList:{items:new Set(),add(x){this.items.add(x)},remove(x){this.items.delete(x)}}};
  const target={isConnected:true,innerHTML:''};
  const mount={isConnected:true,dataset:{},querySelector:selector=>selector==='.position-history-plot'?target:selector==='.position-period'?period:null};

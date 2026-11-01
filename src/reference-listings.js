@@ -12,10 +12,14 @@ const KNOWN=Object.freeze([
 ]);
 export function knownReferenceListing(position){
  if(!position||String(position.currency||'EUR').toUpperCase()!=='EUR')return null;
- const match=KNOWN.find(k=>k.kind===position.kind&&k.symbol===String(position.symbol||'').toUpperCase()&&k.name.test(String(position.name||'')));
+ const match=KNOWN.find(k=>k.kind===position.kind&&k.symbol===String(position.symbol||'').toUpperCase());
  if(!match)return null;
  const isin=String(position.isin||'').toUpperCase();
  if(isin&&isin!==match.isin)return null;
+ // Legacy full names remain usable. Broker abbreviations require all four
+ // independent identity fields, including an explicitly confirmed currency.
+ const strong=isin===match.isin&&String(position.currency||'').trim().toUpperCase()==='EUR'&&String(position.mic||'').trim().toUpperCase()==='XETR';
+ if(!strong&&!match.name.test(String(position.name||'')))return null;
  const mic=String(position.mic||'').trim().toUpperCase();
  const exchange=String(position.exchange||'').trim().toUpperCase();
  if(mic&&mic!=='XETR')return null;

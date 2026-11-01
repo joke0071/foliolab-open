@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {webcrypto} from 'node:crypto';globalThis.crypto??=webcrypto;
-import {fetchSecurityQuote,fetchSecurityHistory,marketSourceOptions} from '../src/security-sources.js';
+import {fetchSecurityQuote,fetchSecurityHistory,marketSourceOptions,marketSourcePlan} from '../src/security-sources.js';
 import {blankModel,createProvider,createAccount,createPosition,backup,safeImport} from '../src/model.js';
 const today=new Date().toISOString().slice(0,10);
 const yday=new Date(Date.now()-86400000).toISOString().slice(0,10);
@@ -12,34 +12,17 @@ test('An external TradingView chart API is not exposed; quote sources remain str
  const sources=await import('../src/security-sources.js');
  assert.equal(Object.hasOwn(sources,'tradingViewIdentifier'),false);
  assert.deepEqual(marketSourceOptions(position(),{}),[]);
- assert.throws(()=>marketSourceOptions(position({mic:'',exchange:''}),{eodhdKey:'SYNTHETIC'}),/Handelsplatz/);
+ assert.throws(()=>marketSourceOptions(position({mic:'',exchange:'',name:'unconfirmed',isin:''}),{eodhdKey:'SYNTHETIC'}),/Handelsplatz/);
 });
-test('Provider auto-priority chooses configured EODHD then explicit FMP then Twelve Data',()=>{
+test('Direct browser providers precede optional worker; direct EODHD keys never cause network requests',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'});
- assert.deepEqual(marketSourceOptions(p,{eodhdKey:'a',fmpKey:'b',twelveKey:'c'}),['eodhd','twelve','fmp']);
- assert.deepEqual(marketSourceOptions(p,{securitySource:'fmp',eodhdKey:'a',fmpKey:'b',twelveKey:'c'}),['fmp']);
- assert.deepEqual(marketSourceOptions(p,{securitySource:'fmp',eodhdKey:'a',twelveKey:'c'}),[]);
- assert.throws(()=>marketSourceOptions(position({exchange:'',mic:''}),{eodhdKey:'a'}),/Handelsplatz/);
-});
-test('EODHD exact XETRA EOD close is used with true bar date, not speculative live label',async()=>{
- const p=position(),calls=[];
- const mock=async url=>{const u=new URL(url);calls.push(u);return ok([{date:older,close:100},{date:yday,close:103.22}]);};
- const quote=await fetchSecurityQuote(p,{eodhdKey:'local-test'},mock);
- assert.deepEqual({price:quote.price,asOf:quote.asOf,source:quote.source,quality:quote.quality},
-  {price:103.22,asOf:yday,source:'EODHD · Tagesschluss',quality:'configured-listing'});
- assert.match(calls[0].pathname,/VWCE.XETRA/);assert.equal(calls[0].searchParams.get('fmt'),'json');
- const history=await fetchSecurityHistory(p,{eodhdKey:'local-test'},30,mock);
- assert.equal(history.points.length,2);assert.equal(history.points.at(-1).total,103.22);
-});
-test('EODHD rejects outdated or empty prices and falls back without changing a holding',async()=>{
- const p=position();
- const mock=async url=>{
-  if(url.includes('eodhd.com'))return ok([{date:'2021-01-01',close:1.2}]);
-  return ok({symbol:'VWCE',exchange:'Xetra',mic_code:'XETR',currency:'EUR',close:105,datetime:today});
- };
- const q=await fetchSecurityQuote(p,{eodhdKey:'a',twelveKey:'b'},mock);
- assert.equal(q.price,105);assert.equal(q.source,'Twelve Data');
- await assert.rejects(()=>fetchSecurityQuote(p,{eodhdKey:'a',securitySource:'eodhd'},mock),/nicht aktuell genug/);
+ const worker={eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'};
+ assert.deepEqual(marketSourceOptions(p,{eodhdKey:'a',fmpKey:'b',twelveKey:'c',...worker}),['fmp','twelve','eodhd']);
+ assert.deepEqual(marketSourceOptions(p,{eodhdKey:'a',fmpKey:'b',twelveKey:'c'}),['fmp','twelve']);
+ let calls=0;
+ for(const source of ['auto','eodhd'])await assert.rejects(()=>fetchSecurityQuote(p,{eodhdKey:'PRIVATE',securitySource:source},()=>{calls++;throw Error('unexpected');}),/deaktiviert/);
+ assert.equal(calls,0);
+ assert.match(marketSourcePlan({...p,symbol:'OTHER',fmpSymbol:''},{fmpKey:'b'})[0].reason,/FMP-Börsenticker fehlt/);
 });
 test('FMP validated explicitly mapped ticker and actual exchange, rejects identity mismatch',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'}),settings={fmpKey:'local-test',securitySource:'fmp'};
@@ -49,7 +32,7 @@ test('FMP validated explicitly mapped ticker and actual exchange, rejects identi
  for(const wrong of [{symbol:'OTHER.DE'},{exchange:'NYSE'},{currency:'USD'},{price:0},{timestamp:Date.parse('2020-01-01')/1000}]){
   await assert.rejects(()=>fetchSecurityQuote(p,settings,async()=>ok([{...(await good().json())[0],...wrong}])));
  }
- await assert.rejects(()=>fetchSecurityQuote(position(),settings,good),/konfiguriert/);
+ await assert.rejects(()=>fetchSecurityQuote(position({name:'short',isin:'IE0000000000'}),settings,good),/ISIN widerspricht/);
 });
 test('FMP historical endpoint uses stable slash path and validates symbol, dates, currency',async()=>{
  const p=position({fmpSymbol:'VWCE.DE'});
@@ -70,40 +53,17 @@ test('FMP and EODHD provider identifiers survive backups, secret API keys never 
  assert.equal(decoded.positions[0].tradingViewSymbol,'XETR:VWCE');
 });
 
-test('EODHD retries the second official host only for network failures, preserving symbol and private key',async()=>{
- const attempts=[];
- const key='SYNTHETIC_SECRET_LOCAL_ONLY';
- const mock=async url=>{
-  const u=new URL(url);
-  attempts.push(u);
-  if(u.hostname==='eodhd.com')throw new TypeError('Failed to fetch');
-  return ok([{date:yday,close:114.23}]);
- };
- const quote=await fetchSecurityQuote(position(),{eodhdKey:key,securitySource:'eodhd'},mock);
- assert.equal(quote.price,114.23);
- assert.deepEqual(attempts.map(x=>x.hostname),['eodhd.com','eodhistoricaldata.com']);
- assert.ok(attempts.every(x=>x.searchParams.get('api_token')===key&&x.pathname.endsWith('/VWCE.XETRA')));
-});
-test('EODHD does not retry auth, tariff, or quota errors on alternate host',async()=>{
- for(const status of [401,402,403,429]){
-  const calls=[];
-  const mock=async url=>{calls.push(url);return {ok:false,status,headers:{get:()=>null}};};
-  await assert.rejects(()=>fetchSecurityQuote(position(),{eodhdKey:'private',securitySource:'eodhd'},mock));
-  assert.equal(calls.length,1,'HTTP '+status+' must not cause a second billable call');
- }
-});
-test('EODHD double network failure gives safe diagnostic without leaking credentials',async()=>{
- const token='SYNTHETIC_SECRET_DO_NOT_LOG',calls=[];
- await assert.rejects(async()=>{
-  await fetchSecurityQuote(position(),{eodhdKey:token},async url=>{calls.push(new URL(url).hostname);throw new TypeError('Failed to fetch at '+url);});
- },error=>{
-  assert.match(error.message,/Netzwerk\/CORS/);
-  assert.ok(!error.message.includes(token));
-  return true;
+test('FMP failure safely falls back to direct Twelve Data; no key-bearing error reaches UI',async()=>{
+ const secret='SYNTHETIC_SECRET_LOCAL_ONLY',calls=[];
+ const quote=await fetchSecurityQuote(position(),{fmpKey:secret,twelveKey:secret,eodhdKey:secret},async url=>{
+  calls.push(new URL(url).hostname);
+  if(url.includes('financialmodelingprep'))throw new TypeError('Failed to fetch '+url);
+  return ok({symbol:'VWCE',exchange:'XETR',mic_code:'XETR',currency:'EUR',close:105,datetime:today});
  });
- assert.deepEqual(calls,['eodhd.com','eodhistoricaldata.com']);
+ assert.equal(quote.price,105);assert.equal(quote.source,'Twelve Data');
+ assert.deepEqual(calls,['financialmodelingprep.com','api.twelvedata.com']);
+ await assert.rejects(()=>fetchSecurityQuote(position(),{fmpKey:secret,eodhdKey:secret},async url=>{throw Error('Failed to fetch '+url);}),error=>!error.message.includes(secret)&&/CORS/.test(error.message)&&error.message.indexOf('fmp:')<error.message.indexOf('eodhd:'));
 });
-
 test('Optional authenticated EODHD worker is a safe first-class market source without local EODHD key',async()=>{
  const token='SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012';
  const settings={eodhdWorkerEndpoint:'https://my-worker.workers.dev',eodhdWorkerAccessToken:token,securitySource:'eodhd'};
@@ -133,9 +93,9 @@ test('Worker endpoint and access key must be an explicitly configured HTTPS pair
  assert.deepEqual(marketSourceOptions(p,onlyUrl),[]);
  const onlyToken={eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'};
  assert.deepEqual(marketSourceOptions(p,onlyToken),[]);
- assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'http://insecure.example',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'}),/HTTPS/);
- assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev/path',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'}),/Basisadresse/);
- assert.throws(()=>marketSourceOptions(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev',eodhdWorkerAccessToken:'short'}),/Zugriffsschlüssel/);
+ assert.match(marketSourcePlan(p,{eodhdWorkerEndpoint:'http://insecure.example',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'})[0].reason,/HTTPS/);
+ assert.match(marketSourcePlan(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev/path',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_123456789012'})[0].reason,/Basisadresse/);
+ assert.match(marketSourcePlan(p,{eodhdWorkerEndpoint:'https://my-worker.workers.dev',eodhdWorkerAccessToken:'short'})[0].reason,/Zugriffsschlüssel/);
 });
 test('No worker secrets can escape an unencrypted portfolio backup',()=>{
  const m=blankModel();
@@ -148,7 +108,7 @@ test('five year Twelve Data requests explicit dates instead of truncated outputs
  const p=position(),calls=[];
  const data={meta:{symbol:'VWCE',currency:'EUR',exchange:'Xetra',mic_code:'XETR'},
   values:[{datetime:older,close:'103'},{datetime:yday,close:'104'}]};
- const mock=async url=>{calls.push(new URL(url));return ok(data);};
+ const mock=async url=>{const u=new URL(url);calls.push(u);assert.equal(u.searchParams.get('exchange'),null);assert.equal(u.searchParams.get('mic_code'),'XETR');return ok(data);};
  const result=await fetchSecurityHistory(p,{securitySource:'twelve',twelveKey:'test'},1826,mock);
  assert.equal(result.points.length,2);
  assert.equal(calls[0].searchParams.get('outputsize'),null);
@@ -157,9 +117,21 @@ test('five year Twelve Data requests explicit dates instead of truncated outputs
 });
 test('five year EODHD chart extends real upstream date boundaries without inventing observations',async()=>{
  const p=position(),calls=[];
- const mock=async url=>{calls.push(new URL(url));return ok([{date:older,close:102},{date:yday,close:105}]);};
- const result=await fetchSecurityHistory(p,{eodhdKey:'test'},1826,mock);
+ const mock=async (url,options)=>{calls.push(JSON.parse(options.body));return ok({schemaVersion:1,status:'ok',symbol:'VWCE.XETRA',points:[{date:older,close:102},{date:yday,close:105}]});};
+ const result=await fetchSecurityHistory(p,{eodhdWorkerEndpoint:'https://own.workers.dev',eodhdWorkerAccessToken:'SYNTHETIC_WORKER_ACCESS_TOKEN_12345'},1826,mock);
  assert.equal(result.points.length,2);
- assert.ok(Date.parse(calls[0].searchParams.get('from'))<Date.now()-1700*864e5);
+ assert.ok(Date.parse(calls[0].from)<Date.now()-1700*864e5);
  assert.equal(result.points[0].date,older);
+});
+
+test('Explicit provider mapping cannot override conflicting Xetra venue or curated ISIN',async()=>{
+ let calls=0;const fetcher=async()=>{calls++;throw Error('must not request');};
+ for(const patch of [{exchange:'NYSE'},{exchange:'Frankfurt'},{mic:'XNYS'},{isin:'IE0000000000'}])
+  await assert.rejects(()=>fetchSecurityQuote(position({fmpSymbol:'VWCE.DE',...patch}),{fmpKey:'SYNTHETIC'},fetcher),/widerspr/);
+ assert.equal(calls,0);
+});
+test('Broken optional worker cannot prevent configured direct browser sources',()=>{
+ const settings={fmpKey:'SYNTHETIC',twelveKey:'SYNTHETIC',eodhdWorkerEndpoint:'http://invalid.example',eodhdWorkerAccessToken:'short'};
+ assert.deepEqual(marketSourceOptions(position(),settings),['fmp','twelve']);
+ assert.equal(marketSourcePlan(position(),settings).find(x=>x.source==='eodhd').ready,false);
 });

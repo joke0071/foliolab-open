@@ -47,7 +47,7 @@ test('Persistent token secrecy: only memory cache, separated by key and fetch fu
 test('Security quotes require confirmed exchange, ticker, currency and MIC',async()=>{
  const good=()=>ok({symbol:'VWCE',exchange:'Xetra',mic_code:'XETR',currency:'EUR',close:'125.25',datetime:'2026-10-21'});
  const listing={symbol:'VWCE',exchange:'Xetra',mic:'XETR',currency:'EUR',isin:'IE00BK5BQT80'};
- const quote=await securityQuote(listing,'USER',async url=>{const q=new URL(url);assert.equal(q.pathname,'/quote');assert.equal(q.searchParams.get('exchange'),'Xetra');return good();});
+ const quote=await securityQuote(listing,'USER',async url=>{const q=new URL(url);assert.equal(q.pathname,'/quote');assert.equal(q.searchParams.get('exchange'),null);assert.equal(q.searchParams.get('mic_code'),'XETR');return good();});
  assert.equal(quote.price,125.25);assert.equal(quote.quality,'verified-listing');
  await assert.rejects(()=>securityQuote({...listing,exchange:'',mic:''},'USER',async()=>good()),/Handelsplatz/);
  for(const wrong of [{currency:'USD'},{symbol:'VWRL'},{exchange:'NYSE'},{mic_code:'XNYS'},{isin:'US1234567890'}]){
@@ -79,7 +79,8 @@ test('Security ISIN is stable while listings at different exchanges have distinc
 test('Position quote source, exact conversion, listing identity survives backup roundtrip',()=>{
  const {m,p}=sample();p.fxRateExact='1';rebuildAssets(m);
  const first=JSON.parse(backup(m)),second=JSON.parse(backup(safeImport(first)));
- assert.deepEqual(second,first);
+ assert.deepEqual(second,{...first,positions:first.positions.map(p=>({...p,eodhdSymbol:'VWCE.XETRA',fmpSymbol:'VWCE.DE'}))});
+ assert.deepEqual(JSON.parse(backup(safeImport(second))),second,'hydration is idempotent; all other data and listing IDs survive unchanged');
  assert.equal(second.positions[0].mic,'XETR');
  assert.equal(second.positions[0].quoteSource,'Twelve Data');
  assert.equal(second.positions[0].quoteAsOf,'2026-10-21');

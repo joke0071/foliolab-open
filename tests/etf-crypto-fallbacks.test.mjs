@@ -111,3 +111,15 @@ test('DefiLlama fallback demands contract, supported chain, strong confidence, m
  assert.equal(price.price,2250);assert.match(price.source,/DefiLlama/);assert.equal(calls,2);
  await assert.rejects(()=>defiLlamaCurrentQuote(p,async url=>ok(url.includes('llama.fi')?{coins:{[token]:{price:100,timestamp:Math.floor(Date.now()/1000),confidence:.2,symbol:'STETH'}}}:{date:day(1),rates:{EUR:1}})),/Datenqualität/);
 });
+
+test('Four curated Xetra identities survive abbreviated broker names, while every conflicting identity fails closed',()=>{
+ for(const [symbol,isin] of [['VWCE','IE00BK5BQT80'],['XDEM','IE00BL25JP72'],['XDEQ','IE00BL25JL35'],['5MVL','IE00BG0SKF03']]){
+  const p={kind:'etf',name:'SYNTH. BROKER ABBR.',symbol,isin,currency:'EUR',mic:'XETR',exchange:'Xetra',quantityExact:'3.14159',priceExact:'0'};
+  const before=JSON.stringify(p),found=enhanceKnownReferenceListing(p);
+  assert.equal(found.fmpSymbol,symbol+'.DE');assert.equal(found.eodhdSymbol,symbol+'.XETRA');
+  assert.equal(found.name,p.name);assert.equal(found.priceExact,p.priceExact);assert.equal(found.quantityExact,p.quantityExact);
+  assert.equal(JSON.stringify(p),before);
+  for(const conflict of [{isin:'IE0000000000'},{symbol:'OTHER'},{currency:'USD'},{currency:undefined},{mic:'XFRA'},{mic:undefined},{exchange:'Frankfurt'},{fmpSymbol:symbol+'.US'},{eodhdSymbol:symbol+'.F'}])
+   assert.strictEqual(enhanceKnownReferenceListing({...p,...conflict}).fmpSymbol,({...p,...conflict}).fmpSymbol);
+ }
+});

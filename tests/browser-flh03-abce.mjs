@@ -58,10 +58,10 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   await p.reload();await nav('dashboard');assert.match(await p.locator('#summaryStats .stat').last().innerText(),/Teilportfolio/);assert.equal(await p.locator('#summaryStats .stat-value').last().innerText(),'–');
   await p.evaluate(async ({base,record})=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{safeImport}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=safeImport(JSON.parse(record.raw));m.settings=record.settings;await s.save(m);s.close();},{base,record:proven});
   await p.reload();await nav('dashboard');const provenRestored=await read();
-  // C: all relevant nested disclosures actually open, including seven reported nodes.
+  // C: all relevant nested disclosures actually open, including the six retained help nodes after direct EODHD retirement.
   await nav('more');await p.evaluate(()=>{for(const id of ['marketSettings','blockchainSettings','googleDriveBackupSetup','backupPasswordSetup']){const root=document.getElementById(id);root.open=true;root.querySelectorAll('details').forEach(d=>d.open=true);}});
   const help=await p.locator('.source-detail .field small,.drive-footer-note').evaluateAll(nodes=>nodes.filter(n=>n.getBoundingClientRect().height).map(n=>({color:getComputedStyle(n).color,text:n.textContent})));
-  assert.ok(help.length>=7,'The reported help nodes are expanded');assert.ok(help.every(n=>n.color==='rgb(77, 103, 86)'));
+  assert.equal(await p.locator('[name="eodhdKey"]').count(),0,'Retired direct EODHD field must not return');assert.ok(help.length>=6,'All six retained help nodes are expanded');assert.ok(help.every(n=>n.color==='rgb(77, 103, 86)'));
   for(const [width,height] of [[320,360],[390,844],[768,500],[1440,900]]){await p.setViewportSize({width,height});await scan('expanded settings '+width);}
   assert.deepEqual(await read(),provenRestored,'Disclosure/summary changes are read-only');
   console.log(engine+': B proven 999→1059 change/no return and C expanded settings/7 help nodes/full axe PASS');
