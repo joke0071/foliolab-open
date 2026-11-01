@@ -1,3 +1,13 @@
+## v261 automatischer Live-Lauf abgeschlossen / Gesamtfreigabe wegen Realblocker verweigert – 01.11.2026
+
+Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`, PR #273, SW v261. **Run 41326923454, Deployment 124912114636 und Live-Abnahme 124912201845 SUCCESS.** 1.079 Tests, Chromium/Firefox/WebKit und alle vorhandenen Finanz-, Speicher-, Offline-, Backup-, Recovery- und PWA-Gates erfolgreich. Zusätzlich 125 reguläre HTTPS-Assetmatches. Abschlusslog gelesen, Liveartefakt **13092413702**, SHA256 `88ecf6d505543f2f425d1abb8323f4782a89eacd4c530832916f6238ac396e40` gegen API/Uploadlog bestätigt. Beleg: `docs/release-evidence/v261-automated-live-real-provider-blocker.json`.
+
+**Trotzdem kein LIVE_ACCEPTED für v261:** echter Marketstack-Historienblocker aus vorherigen Einträgen bleibt nachgewiesen. Korrektur v262 in [PR #274](https://github.com/joke0071/foliolab-open/pull/274), HEAD `39f00a3456346476f5b151f964dae676161ec66a`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`. Pflicht-CI **41329491478 läuft**, Wallet **41329491433 SUCCESS**. Echte korrigierte Kandidatenkette 4/4 und 1.082 lokale Tests PASS; Anbieterhistorien bleiben ehrlich begrenzt. Jetzt nach vollständiger Korrektur-CI seriell integrieren; keine Vorgänger-CI mehr offen und keine CI abgebrochen.
+
+Owner Work/root b1399897b0ba. Nächster Schritt: #274-Abschlussbelege/Main/HEAD/Tree prüfen, v262 deployen, echte unveränderte Produktion und volle Live-Gates abnehmen. Danach P1A Alt-API-/Backupbereinigung, gemeinsamer Import UH01–UH05, #257 und übrige aktive Master gemäß bestehender Reihenfolge.
+
+---
+
 ## v262 PR #274 / Pflicht-CI gestartet – 01.11.2026
 
 Einziger Korrekturkandidat: [PR #274](https://github.com/joke0071/foliolab-open/pull/274), Branch `fix/marketstack-history-gaps-266`, HEAD `39f00a3456346476f5b151f964dae676161ec66a`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`, Basis Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`. Pflicht-CI **41329491478**, Wallet **41329491433** gestartet. Noch kein Merge oder Deployment von v262. Vollständige lokale und echte Kandidatennachweise im vorherigen Eintrag bleiben gültig.
