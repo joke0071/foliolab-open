@@ -1,3 +1,16 @@
+## Aktueller Master-Nachtrag · 01.11.2026 / Owner b1399897b0ba
+
+- **Produktion:** v258 letzte vollständig bestätigte Basis. v259/Main6c339c0 deployed, komplette Liveabnahme41316381886/124880732298 noch laufend; vor vollständigem Abschluss keinLIVE_ACCEPTED. Alpha-Adapter produktiv vorhanden; tatsächlicherVWCE-Kursabruf positiv, weitereAppabrufe durchAnbieterlimit gebremst. Antwortabstand-Korrektur vom altenOwner lokal vorbereitet, nicht doppelt implementieren.
+- **P1A #266:** Marketstack mit eigenem privatenNutzerkey real4/4EOD/EUR/XETR/CORS positiv; exakteV2-Symbole VWCE.DE/XDEM.DE/XDEQ.DE/5MVL.DE. VollständigerBeleg `docs/MARKETSTACK_266_REAL_PROVIDER_PROOF_2026-11-01.md`. Noch keinAdapter. Freitarif konservativ100Einheiten/Monat, vierTicker=vierEinheiten; eigeneprivateNutzung/keineSharedKeys/keineöffentlicheDatenredistribution. SerielleIntegration mitCache/Quote-History-Dedupe/Monatsbudget/Identitätsprüfung.
+- **P1A #266 API-Bereinigung verbindlich offen:** Nach funktionierenderAblösung FMP, Twelve und direkteEODHD-Keys tatsächlich ausKonfiguration/IDB/Save/Migration/neuenverschlüsseltenBackups entfernen. Twelve-Suche/FX zuvor sicherablösen. AlteBackupsweiterlesbar, entfernteKeysbeimRestoreverwerfen, keinespätereWeitergabe. HistorischeKursbelege/Finanzen undnutzer-eigenerEODHD-Worker/CoinGecko/Wallet/RPC/Driveerhalten. PrivatealteBackupdateienunverändert. KeinbloßesAusblendenderFelder.
+- **#268:** bisherigerWIPca1a6cb inPR272 remoteerhalten; enthältkeineSW-RevisionundistkeinReleasekandidat. Erweiterterlokalgeprüfter1070Unit/Chromium/Firefox-Kandidat alsCommit92c16e0 undvollständigerPatchimCheckpointbranchgesichert; nichtPR-HEAD. NachP1A undeindeutigerÜbergabe aufdemselbenBranchvollenden, passendeVersion/volleCI/WebKit/Livepflicht.
+- **#257 danach:** Long-Press aktiviertVerwaltenundwähltgedrücktenEintrag; linkesSymbolalsCheckbox/sonstnormaleCheckbox; zeilenweisesAuswählenentfernen; kurzesTippen/Scroll/Fokus/Keyboard/A11y schützen. KeinezweiteAuswahl-/Löschengine.
+- AlleweiterenMasterpakete einschließlichFLH05#174undFLH-PROJ01#252bleibenACTIVE, tatsächlicheTeilabnahmenundAbhängigkeitenbeachten. KeinungeprüfterMerge, keinCI-Abbruch, keinMergehistorischerCheckpointbranchnachMain.
+
+**BeobachteteKollision:** alterChat8e5a26892934 hatsichnachÜbernahme nochbetätigt. NeuerOwnerüberschreibtkeinenaktivenStrang; aktuellerSTOP-/SicherungsauftragundexakteHashesimzentralenCheckpoint. KeinekonkurrierendeUmsetzungbeginnen.
+
+---
+
 ## Aktueller Nachtrag – 01.11.2026 / v257 LIVE_ACCEPTED
 
 Main6c9edaab, SW257, PR269, Lauf41304484412 vollständig SUCCESS einschließlich tatsächlicher Chromium-/Firefox-/WebKit-Produktionsprüfung (initialer Live-Starttimeout nach positiver Assetprüfung einmal gezielt wiederholt; negative Evidenz erhalten). Genaue SHAs/Artefakte/Tests siehe zentralen Checkpoint und `docs/release-evidence/v257-etf-source-live-acceptance.json`.
