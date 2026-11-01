@@ -1,3 +1,11 @@
+## Masterübernahme /root 8e5a26892934 · 01.11.2026
+
+Nutzer hat die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung an diesen Work-Chat übertragen. Vorheriger STOP unten bestätigt; keine konkurrierende Umsetzung. Main6c9edaab/v257 LIVE_ACCEPTED unverändert. Einziger aktiver Integrationsstrang PR#270 fix/cash-account-ux-267-264. Vorbereiteten reinen Testselektorcommit ec8f6b1b5ee8c7007047ca291636290f7506c446 nach frischer Parent-/Diff-/CI-Prüfung an bestehenden Branch übernommen; keine Produktänderung, keine Gates reduziert. Vollständige neue CI/Live-Abnahme ausstehend, v258 nicht als akzeptiert deklariert.
+
+Danach P1A #266: autorisierte isolierte reale FMP/Twelve/Alpha-Vantage-Prüfung; Alpha Vantage ausdrücklich Pflichtkandidat, nur bei belegten EUR/XETR-Identitäten und echten Kursen integrieren. Separater Tokenpreisfehler. Keine Geheimnisse/Originaldaten in GitHub/Artefakte. Optionaler EODHD-Worker bleibt; kein Pflichtworker. Anschließend #268 und #257 mit Long-Press-Erstauswahl. Alle weiteren ACTIVE-Pakete erhalten. Historischen Checkpoint-Branch niemals vollständig nach Main mergen.
+
+---
+
 ## STOP / kontrollierte Übergabe · 01.11.2026, 13:11 UTC
 
 **Aktive Entwicklungs-, Integrations- und Releaseverantwortung abgegeben.** Auf ausdrücklichen Nutzer-STOP keine Folgeimplementierung, kein neuer Branch/PR/Merge/Deployment und kein weiterer umfangreicher Testlauf. Keine Action abgebrochen oder erneut gestartet.
