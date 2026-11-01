@@ -1,0 +1,32 @@
+{
+  "version": "v260",
+  "main": "ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+  "test": "actual published ETH history dialog",
+  "engine": "chromium",
+  "network": "synthetic provider fixtures, no real wallet scan",
+  "officialCursorPagination": true,
+  "acceptedSyntheticSessionRetained": true,
+  "financialFieldsUnchanged": true,
+  "transientResume": true,
+  "unsupportedCursorRestartOnly": true,
+  "restartFocused": true,
+  "widths": [
+    320,
+    360,
+    390,
+    412,
+    430,
+    768,
+    1440
+  ],
+  "axeScans": 7,
+  "originalPortfolioAccessed": false,
+  "productionCSPUnchanged": true,
+  "tlsProxyException": true,
+  "repro": "v260-production-eth-repro.mjs",
+  "limitations": [
+    "A first extra test harness attempted inline axe injection and was blocked by the published CSP. Repro uses existing pre-document harness instrumentation; no product CSP relaxation.",
+    "No actual private-wallet cause or physical Android acceptance claimed.",
+    "Full mandatory production CI remains separately required."
+  ]
+}
