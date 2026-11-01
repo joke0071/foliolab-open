@@ -83,7 +83,7 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   await preview();assert.match(await page.locator('#interestResult').innerText(),/Festgeld/);await page.locator('#cancelDialog').click();
   assert.equal(await financial(),before);
   // Existing AT03-A path with new interest metadata stays read-only.
-  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('[data-action="check-cash-balance"][data-id="one-cash"]');
+  await page.locator('#mobileNav [data-page="positions"]').click();const check=page.locator('#positionList [data-action="check-cash-balance"][data-id="one-cash"]');
   for(const d of await check.locator('xpath=ancestor::details').all())await d.evaluate(e=>e.open=true);
   await clickDisclosed(check);await page.locator('#cashReference').fill('10005');await page.locator('#cashReferenceCurrent').check();await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch/);await page.locator('#cancelDialog').click();
   // Current password-vault encrypted full backup, then real UI restore of old/new data.

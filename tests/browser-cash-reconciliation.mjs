@@ -50,7 +50,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   });
   await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();
   // Use the app's existing account and position disclosure, just like a user.
-  const button=page.locator('[data-action="check-cash-balance"][data-id="first-cash"]');
+  const button=page.locator('#positionList [data-action="check-cash-balance"][data-id="first-cash"]');
   for(const details of await button.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
   await clickDisclosed(button);assert.match(await page.locator('#dialogFields').innerText(),/Testbank.*first.*EUR/s);
@@ -80,7 +80,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),before,'comparison cannot persist a correction');
   // Selected foreign-currency account, no conversion; reset label on normal editors.
   await page.setViewportSize({width:390,height:844});
-  const usd=page.locator('[data-action="check-cash-balance"][data-id="usd-cash"]');
+  const usd=page.locator('#positionList [data-action="check-cash-balance"][data-id="usd-cash"]');
   for(const details of await usd.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   await clickDisclosed(usd);await page.locator('#cashReference').fill('-1');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/-21,1 USD/);
@@ -92,7 +92,7 @@ for(const name of (process.env.CASH_ENGINES||'chromium').split(',')){
   await page.evaluate(async()=>{await Promise.race([navigator.serviceWorker.ready,new Promise((_,reject)=>setTimeout(()=>reject(Error('Service worker not ready')),15000))]);});
   await page.waitForFunction(()=>navigator.serviceWorker.controller);
   server=await stopServer(server);await page.reload({waitUntil:'domcontentloaded'});await page.locator('#mobileNav [data-page="positions"]').click();
-  const offline=page.locator('[data-action="check-cash-balance"][data-id="second-cash"]');
+  const offline=page.locator('#positionList [data-action="check-cash-balance"][data-id="second-cash"]');
   for(const details of await offline.locator('xpath=ancestor::details').all())await details.evaluate(el=>{el.open=true;});
   await clickDisclosed(offline);await page.locator('#cashReference').fill('250');await page.locator('#cashReferenceCurrent').check();
   await page.locator('#saveDialog').click();assert.match(await page.locator('#cashComparisonResult').innerText(),/stimmen rechnerisch überein/);
