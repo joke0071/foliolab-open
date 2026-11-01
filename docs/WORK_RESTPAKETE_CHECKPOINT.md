@@ -1,3 +1,13 @@
+## v261 DEPLOYED / reale Marketstack-Historienlücken blockieren LIVE_ACCEPTED – 01.11.2026
+
+Main `87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`, SW v261, PR #273. Mainlauf **41326923454**: 1.079 Tests, Syntax, Chromium und alle Firefox-/WebKit-Gruppen SUCCESS. Deployment **124912114636 SUCCESS**, echte Live-Abnahme **124912201845 läuft**. Alle **125 ausgelieferten Dateien** zusätzlich mit regulärer HTTPS-Zertifikatsprüfung bytegleich bestätigt.
+
+**Realer Blocker gefunden, kein LIVE_ACCEPTED:** Die neue 330-Tage-VWCE-Reihe enthält trotz HTTP 200 und vollständiger Pagination 41 historische ungültige Beobachtungen (Null-/Fehlwerte, März bis Juni 2026). Bisheriger Vier-ETF-Latest-Beleg bestätigt die jüngsten Kurse, aber keine vollständige finanzielle Historienabnahme. Frühere Aussage „224 gültige Beobachtungen“ war zu weitgehend: 224 Zeilen/Identitätsfelder wurden nachgewiesen, ihre Kurswerte waren nicht vollständig gültig. Der Adapter weist sie sicher zurück; keine Nullkurse oder wirtschaftlichen Buchungen übernommen. Zusätzliche echte Appprobe deshalb fehlgeschlagen. Private Schlüssel/Antworten bleiben isoliert.
+
+Nächster serieller Korrekturschritt: jüngsten Schlusskurs separat vollständig validieren und aus derselben Antwort freigeben; historische Lücken explizit erhalten und Historienübernahme bei ungültiger Reihe weiterhin blockieren. Gemeinsamen Cache und Kontingentschutz erhalten, keine Validierung von Identität/Datum/Währung/positiven Preisen reduzieren. Einziger Korrekturstrang `fix/marketstack-history-gaps-266`, Owner Work/root b1399897b0ba. Laufende Produktions-CI nicht abbrechen. Danach finale Korrektur-CI/Deployment/reale Vier-ETF-Appkette und vollständige Live-Abnahme. P1A-Alt-API-/Backupbereinigung, gemeinsamer Import UH01–UH05 und #257 bleiben danach verbindlich offen.
+
+---
+
 ## v261 MERGED / Produktionsabnahme ausstehend – 01.11.2026
 
 [PR #273](https://github.com/joke0071/foliolab-open/pull/273) nach vollständiger CI kontrolliert squash-integriert. Main **`87ab27bf4a48f9c2a72d1b249ff83888dd6782a9`**, Tree **`f2e0637d5179c1314bd0b5e60d05d6666793ab64`** exakt gleich geprüftem Branch-HEAD `25281b47f68340df85edf5facd1f7c680cac7c85` und synthetischem Merge `d927d0e`. SW v261. PR-CI **41325666386 SUCCESS**, Wallet **41325666505 SUCCESS**: **1.079 Tests, 0 Fehler/Skips**, Syntax, Chromium und alle Firefox-/WebKit-Gruppen. Neue Marketstack-/Secret-Input-Fälle in allen drei Engines PASS. Abschlusslogs gelesen, Artefaktdigests gegen Uploadlogs bestätigt; Main/HEAD unverändert und keine offenen Revieweinwände. Beleg: `docs/release-evidence/v261-pr273-acceptance.json`.
