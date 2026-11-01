@@ -1,3 +1,13 @@
+## v259 MERGED – Produktionsabnahme ausstehend · 01.11.2026
+
+Main `6c339c0ea502781f155d209b6443a6c02db8182d`, Tree `e37cba420e6fbf685bd1e1d77f8d4514d2102f9a`, SW `foliolab-open-v259`. PR #271 nach frischem Main-/HEAD-/Tree-/Reviewabgleich squash-integriert. Finale Pflicht-CI `41314821732` und Wallet `41314821774` erfolgreich: 1.065 Tests, 0 Fehler/Skips, Chromium und alle Firefox-/WebKit-Gruppen. Neue Alpha-Suite in beiden Engines mit Cache-Minimierung erfolgreich; bestehende Finanz-/PWA-/Offline-/CAS-/Backup-Gates unverändert. Main-/Produktionslauf `41316381886` läuft. Noch kein DEPLOYED oder LIVE_ACCEPTED für v259; bestätigte Rückfallbasis bleibt v258.
+
+Alpha Vantage ist als direkter eigener-Key-Anbieter implementiert, noch keine automatische Übertragung eines privaten Schlüssels ins ursprüngliche Portfolio. Nach Deployment autorisierte echte Vier-ETF-Appkette nur isoliert prüfen; bisher 14 Alpha-Testanfragen. Keine weiteren Produktänderungen an v259 während der Abnahme.
+
+Nächste alleinige Entwicklung: #268 auf integriertem Main, lokaler Branch `fix/eth-history-cursor-268`. Keine weitere Integration vor v259-Abnahme. Frischer Kollisionscheck: nur historische Drafts #157/#161 offen, kein konkurrierender Strang. Offizielle Blockscout-Implementierung direkt gelesen: Token-Batch `index_in_batch`; Transaktionscursor `fee,value,block_number,index,inserted_at,hash`. Konkrete Ursache der privaten Nutzerantwort weiterhin nicht behauptet. Endpointbezogene Typ-/Längengrenzen, geprüfte Fortsetzung und sicherer Neustart ohne Löschen bestätigter Historien umsetzen. Danach #257 mit Long-Press-Erstauswahl; übrige Masterpakete ACTIVE. Owner /root `8e5a26892934`.
+
+---
+
 ## v258 LIVE_ACCEPTED / #266 PR#271 finale CI · 01.11.2026
 
 **Main04f294f044ed8d4825d32ca4e17d4c282adce8a4, Treeb68fecaa576449a8b5e6c0539fe5fe27e9031b74, SWfoliolab-open-v258. PR#270 abgeschlossen.** Main-/Produktionslauf41312214949 completed/SUCCESS,1057Units/0Fehler/0Skips, Syntax/Chromium/alle3FF-WK-Gruppen/Deploy124868069758/Live124868146278SUCCESS. EchtesLive:123exakteAssetmatches,6Kerngruppen/18Axe-Scans, neueCash-UX/ETF-IDB-Suite inallen3EnginesPASS, Finanz16Schritte inklusivehistorischenFX/Teilfüllungen undverschlüsseltemUI-Restore, bestehendeOffline/PWA/CAS/Recovery/TransfergatesPASS. Liveartefakt13085924420 SHA256b05302b630c305b62919f78d703414a0ff2e144713c701ceada8a1700d93681a exaktAPI/Uploadlog; kein eigenerZIP/CRC-Nachweis behauptet. VierDateien überreguläresHTTPS zusätzlichbytegleich, isolierte320px-Produktionskontokarte visuellgesehen, keinphysischerAndroid-Nachweis. Dauerhaft docs/release-evidence/v258-cash-ux-live-acceptance.json. V258 ist aktuellebestätigteRückfallbasis, V257historisch.
