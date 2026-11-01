@@ -1,0 +1,59 @@
+{
+  "release": "v258",
+  "status": "LIVE_ACCEPTED",
+  "mainSha": "04f294f044ed8d4825d32ca4e17d4c282adce8a4",
+  "treeSha": "b68fecaa576449a8b5e6c0539fe5fe27e9031b74",
+  "serviceWorker": "foliolab-open-v258",
+  "pullRequest": 270,
+  "mainRun": 41312214949,
+  "deployJob": 124868069758,
+  "liveJob": 124868146278,
+  "unitTests": 1057,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "production": {
+    "origin": "https://foliolab.unperfekt.at",
+    "exactAssetMatches": 123,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "cashUxWidths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "cashUxActualIdbAndUiRestore": true,
+    "financial16StepChain": true,
+    "pwaOfflineCasBackupGates": true
+  },
+  "liveArtifact": {
+    "id": 13085924420,
+    "digest": "sha256:b05302b630c305b62919f78d703414a0ff2e144713c701ceada8a1700d93681a",
+    "size": 90308158,
+    "apiDigestMatchesUploadLog": true,
+    "downloadedOrCrcVerifiedHere": false
+  },
+  "additionalVerification": {
+    "fourHttpsFilesEqualMain": true,
+    "syntheticProductionCash320": true,
+    "screenshotReviewed": true,
+    "isolatedBrowserProxyCaException": true,
+    "serviceWorkersBlockedForSupplement": true,
+    "physicalAndroid": false
+  },
+  "scope": [
+    "#267 single cash account name and one dashboard card",
+    "#264 nested provider/account/evidence UI",
+    "320px liquidity text wrap",
+    "stable existing cash selectors and restore readiness"
+  ],
+  "providerAcceptance": "No new live-provider quote claim for v258; see separate redacted #266 evidence."
+}
