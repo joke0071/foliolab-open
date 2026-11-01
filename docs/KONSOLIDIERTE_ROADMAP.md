@@ -1,3 +1,16 @@
+## Aktueller Nachtrag – 01.11.2026 / v257 LIVE_ACCEPTED
+
+Main6c9edaab, SW257, PR269, Lauf41304484412 vollständig SUCCESS einschließlich tatsächlicher Chromium-/Firefox-/WebKit-Produktionsprüfung (initialer Live-Starttimeout nach positiver Assetprüfung einmal gezielt wiederholt; negative Evidenz erhalten). Genaue SHAs/Artefakte/Tests siehe zentralen Checkpoint und `docs/release-evidence/v257-etf-source-live-acceptance.json`.
+
+- **#266 ETF-QUOTE = PARTIAL:** kuratierte ISIN/Ticker/XETR/EUR-Hydration unabhängig von Brokernamen, FMP-/Twelve-Direktpfade priorisiert, bestätigte MIC statt Anzeigenamenfilter, klare Quellen-/Datum-/Skip-/404-Diagnose, EODHD nur optionaler Worker, Altkeys erhalten. Umgesetzter Schnitt produktiv abgenommen; echter autorisierter Vier-ETF-Quote-/Origin-CORS-/Tarifbeleg EXTERNAL. Public-Katalogbeleg und synthetischer Browser-PASS ersetzen diesen nicht. Kein ungeprüfter Alpha-/Yahoo-/Alpaca-Adapter.
+- **Nächste serielle Umsetzung: #267 CASH-UX01 + #264 UX-MORE-ACCOUNT01.** Ein neues einfaches Geldkonto/ein sichtbarer Name/eine Guthabenkarte; Anbieter→Konto→Datenstand verschachteln. Kein Merge/Umbenennen bestehender Daten oder Verschmelzen von Konto/Position/Journal.
+- Danach **#268 ETH-HISTORY-CURSOR01**, danach **#257** neueste Verwaltungs-/Long-Press-/Icon-Auswahl-Deltas. Reale Androidfehler vor kosmetischer Politur.
+- #254/#255/#256, DELETE-MASTER28, FLH03, FLH04, FLH05, FLH-PROJ01, HIST-VIS01 und andere Masterreste bleiben ACTIVE/OPEN/PARTIAL nach tatsächlichem Scope. Keine neue Parkierung. Keine physische Android- oder echte OAuth-/Mehrgeräte-Syncabnahme aus Emulator/Backup ableiten.
+
+Dieser Nachtrag übersteuert ältere Prioritäts-/Pending-Angaben nur im nachgewiesenen Umfang; Historie nicht gelöscht. Ein aktiver Implementierungs-/Integrationsstrang, frischer Kollisionsschutz vor jedem Paket; historischen Dokumentationsbranch niemals vollständig nach Main mergen.
+
+---
+
 ## #255 FX-/Teilfüllungen – LIVE_ACCEPTED · 01.11.2026
 
 **Aktueller Main `512d935098e2d31366b861352d94684cae7582cb`, geprüfter Tree `ddb910797eec6484417992d860460eee724e558e`.** [PR #265](https://github.com/joke0071/foliolab-open/pull/265) integriert; [Main-/Produktionslauf 41293317485](https://github.com/joke0071/foliolab-open/actions/runs/41293317485) **completed / success**, erster Versuch ohne Retry oder CI-Abbruch. App/Service Worker bleiben **`foliolab-open-v252`**, da ausschließlich Tests/Dokumentation geändert wurden. 1052 Tests, keine Fehler/Skips, Syntax, vollständiges Chromium und alle drei Firefox-/WebKit-Gruppen erfolgreich.
