@@ -1,3 +1,11 @@
+## CASH-UX01 #267 / UX-MORE-ACCOUNT01 #264 – IN_PROGRESS · 01.11.2026
+
+Ein gemeinsamer aktiver Integrationsstrang: [PR #270](https://github.com/joke0071/foliolab-open/pull/270), Branch `fix/cash-account-ux-267-264`, HEAD `894e8c4a20ce81582ba23921d2c14021fc13838b`, Tree `e41f52234eebc310bec5c0204634dcfa255566d3`, Basis Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d` (v257 LIVE_ACCEPTED). Kandidat v258, noch nicht veröffentlicht.
+
+Neue einfache Geldkonten mit einer Bezeichnung/Währung; intern separate exakte Guthabenposition. Konservative einzelne Kontokarte und gemeinsame Anbieter→Konto→Datenstand-Aufklappeinheit. Keine Migration, Umbenennung von Altdaten oder Entity-Zusammenführung. Umfang in `docs/CASH_UX_267_264.md` auf dem PR-Branch. 1.057 Unit-Tests, Syntax und Diff lokal erfolgreich. Neue verpflichtende UI/IDB/Restore/Axe-Suite in allen drei Engines und Produktion zusätzlich zu sämtlichen historischen Gates. CI läuft an; kein Merge/Deployment/Live-Nachweis für v258 behauptet.
+
+Nächster Schritt: vollständige CI auswerten, echte Fehler korrigieren, exakt geprüften HEAD integrieren und Produktionsabnahme durchführen; anschließend #268. #266 bleibt für autorisierte echte Kurse PARTIAL/EXTERNAL wie unten dokumentiert. Kein physischer Android-Test durchgeführt. Alte Nachweise bleiben erhalten.
+
 ## v257 – LIVE_ACCEPTED · 01.11.2026
 
 **Main `6c9edaab2daf26ce5d018a048c3cf79aa98cf90d`, Tree `a66aa486615071bc5a0f597e78fb14a5349994a4`, Service Worker `foliolab-open-v257`.** [PR #269](https://github.com/joke0071/foliolab-open/pull/269) integriert. [Main-/Produktionslauf41304484412](https://github.com/joke0071/foliolab-open/actions/runs/41304484412) **completed / success**, run_attempt2. Alle Main-Gates zuvor im ersten Versuch SUCCESS: 1052 Tests/0 Fehler/0 Skips, Syntax, vollständiges Chromium und drei Firefox-/WebKit-Gruppen. Deployment124845081657 SUCCESS.
