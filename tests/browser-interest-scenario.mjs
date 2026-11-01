@@ -102,7 +102,14 @@ for(const name of (process.env.INTEREST_ENGINES||'chromium').split(',')){
   // Genuine second-tab conflict invalidates forecast and blocks both calculate/save.
   const peer=await context.newPage();await peer.goto(base);const raw=await peer.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));m.providers[0].name='Updated Testbank';const raw=JSON.stringify(m);localStorage.setItem('foliolab-open-v1',raw);return raw;});
   await page.waitForFunction(()=>document.querySelector('#interestResult').textContent.includes('Datenstand'));await preview();assert.match(await page.locator('#interestResult').innerText(),/neu laden/);
-  await page.locator('[name="interestRate"]').first().fill('9');await page.locator('#saveDialog').click();assert.match(await page.locator('#dialogError').innerText(),/anderen Tab/);assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),raw);await peer.close();
+  await page.locator('[name="interestRate"]').first().fill('9');await page.locator('#saveDialog').click();
+  // Storage recovery is asynchronous; assert the completed rejection, not
+  // feedback read while the guarded save is still awaiting its lock.
+  await page.locator('#dialogError').waitFor({state:'visible'});
+  assert.match(await page.locator('#dialogError').innerText(),/anderen Tab/);
+  assert.equal(await page.locator('#editDialog').evaluate(e=>e.open),true);
+  assert.equal(await page.locator('[name="interestRate"]').first().inputValue(),'9');
+  assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),raw);await peer.close();
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const store=new PortfolioStorage(),m=await store.initialize(),accounts=JSON.stringify(m.accounts);await store.migrate(m);await store.save(m);if(JSON.stringify((await store.reload()).accounts)!==accounts)throw Error('Interest metadata lost in IndexedDB');});
   // IDB writes do not emit the legacy storage event: a read-only forecast must
   // verify the committed revision without adopting it for later stale writes.

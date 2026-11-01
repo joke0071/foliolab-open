@@ -144,7 +144,13 @@ for(const name of (process.env.TERM_ENGINES||'chromium').split(',')){
   await term.locator('button').click();await page.locator('#cashTermsDisclosure').evaluate(e=>e.open=true);await page.locator('#termEvidence').fill('Stale edit must not save');
   const peer=await context.newPage();await peer.goto(base);const peerRaw=await peer.evaluate(()=>{const m=JSON.parse(localStorage.getItem('foliolab-open-v1'));m.providers[0].name='Second-tab bank';const raw=JSON.stringify(m);localStorage.setItem('foliolab-open-v1',raw);return raw;});
   await page.waitForFunction(()=>!document.querySelector('#notice').classList.contains('hidden'));
-  await page.locator('#termEvidenceConfirmed').check();await page.locator('#saveDialog').click();assert.match(await page.locator('#dialogError').innerText(),/anderen Tab/);
+  await page.locator('#termEvidenceConfirmed').check();await page.locator('#saveDialog').click();
+  // The guarded save/reload uses the real asynchronous storage lock. Wait for
+  // its visible rejection, never read the still-empty feedback during submit.
+  await page.locator('#dialogError').waitFor({state:'visible'});
+  assert.match(await page.locator('#dialogError').innerText(),/anderen Tab/);
+  assert.equal(await page.locator('#editDialog').evaluate(e=>e.open),true,'Rejected stale edit keeps its dialog open');
+  assert.equal(await page.locator('#termEvidence').inputValue(),'Stale edit must not save','Rejected stale edit retains its draft');
   assert.equal(await page.evaluate(()=>localStorage.getItem('foliolab-open-v1')),peerRaw);await peer.close();
   // Existing transactional storage must preserve the same optional metadata.
   await page.evaluate(async()=>{
