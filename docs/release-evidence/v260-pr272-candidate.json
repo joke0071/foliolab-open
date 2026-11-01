@@ -1,0 +1,69 @@
+{
+  "version": "v260",
+  "pr": 272,
+  "head": "a4be28851ad7c85bfc096823d20d0a205b5d7b7f",
+  "mergeCommit": "ca99237f8cbe40490d360dd0bd57f9df76dcf584",
+  "tree": "36f29d0cfdece25f3d02809f4ec6bd95da83038a",
+  "syntheticMerge": "94262fedfdf4d4f8b1ad9405204ce39986cea669",
+  "exactTreeEquality": true,
+  "ci": 41319486511,
+  "wallet": 41319486556,
+  "ciConclusion": "success",
+  "tests": {
+    "pass": 1071,
+    "fail": 0,
+    "skipped": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "logsRead": true,
+  "newGates": {
+    "alpha": "slow-response completion gap, limits, cache, shared history, IDB, 7 widths/axe PASS",
+    "ethereum": "endpoint cursors, batch-only pagination, transient resume, restart/focus/cache loss, unchanged accepted history/finances, encrypted backup/CAS PASS"
+  },
+  "artifacts": [
+    {
+      "id": 13089510332,
+      "name": "cross-engine-gates-94262fedfdf4d4f8b1ad9405204ce39986cea669-1",
+      "digest": "sha256:c1ca21b75dee71189ee610f298a9e0dcf07c289c12e599daca989c0c8d0e319e"
+    },
+    {
+      "id": 13089425499,
+      "name": "cross-engine-gates-94262fedfdf4d4f8b1ad9405204ce39986cea669-2",
+      "digest": "sha256:58128bc6af1e9a6822c8d18a9ff08edf593c5b9385850c78a48c71fe119aca68"
+    },
+    {
+      "id": 13089211932,
+      "name": "cross-engine-gates-94262fedfdf4d4f8b1ad9405204ce39986cea669-3",
+      "digest": "sha256:1ca6a98c005eb63bec95234c4c8be2722bc12dbfd662ee0da34b72ecf4e1f021"
+    },
+    {
+      "id": 13088887201,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:2de0a20f24d16e2ce460a7f15445fbd54693a92905e5a7c1a2ab866f7116f772"
+    },
+    {
+      "id": 13088847356,
+      "name": "release-gates-94262fedfdf4d4f8b1ad9405204ce39986cea669",
+      "digest": "sha256:d5f69e6d5a6ccba039ce45abdd3a6be8b973ec27b9aa828c4536dcf08d2a5b85"
+    },
+    {
+      "id": 13088532913,
+      "name": "ci-stage-94262fedfdf4d4f8b1ad9405204ce39986cea669",
+      "digest": "sha256:8afe1827d53fed0ad2943b890e0c690508ef738bf78160331d9389f97c94da6d"
+    }
+  ],
+  "status": "MERGED / MAIN_RELEASE_PENDING",
+  "mainRun": 41320750171,
+  "realProviderFourETFAppAcceptance": "pending after deployment; no claim from synthetic fixtures",
+  "marketstack": "Real four-ETF proof on checkpoint branch; adapter and provider-key cleanup are next P1A, not part of this PR",
+  "limits": [
+    "No CI cancelled",
+    "No gates weakened",
+    "No private keys or original financial data in code/CI",
+    "No physical Android/native Safari/OAuth acceptance"
+  ]
+}
