@@ -1,0 +1,28 @@
+{
+  "version": "v261",
+  "status": "AUTOMATED_LIVE_PASS_REAL_PROVIDER_BLOCKED",
+  "liveAccepted": false,
+  "main": "87ab27bf4a48f9c2a72d1b249ff83888dd6782a9",
+  "tree": "f2e0637d5179c1314bd0b5e60d05d6666793ab64",
+  "run": 41326923454,
+  "deploy": 124912114636,
+  "live": 124912201845,
+  "allAutomatedJobs": "success",
+  "unitTests": 1079,
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "regularHTTPSAssetMatches": 125,
+  "liveLogRead": true,
+  "liveArtifact": {
+    "id": 13092413702,
+    "digest": "sha256:88ecf6d505543f2f425d1abb8323f4782a89eacd4c530832916f6238ac396e40"
+  },
+  "artifactDigestMatched": true,
+  "realProviderBlocker": "Four long provider histories have older zero/null observations; v261 whole-series rejection blocks otherwise valid latest quotes. No zero prices or economic transactions were adopted.",
+  "correctionPR": 274,
+  "correctionHead": "39f00a3456346476f5b151f964dae676161ec66a",
+  "owner": "Work/root b1399897b0ba"
+}
