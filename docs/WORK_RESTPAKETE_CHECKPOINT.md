@@ -1,3 +1,11 @@
+## OWNER_TAKEOVER – 01.11.2026 · Work/root cab7b49c3d16
+
+Ausdrücklicher Nutzer-Masterauftrag ersetzt Sitzung b1399897b0ba. **Alleiniger Schreib-/Integrationsowner ab jetzt: Work/root cab7b49c3d16.** Vorherige Sitzung darf keine Folgeimplementierung beginnen. Übernahmeprüfung: Main `89095774ad605261a293c4b7bc049580f1f91deb`, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`; nur historische Drafts #157/#161 offen, keine neue Produkt-WIP-PR. Vorgängercheckout HEAD `39f00a3` bereits als #274 gemergt, getrackter Diff leer; ungetrackte synthetische QA-Artefakte/Probe und node_modules unverändert belassen. GitHub-Aktivität wird nicht als Beweis eines gestoppten Chats interpretiert; diese explizite Übernahme sperrt den alten Owner organisatorisch.
+
+v260 bleibt letzte LIVE_ACCEPTED-Basis. v262 deployed, Run `41330819283` / Livejob `124924156880` noch IN_PROGRESS; keine CI abbrechen/duplizieren. Zuerst vorhandenen Abschluss auswerten, dann #266 API-/Backupbereinigung mit Suche/FX-Ablösung. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) und [UH01–UH05](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md) verbindlich. Zähler seit Übernahme: 0 akzeptierte Releases / 0 Produktpakete. Historischen Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## v262 DEPLOYED / echte unveränderte Produktions-App 4/4 PASS – 01.11.2026
 
 Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`, PR #274, SW v262. Mainlauf **41330819283**: 1.082 Tests/0 Fehler/Skips, Syntax, Chromium und alle Firefox-/WebKit-Gruppen SUCCESS. Deployment **124923974833 SUCCESS**. Vollständige Live-Abnahme **124924156880 läuft**; noch kein LIVE_ACCEPTED.
