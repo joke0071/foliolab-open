@@ -105,7 +105,11 @@ export function createAlphaClient({store=alphaCache(),clock=()=>Date.now(),pause
    try{
     const data=await requestJSON(url.toString(),{fetcher,ttlMs:0,attempts:1});
     const result=parseAlphaDaily(data,symbol);
-    await store.update(cacheKey,()=>({day:day(clock()),data}));
+    // Never persist arbitrary provider fields (an upstream payload could echo a
+    // credential). Retain only validated public symbol/date/raw-close values.
+    const cachedData={'Meta Data':{'2. Symbol':symbol,'3. Last Refreshed':result.points.at(-1).date},
+     'Time Series (Daily)':Object.fromEntries(result.points.map(p=>[p.date,{'4. close':String(p.total)}]))};
+    await store.update(cacheKey,()=>({day:day(clock()),data:cachedData}));
     return {...result,cached:false};
    }catch(error){
     if(error.cooldown)await store.update(budgetKey,old=>({...old,blockedUntil:Math.min(dayEnd(clock()),clock()+error.cooldown)}));

@@ -19,7 +19,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   if(u.hostname==='www.alphavantage.co'){
    assert.equal(u.searchParams.get('apikey'),'SYNTHETIC_ALPHA_KEY');assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');
    const index=pairs.findIndex(([symbol])=>symbol+'.DEX'===u.searchParams.get('symbol'));assert.ok(index>=0);
-   return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
+   return fulfill(200,{'Meta Data':{'2. Symbol':pairs[index][0]+'.DEX','3. Last Refreshed':date},untrustedDiagnostics:{echoedKey:'SYNTHETIC_ALPHA_KEY'},'Time Series (Daily)':{[previous]:{'4. close':String(100+index)},[date]:{'4. close':String(110+index),'5. adjusted close':'9999'}}});
   }
   if(u.hostname==='financialmodelingprep.com')return fulfill(402,{message:'Synthetic plan denial'});
   if(u.hostname==='api.twelvedata.com')return fulfill(404,{code:404,status:'error',message:'This symbol is available starting with the Grow or Venture plan. SYNTHETIC_PRIVATE_RESPONSE'});

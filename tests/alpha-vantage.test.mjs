@@ -31,7 +31,7 @@ test('Budget reservations are bounded at 25/day, spaced 2.5 seconds and reset on
 });
 test('Concurrent quote/history reads coalesce; new client reuses IDB-shaped daily cache without storing the key',async()=>{
  const store=memory();let calls=0,time=now;const key='SYNTHETIC_PRIVATE_KEY';
- const fetcher=async url=>{calls++;const u=new URL(url);assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');assert.equal(u.searchParams.get('apikey'),key);return {ok:true,status:200,json:async()=>daily(u.searchParams.get('symbol'))};};
+ const fetcher=async url=>{calls++;const u=new URL(url);assert.equal(u.searchParams.get('function'),'TIME_SERIES_DAILY');assert.equal(u.searchParams.get('outputsize'),'compact');assert.equal(u.searchParams.get('apikey'),key);return {ok:true,status:200,json:async()=>({...daily(u.searchParams.get('symbol')),untrustedDiagnostics:{echoedKey:key}})};};
  const deps={store,clock:()=>time,pause:async ms=>{time+=ms;},fetcher},a=createAlphaClient(deps);
  const result=await Promise.all([a.load(position('VWCE'),key),a.load(position('VWCE'),key),a.load(position('XDEM'),key)]);
  assert.equal(calls,2);assert.ok(time>=now+2500);assert.equal(result[0].points.at(-1).total,123.4567);
