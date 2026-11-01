@@ -1,3 +1,15 @@
+## v262 DEPLOYED / echte unveränderte Produktions-App 4/4 PASS – 01.11.2026
+
+Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, Tree `86e7067a801fa16da049907a4f49b6a2bf856b62`, PR #274, SW v262. Mainlauf **41330819283**: 1.082 Tests/0 Fehler/Skips, Syntax, Chromium und alle Firefox-/WebKit-Gruppen SUCCESS. Deployment **124923974833 SUCCESS**. Vollständige Live-Abnahme **124924156880 läuft**; noch kein LIVE_ACCEPTED.
+
+**Echte veröffentlichte, unverändert geladene Appkette 4/4 PASS** (keine Kandidatenüberlagerung): VWCE.DE/XDEM.DE/XDEQ.DE/5MVL.DE, bestätigte Referenz-ISIN, EUR/XETR, Datum **30.10.2026**. Gespeicherter Kurs je Position **exakt gegen den ungeadjusteten Schlusskurs derselben echten Providerantwort** verglichen. Genau vier tatsächliche Anfragen; Historienprüfung und Reload verwenden den gemeinsamen Cache ohne weitere Requests. Alle vier langen Anbieterreihen enthalten historische Lücken und werden weiterhin explizit als Historie gesperrt; keine Nullpreise, Interpolation oder vollständige Historienabdeckung behauptet. Synthetisches isoliertes Portfolio: Mengen unverändert, 0 neue Journal-/sonstige Buchungen und externe Flüsse; keine Originalportfoliodaten verwendet. Alpha-Auge vorhanden, Marketstack-Auge bewahrt den Wert. Privater Schlüssel nicht veröffentlicht.
+
+Zusätzlich **125 Assetmatches über regulär zertifikatsgeprüftes HTTPS**. Reale Browserprobe verwendete den dokumentierten Prüfproxy mit TLS-Ausnahme; CSP unverändert, regulärer unabhängiger HTTPS-Nachweis ohne Ausnahme. Keine Android-Hardwareabnahme. Dauerhafte Belege: `docs/release-evidence/v262-real-marketstack-production.json` und `v262-regular-https-assets.json`.
+
+Owner Work/root b1399897b0ba. Nächster Schritt: vollständigen Livejob inklusive Firefox/WebKit abwarten, Abschlusslogs/Artefakte auswerten und nur bei vollständigem Erfolg LIVE_ACCEPTED setzen. Danach P1A Suche/FX/Alt-API-/Backupbereinigung, gemeinsamer Import UH01–UH05, #257 und übrige aktive Master. Keine laufende CI abgebrochen; kein paralleler Integrationsstrang.
+
+---
+
 ## v262 MERGED / Produktionsabnahme ausstehend – 01.11.2026
 
 [PR #274](https://github.com/joke0071/foliolab-open/pull/274) kontrolliert squash-integriert. Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`** exakt gleich geprüftem HEAD `39f00a3456346476f5b151f964dae676161ec66a` und synthetischem Merge `21bd5a5d`. SW **v262**. Vollständige PR-CI **41329491478 SUCCESS**, Wallet **41329491433 SUCCESS**: **1.082 Tests/0 Fehler/Skips**, Syntax, Chromium und alle Firefox-/WebKit-Gruppen. Neue Fälle beweisen gültige Quote trotz älterer Null-/Fehlwerte, weiterhin gesperrte Historie, fehlenden jüngsten Schlusskurs als harten Blocker sowie unveränderte Secret-, Finanz-, CAS-, Offline- und Backup-Verträge. Abschlusslogs gelesen, Artefaktdigests gegen Uploadlogs bestätigt, keine offenen Reviews und Main/HEAD unverändert. Beleg `docs/release-evidence/v262-pr274-acceptance.json`.
