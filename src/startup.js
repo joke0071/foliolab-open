@@ -13,8 +13,6 @@
  },true);
  window.addEventListener('unhandledrejection',()=>fail('FolioLab konnte nicht vollständig gestartet werden.'));
  window.addEventListener('foliolab:ready',()=>{
-  ready=true;clearTimeout(timeout);startup.hidden=true;
-  document.querySelector('.layout').inert=false;
-  performance.mark('foliolab-interactive');
+  ready=true;clearTimeout(timeout);
  },{once:true});
 })();

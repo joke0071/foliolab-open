@@ -2636,6 +2636,9 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
 const standaloneMedia=matchMedia('(display-mode: standalone)');
 function updatePwaDisplay(){const standalone=standaloneMedia.matches||navigator.standalone===true;$('pwaDisplayStatus').textContent=standalone?'Diese Ansicht läuft eigenständig ohne Browserleiste.':'Diese Ansicht läuft im Browser. Eine vorhandene Installation lässt sich daraus nicht erkennen.';}
 updatePwaDisplay();standaloneMedia.addEventListener('change',updatePwaDisplay);
+// The completed app owns unlocking; a missing watchdog asset must not trap it.
+$('appStartup').hidden=true;document.querySelector('.layout').inert=false;
+performance.mark('foliolab-interactive');
 window.dispatchEvent(new Event('foliolab:ready'));
 if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));

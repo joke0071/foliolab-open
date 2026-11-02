@@ -1,7 +1,7 @@
 {
   "baselineMain": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
   "baselineTree": "bb41bd978b770cb83a0a62dbd5a89852279132eb",
-  "status": "LOCAL_PREFLIGHT_NOT_LIVE_ACCEPTED",
+  "status": "CORRECTED_LOCAL_PREFLIGHT_NOT_LIVE_ACCEPTED",
   "scope": [
     "UI-LOAD01",
     "PWA-FULL01"
@@ -66,6 +66,18 @@
       "fix": "Await actual target attached before inspecting/opening native details; no force click or timeout increase",
       "local": "Existing full WebKit history UI PASS",
       "negativeControl": "Original helper deterministically FAILS late-attached hidden target; corrected helper PASS with real summary/button clicks"
+    },
+    "watchdogDependency": {
+      "negativeControl": {
+        "storageReady": true,
+        "startupHidden": false,
+        "inert": true
+      },
+      "fix": "Completed app owns unlock/interactive mark directly; optional watchdog only observes failures and clears its timer",
+      "fixed": "PASS Chromium/WebKit with startup.js request aborted; full loading/timeout/storage/quota/helper tests PASS",
+      "pwaUpdateAfterFix": "PASS Chromium exact record/current asset hashes/offline restart",
+      "unitsAfterFix": 1087,
+      "failures": 0
     }
   },
   "identity": {
