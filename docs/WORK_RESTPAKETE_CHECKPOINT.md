@@ -1,3 +1,11 @@
+## ACTIVE – PR #279 / finale Watchdog-CI eingefroren – 02.11.2026
+
+Owner **0a0c650dd7f6**. PR #279 auf **`63eb394e9c1c55324f6a9b1639f7f7dff799b05e`**, Tree **`165a7c39f6fe3de2d6fbee2237db5f75c539994c`**, Lease-geschützt aus b4f2140 übernommen, nachdem dessen vollständige CI 41427248954 erfolgreich beendet war. Finale CI **41437775033 IN_PROGRESS**; keine Pushes/Abbrüche/Duplikate. Tatsächlicher Testmerge `0cc2c462be39c8f7240fdddce07ab7110178cabc` hat exakt Kandidatentree und erwartete Eltern Main/HEAD. Reviews/Threads leer; Diff, Originalkolben-PNG und mobile Ladeansicht geprüft.
+
+Main `aa67a3f94f63b93d1764ef672eb009dc31c35305`; Produktion frisch SW **v266**, **v266 LIVE_ACCEPTED übernommen**. v267 nicht gemergt/veröffentlicht/abgenommen. Nächster Schritt: bestehende finale CI einschließlich Hauptjob 125252054109, Cross1 125252054064, Cross2 125252053972, Cross3 125252053953 auswerten, Abschlusslogs/Artefakte/Reviews/Lease prüfen, geschützt mergen und Main/Deployment/echte Produktion abnehmen. Echte Android-WebAPK-/Launcherprüfung bleibt extern offen. Danach UH03–UH05 seriell; reinlesende private UH03-Diagnose gesichert unter `/workspace/scratch/0a0c650dd7f6/private/uh03-original-delta.json`, keine zweite Implementierung. Daten-/Installationsidentität/v5 erhalten; [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – Übernahme 0a0c650dd7f6 / PR #279 Watchdog-Finalisierung – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **0a0c650dd7f6** nach ausdrücklicher STOPPED-Abgabe von edd4e92ffc47. Main `aa67a3f94f63b93d1764ef672eb009dc31c35305`, Produktion frisch SW v266 bestätigt; **v266 LIVE_ACCEPTED übernommen, keine Wiederabnahme**. Nur Produkt-PR #279 plus historische Drafts #157/#161. Bestehende CI **41427248954 completed/success**, zugehörige Wallet/Audit ebenfalls SUCCESS; keine laufende CI abgebrochen oder dupliziert. PR-HEAD unverändert `b4f214082dd2d70b8ce23fcbe22b91a20d0691d6`.
