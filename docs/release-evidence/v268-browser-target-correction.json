@@ -1,0 +1,27 @@
+{
+  "status": "LOCAL_CORRECTION_NOT_LIVE_ACCEPTED",
+  "baseHead": "5569981040c522a399c56fa205e34a21895163e7",
+  "failedRun": 41452952246,
+  "failedJob": 125302471483,
+  "cause": {
+    "element": "flatexBindingConfirm-0 clickable parent label",
+    "width": 390,
+    "domHeight": 44,
+    "firefoxProtocolHeight": 43.999969482421875,
+    "selector": "correct clickable label; no selector change required"
+  },
+  "correction": "45px minimum for flatex confirmation labels; unchanged strict >=44px assertion gains engine/width/element/box diagnostics",
+  "local": {
+    "node": "24.22.1",
+    "playwright": "1.56.1",
+    "firefox": "Full binding suite PASS; five widths/Axe/CAS/offline/exact zero writes. Local Firefox sandbox preferences adapted only in private launcher.",
+    "chromium": "Full binding suite PASS, same gates.",
+    "webkit": "All five widths/Axe/44px, source/manual/reset/paging/CAS passed; local WebKit26 driver internal error on offline reload at line69. NOT full local PASS. Hosted current WebKit required.",
+    "units": "1104 PASS, zero failures/skips",
+    "syntax": "PASS",
+    "diff": "PASS",
+    "visual": "WebKit390 synthetic screenshot reviewed"
+  },
+  "unchanged": "v5, install/data identity, financial and browser gates, SW v268 already pending; no provider/original calls",
+  "next": "One full new candidate CI; freeze branch, inspect reviews/tree/logs/artifacts before protected merge, deploy and actual production acceptance"
+}
