@@ -1,0 +1,108 @@
+{
+  "status": "FINAL_PR_CI_SUCCESS_NOT_LIVE_ACCEPTED",
+  "head": "e470556c314d9dd47e59edd6c9bfc0ed3bb4e6e3",
+  "tree": "9edf973e70a0a3a713c6d05b6c3381f21cad19a6",
+  "testMerge": "9393fb74536a211e1f027fe4d41f9fc626f5d0f2",
+  "base": "0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+  "run": 41462542831,
+  "wallet": 41462542932,
+  "jobs": [
+    {
+      "id": 125334997156,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125335253376,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125335253445,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125335253503,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125335253594,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125335253847,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125341486957,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125341487509,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13150816348,
+      "name": "cross-engine-gates-9393fb74536a211e1f027fe4d41f9fc626f5d0f2-2",
+      "digest": "sha256:6956248e0f4a8d6cf6b54f9e446e3ad2b26216b7e3e91db9b97fd0df960932aa"
+    },
+    {
+      "id": 13150745587,
+      "name": "fast-only-not-integration-9393fb74536a211e1f027fe4d41f9fc626f5d0f2",
+      "digest": "sha256:9208ea78174a87ae164c7e7767b91d218bfc816c96528808a42abdd7902a33ed"
+    },
+    {
+      "id": 13150443623,
+      "name": "release-gates-9393fb74536a211e1f027fe4d41f9fc626f5d0f2",
+      "digest": "sha256:b05cb9309f7518df3bc08428ac75aa439eea0661b9aee9984dc907ecfcc7adb1"
+    },
+    {
+      "id": 13150342667,
+      "name": "ci-stage-9393fb74536a211e1f027fe4d41f9fc626f5d0f2",
+      "digest": "sha256:a7d3062b246381d37d5e2c53dfec76013b427fceb9a6daf3aa8c565aa73fb342"
+    },
+    {
+      "id": 13149873470,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:398ff618a515ccc9cb5f87411a2bd3dfef1cfcd12f84eb9a3f4e31b1106bec25"
+    },
+    {
+      "id": 13149788231,
+      "name": "cross-engine-gates-9393fb74536a211e1f027fe4d41f9fc626f5d0f2-1",
+      "digest": "sha256:6eba779a7c5e55706f5fe911995ea9c848428f8eda7bd2b9ccece260033abc7f"
+    },
+    {
+      "id": 13149772957,
+      "name": "cross-engine-gates-9393fb74536a211e1f027fe4d41f9fc626f5d0f2-3",
+      "digest": "sha256:26c1fc24005af0f6e50d408acb47b7c1500c1027c39277715014c7a7f7661ec0"
+    }
+  ],
+  "checks": [
+    "1104 units, zero failures/skips",
+    "Full Chromium/Firefox/WebKit existing finance/security/storage/browser gates",
+    "Native binding strict44px, five widths/Axe/CAS/offline PASS in all three engines",
+    "UH03 actual CSV/CAS/v5/reimport/undo/encrypted restore/offline PASS in all engines",
+    "Complete job logs read; seven artifact digests matched API/upload logs",
+    "Cross3 archive downloaded, digest/ZIP verified, Firefox/WebKit390 visually reviewed"
+  ],
+  "limits": [
+    "UH03 total remains open",
+    "Not yet merged/deployed/live accepted"
+  ]
+}
