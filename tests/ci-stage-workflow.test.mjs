@@ -36,6 +36,10 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  '          node tests/browser-bitpanda-import.mjs\n',
+  '            HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs\n',
+  '          UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-chromium.log\n',
+  '          UH03_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-cross.log\n',
   '          node tests/browser-kraken-import.mjs\n',
   '            HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs\n',
   '          UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/production-uh03-kraken-chromium.log\n',
@@ -108,4 +112,11 @@ test('UH03 Kraken additions are mandatory without changing any sealed earlier ga
   assert.throws(()=>validate(source.replace(line+'\n','')));
  }
  assert.equal(source.split('node tests/browser-kraken-import.mjs').length,5);
+});
+
+test('UH03 Bitpanda is mandatory in all four integration and production paths',()=>{
+ const lines=source.split('\n').filter(line=>line.includes('node tests/browser-bitpanda-import.mjs'));
+ assert.equal(lines.length,4);
+ for(const line of lines)for(const changed of [source.replace(line+'\n',''),source.replace(line+'\n',line+'\n'+line+'\n')])assert.throws(()=>validate(changed));
+ assert.throws(()=>validate(source.replace('HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs','HISTORY_ENGINES=firefox node tests/browser-bitpanda-import.mjs')));
 });

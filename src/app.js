@@ -10,6 +10,8 @@ import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {readCSVRecords} from './csv-records.js';
 import {looksLikeBitpandaCSV,parseBitpandaCSV} from './bitpanda-preview.js';
 import {bitpandaMarkup} from './bitpanda-preview-ui.js';
+import {createBitpandaImportUI} from './bitpanda-import-ui.js';
+import {confirmBitpandaImport} from './bitpanda-import.js';
 import {referencePermissions,referencePermissionIndex,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,previewReferenceRemoval,prepareReferenceRemoval} from './reference-management.js';
 import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './ledger-live.js';
 import {ledgerLiveMarkup} from './ledger-live-ui.js';
@@ -1365,7 +1367,7 @@ function openCSVImport(){
 
  let ledgerDocument=null,ledgerAssignments={},ledgerLimit=50,ledgerMode=false;
  let krakenDocument=null,krakenLimit=50,krakenMode=false,krakenInputs=[],krakenEconomics=null;
- let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false;
+ let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false,bitpandaInputs=[],bitpandaEconomics=null;
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
  let flatexNativeLinks=null,flatexNativeAmounts=null,flatexOrderLimit=20,flatexLegLimits={};
  let flatexSourceIdentities=null,flatexBindings={},flatexBindingLimit=20,flatexBindingStale=false,flatexBindingAction=0;
@@ -1392,8 +1394,8 @@ function openCSVImport(){
   return checked.preview;
  };
  showDialog('CSV importieren','BUCHUNGEN',
-  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live und Bitpanda bleiben lokale Prüfvorschauen. Kraken-Gruppen können nach expliziter Zuordnung und Saldenprüfung übernommen werden. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
-  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – Vorschau</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Vorschau</option></select></label>'+
+  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live bleibt eine lokale Prüfvorschau. Kraken- und Bitpanda-Vorgänge können nach expliziter Zuordnung und Bestandsprüfung übernommen werden. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – Vorschau</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Buchungen prüfen</option></select></label>'+
    '<div id="csvGeneralFiles"><label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label></div>'+
    '<div id="csvFlatexNativeFiles" class="hidden"><label class="field"><span>Depotumsätze</span><input id="csvFlatexDepot" type="file" accept=".csv,text/csv,text/plain" multiple></label><label class="field"><span>Kontoumsätze</span><input id="csvFlatexAccount" type="file" accept=".csv,text/csv,text/plain" multiple></label><p class="small-help">Einzeln oder gemeinsam, auch mehrere Teil-Dateien. Je Datei maximal 2 MB, insgesamt 20 Dateien und 5.000 Zeilen. Nur lokale Vorschau.</p></div>'+
    '<div id="csvBrokerStatus" role="status"></div>'+
@@ -1418,7 +1420,17 @@ function openCSVImport(){
      throw error;
     }
    }
-   if(bitpandaMode)throw Error('Bitpanda bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
+   if(bitpandaMode){
+    const approval=bitpandaEconomics?.approved();
+    if(!approval)throw Error('Aktuelle Bitpanda-Zuordnung, Kontobewegungen und Endbestände bestätigen.');
+    const generation=selectionGeneration,controller=bitpandaEconomics;
+    await portfolioStore.assertCurrent();
+    if(editor!==importEditor||generation!==selectionGeneration||controller!==bitpandaEconomics||JSON.stringify(controller.approved())!==JSON.stringify(approval))throw Error('Bitpanda-Auswahl oder Datenstand geändert. Erneut prüfen.');
+    const draft=confirmBitpandaImport(model,bitpandaInputs,approval.assignments,approval);
+    const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
+    try{model=draft;await save();}catch(error){if(model===draft)model=previous;controller.resetApproval();throw error;}finally{$('dialogFields').inert=false;}
+    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Geprüfte Bitpanda-Vorgänge atomar gespeichert. Ungeklärte Restvorgänge bleiben offen.');return;
+   }
    if(krakenMode){
     const approval=krakenEconomics?.approved();
     if(!approval)throw Error('Kraken Ledger bleibt ohne aktuelle Zuordnung, Saldenprüfung und ausdrückliche Bestätigung eine lokale Vorschau.');
@@ -1573,10 +1585,13 @@ function openCSVImport(){
  };
  const renderBitpanda=()=>{
   importEditor.submitBlocked=true;
-  $('csvBrokerStatus').textContent='Bitpanda-Export erkannt. Übernahme bleibt gesperrt.';
-  $('csvMapping').innerHTML='';$('csvReview').innerHTML=bitpandaMarkup(bitpandaDocument,{limit:bitpandaLimit});
-  $('csvReviewStatus').textContent='Bitpanda: '+bitpandaDocument.rows.length+' Zeilen, nur lokale Vorschau.';
-  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
+  $('csvBrokerStatus').textContent='Bitpanda-Export erkannt. Zuordnung, Kontobewegungen und Endbestände prüfen.';
+  $('csvMapping').innerHTML='';
+  if(!$('csvBitpandaDocument'))$('csvReview').innerHTML='<div id="csvBitpandaDocument"></div><div id="csvBitpandaEconomic"></div>';
+  $('csvBitpandaDocument').innerHTML=bitpandaMarkup(bitpandaDocument,{limit:bitpandaLimit});
+  if(!bitpandaEconomics)bitpandaEconomics=createBitpandaImportUI({host:$('csvBitpandaEconomic'),inputs:bitpandaInputs,getModel:()=>model,onApproval:ready=>{importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';$('csvBrokerStatus').textContent=ready?'Bitpanda-Auswahl geprüft und bestätigt. Übernahme ist bereit.':'Bitpanda: Zuordnung, Kontobewegungen und Endbestände prüfen und bestätigen.';}});
+  $('csvReviewStatus').textContent='Bitpanda: '+bitpandaDocument.rows.length+' Quellzeilen. Noch nichts gespeichert.';
+  const ready=Boolean(bitpandaEconomics?.approved());importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';
   $('bitpandaShowMore')?.addEventListener('click',()=>{const previous=bitpandaLimit;bitpandaLimit+=50;renderBitpanda();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
  };
  const renderFlatexNative=()=>{
@@ -1685,7 +1700,7 @@ function openCSVImport(){
   const files=selected.map(x=>x.file);
   ledgerDocument=null;ledgerAssignments={};ledgerLimit=50;ledgerMode=false;importEditor.submitBlocked=false;
   krakenDocument=null;krakenLimit=50;krakenMode=false;krakenInputs=[];krakenEconomics=null;
-  bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;
+  bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;bitpandaInputs=[];bitpandaEconomics=null;
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
   flatexNativeLinks=null;flatexNativeAmounts=null;flatexOrderLimit=20;flatexLegLimits={};
   flatexSourceIdentities=null;flatexBindings={};flatexBindingLimit=20;flatexBindingStale=false;flatexBindingAction++;
@@ -1721,7 +1736,7 @@ function openCSVImport(){
     bitpandaMode=true;importEditor.submitBlocked=true;
     if(!['auto','bitpanda'].includes(source))throw Error('Bitpanda-Exporte bitte über die native Bitpanda-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
     if(inputs.length!==1)throw Error('Bitpanda bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
-    bitpandaDocument=parseBitpandaCSV(inputs[0].text);renderBitpanda();return;
+    bitpandaInputs=inputs.map(f=>f.text);bitpandaDocument=parseBitpandaCSV(inputs[0].text);renderBitpanda();return;
    }
    const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name});
    const ledger=inputs.some(f=>looksLikeLedgerLiveCSV(parseCSV(f.text)));
