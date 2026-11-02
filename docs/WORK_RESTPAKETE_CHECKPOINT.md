@@ -1,3 +1,15 @@
+## ACTIVE – v269 einmaliger gezielter Live-Retry – 02.11.2026
+
+Alleiniger Owner **b42fafd72edf**. Main **`f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`**, Tree **`a422cf00601a312fc4ce5f60fb4b842d938c166f`**, SW v269/v5/Installationsidentität unverändert. PR #283 geschützt gemergt, Hauptjob/Cross1–3/Deploy des Mainlaufs **41521172914 SUCCESS**. **v269 DEPLOYED, weiterhin NICHT LIVE_ACCEPTED; v268 letzte akzeptierte Produktion.**
+
+[Originaler Livefehler](release-evidence/v269-pr283-live-firefox-navigation-blocker.json): erster Livejob 125544895577, Firefox dritter Reload im Alpha-Test `NS_ERROR_ABORT`; keine fachliche Assertion fehlgeschlagen. [Gezielte unveränderte vollständige Firefox-Produktionsdiagnose](release-evidence/v269-firefox-navigation-targeted-diagnosis.json) anschließend **PASS**: sämtliche ursprünglichen Assertions unverändert, vier echte Dokumentantworten HTTP200, keine fehlgeschlagene Navigation/Pageerrors, vollständige Cache-/Budget-/Mengen-/Nullschreib-/Axe-Kette. Echter Trace privat, Hash im Beleg. Ursprünglicher Low-Level-Abbruch nicht vollständig beobachtet; als isolierte Navigation/Infrastruktur eingeordnet, kein Fehler ignoriert oder Frist geändert. Lokale Container-/CA-Anpassung nur im privaten Firefox-Profil, keine TLS-Ausnahme/CI-Änderung.
+
+Deshalb **genau einen gezielten Retry ausschließlich des fehlgeschlagenen Livejobs** auf unverändertem Mainlauf angefordert; **41521172914 Versuch2 jetzt unverändert auswerten**. Kein Vollworkflow-/Deployment-Duplikat/Abbruch. Keinen weiteren blinden Retry. Bei Wiederholung Ursachenbehebung vor nächstem Lauf; erst terminale Livepflichtjobs/Logs/Artefakte vollständig PASS als LIVE_ACCEPTED ausgeben. Regulärer [138/138 HTTPS-Byteabgleich](release-evidence/v269-pr283-regular-https-assets.json) bereits PASS.
+
+Noch keine UH03-Produktänderung/neue PR. Nach Releaseabschluss UH03 → UH04 → UH05, Originale/Oracles wiederverwenden. Private exakte Saldopfad-Voranalyse und unabhängiger 199290-Fälle-Oracle PASS; historische unabhängige Endbelege/gruppenübergreifende Chronologie bleiben offen. Checkout und private Diagnosen `/workspace/scratch/b42fafd72edf/`. EFF01/HND01; Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – v269 Live durch Firefox-Navigation blockiert – 02.11.2026
 
 Alleiniger Owner **b42fafd72edf**. Main `f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`, Tree `a422cf00601a312fc4ce5f60fb4b842d938c166f`, SW v269/v5 unverändert. #283 nach finaler grüner CI geschützt gemergt. Mainlauf **41521172914 COMPLETED/FAILURE**: Hauptjob/Cross1–3/Deploy SUCCESS; Livejob **125544895577 FAILURE**. **v269 DEPLOYED, NICHT LIVE_ACCEPTED; v268 letzte akzeptierte Produktion.**
