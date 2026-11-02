@@ -1,0 +1,51 @@
+{
+  "status": "DEPLOYED_APPLICATION_GATES_PASS_JOB_CANCELLED_NOT_LIVE_ACCEPTED",
+  "main": "aa449ce3b8fd5ae20dfe6540dd9512b4cda509c7",
+  "tree": "9277a09b2af5e0992f6ed5435369c8a62497ea27",
+  "run": 41510582520,
+  "attempt": 2,
+  "job": 125510992196,
+  "conclusion": "cancelled",
+  "primaryAnnotation": {
+    "url": "https://api.github.com/repos/joke0071/foliolab-open/check-runs/125510992196/annotations",
+    "level": "failure",
+    "message": "The job has exceeded the maximum execution time of 25m0s"
+  },
+  "steps": "All actual recorded steps, including Chromium, Firefox/WebKit, visual exposure, artifact upload and both post steps, SUCCESS. Aggregate job/run CANCELLED. No full job success claimed.",
+  "timing": {
+    "start": "2026-11-02T19:49:26Z",
+    "chromiumEnd": "2026-11-02T19:55:35Z",
+    "crossEnd": "2026-11-02T20:11:21Z",
+    "uploadEnd": "2026-11-02T20:11:26Z",
+    "cleanupLogEnd": "2026-11-02T20:11:27Z",
+    "terminal": "2026-11-02T20:15:49Z"
+  },
+  "actualProduction": {
+    "coreGroups": 6,
+    "axeScans": 18,
+    "assetMatches": 138,
+    "allRequiredSuites": "PASS in required engines; Kraken/Bitpanda actual CSV/CAS/v5/reload/reimport/undo/encrypted restore/quota/stale CAS/offline PASS in Chromium/Firefox/WebKit"
+  },
+  "artifact": {
+    "id": 13175339084,
+    "size": 92908108,
+    "digest": "sha256:721b5702b280fbb4e078cf31ba7052a5ccdc2ca367271e2985ab9beb0b50a58e",
+    "uploadLogMatched": true,
+    "downloaded": true,
+    "zipIntegrity": "PASS",
+    "visuals": "Bitpanda Chromium/WebKit 390 inspected"
+  },
+  "httpsEvidence": "v269-regular-https-assets.json: 138/138 actual assets, default TLS certificate and hostname validation",
+  "collision": "Main unchanged; only historical drafts plus new PR283. No new release run/foreign owner found; this session issued no cancel.",
+  "fix": {
+    "pr": 283,
+    "head": "3e895510c623acfd8c23adf09bb805d72e427f0e",
+    "tree": "a422cf00601a312fc4ce5f60fb4b842d938c166f",
+    "scope": "Live job wall-clock budget 25→35 minutes; preserved all sealed hashes, commands, engines, per-test deadlines and assertions; shipped assets/SW v269/v5 unchanged",
+    "local": "1118/1118 units, 21 CI contracts, full syntax and diff checks PASS",
+    "ci": 41518262487,
+    "wallet": 41518262511
+  },
+  "lastAccepted": "v268",
+  "next": "Evaluate frozen PR283 full CI, protected merge only after all required gates; new mandatory Main/deploy/actual live gates and final HTTPS equality before v269 LIVE_ACCEPTED. Never third-retry unchanged failed run or claim cancelled job successful."
+}
