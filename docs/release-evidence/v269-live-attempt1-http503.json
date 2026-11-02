@@ -1,0 +1,32 @@
+{
+  "status": "DEPLOYED_NOT_LIVE_ACCEPTED",
+  "main": "aa449ce3b8fd5ae20dfe6540dd9512b4cda509c7",
+  "tree": "9277a09b2af5e0992f6ed5435369c8a62497ea27",
+  "run": 41510582520,
+  "attempt": 1,
+  "units": {
+    "tests": 1117,
+    "pass": 1117,
+    "fail": 0,
+    "skipped": 0
+  },
+  "mainJobs": {
+    "test": 125501209041,
+    "cross1": 125501208800,
+    "cross2": 125501208741,
+    "cross3": 125501208747,
+    "deploy": 125508791159
+  },
+  "integration": "All required main jobs SUCCESS; logs checked. Chart Firefox/WebKit full PASS on actual Main.",
+  "liveFailure": {
+    "job": 125508980182,
+    "phase": "initial published asset byte check, before all application flow checks",
+    "path": "./src/unified-bitcoin.js",
+    "httpStatus": 503,
+    "expectedStatus": 200,
+    "artifact": 13173647458,
+    "digest": "sha256:906c06c887564b06b3143ceb3456908edf38784a2028b912579ab2b5ea1d9828"
+  },
+  "boundary": "Not a product-flow PASS. Original error and artifact retained. No retry yet. Verify current regular HTTPS status/bytes and infrastructure classification before at most one targeted failed-job retry on unchanged Main.",
+  "lastAccepted": "v268"
+}
