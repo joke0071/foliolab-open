@@ -1,0 +1,116 @@
+{
+  "status": "PR282_FINAL_CI_ACCEPTED_NOT_YET_PRODUCTION",
+  "pr": 282,
+  "head": "c723de2be87335f84c2436fa587e773a6525db36",
+  "base": "78ac0600e4e0069308af1937532030c96a6857c1",
+  "testMerge": "d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634",
+  "tree": "9277a09b2af5e0992f6ed5435369c8a62497ea27",
+  "run": 41508052915,
+  "walletRun": 41508052944,
+  "units": {
+    "tests": 1117,
+    "pass": 1117,
+    "fail": 0,
+    "skipped": 0
+  },
+  "jobs": [
+    {
+      "id": 125492326861,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125492458868,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125492459004,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125492459090,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125492459210,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125492461620,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125500439519,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125500441811,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "scope": "Exactly preserved two-file test fix; no shipped assets, SW v269, data v5 or installation identity changes",
+  "logs": "All five required job logs read; no failed assertion/error markers; full chart PASS in Chromium/Firefox/WebKit including exact storage nonmutation",
+  "reviews": [],
+  "reviewThreads": [],
+  "artifacts": [
+    {
+      "id": 13173102166,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:9cf7d609585977be5060db6e172d4d054cc96f204fc252c1db0bca4f856f4fd4",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13172377440,
+      "name": "cross-engine-gates-d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634-1",
+      "digest": "sha256:e13ea2723de4bd826cdeb914d71a1bc01ee9642d513ea1fb6512d7b9dd5362c4",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13172287309,
+      "name": "cross-engine-gates-d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634-3",
+      "digest": "sha256:47cbb6d2960e21f30c2340540d6ceaeeaabe233d40a0a989f48fa40fa2f611bd",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13171703354,
+      "name": "release-gates-d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634",
+      "digest": "sha256:b3a3cbd7b0f3d686808875fe795f542b6b647840f35938f8b545abddefae2f52",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13171678267,
+      "name": "cross-engine-gates-d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634-2",
+      "digest": "sha256:2f713f612a681c695159f8fc299f13ac0189b3397811c43ea889ac952e2011e6",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13171037925,
+      "name": "ci-stage-d2d6bb459d4b1d9f1e2b709fdaf645ff569c6634",
+      "digest": "sha256:87c09e21e2b203f5e0f1a6a271683b64c17084e4a6458647edcb37223ed37ba5",
+      "uploadLogMatched": true
+    }
+  ],
+  "cross3Download": {
+    "id": 13172287309,
+    "sha256": "47cbb6d2960e21f30c2340540d6ceaeeaabe233d40a0a989f48fa40fa2f611bd",
+    "zip": "PASS",
+    "chartReport": "Firefox/WebKit PASS",
+    "visuals": "WebKit history 390 and wallet tooltip 320 inspected"
+  },
+  "next": "SHA-protected merge, mandatory main/deploy/live gates and regular HTTPS byte equality; only then v269 LIVE_ACCEPTED"
+}
