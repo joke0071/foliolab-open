@@ -1,3 +1,13 @@
+## ACTIVE – v267 DEPLOYED / echte Produktionsabnahme läuft – 02.11.2026
+
+Owner **0a0c650dd7f6**. Main **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`**, SW **v267**, Datenformat v5 unverändert. PR #279 gemergt; finale PR-CI 41439753959 SUCCESS. Mainlauf **41441756937**: Hauptjob **125265169502** und alle drei Cross-Gruppen SUCCESS, Deployment **125271584101 SUCCESS**. Haupt-/Cross-/Deploy-Abschlusslogs gelesen, sechs relevante Artefaktdigests gegen API/Uploadlogs bestätigt.
+
+**v267 ist ausgeliefert, aber NICHT LIVE_ACCEPTED.** Livejob **125271742164 IN_PROGRESS** gegen tatsächliches HTTPS, derzeit Chromium-Kern-/Zielprüfungen. Letzte vollständig akzeptierte Produktion bleibt v266. Bestehenden Lauf nicht abbrechen/duplizieren. **Regulärer HTTPS-Abgleich 133/133 PASS** mit Standard-Zertifikats-/Hostnamenprüfung: [Nachweis](release-evidence/v267-regular-https-assets.json). Erster nicht vollständig protokollierter Transportversuch mit HTTP503 nicht als PASS gewertet; vollständiger dokumentierter Folgeabgleich ohne Fehler und ohne Einzelretry. Kein Produktfehler oder Gateabbau daraus abgeleitet.
+
+Nächster Schritt: kompletten Livejob einschließlich Firefox/WebKit, Abschlusslog/Produktionsartefakt/Digest/Visual und aktuellen Main+SW kontrollieren; erst dann LIVE_ACCEPTED/Roadmap. Original-Finanzfunktionen unverändert, keine neuen Providerabrufe. Echte Android-WebAPK-/Launcherprüfung bleibt offen; Namen-/Iconübernahme kann browserseitige Bestätigung benötigen (Chrome-Primärquelle: https://developer.chrome.com/blog/improvements-to-web-app-updates), keine Deinstallation/Datenlöschung. Danach UH03–UH05/Roadmap seriell, private Lesediagnose gesichert. EFF01/HND01 Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 gemergt / v267 Main-Veröffentlichung läuft – 02.11.2026
 
 Owner **0a0c650dd7f6**. PR #279 SHA-geschützt gemergt, Main **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`** exakt wie finaler HEAD/Testmerge. Finale PR-CI **41439753959 completed/success**, Wallet/Audit SUCCESS; 1.087 Units/0 Fehler/Skips, alle drei Browsergruppen und bestehende Finanz-/v5-/CAS-/Backup-/Offline-Gates PASS. Abschlusslogs gelesen, fünf relevante Artefaktdigests gegen Uploadlogs bestätigt, Reviews/Threads leer. [Finaler PR-Beleg](release-evidence/v267-pr279-final-ci.json).
