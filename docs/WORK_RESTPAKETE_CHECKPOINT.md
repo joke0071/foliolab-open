@@ -1,3 +1,11 @@
+## ACTIVE – UH03 übernommen / 37cbd9af859a – 02.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **37cbd9af859a** nach ausdrücklicher STOPPED-Abgabe von 0a0c650dd7f6. Main frisch **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, v267 LIVE_ACCEPTED übernommen, keine Wiederabnahme. Nur historische Drafts #157/#161 offen; neuester Mainlauf 41441756937 completed/success, keine aktive Produkt-PR/Release-CI. Private Originale und gesicherte UH03-Diagnose vorhanden. Eigener isolierter Checkout `/workspace/scratch/37cbd9af859a/foliolab-open`.
+
+Nächster Schritt: UH03 Kraken-/Bitpanda-Dialekte und wirtschaftliche Übernahme im bestehenden Journal-/IDB-/CAS-/Undo-/Restore-Vertrag; danach UH04 → UH05 gemäß [Importplan](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). Kein Preview-only-Abschluss, keine zweite Finanzengine. Daten-/Installationsidentität/v5 erhalten; Checkpointbranch niemals nach Main mergen. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0. Noch keine Produktänderung/PR.
+
+---
+
 ## HANDOVER_READY – v267 LIVE_ACCEPTED / 0a0c650dd7f6 STOPPED – 02.11.2026
 
 Vorgezogene **HND01-Rotation am vollständig abgenommenen Releasepunkt** nach langer Übernahmediagnose, reproduzierter WebKit-Fixture-Korrektur, vollständiger PR-/Main-/Produktionsprüfung und wachsender Kontext-/Toollast. **0a0c650dd7f6 ist STOPPED, gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und beginnt keine weiteren Implementierungen/PRs/Merges/Deployments.** Bis ausdrücklicher Übernahme kein aktiver schreibender Owner. Zähler **1 LIVE_ACCEPTED / 1 gemeinsames UI-/PWA-Integrationspaket**; kein technischer Reset behauptet.
