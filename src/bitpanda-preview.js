@@ -5,7 +5,9 @@ export const BITPANDA_HEADERS=Object.freeze(['Transaction ID','Timestamp','Trans
 const signature=['Transaction ID','Timestamp','Transaction Type','In/Out','Amount Fiat','Fee asset'];
 const headerLike=cells=>signature.filter(h=>cells.includes(h)).length>=3;
 export const looksLikeBitpandaCSV=lexed=>Boolean(lexed?.records?.slice(0,21).some(r=>headerLike(r.cells.map(v=>v.trim()))));
-const shortTypes=new Set(['reward','transfer (stake)','transfer (unstake)']);
+// Exact, observed dialect aliases only. Keep the original spelling in values.
+const shortTypes=new Set(['reward','transfer (stake)','transfer (unstake)','transfer(stake)','transfer(unstake)']);
+export const canonicalBitpandaType=type=>type==='transfer(stake)'?'transfer (stake)':type==='transfer(unstake)'?'transfer (unstake)':type;
 const types=new Set(['buy','sell','deposit','withdrawal','transfer',...shortTypes]);
 const numeric=['Amount Fiat','Amount Asset','Asset market price','Fee','Fee percent','Spread','Tax Fiat'];
 const unknown=v=>v==null||v===''||v==='-';
@@ -47,7 +49,7 @@ export function parseBitpandaCSV(input){
  const ids=new Map();
  for(const row of rows){const id=row.values['Transaction ID'];if(!unknown(id)){const list=ids.get(id)||[];list.push(row);ids.set(id,list);}}
  for(const list of ids.values())if(list.length>1){const same=new Set(list.map(r=>JSON.stringify(r.values))).size===1;for(const row of list)row.issues.push(same?'Identische ID-Wiederholung; alle Zeilen bleiben erhalten.':'Widersprüchliche ID-Zeilen; keine automatische Auflösung.');}
- return Object.freeze({kind:'bitpanda-document-preview',version:1,writeEnabled:false,ready:false,preambleRecords:header,
+ return Object.freeze({kind:'bitpanda-document-preview',version:1,dialect:'bitpanda-18-v2',writeEnabled:false,ready:false,preambleRecords:header,
   rows:Object.freeze(rows.map(r=>Object.freeze({...r,issues:Object.freeze(r.issues)}))),
   reason:'Nur lokale Formatprüfung. Keine Buchungen, Bestände, Cashflows, Einstandswerte oder Steuerwerte werden übernommen. Unabhängige Stichtage und vollständige Historie bleiben gesondert zu belegen.'});
 }

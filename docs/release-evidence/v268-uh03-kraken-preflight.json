@@ -1,0 +1,21 @@
+{
+  "status": "LOCAL_PREFLIGHT_ONLY_NOT_LIVE_ACCEPTED",
+  "baselineMain": "0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+  "scope": "First bounded economic Kraken increment plus exact Bitpanda dialect correction; UH03 remains open",
+  "dataVersion": "Existing v5 preserved; no migration, install identity or credential change",
+  "environment": {"node":"24.22.1","playwright":"1.56.1","browser":"local Chromium binary; hosted browser verification still mandatory"},
+  "checks": {
+    "syntaxAndDiff": "PASS",
+    "units": "1104 PASS, 0 failure, 0 skip on freeze preparation; final exact candidate CI required",
+    "nativeDialectAndSourceIdentity": "PASS synthetic and private originals",
+    "independentFinancialOracle": "PASS isolated original Kraken groups against independent Python Decimal raw amount/fee/balance expectations; no original quantities, IDs or frequencies published",
+    "actualSharedCSVDialog": "PASS Chromium; pure preview, explicit account/opening selection, one canonical CAS commit, exact cash/trade/separate crypto fee",
+    "durability": "PASS Chromium; protected v5, reload/reimport, exact session undo, encrypted complete restore and actual offline PWA reload",
+    "atomicFailures": "PASS real IndexedDB quota rollback and stale multi-tab CAS",
+    "ui": "PASS Chromium; seven widths 320 through 1440 and Axe, synthetic mobile image reviewed",
+    "workflowContracts": "PASS unchanged historical hashes/manifests plus mandatory additive UH03 suites; dropped/duplicated/reduced-engine controls reject"
+  },
+  "localLimitations": ["Local WebKit launch blocked by host dependency validation (libgles2); no local WebKit or Firefox PASS claimed", "Hosted browser and complete release/production acceptance pending", "No Android hardware acceptance"],
+  "notAcceptedAsComplete": ["UH03 overall", "Bitpanda economic import", "Historical exchange backfill over current end balances", "Combined BTC/ETH/ERC20/SOL/SPL chain-counterpart reconciliation", "UH04", "UH05"],
+  "providerCalls": "No additional original blockchain/API calls; existing private originals and diagnoses reused"
+}
