@@ -1,0 +1,82 @@
+diff --git a/docs/release-evidence/v267-loading-pwa-preflight.json b/docs/release-evidence/v267-loading-pwa-preflight.json
+index b1c29f4..ab67624 100644
+--- a/docs/release-evidence/v267-loading-pwa-preflight.json
++++ b/docs/release-evidence/v267-loading-pwa-preflight.json
+@@ -1,7 +1,7 @@
+ {
+   "baselineMain": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
+   "baselineTree": "bb41bd978b770cb83a0a62dbd5a89852279132eb",
+-  "status": "LOCAL_PREFLIGHT_NOT_LIVE_ACCEPTED",
++  "status": "CORRECTED_LOCAL_PREFLIGHT_NOT_LIVE_ACCEPTED",
+   "scope": [
+     "UI-LOAD01",
+     "PWA-FULL01"
+@@ -66,6 +66,18 @@
+       "fix": "Await actual target attached before inspecting/opening native details; no force click or timeout increase",
+       "local": "Existing full WebKit history UI PASS",
+       "negativeControl": "Original helper deterministically FAILS late-attached hidden target; corrected helper PASS with real summary/button clicks"
++    },
++    "watchdogDependency": {
++      "negativeControl": {
++        "storageReady": true,
++        "startupHidden": false,
++        "inert": true
++      },
++      "fix": "Completed app owns unlock/interactive mark directly; optional watchdog only observes failures and clears its timer",
++      "fixed": "PASS Chromium/WebKit with startup.js request aborted; full loading/timeout/storage/quota/helper tests PASS",
++      "pwaUpdateAfterFix": "PASS Chromium exact record/current asset hashes/offline restart",
++      "unitsAfterFix": 1087,
++      "failures": 0
+     }
+   },
+   "identity": {
+diff --git a/src/app.js b/src/app.js
+index adc2c2b..4691c19 100644
+--- a/src/app.js
++++ b/src/app.js
+@@ -2636,6 +2636,9 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
+ const standaloneMedia=matchMedia('(display-mode: standalone)');
+ function updatePwaDisplay(){const standalone=standaloneMedia.matches||navigator.standalone===true;$('pwaDisplayStatus').textContent=standalone?'Diese Ansicht läuft eigenständig ohne Browserleiste.':'Diese Ansicht läuft im Browser. Eine vorhandene Installation lässt sich daraus nicht erkennen.';}
+ updatePwaDisplay();standaloneMedia.addEventListener('change',updatePwaDisplay);
++// The completed app owns unlocking; a missing watchdog asset must not trap it.
++$('appStartup').hidden=true;document.querySelector('.layout').inert=false;
++performance.mark('foliolab-interactive');
+ window.dispatchEvent(new Event('foliolab:ready'));
+ if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
+   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
+diff --git a/src/startup.js b/src/startup.js
+index 2cf22fd..4121fea 100644
+--- a/src/startup.js
++++ b/src/startup.js
+@@ -13,8 +13,6 @@
+  },true);
+  window.addEventListener('unhandledrejection',()=>fail('FolioLab konnte nicht vollständig gestartet werden.'));
+  window.addEventListener('foliolab:ready',()=>{
+-  ready=true;clearTimeout(timeout);startup.hidden=true;
+-  document.querySelector('.layout').inert=false;
+-  performance.mark('foliolab-interactive');
++  ready=true;clearTimeout(timeout);
+  },{once:true});
+ })();
+diff --git a/tests/browser-loading-pwa.mjs b/tests/browser-loading-pwa.mjs
+index 214538d..0091e67 100644
+--- a/tests/browser-loading-pwa.mjs
++++ b/tests/browser-loading-pwa.mjs
+@@ -40,6 +40,8 @@ for(const engine of engines){
+   await quota.evaluate(async()=>{const {blankModel,createProvider,createAccount,createPosition}=await import('./src/model.js'),{PortfolioStorage}=await import('./src/browser-portfolio-storage.js');const m=blankModel();m.providers.push(createProvider({id:'loading-p',name:'Synthetic loading provider'}));m.accounts.push(createAccount({id:'loading-a',providerId:'loading-p',name:'Synthetic loading account',type:'exchange'},m));m.positions.push(createPosition({id:'loading-btc',providerId:'loading-p',accountId:'loading-a',kind:'crypto',coinId:'bitcoin',symbol:'BTC',name:'Synthetic Bitcoin',currency:'EUR',quantity:'1',price:'100'},m));m.settings.autoRefresh=false;const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();});
+   await quota.reload();await interactive(quota);const stored=await record(quota);await quota.evaluate(async()=>{const {PortfolioStorage}=await import('./src/browser-portfolio-storage.js');PortfolioStorage.prototype.save=async()=>{throw new DOMException('Synthetic quota','QuotaExceededError');};});
+   await quota.locator('#mobileNav [data-page="positions"]').click();await quota.locator('#refreshAll').click();await quota.waitForFunction(()=>!document.getElementById('refreshAll').disabled);assert.match(await quota.locator('#priceInfo').innerText(),/Aktualisierung fehlgeschlagen/);assert.equal(await quota.locator('#priceInfo .lab-flask').count(),0);assert.deepEqual(await record(quota),stored);
++  // The watchdog is optional for completion: its own failed download cannot trap a ready app.
++  const watchdog=await fresh();await watchdog.route('**/src/startup.js',r=>r.abort());await watchdog.goto(base);await interactive(watchdog);assert.ok(await watchdog.locator('#mobileNav [data-page=positions]').isEnabled());
+   // Module download failure gives actionable feedback without unlocking controls.
+   const failed=await fresh();await failed.route('**/src/app.js',r=>r.abort());await failed.goto(base);await failed.locator('#appStartupHelp').waitFor();assert.match(await failed.locator('#appStartupText').innerText(),/nicht vollständig/);assert.ok(await failed.locator('.layout').evaluate(e=>e.inert));
+   const reduced=await fresh({reducedMotion:'reduce'});await reduced.route('**/src/app.js',r=>r.abort());await reduced.goto(base);assert.equal(await reduced.locator('.lab-liquid').first().evaluate(e=>getComputedStyle(e).animationName),'none');
+@@ -49,7 +51,7 @@ for(const engine of engines){
+   // Failed storage uses existing read-only recovery, never a blank writable model.
+   const storage=await fresh();await storage.addInitScript(()=>{localStorage.setItem('foliolab-open-storage-mode','idb-v1');});await storage.goto(base);await interactive(storage);assert.match(await storage.locator('#notice').innerText(),/nicht lesbar/);assert.ok(await storage.locator('#addWizard').isDisabled());
+   const timed=await fresh();await timed.goto(base);await interactive(timed);const coldMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.reload();await interactive(timed);const warmMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.evaluate(()=>{setTimeout(()=>{const d=document.createElement('details');d.id='loadingLateDisclosure';const s=document.createElement('summary');s.textContent='Synthetic late action';const b=document.createElement('button');b.dataset.loadingLate='true';b.textContent='Synthetic action';b.onclick=()=>b.dataset.clicked='true';d.append(s,b);document.getElementById('onboarding').append(d);},100);});await clickDisclosed(timed.locator('[data-loading-late]'));assert.equal(await timed.locator('[data-loading-late]').getAttribute('data-clicked'),'true');await timed.locator('#loadingLateDisclosure').evaluate(e=>e.remove());
+-  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,checks:['refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout then late completion','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','browser help'],androidHardware:false}));
++  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,checks:['watchdog download failure','refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout then late completion','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','browser help'],androidHardware:false}));
+   console.log(engine+' loading/PWA PASS');
+  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
+ }
