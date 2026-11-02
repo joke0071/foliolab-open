@@ -1,0 +1,138 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "acceptedAt": "2026-11-02T21:42:23.015Z",
+  "release": "v269",
+  "main": "f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+  "tree": "a422cf00601a312fc4ce5f60fb4b842d938c166f",
+  "serviceWorker": "foliolab-open-v269",
+  "dataVersion": 5,
+  "installationIdentity": "unchanged",
+  "pr": 283,
+  "prEvidence": "v269-pr283-final-ci.json",
+  "run": {
+    "id": 41521172914,
+    "attempt": 2,
+    "status": "completed",
+    "conclusion": "success",
+    "test": 125537382546,
+    "cross": [
+      125537382826,
+      125537382450,
+      125537382347
+    ],
+    "deploy": 125544723201,
+    "live": 125556061110
+  },
+  "units": {
+    "tests": 1118,
+    "passed": 1118,
+    "failed": 0,
+    "skipped": 0
+  },
+  "live": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS",
+    "coreGroups": 6,
+    "axeScans": 18,
+    "assetHashes": 138,
+    "pageErrors": [],
+    "proxyCertificateException": false,
+    "scope": "All required actual production commands retained and passed, including Kraken/Bitpanda real CSV dialog, v5/CAS/reload/reimport/undo/encrypted restore/quota/multitab/offline, financial E2E, sources, loading, UI and transfers. Synthetic source/financial data; not a new real-provider or independent original-account acceptance."
+  },
+  "artifact": {
+    "id": 13180523958,
+    "sha256": "e51bb04b988228fff77683682004078a420e930a9acfcd1ceb8605badbc2e8b6",
+    "actualDownload": "PASS",
+    "zipIntegrity": "PASS",
+    "reports": "core/Alpha/UI/transfers reports PASS; all three engines represented",
+    "visualInspection": [
+      "Bitpanda WebKit impact 390",
+      "Kraken Firefox 390"
+    ]
+  },
+  "artifactReceipts": [
+    {
+      "id": 13180523958,
+      "name": "production-live-acceptance-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+      "digest": "sha256:e51bb04b988228fff77683682004078a420e930a9acfcd1ceb8605badbc2e8b6",
+      "verifiedAgainstUploadLog": "current full log"
+    },
+    {
+      "id": 13178538333,
+      "name": "production-live-acceptance-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+      "digest": "sha256:06a4abc81893dfd4fa31d63af982206e5d2c9e496b53e265a373b09878c65214",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13178355823,
+      "name": "cross-engine-gates-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb-2",
+      "digest": "sha256:31ab2e3395f4c0c5f1a476e7da31679681ac432d9f4242a455399e65e5fb9040",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13178083216,
+      "name": "cross-engine-gates-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb-3",
+      "digest": "sha256:e9e6782043ac743b783950924879d15c4697c116e2c3de57911a79f105908283",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13177448691,
+      "name": "cross-engine-gates-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb-1",
+      "digest": "sha256:6ca7ac83b6c546645bc3cb4afa6797f7b0a5d38740da0a4018e7291d1ac26d3d",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13177404245,
+      "name": "github-pages",
+      "digest": "sha256:9fc92eb1d2f8088a850632b774e84409ea04c4d540e46d96c0acb47f55c98a7d",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13177209436,
+      "name": "release-gates-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+      "digest": "sha256:d06d74650322401c22d3fb208e1c474f72aa017ba642a379973a8d581cfe2706",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13177204673,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:6b7c4537e229da0dc7953dcc5aa75bc8174bbac79b5bb9e865c5c8d31d94f5a0",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    },
+    {
+      "id": 13176824013,
+      "name": "ci-stage-f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+      "digest": "sha256:4e51b09818b7232692cac11d1a920391944e5fb1efb85990f10903d51cfb5da0",
+      "verifiedAgainstUploadLog": "previously verified upload log receipt in this session"
+    }
+  ],
+  "regularHTTPS": {
+    "file": "v269-pr283-regular-https-assets.json",
+    "matches": 138,
+    "total": 138,
+    "tls": "default certificate and hostname verification",
+    "freshServiceWorker": "exact current checkout, normal HTTPS; confirmed at final acceptance"
+  },
+  "failureHistory": {
+    "priorBudgetCancellation": "v269-live-attempt2-job-budget-blocker.json",
+    "firstMainLiveJob": 125544895577,
+    "firstFailure": "v269-pr283-live-firefox-navigation-blocker.json",
+    "targetedUnchangedFirefoxDiagnosis": "v269-firefox-navigation-targeted-diagnosis.json",
+    "targetedLiveRetriesThisRun": 1,
+    "wholeWorkflowRetries": 0,
+    "actionsCancelled": 0,
+    "gateChangesAfterPR283": "none"
+  },
+  "finalCollisionCheck": {
+    "mainUnchanged": true,
+    "activeForeignOwner": false,
+    "openPRs": [
+      157,
+      161
+    ],
+    "newProductCandidate": false,
+    "localProductDiff": "empty"
+  },
+  "boundary": "Release completion only. UH03 as a whole remains OPEN: independent historical closing evidence, cross-source BTC/ETH/ERC20/SOL/SPL/transfer/gas/fees and persistent selective source withdrawal. Next bounded Kraken ordering correction is prepared but NOT implemented; then UH04 and UH05."
+}
