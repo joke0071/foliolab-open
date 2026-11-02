@@ -1,0 +1,179 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "acceptedAt": "2026-11-02T15:21:44.451Z",
+  "release": "v268",
+  "main": "de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+  "tree": "9edf973e70a0a3a713c6d05b6c3381f21cad19a6",
+  "serviceWorker": "foliolab-open-v268",
+  "dataVersion": "Existing v5 preserved; no identity/schema rollback",
+  "pr": 280,
+  "head": "e470556c314d9dd47e59edd6c9bfc0ed3bb4e6e3",
+  "prCI": 41462542831,
+  "walletCI": 41462542932,
+  "mainRun": 41464659527,
+  "deployJob": 125349170295,
+  "liveJob": 125349348813,
+  "jobs": [
+    {
+      "id": 125342274010,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125342534950,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125342534976,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125342535025,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125342535049,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125342538081,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125349170295,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125349348813,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "core": {
+    "checks": 6,
+    "axeScans": 18,
+    "assetMatches": 136,
+    "errors": 0,
+    "proxyCertificateException": false
+  },
+  "regularHTTPS": {
+    "matches": 136,
+    "total": 136,
+    "certificateAndHostnameVerification": "default enabled",
+    "errors": 0,
+    "singleAssetRetries": 0,
+    "evidence": "v268-regular-https-assets.json",
+    "finalSW": "HTTP200 expected v268"
+  },
+  "artifact": {
+    "id": 13154767638,
+    "sha256": "e422860e8975e71c860968b84103352be97152872ab27359d58438c4796d432a",
+    "downloaded": true,
+    "zipIntegrity": "PASS",
+    "reports": "Core PASS; UI chromium/firefox/webkit status PASS; binding firefox/webkit result PASS",
+    "visualReview": [
+      "kraken-import/chromium-390.png",
+      "kraken-import/webkit-390.png",
+      "flatex-native-binding/firefox-390.png",
+      "flatex-native-binding/webkit-390.png"
+    ]
+  },
+  "artifactDigests": [
+    {
+      "id": 13154767638,
+      "name": "production-live-acceptance-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+      "digest": "sha256:e422860e8975e71c860968b84103352be97152872ab27359d58438c4796d432a",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13153206263,
+      "name": "release-gates-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+      "digest": "sha256:d6415616d89d9384d3fb93e36297ca18fc35322a0adb3e68ae77dd23d8776254",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13152966515,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:6e1fc92f221401a6f16b8ff362c369d6569e38594b298efeddae1c0313bfb188",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13152835717,
+      "name": "cross-engine-gates-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400-2",
+      "digest": "sha256:6ed9b5bca6cd3faf497d6c5699be5fc5ae0ca514122a58378a2c298971137939",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13152735332,
+      "name": "github-pages",
+      "digest": "sha256:1c92eecfd5ecf1e4e799a51f3b27b6fa6d33be7bbdce02020af67b0db8bd8f97",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13151746768,
+      "name": "cross-engine-gates-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400-3",
+      "digest": "sha256:ed73bc74a868418dcecefd50fdbe7161bdf544b833e0e061f83312275336d1bc",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13150977565,
+      "name": "cross-engine-gates-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400-1",
+      "digest": "sha256:1ee19d1b9da1e93e8f01c55b4ddc1c85677a7e6384ad3a4edfe77db4aeed8efe",
+      "apiAndUploadLogMatched": true
+    },
+    {
+      "id": 13150259255,
+      "name": "ci-stage-de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+      "digest": "sha256:8febbe784585b4fd7e89a11f1f8aa14c684fca9784f7cb70cc3b8840d1e22065",
+      "apiAndUploadLogMatched": true
+    }
+  ],
+  "checks": [
+    "1104 units PASS, zero failures/skips",
+    "All required original finance/security/browser/storage gates preserved",
+    "UH03 actual shared CSV, exact trade/cash/fee, CAS, protected v5, reimport/undo/encrypted restore/offline PASS in Chromium/Firefox/WebKit",
+    "Native binding >=44px unchanged strict assertion PASS in Chromium/Firefox/WebKit",
+    "Full main/cross/deploy/live logs read, no errors",
+    "Fresh Main and final regular HTTPS SW match exact accepted tree"
+  ],
+  "execution": {
+    "newCandidateRuns": 1,
+    "newMainRuns": 1,
+    "blindRetries": 0,
+    "cancelledActions": 0,
+    "reducedGates": 0,
+    "newProviderOrBlockchainCalls": 0
+  },
+  "correction": {
+    "cause": "Correct Firefox confirmation label DOM44px; protocol bounding43.999969482421875px at390 viewport",
+    "fix": "45px min-height and richer assertion diagnostics; no weakened threshold"
+  },
+  "scope": "First bounded Kraken economic increment and exact Bitpanda dialect correction; UH03 overall remains OPEN",
+  "open": [
+    "Bitpanda economic import",
+    "Historical Kraken ending-balance backfill",
+    "Combined BTC/ETH/ERC20/SOL/SPL evidence and native locator/gas/exchange fee/order-independence",
+    "Persistent selective source/booking undo beyond session undo",
+    "UH04",
+    "UH05",
+    "Actual Android hardware acceptance"
+  ],
+  "references": [
+    "v268-pr280-final-ci.json",
+    "v268-browser-target-correction.json"
+  ]
+}
