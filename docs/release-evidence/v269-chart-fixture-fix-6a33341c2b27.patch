@@ -1,0 +1,54 @@
+diff --git a/docs/release-evidence/v269-chart-fixture-preflight.json b/docs/release-evidence/v269-chart-fixture-preflight.json
+new file mode 100644
+index 00000000..8c978cd
+--- /dev/null
++++ b/docs/release-evidence/v269-chart-fixture-preflight.json
+@@ -0,0 +1,27 @@
++{
++  "status": "LOCAL_TEST_FIX_PREFLIGHT_NOT_RELEASE_READY",
++  "baseMain": "78ac0600e4e0069308af1937532030c96a6857c1",
++  "sw": "foliolab-open-v269 unchanged; not deployed",
++  "production": "v268 LIVE_ACCEPTED remains last accepted production",
++  "mainRun": 41494537497,
++  "failedJob": 125445998958,
++  "failure": "WebKit browser-chart-tooltip.mjs:29, phase fixture-reload, record page.evaluate execution context destroyed during navigation. Firefox passed. Failure state shows newly loading document, active app worker/controller and cache v269.",
++  "failureArtifact": {
++    "id": 13166351100,
++    "sha256": "017c2823b4df5cf607e0831a09bd6da56252bd58234d3348a26e74a66c592893",
++    "downloaded": true,
++    "zipIntegrity": "PASS"
++  },
++  "correction": "Existing controlledStorageFixture before seeding and reloading chart fixture; observe actual activated app worker/controller and exact unchanged blank IDB/settings/revision before fixture setup. No registration mock, action retry, skip, timeout increase or reduced assertion.",
++  "scope": "Only test precondition/import and this evidence; all shipped app assets, data schema v5 and installation identity unchanged. Do not bump service-worker version solely for this test-only correction.",
++  "local": {
++    "chromium": "Full actual chart dashboard/history/time spacing/nearest sparse observation/exact values/7 widths/Axe/long details/bounds/exact zero writes PASS, with real controlled fixture PASS",
++    "ciContracts": "16/16 PASS; historical hashes and manifests unchanged",
++    "syntaxAndDiff": "PASS",
++    "unitBasis": "1117/1117 final PR281 units PASS; production source and unit files unchanged by this test-only delta",
++    "webkit": "NOT_RUN locally: missing host libraries; dependency installation blocked by environment. Hosted WebKit still mandatory."
++  },
++  "oldScriptSha256": "4988f663f4f7216bd059e54de2af78aa3cb9916ffc9bc2c503b6bccdba3b6d7e",
++  "fixedScriptSha256": "1fce044b83e890f0f6fd98297f373dedb2231daca5d3082b10f5d6b4196c9c19",
++  "next": "Finish reading the existing main run without cancellation or blind retry; inspect every failed job. Apply only this limited correction on unchanged expected Main, then one final full CI, merge, deploy and actual production verification. Never merge checkpoint branch."
++}
+diff --git a/tests/browser-chart-tooltip.mjs b/tests/browser-chart-tooltip.mjs
+index da97c49..52e0a5d 100644
+--- a/tests/browser-chart-tooltip.mjs
++++ b/tests/browser-chart-tooltip.mjs
+@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
+ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
+ import {chromium,firefox,webkit} from 'playwright';
+ import {observeBrowserFailures} from './browser-failure-diagnostics.mjs';
++import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
+ const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
+ const out='artifacts/gates/chart-tooltip';mkdirSync(out,{recursive:true});
+ const report={base,scope:'Synthetic real dashboard/history and shared native component tooltip geometry; no physical Android claim',engines:[]};
+@@ -21,7 +22,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
+   assert.ok(boxes.width<=221,label+' narrow tooltip');return boxes;
+  };
+  try{
+-  await p.goto(base);await ready();await p.evaluate(async()=>{
++  await p.goto(base);await controlledStorageFixture(p,ready,record);await p.evaluate(async()=>{
+    const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC chart'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC cash',type:'cash'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',name:'SYNTHETIC cash',kind:'cash',quantity:198000,price:1},m));
+    for(const [date,total]of [['2026-10-01','193652.38'],['2026-10-02','196883.12'],['2026-10-28','199059.98']])snapshot(m,date,'SYNTHETIC reference',{manualTotalEUR:total});
