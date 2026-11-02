@@ -1,3 +1,11 @@
+## v268 LIVE_ACCEPTED / UH03 insgesamt offen – 02.11.2026
+
+[PR #280](https://github.com/joke0071/foliolab-open/pull/280) ist auf Main `de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400` vollständig produktiv abgenommen: begrenzter wirtschaftlicher Kraken-Schnitt, Bitpanda-Dialektkorrektur und reproduziert korrigierte Firefox-Subpixel-Touchhöhe. 1104 Units, Pflichtgates und tatsächliche Chromium-/Firefox-/WebKit-Produktion PASS; reguläres HTTPS 136/136. [Livebeleg](release-evidence/v268-live-acceptance.json), aktueller Owner/Übergabe im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md).
+
+**Nächster Schritt bleibt UH03:** Bitpanda-Wirtschaftsimport mit vorhandenen Originalen/Oracles, historischer Kraken-Endbestandsabgleich und kombinierte BTC/ETH/ERC20/SOL/SPL-Gegenbelege; danach UH04 → UH05 gemäß [Importplan](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). Keine Vorschau als Gesamtabschluss, keine doppelte Finanzengine. v5/Daten-/Installationsidentität und alle übrigen offenen Roadmap-/Hardwarepakete erhalten. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md); Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## UH03 – erster Kraken-Integrationskandidat / Gesamtetappe offen – 02.11.2026
 
 [PR #280](https://github.com/joke0071/foliolab-open/pull/280) implementiert einen begrenzten wirtschaftlichen Kraken-Schnitt und die kompakte Bitpanda-Dialektkorrektur, **noch nicht veröffentlicht/abgenommen**. Produktion bleibt v267 LIVE_ACCEPTED. Bitpanda-Wirtschaftsimport, historischer Endbestandsabgleich und kombinierte BTC-/ETH/ERC20-/SOL/SPL-Gegenbelege bleiben UH03-Restarbeit; danach UH04 → UH05. [Abnahmekarte/Restgrenzen](UH03_KRAKEN_INCREMENT_2026-11-02.md), [Vorprüfung](release-evidence/v268-uh03-kraken-preflight.json); aktuelle CI/Owner ausschließlich im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Daten-/Installationsidentität/v5 erhalten, Checkpointbranch niemals nach Main mergen.
