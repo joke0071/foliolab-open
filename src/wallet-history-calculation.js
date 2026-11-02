@@ -10,7 +10,10 @@ export function calculateHistoryDays(session,options,{signal,timeoutMs=15000}={}
   if(signal?.aborted){abort();return;}signal?.addEventListener('abort',abort,{once:true});
   timer=setTimeout(()=>{done();reject(Error('Berechnungslimit erreicht. Bitte den Anzeigezeitraum verkleinern.'));},timeoutMs);
   worker.onmessage=e=>{done();if(e.data.error)reject(Error(e.data.error));else{cache.set(key,e.data.rows);if(cache.size>3)cache.delete(cache.keys().next().value);resolve(structuredClone(e.data.rows));}};
-  worker.onerror=async()=>{
+  worker.onerror=async event=>{
+   // This error is handled below. WebKit otherwise also reports it as an
+   // uncaught page error even when the exact offline replay succeeds.
+   event.preventDefault();
    done();
    // WebKit may bypass the Service Worker for new workers while offline.
    // Reuse the identical replay generator, yielding between days; never invent rows.
