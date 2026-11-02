@@ -1,3 +1,11 @@
+## ACTIVE – PR #280 gemergt / v268 Main-Veröffentlichung läuft – 02.11.2026
+
+Alleiniger Owner **8aa2b6eb3ce9**. PR #280 nach vollständiger finaler CI **41462542831 SUCCESS** und Wallet **41462542932 SUCCESS** SHA-geschützt gemergt. Main **`de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`**, Tree **`9edf973e70a0a3a713c6d05b6c3381f21cad19a6`**, exakt wie eingefrorener HEAD/Testmerge. Reviews/Threads leer, frischer Owner/Main unverändert. Haupt-/drei Cross-/Plan-/Canary-Abschlusslogs gelesen, sieben Artefaktdigests gegen Uploadlogs/API bestätigt; Cross3-ZIP tatsächlich heruntergeladen, Digest/ZIP geprüft, Firefox-/WebKit390-Bilder gesichtet. 1104 Units/0 Fehler/Skips; bestehende Finanz-/Sicherheits-/v5-/CAS-/Backup-/Offline-Gates und neue UH03-Kette alle drei Engines PASS. [Finaler PR-Beleg](release-evidence/v268-pr280-final-ci.json).
+
+**Main-/Produktionslauf 41464659527 queued bei letzter Abfrage. v268 NICHT DEPLOYED/LIVE_ACCEPTED; letzte vollständig akzeptierte Produktion v267.** Lauf unverändert lassen, keine weitere Produktimplementierung/zweite PR. Nächster Schritt: vollständige Main-/Deploy-/Livegates einschließlich Logs/Artefakten, regulärem HTTPS-Byte-/SW-Abgleich und echtem Produktablauf abnehmen; erst dann LIVE_ACCEPTED. UH03 insgesamt offen: Bitpanda-Wirtschaftsimport, historischer Endbestandsabgleich, kombinierte BTC/ETH/ERC20/SOL/SPL-Gegenbelege, danach UH04 → UH05. Originale/Oracles weiterverwenden; v5/Daten-/Installationsidentität erhalten. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #280 korrigiert und eingefroren / 8aa2b6eb3ce9 – 02.11.2026
 
 Alleiniger Owner **8aa2b6eb3ce9**. Main `0a5e6d5a292b0448ce395122368a583b5fb5aab1`, v267 LIVE_ACCEPTED übernommen, keine Wiederabnahme. PR #280 HEAD **`e470556c314d9dd47e59edd6c9bfc0ed3bb4e6e3`**, Tree **`9edf973e70a0a3a713c6d05b6c3381f21cad19a6`**; lokaler Sicherungscommit `8eb036c` exakt gleicher Tree. CI **41462542831 / 41462542932** neu automatisch gestartet, queued bei letzter Abfrage; vollständigen Releaseworkflow anhand Name prüfen. Keine weiteren Produktpushes während CI.
