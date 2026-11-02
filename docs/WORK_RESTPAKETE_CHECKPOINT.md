@@ -1,3 +1,11 @@
+## ACTIVE – v265 Main-CI-Fehlerdiagnose / 8b1d00b8c8b8 – 02.11.2026
+
+Alleiniger schreibender Entwicklungs-/QA-/Releaseowner **8b1d00b8c8b8** nach ausdrücklicher Übernahme; 2a851b83ff08 STOPPED bestätigt. Main `ad9328eaeb14e43c01da8978d96170eece835859`, SW v265, Datenformat v5. Main-CI `41400746684` completed/failure: Cross3 `125131925749` scheitert in `browser-unified-bitcoin.mjs:48` an zusätzlichem WebKit-pageerror „Importing a module script failed.“; Hauptjob/Cross1/Cross2 SUCCESS, Deploy/Live SKIPPED. **Produktion zuletzt v263 LIVE_ACCEPTED, kein v265 LIVE_ACCEPTED.** Nur historische Drafts #157/#161 offen, kein neuer Owner/Kandidat. Kein Retry/Abbruch/Gateabbau.
+
+Nächster Schritt: verursachenden Modulabruf/Worker-Lebenszyklus gezielt reproduzieren, kleinste korrekte Vorwärtsbehebung mit Regression, einen Kandidaten vollständig prüfen, geschützt mergen und echte Produktion abnehmen. Original-/Blockchain-/Finanzbelege unverändert wiederverwenden; keine neuen Originalabrufe. v5 erhalten, niemals v263-Rollback nach v5-Übernahme. Danach UI-LOAD01/PWA-FULL01/NAM01 gemäß Nutzerauftrag seriell; EFF01/HND01, Zähler 0/0. Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## HANDOVER_READY – v265 Main-Abnahme läuft / 2a851b83ff08 STOPPED – 02.11.2026
 
 Vorgezogene **HND01-Rotation** nach CI-Hänger, zusätzlicher Worker-Fehleranalyse und wachsender Kontext-/Toollast. **2a851b83ff08 ist STOPPED, gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und beginnt keine weiteren Implementierungen/PRs/Merges/Deployments.** Bis ausdrücklicher Übernahme kein aktiver schreibender Owner. Actions bleiben unverändert. Zähler **0 LIVE_ACCEPTED / 0 vollständig abgenommene Pakete**.
