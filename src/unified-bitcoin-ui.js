@@ -1,3 +1,4 @@
+import {setLoading} from './loading-ui.js';
 import {readUnifiedBitcoinFiles,previewUnifiedBitcoin,confirmUnifiedBitcoin,undoUnifiedBitcoin} from './unified-bitcoin.js';
 import {escapeHTML as esc,money} from './model.js';
 /** Uses the existing wallet context and the existing PortfolioStorage commit boundary. */
@@ -26,13 +27,14 @@ export function createUnifiedBitcoinUI({host,getModel,getContext,commit,isBusy=(
  }
  async function load(files){
   const selected=++generation,before=JSON.stringify(getModel());
+  status('Importdateien werden lokal geprüft …');setLoading(el('status'),true);
   try{
    if(files.length>20||files.some(f=>f.size>2e6))throw Error('Höchstens 20 Dateien mit je 2 MB.');
    const parsed=readUnifiedBitcoinFiles(await Promise.all(files.map(f=>f.text())));
    if(selected!==generation)return;
    if(before!==JSON.stringify(getModel()))throw Error('Datenstand geändert. Dateien erneut auswählen.');
    input=parsed;el('funding').checked=false;el('scope').checked=false;render();status('Dateien erkannt und lokal geprüft. Noch nichts gespeichert. '+parsed.duplicateReceipts+' identische Kaufbelege ausgelassen.');
-  }catch(e){input={receipts:[],operations:[]};plan=null;el('preview').textContent='';enabled();status('Keine Übernahme: '+e.message);}
+  }catch(e){input={receipts:[],operations:[]};plan=null;el('preview').textContent='';enabled();status('Keine Übernahme: '+e.message);}finally{if(selected===generation)setLoading(el('status'),false);}
  }
  el('files').onchange=async()=>{if(working||isBusy())return;await load([...el('files').files]);el('files').value='';};
  el('funding').onchange=enabled;el('scope').onchange=enabled;

@@ -14,7 +14,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const periodTargets=async(p,id)=>assert.ok(await p.locator('#'+id).evaluate(group=>{const r=group.getBoundingClientRect();return [...group.querySelectorAll('button,summary')].filter(b=>b.checkVisibility({checkVisibilityCSS:true})).every(b=>{const t=b.getBoundingClientRect();return t.width>=44&&t.height>=44&&t.left>=r.left-1&&t.right<=r.right+1&&t.top>=r.top-1&&t.bottom<=r.bottom+1;});}),engine+' '+id+' wrapped presets stay inside 44px touch controls');
  const cancelDirty=async p=>{const accept=d=>d.accept();p.on('dialog',accept);try{await p.locator('#cancelDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});}finally{p.off('dialog',accept);}};
  try{
-  const p=await fresh();assert.match(await p.locator('#onboarding').innerText(),/Willkommen bei FolioLab Open/);await nav(p,'more');const baseline=await record(p);
+  const p=await fresh();assert.match(await p.locator('#onboarding').innerText(),/Willkommen bei FolioLab/);await nav(p,'more');const baseline=await record(p);
   // Prerequisite cancellation never creates a provider/account or stale continuation.
   await p.locator('#addAccount').click();assert.equal(await p.locator('#dialogTitle').innerText(),'Anbieter hinzufügen');await p.keyboard.press('Escape');await p.locator('#editDialog').waitFor({state:'hidden'});assert.deepEqual(await record(p),baseline);assert.ok(await p.locator('#addAccount').evaluate(b=>b===document.activeElement));
   await p.locator('#addAccount').click();await p.locator('#providerName').fill('Synthetic discarded prerequisite');

@@ -1,3 +1,4 @@
+import {setLoading} from './loading-ui.js';
 import {bitcoinHistoryScope} from './wallet-history-state.js';
 import {createUnifiedBitcoinUI} from './unified-bitcoin-ui.js';
 import {walletStreamMatches} from './historical-position-value.js';
@@ -27,11 +28,11 @@ export function createWalletHistoryUI({getModel,commit}){
  let dialog,selected,preview=null,running=false,controller=null,trigger=null,limit=100,calculating=false,calculation=0,calculationController=null,restartNeeded=false;
  const id=()=> 'wallet-history:'+selected.id;
  const el=name=>dialog.querySelector('[data-history="'+name+'"]');
- const setStatus=text=>{el('status').textContent=text;};
+ const setStatus=text=>{el('status').textContent=text;setLoading(el('status'),running||calculating);};
  const model=()=>getModel();
  const source=()=>selected.wallet.chain.startsWith('btc')?'blockstream.info':['sol','spl'].includes(selected.wallet.chain)?new URL(model().settings.solanaRpc).hostname:'eth.blockscout.com';
  const chain=()=>selected.wallet.chain.startsWith('btc')?'btc':['sol','spl'].includes(selected.wallet.chain)?'sol':'eth';
- function busy(value){running=value;const blocked=value||calculating;for(const field of dialog.querySelectorAll('select,input'))field.disabled=blocked;el('start').disabled=blocked;el('accept').disabled=blocked||!preview;el('discard').disabled=blocked;el('cancel').disabled=!blocked;
+ function busy(value){running=value;const blocked=value||calculating;setLoading(el('status'),blocked);for(const field of dialog.querySelectorAll('select,input'))field.disabled=blocked;el('start').disabled=blocked;el('accept').disabled=blocked||!preview;el('discard').disabled=blocked;el('cancel').disabled=!blocked;
   const entry=cache.get(id()),pending=model().walletHistory?.pending.some(p=>p.id===id()),eth=chain()==='eth';
   const compatible=entry?.identity===JSON.stringify([selected.wallet,model().settings.solanaRpc]);
   el('resume').disabled=blocked||(eth?!(compatible&&Array.isArray(entry.state?.jobs)&&entry.state.jobs.length):!entry&&!pending);
