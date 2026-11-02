@@ -1,3 +1,13 @@
+## ACTIVE – PR #279 / korrigierte finale CI eingefroren – 02.11.2026
+
+Alleiniger Owner **0a0c650dd7f6**. PR #279 HEAD **`2033b2fb6aeefc6d110e261d1db289b0aafe5795`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`**; vorhandene Watchdogkorrektur plus vierzeilige Wiederverwendung der bestehenden echten Storage-Fixture. Voriger Lauf **41437775033 vollständig completed/failure**, Hauptjob/Cross2/Cross3/FAST SUCCESS, nur Cross1-Fixture-Bereitschaft FAILURE; keine Produkt-/Finanzassertion abgeschwächt.
+
+Finale CI **41439753959 IN_PROGRESS**, Wallet **41439753923**, Audit **41439754110**. Kandidat eingefroren, keine Pushes/Abbrüche/Duplikate. Main/Owner/PR unmittelbar vor Lease-geschützter Übernahme frisch geprüft; Main unverändert `aa67a3f94f63b93d1764ef672eb009dc31c35305`, **v266 LIVE_ACCEPTED übernommen**, kein v267-Release. Remote-Sicherungscommit entspricht lokal exakt `2033b2f`/Tree 93fedc0; getrackter Diff leer, nur synthetische QA/node_modules ungetrackt.
+
+Nächster Schritt: bestehende finale CI vollständig samt Logs/Artefakten/Reviews/Testmerge-Tree auswerten, geschützt mergen, Main/Deployment/echte Produktion einschließlich regulärem HTTPS-Asset-/SW-Abgleich abnehmen. Danach UH03–UH05/Roadmap seriell. Echte Android-Hardware weiterhin offen; Daten-/Installationsidentität/v5 erhalten. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 / Selection-Fixture-Korrektur gesichert – 02.11.2026
 
 Owner **0a0c650dd7f6**. Produktion/Main unverändert **v266 LIVE_ACCEPTED** / `aa67a3f94f63b93d1764ef672eb009dc31c35305`. PR #279 HEAD weiterhin `63eb394e9c1c55324f6a9b1639f7f7dff799b05e`; bestehende CI **41437775033 noch IN_PROGRESS**, nicht abbrechen/duplizieren/pushen. Cross2 **125252053972 SUCCESS**, Cross1 **125252054064 FAILURE** beim vorhandenen WebKit-Selection-SW-Bereitschaftstest: synthetischer Save/Reload überlappt erste Aktivierung/Claim; lokal Original zweimal FAIL reproduziert, Worker bleibt activating bei fehlerfreier interaktiver App.
