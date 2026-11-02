@@ -2,6 +2,20 @@
 
 **Verbindlicher Nutzerauftrag vom 02.11.2026.** Ergänzt den bestehenden Masterplan, UI-MASTER28 #149 und PWA-FULL01. Status: **PLAN FREIGEGEBEN; Namensvorprüfung, Textumsetzung und Produktabnahme noch offen.** Keine rechtliche Namensfreigabe, keine neue Produktimplementierung durch diesen Plan.
 
+## Aktualisierte Nutzerpriorität – 02.11.2026 (Android zuerst)
+
+**Primäres und unmittelbar sichtbares Nutzerziel ist der kurze App-Label-Text „FolioLab“ auf dem Android-Startbildschirm und in der installierten PWA.** Nicht eine umfassende Markenstrategie, nicht ein langer Browser-/SEO-Titel. Die App heißt auf unperfekt.at bereits FolioLab; deshalb ist eine **einheitliche sichtbare Benennung** auch im Browser und auf der Produktseite bevorzugt. Der Browser-Tab-Titel mit „Open“ wäre für den Nutzer vorübergehend akzeptabel, ist jedoch nicht das bevorzugte Endergebnis.
+
+**Priorität und kleinster risikoarmer Schnitt:**
+- Android/PWA `manifest.webmanifest`: `short_name: "FolioLab"` und bevorzugt auch `name: "FolioLab"`; installierter Startbildschirm-/Launcher-Name ist vorrangiges Erfolgskriterium.
+- Browser-Tab `<title>FolioLab</title>` als konsistenter Zielzustand, aber kein Blocker, wenn die Android-App bereits korrekt kurz angezeigt wird. App-intern vorhandenes „FolioLab.“ unverändert; längere Funktionsbeschreibung ausschließlich auf Produktseite/Einführung.
+- Bestehende Appinstallationen **datensicher** behandeln: Android-/Browser-Manifest-Update und tatsächliche Launcher-Anzeige auf mindestens einer echten Installation gezielt prüfen; Browser-Shortcut vs installierte Standalone-PWA unterscheiden. Keine Deinstallation/Storage-Bereinigung als Standard, weil Portfolio/Keys lokal gespeichert sind; Verzögerungen bei OS-Namensübernahme ehrlich dokumentieren.
+- **NAM01 als einmalige kompakte Vorprüfung** ohne überproportionale Sperrwirkung behandeln. Bei konkretem erheblichem Konflikthinweis die dauerhafte öffentliche Namensveröffentlichung gezielt zur Nutzerentscheidung stellen; ohne solchen Befund die kleine Android-PWA-Korrektur nicht durch eine offene Vollrecherche blockieren. Keine automatische Alternativnamensuche oder rechtliche Freigabebehauptung.
+- UI-LOAD01/PWA-FULL01 und aktuelle Release-/Importarbeiten seriell und konfliktfrei fortsetzen. Keine separate Namens-PR und kein paralleler Work-Owner; namengebundene Tests/Deploy-Verifier in demselben geprüften PWA-Schnitt korrigieren.
+- Keine Änderung von Repository `foliolab-open`, Origin, App-`id`, `start_url`, `scope`, Service-Worker-Datenschutzregeln, IndexedDB-/Backup-/v5-Identitäten. **Android-Label-Korrektur ist ein UI-/Manifest-Thema, keine Datenmigration.**
+
+**Abnahme:** Android-Launcher zeigt nach regulärer Aktualisierung „FolioLab“ ohne Open/Untertitel; Browser-Titel bevorzugt ebenfalls „FolioLab“; funktionsfähige installierte PWA startet standalone, bestehende Daten bleiben byte-/semantisch unverändert, Offline/Reload/Restore bestehen. Unverifizierte native Android-Hardware nicht als PASS behaupten.
+
 ## 1. Vorrangige Entscheidung: Der Name soll FolioLab bleiben
 
 **Ziel ist ausdrücklich, den Namen „FolioLab“ zu erhalten.** Dies ist kein Auftrag zur Entwicklung einer neuen Marke oder zur vorsorglichen Umbenennung. Schreibweise: FolioLab. Das vorhandene eigene Kolbenlogo, die grüne Gestaltung und die typografische Headerform „FolioLab.“ bleiben erhalten; ein grafischer Punkt ist kein Bestandteil technischer Identitäten.
@@ -52,7 +66,7 @@ Keine lange Funktionsbeschreibung in die Android-Titelleiste oder auf das Appsym
 
 ## 4. PWA-FULL01 – sichtbare Bezeichnung ändern, technische Identität erhalten
 
-Bestehenden PWA-Auftrag ergänzen, keinen zweiten erstellen. Nach NAM01-Entscheidungsvorlage den engen sichtbaren Textschnitt im ohnehin geplanten PWA-/Frontendpaket umsetzen. Namensunabhängige Arbeiten wie Loader und Installationsqualität bleiben separat ausführbar, falls eine Namensfrage noch offen ist.
+Bestehenden PWA-Auftrag ergänzen, keinen zweiten erstellen. Nach einer kurzen NAM01-Vorprüfung ohne konkreten erheblichen Konfliktbefund den engen sichtbaren Textschnitt im ohnehin geplanten PWA-/Frontendpaket umsetzen; primär den Android-Launcher-/PWA-Namen, danach möglichst konsistent den Browser-Titel. Bei relevantem ungeklärtem Konflikt nur die betroffene dauerhafte Namensveröffentlichung zur Entscheidung vorlegen. Namensunabhängige Arbeiten wie Loader und Installationsqualität bleiben separat ausführbar, falls eine Namensfrage noch offen ist.
 
 - Sichtbare Vorkommen gezielt inventarisieren: HTML-Titel, Manifest name/short_name, Begrüßung, App-Informationen, Installationshilfen, gegebenenfalls sichtbare Downloadbezeichnungen. Kein globales Suchen-und-Ersetzen von `foliolab-open`.
 - Repositoryname, bestehende Website-Origin, IndexedDB-Namen, lokale Schlüssel, Quell-/Buchungsidentitäten, Backup-Formatkennungen und Datenversion nicht zur kosmetischen Namensänderung wechseln. **Aktuelles v5-Datenformat und dessen Kompatibilität erhalten; für übernommene v5-Daten kein Rollback auf v263.**
