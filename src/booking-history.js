@@ -24,7 +24,7 @@ export function setArchivePresentation(model,{bookingIds=model.bookingPresentati
  if(referenceIds.length)model.bookingPresentation={version:2,archivedIds:[...bookingIds],referenceArchivedIds:[...referenceIds]};
  else if(bookingIds.length)model.bookingPresentation={version:1,archivedIds:[...bookingIds]};
  else delete model.bookingPresentation;
- model.version=model.bookingPresentation?4:3;
+ model.version=model.version===5?5:model.bookingPresentation?4:3;
  if(model.bookingPresentation)validateBookingArchive(model.bookingPresentation,model);
  return model;
 }

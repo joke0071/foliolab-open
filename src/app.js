@@ -1230,7 +1230,7 @@ function openWalletImport(){
    let added=0,updated=0;
    for(const asset of chosen){
     const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
-    if(existing){updateScannedWalletPosition(existing,asset);updated++;continue;}
+    if(existing){updateScannedWalletPosition(existing,asset,{model});updated++;continue;}
     const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
     model.positions.push(position);added++;
    }
@@ -1685,6 +1685,8 @@ function openCSVImport(){
    $('csvReviewStatus').textContent='Dateien werden geprüft.';
    const inputs=await Promise.all(selected.map(async({file,category})=>{const bytes=new Uint8Array(await file.arrayBuffer());return {name:file.name,category,bytes,text:new TextDecoder('utf-8').decode(bytes)};}));
    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
+   const bitcoinBundle=inputs.some(f=>{try{return parseCSV(f.text).headers.includes('Bitcoin Transaction ID');}catch{return false;}});
+   if(bitcoinBundle){if(!['auto','ledger'].includes(source))throw Error('Bittr-/Ledger-Dateien über die automatische Erkennung gemeinsam prüfen.');if(model.positions.filter(p=>p.wallet?.enabled&&p.wallet.chain.startsWith('btc')).length!==1)throw Error('Genau eine Bitcoin-Wallet erforderlich. Wallet-Zuordnung zuerst klären.');$('editDialog').close();await walletHistoryUI.openBitcoinFiles(files,$('addBooking'));return;}
    const native=inputs.some(f=>{try{return looksLikeFlatexNativeCSV(readCSVRecords(f.text,{delimiter:';'}));}catch{return false;}});
    if(source==='flatex-native'||native){
     flatexNativeMode=true;importEditor.submitBlocked=true;

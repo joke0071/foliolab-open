@@ -13,6 +13,7 @@ const oldSecond=[pwaCommand,...manifest.shards['2'].flatMap(c=>c==='node tests/b
 const split=oldSecond.indexOf('UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs');
 assert.ok(split>0);
 const expectedShards={'1':manifest.shards['1'].flatMap(c=>c==='node tests/browser-atomic-storage-cross-engine.mjs'?[c,...periodCommands]:[c]),'2':oldSecond.slice(0,split),'3':oldSecond.slice(split)};
+const uh02Command='HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs';
 const financeCommand='FIN_E2E_ENGINES=firefox,webkit node tests/browser-fin-e2e.mjs';
 const cashCommand='CASH_UX_ENGINES=firefox,webkit node tests/browser-cash-account-ux.mjs';
 const etfCommand='ETF_SOURCE_ENGINES=firefox,webkit node tests/browser-etf-source-recovery.mjs';
@@ -26,12 +27,13 @@ function validate(source){
  assert.equal(all.filter(c=>c===etfCommand).length,1,'ETF source recovery mandatory exactly once in both engines');
  assert.equal(all.filter(c=>c===recoveryCommand).length,1,'Recovery suite mandatory exactly once');
  assert.equal(all.filter(c=>c===financeCommand).length,1,'Finance chain mandatory exactly once');
- const actual=all.filter(c=>c!==recoveryCommand&&c!==financeCommand&&c!==etfCommand&&c!==cashCommand);
+ assert.equal(all.filter(c=>c===uh02Command).length,1,'UH02 mandatory exactly once in both engines');
+ const actual=all.filter(c=>c!==uh02Command&&c!==recoveryCommand&&c!==financeCommand&&c!==etfCommand&&c!==cashCommand);
  assert.equal(manifest.commands.length,30);assert.equal(new Set(actual).size,actual.length);
  assert.deepEqual(actual.slice().sort(),[...manifest.commands,pchainCommand,sonicCommand,pwaCommand,...periodCommands].sort());
  assert.match(cross,/fail-fast: false/);assert.match(cross,/shard: \[1, 2, 3\]/);
  const branches=cross.match(/if \[\[ [^\n]+matrix\.shard[^\n]+ \]\]; then\n([\s\S]+?)\n {10}elif \[\[ [^\n]+matrix\.shard[^\n]+ \]\]; then\n([\s\S]+?)\n {10}else\n([\s\S]+?)\n {10}fi/);
- assert.ok(branches);for(const key of ['1','2','3']){assert.ok(expectedShards[key].length>0);assert.deepEqual(commands(branches[Number(key)]).filter(c=>c!==recoveryCommand&&c!==financeCommand&&c!==etfCommand&&c!==cashCommand),expectedShards[key]);}
+ assert.ok(branches);for(const key of ['1','2','3']){assert.ok(expectedShards[key].length>0);assert.deepEqual(commands(branches[Number(key)]).filter(c=>c!==uh02Command&&c!==recoveryCommand&&c!==financeCommand&&c!==etfCommand&&c!==cashCommand),expectedShards[key]);}
  assert.deepEqual(v221.shards,expectedShards);
  assert.deepEqual(v221.commands,[...expectedShards['1'],...expectedShards['2'],...expectedShards['3']]);
  assert.match(cross,/name: cross-engine-gates-.*matrix\.shard/);
@@ -73,4 +75,9 @@ test('CI requires both visual period suites in Firefox and WebKit in addition to
    assert.notEqual(broken,workflow);assert.throws(()=>validate(broken));
   }
  }
+});
+
+test('CI requires UH02 in both engines without replacing any historical command',()=>{
+ const line='            '+uh02Command+'\n';
+ for(const broken of [workflow.replace(line,''),workflow.replace(line,line+line),workflow.replace(uh02Command,'HISTORY_ENGINES=firefox node tests/browser-unified-bitcoin.mjs')]){assert.notEqual(broken,workflow);assert.throws(()=>validate(broken));}
 });

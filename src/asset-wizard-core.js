@@ -8,8 +8,8 @@ import {validateEconomicPosition} from './defi.js';
  * @param {object} input Wizard form state
  */
 export function buildAssetWizardDraft(source,input){
- if(!source||![3,4].includes(source.version))throw Error('Unbekannter Portfoliostand.');
- if(source.version===4)safeImport(structuredClone(source));
+ if(!source||![3,4,5].includes(source.version))throw Error('Unbekannter Portfoliostand.');
+ if(source.version>=4)safeImport(structuredClone(source));
  const draft=structuredClone(source);
  const kinds=['etf','stock','fund','crypto','cash','other'];
  const kind=String(input?.kind||'');

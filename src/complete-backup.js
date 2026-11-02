@@ -6,7 +6,7 @@ import {portableWalletHistory} from './wallet-history-state.js';
  * OAuth access/refresh tokens, device vault keys and transient runtime state
  * are NEVER part of this format.
  */
-import {defaultSettings} from './model.js';
+import {defaultSettings,assertDataVersion} from './model.js';
 export const COMPLETE_BACKUP_KIND='FolioLabCompleteBackup';
 export const COMPLETE_BACKUP_VERSION=1;
 const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
@@ -42,7 +42,8 @@ export function portableDrivePreferences(input){
  return {clientId:id,mode,retention};
 }
 export function createCompleteBackup(data,configuration=null,history=null){
- if(!plain(data)||(![3,4].includes(data.version)||(data.version===4)!==(data.bookingPresentation!==undefined))||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
+ if(!plain(data)||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
+ assertDataVersion(data);
  const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data:{...data,settings:defaultSettings()}};
  if(configuration!==null){
   if(!plain(configuration))throw Error('Backup-Konfiguration ungültig.');
