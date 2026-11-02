@@ -27,5 +27,11 @@
   "dataVersion": 5,
   "hostedCI": "NOT_STARTED",
   "release": "NOT_MERGED_OR_DEPLOYED",
-  "privateDataPublished": false
+  "privateDataPublished": false,
+  "asynchronousApproval": {
+    "oldCandidate": "7003d84b26277026db6a77b8b305c99356f37e30",
+    "negativeRepro": "Actual Chromium UI: change and reconfirm fee convention/control balance during paused real storage revision check; old candidate saves previously captured values, reproduced privately with synthetic data.",
+    "correction": "Before any draft/commit, compare the current complete approval against the captured approval after assertCurrent.",
+    "regression": "Full actual CSV suite now requires exact zero persistence on changed/reconfirmed approval during delayed revision check, then normal explicit subsequent import."
+  }
 }

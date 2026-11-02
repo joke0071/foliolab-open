@@ -1425,7 +1425,7 @@ function openCSVImport(){
     if(!approval)throw Error('Aktuelle Bitpanda-Zuordnung, Kontobewegungen und Endbestände bestätigen.');
     const generation=selectionGeneration,controller=bitpandaEconomics;
     await portfolioStore.assertCurrent();
-    if(editor!==importEditor||generation!==selectionGeneration||controller!==bitpandaEconomics||!controller.approved())throw Error('Bitpanda-Auswahl oder Datenstand geändert. Erneut prüfen.');
+    if(editor!==importEditor||generation!==selectionGeneration||controller!==bitpandaEconomics||JSON.stringify(controller.approved())!==JSON.stringify(approval))throw Error('Bitpanda-Auswahl oder Datenstand geändert. Erneut prüfen.');
     const draft=confirmBitpandaImport(model,bitpandaInputs,approval.assignments,approval);
     const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
     try{model=draft;await save();}catch(error){if(model===draft)model=previous;controller.resetApproval();throw error;}finally{$('dialogFields').inert=false;}

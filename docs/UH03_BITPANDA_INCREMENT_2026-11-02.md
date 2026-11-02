@@ -10,6 +10,10 @@ EUR-Kryptokäufe und -verkäufe, explizite Rewards und ausdrücklich externe Ein
 
 Bitpanda liefert in diesem Export keine laufenden Salden. Anfangsbestände und Endbestände müssen deshalb gesondert geprüft sein. Das Programm vergleicht die eingegebenen Kontrollmengen exakt, kann ihre unabhängige Herkunft aber nicht selbst bestätigen. Aus derselben Mengenannahme berechnete Testwerte sind keine unabhängigen Endbestandsbelege. Kostenbasis und realisierte Ergebnisse bleiben unbekannt; bestehende bestätigte Werte und fremde Buchungen werden geschützt. Keine Gesamtfreigabe der privaten Bitpanda-Historie aus isolierten Beispielen ableiten.
 
+## Asynchrone Bestätigung
+
+Reproduzierter Fehler im ersten Kandidaten: Während die echte Speicherrevision geprüft wird, kann eine andere Gebührenkonvention mit neuen Kontrollbeständen erneut bestätigt werden. Die alte Implementierung prüfte nur, ob irgendeine aktuelle Freigabe vorlag, und konnte danach noch die zuvor erfasste Auswahl speichern. Vor Entwurf und Commit wird jetzt die vollständige aktuelle Freigabe mit der erfassten Freigabe verglichen. Der Browser-Gegentest pausiert die echte Revisionsprüfung, ändert und bestätigt den Plan erneut und verlangt exakt unveränderte gespeicherte Daten. Erst ein weiterer expliziter Übernahmeversuch darf speichern. Keine Änderung des Speicher-/CAS-Kerns.
+
 ## Entscheidung und Speicherung
 
 Die Vorschau zeigt die tatsächliche Mengen-/EUR-Kontowirkung vor und nach den gewählten neuen Vorgängen. Ein unbekannter oder widersprüchlicher ausgewählter Vorgang oder ein unpassender Endbestand blockiert den gesamten Commit. Eine Teilmenge verlangt ausdrückliche Auswahl und Bestätigung der offenbleibenden Restvorgänge. Alle betroffenen Endbestände werden erneut geprüft. Ein Unterschied von 10^-18 wird nicht weggerundet.

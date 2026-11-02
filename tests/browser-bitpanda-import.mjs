@@ -53,7 +53,18 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await page.addScriptTag({url:base+'__uh03-axe.js'});
   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#editDialog',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
   await page.setViewportSize({width:390,height:900});await fs.mkdir('artifacts/gates/bitpanda-import',{recursive:true});await page.locator('#editDialog').screenshot({path:'artifacts/gates/bitpanda-import/'+engine+'-390.png'});await page.locator('[data-bitpanda="impact"]').screenshot({path:'artifacts/gates/bitpanda-import/'+engine+'-impact-390.png'});
-  await page.locator('[data-bitpanda="approve"]').check();assert.match(await page.locator('#csvBrokerStatus').innerText(),/Übernahme ist bereit/);await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
+  await page.locator('[data-bitpanda="approve"]').check();
+  // Change and re-confirm fee/net values while the real revision check is paused.
+  // The first click owns the old plan and must not save it over the new approval.
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const original=PortfolioStorage.prototype.assertCurrent;window.__bpAssertOriginal=original;PortfolioStorage.prototype.assertCurrent=async function(...args){window.__bpAssertEntered=true;await new Promise(r=>window.__bpAssertRelease=r);return original.apply(this,args);};});
+  await page.locator('#saveDialog').click();await page.waitForFunction(()=>window.__bpAssertEntered);
+  await page.locator('[data-bitpanda-fee]').selectOption('additional');
+  const cashKey=Object.keys(assignments).find(k=>assignments[k]==='bp1');await page.locator('[data-bitpanda-closing="'+cashKey+'"]').fill('98');
+  await page.locator('[data-bitpanda="simulate"]').click();await page.locator('[data-bitpanda="approve"]').check();
+  await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');PortfolioStorage.prototype.assertCurrent=window.__bpAssertOriginal;window.__bpAssertRelease();});
+  await page.locator('#dialogError:not(.hidden)').filter({hasText:'Bitpanda-Auswahl oder Datenstand geändert'}).waitFor();assert.deepEqual(await read(),before);
+  await page.locator('[data-bitpanda-fee]').selectOption('included');await page.locator('[data-bitpanda-closing="'+cashKey+'"]').fill('99');
+  await page.locator('[data-bitpanda="simulate"]').click();await page.locator('[data-bitpanda="approve"]').check();assert.match(await page.locator('#csvBrokerStatus').innerText(),/Übernahme ist bereit/);await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
   let saved=await read();assert.equal(saved.revision,before.revision+1);assert.equal(saved.model.version,5);assert.equal(saved.model.bookings.length,before.model.bookings.length+2);
   assert.deepEqual(saved.model.positions.filter(p=>p.providerId==='bitpanda').map(p=>p.quantityExact),['3.1','99']);
   assert.deepEqual(saved.model.externalCashFlows,before.model.externalCashFlows);
