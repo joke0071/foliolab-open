@@ -1,3 +1,13 @@
+## ACTIVE – PR #279 / finale v267-CI eingefroren – 02.11.2026
+
+Owner **edd4e92ffc47**. Einziger Kandidat PR #279, Branch `feature/loading-pwa-foliolab`, **HEAD `b4f214082dd2d70b8ce23fcbe22b91a20d0691d6`**, Tree **`a6103fea6d42bb1df807c76bb36670a049638dde`**. Finale vollständige CI **41427248954 IN_PROGRESS**, Wallet 41427248965, Audit 41427248960. Keine weiteren Pushes/Abbrüche/Duplikate. Main unverändert `aa67a3f94f63b93d1764ef672eb009dc31c35305`, **v266 LIVE_ACCEPTED**; v267 noch nicht gemergt/veröffentlicht/abgenommen.
+
+Erster Lauf 41425037217 vollständig ausgelaufen: Hauptjob, Cross2/Cross3 und FAST SUCCESS; nur Cross1-WebKit-Disclosure-Bereitschaft FAILURE. Ursache und echte Negativkontrolle im [Vorprüfbeleg](https://github.com/joke0071/foliolab-open/blob/feature/loading-pwa-foliolab/docs/release-evidence/v267-loading-pwa-preflight.json). Finaler Korrekturstand beendet zusätzlich einen tatsächlich reproduzierten wartenden Kursstatus nach fehlgeschlagenem Speichern. Beide Korrekturen lokal Chromium/WebKit PASS, exakter Datensatz erhalten, bestehender vollständiger WebKit-Historienablauf PASS; 1.087 Units/0 Fehler/Skips, Syntax/Diffcheck. Keine Gates/Fristen abgeschwächt. Sämtlicher Produktcode remote gesichert; lokal nur synthetische Artefakte/node_modules ungetrackt.
+
+Nächster Schritt: bestehende finale CI mit Logs/Artefakten/Reviews/exaktem Testmerge-Tree auswerten, geschützt mergen, Main/Deployment/echte Produktion einschließlich unverändert verpflichtender Gates abnehmen. Danach UH03–UH05/Roadmap seriell, Originale weiterhin verfügbar. Echte Android-Hardwareprüfung offen; Daten-/Installationsidentität/v5 unverändert. EFF01/HND01 Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 / erster CI-Befund, Korrektur gesichert – 02.11.2026
 
 Owner **edd4e92ffc47**, Main/v266 LIVE_ACCEPTED unverändert. PR #279 HEAD weiterhin `040853ca948554fb6a1e985ca5e5bc69836d421e`. Erster vollständiger Lauf **41425037217 läuft noch**, kein Abbruch/Push/Retry. Cross2 SUCCESS; Cross1 **125209555269 FAILURE**: WebKit `browser-history-ui.mjs:79`, Disclosure-Aktion nach Reload verborgen. Repro bestätigt: alter Helfer entscheidet bei noch nicht vorhandenem Ziel voreilig „keine geschlossenen Eltern“; erst an tatsächliches Ziel angehängte Bereitschaft binden, danach unverändert echte Summary-/Buttonklicks. Deterministische Negativkontrolle alter Helfer FAIL / Korrektur PASS; vollständiger lokaler WebKit-Historienablauf PASS. Keine Frist/Assertion abgeschwächt.
