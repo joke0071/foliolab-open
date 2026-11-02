@@ -1904,3 +1904,7 @@
 .startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
 #pwaHelp{grid-column:1/-1;margin-bottom:18px}#pwaHelp summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}#pwaHelp p{line-height:1.6}
 @media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}
+
+/* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */
+#csvBitpandaEconomic summary{min-height:45px;padding:12px 0;cursor:pointer;overflow-wrap:anywhere}
+#csvBitpandaEconomic summary:focus-visible{outline:2px solid #327f52;outline-offset:2px;border-radius:5px}

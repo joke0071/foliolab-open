@@ -1,0 +1,31 @@
+{
+  "status": "LOCAL_PREFLIGHT_ONLY_NOT_RELEASE_OR_FULL_UH03_ACCEPTANCE",
+  "base": "de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+  "inheritedWip": "f93f1662289d21a18d4dd6f20ef7e1a288bc84f0",
+  "scope": "docs/UH03_BITPANDA_INCREMENT_2026-11-02.md",
+  "units": {
+    "passed": 1117,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "chromium": {
+    "playwright": "1.56.1",
+    "browser": "153.0.8010.0",
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "result": "PASS actual CSV, paged selection, exact impacts, existing v5/CAS/reload/reimport/undo/encrypted restore/quota/stale CAS/offline PWA"
+  },
+  "original": "Recovered original fields match saved projection; Python Decimal conditional arithmetic PASS. Generated balances are NOT independent account closing evidence. No full historical or fee-convention acceptance.",
+  "dataVersion": 5,
+  "hostedCI": "NOT_STARTED",
+  "release": "NOT_MERGED_OR_DEPLOYED",
+  "privateDataPublished": false
+}
