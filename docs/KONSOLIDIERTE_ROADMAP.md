@@ -1,3 +1,9 @@
+## UH03 – erster Kraken-Integrationskandidat / Gesamtetappe offen – 02.11.2026
+
+[PR #280](https://github.com/joke0071/foliolab-open/pull/280) implementiert einen begrenzten wirtschaftlichen Kraken-Schnitt und die kompakte Bitpanda-Dialektkorrektur, **noch nicht veröffentlicht/abgenommen**. Produktion bleibt v267 LIVE_ACCEPTED. Bitpanda-Wirtschaftsimport, historischer Endbestandsabgleich und kombinierte BTC-/ETH/ERC20-/SOL/SPL-Gegenbelege bleiben UH03-Restarbeit; danach UH04 → UH05. [Abnahmekarte/Restgrenzen](UH03_KRAKEN_INCREMENT_2026-11-02.md), [Vorprüfung](release-evidence/v268-uh03-kraken-preflight.json); aktuelle CI/Owner ausschließlich im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Daten-/Installationsidentität/v5 erhalten, Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## v267 LIVE_ACCEPTED – 02.11.2026
 
 **Aktuelle vollständig abgenommene Produktion: v267**, Main `0a5e6d5a292b0448ce395122368a583b5fb5aab1`, SW `foliolab-open-v267`, Datenformat v5 erhalten. PR #279, finale PR-/Main-/Deploy-/echte Chromium-/Firefox-/WebKit-Produktion vollständig grün; [Livebeleg](release-evidence/v267-live-acceptance.json), [133/133 reguläre HTTPS-Assetmatches](release-evidence/v267-regular-https-assets.json).
