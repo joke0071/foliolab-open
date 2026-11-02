@@ -1,0 +1,27 @@
+{
+  "status": "LOCAL_TEST_FIX_PREFLIGHT_NOT_RELEASE_READY",
+  "baseMain": "78ac0600e4e0069308af1937532030c96a6857c1",
+  "sw": "foliolab-open-v269 unchanged; not deployed",
+  "production": "v268 LIVE_ACCEPTED remains last accepted production",
+  "mainRun": 41494537497,
+  "failedJob": 125445998958,
+  "failure": "WebKit browser-chart-tooltip.mjs:29, phase fixture-reload, record page.evaluate execution context destroyed during navigation. Firefox passed. Failure state shows newly loading document, active app worker/controller and cache v269.",
+  "failureArtifact": {
+    "id": 13166351100,
+    "sha256": "017c2823b4df5cf607e0831a09bd6da56252bd58234d3348a26e74a66c592893",
+    "downloaded": true,
+    "zipIntegrity": "PASS"
+  },
+  "correction": "Existing controlledStorageFixture before seeding and reloading chart fixture; observe actual activated app worker/controller and exact unchanged blank IDB/settings/revision before fixture setup. No registration mock, action retry, skip, timeout increase or reduced assertion.",
+  "scope": "Only test precondition/import and this evidence; all shipped app assets, data schema v5 and installation identity unchanged. Do not bump service-worker version solely for this test-only correction.",
+  "local": {
+    "chromium": "Full actual chart dashboard/history/time spacing/nearest sparse observation/exact values/7 widths/Axe/long details/bounds/exact zero writes PASS, with real controlled fixture PASS",
+    "ciContracts": "16/16 PASS; historical hashes and manifests unchanged",
+    "syntaxAndDiff": "PASS",
+    "unitBasis": "1117/1117 final PR281 units PASS; production source and unit files unchanged by this test-only delta",
+    "webkit": "NOT_RUN locally: missing host libraries; dependency installation blocked by environment. Hosted WebKit still mandatory."
+  },
+  "oldScriptSha256": "4988f663f4f7216bd059e54de2af78aa3cb9916ffc9bc2c503b6bccdba3b6d7e",
+  "fixedScriptSha256": "1fce044b83e890f0f6fd98297f373dedb2231daca5d3082b10f5d6b4196c9c19",
+  "next": "Finish reading the existing main run without cancellation or blind retry; inspect every failed job. Apply only this limited correction on unchanged expected Main, then one final full CI, merge, deploy and actual production verification. Never merge checkpoint branch."
+}
