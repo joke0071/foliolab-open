@@ -1,3 +1,13 @@
+## ACTIVE – PR #279 / v267 eingefroren – 02.11.2026
+
+Alleiniger Owner **edd4e92ffc47**. Einziger Produktkandidat [PR #279](https://github.com/joke0071/foliolab-open/pull/279), Branch `feature/loading-pwa-foliolab`, HEAD `040853ca948554fb6a1e985ca5e5bc69836d421e`, Tree `65a96b6b7784b9d8bc6762bcd6548b60fc5be528`. Main unverändert `aa67a3f94f63b93d1764ef672eb009dc31c35305`, **v266 LIVE_ACCEPTED** übernommen. v267 noch nicht veröffentlicht/abgenommen. Kandidat eingefroren; keine Pushes/Abbrüche/Duplikate während CI.
+
+UI-LOAD01/PWA-FULL01 implementiert: Originalkolben schon im HTML vor DB-Init, 300ms-Verzögerung, statisch bei Reduced Motion, sichere lange-/Fehlerzustände und gesperrte Startoberfläche; kleine Inlineanzeigen; FolioLab-Titel/Manifest, originale PNG-/maskable-Icons, Standalone-Hilfe. Daten-/Installationsidentität/v5 unverändert. 1.087 Units/0 Fehler/Skips, Syntax/Diffcheck, neue Chromium/WebKit-Negativprüfung, bestehender Chromium-PWA-Update/Offline/exakte-IDB-Test, Small-Rests sowie volle UI-Quality (Breiten/Axe/Nullschreibwirkung) PASS. [Vorprüfbeleg](https://github.com/joke0071/foliolab-open/blob/feature/loading-pwa-foliolab/docs/release-evidence/v267-loading-pwa-preflight.json). Lokaler Checkout `/workspace/scratch/edd4e92ffc47/foliolab-open`; Produktdiff remote vollständig gesichert, nur synthetische Artefakte/node_modules ungetrackt. Keine Android-Hardware-/rechtliche Namensfreigabe behauptet; [NAM01](NAME_PRECHECK_2026-11-02.md) bleibt begrenzt.
+
+Nächster Schritt: bestehende vollständige PR-CI samt Logs/Artefakten/Reviews/Testmerge-Tree auswerten, geschützt mergen, Main/Deploy/echte Produktion abnehmen. Danach UH03–UH05/Roadmap seriell. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0 Releases/0 abgeschlossene Pakete; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – Übernahme edd4e92ffc47 / UI-LOAD01 + PWA-FULL01 – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **edd4e92ffc47**, ausdrücklich übernommen nach STOPPED-Abgabe von 8b1d00b8c8b8. Main `aa67a3f94f63b93d1764ef672eb009dc31c35305`, **v266 LIVE_ACCEPTED** übernommen, keine Wiederabnahme. Nur historische Drafts #157/#161, keine aktive Produkt-PR/Release-CI. Nächster Schritt: Originalkolben-Ladezustände und PWA-Anzeigename/PNG-Icons/Standalone-Hilfe seriell nach #149 und [Namensplan](NAME_COPY_PWA_PLAN_2026-11-02.md), [NAM01-Teilbefund](NAME_PRECHECK_2026-11-02.md) erhalten. Daten-/Installationsidentität und v5 unverändert. Danach UH03–UH05/Roadmap. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0 Releases/0 Pakete; keine parallelen Writer, Checkpointbranch niemals nach Main mergen.
