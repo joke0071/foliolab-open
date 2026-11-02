@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
 import {observeBrowserFailures} from './browser-failure-diagnostics.mjs';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 const base=process.env.UI_QUALITY_BASE||'http://127.0.0.1:4173/',proxy=base.startsWith('https:')&&process.env.HTTPS_PROXY;
 const out='artifacts/gates/chart-tooltip';mkdirSync(out,{recursive:true});
 const report={base,scope:'Synthetic real dashboard/history and shared native component tooltip geometry; no physical Android claim',engines:[]};
@@ -21,7 +22,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.ok(boxes.width<=221,label+' narrow tooltip');return boxes;
  };
  try{
-  await p.goto(base);await ready();await p.evaluate(async()=>{
+  await p.goto(base);await controlledStorageFixture(p,ready,record);await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition,snapshot}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'p',name:'SYNTHETIC chart'}));m.accounts.push(createAccount({id:'a',providerId:'p',name:'SYNTHETIC cash',type:'cash'},m));m.positions.push(createPosition({id:'cash',providerId:'p',accountId:'a',name:'SYNTHETIC cash',kind:'cash',quantity:198000,price:1},m));
    for(const [date,total]of [['2026-10-01','193652.38'],['2026-10-02','196883.12'],['2026-10-28','199059.98']])snapshot(m,date,'SYNTHETIC reference',{manualTotalEUR:total});
