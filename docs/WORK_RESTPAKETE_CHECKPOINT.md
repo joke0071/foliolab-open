@@ -1,3 +1,13 @@
+## ACTIVE – PR #281 gemergt / v269 Main-Veröffentlichung läuft – 02.11.2026
+
+Alleiniger Owner **6a33341c2b27**. PR #281 nach vollständiger finaler CI **41491956960 SUCCESS** und Wallet **41491957118 SUCCESS**, frischen leeren Reviews/Threads und Owner-/Main-/Testmergeabgleich SHA-geschützt gemergt. Main **`78ac0600e4e0069308af1937532030c96a6857c1`**, Tree **`a804ff5e748ca2c5d2acb30cb25b040084f6b2b1`** exakt wie finaler HEAD/Testmerge. [Finaler PR-Beleg](release-evidence/v269-pr281-final-ci.json). 1117 Units/0 Fehler/Skips; bestehende Pflichtgates und neue echte Bitpanda-Kette samt asynchronem Freigabe-Gegentest in Chromium/Firefox/WebKit PASS. Abschlusslogs geprüft, sieben Artefaktdigests gegen Uploadlogs/API bestätigt; Cross3-ZIP tatsächlich heruntergeladen, SHA256/ZIP geprüft, Firefox-/WebKit-Mobilbilder gesichtet. Keine Gateabschwächung/kein blinder Retry/kein Abbruch. Zwei notwendige Kandidatenläufe (erste vollständige CI plus separat belegte Freigabekorrektur); kein zusätzlicher Produktstrang.
+
+**Main-/Produktionslauf 41494537497 IN_PROGRESS. v269 noch NICHT DEPLOYED/LIVE_ACCEPTED; letzte akzeptierte Produktion bleibt v268.** Kandidat/Main unverändert lassen; nächste Aktion: Main-/Deploy-/Livegates, Abschlusslogs/Artefakte, regulärer HTTPS-Byteabgleich mit `/workspace/scratch/6a33341c2b27/private/release-assets.py`, tatsächlicher Importablauf auf unveränderter Produktion und frischer Main/SW. Erst dann LIVE_ACCEPTED und Roadmap aktualisieren. Zähler 0/0.
+
+UH03 insgesamt offen: vollständige unabhängige Original-/Bitpanda-Endbestandsabnahme, historische Kraken-Endstände und gesicherter Reihenfolgerepro, kombinierte BTC/ETH/ERC20/SOL/SPL-Gegenbelege, persistente selektive Quellenrücknahme; danach UH04 → UH05. Private Originale/Oracles/Repros/Logs `/workspace/scratch/6a33341c2b27/private/`; frühere unabhängige Belege wiederverwenden. v5/Daten-/Installationsidentität und [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) erhalten. Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #281 / korrigierter finaler Kandidat eingefroren – 02.11.2026
 
 Alleiniger Owner **6a33341c2b27**. PR #281 HEAD **`54f7f5ff066bcc6274fbd9efeb3807ee2bc2cbd1`**, Tree **`a804ff5e748ca2c5d2acb30cb25b040084f6b2b1`**; nach vollständig abgeschlossenem Vorgängerlauf SHA-geschützt übernommen. Finale CI **41491956960 IN_PROGRESS**, Wallet **41491957118 QUEUED** bei letzter Abfrage. Kandidat eingefroren, keine Produktpushes/Abbrüche/Duplikate. Main `de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`, **v268 LIVE_ACCEPTED übernommen**, kein v269 Merge/Deployment/Liveabschluss. Zähler 0/0.
