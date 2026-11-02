@@ -1,3 +1,11 @@
+## ACTIVE – v269 Testfix übernommen / 708f37c5498f – 02.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **708f37c5498f** nach ausdrücklicher Nutzerübernahme und STOPPED-Abgabe von 6a33341c2b27. Kollisionsschutz: neuester HANDOVER_READY unverändert; Main `78ac0600e4e0069308af1937532030c96a6857c1`, nur Drafts #157/#161, keine laufende Release-CI. Main-Lauf 41494537497 vollständig failure: Hauptjob/Cross1/Cross2 success, ausschließlich Cross3 failure; Deploy/Live skipped. **v268 bleibt letzte LIVE_ACCEPTED-Produktion; v269 nicht deployed/abgenommen.**
+
+Nächster Schritt: exakt gesicherten Testfix `c723de2be87335f84c2436fa587e773a6525db36` gegen unveränderten Main prüfen und in einer einzelnen PR fortführen; keine Produktassets/SW-Version verändern. Volle CI einschließlich WebKit, geschützter Merge und echte Produktion erst bei Grün. Danach UH03-Reste → UH04 → UH05; UI-Nachträge #149 erhalten. Originale/Oracles beim Vorgänger zugänglich und wiederverwenden. Daten-/Installationsidentität/v5 und EFF01/HND01 erhalten. Zähler 0 Releases/0 abgeschlossene Pakete. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – 6a33341c2b27 STOPPED / PR #281 gemergt / v269 Main-CI blockiert – 02.11.2026, 19:00 MEZ
 
 **HND01-Rotation wegen gewachsener Kontext-/Toollast nach Originalwiederherstellung, echter asynchroner Finanzfreigabe-Diagnose und Main-WebKit-Fehleranalyse. 6a33341c2b27 ist STOPPED, gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und startet keine weiteren Implementierungen/PRs/Merges/Deployments.** Kein aktiver schreibender Owner bis ausdrücklicher Übernahme. Zähler **0 LIVE_ACCEPTED / 0 vollständig produktiv abgenommene Pakete**. Keine GitHub Action abgebrochen oder blind wiederholt.
