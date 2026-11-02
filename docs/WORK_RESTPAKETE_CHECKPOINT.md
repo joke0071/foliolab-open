@@ -1,3 +1,13 @@
+## ACTIVE – Übernahme 2a851b83ff08 / PR #276 CI-Diagnose – 02.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **2a851b83ff08** nach ausdrücklicher Übernahme; cac084687058 STOPPED. Main unverändert v263 `10103d6253ff544b383099c6a631035f67be7025`, einziger Kandidat PR #276 HEAD `63622f42e3fa91b1abbebab541a17e3ee10fbfb7`, Tree `ab0111e68a6af96937eb81ca4de2aaa780cc7f25`. Reviews/Threads leer. Keine Produktänderung/kein Merge/Deploy.
+
+Finaler Lauf **41354191091 completed/cancelled**: nur Job **124990659493 cross-engine (1)** nach sechs Stunden abgebrochen. Log endet nach vollständigem Firefox-Archiv-PASS; Artefakt **13115117021** lokal heruntergeladen, SHA256 `f810237f386ff8c741480ee1d56b0ee4a6d814b0c6da72003fa72bfad2083b20` gegen Uploadlog bestätigt, `position-archive.json` enthält Firefox PASS. Danach kein weiteres Testergebnis; Browserabschluss/nächster WebKit-Start verdächtig, keine fehlgeschlagene Finanzassertion belegt. Alle übrigen Pflichtjobs erfolgreich. Ein gezielter Retry ausschließlich dieses abgebrochenen Jobs auf unverändertem Kandidaten nach EFF01; kein Duplikat des Gesamtlaufs. Bei Wiederholung Ursache beheben, keine Gates abschwächen. Original-/Blockchain-/Finanzbelege unverändert wiederverwenden; Datenformat v5 erhalten, kein Rollback auf v263 nach v5-Übernahme.
+
+Nächster Schritt: gezielten Retry vollständig auswerten, bei Erfolg finale Logs/Artefakte/Tree/Reviews und geschützten Merge, Main/Deploy/echte Produktion vollständig abnehmen; danach UI-LOAD01 + PWA-FULL01 gemäß #149 seriell. Zähler 0 Releases/0 abgeschlossene Pakete. Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## HANDOVER_READY – UH02 / PR #276 final CI läuft – cac084687058 STOPPED – 01.11.2026
 
 Vorgezogene HND01-Rotation nach umfangreicher Originaldaten-/Finanz-/Walletbindungs-/Versionsschutz-Etappe bei wachsender Kontextlast. **cac084687058 ist ab jetzt STOPPED, gibt die Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und beginnt keine neue Implementierung/PR/Integration/Veröffentlichung.** Bis ausdrücklicher Übernahme kein aktiver schreibender Owner. Laufende Actions bleiben unverändert. Keine automatische Chat-Neuerstellung/Kontingentzurücksetzung behauptet. Zähler: **0 LIVE_ACCEPTED Releases / 0 vollständig abgenommene Produktpakete**, UH02 ist implementiert und originalgestützt geprüft, finale Pflichtabnahme noch offen.
