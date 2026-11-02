@@ -1,3 +1,13 @@
+## ACTIVE – PR #279 / Selection-Fixture-Korrektur gesichert – 02.11.2026
+
+Owner **0a0c650dd7f6**. Produktion/Main unverändert **v266 LIVE_ACCEPTED** / `aa67a3f94f63b93d1764ef672eb009dc31c35305`. PR #279 HEAD weiterhin `63eb394e9c1c55324f6a9b1639f7f7dff799b05e`; bestehende CI **41437775033 noch IN_PROGRESS**, nicht abbrechen/duplizieren/pushen. Cross2 **125252053972 SUCCESS**, Cross1 **125252054064 FAILURE** beim vorhandenen WebKit-Selection-SW-Bereitschaftstest: synthetischer Save/Reload überlappt erste Aktivierung/Claim; lokal Original zweimal FAIL reproduziert, Worker bleibt activating bei fehlerfreier interaktiver App.
+
+**Notwendige Testkorrektur remote gesichert, Branch noch nicht bewegt:** Commit **`2033b2fb6aeefc6d110e261d1db289b0aafe5795`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`**, Parent exakt 63eb394. Vier Testzeilen verwenden bestehende `controlledStorageFixture` VOR synthetischem Save/Reload; zusätzliche echte Aktivierungs-/Controller-/byteexakte Blankrecord-Prüfungen, keine Zeitgrenze/Offline-/Finanzassertion reduziert, keine Produktänderung. Korrigierter kompletter lokaler Chromium-Selection-/Offline-Neustart/exakte-IDB PASS. Lokaler WebKit1.56.1-Aktivierungs-/Blankrecordteil PASS, danach Offline-Driver Internal Error, **kein vollständiges lokales WebKit-PASS**; aktueller gehosteter WebKit bleibt Pflicht. CI-Vertragstests 12/12 PASS; Diffcheck PASS, Vorprüfbeleg im Sicherungscommit ergänzt.
+
+Nächster Schritt: Lauf 41437775033 vollständig auslaufen lassen und weitere echte Fehler auswerten. Danach Main/Owner/PR neu abgleichen, denselben Branch SHA-geschützt auf 2033b2f bewegen und vollständige finale CI einfrieren. Kein Blindretry, keine zweite PR/Engine. Checkout `/workspace/scratch/0a0c650dd7f6/foliolab-open`; alle Produkt-/Teständerungen remote gesichert, ungetrackt nur synthetische QA/node_modules. Daten-/Installationsidentität/v5 erhalten; Android-Hardwareprüfung offen. Danach UH03–UH05/Roadmap, [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md); Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 / finale Watchdog-CI eingefroren – 02.11.2026
 
 Owner **0a0c650dd7f6**. PR #279 auf **`63eb394e9c1c55324f6a9b1639f7f7dff799b05e`**, Tree **`165a7c39f6fe3de2d6fbee2237db5f75c539994c`**, Lease-geschützt aus b4f2140 übernommen, nachdem dessen vollständige CI 41427248954 erfolgreich beendet war. Finale CI **41437775033 IN_PROGRESS**; keine Pushes/Abbrüche/Duplikate. Tatsächlicher Testmerge `0cc2c462be39c8f7240fdddce07ab7110178cabc` hat exakt Kandidatentree und erwartete Eltern Main/HEAD. Reviews/Threads leer; Diff, Originalkolben-PNG und mobile Ladeansicht geprüft.
