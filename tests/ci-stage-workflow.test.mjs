@@ -70,8 +70,8 @@ function originalContractWithOnlyPinnedCaches(source) {
   '          RECOVERY_BASE="$ACCEPTANCE_BASE" RECOVERY_ENGINES=firefox,webkit node tests/browser-recovery-backup-limits.mjs 2>&1 | tee artifacts/gates/production-recovery-cross.log\n'
  ];
  for(const line of additions){assert.equal(reduced.split(line).length,2,'Each recovery addition is mandatory exactly once');reduced=reduced.replace(line,'');}
- assert.equal(reduced.split('    timeout-minutes: 25\n').length,2);
- reduced=reduced.replace('    timeout-minutes: 25\n','    timeout-minutes: 20\n');
+ assert.equal(reduced.split('    timeout-minutes: 35\n').length,2);
+ reduced=reduced.replace('    timeout-minutes: 35\n','    timeout-minutes: 20\n');
  for(const block of pinnedCacheSteps){
   assert.equal(reduced.split(block).length,2,'Every exact cache stanza must appear once');
   reduced=reduced.replace(block,'');
@@ -96,6 +96,11 @@ function validate(s) {
   assert.match(s, /name: fast-only-not-integration-/);
 }
 test('stage workflow preserves every full regression, deployment and live body byte-for-byte', () => validate(source));
+test('live orchestration has one bounded 35-minute budget while all sealed test commands stay unchanged',()=>{
+ const live=source.slice(source.indexOf('  live-acceptance:\n'));
+ assert.match(live,/^    timeout-minutes: 35$/m);
+ for(const changed of [source.replace('    timeout-minutes: 35\n',''),source.replace('    timeout-minutes: 35\n','    timeout-minutes: 25\n'),source.replace('    timeout-minutes: 35\n','    timeout-minutes: 60\n'),source.replace('    timeout-minutes: 35\n','    timeout-minutes: 35\n    timeout-minutes: 35\n'),source.replace('node tests/browser-live-acceptance.mjs 2>&1','timeout 60 node tests/browser-live-acceptance.mjs 2>&1')])assert.throws(()=>validate(changed));
+});
 test('stage policy rejects missing review event, unsafe gate, reduced deploy dependency or dropped FAST audit', () => {
   for (const broken of [source.replace('ready_for_review, ', ''), source.replace("if: needs.plan.outputs.full == 'true'", "if: always()"), source.replace('needs: [test, cross-engine]', 'needs: [test]'), source.replace('node tests/browser-ui07-audit.mjs 2>&1 | tee artifacts/fast/', 'echo removed '), source.replace('foliolab-pw1.64.1-firefox-webkit-v1-', 'unversioned-unsafe-'), source.replace('DEBUG=pw:install npx playwright install --with-deps firefox webkit', 'echo skipped-browser-install')]) {
     assert.notEqual(broken, source); assert.throws(() => validate(broken));

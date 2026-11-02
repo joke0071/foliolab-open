@@ -1,0 +1,32 @@
+{
+  "status": "LOCAL_PREFLIGHT_NOT_RELEASE_ACCEPTED",
+  "baseMain": "aa449ce3b8fd5ae20dfe6540dd9512b4cda509c7",
+  "sw": "foliolab-open-v269 unchanged",
+  "scope": "Only live job orchestration budget 25 to 35 minutes, explicit bounded-budget CI contract and this evidence. No production asset, schema, per-test timeout, browser set, financial assertion, command or artifact gate change.",
+  "cause": {
+    "run": 41510582520,
+    "attempt": 2,
+    "job": 125510992196,
+    "conclusion": "cancelled",
+    "annotation": "The job has exceeded the maximum execution time of 25m0s",
+    "allSteps": "Every recorded step including full Chromium, Firefox/WebKit, artifact upload and cleanup reported SUCCESS; all application flows completed before terminal job cancellation. This is not a successful required job.",
+    "started": "2026-11-02T19:49:26Z",
+    "flowCompletion": "2026-11-02T20:11:21Z",
+    "artifactUpload": "2026-11-02T20:11:26Z",
+    "terminal": "2026-11-02T20:15:49Z"
+  },
+  "preservedProductionProof": {
+    "artifact": 13175339084,
+    "sha256": "721b5702b280fbb4e078cf31ba7052a5ccdc2ca367271e2985ab9beb0b50a58e",
+    "zip": "PASS",
+    "visuals": "Bitpanda Chromium/WebKit 390 inspected",
+    "regularHTTPS": "138/138 exact assets with default TLS hostname/certificate validation",
+    "applicationTests": "All required actual production suites PASS, including Kraken/Bitpanda across all three engines, v5/CAS/Undo/restore/offline"
+  },
+  "local": {
+    "ciContracts": "21/21 PASS including rejected removed/duplicate/unbounded/25-minute job budget and altered sealed live command; original sealed SHA hashes and all manifests unchanged",
+    "syntaxAndDiff": "PASS",
+    "units": "1118/1118 PASS; 0 failures/skips; full existing syntax check PASS"
+  },
+  "boundary": "v269 DEPLOYED but NOT LIVE_ACCEPTED; v268 remains last fully accepted production. The sole prior targeted retry was spent on independently proven transient HTTP503. No third retry; actual orchestration cause correction requires its own reviewed candidate and full gates."
+}
