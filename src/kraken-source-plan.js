@@ -1,0 +1,69 @@
+/** UH03 source facts. No journal arithmetic, matching by amount, or persistence. */
+import {parseKrakenLedgerCSV,KRAKEN_LEDGER_HEADERS} from './kraken-ledger.js';
+import {sourceDigest} from './import-identity.js';
+import {units,exact} from './decimal.js';
+const digest=v=>sourceDigest(JSON.stringify(v));
+const streamOf=v=>JSON.stringify([v.asset,v.wallet,v.subclass]);
+const abs=n=>n<0n?-n:n;
+/** Each Ledger ID owns its complete payload; refid groups never replace leg identities. */
+export function prepareKrakenSourcePlan(inputs){
+ if(!Array.isArray(inputs)||!inputs.length||inputs.length>20)throw Error('Kraken: 1 bis 20 Originaldateien erforderlich.');
+ const observations=new Map(),conflicts=new Set();let repeated=0,total=0;
+ for(const [fileIndex,input] of inputs.entries()){
+  const doc=parseKrakenLedgerCSV(input);total+=doc.rows.length;
+  if(total>5000)throw Error('Kraken: insgesamt maximal 5.000 Quellzeilen.');
+  for(const row of doc.rows){
+   const v=row.values,payloadDigest=digest(KRAKEN_LEDGER_HEADERS.map(h=>[h,v[h]]));
+   // Source account binding is deliberately absent here, supplied by the later confirmed import.
+   const identity=v.txid?digest(['kraken-ledger-v1',v.txid]):null;
+   const key=identity??digest(['unidentified',observations.size,payloadDigest]);
+   const prior=observations.get(key);
+   if(prior){if(prior.payloadDigest!==payloadDigest)conflicts.add(key);else repeated++;}
+   else observations.set(key,{identity,payloadDigest,values:v,numbers:row.numbers,issues:[...row.issues],occurrences:[]});
+   observations.get(key).occurrences.push({file:fileIndex,line:row.line});
+  }
+ }
+ const rows=[...observations.values()];
+ for(const row of rows){
+  // A duplicate in an overlapping export is documentary repetition, a changed ID is a conflict.
+  row.issues=row.issues.filter(s=>!s.startsWith('Identische txid-Wiederholung')&&!(s==='Gebührenwährung nicht ausdrücklich deklariert.'&&row.numbers.fee==='0'));
+  // A declared exact zero has no fee movement to denominate. Unknown fees stay blocked.
+  if(conflicts.has(row.identity))row.issues.push('Dieselbe Ledger-ID enthält widersprüchliche Quellfelder.');
+  const {amount,fee,balance}=row.numbers,v=row.values;
+  row.streamId=digest(['kraken-stream-v1',streamOf(v)]);
+  row.amountExact=amount;row.feeExact=fee;row.balanceExact=balance;
+  row.beforeExact=amount===null||fee===null||balance===null?null:exact(units(balance)-units(amount)+units(fee));
+  row.deltaExact=amount===null||fee===null?null:exact(units(amount)-units(fee));
+  // The documented Kraken balance equation is in the row's asset. Never convert fee currency.
+  if(fee!==null&&units(fee)!==0n&&v.feecurrency!==v.asset)row.issues.push('Gebührenasset widerspricht dem Asset der Kraken-Saldobewegung.');
+ }
+ const groups=new Map();
+ for(const row of rows){
+  const groupKey=row.values.refid?digest(['kraken-ref-v1',row.values.refid]):digest(['unidentified',row.identity,row.payloadDigest]);
+  if(!groups.has(groupKey))groups.set(groupKey,{id:groupKey,rows:[]});groups.get(groupKey).rows.push(row);
+ }
+ const result=[...groups.values()].map(g=>{
+  const issues=g.rows.flatMap(r=>r.issues),nonzero=g.rows.filter(r=>r.amountExact!==null&&units(r.amountExact)!==0n);
+  const positive=nonzero.filter(r=>units(r.amountExact)>0n),negative=nonzero.filter(r=>units(r.amountExact)<0n);
+  let kind='unresolved';
+  if(g.rows.every(r=>['trade','spend','receive'].includes(r.values.type))&&positive.length===1&&negative.length===1)kind='exchange';
+  else if(g.rows.every(r=>r.values.type==='earn'&&r.values.subtype==='reward')&&positive.length===1&&!negative.length)kind='reward';
+  else if(g.rows.every(r=>r.values.type==='transfer'||r.values.type==='earn'&&['allocation','deallocation','autoallocation','autoallocate'].includes(r.values.subtype))&&positive.length===1&&negative.length===1&&positive[0].values.asset===negative[0].values.asset&&units(positive[0].amountExact)===-units(negative[0].amountExact))kind='internal-transfer';
+  else if(g.rows.every(r=>r.values.type==='deposit')&&positive.length===1&&!negative.length)kind='deposit-review';
+  else if(g.rows.every(r=>r.values.type==='withdrawal')&&negative.length===1&&!positive.length)kind='withdrawal-review';
+  if(new Set(g.rows.map(r=>r.values.time)).size!==1)issues.push('Referenzgruppe enthält verschiedene Zeitpunkte; keine automatische Ausführungsreihenfolge.');
+  if(kind==='unresolved')issues.push('Beine oder Ereignisklasse nicht eindeutig belegt.');
+  const movements=new Map();
+  for(const r of g.rows){
+   if(!movements.has(r.streamId))movements.set(r.streamId,{streamId:r.streamId,asset:r.values.asset,wallet:r.values.wallet,subclass:r.values.subclass,amount:0n,fee:0n,known:true});
+   const m=movements.get(r.streamId);
+   if(r.amountExact===null||r.feeExact===null)m.known=false;else{m.amount+=units(r.amountExact);m.fee+=units(r.feeExact);}
+  }
+  return {id:g.id,kind,issues:[...new Set(issues)],rows:g.rows,
+   outgoing:negative.map(r=>({identity:r.identity,streamId:r.streamId,quantityExact:exact(abs(units(r.amountExact)))})),
+   incoming:positive.map(r=>({identity:r.identity,streamId:r.streamId,quantityExact:r.amountExact})),
+   movements:[...movements.values()].map(m=>({streamId:m.streamId,asset:m.asset,wallet:m.wallet,subclass:m.subclass,amountExact:m.known?exact(m.amount):null,feeExact:m.known?exact(m.fee):null,deltaExact:m.known?exact(m.amount-m.fee):null})),
+   payloadDigest:digest(g.rows.map(r=>[r.identity,r.payloadDigest]).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))))};
+ });
+ return {kind:'kraken-source-plan',version:1,writeEnabled:false,ready:false,groups:result,observations:rows,repeated,conflicts:conflicts.size};
+}

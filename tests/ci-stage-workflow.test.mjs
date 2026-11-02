@@ -36,6 +36,10 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  '          node tests/browser-kraken-import.mjs\n',
+  '            HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs\n',
+  '          UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/production-uh03-kraken-chromium.log\n',
+  '          UH03_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs 2>&1 | tee artifacts/gates/production-uh03-kraken-cross.log\n',
   '          LOADING_BASE="$ACCEPTANCE_BASE" node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-chromium.log\n',
   '          LOADING_BASE="$ACCEPTANCE_BASE" LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-cross.log\n',
   '          node tests/browser-loading-pwa.mjs\n',
@@ -97,4 +101,11 @@ test('stage policy rejects missing review event, unsafe gate, reduced deploy dep
 test('superseded PR runs share one concurrency group while main remains separate', () => {
   assert.ok(source.includes("group: foliolab-open-pages-"+'$'+"{{ github.event_name == 'pull_request' && github.event.pull_request.number || github.ref }}"));
   assert.match(source, /cancel-in-progress: true/);
+});
+
+test('UH03 Kraken additions are mandatory without changing any sealed earlier gate',()=>{
+ for(const line of source.split('\n').filter(line=>line.includes('node tests/browser-kraken-import.mjs'))){
+  assert.throws(()=>validate(source.replace(line+'\n','')));
+ }
+ assert.equal(source.split('node tests/browser-kraken-import.mjs').length,5);
 });

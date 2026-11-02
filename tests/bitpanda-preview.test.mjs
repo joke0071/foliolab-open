@@ -56,3 +56,16 @@ test('quoted hostile strings and embedded newlines are source data in a deeply i
  const csv=bitpandaCSV([{'Product ID':'<img src=x onerror=alert(1)>','Asset class':'Synthetic, "quoted"\nclass'},{}],{preamble:[]}),d=parseBitpandaCSV(csv);assert.deepEqual(d.rows.map(r=>r.line),[2,4]);assert.equal(d.rows[0].values['Product ID'],'<img src=x onerror=alert(1)>');
  assert.ok(Object.isFrozen(d)&&Object.isFrozen(d.rows)&&Object.isFrozen(d.rows[0])&&Object.isFrozen(d.rows[0].values)&&Object.isFrozen(d.rows[0].numbers)&&Object.isFrozen(d.rows[0].issues));assert.throws(()=>{d.rows[0].values.Fee='0';},TypeError);assert.equal(d.writeEnabled,false);assert.equal(d.ready,false);assert.equal('commit' in d,false);
 });
+
+test('UH03 observed compact staking dialect preserves raw spelling and absent tax without general padding',()=>{
+ const types=['transfer(stake)','transfer(unstake)'];
+ for(const type of types){
+  const d=parseBitpandaCSV(bitpandaCSV([{'Transaction Type':type,omitTax:true}]));
+  assert.equal(d.dialect,'bitpanda-18-v2');assert.equal(d.rows[0].values['Transaction Type'],type);
+  assert.equal(d.rows[0].values['Tax Fiat'],null);assert.equal(d.rows[0].numbers['Tax Fiat'],null);
+  assert.doesNotMatch(d.rows[0].issues.join(' '),/Unbekannter Transaktionstyp/);
+  assert.match(d.rows[0].issues.join(' '),/Tax Fiat fehlt/);
+ }
+ for(const type of ['transfer (stake )','transfer( stake)','transfer(STAKE)','transfer(stake)extra','buy'])
+  assert.throws(()=>parseBitpandaCSV(bitpandaCSV([{'Transaction Type':type,omitTax:true}])));
+});

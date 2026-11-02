@@ -15,6 +15,8 @@ import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './led
 import {ledgerLiveMarkup} from './ledger-live-ui.js';
 import {looksLikeKrakenLedgerCSV,parseKrakenLedgerCSV} from './kraken-ledger.js';
 import {krakenLedgerMarkup} from './kraken-ledger-ui.js';
+import {createKrakenImportUI} from './kraken-import-ui.js';
+import {confirmKrakenImport} from './kraken-import.js';
 import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowsActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
@@ -1362,7 +1364,7 @@ function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
 
  let ledgerDocument=null,ledgerAssignments={},ledgerLimit=50,ledgerMode=false;
- let krakenDocument=null,krakenLimit=50,krakenMode=false;
+ let krakenDocument=null,krakenLimit=50,krakenMode=false,krakenInputs=[],krakenEconomics=null;
  let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false;
  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
  let flatexNativeLinks=null,flatexNativeAmounts=null,flatexOrderLimit=20,flatexLegLimits={};
@@ -1390,7 +1392,7 @@ function openCSVImport(){
   return checked.preview;
  };
  showDialog('CSV importieren','BUCHUNGEN',
-  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live, Kraken und Bitpanda bleiben lokale Prüfvorschauen. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live und Bitpanda bleiben lokale Prüfvorschauen. Kraken-Gruppen können nach expliziter Zuordnung und Saldenprüfung übernommen werden. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
   '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – Vorschau</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Vorschau</option></select></label>'+
    '<div id="csvGeneralFiles"><label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label></div>'+
    '<div id="csvFlatexNativeFiles" class="hidden"><label class="field"><span>Depotumsätze</span><input id="csvFlatexDepot" type="file" accept=".csv,text/csv,text/plain" multiple></label><label class="field"><span>Kontoumsätze</span><input id="csvFlatexAccount" type="file" accept=".csv,text/csv,text/plain" multiple></label><p class="small-help">Einzeln oder gemeinsam, auch mehrere Teil-Dateien. Je Datei maximal 2 MB, insgesamt 20 Dateien und 5.000 Zeilen. Nur lokale Vorschau.</p></div>'+
@@ -1417,7 +1419,17 @@ function openCSVImport(){
     }
    }
    if(bitpandaMode)throw Error('Bitpanda bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
-   if(krakenMode)throw Error('Kraken Ledger bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
+   if(krakenMode){
+    const approval=krakenEconomics?.approved();
+    if(!approval)throw Error('Kraken Ledger bleibt ohne aktuelle Zuordnung, Saldenprüfung und ausdrückliche Bestätigung eine lokale Vorschau.');
+    const generation=selectionGeneration,controller=krakenEconomics;
+    await portfolioStore.assertCurrent();
+    if(editor!==importEditor||generation!==selectionGeneration||controller!==krakenEconomics||!controller.approved())throw Error('Kraken-Auswahl oder Datenstand geändert. Erneut prüfen.');
+    const draft=confirmKrakenImport(model,krakenInputs,approval.assignments,approval);
+    const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
+    try{model=draft;await save();}catch(error){if(model===draft)model=previous;controller.resetApproval();throw error;}finally{$('dialogFields').inert=false;}
+    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Geprüfte Kraken-Gruppen atomar gespeichert. Ungeklärte Restgruppen bleiben offen.');return;
+   }
    if(ledgerMode)throw Error('Ledger Live bleibt eine lokale Vorschau. Ohne belegte Ereignis-, Gebühren- und Eigentumszuordnung ist keine Übernahme zulässig.');
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
     if(brokerImport){
@@ -1551,9 +1563,12 @@ function openCSVImport(){
  const renderKraken=()=>{
   importEditor.submitBlocked=true;
   $('csvBrokerStatus').textContent='Kraken-Ledger-Export erkannt. Übernahme bleibt gesperrt.';
-  $('csvMapping').innerHTML='';$('csvReview').innerHTML=krakenLedgerMarkup(krakenDocument,{limit:krakenLimit});
+  $('csvMapping').innerHTML='';
+  if(!$('csvKrakenDocument'))$('csvReview').innerHTML='<div id="csvKrakenDocument"></div><div id="csvKrakenEconomic"></div>';
+  $('csvKrakenDocument').innerHTML=krakenLedgerMarkup(krakenDocument,{limit:krakenLimit});
+  if(!krakenEconomics)krakenEconomics=createKrakenImportUI({host:$('csvKrakenEconomic'),inputs:krakenInputs,getModel:()=>model,onApproval:ready=>{importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';}});
   $('csvReviewStatus').textContent='Kraken Ledger: '+krakenDocument.rows.length+' Zeilen, nur lokale Vorschau.';
-  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
+  const ready=Boolean(krakenEconomics?.approved());importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';
   $('krakenShowMore')?.addEventListener('click',()=>{const previous=krakenLimit;krakenLimit+=50;renderKraken();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
  };
  const renderBitpanda=()=>{
@@ -1669,7 +1684,7 @@ function openCSVImport(){
   const selected=source==='flatex-native'?[...[...$('csvFlatexDepot').files].map(file=>({file,category:'depot'})),...[...$('csvFlatexAccount').files].map(file=>({file,category:'account'}))]:[...($('csvFile').files||[])].map(file=>({file,category:null}));
   const files=selected.map(x=>x.file);
   ledgerDocument=null;ledgerAssignments={};ledgerLimit=50;ledgerMode=false;importEditor.submitBlocked=false;
-  krakenDocument=null;krakenLimit=50;krakenMode=false;
+  krakenDocument=null;krakenLimit=50;krakenMode=false;krakenInputs=[];krakenEconomics=null;
   bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;
   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
   flatexNativeLinks=null;flatexNativeAmounts=null;flatexOrderLimit=20;flatexLegLimits={};
@@ -1715,7 +1730,7 @@ function openCSVImport(){
     krakenMode=true;importEditor.submitBlocked=true;
     if(!['auto','kraken'].includes(source))throw Error('Kraken-Ledgers bitte über die native Kraken-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
     if(inputs.length!==1)throw Error('Kraken Ledger bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
-    krakenDocument=parseKrakenLedgerCSV(inputs[0].text);renderKraken();return;
+    krakenInputs=inputs.map(f=>f.text);krakenDocument=parseKrakenLedgerCSV(inputs[0].text);renderKraken();return;
    }
    if(source==='ledger'||ledger){
     if(!['auto','ledger'].includes(source))throw Error('Ledger-Live-Exporte bitte über die native Ledger-Vorschau prüfen, nicht als allgemeine oder Flatex-Buchungen.');

@@ -143,6 +143,8 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
    post(linkedCash?'cash':'clearing',net,linkedCash,linkedCash?units(linkedCash.lastCashDeltaExact):null);
    if(fee)post('fee',fee);
    if(tax)post('tax',tax);
+ }else if(kind==='fee'&&p.kind==='crypto'){
+   post('asset-fee',zero,p,-qty);post('unpriced-fee',zero);
  }else if(['deposit','withdraw','dividend','interest','fee','tax'].includes(kind)){
    const sign=['deposit','dividend','interest'].includes(kind)?1n:-1n;
    const amt=mul(qty,fx)*sign;
@@ -163,7 +165,7 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
  const entry={id:v.id??id(),type:kind,date:v.date,recordedAt:new Date().toISOString(),
   sequence:nextJournalSequence(copy),postings,
   cashPositionId:linkedCash?.id||null,
-  status:['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
+  status:kind==='fee'&&p.kind==='crypto'?'unpriced-asset-fee':['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
   source:'manual'};
  return validateJournalEntry(entry);
 }
@@ -190,7 +192,10 @@ export function executeTransaction(model,input){
  if((fee>0n||tax>0n)&&!['buy','sell'].includes(kind))throw Error('Nebenkosten für diesen Vorgang bitte separat als Gebühren-/Steuerbuchung erfassen.');
  if(p.kind==='cash'&&['buy','sell'].includes(kind))throw Error('Geldkonten über Ein-/Auszahlung oder Transfer buchen, nicht als Wertpapier kaufen/verkaufen.');
  const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
- const cash=mul(mul(qty,unitPrice),fx);
+ // A native execution can state the settled EUR trade value more precisely than
+ // quantity × a rounded display price. Keep that authoritative total exact.
+ if(input.tradeAmountEURExact!==undefined&&(!['buy','sell'].includes(kind)||p.currency!=='EUR'))throw Error('Exakter Ausführungsbetrag benötigt einen EUR-Kauf oder -Verkauf.');
+ const cash=input.tradeAmountEURExact===undefined?mul(mul(qty,unitPrice),fx):amount(input.tradeAmountEURExact,1n);
  const b=basis(p);let changed=false,linkedCash=null;
  if(['buy','sell'].includes(kind)&&input.cashPositionId){
    linkedCash=pos(copy,input.cashPositionId);
@@ -214,6 +219,7 @@ export function executeTransaction(model,input){
    if(used!==null){const realized=units(p.realizedPnLExact??p.realizedPnLEUR??0)+cash-used-fee-tax;p.realizedPnLEUR=Number(exact(realized));p.realizedPnLExact=exact(realized);}
    changed=true;break;}
  case 'deposit':case 'withdraw':case 'dividend':case 'interest':case 'fee':case 'tax':
+   if(kind==='fee'&&p.kind==='crypto'){positive();enough();setQ(p,prev-qty);setBasis(p,null);changed=true;break;}
    if(p.kind!=='cash')throw Error('Geldbewegungen benötigen eine manuelle Guthabenposition.');
    positive();if(kind==='deposit'||kind==='dividend'||kind==='interest')setQ(p,prev+qty);else {enough();setQ(p,prev-qty);}
    // Fiat money is not treated as investment cost basis or market profit.
@@ -261,6 +267,7 @@ export function executeTransaction(model,input){
  if(!changed)throw Error('Keine Änderung.');
  p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
  const entry=remember(copy,p,input,qty,fee,tax,fx,cash);
+ if(kind==='fee'&&p.kind==='crypto'){entry.amountEUR=null;entry.amountExactEUR=null;entry.unitPrice=null;entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;}
  if(kind==='transfer'||kind==='swap'||kind==='merger')entry.targetQuantityExact=kind==='transfer'?exact(qty):exact(amount(input.targetQuantity,1n));
  if(kind==='split'){entry.ratioNumerator=String(input.ratioNumerator??input.quantity);entry.ratioDenominator=String(input.ratioDenominator??1);}
  if(kind==='correction')entry.targetQuantityExact=exact(amount(input.targetQuantity??input.quantity));
