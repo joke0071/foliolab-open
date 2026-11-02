@@ -1,0 +1,141 @@
+{
+  "status": "FINAL_PR_CI_ACCEPTED_NOT_LIVE_ACCEPTED",
+  "pr": 279,
+  "head": "2033b2fb6aeefc6d110e261d1db289b0aafe5795",
+  "tree": "93fedc04a9a3f2cb58cb7f35431b021df73f0e60",
+  "base": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
+  "testMerge": "54fd041692ee3216a5be45f136f2857254a278c3",
+  "testMergeExactTree": true,
+  "ci": 41439753959,
+  "checks": [
+    {
+      "id": 125258353768,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125258492755,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125258492815,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125258492903,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125258492923,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125258492996,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125264511256,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125264511316,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "wallet": 41439753923,
+  "audit": 41439754110,
+  "units": {
+    "tests": 1087,
+    "pass": 1087,
+    "fail": 0,
+    "skips": 0
+  },
+  "completedLogsRead": true,
+  "artifacts": [
+    {
+      "id": 13140966395,
+      "name": "cross-engine-gates-54fd041692ee3216a5be45f136f2857254a278c3-3",
+      "digest": "sha256:02aeca190761e8f473a11c7aad35527cc6cb97f5b4326ff0a48ccf03b116aba0",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13140580785,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:72dfec29273047a15ecf64ca3187a7797dd072ccf78da468bdafbb0e2f4b0258",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13140370999,
+      "name": "release-gates-54fd041692ee3216a5be45f136f2857254a278c3",
+      "digest": "sha256:bb871e90a2a705410dd8ae02622a8a1fa8dd3a1a90f003f1caff78d7277d08f1",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13139601918,
+      "name": "cross-engine-gates-54fd041692ee3216a5be45f136f2857254a278c3-1",
+      "digest": "sha256:3bd3a1b6b5681b0b6ae608ea58dcd33296530697dc0ce7337a44cf4eb299eb7c",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13137599526,
+      "name": "cross-engine-gates-54fd041692ee3216a5be45f136f2857254a278c3-2",
+      "digest": "sha256:898edbca58ee46c5ad2ac63e6b85656c4799c7c255493075cf64624d6f1b04c4",
+      "matchedUploadLog": true
+    }
+  ],
+  "reviews": [],
+  "threads": [],
+  "originalFinancialEvidence": {
+    "unchanged": [
+      "src/model.js",
+      "src/purchase-evidence.js",
+      "src/unified-bitcoin.js",
+      "src/wallet-history-state.js",
+      "src/wallet-scan-update.js",
+      "src/booking-history.js",
+      "src/complete-backup.js",
+      "src/asset-wizard-core.js"
+    ],
+    "changedUiOnly": [
+      "src/app.js",
+      "src/unified-bitcoin-ui.js",
+      "src/wallet-history-ui.js"
+    ],
+    "newProviderRequests": 0
+  },
+  "supersededAttempt": {
+    "run": 41437775033,
+    "result": "FAILURE",
+    "cause": "WebKit synthetic selection fixture reload overlaps initial worker activation; reproduced and fixed using existing controlledStorageFixture",
+    "retries": 0
+  },
+  "identity": {
+    "name": "FolioLab",
+    "start_url": "./",
+    "scope": "./",
+    "id": "unchanged absent",
+    "dataFormat": "v5 preserved",
+    "origin": "unchanged"
+  },
+  "limits": [
+    "Native Android/WebAPK/launcher still requires actual device",
+    "No legal name clearance",
+    "Local old WebKit offline-driver internal error not counted as PASS; hosted full WebKit PASS"
+  ],
+  "next": "SHA-guarded merge then mandatory main/deploy/production acceptance"
+}
