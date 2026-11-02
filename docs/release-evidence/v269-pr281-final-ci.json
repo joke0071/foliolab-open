@@ -1,0 +1,122 @@
+{
+  "status": "FINAL_PR_CI_ACCEPTED_NOT_DEPLOYED_OR_LIVE_ACCEPTED",
+  "head": "54f7f5ff066bcc6274fbd9efeb3807ee2bc2cbd1",
+  "tree": "a804ff5e748ca2c5d2acb30cb25b040084f6b2b1",
+  "base": "de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400",
+  "testmerge": "c3a42b9cc6aec49edb9a2881e1f81c405d361bd9",
+  "testmergeTreeMatches": true,
+  "walletRun": 41491957118,
+  "reviews": 0,
+  "threads": 0,
+  "downloadedArtifact": {
+    "id": 13165601275,
+    "sha256": "c05344d856c91dc2b9b43cd34b597fa56e2cc60a0b51f21fc2753f17eedc69ee",
+    "zipIntegrity": "PASS",
+    "visual": "Firefox impact and WebKit mobile dialog reviewed"
+  },
+  "audit": {
+    "runId": 41491956960,
+    "jobs": [
+      {
+        "id": 125436963662,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125437150528,
+        "name": "cross-engine (2)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125437150561,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125437150727,
+        "name": "cross-engine (3)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125437150772,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125437150826,
+        "name": "cross-engine (1)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125445119801,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125445120247,
+        "name": "live-acceptance",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13166126388,
+        "name": "dialog-visual-reference",
+        "digest": "sha256:c61005112de28f7875b57bb36b123c844fd7112c44d6afe5bdf785c965b1ec59"
+      },
+      {
+        "id": 13165841839,
+        "name": "release-gates-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9",
+        "digest": "sha256:72643601739b98cca95d71d11e5ede35efc99431863b0fbe8aaa8484898361ca"
+      },
+      {
+        "id": 13165601275,
+        "name": "cross-engine-gates-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9-3",
+        "digest": "sha256:c05344d856c91dc2b9b43cd34b597fa56e2cc60a0b51f21fc2753f17eedc69ee"
+      },
+      {
+        "id": 13165500010,
+        "name": "fast-only-not-integration-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9",
+        "digest": "sha256:0d08424290e4440face0d888a752aab426e2c31128624477f555883844f3451c"
+      },
+      {
+        "id": 13165036853,
+        "name": "cross-engine-gates-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9-2",
+        "digest": "sha256:03eb8d49888cbff3807cfa62ec099edac385456133a8262c8753630b52564617"
+      },
+      {
+        "id": 13164692332,
+        "name": "ci-stage-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9",
+        "digest": "sha256:9720938c9b44e72ef04d050caa7ff64e8fcebda52fd078b42c99cf9bceafa548"
+      },
+      {
+        "id": 13164463468,
+        "name": "cross-engine-gates-c3a42b9cc6aec49edb9a2881e1f81c405d361bd9-1",
+        "digest": "sha256:d09aef1e84857a557d21417e5c7129530979461fd7d2080a6147e495c5085045"
+      }
+    ],
+    "artifactDigestsMatch": true,
+    "errors": [],
+    "bitpanda": [
+      "2026-11-02T17:42:08.5394886Z UH03 Bitpanda firefox: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS",
+      "2026-11-02T17:42:13.7534047Z UH03 Bitpanda webkit: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS",
+      "2026-11-02T17:34:00.4406765Z UH03 Bitpanda chromium: actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS"
+    ],
+    "unitSummary": [
+      "2026-11-02T17:32:27.6805254Z # tests 1117",
+      "2026-11-02T17:32:27.6805554Z # pass 1117",
+      "2026-11-02T17:32:27.6805702Z # fail 0",
+      "2026-11-02T17:32:27.6806225Z # skipped 0"
+    ]
+  },
+  "asynchronousApproval": "Original defect reproduced in actual Chromium; corrected unconditional browser regression passed in final Chromium/Firefox/WebKit suite. No gate reduction.",
+  "boundaries": "Bounded Bitpanda increment only; no full historical original-end-balance, cross-chain or whole UH03 acceptance. v5 and installation identity preserved."
+}
