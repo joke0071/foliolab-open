@@ -1,3 +1,11 @@
+## ACTIVE – PR #282 eingefroren / v269 CI läuft – 02.11.2026
+
+Alleiniger Owner **708f37c5498f**. Gesicherten Testfix unverändert als [PR #282](https://github.com/joke0071/foliolab-open/pull/282) übernommen: HEAD `c723de2be87335f84c2436fa587e773a6525db36`, Tree `9277a09b2af5e0992f6ed5435369c8a62497ea27`, Base/Main `78ac0600e4e0069308af1937532030c96a6857c1`. Finale vollständige CI **41508052915 IN_PROGRESS**, Wallet **41508052944** gestartet. Kandidat eingefroren; keine weiteren Pushes/Abbrüche/Duplikate. Ausschließlich zwei gesicherte Test-/Belegdateien; sämtliche ausgelieferten Assets/SW v269/v5 unverändert. Frische Syntax/Diffchecks und **20/20 CI-Verträge PASS**, bestehender vollständiger Chromium-Vorbeleg wiederverwendet. Reviews/Threads leer. **v268 bleibt LIVE_ACCEPTED; v269 nicht deployed/abgenommen.**
+
+Nächster Schritt: bestehenden vollständigen Lauf einschließlich WebKit samt Abschlusslogs/Artefakten auswerten; Main/Owner/HEAD/Testmerge frisch prüfen, erst bei Grün SHA-geschützt mergen und echte Produktion prüfen. Danach UH03 → UH04 → UH05; unabhängige Endstands-/Quellenbeleggrenzen und #149/UI-Nachträge erhalten. Reinlesende Original-/Decimal-Prüfung erneut PASS ohne neue historische Belegbehauptung. Isolierter Checkout `/workspace/scratch/708f37c5498f/foliolab-open`, private Analysen daneben; Vorgängeroriginale/Oracles weiter zugänglich. EFF01/HND01; Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – v269 Testfix übernommen / 708f37c5498f – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **708f37c5498f** nach ausdrücklicher Nutzerübernahme und STOPPED-Abgabe von 6a33341c2b27. Kollisionsschutz: neuester HANDOVER_READY unverändert; Main `78ac0600e4e0069308af1937532030c96a6857c1`, nur Drafts #157/#161, keine laufende Release-CI. Main-Lauf 41494537497 vollständig failure: Hauptjob/Cross1/Cross2 success, ausschließlich Cross3 failure; Deploy/Live skipped. **v268 bleibt letzte LIVE_ACCEPTED-Produktion; v269 nicht deployed/abgenommen.**
