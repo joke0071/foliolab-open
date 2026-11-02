@@ -33,8 +33,13 @@ const pinnedCacheSteps = [
  * stanzas, mandatory additional recovery/finance/ETF suites and the increased live timeout.
  * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
- let reduced=source;
+ assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
+ let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  '          LOADING_BASE="$ACCEPTANCE_BASE" node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-chromium.log\n',
+  '          LOADING_BASE="$ACCEPTANCE_BASE" LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-cross.log\n',
+  '          node tests/browser-loading-pwa.mjs\n',
+  '            LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs\n',
   '          node tests/browser-unified-bitcoin.mjs\n',
   '            HISTORY_ENGINES=firefox,webkit node tests/browser-unified-bitcoin.mjs\n',
   '          UH02_BASE="$ACCEPTANCE_BASE" node tests/browser-unified-bitcoin.mjs 2>&1 | tee artifacts/gates/production-uh02-chromium.log\n',

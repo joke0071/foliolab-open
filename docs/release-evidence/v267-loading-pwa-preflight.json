@@ -1,0 +1,108 @@
+{
+  "baselineMain": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
+  "baselineTree": "bb41bd978b770cb83a0a62dbd5a89852279132eb",
+  "status": "CORRECTED_LOCAL_PREFLIGHT_NOT_LIVE_ACCEPTED",
+  "scope": [
+    "UI-LOAD01",
+    "PWA-FULL01"
+  ],
+  "tests": {
+    "units": 1087,
+    "failures": 0,
+    "syntax": "PASS",
+    "workflowHistoricalHashes": "PASS; exact title canonicalization plus mandatory additive suites only",
+    "loading": [
+      {
+        "engine": "chromium",
+        "result": "PASS",
+        "coldMs": 269.69999999925494,
+        "warmMs": 77.90000000037253,
+        "checks": [
+          "slow module graph",
+          "300ms visibility",
+          "timeout then late completion",
+          "read-only module error",
+          "storage failure recovery",
+          "reduced motion",
+          "320px/axe",
+          "record-preserving reload",
+          "manifest identity/PNG dimensions",
+          "browser help"
+        ],
+        "androidHardware": false
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "coldMs": 433,
+        "warmMs": 202,
+        "checks": [
+          "slow module graph",
+          "300ms visibility",
+          "timeout then late completion",
+          "read-only module error",
+          "storage failure recovery",
+          "reduced motion",
+          "320px/axe",
+          "record-preserving reload",
+          "manifest identity/PNG dimensions",
+          "browser help"
+        ],
+        "androidHardware": false
+      }
+    ],
+    "chromiumExistingPwaUpdate": "PASS exact record, cache hashes, offline restart",
+    "chromiumUiSmallRests": "PASS five widths, axe, quota, focus",
+    "refreshPersistenceFailure": {
+      "oldHandler": "FAIL reproduced: pending text remains after QuotaExceededError",
+      "correctedHandler": "PASS Chromium/WebKit; exact record preserved, spinner removed, button usable",
+      "cause": "Outer refresh catch did not replace pending status"
+    },
+    "chromiumUiQuality": "PASS entire primary/imported UI suite; mobile widths, axe and zero writes",
+    "disclosureReadiness": {
+      "firstCi": 41425037217,
+      "failedJob": 125209555269,
+      "failure": "WebKit history UI after reload; target rendered inside closed disclosure after helper returned for absent target",
+      "fix": "Await actual target attached before inspecting/opening native details; no force click or timeout increase",
+      "local": "Existing full WebKit history UI PASS",
+      "negativeControl": "Original helper deterministically FAILS late-attached hidden target; corrected helper PASS with real summary/button clicks"
+    },
+    "watchdogDependency": {
+      "negativeControl": {
+        "storageReady": true,
+        "startupHidden": false,
+        "inert": true
+      },
+      "fix": "Completed app owns unlock/interactive mark directly; optional watchdog only observes failures and clears its timer",
+      "fixed": "PASS Chromium/WebKit with startup.js request aborted; full loading/timeout/storage/quota/helper tests PASS",
+      "pwaUpdateAfterFix": "PASS Chromium exact record/current asset hashes/offline restart",
+      "unitsAfterFix": 1087,
+      "failures": 0
+    },
+    "selectionWorkerReadiness": {
+      "ci": 41437775033,
+      "failedJob": 125252054064,
+      "negativeControl": "Original test reproduced WebKit timeout; active worker remained activating after synthetic fixture save/reload overlapped initial activation/claim",
+      "fix": "Reuse existing controlledStorageFixture before synthetic save; actual activated controller and byte-exact blank record required before and after reload; no changed timeout or offline assertion",
+      "chromium": "Full corrected selection/offline fresh realm/exact IDB PASS (Playwright 1.56.1)",
+      "webkit": "Corrected activation/controller and exact blank baseline PASS (Playwright 1.56.1); subsequent offline driver reload returns internal error, so no full local WebKit PASS claimed; current hosted WebKit required",
+      "ciContracts": "12 tests PASS; no skips"
+    }
+  },
+  "identity": {
+    "name": "FolioLab",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "id": "unchanged absent (effective start URL)",
+    "origin": "unchanged",
+    "storageAndBackup": "unchanged",
+    "v5": "preserved"
+  },
+  "limits": [
+    "No native Android/WebAPK or launcher update acceptance; requires real device",
+    "Local WebKit 26.0/Chromium141 Playwright1.56.1; hosted Firefox/WebKit required separately",
+    "Timings are one local laboratory sample, not a production/Android performance claim",
+    "Known NAM01 partial finding retained; no legal clearance"
+  ]
+}

@@ -1888,3 +1888,18 @@
 .simple-cash-actions{display:flex;flex-wrap:wrap;gap:8px;padding:10px 0}
 .simple-cash-actions .btn{min-height:44px;min-width:44px;white-space:normal}
 .simple-cash-account .simple-cash-label span{white-space:normal;overflow-wrap:anywhere}
+
+/* UI-LOAD01: original flask; transform/opacity only, no JS animation loop. */
+.lab-flask{width:32px;height:32px;flex:none;vertical-align:middle}
+.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 4s ease-in-out infinite}
+.lab-bubble{animation:lab-bubble 3.8s ease-in infinite;opacity:0;transform-box:view-box}
+.lab-bubble:nth-child(2){animation-delay:1.3s}.lab-bubble:nth-child(3){animation-delay:2.5s}
+@keyframes lab-liquid{50%{transform:translateY(1px) rotate(2deg)}}
+@keyframes lab-bubble{10%{opacity:.8}80%{opacity:0;transform:translateY(-17px)}100%{opacity:0;transform:translateY(-17px)}}
+.lab-loading>.lab-flask{margin-right:8px}
+.app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
+.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:64px;height:64px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
+@keyframes startup-show{to{visibility:visible}}
+.startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
+#pwaHelp{grid-column:1/-1;margin-bottom:18px}#pwaHelp summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}#pwaHelp p{line-height:1.6}
+@media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}

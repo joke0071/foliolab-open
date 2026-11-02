@@ -1,3 +1,4 @@
+import {setLoading} from './loading-ui.js';
 import {clearAlphaCache} from './alpha-vantage.js';
 import {assertLocalBackupFileSize,assertDriveBackupTextSize,localJSONBackupFile} from './backup-limits.js';
 import {installHeaderStatus} from './header-status.js';
@@ -81,6 +82,7 @@ import {openingCashInput} from './account-opening.js';
 import {setPositionArchived} from './portfolio-edit-actions.js';
 const positionDetailRanges=new Map();
 const portfolioStore=new PortfolioStorage();
+document.getElementById('appStartupText').textContent='Lokale Daten werden vorbereitet …';
 let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e){loadFailure=e;model=blankModel();}
 let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
@@ -218,7 +220,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
    summary.innerHTML=(aggregate.note?'<p>'+esc(aggregate.note)+'</p>':'')+'<div class="hero-quality-counts">'+reviewCountsMarkup(valuationWarnings(model))+'</div><button type="button" class="btn outline" data-action="open-quality-review">Prüfbereich öffnen</button>';
    hint.append(review);
   }else{heroReviewExpanded=false;summary.hidden=true;hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;}
-  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab Open</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
+  const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    const wealth=wealthView();
    $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel,wealth);
   const alloc=allocationBreakdown(model,valueEUR,TYPES);
@@ -1960,7 +1962,7 @@ async function startPerformanceTracking(){
 }
 async function refreshAll(){
  if(busy||saving||editorSubmitting||loadFailure||otherTabChangedPortfolio)return;
- busy=true;$('refreshAll').disabled=true;$('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';
+ busy=true;$('refreshAll').disabled=true;$('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';setLoading($('priceInfo'),true);
  const errors=[];let successes=0;const now=new Date().toISOString();
  try{
   const cryptos=model.positions.filter(p=>p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)));
@@ -2049,8 +2051,8 @@ async function refreshAll(){
    grouped.map(x=>'<div><strong>'+x.count+'× '+esc(x.cause)+'</strong><small>Betroffen: '+esc(x.positions.join(', '))+'</small></div>').join('')+'</div>':'';
   if(errors.length)notify(status+' · Details unter „Positionen“.',true);
   else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
- }catch(e){notify(e.message,true);}
- finally{busy=false;$('refreshAll').disabled=false;}
+ }catch(e){$('priceInfo').textContent='Aktualisierung fehlgeschlagen. Gespeicherten Stand prüfen und später erneut versuchen.';$('priceInfo').classList.add('refresh-warning');$('refreshErrorDetails').classList.add('hidden');notify(e.message,true);}
+ finally{busy=false;setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
 }
 const FULL_BACKUP_OPTION='foliolab-open-backup-include-configuration-v1';
 const HISTORY_BACKUP_OPTION='foliolab-open-backup-include-history-v1';
@@ -2274,6 +2276,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   void refreshBackupPasswordStatus();$('importBackup').addEventListener('click',()=>$('backupFile').click());$('backupFile').addEventListener('change',async e=>{
  const file=e.target.files?.[0];e.target.value='';
  if(!file)return;
+ const restoreStatus=$('backupStatus');restoreStatus.textContent='Sicherung wird wiederhergestellt …';setLoading(restoreStatus,true);
  try{
   assertLocalBackupFileSize(file.size);
   let parsed=JSON.parse(await file.text()),v2Envelope=null,password='';
@@ -2310,7 +2313,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   }
   if(configuration)applyImportedDriveConfiguration(configuration);
   notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
- }catch(err){notify(err.message,true)}
+ }catch(err){notify(err.message,true)}finally{setLoading(restoreStatus,false);renderBackupStatus();}
 });
   // Drive only receives an encrypted package. API/RPC credentials are added to
   // that package exclusively when the user has enabled full backups.
@@ -2630,6 +2633,13 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
   });
  }).catch(()=>{});
 }
+const standaloneMedia=matchMedia('(display-mode: standalone)');
+function updatePwaDisplay(){const standalone=standaloneMedia.matches||navigator.standalone===true;$('pwaDisplayStatus').textContent=standalone?'Diese Ansicht läuft eigenständig ohne Browserleiste.':'Diese Ansicht läuft im Browser. Eine vorhandene Installation lässt sich daraus nicht erkennen.';}
+updatePwaDisplay();standaloneMedia.addEventListener('change',updatePwaDisplay);
+// The completed app owns unlocking; a missing watchdog asset must not trap it.
+$('appStartup').hidden=true;document.querySelector('.layout').inert=false;
+performance.mark('foliolab-interactive');
+window.dispatchEvent(new Event('foliolab:ready'));
 if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
