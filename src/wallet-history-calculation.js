@@ -9,11 +9,9 @@ export function calculateHistoryDays(session,options,{signal,timeoutMs=15000}={}
   const abort=()=>{done();const e=Error('Berechnung abgebrochen.');e.name='AbortError';reject(e);};
   if(signal?.aborted){abort();return;}signal?.addEventListener('abort',abort,{once:true});
   timer=setTimeout(()=>{done();reject(Error('Berechnungslimit erreicht. Bitte den Anzeigezeitraum verkleinern.'));},timeoutMs);
-  worker.onmessage=e=>{done();if(e.data.error)reject(Error(e.data.error));else{cache.set(key,e.data.rows);if(cache.size>3)cache.delete(cache.keys().next().value);resolve(structuredClone(e.data.rows));}};
-  worker.onerror=async event=>{
-   // This error is handled below. WebKit otherwise also reports it as an
-   // uncaught page error even when the exact offline replay succeeds.
-   event.preventDefault();
+  // Module-graph failures can escape WebKit's Worker error event even when
+  // canceled. The worker catches dependency imports and reports them explicitly.
+  const loadFailure=async()=>{
    done();
    // WebKit may bypass the Service Worker for new workers while offline.
    // Reuse the identical replay generator, yielding between days; never invent rows.
@@ -29,6 +27,8 @@ export function calculateHistoryDays(session,options,{signal,timeoutMs=15000}={}
     cache.set(key,rows);if(cache.size>3)cache.delete(cache.keys().next().value);resolve(structuredClone(rows));
    }catch(e){reject(e);}
   };
+  worker.onmessage=e=>{if(e.data.loadError){void loadFailure();return;}done();if(e.data.error)reject(Error(e.data.error));else{cache.set(key,e.data.rows);if(cache.size>3)cache.delete(cache.keys().next().value);resolve(structuredClone(e.data.rows));}};
+  worker.onerror=event=>{event.preventDefault();void loadFailure();};
   worker.postMessage({session:{events:session.events,streams:session.streams},options});
  });
 }

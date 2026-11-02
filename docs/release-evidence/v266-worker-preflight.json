@@ -1,0 +1,42 @@
+{
+  "release": "v266",
+  "baseCommit": "ad9328eaeb14e43c01da8978d96170eece835859",
+  "baseTree": "b1b214423f0f49bc7d26222a4448712a7021fbb7",
+  "originalFailure": {
+    "run": 41400746684,
+    "job": 125131925749,
+    "engine": "WebKit",
+    "assertion": "browser-unified-bitcoin.mjs:48 errors must be empty",
+    "error": "Importing a module script failed."
+  },
+  "rootCause": "WebKit forwards failure of a static worker dependency graph as an extra pageerror despite preventing the Worker error default. Aborting wallet-history-core.js reproduces it; aborting only the entry script does not.",
+  "change": "Catch the worker dependency import rejection inside the worker and report loadError to the unchanged shared online rejection / bounded exact offline replay. Runtime calculation errors remain failures.",
+  "schemaVersion": 5,
+  "financialAndStorageCodeChanged": false,
+  "localEnvironment": {
+    "node": "24.22.1",
+    "playwright": "1.56.1",
+    "chromium": "141.0.7390.37",
+    "webkit": "26.0 build 2215",
+    "note": "Extracted Ubuntu libraries and local wrapper library paths; host ldconfig precheck disabled only locally, no CI workflow changes."
+  },
+  "checks": {
+    "units": {
+      "tests": 1086,
+      "pass": 1086,
+      "fail": 0,
+      "skip": 0
+    },
+    "syntax": "PASS",
+    "diffCheck": "PASS",
+    "negativeControl": "Original static dependency import fails expanded WebKit test with the exact original pageerror; corrected import passes.",
+    "workerChromiumAndWebKit": "PASS: entry plus direct/transitive dependency aborts, online rejection, exact offline 7 base units, no pageerror, cancellation, responsiveness, real SW offline replay",
+    "uh02Chromium": "PASS: shared CSV entry, one CAS, no BTC double effect, reload/reimport, encrypted restore, undo/tombstone, quota/stale rollback, seven widths/axe, protected v5 offline PWA restart"
+  },
+  "limitations": [
+    "Local UH02 WebKit synthetic offline File.text reports I/O read failure; no local WebKit UH02 PASS claimed. Existing CI UH02 test unchanged.",
+    "Local Firefox environment has a launch/context hang; no local Firefox PASS claimed.",
+    "Complete required CI, merge, deploy and actual production acceptance remain mandatory."
+  ],
+  "originalEvidenceReuse": "No parser, financial, identity, schema or storage semantics changed. Existing original/blockchain/independent financial evidence retained; no new original network requests."
+}

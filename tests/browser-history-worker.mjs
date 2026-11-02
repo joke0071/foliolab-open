@@ -36,19 +36,21 @@ for(const name of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   // Force a real worker module-load failure in an isolated, uncontrolled page.
   // The online error must remain a rejection; offline must use exact replay.
   // Neither handled outcome may bubble as an uncaught WebKit page error.
+  for(const failedModule of ['wallet-history-days-worker.js','wallet-history-days.js','wallet-history-core.js']){
   const failedContext=await browser.newContext({serviceWorkers:'block'}),failedPage=await failedContext.newPage(),handledErrors=[];
   failedPage.on('pageerror',e=>handledErrors.push(e.message));
   try{
    await failedPage.goto('http://127.0.0.1:4173/tests/');
    await failedPage.evaluate(async()=>{const {calculateHistoryDays}=await import('/src/wallet-history-calculation.js'),{event,stream}=await import('/tests/wallet-history-fixtures.mjs');await import('/src/wallet-history-days.js');window.failedWorkerReplay=()=>calculateHistoryDays({events:[event({txid:'forced-load-failure',quantityBaseUnits:'7'})],streams:[stream()]},{limit:31});});
-   let failedRequests=0;await failedContext.route('**/src/wallet-history-days-worker.js',route=>{failedRequests++;return route.abort();});
+   let failedRequests=0;await failedContext.route('**/src/'+failedModule,route=>{failedRequests++;return route.abort();});
    const onlineError=await failedPage.evaluate(()=>window.failedWorkerReplay().then(()=>null,e=>e.message));
    assert.match(onlineError,/Lokale Historienberechnung nicht verfügbar/);assert.ok(failedRequests>0,'real worker request was rejected');
    await failedContext.setOffline(true);
    assert.equal(await failedPage.evaluate(async()=>(await window.failedWorkerReplay()).at(-1).quantityBaseUnits),'7');
    assert.deepEqual(handledErrors,[],'handled worker loading errors never escape as page errors');
   }finally{await failedContext.close();}
-  console.log('HISTORY WORKER '+name+': forced module failure remains an online error, exact offline fallback, no uncaught page error PASS');
+  console.log('HISTORY WORKER '+name+': forced '+failedModule+' failure remains an online error, exact offline fallback, no uncaught page error PASS');
+  }
   console.log('HISTORY WORKER '+name+': 1000-event computation leaves UI responsive, cancellation, exact worker replay and real Service Worker offline computation PASS '+Math.round(r.heartbeatMs)+'ms heartbeat');
  }finally{try{await browser.close();}finally{finish();}}
 }
