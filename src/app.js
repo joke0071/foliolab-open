@@ -2051,7 +2051,7 @@ async function refreshAll(){
    grouped.map(x=>'<div><strong>'+x.count+'× '+esc(x.cause)+'</strong><small>Betroffen: '+esc(x.positions.join(', '))+'</small></div>').join('')+'</div>':'';
   if(errors.length)notify(status+' · Details unter „Positionen“.',true);
   else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
- }catch(e){notify(e.message,true);}
+ }catch(e){$('priceInfo').textContent='Aktualisierung fehlgeschlagen. Gespeicherten Stand prüfen und später erneut versuchen.';$('priceInfo').classList.add('refresh-warning');$('refreshErrorDetails').classList.add('hidden');notify(e.message,true);}
  finally{busy=false;setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
 }
 const FULL_BACKUP_OPTION='foliolab-open-backup-include-configuration-v1';

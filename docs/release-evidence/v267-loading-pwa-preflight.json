@@ -15,8 +15,8 @@
       {
         "engine": "chromium",
         "result": "PASS",
-        "coldMs": 231.69999999925494,
-        "warmMs": 70.39999999850988,
+        "coldMs": 269.69999999925494,
+        "warmMs": 77.90000000037253,
         "checks": [
           "slow module graph",
           "300ms visibility",
@@ -34,8 +34,8 @@
       {
         "engine": "webkit",
         "result": "PASS",
-        "coldMs": 384,
-        "warmMs": 218,
+        "coldMs": 433,
+        "warmMs": 202,
         "checks": [
           "slow module graph",
           "300ms visibility",
@@ -52,7 +52,21 @@
       }
     ],
     "chromiumExistingPwaUpdate": "PASS exact record, cache hashes, offline restart",
-    "chromiumUiSmallRests": "PASS five widths, axe, quota, focus"
+    "chromiumUiSmallRests": "PASS five widths, axe, quota, focus",
+    "refreshPersistenceFailure": {
+      "oldHandler": "FAIL reproduced: pending text remains after QuotaExceededError",
+      "correctedHandler": "PASS Chromium/WebKit; exact record preserved, spinner removed, button usable",
+      "cause": "Outer refresh catch did not replace pending status"
+    },
+    "chromiumUiQuality": "PASS entire primary/imported UI suite; mobile widths, axe and zero writes",
+    "disclosureReadiness": {
+      "firstCi": 41425037217,
+      "failedJob": 125209555269,
+      "failure": "WebKit history UI after reload; target rendered inside closed disclosure after helper returned for absent target",
+      "fix": "Await actual target attached before inspecting/opening native details; no force click or timeout increase",
+      "local": "Existing full WebKit history UI PASS",
+      "negativeControl": "Original helper deterministically FAILS late-attached hidden target; corrected helper PASS with real summary/button clicks"
+    }
   },
   "identity": {
     "name": "FolioLab",
