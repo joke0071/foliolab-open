@@ -1,3 +1,9 @@
+## ACTIVE – Notfallübernahme / 8aa2b6eb3ce9 – 02.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **8aa2b6eb3ce9**, nach STOPPED-Abgabe von 37cbd9af859a und ausdrücklichem Nutzerauftrag. Frisch geprüft: Main `0a5e6d5a292b0448ce395122368a583b5fb5aab1`, v267 LIVE_ACCEPTED übernommen, keine Wiederabnahme. Einziger Produktkandidat PR #280 / `feature/uh03-native-exchange` / HEAD `5569981040c522a399c56fa205e34a21895163e7`. CI 41452952246 completed/failure, Wallet success; keine laufende Release-CI. Cross3/125302471483 scheitert in Firefox an 44px-Assertion `browser-flatex-native-binding.mjs:52`, WebKit erreicht diese Suite nicht. Nächster Schritt: tatsächliches Element/Selektor/CSS lokal diagnostizieren, gezielt im bestehenden Kandidaten korrigieren und vollständige CI/Produktionsgates erhalten. Keine blinden Retries/zweite PR. Privater isolierter Checkout `/workspace/scratch/8aa2b6eb3ce9/foliolab-open`; bisherige Originale/Oracles wiederverwenden. v5/Daten-/Installationsidentität erhalten. Danach übriges UH03 → UH04 → UH05. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – PR #280 / v267 LIVE_ACCEPTED / 37cbd9af859a STOPPED – 02.11.2026
 
 Vorgezogene **HND01-Rotation wegen gewachsener Kontext-/Toollast am vollständig gesicherten, eingefrorenen Integrationskandidaten**. **37cbd9af859a ist STOPPED, gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und beginnt keine weiteren Implementierungen/PRs/Merges/Deployments.** Bis ausdrücklicher Übernahme kein aktiver schreibender Owner. Zähler **0 LIVE_ACCEPTED / 0 vollständig abgenommene Pakete**; kein technischer Reset behauptet.
