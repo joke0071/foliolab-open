@@ -1,3 +1,15 @@
+## ACTIVE – UH03 Kraken-Kandidat PR #280 eingefroren / 37cbd9af859a – 02.11.2026
+
+Alleiniger Owner **37cbd9af859a**. Main unverändert **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, Produktion **v267 LIVE_ACCEPTED übernommen**, keine Wiederabnahme. Kandidat [PR #280](https://github.com/joke0071/foliolab-open/pull/280), `feature/uh03-native-exchange`, HEAD **`5569981040c522a399c56fa205e34a21895163e7`**, Tree **`ca932ab36eb91e9b02ec52904985201ce9007e78`**; alle 17 lokalen Dateiblobs und Tree remote identisch geprüft. Lokal `2d30bc7d0c031e6e3638e3ab660721b0b167246f` gleicher Tree. **CI 41452952246 IN_PROGRESS**, Wallet 41452952179 zugehörig. Kandidat einfrieren: keine Pushes, Abbrüche oder duplizierten Läufe. Noch kein v268 DEPLOYED/LIVE_ACCEPTED.
+
+Erster wirtschaftlicher Kraken-Schnitt im vorhandenen Journal samt expliziten Konten-/Anfangsbeständen, exakten Quell-/Folgesalden, separaten Kryptogebühren und exakter EUR-Ausführungssumme; Bitpanda kompakte Staking-Schreibweisen eng korrigiert. **UH03 insgesamt bleibt offen**, insbesondere Bitpanda-Wirtschaftsimport, historischer Endbestands-Backfill und kombinierte BTC-/ETH/ERC20-/SOL/SPL-Gegenbelege. Grenzen/Abnahmekarte: [UH03-Inkrement](UH03_KRAKEN_INCREMENT_2026-11-02.md). Keine Preview-only-/Gesamtfertigmeldung. UH04 → UH05 und übrige Roadmap bleiben verbindlich.
+
+Lokal **1.104 Units / 0 Fehler / 0 Skips**, Syntax/Diffcheck, neue echte Chromium-CSV-/ein-CAS-/v5-/Reload-/Wiederimport-/Undo-/verschlüsselte-Restore-/Quota-/Mehrtab-/Offline-PWA-Kette sowie sieben Breiten/Axe PASS; bestehende Kraken-Vorschau-Chromium-Regressionskette PASS. Isolierte Originalgruppen gegen unabhängigen Python-Decimal-Oracle PASS; keine privaten Mengen/IDs/Frequenzen publiziert. Lokales WebKit durch Hostprüfung libgles2 blockiert, **kein** lokales Firefox-/WebKit-/Android-PASS. Gehostete Pflicht-CI/Reviews/Artefakte und spätere echte Produktion bleiben erforderlich. [Vorprüfung](release-evidence/v268-uh03-kraken-preflight.json).
+
+Privat: `/workspace/scratch/37cbd9af859a/private/uh03-source-check.mjs`, `uh03-economic-oracle.py`, `uh03-economic-check.mjs` und Ergebnisse/Logs; Quellen unter bisherigen Original-Locatoren unverändert. Checkout `/workspace/scratch/37cbd9af859a/foliolab-open`, getrackter Diff leer, ungetrackt nur synthetische QA/node_modules. Daten-/Installationsidentität/v5 erhalten, kein v263-Rollback. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0 Releases/0 vollständig abgenommene Pakete. Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – UH03 übernommen / 37cbd9af859a – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **37cbd9af859a** nach ausdrücklicher STOPPED-Abgabe von 0a0c650dd7f6. Main frisch **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, v267 LIVE_ACCEPTED übernommen, keine Wiederabnahme. Nur historische Drafts #157/#161 offen; neuester Mainlauf 41441756937 completed/success, keine aktive Produkt-PR/Release-CI. Private Originale und gesicherte UH03-Diagnose vorhanden. Eigener isolierter Checkout `/workspace/scratch/37cbd9af859a/foliolab-open`.
