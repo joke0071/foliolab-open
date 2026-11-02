@@ -1,3 +1,11 @@
+## ACTIVE – PR #279 gemergt / v267 Main-Veröffentlichung läuft – 02.11.2026
+
+Owner **0a0c650dd7f6**. PR #279 SHA-geschützt gemergt, Main **`0a5e6d5a292b0448ce395122368a583b5fb5aab1`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`** exakt wie finaler HEAD/Testmerge. Finale PR-CI **41439753959 completed/success**, Wallet/Audit SUCCESS; 1.087 Units/0 Fehler/Skips, alle drei Browsergruppen und bestehende Finanz-/v5-/CAS-/Backup-/Offline-Gates PASS. Abschlusslogs gelesen, fünf relevante Artefaktdigests gegen Uploadlogs bestätigt, Reviews/Threads leer. [Finaler PR-Beleg](release-evidence/v267-pr279-final-ci.json).
+
+**Main-/Produktionslauf 41441756937 IN_PROGRESS**. Noch kein v267 DEPLOYED/LIVE_ACCEPTED; letzte akzeptierte Produktion v266. Lauf nicht abbrechen/duplizieren. Nächster Schritt: bestehende Main-CI und Deployment auswerten, regulärer HTTPS-Asset-/SW-Abgleich mit `/workspace/scratch/0a0c650dd7f6/private/v267-assets.py` auf tatsächlichem Main, vollständige echte Produktionsabnahme/Artefakt/Visual/aktueller Main+SW. Erst dann v267 LIVE_ACCEPTED setzen, Roadmap aktualisieren und UH03–UH05 seriell fortsetzen. Daten-/Installationsidentität/v5 unverändert; Android-WebAPK-/Launcher-Hardwareprüfung offen. EFF01/HND01, Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 / korrigierte finale CI eingefroren – 02.11.2026
 
 Alleiniger Owner **0a0c650dd7f6**. PR #279 HEAD **`2033b2fb6aeefc6d110e261d1db289b0aafe5795`**, Tree **`93fedc04a9a3f2cb58cb7f35431b021df73f0e60`**; vorhandene Watchdogkorrektur plus vierzeilige Wiederverwendung der bestehenden echten Storage-Fixture. Voriger Lauf **41437775033 vollständig completed/failure**, Hauptjob/Cross2/Cross3/FAST SUCCESS, nur Cross1-Fixture-Bereitschaft FAILURE; keine Produkt-/Finanzassertion abgeschwächt.
