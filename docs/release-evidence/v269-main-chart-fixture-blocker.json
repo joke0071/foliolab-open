@@ -1,0 +1,24 @@
+{
+  "status": "MAIN_RELEASE_BLOCKED_NOT_DEPLOYED_OR_LIVE_ACCEPTED",
+  "main": "78ac0600e4e0069308af1937532030c96a6857c1",
+  "run": 41494537497,
+  "failedJob": 125445998958,
+  "failedEngine": "webkit",
+  "phase": "fixture-reload",
+  "failure": "Execution context was destroyed, most likely because of a navigation; tests/browser-chart-tooltip.mjs:29 at record()",
+  "artifact": {
+    "id": 13166351100,
+    "digest": "sha256:017c2823b4df5cf607e0831a09bd6da56252bd58234d3348a26e74a66c592893",
+    "downloadedAndZipVerified": true
+  },
+  "productionLastAccepted": "v268",
+  "candidateCorrection": {
+    "commit": "c723de2be87335f84c2436fa587e773a6525db36",
+    "parent": "78ac0600e4e0069308af1937532030c96a6857c1",
+    "tree": "9277a09b2af5e0992f6ed5435369c8a62497ea27",
+    "branchMoved": false,
+    "localChromium": "PASS full chart and actual controlled fixture",
+    "hostedFirefoxWebKit": "PENDING"
+  },
+  "limits": "Main run still IN_PROGRESS at handoff preparation; inspect all remaining jobs. No action retry/cancellation, no product push after merge, no rollback or gate reduction."
+}
