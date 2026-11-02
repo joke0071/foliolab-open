@@ -1,3 +1,13 @@
+## ACTIVE – v268 DEPLOYED / echte Produktionsabnahme läuft – 02.11.2026
+
+Alleiniger Owner **8aa2b6eb3ce9**. Main `de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`, Tree `9edf973e70a0a3a713c6d05b6c3381f21cad19a6`, SW v268, Datenformat v5 erhalten. Mainlauf **41464659527**: Hauptjob **125342535025**, alle drei Cross-Gruppen **125342534976/125342535049/125342534950 SUCCESS**; Deployment **125349170295 SUCCESS**. Sämtliche Haupt-/Cross-/Plan-/Deploy-Abschlusslogs gelesen, sieben Artefaktdigests gegen API/Uploadlogs bestätigt. Neue Kraken-Kette sowie native Bindings in Chromium/Firefox/WebKit PASS. PR #280 nach vollständiger finaler CI geschützt gemergt; [PR-Beleg](release-evidence/v268-pr280-final-ci.json).
+
+**Livejob 125349348813 IN_PROGRESS. v268 ist DEPLOYED, NICHT LIVE_ACCEPTED; letzte vollständig akzeptierte Produktion bleibt v267.** Regulärer HTTPS-Byteabgleich separat läuft; kein PASS vor Ergebnis behauptet. Bestehenden Main-/Live-Lauf unverändert auswerten, kein Retry/Abbruch/Produktpush. Nächster Schritt: Abschlusslog/Produktionsartefakt/Visual, veröffentlichte Bytes/SW sowie frischen Main prüfen; erst dann LIVE_ACCEPTED.
+
+UH03 insgesamt bleibt offen. Reinlesende nächste Bitpanda-Vorbereitung privat gesichert: `/workspace/scratch/8aa2b6eb3ce9/private/bitpanda-source-oracle.py` und `.json`, unabhängiger Python-Decimal-Abgleich gegen bereits gesicherte Originalprojektion PASS, **keine wirtschaftliche Abnahme**. Marktpreis ist kein gesicherter Ausführungspreis; unbekannte Gebühren/Steuern bleiben unbekannt. Vorhandene Originale/Oracles nicht neu anfordern. Danach Bitpanda-Wirtschaftsimport, historische Kraken-Endbestände und kombinierte BTC/ETH/ERC20/SOL/SPL-Gegenbelege, anschließend UH04 → UH05. v5/Daten-/Installationsidentität erhalten; [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #280 gemergt / v268 Main-Veröffentlichung läuft – 02.11.2026
 
 Alleiniger Owner **8aa2b6eb3ce9**. PR #280 nach vollständiger finaler CI **41462542831 SUCCESS** und Wallet **41462542932 SUCCESS** SHA-geschützt gemergt. Main **`de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`**, Tree **`9edf973e70a0a3a713c6d05b6c3381f21cad19a6`**, exakt wie eingefrorener HEAD/Testmerge. Reviews/Threads leer, frischer Owner/Main unverändert. Haupt-/drei Cross-/Plan-/Canary-Abschlusslogs gelesen, sieben Artefaktdigests gegen Uploadlogs/API bestätigt; Cross3-ZIP tatsächlich heruntergeladen, Digest/ZIP geprüft, Firefox-/WebKit390-Bilder gesichtet. 1104 Units/0 Fehler/Skips; bestehende Finanz-/Sicherheits-/v5-/CAS-/Backup-/Offline-Gates und neue UH03-Kette alle drei Engines PASS. [Finaler PR-Beleg](release-evidence/v268-pr280-final-ci.json).
