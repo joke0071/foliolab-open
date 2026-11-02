@@ -1,0 +1,92 @@
+{
+  "scope": "READ_ONLY_SYNTHETIC_ANALYSIS_NO_PRODUCT_CHANGE",
+  "base": "c723de2be87335f84c2436fa587e773a6525db36",
+  "permutations": 6,
+  "ready": 3,
+  "blocked": 3,
+  "results": [
+    {
+      "order": [
+        "SYN-EUR",
+        "SYN-ETH",
+        "SYN-FEE"
+      ],
+      "ready": 1,
+      "issues": [],
+      "quantities": [
+        "100",
+        "2.9"
+      ]
+    },
+    {
+      "order": [
+        "SYN-EUR",
+        "SYN-FEE",
+        "SYN-ETH"
+      ],
+      "ready": 0,
+      "issues": [
+        "Quellsaldo passt nicht zum Bestand vor dieser Gruppe. Historische Anfangsbestände, Lücken oder Reihenfolge zuerst abgleichen."
+      ],
+      "quantities": null
+    },
+    {
+      "order": [
+        "SYN-ETH",
+        "SYN-EUR",
+        "SYN-FEE"
+      ],
+      "ready": 1,
+      "issues": [],
+      "quantities": [
+        "100",
+        "2.9"
+      ]
+    },
+    {
+      "order": [
+        "SYN-ETH",
+        "SYN-FEE",
+        "SYN-EUR"
+      ],
+      "ready": 1,
+      "issues": [],
+      "quantities": [
+        "100",
+        "2.9"
+      ]
+    },
+    {
+      "order": [
+        "SYN-FEE",
+        "SYN-EUR",
+        "SYN-ETH"
+      ],
+      "ready": 0,
+      "issues": [
+        "Quellsaldo passt nicht zum Bestand vor dieser Gruppe. Historische Anfangsbestände, Lücken oder Reihenfolge zuerst abgleichen."
+      ],
+      "quantities": null
+    },
+    {
+      "order": [
+        "SYN-FEE",
+        "SYN-ETH",
+        "SYN-EUR"
+      ],
+      "ready": 0,
+      "issues": [
+        "Quellsaldo passt nicht zum Bestand vor dieser Gruppe. Historische Anfangsbestände, Lücken oder Reihenfolge zuerst abgleichen."
+      ],
+      "quantities": null
+    }
+  ],
+  "next": "After successful v269 production acceptance: resolve each same-reference stream by a unique complete exact before/balance trail anchored at the confirmed current holding, independent of CSV row order. Preserve all ledger IDs, canonical payloads, financial guards and atomic full-group behavior. Do not use a locally greedy choice that rejects a uniquely forced full trail; keep truly ambiguous/disconnected cases blocked. Review bounded algorithm and independent small exhaustive cases before integration. Separate historical openings/group chronology remain open.",
+  "acceptanceCriteria": [
+    "All six CSV permutations of the same fully identified execution and separate same-asset fee produce identical quantities, journals, source IDs and payloads from one fixed opening model.",
+    "Use exact integer decimal before/balance continuity per asset/wallet stream; no tolerance and no source row ordering.",
+    "Disconnected balance paths, multiple possible next rows, conflicting ledger IDs and protected openings stay blocked without any model mutation.",
+    "Reimport and encrypted backup/restore preserve the same canonical source identity regardless of CSV order.",
+    "Historical closing evidence remains independent from generated arithmetic and must not be inferred from this synthetic diagnosis."
+  ]
+}
