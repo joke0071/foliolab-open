@@ -1,3 +1,11 @@
+## v267 LIVE_ACCEPTED / nächster Fachschritt UH03 – 02.11.2026
+
+UI-LOAD01 und PWA-FULL01-Frontend in PR #279 tatsächlich produktiv abgenommen; Main `0a5e6d5a292b0448ce395122368a583b5fb5aab1`, Daten-/Installationsidentität/v5 erhalten. [Livebeleg](release-evidence/v267-live-acceptance.json). Android-WebAPK-/Launcher-Hardwareprüfung sowie NAM01/COPY01-Reste bleiben explizit VERIFY/OPEN, keine falsche Gesamtfreigabe.
+
+**Nächste Priorität: UH03 → UH04 → UH05** nach [gemeinsamem Importplan](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md), vorhandene private Originale/Diagnosen und bestehenden wirtschaftlichen Importkern wiederverwenden. Weitere #149-/Roadmapaufträge bleiben aktiv. Keine doppelte UI-/PWA-/UH02-Implementierung. Owner/Rotation und exakter nächster Schritt im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md), [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md). Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v262 LIVE_ACCEPTED – 01.11.2026 / Owner Work/root b1399897b0ba
 
 **Aktuelle vollständig abgenommene Produktion: v262.** Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, geprüfter Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`**, Arbeitsbranch `fix/marketstack-history-gaps-266` mit HEAD **`39f00a3456346476f5b151f964dae676161ec66a`**, SW **`foliolab-open-v262`**. PR #273 brachte Marketstack und Secret-Eingaben; PR #274 behob den real nachgewiesenen Historienblocker. Kein unveröffentlichter Codekandidat mehr offen.

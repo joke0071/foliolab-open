@@ -1,0 +1,137 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "at": "2026-11-02T12:41:01.151Z",
+  "release": "v267",
+  "main": "0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+  "tree": "93fedc04a9a3f2cb58cb7f35431b021df73f0e60",
+  "sw": "foliolab-open-v267",
+  "pr": 279,
+  "prHead": "2033b2fb6aeefc6d110e261d1db289b0aafe5795",
+  "prCI": 41439753959,
+  "mainAndProductionRun": 41441756937,
+  "runConclusion": "success",
+  "deployJob": 125271584101,
+  "liveJob": 125271742164,
+  "units": {
+    "tests": 1087,
+    "pass": 1087,
+    "fail": 0,
+    "skips": 0
+  },
+  "browserEnvironment": {
+    "chromium": "Playwright 1.56.1",
+    "firefoxAndWebkit": "Playwright 1.64.1",
+    "os": "Ubuntu 24.04 hosted CI; local preflight separately documented"
+  },
+  "logsRead": true,
+  "artifacts": [
+    {
+      "id": 13142546853,
+      "name": "production-live-acceptance-0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+      "digest": "sha256:3ed2acbab3799f63d220c115e021239f75debf9b9ce09643eca562abcaf5a682",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13141690029,
+      "name": "github-pages",
+      "digest": "sha256:71426d05cd7253081096a291ba4f1a1d9819713ad11bbd6ff9673657cf774418",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13141113184,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:4b693aa980b69388eb234052b4097d9ca1c99254d7103b3561f2c09e55d1a74a",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13140658921,
+      "name": "release-gates-0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+      "digest": "sha256:596e98ca2c247018ad1a80ae09a9f812edde17a048fd533f5c00697c4a0365f0",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13140173097,
+      "name": "cross-engine-gates-0a5e6d5a292b0448ce395122368a583b5fb5aab1-3",
+      "digest": "sha256:c815cc8015a67bee60d2925c97ee851d20fdaf4f66e06bffd4f489d398503e36",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13139519270,
+      "name": "cross-engine-gates-0a5e6d5a292b0448ce395122368a583b5fb5aab1-1",
+      "digest": "sha256:d818e1dd49324928c1e262517ff1e3291ba2bf445770ffa38e25c33961821522",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13139159072,
+      "name": "cross-engine-gates-0a5e6d5a292b0448ce395122368a583b5fb5aab1-2",
+      "digest": "sha256:b4d917a503d0b18c4cd739d37c51af1b8d723694ec7755c66abfb1ee1a586a34",
+      "uploadLogMatched": true
+    }
+  ],
+  "productionArchive": {
+    "id": 13142546853,
+    "sha256": "3ed2acbab3799f63d220c115e021239f75debf9b9ce09643eca562abcaf5a682",
+    "downloaded": true,
+    "digestVerified": true,
+    "zipIntegrity": true,
+    "files": 1023,
+    "loadingReports": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "mobileStartupImagesReviewed": [
+      "Chromium 320px",
+      "WebKit 320px"
+    ]
+  },
+  "actualProductionCore": {
+    "sha": "0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+    "base": "https://foliolab.unperfekt.at/",
+    "result": "PASS",
+    "groups": 6,
+    "axeScans": 18,
+    "assetMatches": 133,
+    "pageErrors": [],
+    "proxyCertificateException": false
+  },
+  "regularHTTPS": {
+    "report": "v267-regular-https-assets.json",
+    "matches": 133,
+    "total": 133,
+    "tls": "default certificate and hostname verification",
+    "initialUnrecordedTransportAttempt": "HTTP503; retained as failure, not reclassified",
+    "documentedFullAttempt": "PASS without per-asset retries"
+  },
+  "scope": {
+    "UI_LOAD01": "Original flask before module/IndexedDB readiness; delayed visibility, reduced motion, late success, watchdog failure, initialization error, quota failure and inline cleanup verified on actual production",
+    "PWA_FULL01": "FolioLab title/name/short_name, original PNG/maskable icons, standalone help; same effective app identity/start URL/scope/origin; offline/update gates PASS"
+  },
+  "data": {
+    "v5": "preserved; no migration or rollback",
+    "identity": "unchanged",
+    "financialFunctions": "same as accepted original evidence; changed three UI modules and new visual/startup modules verified by complete regression suite",
+    "newOriginalProviderRequests": 0
+  },
+  "freshFinalMain": "0a5e6d5a292b0448ce395122368a583b5fb5aab1",
+  "freshPublishedSW": "exact bytes match final checkout",
+  "efficiency": {
+    "ownerPRRuns": [
+      41437775033,
+      41439753959
+    ],
+    "failedRunRetained": 41437775033,
+    "cause": "reproduced synthetic fixture reload during initial WebKit worker activation; existing controlledStorageFixture added without reducing assertions/timeouts",
+    "blindRetries": 0,
+    "mainRuns": 1,
+    "abortedActions": 0
+  },
+  "limits": [
+    "No physical Android/WebAPK or launcher acceptance claimed; native device check remains VERIFY",
+    "Existing Chrome may request approval for name/icon update; no uninstall or data deletion",
+    "NAM01 registry work and COPY01 product-page text scope remain open",
+    "UH03-UH05 remain pending"
+  ],
+  "chromeUpdateSource": "https://developer.chrome.com/blog/improvements-to-web-app-updates",
+  "next": "UH03: reuse private original diagnostics and existing import/journal/CAS; verified economic import, not additional preview-only completion"
+}

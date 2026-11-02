@@ -1,3 +1,13 @@
+## v267 LIVE_ACCEPTED – 02.11.2026
+
+**Aktuelle vollständig abgenommene Produktion: v267**, Main `0a5e6d5a292b0448ce395122368a583b5fb5aab1`, SW `foliolab-open-v267`, Datenformat v5 erhalten. PR #279, finale PR-/Main-/Deploy-/echte Chromium-/Firefox-/WebKit-Produktion vollständig grün; [Livebeleg](release-evidence/v267-live-acceptance.json), [133/133 reguläre HTTPS-Assetmatches](release-evidence/v267-regular-https-assets.json).
+
+**DONE-Scope:** UI-LOAD01 (Originalkolben vor DB-/Modulbereitschaft, kleine Ladeanzeigen, Reduced Motion, sichere Fehler-/Timeout-/späte-Erfolgswege) und PWA-FULL01-Frontend (FolioLab-Titel/name/short_name, originale PNG-/maskable-Icons, Standalone-Hilfe). Effektive App-/Installations-/Datenidentität/Origin/start_url/scope/v5 unverändert. **VERIFY:** tatsächliche Android-WebAPK-/Launcheranzeige; keine Hardwarefreigabe aus Browseremulation ableiten. **OPEN:** NAM01-Register-/COPY01-Produktseitenreste gemäß [Namensplan](NAME_COPY_PWA_PLAN_2026-11-02.md), weitere #149-/Roadmappakete. Keine neue Umbenennung.
+
+**Nächster ausführbarer Fachschritt: UH03**, danach UH04/UH05 nach [gemeinsamem Importplan](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). Vorhandene private Originale und gesicherte UH03-Lesediagnose nutzen; Bitpanda-Dialektlücke und Kraken-Gebühren-/Mehrbeinsemantik im bestehenden Import-/Journal-/CAS-Kern bis echter wirtschaftlicher Übernahme, Wiederimport/Undo/Restore schließen. Keine zweite Engine oder neue Preview-only-Abschlussmeldung. UH02 nicht neu implementieren/abnehmen. Aktuelle Übergabe/alleiniger Owner allein im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md); EFF01/HND01. Nach v5-Übernahme niemals v263-Rollback/Datenlöschung. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v266 LIVE_ACCEPTED – 02.11.2026
 
 **Aktuelle vollständig abgenommene Produktion: v266**, Main `aa67a3f94f63b93d1764ef672eb009dc31c35305`, SW `foliolab-open-v266`, Datenformat v5. PR #278 behebt die statischen WebKit-Worker-Abhängigkeitsfehler aus dem fehlgeschlagenen v265-Mainlauf. PR-/Main-CI, Deployment und tatsächliche Live-Abnahme in Chromium/Firefox/WebKit vollständig grün; [Produktionsbeleg](release-evidence/v266-live-acceptance.json), [regulärer HTTPS-Abgleich 128/128](release-evidence/v266-regular-https-assets.json). UH02 inklusive geschütztem v5-Offline-PWA-Neustart tatsächlich produktiv abgenommen. Kein blindes Retry und keine Gateabschwächung.
