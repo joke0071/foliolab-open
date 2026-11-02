@@ -1,0 +1,112 @@
+{
+  "status": "FINAL_PR_CI_PASS_NOT_LIVE_ACCEPTED",
+  "pr": 283,
+  "head": "3e895510c623acfd8c23adf09bb805d72e427f0e",
+  "testMerge": "b70a97cd5d056364936f915d1fbf8a4a197a5ea7",
+  "tree": "a422cf00601a312fc4ce5f60fb4b842d938c166f",
+  "mergedMain": "f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+  "run": 41518262487,
+  "walletRun": 41518262511,
+  "units": {
+    "tests": 1118,
+    "pass": 1118,
+    "fail": 0,
+    "skipped": 0
+  },
+  "jobs": [
+    {
+      "id": 125527300078,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "conclusion": "success"
+    },
+    {
+      "id": 125527504771,
+      "name": "test",
+      "conclusion": "success"
+    },
+    {
+      "id": 125527504888,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "conclusion": "success"
+    },
+    {
+      "id": 125527504990,
+      "name": "cross-engine (1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 125527505080,
+      "name": "cross-engine (2)",
+      "conclusion": "success"
+    },
+    {
+      "id": 125527505102,
+      "name": "cross-engine (3)",
+      "conclusion": "success"
+    },
+    {
+      "id": 125534924687,
+      "name": "deploy",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125534926278,
+      "name": "live-acceptance",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13177935062,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:ee4597be74e71231fd23fab833658064c10319302ef5ff247a5ad80864486147",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13177391310,
+      "name": "cross-engine-gates-b70a97cd5d056364936f915d1fbf8a4a197a5ea7-1",
+      "digest": "sha256:393db9e89c683c778546f9002400591bd270330dcd900d59e084d8a6d7804ebd",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13177287276,
+      "name": "cross-engine-gates-b70a97cd5d056364936f915d1fbf8a4a197a5ea7-3",
+      "digest": "sha256:93946b971bcf3b7be56f4f956496ef8d26e80f8ec79b1b79294d75c5f0c5d34a",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13177005972,
+      "name": "fast-only-not-integration-b70a97cd5d056364936f915d1fbf8a4a197a5ea7",
+      "digest": "sha256:f71cec4c7b3ae9be4639c796afc19365e7f5468f8c8573e9c21783a70bccbcf6",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13175954680,
+      "name": "release-gates-b70a97cd5d056364936f915d1fbf8a4a197a5ea7",
+      "digest": "sha256:89cacd7e7bf2442fe8461ee0a33270cc24ca820cf4a76745f69fc1d379901afd",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13175589411,
+      "name": "cross-engine-gates-b70a97cd5d056364936f915d1fbf8a4a197a5ea7-2",
+      "digest": "sha256:ca8f8f6a6304219de03ea5c2d16b9cb4249bdb887aae8abdd9b3a10d86e4cf76",
+      "uploadLogMatches": true
+    },
+    {
+      "id": 13175059639,
+      "name": "ci-stage-b70a97cd5d056364936f915d1fbf8a4a197a5ea7",
+      "digest": "sha256:237c3ed02074a9c8409bc47cd8adef669383e576cd68ea1dfd6b63aec9d08f7a",
+      "uploadLogMatches": true
+    }
+  ],
+  "downloadVerified": {
+    "id": 13177287276,
+    "sha256": "93946b971bcf3b7be56f4f956496ef8d26e80f8ec79b1b79294d75c5f0c5d34a",
+    "zip": "PASS",
+    "visual": "WebKit mobile Bitpanda impact inspected"
+  },
+  "reviews": [],
+  "reviewThreads": [],
+  "scope": "35-minute bounded live orchestration budget only; test commands, assertions, shipped assets, SW v269, data v5 and installation identity unchanged",
+  "next": "Main 41521172914, deploy, actual production gates and regular HTTPS byte comparison required"
+}
