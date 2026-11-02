@@ -1,3 +1,11 @@
+## v266 LIVE_ACCEPTED – 02.11.2026
+
+**Aktuelle vollständig abgenommene Produktion: v266**, Main `aa67a3f94f63b93d1764ef672eb009dc31c35305`, SW `foliolab-open-v266`, Datenformat v5. PR #278 behebt die statischen WebKit-Worker-Abhängigkeitsfehler aus dem fehlgeschlagenen v265-Mainlauf. PR-/Main-CI, Deployment und tatsächliche Live-Abnahme in Chromium/Firefox/WebKit vollständig grün; [Produktionsbeleg](release-evidence/v266-live-acceptance.json), [regulärer HTTPS-Abgleich 128/128](release-evidence/v266-regular-https-assets.json). UH02 inklusive geschütztem v5-Offline-PWA-Neustart tatsächlich produktiv abgenommen. Kein blindes Retry und keine Gateabschwächung.
+
+**Nächstes Paket:** UI-LOAD01 + PWA-FULL01 gemäß neuesten #149-Nachträgen: sprudelnder Originalkolben vor DB-Init, tatsächliche Fehler-/Ladezustände, wiederverwendbare Inlineanzeige; kurze Android-Bezeichnung FolioLab, sichere PNG-Icons/Standalone-Hilfe bei erhaltener Installations- und Datenidentität. [NAM01/COPY01/PWA-Namensplan](NAME_COPY_PWA_PLAN_2026-11-02.md) und [begrenzter Namens-Teilbefund](NAME_PRECHECK_2026-11-02.md) berücksichtigen; konkrete AT-/EU-Registerprüfung weiterhin offen, keine rechtliche Namensfreigabe behauptet. Diese UI-/PWA-Folgeimplementierung noch offen. Danach UH03–UH05 und sämtliche übrigen konsolidierten Pakete erhalten. Aktuelle Zuständigkeit/Rotation allein im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md); EFF01/HND01. Datenformat v5 erhalten, nach Übernahme niemals v263-Rollback oder Datenlöschung. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v262 LIVE_ACCEPTED – 01.11.2026 / Owner Work/root b1399897b0ba
 
 **Aktuelle vollständig abgenommene Produktion: v262.** Main **`89095774ad605261a293c4b7bc049580f1f91deb`**, geprüfter Tree **`86e7067a801fa16da049907a4f49b6a2bf856b62`**, Arbeitsbranch `fix/marketstack-history-gaps-266` mit HEAD **`39f00a3456346476f5b151f964dae676161ec66a`**, SW **`foliolab-open-v262`**. PR #273 brachte Marketstack und Secret-Eingaben; PR #274 behob den real nachgewiesenen Historienblocker. Kein unveröffentlichter Codekandidat mehr offen.
