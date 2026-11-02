@@ -1,3 +1,11 @@
+## ACTIVE – PR #276 gemergt / Main-Veröffentlichung läuft – 02.11.2026
+
+Owner **2a851b83ff08**. PR #276 SHA-geschützt auf geprüftem HEAD `63622f42e3fa91b1abbebab541a17e3ee10fbfb7` gemergt. Neuer Main **`e5b2bcdfd192d2ed351ee0aacd574f4ea2b6df11`**, geprüfter Tree **`ab0111e68a6af96937eb81ca4de2aaa780cc7f25`**. Finale PR-CI **41354191091 completed/success** nach einem einzigen gezielten Retry von Cross1: Job **125118015314 SUCCESS**, kompletter Firefox-/WebKit-Suffix PASS, Abschlusslog gelesen; Artefakt **13119449128**, SHA256 `a1116eda23fcd39169e173f9a99e9f3d665307f3bdf1e6c5756e773322a0a2d1` gegen API/Uploadlog bestätigt. Alle anderen Pflichtjobs/Wallet erfolgreich; Reviews/Threads leer, Main/HEAD/Owner vor Merge frisch geprüft. Originalabnahme-Quellhashes vollständig identisch. Abgebrochenen Erstversuch nicht als PASS umgedeutet.
+
+**Main-/Veröffentlichungslauf 41397335103 IN_PROGRESS. Kein v264 LIVE_ACCEPTED vor vollständiger Main-/Deployment-/echter Produktionsabnahme und regulärem HTTPS-Asset-/SW-Abgleich.** Produktion zuletzt frisch v263 bestätigt. Datenformat v5 erhalten, nach Nutzerübernahme niemals v263-Rollback. Keine zusätzliche Originalabfrage. UI-LOAD01/PWA-FULL01 erst nach diesem sicheren Releasepunkt seriell. Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – Übernahme 2a851b83ff08 / PR #276 CI-Diagnose – 02.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **2a851b83ff08** nach ausdrücklicher Übernahme; cac084687058 STOPPED. Main unverändert v263 `10103d6253ff544b383099c6a631035f67be7025`, einziger Kandidat PR #276 HEAD `63622f42e3fa91b1abbebab541a17e3ee10fbfb7`, Tree `ab0111e68a6af96937eb81ca4de2aaa780cc7f25`. Reviews/Threads leer. Keine Produktänderung/kein Merge/Deploy.
