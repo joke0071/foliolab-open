@@ -1,0 +1,179 @@
+{
+  "release": "v266",
+  "status": "LIVE_ACCEPTED",
+  "acceptedAt": "2026-11-02T09:04:18.988Z",
+  "main": "aa67a3f94f63b93d1764ef672eb009dc31c35305",
+  "tree": "bb41bd978b770cb83a0a62dbd5a89852279132eb",
+  "serviceWorker": "foliolab-open-v266",
+  "dataFormat": 5,
+  "pullRequest": 278,
+  "prCI": {
+    "id": 41411550257,
+    "conclusion": "success",
+    "evidence": "v266-pr278-final-ci.json"
+  },
+  "mainAndProduction": {
+    "id": 41413118156,
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 125170479152,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "conclusion": "success"
+      },
+      {
+        "id": 125170563740,
+        "name": "test",
+        "conclusion": "success"
+      },
+      {
+        "id": 125170563800,
+        "name": "cross-engine (3)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125170563823,
+        "name": "cross-engine (2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125170563879,
+        "name": "cross-engine (1)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125170565749,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125175120771,
+        "name": "deploy",
+        "conclusion": "success"
+      },
+      {
+        "id": 125175255052,
+        "name": "live-acceptance",
+        "conclusion": "success"
+      }
+    ],
+    "allCompletionLogsRead": true,
+    "units": {
+      "tests": 1086,
+      "fail": 0,
+      "skip": 0
+    },
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "originalUH02Flow": "PASS including actual protected v5 offline PWA restart on production",
+    "financialE2E": "PASS in all three engines: independent exact cash, flows, basis, PnL, fees/taxes, historical FX, CAS, quota, abort/offline and fresh encrypted restore",
+    "coreLive": {
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 128
+    },
+    "productionUI": {
+      "scansPerEngine": 37,
+      "status": "PASS"
+    },
+    "productionTransferStates": {
+      "scansPerEngine": 10,
+      "status": "PASS"
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13127279106,
+      "name": "production-live-acceptance-aa67a3f94f63b93d1764ef672eb009dc31c35305",
+      "digest": "sha256:d06aefe3eb5835ba6ba9a18add1022d80a85445ba754c8b42ee331cf6e3f45ea",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13127260895,
+      "name": "cross-engine-gates-aa67a3f94f63b93d1764ef672eb009dc31c35305-1",
+      "digest": "sha256:95b15c73ea1c4080cbe28ea473d4a95ee3a60c666f6fc05df69145901cce4b73",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13127196722,
+      "name": "github-pages",
+      "digest": "sha256:03a28a3995ef62c5d6263404abf73f42386a70e3efee6197aa18a141efbb3075",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13127040850,
+      "name": "cross-engine-gates-aa67a3f94f63b93d1764ef672eb009dc31c35305-2",
+      "digest": "sha256:f3ecdc25b06029238d2742e9c19190b3bbff8e9abcc9a0525db58512bf123a03",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13126622500,
+      "name": "cross-engine-gates-aa67a3f94f63b93d1764ef672eb009dc31c35305-3",
+      "digest": "sha256:d51d13aa6e03cdca3bfb26998cb06546b17596d51cabba764af8735cd8c8f199",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13126392971,
+      "name": "release-gates-aa67a3f94f63b93d1764ef672eb009dc31c35305",
+      "digest": "sha256:f51c4348494a565b75240eceb96d0564e142001d8d8dc2aadee748c530f82afd",
+      "uploadLogMatched": true
+    },
+    {
+      "id": 13126313749,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:cbcb89d4a1463b9e318313f09d4ae79b0600ac20485d1b1c9789f39a1dd2c268",
+      "uploadLogMatched": true
+    }
+  ],
+  "downloadedProductionArchive": {
+    "id": 13127279106,
+    "sha256": "d06aefe3eb5835ba6ba9a18add1022d80a85445ba754c8b42ee331cf6e3f45ea",
+    "digestMatched": true,
+    "zipIntegrity": "PASS",
+    "entries": 1015,
+    "productionJSONReportsVerified": true
+  },
+  "visualReview": {
+    "representativeActualProductionScreenshots": [
+      "ui-positions-390.png",
+      "c5-bookings-390.png",
+      "c5-connections-viewport-390.png"
+    ],
+    "logHashesMatched": true,
+    "reviewed": true,
+    "scope": "Representative mobile screenshots; no new UI implementation in this release."
+  },
+  "https": {
+    "evidence": "v266-regular-https-assets.json",
+    "tls": "default certificate and hostname validation",
+    "matches": 128,
+    "total": 128,
+    "freshFinalServiceWorkerSHA256": "0aa1b3dd67e27c9868c5357140d1de30c1ca2583a908dbaff168dbb5b3e91b30"
+  },
+  "reuse": {
+    "originalPreflight": "v264-uh02-original-preflight.json",
+    "unchangedRuntimeSourceHashes": 11,
+    "newOriginalNetworkRequests": 0
+  },
+  "physicalAndroid": "NOT_TESTED",
+  "ciEfficiency": {
+    "finalPRRuns": 1,
+    "mainReleaseRuns": 1,
+    "retries": 0,
+    "gatesWeakened": false
+  },
+  "originalFailedMain": {
+    "run": 41400746684,
+    "job": 125131925749,
+    "retainedAsFailure": true
+  },
+  "next": [
+    "UI-LOAD01",
+    "PWA-FULL01",
+    "NAM01/COPY01 per saved plan",
+    "UH03–UH05 and consolidated roadmap"
+  ]
+}
