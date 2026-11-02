@@ -1,3 +1,11 @@
+## ACTIVE – PR #278 gemergt / v266 Main-Abnahme – 02.11.2026
+
+Owner **8b1d00b8c8b8**. PR #278 auf geprüftem HEAD `bf26478165e82dcac36a443e9b85b12f927a47c5` SHA-geschützt gemergt. Main **`aa67a3f94f63b93d1764ef672eb009dc31c35305`**, Tree **`bb41bd978b770cb83a0a62dbd5a89852279132eb`**, SW v266, Datenformat v5 unverändert. PR-CI **41411550257 SUCCESS**, Wallet/Audit SUCCESS; 1.086 Units, vollständiger UH02-v5-Offline-PWA-Weg und erweiterte Worker-Abhängigkeitsfehlerregression in allen drei Engines PASS. Haupt-/Cross-Abschlusslogs gelesen, fünf relevante Digests gegen API/Uploadlog geprüft, Cross3-Archiv tatsächlich heruntergeladen/hash-/ZIP-/Controllerbelege geprüft. Testmerge-Tree identisch, Reviews/Kommentare leer. [Finaler PR-Beleg](release-evidence/v266-pr278-final-ci.json).
+
+**Noch kein v266 LIVE_ACCEPTED; Produktion zuletzt v263.** Nächster Schritt: automatisch gestarteten Main-Lauf identifizieren und vollständig prüfen, Deployment/echte Produktionsabnahme/regelmäßigen HTTPS-Byteabgleich abschließen. Kein Retry/Duplikat, keine zweite Implementierung während Release-CI. Danach UI-LOAD01/PWA-FULL01/NAM01 gemäß [Namensplan](NAME_COPY_PWA_PLAN_2026-11-02.md). Originalbelege unverändert gültig, keine neuen Originalabrufe. v5 erhalten, niemals v263-Rollback nach v5-Übernahme. EFF01/HND01, Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #278 / v266 eingefroren – 02.11.2026
 
 Alleiniger Owner **8b1d00b8c8b8**, Vorgänger STOPPED. Main `ad9328eaeb14e43c01da8978d96170eece835859`; **Produktion zuletzt v263 LIVE_ACCEPTED; v265 nicht freigegeben**. Einziger Korrekturkandidat [PR #278](https://github.com/joke0071/foliolab-open/pull/278), Branch `fix/history-offline-worker-lifecycle`, HEAD **`bf26478165e82dcac36a443e9b85b12f927a47c5`**, Tree **`bb41bd978b770cb83a0a62dbd5a89852279132eb`**, SW v266, Datenformat v5 unverändert. Pflicht-CI **41411550257** gestartet/queued, Wallet **41411550242**, Audit **41411550268**. Eingefroren: keine Pushes/Abbrüche/Duplikate.
