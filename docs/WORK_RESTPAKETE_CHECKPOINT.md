@@ -1,3 +1,11 @@
+## ACTIVE – PR #283 gemergt / v269 Main-/Liveabschluss – 02.11.2026
+
+Alleiniger Owner **b42fafd72edf**. PR #283 nach vollständiger bestehender CI **41518262487 SUCCESS**, Wallet **41518262511 SUCCESS**, leeren Reviews/Threads und frischem Main/Owner/HEAD/Testmergeabgleich SHA-geschützt squash-gemergt. Main **`f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`**, Tree **`a422cf00601a312fc4ce5f60fb4b842d938c166f`** exakt Testmerge/Kandidat. 1118/1118 Units, alle Pflichtgates/Cross1–3 PASS; sieben Artefaktdigests gegen Logs bestätigt, Cross3 tatsächlich heruntergeladen/Hash/ZIP geprüft, WebKit-Mobilbild gesichtet. [PR-Beleg](release-evidence/v269-pr283-final-ci.json).
+
+Automatischer Mainlauf **41521172914 IN_PROGRESS** auf korrigiertem 35-Minuten-Livejobbudget unverändert auswerten; keine Duplikate/Abbrüche/Pushes. **v269 DEPLOYED, weiterhin NICHT LIVE_ACCEPTED; letzte akzeptierte Produktion v268.** Erst erfolgreiche Main-/Deploy-/echte Livepflichtjobs und reguläre HTTPS-Assetgleichheit mit Releasecheckout bestätigen. Danach UH03 → UH04 → UH05. Bestehende Originale/Diagnosen wiederverwenden; v5/Daten-/Installationsidentität/EFF01/HND01 erhalten. Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – b42fafd72edf übernimmt / PR #283 Abschlussprüfung – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **b42fafd72edf** nach ausdrücklichem Nutzerauftrag und vollständiger STOPPED-Abgabe von 708f37c5498f. Frischer Kollisionsschutz: letzter HANDOVER_READY unverändert, Main `aa449ce3b8fd5ae20dfe6540dd9512b4cda509c7`, einziger Kandidat #283 HEAD `3e895510c623acfd8c23adf09bb805d72e427f0e`, sonst nur historische Drafts #157/#161. Bestehende CI **41518262487 SUCCESS**, Wallet **41518262511 SUCCESS**; keine Duplikate/Abbrüche. Abschlusslogs/Artefakte und Testmerge prüfen, dann bei vollständigem Grün SHA-geschützt mergen; neuen Main-/Deploy-/Live-Lauf vollständig abnehmen. **v269 DEPLOYED, NICHT LIVE_ACCEPTED; v268 bleibt letzte akzeptierte Produktion.** Danach UH03 → UH04 → UH05 gemäß gesicherter Diagnose/Originalen. v5/Daten-/Installationsidentität und EFF01/HND01 erhalten. Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
