@@ -1,3 +1,13 @@
+## ACTIVE – PR #278 / v266 eingefroren – 02.11.2026
+
+Alleiniger Owner **8b1d00b8c8b8**, Vorgänger STOPPED. Main `ad9328eaeb14e43c01da8978d96170eece835859`; **Produktion zuletzt v263 LIVE_ACCEPTED; v265 nicht freigegeben**. Einziger Korrekturkandidat [PR #278](https://github.com/joke0071/foliolab-open/pull/278), Branch `fix/history-offline-worker-lifecycle`, HEAD **`bf26478165e82dcac36a443e9b85b12f927a47c5`**, Tree **`bb41bd978b770cb83a0a62dbd5a89852279132eb`**, SW v266, Datenformat v5 unverändert. Pflicht-CI **41411550257** gestartet/queued, Wallet **41411550242**, Audit **41411550268**. Eingefroren: keine Pushes/Abbrüche/Duplikate.
+
+Ursache aus Main-Fehlerjob 125131925749 lokal mit CI-WebKit reproduziert: Ausfall statischer **Worker-Abhängigkeit** führt trotz preventDefault zusätzlich zu pageerror; Abbruch nur des Hauptskripts reproduziert dies nicht. Worker fängt nun den Abhängigkeitsimport selbst ab und nutzt bestehende gemeinsame Ladefehlerbehandlung. Online Fehler, offline identischer exakter begrenzter Replay; keine Finanz-/Speicher-/Schemaänderung. Neue Drei-Modul-Negativregression; mit altem Worker reproduziert FAIL, korrigiert PASS in lokalem Chromium/WebKit. 1.086 Units/0 Fehler/Skips, Syntax/Diffcheck und kompletter UH02-Chromium-Weg inkl. geschütztem v5-Offline-PWA-Neustart PASS. Lokale WebKit-Datei-I/O-/Firefox-Umgebungsgrenzen ehrlich im [Vorprüfbeleg](https://github.com/joke0071/foliolab-open/blob/fix/history-offline-worker-lifecycle/docs/release-evidence/v266-worker-preflight.json); ursprünglicher UH02-Test und alle CI-Gates unverändert.
+
+Nächster Schritt: vollständige bestehende CI samt Abschlusslogs/Artefakten/Reviews/Testmerge-Tree abnehmen, SHA-geschützt mergen, Main/Deploy/echte Produktion inklusive regulärem HTTPS-Assetabgleich vollständig prüfen. Keine neue Originalabfrage; alte Original-/Blockchain-/Finanzbelege unverändert gültig. v5 erhalten, niemals v263-Rollback nach Übernahme. Danach UI-LOAD01/PWA-FULL01/NAM01 seriell gemäß #149/Namensplan. EFF01/HND01, Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – v265 Main-CI-Fehlerdiagnose / 8b1d00b8c8b8 – 02.11.2026
 
 Alleiniger schreibender Entwicklungs-/QA-/Releaseowner **8b1d00b8c8b8** nach ausdrücklicher Übernahme; 2a851b83ff08 STOPPED bestätigt. Main `ad9328eaeb14e43c01da8978d96170eece835859`, SW v265, Datenformat v5. Main-CI `41400746684` completed/failure: Cross3 `125131925749` scheitert in `browser-unified-bitcoin.mjs:48` an zusätzlichem WebKit-pageerror „Importing a module script failed.“; Hauptjob/Cross1/Cross2 SUCCESS, Deploy/Live SKIPPED. **Produktion zuletzt v263 LIVE_ACCEPTED, kein v265 LIVE_ACCEPTED.** Nur historische Drafts #157/#161 offen, kein neuer Owner/Kandidat. Kein Retry/Abbruch/Gateabbau.
