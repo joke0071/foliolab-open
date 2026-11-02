@@ -1,0 +1,35 @@
+{
+  "scope": "TARGETED_UNCHANGED_FIREFOX_PRODUCTION_DIAGNOSIS_NOT_FULL_RELEASE_ACCEPTANCE",
+  "main": "f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+  "originalTestSha256": "587112dccd291cfe8b678931fa3a13708ff053d988d690121b521ed16251badc",
+  "result": "PASS",
+  "navigationResponses": [
+    {
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 200
+    },
+    {
+      "url": "https://foliolab.unperfekt.at/",
+      "status": 200
+    },
+    {
+      "url": "https://foliolab.unperfekt.at/?page=positions",
+      "status": 200
+    },
+    {
+      "url": "https://foliolab.unperfekt.at/?page=positions",
+      "status": 200
+    }
+  ],
+  "failedRequests": 0,
+  "assertions": "All original Alpha-266 assertions retained, including four synthetic calls, raw closes, exact holdings, cache/history, serial throttle, hashed budget, quota quote retention, retired-provider reload exclusion, canonical record preservation, 7 widths/Axe. No reload catch/retry, no deadline change.",
+  "environment": {
+    "playwright": "1.64.1",
+    "firefox": "157.0",
+    "node": "24.22.1",
+    "context": "Dedicated persistent local profile importing existing system environment CAs; TLS validation enabled. Local content namespace unavailable; host environment workaround only, no CI change."
+  },
+  "traceSha256": "f93b6b89ee70ece273f61279d54043a7db97cdfd1a029302dacc955b5f7fe927",
+  "classification": "Isolated Firefox navigation/infrastructure abort in hosted run; unchanged target passed every original assertion with all navigation HTTP200 and no request/page errors. Exact low-level abort cause is not observed in original log.",
+  "next": "One targeted retry solely live job 125544895577 on same run/main, no full workflow duplicate or deployment retry. If repeated, preserve evidence and repair cause before any further attempt."
+}
