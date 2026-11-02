@@ -1,3 +1,11 @@
+## ACTIVE – PR #277 grün gemergt / v265 Main-Abnahme läuft – 02.11.2026
+
+Owner **2a851b83ff08**. PR #277 SHA-geschützt gemergt; Main **`ad9328eaeb14e43c01da8978d96170eece835859`**, geprüfter Tree **`b1b214423f0f49bc7d26222a4448712a7021fbb7`**. Vollständige PR-CI **41399153092 SUCCESS**, Wallet/Audit SUCCESS. Neue erzwungene Worker-Modulfehler-Regression in Chromium/Firefox/WebKit PASS; ursprünglicher UH02-Weg samt v5-Offline-PWA-Neustart in allen drei Engines PASS. 1.085 Units/0 Fehler/Skips, Abschlusslogs gelesen, fünf Haupt-/Cross-/Dialog-Artefaktdigests gegen API bestätigt, Testmerge-Tree identisch, Reviews/Threads leer. [Finalbeleg](release-evidence/v265-pr277-final-ci.json).
+
+**Main-/Veröffentlichungslauf 41400746684 IN_PROGRESS. Noch kein v264/v265 LIVE_ACCEPTED; Produktion zuletzt v263.** Erst Main/Deploy/echte Produktion inklusive regulärem HTTPS-Asset-/SW-Abgleich vollständig abnehmen. Nicht abbrechen/duplizieren. Danach UI-LOAD01 + PWA-FULL01 gemäß neuesten #149-Nachträgen seriell (noch nicht implementiert). Datenformat v5 erhalten; nach Übernahme niemals v263-Rollback. Keine weiteren Originalabrufe nötig. Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – v265 Worker-Folgefix / PR #277 eingefroren – 02.11.2026
 
 Owner **2a851b83ff08**. **Produktion bleibt v263 LIVE_ACCEPTED. Kein v264 LIVE_ACCEPTED.** PR #276 ist auf Main `e5b2bcdfd192d2ed351ee0aacd574f4ea2b6df11` gemergt (Tree `ab0111e68a6af96937eb81ca4de2aaa780cc7f25`), aber Main-Lauf **41397335103 completed/failure**: Hauptjob und Cross1/2 PASS, Cross3 **125121432192 FAILURE** im UH02-WebKit-Test an `pageerror: Importing a module script failed.`; vorgeschaltete Finanz-/Quota-/CAS-Assertions bestanden. Deployment/Live korrekt übersprungen. Kein Retry dieser Assertion.
