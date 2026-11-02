@@ -1,3 +1,13 @@
+## ACTIVE – v269 Live durch Firefox-Navigation blockiert – 02.11.2026
+
+Alleiniger Owner **b42fafd72edf**. Main `f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`, Tree `a422cf00601a312fc4ce5f60fb4b842d938c166f`, SW v269/v5 unverändert. #283 nach finaler grüner CI geschützt gemergt. Mainlauf **41521172914 COMPLETED/FAILURE**: Hauptjob/Cross1–3/Deploy SUCCESS; Livejob **125544895577 FAILURE**. **v269 DEPLOYED, NICHT LIVE_ACCEPTED; v268 letzte akzeptierte Produktion.**
+
+[Originalfehler/Artefakt](release-evidence/v269-pr283-live-firefox-navigation-blocker.json): `tests/browser-alpha-vantage.mjs:68:89`, dritter echter `page.reload()` → Firefox `NS_ERROR_ABORT`. Alle vorherigen fachlichen Assertions einschließlich bewusster Limit-/Kursretentionsprüfung bestanden, keine Pageerrors, exakt vier synthetische Alpha-Abrufe; Limitmeldung ist erwartet und nicht Ursache. Live-Chromium und davor ausgeführte Live-Cross-Import-/Storage-/Provider-Retirement-Wege PASS; spätere Suiten nicht abgeschlossen. Artefakt **13178538333** tatsächlich heruntergeladen, SHA256/ZIP PASS; [regulär TLS-geprüfte 138/138 Assets](release-evidence/v269-pr283-regular-https-assets.json) exakt Releasecheckout.
+
+**Kein Retry gestartet, keine Produktänderung/neue PR.** Nächster Schritt: unveränderten Firefox-Reload gezielt samt Navigation/Netzwerk untersuchen und Fehler klassifizieren; keine Exception ignorieren/Assertion lockern/CI blind wiederholen. Danach vollständige echte Livepflichtjobs erfolgreich abschließen, erst dann v269 abnehmen. UH03 → UH04 → UH05 bleiben danach; vorhandene Originale und private Saldopfaddiagnosen wiederverwenden. Checkout/Diagnosen `/workspace/scratch/b42fafd72edf/`; EFF01/HND01, Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – v269 Deployment grün / Live-Crossprüfung läuft – 02.11.2026
 
 Alleiniger Owner **b42fafd72edf**. Main **`f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`**, Tree **`a422cf00601a312fc4ce5f60fb4b842d938c166f`**, SW v269/v5/Installationsidentität unverändert. PR #283 geschützt gemergt; [finale PR-CI/Artefakte](release-evidence/v269-pr283-final-ci.json) vollständig PASS. Neuer Mainlauf **41521172914**: 1118 Units/0 Fehler/Skips, Hauptjob und Cross1–3 SUCCESS, Deployment **125544723201 SUCCESS**. Abschlusslogs dieser Jobs gelesen; Artefaktdigests stimmen mit Uploadlogs überein.
