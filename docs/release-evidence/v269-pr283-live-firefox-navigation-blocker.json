@@ -1,0 +1,27 @@
+{
+  "status": "LIVE_FAILURE_NOT_ACCEPTED",
+  "main": "f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+  "tree": "a422cf00601a312fc4ce5f60fb4b842d938c166f",
+  "sw": "foliolab-open-v269",
+  "schema": 5,
+  "run": 41521172914,
+  "job": 125544895577,
+  "conclusion": "failure",
+  "passed": "Main test/Cross1–3/deploy; production Chromium including 6 core groups/18 Axe/138 byte hashes and all import/storage/recovery flows. Live cross UH02/Kraken/Bitpanda/loading/P-Chain/Sonic/cash/provider retirement PASS before failure.",
+  "failure": {
+    "test": "tests/browser-alpha-vantage.mjs:68:89",
+    "operation": "third page.reload, after exact quote-retention and before denied-provider persistence assertion",
+    "error": "page.reload: NS_ERROR_ABORT",
+    "pageErrors": [],
+    "calls": "Exactly four synthetic Alpha daily calls. The expected 25/day-limit UI follows the deliberate budget-exhaustion scenario, not an unexpected provider failure.",
+    "boundary": "Navigation failure is not accepted or ignored. Remaining live suites not completed. No retry yet; targeted unchanged-code reproduction and navigation diagnosis required."
+  },
+  "artifact": {
+    "id": 13178538333,
+    "sha256": "06a4abc81893dfd4fa31d63af982206e5d2c9e496b53e265a373b09878c65214",
+    "actualDownloadAndZip": "PASS"
+  },
+  "regularHTTPS": "138/138 PASS; docs/release-evidence/v269-pr283-regular-https-assets.json",
+  "lastAccepted": "v268",
+  "productChangesAfterMerge": "none"
+}
