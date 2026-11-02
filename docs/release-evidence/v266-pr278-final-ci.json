@@ -1,0 +1,108 @@
+{
+  "release": "v266",
+  "status": "PR_CI_ACCEPTED_NOT_LIVE",
+  "pullRequest": 278,
+  "head": "bf26478165e82dcac36a443e9b85b12f927a47c5",
+  "tree": "bb41bd978b770cb83a0a62dbd5a89852279132eb",
+  "actualTestMerge": "4518aa3cf86702b921c41e95f2beac835d8ade15",
+  "testMergeTreeIdentical": true,
+  "base": "ad9328eaeb14e43c01da8978d96170eece835859",
+  "ci": {
+    "run": 41411550257,
+    "result": "success",
+    "wallet": 41411550242,
+    "audit": 41411550268,
+    "jobs": [
+      {
+        "id": 125165512816,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "conclusion": "success"
+      },
+      {
+        "id": 125165583026,
+        "name": "test",
+        "conclusion": "success"
+      },
+      {
+        "id": 125165583053,
+        "name": "cross-engine (1)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125165583068,
+        "name": "cross-engine (3)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125165583201,
+        "name": "cross-engine (2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125165584870,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125169971562,
+        "name": "deploy",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125169973182,
+        "name": "live-acceptance",
+        "conclusion": "skipped"
+      }
+    ],
+    "units": {
+      "tests": 1086,
+      "fail": 0,
+      "skip": 0
+    },
+    "uh02": "Chromium/Firefox/WebKit full original UI and v5 offline PWA restart PASS",
+    "worker": "Entry/direct/transitive dependency failures: online rejection, exact offline replay, no pageerror PASS in all three engines",
+    "completionLogsRead": true
+  },
+  "artifacts": [
+    {
+      "id": 13126695723,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:0d003d5dc57a376e0ffbcfa3dbb4276a0a4c7638ada49359b021fe63d503e901",
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13126011829,
+      "name": "cross-engine-gates-4518aa3cf86702b921c41e95f2beac835d8ade15-2",
+      "digest": "sha256:0574b822a3b70e4b83f836b77a9d0b76a698d1d5594d6814381e7811143644db",
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13125709312,
+      "name": "cross-engine-gates-4518aa3cf86702b921c41e95f2beac835d8ade15-1",
+      "digest": "sha256:9cd0f94cc7b11c677b91b274bbbf395078800fea1ed7d6cae32d30c7cfaa200a",
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13125594466,
+      "name": "release-gates-4518aa3cf86702b921c41e95f2beac835d8ade15",
+      "digest": "sha256:42bdd5caf69188e7ca7dd96d51ee11c392af692cc7328728b0b51526da178683",
+      "uploadDigestMatched": true
+    },
+    {
+      "id": 13125559109,
+      "name": "cross-engine-gates-4518aa3cf86702b921c41e95f2beac835d8ade15-3",
+      "digest": "sha256:ad76e982fd6623296c84126503276a525bca8de22dd8195926d32a6802c782e2",
+      "uploadDigestMatched": true
+    }
+  ],
+  "downloadedCross3": {
+    "id": 13125559109,
+    "sha256": "ad76e982fd6623296c84126503276a525bca8de22dd8195926d32a6802c782e2",
+    "zipIntegrity": "PASS",
+    "controllerEvidence": "Firefox and WebKit activated before/after reload, result PASS, pageErrors empty"
+  },
+  "reviews": [],
+  "reviewComments": [],
+  "dataFormat": 5,
+  "production": "Last accepted v263; not v265/v266 LIVE_ACCEPTED; main/deploy/live still required"
+}
