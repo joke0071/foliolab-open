@@ -1,3 +1,13 @@
+## ACTIVE – PR #279 / erster CI-Befund, Korrektur gesichert – 02.11.2026
+
+Owner **edd4e92ffc47**, Main/v266 LIVE_ACCEPTED unverändert. PR #279 HEAD weiterhin `040853ca948554fb6a1e985ca5e5bc69836d421e`. Erster vollständiger Lauf **41425037217 läuft noch**, kein Abbruch/Push/Retry. Cross2 SUCCESS; Cross1 **125209555269 FAILURE**: WebKit `browser-history-ui.mjs:79`, Disclosure-Aktion nach Reload verborgen. Repro bestätigt: alter Helfer entscheidet bei noch nicht vorhandenem Ziel voreilig „keine geschlossenen Eltern“; erst an tatsächliches Ziel angehängte Bereitschaft binden, danach unverändert echte Summary-/Buttonklicks. Deterministische Negativkontrolle alter Helfer FAIL / Korrektur PASS; vollständiger lokaler WebKit-Historienablauf PASS. Keine Frist/Assertion abgeschwächt.
+
+Zusätzlich echter UI-LOAD01-Restfall korrigiert: äußerer Aktualisierungs-/Speicherfehler beendet jetzt den wartenden Text statt „werden abgefragt“ stehenzulassen. Alte Variante mit Quota FAIL, Korrektur Chromium/WebKit PASS, exakter gespeicherter Datensatz erhalten. 1.087 Units/0 Fehler/Skips, Syntax/Diffcheck, erweiterte Ladeprüfungen PASS.
+
+**Korrektur vollständig remote als Commitobjekt gesichert, Branch absichtlich noch nicht bewegt:** `b4f214082dd2d70b8ce23fcbe22b91a20d0691d6`, Tree `a6103fea6d42bb1df807c76bb36670a049638dde`, Parent aktueller PR-HEAD. Nächster Schritt: bestehenden Lauf komplett auslaufen lassen und weitere echte Fehler auswerten; dann denselben PR-Branch SHA-geschützt auf diesen geprüften Korrekturstand bewegen und eine finale vollständige CI starten. Kein zweiter Produktstrang. Lokaler Checkout `/workspace/scratch/edd4e92ffc47/foliolab-open`, Produktdiff getrackt/gesichert; nur synthetische Artefakte/node_modules ungetrackt. Noch kein v267-Merge/Deployment/LIVE_ACCEPTED. EFF01/HND01, Zähler 0/0; Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## ACTIVE – PR #279 / v267 eingefroren – 02.11.2026
 
 Alleiniger Owner **edd4e92ffc47**. Einziger Produktkandidat [PR #279](https://github.com/joke0071/foliolab-open/pull/279), Branch `feature/loading-pwa-foliolab`, HEAD `040853ca948554fb6a1e985ca5e5bc69836d421e`, Tree `65a96b6b7784b9d8bc6762bcd6548b60fc5be528`. Main unverändert `aa67a3f94f63b93d1764ef672eb009dc31c35305`, **v266 LIVE_ACCEPTED** übernommen. v267 noch nicht veröffentlicht/abgenommen. Kandidat eingefroren; keine Pushes/Abbrüche/Duplikate während CI.
