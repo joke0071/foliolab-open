@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import {chromium,firefox,webkit} from 'playwright';
 import {waitForAsyncReadiness} from './browser-async-readiness.mjs';
+import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 const base='http://127.0.0.1:4173/';
 for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
@@ -34,6 +35,9 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
   snapshotReference:true,writeEnabled:false,unchanged:true};
  try{
   await page.goto(base);await page.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
+  // Acquire the app-created worker on the untouched blank record before the
+  // synthetic save/reload can interrupt its initial activation and claim.
+  await controlledStorageFixture(page,()=>page.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv')),record);
   // Synthetic canonical setup only; disable background refresh before the no-write baseline.
   await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const store=new PortfolioStorage();const m=await store.initialize();m.settings.autoRefresh=false;await store.save(m);store.close();});
   await page.reload();await page.waitForFunction(()=>document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));

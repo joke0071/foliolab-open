@@ -78,6 +78,15 @@
       "pwaUpdateAfterFix": "PASS Chromium exact record/current asset hashes/offline restart",
       "unitsAfterFix": 1087,
       "failures": 0
+    },
+    "selectionWorkerReadiness": {
+      "ci": 41437775033,
+      "failedJob": 125252054064,
+      "negativeControl": "Original test reproduced WebKit timeout; active worker remained activating after synthetic fixture save/reload overlapped initial activation/claim",
+      "fix": "Reuse existing controlledStorageFixture before synthetic save; actual activated controller and byte-exact blank record required before and after reload; no changed timeout or offline assertion",
+      "chromium": "Full corrected selection/offline fresh realm/exact IDB PASS (Playwright 1.56.1)",
+      "webkit": "Corrected activation/controller and exact blank baseline PASS (Playwright 1.56.1); subsequent offline driver reload returns internal error, so no full local WebKit PASS claimed; current hosted WebKit required",
+      "ciContracts": "12 tests PASS; no skips"
     }
   },
   "identity": {
