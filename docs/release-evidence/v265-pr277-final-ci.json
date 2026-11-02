@@ -1,0 +1,31 @@
+{
+  "status": "FINAL_PR_CI_PASS_PENDING_PRODUCTION",
+  "pr": 277,
+  "head": "e57fd8b034f4b9832a39b5ab06da61d5303ca5d7",
+  "tree": "b1b214423f0f49bc7d26222a4448712a7021fbb7",
+  "testMerge": "4b68f59c3bb9db9f1df986691f49cc4926a0f461",
+  "main": "ad9328eaeb14e43c01da8978d96170eece835859",
+  "prRun": 41399153092,
+  "allRequiredJobs": "success",
+  "units": 1085,
+  "fail": 0,
+  "skip": 0,
+  "reviewThreads": [],
+  "reviews": [],
+  "logDigestsVerified": true,
+  "forcedWorkerModuleFailure": [
+    "chromium PASS",
+    "firefox PASS",
+    "webkit PASS"
+  ],
+  "unchangedUH02AllThreeEngines": true,
+  "actualOfflinePWAV5Reload": true,
+  "previousMainFailure": {
+    "run": 41397335103,
+    "job": 125121432192,
+    "error": "Importing a module script failed.",
+    "deploymentSkipped": true,
+    "noAssertionRetry": true
+  },
+  "physicalAndroid": false
+}
