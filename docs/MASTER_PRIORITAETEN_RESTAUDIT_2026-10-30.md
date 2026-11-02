@@ -1,3 +1,11 @@
+## v269 DEPLOYED / Live-Gesamtfreigabe blockiert / PR #283 – 02.11.2026
+
+Main `aa449ce3b8fd5ae20dfe6540dd9512b4cda509c7`, SW v269/v5 unverändert. PR #281/#282 gemergt; volle Main-CI und Deployment erfolgreich. Tatsächliche Chromium-/Firefox-/WebKit-Produktionsprüfungen und 138/138 reguläre HTTPS-Assets PASS; dennoch Livejob 125510992196 wegen ausdrücklich annotiertem **25-Minuten-Gesamtjoblimit CANCELLED**, daher **v269 NICHT LIVE_ACCEPTED; v268 bleibt letzte akzeptierte Version**. [Präziser Beleg](release-evidence/v269-live-attempt2-job-budget-blocker.json).
+
+Einziger neuer Kandidat [PR #283](https://github.com/joke0071/foliolab-open/pull/283): ausschließlich 35-Minuten-Jobbudget und dessen explizite CI-Vertragsprüfung, keine fachliche Testfrist/Assertion/Engine/Assetänderung; 1118 Units/21 CI-Verträge lokal PASS. CI 41518262487 läuft eingefroren, nicht duplizieren/abbrechen. Aktuellen Owner und exakten Folgeschritt ausschließlich im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) prüfen. Nach vollständiger Releasefreigabe UH03-Reste → UH04 → UH05; [gesicherte synthetische Kraken-Reihenfolgediagnose](release-evidence/uh03-kraken-order-next-diagnosis.json), unabhängige historische Endstände, kombinierte Quellen und selektive Rücknahme offen. Sämtliche #149-/UI-/PWA-/Drive-/Kurs-/Analysepakete erhalten; EFF01/HND01, Checkpointbranch niemals nach Main mergen.
+
+---
+
 ## v268 LIVE_ACCEPTED / UH03 insgesamt offen – 02.11.2026
 
 [PR #280](https://github.com/joke0071/foliolab-open/pull/280) ist auf Main `de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400` vollständig produktiv abgenommen: begrenzter wirtschaftlicher Kraken-Schnitt, Bitpanda-Dialektkorrektur und reproduziert korrigierte Firefox-Subpixel-Touchhöhe. 1104 Units, Pflichtgates und tatsächliche Chromium-/Firefox-/WebKit-Produktion PASS; reguläres HTTPS 136/136. [Livebeleg](release-evidence/v268-live-acceptance.json), aktueller Owner/Übergabe im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md).
