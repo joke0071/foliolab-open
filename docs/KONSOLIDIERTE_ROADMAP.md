@@ -1,3 +1,11 @@
+## v269 LIVE_ACCEPTED / nächster Fachschnitt UH03 – 02.11.2026
+
+Main `f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`, SW v269/v5/Installationsidentität erhalten. #283 geschützt gemergt; Main-/Produktionslauf **41521172914 Versuch2 SUCCESS**, Livejob **125556061110 SUCCESS**. 1118 Units, volle Chromium-/Firefox-/WebKit-Pflichtgates, 138/138 normale HTTPS-Assets, verifiziertes Liveartefakt und mobile Sichtprüfung PASS. [Verbindliche Abnahme einschließlich Fehler-/Retryhistorie](release-evidence/v269-pr283-live-acceptance.json). Diese Abnahme nicht wiederholen.
+
+**UH03 insgesamt offen, danach UH04 → UH05.** Nächster begrenzter Schritt: [gesicherte exakte Kraken-Saldopfadanalyse](release-evidence/uh03-kraken-exact-trail-analysis.json) umsetzen, keine CSV-Reihenfolge oder lokal-gierige Wahl; eindeutigen vollständigen Pfad am bestätigten Bestand verankern, echte Mehrdeutigkeiten/Lücken weiter sperren. Voranalyse ist noch keine Produktkorrektur. Originale/Oracles wiederverwenden; unabhängige historische Endbelege, referenzübergreifende Chronologie, kombinierte BTC/ETH/ERC20/SOL/SPL-/Transfer-/Gas-/Gebührenfälle und persistente selektive Quellenrücknahme bleiben offen. Übrige UI-/Drive-/Kurs-/Analysepakete unverändert erhalten. EFF01/HND01; Übergabe/Owner ausschließlich im aktuellen zentralen Checkpoint. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 # FolioLab – konsolidierte aktuelle Roadmap
 
 Vollständigkeitsabgleich vom **02.11.2026** auf ausdrücklichen Nutzerauftrag. Dies ist eine Dokumentationskorrektur, **keine Entwicklungsübernahme, keine Implementierung und keine neue Releaseabnahme**.
