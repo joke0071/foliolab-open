@@ -1,0 +1,44 @@
+{
+  "status": "FINAL_PR_CI_PASS_NOT_PRODUCTION_ACCEPTED",
+  "candidateHead": "63622f42e3fa91b1abbebab541a17e3ee10fbfb7",
+  "tree": "ab0111e68a6af96937eb81ca4de2aaa780cc7f25",
+  "testMerge": "8cb432326fdb576a95ae1606519de2ab61966558",
+  "main": "e5b2bcdfd192d2ed351ee0aacd574f4ea2b6df11",
+  "run": 41354191091,
+  "attempt": 2,
+  "conclusion": "success",
+  "originalAttempt": {
+    "cross1": 124990659493,
+    "conclusion": "cancelled",
+    "sixHourTimeout": true,
+    "noAssertionFailureObserved": true
+  },
+  "targetedRetry": {
+    "job": 125118015314,
+    "conclusion": "success",
+    "logsRead": true,
+    "fullFirefoxWebkitSuffix": true,
+    "artifact": 13119449128,
+    "sha256": "a1116eda23fcd39169e173f9a99e9f3d665307f3bdf1e6c5756e773322a0a2d1",
+    "downloadedDigestVerified": true,
+    "positionArchiveBothEngines": "PASS"
+  },
+  "units": {
+    "pass": 1084,
+    "fail": 0,
+    "skip": 0
+  },
+  "otherFinalJobLogsRead": [
+    124990659452,
+    124990659482,
+    124990659468
+  ],
+  "otherDigestsVerified": true,
+  "sourceHashesMatchOriginalPreflight": true,
+  "reviews": [],
+  "reviewThreads": [],
+  "protectedMerge": "expected_head_sha",
+  "physicalAndroid": false,
+  "production": "pending",
+  "mainRun": 41397335103
+}
