@@ -1,0 +1,480 @@
+diff --git a/src/app.js b/src/app.js
+index 335ef57..15b0c13 100644
+--- a/src/app.js
++++ b/src/app.js
+@@ -10,6 +10,8 @@ import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
+ import {readCSVRecords} from './csv-records.js';
+ import {looksLikeBitpandaCSV,parseBitpandaCSV} from './bitpanda-preview.js';
+ import {bitpandaMarkup} from './bitpanda-preview-ui.js';
++import {createBitpandaImportUI} from './bitpanda-import-ui.js';
++import {confirmBitpandaImport} from './bitpanda-import.js';
+ import {referencePermissions,referencePermissionIndex,referenceOrigin,referenceRows,updateReferenceSelection,referenceSelectionSummary,previewReferenceArchive,prepareReferenceArchive,previewReferenceEdit,prepareReferenceEdit,prepareReferenceAdd,previewReferenceRemoval,prepareReferenceRemoval} from './reference-management.js';
+ import {looksLikeLedgerLiveCSV,parseLedgerLiveCSV,previewLedgerLive} from './ledger-live.js';
+ import {ledgerLiveMarkup} from './ledger-live-ui.js';
+@@ -1365,7 +1367,7 @@ function openCSVImport(){
+ 
+  let ledgerDocument=null,ledgerAssignments={},ledgerLimit=50,ledgerMode=false;
+  let krakenDocument=null,krakenLimit=50,krakenMode=false,krakenInputs=[],krakenEconomics=null;
+- let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false;
++ let bitpandaDocument=null,bitpandaLimit=50,bitpandaMode=false,bitpandaInputs=[],bitpandaEconomics=null;
+  let flatexNativeDocuments=null,flatexNativeLimit=50,flatexNativeMode=false,nativeFileMode=false;
+  let flatexNativeLinks=null,flatexNativeAmounts=null,flatexOrderLimit=20,flatexLegLimits={};
+  let flatexSourceIdentities=null,flatexBindings={},flatexBindingLimit=20,flatexBindingStale=false,flatexBindingAction=0;
+@@ -1392,8 +1394,8 @@ function openCSVImport(){
+   return checked.preview;
+  };
+  showDialog('CSV importieren','BUCHUNGEN',
+-  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live und Bitpanda bleiben lokale Prüfvorschauen. Kraken-Gruppen können nach expliziter Zuordnung und Saldenprüfung übernommen werden. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
+-  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – Vorschau</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Vorschau</option></select></label>'+
++  '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live bleibt eine lokale Prüfvorschau. Kraken- und Bitpanda-Vorgänge können nach expliziter Zuordnung und Bestandsprüfung übernommen werden. Flatex-Kontoumsätze werden zunächst nur zur Prüfung angezeigt, nicht automatisch verbucht. Alle Dateien bleiben auf deinem Gerät.</p>'+
++  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – Vorschau</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Buchungen prüfen</option></select></label>'+
+    '<div id="csvGeneralFiles"><label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label></div>'+
+    '<div id="csvFlatexNativeFiles" class="hidden"><label class="field"><span>Depotumsätze</span><input id="csvFlatexDepot" type="file" accept=".csv,text/csv,text/plain" multiple></label><label class="field"><span>Kontoumsätze</span><input id="csvFlatexAccount" type="file" accept=".csv,text/csv,text/plain" multiple></label><p class="small-help">Einzeln oder gemeinsam, auch mehrere Teil-Dateien. Je Datei maximal 2 MB, insgesamt 20 Dateien und 5.000 Zeilen. Nur lokale Vorschau.</p></div>'+
+    '<div id="csvBrokerStatus" role="status"></div>'+
+@@ -1418,7 +1420,17 @@ function openCSVImport(){
+      throw error;
+     }
+    }
+-   if(bitpandaMode)throw Error('Bitpanda bleibt eine lokale Vorschau. Keine wirtschaftliche Übernahme freigegeben.');
++   if(bitpandaMode){
++    const approval=bitpandaEconomics?.approved();
++    if(!approval)throw Error('Aktuelle Bitpanda-Zuordnung, Kontobewegungen und Endbestände bestätigen.');
++    const generation=selectionGeneration,controller=bitpandaEconomics;
++    await portfolioStore.assertCurrent();
++    if(editor!==importEditor||generation!==selectionGeneration||controller!==bitpandaEconomics||!controller.approved())throw Error('Bitpanda-Auswahl oder Datenstand geändert. Erneut prüfen.');
++    const draft=confirmBitpandaImport(model,bitpandaInputs,approval.assignments,approval);
++    const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
++    try{model=draft;await save();}catch(error){if(model===draft)model=previous;controller.resetApproval();throw error;}finally{$('dialogFields').inert=false;}
++    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Geprüfte Bitpanda-Vorgänge atomar gespeichert. Ungeklärte Restvorgänge bleiben offen.');return;
++   }
+    if(krakenMode){
+     const approval=krakenEconomics?.approved();
+     if(!approval)throw Error('Kraken Ledger bleibt ohne aktuelle Zuordnung, Saldenprüfung und ausdrückliche Bestätigung eine lokale Vorschau.');
+@@ -1574,9 +1586,12 @@ function openCSVImport(){
+  const renderBitpanda=()=>{
+   importEditor.submitBlocked=true;
+   $('csvBrokerStatus').textContent='Bitpanda-Export erkannt. Übernahme bleibt gesperrt.';
+-  $('csvMapping').innerHTML='';$('csvReview').innerHTML=bitpandaMarkup(bitpandaDocument,{limit:bitpandaLimit});
+-  $('csvReviewStatus').textContent='Bitpanda: '+bitpandaDocument.rows.length+' Zeilen, nur lokale Vorschau.';
+-  $('saveDialog').disabled=true;$('saveDialog').textContent='Nur Vorschau';
++  $('csvMapping').innerHTML='';
++  if(!$('csvBitpandaDocument'))$('csvReview').innerHTML='<div id="csvBitpandaDocument"></div><div id="csvBitpandaEconomic"></div>';
++  $('csvBitpandaDocument').innerHTML=bitpandaMarkup(bitpandaDocument,{limit:bitpandaLimit});
++  if(!bitpandaEconomics)bitpandaEconomics=createBitpandaImportUI({host:$('csvBitpandaEconomic'),inputs:bitpandaInputs,getModel:()=>model,onApproval:ready=>{importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';}});
++  $('csvReviewStatus').textContent='Bitpanda: '+bitpandaDocument.rows.length+' Quellzeilen. Noch nichts gespeichert.';
++  const ready=Boolean(bitpandaEconomics?.approved());importEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent=ready?'Geprüfte Änderungen übernehmen':'Nur Vorschau';
+   $('bitpandaShowMore')?.addEventListener('click',()=>{const previous=bitpandaLimit;bitpandaLimit+=50;renderBitpanda();$('csvReview').querySelectorAll('.performance-details')[previous]?.querySelector('summary')?.focus();});
+  };
+  const renderFlatexNative=()=>{
+@@ -1685,7 +1700,7 @@ function openCSVImport(){
+   const files=selected.map(x=>x.file);
+   ledgerDocument=null;ledgerAssignments={};ledgerLimit=50;ledgerMode=false;importEditor.submitBlocked=false;
+   krakenDocument=null;krakenLimit=50;krakenMode=false;krakenInputs=[];krakenEconomics=null;
+-  bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;
++  bitpandaDocument=null;bitpandaLimit=50;bitpandaMode=false;bitpandaInputs=[];bitpandaEconomics=null;
+   flatexNativeDocuments=null;flatexNativeLimit=50;flatexNativeMode=source==='flatex-native';if(flatexNativeMode)importEditor.submitBlocked=true;
+   flatexNativeLinks=null;flatexNativeAmounts=null;flatexOrderLimit=20;flatexLegLimits={};
+   flatexSourceIdentities=null;flatexBindings={};flatexBindingLimit=20;flatexBindingStale=false;flatexBindingAction++;
+@@ -1721,7 +1736,7 @@ function openCSVImport(){
+     bitpandaMode=true;importEditor.submitBlocked=true;
+     if(!['auto','bitpanda'].includes(source))throw Error('Bitpanda-Exporte bitte über die native Bitpanda-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');
+     if(inputs.length!==1)throw Error('Bitpanda bitte mit genau einer Datei prüfen; keine gemischten Importstapel.');
+-    bitpandaDocument=parseBitpandaCSV(inputs[0].text);renderBitpanda();return;
++    bitpandaInputs=inputs.map(f=>f.text);bitpandaDocument=parseBitpandaCSV(inputs[0].text);renderBitpanda();return;
+    }
+    const probe=parseCSV(inputs[0].text,{sourceName:inputs[0].name});
+    const ledger=inputs.some(f=>looksLikeLedgerLiveCSV(parseCSV(f.text)));
+diff --git a/src/bitpanda-import-ui.js b/src/bitpanda-import-ui.js
+new file mode 100644
+index 00000000..aed515e
+--- /dev/null
++++ b/src/bitpanda-import-ui.js
+@@ -0,0 +1,46 @@
++import {prepareBitpandaSourcePlan,previewBitpandaImport,BITPANDA_SOURCE} from './bitpanda-import.js';
++import {escapeHTML as esc} from './model.js';
++import {sourceUnmodified} from './import-identity.js';
++/** Ephemeral confirmations only; the shared CSV dialog owns the single CAS save. */
++export function createBitpandaImportUI({host,inputs,getModel,onApproval}){
++ const source=prepareBitpandaSourcePlan(inputs),streams=new Map(),assignments={},expectedClosing={},feeModes={},selected=new Set(source.groups.map(r=>r.id)),external=new Set();let plan=null,approved=false,limit=50;
++ for(const r of source.groups){
++  streams.set(r.streamId,{asset:r.asset,kind:r.values['Asset class']==='Fiat'?'cash':'crypto',label:r.asset+' · '+r.values['Asset class']+' · '+r.values['Product ID']});
++  if(r.cashStreamId)streams.set(r.cashStreamId,{asset:r.values.Fiat,kind:'cash',label:r.values.Fiat+' · Verrechnungskonto'});
++ }
++ for(const [key]of streams){
++  const ids=new Set();for(const b of getModel().bookings){if(b.importSource?.sourceId!==BITPANDA_SOURCE)continue;try{for(const [k,id]of JSON.parse(b.importSource.sourcePayload).bindings||[])if(k===key)ids.add(id);}catch{}}
++  if(ids.size===1&&getModel().positions.some(p=>p.id===[...ids][0]))assignments[key]=[...ids][0];
++ }
++ for(const r of source.groups){const b=getModel().bookings.find(b=>b.importSource?.sourceId===BITPANDA_SOURCE&&b.importSource.fileId===r.id&&sourceUnmodified(getModel(),b));if(b)try{const p=JSON.parse(b.importSource.sourcePayload);if(p.feeMode)feeModes[r.id]=p.feeMode;if(p.external)external.add(r.id);}catch{}}
++ const el=k=>host.querySelector('[data-bitpanda="'+k+'"]');
++ host.innerHTML='<details><summary>Bitpanda-Buchungen prüfen und übernehmen</summary><p class="small-help">Ordne die Quellprodukte zu und prüfe die tatsächlichen Kontoumsätze anhand deiner Abrechnung. Der Marktpreis wird nicht als Ausführungspreis verwendet. Fehlende Gebühren und Steuern bleiben unbekannt. Transfers und Staking-Hauptbeträge benötigen noch einen gesonderten Gegenbeleg.</p><div data-bitpanda="bindings"></div><label class="field"><span><input type="checkbox" data-bitpanda="net"> Die Exportbeträge entsprechen den tatsächlichen Kontobewegungen. Bei ausgewiesenen Gebühren habe ich je Vorgang geprüft, ob sie enthalten sind oder zusätzlich abgebucht werden.</span></label><label class="field"><span><input type="checkbox" data-bitpanda="opening"> Vorhandene Mengen sind geprüfte Anfangsbestände vor den neuen Vorgängen. Bereits enthaltene Endbestände werden nicht nochmals addiert.</span></label><div data-bitpanda="groups"></div><button type="button" class="btn outline" data-bitpanda="more" hidden>Weitere Vorgänge anzeigen</button><button type="button" class="btn outline" data-bitpanda="simulate">Auswahl prüfen</button><p data-bitpanda="status" role="status" aria-live="polite">Noch keine Buchungsprüfung durchgeführt.</p><label class="field"><span><input type="checkbox" data-bitpanda="partial"> Nicht ausgewählte Restvorgänge ausdrücklich offen lassen.</span></label><label class="field"><span><input type="checkbox" data-bitpanda="approve" disabled> Geprüfte Mengen, Geldbewegungen und unabhängig belegte Endbestände bestätigen. Unbekannte Kosten und Steuern bleiben ungeprüft.</span></label></details>';
++ const options=()=>({selectedGroups:[...selected],externalReferences:[...external],feeModes:{...feeModes},expectedClosing:{...expectedClosing},netConfirmed:el('net').checked,openingConfirmed:el('opening').checked});
++ const valid=()=>approved&&plan?.ready&&!plan.issues.length&&plan.baseline===JSON.stringify(getModel())&&(!plan.excluded||el('partial').checked);
++ const notify=()=>onApproval(Boolean(valid()));
++ const invalidate=()=>{plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
++ function renderBindings(){
++  el('bindings').innerHTML=[...streams].map(([key,s])=>{
++   const positions=getModel().positions.filter(p=>!p.wallet?.enabled&&p.managementSource!=='wallet'&&p.currency==='EUR'&&p.kind===s.kind&&(s.kind==='cash'||p.symbol===s.asset));
++   return '<div class="history-sub"><label class="field"><span>'+esc(s.label)+'</span><select data-bitpanda-binding="'+esc(key)+'"><option value="">Bitte ausdrücklich zuordnen</option>'+positions.map(p=>'<option value="'+esc(p.id)+'"'+(assignments[key]===p.id?' selected':'')+'>'+esc((getModel().providers.find(v=>v.id===p.providerId)?.name||'Anbieter')+' / '+p.name)+'</option>').join('')+'</select></label><label class="field"><span>Unabhängig belegter Endbestand nach der gewählten neuen Teilmenge</span><input type="text" inputmode="decimal" autocomplete="off" data-bitpanda-closing="'+esc(key)+'" value="'+esc(expectedClosing[assignments[key]]??'')+'"></label></div>';
++  }).join('');
++  for(const e of host.querySelectorAll('[data-bitpanda-binding]'))e.onchange=()=>{assignments[e.dataset.bitpandaBinding]=e.value;invalidate();renderBindings();};
++  for(const e of host.querySelectorAll('[data-bitpanda-closing]'))e.oninput=()=>{const id=assignments[e.dataset.bitpandaClosing];if(id)expectedClosing[id]=e.value;invalidate();};
++ }
++ function renderGroups(){
++  el('groups').innerHTML=source.groups.slice(0,limit).map(r=>{
++   const v=r.values,n=r.numbers,result=plan?.groups.find(g=>g.id===r.id);
++   return '<div class="history-sub"><label class="field"><span><input type="checkbox" data-bitpanda-group="'+esc(r.id)+'"'+(selected.has(r.id)?' checked':'')+'> '+esc(v.Timestamp+' · '+v['Transaction Type']+' · '+(n['Amount Asset']??'unbekannt')+' '+v.Asset)+'</span></label><p class="small-help">Fiatbetrag: '+esc(n['Amount Fiat']??'unbekannt')+' '+esc(v.Fiat)+' · Gebühr: '+esc(n.Fee??'unbekannt')+' '+esc(v['Fee asset'])+'</p>'+(n.Fee!==null&&Number(n.Fee)>0?'<label class="field"><span>Gebühr laut Abrechnung</span><select data-bitpanda-fee="'+esc(r.id)+'"><option value="">Bitte prüfen</option><option value="included"'+(feeModes[r.id]==='included'?' selected':'')+'>Im Exportbetrag enthalten</option><option value="additional"'+(feeModes[r.id]==='additional'?' selected':'')+'>Zusätzliche Abbuchung</option></select></label>':'')+(['deposit','withdrawal'].includes(r.kind)?'<label class="field"><span><input type="checkbox" data-bitpanda-external="'+esc(r.id)+'"'+(external.has(r.id)?' checked':'')+'> Gegenbereich liegt außerhalb aller erfassten Konten und Wallets.</span></label>':'')+'<p class="small-help">'+esc(result?.message||(result?.status==='ready'?'Geprüft – neuer Vorgang':result?.status==='existing'?'Bereits vorhanden':''))+'</p></div>';
++  }).join('');
++  for(const e of host.querySelectorAll('[data-bitpanda-group]'))e.onchange=()=>{e.checked?selected.add(e.dataset.bitpandaGroup):selected.delete(e.dataset.bitpandaGroup);invalidate();};
++  for(const e of host.querySelectorAll('[data-bitpanda-external]'))e.onchange=()=>{e.checked?external.add(e.dataset.bitpandaExternal):external.delete(e.dataset.bitpandaExternal);invalidate();};
++  for(const e of host.querySelectorAll('[data-bitpanda-fee]'))e.onchange=()=>{feeModes[e.dataset.bitpandaFee]=e.value;invalidate();};
++  el('more').hidden=limit>=source.groups.length;el('more').classList.toggle('hidden',limit>=source.groups.length);
++ }
++ el('net').onchange=invalidate;el('opening').onchange=invalidate;
++ el('partial').onchange=()=>{approved=false;el('approve').checked=false;notify();};
++ el('approve').onchange=()=>{approved=el('approve').checked;notify();};
++ el('simulate').onclick=()=>{approved=false;el('approve').checked=false;plan=null;try{plan=previewBitpandaImport(getModel(),inputs,assignments,options());el('status').textContent=plan.ready+' neue Vorgänge · '+plan.duplicates+' bereits vorhanden · '+plan.issues.length+' gesperrt · '+plan.excluded+' nicht ausgewählt. Noch nichts gespeichert.'+(plan.issues.length?' '+[...new Set(plan.issues.map(i=>i.message))].join(' '):'');}catch(e){el('status').textContent='Keine Übernahme: '+e.message;}el('approve').disabled=!plan?.ready||Boolean(plan.issues.length);renderGroups();notify();};
++ el('more').onclick=()=>{limit+=50;renderGroups();};renderBindings();renderGroups();notify();
++ return {approved(){return valid()?{...options(),assignments:{...assignments},baseline:plan.baseline,confirmed:true,partialConfirmed:el('partial').checked}:null;},resetApproval:invalidate};
++}
+diff --git a/src/bitpanda-import.js b/src/bitpanda-import.js
+new file mode 100644
+index 00000000..e23c01f
+--- /dev/null
++++ b/src/bitpanda-import.js
+@@ -0,0 +1,129 @@
++/** UH03: native source observations orchestrate the existing journal only. */
++import {parseBitpandaCSV,canonicalBitpandaType} from './bitpanda-preview.js';
++import {sourceDigest,importSourceKey,sourceUnmodified,bookingOwnership,validateImportSource} from './import-identity.js';
++import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
++import {units,exact,div} from './decimal.js';
++import {backup,safeImport} from './model.js';
++export const BITPANDA_SOURCE='bitpanda-uh03-v1';
++const digest=v=>sourceDigest(JSON.stringify(v));
++const fail=message=>{throw Error(message);};
++const qty=p=>units(p.quantityExact??p.quantity);
++export function prepareBitpandaSourcePlan(inputs){
++ if(!Array.isArray(inputs)||!inputs.length||inputs.length>20)fail('Bitpanda: 1 bis 20 Dateien erforderlich.');
++ const rows=new Map();let total=0,repeated=0;
++ for(const input of inputs)for(const row of parseBitpandaCSV(input).rows){
++  if(++total>5000)fail('Bitpanda: insgesamt maximal 5.000 Quellzeilen.');
++  const v=row.values,reference=v['Transaction ID'],id=digest(['bitpanda-transaction-v1',reference]),payload=digest(v);
++  const prior=rows.get(id);
++  if(prior){if(prior.payload!==payload)prior.conflict=true;else repeated++;continue;}
++  const kind=canonicalBitpandaType(v['Transaction Type']),asset=v['Asset class']==='Fiat'?v.Fiat:v.Asset;
++  rows.set(id,{...row,id,payload,kind,asset,conflict:false,
++   streamId:v['Asset class']==='Fiat'?digest(['bitpanda-fiat-v1',asset]):digest(['bitpanda-product-v1',v['Asset class'],v['Product ID'],asset]),
++   cashStreamId:['buy','sell'].includes(kind)?digest(['bitpanda-fiat-v1',v.Fiat]):null});
++ }
++ return {groups:[...rows.values()],repeated};
++}
++function bound(model,key,assignments,asset,kind){
++ const p=model.positions.find(p=>p.id===assignments[key]);
++ if(!p||p.wallet?.enabled||p.managementSource==='wallet'||p.currency!=='EUR'||p.kind!==kind||kind==='crypto'&&p.symbol!==asset)fail('Quellprodukt ausdrücklich einer passenden manuellen EUR-Position zuordnen.');
++ return p;
++}
++function actionsFor(model,row,assignments,{netConfirmed,feeModes={},externalReferences=[]}){
++ const v=row.values,n=row.numbers,kind=row.kind;
++ if(row.conflict)fail('Dieselbe Bitpanda-ID enthält widersprüchliche Quellfelder.');
++ // Missing optional economic values remain unknown. Malformed values and identifiers block.
++ const structural=row.issues.filter(s=>!s.includes('Wert unbekannt')&&!s.startsWith('Tax Fiat fehlt')&&!s.startsWith('Identische ID-Wiederholung')&&!(s.startsWith('Fee asset:')&&n.Fee==='0'));
++ if(structural.length)fail(structural.join(' '));
++ if(!netConfirmed)fail('Tatsächliche Kontobewegungen und zeitlichen Bezug der Anfangsbestände bestätigen.');
++ const cash=v['Asset class']==='Fiat';
++ if(!['Cryptocurrency','Fiat'].includes(v['Asset class'])||!cash&&(!v['Product ID']||v['Product ID']==='-'))fail('Assetklasse und Produkt-ID müssen eindeutig belegt sein.');
++ const p=bound(model,row.streamId,assignments,row.asset,cash?'cash':'crypto');
++ if(cash&&(row.asset!=='EUR'||!['','-','EUR'].includes(v.Asset)))fail('Fiatbewegung benötigt ein ausdrücklich belegtes EUR-Asset.');
++ if(cash&&n['Amount Asset']!==null&&n['Amount Fiat']!==n['Amount Asset'])fail('Fiat- und Assetbetrag widersprechen sich.');
++ const rawQuantity=cash?n['Amount Fiat']:n['Amount Asset'],quantity=rawQuantity===null?null:units(rawQuantity);
++ if(quantity===null||quantity<=0n)fail('Positive exakte Assetmenge erforderlich; keine Vorzeichenannahme.');
++ const incoming=v['In/Out']==='incoming',fee=n.Fee===null?null:units(n.Fee),tax=n['Tax Fiat']===null?null:units(n['Tax Fiat']);
++ if(fee!==null&&fee<0n||tax!==null&&tax<0n)fail('Negative Gebühren/Steuern zuerst klären.');
++ if(tax!==null&&tax!==0n)fail('Ausgewiesene Steuer benötigt einen gesonderten belegten Nettobetragsabgleich.');
++ const mode=feeModes[row.id];
++ if(fee>0n&&!['included','additional'].includes(mode))fail('Ausgewiesene Gebühr: enthalten oder zusätzlich anhand des Kontoumsatzes bestätigen.');
++ const actions=[],add=(type,q,more={})=>actions.push({type,date:new Date(v.Timestamp).toISOString().slice(0,10),positionId:p.id,quantity:exact(q),unitPrice:cash?'1':'0',feeEUR:'0',taxEUR:'0',fxRate:'1',notes:'Bitpanda '+kind+'. Gebühren/Steuern und Kostenbasis soweit unbekannt ungeprüft.',...more});
++ if(['buy','sell'].includes(kind)){
++  if(cash||v.Fiat!=='EUR'||kind==='buy'&&incoming||kind==='sell'&&!incoming)fail('Handelsrichtung oder EUR-Kryptohandel nicht eindeutig belegt.');
++  const c=bound(model,row.cashStreamId,assignments,'EUR','cash'),total=n['Amount Fiat']===null?null:units(n['Amount Fiat']);
++  if(c.providerId!==p.providerId||total===null||total<=0n)fail('Positiver tatsächlicher EUR-Kontoumsatz und gleicher Anbieter erforderlich.');
++  if(fee>0n&&v['Fee asset']!=='EUR')fail('Handelsgebühr in anderem Asset benötigt gesonderten Mehrbeinabgleich.');
++  const charge=fee??0n,trade=mode==='included'?total+(kind==='buy'?-charge:charge):total;
++  if(trade<=0n)fail('Gebühr übersteigt den belegten Handelsbetrag.');
++  add(kind,quantity,{cashPositionId:c.id,tradeAmountEURExact:exact(trade),unitPrice:exact(div(trade,quantity)),feeEUR:exact(charge)});
++ }else if(kind==='reward'){
++  if(cash||!incoming)fail('Reward benötigt eine eingehende Kryptomenge.');
++  if(fee>0n&&v['Fee asset']!==v.Asset)fail('Rewardgebühr in anderem Asset gesondert abgleichen.');
++  add('reward',quantity+(mode==='included'?(fee??0n):0n));
++ }else if(['deposit','withdrawal'].includes(kind)){
++  if((kind==='deposit')!==incoming)fail('Richtung widerspricht Ein-/Ausgang.');
++  if(!externalReferences.includes(row.id))fail('Gegenbereich ausdrücklich außerhalb aller erfassten Konten und Wallets bestätigen oder starken internen Gegenbeleg klären.');
++  if(fee>0n&&v['Fee asset']!==row.asset)fail('Gebührenasset benötigt gesonderten Mehrbeinabgleich.');
++  const principal=quantity+(mode==='included'?(incoming?1n:-1n)*(fee??0n):0n);
++  if(principal<=0n)fail('Gebühr übersteigt die belegte Bewegung.');
++  add(cash?(incoming?'deposit':'withdraw'):(incoming?'deliver_in':'deliver_out'),principal);
++ }else fail('Transfer-/Staking-Hauptbetrag oder Sonderfall benötigt einen belegten Gegenbereich; kein neuer Ertrag.');
++ if(fee>0n&&!['buy','sell'].includes(kind))add('fee',fee,{notes:'Bitpanda-Gebühr in '+v.Asset+'. Kein zusätzlich erfundener EUR-Wert.'});
++ return actions;
++}
++/** Pure detached draft. An unresolved selected row prevents the enclosing atomic commit. */
++export function previewBitpandaImport(model,inputs,assignments,options={}){
++ const {selectedGroups=null,expectedClosing={},openingConfirmed=false}=options,baseline=JSON.stringify(model),source=prepareBitpandaSourcePlan(inputs);
++ if(!assignments||typeof assignments!=='object'||Array.isArray(assignments))fail('Explizite Bitpanda-Zuordnung erforderlich.');
++ const ids=new Set(source.groups.map(g=>g.id));
++ if(selectedGroups!==null&&(!Array.isArray(selectedGroups)||new Set(selectedGroups).size!==selectedGroups.length||selectedGroups.some(id=>!ids.has(id))))fail('Bitpanda-Auswahl ist veraltet oder doppelt.');
++ if(options.externalReferences!==undefined&&(!Array.isArray(options.externalReferences)||options.externalReferences.some(id=>!ids.has(id))))fail('Externe Gegenbereiche sind veraltet.');
++ const selected=source.groups.filter(g=>selectedGroups===null||selectedGroups.includes(g.id)).sort((a,b)=>Date.parse(a.values.Timestamp)-Date.parse(b.values.Timestamp)||a.id.localeCompare(b.id));
++ const used=new Map(),providers=new Set();
++ for(const row of source.groups)for(const key of [row.streamId,row.cashStreamId].filter(Boolean)){
++  const id=assignments[key];if(!id)continue;
++  if(used.has(id)&&used.get(id)!==key)fail('Verschiedene Quellprodukte dürfen nicht dieselbe Position verwenden.');
++  used.set(id,key);const p=model.positions.find(p=>p.id===id);if(p)providers.add(p.providerId);
++ }
++ if(providers.size>1)fail('Bitpanda-Quellprodukte müssen zum selben Anbieter gehören.');
++ const draft=structuredClone(model),groups=[],issues=[],touched=new Set();let ready=0,duplicates=0;
++ for(const row of selected){try{
++  const actions=actionsFor(draft,row,assignments,options),bindings=[...new Set([row.streamId,row.cashStreamId].filter(Boolean))].map(k=>[k,assignments[k]]).sort((a,b)=>a[0].localeCompare(b[0]));
++  const origins=actions.map((a,i)=>({version:1,sourceId:BITPANDA_SOURCE,accountId:draft.positions.find(p=>p.id===a.positionId).accountId,externalId:row.id+':'+i,fileId:row.id,occurrence:1,ownership:'imported',ownedSnapshot:'',sourcePayload:JSON.stringify({source:row.payload,bindings,feeMode:options.feeModes?.[row.id]??null,netConfirmed:true,external:options.externalReferences?.includes(row.id)??false,action:a})}));
++  const prior=draft.bookings.filter(b=>b.importSource?.sourceId===BITPANDA_SOURCE&&b.importSource.fileId===row.id);
++  if(prior.length){
++   if(prior.length!==origins.length||origins.some(o=>{const matches=prior.filter(b=>importSourceKey(b.importSource)===importSourceKey(o));return matches.length!==1||matches[0].importSource.sourcePayload!==o.sourcePayload||!sourceUnmodified(draft,matches[0]);}))fail('Vorhandener Bitpanda-Vorgang ist geändert, unvollständig oder widersprüchlich.');
++   duplicates++;groups.push({id:row.id,status:'existing',actions});continue;
++  }
++  if(draft.journalEntries.some(j=>j.source===BITPANDA_SOURCE&&j.id.startsWith('uh03bp:'+row.id+':')))fail('Quellbuchung fehlt zum vorhandenen Journal; keine Wiederbelebung.');
++  const affected=new Set(actions.flatMap(a=>[a.positionId,a.cashPositionId].filter(Boolean)));
++  for(const id of affected){
++   const p=draft.positions.find(p=>p.id===id),opening=draft.openingPositions.find(o=>o.positionId===id);
++   if(!openingConfirmed)fail('Geprüfte Anfangsbestände vor den neuen Vorgängen ausdrücklich bestätigen.');
++   if(opening?.asOf&&opening.asOf>actions[0].date)fail('Datierter Anfangsbestand liegt nach dem Quellenereignis.');
++   if(p.kind==='crypto'&&[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,opening?.costBasisExact,opening?.realizedPnLExact].some(v=>v!=null))fail('Vorhandene bestätigte Kostenbasis bleibt geschützt.');
++   if(draft.bookings.some(b=>b.importSource?.sourceId!==BITPANDA_SOURCE&&[b.positionId,b.cashPositionId,b.targetPositionId].includes(id)))fail('Andere oder manuelle Buchungen benötigen zuerst einen ausdrücklichen Quellenabgleich.');
++  }
++  const candidate=structuredClone(draft);
++  for(const [i,action]of actions.entries()){
++   const b=executeTransaction(candidate,{...action,id:'uh03bp:'+row.id+':'+i});candidate.journalEntries.find(j=>j.id===b.journalEntryId).source=BITPANDA_SOURCE;
++   b.costsVerified=false;b.taxEUR=null;if(row.numbers.Fee===null)b.feeEUR=null;
++   if(!['buy','sell'].includes(action.type)&&candidate.positions.find(p=>p.id===action.positionId).kind==='crypto'){b.amountEUR=null;b.amountExactEUR=null;b.unitPrice=null;}
++   for(const id of affected){const p=candidate.positions.find(p=>p.id===id);if(p.kind==='crypto'){p.costBasisExact=null;p.costBasisEUR=null;p.realizedPnLExact=null;p.realizedPnLEUR=null;}}
++   origins[i].ownedSnapshot=bookingOwnership(candidate,b);b.importSource=validateImportSource(origins[i],b.accountId);
++  }
++  if(!ledgerQuantityAudit(candidate).ok)fail('Journal und Bestände widersprechen sich.');
++  Object.assign(draft,candidate);for(const id of affected)touched.add(id);ready++;groups.push({id:row.id,status:'ready',actions});
++ }catch(e){issues.push({id:row.id,message:e.message});groups.push({id:row.id,status:'blocked',message:e.message});}}
++ // Bitpanda has no source running balances. A separately checked closing balance is mandatory.
++ for(const id of touched){try{if(expectedClosing[id]==null||expectedClosing[id]===''||units(expectedClosing[id])!==qty(draft.positions.find(p=>p.id===id)))fail('Unabhängig belegten Endbestand für jede betroffene Position eingeben und exakt abgleichen.');}catch(e){issues.push({id,message:e.message});}}
++ return {baseline,source,groups,issues,ready,duplicates,excluded:source.groups.length-selected.length,simulated:draft};
++}
++export function confirmBitpandaImport(model,inputs,assignments,{baseline,confirmed=false,partialConfirmed=false,...options}={}){
++ if(!confirmed||baseline!==JSON.stringify(model))fail('Aktuellen Bitpanda-Prüfplan erneut bestätigen.');
++ const plan=previewBitpandaImport(model,inputs,assignments,options);
++ if(plan.issues.length)fail('Ungeklärte Vorgänge oder Endbestände verhindern die gesamte Auswahl.');
++ if(plan.excluded&&!partialConfirmed)fail('Nicht ausgewählte Restvorgänge ausdrücklich offen lassen.');
++ if(!plan.ready)return model;
++ safeImport(JSON.parse(backup(plan.simulated)));return plan.simulated;
++}
+diff --git a/sw.js b/sw.js
+index 64ca624..671061c 100644
+--- a/sw.js
++++ b/sw.js
+@@ -1,5 +1,5 @@
+-const CACHE='foliolab-open-v268';
+-const ASSETS=['./','./src/startup.js','./src/loading-ui.js','./icons/flask-192.png','./icons/flask-512.png','./icons/flask-maskable-512.png','./src/unified-bitcoin.js','./src/unified-bitcoin-ui.js','./src/retired-providers.js','./src/marketstack.js','./src/alpha-vantage.js','./src/backup-limits.js','./src/header-status.js','./src/blocked-reasons-ui.js','./src/flatex-native-ui.js','./src/flatex-native.js','./src/bitpanda-preview-ui.js','./src/csv-records.js','./src/bitpanda-preview.js','./src/kraken-ledger.js','./src/kraken-ledger-ui.js','./src/kraken-source-plan.js','./src/kraken-import.js','./src/kraken-import-ui.js','./src/pchain-identity.js','./src/reference-management.js','./src/sonic-staking-evidence.js','./src/pchain-evidence.js','./src/ledger-live.js','./src/ledger-live-ui.js','./src/account-evidence.js','./src/booking-management.js','./src/csv-batch.js','./src/history-evidence-cache.js','./src/historical-portfolio-value.js','./src/historical-position-value.js','./src/purchase-evidence.js','./src/purchase-evidence-ui.js','./src/interest-ui.js','./src/interest-account.js','./src/interest-scenario.js','./src/cash-reconciliation.js','./src/cash-terms.js','./src/cash-terms-ui.js','./src/wallet-history-calculation.js','./src/wallet-history-days-worker.js','./src/wallet-history-valuation.js','./src/solana-history.js','./src/wallet-history-days.js','./src/wallet-history-ui.js','./src/wallet-history-state.js','./src/ethereum-history.js','./src/bitcoin-history.js','./src/wallet-history-core.js','./src/import-identity.js','./index.html','./styles.css','./src/credential-visibility.js','./src/economic-form-ui.js','./src/dialog-discard.js','./src/app.js','./src/drive-backup.js','./src/backup-vault.js','./src/complete-backup.js','./src/account-opening.js','./src/portfolio-edit-actions.js','./src/position-selection.js','./src/coin-identity.js','./src/position-search.js','./src/asset-wizard.js','./src/asset-wizard-core.js','./src/public-instruments-client.js','./src/refresh-ui.js','./src/market-diagnostics.js','./src/quote-quality.js','./src/dashboard-ui.js','./src/chart-periods.js','./src/position-history.js','./src/eodhd-transport.js','./src/eodhd-worker-client.js','./src/security-sources.js','./src/security-discovery.js','./src/onboarding-suggestions.js','./src/reference-listings.js','./src/instrument-catalog.js','./src/security-catalog.js','./src/crypto-fallbacks.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/position-bookings.js','./src/flatex-review-export.js','./src/allocation-ui.js','./src/position-quality-review.js','./src/valuation-status.js','./src/legacy-quote-audit.js','./src/atomic-storage.js','./src/browser-portfolio-storage.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transfer-matching-ui.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/staking-discovery.js','./src/bnb-token-scanner.js','./src/solana-rpc.js','./src/wallet-scan-update.js','./src/ethereum-fallback.js','./src/native-staking-networks.js','./src/staking-catalog.js','./src/wallet-visibility.js','./src/request-cache.js','./src/csv-import.js','./src/flatex-import.js','./src/flatex-reconciliation.js','./src/flatex-backfill.js','./src/flatex-cost-basis.js','./src/flatex-settlements.js','./src/flatex-settlement-audit.js','./src/flatex-cash-audit.js','./src/booking-history.js','./src/booking-history-ui.js','./src/booking-insights-ui.js','./src/booking-insights.js','./src/capital-flows.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/position-icons.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
++const CACHE='foliolab-open-v269';
++const ASSETS=['./','./src/startup.js','./src/loading-ui.js','./icons/flask-192.png','./icons/flask-512.png','./icons/flask-maskable-512.png','./src/unified-bitcoin.js','./src/unified-bitcoin-ui.js','./src/retired-providers.js','./src/marketstack.js','./src/alpha-vantage.js','./src/backup-limits.js','./src/header-status.js','./src/blocked-reasons-ui.js','./src/flatex-native-ui.js','./src/flatex-native.js','./src/bitpanda-preview-ui.js','./src/csv-records.js','./src/bitpanda-preview.js','./src/bitpanda-import.js','./src/bitpanda-import-ui.js','./src/kraken-ledger.js','./src/kraken-ledger-ui.js','./src/kraken-source-plan.js','./src/kraken-import.js','./src/kraken-import-ui.js','./src/pchain-identity.js','./src/reference-management.js','./src/sonic-staking-evidence.js','./src/pchain-evidence.js','./src/ledger-live.js','./src/ledger-live-ui.js','./src/account-evidence.js','./src/booking-management.js','./src/csv-batch.js','./src/history-evidence-cache.js','./src/historical-portfolio-value.js','./src/historical-position-value.js','./src/purchase-evidence.js','./src/purchase-evidence-ui.js','./src/interest-ui.js','./src/interest-account.js','./src/interest-scenario.js','./src/cash-reconciliation.js','./src/cash-terms.js','./src/cash-terms-ui.js','./src/wallet-history-calculation.js','./src/wallet-history-days-worker.js','./src/wallet-history-valuation.js','./src/solana-history.js','./src/wallet-history-days.js','./src/wallet-history-ui.js','./src/wallet-history-state.js','./src/ethereum-history.js','./src/bitcoin-history.js','./src/wallet-history-core.js','./src/import-identity.js','./index.html','./styles.css','./src/credential-visibility.js','./src/economic-form-ui.js','./src/dialog-discard.js','./src/app.js','./src/drive-backup.js','./src/backup-vault.js','./src/complete-backup.js','./src/account-opening.js','./src/portfolio-edit-actions.js','./src/position-selection.js','./src/coin-identity.js','./src/position-search.js','./src/asset-wizard.js','./src/asset-wizard-core.js','./src/public-instruments-client.js','./src/refresh-ui.js','./src/market-diagnostics.js','./src/quote-quality.js','./src/dashboard-ui.js','./src/chart-periods.js','./src/position-history.js','./src/eodhd-transport.js','./src/eodhd-worker-client.js','./src/security-sources.js','./src/security-discovery.js','./src/onboarding-suggestions.js','./src/reference-listings.js','./src/instrument-catalog.js','./src/security-catalog.js','./src/crypto-fallbacks.js','./src/historical-csv.js','./src/position-detail-ui.js','./src/position-bookings.js','./src/flatex-review-export.js','./src/allocation-ui.js','./src/position-quality-review.js','./src/valuation-status.js','./src/legacy-quote-audit.js','./src/atomic-storage.js','./src/browser-portfolio-storage.js','./src/model.js','./src/assets.js','./src/decimal.js','./src/transfer-matching-ui.js','./src/transactions.js','./src/blockchain-adapters.js','./src/performance.js','./src/market.js','./src/staking-discovery.js','./src/bnb-token-scanner.js','./src/solana-rpc.js','./src/wallet-scan-update.js','./src/ethereum-fallback.js','./src/native-staking-networks.js','./src/staking-catalog.js','./src/wallet-visibility.js','./src/request-cache.js','./src/csv-import.js','./src/flatex-import.js','./src/flatex-reconciliation.js','./src/flatex-backfill.js','./src/flatex-cost-basis.js','./src/flatex-settlements.js','./src/flatex-settlement-audit.js','./src/flatex-cash-audit.js','./src/booking-history.js','./src/booking-history-ui.js','./src/booking-insights-ui.js','./src/booking-insights.js','./src/capital-flows.js','./src/xrpl-assets.js','./src/bitcoin-hd.js','./src/defi.js','./src/position-icons.js','./src/format.js','./src/crypto-backup.js','./icons/flask.svg','./manifest.webmanifest'];
+ self.addEventListener('install',event=>{
+   // A new version must not inherit still-fresh HTTP-cache bytes from the old
+   // deployment. Cache API requests otherwise use the browser's HTTP cache.
+diff --git a/tests/bitpanda-import-fixture.mjs b/tests/bitpanda-import-fixture.mjs
+new file mode 100644
+index 00000000..1f188a8
+--- /dev/null
++++ b/tests/bitpanda-import-fixture.mjs
+@@ -0,0 +1,15 @@
++import {bitpandaCSV} from './bitpanda-fixture.mjs';
++import {blankModel,createProvider,createAccount,createPosition} from '../src/model.js';
++import {captureOpenings} from '../src/transactions.js';
++import {prepareBitpandaSourcePlan} from '../src/bitpanda-import.js';
++export const source=()=>bitpandaCSV([
++ {'Transaction ID':'SYN-BUY','Transaction Type':'buy','In/Out':'outgoing','Amount Asset':'3','Amount Fiat':'101',Asset:'ETH','Asset market price':'99999',Fee:'1','Fee asset':'EUR','Product ID':'SYN-ETH'},
++ {'Transaction ID':'SYN-REWARD',Timestamp:'1999-01-03T12:00:00+01:00','Transaction Type':'reward','In/Out':'incoming','Amount Asset':'0.1','Amount Fiat':'4',Asset:'ETH','Asset market price':'22',Fee:'-','Fee asset':'-','Product ID':'SYN-ETH',omitTax:true}
++]);
++export function fixture(text=source()){
++ const m=blankModel(),provider=createProvider({id:'bitpanda',name:'Synthetic Bitpanda'});m.providers.push(provider);
++ const assignments={},feeModes={},expectedClosing={},streams=new Map();
++ for(const r of prepareBitpandaSourcePlan([text]).groups){streams.set(r.streamId,{asset:r.asset,cash:r.values['Asset class']==='Fiat'});if(r.cashStreamId)streams.set(r.cashStreamId,{asset:r.values.Fiat,cash:true});if(r.numbers.Fee!==null&&Number(r.numbers.Fee)>0)feeModes[r.id]='included';}
++ for(const [key,s]of streams){const id='bp'+Object.keys(assignments).length,a=createAccount({id:'a'+id,providerId:provider.id,name:s.asset,type:s.cash?'checking':'crypto'},m);m.accounts.push(a);m.positions.push(createPosition({id,providerId:provider.id,accountId:a.id,name:s.asset,symbol:s.asset,coinId:s.cash?'':'ethereum',kind:s.cash?'cash':'crypto',currency:'EUR',quantity:s.cash?'200':'0',price:1},m));assignments[key]=id;expectedClosing[id]=s.cash?'99':'3.1';}
++ captureOpenings(m);return {m,assignments,options:{netConfirmed:true,openingConfirmed:true,feeModes,expectedClosing}};
++}
+diff --git a/tests/bitpanda-import.test.mjs b/tests/bitpanda-import.test.mjs
+new file mode 100644
+index 00000000..4993cd0
+--- /dev/null
++++ b/tests/bitpanda-import.test.mjs
+@@ -0,0 +1,73 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {backup,safeImport} from '../src/model.js';
++import {ledgerQuantityAudit,executeTransaction} from '../src/transactions.js';
++import {previewBitpandaImport,confirmBitpandaImport,prepareBitpandaSourcePlan} from '../src/bitpanda-import.js';
++import {source,fixture} from './bitpanda-import-fixture.mjs';
++import {bitpandaCSV} from './bitpanda-fixture.mjs';
++const confirm=(m,text,assignments,options)=>{const p=previewBitpandaImport(m,[text],assignments,options);assert.deepEqual(p.issues,[]);return confirmBitpandaImport(m,[text],assignments,{...options,confirmed:true,baseline:p.baseline});};
++test('Bitpanda exact settled trade and net reward use journal; source market price never sets execution value',()=>{
++ const text=source(),{m,assignments,options}=fixture(),before=JSON.stringify(m),p=previewBitpandaImport(m,[text],assignments,options);
++ assert.equal(JSON.stringify(m),before);assert.deepEqual(p.issues,[]);assert.equal(p.ready,2);
++ const next=confirm(m,text,assignments,options),buy=next.bookings.find(b=>b.type==='buy'),reward=next.bookings.find(b=>b.type==='reward');
++ assert.deepEqual(next.positions.map(p=>p.quantityExact),['3.1','99']);assert.equal(buy.amountExactEUR,'100');assert.equal(buy.feeEUR,1);assert.equal(buy.taxEUR,null);
++ assert.equal(reward.amountEUR,null);assert.equal(reward.feeEUR,null);assert.equal(reward.taxEUR,null);assert.equal(reward.costsVerified,false);assert.equal(next.positions[0].costBasisExact,null);
++ assert.deepEqual(next.externalCashFlows,[]);assert.equal(ledgerQuantityAudit(next).ok,true);assert.equal(JSON.stringify(m),before);
++ const restored=safeImport(JSON.parse(backup(next))),repeat=previewBitpandaImport(restored,[text,text],assignments,options);
++ assert.deepEqual(repeat.issues,[]);assert.equal(repeat.ready,0);assert.equal(repeat.duplicates,2);assert.equal(JSON.stringify(repeat.simulated),JSON.stringify(restored));
++});
++test('Bitpanda unknown conventions, end balances, stale model and partial selection block whole batch',()=>{
++ const text=source(),{m,assignments,options}=fixture(),before=JSON.stringify(m);
++ for(const bad of [{...options,netConfirmed:false},{...options,openingConfirmed:false},{...options,feeModes:{}},{...options,expectedClosing:{}},{...options,expectedClosing:{bp0:'3.2',bp1:'99'}}]){
++  assert.ok(previewBitpandaImport(m,[text],assignments,bad).issues.length);assert.throws(()=>confirmBitpandaImport(m,[text],assignments,{...bad,confirmed:true,baseline:before}),/Ungeklärte/);
++ }
++ assert.throws(()=>confirmBitpandaImport(m,[text],assignments,{...options,baseline:'stale',confirmed:true}),/erneut/);
++ const selected=[prepareBitpandaSourcePlan([text]).groups[0].id],partial={...options,selectedGroups:selected,expectedClosing:{bp0:'3',bp1:'99'}};
++ assert.throws(()=>confirmBitpandaImport(m,[text],assignments,{...partial,confirmed:true,baseline:before}),/Restvorgänge/);
++ assert.equal(confirmBitpandaImport(m,[text],assignments,{...partial,partialConfirmed:true,confirmed:true,baseline:before}).bookings.length,1);assert.equal(JSON.stringify(m),before);
++});
++test('Bitpanda overlap/order keeps IDs; changed source, correction and orphan journal cannot resurrect',()=>{
++ const text=source(),{m,assignments,options}=fixture(),next=confirm(m,text,assignments,options);
++ const [preamble,owner,header,...rows]=text.split('\n'),reversed=[preamble,owner,header,...rows.reverse()].join('\n');assert.equal(previewBitpandaImport(next,[reversed],assignments,options).duplicates,2);
++ assert.ok(previewBitpandaImport(next,[text.replace('99999','99998')],assignments,options).issues.length);
++ const edited=structuredClone(next);edited.bookings[0].notes='Manual correction';assert.ok(previewBitpandaImport(edited,[text],assignments,options).issues.length);
++ const orphan=structuredClone(next);orphan.bookings=[];assert.match(previewBitpandaImport(orphan,[text],assignments,options).issues[0].message,/Wiederbelebung/);
++ const conflict=previewBitpandaImport(m,[text,text.replace('99999','99998')],assignments,options);assert.match(conflict.issues[0].message,/widersprüchliche/);
++});
++test('Bitpanda known additional and included fees differ exactly; nonzero tax is not inferred',()=>{
++ const text=source(),{m,assignments,options}=fixture(),id=prepareBitpandaSourcePlan([text]).groups[0].id;
++ const next=confirm(m,text,assignments,{...options,feeModes:{[id]:'additional'},expectedClosing:{bp0:'3.1',bp1:'98'}});assert.equal(next.positions[1].quantityExact,'98');assert.equal(next.bookings.find(b=>b.type==='buy').amountExactEUR,'101');
++ assert.ok(previewBitpandaImport(m,[text.replace(',0\n',',2\n')],assignments,options).issues.length);
++});
++test('Bitpanda principal transfers stay blocked; foreign bookings and trusted basis stay protected',()=>{
++ const text=source(),{m,assignments,options}=fixture();
++ const protectedModel=structuredClone(m);protectedModel.positions[0].costBasisExact='1';assert.match(previewBitpandaImport(protectedModel,[text],assignments,options).issues[0].message,/Kostenbasis/);
++ const foreign=structuredClone(m);executeTransaction(foreign,{type:'deposit',date:'1999-01-01',positionId:'bp1',quantity:'1'});assert.match(previewBitpandaImport(foreign,[text],assignments,options).issues[0].message,/manuelle/);
++ const transfer=bitpandaCSV([{'Transaction Type':'transfer(stake)',omitTax:true,Fee:'-','Fee asset':'-'}]),f=fixture(transfer);assert.match(previewBitpandaImport(f.m,[transfer],f.assignments,f.options).issues[0].message,/Hauptbetrag/);
++});
++test('Bitpanda external withdrawal and reward fee never become extra external deposits',()=>{
++ for(const mode of ['included','additional']){
++  const text=bitpandaCSV([{'Transaction Type':'withdrawal','In/Out':'outgoing','Amount Asset':'1',Asset:'ETH',Fee:'0.01','Fee asset':'ETH','Product ID':'SYN-ETH'}]),f=fixture(text),id=prepareBitpandaSourcePlan([text]).groups[0].id;
++  f.m.positions[0].quantityExact='2';f.m.positions[0].quantity=2;f.m.openingPositions[0].quantityExact='2';
++  assert.match(previewBitpandaImport(f.m,[text],f.assignments,f.options).issues[0].message,/Gegenbereich/);
++  const next=confirm(f.m,text,f.assignments,{...f.options,externalReferences:[id],feeModes:{[id]:mode},expectedClosing:{bp0:mode==='included'?'1':'0.99'}});
++  assert.equal(next.bookings.filter(b=>b.type==='fee').length,1);assert.deepEqual(next.externalCashFlows,[]);assert.equal(ledgerQuantityAudit(next).ok,true);
++ }
++});
++test('Bitpanda sale settles included EUR fee without treating market price as proceeds',()=>{
++ const text=bitpandaCSV([{'Transaction Type':'sell','In/Out':'incoming','Amount Asset':'3','Amount Fiat':'99',Asset:'ETH',Fee:'1','Fee asset':'EUR','Product ID':'SYN-ETH'}]),f=fixture(text);
++ f.m.positions[0].quantityExact='3';f.m.positions[0].quantity=3;f.m.openingPositions[0].quantityExact='3';
++ const next=confirm(f.m,text,f.assignments,{...f.options,expectedClosing:{bp0:'0',bp1:'299'}});
++ assert.equal(next.bookings[0].amountExactEUR,'100');assert.equal(next.bookings[0].feeEUR,1);assert.equal(next.positions[1].quantityExact,'299');assert.deepEqual(next.externalCashFlows,[]);
++});
++test('Bitpanda Fiat dialect with absent asset quantity uses explicit EUR amount; contradictions block',()=>{
++ const text=bitpandaCSV([{'Transaction Type':'deposit','In/Out':'incoming','Amount Asset':'-','Amount Fiat':'10',Asset:'-',Fiat:'EUR','Asset class':'Fiat','Product ID':'-',Fee:'0','Fee asset':'-'}]),f=fixture(text),id=prepareBitpandaSourcePlan([text]).groups[0].id;
++ const next=confirm(f.m,text,f.assignments,{...f.options,externalReferences:[id],expectedClosing:{bp0:'210'}});
++ assert.equal(next.positions[0].quantityExact,'210');assert.equal(next.externalCashFlows[0].amountExactEUR,'10');
++ const bad=text.replace(',-,-,50000',',9,EUR,50000');assert.ok(previewBitpandaImport(f.m,[bad],f.assignments,f.options).issues.length);
++});
++test('Bitpanda net reward plus separately identified asset fee is exact and unpriced',()=>{
++ const text=bitpandaCSV([{'Transaction Type':'reward','In/Out':'incoming','Amount Asset':'1',Asset:'ETH',Fee:'0.01','Fee asset':'ETH','Product ID':'SYN-ETH',omitTax:true}]),f=fixture(text);
++ const next=confirm(f.m,text,f.assignments,{...f.options,expectedClosing:{bp0:'1'}});
++ assert.equal(next.bookings.find(b=>b.type==='reward').quantityExact,'1.01');assert.equal(next.bookings.find(b=>b.type==='fee').quantityExact,'0.01');assert.ok(next.bookings.every(b=>b.amountExactEUR===null));assert.equal(ledgerQuantityAudit(next).ok,true);
++});
+diff --git a/tests/browser-bitpanda-import.mjs b/tests/browser-bitpanda-import.mjs
+new file mode 100644
+index 00000000..d088e49
+--- /dev/null
++++ b/tests/browser-bitpanda-import.mjs
+@@ -0,0 +1,76 @@
++import assert from 'node:assert/strict';
++import fs from 'node:fs/promises';
++import {chromium,firefox,webkit} from 'playwright';
++import {source,fixture} from './bitpanda-import-fixture.mjs';
++import {ledgerModel,ledgerEvidence} from './ledger-live-fixture.mjs';
++import {previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoin.js';
++import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
++import {clickDisclosed} from './browser-disclosures.mjs';
++const base=process.env.UH03_BASE||process.env.BASE_URL||'http://127.0.0.1:4173/';
++const {m,assignments,options}=fixture();
++const protectedModel=ledgerEvidence(ledgerModel()),input={receipts:protectedModel.purchaseEvidence.receipts,operations:[]};
++const seed=confirmUnifiedBitcoin(protectedModel,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(protectedModel,input,'wallet').baseline});
++seed.providers.push(...m.providers);seed.accounts.push(...m.accounts);seed.positions.push(...m.positions);seed.openingPositions.push(...m.openingPositions);seed.settings.autoRefresh=false;
++for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
++ const browser=await ({chromium,firefox,webkit}[engine]).launch({headless:true,timeout:20000});
++ try{
++  const context=await browser.newContext({viewport:{width:390,height:900},serviceWorkers:'block'}),page=await context.newPage();page.setDefaultTimeout(20000);
++  const errors=[];page.on('pageerror',e=>errors.push(e.message));
++  await context.route('**/__uh03-fixture.html',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html lang="de"><title>Synthetic UH03 fixture</title><body></body></html>'}));
++  await page.goto(base+'__uh03-fixture.html');
++  await page.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
++  const read=()=>page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{readPortfolioRecord}=await import('/src/atomic-storage.js');const s=new PortfolioStorage(),model=await s.initialize(),revision=(await readPortfolioRecord(s.db)).revision;s.close();return {model,revision};});
++  const before=await read();
++  const file={name:'synthetic-bitpanda.csv',mimeType:'text/csv',buffer:Buffer.from(source())};
++  const open=async()=>{await page.goto(base+'?page=bookings');await page.locator('#openCSVImport').click();await page.locator('#csvFile').setInputFiles(file);await page.locator('#csvBitpandaEconomic').waitFor();};
++  await open();assert.deepEqual(await read(),before);
++  assert.equal(await page.locator('#saveDialog').isDisabled(),true);assert.equal(await page.locator('[data-bitpanda="more"]').isHidden(),true);
++  await clickDisclosed(page.locator('[data-bitpanda="simulate"]'));
++  await page.locator('[data-bitpanda="status"]').filter({hasText:'gesperrt'}).waitFor();assert.equal(await page.locator('#saveDialog').isDisabled(),true);
++  for(const [stream,id] of Object.entries(assignments)){
++   await page.locator('[data-bitpanda-binding="'+stream+'"]').selectOption(id);
++   await page.locator('[data-bitpanda-closing="'+stream+'"]').fill(options.expectedClosing[id]);
++  }
++  for(const [id,mode]of Object.entries(options.feeModes))await page.locator('[data-bitpanda-fee="'+id+'"]').selectOption(mode);
++  await page.locator('[data-bitpanda="net"]').check();
++  await page.locator('[data-bitpanda="opening"]').check();await page.locator('[data-bitpanda="simulate"]').click();
++  await page.locator('[data-bitpanda="status"]').filter({hasText:'2 neue Vorgänge'}).waitFor();assert.equal(await page.locator('[data-bitpanda="approve"]').isDisabled(),false);
++  assert.deepEqual(await read(),before);
++  for(const width of [320,360,390,412,430,768,1440]){await page.setViewportSize({width,height:900});assert.equal(await page.locator('#editDialog').evaluate(e=>e.scrollWidth>e.clientWidth+1),false,'overflow '+width);}
++  await context.route('**/__uh03-axe.js',async r=>r.fulfill({contentType:'text/javascript',body:await fs.readFile('node_modules/axe-core/axe.min.js','utf8')}));
++  await page.addScriptTag({url:base+'__uh03-axe.js'});
++  assert.deepEqual(await page.evaluate(async()=> (await axe.run('#editDialog',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
++  await page.setViewportSize({width:390,height:900});await fs.mkdir('artifacts/gates/bitpanda-import',{recursive:true});await page.locator('#editDialog').screenshot({path:'artifacts/gates/bitpanda-import/'+engine+'-390.png'});
++  await page.locator('[data-bitpanda="approve"]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
++  let saved=await read();assert.equal(saved.revision,before.revision+1);assert.equal(saved.model.version,5);assert.equal(saved.model.bookings.length,before.model.bookings.length+2);
++  assert.deepEqual(saved.model.positions.filter(p=>p.providerId==='bitpanda').map(p=>p.quantityExact),['3.1','99']);
++  assert.deepEqual(saved.model.externalCashFlows,before.model.externalCashFlows);
++  await page.locator('#undoCSVImport').click();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});await page.locator('#toast').filter({hasText:'CSV-Import rückgängig gemacht.'}).waitFor();
++  const undone=await read();assert.deepEqual(undone.model,before.model);assert.equal(undone.revision,saved.revision+1);
++  await open();await clickDisclosed(page.locator('[data-bitpanda="simulate"]'));
++  for(const [stream,id] of Object.entries(assignments)){
++   await page.locator('[data-bitpanda-binding="'+stream+'"]').selectOption(id);
++   await page.locator('[data-bitpanda-closing="'+stream+'"]').fill(options.expectedClosing[id]);
++  }
++  for(const [id,mode]of Object.entries(options.feeModes))await page.locator('[data-bitpanda-fee="'+id+'"]').selectOption(mode);
++  await page.locator('[data-bitpanda="net"]').check();
++  await page.locator('[data-bitpanda="opening"]').check();await page.locator('[data-bitpanda="simulate"]').click();await page.locator('[data-bitpanda="approve"]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});saved=await read();
++  await open();await clickDisclosed(page.locator('[data-bitpanda="simulate"]'));
++  await page.locator('[data-bitpanda="net"]').check();await page.locator('[data-bitpanda="simulate"]').click();await page.locator('[data-bitpanda="status"]').filter({hasText:'2 bereits vorhanden'}).waitFor();assert.equal(await page.locator('#saveDialog').isDisabled(),true);assert.deepEqual(await read(),saved);
++  await page.locator('#cancelDialog').click();
++  const restored=await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{backup,safeImport}=await import('/src/model.js'),{createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js'),{encryptBackup,decryptBackup}=await import('/src/crypto-backup.js');const s=new PortfolioStorage(),m=await s.initialize(),full=createCompleteBackup(JSON.parse(backup(m)),null,m.walletHistory),r=safeImport(unpackCompleteBackup(JSON.parse(await decryptBackup(JSON.parse(await encryptBackup(JSON.stringify(full),'synthetic-passphrase')),'synthetic-passphrase'))).data);await s.save(r);s.close();return {version:r.version,bookings:r.bookings.length};});assert.deepEqual(restored,{version:5,bookings:saved.model.bookings.length});
++  // Exact quota rollback and stale-CAS behavior use the real existing storage boundary.
++  const failures=await page.evaluate(async seed=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{previewBitpandaImport,confirmBitpandaImport}=await import('/src/bitpanda-import.js');const a=new PortfolioStorage(),b=new PortfolioStorage();await a.initialize();await a.save(seed.model);await b.initialize();const p=previewBitpandaImport(seed.model,[seed.text],seed.assignments,seed.options),draft=confirmBitpandaImport(seed.model,[seed.text],seed.assignments,{...seed.options,baseline:p.baseline,confirmed:true}),before=JSON.stringify(await a.reload()),put=IDBObjectStore.prototype.put;let quota=false;IDBObjectStore.prototype.put=function(){throw new DOMException('synthetic quota','QuotaExceededError');};try{await a.save(draft);}catch(e){quota=e.name==='QuotaExceededError';}finally{IDBObjectStore.prototype.put=put;}const unchanged=JSON.stringify(await a.reload())===before;await a.save(draft);let stale=false;try{await b.save(draft);}catch(e){stale=/anderen Tab/.test(e.message);}a.close();b.close();return {quota,unchanged,stale};},{model:seed,text:source(),assignments,options});assert.deepEqual(failures,{quota:true,unchanged:true,stale:true});
++  assert.deepEqual(errors,[]);await context.close();
++  const offlineContext=await browser.newContext({viewport:{width:390,height:900},serviceWorkers:'allow'}),offlinePage=await offlineContext.newPage();offlinePage.setDefaultTimeout(20000);
++  await offlinePage.goto(base+'?page=bookings');
++  const ready=()=>offlinePage.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
++  const record=()=>offlinePage.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}});
++  await controlledStorageFixture(offlinePage,ready,record);
++  await offlinePage.evaluate(async model=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(model);s.close();},saved.model);
++  await offlinePage.reload();await ready();await offlineContext.setOffline(true);await offlinePage.reload();await ready();
++  await offlinePage.locator('#openCSVImport').click();await offlinePage.locator('#csvFile').setInputFiles(file);await clickDisclosed(offlinePage.locator('[data-bitpanda="simulate"]'));await offlinePage.locator('[data-bitpanda="net"]').check();await offlinePage.locator('[data-bitpanda="simulate"]').click();await offlinePage.locator('[data-bitpanda="status"]').filter({hasText:'2 bereits vorhanden'}).waitFor();
++  const offline=JSON.parse((await record()).raw);assert.equal(offline.version,5);assert.equal(offline.bookings.length,saved.model.bookings.length);await offlineContext.close();
++  console.log('UH03 Bitpanda '+engine+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS');
++ }finally{await browser.close();}
++}
+diff --git a/tests/browser-bitpanda-preview.mjs b/tests/browser-bitpanda-preview.mjs
+index 162bb9c..97ad655 100644
+--- a/tests/browser-bitpanda-preview.mjs
++++ b/tests/browser-bitpanda-preview.mjs
+@@ -36,7 +36,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
+    await p.screenshot({path:'artifacts/gates/bitpanda-preview/'+engine+'-'+width+'.png'});
+   }
+   await p.setViewportSize({width:390,height:900});assert.deepEqual(await read(),before);
+-  await p.locator('#editorForm').evaluate(f=>f.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));await p.locator('#dialogError:not(.hidden)').waitFor();assert.match(await p.locator('#dialogError').innerText(),/Bitpanda bleibt/);assert.ok(await p.locator('#saveDialog').isDisabled());assert.deepEqual(await read(),before);await close('Escape');
++  await p.locator('#editorForm').evaluate(f=>f.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true})));await p.locator('#dialogError:not(.hidden)').waitFor();assert.match(await p.locator('#dialogError').innerText(),/Bitpanda/);assert.ok(await p.locator('#saveDialog').isDisabled());assert.deepEqual(await read(),before);await close('Escape');
+   await open();assert.equal(await p.locator('#csvReview .performance-details').count(),0);await p.locator('#csvFile').setInputFiles(file(bitpandaCSV(Array.from({length:75},()=>({})))));await preview();assert.equal(await p.locator('#csvReview .performance-details').count(),50);await p.locator('#bitpandaShowMore').click();assert.equal(await p.locator('#csvReview .performance-details').count(),75);assert.equal(await p.locator('#bitpandaShowMore').count(),0);assert.ok(await p.locator('#csvReview .performance-details').nth(50).locator('summary').first().evaluate(e=>e===document.activeElement));
+   await p.locator('#csvSource').selectOption('generic');await p.waitForFunction(()=>document.getElementById('csvReview')?.textContent.includes('native Bitpanda-Vorschau'));assert.ok(await p.locator('#saveDialog').isDisabled());assert.equal(await p.locator('#csvMap-feeEUR').count(),0);
+   for(const mode of ['flatex','ledger','kraken']){await p.locator('#csvSource').selectOption(mode);await p.waitForFunction(()=>document.getElementById('csvReview')?.textContent.includes('native Bitpanda-Vorschau'));assert.ok(await p.locator('#saveDialog').isDisabled());}await p.locator('#csvSource').selectOption('auto');await preview();await p.locator('#csvFile').setInputFiles([{name:'synthetic-generic.csv',mimeType:'text/csv',buffer:Buffer.from('date,type,quantity\n1999-01-01,buy,1')},file(bitpandaCSV())]);await p.waitForFunction(()=>document.getElementById('csvReview')?.textContent.includes('genau einer Datei'));assert.ok(await p.locator('#saveDialog').isDisabled());assert.deepEqual(await read(),before);

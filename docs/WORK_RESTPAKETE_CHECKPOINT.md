@@ -1,3 +1,35 @@
+## HANDOVER_READY – 4e686cd7a8d5 STOPPED / Bitpanda-WIP gesichert / v268 LIVE_ACCEPTED – 02.11.2026
+
+**Sofortiger Nutzer-STOP umgesetzt. 4e686cd7a8d5 ist STOPPED und gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine weiteren Implementierungen, PRs, Merges oder Deployments durch diese Sitzung.** Der neue Work-Chat übernimmt nach eigenem frischem Owner-/GitHub-Abgleich. Bis dahin kein aktiver schreibender Owner dieser Sitzung. Zähler **0 Releases / 0 fachlich vollständig abgenommene Pakete**.
+
+Frisch geprüft: Main **`de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`**, **v268 LIVE_ACCEPTED übernommen, keine Wiederabnahme**. PR #280 bereits gemergt. Nur historische Drafts #157/#161 offen; keine neue Produkt-PR und kein Remote-Produktbranch durch diese Sitzung. Letzter Release-Lauf **41464659527 completed/success**, letzte PR-Läufe 41462542831/41462542932 success; keine laufende Release-CI bei STOP-Abfrage. Keine GitHub Action gestartet, wiederholt oder abgebrochen.
+
+**WIP, ausdrücklich NICHT releasebereit:** lokaler Commit **`f93f1662289d21a18d4dd6f20ef7e1a288bc84f0`**, Tree **`07a9cc19f1a353152303543d840442dc86678910`**, Branch `feature/uh03-bitpanda-economic`, Checkout `/workspace/scratch/4e686cd7a8d5/foliolab-open`. Rekonstruierbarer [vollständiger WIP-Patch gegen Main](release-evidence/v269-bitpanda-wip-4e686cd7a8d5.patch), SHA256 **`4b3cc7d2e1c7933945b703ea4bc98089da2eeb0543b935565f0ccf2556f433a5`**; lokal zusätzlich `/workspace/scratch/4e686cd7a8d5/private/v269-bitpanda-wip.patch`. **Nur diesen begrenzten Patch auf passenden Main übernehmen; Checkpointbranch niemals vollständig nach Main mergen.** Getrackter/gestagter Diff leer; ungetrackt nur synthetische Browserartefakte und node_modules-Verweis. Lokale Toolprozesse nicht mehr aktiv.
+
+WIP umfasst `bitpanda-import.js` / `bitpanda-import-ui.js`, gemeinsamen CSV-Dialog, synthetische Unit-/Browserkette, angepassten bisherigen Vorschau-Fehlertexttest und **nur lokal vorbereiteten SW v269** mit zwei zusätzlichen Offlineassets. Bestehendes `executeTransaction`-Journal wird verwendet, keine zweite Finanzengine. Unterstützter Ansatz: explizit zugeordnete EUR-Kryptokäufe/-verkäufe, Rewards und ausdrücklich externe Ein-/Ausgänge; tatsächliche Nettokontobewegungen, Anfangsbezug und unabhängige Endbestände müssen bestätigt sein. Ausgewiesene Gebühren erfordern pro Vorgang enthalten/zusätzlich; fehlende Gebühren/Steuern bleiben unbekannt, Marktpreis wird nicht als Ausführungsbetrag verwendet. Fiat-Originaldialekt mit fehlender Assetmenge zuletzt ergänzt. Transfers/Staking-Hauptbeträge, Steuerabzüge und andere Gebührenassets bleiben gesperrt. **Dies ist ein begrenzter WIP-Ansatz, keine UH03-/Original-/historische Gesamtfreigabe.**
+
+**Vor STOP tatsächlich geprüft:** erste WIP-Fassung Syntax PASS, **1110 Units / 0 Fehler/Skips**; echte Chromium-CSV-Kette PASS mit geschütztem v5, genau einer CAS-Revision, Reload/Wiederimport, exaktem Sitzungs-Undo, verschlüsseltem Restore, Quota-/Mehrtabkonflikt, sieben Breiten 320–1440/Axe und echtem Offline-PWA-Neustart; synthetisches 390px-Bild gesichtet. Danach letzte Fiat-/Quellasset-Ergänzung und drei weitere Tests: **9/9 gezielte Bitpanda-Units PASS**, Diffcheck PASS. **Vollständige Units/Syntax/Browser nach dem letzten Delta noch nicht erneut ausgeführt; kein Firefox-/WebKit-/gehostetes CI-/Live-PASS für diesen WIP.** Logs/Screenshots privat unter `/workspace/scratch/4e686cd7a8d5/private/` bzw. `foliolab-open/artifacts/gates/bitpanda-import/`. Keine wirtschaftliche Originalabnahme behaupten.
+
+**Konkreter nächster Schritt:** WIP fachlich reviewen, Nettobetrags-/Gebührenkonventionen anhand vorhandener Originale und unabhängiger Belege validieren; verpflichtender Endbestandsabgleich darf nicht durch aus denselben Annahmen erzeugte Pseudo-Sollwerte ersetzt werden. Bestehende Originale `/workspace/scratch/cab7b49c3d16/private-originals/`, Originalprojektion/Kraken-Oracles `/workspace/scratch/37cbd9af859a/private/`, Bitpanda-Decimal-Vorbereitung `/workspace/scratch/8aa2b6eb3ce9/private/bitpanda-source-oracle.py` und `.json` wiederverwenden. Die Vorbereitung ist nur Rohwertprüfung, kein Beleg für Netto-/Bruttokonventionen. WIP-Bedienung/Selektion/Paginierung sowie Endbestands-/Teilimportabhängigkeiten prüfen; neue Browserkette ist **noch nicht in CI-/Cross-/Live-Pfaden verdrahtet**, bestehende CI-Vertragshashes unangetastet. Vor Kandidatenfreigabe vollständige betroffene Gates ergänzen/prüfen, keine Reduktion bestehender Gates.
+
+Danach **UH03** historischer Kraken-Endbestandsabgleich und kombinierte BTC/ETH/ERC20/SOL/SPL-Gegenbelege einschließlich nativer Locators/Gas/Gebühren/Reihenfolgeunabhängigkeit; anschließend **UH04 → UH05** gemäß [Importplan](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). Persistente selektive Quellenrücknahme ebenfalls offen. v5/Daten-/Installationsidentität erhalten, kein v263-Rollback/Datenlöschen. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md). Keine privaten Originalwerte/IDs/Keys im WIP-Patch.
+
+### Startprompt
+
+```text
+Übernimm FolioLab Open: https://github.com/joke0071/foliolab-open
+Lies den neuesten HANDOVER_READY-Kopf in docs/WORK_RESTPAKETE_CHECKPOINT.md auf feature/flh05-import-foundation.
+4e686cd7a8d5 ist STOPPED und hat vollständig abgegeben. v268 ist LIVE_ACCEPTED; nicht erneut abnehmen.
+Aktuellen Main, PRs, Actions und Owner prüfen. Es gab keine neue Produkt-PR/Release-CI.
+Vorhandener Bitpanda-WIP ist als vollständiger Patch im Übergabekopf gesichert; nicht doppelt implementieren, nicht ungeprüft veröffentlichen.
+Zuerst fachlichen Original-/Gebühren-/Endbestandsabgleich und fehlende finale Tests/CI-Verdrahtung erledigen.
+Danach UH03-Reste (historisches Kraken/ BTC/ETH/ERC20/SOL/SPL), dann UH04 → UH05.
+Originale/Oracles wiederverwenden; v5/Daten-/Installationsidentität und EFF01/HND01 erhalten.
+Checkpointbranch niemals vollständig nach Main mergen.
+```
+
+---
+
 ## ACTIVE – UH03 Bitpanda-Wirtschaftsimport / 4e686cd7a8d5 – 02.11.2026
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **4e686cd7a8d5** nach STOPPED-Abgabe von 8aa2b6eb3ce9 und ausdrücklicher Nutzerübernahme. Frisch geprüft: Main `de0b6a9e65e4021f4f7bbe26117f5c30a6ce3400`; **v268 LIVE_ACCEPTED übernommen, keine Wiederabnahme**. Nur historische Drafts #157/#161 offen; letzte Release-CI 41464659527 completed/success, keine laufende Release-CI. Zähler 0 Releases/0 Pakete.
