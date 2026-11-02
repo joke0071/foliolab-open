@@ -1,3 +1,13 @@
+## ACTIVE – v269 Deployment grün / Live-Crossprüfung läuft – 02.11.2026
+
+Alleiniger Owner **b42fafd72edf**. Main **`f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`**, Tree **`a422cf00601a312fc4ce5f60fb4b842d938c166f`**, SW v269/v5/Installationsidentität unverändert. PR #283 geschützt gemergt; [finale PR-CI/Artefakte](release-evidence/v269-pr283-final-ci.json) vollständig PASS. Neuer Mainlauf **41521172914**: 1118 Units/0 Fehler/Skips, Hauptjob und Cross1–3 SUCCESS, Deployment **125544723201 SUCCESS**. Abschlusslogs dieser Jobs gelesen; Artefaktdigests stimmen mit Uploadlogs überein.
+
+**Livejob 125544895577 IN_PROGRESS:** Chromium-Produktionsschritt und Installation der weiteren Browser SUCCESS; aktuell Firefox-/WebKit-Produktionssuiten. Unverändert auslaufen lassen, keine Duplikate/Abbrüche. Separater [regulärer HTTPS-Byteabgleich](release-evidence/v269-pr283-regular-https-assets.json) **138/138 PASS**, normale Zertifikats-/Hostnameprüfung mit identischem Releasecheckout. **v269 weiterhin DEPLOYED, NICHT LIVE_ACCEPTED; v268 letzte akzeptierte Produktion.** Erst erfolgreiche terminale Pflichtjobs und tatsächlichen Live-Artefaktabschluss prüfen, dann abnehmen.
+
+Danach UH03 → UH04 → UH05. Nur lesende Voranalyse während CI: private synthetische vollständige Suchkontrolle über 199290 kleine Graph-/Startfälle PASS; exakter vollständiger Saldopfad pro Referenz/Stream ist möglich, lokale-gierige Wahl reicht nicht. Private Originalstrukturdiagnose: Referenz-/Streamketten eindeutig, Zeitgruppenübergreifendes bleibt separat; keine unabhängigen historischen Endbestände daraus ableiten. **Keine Produktänderung begonnen.** Originale/Oracles wiederverwendet; neue Analysen `/workspace/scratch/b42fafd72edf/private/`, Checkout daneben. Lokaler Chromium 141/Playwright 1.56.1 startfähig (eigener PLAYWRIGHT_BROWSERS_PATH im privaten Verzeichnis). EFF01/HND01, Zähler 0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #283 gemergt / v269 Main-/Liveabschluss – 02.11.2026
 
 Alleiniger Owner **b42fafd72edf**. PR #283 nach vollständiger bestehender CI **41518262487 SUCCESS**, Wallet **41518262511 SUCCESS**, leeren Reviews/Threads und frischem Main/Owner/HEAD/Testmergeabgleich SHA-geschützt squash-gemergt. Main **`f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb`**, Tree **`a422cf00601a312fc4ce5f60fb4b842d938c166f`** exakt Testmerge/Kandidat. 1118/1118 Units, alle Pflichtgates/Cross1–3 PASS; sieben Artefaktdigests gegen Logs bestätigt, Cross3 tatsächlich heruntergeladen/Hash/ZIP geprüft, WebKit-Mobilbild gesichtet. [PR-Beleg](release-evidence/v269-pr283-final-ci.json).
