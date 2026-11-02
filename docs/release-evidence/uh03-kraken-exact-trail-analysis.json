@@ -1,0 +1,37 @@
+{
+  "status": "READ_ONLY_ALGORITHM_ANALYSIS_NOT_IMPLEMENTED",
+  "main": "f02c4ef277ba727eeecfee07e7b4261ab3b7a4bb",
+  "productMutation": false,
+  "priorDiagnosis": "uh03-kraken-order-next-diagnosis.json",
+  "proposedBoundedScope": "Within each Kraken reference/asset-wallet stream only; anchor at an explicitly confirmed current holding. Existing actions, canonical IDs/payloads, opening protections and atomic journal/CAS boundary remain intact.",
+  "algorithm": [
+    "Represent each exact before/balance observation as a distinct directed edge between integer decimal balances.",
+    "A residual complete trail from a fixed start exists iff the directed Euler start/end degree conditions and weak connectivity of all incident vertices hold; no tolerance, no source order, no inferred start.",
+    "At each step inspect outgoing rows and keep only those whose removal leaves a complete residual trail from that row's balance.",
+    "Exactly one feasible row: choose it. Two or more: true ambiguity remains blocked. Zero: disconnected/gap remains blocked. Empty remainder succeeds.",
+    "Maximum existing reference group remains 64 rows; no unbounded backtracking or factorial production search."
+  ],
+  "independentOracle": {
+    "environment": "Node 24.22.1, private synthetic script",
+    "scope": "All directed edge sequences over three numeric labels, zero through five edges, all three starts",
+    "cases": 199290,
+    "method": "Independent exhaustive remaining-edge traversal counts complete trails up to two, compares classification and exact sole row path.",
+    "result": "PASS",
+    "forcedLocalBranchCase": "0→1,1→0,0→2 has one complete path from0; local-greedy ambiguity rejection would be wrong.",
+    "sixtyFourEdgeBound": "Synthetic chain PASS"
+  },
+  "originalBoundary": "Existing private original structure inspected without product mutation or provider requests. Source-internal continuity does not establish independent historical opening/closing balances. Cross-reference timestamp ordering remains separate.",
+  "requiredNextTests": [
+    "All six same-asset fee CSV permutations from one fixed model produce identical exact quantities, journals, source IDs and payloads.",
+    "Rows reordered across overlapping files, reimport and encrypted restore preserve canonical identity.",
+    "Gaps, multiple full trails, conflicting IDs, wrong asset/wallet, protected openings and stale approvals leave model/storage unchanged.",
+    "Independent exhaustive small-case oracle, 64-row boundary, exact decimal values and locally branching forced complete trails.",
+    "Existing real UI confirmation/reload/offline/v5/CAS/undo/backup and required cross/live gates retained."
+  ],
+  "privateAnalysisPaths": [
+    "/workspace/scratch/b42fafd72edf/private/unique-trail-analysis.mjs",
+    "/workspace/scratch/b42fafd72edf/private/original-trail-analysis.py",
+    "/workspace/scratch/b42fafd72edf/private/original-trail-analysis.json"
+  ],
+  "boundary": "This is preparation only, not a product fix, full original financial acceptance or UH03 completion. Release v269 must be completed before implementing."
+}
