@@ -1,0 +1,725 @@
+{
+  "owner": "cb8a6d16f52c",
+  "date": "2026-11-03",
+  "pr": 289,
+  "status": "FROZEN_CANDIDATE_NOT_RELEASED",
+  "originalHead": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16",
+  "head": "c1e72a8b3da1eda2397956dea775a29407ad2b75",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "tree": "14cce50f47453ef01ea06641114ab6e9d5117b41",
+  "localRemoteAndTestMergeTreeIdentical": true,
+  "testMerge": "f0e9c9a94ba787762f5e0595a1a43ce63e0b493d",
+  "diff": {
+    "original": 250,
+    "final": 135,
+    "removedStrays": 128,
+    "deletedPreexistingMainFiles": 0,
+    "productionFiles": [
+      "index.html",
+      "styles.css",
+      "sw.js",
+      "src/allocation-ui.js",
+      "src/app.js",
+      "src/booking-history-ui.js",
+      "src/format.js",
+      "src/loading-ui.js",
+      "src/position-detail-ui.js"
+    ],
+    "allOtherProductionBlobsMatchMain": true
+  },
+  "cleanup": [
+    {
+      "path": "_cap.mjs",
+      "blob": "b369e2e2c99c33a55f0a434f5b5d4cb1c8b67225",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management-preview-1440.png",
+      "blob": "a83a544902c709aab7bd6e548a4c9663d2f855e3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management-preview-320.png",
+      "blob": "76068a7cd5964d44aa659e0080c53294e5eafeae",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management-preview-390.png",
+      "blob": "3459bdd129e6b687ca87a90fe97b427fa5689cfb",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management-preview-430.png",
+      "blob": "85bd7b66d13e2977aecd1308c66d254a1035261a",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management-preview-768.png",
+      "blob": "1e3d07fb6901cb964eb6daeeb13b63f31bece366",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-management.json",
+      "blob": "7bd29938817dd06db521607eb1ffdf13748ab960",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-1440.png",
+      "blob": "845a6b7c62e45bebd8af5700e11d81f39d7a7ec4",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-320.png",
+      "blob": "5841dc1538cce697d353adc76850b55ffa52700a",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-360.png",
+      "blob": "d032c0b7b86519002a77ea348f8fa1578dcdef93",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-390.png",
+      "blob": "83aa673f39964debd38030e0c076d149c4be40e2",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-412.png",
+      "blob": "8ad9433e7459a82225737ce866412c9f196c897d",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-430.png",
+      "blob": "3cb96e8f302bb53054884a85522af6cebce4371a",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-768.png",
+      "blob": "316597716e5062d512dece1162552c07f10f9e6c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-1440.png",
+      "blob": "3ae871352f48a7e868b0fc6ea33bb4ad927a93d2",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-320.png",
+      "blob": "13341811d1dc46e61bb29a68d4c99a953924d9e4",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-360.png",
+      "blob": "51b1ed2c46b531860612465391c98d208a9e6cc7",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-390.png",
+      "blob": "34510c299f4824ed83a2b01ea70e9f2e4e598eb3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-412.png",
+      "blob": "881c08d7911bcf94d0d3af9c5372b01ae8f622c3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-430.png",
+      "blob": "169ced52d16ebc5b17fb8fe8b3388c77ffbafd92",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/booking-ui/chromium-edit-768.png",
+      "blob": "5a417155ee297826550c2319da99f5df6dc7e5ea",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-1440.png",
+      "blob": "a49b1f2098b525aac7108c5e7eca040329059437",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-320.png",
+      "blob": "37190ac47a351ab9d23af4f25d1d518f25ccc646",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-360.png",
+      "blob": "6e3677005e2ac95bea515967884ca04971fdd521",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-390.png",
+      "blob": "97832e1e0866c0f9050f7114fef6dec260ddced6",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-412.png",
+      "blob": "3ff5db5f1573dc763f3b2b9c2dab56bc0f117af5",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/import-removal/chromium-430.png",
+      "blob": "5b5d16c209352f177e567782fa7ebf42c93ad7b8",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/loading-pwa/chromium-startup-320.png",
+      "blob": "ad47ea87f03679f027d86267af07e0c93b17b1e3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/loading-pwa/chromium.json",
+      "blob": "3a5b9f3359b31703e04e33c418bcaa2ef9ca3b0f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/loading-pwa/firefox-startup-320.png",
+      "blob": "bc7b650e3ff4cf373fc53ef15d963cb5211ee415",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/loading-pwa/firefox.json",
+      "blob": "ce6ef06ce0d6309dd3e42105842e46ea9ba1ce1d",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-1440-dashboard.png",
+      "blob": "ba1caef696e3eb881114f0dcce207fe6a108070b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-1440-positions.png",
+      "blob": "95690e83d64e60807c926385e9ef756552ecc763",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-320-all-unknown.png",
+      "blob": "4f2c42efc345c061a9bc51d56c280e78be56b362",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-320-dashboard.png",
+      "blob": "18b27047baab30e42b2c62458efa424698ebe259",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-320-positions.png",
+      "blob": "ff4c1c0c9f121e74d14ba7cbbd8ae8d4aeb13f79",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-320-sourced-zero.png",
+      "blob": "0b27b2bd5ded33b5eb89aad89b7b89cd2bfb857b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-360-dashboard.png",
+      "blob": "fc0200d38d5d3509a76a3417d5046e06d36df384",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-360-positions.png",
+      "blob": "9b2307907ad21c420abb6df99e52e3510895066f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-390-dashboard.png",
+      "blob": "18ffbffbb22503436de088ecd82534382e6da5c4",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-390-positions.png",
+      "blob": "26f4717b4653c51739649c55d212188699858236",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-412-dashboard.png",
+      "blob": "1a47b8540d05947121ef086a1a6502b851df6524",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-412-positions.png",
+      "blob": "63de2e42f873ddde94a00a17f3e92a19d22d86c5",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-430-dashboard.png",
+      "blob": "bcf38477ad9e962d4b67461956d6310f5799db32",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-430-positions.png",
+      "blob": "e517f7276add4c9e8a2d29e1eba16d4d80cf9a69",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-768-dashboard.png",
+      "blob": "9770c43640266cd23d5a8ea6490cd810dfb21379",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/chromium-768-positions.png",
+      "blob": "0672a129c49dee0caa1c8acb50bd439267ee32f9",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/missing-position-value/report.json",
+      "blob": "59df0e1500bc15ab398b4a1e76145f6e365d564c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-booking-details.png",
+      "blob": "f6bdb43c11baf3f54c19a687bfeacc10f1a46832",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-bookings.png",
+      "blob": "062f59b7dee793b17218933084a58d233f39f368",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-dashboard.png",
+      "blob": "176ded59c101767f138b11fc2a3fe75540eb2930",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-history.png",
+      "blob": "8f03eac7ebe4eb6f98c3ee727cd84df345431bdb",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-more.png",
+      "blob": "17e22cb03b75022530881afc2cdc73cdcb0cafd2",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-positions.png",
+      "blob": "cf59863d5590dbb1b8164993373624fca678e369",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-1440-900-selection.png",
+      "blob": "f876b9132dc3f52cfa1430880a978c641d04785b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-booking-details.png",
+      "blob": "247f98866ca7375807cc15f90d4b72f1ca237293",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-bookings.png",
+      "blob": "dd76a068c9ce064ab719c0b49d4c6801985326ee",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-dashboard.png",
+      "blob": "03a1872098341872a85a964bbedb9bff329627d4",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-history.png",
+      "blob": "ad94167abc60234caa3d9bf2ac2679d8213d7e07",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-more.png",
+      "blob": "da55733dc7b472f924fccb428207aa51211fb1b5",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-positions.png",
+      "blob": "8629f3ef982df3d442c948c66a0fbe42b4d894a7",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-640-selection.png",
+      "blob": "649fc64962d02c6381173946181ade559ee62a16",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-320-hero-text125.png",
+      "blob": "b911d04582b3740a92464599134cad772dfaf5ca",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-booking-details.png",
+      "blob": "afcecd3c718eeab632b4892a11183fe6739561c7",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-bookings.png",
+      "blob": "f5978fd370755419d23148deff4c70a4df07b809",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-dashboard.png",
+      "blob": "bff5c1c8b7299a3e55a485e53e3e7b47c6d09443",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-history.png",
+      "blob": "e564f8e610cb8f01153ed548868b719f48153400",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-more.png",
+      "blob": "2de7f7c3ad7d884d0e41db0f52169482a5b8b12b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-positions.png",
+      "blob": "4b32b481c5b7def684d7c79b49a6d70c6347805f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-360-740-selection.png",
+      "blob": "f4681d3f2ca7967a210b413de71fe9d673b8e3d2",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-booking-details.png",
+      "blob": "2f5b961a81bd44602884ce55c0489b8ad2ae5e41",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-bookings.png",
+      "blob": "ff38177850e0ebff4e6e33ee4a7938a3187134ee",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-dashboard.png",
+      "blob": "e26852454c6af6ed795ace24208868b9bf96617c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-history.png",
+      "blob": "5573b59107f86ac6f9f4826942e1efcab3eaa4eb",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-more.png",
+      "blob": "617049595f8fb12e55dc0cdb07955f2ccf786303",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-positions.png",
+      "blob": "aad0687dca46fecde0278a5e605a793a5e892f49",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-844-selection.png",
+      "blob": "406234546a7dad9093941b471e4a70d4d9b1498f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-hero-text125.png",
+      "blob": "e2bbab880ed04a1e69c9314296c2cb344ff441e0",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-more-expanded.png",
+      "blob": "88c9ad4549779411a911e9096f8f03b3a50bf4db",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-390-text125.png",
+      "blob": "ced6616016df6a9d59522d4b8d4d0544ebda0f1b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-booking-details.png",
+      "blob": "178e9e55b66bc81dc8b2e736b359f15b247243b3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-bookings.png",
+      "blob": "7defd86244d54c5cfae86b4b8c990b1537d6d972",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-dashboard.png",
+      "blob": "b3c3cbedbe05f26a37b1cf9b4e739f5985aa810d",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-history.png",
+      "blob": "b2b0ae028024ce09f9532e2ae006c866d8111da8",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-more.png",
+      "blob": "62291947f0115fa3295b17033ea319da032b9c2c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-positions.png",
+      "blob": "3188526fc1bb9a54eaf6460a0c54b7cd3867dd1c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-412-915-selection.png",
+      "blob": "5833634c69f7b827045b6f38dafb45685d824501",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-booking-details.png",
+      "blob": "69d5ed2af549a8882efc9d1d28ee64c64bc493d1",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-bookings.png",
+      "blob": "0201ca4d356637f10d29f9ba499c87cff3b47807",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-dashboard.png",
+      "blob": "b267c5412b0c6df6f0972338709a2e0c9ae611a4",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-history.png",
+      "blob": "50dd2c8a1fbe87abde2e6c0d18f70d988ece10aa",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-more.png",
+      "blob": "31868d8e8c862d1396479ecbe7e76303f2a500b5",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-positions.png",
+      "blob": "8a85f94d03c4c5273e292c24b45e5f4fea90365a",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-430-932-selection.png",
+      "blob": "fbabdefc1f7b4c92dd5e7fbf51bec8a85f6032e1",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-booking-details.png",
+      "blob": "86bf0f0cc8c08ca5346e9dc3e4d6a995dcd1238f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-bookings.png",
+      "blob": "7981a28c4e00d15e75733582e0fb2f9260441525",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-dashboard.png",
+      "blob": "b263fe6b4c95651e783a78529e1a4e28dd7f8fc3",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-history.png",
+      "blob": "1daa3d917eec486768935f19c5760261b1301d6d",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-more.png",
+      "blob": "0298863e5f5f17da14ee51b75c68faf71ff67195",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-positions.png",
+      "blob": "64c9f8be87931ff32cb4c47f7711f6ee10699f41",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-740-360-selection.png",
+      "blob": "61f9ffd2afc8187fbde95ce89185146702e649b5",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-booking-details.png",
+      "blob": "66dc522cc0669898bfda3ac72c7bfcf2159d1361",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-bookings.png",
+      "blob": "51bcd58ff9eec014949e8c59909df6117c90ba74",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-dashboard.png",
+      "blob": "f3f25cbd915614f6cbceb152e11183eeab4b147c",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-history.png",
+      "blob": "25ec1f38622da9e18b6759ac5d4158d359ce592b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-more.png",
+      "blob": "080fcdba26b725d46727167d9c1fb8da87cf6555",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-positions.png",
+      "blob": "6be11392f89ba809837ac562b2227a084da956a9",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/chromium-768-1024-selection.png",
+      "blob": "769870c1a87b2d8465b8d5129d152cd1e2a1b1c6",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/readability/report.json",
+      "blob": "1e1a3abd6423588def917840a3e3872362af8ff1",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-1440.png",
+      "blob": "1093b98fa0d19b7178c946ceea4a720324e1e5cd",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-320.png",
+      "blob": "f5dcf0bf4ee5b01df209f4b14771ed86b4cec5db",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-360.png",
+      "blob": "875ceed813f0c496f418af5aa119687539c7fb93",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-390.png",
+      "blob": "89674c70aba9a8cd9b8afc94f7c81c58e9388c44",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-412.png",
+      "blob": "dc04cda3fffecc18f785045c930d1384ccd59451",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-430.png",
+      "blob": "edb16df445c0a4939675bc01f0926e106c2b4adf",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/selection-head/bookings-chromium-768.png",
+      "blob": "8667353284e52d291ed4182f4bf9ac946ecba1aa",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-alltag10/long-press.json",
+      "blob": "e521e4b6008dfc16e3609a2d211a5b8aeba04e81",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-calendar-1440.png",
+      "blob": "434794cf9e590d0ec537666a7e83e1dcab20524b",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-calendar-320.png",
+      "blob": "3760c983da819d7af7bb93a7ebf53e5344e731ce",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-calendar-390.png",
+      "blob": "cb6f4c370135bf818d4abfffaf2469f84d0245f2",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-calendar-430.png",
+      "blob": "58f1bca01c8bd8ca5f4f14f3e642ac675fce0355",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-calendar-768.png",
+      "blob": "72d509a20d89615a2c85635928cbde55f4b36c54",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-focus-1440.png",
+      "blob": "0dabaca06b3a6ac82f712b328a4915cf2ab51e80",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-focus-320.png",
+      "blob": "4fe21a19bea4b465d77dcf1923e07c4210596c4f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-focus-390.png",
+      "blob": "8dba9d7eaf9da3c24df8966982fc2aea7399e032",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-focus-430.png",
+      "blob": "31a31be49aa9f4bd87908ef45cabfb6fe0ecb06f",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/chromium-focus-768.png",
+      "blob": "ca7f80b96a86cccf9cdc7352cd6727e9ad787fe7",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    },
+    {
+      "path": "artifacts/gates/ui-audit-controls/report.json",
+      "blob": "c03f5704ecb0433c549a4482dd7617906a1971aa",
+      "retainedInAncestorCommit": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16"
+    }
+  ],
+  "preservedIntentionalEvidence": "docs/ui-copilot-2026-11-03",
+  "docs25ebb89": {
+    "available": false,
+    "applied": false,
+    "meaningProvidedByUser": true,
+    "decisionsImplemented": [
+      "257-B details only under management; transfers and all safety assertions retained",
+      "L07 explicit position picker under advanced More; existing source/import/replace/remove; no provider heuristics or import implementation change"
+    ]
+  },
+  "local": {
+    "node": "24.22.1",
+    "playwright": "1.64.1",
+    "webkit": "27.2",
+    "syntax": "PASS",
+    "units": {
+      "pass": 1150,
+      "fail": 0,
+      "skipped": 0
+    },
+    "browserTests": [
+      "ui-alltag10",
+      "loading-pwa",
+      "ui-textscale",
+      "price-csv-tools",
+      "ui07-audit",
+      "chart-tooltip",
+      "flh03-abce",
+      "readability",
+      "ui-quality complete chain",
+      "transfer-states and integrated booking transfer contract"
+    ],
+    "result": "PASS",
+    "exitCodesVerified": true,
+    "limits": [
+      "private host libraries/local Playwright host preflight skip only",
+      "No local Chromium or Firefox success claimed",
+      "No Android/iOS/TalkBack hardware acceptance"
+    ]
+  },
+  "safety": {
+    "format": "v5 unchanged",
+    "identities": "unchanged",
+    "parserFinancialJournalStorageBackupRestore": "source blobs unchanged",
+    "workflow": "three additional browser suites across four required integration/live paths; sealed original hashes unchanged and omission/duplication/reduced-engine negative controls pass"
+  },
+  "ci": {
+    "run": 41672608218,
+    "wallet": 41672608317,
+    "status": "IN_PROGRESS",
+    "rerunsRequested": 0
+  },
+  "next": "Read existing exact-head CI to completion; preserve failure evidence if needed; only then protected merge and actual fresh main/deploy/live/HTTPS acceptance"
+}
