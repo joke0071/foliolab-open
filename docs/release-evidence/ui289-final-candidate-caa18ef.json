@@ -1,0 +1,69 @@
+{
+  "owner": "975176198816",
+  "date": "2026-11-03",
+  "head": "caa18efb26da86d55df4d1068475141160890a35",
+  "tree": "14853689d9d48adad2a67a39ed30b80b6a0a390c",
+  "testMerge": "6e8af199849fd9268fa410a3230770ae1a499849",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "status": "FROZEN_NOT_RELEASED",
+  "diffFiles": 139,
+  "correction": {
+    "files": [
+      "styles.css",
+      "tests/browser-ui-textscale.mjs",
+      "tests/browser-position-details.mjs",
+      "docs/ui-copilot-2026-11-03/REPORT.md"
+    ],
+    "reason": "Independent image review: detail label/edit overlap at 200% text/320px; separate old normal-mode detail test still bypassed now-required management entry",
+    "behavior": "Text-relative reserve, narrow container stacking, unchanged existing native details/edit controls",
+    "assertions": "Existing domain/secret/CAS/Undo/precision assertions preserved; new presence/44px/target separation/text containment assertions"
+  },
+  "previous": {
+    "head": "deb79b6a16a65d966a9dd07366d33dadfbb1d1c6",
+    "run": 41679338919,
+    "result": "COMPLETED_FAILURE",
+    "allThreeCrossJobs": "SUCCESS",
+    "main": "browser-position-details.mjs:28 attempted hidden normal-mode summary; prior key privacy/data source fixes explicitly PASS in same CI",
+    "artifact": {
+      "id": 13251958736,
+      "bytes": 50286480,
+      "sha256": "f119798c2d85a7e40b0380245482869555d718cabeb3246eb627f9b68880193c",
+      "entries": 527,
+      "integrity": "PASS",
+      "downloaded": true
+    }
+  },
+  "local": {
+    "nonbinaryTreeMismatches": [],
+    "syntax": "PASS",
+    "serialUnits": {
+      "pass": 1150,
+      "fail": 0,
+      "skipped": 0
+    },
+    "negativeControl": "New target separation assertion FAILS old CSS for all8 position rows at200%/320px",
+    "chromium": "Google Chrome for Testing156.0.8078.80/Playwright1.64.1; private launch override only",
+    "webkit": "WebKit27.2/Playwright1.64.1; private shared library paths and host preflight override only",
+    "passes": [
+      "new text geometry Chromium/WebKit both320/768 and normal/management modes",
+      "trusted CDP three-list long press/reflow/ghost/Fertig/teardown/exact IDB",
+      "full Chromium UI quality and transfer chain",
+      "full position removal201/401,12Axe scans,six widths,quota/post-put abort/CAS/plain+encrypted restore/exact Undo/offline",
+      "separate position-detail full precision/missing/zero/unknown-source/seven widths/reference protection/exact IDB"
+    ],
+    "images": "Old overlap and corrected200% position crop viewed; representative final normal/management screenshots generated; final CI images still to review",
+    "limits": [
+      "No Android/iOS hardware/TalkBack/IME acceptance",
+      "Incomplete concurrent local npm log was not counted as PASS; complete serial1150 run used instead"
+    ]
+  },
+  "ci": {
+    "run": 41681836593,
+    "wallet": 41681836866,
+    "status": "IN_PROGRESS",
+    "reruns": 0,
+    "aborted": 0,
+    "manualDuplicates": 0
+  },
+  "next": "Unchanged exact-head CI to terminal; all logs/artifacts/digests/required true ZIP/hash/images and final owner/main/head/testmerge tree verification, protected merge, actual new main/deploy/live and regular TLS asset comparison before LIVE_ACCEPTED"
+}
