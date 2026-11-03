@@ -1,3 +1,4 @@
+import {validateEthereumBridgeProof,validateKrakenEthereumBridges,krakenEthereumBridgeFor,ethereumBridgeDigest} from './kraken-ethereum-bridge.js';
 import {validateBitcoinBridgeProof,validateKrakenBitcoinBridges,krakenBridgeFor,bitcoinBridgeDigest} from './kraken-bitcoin-bridge.js';
 /** UH03: orchestration over the existing transaction journal, never a second financial engine. */
 import {prepareKrakenSourcePlan} from './kraken-source-plan.js';
@@ -112,7 +113,7 @@ function position(model,row,assignments){
  if(p.kind==='cash'?row.values.asset!=='EUR':p.symbol!==row.values.asset)unsupported('Assetcode und Position widersprechen sich; keine Ticker- oder Netzwerkanahme.');
  return p;
 }
-function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge=null}={}){
+function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge=null,ethereumBridge=null}={}){
  if(group.issues.length)unsupported(group.issues.join(' '));
  const rows=[...group.rows].sort((a,b)=>a.identity.localeCompare(b.identity)),positive=rows.filter(r=>units(r.amountExact)>0n),negative=rows.filter(r=>units(r.amountExact)<0n),actions=[];
  const p=row=>position(model,row,assignments);
@@ -132,7 +133,7 @@ function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge
  }else if(group.kind==='reward')add(p(positive[0]).kind==='cash'?'interest':'reward',positive[0],units(positive[0].amountExact));
  else if(['deposit-review','withdrawal-review'].includes(group.kind)){
   // Ledger IDs are not chain transaction IDs. Never infer internal ownership from amount/time.
-  if(!bitcoinBridge&&!externalReferences.includes(group.id))unsupported('Ein-/Ausgang benötigt einen bestätigten externen Gegenbereich oder einen starken Wallet-Gegenbeleg.');
+  if(!bitcoinBridge&&!ethereumBridge&&!externalReferences.includes(group.id))unsupported('Ein-/Ausgang benötigt einen bestätigten externen Gegenbereich oder einen starken Wallet-Gegenbeleg.');
   const row=positive[0]??negative[0],incoming=positive.length>0,cash=p(row).kind==='cash';
   add(cash?(incoming?'deposit':'withdraw'):(incoming?'deliver_in':'deliver_out'),row,amount(units(row.amountExact)));
  }else unsupported('Ereignisklasse vor Übernahme fachlich klären.');
@@ -144,7 +145,7 @@ function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge
  return actions;
 }
 /** Pure full-batch simulation. No selected group is silently omitted after a failure. */
-export function previewKrakenImport(model,inputs,assignments,{selectedGroups=null,externalReferences=[],openingConfirmed=false,bitcoinBridge=null}={}){
+export function previewKrakenImport(model,inputs,assignments,{selectedGroups=null,externalReferences=[],openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null}={}){
  const baseline=JSON.stringify(model),source=prepareKrakenSourcePlan(inputs),known=new Set(source.groups.map(g=>g.id));
  if(!assignments||typeof assignments!=='object'||Array.isArray(assignments))throw Error('Explizite Kraken-Zuordnung erforderlich.');
  if(selectedGroups!==null&&(!Array.isArray(selectedGroups)||new Set(selectedGroups).size!==selectedGroups.length||selectedGroups.some(id=>!known.has(id))))throw Error('Kraken-Auswahl ist veraltet oder doppelt.');
@@ -164,16 +165,18 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    if(draft.journalEntries.some(j=>j.id===krakenWithdrawalId(group.id)))unsupported('Diese Kraken-Gruppe wurde dauerhaft zurückgenommen. Kein automatischer Wiederimport.');
    if(group.chronologyIssue)unsupported(group.chronologyIssue);
    if(group.rows.length>64)unsupported('Große Referenzgruppe benötigt einen gesonderten vollständigen Beinabgleich.');
-   const bridge=bitcoinBridge?.group===group.id?bitcoinBridge:krakenBridgeFor(draft,group.id);
+   const btc=bitcoinBridge?.group===group.id?bitcoinBridge:krakenBridgeFor(draft,group.id),eth=ethereumBridge?.group===group.id?ethereumBridge:krakenEthereumBridgeFor(draft,group.id);
+   if(btc&&eth)unsupported('Mehrdeutige Wallet-Gegenbelege.');
+   const bridge=btc??eth,bridgeKey=eth?'ethereumBridge':'bitcoinBridge',bridgeDigest=eth?ethereumBridgeDigest:bitcoinBridgeDigest;
    if(bridge){
-    validateBitcoinBridgeProof(draft,bridge,{requireHistory:!krakenBridgeFor(draft,group.id)});
-    const row=group.rows[0],source=position(draft,row,assignments);
-    if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!=='BTC'||source.coinId!=='bitcoin'||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge.principalBTC!==exact(-units(row.amountExact))||bridge.exchangeFeeBTC!==row.feeExact||externalReferences.includes(group.id))unsupported('Bitcoin-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
+    (eth?validateEthereumBridgeProof:validateBitcoinBridgeProof)(draft,bridge,{requireHistory:!(eth?krakenEthereumBridgeFor:krakenBridgeFor)(draft,group.id)});
+    const row=group.rows[0],source=position(draft,row,assignments),asset=eth?'ETH':'BTC',coin=eth?'ethereum':'bitcoin';
+    if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!==asset||source.coinId!==coin||source.accountId===bridge.event.accountId||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge[eth?'principalETH':'principalBTC']!==exact(-units(row.amountExact))||bridge[eth?'exchangeFeeETH':'exchangeFeeBTC']!==row.feeExact||externalReferences.includes(group.id))unsupported('Wallet-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
    }
-   const actions=actionsFor(draft,group,assignments,{externalReferences,bitcoinBridge:bridge});
+   const actions=actionsFor(draft,group,assignments,{externalReferences,bitcoinBridge:btc,ethereumBridge:eth});
    if(actions.length>24)unsupported('Zu viele abhängige Buchungen in einer einzelnen Referenzgruppe.');
-   const payload=digest([group.payloadDigest,group.rows.map(r=>[r.identity,assignments[r.streamId]]).sort((a,b)=>a[0].localeCompare(b[0])),externalReferences.includes(group.id),...(bridge?[bitcoinBridgeDigest(bridge)]:[])]);
-   const origins=actions.map((action,i)=>({version:1,sourceId,accountId:draft.positions.find(p=>p.id===action.positionId).accountId,externalId:group.id+':'+i,sourcePayload:JSON.stringify({group:group.id,payload,...(bridge?{bitcoinBridge:bitcoinBridgeDigest(bridge)}:{}),bindings:[...new Map(group.rows.map(r=>[r.streamId,assignments[r.streamId]])).entries()].sort((a,b)=>a[0].localeCompare(b[0])),action}),fileId:group.id,occurrence:1,ownership:'imported',ownedSnapshot:''}));
+   const payload=digest([group.payloadDigest,group.rows.map(r=>[r.identity,assignments[r.streamId]]).sort((a,b)=>a[0].localeCompare(b[0])),externalReferences.includes(group.id),...(bridge?[bridgeDigest(bridge)]:[])]);
+   const origins=actions.map((action,i)=>({version:1,sourceId,accountId:draft.positions.find(p=>p.id===action.positionId).accountId,externalId:group.id+':'+i,sourcePayload:JSON.stringify({group:group.id,payload,...(bridge?{[bridgeKey]:bridgeDigest(bridge)}:{}),bindings:[...new Map(group.rows.map(r=>[r.streamId,assignments[r.streamId]])).entries()].sort((a,b)=>a[0].localeCompare(b[0])),action}),fileId:group.id,occurrence:1,ownership:'imported',ownedSnapshot:''}));
    const existing=origins.map(origin=>draft.bookings.filter(b=>importSourceKey(b.importSource)===importSourceKey(origin)));
    const priorGroup=draft.bookings.filter(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id);
    if(priorGroup.length||existing.some(list=>list.length)){
@@ -204,7 +207,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    const candidate=structuredClone(draft);
    for(const [i,action] of actions.entries()){
     const b=executeTransaction(candidate,{...action,id:'uh03:'+group.id+':'+i});
-    const j=candidate.journalEntries.find(j=>j.id===b.journalEntryId);j.source=sourceId;if(bridge&&i===0)j.krakenBitcoinBridge=structuredClone(bridge);
+    const j=candidate.journalEntries.find(j=>j.id===b.journalEntryId);j.source=sourceId;if(bridge&&i===0)j[eth?'krakenEthereumBridge':'krakenBitcoinBridge']=structuredClone(bridge);
     // Ledger quantities and cash settlement are facts; historical EUR fee valuation/taxes are not.
     b.costsVerified=false;b.taxEUR=null;
     if(action.type==='fee'&&action.notes.startsWith('Kraken-Gebühr')&&candidate.positions.find(p=>p.id===action.positionId).kind==='crypto'){b.amountEUR=null;b.amountExactEUR=null;b.unitPrice=null;}
@@ -213,15 +216,15 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    }
    for(const [id,n] of expected)if(qty(candidate.positions.find(p=>p.id===id))!==n)unsupported('Gebuchte Menge und exakter Kraken-Folgesaldo widersprechen sich.');
    if(!ledgerQuantityAudit(candidate).ok)unsupported('Journal stimmt nicht mit den Beständen überein.');
-   if(bridge)candidate.version=5;validateKrakenBitcoinBridges(candidate);
+   if(bridge)candidate.version=5;validateKrakenBitcoinBridges(candidate);validateKrakenEthereumBridges(candidate);
    Object.assign(draft,candidate);ready++;groups.push({id:group.id,status:'ready',actions});
   }catch(e){issues.push({id:group.id,message:e.message});groups.push({id:group.id,status:'blocked',message:e.message});}
  }
  return {baseline,source,groups,issues,ready,duplicates,excluded:source.groups.length-selected.length,simulated:draft};
 }
-export function confirmKrakenImport(model,inputs,assignments,{baseline,confirmed=false,selectedGroups=null,externalReferences=[],partialConfirmed=false,openingConfirmed=false,bitcoinBridge=null}={}){
+export function confirmKrakenImport(model,inputs,assignments,{baseline,confirmed=false,selectedGroups=null,externalReferences=[],partialConfirmed=false,openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null}={}){
  if(!confirmed||baseline!==JSON.stringify(model))throw Error('Aktuellen Kraken-Prüfplan erneut bestätigen.');
- const plan=previewKrakenImport(model,inputs,assignments,{selectedGroups,externalReferences,openingConfirmed,bitcoinBridge});
+ const plan=previewKrakenImport(model,inputs,assignments,{selectedGroups,externalReferences,openingConfirmed,bitcoinBridge,ethereumBridge});
  if(plan.issues.length)throw Error('Ungeklärte Gruppen verhindern die Übernahme der Auswahl.');
  if(plan.excluded&&!partialConfirmed)throw Error('Nicht ausgewählte Restgruppen ausdrücklich bestätigen.');
  if(!plan.ready)return model;
@@ -242,7 +245,7 @@ export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
  const id=selectedGroups[0],originals=group.actions.map((_,i)=>{
   const booking=model.bookings.find(b=>b.id==='uh03:'+id+':'+i),journal=model.journalEntries.find(j=>j.id===booking?.journalEntryId);
   if(!booking||!journal||journal.id!==booking.id||journal.source!==KRAKEN_SOURCE||!sourceUnmodified(model,booking)||booking.transferMatch)throw Error('Kraken-Gruppe wurde geändert oder ist verknüpft.');
-  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source krakenBitcoinBridge'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
+  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source krakenBitcoinBridge krakenEthereumBridge'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
   if(Object.keys(booking).some(k=>!knownBooking.includes(k))||Object.keys(journal).some(k=>!knownJournal.includes(k))||journal.postings.some(p=>Object.keys(p).some(k=>!knownPosting.includes(k)))||!Number.isSafeInteger(journal.sequence))throw Error('Unbekannte Gruppenfelder oder Journalreihenfolge zuerst abgleichen.');
   return structuredClone({booking,journal,flows:model.externalCashFlows.filter(f=>f.id===booking.id)});
  });
