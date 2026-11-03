@@ -36,6 +36,18 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  "          node tests/browser-price-csv-tools.mjs\n",
+  "            UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-chromium.log\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-cross.log\n",
+  "          node tests/browser-ui-alltag10.mjs\n",
+  "            UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-ui-alltag10.mjs 2>&1 | tee artifacts/gates/production-ui-alltag10-chromium.log\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs 2>&1 | tee artifacts/gates/production-ui-alltag10-cross.log\n",
+  "          node tests/browser-ui-textscale.mjs\n",
+  "            UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-chromium.log\n",
+  "          UI_BASE=\"$ACCEPTANCE_BASE\" UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-cross.log\n",
   '          node tests/browser-bitpanda-import.mjs\n',
   '            HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs\n',
   '          UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-chromium.log\n',
@@ -124,4 +136,8 @@ test('UH03 Bitpanda is mandatory in all four integration and production paths',(
  assert.equal(lines.length,4);
  for(const line of lines)for(const changed of [source.replace(line+'\n',''),source.replace(line+'\n',line+'\n'+line+'\n')])assert.throws(()=>validate(changed));
  assert.throws(()=>validate(source.replace('HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs','HISTORY_ENGINES=firefox node tests/browser-bitpanda-import.mjs')));
+});
+
+test('UI289 gesture and text scaling gates are additive and mandatory on all four integration/live paths',()=>{
+ for(const suite of ['ui-alltag10','ui-textscale','price-csv-tools']){const lines=source.split('\n').filter(line=>line.includes('node tests/browser-'+suite+'.mjs'));assert.equal(lines.length,4);for(const line of lines)for(const changed of [source.replace(line+'\n',''),source.replace(line+'\n',line+'\n'+line+'\n')])assert.throws(()=>validate(changed));assert.throws(()=>validate(source.replace('UI_ENGINES=firefox,webkit node tests/browser-'+suite+'.mjs','UI_ENGINES=firefox node tests/browser-'+suite+'.mjs')));}
 });

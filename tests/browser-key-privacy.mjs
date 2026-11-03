@@ -24,7 +24,8 @@ try{
  });
  assert.equal(before.providers.length,1);
  assert.equal(before.settings.marketstackKey,'SYNTHETIC_SECRET_FOR_TEST');
- const removeKeysHelp=page.locator('#marketSettings > .more-panel-help');
+ const removeKeysHelp=page.locator('#marketSettings > .more-panel-help').filter({has:page.locator('#clearApiKeys')});
+ assert.equal(await removeKeysHelp.count(),1,'Exactly one key-security disclosure owns credential removal');
  assert.equal(await removeKeysHelp.evaluate(el=>el.open),false,'Destructive key removal is collapsed by default');
  await removeKeysHelp.evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();

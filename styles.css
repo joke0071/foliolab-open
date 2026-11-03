@@ -1892,19 +1892,98 @@
 
 /* UI-LOAD01: original flask; transform/opacity only, no JS animation loop. */
 .lab-flask{width:32px;height:32px;flex:none;vertical-align:middle}
-.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 4s ease-in-out infinite}
-.lab-bubble{animation:lab-bubble 3.8s ease-in infinite;opacity:0;transform-box:view-box}
-.lab-bubble:nth-child(2){animation-delay:1.3s}.lab-bubble:nth-child(3){animation-delay:2.5s}
-@keyframes lab-liquid{50%{transform:translateY(1px) rotate(2deg)}}
-@keyframes lab-bubble{10%{opacity:.8}80%{opacity:0;transform:translateY(-17px)}100%{opacity:0;transform:translateY(-17px)}}
+.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 2.8s ease-in-out infinite}
+.lab-bubble{animation:lab-bubble 2.6s ease-out infinite;opacity:0;transform-box:view-box}
+.lab-bubble:nth-child(2){animation-delay:-.87s}.lab-bubble:nth-child(3){animation-delay:-1.73s}
+@keyframes lab-liquid{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-2px) rotate(2.5deg)}}
+@keyframes lab-bubble{0%{opacity:0;transform:translate(0,0) scale(.7)}12%{opacity:.95}70%{opacity:.9}100%{opacity:0;transform:translate(1.5px,-24px) scale(1.15)}}
 .lab-loading>.lab-flask{margin-right:8px}
 .app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
-.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:64px;height:64px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
+.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
 .startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
-#pwaHelp{grid-column:1/-1;margin-bottom:18px}#pwaHelp summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}#pwaHelp p{line-height:1.6}
 @media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}
 
 /* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */
 #csvBitpandaEconomic summary{min-height:45px;padding:12px 0;cursor:pointer;overflow-wrap:anywhere}
 #csvBitpandaEconomic summary:focus-visible{outline:2px solid #327f52;outline-offset:2px;border-radius:5px}
+
+/* UI-ALLTAG10 A: the left position symbol is the management selection control. */
+.selection-mark{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;margin:0;padding:0;border-radius:12px;cursor:pointer}
+.selection-mark>input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:1;cursor:pointer}
+.selection-mark .selection-glyph{position:relative;pointer-events:none;display:grid;place-items:center;width:100%;height:100%;border:2px solid #7f9c89;border-radius:inherit;background:#fff;color:#2d5d40}
+.selection-mark .selection-glyph svg{width:20px;height:20px}
+.selection-mark>input:checked+.selection-glyph{border-color:#267044;background:#e3f1e8}
+.selection-mark>input:checked+.selection-glyph::after{content:"\2713";position:absolute;right:-6px;bottom:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#267044;color:#fff;font-size:12px;font-weight:700;line-height:1}
+.selection-mark>input:focus-visible+.selection-glyph{outline:3px solid #1d4ed8;outline-offset:2px}
+#positionList .position-entry:has(.selection-mark)>.holding-row{grid-row:1}
+#positionList .position-entry .holding-l>.selection-mark{width:44px;height:44px}
+#positionList,#bookingList,#snapshotList{-webkit-touch-callout:none}
+#bookingList .booking-row-tools>.selection-check{padding:0;min-width:44px;justify-content:center}
+
+/* UI-ALLTAG10 B: compact install icon, rendered only while a usable install prompt is held. */
+.install-icon[hidden]{display:none}
+.mobile-header .install-icon:not([hidden]){margin-left:auto}
+.mobile-header .install-icon:not([hidden])+.header-status-actions{margin-left:0}
+.install-icon{color:#267044}
+.install-icon:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}
+
+/* UI-ALLTAG10 D: tighter, consistent mobile list headers; labels, 44px targets and #257 view labels stay intact. */
+@media(max-width:767px){
+ #positionsPage .position-search-tools,#bookingsPage .booking-filter-tools{gap:6px;margin-bottom:10px}
+ #positionsPage .position-search-tools .field>span,#bookingsPage .booking-filter-tools .field>span,#historyPage .reference-filter>span{display:block;margin-bottom:3px;font-size:12px;line-height:1.3}
+ #positionListHead,#bookingListHead{gap:8px;flex-wrap:wrap}
+ #positionListHead>h3,#bookingListHead>h3{flex:1 1 auto;min-width:0;margin:0;overflow-wrap:anywhere}
+ #positionListHead .btn,#bookingListHead .btn{min-height:44px}
+ #positionSelectionStatus,#bookingSelectionStatus,#referenceSelectionStatus{margin:6px 0;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+}
+
+/* UI-ALLTAG10 E: align "Gebuchte Vorgänge" with sibling disclosures; quieter loading note. */
+.position-booking-history>summary{font-size:12px;font-weight:650;color:#4d6756}
+.position-history-plot[role="status"]{font-size:11px;font-weight:500;line-height:1.4;color:#657a69}
+
+/* Donut centre: DOM order matches the accessible name (label, share, total); visual order unchanged. */
+.donut-inner.allocation-center>small{order:2}
+
+/* One install icon per layout: the page-header icon on desktop, the mobile-header icon on phones. */
+@media(max-width:720px){#installButton.install-icon{display:none}}
+@media(min-width:721px){#installButtonMobile.install-icon{display:none}}
+
+/* UI-VISUAL02: consistent action arrangement in "Mehr" on phones – single actions span the card, pairs share the row. */
+@media(max-width:720px){
+ #morePage .button-row,#morePage .drive-backup-actions,#morePage .danger-zone,#morePage .drive-folder-options,#morePage .backup-password-form{display:grid;grid-template-columns:minmax(0,1fr)}
+ #morePage .button-row>.btn,#morePage #saveBackupPassword,#morePage #driveSaveNow,#morePage #driveFolderCreate,#morePage #deleteAll,#morePage #clearApiKeys,#morePage .advanced-apis.source-detail>.btn[form="apiSettings"]{width:100%;min-height:44px;justify-content:center;text-align:center;box-sizing:border-box;white-space:normal}
+ #morePage .drive-folder-actions>.btn{flex:1 1 0;min-width:0;min-height:44px}
+ #morePage .more-panel-help>#clearApiKeys{margin-top:8px}
+}
+
+/* #257-A: quiet header symbols in Mehr, same scale and colour as #settingsGear (decorative, not clickable). */
+.panel-title-icon{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.panel-title-icon>div{min-width:0}
+#accountsIcon,#securityIcon{display:inline-flex;flex-shrink:0;color:#537a60;pointer-events:none}
+
+/* Touch targets measured below 44px by docs/ui-copilot-2026-11-03/sweep.mjs. */
+#positionSearch,#bookingSearch,#wizardDirectoryImport,summary.provider-holding{min-height:44px;box-sizing:border-box}
+
+/* UI289 review: keep title shrinkable beside fixed header controls, including 768px. */
+.heading-row>div:first-child{flex:1 1 0;min-width:0;overflow-wrap:anywhere}
+.detail-action-row[hidden]{display:none}
+/* Long status words and management labels must also fit with enlarged text. */
+#positionList .tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+#positionSelectionTools .btn,#bookingManagementTools .btn,#referenceSelectionTools .btn{overflow-wrap:anywhere}
+#historyPage .history-calendar-popover:not([open]) .history-calendar-panel{display:none}
+@media(max-width:720px){
+ #historyPage .chart-period.history-chart-period:has(.period-more){flex-wrap:wrap}
+ #historyPage .chart-period.history-chart-period:has(.period-more)>button,
+ #historyPage .chart-period.history-chart-period:has(.period-more)>.period-more{flex:1 0 max-content}
+}
+#historyPage .chart-x-labels>span{min-width:0;white-space:normal;overflow-wrap:anywhere}
+
+/* Reserve edit space in text units so enlarged labels keep separate targets. */
+.detail-action-row{container:detail-actions / inline-size;font-size:11px}
+.detail-action-row:has(>.detail-edit)>details>summary{width:calc(100% - 7.5em);overflow-wrap:anywhere}
+.detail-action-row>.detail-edit{min-width:0;width:7em;white-space:normal;overflow-wrap:anywhere}
+@container detail-actions (max-width:20em){
+ .detail-action-row:has(>.detail-edit)>details>summary{width:100%}
+ .detail-action-row>.detail-edit{position:static;display:block;margin-left:auto}
+}

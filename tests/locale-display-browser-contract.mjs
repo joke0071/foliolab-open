@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync} from 'node:fs';
 import {transferFixture} from './transfer-matching-fixture.mjs';
@@ -18,13 +19,13 @@ export async function localeDisplayBrowserContract({p,nav,record,scan,engine,sca
   const buy=p.locator('[data-booking-id="locale-buy"]'),fraction=p.locator('[data-booking-id="locale-fraction"]');
   assert.equal(await buy.locator('time').getAttribute('datetime'),'2024-02-29');assert.equal(await buy.locator('time').innerText(),'29.02.2024');assert.equal(await buy.locator('.quantity-display').innerText(),'+1E-18');
   assert.equal(await fraction.locator('time').innerText(),'29.03.2026');assert.equal(await fraction.locator('.quantity-display').innerText(),'-0,123456789012345678');
-  await buy.locator('.booking-meta>summary').click();const restrictions=buy.locator('.booking-permission-details');assert.equal(await restrictions.evaluate(e=>e.open),false,'technical restrictions start compact');const reasonSummary=restrictions.locator('summary');assert.ok((await reasonSummary.boundingBox()).height>=44);await reasonSummary.focus();await p.keyboard.press('Enter');assert.equal(await restrictions.evaluate(e=>e.open),true);assert.match(await restrictions.locator('p').innerText(),/Status|Kapitalfluss|belegt/);await scan('expanded restriction '+width);await reasonSummary.click();assert.equal(await restrictions.evaluate(e=>e.open),false);assert.match(await buy.locator('.booking-meta>summary').getAttribute('aria-label'),/29\.02\.2024/);await scan('localized bookings '+width);
-  await buy.scrollIntoViewIfNeeded();await p.screenshot({path:'artifacts/gates/locale-display/'+engine+'-bookings-'+width+'.png'});await buy.locator('.booking-meta>summary').click();
+  await manageList(p,'bookings');await buy.locator('.booking-meta>summary').click();const restrictions=buy.locator('.booking-permission-details');assert.equal(await restrictions.evaluate(e=>e.open),false,'technical restrictions start compact');const reasonSummary=restrictions.locator('summary');assert.ok((await reasonSummary.boundingBox()).height>=44);await reasonSummary.focus();await p.keyboard.press('Enter');assert.equal(await restrictions.evaluate(e=>e.open),true);assert.match(await restrictions.locator('p').innerText(),/Status|Kapitalfluss|belegt/);await scan('expanded restriction '+width);await reasonSummary.click();assert.equal(await restrictions.evaluate(e=>e.open),false);assert.match(await buy.locator('.booking-meta>summary').getAttribute('aria-label'),/29\.02\.2024/);await scan('localized bookings '+width);
+  await buy.scrollIntoViewIfNeeded();await p.screenshot({path:'artifacts/gates/locale-display/'+engine+'-bookings-'+width+'.png'});await manageList(p,'bookings');await buy.locator('.booking-meta>summary').click();
   for(const term of ['29.02.2024','2024-02-29']){await p.locator('#bookingSearch').fill(term);assert.equal(await p.locator('.booking-management-row').count(),1,'localized and original ISO dates remain searchable');}
   await p.locator('#bookingSearch').fill('');await fraction.locator('.booking-meta>summary').click();await fraction.locator('[data-action=booking-transfer]').click();
   const dialog=p.locator('#transferMatchingDialog');assert.match(await dialog.locator('[data-transfer=out] option:checked').innerText(),/29\.03\.2026.*0,123456789012345678/);await scan('localized transfer '+width);await p.keyboard.press('Escape');
   await nav('positions');await p.locator('#positionSearch').fill('SYNTHETIC winziger Bestand');
-  const detail=p.locator('.position-entry .holding-expand');await detail.locator('summary').click();
+  await manageList(p,'positions');const detail=p.locator('.position-entry .holding-expand');await detail.locator('summary').click();
   const fact=detail.locator('.holding-facts>div').filter({has:p.locator('dt', {hasText:/^Bestand$/})});assert.equal(await fact.locator('dd').innerText(),'1E-18');await scan('localized tiny position '+width);await detail.scrollIntoViewIfNeeded();await p.screenshot({path:'artifacts/gates/locale-display/'+engine+'-positions-'+width+'.png'});
   await detail.locator('summary').click();await p.locator('#positionSearch').fill('');
   // The native provider details use the same delivered formatters; reading the

@@ -26,7 +26,7 @@ import {historicalWealthView} from './historical-portfolio-value.js';
 import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
-import {bookingRowMarkup,createBookingHistoryUI} from './booking-history-ui.js';
+import {bookingRowMarkup,createBookingHistoryUI,attachRowLongPress} from './booking-history-ui.js';
 import {forecastAccountInterest} from './interest-account.js';
 import {interestFormMarkup,interestTermsFromForm,bindInterestForm} from './interest-ui.js';
 import {compareCurrentCashBalance} from './cash-reconciliation.js';
@@ -134,7 +134,7 @@ function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
 function go(next,{review=false}={}){qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
-function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
+function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
  const unavailable=Boolean(loadFailure),conflict=otherTabChangedPortfolio;
@@ -240,7 +240,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions)+renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=wealth.samples;
-  $('miniHistoryStatus').textContent=wealth.label;
+  $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
@@ -380,7 +380,7 @@ function renderHistory(){
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
  const wealth=wealthView();let data=wealth.samples;
- $('historySourceStatus').textContent=wealth.label;
+ $('historySourceStatus').textContent=wealthBasis==='observed'&&wealth.basis==='observed'?'Quelle: gespeicherte Referenzwerte':wealth.label;
  if(page==='history')$('pageDescription').textContent=PAGE_DESCRIPTIONS.history;
  const emptyHistory=!wealth.samples.length;
  $('historySourceStatus').hidden=emptyHistory;
@@ -484,14 +484,14 @@ function renderPositions(){
   const rows=facts.map(([label,value])=>'<div><dt>'+esc(label)+'</dt><dd>'+esc(value)+'</dd></div>').join('');
   const h=historyAction(model,p);
   const secondaryActions=(p.kind==='cash'?'<button type="button" class="btn outline" data-action="check-cash-balance" data-id="'+esc(p.id)+'" aria-label="Kontostand für '+esc(p.name)+' prüfen">Kontostand prüfen</button>':'')+(h?'<button type="button" class="btn outline" data-action="'+h.action+'" data-id="'+esc(p.id)+'">'+h.label+'</button>':'');
-  return '<div class="position-entry" data-position-id="'+esc(p.id)+'"><div class="position-card-tools">'+(positionSelecting?'<label class="selection-check"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'">Auswählen</label>':'')+'</div><div class="holding-row">'+
-   '<div class="holding-l"><div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>'+
+  return '<div class="position-entry" data-position-id="'+esc(p.id)+'"><div class="position-card-tools"></div><div class="holding-row">'+
+   '<div class="holding-l">'+(positionSelecting?'<label class="holding-mark selection-check selection-mark"><input type="checkbox" data-position-select="'+esc(p.id)+'" '+(selectedPositionIds.includes(p.id)?'checked ':'')+'aria-label="'+esc(p.name+' · '+(account?.name||'Konto')+' auswählen')+'"><span class="selection-glyph" aria-hidden="true">'+svg(positionIconName(p,account),21)+'</span></label>':'<div class="holding-mark">'+svg(positionIconName(p,account),21)+'</div>')+
    '<div class="holding-info"><div class="holding-name" title="'+esc(p.name)+'">'+esc(p.name)+'</div>'+
    '<div class="holding-note">'+caption+'</div><div>'+tags+'</div>'+
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+
    '</div></div>'+
-   '<div class="detail-action-row position-detail-actions"><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
+   '<div class="detail-action-row position-detail-actions"'+(positionSelecting?'':' hidden')+'><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -625,13 +625,13 @@ function assertBookingWritable(){if(!bookingWritable())throw Error('Datenstand n
 function bookingManagementRow(row,archived,lookups){
  const checks=lookups.rowReasons.get(row.id),reason=checks.notes.join(' '),removeReason=checks.remove.join(' '),label=calendarDateLabel(row.date)+' · '+(row.positionName||model.positions.find(p=>p.id===row.positionId)?.name||row.positionId);
  const edit=lookups.bookings.has(row.id)?'<button type="button" class="link-button detail-edit" data-booking-row-action="edit" data-id="'+esc(row.id)+'" aria-label="'+esc(label+' · Buchung bearbeiten')+'" '+(loadFailure||otherTabChangedPortfolio?'disabled':'')+'>Bearbeiten</button>':'<span class="reference-protection">Geschützt · Buchungsdetails ansehen.</span>';
- const controls=bookingSelecting?'<div class="position-card-tools booking-row-tools"><label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'">Auswählen</label></div>':'';
+ const controls=bookingSelecting?'<div class="position-card-tools booking-row-tools"><label class="selection-check"><input type="checkbox" data-booking-select="'+esc(row.id)+'" '+(selectedBookingIds.includes(row.id)?'checked':'')+' aria-label="'+esc(label+' auswählen')+'"></label></div>':'';
  const original=lookups.bookings.get(row.id),position=lookups.positions.get(row.positionId),account=position&&lookups.accounts.get(position.accountId);
  const eligible=original&&['withdraw','deposit'].includes(original.type)&&position?.kind==='cash'&&!position.wallet?.enabled&&account?.providerId===position.providerId;
  const match=original?.transferMatch;
  const transferAction=match?'<div class="booking-transfer-actions"><button type="button" class="btn outline" data-action="booking-transfer" data-id="'+esc(row.id)+'" '+(!bookingWritable()?'disabled':'')+'>Zuordnung ansehen / aufheben</button></div>':eligible?'<div class="booking-transfer-actions"><button type="button" class="btn outline" data-action="booking-transfer" data-id="'+esc(row.id)+'" '+(!bookingWritable()?'disabled':'')+'>Als internen Transfer zuordnen</button><p class="small-help">Mögliche Gegenbuchungen prüfen. Betrag und Datum allein sind kein Beleg.</p></div>':'';
  const counterpartLabel=match?[match.outgoingId,...match.incomingIds].filter(id=>id!==row.id).map(id=>{const b=lookups.bookings.get(id),p=b&&lookups.positions.get(b.positionId),a=p&&lookups.accounts.get(p.accountId);return [calendarDateLabel(b?.date),a?.name,exactQuantityLabel(b?.quantityExact??b?.quantity),p?.currency,id].filter(x=>x!=null).join(' · ');}).join(' / '):'';
- return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?edit:'',transferAction:bookingSelecting?'':transferAction,counterpartLabel})+'</article>';
+ return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?edit:'',transferAction,counterpartLabel,detailsAvailable:bookingSelecting})+'</article>';
 }
 function bookingTransferShortcut(){return '<button id="bookingTransferAction" type="button" class="btn outline" data-action="transfer-matching" aria-describedby="bookingTransferHint" '+(!bookingWritable()?'disabled':'')+'>Transfers prüfen</button>';}
 function restoreBookingTransferFocus(button){
@@ -714,6 +714,7 @@ function renderAccountEvidence(row,account,expanded){
  return '<section class="account-evidence-body"><h3>Datenstand</h3><ul>'+facts.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul><p class="small-help">Kein vollständiger Bank- oder Walletabgleich bestätigt. Eröffnungsdatum, historische Kurse, Wechselkurse und Anschaffungswerte müssen für den jeweiligen Zeitraum belegt sein. Importherkunft allein belegt keine vollständige Historie. Nicht zugeordnete Ein-/Auszahlungen können externe Geldflüsse sein.</p><div class="settings-actions"><button type="button" class="btn outline" data-action="view-account" data-id="'+esc(account.id)+'">Positionen prüfen</button>'+(row.unmatchedCashMovements?'<button type="button" class="btn outline" data-action="account-transfer-review">Transferzuordnung prüfen</button>':'')+'</div></section>';
 }
 function renderSettings(){
+ renderHistoricalPriceCSVTools();
  $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
@@ -984,7 +985,7 @@ function openAccount(a,defaultProviderId){
 }
 function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Prüfe die wichtigsten Positionsdaten. Weitere Zuordnungen und technische Angaben findest du in den aufklappbaren Bereichen.</p>
 <div class="field-row"><label class="field"><span>Anbieter</span><input type="search" id="positionProviderSearch" class="picker-search" autocomplete="off" placeholder="Suchen, z. B. f → Flatex" aria-label="Anbieter filtern"><select name="providerId" id="positionProvider" required>${options(providerOptions,p?.providerId||model.providers[0]?.id)}</select></label><label class="field"><span>Konto / Depot</span><input type="search" id="positionAccountSearch" class="picker-search" autocomplete="off" placeholder="Konto suchen" aria-label="Konten filtern"><select name="accountId" id="positionAccount" required>${options(model.accounts.filter(a=>a.providerId===(p?.providerId||model.providers[0]?.id)).map(a=>[a.id,a.name]),currentAccount)}</select></label></div>
-<details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Mit eigenem EODHD-, FMP- oder Twelve-Data-Schlüssel nach ISIN, Ticker oder Name suchen. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
+<details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Zuerst lokale Referenzliste, danach Xetra-Suche mit eigenem Alpha-Vantage-Schlüssel (unter „Mehr“) nach ISIN, Ticker oder Name. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
 <div class="field-row"><label class="field"><span>Anlageklasse</span><select name="kind" id="positionKind">${options(Object.entries(TYPES),kind)}</select></label>${field('Name / Bezeichnung','name',p?.name||'','text','required maxlength="110" placeholder="Oder selbst eintippen"')}</div>
 <div class="field-row">${field('Ticker / Symbol','symbol',p?.symbol||'','text','maxlength="32"')}${field('ISIN (optional)','isin',p?.isin||'','text','maxlength="20"')}</div><div id="exchangeField"><div class="field-row">${field('Handelsplatz (z. B. Xetra)','exchange',p?.exchange||'','text','maxlength="60"')}${field('Börsen-MIC (optional, z. B. XETR)','mic',p?.mic||'','text','maxlength="8"')}</div></div>
 <div id="marketIdentifiers"><details class="advanced-apis"><summary>Externe Börsenkürzel (optional)</summary><p class="small-help">Nur den Ticker derselben ISIN, Handelswährung und Börsennotierung verwenden. Ein falsches Kürzel kann falsche Kurse liefern.</p><div class="field-row">${field('EODHD (z. B. VWCE.XETRA)','eodhdSymbol',p?.eodhdSymbol||'','text','maxlength="45"')}</div></details></div>
@@ -2164,6 +2165,16 @@ $('providerOverview').addEventListener('click',event=>{
  positionDetailRanges.set(id,days);
  showPositionDetail(id);
 });
+function renderHistoricalPriceCSVTools(){
+ const root=$('historicalPriceCSVTools');if(!root)return;
+ const chosen=$('priceCSVPosition')?.value||'';
+ const positions=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind));
+ const p=positions.find(p=>p.id===chosen),history=p&&model.priceHistories?.[p.id];
+ root.innerHTML='<label class="field"><span>Position für Kurs-CSV</span><select id="priceCSVPosition"><option value="">Position ausdrücklich wählen</option>'+positions.map(p=>'<option value="'+esc(p.id)+'"'+(p.id===chosen?' selected':'')+'>'+esc(p.name+(p.archived?' · archiviert':''))+'</option>').join('')+'</select></label>'+
+  '<p class="small-help" id="priceCSVSource" role="status">'+(p?esc((p.isin||p.symbol||'Kennung nicht zugeordnet')+' · '+(p.currency||'Währung nicht bestätigt'))+'<br>'+esc(history?'Quelle: '+history.source+' · '+history.points.length+' Kurse · '+history.currency:'Noch keine lokale Kursquelle für diese Position.'):positions.length?'Wähle die konkrete Position und prüfe Notierung und Handelswährung.':'Noch keine Wertpapierposition vorhanden.')+'</p>'+
+  '<div class="button-row"><button type="button" class="btn outline" data-action="import-price-history" data-id="'+esc(p?.id||'')+'"'+(!p?' disabled':'')+'>'+(history?'Lokale Quelle durch Kurs-CSV ersetzen':'Kurs-CSV importieren')+'</button>'+(history?'<button type="button" class="btn outline" data-action="remove-price-history" data-id="'+esc(p.id)+'">Lokale Kursquelle entfernen</button>':'')+'</div>';
+ $('priceCSVPosition').addEventListener('change',()=>{renderHistoricalPriceCSVTools();$('priceCSVPosition').focus({preventScroll:true});});
+}
 function openHistoricalPriceCSV(positionId){
  const p=model.positions.find(x=>x.id===positionId);
  if(!p||!['etf','stock','fund'].includes(p.kind))return notify('Nur Wertpapiere können einen CSV-Marktkursverlauf importieren.',true);
@@ -2195,6 +2206,23 @@ function openHistoricalPriceCSV(positionId){
 async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'clear-position-selection':selectedPositionIds=[];renderPositions();focusPositionSelection();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'refresh-quality-sources':{const pending=refreshAll();renderPositions();await pending;if(page==='positions'&&qualityReviewOpen){renderPositions();$('qualityReviewSourceActions').querySelector('button')?.focus({preventScroll:true});}break;}case 'open-quality-review':openQualityReview();break;case 'close-quality-review':closeQualityReview();break;case 'more-quality-review':{const previous=qualityReviewLimit;qualityReviewLimit+=50;renderPositions();const next=$('qualityReviewList').children[previous];(next?.querySelector('button')||$('qualityReviewHeading')).focus({preventScroll:true});next?.scrollIntoView({block:'nearest'});break;}case 'review-legacy-quote':if(!qualityReviewOpen)openQualityReview();$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';qualityReviewLimit=50;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'booking-transfer':transferMatchingUI.open(button,{bookingId:id});break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
 }}}
 function initEvents(){
+ // Long press = existing Verwalten mode plus the pressed row only; short tap keeps its normal action.
+ const focusSelected=(root,attr,id)=>[...root.querySelectorAll('['+attr+']')].find(el=>el.getAttribute(attr)===id)?.focus({preventScroll:true});
+ attachRowLongPress($('positionList'),{rowSelector:'.position-entry',idOf:row=>row.dataset.positionId,enabled:()=>!positionSelecting&&page==='positions',onLongPress:id=>{
+  positionSelecting=true;selectedPositionIds=[];renderPositions();
+  try{selectedPositionIds=updatePositionSelection(model,[],{type:'toggle',id});}catch(error){notify(error.message,true);}
+  renderPositions();focusSelected($('positionList'),'data-position-select',id);
+ }});
+ attachRowLongPress($('bookingList'),{rowSelector:'.booking-management-row',idOf:row=>row.dataset.bookingId,enabled:()=>!bookingSelecting&&page==='bookings',onLongPress:id=>{
+  bookingSelecting=true;selectedBookingIds=[];renderBookings();
+  try{selectedBookingIds=updateBookingSelection(model,[],{type:'toggle',id});}catch(error){notify(error.message,true);}
+  renderBookings();focusSelected($('bookingList'),'data-booking-select',id);
+ }});
+ attachRowLongPress($('snapshotList'),{rowSelector:'.reference-row',idOf:row=>row.dataset.referenceId,enabled:()=>!referenceSelecting&&page==='history',onLongPress:id=>{
+  referenceSelecting=true;selectedReferenceIds=[];renderReferences();
+  try{selectedReferenceIds=updateReferenceSelection(model,[],{type:'toggle',id},referenceMatchingIds);}catch(error){notify(error.message,true);}
+  renderReferences();focusSelected($('snapshotList'),'data-reference-select',id);
+ }});
  $('manageReferences').addEventListener('click',()=>{referenceSelecting=!referenceSelecting;selectedReferenceIds=[];renderReferences();if(referenceSelecting)focusReferences();else $('manageReferences').focus();});
  $('referenceArchiveFilter').addEventListener('change',()=>{referenceLimit=100;renderReferences();});
  $('snapshotManager').addEventListener('toggle',()=>{if(!$('snapshotManager').open){referenceSelecting=false;selectedReferenceIds=[];renderReferences();}});
@@ -2547,7 +2575,13 @@ $('apiSettings').addEventListener('submit',async e=>{
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
  $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
  const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
-  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').classList.remove('hidden');});$('installButton').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();installPrompt=null;$('installButton').classList.add('hidden');});
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
+  window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
+  document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
+   const prompt=installPrompt;if(!prompt){showInstallHelp();return;}
+   installPrompt=null;updateInstallControls();
+   try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
+  }));
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
@@ -2664,8 +2698,14 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 const standaloneMedia=matchMedia('(display-mode: standalone)');
-function updatePwaDisplay(){const standalone=standaloneMedia.matches||navigator.standalone===true;$('pwaDisplayStatus').textContent=standalone?'Diese Ansicht läuft eigenständig ohne Browserleiste.':'Diese Ansicht läuft im Browser. Eine vorhandene Installation lässt sich daraus nicht erkennen.';}
-updatePwaDisplay();standaloneMedia.addEventListener('change',updatePwaDisplay);
+function installHelpHTML(){
+ const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const steps=ios?'<li>In Safari unten oder oben auf „Teilen“ tippen.</li><li>„Zum Home-Bildschirm“ wählen.</li><li>Mit „Hinzufügen“ bestätigen.</li>':'<li>Im Browsermenü nach „App installieren“ oder „Zum Startbildschirm hinzufügen“ suchen.</li><li>Das Angebot bestätigen, falls es dein Browser anzeigt.</li>';
+ return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Je nach Gerät und Browser können installierte App und Browser denselben oder getrennten Speicher nutzen. Sichere vor der Installation ein Backup und prüfe danach deine Daten. Browserdaten bitte nicht löschen und die App nicht deinstallieren, solange deine Sicherung nicht geprüft ist.</p>';
+}
+function showInstallHelp(){showDialog('FolioLab als App verwenden','INSTALLATION',installHelpHTML(),null,{readOnly:true});$('saveDialog').hidden=true;}
+function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,direct=Boolean(installPrompt);document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=standalone||document.documentElement.dataset.appInstalled==='1';const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';});}
+updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
 performance.mark('foliolab-interactive');

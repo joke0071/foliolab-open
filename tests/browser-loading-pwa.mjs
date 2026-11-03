@@ -29,8 +29,22 @@ for(const engine of engines){
   release();await interactive(p);const before=await record(p);await p.reload();await interactive(p);assert.deepEqual(await record(p),before);
   assert.equal(await p.title(),'FolioLab');
   assert.ok(await p.evaluate(async()=>{const {setLoading}=await import('./src/loading-ui.js');const a=document.createElement('p'),b=document.createElement('p');a.textContent='Kurse werden aktualisiert …';b.textContent='Wallet wird geprüft …';document.body.append(a,b);setLoading(a,true);setLoading(a,true);setLoading(b,true);const valid=a.querySelectorAll('svg').length===1&&a.getAttribute('role')==='status'&&a.querySelector('clipPath').id!==b.querySelector('clipPath').id;setLoading(a,false);const ended=!a.querySelector('svg')&&a.textContent==='Kurse werden aktualisiert …';a.remove();b.remove();return valid&&ended;}));
-  await p.locator('#mobileNav [data-page="more"]').click();await p.locator('#pwaHelp summary').click();
-  assert.match(await p.locator('#pwaDisplayStatus').innerText(),/läuft im Browser/);
+  await p.locator('#mobileNav [data-page="more"]').click();
+  // The large install card is gone. A compact icon always opens manual help; with a held prompt it installs, never automatically.
+  assert.equal(await p.locator('#pwaHelp').count(),0);
+  const install=p.locator('#installButtonMobile');assert.ok(await install.isVisible());assert.equal(await install.getAttribute('data-install-mode'),'help');assert.match(await install.getAttribute('aria-label'),/^Installationshilfe/);
+  assert.ok(await install.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.right<=innerWidth;}));
+  await install.click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');assert.equal(await p.locator('#saveDialog').isHidden(),true,'help dialog has no save action');
+  assert.ok(await p.locator('#dialogFields').innerText().then(t=>t.includes('Browsermenü')||t.includes('Teilen')));
+  await p.locator('#cancelDialog').click();assert.equal(await p.locator('#editDialog[open]').count(),0,'help dialog closes');
+  assert.ok(await p.evaluate(()=>{window.__prompts=0;const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{window.__prompts++;};e.userChoice=Promise.resolve({outcome:'dismissed'});window.dispatchEvent(e);return e.defaultPrevented;}));
+  assert.equal(await p.evaluate(()=>window.__prompts),0,'prompt must wait for a user tap');
+  assert.equal(await install.getAttribute('data-install-mode'),'prompt');assert.equal(await install.getAttribute('aria-label'),'FolioLab als App installieren');
+  await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.equal(await install.getAttribute('data-install-mode'),'help','used prompt falls back to help');
+  await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('[data-install-action]:visible').count(),0,'appinstalled hides icon');
+  await p.evaluate(()=>{delete document.documentElement.dataset.appInstalled;window.dispatchEvent(new Event('visibilitychange'));});
+  await p.evaluate(()=>{Object.defineProperty(navigator,'standalone',{value:true,configurable:true});const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{};e.userChoice=new Promise(()=>{});window.dispatchEvent(e);});assert.equal(await p.locator('[data-install-action]:visible').count(),0,'standalone hides icon');
+  await p.evaluate(()=>{delete navigator.standalone;});
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
   const manifest=await p.evaluate(async()=>await(await fetch('./manifest.webmanifest')).json());
   assert.equal(manifest.name,'FolioLab');assert.equal(manifest.short_name,'FolioLab');assert.equal(manifest.start_url,'./');assert.equal(manifest.scope,'./');assert.equal(manifest.display,'standalone');assert.equal(manifest.id,undefined);
@@ -51,7 +65,7 @@ for(const engine of engines){
   // Failed storage uses existing read-only recovery, never a blank writable model.
   const storage=await fresh();await storage.addInitScript(()=>{localStorage.setItem('foliolab-open-storage-mode','idb-v1');});await storage.goto(base);await interactive(storage);assert.match(await storage.locator('#notice').innerText(),/nicht lesbar/);assert.ok(await storage.locator('#addWizard').isDisabled());
   const timed=await fresh();await timed.goto(base);await interactive(timed);const coldMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.reload();await interactive(timed);const warmMs=await timed.evaluate(()=>performance.getEntriesByName('foliolab-interactive')[0].startTime);await timed.evaluate(()=>{setTimeout(()=>{const d=document.createElement('details');d.id='loadingLateDisclosure';const s=document.createElement('summary');s.textContent='Synthetic late action';const b=document.createElement('button');b.dataset.loadingLate='true';b.textContent='Synthetic action';b.onclick=()=>b.dataset.clicked='true';d.append(s,b);document.getElementById('onboarding').append(d);},100);});await clickDisclosed(timed.locator('[data-loading-late]'));assert.equal(await timed.locator('[data-loading-late]').getAttribute('data-clicked'),'true');await timed.locator('#loadingLateDisclosure').evaluate(e=>e.remove());
-  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,checks:['watchdog download failure','refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout then late completion','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','browser help'],androidHardware:false}));
+  writeFileSync(`artifacts/gates/loading-pwa/${engine}.json`,JSON.stringify({engine,result:'PASS',coldMs,warmMs,checks:['watchdog download failure','refresh persistence failure/exact record','delayed IndexedDB initialization','inline loader deduplication','slow module graph','300ms visibility','timeout then late completion','read-only module error','storage failure recovery','reduced motion','320px/axe','record-preserving reload','manifest identity/PNG dimensions','compact install icon states'],androidHardware:false}));
   console.log(engine+' loading/PWA PASS');
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
 }

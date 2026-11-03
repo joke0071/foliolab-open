@@ -68,7 +68,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
   renderChartPeriodButtons('market','data-position-range',days,standard)+extra+'</div>':'';
  const hasMarketKey=Boolean((model.settings?.eodhdWorkerEndpoint&&model.settings?.eodhdWorkerAccessToken)||model.settings?.alphaVantageKey||model.settings?.marketstackKey);
  const noMarketChart=isSecurity&&!needsOwnChart?collapsedHistory(
-   hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional FMP oder Twelve Data unter „Mehr“ einrichten; ein eigener EODHD-Worker ist als zusätzliche Quelle möglich.',
+   hasMarketKey?'Kein nativer Kursverlauf: Bitte Kursanbieter in „Mehr“, bestätigten Handelsplatz, Börsen-MIC, Ticker und Handelswährung dieser Position prüfen.':'Kein nativer Kursverlauf: Optional Alpha Vantage, Marketstack oder einen eigenen EODHD-Worker unter „Mehr“ einrichten und Handelsplatz, Ticker und Währung prüfen.',
    {esc}):'';
  const extraTools=isSecurity?'<div class="position-native-quote-actions">'+csvTool+'</div>':'';
  const timeline=positionBookingTimeline(model,p.id);

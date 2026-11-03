@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -44,11 +45,11 @@ for(const engine of (process.env.READABILITY_ENGINES||process.env.BOOKING_MANAGE
    assert.ok(geometry.every(r=>r.wordLines.every(lines=>lines<=2)),`${engine} ${width} words broken into narrow vertical fragments`);assert.ok(geometry.every(r=>r.values.every(v=>v.left>=0&&v.right<=width+1&&v.scroll<=v.client+1)),`${engine} ${width} booking values clipped or overflowing: `+JSON.stringify(geometry.filter(r=>r.values.some(v=>v.scroll>v.client+1))));
    if(width<=767)assert.ok(geometry.every(r=>r.values.filter(v=>/^[€+−\-0-9]/.test(v.text)).every(v=>v.lines===1)),`${engine} ${width} numeric values split across lines`);
    await page.locator('[data-booking-manage="select"]').click();assert.ok(await page.locator('#bookingList .booking-main').evaluateAll(nodes=>nodes.every(n=>n.querySelector('strong').getBoundingClientRect().width>=80)),'selection preserves readable titles');await page.screenshot({path:`${out}/${engine}-${width}-${height}-selection.png`});await page.locator('[data-booking-manage="cancel"]').click();
-   await page.locator('#bookingList .booking-meta>summary').first().click();
+   await manageList(page,'bookings');await page.locator('#bookingList .booking-meta>summary').first().click();
    await page.locator('#bookingList .booking-meta').first().scrollIntoViewIfNeeded();
    await page.screenshot({path:`${out}/${engine}-${width}-${height}-booking-details.png`});
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'expanded booking details fit');
-   await page.locator('#bookingList .booking-meta>summary').first().click();
+   await manageList(page,'bookings');await page.locator('#bookingList .booking-meta>summary').first().click();await page.locator('[data-booking-manage=cancel]').click();
    for(const value of ['archived','all','active']){await page.locator('#bookingArchiveFilter').selectOption(value);assert.equal(await page.locator('#bookingArchiveFilter').inputValue(),value);}
    if(width===390){
     await nav('more');
