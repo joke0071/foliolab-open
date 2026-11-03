@@ -1,3 +1,13 @@
+## ACTIVE – PR #287 gemergt / v273 Main- und Produktionsabnahme – 03.11.2026
+
+Alleiniger Owner **ecc3561f055e**. #287 nach finaler PR-CI **41638566497 Versuch1 SUCCESS**, Wallet **41638566574 SUCCESS**,1142Units/0Fehler/Skips, vollständigen Logs/6Artefaktdigests/echtem Cross3-Download+Hash+ZIP/Firefox-/WebKit-Mobilbildsichtung/leerenReviews und frischemOwner-/Main-/HEAD-/Testmergeabgleich SHA-geschützt gemergt. **Main8d590d19936403557ce75d59105da3a0fca1c7b5**, Tree **5e33e2461882e205b2575cb4fe5aae8652886852** exakt geprüfterKandidat/Testmerge; SWv273/v5/Identitäten. [FinalePR-Abnahme](release-evidence/v273-pr287-final-ci.json). NeuerBitcoin-Brückenfall UND alle3bestehendenKrakenfälle vollständig inChromium/Firefox/WebKit PASS, einschließlichUI/IDB/CAS/Quota/Rücknahme/verschlüsseltemRestore/Offline/7Breiten/Axe. Private Original-/Chain-/HD-/Decimalbelege vorhanden; keine unabhängige historischeEndbestandsabnahme daraus.
+
+**v273 MERGED, NICHT LIVE_ACCEPTED; v272 bleibt letzte akzeptierte Produktion.** Automatischen Main-/Produktionslauf **41641358681 IN_PROGRESS** unverändert auswerten, keine Duplikate/Abbrüche/Folgeimplementierung. Nach Deployment normalen TLS-geprüften Assetbyteabgleich ausführen und sämtliche neuen Livepflichtgates abnehmen. Eigener lokalerIndex/Dateibaum exakt5e33e246; privateLogs/ZIPs/Originale/Oracles `/workspace/scratch/ecc3561f055e/private/`, Checkoutdaneben.
+
+Externe UI-Delegation **#288 / Copilot-Draft#289** bleibt getrennt und nicht integriert. LetztbeobachteterDraftHEAD115bb4e9; GitHub meldet Copilot-Lauf41639154185 **CANCELLED**, beideDraft-Checks41639161229/41639161133 **ACTION_REQUIRED**. Ursache noch nicht belegt, keine abgeschlosseneLieferung/Prüfung behaupten; keine erneuteBeauftragung oder Actionfreigabe/-Wiederholung gestartet. Drei-Listen/PWA/Loader/mobileLeisten/Text bleiben extern reserviert. Hauptowner behält alleinigeIntegration/QA/Release. UH03insgesamtPARTIAL, danachUH04→UH05; alleRestgrenzen/EFF01/HND01/Zähler0/0 erhalten. Checkpointbranch niemals vollständig nachMain mergen.
+
+---
+
 ## ACTIVE – PR #287 eingefroren / vollständige Pflichtgates laufen – 03.11.2026
 
 **Externer Zwischenstand zu #288:** Copilot hat [Draft-PR #289](https://github.com/joke0071/foliolab-open/pull/289) auf `copilot/ui-alltag10-drei-listen-bedienung` angelegt; zuletzt beobachteter HEAD `115bb4e936dd7f765bf2efc01e748ea4be5dfaff`. Dies ist WIP, keine bestätigte Lieferung/Abnahme. Noch keine unabhängige Diff-/UI-Prüfung oder Integration begonnen. Erst gelieferten tatsächlichen Stand prüfen; PR287 und UH03→UH04→UH05 behalten Vorrang. Keine erneute Zuweisung/Doppelimplementierung.
