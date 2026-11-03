@@ -1,0 +1,130 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": "v272",
+  "main": "0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+  "tree": "05ae1caece85f53b89562bf071c37f4122b7a1f7",
+  "cache": "foliolab-open-v272",
+  "schemaVersion": 5,
+  "identities": "Data/installation identity unchanged",
+  "pr": 286,
+  "prAcceptance": "v272-pr286-final-ci.json",
+  "run": {
+    "id": 41619792780,
+    "attempt": 1,
+    "status": "COMPLETED/SUCCESS",
+    "deploymentJob": 125869525305,
+    "liveJob": 125869732060
+  },
+  "units": {
+    "pass": 1134,
+    "fail": 0,
+    "skip": 0
+  },
+  "localOriginalOracle": {
+    "accepted": 957,
+    "blocked": 16,
+    "total": 973,
+    "boundary": "Independent Decimal structural group quantities/inverse; not independently evidenced historical portfolio openings/closing balances"
+  },
+  "live": {
+    "engines": [
+      "Chromium141/Playwright1.56.1",
+      "Firefox157/WebKit27.2/Playwright1.64.1"
+    ],
+    "kraken": "All three exact trade/fee/cross-reference scenarios: shared CSV UI, persistent complete-group withdrawal, source evidence, reimport denial, v5/Bitcoin, CAS/quota, reload/offline/encrypted restore/7 widths/Axe PASS",
+    "core": {
+      "result": "PASS",
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 139,
+      "pageErrors": [],
+      "proxyCertificateException": false
+    },
+    "uiAndTransferReports": "All required engine reports PASS",
+    "assetByteVerification": "v272-regular-https-assets.json; 139/139 with default TLS certificate and hostname validation, final service worker rechecked exactly",
+    "visualReview": [
+      "production Chromium distinct-fee withdrawal390px",
+      "production WebKit cross-reference withdrawal390px",
+      "PR Firefox same-asset-fee withdrawal390px"
+    ]
+  },
+  "artifacts": [
+    {
+      "id": 13224088850,
+      "name": "production-live-acceptance-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+      "bytes": 94155982,
+      "digest": "sha256:903b4a3502f9c966d2f324e29eece4806d673d1b60f4ebaed777777c57c50403",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13223783127,
+      "name": "dialog-visual-reference",
+      "bytes": 934784,
+      "digest": "sha256:37dc55bbc912e4e28221c567a8ef86fca92544ad4c25e500a08578751fc630d7",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13223537839,
+      "name": "cross-engine-gates-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a-3",
+      "bytes": 50034310,
+      "digest": "sha256:5f641417d0f97a3b3aa89fdd3748adb156e97a79b4e63f14e5936de4c39a19ce",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13223422787,
+      "name": "cross-engine-gates-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a-2",
+      "bytes": 12107639,
+      "digest": "sha256:6db45ad366395e48cb4d2ae74765ada25e88857bc24401000583c0a3c5d70f10",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13223358817,
+      "name": "cross-engine-gates-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a-1",
+      "bytes": 48964270,
+      "digest": "sha256:e6c46dcb63ece054578818c5bef4363554cd744c47143a372710b403ecc1fccd",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13223329643,
+      "name": "release-gates-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+      "bytes": 53810982,
+      "digest": "sha256:e49d43fcf0a200726d03f535c737cbc892b8f151dd71fb65424b672031aab1cb",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13222734444,
+      "name": "github-pages",
+      "bytes": 490080,
+      "digest": "sha256:c4304d5b870c087980a7cbafc3ca91844666c32fc0ba0b3dc5213dd25e5e86ee",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13221889327,
+      "name": "ci-stage-0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+      "bytes": 354,
+      "digest": "sha256:0bd18168e93c2b4d3cd61022147dcdd4b9c125e0c04d890896f0dde003eac057",
+      "uploadLogDigestMatch": true
+    }
+  ],
+  "productionDownload": {
+    "id": 13224088850,
+    "bytes": 94155982,
+    "sha256": "903b4a3502f9c966d2f324e29eece4806d673d1b60f4ebaed777777c57c50403",
+    "hashAndZipIntegrity": "PASS"
+  },
+  "diagnosticHistory": {
+    "failureArtifact": 13220139603,
+    "failedRun": 41615076015,
+    "classification": "Deterministically reproduced test synchronization race; cleared hidden text accepted before submit rejection completed; existing busy guard correctly blocks early Escape",
+    "fix": "Require visible changed actual abort feedback AND unlocked editor; no timeout/gate/product-storage weakening",
+    "finalPRAndMainRetries": 0,
+    "abortedRuns": 0,
+    "traceRetentionCorrection": "Initial diagnostic trace hash7aae8f... was observed but same-named trace later overwritten during diagnosis. Final deterministic reproduction re-run to a unique retained path; use the following authoritative retained trace rather than the old candidate trace reference.",
+    "retainedReproScriptSHA256": "f629fad9708dcc4a9745e2b839edf68cda0c17ef9d9479749e4205c171fc4ad1",
+    "retainedReproLogSHA256": "2cc84f6d9a76699871d3257de2ad9147ea15861c4c4021e17475522b3ac4a5d3",
+    "retainedFinalTrace": "reference-race-final-trace-1.zip",
+    "retainedFinalTraceSHA256": "36b747e0d9c4f1f5ee34b69878115f344d654a8c6703641d6edf984e8bee48bb"
+  },
+  "privateEvidence": "/workspace/scratch/0ccb6712f33e/private/",
+  "remaining": "UH03 PARTIAL: independent historical balances, combined exchange/wallet/Ledger/chain transfers and fees/gas, broader source reconciliation. Then UH04 -> UH05; real Android hardware QA remains open."
+}
