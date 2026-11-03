@@ -1,0 +1,186 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "at": "2026-11-03",
+  "main": "06688b537937ac901d482cbe771d8327977cf2c0",
+  "tree": "cfb12b43bda1476ccaaf5c64e09e7b63337912c4",
+  "sw": "foliolab-open-v270",
+  "pr": 284,
+  "dataVersion": 5,
+  "dataAndInstallationIdentity": "unchanged",
+  "finalRun": {
+    "id": 41590568785,
+    "status": "completed",
+    "result": "success",
+    "sha": "06688b537937ac901d482cbe771d8327977cf2c0",
+    "attempt": 1,
+    "started": "2026-11-03T06:32:54Z",
+    "updated": "2026-11-03T07:04:39Z"
+  },
+  "jobs": [
+    {
+      "id": 125766097429,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125766167197,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125766167294,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125766167315,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125766167324,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125766168491,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125771119513,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125771278406,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "prEvidence": "v270-pr284-final-ci.json",
+  "units": {
+    "tests": 1122,
+    "pass": 1122,
+    "fail": 0,
+    "skip": 0
+  },
+  "scope": "Within-reference exact Kraken balance trails, independent of CSV row order, fixed confirmed opening, bounded64; all canonical source IDs/payloads/actions and guards retained. Locally branching sole full paths accepted; ambiguous/disconnected paths blocked.",
+  "oracles": {
+    "smallGraphs": 199290,
+    "allSixCSVPerturbations": "PASS with identical complete model/journal/source IDs and payloads under fixed test clock/UUID",
+    "privateOriginal": "Recovered original + independent Decimal/exhaustive reference/stream continuity PASS; structural candidate starts only, not independent historical ending balances"
+  },
+  "browserAcceptance": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "scenarios": [
+      "original distinct fee asset",
+      "reversed same asset fee"
+    ],
+    "fullKrakenChain": "Actual shared CSV UI/bindings/opening confirmation -> single real IDB-CAS revision -> protected v5 -> reload/reimport -> exact undo -> encrypted restore -> quota/stale CAS -> actual offline PWA reload; seven widths and Axe PASS",
+    "otherMandatorySuites": "All unchanged required import/financial/storage/CAS/backup/recovery/provider/PWA/UI suites PASS, including Alpha and Bitpanda in all engines",
+    "core": {
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 138,
+      "errors": [],
+      "proxyCertificateException": false
+    },
+    "productionUIAndTransfersReports": "Chromium/Firefox/WebKit PASS"
+  },
+  "httpsEvidence": "v270-regular-https-assets.json",
+  "regularHttps": {
+    "assetMatches": 138,
+    "total": 138,
+    "certificateAndHostnameVerification": "default",
+    "finalServiceWorkerByteComparison": "PASS"
+  },
+  "artifacts": [
+    {
+      "id": 13211110089,
+      "name": "github-pages",
+      "digest": "sha256:25060957cd7b2834797797e726469addf53c9cc6ae8593223cfa32f49ab5c220",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210431582,
+      "name": "cross-engine-gates-06688b537937ac901d482cbe771d8327977cf2c0-1",
+      "digest": "sha256:3da7fb499350c034647391ecdf50b8e6ac7f5865e057005a871346418aa17784",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210422439,
+      "name": "release-gates-06688b537937ac901d482cbe771d8327977cf2c0",
+      "digest": "sha256:f86747eab2b412b25c75c4ca9f89f8fbbc164e69321fcf4238e82983e0cd866c",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210300070,
+      "name": "ci-stage-06688b537937ac901d482cbe771d8327977cf2c0",
+      "digest": "sha256:ab167405ee66754a8d947e945222f586227a018091adc76a208b54406c2414bb",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210284872,
+      "name": "production-live-acceptance-06688b537937ac901d482cbe771d8327977cf2c0",
+      "digest": "sha256:c744a89f1a6c109093aee702b5e2b41fc5155e392e8679de7be8378050643eba",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210211304,
+      "name": "cross-engine-gates-06688b537937ac901d482cbe771d8327977cf2c0-2",
+      "digest": "sha256:64a3ae23c8a8643eeb7e1dfe6b414b9bdef85503e5fc3baea9805734cb696c23",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13210138934,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:228780a68f1ed18ae17ffed12cb1ae7071eb12855a4abb52b88ca58464dc4f79",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13209854990,
+      "name": "cross-engine-gates-06688b537937ac901d482cbe771d8327977cf2c0-3",
+      "digest": "sha256:1b681b7c548f7893a42ce19547b2c80f5506ad635bd226a696f78548c24003b0",
+      "uploadLogMatch": true
+    }
+  ],
+  "actualLiveDownload": {
+    "id": 13210284872,
+    "sha256": "c744a89f1a6c109093aee702b5e2b41fc5155e392e8679de7be8378050643eba",
+    "zipCRC": "PASS",
+    "coreAndUITransferReports": "read and checked",
+    "mobileImages": "Chromium/WebKit same-asset fee390px inspected"
+  },
+  "finalCollisionCheck": {
+    "mainUnchanged": true,
+    "owner": "4828cb971371",
+    "openPRs": [
+      157,
+      161
+    ],
+    "actionsInProgress": 0,
+    "actionsQueued": 0
+  },
+  "efficiency": {
+    "fullPRWorkflows": 1,
+    "mainReleaseWorkflows": 1,
+    "retries": 0,
+    "cancellations": 0
+  },
+  "limitations": "UH03 overall PARTIAL. Independent historical Kraken/Bitpanda end balances, cross-reference chronology, combined BTC/ETH/ERC20/SOL/SPL transfer/gas/fees and persistent selective source withdrawal remain open. No physical Android/native Safari/OAuth acceptance inferred.",
+  "nextDiagnosis": "uh03-kraken-cross-reference-next-diagnosis.json",
+  "private": "/workspace/scratch/4828cb971371/private/"
+}
