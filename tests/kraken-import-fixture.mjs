@@ -23,3 +23,10 @@ export function fixture(text=source()){
  }
  captureOpenings(m);return {m,assignments};
 }
+// Same timestamp, two references. The second trade depends on the first in both streams.
+export const crossReferenceSource=()=>krakenCSV([
+ {txid:'SYN-CROSS-EUR-1',refid:'SYN-CROSS-SECOND',asset:'EUR',subclass:'fiat',amount:'-100',fee:'0',balance:'100',feecurrency:'EUR'},
+ {txid:'SYN-CROSS-ETH-1',refid:'SYN-CROSS-SECOND',asset:'ETH',amount:'3',fee:'0',balance:'3',feecurrency:'ETH'},
+ {txid:'SYN-CROSS-EUR-2',refid:'SYN-CROSS-FIRST',asset:'EUR',subclass:'fiat',amount:'-50',fee:'0',balance:'50',feecurrency:'EUR'},
+ {txid:'SYN-CROSS-ETH-2',refid:'SYN-CROSS-FIRST',asset:'ETH',amount:'2',fee:'0',balance:'5',feecurrency:'ETH'}
+]);
