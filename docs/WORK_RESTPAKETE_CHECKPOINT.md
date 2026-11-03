@@ -1,3 +1,9 @@
+## ACTIVE – UH03 selektive Quellen-/Gruppenrücknahme – 03.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **8f8da2b5bb83** nach ausdrücklicher Übernahme und vollständiger STOPPED-Abgabe von 326c8cc8f969. Frischer Kollisionsschutz: Main `e72cfb98f309a84c221ed47d95f0bd300a1db74c`, Tree `1a44fbc45dcb2317710ce435ff0944e7fa62c0b4`, **v271 LIVE_ACCEPTED**, #285 gemergt; nur historische Drafts #157/#161 offen, letzte Actions abgeschlossen. Keine erneute v270/v271-Abnahme und keine Doppelimplementierung der produktiven Kraken-Chronologie. Nächster begrenzter Schnitt gemäß [gesicherter Diagnose](release-evidence/uh03-selective-source-withdrawal-next-diagnosis.json): vollständige Quellen-/Wirtschaftsgruppen sicher und persistent zurücknehmen; Quellenentfernung und wirtschaftliches Undo unterscheiden, Reimportschutz/Abhängigkeiten/Originale/unabhängige Oracles erhalten. UH03 insgesamt offen, danach UH04 → UH05. v5/Daten-/Installationsidentität/EFF01/HND01 erhalten; Zähler0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – v271 LIVE_ACCEPTED / 326c8cc8f969 STOPPED – 03.11.2026
 
 **HND01-Frührotation nach vollständigem Implementierungs-/Original-/Oracle-/PR-/Main-/Produktionsabschluss und umfangreicher Tool-/Log-/Wartelast. 326c8cc8f969 ist STOPPED und gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine weiteren Implementierungen, PRs, Merges, Deployments oder Retries dieser Sitzung. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Owner.** Zähler **1 LIVE_ACCEPTED / 1 abgeschlossener begrenzter Produktschnitt**; UH03 insgesamt weiterhin offen. Kein technischer Chat-/Kontingentreset behauptet.
