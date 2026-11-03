@@ -1,0 +1,31 @@
+{
+  "status": "WAITING_FOR_NATIVE_SOURCE_PROOF",
+  "owner": "b0d443b77469",
+  "release": "v276 LIVE_ACCEPTED",
+  "main": "29098c299bdf230ffd1d4e97ce34f0c2c129f38b",
+  "chain": "Solana",
+  "source": "existing native Kraken/Ledger originals reused",
+  "existingWeakCandidates": 3,
+  "selectedTarget": "Most recent original native SOL withdrawal; exact private locator below",
+  "independentChecks": [
+    "exact Decimal principal equals observed Ledger incoming amount",
+    "principal and separate exchange fee have integral lamport representation",
+    "amount/time match is weak only; no source-to-chain binding accepted"
+  ],
+  "missing": [
+    "Native completed Kraken withdrawal detail binding provider refid to Solana network, full signature and recipient",
+    "Successful canonical/finalized chain instruction and exact own-wallet/fee-payer verification before any bridge"
+  ],
+  "privateTarget": "/workspace/scratch/b0d443b77469/private/uh03-next-sol-proof-target.json",
+  "privateTargetSHA256": "b5993583bdd189dd5e4eca4f885a5c307d3b64adbedb0444887190fe7308151c",
+  "search": "Inherited private evidence and targeted current Library ref/content/image searches found no matching native SOL withdrawal detail; not an exhaustive absence claim",
+  "productMutation": false,
+  "existingETHScreenshotRequestedAgain": false,
+  "existingCSVsRequestedAgain": false,
+  "limits": [
+    "SOL candidates are not confirmed transfers",
+    "native ETH total history remains partial",
+    "UH03 overall partial; UH04/UH05 remain open"
+  ],
+  "next": "Request only selected native SOL withdrawal detail privately; use inherited UH04 preparation for later implementation"
+}
