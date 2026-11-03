@@ -1,0 +1,19 @@
+{
+  "status": "READ_ONLY_NEXT_SCOPE_NOT_IMPLEMENTED",
+  "base": "06688b537937ac901d482cbe771d8327977cf2c0",
+  "currentRelease": "v270 MERGED; main/deploy/live gates pending",
+  "privateOriginal": "Recovered original Kraken CSV reused; independent Python Decimal/exhaustive row traversal by timestamp+asset+wallet+subclass",
+  "findings": {
+    "crossReferenceSameTimestampClustersExist": true,
+    "uniqueCompleteStructuralPathsExist": true,
+    "ambiguousCompleteStructuralPathsExist": true,
+    "over64ClustersObserved": false,
+    "independentHistoricalBalances": false
+  },
+  "next": "After v270 release completion, investigate bounded ordering across references sharing a timestamp. Complete exact timestamp/stream row trails anchored in confirmed holdings may induce reference dependencies; require each reference to be contiguous per stream and cross-stream dependencies acyclic. Independent references can use canonical deterministic ordering. This is a proposal, not an independently validated production algorithm; preserve blocked ambiguous/conflicting/unsupported cases and canonical source/action identity. Existing/reimport groups require careful separate handling so final current holdings are not mistaken for historical openings.",
+  "privateLocators": [
+    "/workspace/scratch/4828cb971371/private/chronology-diagnosis.py",
+    "/workspace/scratch/4828cb971371/private/chronology-diagnosis.json"
+  ],
+  "remainingUH03": "Independent historical Kraken/Bitpanda end balances; combined BTC/ETH/ERC20/SOL/SPL transfers/gas/exchange fees; persistent selective source withdrawal. UH03 before UH04 before UH05."
+}
