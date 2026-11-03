@@ -1902,7 +1902,6 @@
 .app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:64px;height:64px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
 .startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
-#pwaHelp{grid-column:1/-1;margin-bottom:18px}#pwaHelp summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}#pwaHelp p{line-height:1.6}
 @media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}
 
 /* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */
@@ -1924,3 +1923,10 @@
 #bookingList .booking-management-row:has(.booking-row-tools .selection-check)>.booking-row-tools{grid-column:1;grid-row:1;min-height:44px;padding:0;justify-content:center}
 #bookingList .booking-management-row:has(.booking-row-tools .selection-check)>.booking-compact{grid-column:2;grid-row:1}
 #bookingList .booking-row-tools>.selection-check{padding:0;min-width:44px;justify-content:center}
+
+/* UI-ALLTAG10 B: compact install icon, rendered only while a usable install prompt is held. */
+.install-icon[hidden]{display:none}
+.mobile-header .install-icon:not([hidden]){margin-left:auto}
+.mobile-header .install-icon:not([hidden])+.header-status-actions{margin-left:0}
+.install-icon{color:#267044}
+.install-icon:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}

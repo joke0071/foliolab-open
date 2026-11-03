@@ -2565,7 +2565,13 @@ $('apiSettings').addEventListener('submit',async e=>{
  $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
  $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
  const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
-  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').classList.remove('hidden');});$('installButton').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();installPrompt=null;$('installButton').classList.add('hidden');});
+  window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
+  window.addEventListener('appinstalled',()=>{installPrompt=null;updateInstallControls();notify('FolioLab wurde als App installiert.');});
+  document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
+   const prompt=installPrompt;if(!prompt)return;
+   installPrompt=null;updateInstallControls();
+   try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
+  }));
 }
 const assetWizard=createAssetWizard($('wizardDialog'),{
  getModel:()=>model,
@@ -2682,8 +2688,8 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 const standaloneMedia=matchMedia('(display-mode: standalone)');
-function updatePwaDisplay(){const standalone=standaloneMedia.matches||navigator.standalone===true;$('pwaDisplayStatus').textContent=standalone?'Diese Ansicht läuft eigenständig ohne Browserleiste.':'Diese Ansicht läuft im Browser. Eine vorhandene Installation lässt sich daraus nicht erkennen.';}
-updatePwaDisplay();standaloneMedia.addEventListener('change',updatePwaDisplay);
+function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,show=Boolean(installPrompt)&&!standalone;document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=!show;});}
+updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
 performance.mark('foliolab-interactive');
