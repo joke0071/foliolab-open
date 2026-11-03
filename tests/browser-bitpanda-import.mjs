@@ -1,3 +1,4 @@
+import {bitpandaWithdrawalBrowserContract} from './bitpanda-withdrawal-browser-contract.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {chromium,firefox,webkit} from 'playwright';
@@ -94,6 +95,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await offlinePage.reload();await ready();await offlineContext.setOffline(true);await offlinePage.reload();await ready();
   await offlinePage.locator('#openCSVImport').click();await offlinePage.locator('#csvFile').setInputFiles(file);await clickDisclosed(offlinePage.locator('[data-bitpanda="simulate"]'));await offlinePage.locator('[data-bitpanda="net"]').check();await offlinePage.locator('[data-bitpanda="simulate"]').click();await offlinePage.locator('[data-bitpanda="status"]').filter({hasText:'2 bereits vorhanden'}).waitFor();
   const offline=JSON.parse((await record()).raw);assert.equal(offline.version,5);assert.equal(offline.bookings.length,saved.model.bookings.length);await offlineContext.close();
+  await bitpandaWithdrawalBrowserContract({browser,base,engine,model:saved.model});
   console.log('UH03 Bitpanda '+engine+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS');
  }finally{await browser.close();}
 }

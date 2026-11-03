@@ -1,3 +1,4 @@
+import {manageList} from './browser-management-mode.mjs';
 import {legacyPage} from './legacy-browser-fixture.mjs';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright';
@@ -27,7 +28,7 @@ try{
  await page.locator('#bookingFilterType').selectOption('buy');
  assert.equal(await page.locator('#bookingList .history-row').count(),1);
  assert.equal(await page.locator('#bookingList .booking-meta').evaluate(el=>el.open),false);
- await page.locator('#bookingList .booking-meta>summary').click();
+ await manageList(page,'bookings');await page.locator('#bookingList .booking-meta>summary').click();
  assert.match(await page.locator('#bookingList').innerText(),/Brokerausführung/);
  await page.locator('#bookingSearch').fill('nomatch');
  assert.match(await page.locator('#bookingList').innerText(),/Keine Buchungen/);

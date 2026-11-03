@@ -491,7 +491,7 @@ function renderPositions(){
    '</div></div>'+
    '<div class="holding-r"><strong class="holding-money">'+esc(positionValueLabel(p,valueEUR(p),money))+'</strong>'+
    '</div></div>'+
-   '<div class="detail-action-row position-detail-actions"><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
+   '<div class="detail-action-row position-detail-actions"'+(positionSelecting?'':' hidden')+'><details class="holding-expand"><summary>Bestand und Kursdetails</summary><dl class="holding-facts">'+rows+'</dl>'+(secondaryActions?'<div class="position-actions" role="group" aria-label="'+esc('Aktionen für '+p.name)+'">'+secondaryActions+'</div>':'')+'</details>'+(positionSelecting?'<button type="button" class="link-button detail-edit" data-action="edit-position" data-id="'+esc(p.id)+'" aria-label="'+esc(p.name)+' bearbeiten">Bearbeiten</button>':'')+'</div></div>';
  });
  $('positionList').innerHTML=visible.length?list.join('')+
   (visible.length>positionLimit?'<div class="empty"><button type="button" class="btn outline" data-action="more-positions">Weitere '+Math.min(100,visible.length-positionLimit)+' Positionen anzeigen</button></div>':''):
@@ -631,7 +631,7 @@ function bookingManagementRow(row,archived,lookups){
  const match=original?.transferMatch;
  const transferAction=match?'<div class="booking-transfer-actions"><button type="button" class="btn outline" data-action="booking-transfer" data-id="'+esc(row.id)+'" '+(!bookingWritable()?'disabled':'')+'>Zuordnung ansehen / aufheben</button></div>':eligible?'<div class="booking-transfer-actions"><button type="button" class="btn outline" data-action="booking-transfer" data-id="'+esc(row.id)+'" '+(!bookingWritable()?'disabled':'')+'>Als internen Transfer zuordnen</button><p class="small-help">Mögliche Gegenbuchungen prüfen. Betrag und Datum allein sind kein Beleg.</p></div>':'';
  const counterpartLabel=match?[match.outgoingId,...match.incomingIds].filter(id=>id!==row.id).map(id=>{const b=lookups.bookings.get(id),p=b&&lookups.positions.get(b.positionId),a=p&&lookups.accounts.get(p.accountId);return [calendarDateLabel(b?.date),a?.name,exactQuantityLabel(b?.quantityExact??b?.quantity),p?.currency,id].filter(x=>x!=null).join(' · ');}).join(' / '):'';
- return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?edit:'',transferAction:bookingSelecting?'':transferAction,counterpartLabel})+'</article>';
+ return '<article class="booking-management-row" data-booking-id="'+esc(row.id)+'">'+controls+bookingRowMarkup(row,model,{archived,managementReason:reason||removeReason,editAction:bookingSelecting?edit:'',transferAction,counterpartLabel,detailsAvailable:bookingSelecting})+'</article>';
 }
 function bookingTransferShortcut(){return '<button id="bookingTransferAction" type="button" class="btn outline" data-action="transfer-matching" aria-describedby="bookingTransferHint" '+(!bookingWritable()?'disabled':'')+'>Transfers prüfen</button>';}
 function restoreBookingTransferFocus(button){
@@ -714,6 +714,7 @@ function renderAccountEvidence(row,account,expanded){
  return '<section class="account-evidence-body"><h3>Datenstand</h3><ul>'+facts.map(text=>'<li>'+esc(text)+'</li>').join('')+'</ul><p class="small-help">Kein vollständiger Bank- oder Walletabgleich bestätigt. Eröffnungsdatum, historische Kurse, Wechselkurse und Anschaffungswerte müssen für den jeweiligen Zeitraum belegt sein. Importherkunft allein belegt keine vollständige Historie. Nicht zugeordnete Ein-/Auszahlungen können externe Geldflüsse sein.</p><div class="settings-actions"><button type="button" class="btn outline" data-action="view-account" data-id="'+esc(account.id)+'">Positionen prüfen</button>'+(row.unmatchedCashMovements?'<button type="button" class="btn outline" data-action="account-transfer-review">Transferzuordnung prüfen</button>':'')+'</div></section>';
 }
 function renderSettings(){
+ renderHistoricalPriceCSVTools();
  $('marketSupplyStatus').textContent=marketSupplySummary(model.settings,model.positions);
  if(legacyAuditPerformed)renderLegacyQuoteAudit();
  const settings=$('providerSettings');
@@ -2164,6 +2165,16 @@ $('providerOverview').addEventListener('click',event=>{
  positionDetailRanges.set(id,days);
  showPositionDetail(id);
 });
+function renderHistoricalPriceCSVTools(){
+ const root=$('historicalPriceCSVTools');if(!root)return;
+ const chosen=$('priceCSVPosition')?.value||'';
+ const positions=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind));
+ const p=positions.find(p=>p.id===chosen),history=p&&model.priceHistories?.[p.id];
+ root.innerHTML='<label class="field"><span>Position für Kurs-CSV</span><select id="priceCSVPosition"><option value="">Position ausdrücklich wählen</option>'+positions.map(p=>'<option value="'+esc(p.id)+'"'+(p.id===chosen?' selected':'')+'>'+esc(p.name+(p.archived?' · archiviert':''))+'</option>').join('')+'</select></label>'+
+  '<p class="small-help" id="priceCSVSource" role="status">'+(p?esc((p.isin||p.symbol||'Kennung nicht zugeordnet')+' · '+(p.currency||'Währung nicht bestätigt'))+'<br>'+esc(history?'Quelle: '+history.source+' · '+history.points.length+' Kurse · '+history.currency:'Noch keine lokale Kursquelle für diese Position.'):positions.length?'Wähle die konkrete Position und prüfe Notierung und Handelswährung.':'Noch keine Wertpapierposition vorhanden.')+'</p>'+
+  '<div class="button-row"><button type="button" class="btn outline" data-action="import-price-history" data-id="'+esc(p?.id||'')+'"'+(!p?' disabled':'')+'>'+(history?'Lokale Quelle durch Kurs-CSV ersetzen':'Kurs-CSV importieren')+'</button>'+(history?'<button type="button" class="btn outline" data-action="remove-price-history" data-id="'+esc(p.id)+'">Lokale Kursquelle entfernen</button>':'')+'</div>';
+ $('priceCSVPosition').addEventListener('change',()=>{renderHistoricalPriceCSVTools();$('priceCSVPosition').focus({preventScroll:true});});
+}
 function openHistoricalPriceCSV(positionId){
  const p=model.positions.find(x=>x.id===positionId);
  if(!p||!['etf','stock','fund'].includes(p.kind))return notify('Nur Wertpapiere können einen CSV-Marktkursverlauf importieren.',true);
@@ -2690,7 +2701,7 @@ const standaloneMedia=matchMedia('(display-mode: standalone)');
 function installHelpHTML(){
  const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
  const steps=ios?'<li>In Safari unten oder oben auf „Teilen“ tippen.</li><li>„Zum Home-Bildschirm“ wählen.</li><li>Mit „Hinzufügen“ bestätigen.</li>':'<li>Im Browsermenü nach „App installieren“ oder „Zum Startbildschirm hinzufügen“ suchen.</li><li>Das Angebot bestätigen, falls es dein Browser anzeigt.</li>';
- return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Eine installierte App und der Browser nutzen getrennten Speicher. Installiere nur, wenn du das bewusst möchtest, und sichere vorher ein Backup.</p>';
+ return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Je nach Gerät und Browser können installierte App und Browser denselben oder getrennten Speicher nutzen. Sichere vor der Installation ein Backup und prüfe danach deine Daten. Browserdaten bitte nicht löschen und die App nicht deinstallieren, solange deine Sicherung nicht geprüft ist.</p>';
 }
 function showInstallHelp(){showDialog('FolioLab als App verwenden','INSTALLATION',installHelpHTML(),null,{readOnly:true});$('saveDialog').hidden=true;}
 function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,direct=Boolean(installPrompt);document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=standalone||document.documentElement.dataset.appInstalled==='1';const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';});}

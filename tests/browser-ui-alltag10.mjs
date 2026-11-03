@@ -6,17 +6,21 @@ import {seed,ready,nav} from '../docs/ui-copilot-2026-11-03/capture.mjs';
 const base=process.env.UI_BASE||'http://127.0.0.1:4173/';
 mkdirSync('artifacts/gates/ui-alltag10',{recursive:true});
 const report={engines:[]};
-const press=(p,selector,{hold=650,release=true,move=0,second=false}={})=>p.evaluate(async({selector,hold,release,move,second})=>{
+const press=async(p,selector,{hold=650,release=true,move=0,second=false,outside=false}={})=>{
+ await p.locator(selector).scrollIntoViewIfNeeded();
+ // Flush target-reveal scrolling before starting the gesture.
+ await p.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ return p.evaluate(async({selector,hold,release,move,second,outside})=>{
  const el=document.querySelector(selector),r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+Math.min(r.height/2,20);
- const init=(id,type,dx=0)=>({pointerId:id,pointerType:'touch',isPrimary:id===1,bubbles:true,cancelable:true,composed:true,clientX:x+dx,clientY:y,button:0,buttons:1});
+ const init=(id,type,dx=0)=>({pointerId:100+id,pointerType:'touch',isPrimary:id===1,bubbles:true,cancelable:true,composed:true,clientX:x+dx,clientY:y,button:0,buttons:1});
  el.dispatchEvent(new PointerEvent('pointerdown',init(1,'down')));
- if(second)el.dispatchEvent(new PointerEvent('pointerdown',init(2,'down')));
+ if(second)(outside?document.body:el).dispatchEvent(new PointerEvent('pointerdown',init(2,'down')));
  if(move)el.dispatchEvent(new PointerEvent('pointermove',init(1,'move',move)));
  await new Promise(r=>setTimeout(r,hold));
  if(release){const t=document.elementFromPoint(x,y)||document.body;t.dispatchEvent(new PointerEvent('pointerup',{...init(1),buttons:0}));if(second)t.dispatchEvent(new PointerEvent('pointerup',{...init(2),buttons:0}));}
  return true;
-},{selector,hold,release,move,second});
-const ghostClick=(p,selector)=>p.evaluate(s=>{const el=document.querySelector(s);(document.elementFromPoint(el.getBoundingClientRect().left+10,el.getBoundingClientRect().top+10)||el).dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));},selector);
+},{selector,hold,release,move,second,outside});};
+const ghostClick=(p,selector)=>p.evaluate(s=>{const el=document.querySelector(s);(document.elementFromPoint(el.getBoundingClientRect().left+10,el.getBoundingClientRect().top+10)||el).dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,detail:1}));},selector);
 const lists={
  positions:{nav:'positions',row:'.position-entry[data-position-id="pos-1"]',box:'[data-position-select]',status:'#positionSelectionStatus',done:'#positionListHead [data-action="cancel-selection"]',manage:'#positionListHead [data-action="select-positions"]',open:'.position-entry[data-position-id="pos-1"] details.holding-expand'},
  bookings:{nav:'bookings',row:'.booking-management-row[data-booking-id="bk-1"]',box:'[data-booking-select]',done:'[data-booking-manage="cancel"]',manage:'#bookingListHead [data-booking-manage="select"]',open:'.booking-management-row[data-booking-id="bk-1"] details.booking-meta'},
@@ -41,16 +45,22 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await p.evaluate(async s=>{const el=document.querySelector(s),r=el.getBoundingClientRect();const i={pointerId:3,pointerType:'touch',isPrimary:true,bubbles:true,cancelable:true,clientX:r.left+r.width/2,clientY:r.top+10,button:0};el.dispatchEvent(new PointerEvent('pointerdown',i));await new Promise(r=>setTimeout(r,100));el.dispatchEvent(new PointerEvent('pointercancel',i));await new Promise(r=>setTimeout(r,700));},c.row);assert.equal(await selecting(),0,name+' pointercancel cancels');
   // multi-touch cancels
   await press(p,c.row,{second:true});assert.equal(await selecting(),0,name+' multi-touch cancels');
+  await press(p,c.row,{second:true,outside:true});assert.equal(await selecting(),0,name+' outside-list second touch cancels');
   // mouse never long-presses
   await p.evaluate(async s=>{const el=document.querySelector(s),r=el.getBoundingClientRect();el.dispatchEvent(new PointerEvent('pointerdown',{pointerId:9,pointerType:'mouse',bubbles:true,clientX:r.left+20,clientY:r.top+10,button:0}));await new Promise(r=>setTimeout(r,650));el.dispatchEvent(new PointerEvent('pointerup',{pointerId:9,pointerType:'mouse',bubbles:true}));},c.row);assert.equal(await selecting(),0,name+' mouse does not long press');
   // interactive child: no competing gesture
-  if(c.open){await press(p,c.open+'>summary');assert.equal(await selecting(),0,name+' summary press is not a row gesture');}
+  if(c.open)assert.equal(await p.locator(c.open).isVisible(),false,name+' normal details are hidden');
+  // An independent action works immediately even if the browser emits no ghost click.
+  await press(p,c.row);await p.locator(c.done).first().click();assert.equal(await selecting(),0,name+' immediate first Fertig works');
+  if(c.open)assert.equal(await p.locator(c.open).isVisible(),false,name+' Fertig hides details');
+  assert.equal(await p.locator(c.manage).evaluate(e=>document.activeElement===e),true,name+' Fertig focus');
   // real long press
   await press(p,c.row);await p.locator(c.box).first().waitFor();
   const ids=await checkedIds();assert.equal(ids.length,1,name+' exactly one selected');assert.match(ids[0],/-1$/,name+' pressed row selected');
   assert.equal(await p.locator(c.row+' '+c.box+':checked').count(),1);
   assert.equal(await p.locator(c.box).evaluateAll(es=>es.every(e=>!e.closest('label')?.textContent.trim().includes('Auswählen'))),true,name+' no visible Auswählen text');
   assert.equal(await p.locator(c.box).evaluateAll(es=>es.every(e=>e.getAttribute('aria-label')?.endsWith('auswählen'))),true,name+' accessible name');
+  if(c.open)assert.equal(await p.locator(c.open).isVisible(),true,name+' managed details are available');
   // ghost click after the press must not open details or toggle
   await ghostClick(p,c.row);assert.deepEqual(await checkedIds(),ids,name+' ghost click ignored');
   if(c.open)assert.equal(await p.locator(c.open).evaluate(e=>e.open),false,name+' ghost click did not open details');
@@ -88,6 +98,18 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   assert.equal(await p.locator('[data-position-select]').count(),0,'real short touch does not manage');
   result.realTouch='PASS';
  }
+ // Teardown removes pending timers and all gesture/click listeners.
+ const teardown=await p.evaluate(async()=>{
+  const {attachRowLongPress}=await import('./src/booking-history-ui.js');
+  const root=document.createElement('div');root.innerHTML='<div data-probe-row="one">Probe</div>';document.body.append(root);const row=root.firstElementChild;
+  let calls=0,clicks=0;row.addEventListener('click',()=>clicks++);
+  const opts={rowSelector:'[data-probe-row]',idOf:e=>e.dataset.probeRow,enabled:()=>true,onLongPress:()=>calls++,delay:20};
+  const down=()=>row.dispatchEvent(new PointerEvent('pointerdown',{pointerId:701,pointerType:'touch',isPrimary:true,bubbles:true,button:0}));
+  const up=()=>row.dispatchEvent(new PointerEvent('pointerup',{pointerId:701,pointerType:'touch',isPrimary:true,bubbles:true,button:0}));
+  const first=attachRowLongPress(root,opts);down();first.destroy();up();await new Promise(r=>setTimeout(r,50));const canceled=calls===0;
+  const second=attachRowLongPress(root,opts);down();await new Promise(r=>setTimeout(r,50));up();second.destroy();row.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,detail:1}));
+  down();await new Promise(r=>setTimeout(r,50));up();root.remove();return {canceled,calls,clicks};
+ });assert.deepEqual(teardown,{canceled:true,calls:1,clicks:1},'destroy removes timers and gesture/ghost listeners');
  assert.equal(await record(p),stored,'pure UI operation must not change stored data');
  assert.deepEqual(errors,[]);
  report.engines.push({engine,result});console.log(engine,JSON.stringify(result));

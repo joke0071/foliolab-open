@@ -20,13 +20,13 @@ export function historicalAxisLabel(value,currency=null){
 const historicalCell=(label,value,fallback)=>'<td data-label="'+esc(label)+'"'+(value==null?'':' tabindex="0" title="Exakter Wert: '+esc(value)+'" aria-label="'+esc(label+': '+historicalNumber(value)+'. Exakter Wert: '+value)+'"')+'>'+esc(value==null?fallback:historicalNumber(value))+'</td>';
 const historicalDate=calendarDateLabel;
 const signed=q=>q===null?'Änderung unbekannt':(units(q)>0n?'+':'')+exactQuantityLabel(q);
-export function bookingRowMarkup(b,model,{archived=false,managementReason='',editAction='',transferAction='',counterpartLabel=''}={}){
+export function bookingRowMarkup(b,model,{archived=false,managementReason='',editAction='',transferAction='',counterpartLabel='',detailsAvailable=true}={}){
  const name=b.positionName||model.positions.find(p=>p.id===b.positionId)?.name||'Historische Position';
  const account=model.accounts.find(a=>a.id===(b.accountId||model.positions.find(p=>p.id===b.positionId)?.accountId));
  const entry=model.journalEntries.find(e=>e.id===(b.journalEntryId??b.id)),position=model.positions.find(p=>p.id===b.positionId);
  const source=b.importSource||b.importFingerprint||entry?.source==='csv'?'CSV-/Brokerimport':position?.wallet?.enabled||['wallet','blockchain'].includes(entry?.source)?'Wallet-/Blockchain-Nachweis':b.technical?'Technischer Journalabgleich':entry?.source==='manual'?'Manuell':'Herkunft ungeklärt';
  const details=[['Transferbeleg',b.transferMatch?.reference],['Gegenbuchungen',counterpartLabel],['Konto',account?.name],['Notiz',b.notes],['Buchungs-ID',b.id],['Journal-ID',b.journalEntryId],['Quelle',source],['Zielposition',b.targetPositionId?model.positions.find(p=>p.id===b.targetPositionId)?.name||'Historische Position':null]];
- return '<div class="history-row booking-compact"><div class="booking-main"><time datetime="'+esc(b.date)+'">'+esc(calendarDateLabel(b.date))+'</time><strong>'+esc(name)+'</strong><span>'+esc(b.transferMatch?'Interner Transfer · '+(b.type==='withdraw'?'Ausgang':'Eingang'):TX_TYPES[b.type]||b.type)+(b.technical?' · technisch':'')+'</span><span class="quantity-display" title="'+esc(b.deltaExact??'Änderung unbekannt')+'">'+esc(signed(b.deltaExact))+'</span><strong>'+(b.technical?'Kein Handel':b.tradeExactEUR!==null?money(Number(b.tradeExactEUR)):'Kein belegter Handelswert')+'</strong><small class="booking-origin">'+esc(source+(archived?' · archiviert':''))+'</small></div><div class="detail-action-row booking-detail-actions"><details class="booking-meta"><summary aria-label="Buchungsdetails für '+esc(name)+' am '+esc(calendarDateLabel(b.date))+'">Buchungsdetails</summary><dl class="holding-facts">'+details.filter(([,v])=>v).map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+(b.type==='correction'?'<div><dt>Bestandsabgleich</dt><dd>Mengenänderung aus dem Journal. Kein Kauf, Ertrag oder externer Geldfluss.</dd></div>':'')+'</dl>'+(managementReason?'<details class="booking-permission-details"><summary>Einschränkungen ansehen</summary><p>'+esc(managementReason)+'</p></details>':'')+transferAction+'</details>'+editAction+'</div></div>';
+ return '<div class="history-row booking-compact"><div class="booking-main"><time datetime="'+esc(b.date)+'">'+esc(calendarDateLabel(b.date))+'</time><strong>'+esc(name)+'</strong><span>'+esc(b.transferMatch?'Interner Transfer · '+(b.type==='withdraw'?'Ausgang':'Eingang'):TX_TYPES[b.type]||b.type)+(b.technical?' · technisch':'')+'</span><span class="quantity-display" title="'+esc(b.deltaExact??'Änderung unbekannt')+'">'+esc(signed(b.deltaExact))+'</span><strong>'+(b.technical?'Kein Handel':b.tradeExactEUR!==null?money(Number(b.tradeExactEUR)):'Kein belegter Handelswert')+'</strong><small class="booking-origin">'+esc(source+(archived?' · archiviert':''))+'</small></div><div class="detail-action-row booking-detail-actions"'+(detailsAvailable?'':' hidden')+'><details class="booking-meta"><summary aria-label="Buchungsdetails für '+esc(name)+' am '+esc(calendarDateLabel(b.date))+'">Buchungsdetails</summary><dl class="holding-facts">'+details.filter(([,v])=>v).map(([k,v])=>'<div><dt>'+esc(k)+'</dt><dd>'+esc(v)+'</dd></div>').join('')+(b.type==='correction'?'<div><dt>Bestandsabgleich</dt><dd>Mengenänderung aus dem Journal. Kein Kauf, Ertrag oder externer Geldfluss.</dd></div>':'')+'</dl>'+(managementReason?'<details class="booking-permission-details"><summary>Einschränkungen ansehen</summary><p>'+esc(managementReason)+'</p></details>':'')+transferAction+'</details>'+editAction+'</div></div>';
 }
 export function createBookingHistoryUI({getModel,commit}){
  let dialog,trigger,positionId,limit,lastLoaded;const loaded=new Map();
@@ -89,45 +89,58 @@ export const GHOST_CLICK_MS=700;
 export const HOLD_GUARD_MS=3000;
 
 export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPress,delay=LONG_PRESS_MS,slop=LONG_PRESS_SLOP,now=()=>performance.now()}){
- let state=null,suppressUntil=0,pressedPointer=null;
+ let state=null,guard=null;
  const pointers=new Set();
  const clear=()=>{if(state){clearTimeout(state.timer);state=null;}};
- container.addEventListener('pointerdown',event=>{
+ const cancel=()=>{clear();guard=null;pointers.clear();};
+ const rowOf=target=>target?.closest?.(rowSelector);
+ const isGuarded=target=>{const row=rowOf(target);return guard&&now()<guard.until&&row&&container.contains(row)&&idOf(row)===guard.id;};
+ const down=event=>{
   if(event.pointerType==='mouse'||event.button>0)return;
+  // A new primary touch starts a new gesture, including after a lost release.
+  if(event.isPrimary&&!state)pointers.clear();
+  guard=null;
   pointers.add(event.pointerId);
   if(pointers.size>1){clear();return;}
-  if(!enabled()||event.target.closest(INTERACTIVE))return;
-  const row=event.target.closest(rowSelector);if(!row||!container.contains(row))return;
+  if(!container.contains(event.target)||!enabled()||event.target.closest(INTERACTIVE))return;
+  const row=rowOf(event.target);if(!row||!container.contains(row))return;
   const id=idOf(row);if(!id)return;
   clear();
-  state={row,id,x:event.clientX,y:event.clientY,pointerId:event.pointerId,timer:setTimeout(()=>{
+  state={row,id,x:event.clientX,y:event.clientY,pointerId:event.pointerId,pointerType:event.pointerType,timer:setTimeout(()=>{
    const current=state;state=null;
    if(!current||!current.row.isConnected||!enabled())return;
-   suppressUntil=now()+HOLD_GUARD_MS;pressedPointer=current.pointerId;
+   guard={id:current.id,pointerId:current.pointerId,pointerType:current.pointerType,until:now()+HOLD_GUARD_MS};
    onLongPress(current.id,current.row);
   },delay)};
- });
- container.addEventListener('pointermove',event=>{
-  if(!state||event.pointerId!==state.pointerId)return;
+ };
+ const move=event=>{
+  if(!state||event.pointerId!==state.pointerId||event.pointerType!==state.pointerType)return;
   if(Math.hypot(event.clientX-state.x,event.clientY-state.y)>slop||!state.row.contains(document.elementFromPoint(event.clientX,event.clientY)))clear();
- });
+ };
  const release=event=>{
+  if(event.pointerType==='mouse')return;
   pointers.delete(event.pointerId);
   if(state&&event.pointerId===state.pointerId)clear();
-  if(event.pointerId===pressedPointer){pressedPointer=null;suppressUntil=now()+GHOST_CLICK_MS;}
+  if(guard&&event.pointerId===guard.pointerId){if(event.type==='pointercancel')guard=null;else guard.until=now()+GHOST_CLICK_MS;}
  };
+ // Observe all touches: a second finger outside the list also cancels a pending press.
  // The pressed row is re-rendered, so release events must be observed on the document.
+ document.addEventListener('pointerdown',down,true);
+ document.addEventListener('pointermove',move,true);
  document.addEventListener('pointerup',release,true);
  document.addEventListener('pointercancel',release,true);
- container.addEventListener('pointerleave',event=>{if(state&&event.pointerId===state.pointerId)clear();});
+ const leave=event=>{if(state&&event.pointerId===state.pointerId&&event.pointerType===state.pointerType)clear();};
+ container.addEventListener('pointerleave',leave);
  // Any scroll in the page (capture) means the finger is panning, not pressing.
  window.addEventListener('scroll',clear,{capture:true,passive:true});
- container.addEventListener('contextmenu',event=>{if(state||now()<suppressUntil)event.preventDefault();});
- // The browser may still dispatch the click that ends the press; swallow it once.
+ window.addEventListener('blur',cancel);
+ const contextMenu=event=>{if(state||isGuarded(event.target))event.preventDefault();};
+ container.addEventListener('contextmenu',contextMenu);
+ // Swallow only the originating row's touch click; unrelated actions and keyboard clicks work immediately.
  const swallow=event=>{
-  if(now()>=suppressUntil)return;
-  suppressUntil=0;event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
+  if(event.detail===0||!isGuarded(event.target))return;
+  guard=null;event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
  };
  document.addEventListener('click',swallow,true);
- return {cancel:clear,destroy(){clear();document.removeEventListener('pointerup',release,true);document.removeEventListener('pointercancel',release,true);document.removeEventListener('click',swallow,true);window.removeEventListener('scroll',clear,{capture:true});}};
+ return {cancel,destroy(){cancel();document.removeEventListener('pointerdown',down,true);document.removeEventListener('pointermove',move,true);document.removeEventListener('pointerup',release,true);document.removeEventListener('pointercancel',release,true);document.removeEventListener('click',swallow,true);container.removeEventListener('pointerleave',leave);container.removeEventListener('contextmenu',contextMenu);window.removeEventListener('scroll',clear,{capture:true});window.removeEventListener('blur',cancel);}};
 }
