@@ -1,0 +1,38 @@
+{
+  "status": "LOCAL_CANDIDATE_NOT_RELEASE_ACCEPTED",
+  "base": "e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+  "targetSW": "foliolab-open-v272",
+  "goal": "Complete original-backed terminal Kraken economic-group withdrawal through the shared CSV dialog and existing CAS boundary.",
+  "notGoals": [
+    "No source-only detachment; documentary attribution is retained in rollback evidence.",
+    "No generic row eligibility relaxation, dependent-group cascade or Bitcoin scan quantity semantics.",
+    "No UH03/UH04/UH05 overall acceptance; historical independent balances and combined chain cases remain open."
+  ],
+  "risk": "Financial/source lifecycle: complete unchanged original group, exact inverse journal quantities, cash-flow removal, archive cleanup, permanent tombstone and full model/restore validation.",
+  "acceptance": [
+    "Same original export, explicit one-group selection, pure fresh preview with all cash/asset/fee changes, explicit confirmation and one atomic CAS revision.",
+    "Later/foreign postings, manual edits, unknown group fields, protected basis, additional source references and stale approval fail closed.",
+    "Source ownership snapshots and complete original group retained in a validated bounded uh03-undo record; reimport blocked after reload/offline/encrypted restore.",
+    "Existing v5/Bitcoin/installation/source identity preserved; tombstone uses uh03:<group>:undo so unchanged v271 orphan-journal guard also blocks resurrection.",
+    "Unchanged full final PR/Main/production gates required before release acceptance."
+  ],
+  "local": {
+    "units": {
+      "tests": 1133,
+      "failed": 0,
+      "skipped": 0,
+      "note": "Final exact-code full Node24.22.1 serial run: 1133 passed, 0 failed/skipped; 51.9s. Initial concurrent full run also passed; later concurrent output incomplete, not used as final evidence."
+    },
+    "targetedWithdrawalUnits": 6,
+    "browser": "Chromium141 Playwright1.56.1 all three existing scenarios extended with actual shared-dialog withdrawal, independent expected amounts, protected v5/Bitcoin, reload/reimport, encrypted restore, withdrawal quota/stale CAS, offline, seven widths and Axe; 390px effects preview visually inspected.",
+    "originalOracle": {
+      "accepted": 957,
+      "blocked": 16,
+      "total": 973,
+      "scope": "Original group structural import/rollback against independent Decimal arithmetic. NOT historical opening/end balance acceptance."
+    },
+    "legacyGuard": "Unmodified v271 preview import function rejects new withdrawal state through its existing orphan-journal guard."
+  },
+  "privateEvidence": "/workspace/scratch/8f8da2b5bb83/private/; no original values, wallet identities or credentials in public fixtures or this record.",
+  "next": "Freeze candidate; full existing CI, logs/artifacts/reviews/tree, guarded merge and genuine new production acceptance."
+}

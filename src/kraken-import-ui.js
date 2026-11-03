@@ -1,5 +1,5 @@
 import {prepareKrakenSourcePlan} from './kraken-source-plan.js';
-import {previewKrakenImport} from './kraken-import.js';
+import {previewKrakenImport,previewKrakenWithdrawal} from './kraken-import.js';
 import {sourceUnmodified} from './import-identity.js';
 import {escapeHTML as esc} from './model.js';
 /** All selections are ephemeral until the enclosing dialog performs its canonical CAS commit. */
@@ -13,8 +13,8 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
  }
  for(const g of source.groups.filter(g=>['deposit-review','withdrawal-review'].includes(g.kind)))if(getModel().bookings.some(b=>b.importSource?.sourceId==='kraken-uh03-v1'&&b.importSource.fileId===g.id&&b.external===true&&sourceUnmodified(getModel(),b)))external.add(g.id);
  const el=id=>host.querySelector('[data-kraken="'+id+'"]');
- host.innerHTML='<details><summary>Kraken-Buchungen prüfen und übernehmen</summary><p class="small-help">Ordne jeden Asset-/Walletbereich ausdrücklich zu. Der vorhandene Bestand muss dem Quellsaldo vor der ersten neuen Gruppe entsprechen. Eine vollständige Historie lässt sich damit nicht über den heutigen Endbestand addieren. Bekannte Anschaffungskosten bleiben geschützt. Ledger-IDs belegen keine Blockchain-Transaktion; interne Wallet-Gegenbelege sind gesondert zu klären.</p><div data-kraken="bindings"></div><button type="button" class="btn outline" data-kraken="more-bindings" hidden>Weitere Quellbereiche anzeigen</button><label class="field"><span><input type="checkbox" data-kraken="opening"> Vorhandene Mengen sind geprüfte Anfangsbestände vor den ausgewählten neuen Vorgängen, keine bereits enthaltenen Endbestände.</span></label><button type="button" class="btn outline" data-kraken="simulate">Auswahl prüfen</button><p data-kraken="status" role="status" aria-live="polite">Noch keine Buchungsprüfung durchgeführt.</p><div data-kraken="groups"></div><button type="button" class="btn outline" data-kraken="more" hidden>Weitere Gruppen anzeigen</button><label class="field"><span><input type="checkbox" data-kraken="partial"> Nicht ausgewählte Restgruppen ausdrücklich offen lassen. Die gewählte Teilmenge wurde vollständig auf Abhängigkeiten geprüft.</span></label><label class="field"><span><input type="checkbox" data-kraken="approve" disabled> Geprüfte Änderungen übernehmen. Exakte Mengen und Geldbewegungen sind bestätigt; Kosten-, Gebührenbewertung und Steuern bleiben soweit angegeben ungeprüft.</span></label></details>';
- const options=()=>({selectedGroups:[...selected],externalReferences:[...external],openingConfirmed:el('opening').checked});
+ host.innerHTML='<details><summary>Kraken-Buchungen prüfen und übernehmen</summary><p class="small-help">Ordne jeden Asset-/Walletbereich ausdrücklich zu. Der vorhandene Bestand muss dem Quellsaldo vor der ersten neuen Gruppe entsprechen. Eine vollständige Historie lässt sich damit nicht über den heutigen Endbestand addieren. Bekannte Anschaffungskosten bleiben geschützt. Ledger-IDs belegen keine Blockchain-Transaktion; interne Wallet-Gegenbelege sind gesondert zu klären.</p><label class="field"><span>Vorgang</span><select data-kraken="operation"><option value="import">Buchungsgruppen übernehmen</option><option value="withdraw">Eine vollständige Gruppe zurücknehmen</option></select></label><p class="small-help">Zur Rücknahme denselben Originalexport laden und genau eine bestehende Gruppe auswählen. Geld-, Krypto- und Gebührenwirkungen werden gemeinsam zurückgenommen. Der Quellenbeleg bleibt als dauerhafte Wiederimportsperre erhalten. Eine bloße Quellenentfernung ist hier nicht möglich. Spätere oder fremde Buchungen im selben Bereich bleiben geschützt.</p><div data-kraken="bindings"></div><button type="button" class="btn outline" data-kraken="more-bindings" hidden>Weitere Quellbereiche anzeigen</button><label class="field"><span><input type="checkbox" data-kraken="opening"> Vorhandene Mengen sind geprüfte Anfangsbestände vor den ausgewählten neuen Vorgängen, keine bereits enthaltenen Endbestände.</span></label><button type="button" class="btn outline" data-kraken="simulate">Auswahl prüfen</button><p data-kraken="status" role="status" aria-live="polite">Noch keine Buchungsprüfung durchgeführt.</p><div data-kraken="groups"></div><button type="button" class="btn outline" data-kraken="more" hidden>Weitere Gruppen anzeigen</button><label class="field"><span><input type="checkbox" data-kraken="partial"> Nicht ausgewählte Restgruppen ausdrücklich offen lassen. Die gewählte Teilmenge wurde vollständig auf Abhängigkeiten geprüft.</span></label><label class="field"><span><input type="checkbox" data-kraken="approve" disabled> Gezeigten Vorgang einschließlich aller Gruppenbeine bestätigen. Bei Rücknahme Geld-/Mengenänderungen und dauerhafte Wiederimportsperre übernehmen. Exakte Mengen und Geldbewegungen sind bestätigt; Kosten-, Gebührenbewertung und Steuern bleiben soweit angegeben ungeprüft.</span></label></details>';
+ const options=()=>({operation:el('operation').value,selectedGroups:[...selected],externalReferences:[...external],openingConfirmed:el('opening').checked});
  const notify=()=>onApproval(Boolean(approved&&plan?.ready&&!plan.issues.length&&plan.baseline===JSON.stringify(getModel())&&(!plan.excluded||el('partial').checked)));
  const invalidate=()=>{plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
  function renderBindings(){
@@ -36,12 +36,18 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
   el('more').hidden=limit>=source.groups.length;el('more').classList.toggle('hidden',limit>=source.groups.length);
  }
  el('more-bindings').onclick=()=>{const previous=bindingLimit;bindingLimit+=20;renderBindings();host.querySelectorAll('[data-kraken-binding]')[previous]?.focus();};
- el('opening').onchange=invalidate;
+ el('opening').onchange=invalidate;el('operation').onchange=()=>{el('opening').closest('label').hidden=el('operation').value==='withdraw';invalidate();};
  el('partial').onchange=()=>{approved=false;el('approve').checked=false;notify();};
  el('approve').onchange=()=>{approved=el('approve').checked;notify();};
  el('simulate').onclick=()=>{
   approved=false;el('approve').checked=false;plan=null;
-  try{plan=previewKrakenImport(getModel(),inputs,assignments,options());el('status').textContent=plan.ready+' neue Gruppen · '+plan.duplicates+' bereits vorhanden · '+plan.issues.length+' gesperrt · '+plan.excluded+' nicht ausgewählt. Noch nichts gespeichert.';}
+  try{
+   if(el('operation').value==='withdraw'){
+    const review=previewKrakenWithdrawal(getModel(),inputs,assignments,options());
+    plan={...review,ready:1,issues:[],groups:[{id:review.group,status:'ready',message:'Vollständige Rücknahme geprüft. Geld-/Mengenänderungen: '+review.changes.map(c=>(getModel().positions.find(p=>p.id===c.positionId)?.name||c.positionId)+' '+c.before+' → '+c.after).join(' · ')}]};
+    el('status').textContent='1 Gruppe rücknehmbar · '+review.excluded+' nicht ausgewählt. Quellenbeleg und Wiederimportsperre bleiben dauerhaft erhalten. Noch nichts gespeichert.';
+   }else{plan=previewKrakenImport(getModel(),inputs,assignments,options());el('status').textContent=plan.ready+' neue Gruppen · '+plan.duplicates+' bereits vorhanden · '+plan.issues.length+' gesperrt · '+plan.excluded+' nicht ausgewählt. Noch nichts gespeichert.';}
+  }
   catch(e){el('status').textContent='Keine Übernahme: '+e.message;}
   el('approve').disabled=!plan||!plan.ready||Boolean(plan.issues.length);renderGroups();notify();
  };
