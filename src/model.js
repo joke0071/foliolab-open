@@ -1,3 +1,4 @@
+import {validateKrakenEthereumBridges,hasKrakenEthereumState} from './kraken-ethereum-bridge.js';
 import {validateBitpandaWithdrawals,hasBitpandaWithdrawals} from './bitpanda-withdrawal-evidence.js';
 import {validateKrakenBitcoinBridges} from './kraken-bitcoin-bridge.js';
 import {validateKrakenWithdrawals} from './kraken-withdrawal-evidence.js';
@@ -164,7 +165,7 @@ const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.
 /** Importiert v1/v2-Backups ohne erfundene Transaktionen als dokumentierte v3-Eröffnungsbestände. */
 /** Opt into a future-rejecting format before introducing economic/source contracts older clients would drop. */
 export function assertDataVersion(model){
- if(![3,4,5].includes(model?.version)||(model.version!==5&&(model.version===4)!==(model.bookingPresentation!==undefined))||(hasUnifiedBitcoinState(model)||hasBitpandaWithdrawals(model))!==(model.version===5))throw Error('Datenversion und geschützte Import-/Archivmetadaten widersprechen sich.');
+ if(![3,4,5].includes(model?.version)||(model.version!==5&&(model.version===4)!==(model.bookingPresentation!==undefined))||(hasUnifiedBitcoinState(model)||hasBitpandaWithdrawals(model)||hasKrakenEthereumState(model))!==(model.version===5))throw Error('Datenversion und geschützte Import-/Archivmetadaten widersprechen sich.');
 }
 export function safeImport(raw){
   // Archive-capable portfolios opt into v4 only on explicit archive commit.
@@ -270,14 +271,14 @@ export function safeImport(raw){
    const audit=ledgerQuantityAudit(m);
    if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');
   }
-  validateUnifiedBitcoinEconomics(m);validateKrakenWithdrawals(m);validateBitpandaWithdrawals(m);validateKrakenBitcoinBridges(m);
+  validateUnifiedBitcoinEconomics(m);validateKrakenWithdrawals(m);validateBitpandaWithdrawals(m);validateKrakenBitcoinBridges(m);validateKrakenEthereumBridges(m);
   if(raw.bookingPresentation!==undefined)m.bookingPresentation=validateBookingArchive(raw.bookingPresentation,m);
   if(archiveFormat)m.version=4;
   if(unifiedFormat)m.version=5;
   assertDataVersion(m);
   return m;
 }
-export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -299,7 +300,7 @@ export function persist(model,storage=globalThis.localStorage){
  // once another tab has activated transactional IndexedDB.
  if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
   throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
- assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);
+ assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);
  if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');

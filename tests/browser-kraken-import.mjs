@@ -1,3 +1,4 @@
+import {ethereumBridgeFixture} from './kraken-ethereum-bridge-fixture.mjs';
 import {bridgeFixture} from './kraken-bitcoin-bridge-fixture.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -10,13 +11,14 @@ import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs
 import {clickDisclosed} from './browser-disclosures.mjs';
 const base=process.env.UH03_BASE||process.env.BASE_URL||'http://127.0.0.1:4173/';
 for(const scenario of [
+ {name:'ethereum-bridge',bridge:true,ethereum:true,source:()=>ethereumBridgeFixture().text,seed:ethereumBridgeFixture().text,quantities:['0']},
  {name:'bitcoin-bridge',bridge:true,source:()=>bridgeFixture().text,seed:bridgeFixture().text,quantities:['0']},
  {name:'distinct-fee',source:distinctAssetSource,seed:distinctAssetSource(),quantities:['100','3','0.00000083']},
  {name:'cross-reference',source:()=>{const [header,...rows]=crossReferenceSource().split('\n');return [header,...rows.reverse()].join('\n');},seed:crossReferenceSource(),quantities:['50','5'],groups:2},
  {name:'same-asset-fee',source:()=>{const [header,...rows]=sameAssetSource().split('\n');return [header,...rows.reverse()].join('\n');},seed:sameAssetSource(),quantities:['100','2.99']}
 ]){
 const source=scenario.source;
-const bridge=scenario.bridge?bridgeFixture():null;
+const bridge=scenario.ethereum?ethereumBridgeFixture():scenario.bridge?bridgeFixture():null;
 const {m,assignments}=bridge||fixture(scenario.seed);
 const protectedModel=ledgerEvidence(ledgerModel()),input={receipts:protectedModel.purchaseEvidence.receipts,operations:[]};
 const protectedSeed=confirmUnifiedBitcoin(protectedModel,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(protectedModel,input,'wallet').baseline});
@@ -30,18 +32,19 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await context.route('**/__uh03-fixture.html',r=>r.fulfill({contentType:'text/html',body:'<!doctype html><html lang="de"><title>Synthetic UH03 fixture</title><body></body></html>'}));
   await page.goto(base+'__uh03-fixture.html');
   await page.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},seed);
-  if(bridge)await context.route('https://blockstream.info/api/tx/*',r=>{assert.equal(r.request().url(),'https://blockstream.info/api/tx/'+bridge.proofInput.txid);return r.fulfill({contentType:'application/json',body:JSON.stringify(bridge.transaction)});});
+  if(bridge&&!scenario.ethereum)await context.route('https://blockstream.info/api/tx/*',r=>{assert.equal(r.request().url(),'https://blockstream.info/api/tx/'+bridge.proofInput.txid);return r.fulfill({contentType:'application/json',body:JSON.stringify(bridge.transaction)});});
+  if(scenario.ethereum)await context.route('https://ethereum-rpc.publicnode.com',r=>{const {method,params}=r.request().postDataJSON();const result=method==='eth_chainId'?'0x1':method==='eth_getTransactionByHash'?bridge.transaction:method==='eth_getTransactionReceipt'?bridge.receipt:params[0]==='finalized'?bridge.finalized:bridge.block;return r.fulfill({contentType:'application/json',body:JSON.stringify({jsonrpc:'2.0',id:1,result})});});
   const proof=async()=>{
    if(!bridge)return;
-   await page.locator('[data-kraken="operation"]').selectOption('bridge');
-   await page.locator('[data-kraken="bridge-wallet"]').selectOption('own-btc');
+   await page.locator('[data-kraken="operation"]').selectOption(scenario.ethereum?'ethereum-bridge':'bridge');
+   await page.locator('[data-kraken="bridge-wallet"]').selectOption(scenario.ethereum?'own-eth':'own-btc');
    await page.locator('[data-kraken="bridge-reference"]').fill(bridge.proofInput.reference);
    await page.locator('[data-kraken="bridge-txid"]').fill(bridge.proofInput.txid);
    await page.locator('[data-kraken="bridge-address"]').fill(bridge.proofInput.destination);
    await page.locator('[data-kraken="bridge-ledger"]').setInputFiles({name:'synthetic-ledger.csv',mimeType:'text/csv',buffer:Buffer.from(bridge.ledger)});
    await page.locator('[data-kraken="bridge-consent"]').check();
    await page.locator('[data-kraken="bridge-lookup"]').click();
-   await page.locator('[data-kraken="bridge-status"]').filter({hasText:'Exakter eigener Bitcoin-Output belegt'}).waitFor();
+   await page.locator('[data-kraken="bridge-status"]').filter({hasText:scenario.ethereum?'Exakter eigener Ethereum-Eingang belegt':'Exakter eigener Bitcoin-Output belegt'}).waitFor();
   };
   const read=()=>page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{readPortfolioRecord}=await import('/src/atomic-storage.js');const s=new PortfolioStorage(),model=await s.initialize(),revision=(await readPortfolioRecord(s.db)).revision;s.close();return {model,revision};});
   const before=await read();
@@ -63,7 +66,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await page.locator('[data-kraken="approve"]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
   let saved=await read();assert.equal(saved.revision,before.revision+1);assert.equal(saved.model.version,5);assert.equal(saved.model.bookings.length,before.model.bookings.length+2);
   assert.deepEqual(saved.model.positions.filter(p=>p.providerId==='kraken').map(p=>p.quantityExact),scenario.quantities);
-  assert.deepEqual(saved.model.externalCashFlows,before.model.externalCashFlows);if(bridge){assert.deepEqual(saved.model.positions.at(-1),before.model.positions.at(-1));assert.equal(saved.model.journalEntries[0].krakenBitcoinBridge.transactionFeeBTC,'0.000004');}
+  assert.deepEqual(saved.model.externalCashFlows,before.model.externalCashFlows);if(bridge){assert.deepEqual(saved.model.positions.at(-1),before.model.positions.at(-1));if(scenario.ethereum){assert.equal(saved.model.journalEntries[0].krakenEthereumBridge.networkFeeETH,'0.000000000000042');assert.deepEqual(saved.model.walletHistory,before.model.walletHistory);assert.equal(saved.model.walletHistory.sessions[0].streams[0].coverage.status,'partial');}else assert.equal(saved.model.journalEntries[0].krakenBitcoinBridge.transactionFeeBTC,'0.000004');}
   await page.locator('#undoCSVImport').click();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});await page.locator('#toast').filter({hasText:'CSV-Import rückgängig gemacht.'}).waitFor();
   const undone=await read();assert.deepEqual(undone.model,before.model);assert.equal(undone.revision,saved.revision+1);
   await open();await clickDisclosed(page.locator('[data-kraken="simulate"]'));
@@ -93,6 +96,15 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   const restored=await page.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{backup,safeImport}=await import('/src/model.js'),{createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js'),{encryptBackup,decryptBackup}=await import('/src/crypto-backup.js');const s=new PortfolioStorage(),m=await s.initialize(),full=createCompleteBackup(JSON.parse(backup(m)),null,m.walletHistory),r=safeImport(unpackCompleteBackup(JSON.parse(await decryptBackup(JSON.parse(await encryptBackup(JSON.stringify(full),'synthetic-passphrase')),'synthetic-passphrase'))).data);await s.save(r);s.close();return {version:r.version,bookings:r.bookings.length};});assert.deepEqual(restored,{version:5,bookings:withdrawn.model.bookings.length});
   // Exact quota rollback and stale-CAS behavior use the real existing storage boundary.
   const failures=await page.evaluate(async seed=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{previewKrakenWithdrawal,confirmKrakenWithdrawal}=await import('/src/kraken-import.js');const a=new PortfolioStorage(),b=new PortfolioStorage();await a.initialize();await a.save(seed.model);await b.initialize();const options={selectedGroups:[seed.group],openingConfirmed:true,partialConfirmed:true},p=previewKrakenWithdrawal(seed.model,[seed.text],seed.assignments,options),draft=confirmKrakenWithdrawal(seed.model,[seed.text],seed.assignments,{...options,baseline:p.baseline,confirmed:true}),before=JSON.stringify(await a.reload()),put=IDBObjectStore.prototype.put;let quota=false;IDBObjectStore.prototype.put=function(){throw new DOMException('synthetic quota','QuotaExceededError');};try{await a.save(draft);}catch(e){quota=e.name==='QuotaExceededError';}finally{IDBObjectStore.prototype.put=put;}const unchanged=JSON.stringify(await a.reload())===before;await a.save(draft);let stale=false;try{await b.save(draft);}catch(e){stale=/anderen Tab/.test(e.message);}a.close();b.close();return {quota,unchanged,stale};},{model:saved.model,text:source(),assignments,group:removedGroup});assert.deepEqual(failures,{quota:true,unchanged:true,stale:true});
+  if(scenario.ethereum){
+   const atomic=await page.evaluate(async seed=>{
+    const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{readPortfolioRecord}=await import('/src/atomic-storage.js'),{prepareKrakenSourcePlan}=await import('/src/kraken-source-plan.js'),{prepareKrakenEthereumBridge}=await import('/src/kraken-ethereum-bridge.js'),{previewKrakenImport,confirmKrakenImport}=await import('/src/kraken-import.js');
+    const a=new PortfolioStorage();await a.initialize();await a.save(seed.m);const ethereumBridge=prepareKrakenEthereumBridge(seed.m,prepareKrakenSourcePlan([seed.text]).groups[0],seed.proofInput),options={ethereumBridge,openingConfirmed:true},p=previewKrakenImport(seed.m,[seed.text],seed.assignments,options),draft=confirmKrakenImport(seed.m,[seed.text],seed.assignments,{...options,confirmed:true,baseline:p.baseline}),before=JSON.stringify(await readPortfolioRecord(a.db)),put=IDBObjectStore.prototype.put,checks=[];
+    for(const mode of ['quota','abort']){let error,queued=false;IDBObjectStore.prototype.put=function(...args){if(mode==='quota')throw new DOMException('Synthetic ETH quota','QuotaExceededError');const r=put.apply(this,args);queued=true;this.transaction.abort();return r;};try{await a.save(draft);}catch(e){error=mode==='abort'&&(e.name==='AbortError'||e.name==='Error'&&e.message==='Speichertransaktion abgebrochen.')?'transaction-aborted':e.name;}finally{IDBObjectStore.prototype.put=put;}checks.push({mode,error,queued,unchanged:JSON.stringify(await readPortfolioRecord(a.db))===before});}
+    a.close();return checks;
+   },bridge);
+   assert.deepEqual(atomic,[{mode:'quota',error:'QuotaExceededError',queued:false,unchanged:true},{mode:'abort',error:'transaction-aborted',queued:true,unchanged:true}]);
+  }
   assert.deepEqual(errors,[]);await context.close();
   const offlineContext=await browser.newContext({viewport:{width:390,height:900},serviceWorkers:'allow'}),offlinePage=await offlineContext.newPage();offlinePage.setDefaultTimeout(20000);
   await offlinePage.goto(base+'?page=bookings');
