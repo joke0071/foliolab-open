@@ -1,3 +1,13 @@
+## ACTIVE – a599191b2b46 / PR292 SOL-Kandidat eingefroren – 03.11.2026
+
+Alleiniger Owner **a599191b2b46**. Main29098c299bdf230ffd1d4e97ce34f0c2c129f38b / **v276 LIVE_ACCEPTED**, keine Wiederabnahme. Einziger Produktkandidat [PR292](https://github.com/joke0071/foliolab-open/pull/292), HEAD **b6216d87a5b50ee47fb00a6167dd58995f1986d6**, Tree **6b73950cd0879a7e81f4bbc3046c9b49608a7a9a** unabhängig berechnet und remote gleich. Neun beabsichtigte Dateien, keine privaten Originale/Kennungen. [Kandidaten-/Originalqualifikation](release-evidence/v277-sol-candidate-qualification.json).
+
+Lokal Syntax/1168Units0Fehler0Skips, alle6Kraken-Szenarien inChromium/WebKit PASS: tatsächlicherDialog,7Breiten/Axe,Undo,Rücknahme/Restore,CAS/Quota/post-putAbort/Offline. PrivateOriginalzeilen/Ledger/echtefinalizedMainnet-RPC mitseparatemDecimal-/Integer-/Base58oracle undneuemProduktpfad PASS; kontrollierteEröffnungen sindkeinehistorischeBestandsabnahme. EigenerInstructionindex getrennt vomAccountdelta-Locator,Empfänger/Flows unverändert,Börsenprincipal+separateGebühr einmal,v5/Identitäten erhalten. ÖffentlicheFixtures synthetisch.
+
+**Bestehende PR-CI41717902064 / Wallet41717901841 IN_PROGRESS**, Kandidat eingefroren; keinePushes/Abbrüche/Duplikate/blindenRetries. Nochkein v277Release. NächsterSchritt: finaleCI/Logs/tatsächlicheArtefakte/Reviews/frischenOwner/Main/HEAD/Tree auswerten, erstnachPflichtgates geschütztmergen undneueMain-/Deploy-/Live-/reguläreTLS-Abnahme. UH03bleibtPARTIAL; danachUH03weiter→UH04→UH05. PrivateOriginal-/Oracle-/Quell-/Logbelege /workspace/scratch/a599191b2b46/private/; Vorgängerunverändert. Zähler0/0, EFF01/HND01. NurGitHub-Plugin; CheckpointbranchniemalsvollständignachMainmergen.
+
+---
+
 ## ACTIVE – a599191b2b46 / native SOL-Quellbrücke – 03.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **a599191b2b46** nach bestätigter STOPPED/HANDOVER_READY-Abgabe b0d443b77469 und ausdrücklicher Übernahme. Kopf und vollständige Übergabe gelesen. Main29098c299bdf230ffd1d4e97ce34f0c2c129f38b / Treec176da53aec9ab98f571df3ec3b23bc574896658 frisch unverändert, nur historische Drafts157/161 mit bestätigten HEADs, keine laufenden Actions/kein Produktkandidat. **v276 LIVE_ACCEPTED**, keine Wiederabnahme. WIP/Originale/Oracles zugänglich, Vorgänger unverändert.
