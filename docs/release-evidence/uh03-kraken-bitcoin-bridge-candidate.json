@@ -1,0 +1,31 @@
+{
+  "status": "LOCAL_CANDIDATE_NOT_RELEASE_ACCEPTED",
+  "base": "0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+  "version": "v273 / data v5",
+  "scope": "One original-backed native Kraken BTC withdrawal group -> exactly one verified own confirmed native-SegWit BTC output. Existing exchange journal and exact fees retained. No wallet-quantity replay, no entire batch-mining-fee allocation, no funding flow or assumed EUR costs.",
+  "tests": {
+    "serialUnits": {
+      "count": 1142,
+      "passed": 1142,
+      "failures": 0,
+      "skips": 0
+    },
+    "syntheticDirected": "8 tests: exact quantities/fees, source proof guards, changed wallet/event/source, CAS/openings, v5 reload/no-history restore, terminal economic rollback/tombstone, both Ledger/exchange source orders, conflicting financed acquisition.",
+    "browser": "Real WebKit27.2 new shared-CSV scenario PASS: actual UI/IDB/one revision, quota/stale CAS, whole-CSV undo, terminal withdrawal, encrypted restore, reload/reimport, offline PWA, seven widths/Axe; mobile image inspected. Remaining final crossbrowser/integration/production gates required.",
+    "environment": "Node24.22.1 / Playwright1.64.1 WebKit27.2, private existing runtime libraries; local host-preflight adaptation only. Chromium downloads returned Site-Unavailable HTML, so no local Chromium success claimed. No workflow/timeout/TLS/gate weakening."
+  },
+  "originalEvidence": {
+    "verified": "Native exchange reference -> screenshot-supplied chain hash/destination -> exact original Ledger receipt -> confirmed Esplora output -> address privately derived from original Ledger xpub.",
+    "oracle": "Original exchange debit/fee and on-chain output values checked in isolated synthetic one-event model; wallet unchanged and no external cashflow. Independent Python integer/Decimal output and transaction fee sums. Not an independent historic end-balance or real-wallet full-history coverage acceptance.",
+    "private": "/workspace/scratch/ecc3561f055e/private/check-original-bridge.mjs, original-bridge-result.json, btc-chain-proof.json, btc-own-output-derivation.json; originals retain Library identities. No original financial data/IDs/keys in public fixtures."
+  },
+  "review": "New proofs require currently accepted own history; retained proofs remain portable without optional history. Changed selection/data invalidates approval. Conflicting external funding/other own outputs/ambiguous source/event/fees remain blocked. Receipt and chain transaction identity are explicitly distinct.",
+  "remaining": [
+    "Full PR/Main/production gates not yet run",
+    "Other networks and Bitpanda, N:M, further source reconciliation",
+    "Independent historical balances and tax/cost-basis acceptance",
+    "UH03 still open; UH04 then UH05",
+    "Real Android hardware checks"
+  ],
+  "protection": "EFF01/HND01; checkpoint branch never merged wholesale."
+}

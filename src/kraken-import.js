@@ -166,7 +166,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    if(group.rows.length>64)unsupported('Große Referenzgruppe benötigt einen gesonderten vollständigen Beinabgleich.');
    const bridge=bitcoinBridge?.group===group.id?bitcoinBridge:krakenBridgeFor(draft,group.id);
    if(bridge){
-    validateBitcoinBridgeProof(draft,bridge);
+    validateBitcoinBridgeProof(draft,bridge,{requireHistory:!krakenBridgeFor(draft,group.id)});
     const row=group.rows[0],source=position(draft,row,assignments);
     if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!=='BTC'||source.coinId!=='bitcoin'||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge.principalBTC!==exact(-units(row.amountExact))||bridge.exchangeFeeBTC!==row.feeExact||externalReferences.includes(group.id))unsupported('Bitcoin-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
    }

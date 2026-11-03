@@ -20,7 +20,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
  el('bindings').before(bridgeHost);
  const options=()=>({bitcoinBridge:el('operation').value==='bridge'?bitcoinBridge:null,operation:el('operation').value,selectedGroups:[...selected],externalReferences:[...external],openingConfirmed:el('opening').checked});
  const notify=()=>onApproval(Boolean(approved&&plan?.ready&&!plan.issues.length&&plan.baseline===JSON.stringify(getModel())&&(!plan.excluded||el('partial').checked)));
- const invalidate=()=>{++lookupGeneration;lookupController?.abort();bitcoinBridge=null;plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
+ const invalidate=({clearProof=true}={})=>{++lookupGeneration;lookupController?.abort();if(clearProof)bitcoinBridge=null;plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
  function renderBindings(){
   el('bindings').innerHTML=streams.slice(0,bindingLimit).map(row=>{
    const positions=getModel().positions.filter(p=>!p.wallet?.enabled&&p.currency==='EUR'&&(row.values.asset==='EUR'?p.kind==='cash':p.kind==='crypto'&&p.symbol===row.values.asset));
@@ -61,7 +61,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
   finally{el('bridge-lookup').disabled=false;}
  };
  el('more-bindings').onclick=()=>{const previous=bindingLimit;bindingLimit+=20;renderBindings();host.querySelectorAll('[data-kraken-binding]')[previous]?.focus();};
- el('opening').onchange=invalidate;el('operation').onchange=()=>{el('bridge').hidden=el('operation').value!=='bridge';el('bridge').classList.toggle('hidden',el('operation').value!=='bridge');const label=el('opening').closest('label'),withdraw=el('operation').value==='withdraw';label.hidden=withdraw;label.classList.toggle('hidden',withdraw);invalidate();};
+ el('opening').onchange=()=>invalidate({clearProof:false});el('operation').onchange=()=>{el('bridge').hidden=el('operation').value!=='bridge';el('bridge').classList.toggle('hidden',el('operation').value!=='bridge');const label=el('opening').closest('label'),withdraw=el('operation').value==='withdraw';label.hidden=withdraw;label.classList.toggle('hidden',withdraw);invalidate();};
  el('partial').onchange=()=>{approved=false;el('approve').checked=false;notify();};
  el('approve').onchange=()=>{approved=el('approve').checked;notify();};
  el('simulate').onclick=()=>{

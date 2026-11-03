@@ -18,13 +18,14 @@ export function krakenBridgeFor(model,group){
  return live??removed??null;
 }
 /** Static restore contract: optional history may be absent; retained exact proof may not. */
-export function validateBitcoinBridgeProof(model,proof){
+export function validateBitcoinBridgeProof(model,proof,{requireHistory=false}={}){
  if(!proof||Object.keys(proof).sort().join()!==[...fields].sort().join()||proof.version!==1||!hash(proof.group)||!hash(proof.payload)||!hash(proof.walletScopeDigest)||!hash(proof.txid)||!hash(proof.ledgerId)||!hash(proof.ledgerOwnerDigest)||typeof proof.reference!=='string'||!proof.reference||proof.reference.length>200||/[\u0000-\u001f]/.test(proof.reference)||typeof proof.destination!=='string'||!/^bc1[ac-hj-np-z02-9]{11,87}$/.test(proof.destination))fail();
  const p=model.positions.find(p=>p.id===proof.positionId),e=validateHistoryEvent(proof.event);
- if(!p?.wallet?.enabled||!['btc','btc-hd'].includes(p.wallet.chain)||p.kind!=='crypto'||p.coinId!=='bitcoin'||p.symbol!=='BTC'||bitcoinHistoryScope(p.wallet)!==proof.walletScopeDigest||sourceDigest(p.wallet.address)!==proof.ledgerOwnerDigest||e.network!=='bitcoin'||e.chainId!=='mainnet'||e.accountId!==p.accountId||e.assetId!=='bitcoin'||e.contract!==null||e.mint!==null||e.decimals!==8||e.txid!==proof.txid||e.type!=='incoming'||e.locator.kind!=='vout'||e.status!=='confirmed'||e.finality!=='confirmed'||e.coverage!=='verified'||!hash(e.blockHash)||!e.timestamp||units(proof.principalBTC)<=0n||units(proof.principalBTC)!==BigInt(e.quantityBaseUnits)*10n**10n||units(proof.exchangeFeeBTC)<0n||units(proof.transactionFeeBTC)<0n)fail();
+ if(!p?.wallet?.enabled||!['btc','btc-hd'].includes(p.wallet.chain)||p.kind!=='crypto'||p.coinId!=='bitcoin'||p.symbol!=='BTC'||bitcoinHistoryScope(p.wallet)!==proof.walletScopeDigest||sourceDigest(p.wallet.address)!==proof.ledgerOwnerDigest||e.network!=='bitcoin'||e.chainId!=='mainnet'||e.accountId!==p.accountId||e.assetId!=='bitcoin'||e.contract!==null||e.mint!==null||e.decimals!==8||e.txid!==proof.txid||e.type!=='incoming'||e.locator.kind!=='vout'||e.status!=='confirmed'||e.finality!=='confirmed'||e.coverage!=='verified'||!hash(e.blockHash)||!e.timestamp||units(proof.principalBTC)<=0n||units(proof.principalBTC)!==BigInt(e.quantityBaseUnits)*10n**10n||units(proof.exchangeFeeBTC)<0n||units(proof.exchangeFeeBTC)%10n**10n!==0n||units(proof.transactionFeeBTC)<0n||units(proof.transactionFeeBTC)%10n**10n!==0n)fail();
  // Receipt and event must be preserved canonically; event identity includes the output index.
  if(JSON.stringify(e)!==JSON.stringify(proof.event))fail();
  const sessions=(model.walletHistory?.sessions||[]).filter(s=>s.walletKey===p.id);
+ if(requireHistory&&sessions.length!==1)fail();
  if(sessions.length){
   if(sessions.length!==1||sessions[0].walletScopeDigest!==proof.walletScopeDigest)fail();
   const match=sessions[0].events.filter(x=>x.id===e.id);

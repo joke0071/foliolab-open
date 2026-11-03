@@ -27,6 +27,7 @@ test('reload, no-history backup and reimport preserve one source effect',()=>{
  const full=safeImport(JSON.parse(backup(d,{includeHistory:true})));assert.equal(full.bookings.length,2);assert.deepEqual(full.walletHistory,d.walletHistory);
  const x=bridgeFixture(),proof=prepareKrakenBitcoinBridge(x.m,x.group,x.proofInput);x.m.walletHistory.sessions=[];assert.throws(()=>prepareKrakenBitcoinBridge(x.m,x.group,x.proofInput));
  // A checked immutable proof remains portable; a new proof always requires accepted own history.
+ assert.ok(previewKrakenImport(x.m,[x.text],x.assignments,{bitcoinBridge:proof,openingConfirmed:true}).issues.length);
  assert.ok(proof.event.id);assert.equal(backup(r).includes('krakenBitcoinBridge'),true);
 });
 test('CAS baseline and changed opening protections remain; selection cannot apply another group proof',()=>{
