@@ -1,3 +1,15 @@
+## ACTIVE – PR290 gemergt / v274 Mainprüfung; UI289-Review reserviert – 03.11.2026
+
+Alleiniger Owner **37e32f7146e0**. PR290 nach vollständigerPR-CI41656632739/Wallet41656632048 SUCCESS,1148Units/0Fehler/Skips,allenLogs/6Artefaktdigests/echtemCross3-Download+Hash+ZIP/Firefox-WebKit-Mobilbildsichtung/leerenReviews/Threads undfrischemMain-/Owner-/HEAD-/Testmergeabgleich SHA-geschütztgemergt. Main **0765bab7cfcefae22ea47d12a80aaebd2a676314**, Tree **39553b20b1f944bf5c06ffc37d9054df2392e07e** exaktgeprüfterKandidat, SWv274/v5/Identitäten. [FinalePR-Abnahme](release-evidence/v274-pr290-final-ci.json). NeuerBitpanda-Rücknahmeablauf inChromium/Firefox/WebKit PASS;112Original-DOT-Reward-Rücknahmen und8unabhängigeGebührenkontrollenprivatPASS,keinehistorischeVollbestandsabnahme.
+
+AutomatischenMain-/Produktionslauf **41659731322 QUEUED/IN_PROGRESS** unverändertauswerten,keineDuplikate/Abbrüche/Folgeintegration. **v274 MERGED, NICHT LIVE_ACCEPTED; v273 letzteakzeptierteProduktion.** Zuerst neueMain-/Deploy-/Livegates/Artefakte/Bilder/normalenTLS-Byteabgleichabschließen.
+
+NeuerNutzerauftrag: gesamteUI-Lieferung289 unabhängigreviewen unddanachamkonfliktfreienPunktintegrieren/veröffentlichen. RevieweingangHEAD **00d8fafa59fe430ff4c94f2fc4706ea6bd704f16**,250Dateien. WährendReviewkeineweiterenCopilotänderungen/Neuzuweisungen;aktuelleCI/HEAD/Komplettdiff/Longpress/Symbolauswahl/Installation/Loader/Reload/257-BundL07gezieltprüfen. Ältere7d46891-Befunde sindhistorisch;keinPauschal-DONEaus280Sweepbehaupten. UI-Reviewzunächstreinlesendwährendv274-Prüfung,keineparalleleProduktintegration. KeinweitererBrowserlogin;GitHub ausschließlichverbundenesPlugin.
+
+PrivateOriginale/Oracles/Logs/ZIPs/Checkout `/workspace/scratch/37e32f7146e0/`;Produktbaumtreeidentisch,keinungesichertergetrackterWIP. UH03PARTIAL→UH04→UH05/alleRestaufträge undEFF01/HND01erhalten;Zähler1LIVE_ACCEPTED/0fertigereigenerProduktschnitt. CheckpointbranchniemalsvollständignachMainmergen.
+
+---
+
 ## ACTIVE – PR290 eingefroren / Bitpanda-Rücknahme-Pflichtgates laufen – 03.11.2026
 
 Alleiniger Owner **37e32f7146e0** nach ausdrücklicher Nutzerablösung. **v273 LIVE_ACCEPTED**, Main8d590d19936403557ce75d59105da3a0fca1c7b5/Tree5e33e2461882e205b2575cb4fe5aae8652886852 unverändert, nicht erneut abnehmen. Einziger neuer Produktkandidat **[PR290](https://github.com/joke0071/foliolab-open/pull/290)** auf `feature/uh03-bitpanda-terminal-withdrawal`, HEAD **38c93f02106cc7cbcedf1d872d441cc40077ae3c**, Tree **39553b20b1f944bf5c06ffc37d9054df2392e07e**, SWv274/v5. [Kandidatenbeleg](https://github.com/joke0071/foliolab-open/blob/38c93f02106cc7cbcedf1d872d441cc40077ae3c/docs/release-evidence/uh03-bitpanda-withdrawal-candidate.json). Vollständige terminale unveränderte Bitpanda-Gruppe atomar zurücknehmen; Original/validierteKontrollbestände/Wiederimportsperre bleiben. Beide unabhängigenKontrollwerte ausdrücklich bestätigen; keine historischenSalden/zusätzlicheWalletbrücke/pauschaleLöschfreigabe.
