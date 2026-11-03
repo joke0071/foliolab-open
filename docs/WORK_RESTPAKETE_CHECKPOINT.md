@@ -1,3 +1,15 @@
+## ACTIVE – v273 LIVE_ACCEPTED / UH03 fortsetzen – 03.11.2026
+
+Alleiniger Owner **37e32f7146e0** nach ausdrücklicher Nutzerablösung des Vorgängers; keine bestätigte STOPPED-Abgabe behauptet. **v273 vollständig LIVE_ACCEPTED**, Main **8d590d19936403557ce75d59105da3a0fca1c7b5**, Tree **5e33e2461882e205b2575cb4fe5aae8652886852**, SWv273/v5/Identitäten erhalten. PR287 gemergt. Main-/Produktionslauf **41641358681 Versuch1 COMPLETED/SUCCESS**, Deployment125943226805/Live125943410377 SUCCESS. [Verbindliche Abnahme](release-evidence/v273-pr287-live-acceptance.json). **v272/v273 nicht erneut abnehmen.**
+
+1142Units/0Fehler/Skips; neue Bitcoinbrücke UND3bestehendeKrakenfälle plusBitpanda vollständig produktiv inChromium/Firefox/WebKit PASS. Liveartefakt13234228890 tatsächlich heruntergeladen:94682690Bytes, SHA256 **b417cb8e575612374f1ba8eaed3dea8c9d49f0a3e3851354caf4afc1ad65d916**,1075ZIPeinträge/Integrität PASS; Core6Checks/18Axe/140Assetmatches/0Pageerrors/keineTLS-Ausnahme, UI/Transfers alle3Engines PASS. Produktions-Chromium-Brücke390px/WebKit-Rücknahme390px gesichtet. Alle8Main-/Liveartefaktdigests mit Uploadlogs bestätigt. HTTPS140/140-Bericht gegen eigenenCheckout geprüft, SW abschließend erneut regulärTLS exakt bestätigt. KeineCI-Duplikate/Abbrüche/Retries durchNachfolger.
+
+EigenerCheckout exaktMain; privateBelege/ZIP/Logs/Originale/Oracles unter `/workspace/scratch/37e32f7146e0/private/`, Vorgängerbelege in `predecessor-evidence/`; Flatexvorbereitung zusätzlich in `uh04-preparation/` und Bericht daneben gesichert. Kein getrackter Produkt-WIP. **UH03 insgesamt PARTIAL**: weitereNetze/Bitpanda/N:M/weitergehenderQuellenabgleich/unabhängigehistorischeEndstände offen. Nächster begrenzter Fachschnitt prüfen: persistente vollständige terminale Bitpanda-Gruppenrücknahme unter unverändertem Original-/Endbestands-/Journalvertrag; keine neue Brücke ohne starken Gegenbeleg. DanachUH04→UH05.
+
+**UI288/289 extern reserviert**, HEADb59d4e823f8c49fa812174450ed0415eda29dc2a, Wallet41645239741 SUCCESS; Haupt41645239672 hat SW-Revisionsgate FAILURE (Bump nur durchHauptowner beiIntegration) und Cross1-Touchzielfehler `direct booking transfer action has a usable touch target`; übrigeCrossjobs laufend/erfolgreich nachfrischerPrüfung. ExakterFehlerlog privat gesichert. ErweiterterSonnet-Auftrag/unbearbeiteteUIPakete erhalten; keinezweiteImplementierung/Neuzuweisung/ungeprüfteIntegration. SämtlicheSchutzverträge/EFF01/HND01/Zähler **1 LIVE_ACCEPTED / 0 eigenerImplementierungsschnitt** erhalten. Checkpointbranch niemals vollständig nachMain mergen.
+
+---
+
 ## ACTIVE – ausdrückliche Nutzerablösung / Owner 37e32f7146e0 – 03.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **37e32f7146e0** aufgrund ausdrücklicher Nutzerentscheidung: **ecc3561f055e wurde vom Nutzer abgelöst**; keine STOPPED-Bestätigung oder bestätigter Stillstand des Vorgängers behauptet. Historische Einträge bleiben erhalten. Bei beobachteten weiteren fremden Schreibaktionen betroffene Mutationen aussetzen und Konflikt benennen.
