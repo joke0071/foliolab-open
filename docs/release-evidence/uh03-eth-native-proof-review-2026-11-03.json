@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-03",
+  "owner": "975176198816",
+  "status": "NATIVE_SOURCE_LEDGER_AND_CANONICAL_CHAIN_CHECKED",
+  "implementation": "NOT_STARTED",
+  "release": "v275 LIVE_ACCEPTED unchanged",
+  "sourceEvidence": "User supplied original privately retained; no original CSV requested again",
+  "checks": [
+    "native reference/source time/fee/recipient/network binding",
+    "displayed hash prefix matches original Ledger full hash",
+    "full transaction/receipt/canonical block and finality",
+    "exact principal and distinct exchange/network fees",
+    "independent Decimal/integer oracle without production imports"
+  ],
+  "oracle": "PASS",
+  "privateRoot": "/workspace/scratch/975176198816/private/",
+  "manifest": "uh03-eth-proof-manifest.json",
+  "limitations": [
+    "screenshot amount rounded and hash prefix truncated; exact values/full hash from original sources and canonical chain",
+    "no historical balance acceptance",
+    "no product booking or full UH03 acceptance"
+  ],
+  "next": "Bounded native ETH receipt-backed bridge; keep whole native history partial"
+}
