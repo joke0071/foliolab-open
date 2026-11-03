@@ -1,3 +1,11 @@
+## ACTIVE – a9b7a8511bfe / v277 DEPLOYED, Live-Abnahme offen – 03.11.2026
+
+Alleiniger Owner **a9b7a8511bfe**. **v277 DEPLOYED / LIVE_ACCEPTANCE_PENDING, NICHT LIVE_ACCEPTED.** Main d651f09f93f261ee318a478279586fefd31fcd7f / Tree6b73950cd0879a7e81f4bbc3046c9b49608a7a9a / SWv277, exakt geprüfterKandidat/PR292 integriert. Mainlauf **41723207943 Versuch1**, Syntax/1168Units0Fehler0Skips/Hauptjob126221523023 undalle3Crossjobs126221523363/126221523028/126221523027 SUCCESS. Alle7bisherigenArchive tatsächlich heruntergeladen/hash-/CRC-/Berichtsprüfung; StageRELEASE,136JSONs ohneFehler; neueSOL-Bilder/terminalenLogs geprüft. Deploy **126229966090 SUCCESS**; Livejob **126230291673 IN_PROGRESS**. KeineAbbrüche/Duplikate/Retry.
+
+NächsterSchritt: bestehendenLivejob samtfinalenLogs/ZIP/Berichten/Bildern sowie142Assets/regulärerTLS ohneZertifikatsausnahme tatsächlichabnehmen. Erst dann LIVE_ACCEPTED. v276bleibtletzteAbnahme, nichtwiederholen. [PR-Abnahme](release-evidence/v277-pr292-final-ci.json). EigeneOriginal-/Oracle-/Quell-/Belegkopie /workspace/scratch/a9b7a8511bfe/private/, keinezusätzlicheProduktänderung. UH03weiter→UH04→UH05; nativeSOL begrenzt, ERC20/SPL/N:M/unabhängigehistorischeBeständeoffen. Konkreter nächsterERC20-Target privat eingegrenzt, nochkeineIdentitäts-/Chainfreigabe. v5/Identitäten/Finanzschutz/EFF01/HND01, Zähler0/0. NurGitHub-Plugin; CheckpointbranchniemalsvollständignachMainmergen.
+
+---
+
 ## ACTIVE – a9b7a8511bfe / PR292 gemergt, v277 Main-CI – 03.11.2026
 
 Alleiniger Owner **a9b7a8511bfe**. PR292 nach terminaler vollständiger CI41717902064/Wallet41717901841, tatsächlicher Archiv-/Hash-/CRC-/Berichts-/SOL-Bildprüfung und frischem SHA-/Main-/Reviewabgleich geschützt gemergt. **Main d651f09f93f261ee318a478279586fefd31fcd7f / Tree6b73950cd0879a7e81f4bbc3046c9b49608a7a9a**, exakt Kandidat/synthetischer Merge. [Finale PR-Abnahme](release-evidence/v277-pr292-final-ci.json). Automatischer Mainlauf **41723207943 Versuch1 IN_PROGRESS**, keine Duplikate/Abbrüche/Retry. **v277 noch NICHT DEPLOYED/LIVE_ACCEPTED; v276 bleibt LIVE_ACCEPTED und wird nicht erneut geprüft.**
