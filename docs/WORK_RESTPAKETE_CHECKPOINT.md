@@ -1,3 +1,15 @@
+## ACTIVE – ausdrückliche Nutzerablösung / Owner 37e32f7146e0 – 03.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **37e32f7146e0** aufgrund ausdrücklicher Nutzerentscheidung: **ecc3561f055e wurde vom Nutzer abgelöst**; keine STOPPED-Bestätigung oder bestätigter Stillstand des Vorgängers behauptet. Historische Einträge bleiben erhalten. Bei beobachteten weiteren fremden Schreibaktionen betroffene Mutationen aussetzen und Konflikt benennen.
+
+Frisch geprüft: Main **8d590d19936403557ce75d59105da3a0fca1c7b5**, Tree **5e33e2461882e205b2575cb4fe5aae8652886852**, PR287 gemergt; SWv273/v5. **v273 DEPLOYED, NICHT LIVE_ACCEPTED; v272 letzte bestätigte Abnahme.** Mainlauf **41641358681 IN_PROGRESS** unverändert auswerten; keine Abbrüche/Duplikate/blinden Retries. Vorhandene PR-/Main-/HTTPS140/140-Nachweise wiederverwenden; zuerst verbleibende Live-/Artefakt-/Bild-/Identitätsabnahme abschließen.
+
+Eigener sauberer Checkout exakt Main unter `/workspace/scratch/37e32f7146e0/foliolab-open`; verfügbare private Vorgängerbelege vollständig separat kopiert nach `/workspace/scratch/37e32f7146e0/private/predecessor-evidence/`. Frühere WIP-Sicherung `private/takeover-readonly-snapshot/`; Vorgängercheckout ohne getrackten/gestagten WIP, synthetische Artefakte erhalten. Private Originale/Chain-/Ownership-/Oracledaten nicht veröffentlichen.
+
+Externe UI-Arbeit #288/Draft#289 bleibt erhalten, HEAD **b59d4e823f8c49fa812174450ed0415eda29dc2a**, Wallet41645239741 SUCCESS, Haupt-CI41645239672 läuft; bekanntes SW-Revisionsgate offen (Copilot darf auftragsgemäß keinen SW-Bump vornehmen). Erweiterter Sonnet-Folgeauftrag und offener Lieferumfang bleiben erhalten; keine Modellannahme, keine Wiederzuweisung/Doppelimplementierung. Historische Drafts157/161 unverändert. Danach UH03→UH04→UH05; UH03 PARTIAL, Flatexvorbereitung wiederverwenden, v5/Identitäten/Schutzverträge/EFF01/HND01/Zähler0/0 erhalten. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – v273 HTTPS140/140 / produktive Firefox-WebKit-Abnahme läuft – 03.11.2026
 
 Alleiniger Owner **ecc3561f055e**. Main **8d590d19936403557ce75d59105da3a0fca1c7b5**/Tree **5e33e2461882e205b2575cb4fe5aae8652886852**, SWv273/v5/Identitäten. Main41641358681 Hauptjob/Cross1–3/Deployment125943226805 SUCCESS;1142Units/0Fehler/Skips,7Mainartefaktdigests bestätigt. [Regulärer TLS-geprüfter140/140Byteabgleich](release-evidence/v273-regular-https-assets.json) PASS. **Livejob125943410377 IN_PROGRESS**, Chromium-Produktionsschritt SUCCESS; aktuell gezielte echteFirefox-/WebKit-Produktionspflichtgates. **v273 DEPLOYED, NICHT LIVE_ACCEPTED; v272 letzte akzeptierteProduktion.** KeineRetries/Abbrüche/Duplikate/Folgeimplementierung. Nach terminalemLiveerfolg Logs/Artefakte/echtenDownload+Hash+ZIP/Berichte/Bilder/aktuellenMain/Owner prüfen, erst dann LIVE_ACCEPTED sichern.
