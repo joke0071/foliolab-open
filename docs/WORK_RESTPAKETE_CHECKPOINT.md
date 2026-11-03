@@ -1,3 +1,19 @@
+## HANDOVER_READY – 975176198816 STOPPED / v275 LIVE_ACCEPTED / ETH-Beleg geprüft – 03.11.2026
+
+**975176198816 gibt hiermit die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und ist STOPPED.** Keine weiteren Implementierungen/PRs/Merges/Deployments dieser Sitzung. Frühe sichere Rotation gemäß EFF01/HND01 nach umfangreichem Release-/Diagnoseverlauf; eigene Zähler 1 LIVE_ACCEPTED / 1 fertiger UI-Schnitt. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Hauptowner. Ablösung des Vorgängers erfolgte durch Nutzerentscheidung, keine bestätigte Vorgängerabgabe behauptet.
+
+**v275 LIVE_ACCEPTED**, Main `4def94b43008b8b36c243e586696d0a152010d32`, Tree `14853689d9d48adad2a67a39ed30b80b6a0a390c`, SWv275/v5. PR289 gemergt. Mainlauf41684716512 Versuch1 COMPLETED/SUCCESS einschließlich Deployment126096142413/Live126096536974; [verbindliche Abnahme](release-evidence/v275-pr289-live-acceptance.json). v274/v275 nicht erneut abnehmen. Frisch vor Abgabe Main/Tree/Owner unverändert, nur historische Drafts157/161 mit unveränderten HEADs offen; **0 in_progress/0 queued Actions**, kein eigener neuer Produktkandidat.
+
+**WAITING_FOR_EVIDENCE ist erledigt:** Nutzeroriginal des konkreten Kraken-ETH-Auszahlungsdetails erhalten und privat unverändert gesichert. Quelle/Referenz/Zeit/Gebühr/Empfänger, originaler Ledger-Vollhash und kanonische Transaktion/erfolgreiches Receipt/Block unabhängig geprüft, Decimal-/Integer-Oracle PASS. Native Anzeige enthält gerundete Menge und nur Hashpräfix; vollständige Werte stammen aus Originalquelle/Ledger/Chain. [Redigierter Belegstatus](release-evidence/uh03-eth-native-proof-review-2026-11-03.json). Keine neue Produktbuchung/historische Bestandsabnahme, UH03 bleibt PARTIAL. Screenshot und vorhandene CSVs nicht erneut anfordern.
+
+**Nächster Schritt:** nach frischer Übernahmeprüfung eine begrenzte native ETH-Quellbrücke mit exakt receipt-backed Event/Ownwallet/Quellgruppe implementieren und unabhängig qualifizieren. Gesamte native ETH-Historie bleibt partial; keine Coverage-/Finanzschutzlockerung. Danach UH03 weiter → UH04 → UH05; übrige Roadmap erhalten.
+
+**Vollständige Übergabe samt kopierbarem Startprompt:** [HANDOVER_975176198816_2026-11-03.md](HANDOVER_975176198816_2026-11-03.md). Private Originale/RPC-Rohbelege/Oracle/Manifest unter `/workspace/scratch/975176198816/private/`, insbesondere `uh03-eth-proof-manifest.json`; vorhandene Originale/Flatexvorbereitung und Vorgänger-WIP gesichert. Quellkopie `/workspace/scratch/975176198816/foliolab-open` ohne .git, gegen Main geprüfte Blobs, **keine neue ungesicherte Produktänderung**. Bereits integrierte UI-Patches nicht erneut anwenden.
+
+Nur GitHub-Plugin, keine Browser-Logins; keine Action-Duplikate/Abbrüche/blinden Retries. v5, Daten-/Installationsidentität, Journal/CAS/Backup/Restore und EFF01/HND01 erhalten. Private Finanzdaten/Originale/Walletkennungen/xpubs/Secrets nicht veröffentlichen. Checkpointbranch niemals vollständig nach Main mergen. Historische ACTIVE-/WAITING-Einträge darunter sind durch diesen Kopf übersteuert.
+
+---
+
 ## ACTIVE / WAITING_FOR_EVIDENCE – v275 LIVE_ACCEPTED / UH03 nächster ETH-Beleg – 03.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **975176198816**, durch ausdrückliche Nutzerentscheidung als Ersatz für cb8a6d16f52c eingesetzt; keine bestätigte Vorgängerabgabe behauptet. **v275 vollständig LIVE_ACCEPTED.** Main **`4def94b43008b8b36c243e586696d0a152010d32`**, Tree **`14853689d9d48adad2a67a39ed30b80b6a0a390c`**, SW **`foliolab-open-v275`**, v5 und Identitäten erhalten. PR289 SHA-gebunden gemergt. [Verbindliche Live-Abnahme](release-evidence/v275-pr289-live-acceptance.json), [finale PR-Abnahme](release-evidence/v275-pr289-final-ci.json). v274/v275 nicht erneut abnehmen.
