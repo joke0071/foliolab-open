@@ -1,3 +1,13 @@
+## ACTIVE – ausdrückliche Nutzerübernahme 975176198816 / UI289 CI-Fehlerdiagnose – 03.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **975176198816** aufgrund ausdrücklicher Nutzerentscheidung: **cb8a6d16f52c wurde abgelöst; keine bestätigte STOPPED-Abgabe des Vorgängers behauptet.** Frisch geprüft: Main `0765bab7cfcefae22ea47d12a80aaebd2a676314` / Tree `39553b20b1f944bf5c06ffc37d9054df2392e07e`, **v274 LIVE_ACCEPTED**, nicht erneut abnehmen. PR289 HEAD `d367796827dc3581c482a615e4d34bb2befe25a8`, Testmerge `8d86b5a443f795000edb741930c8f59afe674217` unverändert. Keine gleichzeitig beobachtete Fremdmutation.
+
+Bestehender Lauf **41675916561 COMPLETED/FAILURE**: test126056641863 Browser-Smoke FAILURE; Cross1/2/3 und FAST SUCCESS, Wallet41675916500 SUCCESS. Deploy/Live SKIPPED, **v275 nicht veröffentlicht/abgenommen**. Keine Duplikate/Abbrüche/Retry. Nächster Schritt: exakten Hauptjobfehler samt Artefakten diagnostizieren und vollständigen Kandidatenreview abschließen, gezielte Korrektur im bestehenden PR, danach Pflichtgates/geschützter Merge/echte neue Main-/Produktions-/reguläre HTTPS-Abnahme.
+
+WIP/Belege vor Änderungen privat gesichert unter `/workspace/scratch/975176198816/private/`: vollständige Vorgängerbelege kopiert; Checkout mit Index/Arbeitsbaum (ohne reproduzierbare Gateausgaben/node_modules) als `predecessor-checkout-wip.tar.gz`, SHA256 `3619425681646af23fbe799c9d9f2eecda1967fc780bf9bb7c4478399934df84`; vorhandenes ui275-wip.tar.gz erhalten. Git-Diffexport scheiterte an fehlendem lokalem Blob; deshalb vollständige Checkout-Sicherung, Vorgängercheckout unverändert. Keine privaten Originale veröffentlichen. UH03 PARTIAL→UH04→UH05, alle Restaufträge, v5/Identitäten/Journal/CAS/Backup/Restore/EFF01/HND01 erhalten. GitHub ausschließlich Plugin, keine Browser-Logins; Checkpointbranch niemals vollständig nach Main mergen. Zähler0 LIVE_ACCEPTED/0 eigener fertiger Schnitt.
+
+---
+
 ## ACTIVE – UI289 d367796 eingefroren / korrigierte CI läuft – 03.11.2026
 
 Alleiniger Owner **cb8a6d16f52c**. **v274 LIVE_ACCEPTED**, Main `0765bab7cfcefae22ea47d12a80aaebd2a676314` unverändert. UI289 jetzt HEAD **d367796827dc3581c482a615e4d34bb2befe25a8**, Tree **94d0d2d05f2972d3c20553f86170ef104e793f0e** lokal/remote/Testmerge `8d86b5a` identisch; 136 Diff-Dateien, alle128 Strays weiterhin abwesend. [Vollständiger Korrekturbeleg](release-evidence/ui289-corrected-candidate-d367796.json). Ersten Kandidatenlauf41672608218 vollständig ohneAbbruch auslaufenlassen: Haupt/Cross2 Fehler gesichert, Cross1/Cross3/FAST/Wallet erfolgreich. Echte Fehler-ZIPs heruntergeladen, Hash/Integrität bestätigt. Keine Workflow-Retries.
