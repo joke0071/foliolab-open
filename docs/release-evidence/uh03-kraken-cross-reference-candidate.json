@@ -1,0 +1,23 @@
+{
+  "status": "LOCAL_PREFLIGHT_PASS_NOT_RELEASE_ACCEPTANCE",
+  "owner": "326c8cc8f969",
+  "base": "06688b537937ac901d482cbe771d8327977cf2c0",
+  "release": "v271 candidate; v270 remains LIVE_ACCEPTED",
+  "scope": "Exact unique timestamp/asset/wallet/subclass trails induce contiguous reference dependencies. Acyclic dependencies produce deterministic reference ordering. Existing groups validate their unchanged canonical payloads separately and never replay into new trails.",
+  "bounds": "Existing 64-row trail bound now also applies per timestamp/stream. Existing per-reference and action bounds retained. Ambiguity, gaps, interleaving, dependency cycles, changed identities, protected openings/costs and atomic confirmation remain blocked.",
+  "nonGoals": "No schema, source/action identity, installation identity, financial engine, CI workflow or historical opening inference change. UH03 remains partial; UH04/UH05 not complete.",
+  "validation": {
+    "node": "24.22.1",
+    "units": {"passed": 1127, "failed": 0, "skipped": 0, "concurrency": 1},
+    "syntaxAndDiff": "PASS",
+    "existingIndependentRowGraphStartOracles": 199290,
+    "independentCrossStreamPermutations": 36,
+    "independentReferenceAssignments": 729,
+    "all24CsvPermutations": "Identical serialized model, journal and source identity; exact explicit cash/ETH oracle PASS",
+    "mixedReimport": "One existing plus two new timestamp references; reload/restore and changed-booking rejection PASS",
+    "baselineRegression": "v270 blocks new synthetic fixture; candidate accepts independently supplied exact balances",
+    "privateOriginal": "Recovered authorized original reused against independent Python Decimal/full-path/pruned group-permutation oracle PASS. Structural starts only; no independent historical balances claimed. Private values/IDs excluded.",
+    "chromium": "Playwright1.56.1/Chromium141 headless shell: all three existing/new scenarios, real shared CSV UI, actual IDB/CAS/v5, one revision, undo, encrypted restore, quota rollback, stale tab, offline SW reload, seven widths and Axe PASS; new390px screenshot inspected"
+  },
+  "remaining": "Final mandatory PR/main/live gates and independent historical Kraken/Bitpanda end balances, combined BTC/ETH/ERC20/SOL/SPL transfers/gas/fees, persistent selective source withdrawal; then UH04 then UH05."
+}

@@ -49,6 +49,60 @@ export function krakenBalanceTrail(rows,start){
  }
  return trail;
 }
+/** One timestamp, new references only. Existing groups never supply historical openings. */
+export function krakenReferenceOrder(groups,starts){
+ const byId=new Map(groups.map(g=>[g.id,g])),streams=new Map(),edges=new Map(groups.map(g=>[g.id,new Set()]));
+ if(byId.size!==groups.length)unsupported('Doppelte Kraken-Referenzgruppe.');
+ const times=new Set();
+ for(const group of groups){
+  if(group.issues.length)unsupported(group.issues.join(' '));
+  for(const row of group.rows){
+   times.add(row.values.time);
+   if(!streams.has(row.streamId))streams.set(row.streamId,[]);
+   streams.get(row.streamId).push({...row,referenceId:group.id});
+  }
+ }
+ if(times.size>1)unsupported('Kraken-Chronologie benötigt einen gemeinsamen exakten Zeitpunkt.');
+ for(const [stream,rows] of streams){
+  if(!starts.has(stream))unsupported('Expliziter Bestand für jeden Kraken-Quellbereich erforderlich.');
+  const trail=krakenBalanceTrail(rows,starts.get(stream)),seen=new Set();let previous=null;
+  for(const row of trail){
+   const id=row.referenceId;if(id===previous)continue;
+   if(seen.has(id))unsupported('Kraken-Referenzen sind im selben Quellbereich verschachtelt. Gesonderter Beinabgleich erforderlich.');
+   seen.add(id);if(previous!==null)edges.get(previous).add(id);previous=id;
+  }
+ }
+ const incoming=new Map(groups.map(g=>[g.id,0]));
+ for(const targets of edges.values())for(const id of targets)incoming.set(id,incoming.get(id)+1);
+ const available=[...incoming].filter(([,n])=>n===0).map(([id])=>id).sort(),ordered=[];
+ while(available.length){
+  const id=available.shift();ordered.push(byId.get(id));
+  for(const target of edges.get(id)){incoming.set(target,incoming.get(target)-1);if(incoming.get(target)===0){available.push(target);available.sort();}}
+ }
+ if(ordered.length!==groups.length)unsupported('Kraken-Quellbereiche widersprechen sich in der Referenzreihenfolge.');
+ return ordered;
+}
+// Resolve each timestamp against the evolving draft. Reimport groups are validated
+// normally but excluded from new trails: their effects are already in the holding.
+function* chronologicalGroups(selected,draft,assignments){
+ const timestamps=new Map();
+ for(const group of selected){const time=group.rows[0].values.time;if(!timestamps.has(time))timestamps.set(time,[]);timestamps.get(time).push(group);}
+ for(const time of [...timestamps.keys()].sort()){
+  const cluster=timestamps.get(time).sort((a,b)=>a.id.localeCompare(b.id)),fresh=[];
+  for(const group of cluster){
+   if(draft.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id))yield group;
+   else fresh.push(group);
+  }
+  if(fresh.length<2){yield* fresh;continue;}
+  let ordered;
+  try{
+   const starts=new Map();
+   for(const group of fresh)for(const row of group.rows)starts.set(row.streamId,qty(position(draft,row,assignments)));
+   ordered=krakenReferenceOrder(fresh,starts);
+  }catch(e){ordered=fresh.map(group=>({...group,chronologyIssue:e.message}));}
+  yield* ordered;
+ }
+}
 function position(model,row,assignments){
  const id=assignments[row.streamId],p=model.positions.find(p=>p.id===id);
  if(!p||p.wallet?.enabled||p.managementSource==='wallet'||!['cash','crypto'].includes(p.kind)||p.currency!=='EUR')unsupported('Jeden Kraken-Asset-/Walletbereich ausdrücklich einer manuellen EUR-Position zuordnen.');
@@ -102,9 +156,9 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
   assignedStreams.set(id,row.streamId);const assigned=model.positions.find(p=>p.id===id);if(assigned)providers.add(assigned.providerId);
  }
  if(providers.size>1)throw Error('Kraken-Quellbereiche müssen zum selben ausdrücklich gewählten Anbieter gehören.');
- const ordered=[...selected].sort((a,b)=>a.rows[0].values.time.localeCompare(b.rows[0].values.time)||a.id.localeCompare(b.id));
- for(const group of ordered){
+ for(const group of chronologicalGroups(selected,draft,assignments)){
   try{
+   if(group.chronologyIssue)unsupported(group.chronologyIssue);
    if(group.rows.length>64)unsupported('Große Referenzgruppe benötigt einen gesonderten vollständigen Beinabgleich.');
    const actions=actionsFor(draft,group,assignments,{externalReferences});
    if(actions.length>24)unsupported('Zu viele abhängige Buchungen in einer einzelnen Referenzgruppe.');
