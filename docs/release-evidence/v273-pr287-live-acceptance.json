@@ -1,0 +1,164 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "release": "v273",
+  "acceptedBy": "37e32f7146e0",
+  "authority": "Explicit user replacement of ecc3561f055e; no predecessor STOP confirmation claimed",
+  "main": "8d590d19936403557ce75d59105da3a0fca1c7b5",
+  "tree": "5e33e2461882e205b2575cb4fe5aae8652886852",
+  "cache": "foliolab-open-v273",
+  "dataFormat": 5,
+  "identityPreserved": true,
+  "pr": 287,
+  "run": {
+    "id": 41641358681,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 125935394839,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "conclusion": "success"
+      },
+      {
+        "id": 125935492077,
+        "name": "cross-engine (3)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125935492102,
+        "name": "cross-engine (2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125935492194,
+        "name": "cross-engine (1)",
+        "conclusion": "success"
+      },
+      {
+        "id": 125935492357,
+        "name": "test",
+        "conclusion": "success"
+      },
+      {
+        "id": 125935498206,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 125943226805,
+        "name": "deploy",
+        "conclusion": "success"
+      },
+      {
+        "id": 125943410377,
+        "name": "live-acceptance",
+        "conclusion": "success"
+      }
+    ],
+    "retriesBySuccessor": 0,
+    "cancellationsBySuccessor": 0,
+    "duplicateRunsBySuccessor": 0
+  },
+  "verification": {
+    "units": 1142,
+    "failedUnits": 0,
+    "skippedUnits": 0,
+    "existingPR": "v273-pr287-final-ci.json",
+    "mainLogs": "All seven main artifact digests match inherited complete upload logs and current GitHub artifact metadata; no main error markers. Existing unchanged successful gates reused.",
+    "live": "Complete terminal live job log inspected. All four Kraken scenarios and Bitpanda PASS in Chromium/Firefox/WebKit, including shared UI/IDB/CAS/quota/undo/terminal Kraken withdrawal/reimport/encrypted restore/offline/seven widths/Axe. Other required production suites including finance E2E/UI/transfers PASS.",
+    "core": {
+      "result": "PASS",
+      "checks": 6,
+      "axeScans": 18,
+      "exactAssetMatches": 140,
+      "pageErrors": 0,
+      "proxyCertificateException": false
+    },
+    "uiEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "transferEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "regularHTTPS": "Inherited v273-regular-https-assets.json:140/140 expected/received hashes rechecked against own exact-main checkout. Final sw.js fetched again through regular TLS certificate/hostname verification and matched byte-for-byte.",
+    "finalSWSHA256": "ba31e4291079125f8720601e99611b60bf7e87417741eb9817537b83a9f16c1a"
+  },
+  "artifacts": [
+    {
+      "id": 13234228890,
+      "name": "production-live-acceptance-8d590d19936403557ce75d59105da3a0fca1c7b5",
+      "size": 94682690,
+      "digest": "sha256:b417cb8e575612374f1ba8eaed3dea8c9d49f0a3e3851354caf4afc1ad65d916",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13234106483,
+      "name": "github-pages",
+      "size": 495189,
+      "digest": "sha256:d331d989b7013926c443940aa7526743429496ce21b6beb4e47f05e7032f67d8",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13234061217,
+      "name": "dialog-visual-reference",
+      "size": 934784,
+      "digest": "sha256:069943062f86c57811795bcd710c1e61c9f9192f938ad52a00d60898e5d3975e",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13233886380,
+      "name": "cross-engine-gates-8d590d19936403557ce75d59105da3a0fca1c7b5-3",
+      "size": 50405732,
+      "digest": "sha256:d36de58eb07e532f5c37eeabf88850d766bb8f8da1cd8c8f8a990b0e19ad0732",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13233468023,
+      "name": "release-gates-8d590d19936403557ce75d59105da3a0fca1c7b5",
+      "size": 53974000,
+      "digest": "sha256:adf1e46417400ddc9ff45ff1cef2473c17a4dcd13318ca52158c3a0c11a255ab",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13233153830,
+      "name": "cross-engine-gates-8d590d19936403557ce75d59105da3a0fca1c7b5-1",
+      "size": 48955615,
+      "digest": "sha256:4096780b8705cd1b8f89b470b46efb01f5de2cfc76ec97f5a07477c8094f713e",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13232958604,
+      "name": "cross-engine-gates-8d590d19936403557ce75d59105da3a0fca1c7b5-2",
+      "size": 12109276,
+      "digest": "sha256:481b241809b7e1d03ee029cfab357add9e9ac41f0f5d1f094372f53ccf6d2bf4",
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13232253715,
+      "name": "ci-stage-8d590d19936403557ce75d59105da3a0fca1c7b5",
+      "size": 354,
+      "digest": "sha256:a452386324c5047ec93902006e33321b805bf66e842451d4a7c383deee16c3d8",
+      "uploadLogDigestMatch": true
+    }
+  ],
+  "downloaded": {
+    "id": 13234228890,
+    "size": 94682690,
+    "sha256": "b417cb8e575612374f1ba8eaed3dea8c9d49f0a3e3851354caf4afc1ad65d916",
+    "zipEntries": 1075,
+    "zipTest": "PASS",
+    "visualReview": [
+      "production Chromium bitcoin bridge390px",
+      "production WebKit bridge withdrawal390px"
+    ],
+    "privatePath": "/workspace/scratch/37e32f7146e0/private/v273-production.zip"
+  },
+  "originalBoundary": "Original Kraken/Ledger/chain/HD-own-output and independent Decimal/integer oracles preserved privately. Bounded original event, not independent historical end-balance/full-wallet acceptance.",
+  "scope": "One explicit source-bound Kraken BTC withdrawal to one verified own Bitcoin output. Principal/exchange fee/documentary whole-batch mining fee separated; wallet amount not replayed; terminal withdrawal preserves evidence/reimport block.",
+  "next": "UH03 remains PARTIAL. Next bounded source/withdrawal scope must reuse preserved originals and independent controls, then UH04->UH05. UI288/289 remains separately reserved for extended Sonnet delivery; no overall UI acceptance."
+}
