@@ -1,0 +1,28 @@
+{
+  "status": "TARGETED_UNCHANGED_WEBKIT_PASS_SINGLE_JOB_RETRY_JUSTIFIED",
+  "pr": 286,
+  "head": "43be35d5efb3775d057c501ff8efef171c959554",
+  "tree": "8a526936bc4b0c8d6f7b8231007e53befcf09ed1",
+  "run": 41609852189,
+  "failedJob": 125828785864,
+  "originalFailure": {
+    "engine": "WebKit",
+    "test": "tests/browser-reference-removal.mjs:33",
+    "behavior": "After expected post-put IDB abort and exact stored-record equality, native Escape did not close the still-visible dialog within 30s. No finance/IDB equality assertion failed. New Kraken cross-engine checks were not yet reached.",
+    "artifact": 13217749871,
+    "artifactSHA256": "d0744ce8fa75a827122cb48f8f0679af9835cc83dce1d9f9cbff6b26bdcee604",
+    "bytes": 19335716
+  },
+  "targeted": {
+    "result": "PASS",
+    "test": "Entire unchanged tests/browser-reference-removal.mjs",
+    "testSHA256": "2d428ac18bda152e43a7c4950bafe093d613b9a1543c15ec9a94dff030db6f98",
+    "testSameAsBase": true,
+    "runtime": "Node24.22.1 / Playwright1.64.1 / WebKit27.2; local Ubuntu24 container, private extracted system libraries and wrapper LD path. Host preflight bypass only to load private libraries; no product, browser assertion, timeout, TLS or CI changes. Not the GitHub runner environment.",
+    "scope": "Original complete backup/consent/metrics/quota/post-put-abort/offline/undo/restore/CAS/editor7-preview5widths/Axe checks unchanged. Passive events and trace only.",
+    "traceSHA256": "f0fa0eb970e4fc35005afffc3db983328ac049a53490e8a00d27e1d65dfdd77a"
+  },
+  "classification": "Isolated nonreproduced native-dialog cancellation failure; original low-level event state unavailable, precise original cause remains uncertain. No relevant reference/dialog product code delta, and exact unchanged full targeted suite now passes on matching Playwright/WebKit versions.",
+  "decision": "Exactly one targeted retry of failed Cross3 only on unchanged candidate; keep all successful jobs. No full-workflow restart, cancellation, skip, increased timeout or assertion change. If repeated, repair cause before another run.",
+  "release": "Blocked until terminal required CI success plus final logs/artifacts/reviews/tree and genuine new main/production acceptance."
+}
