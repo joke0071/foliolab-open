@@ -1,0 +1,82 @@
+{
+  "main": "4def94b43008b8b36c243e586696d0a152010d32",
+  "candidate": "ddecde0872d116776936a9e1e7630ddef1f58057",
+  "tree": "c176da53aec9ab98f571df3ec3b23bc574896658",
+  "blobs": {
+    "src/kraken-ethereum-bridge.js": "74510f9b629bec2cd6c634be75bd3caccd28ccb7",
+    "src/kraken-import.js": "be854c02d2f7e354305be5ef926bdccad3736b61",
+    "src/kraken-import-ui.js": "74da4886f986a9b9119c000c77b16661f2cc4501",
+    "src/model.js": "18c4b9ed2fd46382be5900a5bdca3927078c6b42",
+    "sw.js": "72359c957783e57ecba9d2d00756d15f775d45ca",
+    "tests/kraken-ethereum-bridge-fixture.mjs": "f97ded1178cd5d8333ca8d84d47984237b91a34a",
+    "tests/kraken-ethereum-bridge.test.mjs": "4352e0933a734df9ab5b2bdf3ffbf5154d876028",
+    "tests/browser-kraken-import.mjs": "43f6fbfc6abcd74dc5756bd9d38dcc29ea8be777",
+    "docs/UH03_NATIVE_ETH_BRIDGE.md": "d3f1bbf5947e489c8f1efc5216d409805ff55d2b"
+  },
+  "files": {
+    "bridge-unit-final.log": "68fce0482eaa2e5d0e30e782208086df924e1e516304e4e7fd215b27865bf1e8",
+    "browser-kraken-webkit-final.log": "2cea7152d22712e9aa3c12cec270ea82840999877bd47fa4adf908d4a5bab24c",
+    "browser-kraken-chromium-final.log": "1f95904f4e5fe475f2fc4b89b899f8ed12c5f9cdd14f774c6e4544e74c733f99",
+    "unit-tap.log": "69feb6de60fb99489ded1209597c787aa5aa8cf2a0c39112fdb820a9f06a3b05",
+    "syntax-final.log": "45ec98e8609d91c615ae6a08d540a6f554b02be522fb3483b1c2ab8a267f7965",
+    "unit-final.log": "b1d62564a7caeea9e987ecdda48cdcff5205434dbb545b86305850c7828682de",
+    "browser-kraken-webkit.log": "1f95904f4e5fe475f2fc4b89b899f8ed12c5f9cdd14f774c6e4544e74c733f99",
+    "browser-kraken-chromium.log": "966c0b775cbbe596ffe29a01b0ea1e17dc1a384ba898178625982887262f6f3e",
+    "unit.log": "7dc118cb7dc3a689305bb67ed467f9c710d4482bc234196a14e2c8d729c24dda",
+    "browser-kraken-chromium-final2.log": "f6b72436d5c09c57995b5931d7a6e50d5e3d609a7512d7cc3863b165a2e538dd"
+  },
+  "qualification": {
+    "syntax": "PASS",
+    "units": {
+      "tests": 1158,
+      "pass": 1158,
+      "fail": 0,
+      "skips": 0
+    },
+    "chromiumScenarios": [
+      "ethereum-bridge",
+      "bitcoin-bridge",
+      "distinct-fee",
+      "cross-reference",
+      "same-asset-fee"
+    ],
+    "webkitCompletedScenarios": [
+      "ethereum-bridge",
+      "bitcoin-bridge",
+      "distinct-fee"
+    ],
+    "browserScope": [
+      "actual CSV dialog",
+      "seven widths/Axe",
+      "pure preview",
+      "exact undo/reimport",
+      "permanent source withdrawal",
+      "encrypted restore",
+      "withdrawal quota/stale CAS",
+      "ETH import quota/post-put abort",
+      "offline PWA reload"
+    ],
+    "originalReplay": {
+      "status": "PASS",
+      "originalSourceLedgerReceiptBlockBinding": true,
+      "independentOracle": "../975176198816/private/uh03-eth-chain-oracle.json",
+      "sourcePrincipalAndFeeExactlyOnce": true,
+      "recipientUnchanged": true,
+      "flowsUnchanged": true,
+      "reimportRestoreAndWithdrawal": true,
+      "nativeHistoryStillPartial": true,
+      "actualPortfolioOrHistoricalBalancesAccepted": false,
+      "finalizedHeader": "controlled fixture; native original proves canonical inclusion and >=64 confirmations, not a finalized-tag RPC response"
+    },
+    "limits": [
+      "not a hardware/OAuth acceptance",
+      "native ETH total history remains partial",
+      "no historical balances or actual portfolio accepted",
+      "finalized-tag RPC transport mocked in local qualification"
+    ]
+  },
+  "testedMerge": {
+    "sha": "47bf66ded13ecdcb7905fff9af5d26770ec076aa",
+    "tree": "c176da53aec9ab98f571df3ec3b23bc574896658"
+  }
+}
