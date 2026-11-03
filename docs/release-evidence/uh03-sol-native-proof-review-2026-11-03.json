@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-03",
+  "owner": "b0d443b77469",
+  "status": "NATIVE_SOURCE_LEDGER_AND_FINALIZED_CHAIN_CHECKED",
+  "release": "v276 LIVE_ACCEPTED unchanged",
+  "implementation": "NOT_STARTED",
+  "sourceEvidence": "New requested native SOL detail received and privately preserved; existing originals reused",
+  "checks": [
+    "native reference/time/separate exchange fee/network/recipient binding",
+    "64-character displayed signature prefix matches exactly one original Ledger full 88-character signature",
+    "mainnet genesis, successful finalized transaction, canonical block signature inclusion/index and finalized slot",
+    "independent base58 SystemProgram transfer instruction decode; exactly one native transfer, no SPL/inner transfer",
+    "exact recipient pre/post delta and principal; separate exchange fee",
+    "network fee paid by sender; Ledger documentary fee is not an extra recipient debit"
+  ],
+  "oracle": "PASS",
+  "provider": "api.mainnet.solana.com, regular TLS; publicnode returned403, original error retained",
+  "privateRoot": "/workspace/scratch/b0d443b77469/private/",
+  "manifest": "uh03-sol-proof-manifest.json",
+  "limits": [
+    "native screenshot amount rounded; exact principal from original source/Ledger/canonical instruction",
+    "screenshot signature truncated; full signature from original Ledger",
+    "no actual historical balance/whole wallet history acceptance",
+    "no product bridge implemented by original qualification"
+  ],
+  "next": "Bounded native SOL source bridge with exact instruction/event/own-wallet/source-group binding, durable journal/restore/source withdrawal proof; no SPL/N:M broadening"
+}
