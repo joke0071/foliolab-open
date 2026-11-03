@@ -1,3 +1,9 @@
+## ACTIVE – v272 HTTPS139/139 / Live-Firefox-WebKit läuft – 03.11.2026
+
+Alleiniger Owner **0ccb6712f33e**. Main **0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a**/Tree **05ae1caece85f53b89562bf071c37f4122b7a1f7**, SWv272/v5/Identitäten. Mainlauf41619792780: Hauptjob/Cross1–3/Deploy125869525305 SUCCESS,1134Units/0Fehler/Skips,7Artefaktdigests bestätigt. [Normal TLS-geprüfter139/139Byteabgleich](release-evidence/v272-regular-https-assets.json) PASS. **Livejob125869732060 IN_PROGRESS**, Chromiumschritt SUCCESS, aktuell echte Firefox-/WebKitpflichtgates. **v272 DEPLOYED, NICHT LIVE_ACCEPTED; v271 letzte akzeptierte Produktion.** Keine Retries/Abbrüche/Duplikate/Folgeimplementierung. Eigener Checkout jetzt detached exakt Main/Tree; getrackter/gestagter Diff leer, nur synthetische Gateartefakte/node_modules ungetrackt; keine lokalen Test-/HTTPprozesse. Private Logs/Repros/ZIPs/Oracles `/workspace/scratch/0ccb6712f33e/private/`. Nach terminalem Liveerfolg Logs/Artefakte/Download/Hash/ZIP/Bilder/aktuellenMain/Owner prüfen und erst dann LIVE_ACCEPTED sichern. UH03 PARTIAL, danachUH04→UH05; alle Restgrenzen/EFF01/HND01/Zähler0/0 erhalten. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – v272 DEPLOYED / echte Live-Abnahme läuft – 03.11.2026
 
 Alleiniger Owner **0ccb6712f33e**. Main **0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a**, Tree **05ae1caece85f53b89562bf071c37f4122b7a1f7**, SWv272/v5/Identitäten erhalten. Mainlauf **41619792780**:1134Units/0Fehler/Skips, Hauptjob/Cross1–3 **SUCCESS**, Deployment **125869525305 SUCCESS**. Sämtliche abgeschlossenen Logs gelesen/privat gesichert; alle3Krakenfälle in allen3Engines mit dauerhafter Rücknahme/IDB/CAS/Restore/Offline PASS. Alle7Mainartefaktdigests gegen Uploadlogs bestätigt. [Finale PR-Abnahme](release-evidence/v272-pr286-final-ci.json).
