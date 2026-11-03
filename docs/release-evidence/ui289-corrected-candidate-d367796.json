@@ -1,0 +1,88 @@
+{
+  "owner": "cb8a6d16f52c",
+  "date": "2026-11-03",
+  "head": "d367796827dc3581c482a615e4d34bb2befe25a8",
+  "tree": "94d0d2d05f2972d3c20553f86170ef104e793f0e",
+  "testMerge": "8d86b5a443f795000edb741930c8f59afe674217",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "status": "FROZEN_NOT_RELEASED",
+  "changedFiles": 136,
+  "strayFilesAbsent": 128,
+  "firstCandidate": {
+    "head": "c1e72a8b3da1eda2397956dea775a29407ad2b75",
+    "run": 41672608218,
+    "status": "COMPLETED_FAILURE",
+    "attempt": 1,
+    "pass": [
+      "classifier",
+      "FAST CI-contract canary",
+      "cross1",
+      "cross3",
+      "wallet41672608317"
+    ],
+    "failures": [
+      {
+        "job": 126044819968,
+        "assertion": "no details opened by the lifting finger",
+        "actual": 1,
+        "expected": 0,
+        "artifact": {
+          "id": 13248607831,
+          "bytes": 4320260,
+          "sha256": "18361c0a5e594e1d50ca21dc0d6f5d8f9178617b26896225c67e6edf22951ae1",
+          "entries": 33,
+          "zipIntegrity": "PASS",
+          "downloaded": true
+        }
+      },
+      {
+        "job": 126044819857,
+        "assertion": "selection header above row",
+        "resolution": "new explicit left-symbol contract checks, no economic assertions reduced",
+        "artifact": {
+          "id": 13249920961,
+          "bytes": 12213342,
+          "sha256": "82bf933025984d8e803969f902cbf108a9543740c943047bcbe6cf3ea9dbf175",
+          "entries": 92,
+          "zipIntegrity": "PASS",
+          "downloaded": true
+        }
+      }
+    ],
+    "allJobsAllowedToFinish": true,
+    "reruns": 0
+  },
+  "correction": {
+    "files": [
+      "src/booking-history-ui.js",
+      "tests/browser-ui-alltag10.mjs",
+      "tests/browser-position-removal.mjs",
+      "tests/browser-price-csv-tools.mjs",
+      "docs/ui-copilot-2026-11-03/REPORT.md"
+    ],
+    "gesture": "bind terminal click/contextmenu to same pointer or release coordinates across reflow; deliberate new pointer resets guard; keyboard preserved",
+    "test": "synthetic shifted-row case plus actual CDP pointer/click/PNG evidence before strict unchanged assertion; stronger 44px one-checkbox left-symbol geometry",
+    "local": {
+      "syntax": "PASS",
+      "units": {
+        "tests": 1150,
+        "pass": 1150,
+        "fail": 0,
+        "skipped": 0
+      },
+      "webkit": [
+        "reflow/contextmenu and all three lists PASS",
+        "full position removal 201/401, six widths/12 Axe/quota/post-put abort/CAS/UI restore/offline exact Undo PASS",
+        "central CSV including44px targets PASS"
+      ]
+    }
+  },
+  "ci": {
+    "run": 41675916561,
+    "wallet": 41675916500,
+    "walletResult": "SUCCESS",
+    "status": "IN_PROGRESS",
+    "reruns": 0
+  },
+  "next": "Wait for the existing exact-head CI; no further push while active; then full protected merge/main/deploy/live/regular HTTPS acceptance"
+}
