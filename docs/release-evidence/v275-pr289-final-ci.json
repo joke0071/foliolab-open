@@ -1,0 +1,188 @@
+{
+  "owner": "975176198816",
+  "date": "2026-11-03",
+  "head": "caa18efb26da86d55df4d1068475141160890a35",
+  "tree": "14853689d9d48adad2a67a39ed30b80b6a0a390c",
+  "testMerge": "6e8af199849fd9268fa410a3230770ae1a499849",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "status": "REVIEWED_CI_ACCEPTED_NOT_LIVE",
+  "diffFiles": 139,
+  "correction": {
+    "files": [
+      "styles.css",
+      "tests/browser-ui-textscale.mjs",
+      "tests/browser-position-details.mjs",
+      "docs/ui-copilot-2026-11-03/REPORT.md"
+    ],
+    "reason": "Independent image review: detail label/edit overlap at 200% text/320px; separate old normal-mode detail test still bypassed now-required management entry",
+    "behavior": "Text-relative reserve, narrow container stacking, unchanged existing native details/edit controls",
+    "assertions": "Existing domain/secret/CAS/Undo/precision assertions preserved; new presence/44px/target separation/text containment assertions"
+  },
+  "previous": {
+    "head": "deb79b6a16a65d966a9dd07366d33dadfbb1d1c6",
+    "run": 41679338919,
+    "result": "COMPLETED_FAILURE",
+    "allThreeCrossJobs": "SUCCESS",
+    "main": "browser-position-details.mjs:28 attempted hidden normal-mode summary; prior key privacy/data source fixes explicitly PASS in same CI",
+    "artifact": {
+      "id": 13251958736,
+      "bytes": 50286480,
+      "sha256": "f119798c2d85a7e40b0380245482869555d718cabeb3246eb627f9b68880193c",
+      "entries": 527,
+      "integrity": "PASS",
+      "downloaded": true
+    }
+  },
+  "local": {
+    "nonbinaryTreeMismatches": [],
+    "syntax": "PASS",
+    "serialUnits": {
+      "pass": 1150,
+      "fail": 0,
+      "skipped": 0
+    },
+    "negativeControl": "New target separation assertion FAILS old CSS for all8 position rows at200%/320px",
+    "chromium": "Google Chrome for Testing156.0.8078.80/Playwright1.64.1; private launch override only",
+    "webkit": "WebKit27.2/Playwright1.64.1; private shared library paths and host preflight override only",
+    "passes": [
+      "new text geometry Chromium/WebKit both320/768 and normal/management modes",
+      "trusted CDP three-list long press/reflow/ghost/Fertig/teardown/exact IDB",
+      "full Chromium UI quality and transfer chain",
+      "full position removal201/401,12Axe scans,six widths,quota/post-put abort/CAS/plain+encrypted restore/exact Undo/offline",
+      "separate position-detail full precision/missing/zero/unknown-source/seven widths/reference protection/exact IDB"
+    ],
+    "images": "Old overlap and corrected200% position crop viewed; representative final normal/management screenshots generated; final CI images still to review",
+    "limits": [
+      "No Android/iOS hardware/TalkBack/IME acceptance",
+      "Incomplete concurrent local npm log was not counted as PASS; complete serial1150 run used instead"
+    ]
+  },
+  "ci": {
+    "run": 41681836593,
+    "attempt": 1,
+    "result": "SUCCESS",
+    "wallet": 41681836866,
+    "walletResult": "SUCCESS",
+    "jobs": [
+      {
+        "id": 126077226462,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "conclusion": "success"
+      },
+      {
+        "id": 126077499521,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "conclusion": "success"
+      },
+      {
+        "id": 126077499628,
+        "name": "cross-engine (3)",
+        "conclusion": "success"
+      },
+      {
+        "id": 126077499724,
+        "name": "cross-engine (1)",
+        "conclusion": "success"
+      },
+      {
+        "id": 126077499753,
+        "name": "test",
+        "conclusion": "success"
+      },
+      {
+        "id": 126077499800,
+        "name": "cross-engine (2)",
+        "conclusion": "success"
+      },
+      {
+        "id": 126085911974,
+        "name": "deploy",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 126085913005,
+        "name": "live-acceptance",
+        "conclusion": "skipped"
+      }
+    ],
+    "reruns": 0,
+    "aborted": 0
+  },
+  "next": "Fresh owner/main/head/testmerge tree check; expected-head-bound merge, actual new main/deploy/live and normal TLS acceptance. v275 is not LIVE_ACCEPTED.",
+  "artifacts": [
+    {
+      "id": 13254330844,
+      "name": "cross-engine-gates-6e8af199849fd9268fa410a3230770ae1a499849-2",
+      "bytes": 12213188,
+      "digest": "sha256:f89cd816dca1579896156976ecf15ee18ed71be07f2b80ab6cda194e124840c5",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13254090485,
+      "name": "fast-only-not-integration-6e8af199849fd9268fa410a3230770ae1a499849",
+      "bytes": 2014405,
+      "digest": "sha256:41c329de2b5251f82e794ba172329a7da50c36f4068f054d82d3779f6df353d2",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13254067265,
+      "name": "cross-engine-gates-6e8af199849fd9268fa410a3230770ae1a499849-1",
+      "bytes": 59576359,
+      "digest": "sha256:f3fee2507cf892bab9676c5b767121790ea91bc6892174dba01d9c8ef62047b9",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13253997320,
+      "name": "dialog-visual-reference",
+      "bytes": 934792,
+      "digest": "sha256:7868137a91682f589e3f29fd9654835c3f6ff424e19c88e224b5a2e8e6064c2d",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13253650480,
+      "name": "ci-stage-6e8af199849fd9268fa410a3230770ae1a499849",
+      "bytes": 1390,
+      "digest": "sha256:97c734eb66f108396d93906ec09eca123959d5a0df57bd3bd3d555dc07623734",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13253372918,
+      "name": "release-gates-6e8af199849fd9268fa410a3230770ae1a499849",
+      "bytes": 59438385,
+      "digest": "sha256:f023e265ed9eec9f4f2d53accb011a306c4ba7399df22ab19499da3de57b39bd",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13253317608,
+      "name": "cross-engine-gates-6e8af199849fd9268fa410a3230770ae1a499849-3",
+      "bytes": 51422735,
+      "digest": "sha256:9bf15b2a66bd1bbdf30ff5c1e5ee5f931b0ad10490ec64b94124c38bde11086a",
+      "matchedUploadLog": true
+    }
+  ],
+  "actualDownloads": [
+    {
+      "id": 13253372918,
+      "bytes": 59438385,
+      "sha256": "f023e265ed9eec9f4f2d53accb011a306c4ba7399df22ab19499da3de57b39bd",
+      "entries": 643,
+      "integrity": "PASS"
+    },
+    {
+      "id": 13253317608,
+      "bytes": 51422735,
+      "sha256": "9bf15b2a66bd1bbdf30ff5c1e5ee5f931b0ad10490ec64b94124c38bde11086a",
+      "entries": 586,
+      "integrity": "PASS"
+    }
+  ],
+  "reports": "Actual Chromium and Firefox/WebKit UI quality, transfer contract, text-scale and gesture PASS reports/logs inspected. Main log confirms exact position-detail precision/source/IDB/seven-width test PASS.",
+  "imagesViewed": [
+    "actual CI Chromium200%320px position management crop",
+    "actual CI Firefox390 reference management",
+    "actual CI WebKit390 Bitpanda withdrawal",
+    "independent final320/768/1440 normal/management images"
+  ],
+  "reviews": [],
+  "unresolvedThreads": []
+}
