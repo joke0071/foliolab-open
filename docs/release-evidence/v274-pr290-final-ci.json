@@ -1,0 +1,83 @@
+{
+  "status": "FINAL_PR_ACCEPTED_NOT_YET_LIVE_ACCEPTED",
+  "pr": 290,
+  "head": "38c93f02106cc7cbcedf1d872d441cc40077ae3c",
+  "base": "8d590d19936403557ce75d59105da3a0fca1c7b5",
+  "testMerge": "a72e2040849896a6c49f3bbd96ae7fecca7ad811",
+  "tree": "39553b20b1f944bf5c06ffc37d9054df2392e07e",
+  "cache": "foliolab-open-v274",
+  "dataFormat": 5,
+  "owner": "37e32f7146e0",
+  "ci": {
+    "id": 41656632739,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "wallet": 41656632048,
+    "units": 1148,
+    "failed": 0,
+    "skippedUnits": 0,
+    "retries": 0,
+    "cancellations": 0
+  },
+  "browser": "New persistent Bitpanda terminal original-group withdrawal PASS in Chromium/Firefox/WebKit through actual shared dialog, exact control balances and consent, source retention, quantity/cash/fee effects, seven widths/Axe, approval race, quota, real successful put then abort, stale CAS, exact whole-operation Undo, reload/reimport block, encrypted restore and actual offline PWA. Existing required suites PASS.",
+  "artifacts": [
+    {
+      "id": 13241540595,
+      "name": "cross-engine-gates-a72e2040849896a6c49f3bbd96ae7fecca7ad811-1",
+      "digest": "sha256:c56d3720a0e2140782f5c8e5762b1ea5f3eca9b7c63487dfe2af44ff79bc9486",
+      "size": 48952814,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13241161600,
+      "name": "release-gates-a72e2040849896a6c49f3bbd96ae7fecca7ad811",
+      "digest": "sha256:dae1131a49450135a2bd202df903ae55633f97a1cb90a1b4ceb5016caa0defdf",
+      "size": 54037725,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13240526881,
+      "name": "cross-engine-gates-a72e2040849896a6c49f3bbd96ae7fecca7ad811-2",
+      "digest": "sha256:b2756adf1df1a176c96aec021edcb967cda5aea0424ce5dccc2b4f50419b4eb8",
+      "size": 12106550,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13240376705,
+      "name": "ci-stage-a72e2040849896a6c49f3bbd96ae7fecca7ad811",
+      "digest": "sha256:4933d930e2bb6621fda1247882295e242e43591c83b571a4a10cd0d947f150d7",
+      "size": 578,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13240339419,
+      "name": "cross-engine-gates-a72e2040849896a6c49f3bbd96ae7fecca7ad811-3",
+      "digest": "sha256:0819e1b9ac244206c986f281d31ffed578d8c6dc3d05534549622db5c669f513",
+      "size": 50566737,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13240134029,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:fa28a2087bd7950c9d65dee036a22eabd6c38ede0f88010c220abe9bdab1c090",
+      "size": 935109,
+      "uploadLogDigestMatch": true
+    }
+  ],
+  "downloaded": {
+    "id": 13240339419,
+    "size": 50566737,
+    "sha256": "0819e1b9ac244206c986f281d31ffed578d8c6dc3d05534549622db5c669f513",
+    "zipEntries": 586,
+    "zipTest": "PASS",
+    "visualReview": [
+      "Firefox withdrawal390px",
+      "WebKit withdrawal390px"
+    ],
+    "privateFile": "/workspace/scratch/37e32f7146e0/private/pr290-cross3.zip"
+  },
+  "independentOriginal": "112 unchanged native DOT reward observations from the authorized original export, independent Python Decimal90 and integer control quantities, each terminal reversal/retained original, portable restore and all replay blocks PASS. Explicit synthetic opening, not historical full-account balance acceptance. Eight separate literal buy/sell/deposit/withdrawal included/additional fee controls also PASS.",
+  "review": "Exact final diff and financial/source/storage boundaries reviewed. No submitted reviews, inline comments or review threads. Fresh main/base/owner/HEAD and exact test-merge tree checked; unchanged clean candidate.",
+  "next": "SHA-protected merge, then mandatory new main/deploy/live gates and regular TLS asset-byte verification. No new product push or duplicate workflow. UH03 remains PARTIAL; UI289 external partial delivery not accepted."
+}
