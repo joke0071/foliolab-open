@@ -1,0 +1,54 @@
+{
+  "status": "PR_CANDIDATE_ACCEPTED",
+  "owner": "a9b7a8511bfe",
+  "pr": 292,
+  "head": "b6216d87a5b50ee47fb00a6167dd58995f1986d6",
+  "base": "29098c299bdf230ffd1d4e97ce34f0c2c129f38b",
+  "tree": "6b73950cd0879a7e81f4bbc3046c9b49608a7a9a",
+  "testedMerge": "6010eedb51333db4e2844067bb413e4fb4e0adfd",
+  "run": 41717902064,
+  "attempt": 1,
+  "conclusion": "success",
+  "units": {
+    "pass": 1168,
+    "fail": 0,
+    "skip": 0
+  },
+  "review": "Nine intended files, all remote blobs equal inherited locally hashed files; separate instruction/accountdelta binding, source fee, portable immutable journal proof, version/CAS/removal protections reviewed; no blocker found. Reviews/comments empty.",
+  "artifacts": [
+    {
+      "id": 13272215340,
+      "size": 59588944,
+      "digest": "sha256:1aebd4f070ba726a65f6be61b544c815a9da79053ec32d49beb5831642f2a6cf"
+    },
+    {
+      "id": 13272070850,
+      "size": 52182115,
+      "digest": "sha256:bd48ae5a47ec4f20ae06125094ad3b9c60aa65c6c8458cd60c785b2c89959d04"
+    },
+    {
+      "id": 13271520522,
+      "size": 12212264,
+      "digest": "sha256:74df964adb8390ff5f2662b8539e42e0dd91680249d25e281fd444d0772acc48"
+    },
+    {
+      "id": 13271144822,
+      "size": 59752531,
+      "digest": "sha256:d789663477053213927267a852118a1b2ccdcc73d6402f6abd5eda11ff4a003a"
+    },
+    {
+      "id": 13271074833,
+      "size": 934788,
+      "digest": "sha256:deedcb98b8b7b557f2fb0bb95af9e235439f7a5d28fa8ecd2bc362ea8f4c0da4"
+    },
+    {
+      "id": 13269659114,
+      "size": 576,
+      "digest": "sha256:84718afb6b4ef4b25a807f29470c871f40c7256f48fa60a24d8c58a2c7184f38"
+    }
+  ],
+  "verification": "All six archive hashes/CRC verified; stage and cross1/2 inherited verified receipts, cross3/release/dialog newly downloaded and checked. 136 JSON reports parsed across release/cross1/2/3 with no populated error/failure/violation arrays or failed result. Terminal main and inherited cross logs read, all six Kraken scenarios pass in Chromium/Firefox/WebKit. New SOL WebKit bridge and Chromium withdrawal images viewed.",
+  "private": "/workspace/scratch/a9b7a8511bfe/private/",
+  "originalEvidence": "Inherited original finalized RPC/CSV/Ledger replay and independent Decimal/Integer/Base58 oracle PASS for identical product blobs; controlled openings not historical end balance acceptance.",
+  "limits": "No v277 live acceptance before main/deploy/live/TLS/assets. UH03 remains partial for ERC20/SPL/N:M/independent historical balances; real Android/native Safari/OAuth/TalkBack remain unclaimed."
+}
