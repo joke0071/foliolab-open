@@ -1,0 +1,66 @@
+diff --git a/src/kraken-import-ui.js b/src/kraken-import-ui.js
+index 594e1fc..52a213e 100644
+--- a/src/kraken-import-ui.js
++++ b/src/kraken-import-ui.js
+@@ -36,7 +36,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
+   el('more').hidden=limit>=source.groups.length;el('more').classList.toggle('hidden',limit>=source.groups.length);
+  }
+  el('more-bindings').onclick=()=>{const previous=bindingLimit;bindingLimit+=20;renderBindings();host.querySelectorAll('[data-kraken-binding]')[previous]?.focus();};
+- el('opening').onchange=invalidate;el('operation').onchange=()=>{el('opening').closest('label').hidden=el('operation').value==='withdraw';invalidate();};
++ el('opening').onchange=invalidate;el('operation').onchange=()=>{const label=el('opening').closest('label'),withdraw=el('operation').value==='withdraw';label.hidden=withdraw;label.classList.toggle('hidden',withdraw);invalidate();};
+  el('partial').onchange=()=>{approved=false;el('approve').checked=false;notify();};
+  el('approve').onchange=()=>{approved=el('approve').checked;notify();};
+  el('simulate').onclick=()=>{
+diff --git a/src/kraken-import.js b/src/kraken-import.js
+index 353348c..2781a4e 100644
+--- a/src/kraken-import.js
++++ b/src/kraken-import.js
+@@ -262,6 +262,19 @@ export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
+   if(after<0n)throw Error('Rücknahme würde einen negativen Bestand erzeugen.');
+   changes.push({positionId,before:exact(before),after:exact(after),delta:exact(-delta)});p.quantityExact=exact(after);p.quantity=Number(p.quantityExact);
+  }
++ // A coherent journal alone does not prove that a later edited opening still
++ // belongs to this original export. Anchor both sides of the inverse to the
++ // original exact stream balances, never to a changed observed baseline.
++ const sourceGroup=plan.source.groups.find(g=>g.id===id),streams=new Map();
++ for(const row of sourceGroup.rows){
++  const p=position(draft,row,assignments),opening=draft.openingPositions.find(o=>o.positionId===p.id);
++  if(opening.asOf&&opening.asOf>row.values.time.slice(0,10))throw Error('Geänderter datierter Anfangsbestand liegt nach der Originalgruppe.');
++  if(!streams.has(p.id))streams.set(p.id,[]);streams.get(p.id).push(row);
++ }
++ for(const [positionId,rows] of streams){
++  const trail=krakenBalanceTrail(rows,qty(draft.positions.find(p=>p.id===positionId)));
++  if(units(trail.at(-1).balanceExact)!==qty(model.positions.find(p=>p.id===positionId)))throw Error('Aktueller Bestand widerspricht dem unveränderten Kraken-Endsaldo der Gruppe.');
++ }
+  if(draft.bookingPresentation)setArchivePresentation(draft,{bookingIds:draft.bookingPresentation.archivedIds.filter(id=>!ids.has(id))});
+  if(!ledgerQuantityAudit(draft).ok)throw Error('Rücknahme widerspricht dem vollständigen chronologischen Journal.');
+  return {baseline,group:id,originals,changes,simulated:draft,excluded:plan.excluded};
+diff --git a/tests/browser-kraken-import.mjs b/tests/browser-kraken-import.mjs
+index ee66c07..4dab738 100644
+--- a/tests/browser-kraken-import.mjs
++++ b/tests/browser-kraken-import.mjs
+@@ -58,7 +58,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
+   // Persistent selective economic rollback through the same actual dialog/CAS boundary.
+   const sourceGroups=prepareKrakenSourcePlan([source()]).groups,removedGroup=(scenario.groups?sourceGroups.find(g=>g.rows.some(r=>r.values.refid==='SYN-CROSS-FIRST')):sourceGroups[0]).id;
+   await open();await clickDisclosed(page.locator('[data-kraken="operation"]'));
+-  await page.locator('[data-kraken="operation"]').selectOption('withdraw');
++  await page.locator('[data-kraken="operation"]').selectOption('withdraw');assert.equal(await page.locator('[data-kraken="opening"]').isHidden(),true);
+   for(const box of await page.locator('[data-kraken-group]').all())if(await box.getAttribute('data-kraken-group')!==removedGroup)await box.uncheck();
+   await page.locator('[data-kraken="simulate"]').click();await page.locator('[data-kraken="status"]').filter({hasText:'1 Gruppe rücknehmbar'}).waitFor();
+   assert.deepEqual(await read(),saved);
+diff --git a/tests/kraken-withdrawal.test.mjs b/tests/kraken-withdrawal.test.mjs
+index 363a940..4cd92b0 100644
+--- a/tests/kraken-withdrawal.test.mjs
++++ b/tests/kraken-withdrawal.test.mjs
+@@ -87,3 +87,11 @@ test('tampered persistent withdrawal is rejected on backup and restore; no orpha
+  ]){const raw=structuredClone(end);change(raw.journalEntries[0]);assert.throws(()=>backup(raw));assert.throws(()=>safeImport(raw));}
+  const raw=structuredClone(end);raw.bookings.push(raw.journalEntries[0].krakenWithdrawal.originals[0].booking);assert.throws(()=>backup(raw));assert.throws(()=>safeImport(raw));
+ });
++
++test('changed opening quantity and later dated opening cannot authorize a source-anchored inverse',()=>{
++ const f=imported();
++ for(const change of [m=>{m.positions[0].quantityExact='101';m.positions[0].quantity=101;m.openingPositions[0].quantityExact='201';},m=>{m.openingPositions[0].asOf='2026-11-03';}]){
++  const m=structuredClone(f.next);change(m);assert.equal(ledgerQuantityAudit(m).ok,true);const before=JSON.stringify(m);
++  assert.throws(()=>previewKrakenWithdrawal(m,[f.text],f.assignments,options(f)),/Quellsaldo|Anfangsbestand/);assert.equal(JSON.stringify(m),before);
++ }
++});
