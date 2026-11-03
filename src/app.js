@@ -22,12 +22,11 @@ import {confirmKrakenImport,confirmKrakenWithdrawal} from './kraken-import.js';
 import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowsActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
-import {attachRowLongPress} from './row-long-press.js';
 import {historicalWealthView} from './historical-portfolio-value.js';
 import {structuredQualityReview,filterQualityReview} from './position-quality-review.js';
 import {createTransferMatchingUI,transferDialogChoices} from './transfer-matching-ui.js';
 import {bookingHistoryRows,historyAction} from './booking-history.js';
-import {bookingRowMarkup,createBookingHistoryUI} from './booking-history-ui.js';
+import {bookingRowMarkup,createBookingHistoryUI,attachRowLongPress} from './booking-history-ui.js';
 import {forecastAccountInterest} from './interest-account.js';
 import {interestFormMarkup,interestTermsFromForm,bindInterestForm} from './interest-ui.js';
 import {compareCurrentCashBalance} from './cash-reconciliation.js';
@@ -241,7 +240,7 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   $('providerOverview').innerHTML=renderProviderAccounts(model,money,valueEUR,esc,expanded,expandedPositions)+renderCashTermsOverview(model,esc,{open:cashOverviewOpen});
   for(const id of expandedPositions)showPositionDetail(id);
   const shots=wealth.samples;
-  $('miniHistoryStatus').textContent=wealth.label;
+  $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
@@ -381,7 +380,7 @@ function renderHistory(){
   esc(percent(twr)+' für den erfassten Zeitraum'))+'</p>';
  $('startPerformance').classList.toggle('hidden',Boolean(start));
  const wealth=wealthView();let data=wealth.samples;
- $('historySourceStatus').textContent=wealth.label;
+ $('historySourceStatus').textContent=wealthBasis==='observed'&&wealth.basis==='observed'?'Quelle: gespeicherte Referenzwerte':wealth.label;
  if(page==='history')$('pageDescription').textContent=PAGE_DESCRIPTIONS.history;
  const emptyHistory=!wealth.samples.length;
  $('historySourceStatus').hidden=emptyHistory;
@@ -985,7 +984,7 @@ function openAccount(a,defaultProviderId){
 }
 function posForm(p){const providerOptions=model.providers.map(x=>[x.id,x.name]);const preferred=model.accounts.find(a=>a.id===model.settings.lastAccountId&&a.providerId===(p?.providerId||model.providers[0]?.id));const currentAccount=p?.accountId||preferred?.id||model.accounts.find(a=>a.providerId===(p?.providerId||model.providers[0]?.id))?.id;const curr=p?.currency||'EUR';const kind=p?.kind||'etf';const coin=p?.coinId||'';const w=p?.wallet;return `<p class="dialog-intro">Prüfe die wichtigsten Positionsdaten. Weitere Zuordnungen und technische Angaben findest du in den aufklappbaren Bereichen.</p>
 <div class="field-row"><label class="field"><span>Anbieter</span><input type="search" id="positionProviderSearch" class="picker-search" autocomplete="off" placeholder="Suchen, z. B. f → Flatex" aria-label="Anbieter filtern"><select name="providerId" id="positionProvider" required>${options(providerOptions,p?.providerId||model.providers[0]?.id)}</select></label><label class="field"><span>Konto / Depot</span><input type="search" id="positionAccountSearch" class="picker-search" autocomplete="off" placeholder="Konto suchen" aria-label="Konten filtern"><select name="accountId" id="positionAccount" required>${options(model.accounts.filter(a=>a.providerId===(p?.providerId||model.providers[0]?.id)).map(a=>[a.id,a.name]),currentAccount)}</select></label></div>
-<details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Mit eigenem EODHD-, FMP- oder Twelve-Data-Schlüssel nach ISIN, Ticker oder Name suchen. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
+<details class="advanced-apis position-editor-optional" id="securityGroup"><summary>Wertpapier suchen und zuordnen</summary><p class="small-help">Optional: Zuerst lokale Referenzliste, danach Xetra-Suche mit eigenem Alpha-Vantage-Schlüssel (unter „Mehr“) nach ISIN, Ticker oder Name. Übernommene Stammdaten bitte prüfen. Stückzahl und Kurs werden nicht überschrieben.</p><div class="inline-actions"><label class="field"><span>Suche</span><input id="securityQuery" placeholder="ISIN, Ticker oder Fondsname"></label><button type="button" class="btn outline" id="securitySearch">Suchen</button></div><div class="security-results hidden" id="securityResults"></div></details>
 <div class="field-row"><label class="field"><span>Anlageklasse</span><select name="kind" id="positionKind">${options(Object.entries(TYPES),kind)}</select></label>${field('Name / Bezeichnung','name',p?.name||'','text','required maxlength="110" placeholder="Oder selbst eintippen"')}</div>
 <div class="field-row">${field('Ticker / Symbol','symbol',p?.symbol||'','text','maxlength="32"')}${field('ISIN (optional)','isin',p?.isin||'','text','maxlength="20"')}</div><div id="exchangeField"><div class="field-row">${field('Handelsplatz (z. B. Xetra)','exchange',p?.exchange||'','text','maxlength="60"')}${field('Börsen-MIC (optional, z. B. XETR)','mic',p?.mic||'','text','maxlength="8"')}</div></div>
 <div id="marketIdentifiers"><details class="advanced-apis"><summary>Externe Börsenkürzel (optional)</summary><p class="small-help">Nur den Ticker derselben ISIN, Handelswährung und Börsennotierung verwenden. Ein falsches Kürzel kann falsche Kurse liefern.</p><div class="field-row">${field('EODHD (z. B. VWCE.XETRA)','eodhdSymbol',p?.eodhdSymbol||'','text','maxlength="45"')}</div></details></div>

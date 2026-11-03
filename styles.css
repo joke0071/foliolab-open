@@ -1892,14 +1892,14 @@
 
 /* UI-LOAD01: original flask; transform/opacity only, no JS animation loop. */
 .lab-flask{width:32px;height:32px;flex:none;vertical-align:middle}
-.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 4s ease-in-out infinite}
-.lab-bubble{animation:lab-bubble 3.8s ease-in infinite;opacity:0;transform-box:view-box}
-.lab-bubble:nth-child(2){animation-delay:1.3s}.lab-bubble:nth-child(3){animation-delay:2.5s}
-@keyframes lab-liquid{50%{transform:translateY(1px) rotate(2deg)}}
-@keyframes lab-bubble{10%{opacity:.8}80%{opacity:0;transform:translateY(-17px)}100%{opacity:0;transform:translateY(-17px)}}
+.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 2.8s ease-in-out infinite}
+.lab-bubble{animation:lab-bubble 2.6s ease-out infinite;opacity:0;transform-box:view-box}
+.lab-bubble:nth-child(2){animation-delay:-.87s}.lab-bubble:nth-child(3){animation-delay:-1.73s}
+@keyframes lab-liquid{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-2px) rotate(2.5deg)}}
+@keyframes lab-bubble{0%{opacity:0;transform:translate(0,0) scale(.7)}12%{opacity:.95}70%{opacity:.9}100%{opacity:0;transform:translate(1.5px,-24px) scale(1.15)}}
 .lab-loading>.lab-flask{margin-right:8px}
 .app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
-.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:64px;height:64px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
+.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
 .startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
 @media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}
@@ -1910,8 +1910,8 @@
 
 /* UI-ALLTAG10 A: the left position symbol is the management selection control. */
 .selection-mark{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;margin:0;padding:0;border-radius:12px;cursor:pointer}
-.selection-mark>input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
-.selection-mark .selection-glyph{position:relative;display:grid;place-items:center;width:100%;height:100%;border:2px solid #7f9c89;border-radius:inherit;background:#fff;color:#2d5d40}
+.selection-mark>input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;z-index:1;cursor:pointer}
+.selection-mark .selection-glyph{position:relative;pointer-events:none;display:grid;place-items:center;width:100%;height:100%;border:2px solid #7f9c89;border-radius:inherit;background:#fff;color:#2d5d40}
 .selection-mark .selection-glyph svg{width:20px;height:20px}
 .selection-mark>input:checked+.selection-glyph{border-color:#267044;background:#e3f1e8}
 .selection-mark>input:checked+.selection-glyph::after{content:"\2713";position:absolute;right:-6px;bottom:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#267044;color:#fff;font-size:12px;font-weight:700;line-height:1}
@@ -1930,3 +1930,17 @@
 .mobile-header .install-icon:not([hidden])+.header-status-actions{margin-left:0}
 .install-icon{color:#267044}
 .install-icon:focus-visible{outline:3px solid #1d4ed8;outline-offset:2px}
+
+/* UI-ALLTAG10 D: tighter, consistent mobile list headers; labels, 44px targets and #257 view labels stay intact. */
+@media(max-width:767px){
+ #positionsPage .position-search-tools,#bookingsPage .booking-filter-tools{gap:6px;margin-bottom:10px}
+ #positionsPage .position-search-tools .field>span,#bookingsPage .booking-filter-tools .field>span,#historyPage .reference-filter>span{display:block;margin-bottom:3px;font-size:12px;line-height:1.3}
+ #positionListHead,#bookingListHead{gap:8px;flex-wrap:wrap}
+ #positionListHead>h3,#bookingListHead>h3{flex:1 1 auto;min-width:0;margin:0;overflow-wrap:anywhere}
+ #positionListHead .btn,#bookingListHead .btn{min-height:44px}
+ #positionSelectionStatus,#bookingSelectionStatus,#referenceSelectionStatus{margin:6px 0;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+}
+
+/* UI-ALLTAG10 E: align "Gebuchte Vorgänge" with sibling disclosures; quieter loading note. */
+.position-booking-history>summary{font-size:12px;font-weight:650;color:#4d6756}
+.position-history-plot[role="status"]{font-size:11px;font-weight:500;line-height:1.4;color:#657a69}
