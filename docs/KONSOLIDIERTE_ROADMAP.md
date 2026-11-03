@@ -1,3 +1,15 @@
+## v275 LIVE_ACCEPTED / UH03 fortgesetzt – 03.11.2026
+
+**v275 LIVE_ACCEPTED**, Main `4def94b43008b8b36c243e586696d0a152010d32`, SWv275/v5. PR289 nach unabhängigem Review und vollständigen PR-/Main-/Produktionsgates veröffentlicht; [verbindliche Live-Abnahme](release-evidence/v275-pr289-live-acceptance.json), [regulärer TLS-Assetabgleich141/141](release-evidence/v275-regular-https-assets.json). v274 war bereits akzeptiert und wurde nicht erneut abgenommen.
+
+UI289 schließt das geprüfte Paket aus Drei-Listen-Verwalten/Long-Press/Symbolauswahl, #257-B-Details/Transferzugang, Installation/Loader, zentralen Kurs-CSV-Werkzeugen und begrenzten mobilen Text-/Layoutkorrekturen ab. Zusätzlich wurde eine echte 200%-Textüberlappung korrigiert. Kein pauschales Gesamt-DONE für weitere UI-/Roadmap-/Android-/TalkBack-/IME-Aufträge.
+
+**UH03 bleibt PARTIAL und wurde anhand der vorhandenen Originale/Oracles weitergeführt.** Nächster begrenzter ETH-Quellenabgleich: ein konkreter bestehender Kraken-Abgang ist privat bestimmt; für die sichere Börsenreferenz→Netzwerk/Chainhash/Zielbindung fehlt noch das native Auszahlungsdetail. Originalidentitäten wurden gegen die gesicherten Hashes bestätigt; eine gezielte Suche ergab keinen passenden zusätzlichen nativen Beleg. Keine Mengen-/Zeitheuristik, keine neue Brücke oder Finanzfreigabe ohne Nachweis. Bereits akzeptierte BTC-Brücke sowie Kraken-/Bitpanda-Rücknahmen bleiben erhalten; kein erneutes Anfordern vorhandener Originalexporte. Weitere Netze/N:M und unabhängige historische Endstände bleiben offen.
+
+Reihenfolge **UH03 → UH04 → UH05** und sämtliche übrigen Aufträge erhalten; die gesicherte Flatex-Original-/Oracle-Vorbereitung wiederverwenden. Aktueller Owner und privater nächster Beleglocator im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), v5, Daten-/Installationsidentität, Journal/CAS/Backup/Restore unverändert. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v273 LIVE_ACCEPTED / Bitpanda-Rücknahme PR290 in Prüfung – 03.11.2026
 
 **v273 LIVE_ACCEPTED**, Main8d590d19936403557ce75d59105da3a0fca1c7b5, [verbindliche Produktionsabnahme](release-evidence/v273-pr287-live-acceptance.json). Begrenzte Kraken-BTC-Brücke mit ausdrücklichem Original-/Chain-/Own-Output-Beleg; keine Walletmengen-/Batchgebühren-Doppelbuchung. v272/v273 nicht erneut abnehmen.
