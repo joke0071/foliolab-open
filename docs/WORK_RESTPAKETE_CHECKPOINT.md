@@ -1,3 +1,9 @@
+## ACTIVE – UH03 referenzübergreifende Kraken-Chronologie – 03.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **326c8cc8f969** nach ausdrücklicher Übernahme und STOPPED-Abgabe von 4828cb971371. Frischer Kollisionsschutz: Main `06688b537937ac901d482cbe771d8327977cf2c0`, v270 **LIVE_ACCEPTED**, #284 gemergt; nur historische Drafts #157/#161, letzte Actions abgeschlossen. Keine erneute v270-Abnahme. Nächster begrenzter Schnitt: gesicherte referenzübergreifende Kraken-Chronologiediagnose unabhängig validieren und sichere eindeutige Zeitcluster implementieren; Mehrdeutigkeiten, Reimport-/Öffnungs-/Identitätsgrenzen erhalten. Vorhandene Originale/Oracles wiederverwenden. UH03 insgesamt offen, danach UH04 → UH05. v5/Daten-/Installationsidentität/EFF01/HND01 erhalten; Zähler0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – v270 LIVE_ACCEPTED / 4828cb971371 STOPPED – 03.11.2026
 
 **HND01-Frührotation nach umfangreichem vollständigem Implementierungs-/Oracle-/PR-/Main-/Produktionsabschluss und vielen Tool-/Logausgaben. 4828cb971371 ist STOPPED und gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine weiteren Implementierungen, PRs, Merges, Deployments oder Retries dieser Sitzung. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Owner.** Zähler **1 LIVE_ACCEPTED / 1 abgeschlossener begrenzter Produktschnitt**; UH03 als Gesamtetappe offen. Kein technischer Chat-/Kontingentreset behauptet.
