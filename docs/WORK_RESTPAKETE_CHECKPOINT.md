@@ -1,3 +1,13 @@
+## ACTIVE – UI289 d367796 eingefroren / korrigierte CI läuft – 03.11.2026
+
+Alleiniger Owner **cb8a6d16f52c**. **v274 LIVE_ACCEPTED**, Main `0765bab7cfcefae22ea47d12a80aaebd2a676314` unverändert. UI289 jetzt HEAD **d367796827dc3581c482a615e4d34bb2befe25a8**, Tree **94d0d2d05f2972d3c20553f86170ef104e793f0e** lokal/remote/Testmerge `8d86b5a` identisch; 136 Diff-Dateien, alle128 Strays weiterhin abwesend. [Vollständiger Korrekturbeleg](release-evidence/ui289-corrected-candidate-d367796.json). Ersten Kandidatenlauf41672608218 vollständig ohneAbbruch auslaufenlassen: Haupt/Cross2 Fehler gesichert, Cross1/Cross3/FAST/Wallet erfolgreich. Echte Fehler-ZIPs heruntergeladen, Hash/Integrität bestätigt. Keine Workflow-Retries.
+
+Gezielte Korrekturen: Abschluss derselben Touch-Geste auch nach Reflow abfangen, neue bewusste Aktionen freigeben; Kontextmenü/Reflow und echte CDP-Ereignis-/Bildbelege ergänzen unveränderte Touchassertion. Veraltete Auswahl-oberhalb-Zeile-Assertion durch konkret geforderte 44px-Checkbox im linken Symbol ersetzen, Wirtschaftsschutz unverändert. LokaleSyntax/1150Units und zusätzlicheWebKit-Gesten/vollePositionsentfernung/CAS/Quota/Undo/Restore/Offline/KursCSV44px PASS.
+
+**Bestehende finale Kandidaten-CI41675916561 IN_PROGRESS**, Wallet41675916500 SUCCESS. Kandidat eingefroren, keinePushes/Abbrüche/Duplikate/blindenRetries. **v275 noch NICHT gemergt/veröffentlicht/abgenommen.** Nach terminalenPflichtgates/Logs/Artefakten/Bildern/Reviews/frischemOwner/Main/HEAD/Tree geschütztmergen und neueechteMain-/Produktions-/reguläreHTTPS-Abnahme. #257-B/L07/Straybereinigung undv274-Bitpandaquellstand erhalten. SämtlichereigenerProdukt-WIP remotealsHEAD gesichert, lokaleText-/Patch-/Tar-/Manifestbelege `/workspace/scratch/cb8a6d16f52c/private/`. EFF01/HND01, Zähler1LIVE_ACCEPTED/0fertigerSchnitt;nachzweiterAbnahmeÜbergabe. UH03PARTIAL→UH04→UH05,v5/Identitäten/Fachschutz erhalten. GitHubnurPlugin,keineBrowser-Logins;CheckpointbranchniemalsvollständignachMainmergen.
+
+---
+
 ## ACTIVE – UI289: erster Kandidat fehlerhaft, Korrektur gesichert – 03.11.2026
 
 Alleiniger Owner **cb8a6d16f52c**. **v274 LIVE_ACCEPTED**, Main `0765bab7cfcefae22ea47d12a80aaebd2a676314` unverändert. UI289-HEAD `c1e72a8` / Tree `14cce50` bleibt remote eingefroren, **nicht integriert oder veröffentlicht**. Bestehender Lauf **41672608218**: Hauptjob FAILURE (echter Chromium-Touchabschluss öffnet ein Detail), Cross2 FAILURE (veraltete Auswahl-oberhalb-Zeile-Geometrie); Cross1/Cross3 noch IN_PROGRESS. Wallet **41672608317 SUCCESS**. Keine Abbrüche, Duplikate oder Retries.
