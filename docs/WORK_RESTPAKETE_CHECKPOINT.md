@@ -1,3 +1,9 @@
+## ACTIVE – kontrollierte Übernahme / UH03 Quellen-Wallet-Brücke – 03.11.2026
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner **ecc3561f055e** nach bestätigter STOPPED-/HANDOVER_READY-Abgabe von **0ccb6712f33e** und ausdrücklichem Nutzerauftrag. Frischer Kollisionsschutz: Main **0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a**, **v272 LIVE_ACCEPTED**, nur historische Drafts #157 (08714cc6)/#161 (0d980c2f), Mainlauf41619792780 einschließlich Deployment125869525305/Live125869732060 COMPLETED/SUCCESS; keine laufende Release-CI und kein neuer Produktkandidat. v271/v272 nicht erneut abnehmen. Kein ungesicherter Produkt-WIP laut bestätigter Abgabe. Nächster Schritt: vorhandene Originale und [gesicherte Brückendiagnose](release-evidence/uh03-source-bridge-next-diagnosis.json) auf starken Netzwerk-/Transaktions-/Eventnachweis prüfen; anschließend genau einen belegten wirtschaftlichen Brückenschnitt umsetzen. Keine Mengen-/Zeitheuristik, keine doppelten Walletmengen, keine pauschale Sperrlockerung. UH03 offen, danach UH04→UH05; Flatex-Vorbereitung wiederverwenden. v5/Identitäten und [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) erhalten, Zähler0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – v272 LIVE_ACCEPTED / 0ccb6712f33e STOPPED – 03.11.2026
 
 **HND01-Frührotation nach vollständigem Implementierungs-/Original-/Oracle-/PR-/Main-/Produktionsabschluss und umfangreichen Diagnose-/Log-/Warteläufen. 0ccb6712f33e ist STOPPED und gibt Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab. Keine weiteren Implementierungen, PRs, Merges, Deployments oder Retries dieser Sitzung. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Owner.** Zähler **1 LIVE_ACCEPTED / 1 abgeschlossener begrenzter Produktschnitt**; UH03 insgesamt weiterhin offen. Kein technischer Chat-/Kontingentreset behauptet.
