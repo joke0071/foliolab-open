@@ -1978,3 +1978,12 @@
  #historyPage .chart-period.history-chart-period:has(.period-more)>.period-more{flex:1 0 max-content}
 }
 #historyPage .chart-x-labels>span{min-width:0;white-space:normal;overflow-wrap:anywhere}
+
+/* Reserve edit space in text units so enlarged labels keep separate targets. */
+.detail-action-row{container:detail-actions / inline-size;font-size:11px}
+.detail-action-row:has(>.detail-edit)>details>summary{width:calc(100% - 7.5em);overflow-wrap:anywhere}
+.detail-action-row>.detail-edit{min-width:0;width:7em;white-space:normal;overflow-wrap:anywhere}
+@container detail-actions (max-width:20em){
+ .detail-action-row:has(>.detail-edit)>details>summary{width:100%}
+ .detail-action-row>.detail-edit{position:static;display:block;margin-left:auto}
+}

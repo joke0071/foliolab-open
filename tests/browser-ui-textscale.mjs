@@ -27,6 +27,14 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
     try{
      await p.screenshot({path:'artifacts/gates/ui-textscale/'+engine+'-'+width+'-'+tab+'-'+mode+'.png',fullPage:true});
      assert.ok(result.scroll<=width+1,engine+' '+tab+' '+mode+' 200% text: '+JSON.stringify(result));
+     const detailTargets=await p.locator('#'+tab+'Page .detail-action-row:visible').evaluateAll(rows=>rows.flatMap(row=>{
+      const summary=row.querySelector(':scope>details>summary'),edit=row.querySelector(':scope>.detail-edit');
+      if(!summary||!edit)return [];
+      const a=summary.getBoundingClientRect(),b=edit.getBoundingClientRect(),text=document.createRange();text.selectNodeContents(summary);
+      return [{separate:a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top,textInside:[...text.getClientRects()].every(r=>r.left>=a.left-1&&r.right<=a.right+1),editInside:b.right<=row.getBoundingClientRect().right+1,usable:a.width>=44&&a.height>=44&&b.width>=44&&b.height>=44}];
+     }));
+     if(mode==='management'&&['positions','bookings'].includes(tab))assert.ok(detailTargets.length>0,'Enlarged management details and editors remain present');
+     assert.ok(detailTargets.every(t=>t.separate&&t.textInside&&t.editInside&&t.usable),engine+' '+tab+' '+mode+' enlarged detail/edit targets and text remain separate: '+JSON.stringify(detailTargets));
      results.push({engine,width,tab,mode,result:'PASS'});
     }finally{await p.evaluate(()=>{globalThis.__restoreFontScale();delete globalThis.__restoreFontScale;});}
    }

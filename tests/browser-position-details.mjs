@@ -25,6 +25,7 @@ try{
  assert.match(summary,/EODHD/);assert.match(summary,/21/);
  assert.doesNotMatch(summary,/15\.10/,'Do not print edit date as another quote date');
  assert.equal(await entry.locator('.holding-facts').isVisible(),false);
+ await manageList(page,'positions');
  await entry.locator('summary').click();
  assert.equal(await entry.locator('.holding-facts').isVisible(),true);
  const details=await entry.locator('.holding-facts').innerText();
@@ -35,6 +36,9 @@ try{
   await page.setViewportSize({width,height:850});
   const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
   await page.locator(nav+' [data-page="positions"]').click();
+  await manageList(page,'positions');
+  if(!await entry.locator('.holding-expand').evaluate(el=>el.open))await entry.locator('summary').click();
+  assert.equal(await entry.locator('.holding-facts').isVisible(),true,'Managed position facts remain reachable at '+width);
   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
   assert.ok(overflow<=1,'Holding details overflow at '+width+': '+overflow);
  }
@@ -102,6 +106,7 @@ try{
   const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
  });
  const beforeFacts=await record();
+ await manageList(page,'positions');
  const quoteCases=[
   ['missing-quote','Nicht verfügbar','Unbekannt'],
   ['zero-quote','0 EUR','Manuell'],
