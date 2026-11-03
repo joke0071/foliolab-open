@@ -9,6 +9,46 @@ const sourceId='kraken-uh03-v1';
 const unsupported=message=>{throw Error(message);};
 const qty=p=>units(p.quantityExact??p.quantity);
 const amount=n=>n<0n?-n:n;
+// Directed Euler-trail feasibility: exact degree balance plus weak connectivity.
+// This avoids factorial search while retaining locally branching unique trails.
+function completeTrailExists(edges,start){
+ if(!edges.length)return true;
+ const degree=new Map(),adjacent=new Map();
+ for(const {before,after} of edges){
+  degree.set(before,(degree.get(before)||0)+1);degree.set(after,(degree.get(after)||0)-1);
+  if(!adjacent.has(before))adjacent.set(before,new Set());
+  if(!adjacent.has(after))adjacent.set(after,new Set());
+  adjacent.get(before).add(after);adjacent.get(after).add(before);
+ }
+ let positive=0,negative=0;
+ for(const [vertex,delta] of degree){
+  if(delta===1){positive++;if(vertex!==start)return false;}
+  else if(delta===-1)negative++;
+  else if(delta!==0)return false;
+ }
+ if(!((positive===0&&negative===0)||(positive===1&&negative===1))||!adjacent.has(start))return false;
+ const seen=new Set([start]),pending=[start];
+ while(pending.length)for(const vertex of adjacent.get(pending.pop()))if(!seen.has(vertex)){seen.add(vertex);pending.push(vertex);}
+ return seen.size===adjacent.size;
+}
+/** Sole complete row path from a confirmed holding, within one reference/stream. */
+export function krakenBalanceTrail(rows,start){
+ if(rows.length>64)unsupported('Große Referenzgruppe benötigt einen gesonderten vollständigen Beinabgleich.');
+ let rest=rows.map(row=>({row,before:units(row.beforeExact),after:units(row.balanceExact)})),current=start;
+ const trail=[];
+ if(!completeTrailExists(rest,current))unsupported('Quellsaldo passt nicht zum Bestand vor dieser Gruppe. Historische Anfangsbestände, Lücken oder Reihenfolge zuerst abgleichen.');
+ while(rest.length){
+  let chosen=null;
+  for(const edge of rest){
+   if(edge.before!==current||!completeTrailExists(rest.filter(other=>other!==edge),edge.after))continue;
+   if(chosen)unsupported('Quellsaldo erlaubt mehrere vollständige Reihenfolgen innerhalb dieser Referenzgruppe. Zuerst eindeutig abgleichen.');
+   chosen=edge;
+  }
+  if(!chosen)unsupported('Quellsaldo enthält eine Lücke in dieser Referenzgruppe.');
+  trail.push(chosen.row);current=chosen.after;rest=rest.filter(edge=>edge!==chosen);
+ }
+ return trail;
+}
 function position(model,row,assignments){
  const id=assignments[row.streamId],p=model.positions.find(p=>p.id===id);
  if(!p||p.wallet?.enabled||p.managementSource==='wallet'||!['cash','crypto'].includes(p.kind)||p.currency!=='EUR')unsupported('Jeden Kraken-Asset-/Walletbereich ausdrücklich einer manuellen EUR-Position zuordnen.');
@@ -79,16 +119,20 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    }
    // Exact source balances guard gaps, ordering and replay over already observed holdings.
    if(draft.journalEntries.some(j=>j.source===sourceId&&j.id.startsWith('uh03:'+group.id+':')))unsupported('Kraken-Journal ohne vollständige Quellbuchungen; keine Wiederbelebung.');
-   const expected=new Map();
+   const expected=new Map(),streams=new Map();
    for(const row of group.rows){
     const p=position(draft,row,assignments);
     const opening=draft.openingPositions.find(o=>o.positionId===p.id);
     if(opening?.asOf&&opening.asOf>row.values.time.slice(0,10))unsupported('Datierter Anfangsbestand liegt nach diesem Quellenereignis. Kein historisches Aufaddieren.');
     if(opening?.costBasisExact!=null||opening?.realizedPnLExact!=null)unsupported('Bestätigte Kostenbasis im Anfangsbestand bleibt geschützt.');
-    const before=expected.has(p.id)?expected.get(p.id):qty(p);
+    const before=qty(p);
     if(!openingConfirmed&&before!==0n&&!draft.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.positionId===p.id))unsupported('Bestehenden Anfangsbestand und seinen zeitlichen Bezug ausdrücklich bestätigen.');
-    if(before!==units(row.beforeExact))unsupported('Quellsaldo passt nicht zum Bestand vor dieser Gruppe. Historische Anfangsbestände, Lücken oder Reihenfolge zuerst abgleichen.');
-    expected.set(p.id,units(row.balanceExact));
+    if(!streams.has(p.id))streams.set(p.id,[]);
+    streams.get(p.id).push(row);
+   }
+   for(const [id,rows] of streams){
+    const trail=krakenBalanceTrail(rows,qty(draft.positions.find(p=>p.id===id)));
+    expected.set(id,units(trail.at(-1).balanceExact));
    }
    const touched=new Set(actions.flatMap(a=>[a.positionId,a.targetPositionId,a.cashPositionId].filter(Boolean)));
    if(draft.bookings.some(b=>b.importSource?.sourceId!==sourceId&&[b.positionId,b.targetPositionId,b.cashPositionId].some(id=>touched.has(id))))unsupported('Andere oder manuelle Buchungen benötigen einen ausdrücklichen Quellenabgleich.');

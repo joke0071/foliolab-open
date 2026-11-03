@@ -1,13 +1,18 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {chromium,firefox,webkit} from 'playwright';
-import {source,fixture} from './kraken-import-fixture.mjs';
+import {source as distinctAssetSource,sameAssetSource,fixture} from './kraken-import-fixture.mjs';
 import {ledgerModel,ledgerEvidence} from './ledger-live-fixture.mjs';
 import {previewUnifiedBitcoin,confirmUnifiedBitcoin} from '../src/unified-bitcoin.js';
 import {controlledStorageFixture} from './browser-controlled-storage-fixture.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
 const base=process.env.UH03_BASE||process.env.BASE_URL||'http://127.0.0.1:4173/';
-const {m,assignments}=fixture();
+for(const scenario of [
+ {name:'distinct-fee',source:distinctAssetSource,seed:distinctAssetSource(),quantities:['100','3','0.00000083']},
+ {name:'same-asset-fee',source:()=>{const [header,...rows]=sameAssetSource().split('\n');return [header,...rows.reverse()].join('\n');},seed:sameAssetSource(),quantities:['100','2.99']}
+]){
+const source=scenario.source;
+const {m,assignments}=fixture(scenario.seed);
 const protectedModel=ledgerEvidence(ledgerModel()),input={receipts:protectedModel.purchaseEvidence.receipts,operations:[]};
 const seed=confirmUnifiedBitcoin(protectedModel,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(protectedModel,input,'wallet').baseline});
 seed.providers.push(...m.providers);seed.accounts.push(...m.accounts);seed.positions.push(...m.positions);seed.openingPositions.push(...m.openingPositions);seed.settings.autoRefresh=false;
@@ -35,10 +40,10 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await context.route('**/__uh03-axe.js',async r=>r.fulfill({contentType:'text/javascript',body:await fs.readFile('node_modules/axe-core/axe.min.js','utf8')}));
   await page.addScriptTag({url:base+'__uh03-axe.js'});
   assert.deepEqual(await page.evaluate(async()=> (await axe.run('#editDialog',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[]);
-  await page.setViewportSize({width:390,height:900});await fs.mkdir('artifacts/gates/kraken-import',{recursive:true});await page.locator('#editDialog').screenshot({path:'artifacts/gates/kraken-import/'+engine+'-390.png'});
+  await page.setViewportSize({width:390,height:900});await fs.mkdir('artifacts/gates/kraken-import',{recursive:true});await page.locator('#editDialog').screenshot({path:'artifacts/gates/kraken-import/'+engine+'-'+scenario.name+'-390.png'});
   await page.locator('[data-kraken="approve"]').check();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
   let saved=await read();assert.equal(saved.revision,before.revision+1);assert.equal(saved.model.version,5);assert.equal(saved.model.bookings.length,before.model.bookings.length+2);
-  assert.deepEqual(saved.model.positions.filter(p=>p.providerId==='kraken').map(p=>p.quantityExact),['100','3','0.00000083']);
+  assert.deepEqual(saved.model.positions.filter(p=>p.providerId==='kraken').map(p=>p.quantityExact),scenario.quantities);
   assert.deepEqual(saved.model.externalCashFlows,before.model.externalCashFlows);
   await page.locator('#undoCSVImport').click();await page.locator('#saveDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});await page.locator('#toast').filter({hasText:'CSV-Import rückgängig gemacht.'}).waitFor();
   const undone=await read();assert.deepEqual(undone.model,before.model);assert.equal(undone.revision,saved.revision+1);
@@ -61,6 +66,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   await offlinePage.reload();await ready();await offlineContext.setOffline(true);await offlinePage.reload();await ready();
   await offlinePage.locator('#openCSVImport').click();await offlinePage.locator('#csvFile').setInputFiles(file);await clickDisclosed(offlinePage.locator('[data-kraken="simulate"]'));await offlinePage.locator('[data-kraken="status"]').filter({hasText:'1 bereits vorhanden'}).waitFor();
   const offline=JSON.parse((await record()).raw);assert.equal(offline.version,5);assert.equal(offline.bookings.length,saved.model.bookings.length);await offlineContext.close();
-  console.log('UH03 Kraken '+engine+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS');
+  console.log('UH03 Kraken '+engine+' '+scenario.name+': actual shared CSV dialog, exact trade/fee/cash, pure preview, explicit bindings/opening, one CAS revision, protected v5, reload/reimport, seven widths/Axe, exact undo, encrypted restore, quota/stale CAS and actual offline PWA reload PASS');
  }finally{await browser.close();}
+}
 }
