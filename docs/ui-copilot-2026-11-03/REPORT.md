@@ -1,0 +1,41 @@
+# UI-Paket #288 – Bericht (Draft-PR #289)
+
+Nur synthetische Daten. Kein Merge, kein Deployment; Checkpoint und Roadmap unverändert. Issues bleiben offen, kein pauschales „Fixes“.
+
+## Anforderung → Änderung → tatsächlicher Test
+
+| Paket | Vorheriger Stand | Änderung | Test | Offene Grenze |
+|---|---|---|---|---|
+| A Long-Press + linke Auswahl (Positionen, Buchungen, Referenzwerte) | nicht vorhanden; Auswahl nur über „Verwalten“, sichtbares „Auswählen“ | `attachRowLongPress` (jetzt in `src/booking-history-ui.js`, damit kein neues Modul in `sw.js` nötig ist), verdrahtet am Anfang von `initEvents`; linkes Symbol = `label.selection-mark` mit Checkbox (44 px); sichtbares „Auswählen“ entfernt, aria-label bleibt; bestehende Auswahl-Engines wiederverwendet | `tests/browser-ui-alltag10.mjs` (Chromium+Firefox, plus echte CDP-Touch-Geste in Chromium): Tap, Move/Cancel, Pointercancel, Multi-Touch, Maus, Unterelemente, Ghost Click, genau 1 Auswahl, Tastatur, Fertig, Axe, unveränderte Daten. Bestehend: reference-management, position-removal, reference-removal PASS | Reale Touch-Hardware nicht geprüft |
+| B Install-Symbol | große Karte `#pwaHelp` | Karte entfernt; Icon-Button (aria-label „FolioLab als App installieren“, 44 px) nur bei gehaltenem `beforeinstallprompt` und nicht Standalone; Prompt nur per Tap; appinstalled/Abbruch/Standalone behandelt | `tests/browser-loading-pwa.mjs` angepasst (Chromium+Firefox PASS) | Die manuelle Installationshilfe (Text der Karte) entfällt bewusst → Produktentscheidung für Hauptowner. iOS/Safari-Installationshinweis fehlt nun |
+| C Loader | vorhandene Flask-Animation kaum sichtbar | Keyframes/Größe/Blasenfarbe in `styles.css`, `index.html`, `src/loading-ui.js`; keine Mindestladezeit; Reduced Motion statisch | `browser-loading-pwa` (Reload, langsames DB/Modul, Timeout→später Erfolg, Fehler, Storage, Reduced Motion) PASS; Belege `img/loader-before|after-strip.png`, `loader-*.webm` | Offline-Start nur über den bestehenden Test abgedeckt |
+| D Toolbars | — | mobile (≤767 px) Abstände/Labels/44-px-Buttons in `styles.css`; #257-Volltext-Labels der Ansicht bewusst nicht gekürzt | Sweep 320/360/390/412/430/768/1024/1440 × 100 %/200 % Text × Chromium/Firefox × Normal/Verwalten: 0 Überläufe, 0 Ziele < 44 px (Wegwerfskript, nicht eingecheckt) | — |
+| E Texte | „Erfasste Stichtage“ doppelt; veraltete FMP/Twelve-Hilfen | Verlauf-Quellzeile bei gewählter Basis „Stichtage“ kompakt („Quelle: gespeicherte Referenzwerte“), Übersicht „Datenbasis: Stichtage“; 3 Hilfen (index.html, position-detail-ui.js, app.js) auf Alpha Vantage/Marketstack/EODHD-Worker bzw. tatsächliche Suche (Referenzliste + Alpha Vantage); „Historische Daten werden geprüft“ kleiner/gedämpft; „Gebuchte Vorgänge“ an Geschwister-Summary angeglichen | history-followup, ui-small-rests, flh02-release PASS | — |
+
+## Erweiterte Pakete (Stand dieser Lieferung)
+
+| Paket | Status |
+|---|---|
+| UI-VISUAL09 / #226, UI-POS02 / BOOK03 / #257 (Toolbars, Verwalten/Fertig-Parität) | Neu korrigiert (Toolbar-Verdichtung) und geprüft; Auswahl-/Archivsemantik unverändert (bestehende Tests PASS) |
+| UI-VISUAL03 (Positionsdetail Typografie) | Teilweise neu korrigiert (E); Rest nicht bearbeitet |
+| UI-VISUAL02 Mehr, VISUAL04 Header/Nav, VISUAL05 Dialoge, VISUAL06 Onboarding, VISUAL08 Verlauf-Akkordeons, HERO-QUALITY03, UI-TEXT03–10 | **Nicht bearbeitet** in dieser Lieferung (nur Sichtung ohne Befund in Overflow-/Target-Sweep). Weder umgesetzt noch als erledigt zu werten |
+| L07 Kurs-CSV unter „Mehr“ | Nicht umgesetzt; Quellentscheidung nicht eindeutig ableitbar |
+
+## Testergebnisse
+
+- `node --test tests/*.test.mjs worker/tests/*.test.mjs`: 1134 pass, 0 fail (enthält Service-Worker-Cache-Test; er bestätigt, dass kein neues JS-Modul ergänzt wurde).
+- Browser Chromium (+Firefox wo `*_ENGINES` gesetzt): ui-alltag10, loading-pwa, reference-management, position-removal, reference-removal, history-followup, ui-small-rests, flh02-release PASS.
+- **Auf unverändertem main ebenfalls fehlschlagend (vorbestehend, nicht verändert):** `browser-booking-management.mjs` („protected booking card uses full mobile row width“) und `browser-accessibility-audit.mjs` (`label-content-name-mismatch` auf `.donut-inner`, `src/allocation-ui.js`; liegt im Bereich UI-ALLOC01, nicht angefasst).
+- `npm run check` und die vollständigen Release-Gates: **nicht ausgeführt**. WebKit nicht verfügbar (fehlende Systembibliotheken). Keine Android-/TalkBack-/Hardwareprüfung. Playwright-Version lokal neuer als CI (1.56.1).
+- Reduced-Motion-Loader: durch Test geprüft; kein separater Bewegungsbeleg abgelegt.
+
+## Dateien
+
+`index.html`, `styles.css`, `src/app.js`, `src/booking-history-ui.js`, `src/loading-ui.js`, `src/position-detail-ui.js`, `tests/browser-ui-alltag10.mjs` (neu), `tests/browser-loading-pwa.mjs`, `artifacts/gates/ui-alltag10/long-press.json`, `docs/ui-copilot-2026-11-03/*` (Bericht, `capture.mjs`, `loader-evidence.mjs`, `img/` Vorher/Nachher 320/390/1440 Chromium, Loader-Streifen/Videos).
+Unberührt: `sw.js`, Manifest, Versionen, Workflows, Finanz-/Import-/Speicherlogik. Kollision mit PR #287 (Kraken): keine gemeinsamen Dateien.
+
+## Hinweise für den Hauptowner
+
+- Falls das Release-Gate eine SW-Revision (`sw.js`) verlangt, ist das offen; nicht angefasst, Gate nicht abgeschwächt.
+- Entscheidung nötig: Ersatz der entfernten manuellen Installationshilfe (iOS/Safari).
+- Vorher-/Nachher nur Chromium; Firefox-Bilder nicht erzeugt.
