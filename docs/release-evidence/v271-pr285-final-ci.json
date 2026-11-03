@@ -1,0 +1,121 @@
+{
+  "status": "FINAL_PR_CI_PASS_NOT_YET_LIVE",
+  "pr": 285,
+  "head": "fc1d3d0f5c2716128b10fc064c6ac3411bdb2575",
+  "base": "06688b537937ac901d482cbe771d8327977cf2c0",
+  "tree": "1a44fbc45dcb2317710ce435ff0944e7fa62c0b4",
+  "testMerge": {
+    "sha": "0bcb6bc64e250a713e59614dddfdbe5d5439bd49",
+    "tree": "1a44fbc45dcb2317710ce435ff0944e7fa62c0b4",
+    "parents": [
+      "06688b537937ac901d482cbe771d8327977cf2c0",
+      "fc1d3d0f5c2716128b10fc064c6ac3411bdb2575"
+    ]
+  },
+  "run": 41599489271,
+  "walletRun": 41599489146,
+  "jobs": [
+    {
+      "id": 125794581636,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125794642292,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125794642318,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125794642398,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125794642451,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125794644641,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125800334221,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125800334548,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "units": {
+    "tests": 1127,
+    "pass": 1127,
+    "fail": 0,
+    "skip": 0
+  },
+  "krakenScenarios": "Distinct fee, cross-reference chronology and reversed same-asset fee full actual UI/IDB/v5/CAS/quota/undo/encrypted-restore/offline/7-width/Axe chains PASS in Chromium/Firefox/WebKit",
+  "artifacts": [
+    {
+      "id": 13214890188,
+      "name": "cross-engine-gates-0bcb6bc64e250a713e59614dddfdbe5d5439bd49-3",
+      "digest": "sha256:e0beefab9c6a9516682e9e79a617778bf25b5d7f3367cc073e36c8edba894c20",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214362374,
+      "name": "release-gates-0bcb6bc64e250a713e59614dddfdbe5d5439bd49",
+      "digest": "sha256:81db814abf6a9b3c26314ff56e65335326651a9a3d81da178a987c6aa97ab5ba",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214217935,
+      "name": "cross-engine-gates-0bcb6bc64e250a713e59614dddfdbe5d5439bd49-2",
+      "digest": "sha256:c44698016d2c6f671ead7be4a048b8b7469d35ee9201d13f27e27b188c1b7989",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214094159,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:fe64ab11ec74637b6279c4e7884d31a28bb1f8df9926562bc42cc92051862529",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13213777357,
+      "name": "ci-stage-0bcb6bc64e250a713e59614dddfdbe5d5439bd49",
+      "digest": "sha256:20117f9fa492064188a919c305c44f9604d28dc67269599704c9bdf216b02204",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13213443432,
+      "name": "cross-engine-gates-0bcb6bc64e250a713e59614dddfdbe5d5439bd49-1",
+      "digest": "sha256:8669da64b86f34474b6c4d7153f446f27128ddf67bc279e382b4018c16501be0",
+      "uploadLogMatch": true
+    }
+  ],
+  "actualDownload": {
+    "artifact": 13214890188,
+    "sha256": "e0beefab9c6a9516682e9e79a617778bf25b5d7f3367cc073e36c8edba894c20",
+    "zipCRC": "PASS",
+    "mobileImages": "Firefox/WebKit cross-reference390px inspected"
+  },
+  "reviews": [],
+  "reviewThreads": [],
+  "boundary": "UH03 PARTIAL; independent historical balances/combined chain cases/persistent selective withdrawal remain open; no physical Android acceptance. Main/deploy/live gates still required."
+}
