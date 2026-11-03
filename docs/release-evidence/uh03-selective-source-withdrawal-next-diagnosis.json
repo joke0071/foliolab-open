@@ -1,0 +1,18 @@
+{
+  "status": "READ_ONLY_NEXT_SCOPE_NOT_IMPLEMENTED",
+  "base": "e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+  "currentRelease": "v271 DEPLOYED; live acceptance still pending when this diagnosis was written",
+  "findings": {
+    "kraken": "src/kraken-import.js validates complete canonical groups and blocks orphan journals, but exports no persistent selective group/source withdrawal API.",
+    "bitcoin": "src/unified-bitcoin.js undoUnifiedBitcoin retains receipt/history evidence and a validated permanent uh02-undo tombstone. Its scan-reflected-acquisition contract is Bitcoin-specific; do not copy its quantity behavior into Kraken cash/crypto trades.",
+    "genericManagement": "src/booking-management.js eligibility allows only proven isolated EUR cash removal. Imported crypto and linked groups are intentionally blocked. Existing Kraken fixture reproduces these safe denials.",
+    "wholeBatchUndo": "The browser import test uses the existing whole-import undo path; it does not prove persistent selective withdrawal."
+  },
+  "next": "Continue UH03 with a bounded lifecycle contract for complete Kraken source/economic groups using existing journal/identity/CAS boundaries. Explicitly distinguish documentary source removal from economic rollback; retain independent sources and dependencies. Validate group completeness, manual edits, cash/crypto/fee effects, nonnegative chronological replay, archive references, reload/offline/encrypted restore and permanent reimport protection before enabling a selective action. No implementation started; no generic eligibility relaxation or row-only journal deletion authorized by this diagnosis.",
+  "privateLocators": [
+    "/workspace/scratch/326c8cc8f969/private/selective-withdrawal-readonly.json",
+    "/workspace/scratch/326c8cc8f969/private/originals"
+  ],
+  "remainingUH03": "Independent historical Kraken/Bitpanda end balances; combined BTC/ETH/ERC20/SOL/SPL transfers/gas/exchange fees; persistent selective source withdrawal. Keep UH03 before UH04 before UH05.",
+  "boundary": "Structural CSV starts/ends or current scans are not independent historical balance evidence. Existing v5/data/installation/source identity and EFF01/HND01 remain binding."
+}
