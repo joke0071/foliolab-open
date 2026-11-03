@@ -1,0 +1,134 @@
+diff --git a/docs/ui-copilot-2026-11-03/REPORT.md b/docs/ui-copilot-2026-11-03/REPORT.md
+index 636bde5..c4be628 100644
+--- a/docs/ui-copilot-2026-11-03/REPORT.md
++++ b/docs/ui-copilot-2026-11-03/REPORT.md
+@@ -8,7 +8,7 @@ Der [ursprüngliche Lieferbericht](https://github.com/joke0071/foliolab-open/blo
+ 
+ | Anforderung | Tatsächlicher Stand / Prüfumfang |
+ | --- | --- |
+-| A: Long-Press in drei Listen | Verwalten plus genau gedrückter Eintrag. Linkes Positionssymbol als Checkbox, sonst Checkboxfallback; kein sichtbares zeilenweises „Auswählen“. Ghost Click nur auf Ursprungszeile; unabhängiges sofortiges Fertig, zweite Berührung außerhalb der Liste, Pointertyp und vollständiger Listenerabbau zusätzlich geprüft. |
++| A: Long-Press in drei Listen | Verwalten plus genau gedrückter Eintrag. Linkes Positionssymbol als Checkbox, sonst Checkboxfallback; kein sichtbares zeilenweises „Auswählen“. Ghost Click nur auf Ursprungszeile beziehungsweise als Abschluss derselben Touch-Geste; unabhängiges sofortiges Fertig, zweite Berührung außerhalb der Liste, Pointertyp und vollständiger Listenerabbau zusätzlich geprüft. |
+ | B: Installation | Große Karte entfernt. Ein kleines Symbol pro Layout startet einen vorhandenen Prompt nur nach Tap oder öffnet eine nutzbare Installationshilfe. Standalone/appinstalled/Abbruch bleiben berücksichtigt. Speicherhinweis ist browser-/geräteabhängig qualifiziert, mit Backup- und Nichtlöschenhinweis. |
+ | C: Loader | Vorhandene sichtbare Blasenbewegung verstärkt; Startup, Reload, verzögerte Module/DB, Fehler, Timeout/später Erfolg und Reduced Motion geprüft. Keine künstliche Mindestladezeit. Historische Bewegungsbelege unter `img/loader-*`; unabhängiges Review bestätigte tatsächlich wechselnde Frames. |
+ | D: Listen / #257-B | Positions- und Buchungsdetails ausschließlich unter Verwalten; nach Fertig geschlossen und verborgen, Fokus zurück. Separate Dialogverwendungen behalten Details. Transferaktionen im Verwaltungsmodus erreichbar, einschließlich Vorschau, Beleg, Zustimmung, CAS und Undo. Tests verwenden den neuen sichtbaren Einstieg; fachliche Assertions bleiben bestehen. |
+@@ -39,3 +39,9 @@ Der historische 280-Scan-Sweep komprimiert Viewports. Er beweist keine echte 200
+ ## Grenzen und weitere Pakete
+ 
+ Android-/iOS-Geräte, TalkBack und reale Bildschirmtastatur bleiben extern ungeprüft. Für VISUAL03/04/05/06/08, HERO-QUALITY03 und UI-TEXT03–10 sind Sichtung, vorhandene Regressionen und konkrete vorgenommene Deltas zu unterscheiden; kein pauschales Gesamt-DONE aus diesem UI-PR. UI-ALLOC01-Berechnung, BestGuess/Modellverlauf/Score/Projektionen, unklare Täglich/6×1-Wünsche und wirtschaftliche Löschberechtigungen werden nicht ausgeweitet. v5, Installation/Origin, Journal, Finanzberechnungen, Importparser, CAS und Backup/Restore bleiben erhalten.
++
++## Erste Kandidaten-CI: tatsächlicher Touch-Befund
++
++Kandidat `c1e72a8`, Lauf `41672608218`: Chromium scheiterte im echten CDP-Touchfall an „no details opened by the lifting finger“ (1 statt 0). Der Schutz darf nach dem Verwaltungs-Reflow nicht nur die vorherige Zeilen-ID betrachten: Der Abschluss derselben Geste kann ein anderes Detailziel treffen. Die Korrektur bindet den Abschluss zusätzlich an Pointer-ID/-Typ beziehungsweise die Release-Koordinaten; eine neue bewusste Pointeraktion ersetzt den Guard, Tastaturaktionen bleiben unabhängig. Ein zusätzlicher synthetischer Reflowfall und aufbewahrte echte Pointer-/Klick-/Bildbelege ergänzen die unveränderte strenge Chromium-Assertion. Keine laufende CI wird für diese lokale Korrektur abgebrochen oder ersetzt. Finale Abnahme bleibt offen.
++
++Der zusätzliche WebKit-Cross2-Befund betraf die veraltete Assertion, die Auswahl müsse oberhalb des Zeileninhalts liegen (`browser-position-removal.mjs`). Sie wird durch strengere zielgerechte Geometrie ersetzt: exakt eine Checkbox im vorhandenen linken Symbol, innerhalb der Holding-Zeile, links vom Namen und mindestens44px. Keine wirtschaftliche Assertion des Entfernungsablaufs wird entfernt oder reduziert.
+diff --git a/src/booking-history-ui.js b/src/booking-history-ui.js
+index 722f039..61212dc 100644
+--- a/src/booking-history-ui.js
++++ b/src/booking-history-ui.js
+@@ -95,11 +95,15 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
+  const cancel=()=>{clear();guard=null;pointers.clear();};
+  const rowOf=target=>target?.closest?.(rowSelector);
+  const isGuarded=target=>{const row=rowOf(target);return guard&&now()<guard.until&&row&&container.contains(row)&&idOf(row)===guard.id;};
++ const fromGesture=event=>guard&&now()<guard.until&&(
++  event.pointerId===guard.pointerId&&event.pointerType===guard.pointerType||
++  container.contains(event.target)&&Math.hypot(event.clientX-guard.x,event.clientY-guard.y)<=slop);
+  const down=event=>{
++  // Any deliberate new pointer action supersedes the preceding gesture's click guard.
++  guard=null;
+   if(event.pointerType==='mouse'||event.button>0)return;
+   // A new primary touch starts a new gesture, including after a lost release.
+   if(event.isPrimary&&!state)pointers.clear();
+-  guard=null;
+   pointers.add(event.pointerId);
+   if(pointers.size>1){clear();return;}
+   if(!container.contains(event.target)||!enabled()||event.target.closest(INTERACTIVE))return;
+@@ -109,7 +113,7 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
+   state={row,id,x:event.clientX,y:event.clientY,pointerId:event.pointerId,pointerType:event.pointerType,timer:setTimeout(()=>{
+    const current=state;state=null;
+    if(!current||!current.row.isConnected||!enabled())return;
+-   guard={id:current.id,pointerId:current.pointerId,pointerType:current.pointerType,until:now()+HOLD_GUARD_MS};
++   guard={id:current.id,pointerId:current.pointerId,pointerType:current.pointerType,x:current.x,y:current.y,until:now()+HOLD_GUARD_MS};
+    onLongPress(current.id,current.row);
+   },delay)};
+  };
+@@ -121,7 +125,7 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
+   if(event.pointerType==='mouse')return;
+   pointers.delete(event.pointerId);
+   if(state&&event.pointerId===state.pointerId)clear();
+-  if(guard&&event.pointerId===guard.pointerId){if(event.type==='pointercancel')guard=null;else guard.until=now()+GHOST_CLICK_MS;}
++  if(guard&&event.pointerId===guard.pointerId&&event.pointerType===guard.pointerType){if(event.type==='pointercancel')guard=null;else{guard.until=now()+GHOST_CLICK_MS;guard.x=event.clientX;guard.y=event.clientY;}}
+  };
+  // Observe all touches: a second finger outside the list also cancels a pending press.
+  // The pressed row is re-rendered, so release events must be observed on the document.
+@@ -134,11 +138,12 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
+  // Any scroll in the page (capture) means the finger is panning, not pressing.
+  window.addEventListener('scroll',clear,{capture:true,passive:true});
+  window.addEventListener('blur',cancel);
+- const contextMenu=event=>{if(state||isGuarded(event.target))event.preventDefault();};
++ const contextMenu=event=>{if(state||fromGesture(event)||isGuarded(event.target))event.preventDefault();};
+  container.addEventListener('contextmenu',contextMenu);
+- // Swallow only the originating row's touch click; unrelated actions and keyboard clicks work immediately.
++ // Re-rendering can move another row under the lifting finger. Match that same
++ // gesture too, while a deliberate new pointer action or keyboard click remains independent.
+  const swallow=event=>{
+-  if(event.detail===0||!isGuarded(event.target))return;
++  if(event.detail===0||!fromGesture(event)&&!isGuarded(event.target))return;
+   guard=null;event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
+  };
+  document.addEventListener('click',swallow,true);
+diff --git a/tests/browser-position-removal.mjs b/tests/browser-position-removal.mjs
+index f2f8776..c00b7b6 100644
+--- a/tests/browser-position-removal.mjs
++++ b/tests/browser-position-removal.mjs
+@@ -86,7 +86,7 @@ for(const engine of (process.env.FLH03_08_ENGINES||'chromium').split(',')){
+   await page.locator('#positionSearch').fill('Other 1');await page.locator('[data-position-select="p-1"]').check();await page.locator('#positionSearch').fill('');
+   for(const width of [320,390,430,768,1024,1440]){
+    console.log(engine+': selection/preview width '+width);await page.setViewportSize({width,height:560});await axe();assert.equal(await page.locator('#positionSelectionTools details').count(),0);if(engine==='chromium')await page.screenshot({path:'artifacts/gates/c6-selection-'+width+'.png'});assert.ok(await page.locator('.selection-master').evaluate(e=>e.getBoundingClientRect().width>=44));
+-   const card=await page.locator('.position-entry').first().evaluate(e=>{const header=e.querySelector('.position-card-tools').getBoundingClientRect(),body=e.querySelector('.holding-row').getBoundingClientRect(),check=e.querySelector('.selection-check').getBoundingClientRect(),buttons=[...e.querySelectorAll('.position-row-actions button')].map(b=>b.getBoundingClientRect());return {above:header.bottom<=body.top+1,buttons:buttons.map(b=>({width:b.width,height:b.height,inside:b.left>=header.left&&b.right<=header.right&&b.top>=header.top&&b.bottom<=header.bottom,overlap:!(b.left>=check.right||b.right<=check.left||b.top>=check.bottom||b.bottom<=check.top)}))};});assert.equal(card.above,true);assert.equal(card.buttons.length,0,'management rows contain selection only');const central=await page.locator('#positionListHead button,#positionSelectionTools button,#positionSelectionTools .selection-master').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom};}));assert.ok(central.length>=4);assert.ok(central.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=width+1),'central management controls retain44px targets within viewport');assert.ok(central.every((r,i)=>central.slice(i+1).every(o=>r.right<=o.left||o.right<=r.left||r.bottom<=o.top||o.bottom<=r.top)),'central targets never overlap');
++   const card=await page.locator('.position-entry').first().evaluate(e=>{const body=e.querySelector('.holding-row').getBoundingClientRect(),symbol=e.querySelector('.holding-l>.selection-mark'),check=symbol.getBoundingClientRect(),name=e.querySelector('.holding-info').getBoundingClientRect();return {inside:check.left>=body.left-1&&check.right<=body.right+1&&check.top>=body.top-1&&check.bottom<=body.bottom+1,leftOfName:check.right<=name.left+1,width:check.width,height:check.height,checkboxes:e.querySelectorAll('[data-position-select]').length,symbolCheckbox:symbol.contains(e.querySelector('[data-position-select]')),rowIconButtons:e.querySelectorAll('.position-row-actions button').length};});assert.equal(card.inside,true,'selection target is inside the holding row');assert.equal(card.leftOfName,true,'the left symbol is the selection target');assert.ok(card.width>=44&&card.height>=44,'symbol checkbox retains44px target');assert.equal(card.checkboxes,1,'one checkbox per position');assert.equal(card.symbolCheckbox,true,'checkbox uses the existing left symbol');assert.equal(card.rowIconButtons,0,'no duplicate row-icon toolbar');const central=await page.locator('#positionListHead button,#positionSelectionTools button,#positionSelectionTools .selection-master').evaluateAll(es=>es.map(e=>{const r=e.getBoundingClientRect();return {width:r.width,height:r.height,left:r.left,right:r.right,top:r.top,bottom:r.bottom};}));assert.ok(central.length>=4);assert.ok(central.every(r=>r.width>=44&&r.height>=44&&r.left>=0&&r.right<=width+1),'central management controls retain44px targets within viewport');assert.ok(central.every((r,i)=>central.slice(i+1).every(o=>r.right<=o.left||o.right<=r.left||r.bottom<=o.top||o.bottom<=r.top)),'central targets never overlap');
+    await button('preview-removal').click();await axe();
+    assert.match(await page.locator('#dialogFields').innerText(),/1 unverbundene Positionen löschbar, 1 gesperrt/);
+    assert.equal(await page.locator('#saveDialog').evaluate(e=>e.classList.contains('primary')),false,'Destructive consent must never retain primary green styling');
+diff --git a/tests/browser-ui-alltag10.mjs b/tests/browser-ui-alltag10.mjs
+index 68702d9..acc67ee 100644
+--- a/tests/browser-ui-alltag10.mjs
++++ b/tests/browser-ui-alltag10.mjs
+@@ -54,6 +54,12 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
+   await press(p,c.row);await p.locator(c.done).first().click();assert.equal(await selecting(),0,name+' immediate first Fertig works');
+   if(c.open)assert.equal(await p.locator(c.open).isVisible(),false,name+' Fertig hides details');
+   assert.equal(await p.locator(c.manage).evaluate(e=>document.activeElement===e),true,name+' Fertig focus');
++  // A layout change may put another row under the same lifting finger.
++  await press(p,c.row);
++  const shifted=await p.evaluate(({selector,detail})=>{const row=document.querySelector(selector.replace('-1"','-2"')),target=detail?row.querySelector('summary'):row,init={pointerId:101,pointerType:'touch',detail:1,bubbles:true,cancelable:true};return {contextMenu:target.dispatchEvent(new PointerEvent('contextmenu',init)),click:target.dispatchEvent(new PointerEvent('click',init))};},{selector:c.row,detail:Boolean(c.open)});
++  assert.deepEqual(shifted,{contextMenu:false,click:false},name+' same-gesture context menu/click stay blocked after row reflow');
++  if(c.open)assert.equal(await p.locator(c.open.replace('-1"','-2"')).evaluate(e=>e.open),false,name+' moved row details stay closed');
++  await p.locator(c.done).first().click();assert.equal(await selecting(),0);
+   // real long press
+   await press(p,c.row);await p.locator(c.box).first().waitFor();
+   const ids=await checkedIds();assert.equal(ids.length,1,name+' exactly one selected');assert.match(ids[0],/-1$/,name+' pressed row selected');
+@@ -74,6 +80,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
+   // axe
+   const violations=await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id+':'+v.nodes.map(n=>n.target.join(' ')).join('|')));assert.deepEqual(violations,[],name+' axe');
+   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' no overflow');
++  await p.screenshot({path:'artifacts/gates/ui-alltag10/'+engine+'-'+name+'-390.png'});
+   // Fertig leaves management without leftover checkboxes
+   await p.locator(c.done).first().click();await p.waitForTimeout(300);assert.equal(await selecting(),0,name+' Fertig removes checkboxes');
+   assert.equal(await p.locator(c.manage).count()>0,true,name+' Verwalten reachable again');
+@@ -85,12 +92,17 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
+  if(engine==='chromium'){
+   // Real browser touch input via CDP (trusted events): long press selects, panning cancels.
+   const cdp=await ctx.newCDPSession(p),touch=async(type,x,y)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'?[]:[{x,y,id:1}]});
++  await p.evaluate(()=>{globalThis.__realTouch=[];for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,e=>globalThis.__realTouch.push({type:e.type,pointerId:e.pointerId,pointerType:e.pointerType,detail:e.detail,x:e.clientX,y:e.clientY,target:e.target.className,row:e.target.closest?.('.position-entry')?.dataset.positionId,trusted:e.isTrusted}),true);});
++  const touchEvidence=async phase=>{const data=await p.evaluate(()=>({events:globalThis.__realTouch,open:[...document.querySelectorAll('.holding-expand[open]')].map(e=>e.closest('.position-entry').dataset.positionId),selected:[...document.querySelectorAll('[data-position-select]:checked')].map(e=>e.dataset.positionSelect)}));writeFileSync('artifacts/gates/ui-alltag10/chromium-real-touch-'+phase+'.json',JSON.stringify(data,null,2));await p.screenshot({path:'artifacts/gates/ui-alltag10/chromium-real-touch-'+phase+'.png'});};
+   await nav(p,'positions');const target=p.locator('#positionList .position-entry .holding-row').nth(2);await target.evaluate(e=>e.scrollIntoView({block:'center'}));
+   const box=await p.locator('#positionList .position-entry .holding-row').nth(2).boundingBox(),x=box.x+box.width/2,y=box.y+box.height/2;
+   await touch('touchStart',x,y);await p.waitForTimeout(150);for(let i=1;i<=6;i++){await touch('touchMove',x,y-i*25);await p.waitForTimeout(40);}await p.waitForTimeout(700);await touch('touchEnd');
++  await touchEvidence('pan');
+   assert.equal(await p.locator('[data-position-select]').count(),0,'real touch pan must not select');
++  assert.equal(await p.locator('.position-entry details.holding-expand[open]').count(),0,'real touch pan does not open details');
+   await target.evaluate(e=>e.scrollIntoView({block:'center'}));const box2=await target.boundingBox(),x2=box2.x+box2.width/2,y2=box2.y+box2.height/2;
+   await touch('touchStart',x2,y2);await p.waitForTimeout(700);await touch('touchEnd');await p.waitForTimeout(300);
++  await touchEvidence('press');
+   assert.equal(await p.locator('[data-position-select]:checked').count(),1,'real touch long press selects exactly one');
+   assert.equal(await p.locator('.position-entry details.holding-expand[open]').count(),0,'no details opened by the lifting finger');
+   await p.locator('#positionListHead [data-action="cancel-selection"]').click();
