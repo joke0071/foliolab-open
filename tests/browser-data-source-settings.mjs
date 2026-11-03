@@ -47,7 +47,9 @@ try{
  await page.locator('#optionalConnections').evaluate(el=>el.open=true);await page.locator('#publicSearchSetup').evaluate(el=>el.open=true);
  assert.equal(await page.locator('[name="publicInstrumentEndpoint"]').inputValue(),'https://test-worker.workers.dev');
  await page.locator('#marketSettings').evaluate(el=>el.open=true);
- await page.locator('#marketSettings > .more-panel-help').evaluate(el=>el.open=true);
+ const keySecurityHelp=page.locator('#marketSettings > .more-panel-help').filter({has:page.locator('#clearApiKeys')});
+ assert.equal(await keySecurityHelp.count(),1,'Exactly one key-security disclosure owns credential removal');
+ await keySecurityHelp.evaluate(el=>el.open=true);
  await page.locator('#clearApiKeys').click();
  await page.waitForFunction(()=>document.getElementById('toast')?.textContent==='API-Schlüssel und privater RPC-Zugang entfernt. Portfolio bleibt erhalten.');
  settings=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1'))?.settings);
