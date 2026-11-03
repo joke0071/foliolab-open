@@ -1,0 +1,176 @@
+{
+  "owner": "37e32f7146e0",
+  "date": "2026-11-03",
+  "pullRequest": 289,
+  "head": "00d8fafa59fe430ff4c94f2fc4706ea6bd704f16",
+  "result": "CHANGES_REQUIRED_NOT_ACCEPTED",
+  "scope": {
+    "manifestFiles": 250,
+    "productionFiles": [
+      {
+        "path": "index.html",
+        "sha": "dd487c80419f06995ca2cd4f8215719bded87936",
+        "status": "modified",
+        "changes": 12
+      },
+      {
+        "path": "src/allocation-ui.js",
+        "sha": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+        "status": "modified",
+        "changes": 11
+      },
+      {
+        "path": "src/app.js",
+        "sha": "8c342c5015cf26b60734e56471580eea822fb9db",
+        "status": "modified",
+        "changes": 51
+      },
+      {
+        "path": "src/booking-history-ui.js",
+        "sha": "32945382eea52449121ff33bbd42edec63858830",
+        "status": "modified",
+        "changes": 54
+      },
+      {
+        "path": "src/format.js",
+        "sha": "8857db66fc5a02b5db753de3e77e49a88be9c977",
+        "status": "modified",
+        "changes": 2
+      },
+      {
+        "path": "src/loading-ui.js",
+        "sha": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83",
+        "status": "modified",
+        "changes": 2
+      },
+      {
+        "path": "src/position-detail-ui.js",
+        "sha": "157c9720e120a5b38ebbb954d29baa91601f9d15",
+        "status": "modified",
+        "changes": 2
+      },
+      {
+        "path": "styles.css",
+        "sha": "196dd4af6c293a11963b8f56a11ce42124b04a2f",
+        "status": "modified",
+        "changes": 70
+      }
+    ],
+    "note": "Full changed-file manifest and all eight production-file contents inspected; no claim of exhaustive visual acceptance of all images or all expanded roadmap packages."
+  },
+  "ci": {
+    "wallet": {
+      "run": 41659003589,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "main": {
+      "run": 41659003419,
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    "failures": [
+      {
+        "job": 125997082892,
+        "name": "test",
+        "cause": "Required service-worker cache revision absent; preserve gate, revision belongs to integration."
+      },
+      {
+        "job": 125997082976,
+        "name": "cross-engine (1)",
+        "cause": "browser-ui07-audit: Firefox history viewport 768, document scrollWidth 795."
+      },
+      {
+        "job": 125997083052,
+        "name": "cross-engine (3)",
+        "cause": "browser-chart-tooltip: page overflow at 768."
+      },
+      {
+        "job": 125997083146,
+        "name": "cross-engine (2)",
+        "cause": "browser-flh03-abce: Firefox C6 empty UI 768; installButton right=795 and width=44."
+      }
+    ]
+  },
+  "independentLocal": {
+    "environment": "Node 24.22.1, Playwright 1.64.1, WebKit 27.2; private system libraries and local host preflight skip, no CI/TLS/assertion/timeout changes",
+    "tests": [
+      {
+        "name": "browser-ui-alltag10.mjs",
+        "result": "PASS",
+        "scope": "All three lists: synthetic touch pointer gestures, exact pressed selection, cancellation/multitouch within list, keyboard, focus, 44px, Axe, exact unchanged IDB record. Real Chromium CDP case was not run locally."
+      },
+      {
+        "name": "browser-loading-pwa.mjs",
+        "result": "PASS",
+        "scope": "Startup/reload, install prompt/help/standalone, delayed modules/IDB, storage errors, timeout then success, reduced motion, record preservation."
+      },
+      {
+        "name": "independent loader motion probe",
+        "result": "PASS",
+        "scope": "Actual computed bubble transforms/opacity change over three frames, static reduced motion, completion unlock; two normal-motion images viewed. First screenshot attempt blocked on unresolved document font readiness; use existing PW_TEST_SCREENSHOT_NO_FONTS_READY=1 only for this deliberately pending module probe; unchanged timeouts."
+      },
+      {
+        "name": "independent UI probe",
+        "result": "FAILURES_REPRODUCED",
+        "scope": "WebKit 768 scrollWidth795/install right795.078; normal position details visible; long press selects exactly one but first immediate Fertig click leaves management active."
+      }
+    ]
+  },
+  "requiredCorrections": [
+    {
+      "priority": "P1",
+      "path": "styles.css",
+      "finding": "Desktop heading flex children cannot fit at 768 when install help icon is visible.",
+      "next": "Make heading title shrink/wrap and reserve fixed controls or group controls correctly. Re-run failed exact states with original assertions, not only synthetic sweep."
+    },
+    {
+      "priority": "P1",
+      "path": "src/booking-history-ui.js attachRowLongPress",
+      "finding": "Document-wide click suppression consumes unrelated first action, including Fertig, for 700ms after release if no ghost click arrives.",
+      "next": "Limit suppression to the originating row/gesture, preserve real touch ghost-click prevention and test immediate independent actions. Also add outside-list second-touch coverage and listener teardown check."
+    },
+    {
+      "priority": "P1",
+      "path": "src/app.js and src/booking-history-ui.js",
+      "finding": "#257-B not implemented; alleged product conflict is resolved by newer explicit user decision.",
+      "next": "Hide position-list holding-expand and booking-list booking-meta in normal mode; expose under Verwalten, close/hide on Fertig with focus return. Keep economic facts/warnings and all transfer preview/reference/consent/CAS/Undo protection. Add explicit list-only detail availability option to bookingRowMarkup; other dialog uses retain existing default. Existing transferAction is currently removed in management: preserve/re-enable it there. Update test entry paths to Verwalten; never weaken economic assertions."
+    },
+    {
+      "priority": "P2",
+      "path": "src/app.js installHelpHTML",
+      "finding": "Help asserts installed app and browser always use separate storage; this blanket claim is unsupported and browser dependent.",
+      "next": "Use qualified device/browser-context wording; preserve backup-before-install/data-deletion protection."
+    }
+  ],
+  "decisions": {
+    "issue257B": {
+      "authority": "Issue #257 top amendment 2026-10-31 23:10 explicitly supersedes older normal-mode detail visibility; user context confirms.",
+      "status": "RESOLVED_IMPLEMENT_NEW_USER_DECISION"
+    },
+    "L07": {
+      "status": "OPEN_PRODUCT_DECISION",
+      "question": "What observable condition should expose the central historical price-CSV entry under Mehr: always with explicit position choice, only without a configured provider/listing, or also after a failed/insufficient actual history request? Configured access does not prove usable history. Existing import requires a particular position and its identity/currency; no silent position or provider choice.",
+      "interim": "Keep existing per-position entry until clarified; do not invent a provider availability heuristic."
+    }
+  },
+  "limits": [
+    "No physical Android/iOS/keyboard IME/TalkBack acceptance.",
+    "Local WebKit tests fill specific gaps, not full release approval.",
+    "280-scan script changes CSS viewport width/zoom >=320; it does not test actual 200% text scaling and ignores small-target findings for process exit. CI 768 failure disproves blanket no-overflow claim.",
+    "Report contains stale contradictory install-help and coverage statements; rewrite around final independently tested candidate.",
+    "No UI product correction, SW bump, Copilot reassignment, merge or deployment performed during review."
+  ],
+  "artifact": {
+    "id": 13241565808,
+    "run": 41659003419,
+    "bytes": 15675722,
+    "sha256": "55a636e0490f307f3f0d44fe2c9544a6904d32a07656e9b25ea83575c10a615c",
+    "entries": 152,
+    "downloaded": true,
+    "zipIntegrity": "PASS",
+    "digestMatchedUploadLog": true,
+    "imageViewed": "ui07/firefox-768.png"
+  },
+  "next": "Finish existing v274 run41659731322 and genuine live acceptance first. Then exact fresh owner/main/UI head checks and one serial correction/integration of existing PR289; preserve v274 Bitpanda source changes and all original expanded #288 requirements."
+}
