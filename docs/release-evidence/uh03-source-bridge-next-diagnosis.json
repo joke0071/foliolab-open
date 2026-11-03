@@ -30,10 +30,36 @@
     "Missing strong proof/end balances stays unknown; unsupported groups remain safely isolated"
   ],
   "reuse": {
-    "originals": "/workspace/scratch/326c8cc8f969/private/originals/; retained Library identities in prior original-request manifests",
+    "originals": "Old /workspace/scratch/326c8cc8f969/private/originals is no longer accessible at final handover. Reuse Library identities below or private original-locators.json; no blanket re-request. Metadata locator lookup only, not a new financial/format acceptance.",
     "krakenOracle": "/workspace/scratch/0ccb6712f33e/private/original-withdrawal-oracle.py/json",
     "flatexReport": "Library libfile_8ef7c378015c81919ad201c46a2b2b36 and /workspace/scratch/c8d2f95bcd2a/UH04_Flatex_Uebergabe.md",
-    "flatexRepros": "Library libfile_0bc1f7cce974819188be35af76865f27; local private originals/oracles alongside report"
+    "flatexRepros": "Library libfile_0bc1f7cce974819188be35af76865f27; local private originals/oracles alongside report",
+    "libraryOriginals": [
+      {
+        "name": "kraken.csv",
+        "library_file_id": "libfile_b99346c54920819185bcd4763e6190f2",
+        "path": "/FolioLab Open – Originaldaten/kraken.csv",
+        "model_generated": false
+      },
+      {
+        "name": "bitpanda.csv",
+        "library_file_id": "libfile_70dbfcc20a508191bde2f6140004c5e2",
+        "path": "/FolioLab Open – Originaldaten/bitpanda.csv",
+        "model_generated": false
+      },
+      {
+        "name": "bittr.csv",
+        "library_file_id": "libfile_a30a837ddd3c819186d57b9be3e04ed2",
+        "path": "/FolioLab Open – Originaldaten/bittr.csv",
+        "model_generated": false
+      },
+      {
+        "name": "ledgerwallet-operations-2026.10.26(1)(1).csv",
+        "library_file_id": "libfile_af383ec806808191a5102dce5037a791",
+        "path": "/ledgerwallet-operations-2026.10.26(1)(1).csv",
+        "model_generated": false
+      }
+    ]
   },
   "boundary": "This diagnosis is not an implementation, new parser, independent historical balance acceptance or UH03/UH04/UH05 overall completion. UH03 -> UH04 -> UH05, EFF01/HND01 and v5/identities remain binding."
 }
