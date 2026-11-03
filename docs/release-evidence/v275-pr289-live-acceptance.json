@@ -1,0 +1,162 @@
+{
+  "owner": "975176198816",
+  "date": "2026-11-03",
+  "status": "LIVE_ACCEPTED",
+  "version": 275,
+  "main": "4def94b43008b8b36c243e586696d0a152010d32",
+  "tree": "14853689d9d48adad2a67a39ed30b80b6a0a390c",
+  "sw": "foliolab-open-v275",
+  "schema": 5,
+  "base": "https://foliolab.unperfekt.at/",
+  "pr": 289,
+  "candidate": "caa18efb26da86d55df4d1068475141160890a35",
+  "run": {
+    "id": 41684716512,
+    "attempt": 1,
+    "result": "COMPLETED_SUCCESS",
+    "deployment": 126096142413,
+    "live": 126096536974,
+    "allMainCrossJobs": "SUCCESS",
+    "retries": 0,
+    "aborts": 0
+  },
+  "units": {
+    "tests": 1150,
+    "pass": 1150,
+    "fail": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13256583876,
+      "name": "production-live-acceptance-4def94b43008b8b36c243e586696d0a152010d32",
+      "bytes": 111833939,
+      "digest": "sha256:82af06feeb1459cd2407deb4351f2f5e6d148cfd73aa381fbbb50e0220faa1a6",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13256480186,
+      "name": "dialog-visual-reference",
+      "bytes": 934792,
+      "digest": "sha256:07ab9b3e6841afe02f0b76e425bea1e499de7da9c4f70b32146815e60ad86a68",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13255900539,
+      "name": "release-gates-4def94b43008b8b36c243e586696d0a152010d32",
+      "bytes": 59436993,
+      "digest": "sha256:359c17635684418fa2b08465185c59db91e395b4c252fe50a824a47cb053dafc",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13255433181,
+      "name": "github-pages",
+      "bytes": 503853,
+      "digest": "sha256:e74491f3407e24a7f2bbe450ea91dcf0bb88c035ab66a05ac97c964d1c3bf560",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13255122611,
+      "name": "cross-engine-gates-4def94b43008b8b36c243e586696d0a152010d32-2",
+      "bytes": 12212534,
+      "digest": "sha256:2bdcf9190ea582a641173de6a2b69e3d62727490353d06ec995a9222f09b618e",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13254329081,
+      "name": "cross-engine-gates-4def94b43008b8b36c243e586696d0a152010d32-1",
+      "bytes": 59573744,
+      "digest": "sha256:84adf0c9cc11dc7718313267d7b7527a712d676118d3b04b1b95077768d52f83",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13254277570,
+      "name": "ci-stage-4def94b43008b8b36c243e586696d0a152010d32",
+      "bytes": 355,
+      "digest": "sha256:6400ba35b997a3dc413055d2134965fbd5956bb05985fb7024ed25e432e35707",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13253949709,
+      "name": "cross-engine-gates-4def94b43008b8b36c243e586696d0a152010d32-3",
+      "bytes": 51425331,
+      "digest": "sha256:32952753db2c06181127a3d7cb56f2cbf8bbb1cd6524bbf792d01d050c80c3a4",
+      "matchedUploadLog": true
+    }
+  ],
+  "pages": {
+    "id": 13255433181,
+    "bytes": 503853,
+    "sha256": "e74491f3407e24a7f2bbe450ea91dcf0bb88c035ab66a05ac97c964d1c3bf560",
+    "actualDownloaded": true,
+    "zipIntegrity": "PASS",
+    "tarFiles": 140,
+    "byteMatches": 140
+  },
+  "production": {
+    "id": 13256583876,
+    "bytes": 111833939,
+    "sha256": "82af06feeb1459cd2407deb4351f2f5e6d148cfd73aa381fbbb50e0220faa1a6",
+    "actualDownloaded": true,
+    "zipEntries": 1154,
+    "zipIntegrity": "PASS",
+    "core": {
+      "result": "PASS",
+      "groups": 6,
+      "axeScans": 18,
+      "assetHashes": 141,
+      "errors": [],
+      "proxyCertificateException": false
+    },
+    "ui": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "transfers": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    },
+    "additionalGates": "Three-list gestures/trusted Chromium CDP reflow/independent Fertig, startup/reload/reduced motion, exact200% text target geometry and explicit central quote CSV; financial/import/CAS/quota/abort/Undo/restore/offline gates all PASS in required engines",
+    "imagesViewed": [
+      "ui-alltag10/chromium-real-touch-press.png",
+      "ui-textscale/webkit-320-positions-management.png (inspection crop)",
+      "c5-bookings-390.png",
+      "booking-transfers/firefox-out-390.png"
+    ]
+  },
+  "regularHTTPS": {
+    "report": "v275-regular-https-assets.json",
+    "matches": 141,
+    "total": 141,
+    "verification": "default certificate and hostname verification; no TLS exception",
+    "finalServiceWorkerExact": true,
+    "finalServiceWorkerSHA256": "b668f91d19be5d57eb9e63c394b117e75761dae8348eea3705f5909c99797468"
+  },
+  "freshState": {
+    "mainUnchanged": true,
+    "ownerUnchanged": true,
+    "openPRs": [
+      157,
+      161
+    ],
+    "newProductCandidate": false
+  },
+  "preserved": [
+    "v5/data/install identity",
+    "Journal/CAS/backup/restore",
+    "v274 Bitpanda code",
+    "All old domain assertions; new gates additive",
+    "Removal of128 accidental new stray files"
+  ],
+  "limits": [
+    "No physical Android/iOS/TalkBack/IME acceptance",
+    "UH03 remains PARTIAL; no new full historical financial acceptance inferred from UI release"
+  ],
+  "counters": {
+    "liveAccepted": 1,
+    "completedProductSlices": 1
+  },
+  "next": "Resume UH03 using secured originals/oracles. Next concrete ETH source-to-chain binding needs native exchange withdrawal detail; private target prepared, no published personal reference/hash/amount. UH04 preparation retained; then UH05."
+}
