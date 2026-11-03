@@ -1,3 +1,11 @@
+## ACTIVE – v270 DEPLOYED / Live-Abnahme läuft – 03.11.2026
+
+Alleiniger Owner **4828cb971371**. Main `06688b537937ac901d482cbe771d8327977cf2c0`, Tree `cfb12b43bda1476ccaaf5c64e09e7b63337912c4`, SW v270/v5/Installationsidentität erhalten. Mainlauf **41590568785**: 1122 Units/0 Fehler/Skips, Hauptjob/Cross1–3 **SUCCESS**, Deployment **125771119513 SUCCESS**. Vollständige Abschlusslogs der Pflichtjobs gelesen; beide Kraken-Gebührenfälle in Chromium/Firefox/WebKit PASS, Mainartefaktdigests einschließlich github-pages gegen Uploadlogs bestätigt. [Finaler PR-Beleg](release-evidence/v270-pr284-final-ci.json).
+
+**Livejob 125771278406 IN_PROGRESS**, derzeit tatsächliche Chromium-Produktionsabnahme; anschließend Firefox/WebKit. **v270 DEPLOYED, NICHT LIVE_ACCEPTED; v269 letzte akzeptierte Produktion.** Unverändert auslaufen lassen, keine Duplikate/Abbrüche. Separater normal TLS-geprüfter 138-Asset-Byteabgleich gestartet. Keine Folgeimplementierung begonnen. [Lesende nächste Chronologiediagnose](release-evidence/uh03-kraken-cross-reference-next-diagnosis.json) gesichert, kein fertiger Algorithmus/keine historische Endbestandsabnahme daraus ableiten. Nach Releaseabschluss UH03 weiter, dann UH04 → UH05. Private Repros/Logs `/workspace/scratch/4828cb971371/private/`; EFF01/HND01 Zähler0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #284 gemergt / v270 Releaseabschluss – 03.11.2026
 
 Alleiniger Owner **4828cb971371**. #284 nach vollständiger unveränderter PR-CI **41588747659 SUCCESS** und Wallet **41588747703 SUCCESS**, Logs/Artefaktdigests/echtem Cross3-Download+ZIP-/Mobilbildprüfung, leeren Reviews/Threads und frischem Main/Owner/HEAD/Testmergeabgleich SHA-geschützt gemergt. **Main `06688b537937ac901d482cbe771d8327977cf2c0`**, Tree `cfb12b43bda1476ccaaf5c64e09e7b63337912c4` exakt Kandidat/Testmerge. [Finaler PR-Beleg](release-evidence/v270-pr284-final-ci.json). 1122 Units/0 Fehler/Skips; beide Kraken-Gebührenfälle vollständig in Chromium/Firefox/WebKit inklusive v5/CAS/Restore/Offline PASS.
