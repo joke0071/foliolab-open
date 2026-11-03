@@ -1,0 +1,35 @@
+{
+  "status": "LOCAL_CORRECTION_PENDING_FINAL_CI",
+  "baseCandidate": "8c7ed4d76b86a378c45d627872b77b15f861a466",
+  "failedRun": 41615076015,
+  "failedJob": 125846479191,
+  "originalFailure": {
+    "test": "tests/browser-reference-removal.mjs:33",
+    "engine": "WebKit27.2",
+    "timeoutMs": 30000,
+    "artifact": 13220139603,
+    "sizeBytes": 19345420,
+    "sha256": "223d733a46bbf93769023ee5a2e2ca2d928a514185ef1b23b70589ad85eab3ec",
+    "downloadHashAndZip": "PASS"
+  },
+  "cause": "The previous text!=prior predicate also matched the cleared hidden error at submission start. Escape during editorSubmitting is correctly refused by the existing busy discard guard.",
+  "deterministicReproduction": {
+    "scope": "Same synthetic original-reference setup and real post-put IDB abort. A private wrapper holds only rejection delivery until explicitly released; no storage or product behavior weakened.",
+    "observed": {
+      "errorText": "",
+      "errorHidden": true,
+      "submitDisabled": true,
+      "fieldsInert": true,
+      "originalRawSettingsRevisionUnchanged": true,
+      "prematureEscapeBlocked": true,
+      "afterReleasedRejectionVisibleAbortAndEnabledSubmitAllowsClose": true
+    },
+    "scriptSHA256": "f629fad9708dcc4a9745e2b839edf68cda0c17ef9d9479749e4205c171fc4ad1",
+    "logSHA256": "2cc84f6d9a76699871d3257de2ad9147ea15861c4c4021e17475522b3ac4a5d3",
+    "traceSHA256": "7aae8f010cdd69ef5d048044c9c80a3884428e1dab7e44059b89e71e820326ec"
+  },
+  "correction": "Wait for changed visible error, enabled save and non-inert fields, then assert an actual abort message before checking unchanged records and Escape closure. No timeout, assertion, engine, workflow, TLS or product-storage change.",
+  "privateEvidence": "/workspace/scratch/0ccb6712f33e/private/",
+  "next": "Full corrected original WebKit suite, then new frozen candidate/full required CI after existing jobs terminate; no blind retry.",
+  "correctedFullWebKitSuite": "PASS: all original backup/consent/metrics/quota/post-put abort/offline/undo/restore/CAS/editor7-preview5widths/Axe assertions retained; Playwright1.64.1/WebKit27.2, private extracted library environment."
+}

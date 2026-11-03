@@ -1,9 +1,11 @@
 /** UH03: orchestration over the existing transaction journal, never a second financial engine. */
 import {prepareKrakenSourcePlan} from './kraken-source-plan.js';
-import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
+import {executeTransaction,ledgerQuantityAudit,validateJournalEntry,nextJournalSequence} from './transactions.js';
+import {KRAKEN_SOURCE,krakenWithdrawalId,withdrawalDigest,validateKrakenWithdrawals} from './kraken-withdrawal-evidence.js';
 import {sourceDigest,sourceUnmodified,bookingOwnership,importSourceKey,validateImportSource} from './import-identity.js';
 import {units,exact,div} from './decimal.js';
 import {backup,safeImport} from './model.js';
+import {setArchivePresentation} from './booking-history.js';
 const digest=v=>sourceDigest(JSON.stringify(v));
 const sourceId='kraken-uh03-v1';
 const unsupported=message=>{throw Error(message);};
@@ -90,7 +92,7 @@ function* chronologicalGroups(selected,draft,assignments){
  for(const time of [...timestamps.keys()].sort()){
   const cluster=timestamps.get(time).sort((a,b)=>a.id.localeCompare(b.id)),fresh=[];
   for(const group of cluster){
-   if(draft.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id))yield group;
+   if(draft.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id)||draft.journalEntries.some(j=>j.id===krakenWithdrawalId(group.id)))yield group;
    else fresh.push(group);
   }
   if(fresh.length<2){yield* fresh;continue;}
@@ -158,6 +160,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
  if(providers.size>1)throw Error('Kraken-Quellbereiche müssen zum selben ausdrücklich gewählten Anbieter gehören.');
  for(const group of chronologicalGroups(selected,draft,assignments)){
   try{
+   if(draft.journalEntries.some(j=>j.id===krakenWithdrawalId(group.id)))unsupported('Diese Kraken-Gruppe wurde dauerhaft zurückgenommen. Kein automatischer Wiederimport.');
    if(group.chronologyIssue)unsupported(group.chronologyIssue);
    if(group.rows.length>64)unsupported('Große Referenzgruppe benötigt einen gesonderten vollständigen Beinabgleich.');
    const actions=actionsFor(draft,group,assignments,{externalReferences});
@@ -216,4 +219,72 @@ export function confirmKrakenImport(model,inputs,assignments,{baseline,confirmed
  if(!plan.ready)return model;
  safeImport(JSON.parse(backup(plan.simulated)));
  return plan.simulated;
+}
+
+/** Original export proves the complete group, including separate fee legs.
+ * Bounded first contract: terminal groups only. Never detach the sole source
+ * from an economic event or reinterpret scan-reflected Bitcoin quantities.
+ */
+export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
+ const baseline=JSON.stringify(model),{selectedGroups}=options;
+ if(!Array.isArray(selectedGroups)||selectedGroups.length!==1)throw Error('Genau eine vollständige Kraken-Gruppe zur Rücknahme auswählen.');
+ safeImport(JSON.parse(backup(model)));validateKrakenWithdrawals(model);
+ const plan=previewKrakenImport(model,inputs,assignments,options),group=plan.groups[0];
+ if(plan.issues.length||group?.status!=='existing'||plan.duplicates!==1)throw Error('Vollständige unveränderte Originalgruppe erforderlich. '+(plan.issues[0]?.message||''));
+ const id=selectedGroups[0],originals=group.actions.map((_,i)=>{
+  const booking=model.bookings.find(b=>b.id==='uh03:'+id+':'+i),journal=model.journalEntries.find(j=>j.id===booking?.journalEntryId);
+  if(!booking||!journal||journal.id!==booking.id||journal.source!==KRAKEN_SOURCE||!sourceUnmodified(model,booking)||booking.transferMatch)throw Error('Kraken-Gruppe wurde geändert oder ist verknüpft.');
+  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
+  if(Object.keys(booking).some(k=>!knownBooking.includes(k))||Object.keys(journal).some(k=>!knownJournal.includes(k))||journal.postings.some(p=>Object.keys(p).some(k=>!knownPosting.includes(k)))||!Number.isSafeInteger(journal.sequence))throw Error('Unbekannte Gruppenfelder oder Journalreihenfolge zuerst abgleichen.');
+  return structuredClone({booking,journal,flows:model.externalCashFlows.filter(f=>f.id===booking.id)});
+ });
+ const ids=new Set(originals.map(o=>o.booking.id)),touched=new Set(originals.flatMap(o=>o.journal.postings.map(p=>p.positionId).filter(Boolean)));
+ const targets=[id,...ids,...originals.flatMap(o=>o.journal.postings.map(p=>p.id))];
+ let nodes=0;
+ const references=(v,depth=0)=>{
+  if(++nodes>200000||depth>64)throw Error('Referenzprüfung überschreitet das sichere Prüflimit.');
+  return typeof v==='string'?targets.some(id=>v.includes(id)):v&&typeof v==='object'?Object.entries(v).some(([k,v])=>targets.includes(k)||references(v,depth+1)):false;
+ };
+ const draft=structuredClone(model);
+ draft.bookings=draft.bookings.filter(b=>!ids.has(b.id));draft.journalEntries=draft.journalEntries.filter(j=>!ids.has(j.id));draft.externalCashFlows=draft.externalCashFlows.filter(f=>!ids.has(f.id));
+ if(references({...draft,bookingPresentation:undefined}))throw Error('Weitere Quellen oder abhängige Nachweise verhindern die isolierte Gruppenrücknahme.');
+ const first=Math.min(...originals.map(o=>o.journal.sequence));
+ for(const j of draft.journalEntries.filter(j=>j.postings.some(p=>touched.has(p.positionId)))){
+  if(j.source!==KRAKEN_SOURCE||!Number.isSafeInteger(j.sequence)||j.sequence>=first)throw Error('Spätere oder fremde Buchungen im betroffenen Quellbereich zuerst abgleichen.');
+  const b=draft.bookings.find(b=>b.journalEntryId===j.id);
+  if(!b||!sourceUnmodified(draft,b))throw Error('Frühere Quellbuchungen wurden geändert.');
+ }
+ const changes=[];
+ for(const positionId of touched){
+  const p=draft.positions.find(p=>p.id===positionId),opening=draft.openingPositions.find(o=>o.positionId===positionId);
+  if(!p||p.wallet?.enabled||p.currency!=='EUR'||!['cash','crypto'].includes(p.kind)||!opening||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,opening.costBasisExact,opening.realizedPnLExact].some(v=>v!=null))throw Error('Wallet, fehlender Anfangsbestand oder bestätigte Kosten-/Ergebniswerte bleiben geschützt.');
+  const delta=originals.reduce((sum,o)=>sum+o.journal.postings.filter(p=>p.positionId===positionId&&p.quantityDeltaExact!=null).reduce((n,p)=>n+units(p.quantityDeltaExact),0n),0n),before=qty(p),after=before-delta;
+  if(after<0n)throw Error('Rücknahme würde einen negativen Bestand erzeugen.');
+  changes.push({positionId,before:exact(before),after:exact(after),delta:exact(-delta)});p.quantityExact=exact(after);p.quantity=Number(p.quantityExact);
+ }
+ // A coherent journal alone does not prove that a later edited opening still
+ // belongs to this original export. Anchor both sides of the inverse to the
+ // original exact stream balances, never to a changed observed baseline.
+ const sourceGroup=plan.source.groups.find(g=>g.id===id),streams=new Map();
+ for(const row of sourceGroup.rows){
+  const p=position(draft,row,assignments),opening=draft.openingPositions.find(o=>o.positionId===p.id);
+  if(opening.asOf&&opening.asOf>row.values.time.slice(0,10))throw Error('Geänderter datierter Anfangsbestand liegt nach der Originalgruppe.');
+  if(!streams.has(p.id))streams.set(p.id,[]);streams.get(p.id).push(row);
+ }
+ for(const [positionId,rows] of streams){
+  const trail=krakenBalanceTrail(rows,qty(draft.positions.find(p=>p.id===positionId)));
+  if(units(trail.at(-1).balanceExact)!==qty(model.positions.find(p=>p.id===positionId)))throw Error('Aktueller Bestand widerspricht dem unveränderten Kraken-Endsaldo der Gruppe.');
+ }
+ if(draft.bookingPresentation)setArchivePresentation(draft,{bookingIds:draft.bookingPresentation.archivedIds.filter(id=>!ids.has(id))});
+ if(!ledgerQuantityAudit(draft).ok)throw Error('Rücknahme widerspricht dem vollständigen chronologischen Journal.');
+ return {baseline,group:id,originals,changes,simulated:draft,excluded:plan.excluded};
+}
+export function confirmKrakenWithdrawal(model,inputs,assignments,{baseline,confirmed=false,partialConfirmed=false,at=new Date().toISOString(),...options}={}){
+ if(!confirmed||baseline!==JSON.stringify(model))throw Error('Aktuelle Gruppenrücknahme erneut prüfen und bestätigen.');
+ const plan=previewKrakenWithdrawal(model,inputs,assignments,options);
+ if(plan.excluded&&!partialConfirmed)throw Error('Nicht ausgewählte Restgruppen ausdrücklich bestätigen.');
+ const draft=plan.simulated,id=krakenWithdrawalId(plan.group);
+ draft.journalEntries.push(validateJournalEntry({id,type:'uh03-undo',date:at.slice(0,10),recordedAt:at,sequence:nextJournalSequence(model),source:KRAKEN_SOURCE,status:'removed',postings:[{id:id+':documentation',role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],krakenWithdrawal:{version:1,group:plan.group,count:plan.originals.length,originals:plan.originals,digest:withdrawalDigest(plan.originals)}}));
+ validateKrakenWithdrawals(draft);safeImport(JSON.parse(backup(draft)));
+ return draft;
 }

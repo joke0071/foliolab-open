@@ -18,7 +18,7 @@ import {ledgerLiveMarkup} from './ledger-live-ui.js';
 import {looksLikeKrakenLedgerCSV,parseKrakenLedgerCSV} from './kraken-ledger.js';
 import {krakenLedgerMarkup} from './kraken-ledger-ui.js';
 import {createKrakenImportUI} from './kraken-import-ui.js';
-import {confirmKrakenImport} from './kraken-import.js';
+import {confirmKrakenImport,confirmKrakenWithdrawal} from './kraken-import.js';
 import {accountEvidenceRows} from './account-evidence.js';
 import {updateBookingSelection,bookingSelectionSummary,previewBookingChange,prepareBookingChange,canUndoBookingChange,prepareBookingUndo,bookingChangePermissions,bookingEditRequest,previewBookingArchive,prepareBookingArchive,bookingRowsActionReasons} from './booking-management.js';
 import {updatePositionSelection,positionSelectionSummary,previewPositionRemoval,preparePositionRemoval} from './position-selection.js';
@@ -1437,10 +1437,10 @@ function openCSVImport(){
     const generation=selectionGeneration,controller=krakenEconomics;
     await portfolioStore.assertCurrent();
     if(editor!==importEditor||generation!==selectionGeneration||controller!==krakenEconomics||!controller.approved())throw Error('Kraken-Auswahl oder Datenstand geändert. Erneut prüfen.');
-    const draft=confirmKrakenImport(model,krakenInputs,approval.assignments,approval);
+    const draft=(approval.operation==='withdraw'?confirmKrakenWithdrawal:confirmKrakenImport)(model,krakenInputs,approval.assignments,approval);
     const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
     try{model=draft;await save();}catch(error){if(model===draft)model=previous;controller.resetApproval();throw error;}finally{$('dialogFields').inert=false;}
-    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Geprüfte Kraken-Gruppen atomar gespeichert. Ungeklärte Restgruppen bleiben offen.');return;
+    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify(approval.operation==='withdraw'?'Kraken-Gruppe vollständig zurückgenommen. Quellenbeleg und Wiederimportsperre gespeichert.':'Geprüfte Kraken-Gruppen atomar gespeichert. Ungeklärte Restgruppen bleiben offen.');return;
    }
    if(ledgerMode)throw Error('Ledger Live bleibt eine lokale Vorschau. Ohne belegte Ereignis-, Gebühren- und Eigentumszuordnung ist keine Übernahme zulässig.');
    if(!parsed)throw Error('Bitte zuerst eine CSV-Datei auswählen.');
