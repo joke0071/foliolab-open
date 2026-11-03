@@ -1,0 +1,103 @@
+{
+  "status": "MAIN_TESTS_AND_DEPLOY_SUCCESS_LIVE_PENDING",
+  "main": "d651f09f93f261ee318a478279586fefd31fcd7f",
+  "tree": "6b73950cd0879a7e81f4bbc3046c9b49608a7a9a",
+  "run": 41723207943,
+  "attempt": 1,
+  "jobs": [
+    {
+      "id": 126221076452,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126221523023,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126221523027,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126221523028,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126221523363,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126221526181,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 126229966090,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "units": {
+    "pass": 1168,
+    "fail": 0,
+    "skip": 0
+  },
+  "artifacts": [
+    {
+      "id": 13275405328,
+      "name": "cross-engine-gates-d651f09f93f261ee318a478279586fefd31fcd7f-3",
+      "size": 52182664,
+      "digest": "sha256:21e1c356c5e172223a39134ba67e82e1e27295d315cac1e91e81fa41a691db52"
+    },
+    {
+      "id": 13274657054,
+      "name": "github-pages",
+      "size": 512045,
+      "digest": "sha256:4f9d32b31f6ebd561257954fd6e2b15325124f958f4c7d8b602688b0c32156d5"
+    },
+    {
+      "id": 13274240799,
+      "name": "release-gates-d651f09f93f261ee318a478279586fefd31fcd7f",
+      "size": 59749376,
+      "digest": "sha256:3c77c02aa5b7c26c81abecf9c482ec5626dbc6ebc1e663be887ee5b470b822b8"
+    },
+    {
+      "id": 13274066981,
+      "name": "dialog-visual-reference",
+      "size": 934694,
+      "digest": "sha256:da66d67bee033eac0e0510a4cd1c45978846dd9122e8b2c7e243e639fbd81d73"
+    },
+    {
+      "id": 13273950622,
+      "name": "cross-engine-gates-d651f09f93f261ee318a478279586fefd31fcd7f-1",
+      "size": 59577092,
+      "digest": "sha256:b9e2dc79e8b644ea6be1961e916cc8ab9d9aac95617d4111bac6f067ed78b987"
+    },
+    {
+      "id": 13273308572,
+      "name": "ci-stage-d651f09f93f261ee318a478279586fefd31fcd7f",
+      "size": 354,
+      "digest": "sha256:ba6563b7879439bcc047f556ff04612c12fee2eef6e56b003c9309d703f845ea"
+    },
+    {
+      "id": 13271734619,
+      "name": "cross-engine-gates-d651f09f93f261ee318a478279586fefd31fcd7f-2",
+      "size": 12214582,
+      "digest": "sha256:8305c8e3c8dbf6e222fec0bf183c512259c7ed06b5392b4232dcad4f7499745f"
+    }
+  ],
+  "verification": "All 7 actual ZIP hashes/sizes match API and terminal upload logs; CRC PASS. Stage RELEASE, 136 JSON reports without populated error/failure/violation arrays. Logs read; all six Kraken scenarios each Chromium/Firefox/WebKit PASS including new SOL and storage/removal/restore/offline. Firefox SOL production-candidate dialog image viewed. Pages artifact.tar all 142 distinct files match source. Regular independent HTTPS 143/143 URL hashes PASS including service worker, no certificate exception.",
+  "livePending": 126230291673,
+  "limits": "Not LIVE_ACCEPTED until terminal actual live artifact/report/TLS/browser acceptance."
+}
