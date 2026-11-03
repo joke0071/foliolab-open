@@ -1,0 +1,75 @@
+{
+  "owner": "975176198816",
+  "date": "2026-11-03",
+  "authority": "Explicit user replacement of cb8a6d16f52c; no confirmed predecessor handover claimed",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "lastAccepted": "v274; not reaccepted",
+  "head": "deb79b6a16a65d966a9dd07366d33dadfbb1d1c6",
+  "tree": "dbeb29efde38fce817c45fd8a0b128d2a815618b",
+  "previous": {
+    "head": "d367796827dc3581c482a615e4d34bb2befe25a8",
+    "run": 41675916561,
+    "conclusion": "FAILURE",
+    "crossEngines": "all three SUCCESS",
+    "wallet": "SUCCESS",
+    "failure": {
+      "job": 126056641863,
+      "path": "tests/browser-key-privacy.mjs:28",
+      "cause": "Ambiguous '#marketSettings > .more-panel-help' after central price-CSV disclosure; credential-security and CSV disclosure both matched",
+      "artifact": {
+        "id": 13250827346,
+        "bytes": 50277262,
+        "sha256": "bde959c090322d98beb2dcca92bb4232ce7c41f225a581699b375eaeb7ea7e06",
+        "entries": 527,
+        "integrity": "PASS",
+        "downloaded": true,
+        "realTouchEvidence": "selected pos-2; no open details; trusted touch release reflowed to pos-1; PNG viewed"
+      }
+    }
+  },
+  "correction": {
+    "files": [
+      "tests/browser-key-privacy.mjs",
+      "tests/browser-data-source-settings.mjs"
+    ],
+    "scope": "Select disclosure that contains existing clearApiKeys control; assert exactly one. No product/timeout/financial/security assertions removed or weakened."
+  },
+  "local": {
+    "productionAndTestSources": "All non-image candidate tree blobs matched local files before the two test edits; missing six unchanged preexisting gate PNGs excluded from source claim",
+    "units": {
+      "pass": 1150,
+      "fail": 0,
+      "skipped": 0
+    },
+    "syntax": "PASS",
+    "chromium": "Google Chrome for Testing 156.0.8078.80 via private executable override; Playwright 1.64.1; no TLS/assertion/timeout changes",
+    "pass": [
+      "full key privacy revocation/portfolio preservation/legacy purge/all-data deletion",
+      "data source settings persistence/key removal/non-secret endpoint/mobile layout",
+      "three lists and trusted CDP real touch/reflow/ghost/independent Fertig/teardown/unchanged IDB",
+      "loading/PWA/reload/reduced motion",
+      "computed 200% font scaling at320/768",
+      "central price CSV explicit choice/import cancel/replace/remove cancel/Axe/unchanged finances"
+    ]
+  },
+  "review": {
+    "manifest": "136 files before two targeted test changes; no _cap.mjs or new artifacts/gates/ strays",
+    "workflow": "Only additive UI gates in all four integration/live paths; historic assertions/hashes retained",
+    "protection": "#257-B normal-mode hidden details; transfer actions available through management; financial/CAS/Undo assertions retained",
+    "reviews": [],
+    "threads": [],
+    "limits": [
+      "No physical Android/iOS/TalkBack/IME acceptance",
+      "No full new candidate or release approval until final CI/artifacts and main/live/regular TLS asset acceptance"
+    ]
+  },
+  "ci": {
+    "run": 41679338919,
+    "wallet": 41679338847,
+    "status": "IN_PROGRESS",
+    "retry": 0,
+    "aborted": 0,
+    "manualDuplicate": 0
+  },
+  "status": "FROZEN_NOT_MERGED_NOT_RELEASED"
+}
