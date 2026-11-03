@@ -25,8 +25,11 @@ Nur synthetische Daten. Kein Merge, kein Deployment; Checkpoint und Roadmap unve
 
 - `node --test tests/*.test.mjs worker/tests/*.test.mjs`: 1134 pass, 0 fail (enthält Service-Worker-Cache-Test; er bestätigt, dass kein neues JS-Modul ergänzt wurde).
 - Browser Chromium (+Firefox wo `*_ENGINES` gesetzt): ui-alltag10, loading-pwa, reference-management, position-removal, reference-removal, history-followup, ui-small-rests, flh02-release PASS.
-- **Auf unverändertem main ebenfalls fehlschlagend (vorbestehend, nicht verändert):** `browser-booking-management.mjs` („protected booking card uses full mobile row width“) und `browser-accessibility-audit.mjs` (`label-content-name-mismatch` auf `.donut-inner`, `src/allocation-ui.js`; liegt im Bereich UI-ALLOC01, nicht angefasst).
-- `npm run check` und die vollständigen Release-Gates: **nicht ausgeführt**. WebKit nicht verfügbar (fehlende Systembibliotheken). Keine Android-/TalkBack-/Hardwareprüfung. Playwright-Version lokal neuer als CI (1.56.1).
+- **Korrektur früherer Angaben / Reproduktion gegen main 8d590d1 (Chromium, Playwright 1.64.1, lokaler Server):**
+  - `browser-booking-management.mjs` (Assertion „protected booking card uses full mobile row width“, `browser-booking-ui.mjs:50`): auf main **PASS**; auf dem PR-Stand b59d4e8 FAIL durch **meine** Buchungszeilen-CSS (44-px-Spalte links). Regel entfernt, jetzt PASS. Die frühere Aussage „auch auf main fehlschlagend“ war falsch.
+  - `cross-engine (1)` auf b59d4e8: `booking-transfer-browser-contract.mjs:10` „direct booking transfer action has a usable touch target“ – gleiche Ursache; `browser-transfer-states.mjs` lokal jetzt PASS (Chromium). CI-Bestätigung steht aus.
+  - `browser-accessibility-audit.mjs`: auf main **FAIL** (`label-content-name-mismatch` an `.donut-inner`); nach Behebung zusätzlich `#openCSVImport` (sichtbar „CSV-Import“ vs. aria-label „CSV importieren“) bei 1440 px. Beides reine Accessible-Name-/DOM-Reihenfolge-Korrekturen (`src/allocation-ui.js`, `index.html`), Allokationsberechnung unverändert; Audit jetzt 0 Verstöße.
+- `npm run check` PASS; `npm test` 1142 pass/0 fail. Weitere Browser-PASS (Chromium, Firefox wo unterstützt): loading-pwa, ui-alltag10, booking-management, accessibility-audit, ui-audit-controls, ui-small-rests, transfer-states (nur Chromium). Vollständige Release-Gates und WebKit: **nicht ausgeführt** (fehlende Bibliotheken). Keine Android-/TalkBack-Prüfung. Playwright lokal 1.64.1, CI 1.56.1.
 - Reduced-Motion-Loader: durch Test geprüft; kein separater Bewegungsbeleg abgelegt.
 
 ## Dateien
@@ -37,5 +40,8 @@ Unberührt: `sw.js`, Manifest, Versionen, Workflows, Finanz-/Import-/Speicherlog
 ## Hinweise für den Hauptowner
 
 - Falls das Release-Gate eine SW-Revision (`sw.js`) verlangt, ist das offen; nicht angefasst, Gate nicht abgeschwächt.
-- Entscheidung nötig: Ersatz der entfernten manuellen Installationshilfe (iOS/Safari).
+- Installationshilfe: Ohne `beforeinstallprompt` öffnet das Symbol (nicht Standalone, nicht nach `appinstalled`) einen kompakten Hilfedialog (iOS/Safari: Teilen → Zum Home-Bildschirm; sonst Browsermenü); Prompt weiterhin nur per Tap. Auf Mobil nur ein Symbol (Header), auf Desktop nur das Seitenkopf-Symbol.
+- Mehr (VISUAL02): einheitliche Aktionsanordnung ≤720 px (Einzelaktionen volle Breite, Paare geteilt, 44 px). Übrige Mehr-Bereiche gesichtet; kein weiterer konkreter Defekt belegt.
+- **Nicht bearbeitet / offen:** VISUAL03/04/05/06/08, #257-Parität, HERO-QUALITY03, UI-TEXT03–10 nur gesichtet (Screenshots `img/*-s-*.png`, `capture-states.mjs`), keine weiteren Änderungen; L07 Kurs-CSV: Quellkontext nicht eindeutig → Produktentscheidung nötig (nichts implementiert); 8-Breiten-×-200%-Sweep und Firefox-Vorher/Nachher nicht vollständig durchgeführt.
+- **CI-Integrationsschritt:** Job `test` scheitert am Gate „Require a service-worker cache revision“ (sw.js-Bump); vom Hauptowner bei Integration zu erledigen, nicht von mir verändert.
 - Vorher-/Nachher nur Chromium; Firefox-Bilder nicht erzeugt.

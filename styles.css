@@ -1944,3 +1944,15 @@
 
 /* Donut centre: DOM order matches the accessible name (label, share, total); visual order unchanged. */
 .donut-inner.allocation-center>small{order:2}
+
+/* One install icon per layout: the page-header icon on desktop, the mobile-header icon on phones. */
+@media(max-width:720px){#installButton.install-icon{display:none}}
+@media(min-width:721px){#installButtonMobile.install-icon{display:none}}
+
+/* UI-VISUAL02: consistent action arrangement in "Mehr" on phones – single actions span the card, pairs share the row. */
+@media(max-width:720px){
+ #morePage .button-row,#morePage .drive-backup-actions,#morePage .danger-zone,#morePage .drive-folder-options,#morePage .backup-password-form{display:grid;grid-template-columns:minmax(0,1fr)}
+ #morePage .button-row>.btn,#morePage #saveBackupPassword,#morePage #driveSaveNow,#morePage #driveFolderCreate,#morePage #deleteAll,#morePage #clearApiKeys,#morePage .advanced-apis.source-detail>.btn[form="apiSettings"]{width:100%;min-height:44px;justify-content:center;text-align:center;box-sizing:border-box;white-space:normal}
+ #morePage .drive-folder-actions>.btn{flex:1 1 0;min-width:0;min-height:44px}
+ #morePage .more-panel-help>#clearApiKeys{margin-top:8px}
+}

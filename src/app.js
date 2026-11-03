@@ -2565,9 +2565,9 @@ $('apiSettings').addEventListener('submit',async e=>{
  $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
  const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
-  window.addEventListener('appinstalled',()=>{installPrompt=null;updateInstallControls();notify('FolioLab wurde als App installiert.');});
+  window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
   document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
-   const prompt=installPrompt;if(!prompt)return;
+   const prompt=installPrompt;if(!prompt){showInstallHelp();return;}
    installPrompt=null;updateInstallControls();
    try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
   }));
@@ -2687,7 +2687,13 @@ if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127
  }).catch(()=>{});
 }
 const standaloneMedia=matchMedia('(display-mode: standalone)');
-function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,show=Boolean(installPrompt)&&!standalone;document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=!show;});}
+function installHelpHTML(){
+ const ua=navigator.userAgent||'',ios=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+ const steps=ios?'<li>In Safari unten oder oben auf „Teilen“ tippen.</li><li>„Zum Home-Bildschirm“ wählen.</li><li>Mit „Hinzufügen“ bestätigen.</li>':'<li>Im Browsermenü nach „App installieren“ oder „Zum Startbildschirm hinzufügen“ suchen.</li><li>Das Angebot bestätigen, falls es dein Browser anzeigt.</li>';
+ return '<p class="small-help">Dein Browser bietet keine direkte Installation aus FolioLab an. Die Installation ist optional; alle Daten bleiben lokal auf diesem Gerät.</p><ol class="small-help">'+steps+'</ol><p class="small-help">Eine installierte App und der Browser nutzen getrennten Speicher. Installiere nur, wenn du das bewusst möchtest, und sichere vorher ein Backup.</p>';
+}
+function showInstallHelp(){showDialog('FolioLab als App verwenden','INSTALLATION',installHelpHTML(),null,{readOnly:true});$('saveDialog').hidden=true;}
+function updateInstallControls(){const standalone=standaloneMedia.matches||navigator.standalone===true,direct=Boolean(installPrompt);document.querySelectorAll('[data-install-action]').forEach(button=>{button.hidden=standalone||document.documentElement.dataset.appInstalled==='1';const name=direct?'FolioLab als App installieren':'Installationshilfe: FolioLab als App verwenden';button.setAttribute('aria-label',name);button.title=name;button.dataset.installMode=direct?'prompt':'help';});}
 updateInstallControls();standaloneMedia.addEventListener('change',updateInstallControls);
 // The completed app owns unlocking; a missing watchdog asset must not trap it.
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;

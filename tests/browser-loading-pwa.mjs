@@ -30,15 +30,19 @@ for(const engine of engines){
   assert.equal(await p.title(),'FolioLab');
   assert.ok(await p.evaluate(async()=>{const {setLoading}=await import('./src/loading-ui.js');const a=document.createElement('p'),b=document.createElement('p');a.textContent='Kurse werden aktualisiert …';b.textContent='Wallet wird geprüft …';document.body.append(a,b);setLoading(a,true);setLoading(a,true);setLoading(b,true);const valid=a.querySelectorAll('svg').length===1&&a.getAttribute('role')==='status'&&a.querySelector('clipPath').id!==b.querySelector('clipPath').id;setLoading(a,false);const ended=!a.querySelector('svg')&&a.textContent==='Kurse werden aktualisiert …';a.remove();b.remove();return valid&&ended;}));
   await p.locator('#mobileNav [data-page="more"]').click();
-  // The large install card is gone; a compact icon exists only while a usable prompt is held and is never automatic.
-  assert.equal(await p.locator('#pwaHelp').count(),0);assert.equal(await p.locator('[data-install-action]:visible').count(),0);
+  // The large install card is gone. A compact icon always opens manual help; with a held prompt it installs, never automatically.
+  assert.equal(await p.locator('#pwaHelp').count(),0);
+  const install=p.locator('#installButtonMobile');assert.ok(await install.isVisible());assert.equal(await install.getAttribute('data-install-mode'),'help');assert.match(await install.getAttribute('aria-label'),/^Installationshilfe/);
+  assert.ok(await install.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.right<=innerWidth;}));
+  await install.click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');assert.equal(await p.locator('#saveDialog').isHidden(),true,'help dialog has no save action');
+  assert.ok(await p.locator('#dialogFields').innerText().then(t=>t.includes('Browsermenü')||t.includes('Teilen')));
+  await p.locator('#cancelDialog').click();assert.equal(await p.locator('#editDialog[open]').count(),0,'help dialog closes');
   assert.ok(await p.evaluate(()=>{window.__prompts=0;const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{window.__prompts++;};e.userChoice=Promise.resolve({outcome:'dismissed'});window.dispatchEvent(e);return e.defaultPrevented;}));
   assert.equal(await p.evaluate(()=>window.__prompts),0,'prompt must wait for a user tap');
-  const install=p.locator('#installButtonMobile');assert.ok(await install.isVisible());assert.equal(await install.getAttribute('aria-label'),'FolioLab als App installieren');
-  assert.ok(await install.evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44&&r.right<=innerWidth;}));
-  await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.equal(await p.locator('[data-install-action]:visible').count(),0,'icon hidden after use');
-  await p.evaluate(()=>{const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{};e.userChoice=Promise.resolve({outcome:'accepted'});window.dispatchEvent(e);});assert.ok(await install.isVisible());
+  assert.equal(await install.getAttribute('data-install-mode'),'prompt');assert.equal(await install.getAttribute('aria-label'),'FolioLab als App installieren');
+  await install.click();assert.equal(await p.evaluate(()=>window.__prompts),1);assert.equal(await install.getAttribute('data-install-mode'),'help','used prompt falls back to help');
   await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('[data-install-action]:visible').count(),0,'appinstalled hides icon');
+  await p.evaluate(()=>{delete document.documentElement.dataset.appInstalled;window.dispatchEvent(new Event('visibilitychange'));});
   await p.evaluate(()=>{Object.defineProperty(navigator,'standalone',{value:true,configurable:true});const e=new Event('beforeinstallprompt',{cancelable:true});e.prompt=async()=>{};e.userChoice=new Promise(()=>{});window.dispatchEvent(e);});assert.equal(await p.locator('[data-install-action]:visible').count(),0,'standalone hides icon');
   await p.evaluate(()=>{delete navigator.standalone;});
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
