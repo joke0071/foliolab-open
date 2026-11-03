@@ -1908,3 +1908,19 @@
 /* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */
 #csvBitpandaEconomic summary{min-height:45px;padding:12px 0;cursor:pointer;overflow-wrap:anywhere}
 #csvBitpandaEconomic summary:focus-visible{outline:2px solid #327f52;outline-offset:2px;border-radius:5px}
+
+/* UI-ALLTAG10 A: the left position symbol is the management selection control. */
+.selection-mark{position:relative;display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;min-height:44px;margin:0;padding:0;border-radius:12px;cursor:pointer}
+.selection-mark>input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.selection-mark .selection-glyph{position:relative;display:grid;place-items:center;width:100%;height:100%;border:2px solid #7f9c89;border-radius:inherit;background:#fff;color:#2d5d40}
+.selection-mark .selection-glyph svg{width:20px;height:20px}
+.selection-mark>input:checked+.selection-glyph{border-color:#267044;background:#e3f1e8}
+.selection-mark>input:checked+.selection-glyph::after{content:"\2713";position:absolute;right:-6px;bottom:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#267044;color:#fff;font-size:12px;font-weight:700;line-height:1}
+.selection-mark>input:focus-visible+.selection-glyph{outline:3px solid #1d4ed8;outline-offset:2px}
+#positionList .position-entry:has(.selection-mark)>.holding-row{grid-row:1}
+#positionList .position-entry .holding-l>.selection-mark{width:44px;height:44px}
+#positionList,#bookingList,#snapshotList{-webkit-touch-callout:none}
+#bookingList .booking-management-row:has(.booking-row-tools .selection-check){grid-template-columns:44px minmax(0,1fr);column-gap:4px;align-items:start}
+#bookingList .booking-management-row:has(.booking-row-tools .selection-check)>.booking-row-tools{grid-column:1;grid-row:1;min-height:44px;padding:0;justify-content:center}
+#bookingList .booking-management-row:has(.booking-row-tools .selection-check)>.booking-compact{grid-column:2;grid-row:1}
+#bookingList .booking-row-tools>.selection-check{padding:0;min-width:44px;justify-content:center}
