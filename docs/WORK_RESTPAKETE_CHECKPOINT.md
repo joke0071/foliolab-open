@@ -1,3 +1,11 @@
+## ACTIVE – b0d443b77469 / v276 Releaseabschluss – 03.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **b0d443b77469** nach vollständiger STOPPED-/HANDOVER_READY-Abgabe von40c3d1ac08bf und Nutzerauftrag zur Fortsetzung. Übergabe vollständig gelesen; Main29098c299bdf230ffd1d4e97ce34f0c2c129f38b / Treec176da53aec9ab98f571df3ec3b23bc574896658 frisch unverändert, nur historische Drafts157/161, 0laufende/0wartende Actions. Bestehender Run41703489364 einschließlich Livejob126162611933 jetzt SUCCESS; **v276 bleibt DEPLOYED, noch NICHT LIVE_ACCEPTED**, bis endgültige Logs/LiveZIP13266492978/Berichte/Bilder und regulärerTLS-142Assetbeleg geprüft sind. KeineActions neu gestartet/abgebrochen. v275 nicht erneut abnehmen.
+
+Private Originale/Flatexvorbereitung/WIP erreichbar; Übergabearchiv109Einträge und SHA256 bestätigt, keine ungesicherte zusätzliche Produktänderung laut Manifest. Vorgängerstand unverändert. NächsterSchritt: genau diesen finalen Releasebeleg auswerten, danach UH03→UH04→UH05. ETH-Brücke bereits integriert, Gesamthistoriepartial; keine erneute Screenshot-/CSV-Anforderung. v5/Identitäten/Journal/CAS/Backup/Restore und EFF01/HND01 erhalten. Zähler0LIVE_ACCEPTED/0fertigePakete. Nur GitHub-Plugin, keineBrowser-Logins; Checkpointbranch niemals vollständig nachMain mergen.
+
+---
+
 ## HANDOVER_READY – 40c3d1ac08bf STOPPED / v276 DEPLOYED, Live-Abnahme offen – 03.11.2026
 
 **40c3d1ac08bf gibt auf ausdrücklichen Nutzerauftrag die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und ist STOPPED.** Keine Folgeimplementierung begonnen; nach diesem Eintrag keine weiteren Produktänderungen/PRs/Merges/Deployments/Retry dieser Sitzung. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Hauptowner. Historische ACTIVE-Einträge darunter sind übersteuert.
