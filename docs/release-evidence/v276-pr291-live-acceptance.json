@@ -1,0 +1,82 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "b0d443b77469",
+  "release": "v276",
+  "main": "29098c299bdf230ffd1d4e97ce34f0c2c129f38b",
+  "tree": "c176da53aec9ab98f571df3ec3b23bc574896658",
+  "cache": "foliolab-open-v276",
+  "run": 41703489364,
+  "attempt": 1,
+  "conclusion": "success",
+  "deployJob": 126162113598,
+  "liveJob": 126162611933,
+  "units": {
+    "pass": 1158,
+    "fail": 0,
+    "skips": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "krakenScenariosPerEngine": [
+    "ethereum-bridge",
+    "bitcoin-bridge",
+    "distinct-fee",
+    "cross-reference",
+    "same-asset-fee"
+  ],
+  "liveArtifact": {
+    "id": 13266492978,
+    "bytes": 112343106,
+    "sha256": "e4b0ee1bcfa2bfae721376fc761cf71497ae1d966c6dd517d2650aa7f788dd27",
+    "apiAndUploadLogDigestMatch": true,
+    "zipIntegrity": "PASS",
+    "entries": 1163
+  },
+  "tls": {
+    "source": "GitHub Actions live/report.json in actual live ZIP; default regular certificate/hostname verification, no proxy certificate exception",
+    "proxyCertificateException": false,
+    "base": "https://foliolab.unperfekt.at/",
+    "assetHashChecks": 142,
+    "allMatchVerifiedPagesMainBytes": true,
+    "result": "PASS",
+    "errors": [],
+    "additionalLocalProbe": "88/142 matched; 54 local CONNECT proxy403, no observed byte difference; not a local full PASS"
+  },
+  "core": {
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "axeScans": 18,
+    "pageErrors": []
+  },
+  "visualReviewSHA256": {
+    "kraken-import/chromium-ethereum-bridge-390.png": "78525b74b7ca27272ed16480bb9902f9616205faf02e4f509d2c28b83f3542b1",
+    "kraken-import/firefox-ethereum-bridge-390.png": "4da9e886ac0e0eba34d3649ac6362ae048e84b50540e454204af4d7b62c7b864",
+    "kraken-import/webkit-ethereum-bridge-withdrawal-390.png": "531cdce9e8224f8292135bd4ec3853fe9b8504a4f61a87f65e195a2b53cd1322"
+  },
+  "inheritedEvidence": {
+    "finalPR": "v276-pr291-final-ci.json",
+    "qualification": "v276-eth-candidate-qualification.json",
+    "sevenMainArtifacts": "Verified by predecessor with existing ZIP/log/integrity files; not redownloaded",
+    "pagesMainByteMatches": "141/141 as inherited v276-pages-byte-check.json"
+  },
+  "guards": [
+    "v5 and data/install identity retained",
+    "journal/CAS/quota/post-put abort/undo/permanent source withdrawal/encrypted restore/offline PASS",
+    "source principal and distinct exchange fee once; recipient/flows unchanged",
+    "native ETH total history remains partial"
+  ],
+  "limits": [
+    "controlled openings and finalized-header fixture do not accept historical balances or live finalized-tag RPC",
+    "no hardware/OAuth/native Safari/TalkBack/IME acceptance",
+    "UH03 overall remains partial"
+  ]
+}
