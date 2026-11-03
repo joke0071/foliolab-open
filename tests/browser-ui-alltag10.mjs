@@ -54,6 +54,12 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await press(p,c.row);await p.locator(c.done).first().click();assert.equal(await selecting(),0,name+' immediate first Fertig works');
   if(c.open)assert.equal(await p.locator(c.open).isVisible(),false,name+' Fertig hides details');
   assert.equal(await p.locator(c.manage).evaluate(e=>document.activeElement===e),true,name+' Fertig focus');
+  // A layout change may put another row under the same lifting finger.
+  await press(p,c.row);
+  const shifted=await p.evaluate(({selector,detail})=>{const row=document.querySelector(selector.replace('-1"','-2"')),target=detail?row.querySelector('summary'):row,init={pointerId:101,pointerType:'touch',detail:1,bubbles:true,cancelable:true};return {contextMenu:target.dispatchEvent(new PointerEvent('contextmenu',init)),click:target.dispatchEvent(new PointerEvent('click',init))};},{selector:c.row,detail:Boolean(c.open)});
+  assert.deepEqual(shifted,{contextMenu:false,click:false},name+' same-gesture context menu/click stay blocked after row reflow');
+  if(c.open)assert.equal(await p.locator(c.open.replace('-1"','-2"')).evaluate(e=>e.open),false,name+' moved row details stay closed');
+  await p.locator(c.done).first().click();assert.equal(await selecting(),0);
   // real long press
   await press(p,c.row);await p.locator(c.box).first().waitFor();
   const ids=await checkedIds();assert.equal(ids.length,1,name+' exactly one selected');assert.match(ids[0],/-1$/,name+' pressed row selected');
@@ -74,6 +80,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   // axe
   const violations=await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id+':'+v.nodes.map(n=>n.target.join(' ')).join('|')));assert.deepEqual(violations,[],name+' axe');
   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),name+' no overflow');
+  await p.screenshot({path:'artifacts/gates/ui-alltag10/'+engine+'-'+name+'-390.png'});
   // Fertig leaves management without leftover checkboxes
   await p.locator(c.done).first().click();await p.waitForTimeout(300);assert.equal(await selecting(),0,name+' Fertig removes checkboxes');
   assert.equal(await p.locator(c.manage).count()>0,true,name+' Verwalten reachable again');
@@ -85,12 +92,17 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
  if(engine==='chromium'){
   // Real browser touch input via CDP (trusted events): long press selects, panning cancels.
   const cdp=await ctx.newCDPSession(p),touch=async(type,x,y)=>cdp.send('Input.dispatchTouchEvent',{type,touchPoints:type==='touchEnd'?[]:[{x,y,id:1}]});
+  await p.evaluate(()=>{globalThis.__realTouch=[];for(const type of ['pointerdown','pointerup','click'])window.addEventListener(type,e=>globalThis.__realTouch.push({type:e.type,pointerId:e.pointerId,pointerType:e.pointerType,detail:e.detail,x:e.clientX,y:e.clientY,target:e.target.className,row:e.target.closest?.('.position-entry')?.dataset.positionId,trusted:e.isTrusted}),true);});
+  const touchEvidence=async phase=>{const data=await p.evaluate(()=>({events:globalThis.__realTouch,open:[...document.querySelectorAll('.holding-expand[open]')].map(e=>e.closest('.position-entry').dataset.positionId),selected:[...document.querySelectorAll('[data-position-select]:checked')].map(e=>e.dataset.positionSelect)}));writeFileSync('artifacts/gates/ui-alltag10/chromium-real-touch-'+phase+'.json',JSON.stringify(data,null,2));await p.screenshot({path:'artifacts/gates/ui-alltag10/chromium-real-touch-'+phase+'.png'});};
   await nav(p,'positions');const target=p.locator('#positionList .position-entry .holding-row').nth(2);await target.evaluate(e=>e.scrollIntoView({block:'center'}));
   const box=await p.locator('#positionList .position-entry .holding-row').nth(2).boundingBox(),x=box.x+box.width/2,y=box.y+box.height/2;
   await touch('touchStart',x,y);await p.waitForTimeout(150);for(let i=1;i<=6;i++){await touch('touchMove',x,y-i*25);await p.waitForTimeout(40);}await p.waitForTimeout(700);await touch('touchEnd');
+  await touchEvidence('pan');
   assert.equal(await p.locator('[data-position-select]').count(),0,'real touch pan must not select');
+  assert.equal(await p.locator('.position-entry details.holding-expand[open]').count(),0,'real touch pan does not open details');
   await target.evaluate(e=>e.scrollIntoView({block:'center'}));const box2=await target.boundingBox(),x2=box2.x+box2.width/2,y2=box2.y+box2.height/2;
   await touch('touchStart',x2,y2);await p.waitForTimeout(700);await touch('touchEnd');await p.waitForTimeout(300);
+  await touchEvidence('press');
   assert.equal(await p.locator('[data-position-select]:checked').count(),1,'real touch long press selects exactly one');
   assert.equal(await p.locator('.position-entry details.holding-expand[open]').count(),0,'no details opened by the lifting finger');
   await p.locator('#positionListHead [data-action="cancel-selection"]').click();

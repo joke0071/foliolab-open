@@ -19,7 +19,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await p.locator('#mobileNav [data-page=more]:visible,#sidebarNav [data-page=more]:visible').click();
   const root=p.locator('#historicalPriceCSVTools'),select=root.locator('#priceCSVPosition');await revealAction(select);
   const before=await record();assert.equal(await select.inputValue(),'','No inferred position or source choice');assert.ok(await root.locator('[data-action=import-price-history]').isDisabled());
-  await select.selectOption('csv-a');assert.match(await root.innerText(),/IE00BK5BQT80.*EUR/);assert.deepEqual(await record(),before,'Choosing and reading a source is read-only');
+  await select.selectOption('csv-a');assert.match(await root.innerText(),/IE00BK5BQT80.*EUR/);for(const control of [select,root.locator('[data-action=import-price-history]')]){const box=await control.boundingBox();assert.ok(box.width>=44&&box.height>=44,'central CSV controls retain44px targets: '+JSON.stringify(box));}assert.deepEqual(await record(),before,'Choosing and reading a source is read-only');
   const upload=async(close,accept)=>{
    const chooser=p.waitForEvent('filechooser');await root.locator('[data-action=import-price-history]').click();
    const decision=new Promise((resolve,reject)=>p.once('dialog',async d=>{try{assert.equal(d.type(),'confirm');assert.match(d.message(),/SYNTHETIC csv-a/);await(accept?d.accept():d.dismiss());resolve();}catch(error){reject(error);}}));

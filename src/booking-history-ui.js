@@ -95,11 +95,15 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
  const cancel=()=>{clear();guard=null;pointers.clear();};
  const rowOf=target=>target?.closest?.(rowSelector);
  const isGuarded=target=>{const row=rowOf(target);return guard&&now()<guard.until&&row&&container.contains(row)&&idOf(row)===guard.id;};
+ const fromGesture=event=>guard&&now()<guard.until&&(
+  event.pointerId===guard.pointerId&&event.pointerType===guard.pointerType||
+  container.contains(event.target)&&Math.hypot(event.clientX-guard.x,event.clientY-guard.y)<=slop);
  const down=event=>{
+  // Any deliberate new pointer action supersedes the preceding gesture's click guard.
+  guard=null;
   if(event.pointerType==='mouse'||event.button>0)return;
   // A new primary touch starts a new gesture, including after a lost release.
   if(event.isPrimary&&!state)pointers.clear();
-  guard=null;
   pointers.add(event.pointerId);
   if(pointers.size>1){clear();return;}
   if(!container.contains(event.target)||!enabled()||event.target.closest(INTERACTIVE))return;
@@ -109,7 +113,7 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
   state={row,id,x:event.clientX,y:event.clientY,pointerId:event.pointerId,pointerType:event.pointerType,timer:setTimeout(()=>{
    const current=state;state=null;
    if(!current||!current.row.isConnected||!enabled())return;
-   guard={id:current.id,pointerId:current.pointerId,pointerType:current.pointerType,until:now()+HOLD_GUARD_MS};
+   guard={id:current.id,pointerId:current.pointerId,pointerType:current.pointerType,x:current.x,y:current.y,until:now()+HOLD_GUARD_MS};
    onLongPress(current.id,current.row);
   },delay)};
  };
@@ -121,7 +125,7 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
   if(event.pointerType==='mouse')return;
   pointers.delete(event.pointerId);
   if(state&&event.pointerId===state.pointerId)clear();
-  if(guard&&event.pointerId===guard.pointerId){if(event.type==='pointercancel')guard=null;else guard.until=now()+GHOST_CLICK_MS;}
+  if(guard&&event.pointerId===guard.pointerId&&event.pointerType===guard.pointerType){if(event.type==='pointercancel')guard=null;else{guard.until=now()+GHOST_CLICK_MS;guard.x=event.clientX;guard.y=event.clientY;}}
  };
  // Observe all touches: a second finger outside the list also cancels a pending press.
  // The pressed row is re-rendered, so release events must be observed on the document.
@@ -134,11 +138,12 @@ export function attachRowLongPress(container,{rowSelector,idOf,enabled,onLongPre
  // Any scroll in the page (capture) means the finger is panning, not pressing.
  window.addEventListener('scroll',clear,{capture:true,passive:true});
  window.addEventListener('blur',cancel);
- const contextMenu=event=>{if(state||isGuarded(event.target))event.preventDefault();};
+ const contextMenu=event=>{if(state||fromGesture(event)||isGuarded(event.target))event.preventDefault();};
  container.addEventListener('contextmenu',contextMenu);
- // Swallow only the originating row's touch click; unrelated actions and keyboard clicks work immediately.
+ // Re-rendering can move another row under the lifting finger. Match that same
+ // gesture too, while a deliberate new pointer action or keyboard click remains independent.
  const swallow=event=>{
-  if(event.detail===0||!isGuarded(event.target))return;
+  if(event.detail===0||!fromGesture(event)&&!isGuarded(event.target))return;
   guard=null;event.preventDefault();event.stopPropagation();event.stopImmediatePropagation();
  };
  document.addEventListener('click',swallow,true);
