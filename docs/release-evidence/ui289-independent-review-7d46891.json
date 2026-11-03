@@ -1,0 +1,47 @@
+{
+  "status": "PARTIAL_DELIVERY_NOT_ACCEPTED",
+  "pr": 289,
+  "head": "7d46891dbd8edc3cf7467032b4e7503505fe5a87",
+  "main": "8d590d19936403557ce75d59105da3a0fca1c7b5",
+  "files": 229,
+  "ci": {
+    "main": 41650831288,
+    "wallet": 41650831305,
+    "walletConclusion": "success",
+    "mainConclusion": "failure",
+    "failures": [
+      {
+        "job": 125968311305,
+        "test": "service-worker cache revision",
+        "cause": "Delegated task intentionally excludes SW bump; main owner must do it at integration. Gate unchanged."
+      },
+      {
+        "job": 125968311612,
+        "test": "browser-ui07-audit.mjs:40",
+        "error": "Firefox history page overflow at768px, scrollWidth795."
+      },
+      {
+        "job": 125968311756,
+        "test": "browser-flh03-abce.mjs:72",
+        "error": "768px empty UI overflow, scrollWidth795. Exact offending node installButton header-status-button install-icon, width44/right795."
+      },
+      {
+        "job": 125968313125,
+        "test": "browser-chart-tooltip.mjs:84",
+        "error": "page overflow768."
+      }
+    ]
+  },
+  "review": "Read actual production-file patches and updated report; presentation/selection/PWA changes, allocation diff is accessible-name/DOM text ordering, no allocation calculation change observed. No UI branch mutation or independent acceptance performed during frozen PR290 release path.",
+  "next": "Investigate header layout width and install-control placement at768px against exact current main/PR in identical browser environment; preserve strict overflow/target/Axe checks. Independently inspect all actual delivered interactions/screenshots and scope exclusions, use final delivered HEAD only, then integrate at a conflict-free point with SW bump and full required gates.",
+  "openPackages": [
+    "VISUAL03/04/05/06/08",
+    "257 parity",
+    "HERO-QUALITY03",
+    "UI-TEXT03–10",
+    "L07 context decision",
+    "real Android/TalkBack",
+    "Firefox before/after and full200% sweep"
+  ],
+  "boundary": "No automatic reassignment, duplicate UI implementation, merge, deploy, overall issue closure or main checkpoint changes by Copilot."
+}
