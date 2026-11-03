@@ -1,0 +1,115 @@
+{
+  "owner": "cb8a6d16f52c",
+  "main": "0765bab7cfcefae22ea47d12a80aaebd2a676314",
+  "tree": "39553b20b1f944bf5c06ffc37d9054df2392e07e",
+  "run": 41659731322,
+  "liveJob": 126009524874,
+  "status": "LIVE_ACCEPTED",
+  "artifacts": [
+    {
+      "id": 13243959461,
+      "name": "production-live-acceptance-0765bab7cfcefae22ea47d12a80aaebd2a676314",
+      "digest": "sha256:296398618966c29aa24693b4e6f04e9e8c508196e47c8565bcb35680eabca1b5",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13243890274,
+      "name": "github-pages",
+      "digest": "sha256:053807d317327fb4ac0eb01f70e2d36f83cf76791cbecce001719b78e1e65b79",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13243215617,
+      "name": "cross-engine-gates-0765bab7cfcefae22ea47d12a80aaebd2a676314-3",
+      "digest": "sha256:b0c9e5472ab0ba9ef0da318e329469920e200b405c5f38b5f9288a8ca97a4d27",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13242935767,
+      "name": "cross-engine-gates-0765bab7cfcefae22ea47d12a80aaebd2a676314-1",
+      "digest": "sha256:1afbaa06f79927b892d5e9545119fa60d81183353d09f564ac24926abbe38964",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13242292003,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:c7651be44a6b64c77d687ed9d8b9a619360e83bcc74d07b62bb6e5c8d234b164",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13241698317,
+      "name": "release-gates-0765bab7cfcefae22ea47d12a80aaebd2a676314",
+      "digest": "sha256:3010e6fe82d6cdfdba00a6a303b728c44f1a06d48d07299549de563024c3dfcc",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13241561555,
+      "name": "ci-stage-0765bab7cfcefae22ea47d12a80aaebd2a676314",
+      "digest": "sha256:d1d3859a832c74024fec1f359d88fe7ad624189240132dd7b10c43899b386136",
+      "matchedUploadLog": true
+    },
+    {
+      "id": 13240954654,
+      "name": "cross-engine-gates-0765bab7cfcefae22ea47d12a80aaebd2a676314-2",
+      "digest": "sha256:cec6633c5dd246007fcb4cd890913e638423da4d475a5d043959a846a2bcfb1a",
+      "matchedUploadLog": true
+    }
+  ],
+  "cross3": {
+    "downloaded": true,
+    "bytes": 50558348,
+    "sha256": "b0c9e5472ab0ba9ef0da318e329469920e200b405c5f38b5f9288a8ca97a4d27",
+    "entries": 586,
+    "integrity": "PASS",
+    "imagesViewed": [
+      "bitpanda-import/firefox-withdrawal-390.png",
+      "bitpanda-import/webkit-withdrawal-390.png"
+    ]
+  },
+  "units": {
+    "tests": 1148,
+    "pass": 1148,
+    "fail": 0,
+    "skipped": 0
+  },
+  "https": {
+    "matches": 141,
+    "total": 141,
+    "certificateValidation": "default"
+  },
+  "liveResult": "SUCCESS",
+  "liveArtifact": {
+    "id": 13243959461,
+    "bytes": 94916572,
+    "sha256": "296398618966c29aa24693b4e6f04e9e8c508196e47c8565bcb35680eabca1b5",
+    "entries": 1081,
+    "zipIntegrity": "PASS",
+    "downloaded": true,
+    "imagesViewed": [
+      "bitpanda-import/chromium-withdrawal-390.png",
+      "bitpanda-import/webkit-withdrawal-390.png"
+    ]
+  },
+  "live": {
+    "groups": 6,
+    "axe": 18,
+    "assetMatches": 141,
+    "pageErrors": 0,
+    "certificateException": false,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "scope": "Full workflow-required new production gates including Bitpanda persistent terminal withdrawal, all existing Kraken cases, transfer preview/consent/CAS/Undo, encrypted restore and actual offline PWA"
+  },
+  "finalServiceWorker": {
+    "sha256": "951305afcb038ab32736b01d56ae682bf6a623abe1b06cabaeafff4e1cbcc388",
+    "normalTLSByteMatch": true
+  },
+  "privateEvidence": "/workspace/scratch/cb8a6d16f52c/private/",
+  "limits": [
+    "No independent historical full-balance acceptance",
+    "No physical Android/TalkBack acceptance"
+  ]
+}
