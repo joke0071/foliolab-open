@@ -15,7 +15,7 @@
 +}
 --- a/tests/browser-ui-textscale.mjs
 +++ b/tests/browser-ui-textscale.mjs
-@@ -27,6 +27,13 @@
+@@ -27,6 +27,14 @@
      try{
       await p.screenshot({path:'artifacts/gates/ui-textscale/'+engine+'-'+width+'-'+tab+'-'+mode+'.png',fullPage:true});
       assert.ok(result.scroll<=width+1,engine+' '+tab+' '+mode+' 200% text: '+JSON.stringify(result));
@@ -23,9 +23,51 @@
 +      const summary=row.querySelector(':scope>details>summary'),edit=row.querySelector(':scope>.detail-edit');
 +      if(!summary||!edit)return [];
 +      const a=summary.getBoundingClientRect(),b=edit.getBoundingClientRect(),text=document.createRange();text.selectNodeContents(summary);
-+      return [{separate:a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top,textInside:[...text.getClientRects()].every(r=>r.left>=a.left-1&&r.right<=a.right+1),editInside:b.right<=row.getBoundingClientRect().right+1}];
++      return [{separate:a.right<=b.left||b.right<=a.left||a.bottom<=b.top||b.bottom<=a.top,textInside:[...text.getClientRects()].every(r=>r.left>=a.left-1&&r.right<=a.right+1),editInside:b.right<=row.getBoundingClientRect().right+1,usable:a.width>=44&&a.height>=44&&b.width>=44&&b.height>=44}];
 +     }));
-+     assert.ok(detailTargets.every(t=>t.separate&&t.textInside&&t.editInside),engine+' '+tab+' '+mode+' enlarged detail/edit targets and text remain separate: '+JSON.stringify(detailTargets));
++     if(mode==='management'&&['positions','bookings'].includes(tab))assert.ok(detailTargets.length>0,'Enlarged management details and editors remain present');
++     assert.ok(detailTargets.every(t=>t.separate&&t.textInside&&t.editInside&&t.usable),engine+' '+tab+' '+mode+' enlarged detail/edit targets and text remain separate: '+JSON.stringify(detailTargets));
       results.push({engine,width,tab,mode,result:'PASS'});
      }finally{await p.evaluate(()=>{globalThis.__restoreFontScale();delete globalThis.__restoreFontScale;});}
     }
+--- a/tests/browser-position-details.mjs
++++ b/tests/browser-position-details.mjs
+@@ -25,6 +25,7 @@
+  assert.match(summary,/EODHD/);assert.match(summary,/21/);
+  assert.doesNotMatch(summary,/15\.10/,'Do not print edit date as another quote date');
+  assert.equal(await entry.locator('.holding-facts').isVisible(),false);
++ await manageList(page,'positions');
+  await entry.locator('summary').click();
+  assert.equal(await entry.locator('.holding-facts').isVisible(),true);
+  const details=await entry.locator('.holding-facts').innerText();
+@@ -35,6 +36,9 @@
+   await page.setViewportSize({width,height:850});
+   const nav=await page.locator('#mobileNav').isVisible()?'#mobileNav':'#sidebarNav';
+   await page.locator(nav+' [data-page="positions"]').click();
++  await manageList(page,'positions');
++  if(!await entry.locator('.holding-expand').evaluate(el=>el.open))await entry.locator('summary').click();
++  assert.equal(await entry.locator('.holding-facts').isVisible(),true,'Managed position facts remain reachable at '+width);
+   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
+   assert.ok(overflow<=1,'Holding details overflow at '+width+': '+overflow);
+  }
+@@ -102,6 +106,7 @@
+   const db=await openPortfolioDB();try{return await readPortfolioRecord(db);}finally{db.close();}
+  });
+  const beforeFacts=await record();
++ await manageList(page,'positions');
+  const quoteCases=[
+   ['missing-quote','Nicht verfügbar','Unbekannt'],
+   ['zero-quote','0 EUR','Manuell'],
+--- a/docs/ui-copilot-2026-11-03/REPORT.md
++++ b/docs/ui-copilot-2026-11-03/REPORT.md
+@@ -45,3 +45,9 @@
+ Kandidat `c1e72a8`, Lauf `41672608218`: Chromium scheiterte im echten CDP-Touchfall an „no details opened by the lifting finger“ (1 statt 0). Der Schutz darf nach dem Verwaltungs-Reflow nicht nur die vorherige Zeilen-ID betrachten: Der Abschluss derselben Geste kann ein anderes Detailziel treffen. Die Korrektur bindet den Abschluss zusätzlich an Pointer-ID/-Typ beziehungsweise die Release-Koordinaten; eine neue bewusste Pointeraktion ersetzt den Guard, Tastaturaktionen bleiben unabhängig. Ein zusätzlicher synthetischer Reflowfall und aufbewahrte echte Pointer-/Klick-/Bildbelege ergänzen die unveränderte strenge Chromium-Assertion. Keine laufende CI wird für diese lokale Korrektur abgebrochen oder ersetzt. Finale Abnahme bleibt offen.
+ 
+ Der zusätzliche WebKit-Cross2-Befund betraf die veraltete Assertion, die Auswahl müsse oberhalb des Zeileninhalts liegen (`browser-position-removal.mjs`). Sie wird durch strengere zielgerechte Geometrie ersetzt: exakt eine Checkbox im vorhandenen linken Symbol, innerhalb der Holding-Zeile, links vom Namen und mindestens44px. Keine wirtschaftliche Assertion des Entfernungsablaufs wird entfernt oder reduziert.
++
++## Weiterer unabhängiger Integrationsreview
++
++Die tatsächliche 200%-Textsichtung bei 320px zeigte eine Überlappung von Detailbeschriftung und „Bearbeiten“, obwohl die Seite nicht horizontal überlief. Die Platzreserve richtet sich jetzt nach der Schriftgröße; bei zu wenig Platz stehen die Aktionen untereinander. Die zusätzliche Browserassertion verlangt vorhandene, getrennte 44px-Ziele, vollständig innerhalb der Detailfläche liegenden Text und einen Bearbeitenbutton innerhalb der Zeile. Sie reproduziert den Fehler mit dem alten CSS und besteht mit der Korrektur in Chromium und WebKit. Kein Nachweis für reale Geräte oder Betriebssystem-Textskalierung.
++
++Zwei Schlüsseltests wählen den Sicherheitsaufklapper ausdrücklich über seine vorhandene Schlüssel-Löschaktion, seit unter „Automatische Kurse“ auch Kurs-CSV-Werkzeuge stehen. Der separate Positionsdetailtest verwendet vor dem Öffnen „Verwalten“ und prüft geöffnete präzise Fakten an allen sieben Breiten. Schlüsselwiderruf, unverändertes Portfolio, Lösch-/Referenzschutz, exakte Quellen und Preise sowie der IndexedDB-Abgleich bleiben vollständig erhalten. Die ersten beiden Kandidatenläufe bleiben als tatsächliche Fehlerbelege dokumentiert; keine blinden Retries oder Abschwächung von Fristen und Assertions.
+
