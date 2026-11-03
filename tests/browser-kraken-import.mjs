@@ -58,7 +58,7 @@ for(const engine of (process.env.HISTORY_ENGINES||'chromium').split(',')){
   // Persistent selective economic rollback through the same actual dialog/CAS boundary.
   const sourceGroups=prepareKrakenSourcePlan([source()]).groups,removedGroup=(scenario.groups?sourceGroups.find(g=>g.rows.some(r=>r.values.refid==='SYN-CROSS-FIRST')):sourceGroups[0]).id;
   await open();await clickDisclosed(page.locator('[data-kraken="operation"]'));
-  await page.locator('[data-kraken="operation"]').selectOption('withdraw');
+  await page.locator('[data-kraken="operation"]').selectOption('withdraw');assert.equal(await page.locator('[data-kraken="opening"]').isHidden(),true);
   for(const box of await page.locator('[data-kraken-group]').all())if(await box.getAttribute('data-kraken-group')!==removedGroup)await box.uncheck();
   await page.locator('[data-kraken="simulate"]').click();await page.locator('[data-kraken="status"]').filter({hasText:'1 Gruppe rücknehmbar'}).waitFor();
   assert.deepEqual(await read(),saved);

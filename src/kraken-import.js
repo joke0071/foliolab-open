@@ -262,6 +262,19 @@ export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
   if(after<0n)throw Error('Rücknahme würde einen negativen Bestand erzeugen.');
   changes.push({positionId,before:exact(before),after:exact(after),delta:exact(-delta)});p.quantityExact=exact(after);p.quantity=Number(p.quantityExact);
  }
+ // A coherent journal alone does not prove that a later edited opening still
+ // belongs to this original export. Anchor both sides of the inverse to the
+ // original exact stream balances, never to a changed observed baseline.
+ const sourceGroup=plan.source.groups.find(g=>g.id===id),streams=new Map();
+ for(const row of sourceGroup.rows){
+  const p=position(draft,row,assignments),opening=draft.openingPositions.find(o=>o.positionId===p.id);
+  if(opening.asOf&&opening.asOf>row.values.time.slice(0,10))throw Error('Geänderter datierter Anfangsbestand liegt nach der Originalgruppe.');
+  if(!streams.has(p.id))streams.set(p.id,[]);streams.get(p.id).push(row);
+ }
+ for(const [positionId,rows] of streams){
+  const trail=krakenBalanceTrail(rows,qty(draft.positions.find(p=>p.id===positionId)));
+  if(units(trail.at(-1).balanceExact)!==qty(model.positions.find(p=>p.id===positionId)))throw Error('Aktueller Bestand widerspricht dem unveränderten Kraken-Endsaldo der Gruppe.');
+ }
  if(draft.bookingPresentation)setArchivePresentation(draft,{bookingIds:draft.bookingPresentation.archivedIds.filter(id=>!ids.has(id))});
  if(!ledgerQuantityAudit(draft).ok)throw Error('Rücknahme widerspricht dem vollständigen chronologischen Journal.');
  return {baseline,group:id,originals,changes,simulated:draft,excluded:plan.excluded};

@@ -36,7 +36,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
   el('more').hidden=limit>=source.groups.length;el('more').classList.toggle('hidden',limit>=source.groups.length);
  }
  el('more-bindings').onclick=()=>{const previous=bindingLimit;bindingLimit+=20;renderBindings();host.querySelectorAll('[data-kraken-binding]')[previous]?.focus();};
- el('opening').onchange=invalidate;el('operation').onchange=()=>{el('opening').closest('label').hidden=el('operation').value==='withdraw';invalidate();};
+ el('opening').onchange=invalidate;el('operation').onchange=()=>{const label=el('opening').closest('label'),withdraw=el('operation').value==='withdraw';label.hidden=withdraw;label.classList.toggle('hidden',withdraw);invalidate();};
  el('partial').onchange=()=>{approved=false;el('approve').checked=false;notify();};
  el('approve').onchange=()=>{approved=el('approve').checked;notify();};
  el('simulate').onclick=()=>{

@@ -87,3 +87,11 @@ test('tampered persistent withdrawal is rejected on backup and restore; no orpha
  ]){const raw=structuredClone(end);change(raw.journalEntries[0]);assert.throws(()=>backup(raw));assert.throws(()=>safeImport(raw));}
  const raw=structuredClone(end);raw.bookings.push(raw.journalEntries[0].krakenWithdrawal.originals[0].booking);assert.throws(()=>backup(raw));assert.throws(()=>safeImport(raw));
 });
+
+test('changed opening quantity and later dated opening cannot authorize a source-anchored inverse',()=>{
+ const f=imported();
+ for(const change of [m=>{m.positions[0].quantityExact='101';m.positions[0].quantity=101;m.openingPositions[0].quantityExact='201';},m=>{m.openingPositions[0].asOf='2026-11-03';}]){
+  const m=structuredClone(f.next);change(m);assert.equal(ledgerQuantityAudit(m).ok,true);const before=JSON.stringify(m);
+  assert.throws(()=>previewKrakenWithdrawal(m,[f.text],f.assignments,options(f)),/Quellsaldo|Anfangsbestand/);assert.equal(JSON.stringify(m),before);
+ }
+});
