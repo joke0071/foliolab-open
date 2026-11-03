@@ -1,0 +1,22 @@
+{
+  "status": "LOCAL_CANDIDATE_NOT_LIVE_ACCEPTED",
+  "base": "8d590d19936403557ce75d59105da3a0fca1c7b5",
+  "baseRelease": "v273 LIVE_ACCEPTED",
+  "candidateCache": "foliolab-open-v274",
+  "scope": "One complete unchanged terminal native Bitpanda economic group can be withdrawn through the existing shared CSV dialog. All quantity/cash/fee legs reversed once; original group and independent before/after control confirmations remain in a validated documentary journal tombstone. Reload/restore/reimport cannot silently resurrect it.",
+  "boundaries": [
+    "No source detach, generic booking-delete eligibility change, wallet-quantity replay or new exchange-chain bridge.",
+    "Explicit matching current and post-withdrawal controls for every affected position; their independent origin must be checked by the user. Bitpanda has no running source balances.",
+    "Later/foreign/dependent/modified groups, unknown fields, protected basis/results, negative balances and incompatible openings remain blocked.",
+    "v5 and existing identity/storage/CAS/backup contracts preserved. No overall UH03 or historical balance acceptance."
+  ],
+  "local": {
+    "fullSerialUnits": "1148 PASS, zero failures/skips; six new focused withdrawal cases, existing Bitpanda import and SW/manifest tests retained.",
+    "syntax": "npm run check and git diff --check PASS",
+    "browser": "Actual WebKit27.2 shared-dialog import and persistent withdrawal. Independent before/after control inputs, partial-selection consent, source/quantity effects, seven widths/Axe, approval change during revision check, quota, real post-put success then transaction abort, stale CAS, whole-operation Undo, reload/reimport block, encrypted restore and real controlled offline PWA PASS. Mobile withdrawal image visually inspected.",
+    "environment": "Node24.22.1/Playwright1.64.1/WebKit27.2 with preserved private runtime libraries. Local host package preflight skipped because libraries are outside system paths; actual browser executed. No product/workflow/TLS/assertion/timeout exception and no local Chromium success claimed.",
+    "original": "One unchanged native 17-field original DOT reward checked against an independent Python Decimal90 oracle with isolated explicitly synthetic opening/control balance. Exact reversal, retained original, restore/reimport block PASS. This does not prove a historical Bitpanda balance. Original identities and values remain private.",
+    "diagnosticHistory": "First new test attempted inline Axe injection, rejected correctly by CSP; fixed test to load self-origin script without changing CSP. Abort-fixture initially expected only DOM AbortError; existing storage contract returns a specific generic abort error when tx.error is null. Final test requires actual successful put followed by abort, exact record preservation and the existing documented abort errors. Original failure logs retained privately."
+  },
+  "requiredNext": "Freeze exact candidate; complete unchanged mandatory PR/Crossbrowser/Wallet gates, inspect logs/artifacts/reviews/main/owner/tree, then SHA-protected merge and new actual main/deployment/live acceptance. Existing UI288/289 remains externally reserved."
+}

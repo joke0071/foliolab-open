@@ -1,10 +1,12 @@
 /** UH03: native source observations orchestrate the existing journal only. */
 import {parseBitpandaCSV,canonicalBitpandaType} from './bitpanda-preview.js';
 import {sourceDigest,importSourceKey,sourceUnmodified,bookingOwnership,validateImportSource} from './import-identity.js';
-import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
+import {executeTransaction,ledgerQuantityAudit,validateJournalEntry,nextJournalSequence} from './transactions.js';
+import {BITPANDA_SOURCE,bitpandaWithdrawalId,bitpandaWithdrawalDigest,validateBitpandaWithdrawals} from './bitpanda-withdrawal-evidence.js';
+import {setArchivePresentation} from './booking-history.js';
 import {units,exact,div} from './decimal.js';
 import {backup,safeImport} from './model.js';
-export const BITPANDA_SOURCE='bitpanda-uh03-v1';
+export {BITPANDA_SOURCE};
 const digest=v=>sourceDigest(JSON.stringify(v));
 const fail=message=>{throw Error(message);};
 const qty=p=>units(p.quantityExact??p.quantity);
@@ -88,6 +90,7 @@ export function previewBitpandaImport(model,inputs,assignments,options={}){
  if(providers.size>1)fail('Bitpanda-Quellprodukte müssen zum selben Anbieter gehören.');
  const draft=structuredClone(model),groups=[],issues=[],touched=new Set();let ready=0,duplicates=0;
  for(const row of selected){try{
+  if(draft.journalEntries.some(j=>j.id===bitpandaWithdrawalId(row.id)))fail('Dieser Bitpanda-Vorgang wurde dauerhaft zurückgenommen. Kein automatischer Wiederimport.');
   const actions=actionsFor(draft,row,assignments,options),bindings=[...new Set([row.streamId,row.cashStreamId].filter(Boolean))].map(k=>[k,assignments[k]]).sort((a,b)=>a[0].localeCompare(b[0]));
   const origins=actions.map((a,i)=>({version:1,sourceId:BITPANDA_SOURCE,accountId:draft.positions.find(p=>p.id===a.positionId).accountId,externalId:row.id+':'+i,fileId:row.id,occurrence:1,ownership:'imported',ownedSnapshot:'',sourcePayload:JSON.stringify({source:row.payload,bindings,feeMode:options.feeModes?.[row.id]??null,netConfirmed:true,external:options.externalReferences?.includes(row.id)??false,action:a})}));
   const prior=draft.bookings.filter(b=>b.importSource?.sourceId===BITPANDA_SOURCE&&b.importSource.fileId===row.id);
@@ -120,10 +123,64 @@ export function previewBitpandaImport(model,inputs,assignments,options={}){
  return {baseline,source,groups,issues,ready,duplicates,excluded:source.groups.length-selected.length,simulated:draft};
 }
 export function confirmBitpandaImport(model,inputs,assignments,{baseline,confirmed=false,partialConfirmed=false,...options}={}){
+ if(options.operation==='withdraw')return confirmBitpandaWithdrawal(model,inputs,assignments,{...options,baseline,confirmed,partialConfirmed});
+ if(options.operation!==undefined&&options.operation!=='import')fail('Unbekannter Bitpanda-Vorgang.');
  if(!confirmed||baseline!==JSON.stringify(model))fail('Aktuellen Bitpanda-Prüfplan erneut bestätigen.');
  const plan=previewBitpandaImport(model,inputs,assignments,options);
  if(plan.issues.length)fail('Ungeklärte Vorgänge oder Endbestände verhindern die gesamte Auswahl.');
  if(plan.excluded&&!partialConfirmed)fail('Nicht ausgewählte Restvorgänge ausdrücklich offen lassen.');
  if(!plan.ready)return model;
  safeImport(JSON.parse(backup(plan.simulated)));return plan.simulated;
+}
+
+/** One complete terminal native group; both control balances are explicit and exact.
+ * Bitpanda has no running source balances. These user-supplied controls must come
+ * from independent records, never from an invented historical opening balance.
+ */
+export function previewBitpandaWithdrawal(model,inputs,assignments,options={}){
+ const baseline=JSON.stringify(model),{selectedGroups,expectedClosing={},expectedRestored={},controlsConfirmed=false}=options;
+ if(!Array.isArray(selectedGroups)||selectedGroups.length!==1)fail('Genau einen vollständigen Bitpanda-Vorgang zur Rücknahme auswählen.');
+ if(!controlsConfirmed)fail('Aktuellen Bestand und Bestand nach Rücknahme anhand unabhängiger Belege ausdrücklich bestätigen.');
+ safeImport(JSON.parse(backup(model)));validateBitpandaWithdrawals(model);
+ const plan=previewBitpandaImport(model,inputs,assignments,options),group=plan.groups[0];
+ if(plan.issues.length||group?.status!=='existing'||plan.duplicates!==1)fail('Vollständiger unveränderter Originalvorgang erforderlich. '+(plan.issues[0]?.message||''));
+ const id=selectedGroups[0],originals=group.actions.map((_,i)=>{
+  const booking=model.bookings.find(b=>b.id==='uh03bp:'+id+':'+i),journal=model.journalEntries.find(j=>j.id===booking?.journalEntryId);
+  if(!booking||!journal||journal.id!==booking.id||journal.source!==BITPANDA_SOURCE||!sourceUnmodified(model,booking)||booking.transferMatch)fail('Bitpanda-Vorgang wurde geändert oder ist verknüpft.');
+  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
+  if(Object.keys(booking).some(k=>!knownBooking.includes(k))||Object.keys(journal).some(k=>!knownJournal.includes(k))||journal.postings.some(p=>Object.keys(p).some(k=>!knownPosting.includes(k)))||!Number.isSafeInteger(journal.sequence))fail('Unbekannte Vorgangsfelder oder Journalreihenfolge zuerst abgleichen.');
+  return structuredClone({booking,journal,flows:model.externalCashFlows.filter(f=>f.id===booking.id)});
+ });
+ const ids=new Set(originals.map(o=>o.booking.id)),touched=new Set(originals.flatMap(o=>o.journal.postings.filter(p=>p.quantityDeltaExact!=null).map(p=>p.positionId))),targets=[id,...ids,...originals.flatMap(o=>o.journal.postings.map(p=>p.id))];
+ let nodes=0;const references=(v,depth=0)=>{
+  if(++nodes>200000||depth>64)fail('Referenzprüfung überschreitet das sichere Prüflimit.');
+  return typeof v==='string'?targets.some(id=>v.includes(id)):v&&typeof v==='object'?Object.entries(v).some(([k,v])=>targets.includes(k)||references(v,depth+1)):false;
+ };
+ const draft=structuredClone(model);
+ draft.bookings=draft.bookings.filter(b=>!ids.has(b.id));draft.journalEntries=draft.journalEntries.filter(j=>!ids.has(j.id));draft.externalCashFlows=draft.externalCashFlows.filter(f=>!ids.has(f.id));
+ if(references({...draft,bookingPresentation:undefined}))fail('Weitere Quellen oder abhängige Nachweise verhindern die isolierte Rücknahme.');
+ const first=Math.min(...originals.map(o=>o.journal.sequence)),date=originals[0].booking.date;
+ for(const j of draft.journalEntries.filter(j=>j.postings.some(p=>touched.has(p.positionId)))){
+  if(j.source!==BITPANDA_SOURCE||!Number.isSafeInteger(j.sequence)||j.sequence>=first||j.date>date)fail('Spätere oder fremde Buchungen im betroffenen Quellbereich zuerst abgleichen.');
+  const b=draft.bookings.find(b=>b.journalEntryId===j.id);if(!b||!sourceUnmodified(draft,b))fail('Frühere Quellbuchungen wurden geändert.');
+ }
+ const changes=[];
+ for(const positionId of touched){
+  const p=draft.positions.find(p=>p.id===positionId),opening=draft.openingPositions.find(o=>o.positionId===positionId);
+  if(!p||p.wallet?.enabled||p.managementSource==='wallet'||p.currency!=='EUR'||!['cash','crypto'].includes(p.kind)||!opening||opening.asOf&&opening.asOf>date||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,opening.costBasisExact,opening.realizedPnLExact].some(v=>v!=null))fail('Wallet, Anfangsbestand oder bestätigte Kosten-/Ergebniswerte bleiben geschützt.');
+  const delta=originals.reduce((n,o)=>n+o.journal.postings.filter(p=>p.positionId===positionId&&p.quantityDeltaExact!=null).reduce((n,p)=>n+units(p.quantityDeltaExact),0n),0n),before=qty(p),after=before-delta;
+  if(after<0n||expectedClosing[positionId]==null||expectedClosing[positionId]===''||expectedRestored[positionId]==null||expectedRestored[positionId]===''||units(expectedClosing[positionId])!==before||units(expectedRestored[positionId])!==after)fail('Unabhängig belegte aktuelle und rückgenommene Kontrollbestände müssen für jeden betroffenen Bereich exakt übereinstimmen.');
+  changes.push({positionId,before:exact(before),after:exact(after),delta:exact(-delta)});p.quantityExact=exact(after);p.quantity=Number(p.quantityExact);
+ }
+ if(draft.bookingPresentation)setArchivePresentation(draft,{bookingIds:draft.bookingPresentation.archivedIds.filter(id=>!ids.has(id))});
+ if(!ledgerQuantityAudit(draft).ok)fail('Rücknahme widerspricht dem vollständigen chronologischen Journal.');
+ return {baseline,group:id,originals,changes,simulated:draft,excluded:plan.excluded};
+}
+export function confirmBitpandaWithdrawal(model,inputs,assignments,{baseline,confirmed=false,partialConfirmed=false,at=new Date().toISOString(),...options}={}){
+ if(!confirmed||baseline!==JSON.stringify(model))fail('Aktuelle Bitpanda-Rücknahme erneut prüfen und bestätigen.');
+ const plan=previewBitpandaWithdrawal(model,inputs,assignments,options);
+ if(plan.excluded&&!partialConfirmed)fail('Nicht ausgewählte Restvorgänge ausdrücklich offen lassen.');
+ const draft=plan.simulated,id=bitpandaWithdrawalId(plan.group);
+ draft.journalEntries.push(validateJournalEntry({id,type:'bitpanda-undo',date:at.slice(0,10),recordedAt:at,sequence:nextJournalSequence(model),source:BITPANDA_SOURCE,status:'removed',postings:[{id:id+':documentation',role:'documentation',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:'0'}],bitpandaWithdrawal:{version:1,group:plan.group,originals:plan.originals,checks:plan.changes,digest:bitpandaWithdrawalDigest([plan.originals,plan.changes])}}));
+ draft.version=5;validateBitpandaWithdrawals(draft);safeImport(JSON.parse(backup(draft)));return draft;
 }
