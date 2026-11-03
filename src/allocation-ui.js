@@ -7,7 +7,8 @@ export function formatAllocationShare(value){
 }
 /** Pie shares represent positive asset values, never net worth after liabilities. */
 /** Accessible name always starts with the visible label and share (WCAG 2.5.3). */
-export function allocationCenterName(label,share,value,incomplete=false){return label+', '+share+': '+value+' · '+(incomplete?'Bekannte Werte anzeigen':'Gesamtwert des Portfolios anzeigen');}
+// Visible text order is label, share, total; the name repeats it so it contains the visible text (WCAG 2.5.3).
+export function allocationCenterName(label,share,value,incomplete=false,visible=''){return label+', '+share+': '+(visible&&visible!==value?visible+' ('+value+')':value)+' · '+(incomplete?'Bekannte Werte anzeigen':'Gesamtwert des Portfolios anzeigen');}
 export function allocationBreakdown(model,valueEUR,types){
  const byKind=new Map(Object.keys(types).map(key=>[key,0]));
  let gross=0,liabilities=0;
@@ -46,9 +47,9 @@ export function renderAllocationDonut(data,{money,esc,colors,netTotal,selectedKe
  const share=chosen?formatAllocationShare(chosen.percent):valuation?.missing?(valuation.allUnknown?'Nicht bewertet':'Teilsumme'):liabilities>0?'Nettovermögen':'Gesamtwert';
  return {donut:'<svg class="allocation-svg" viewBox="0 0 200 200" role="group" aria-label="Anlageklassen. Segmente auswählen, um Werte anzuzeigen.">'+
   '<circle class="allocation-track" cx="100" cy="100" r="84" stroke="#e8efe9" stroke-width="30" fill="none"/>'+segments+'</svg>'+
-  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value,Boolean(valuation?.missing)))+'" title="'+esc(valuation?.value??money(netTotal))+'">'+
-  '<span id="donutLabel">'+esc(label)+'</span><strong id="donutTotal" title="'+esc(value)+'">'+esc(!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal))+'</strong>'+
-  '<small id="donutShare">'+esc(share)+'</small></button>',
+  '<button class="donut-inner allocation-center" type="button" aria-label="'+esc(allocationCenterName(label,share,value,Boolean(valuation?.missing),!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal)))+'" title="'+esc(valuation?.value??money(netTotal))+'">'+
+  '<span id="donutLabel">'+esc(label)+'</span> <small id="donutShare">'+esc(share)+'</small> '+
+  '<strong id="donutTotal" title="'+esc(value)+'">'+esc(!chosen&&valuation?.allUnknown?'–':compactMoney(chosen?chosen.value:netTotal))+'</strong></button>',
   legend:rest,activeIndex:chosen?slices.indexOf(chosen):-1};
 }
 export function attachAllocationInteractions(root,{slices,money,netTotal,initialIndex=-1,valuation=null}){
@@ -73,7 +74,7 @@ export function attachAllocationInteractions(root,{slices,money,netTotal,initial
    el.classList.toggle('active',active);
    el.setAttribute('aria-pressed',String(Number(el.dataset.allocationIndex)===pinned));
   });
-  center.setAttribute('aria-label',allocationCenterName(label.textContent,share.textContent,!item&&valuation?.allUnknown?'Nicht bewertet':money(item?.value??netTotal),Boolean(valuation?.missing)));
+  center.setAttribute('aria-label',allocationCenterName(label.textContent,share.textContent,!item&&valuation?.allUnknown?'Nicht bewertet':money(item?.value??netTotal),Boolean(valuation?.missing),value.textContent));
  }
  function pin(index){
   pinned=pinned===index?-1:index;

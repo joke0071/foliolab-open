@@ -1,0 +1,20 @@
+{
+  "engines": [
+    {
+      "engine": "chromium",
+      "status": "PASS",
+      "checks": [
+        "205/all/103filtered/hidden/stableIDs",
+        "five widths/Axe/preview/Escape/exact no writes",
+        "actual quota and post-put abort",
+        "one CAS revision offline correction",
+        "UI removal and exact undo",
+        "UI metadata and exact undo",
+        "blocked source and programmatic bypass",
+        "exact undo",
+        "plain/encrypted fresh restore",
+        "competing tab stale preview"
+      ]
+    }
+  ]
+}
