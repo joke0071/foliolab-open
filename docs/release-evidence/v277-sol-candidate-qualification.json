@@ -1,0 +1,53 @@
+{
+  "version": "v277-candidate",
+  "head": "b6216d87a5b50ee47fb00a6167dd58995f1986d6",
+  "tree": "6b73950cd0879a7e81f4bbc3046c9b49608a7a9a",
+  "base": "29098c299bdf230ffd1d4e97ce34f0c2c129f38b",
+  "pr": 292,
+  "status": "CANDIDATE_FROZEN_NOT_RELEASED",
+  "local": {
+    "syntax": "PASS",
+    "units": {
+      "pass": 1168,
+      "fail": 0,
+      "skip": 0
+    },
+    "browser": {
+      "chromium": "all 6 Kraken scenarios PASS",
+      "webkit": "all 6 Kraken scenarios PASS",
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "axe": "PASS",
+      "undo": "PASS",
+      "encryptedRestore": "PASS",
+      "permanentWithdrawal": "PASS",
+      "staleCAS": "PASS",
+      "quota": "PASS",
+      "postPutAbort": "PASS",
+      "offlinePWA": "PASS"
+    },
+    "runtime": "Node24.22.1 / Playwright1.64.1; retained Chromium executable and WebKit2370/shared libraries in private launch wrappers"
+  },
+  "original": {
+    "status": "PASS",
+    "sourceRowsAndLedger": "retained original CSV rows independently crosschecked against native proof",
+    "chain": "actual retained finalized mainnet genesis/transaction/block/slot RPC responses",
+    "oracle": "separate Python Decimal/Integer/Base58",
+    "productReplay": "exact source balance, unchanged recipient/flows, portable restore, removal/replay block",
+    "historicalBalanceAcceptance": false,
+    "opening": "controlled test opening",
+    "coverageUpgrade": false
+  },
+  "identityScan": "PASS",
+  "treeComputedIndependently": true,
+  "remaining": "full PR CI / reviews / protected merge / Main CI / actual new deployment+production+TLS+artifact acceptance; v276 remains LIVE_ACCEPTED",
+  "privateEvidence": "/workspace/scratch/a599191b2b46/private/",
+  "scope": "direct native legacy SOL only; UH03 overall PARTIAL"
+}
