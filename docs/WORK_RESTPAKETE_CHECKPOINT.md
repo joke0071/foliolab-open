@@ -1,3 +1,11 @@
+## ACTIVE – v271 DEPLOYED / echte Live-Abnahme läuft – 03.11.2026
+
+Alleiniger Owner **326c8cc8f969**. Main `e72cfb98f309a84c221ed47d95f0bd300a1db74c`, Tree `1a44fbc45dcb2317710ce435ff0944e7fa62c0b4`, SW v271/v5/Identitäten erhalten. Mainlauf **41601479393**:1127Units/0Fehler/Skips, Hauptjob/Cross1–3 **SUCCESS**, Deployment **125806318372 SUCCESS**; Abschlusslogs gelesen, alle3Krakenfälle in allen3Engines PASS,7Artefaktdigests gegen Uploadlogs bestätigt. [PR-Abnahme](release-evidence/v271-pr285-final-ci.json).
+
+**Livejob125806460472 IN_PROGRESS**; jetzt echte Chromium-/anschließend Firefox-/WebKit-Produktionspflichtgates unverändert auswerten. **v271 DEPLOYED, noch NICHT LIVE_ACCEPTED; v270 bleibt letzte akzeptierte Produktion.** Keine Duplikate/Abbrüche/Folgeimplementierung. Regulärer TLS-geprüfter138Asset-Byteabgleich gestartet. UH03 insgesamt PARTIAL, danachUH04→UH05; historische Endbelege/kombinierteChainfälle/persistente selektive Quellenrücknahme offen. Private Originale aller5Anbieter/Flatexreferenz/Oracles/Logs/ZIPs/Browsertools `/workspace/scratch/326c8cc8f969/private/`; Checkout daneben. EFF01/HND01 Zähler0/0; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – PR #285 gemergt / v271 Main-/Produktionsabschluss – 03.11.2026
 
 Alleiniger Owner **326c8cc8f969**. #285 nach vollständiger PR-CI **41599489271 SUCCESS** und Wallet **41599489146 SUCCESS**, Logs/6Artefaktdigests/echtem Cross3-Download+Hash/ZIP-/Firefox-/WebKit-Mobilbildprüfung, leeren Reviews/Threads und frischem Main/Owner/HEAD/Testmergeabgleich SHA-geschützt gemergt. **Main `e72cfb98f309a84c221ed47d95f0bd300a1db74c`**, Tree `1a44fbc45dcb2317710ce435ff0944e7fa62c0b4` exakt Kandidat/Testmerge, SW v271/v5/Identitäten erhalten. [Finaler PR-Beleg](release-evidence/v271-pr285-final-ci.json).1127Units/0Fehler/Skips; alle3Krakenfälle vollständig in Chromium/Firefox/WebKit inklusive echter UI/IDB/CAS/Undo/Restore/Offline PASS.
