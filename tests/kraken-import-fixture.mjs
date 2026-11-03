@@ -7,6 +7,12 @@ export const source=()=>krakenCSV([
  {txid:'SYN-ETH',asset:'ETH',amount:'3',fee:'0',balance:'3',feecurrency:'ETH'},
  {txid:'SYN-FEE',asset:'BTC',amount:'0',fee:'0.00000017',balance:'0.00000083',feecurrency:'BTC'}
 ]);
+// The fee belongs to the acquired asset; the CSV may list it before the trade.
+export const sameAssetSource=()=>krakenCSV([
+ {txid:'SYN-EUR',asset:'EUR',subclass:'fiat',amount:'-100',fee:'0',balance:'100',feecurrency:'EUR'},
+ {txid:'SYN-ETH',asset:'ETH',amount:'3',fee:'0',balance:'3',feecurrency:'ETH'},
+ {txid:'SYN-FEE-ETH',asset:'ETH',amount:'0',fee:'0.01',balance:'2.99',feecurrency:'ETH'}
+]);
 export function fixture(text=source()){
  const m=blankModel(),provider=createProvider({id:'kraken',name:'Synthetic Kraken'});m.providers.push(provider);
  const assignments={};
