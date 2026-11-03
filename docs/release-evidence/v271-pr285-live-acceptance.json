@@ -1,0 +1,172 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "release": "v271",
+  "pr": 285,
+  "main": "e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+  "tree": "1a44fbc45dcb2317710ce435ff0944e7fa62c0b4",
+  "serviceWorker": "foliolab-open-v271",
+  "dataFormat": 5,
+  "identity": "Data, installation and canonical source/action identity preserved",
+  "prRun": 41599489271,
+  "walletRun": 41599489146,
+  "mainRun": 41601479393,
+  "attempt": 1,
+  "deployJob": 125806318372,
+  "liveJob": 125806460472,
+  "jobs": [
+    {
+      "id": 125801010465,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125801149773,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125801149882,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125801149934,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125801149940,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125801152378,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 125806318372,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 125806460472,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "units": {
+    "tests": 1127,
+    "pass": 1127,
+    "fail": 0,
+    "skip": 0
+  },
+  "scope": "Unique complete exact balance trails across same-time Kraken references, contiguous groups and acyclic cross-stream dependencies; confirmed current holdings anchor only new groups; unchanged existing groups validated separately without replay",
+  "oracles": "199290 independent row/start cases,36 cross-stream permutations,729 reference assignments,all24CSV permutations, mixed one-existing/two-new restore/reimports and private original Decimal/exhaustive structural oracle PASS; no independent historical balance inferred",
+  "krakenProduction": "Distinct-asset fee, cross-reference chronology and reversed same-asset fee: real shared UI, exact holdings/cash/fees, IDB/v5/CAS, one revision, undo, encrypted restore, quota/stale tab, offline PWA reload, seven widths and Axe PASS in Chromium/Firefox/WebKit",
+  "liveArtifact": {
+    "id": 13216311890,
+    "sha256": "2359697a33699675e314a7a12fb34d227cd45060dc52a1eb0feeda1bfe8821e2",
+    "bytes": 93380609,
+    "actualDownload": true,
+    "zipCRC": "PASS",
+    "images": "Chromium/WebKit cross-reference390px inspected; Firefox/WebKit PR images also inspected"
+  },
+  "productionReports": {
+    "sha": "e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+    "cache": "foliolab-open-v271",
+    "coreGroups": 6,
+    "axeScans": 18,
+    "assetHashes": 138,
+    "errors": 0,
+    "certificateException": false,
+    "reports": {
+      "production-ui-chromium.json": [
+        "chromium"
+      ],
+      "production-ui-cross.json": [
+        "firefox",
+        "webkit"
+      ],
+      "production-transfers-chromium.json": [
+        "chromium"
+      ],
+      "production-transfers-cross.json": [
+        "firefox",
+        "webkit"
+      ]
+    }
+  },
+  "artifacts": [
+    {
+      "id": 13216311890,
+      "name": "production-live-acceptance-e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+      "digest": "sha256:2359697a33699675e314a7a12fb34d227cd45060dc52a1eb0feeda1bfe8821e2",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13215602312,
+      "name": "github-pages",
+      "digest": "sha256:7f701e5d1226937104856f4d2025d34766f8b6270e5914dde39b929c96fc3a04",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13215292021,
+      "name": "cross-engine-gates-e72cfb98f309a84c221ed47d95f0bd300a1db74c-3",
+      "digest": "sha256:6cede7a829acfbed82f5029c1bd9f4d1fe493f79d51ad0d6fb39b3cf3166b03e",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13215202807,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:5fbe6d36ccf321c4cb2925aafaabb21dbedf50286a13420cde1554ce833ef4a8",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13215202800,
+      "name": "release-gates-e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+      "digest": "sha256:dc9aa969c03e44e7ae027188850a908fe87bda5da5c50ac4be55072ad23aaa7f",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214541868,
+      "name": "cross-engine-gates-e72cfb98f309a84c221ed47d95f0bd300a1db74c-1",
+      "digest": "sha256:7ecf50d566393ca758bc851efdbbf0ea58247a3d71012684f879f9f1710ed56e",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214456026,
+      "name": "ci-stage-e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+      "digest": "sha256:c5fde5af14900a5bdb7d7d238e22244fe998941825a10984e949fd35f01f0ff3",
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13214284853,
+      "name": "cross-engine-gates-e72cfb98f309a84c221ed47d95f0bd300a1db74c-2",
+      "digest": "sha256:529314f47c3fc0e349228fda55e78f1bf79d93ce5059cc8de2c5e80a6e2c2eb3",
+      "uploadLogMatch": true
+    }
+  ],
+  "regularHttps": {
+    "evidence": "v271-regular-https-assets.json",
+    "matches": 138,
+    "total": 138,
+    "tls": "Default certificate and hostname verification",
+    "finalSW": "Regular HTTPS response exactly matches checkout; SHA256457b2172d34c1e2ce87478ec4effe0fdddc3a466d259572034a09dff324ad969"
+  },
+  "efficiency": {
+    "prWorkflows": 1,
+    "mainWorkflows": 1,
+    "retries": 0,
+    "cancellations": 0
+  },
+  "boundary": "One bounded product cut complete. UH03 PARTIAL: independent historical Kraken/Bitpanda end balances, combined BTC/ETH/ERC20/SOL/SPL transfers/gas/exchange fees and persistent selective source withdrawal remain open. Then UH04 then UH05. No physical Android acceptance."
+}
