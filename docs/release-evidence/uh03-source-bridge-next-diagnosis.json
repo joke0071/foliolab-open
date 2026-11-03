@@ -1,0 +1,39 @@
+{
+  "status": "READ_ONLY_NEXT_SCOPE_NOT_IMPLEMENTED",
+  "base": "0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+  "tree": "05ae1caece85f53b89562bf071c37f4122b7a1f7",
+  "release": "v272 LIVE_ACCEPTED",
+  "completed": "Terminal unchanged original Kraken group economic withdrawal is persistent and source-anchored. Chronology and this withdrawal must not be reimplemented.",
+  "observedContracts": [
+    {
+      "file": "src/kraken-ledger.js",
+      "fact": "Native 16-field ledger IDs/refids are exchange ledger identifiers; no independently verified chain hash/event locator follows from these fields alone."
+    },
+    {
+      "file": "src/kraken-import.js",
+      "fact": "Manual exchange EUR cash/crypto positions and exact source streams protected; externalReferences explicitly classify an outside counterpart, not an internal wallet match."
+    },
+    {
+      "file": "src/bitpanda-preview.js",
+      "fact": "Observed 18-column schema and narrowly qualified 17-field records preserve missing tax; Transaction ID alone is not a verified blockchain event locator."
+    },
+    {
+      "file": "src/ledger-live.js",
+      "fact": "Existing Operation Hash, chain-sensitive transaction keys and wallet-history event references are reusable documentary evidence, not general exchange/chain economic merge approval."
+    }
+  ],
+  "next": "Continue the existing UH03 bridge for one complete evidence-backed exchange withdrawal -> own wallet/Ledger/chain case. Reuse current source normalization, wallet event identities, journal/transfer/CAS and private original/independent oracles. First resolve an actual strong network/transaction/event proof in existing private material; never infer chain identity from exchange IDs or amount/time. Distinguish principal, exchange fee, gas and third-party evidence; no duplicate wallet quantity or external funding. Original balances/covered period must be independently comparable, or remain explicitly unknown. Do not weaken manual/wallet binding guards to simulate a bridge.",
+  "acceptance": [
+    "A concrete original-backed case plus independent synthetic expected quantities across CSV->chain->Ledger and reverse source order",
+    "Additional evidence cannot add an already reflected wallet quantity; each real fee exactly once",
+    "Reload/offline/v5 encrypted restore/reimport and economic removal with retained independent sources/dependencies",
+    "Missing strong proof/end balances stays unknown; unsupported groups remain safely isolated"
+  ],
+  "reuse": {
+    "originals": "/workspace/scratch/326c8cc8f969/private/originals/; retained Library identities in prior original-request manifests",
+    "krakenOracle": "/workspace/scratch/0ccb6712f33e/private/original-withdrawal-oracle.py/json",
+    "flatexReport": "Library libfile_8ef7c378015c81919ad201c46a2b2b36 and /workspace/scratch/c8d2f95bcd2a/UH04_Flatex_Uebergabe.md",
+    "flatexRepros": "Library libfile_0bc1f7cce974819188be35af76865f27; local private originals/oracles alongside report"
+  },
+  "boundary": "This diagnosis is not an implementation, new parser, independent historical balance acceptance or UH03/UH04/UH05 overall completion. UH03 -> UH04 -> UH05, EFF01/HND01 and v5/identities remain binding."
+}
