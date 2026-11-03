@@ -1,0 +1,46 @@
+{
+  "status": "BLOCKED_MISSING_EXCHANGE_CHAIN_BINDING",
+  "owner": "ecc3561f055e",
+  "date": "2026-11-03",
+  "base": "0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+  "release": "v272 LIVE_ACCEPTED",
+  "scope": "Read-only UH03 original-backed bridge diagnosis. No product implementation or new financial acceptance.",
+  "checked": {
+    "kraken": {
+      "rows": 1499,
+      "withdrawals": 43,
+      "format": "16 columns; txid/refid are native exchange ledger references; no network/destination/on-chain transaction field."
+    },
+    "bitpanda": {
+      "rows": 1371,
+      "withdrawals": 139,
+      "format": "18-column header plus supported 17-field rows; Transaction ID is native exchange identity, not verified chain locator."
+    },
+    "ledger": {
+      "operations": 357,
+      "format": "12 columns; Operation Hash and account identity cannot establish which exchange withdrawal caused an incoming event."
+    },
+    "exactExchangeIdentifierLedgerHashIntersection": 0,
+    "otherMaterials": "Targeted existing Library searches; found app screenshots and migrated v3 backups do not supply the binding. Parsed 2024/2025 tax reports provide no observed chain-hash linkage; their ownership assumptions are not independent event proof."
+  },
+  "privateReproduction": {
+    "script": "/workspace/scratch/ecc3561f055e/private/audit-bridge-originals.py",
+    "report": "/workspace/scratch/ecc3561f055e/private/audit-bridge-originals.json",
+    "result": "PASS structural counts and exact identifier intersection checks; not a financial oracle.",
+    "originals": "/workspace/scratch/ecc3561f055e/private/originals/",
+    "identity": "Original Library identities retained; previous original locators remain valid."
+  },
+  "finding": "No verified exchange->chain binding was found in the inspected material. Zero exact ID intersections or hash-shaped IDs alone neither prove universal absence nor authorize amount/time inference.",
+  "requiredInput": "One completed native Kraken or Bitpanda withdrawal detail linking the export exchange reference to network, actual chain transaction hash/signature, destination, asset and amount, with separately stated fees. For a first concrete case use the sole BTC withdrawal in the supplied Kraken original; exact date/amount remain private.",
+  "next": "Validate the supplied exchange proof against own Ledger account and exact chain event/output; then build one bounded bridge using existing journal/wallet identities without adding already reflected quantities. Distinguish exchange fee and network fee; missing fee split/end balances stay unknown. Independently test both source orders, reimport, encrypted restore, reload/offline/CAS and removal with remaining evidence.",
+  "preserved": [
+    "v5 and all identities",
+    "No guard or CI relaxation",
+    "No duplicate v271/v272 acceptance",
+    "No new PR/CI/retry/deployment",
+    "UH03 still open; UH04 then UH05, no premature completion or reprioritization",
+    "EFF01/HND01; counters 0/0",
+    "Checkpoint branch never fully merged to main"
+  ],
+  "missingInputIsNotApproval": true
+}
