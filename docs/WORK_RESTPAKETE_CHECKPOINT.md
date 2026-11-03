@@ -1,3 +1,11 @@
+## ACTIVE – 40c3d1ac08bf / UH03 native ETH-Quellbrücke – 03.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **40c3d1ac08bf** nach bestätigter vollständiger STOPPED-/HANDOVER_READY-Abgabe von975176198816 und ausdrücklichem Nutzerauftrag. Kopf, neuester HANDOVER_READY und vollständige Übergabe gelesen; Main **4def94b43008b8b36c243e586696d0a152010d32**, Tree **14853689d9d48adad2a67a39ed30b80b6a0a390c** unverändert; nur historische Drafts157/161 mit unveränderten HEADs, 0 laufende/0 wartende Actions. **v275 LIVE_ACCEPTED, keine Wiederabnahme.** Private Beleg-/Oracle-/Originalpfade tatsächlich vorhanden, Vorgängerquelle ohne .git; keine neue ungesicherte Produktänderung übernommen.
+
+Einziger nächster Produktschnitt: begrenzte receiptgestützte native ETH-Quellbrücke mit exakter Ereignis-/Ownwallet-/Quellgruppenbindung, dauerhaftem Journal-/Restore-/Quellrücknahmevertrag und unabhängigem Oracle. Gesamte native ETH-Historie bleibt partial; keine Coverage-/Finanzschutzlockerung. Screenshot/CSVs nicht erneut anfordern. Danach UH03 weiter → UH04 → UH05, übrige Roadmap erhalten. v5/Identitäten/Journal/CAS/Backup/Restore und [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md), bestehende Releasefreigabe gelten. Eigene Zähler0 LIVE_ACCEPTED/0 fertige Pakete. Nur GitHub-Plugin, keine Browser-Logins, keine privaten Daten veröffentlichen; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – 975176198816 STOPPED / v275 LIVE_ACCEPTED / ETH-Beleg geprüft – 03.11.2026
 
 **975176198816 gibt hiermit die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab und ist STOPPED.** Keine weiteren Implementierungen/PRs/Merges/Deployments dieser Sitzung. Frühe sichere Rotation gemäß EFF01/HND01 nach umfangreichem Release-/Diagnoseverlauf; eigene Zähler 1 LIVE_ACCEPTED / 1 fertiger UI-Schnitt. Bis ausdrücklicher neuer Übernahme kein aktiver schreibender Hauptowner. Ablösung des Vorgängers erfolgte durch Nutzerentscheidung, keine bestätigte Vorgängerabgabe behauptet.
