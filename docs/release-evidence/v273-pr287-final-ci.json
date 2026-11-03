@@ -1,0 +1,97 @@
+{
+  "status": "FINAL_PR_ACCEPTED_NOT_YET_LIVE_ACCEPTED",
+  "pr": 287,
+  "head": "b63a0a5da27f5fd48a1517d83c1b433182e513dc",
+  "base": "0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a",
+  "testMerge": "ecd4ead935fdc064c0a25cc89daeeff6ecbe4857",
+  "tree": "5e33e2461882e205b2575cb4fe5aae8652886852",
+  "ci": {
+    "id": 41638566497,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "wallet": 41638566574,
+    "units": 1142,
+    "failed": 0,
+    "skippedUnits": 0,
+    "retries": 0,
+    "cancellations": 0,
+    "jobs": [
+      125925897817,
+      125926004821,
+      125926004793,
+      125926004929,
+      125926005048
+    ]
+  },
+  "actualNewFlow": "Synthetic Kraken->own BTC full shared CSV dialog PASS in Chromium/Firefox/WebKit, preserving scan quantity, exact principal/exchange fee vs documentary whole-batch mining fee; UI/IDB/revision/CAS/quota/undo/terminal rollback/reimport/encrypted restore/offline/seven widths/Axe. Existing three Kraken cases and all other mandatory suites PASS.",
+  "artifacts": [
+    {
+      "id": 13233340795,
+      "name": "cross-engine-gates-ecd4ead935fdc064c0a25cc89daeeff6ecbe4857-3",
+      "digest": "sha256:d2d8137855254de3370cdf5db74d58cc4b90860547ca6d1a92cec446e264bfeb",
+      "size": 50407122,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13233061116,
+      "name": "release-gates-ecd4ead935fdc064c0a25cc89daeeff6ecbe4857",
+      "digest": "sha256:d35edb37fbe8b1e73b7be3a2bb6d56637576b34884e0ba9286960cf84ccd7e6c",
+      "size": 53969387,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13232966344,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:3fc02df29dc660eb57fd76a63805eb1123b95478a5525631d756329e242bd202",
+      "size": 934785,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13232540542,
+      "name": "cross-engine-gates-ecd4ead935fdc064c0a25cc89daeeff6ecbe4857-2",
+      "digest": "sha256:0da662b8ff82efec1eb359b9d9ac4578ca22facf3182729dd40a13eda416f568",
+      "size": 12108935,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13231272350,
+      "name": "ci-stage-ecd4ead935fdc064c0a25cc89daeeff6ecbe4857",
+      "digest": "sha256:f0d4d5772a78127aaa91ba9a669cfb0b0d6e8a03ce7f180aa63965c6794375b1",
+      "size": 580,
+      "uploadLogDigestMatch": true
+    },
+    {
+      "id": 13231019637,
+      "name": "cross-engine-gates-ecd4ead935fdc064c0a25cc89daeeff6ecbe4857-1",
+      "digest": "sha256:9c259f664812afb8d395c04a4360353fe5abcadd4de50404cc3c4733dd5b15ae",
+      "size": 48964282,
+      "uploadLogDigestMatch": true
+    }
+  ],
+  "downloaded": [
+    {
+      "id": 13233340795,
+      "file": "private/pr287-cross3.zip",
+      "size": 50407122,
+      "sha256": "d2d8137855254de3370cdf5db74d58cc4b90860547ca6d1a92cec446e264bfeb",
+      "zipEntries": 582,
+      "zipTest": "PASS",
+      "visualReview": [
+        "Firefox bitcoin bridge390px",
+        "WebKit bridge withdrawal390px"
+      ]
+    },
+    {
+      "id": 13232540542,
+      "file": "private/pr287-cross2.zip",
+      "size": 12108935,
+      "sha256": "0da662b8ff82efec1eb359b9d9ac4578ca22facf3182729dd40a13eda416f568",
+      "zipTest": "PASS"
+    }
+  ],
+  "review": "Final diff reviewed; no requested or submitted PR reviews/inline comments; base/main/owner/HEAD and exact test-merge tree checked. Additional archived-withdrawal review passed unchanged candidate; no correction/retry needed.",
+  "original": "Exchange ref/screenshot/real Ledger row/live own vout/HD-derived ownership and independent Decimal/integer fee/output oracle privately verified. This is an isolated original-event check, not independent historical end-balance/full-wallet acceptance.",
+  "next": "SHA-protected merge only; automatic new main/deployment/live gates and normal TLS asset verification required. No new code push or duplicate workflow.",
+  "delegation": "External UI issue288 / Copilot Draft289 WIP. No duplicate implementation or integration during this release. Sole owner ecc3561f055e; UH03->UH04->UH05 priority unchanged."
+}
