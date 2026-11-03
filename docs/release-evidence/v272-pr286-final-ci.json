@@ -1,0 +1,81 @@
+{
+  "status": "PR_ACCEPTED_NOT_LIVE",
+  "pr": 286,
+  "head": "88a75473c9554edc32bebfae25d26d6a59a32de4",
+  "base": "e72cfb98f309a84c221ed47d95f0bd300a1db74c",
+  "testMerge": "c1575db13d0621bf621218e71adc31d46e0c3b44",
+  "tree": "05ae1caece85f53b89562bf071c37f4122b7a1f7",
+  "runs": {
+    "integration": 41617498431,
+    "wallet": 41617498466,
+    "result": "COMPLETED/SUCCESS",
+    "attempt": 1
+  },
+  "units": {
+    "passed": 1134,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": "All three Kraken scenarios with exact withdrawal/reimport/IDB/v5/CAS/quota/restore/offline/7widths/Axe pass Chromium, Firefox, WebKit; corrected full reference removal gate all three engines PASS.",
+  "reviews": {
+    "reviews": [],
+    "threads": []
+  },
+  "artifacts": [
+    {
+      "id": 13223115447,
+      "name": "cross-engine-gates-c1575db13d0621bf621218e71adc31d46e0c3b44-1",
+      "digest": "sha256:3005b62e258e45e85ae6f3c776d8325dc9fcd36b2be479d06f99086a6814d5df",
+      "bytes": 48967811,
+      "uploadLogDigestMatches": true
+    },
+    {
+      "id": 13223105529,
+      "name": "cross-engine-gates-c1575db13d0621bf621218e71adc31d46e0c3b44-2",
+      "digest": "sha256:ed698b25ebd420be0519a142ca45282e0a9b63b3f5c46380b22bcfb90a290eae",
+      "bytes": 12105551,
+      "uploadLogDigestMatches": true
+    },
+    {
+      "id": 13222647037,
+      "name": "release-gates-c1575db13d0621bf621218e71adc31d46e0c3b44",
+      "digest": "sha256:174af37b10b69dd9da4f4fe13f0a320658676f34f73e3fe840af2014bb68897b",
+      "bytes": 53803478,
+      "uploadLogDigestMatches": true
+    },
+    {
+      "id": 13222281238,
+      "name": "ci-stage-c1575db13d0621bf621218e71adc31d46e0c3b44",
+      "digest": "sha256:8475f0008361ac471ecd26770dfebd9059d82869572a2e5de16fa854c33f3b85",
+      "bytes": 608,
+      "uploadLogDigestMatches": true
+    },
+    {
+      "id": 13221938725,
+      "name": "dialog-visual-reference",
+      "digest": "sha256:3c4af8f7f5cc500d18d9ad1c4246874b8227568c4017220d2a10aefce000b9af",
+      "bytes": 934687,
+      "uploadLogDigestMatches": true
+    },
+    {
+      "id": 13221904074,
+      "name": "cross-engine-gates-c1575db13d0621bf621218e71adc31d46e0c3b44-3",
+      "digest": "sha256:871ad42f3005036e632892fb0829dce1f5e8f6b5923883be6dd664f59d0a7a22",
+      "bytes": 50028151,
+      "uploadLogDigestMatches": true
+    }
+  ],
+  "download": {
+    "id": 13221904074,
+    "bytes": 50028151,
+    "sha256": "871ad42f3005036e632892fb0829dce1f5e8f6b5923883be6dd664f59d0a7a22",
+    "zipIntegrity": "PASS",
+    "visualReview": [
+      "WebKit cross-reference withdrawal 390px",
+      "Firefox same-asset fee withdrawal 390px"
+    ]
+  },
+  "history": "Old head43be35 targeted retry remained recorded; source-anchor candidate8c7ed4 failed repeated reference-cancel race in41615076015. Original artifact13220139603 preserved. Deterministic synchronization cause fixed without timeout/assertion/gate weakening; no retry/abort on corrected final candidate.",
+  "privateEvidence": "/workspace/scratch/0ccb6712f33e/private/",
+  "next": "Guarded merge and actual new Main/deploy/live acceptance; v271 remains last LIVE_ACCEPTED."
+}
