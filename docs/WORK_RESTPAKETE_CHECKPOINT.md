@@ -1,3 +1,11 @@
+## ACTIVE – a9b7a8511bfe / PR292 gemergt, v277 Main-CI – 03.11.2026
+
+Alleiniger Owner **a9b7a8511bfe**. PR292 nach terminaler vollständiger CI41717902064/Wallet41717901841, tatsächlicher Archiv-/Hash-/CRC-/Berichts-/SOL-Bildprüfung und frischem SHA-/Main-/Reviewabgleich geschützt gemergt. **Main d651f09f93f261ee318a478279586fefd31fcd7f / Tree6b73950cd0879a7e81f4bbc3046c9b49608a7a9a**, exakt Kandidat/synthetischer Merge. [Finale PR-Abnahme](release-evidence/v277-pr292-final-ci.json). Automatischer Mainlauf **41723207943 Versuch1 IN_PROGRESS**, keine Duplikate/Abbrüche/Retry. **v277 noch NICHT DEPLOYED/LIVE_ACCEPTED; v276 bleibt LIVE_ACCEPTED und wird nicht erneut geprüft.**
+
+Nächster Schritt: bestehenden Main-/Deployment-/echten Liveabschluss samt tatsächlichen ZIPs/Hashes/CRC/Logs/Berichten/Bildern und regulärem TLS/142Assets prüfen; erst dann LIVE_ACCEPTED. Keine Produktänderung während Release. Eigene Quell-/Belegkopie unter /workspace/scratch/a9b7a8511bfe/; Vorgänger unverändert, Originale/SOL-Oracle gesichert. Screenshot/CSVs nicht erneut anfordern. Danach UH03→UH04→UH05; UH03partial/ERC20/SPL/N:M/unabhängige historische Endstände offen. v5/Identitäten/Finanzschutz/EFF01/HND01 erhalten, Zähler0/0. Nur GitHub-Plugin; Checkpointbranch niemals vollständig nachMain mergen.
+
+---
+
 ## ACTIVE – a9b7a8511bfe / PR292 finale Belegprüfung – 03.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **a9b7a8511bfe** nach bestätigter vollständiger STOPPED/HANDOVER_READY-Abgabe a599191b2b46 und ausdrücklichem Nutzerauftrag. Main29098c299bdf230ffd1d4e97ce34f0c2c129f38b / Treec176da53aec9ab98f571df3ec3b23bc574896658 frisch unverändert; v276 LIVE_ACCEPTED, keine Wiederabnahme. Einziger Kandidat PR292 HEADb6216d87a5b50ee47fb00a6167dd58995f1986d6 / Tree6b73950cd0879a7e81f4bbc3046c9b49608a7a9a. Run41717902064 Versuch1 undWallet41717901841 COMPLETED/SUCCESS; keine laufenden Actions, keine neuen Runs. Reviews/Kommentare leer, alte Drafts157/161 unverändert. WIP/Originalbelege erreichbar, Vorgänger unverändert.
