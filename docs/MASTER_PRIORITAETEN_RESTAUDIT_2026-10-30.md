@@ -1,3 +1,13 @@
+## v273 LIVE_ACCEPTED / Bitpanda-Rücknahme PR290 in Prüfung – 03.11.2026
+
+**v273 LIVE_ACCEPTED**, Main8d590d19936403557ce75d59105da3a0fca1c7b5, [verbindliche Produktionsabnahme](release-evidence/v273-pr287-live-acceptance.json). Begrenzte Kraken-BTC-Brücke mit ausdrücklichem Original-/Chain-/Own-Output-Beleg; keine Walletmengen-/Batchgebühren-Doppelbuchung. v272/v273 nicht erneut abnehmen.
+
+**UH03 insgesamt PARTIAL**. Aktiver nächster Schnitt: [PR290](https://github.com/joke0071/foliolab-open/pull/290), vollständige terminale Bitpanda-Gruppe mit zwei ausdrücklich bestätigten unabhängigen Kontrollbeständen, retained Original/Wiederimportsperre. Kandidat38c93f0/Tree39553b20, SWv274; Pflicht-CI41656632739 läuft, noch kein neuer Release. Aktueller Owner/CI-Abschluss ausschließlich im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). Danach UH03 weiter → UH04 → UH05; zusätzliche Netze/N:M/Quellenabgleich/unabhängige historische Endstände offen. Gesicherte Flatexvorbereitung wiederverwenden.
+
+UI288/289 bleibt extern reserviert/Teillieferung; [unabhängige aktuelle Befunde](release-evidence/ui289-independent-review-7d46891.json), keine pauschale Erledigung. Alle übrigen Roadmap-/Android-/OAuth-/Hardwareaufträge und EFF01/HND01 erhalten. Historische Absätze darunter bleiben Belege früherer Zustände.
+
+---
+
 ## v272 LIVE_ACCEPTED / persistente Kraken-Gruppenrücknahme abgeschlossen – 03.11.2026
 
 PR #286 ist gemergt; Main `0e3d13bdd9f4320004d1ed5f1b4cc6c70f80364a`, Tree `05ae1caece85f53b89562bf071c37f4122b7a1f7`, SW v272/v5/Identitäten erhalten. [Verbindliche vollständige Abnahme](release-evidence/v272-pr286-live-acceptance.json):1134Units/0Fehler/Skips, finale PR-/Main-/echte Livegates in Chromium/Firefox/WebKit PASS;139/139 reguläre HTTPS-Assetbytes,8Main-/Liveartefaktdigests und echtes ProduktionsZIP/Hash/Berichte/Mobilbilder geprüft. Terminale vollständige unveränderte Originalgruppe mit allen Geld-/Krypto-/Gebührenwirkungen sicher zurücknehmen; Originalsaldoanker schützt geänderte Öffnungen, persistenter Quellenbeleg verhindert Wiederimport auch nach Reload/Offline/verschlüsseltem Restore. Wiederholten WebKit-Testfehler deterministisch als Submit-/Fehlertext-Synchronisationslücke behoben, Prüfbedingung verschärft; keine Finanz-/Storage-/Frist-/Gateabschwächung.
