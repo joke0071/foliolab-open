@@ -1,0 +1,104 @@
+{
+  "status": "CI_ACCEPTED",
+  "candidate": "ddecde0872d116776936a9e1e7630ddef1f58057",
+  "tree": "c176da53aec9ab98f571df3ec3b23bc574896658",
+  "testedMerge": "47bf66ded13ecdcb7905fff9af5d26770ec076aa",
+  "base": "4def94b43008b8b36c243e586696d0a152010d32",
+  "runs": {
+    "integration": 41700530694,
+    "wallet": 41700530700,
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "units": {
+    "tests": 1158,
+    "pass": 1158,
+    "fail": 0,
+    "skipped": 0
+  },
+  "browsers": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "krakenScenarios": [
+    "ethereum-bridge",
+    "bitcoin-bridge",
+    "distinct-fee",
+    "cross-reference",
+    "same-asset-fee"
+  ],
+  "artifacts": [
+    {
+      "id": 13264790373,
+      "name": "cross-engine-gates-47bf66ded13ecdcb7905fff9af5d26770ec076aa-2",
+      "bytes": 12212604,
+      "digest": "sha256:28e0beb6fb4fb0671f2e7cfd64943c8e00994e21aa917cbde58e18ccac281450",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    },
+    {
+      "id": 13264446478,
+      "name": "dialog-visual-reference",
+      "bytes": 934791,
+      "digest": "sha256:e879e444892bb7741d874dd399bcbc533514590282c39bbee0fb320e1c152dcf",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    },
+    {
+      "id": 13263616981,
+      "name": "release-gates-47bf66ded13ecdcb7905fff9af5d26770ec076aa",
+      "bytes": 59590042,
+      "digest": "sha256:18ab1b36aceb3cb6f6241d7dc246b65ee4eedec88763683e99174c629f8264eb",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    },
+    {
+      "id": 13263368831,
+      "name": "cross-engine-gates-47bf66ded13ecdcb7905fff9af5d26770ec076aa-1",
+      "bytes": 59571253,
+      "digest": "sha256:fb4905894e33e0aff43dff83e1b5974f84f8719e4c07bf6ccddf97844d9d1c95",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    },
+    {
+      "id": 13263309219,
+      "name": "cross-engine-gates-47bf66ded13ecdcb7905fff9af5d26770ec076aa-3",
+      "bytes": 51802990,
+      "digest": "sha256:ab5e13e1c81b479c9475f6d347ab03d49f979a9fb8190014f92da6e32bacea09",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    },
+    {
+      "id": 13262947873,
+      "name": "ci-stage-47bf66ded13ecdcb7905fff9af5d26770ec076aa",
+      "bytes": 574,
+      "digest": "sha256:5082135333e969a81b6889509399c630876233836653281a382e2abd018a1019",
+      "uploadLogDigestMatches": true,
+      "actualZipIntegrity": "PASS"
+    }
+  ],
+  "visualReview": [
+    "chromium ETH bridge",
+    "firefox ETH bridge",
+    "webkit ETH withdrawal"
+  ],
+  "guards": [
+    "source principal and exchange fee once",
+    "recipient/flows unchanged",
+    "native ETH total history partial",
+    "v5 data/install identity retained",
+    "immutable optional-history portable proof",
+    "reimport/undo/permanent complete-group withdrawal",
+    "quota/post-put abort/raw bytes/revision",
+    "CAS/offline/encrypted restore"
+  ],
+  "privateQualification": "v276-eth-candidate-qualification.json",
+  "privateOriginalCaveat": "Controlled test openings/finalized-header wrapper; no actual portfolio/historical balance or live finalized-tag RPC acceptance",
+  "review": {
+    "comments": 0,
+    "reviews": 0,
+    "independentEconomics": "private Decimal/integer oracle"
+  },
+  "release": "NOT_MERGED"
+}
