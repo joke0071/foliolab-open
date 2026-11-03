@@ -9,17 +9,25 @@ Nur synthetische Daten. Kein Merge, kein Deployment; Checkpoint und Roadmap unve
 | A Long-Press + linke Auswahl (Positionen, Buchungen, Referenzwerte) | nicht vorhanden; Auswahl nur über „Verwalten“, sichtbares „Auswählen“ | `attachRowLongPress` (jetzt in `src/booking-history-ui.js`, damit kein neues Modul in `sw.js` nötig ist), verdrahtet am Anfang von `initEvents`; linkes Symbol = `label.selection-mark` mit Checkbox (44 px); sichtbares „Auswählen“ entfernt, aria-label bleibt; bestehende Auswahl-Engines wiederverwendet | `tests/browser-ui-alltag10.mjs` (Chromium+Firefox, plus echte CDP-Touch-Geste in Chromium): Tap, Move/Cancel, Pointercancel, Multi-Touch, Maus, Unterelemente, Ghost Click, genau 1 Auswahl, Tastatur, Fertig, Axe, unveränderte Daten. Bestehend: reference-management, position-removal, reference-removal PASS | Reale Touch-Hardware nicht geprüft |
 | B Install-Symbol | große Karte `#pwaHelp` | Karte entfernt; Icon-Button (aria-label „FolioLab als App installieren“, 44 px) nur bei gehaltenem `beforeinstallprompt` und nicht Standalone; Prompt nur per Tap; appinstalled/Abbruch/Standalone behandelt | `tests/browser-loading-pwa.mjs` angepasst (Chromium+Firefox PASS) | Die manuelle Installationshilfe (Text der Karte) entfällt bewusst → Produktentscheidung für Hauptowner. iOS/Safari-Installationshinweis fehlt nun |
 | C Loader | vorhandene Flask-Animation kaum sichtbar | Keyframes/Größe/Blasenfarbe in `styles.css`, `index.html`, `src/loading-ui.js`; keine Mindestladezeit; Reduced Motion statisch | `browser-loading-pwa` (Reload, langsames DB/Modul, Timeout→später Erfolg, Fehler, Storage, Reduced Motion) PASS; Belege `img/loader-before|after-strip.png`, `loader-*.webm` | Offline-Start nur über den bestehenden Test abgedeckt |
-| D Toolbars | — | mobile (≤767 px) Abstände/Labels/44-px-Buttons in `styles.css`; #257-Volltext-Labels der Ansicht bewusst nicht gekürzt | Sweep 320/360/390/412/430/768/1024/1440 × 100 %/200 % Text × Chromium/Firefox × Normal/Verwalten: 0 Überläufe, 0 Ziele < 44 px (Wegwerfskript, nicht eingecheckt) | — |
+| D Toolbars | — | mobile (≤767 px) Abstände/Labels/44-px-Buttons in `styles.css`; #257-Volltext-Labels der Ansicht bewusst nicht gekürzt | Sweep 320/360/390/412/430/768/1024/1440 × 100 %/200 % Text × Chromium/Firefox × Normal/Verwalten: 0 Überläufe, 0 Ziele < 44 px (jetzt eingecheckt: `sweep.mjs`) | — |
 | E Texte | „Erfasste Stichtage“ doppelt; veraltete FMP/Twelve-Hilfen | Verlauf-Quellzeile bei gewählter Basis „Stichtage“ kompakt („Quelle: gespeicherte Referenzwerte“), Übersicht „Datenbasis: Stichtage“; 3 Hilfen (index.html, position-detail-ui.js, app.js) auf Alpha Vantage/Marketstack/EODHD-Worker bzw. tatsächliche Suche (Referenzliste + Alpha Vantage); „Historische Daten werden geprüft“ kleiner/gedämpft; „Gebuchte Vorgänge“ an Geschwister-Summary angeglichen | history-followup, ui-small-rests, flh02-release PASS | — |
 
-## Erweiterte Pakete (Stand dieser Lieferung)
+## Erweiterte Pakete – Befund, Änderung, Test, Grenze (Stand dieser Lieferung)
 
-| Paket | Status |
-|---|---|
-| UI-VISUAL09 / #226, UI-POS02 / BOOK03 / #257 (Toolbars, Verwalten/Fertig-Parität) | Neu korrigiert (Toolbar-Verdichtung) und geprüft; Auswahl-/Archivsemantik unverändert (bestehende Tests PASS) |
-| UI-VISUAL03 (Positionsdetail Typografie) | Teilweise neu korrigiert (E); Rest nicht bearbeitet |
-| UI-VISUAL02 Mehr, VISUAL04 Header/Nav, VISUAL05 Dialoge, VISUAL06 Onboarding, VISUAL08 Verlauf-Akkordeons, HERO-QUALITY03, UI-TEXT03–10 | **Nicht bearbeitet** in dieser Lieferung (nur Sichtung ohne Befund in Overflow-/Target-Sweep). Weder umgesetzt noch als erledigt zu werten |
-| L07 Kurs-CSV unter „Mehr“ | Nicht umgesetzt; Quellentscheidung nicht eindeutig ableitbar |
+Methode: Sichtung der Zustände (`capture-states.mjs`, `img/*-s-*.png`), reproduzierbarer Sweep (`sweep.mjs`, Ergebnis `sweep-result.json`: 8 Breiten × Browserzoom 100/150/200 % mit Viewport = Breite/Zoom ≥ 320 CSS-px × Normal/Verwalten × Dialoge, Chromium+Firefox, 280 Scans) und bestehende Vertragstests.
+
+| Paket | Tatsächlicher Befund | Änderung | Test | Offene Grenze |
+|---|---|---|---|---|
+| VISUAL02 / #210 Mehr + #257-A Symbole | Aktionen uneinheitlich (Einzelbuttons teils schmal/links); Kopfsymbole für „Anbieter und Konten“ und „Deine Daten“ fehlten (nur `#settingsGear`) | ≤720 px einheitliche Aktionsanordnung (Einzel voll breit, Paare geteilt, 44 px); dekorative Symbole `bank`/`shield` (`aria-hidden`, gleiche Größe/Farbe/x-Position wie Gear: 19 px, 341/390 px) | Sweep 0 Überläufe; accessibility-audit 0 Verstöße; ui-small-rests PASS | Kontextmenü-/Kontenzeilen-Kompaktierung nicht geändert (kein belegter Defekt) |
+| VISUAL03 / #211 Buchungen, Positionsdetail | Sweep: Suchfeld Positionen 42 px, Anbieter-Zeile 43 px, Wizard-Button 40 px | `min-height:44px` (selektorspezifisch) | Sweep: nur noch Inline-Textlinks < 44 px (WCAG-2.5.8-Ausnahme); booking-management, ui-quality PASS | Typografie/Kartenrahmen: kein weiterer messbarer Defekt, keine Änderung |
+| VISUAL04 / #215 Header/Nav | Doppeltes Installationssymbol (Header und Seitenkopf) auf Mobil | Ein Symbol je Layout (CSS) | loading-pwa Chromium+Firefox PASS; Sweep | Safe-Area/Notch nur emuliert, keine Gerätprüfung |
+| VISUAL05 / #216 Dialoge | Sweep: Wizard und Wallet-Dialog passen in allen 8 Breiten/Zooms in den Viewport, kein Überlauf | keine | Sweep, onboarding-suggestions PASS | Bildschirmtastatur nicht prüfbar (Emulation ohne IME) |
+| VISUAL06 / #217 Erststart | Leer-Zustände (Dashboard/Positionen/Buchungen/Verlauf) in Screenshots ohne Defekt | keine | browser-onboarding-suggestions PASS; Screenshots `img/after2-*-s-empty-*` | Szenarien „erster Anbieter/erste Position“ nicht separat neu geprüft |
+| VISUAL08 / #224 Verlauf | Akkordeons: ein CSS-Chevron je Titel, keine Überläufe | keine | history-followup, reference-management PASS; Sweep history-open/manage | – |
+| #257 B (Details nur in „Verwalten“) | Details sind im Normalmodus sichtbar | **nicht geändert – Konflikt**: bestehende Verträge (Transfer-Browservertrag öffnet `.booking-meta` im Normalmodus; UI-Qualität „archive visible without detail disclosure“) setzen das voraus; Änderung würde Tests abschwächen | – | **Produkt-/Vertragsentscheidung nötig** (Vorrang #257-Nachtrag vs. integrierte Transferdarstellung) |
+| HERO-QUALITY03 | Hero-Kurzinfo, „Prüfbereich öffnen“, kein Auto-Open bereits implementiert | keine | browser-quality-review PASS (7 Breiten, Axe, Fokus) | – |
+| UI-TEXT03–10 | Kein weiterer eindeutig offener Präsentationsrest belegt | keine | ui-quality, ui-audit-controls PASS | Wörtlicher Abgleich jedes TEXT-Vertrags nicht Zeile für Zeile durchgeführt |
+| L07 Kurs-CSV | Quellkontext nicht eindeutig | **offen gelassen** | – | Varianten: (a) CSV-Einstieg im Positionsdetail belassen; (b) unter „Mehr“/erweitert bündeln, wenn keine automatische Quelle nutzbar. Fehlende Entscheidung: welches Signal „nutzbare alternative Quelle“ ist |
 
 ## Testergebnisse
 
@@ -45,3 +53,20 @@ Unberührt: `sw.js`, Manifest, Versionen, Workflows, Finanz-/Import-/Speicherlog
 - **Nicht bearbeitet / offen:** VISUAL03/04/05/06/08, #257-Parität, HERO-QUALITY03, UI-TEXT03–10 nur gesichtet (Screenshots `img/*-s-*.png`, `capture-states.mjs`), keine weiteren Änderungen; L07 Kurs-CSV: Quellkontext nicht eindeutig → Produktentscheidung nötig (nichts implementiert); 8-Breiten-×-200%-Sweep und Firefox-Vorher/Nachher nicht vollständig durchgeführt.
 - **CI-Integrationsschritt:** Job `test` scheitert am Gate „Require a service-worker cache revision“ (sw.js-Bump); vom Hauptowner bei Integration zu erledigen, nicht von mir verändert.
 - Vorher-/Nachher nur Chromium; Firefox-Bilder nicht erzeugt.
+
+
+## #288 Einzelzuordnung
+
+| Anforderung | Status | Beleg |
+|---|---|---|
+| Long-Press aktiviert Verwalten + wählt genau den Eintrag (3 Listen) | umgesetzt, geprüft (Chromium+Firefox, emuliert; Touch real nur Playwright-Touch) | `tests/browser-ui-alltag10.mjs` |
+| Scroll/Cancel/Ghost-Click/Mehrfinger | umgesetzt, geprüft | ebenda |
+| Tastatur/Checkbox-Semantik/linkes Symbol | umgesetzt, geprüft | ebenda, booking-management, reference-management |
+| Kompaktes Install-Symbol + manuelle Hilfe | umgesetzt, geprüft | loading-pwa |
+| Loader sichtbarer, keine Mindestzeit, Reduced Motion | umgesetzt, geprüft; Bewegungsbeleg `img/loader-*` | loading-pwa |
+| Reload, langsam, Offline, Fehler, Timeout→Erfolg | geprüft | loading-pwa |
+| Toolbars verdichtet | umgesetzt, geprüft | Sweep |
+| Textreste / Anbieterhilfen | umgesetzt, geprüft | unit + ui-quality |
+| WebKit / Android-Gerät / TalkBack | **nicht geprüft** | Umgebung fehlt |
+
+Lokale Chromium-/Firefox-Läufe (Playwright 1.64.1; CI 1.56.1) sind weder WebKit- noch vollständige Releaseabnahme.

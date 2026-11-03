@@ -1956,3 +1956,11 @@
  #morePage .drive-folder-actions>.btn{flex:1 1 0;min-width:0;min-height:44px}
  #morePage .more-panel-help>#clearApiKeys{margin-top:8px}
 }
+
+/* #257-A: quiet header symbols in Mehr, same scale and colour as #settingsGear (decorative, not clickable). */
+.panel-title-icon{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.panel-title-icon>div{min-width:0}
+#accountsIcon,#securityIcon{display:inline-flex;flex-shrink:0;color:#537a60;pointer-events:none}
+
+/* Touch targets measured below 44px by docs/ui-copilot-2026-11-03/sweep.mjs. */
+#positionSearch,#bookingSearch,#wizardDirectoryImport,summary.provider-holding{min-height:44px;box-sizing:border-box}

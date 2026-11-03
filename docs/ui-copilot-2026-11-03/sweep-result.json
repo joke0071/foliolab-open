@@ -1,0 +1,506 @@
+{
+ "scans": 280,
+ "overflowFindings": [],
+ "smallTargets": [
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 320,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 320,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 360,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 360,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 390,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 390,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 412,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 412,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 430,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 430,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 1.5
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 1.5
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 2
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 768,
+   "zoom": 2
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 1.5
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 1.5
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 2
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1024,
+   "zoom": 2
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 1.5
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 1.5
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 2
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "chromium",
+   "w": 1440,
+   "zoom": 2
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 320,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 320,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 360,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 360,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 390,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 390,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 412,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 412,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 430,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 430,
+   "zoom": 1
+  },
+  {
+   "tag": "more-open",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Google Cloud",
+    "Schritt-für-Schritt-"
+   ],
+   "engine": "firefox",
+   "w": 768,
+   "zoom": 1
+  },
+  {
+   "tag": "dialog-addWizard",
+   "over": 0,
+   "wide": [],
+   "small": [
+    "Xetra-Downloadseite ",
+    "Nasdaq-Werte (.txt) ",
+    "Weitere US-Börsen (."
+   ],
+   "engine": "firefox",
+   "w": 768,
+   "zoom": 1
+  }
+ ]
+}
