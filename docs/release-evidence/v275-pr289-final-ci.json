@@ -51,7 +51,7 @@
       "full position removal201/401,12Axe scans,six widths,quota/post-put abort/CAS/plain+encrypted restore/exact Undo/offline",
       "separate position-detail full precision/missing/zero/unknown-source/seven widths/reference protection/exact IDB"
     ],
-    "images": "Old overlap and corrected200% position crop viewed; representative final normal/management screenshots generated; final CI images still to review",
+    "images": "Representative final 320/390/768/1440 normal/management images and actual CI Chromium200%-320px crop, Firefox390 reference management and WebKit390 Bitpanda withdrawal viewed. Reports and ZIP integrity verified.",
     "limits": [
       "No Android/iOS hardware/TalkBack/IME acceptance",
       "Incomplete concurrent local npm log was not counted as PASS; complete serial1150 run used instead"
