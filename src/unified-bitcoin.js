@@ -8,7 +8,7 @@ import {sourceDigest,bookingOwnership,sourceUnmodified} from './import-identity.
 import {units,exact} from './decimal.js';
 import {validateJournalEntry,nextJournalSequence,ledgerQuantityAudit} from './transactions.js';
 const PREFIX='uh02:';
-export const hasUnifiedBitcoinState=model=>Boolean(model?.purchaseEvidence?.bitcoinLedger?.length||(model?.journalEntries||[]).some(j=>j.source==='unified-bitcoin'||j.id?.startsWith(PREFIX))||(model?.bookings||[]).some(b=>b.importSource?.sourceId==='unified-bitcoin-v1'||b.id?.startsWith(PREFIX)));
+export const hasUnifiedBitcoinState=model=>Boolean((model?.journalEntries||[]).some(j=>j.krakenBitcoinBridge||j.krakenWithdrawal?.originals?.some(o=>o.journal?.krakenBitcoinBridge))||model?.purchaseEvidence?.bitcoinLedger?.length||(model?.journalEntries||[]).some(j=>j.source==='unified-bitcoin'||j.id?.startsWith(PREFIX))||(model?.bookings||[]).some(b=>b.importSource?.sourceId==='unified-bitcoin-v1'||b.id?.startsWith(PREFIX)));
 const key=(p,txid)=>PREFIX+sourceDigest(JSON.stringify(['bitcoin','mainnet',p.id,txid]));
 const digest=value=>sourceDigest(JSON.stringify(value));
 const fingerprint=e=>digest([e.id,e.blockHash,e.blockHeight,e.timestamp,e.quantityBaseUnits,e.status,e.finality,e.type,e.coverage]);

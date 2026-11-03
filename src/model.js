@@ -1,3 +1,4 @@
+import {validateKrakenBitcoinBridges} from './kraken-bitcoin-bridge.js';
 import {validateKrakenWithdrawals} from './kraken-withdrawal-evidence.js';
 import {validateUnifiedBitcoinEconomics,hasUnifiedBitcoinState} from './unified-bitcoin.js';
 import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
@@ -268,14 +269,14 @@ export function safeImport(raw){
    const audit=ledgerQuantityAudit(m);
    if(!audit.ok)throw Error('Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen.');
   }
-  validateUnifiedBitcoinEconomics(m);validateKrakenWithdrawals(m);
+  validateUnifiedBitcoinEconomics(m);validateKrakenWithdrawals(m);validateKrakenBitcoinBridges(m);
   if(raw.bookingPresentation!==undefined)m.bookingPresentation=validateBookingArchive(raw.bookingPresentation,m);
   if(archiveFormat)m.version=4;
   if(unifiedFormat)m.version=5;
   assertDataVersion(m);
   return m;
 }
-export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateKrakenBitcoinBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -297,7 +298,7 @@ export function persist(model,storage=globalThis.localStorage){
  // once another tab has activated transactional IndexedDB.
  if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
   throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
- assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);
+ assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateKrakenBitcoinBridges(model);
  if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
