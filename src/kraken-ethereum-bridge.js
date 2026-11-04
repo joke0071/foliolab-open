@@ -1,3 +1,4 @@
+import {validateLinkBridgeProof} from './kraken-link-bridge.js';
 /** One direct native ETH source withdrawal -> one receipt-backed own incoming event.
  * The retained proof is portable without optional history. It never certifies history coverage.
  */
@@ -35,6 +36,7 @@ function validateChain(c,e,destination){
  return hex(r.gasUsed)*hex(r.effectiveGasPrice);
 }
 export function validateEthereumBridgeProof(model,proof,{requireHistory=false}={}){
+ if(proof?.kind==='link-explorer-beacon')return validateLinkBridgeProof(model,proof,{requireHistory});
  keys(proof,'version group payload positionId walletScopeDigest reference txid destination principalETH exchangeFeeETH networkFeeETH ledgerId ledgerOwnerDigest event chain');
  if(proof.version!==1||![proof.group,proof.payload,proof.walletScopeDigest,proof.ledgerId,proof.ledgerOwnerDigest].every(sha)||!hash(proof.txid)||typeof proof.reference!=='string'||!proof.reference||proof.reference.length>200||/[\u0000-\u001f]/.test(proof.reference)||address(proof.destination)!==proof.destination)fail();
  const p=model.positions.find(p=>p.id===proof.positionId),e=validateHistoryEvent(proof.event);
@@ -75,14 +77,14 @@ export async function fetchKrakenEthereumTransaction(txid,{fetcher=globalThis.fe
 export function validateKrakenEthereumBridges(model){
  const seen=new Set(),entries=model.journalEntries.flatMap(j=>j.krakenWithdrawal?.originals?.map(o=>({j:o.journal,b:o.booking,removed:true}))||[{j,b:model.bookings.find(b=>b.journalEntryId===j.id),removed:false}]);
  for(const {j,b,removed} of entries){
-  if(!j.krakenEthereumBridge)continue;if(j.krakenBitcoinBridge)fail();const p=validateEthereumBridgeProof(model,j.krakenEthereumBridge);
-  if(j.id!=='uh03:'+p.group+':0'||j.source!=='kraken-uh03-v1'||j.type!=='deliver_out'||j.status!=='recorded'||!b||!sourceUnmodified({journalEntries:[j]},b)||b.type!=='deliver_out'||b.accountId===p.event.accountId||b.importSource?.fileId!==p.group||units(b.quantityExact)!==units(p.principalETH)||model.externalCashFlows.some(f=>f.id===b.id))fail();
-  const source=model.positions.find(x=>x.id===b.positionId);if(!source||source.wallet?.enabled||source.symbol!=='ETH'||source.coinId!=='ethereum')fail();
+  if(!j.krakenEthereumBridge)continue;if(j.krakenBitcoinBridge)fail();const p=validateEthereumBridgeProof(model,j.krakenEthereumBridge),link=p.kind==='link-explorer-beacon',asset=link?'LINK':'ETH',coin=link?'chainlink':'ethereum',principal=link?p.principalLINK:p.principalETH,fee=link?p.exchangeFeeLINK:p.exchangeFeeETH;
+  if(j.id!=='uh03:'+p.group+':0'||j.source!=='kraken-uh03-v1'||j.type!=='deliver_out'||j.status!=='recorded'||!b||!sourceUnmodified({journalEntries:[j]},b)||b.type!=='deliver_out'||b.accountId===p.event.accountId||b.importSource?.fileId!==p.group||units(b.quantityExact)!==units(principal)||model.externalCashFlows.some(f=>f.id===b.id))fail();
+  const source=model.positions.find(x=>x.id===b.positionId);if(!source||source.wallet?.enabled||source.symbol!==asset||source.coinId!==coin)fail();
   let payload;try{payload=JSON.parse(b.importSource.sourcePayload);}catch{fail();}
-  if(payload.ethereumBridge!==ethereumBridgeDigest(p)||payload.group!==p.group||j.postings.length!==1||j.postings[0].positionId!==b.positionId||j.postings[0].accountId!==b.accountId||units(j.postings[0].quantityDeltaExact)!==-units(p.principalETH)||units(j.postings[0].amountBookEURExact)!==0n||b.external!==false||seen.has(p.event.id))fail();seen.add(p.event.id);
+  if(payload.ethereumBridge!==ethereumBridgeDigest(p)||payload.group!==p.group||j.postings.length!==1||j.postings[0].positionId!==b.positionId||j.postings[0].accountId!==b.accountId||units(j.postings[0].quantityDeltaExact)!==-units(principal)||units(j.postings[0].amountBookEURExact)!==0n||b.external!==false||seen.has(p.event.id))fail();seen.add(p.event.id);
   const siblings=removed?entries.filter(x=>x.removed&&x.b?.importSource?.fileId===p.group).map(x=>x.b):model.bookings.filter(x=>x.importSource?.sourceId==='kraken-uh03-v1'&&x.importSource.fileId===p.group);
   const fees=siblings.filter(x=>x.id!==b.id);
-  if(units(p.exchangeFeeETH)>0n?(fees.length!==1||fees[0].type!=='fee'||fees[0].positionId!==b.positionId||units(fees[0].quantityExact)!==units(p.exchangeFeeETH)||!sourceUnmodified({journalEntries:entries.map(x=>x.j)},fees[0])):fees.length!==0)fail();
+  if(units(fee)>0n?(fees.length!==1||fees[0].type!=='fee'||fees[0].positionId!==b.positionId||units(fees[0].quantityExact)!==units(fee)||!sourceUnmodified({journalEntries:entries.map(x=>x.j)},fees[0])):fees.length!==0)fail();
  }
  for(const {j,b} of entries.filter(x=>x.b?.importSource?.sourceId==='kraken-uh03-v1')){let payload;try{payload=JSON.parse(b.importSource.sourcePayload);}catch{continue;}if(payload.ethereumBridge&&!entries.some(x=>x.j.id==='uh03:'+payload.group+':0'&&x.j.krakenEthereumBridge&&ethereumBridgeDigest(x.j.krakenEthereumBridge)===payload.ethereumBridge))fail();}
 }

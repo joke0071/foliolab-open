@@ -171,8 +171,8 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    const bridge=btc??eth??sol,bridgeKey=sol?'solanaBridge':eth?'ethereumBridge':'bitcoinBridge',bridgeDigest=sol?solanaBridgeDigest:eth?ethereumBridgeDigest:bitcoinBridgeDigest;
    if(bridge){
     (sol?validateSolanaBridgeProof:eth?validateEthereumBridgeProof:validateBitcoinBridgeProof)(draft,bridge,{requireHistory:!(sol?krakenSolanaBridgeFor:eth?krakenEthereumBridgeFor:krakenBridgeFor)(draft,group.id)});
-    const row=group.rows[0],source=position(draft,row,assignments),asset=sol?'SOL':eth?'ETH':'BTC',coin=sol?'solana':eth?'ethereum':'bitcoin';
-    if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!==asset||source.coinId!==coin||source.accountId===bridge.event.accountId||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge[sol?'principalSOL':eth?'principalETH':'principalBTC']!==exact(-units(row.amountExact))||bridge[sol?'exchangeFeeSOL':eth?'exchangeFeeETH':'exchangeFeeBTC']!==row.feeExact||externalReferences.includes(group.id))unsupported('Wallet-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
+    const row=group.rows[0],source=position(draft,row,assignments),asset=sol?'SOL':eth?.kind==='link-explorer-beacon'?'LINK':eth?'ETH':'BTC',coin=sol?'solana':eth?.kind==='link-explorer-beacon'?'chainlink':eth?'ethereum':'bitcoin';
+    if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!==asset||source.coinId!==coin||source.accountId===bridge.event.accountId||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge['principal'+asset]!==exact(-units(row.amountExact))||bridge['exchangeFee'+asset]!==row.feeExact||externalReferences.includes(group.id))unsupported('Wallet-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
    }
    const actions=actionsFor(draft,group,assignments,{externalReferences,bitcoinBridge:btc,ethereumBridge:eth,solanaBridge:sol});
    if(actions.length>24)unsupported('Zu viele abhängige Buchungen in einer einzelnen Referenzgruppe.');
