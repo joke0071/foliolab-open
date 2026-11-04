@@ -1,3 +1,11 @@
+## ACTIVE – 35cd9cbceaef / Übernahme nach vollständiger Abgabe – 04.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **35cd9cbceaef** nach STOPPED/HANDOVER_READY von74db01715cc2 und ausdrücklichem Nutzerauftrag. Kopf und vollständige Übergabe einschließlich neuestem RPC-Freigabenachtrag gelesen. Main **2bf36bf6328fb5f66da29c2c04d3309d206a7aae**, Tree **061b13d7dd33718765d6a6449a5d20af19424dca** frisch unverändert; nur historische Drafts157/161 mit unveränderten HEADs, 0in_progress/0queued. Main-/Produktionslauf41791654108 Versuch1 completed/success. **v278 LIVE_ACCEPTED**, keine Wiederabnahme/CI-Duplikate. Kein Produkt-WIP übernommen; private Originale, 81-Paar-Oracle und Quellkopie erreichbar.
+
+Nächster Schritt: ausdrücklich freigegebene lesende LINK-Receiptprüfung ausschließlich bei eth.llamarpc.com und eth.drpc.org, keinen Erfolg vorwegnehmen. Bei fortbestehendem Receiptblocker wirtschaftlichen nativen EUR-Depot-/Kontopaarablauf gemäß UH04_NET_SETTLEMENT_TASKCARD_2026-11-04.md im gemeinsamen Kern implementieren und vollständig qualifizieren; kein Preview-only-Abschluss. Ungeklärte Nettodifferenzen bleiben ungeklärt, keine bestätigten Gebühren/Steuern/Kosten. Danach UH03/UH04/UH05 gemäß Gesamtplan. Keine Screenshots/CSVs erneut anfordern; private Kennungen nicht veröffentlichen. Alle Finanz-/v5-/Journal-/Identitäts-/CAS-/Backup-/Restoreverträge und EFF01/HND01/Releasefreigabe erhalten. GitHub nur Plugin; Checkpointbranch niemals vollständig nach Main mergen. Eigene Zähler0/0.
+
+---
+
 ## HANDOVER_READY – 74db01715cc2 STOPPED / v278 LIVE_ACCEPTED – 04.11.2026
 
 **Nutzerfreigabe vom 04.11.2026 (nach der Abgabe):** Der Nutzer hat ausdrücklich bestätigt, dass die bereits vorhandene LINK-Transaktionskennung für die noch fehlende Receiptprüfung an **https://eth.llamarpc.com** und **https://eth.drpc.org** übermittelt werden darf. Diese eng begrenzten lesenden RPC-Abfragen sind autorisiert; dafür keine erneute Rückfrage. Die zuvor dokumentierte automatische Ablehnung bleibt als historischer Befund erhalten, die damals fehlende Nutzerfreigabe liegt jetzt vor. Kein Abfrageerfolg oder Receipt damit behauptet. Keine privaten Kennungen in GitHub veröffentlichen. Owner bleibt STOPPED/HANDOVER_READY; der nächste Owner prüft vor Ausführung den aktuellen Stand.
