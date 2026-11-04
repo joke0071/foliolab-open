@@ -1,0 +1,61 @@
+{
+  "status": "WAITING_FOR_EXISTING_MAIN_RUN",
+  "owner": "01a1a73ba52f",
+  "main": "5e24de041622cf5753adc48eebc303ef647e788b",
+  "tree": "6b226b1082f05078257c106d57f6fa07dd97720f",
+  "lastLiveAccepted": "v280",
+  "candidate": "v281",
+  "run": 41861912576,
+  "attempt": 1,
+  "jobs": [
+    {
+      "id": 126685689136,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "queued",
+      "conclusion": null
+    },
+    {
+      "id": 126685792551,
+      "name": "cross-engine (2)",
+      "status": "queued",
+      "conclusion": null
+    },
+    {
+      "id": 126685792594,
+      "name": "cross-engine (1)",
+      "status": "queued",
+      "conclusion": null
+    },
+    {
+      "id": 126685792597,
+      "name": "test",
+      "status": "queued",
+      "conclusion": null
+    },
+    {
+      "id": 126685792640,
+      "name": "cross-engine (3)",
+      "status": "queued",
+      "conclusion": null
+    },
+    {
+      "id": 126685795119,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "blocker": "Existing main jobs remain queued on GitHub; no completed main/deployment/actual-production evidence yet.",
+  "integrationEvidence": "v281-pr296-integration-acceptance.json",
+  "actionsTaken": [
+    "user-confirmed exclusive emergency takeover",
+    "private archive exact SHA256 and all 189 hashes qualified",
+    "existing integration artifacts/terminal logs and original oracle qualified",
+    "PR296 expected-head protected merge"
+  ],
+  "noAdditionalRuns": true,
+  "noPipelineChanges": true,
+  "noFollowupImplementation": true,
+  "next": "Resume existing run 41861912576; inspect terminal main logs/artifacts, Pages artifact and deployment; inspect actual production three-engine augmentation flow and strict HTTPS asset identity; only then accept v281. Then UH04 -> UH05.",
+  "LINK": "blocked; finalized execution anchor missing; no repeat RPC or user Python needed"
+}
