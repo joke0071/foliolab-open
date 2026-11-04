@@ -1,0 +1,110 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": "v280",
+  "main": "4e8c63c9deda58203c3dc637cd80366047d25d18",
+  "tree": "94802e05c2ce5ece4b9f4c4eca20ba7b45133259",
+  "sw": "foliolab-open-v280",
+  "pr": 295,
+  "workflow": 41832189388,
+  "attempt": 1,
+  "workflowResult": "SUCCESS",
+  "allRequiredMainJobs": "SUCCESS",
+  "deployJob": 126591095765,
+  "liveJob": 126591249969,
+  "liveResult": "SUCCESS",
+  "mainQualification": "v280-main-qualification-live-pending.json",
+  "integrationQualification": "v280-pr295-integration-acceptance.json",
+  "regularHTTPSQualification": "v280-regular-https-assets.json",
+  "regularHTTPS": {
+    "matched": 144,
+    "total": 144,
+    "certificateValidation": true,
+    "proxyCertificateException": false
+  },
+  "actualProductionCore": {
+    "groups": 6,
+    "axeScans": 18,
+    "exactAssetHashes": 144,
+    "proxyCertificateException": false,
+    "result": "PASS",
+    "errors": []
+  },
+  "actualProductionIncrementalEconomics": {
+    "engines": [
+      "chromium141",
+      "firefox157",
+      "webkit27.2"
+    ],
+    "chromiumEvidence": "Original terminal production log126591249969: chromium NATIVE FLATEX NET ECONOMICS PASS",
+    "jsonReportEngines": [
+      "firefox",
+      "webkit"
+    ],
+    "reportOverwriteLimit": "Shared net report.json was overwritten by cross-engine step; Chromium is proved by its original completed production log, not represented as a third JSON engine",
+    "checks": [
+      "later exact net pair commit without replacing existing opening/booking/journal",
+      "one CAS revision; exact3shares/cash66; unknown costs/no external flows",
+      "quota/post-putAbort/real second-writer CAS",
+      "offline/fresh-profile encrypted v5 UI restore/replay",
+      "persistent latest-group removal/reimport block",
+      "seven widths/Axe"
+    ]
+  },
+  "liveArtifact": {
+    "id": 13327633455,
+    "name": "production-live-acceptance-4e8c63c9deda58203c3dc637cd80366047d25d18",
+    "bytes": 117635797,
+    "sha256": "5cea8bc71fbd7e64bb0322acfa818a35ecd5dad6ffd0be47f4bde0d302d17f18",
+    "APIUploadLogFileMatch": true,
+    "CRC": "PASS",
+    "entries": 1230,
+    "jsons": 91,
+    "pngsDecoded": 21,
+    "failureFields": [],
+    "selected": [
+      "flatex-net-settlement/chromium-1440.png",
+      "flatex-net-settlement/chromium-320.png",
+      "flatex-net-settlement/chromium-360.png",
+      "flatex-net-settlement/chromium-390.png",
+      "flatex-net-settlement/chromium-412.png",
+      "flatex-net-settlement/chromium-768.png",
+      "flatex-net-settlement/firefox-1440.png",
+      "flatex-net-settlement/chromium-430.png",
+      "flatex-net-settlement/firefox-320.png",
+      "flatex-net-settlement/firefox-360.png",
+      "flatex-net-settlement/firefox-390.png",
+      "flatex-net-settlement/firefox-412.png",
+      "flatex-net-settlement/firefox-430.png",
+      "flatex-net-settlement/firefox-768.png",
+      "flatex-net-settlement/report.json",
+      "flatex-net-settlement/webkit-1440.png",
+      "flatex-net-settlement/webkit-320.png",
+      "flatex-net-settlement/webkit-390.png",
+      "flatex-net-settlement/webkit-412.png",
+      "flatex-net-settlement/webkit-360.png",
+      "flatex-net-settlement/webkit-430.png",
+      "flatex-net-settlement/webkit-768.png"
+    ]
+  },
+  "imagesInspected": [
+    "production chromium320",
+    "production webkit320",
+    "production firefox1440"
+  ],
+  "freshEndState": {
+    "mainUnchanged": true,
+    "onlyHistoricalDrafts": [
+      157,
+      161
+    ],
+    "inProgress": 0,
+    "queued": 0,
+    "productWIP": false
+  },
+  "limits": [
+    "UH04 remains partial: single-leg augmentation/Depot13 context/Konto8/FX/N:M/special events/independent historical ending balances not qualified",
+    "LINK WAITING_FOR_EXTERNAL_CAPTURE; no new LINK RPC requests in this continuation",
+    "No complete UH03/ERC20/UH05 acceptance or actual Android hardware claim",
+    "Independent original81pairs use controlled openings, not genuine historical opening/end balances"
+  ]
+}
