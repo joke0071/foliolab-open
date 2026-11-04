@@ -1,3 +1,19 @@
+## HANDOVER_READY – 153e89d5df7c STOPPED / PR293 eingefroren / v277 LIVE_ACCEPTED – 04.11.2026
+
+**153e89d5df7c ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Frühe sichere HND01-Rotation nach umfangreicher Beleg-/Umgebungs-/Browseretappe. Nach diesem Kopf keine neue Produktarbeit/PR/Merge/Deployment; laufende CI unverändert. [Vollständige Übergabe samt Startprompt](HANDOVER_153e89d5df7c_2026-11-04.md).
+
+Frisch unveränderter Main **d651f09f93f261ee318a478279586fefd31fcd7f** / Tree **6b73950cd0879a7e81f4bbc3046c9b49608a7a9a**. **v277 LIVE_ACCEPTED**, nicht erneut abnehmen. Einziger neuer Kandidat **PR293**, Branch feature/uh04-flatex-depot13, HEAD **5cd08aeeaed3b6d880dc22c58207ed03a4541972**, Tree **061b13d7dd33718765d6a6449a5d20af19424dca** unabhängig berechnet/exakt synthetischer Merge. Nur13 beabsichtigte Dateien, privater Kennungsscan PASS, kein weiterer Produkt-WIP. **v278 NICHT gemergt/deployed/LIVE_ACCEPTED.** Historische Drafts157/161 unverändert.
+
+**CI41789688499 Versuch1 zuletzt IN_PROGRESS**, Haupt126439976235 und Cross126439976297/126439976399/126439976370 in Browserphasen; Plan/Vertragskanarien SUCCESS. **Wallet41789688651 SUCCESS**. Keine Actions verändert. NächsterSchritt: bestehenden Abschluss/terminale Logs/tatsächliche ZIPs/Hash/CRC/Berichte/Bilder/Reviews frisch prüfen; bei erfüllten Pflichtgates geschützt mergen und echte Main-/Live-/reguläreHTTPS-Abnahme einschließlich neuer nativer Flatexgates. Keine neue CI/Abbrüche/blindenRetries. [Kandidatenqualifikation](release-evidence/v278-depot13-candidate-qualification.json).
+
+Privater Originaloracle/155Flatex-/1173Volltests vor finalen Workflowergänzungen/174gezielte/finale19Workflowtests PASS. NativeUI mit Depot13 online/offline/5Breiten/Axe/erzwungenemSubmit/exakterIDB sowie bestehender Append-/Backfill-Commit mit Backup/Quota/post-putAbort/CAS/Replay/Undo/Restore/Offline WebKit PASS. Nicht als fertigen UH04-Wirtschaftsimport ausgeben: fehlende exportierte Depotkennung bleibt gesperrt, gemeinsame Depot-/Kontowirtschaftsgruppen/Kostensplit/Endbestände weiter offen.
+
+LINK: Quelle/kanonischeRPC-Fakten wiederverwendet. Neu unabhängig passende Explorer-Ausführungsdaten/Gas/Logsatz und genaue Tokenmetadaten(decimals18) qualifiziert; **rohesReceipt/historischereth_call weiterhinHTTP403**, keineERC20-Produktbrücke/Gesamtabnahme. [Delta](release-evidence/uh03-link-explorer-delta-2026-11-04.json). Screenshot/CSVs NICHT erneut anfordern. NachKandidat UH03 weiter; bei externemReceiptblocker unabhängige sichere wirtschaftlicheUH04-Arbeit gemäß bestehenderVorbereitung, danachUH05.
+
+PrivateSicherung **libfile_42e6c0236610819189e0ba522c74ecfd Version3**,210832Bytes/SHA256 **7f74d32103ab253f324428770f7c6093e300057a44941eea56e66ee4a70476cd**,47interneHashesPASS. LokalePrivateBelege **/workspace/scratch/153e89d5df7c/private/**, geprüfteVorgängerbelege unter676380c86f50/private/, Quellkopie source/; Erreichbarkeitfrischprüfen, Gitcheckoutsauberkeitnichtbehaupten. Alle13Produktdateienremote. v5/Identitäten/Finanzschutz/Journal/CAS/Backup/Restore/EFF01/HND01 undReleasefreigabe erhalten. Zähler0/0. GitHubnurüberPlugin; Checkpointbranch **niemalsvollständig nachMain mergen**.
+
+---
+
 ## ACTIVE – 153e89d5df7c / Übernahme nach bestätigter Abgabe – 04.11.2026
 
 Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner **153e89d5df7c** nach STOPPED/HANDOVER_READY von 676380c86f50 und Nutzerauftrag. Frisch geprüft: Main d651f09f93f261ee318a478279586fefd31fcd7f / Tree 6b73950cd0879a7e81f4bbc3046c9b49608a7a9a; **v277 LIVE_ACCEPTED**, keine Wiederabnahme. Nur historische Drafts157/161 mit unveränderten HEADs; letzte fünf Actions completed/success, keine Actions verändert. Kein Produkt-WIP übernommen. Private Originale/Chainbelege/UH04-Vorbereitung tatsächlich erreichbar, Sicherungsarchiv SHA256 exakt zur Übergabe.
