@@ -1,0 +1,22 @@
+{
+  "status": "SOURCE_DETAIL_ACCEPTED_CANONICAL_TRANSFER_LOG_PASS_RECEIPT_PENDING",
+  "date": "2026-11-04",
+  "main": "d651f09f93f261ee318a478279586fefd31fcd7f",
+  "release": "v277 LIVE_ACCEPTED (unchanged)",
+  "scope": "One native Kraken ERC20 LINK withdrawal detail matched to unchanged Kraken and Ledger originals; private exact proof retained.",
+  "verified": [
+    "Reference, destination, fee and local/UTC timestamp",
+    "Rounded displayed quantity agrees with exact original amount",
+    "Truncated displayed hash prefix agrees with full Ledger hash",
+    "Ethereum mainnet chainId, transaction, historical canonical block and exact inclusion/index",
+    "Finalized head exceeds transaction height",
+    "Direct ERC20 transfer calldata and emitted contract/sender/recipient/raw quantity/log index",
+    "Block timestamp matches original Ledger; independent Decimal principal plus separate exchange fee"
+  ],
+  "missing": [
+    "eth_getTransactionReceipt returned result:null on PublicNode/Flashbots/Cloudflare; actual gas fee and complete receipt remain unqualified",
+    "Historical decimals eth_call HTTP403; 18-decimal interpretation matches original quantity but call not independently verified"
+  ],
+  "limits": "Not a complete ERC20 source-bridge/product approval, historical holdings or overall UH03 acceptance. No product mutation/CI/release/unsafe retry. No further screenshot/CSV needed.",
+  "next": "Only missing actual receipt and decimals proof; then receipt/log/fee/event qualification and bounded ERC20 implementation. Preserve v5/financial protections."
+}
