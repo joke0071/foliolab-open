@@ -1,3 +1,11 @@
+## ACTIVE – 01a1a73ba52f / PR296 gemergt / v281 Main-Abnahme läuft – 04.11.2026
+
+PR296 nach [Integrationsabnahme](release-evidence/v281-pr296-integration-acceptance.json) HEAD-geschützt gemergt. Main5e24de041622cf5753adc48eebc303ef647e788b / Tree6b226b1082f05078257c106d57f6fa07dd97720f entspricht geprüftemKandidaten/Testmerge. Pflicht41854091524/Wallet41854091649Versuch1SUCCESS; tatsächlicheZIPs/API-/Uploadloghash/CRC/141JSONs/21AugmentationsPNG/3gesichtet/OriginalOraclePASS. 1190Tests0Fehler0Skips. KeineDuplikate/Retries/Abbrüche.
+
+v280 bleibt letzte LIVE_ACCEPTED-Version; v281 noch NICHT LIVE_ACCEPTED. Regulären automatisch ausgelösten Main-/Deployment-/Liveablauf abwarten und tatsächliche Belege qualifizieren. KeineFolgeimplementierung währendIntegration. AlleinigerOwner01a1a73ba52f nach bestätigtem Nutzerstop des altenWork-Laufs. PrivateVersion15 vollständig189HashesPASS. LINKweitergesperrt wegenFinalitätsanker. EFF01/HND01/alleSchutzverträgegelten;CheckpointbranchniemalsvollständignachMainmergen. EigeneZähler0LIVE_ACCEPTED/0abgeschlosseneProduktpakete.
+
+---
+
 ## ACTIVE – 01a1a73ba52f / bestätigte Notfallübernahme / PR296 eingefroren – 04.11.2026
 
 Nutzer hat im neuen Work-Chat ausdrücklich bestätigt: alter Work-Lauf f5b53dbf4bae beendet, ausschließlich dieser Chat setzt fort. Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung bei 01a1a73ba52f; keine technische STOPPED-Erklärung des Vorgängers erfunden. Frisch Main4e8c63c9deda58203c3dc637cd80366047d25d18 / Tree94802e05c2ce5ece4b9f4c4eca20ba7b45133259 unverändert, v280LIVE_ACCEPTED. PR296 HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 offen; Pflicht41854091524 und Wallet41854091649 Versuch1SUCCESS,0laufende/0wartendeActions. Keine neue CI/Implementierung. Nächster Schritt: vorhandene tatsächliche CI-Logs/Artefakte und Kandidat qualifizieren; nur bei vollständigen Gates SHA-geschützt mergen, Main/Deploy/Produktion v281 abnehmen; danach UH04→UH05.
