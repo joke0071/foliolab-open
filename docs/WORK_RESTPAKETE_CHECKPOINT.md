@@ -1,3 +1,13 @@
+## ACTIVE – f5b53dbf4bae / UH04 Einzelbeinergänzung / LINK-GET-Zugang – 04.11.2026
+
+Fortsetzung des bestehenden Hauptstrangs; alleiniger Work-Owner f5b53dbf4bae, Vorgänger 8e88691c253e bestätigt STOPPED. Main 4e8c63c9deda58203c3dc637cd80366047d25d18 / Tree 94802e05c2ce5ece4b9f4c4eca20ba7b45133259, v280 LIVE_ACCEPTED unverändert. Frisch nur historische Drafts157/161, 0 laufende/0 wartende Actions; keine neue CI/kein Produktkandidat.
+
+[Nutzerergänzung LINK](https://github.com/joke0071/foliolab-open/issues/174#issuecomment-6633679294) gelesen. Android-Ergebnis-ZIP übernommen: beide chainId-Anfragen403, kein Receipt-/Finalitätsbeleg. Reguläre kennungsfreie Blockscout-GETs stats/config/backend/blocks/0 HTTP200; Genesis entspricht Ethereum Mainnet. Keine private Kennung gesendet, keine Wiederholung blockierter RPC-POSTs, kein Bypass. Vor kennungsbezogenen GETs gezielte Nutzerfreigabe erforderlich. LINK bleibt gesperrt; dokumentierter GET-Umfang liefert noch keinen erfassten finalized-Anker. Keine weitere lokale Python-Ausführung vom Nutzer erforderlich.
+
+UH04 gemäß [Einzelbein-Taskkarte](UH04_SINGLE_LEG_AUGMENTATION_TASKCARD_2026-11-04.md) fortsetzen: ausdrücklicher Ergänzungsmodus, exakte Altquelle/alter Buchungs- und Journalbeleg dauerhaft streng gebunden, unveränderte Stückwirkung, nur belegter Cashdelta, geschützter datierter Cashanfang, bestehender v5-/CAS-/Rücknahmekern. Generische CSV-/importierte Änderungsrechte nicht lockern. Relevante513MainBlobs und154privateArchivHashes qualifiziert; kein vollständiger Gitcheckout behauptet. PrivateSicherungVersion14 plus Android-ZIP erhalten. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) und Releasegates gelten; Checkpointbranch nie vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY – 8e88691c253e STOPPED / v280 LIVE_ACCEPTED – 04.11.2026
 
 **8e88691c253e ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Früher sicherer HND01-Releasepunkt nach umfangreicher Beleg-/Implementierungs-/Integrations-/Main-/Produktionsetappe. [Vollständige Übergabe und kopierbarer Startprompt](HANDOVER_8e88691c253e_2026-11-04.md). Nach dieser Abgabe keine Folgeimplementierung/PR/Merge/Deployment/Retry.
