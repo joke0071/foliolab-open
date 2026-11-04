@@ -1,0 +1,67 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": "v277",
+  "acceptedAt": "2026-11-04T06:05:44.094Z",
+  "owner": "676380c86f50",
+  "main": "d651f09f93f261ee318a478279586fefd31fcd7f",
+  "tree": "6b73950cd0879a7e81f4bbc3046c9b49608a7a9a",
+  "pr": 292,
+  "run": 41723207943,
+  "attempt": 1,
+  "liveJob": 126230291673,
+  "artifact": {
+    "id": 13275991573,
+    "bytes": 112921913,
+    "sha256": "14aef59d07650ba5182241ec3a801265da85ccf5e4d7b087d0bb7168210ba866",
+    "entries": 1172,
+    "crc": "PASS",
+    "apiUploadLogActualFileMatch": true
+  },
+  "live": {
+    "cache": "foliolab-open-v277",
+    "result": "PASS",
+    "errors": [],
+    "proxyCertificateException": false,
+    "uniqueAssetHashes": 143,
+    "allMatchInheritedIndependentHttpsAndSourceReceipt": true,
+    "coreGroups": 6,
+    "axeScans": 18,
+    "jsonReportsParsed": 90,
+    "populatedErrorFailureViolationArrays": 0,
+    "krakenScenarioPasses": 18,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "cases": [
+      "solana-bridge",
+      "ethereum-bridge",
+      "bitcoin-bridge",
+      "distinct-fee",
+      "cross-reference",
+      "same-asset-fee"
+    ],
+    "verifiedContracts": [
+      "IDB/CAS/revision",
+      "quota/stale/post-put abort",
+      "exact journal/cash/fee/holding invariants",
+      "undo",
+      "persistent source withdrawal/tombstone",
+      "encrypted fresh restore",
+      "offline SW reload"
+    ],
+    "imagesViewed": [
+      "kraken-import/chromium-solana-bridge-390.png",
+      "kraken-import/firefox-solana-bridge-390.png",
+      "kraken-import/webkit-solana-bridge-withdrawal-390.png"
+    ]
+  },
+  "inheritedEvidence": [
+    "v277-pr292-final-ci.json",
+    "v277-main-deploy-gates.json",
+    "v277-independent-https-assets.json"
+  ],
+  "limits": "UH03 overall PARTIAL; controlled synthetic openings are not independent historical balances. ERC20/SPL/N:M and historical end balances remain open. No original data reacquisition or product changes. v276 not reaccepted.",
+  "localEvidence": "/workspace/scratch/676380c86f50/private/"
+}
