@@ -1,0 +1,84 @@
+{
+  "owner": "35cd9cbceaef",
+  "status": "LOCAL_QUALIFIED_INTEGRATION_PENDING",
+  "base": "2bf36bf6328fb5f66da29c2c04d3309d206a7aae",
+  "head": "6fa1ec516e6cf1dca7af8814d5c64f19546f0163",
+  "tree": "6c091be0072a7984f8e5a17c7fbdcc03faeba9e6",
+  "testMerge": "d9fe25ddce9f7bd315b103631dc331a573a4f2c0",
+  "pr": 294,
+  "ci": 41802701910,
+  "wallet": {
+    "run": 41802702068,
+    "status": "SUCCESS"
+  },
+  "files": 18,
+  "units": {
+    "tests": 1182,
+    "fail": 0,
+    "skip": 0
+  },
+  "original": {
+    "pairs": 81,
+    "oracle": "independent Python CSV/Decimal, controlled synthetic openings only",
+    "checks": [
+      "exact gross/net/unallocated difference",
+      "common economic commit/v5 restore/replay/full-group removal/reimport block"
+    ],
+    "actualHistoricalBalancesAccepted": false
+  },
+  "localBrowser": {
+    "engine": "WebKit",
+    "result": "PASS",
+    "scope": [
+      "actual net UI backup/confirmation/one CAS commit",
+      "quota and post-put abort exact no partial effect",
+      "real second writer after freshness rejected at CAS",
+      "offline reload and actual fresh-profile encrypted v5 UI restore",
+      "replay/persistent group removal/reimport tombstone",
+      "seven widths/Axe; 320px screenshot inspected",
+      "existing native share append/backfill regression"
+    ],
+    "limits": [
+      "Existing private WebKit runtime/dependency library paths",
+      "Host dependency preflight skipped for local runtime; no product or CI assertion skipped",
+      "No Chromium/Firefox/full integration/live/hardware acceptance yet"
+    ]
+  },
+  "link": {
+    "status": "TRANSPORT_BLOCKED_RECEIPT_PENDING",
+    "clientMethod": "POST",
+    "contentType": "application/json",
+    "redirectPolicyForChainId": "do not follow; no redirect observed",
+    "chainId": {
+      "llama": {
+        "http": 405,
+        "body": "HTML openresty Method Not Allowed"
+      },
+      "drpc": {
+        "http": 403,
+        "body": "Cloudflare error code 1010"
+      }
+    },
+    "receiptAttempts": {
+      "llama": 405,
+      "drpc": 403
+    },
+    "limits": [
+      "Original receipt HTTP-error response headers/body were not retained; no retrospective wire/redirect claim",
+      "Client request construction does not establish proxy/upstream wire bytes",
+      "No successful JSON-RPC receipt, no proof that receipt is absent on chain",
+      "No new private-hash query after failed basic chainId",
+      "Explorer evidence retained; no raw receipt reconstructed and no equivalent substitute verifier accepted"
+    ],
+    "localCounterprobePrepared": true
+  },
+  "lastLiveAccepted": "v278",
+  "newMergeDeployOrLiveAcceptance": false,
+  "privateBackup": {
+    "libraryFileId": "libfile_42e6c0236610819189e0ba522c74ecfd",
+    "version": 7,
+    "bytes": 388956,
+    "sha256": "363227e81158aaa8e91d9f60b53e9347dd8db14d61779307365146d20dd065f2",
+    "verifiedInternalFiles": 90
+  }
+}
