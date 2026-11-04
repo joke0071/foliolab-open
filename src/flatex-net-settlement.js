@@ -72,6 +72,97 @@ export function validateNetSettlement(proof){
  return proof;
 }
 export const hasFlatexNetState=m=>m?.flatexNetRemovals!==undefined||(m?.bookings||[]).some(b=>b.netSettlement!==undefined)||(m?.journalEntries||[]).some(j=>j.netSettlementId!==undefined||j.status==='unresolved-net-settlement'||j.postings?.some(p=>p.role==='unresolved-net-amount'));
+/** Validate the retained native purchase independently of current ownership.
+ * Imported editing and ordinary CSV replay do not acquire this permission. */
+function validateOriginalPurchase(b,j,s){
+ if(!b||!j||b.netAugmentation!==undefined||b.netSettlement!==undefined||s.type!=='buy'||b.type!=='buy'||b.date!==s.date||b.journalEntryId!==j.id||j.type!=='buy'||j.date!==b.date||j.source!=='csv'||j.status!=='unresolved-clearing'||j.netSettlementId!==undefined||j.cashPositionId||b.cashPositionId||b.targetPositionId||b.transferMatch||b.external!==false||b.costsVerified!==false||b.feeEUR!==null||b.taxEUR!==null||b.fxRate!==1||b.unitPrice!==Number(s.unitPriceExact)||b.amountEUR!==Number(s.grossExact)||units(b.amountExactEUR)!==units(s.grossExact)||units(b.quantityExact)!==units(s.quantityExact)||b.quantity!==Number(s.quantityExact))fail();
+ validateImportSource(b.importSource,b.accountId);validateJournalEntry(j);
+ if(b.importSource.sourceId!==s.depot.sourceId||b.importSource.externalId!==s.depot.externalId||!sourceUnmodified({journalEntries:[j]},b))fail();
+ const row=JSON.parse(b.importSource.sourcePayload);
+ keys(row,'type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId sourceEvidence');
+ if(row.type!==b.type||row.date!==b.date||row.positionId!==b.positionId||row.cashPositionId||row.notes!==b.notes||row.externalId!==s.depot.externalId||row.feeEUR!==null||row.taxEUR!==null||units(row.quantity)!==units(s.quantityExact)||units(row.unitPrice)!==units(s.unitPriceExact)||units(row.fxRate)!==units('1')||!equal(row.sourceEvidence,{version:1,payloadDigest:s.depot.payloadDigest}))fail();
+ if(j.postings.length!==2)fail();
+ const [asset,clearing]=j.postings;
+ if(asset.role!=='asset'||asset.positionId!==b.positionId||asset.accountId!==b.accountId||units(asset.quantityDeltaExact)!==units(s.quantityExact)||units(asset.amountBookEURExact)!==units(s.grossExact)||clearing.role!=='clearing'||clearing.positionId!==null||clearing.accountId!==null||clearing.quantityDeltaExact!==null||units(clearing.amountBookEURExact)!==-units(s.grossExact))fail();
+}
+/** One deterministic transition; original IDs, timestamp, sequence and asset
+ * posting survive. Exact original booking/journal bytes live in the new audit. */
+function augmentedPurchase(original,journal,proof,cashPositionId){
+ validateOriginalPurchase(original,journal,proof);
+ const b=structuredClone(original),j=structuredClone(journal);
+ const audit={version:1,booking:structuredClone(original),journal:structuredClone(journal)};
+ b.cashPositionId=cashPositionId;b.netSettlement=structuredClone(proof);b.netAugmentation=audit;
+ b.reconciliationStatus='unresolved-net-settlement';
+ j.cashPositionId=cashPositionId;j.netSettlementId=proof.id;j.status='unresolved-net-settlement';
+ const cash=j.postings[1];cash.role='cash';cash.positionId=cashPositionId;
+ // The account is bound by the caller and checked against the model below.
+ cash.accountId=null;cash.quantityDeltaExact=proof.cashExact;cash.amountBookEURExact=proof.cashExact;
+ j.postings.push({id:proof.id+'-difference',role:'unresolved-net-amount',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:exact(-units(proof.grossExact)-units(proof.cashExact))});
+ const row=JSON.parse(original.importSource.sourcePayload);
+ Object.assign(row,{cashPositionId,tradeAmountEURExact:proof.grossExact,netSettlementId:proof.id,netCashExact:proof.cashExact,netAugmentationDigest:sourceDigest(JSON.stringify(audit))});
+ b.importSource.sourcePayload=JSON.stringify(row);
+ return {booking:b,journal:j};
+}
+function completeAugmentation(original,journal,proof,cash){
+ const result=augmentedPurchase(original,journal,proof,cash.id);
+ result.journal.postings[1].accountId=cash.accountId;
+ result.booking.importSource.ownedSnapshot=bookingOwnership({journalEntries:[result.journal]},result.booking);
+ return result;
+}
+function validateNetAugmentation(b,j){
+ const a=b.netAugmentation;keys(a,'version booking journal');if(a.version!==1)fail();
+ const cash=j.postings.find(p=>p.role==='cash');if(!cash?.positionId||!cash.accountId)fail();
+ const expected=completeAugmentation(a.booking,a.journal,b.netSettlement,{id:cash.positionId,accountId:cash.accountId});
+ if(!equal(expected.booking,b)||!equal(expected.journal,j))fail();
+}
+/** Narrow, explicit single native purchase augmentation. No other dependency,
+ * protected cost, reference balance or existing cash effect can be rewritten. */
+function augmentModel(model,proof,assetId,cashId,openingDate){
+ validateFlatexNetSettlements(model);validateNetSettlement(proof);
+ if(proof.type!=='buy'||!validCalendarDate(openingDate)||openingDate>=proof.date||!ledgerQuantityAudit(model).ok)fail();
+ const p=model.positions.find(p=>p.id===assetId),c=model.positions.find(p=>p.id===cashId);
+ if(!p||!c||p.id===c.id||p.accountId===c.accountId||p.providerId!==c.providerId||p.currency!=='EUR'||c.currency!=='EUR'||!['etf','stock','fund'].includes(p.kind)||p.isin!==proof.isin||c.kind!=='cash'||p.archived||c.archived||p.wallet?.enabled||c.wallet?.enabled||p.managementSource==='wallet'||c.managementSource==='wallet')fail();
+ for(const pos of [p,c])if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)fail();
+ const matches=model.bookings.filter(b=>b.accountId===p.accountId&&b.importSource?.sourceId===proof.depot.sourceId&&b.importSource.externalId===proof.depot.externalId);
+ if(matches.length!==1)fail();const old=matches[0],j=model.journalEntries.find(j=>j.id===old.journalEntryId);
+ validateOriginalPurchase(old,j,proof);if(old.positionId!==p.id)fail();
+ const touched=new Set([p.id,c.id]);
+ if(model.bookings.some(b=>b.id!==old.id&&[b.positionId,b.cashPositionId,b.targetPositionId].some(id=>touched.has(id)))||model.journalEntries.some(e=>e.id!==j.id&&e.postings.some(x=>touched.has(x.positionId)))||model.externalCashFlows.some(f=>f.id===old.id)||(model.snapshots||[]).some(s=>s.byPosition&&[p.id,c.id].some(id=>Object.hasOwn(s.byPosition,id))&&s.date>=openingDate))fail();
+ const sources=[proof.depot,proof.account];
+ if((model.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(s=>sources.some(n=>sourceKey(s)===sourceKey(n))))||model.bookings.some(b=>b.id!==old.id&&b.importSource&&sources.some(s=>sourceKey(s)===sourceKey(b.importSource))))fail();
+ const assetOpening=model.openingPositions.find(o=>o.positionId===p.id),cashOpening=model.openingPositions.find(o=>o.positionId===c.id);
+ if(!assetOpening||units(assetOpening.quantityExact)!==0n||assetOpening.costBasisExact!=null||assetOpening.realizedPnLExact!=null||(assetOpening.asOf!=null&&(!validCalendarDate(assetOpening.asOf)||assetOpening.asOf>=proof.date))||units(p.quantityExact??p.quantity)!==units(proof.quantityExact)||!cashOpening||units(cashOpening.quantityExact)!==units(c.quantityExact??c.quantity)||cashOpening.costBasisExact!=null||cashOpening.realizedPnLExact!=null||(cashOpening.asOf!=null&&cashOpening.asOf!==openingDate))fail();
+ const nextCash=units(c.quantityExact??c.quantity)+units(proof.cashExact);if(nextCash<0n)fail();
+ const draft=structuredClone(model),changed=completeAugmentation(old,j,proof,c);
+ draft.bookings[draft.bookings.findIndex(b=>b.id===old.id)]=changed.booking;
+ draft.journalEntries[draft.journalEntries.findIndex(e=>e.id===j.id)]=changed.journal;
+ const next=draft.positions.find(p=>p.id===c.id);next.quantityExact=exact(nextCash);next.quantity=Number(next.quantityExact);
+ draft.openingPositions.find(o=>o.positionId===c.id).asOf=openingDate;draft.version=5;
+ validateFlatexNetSettlements(draft);if(!ledgerQuantityAudit(draft).ok)fail();return draft;
+}
+export function prepareFlatexNetAugmentationPreview(model,documents,assignments,{selectedIds=[],openingDate='',openingConfirmed=false,stale=false}={}){
+ const inspection=inspectFlatexNetPairs(documents),prepared={...inspection,issues:[]};
+ const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
+ try{
+  if(stale||!openingConfirmed||selectedIds.length!==1)throw Error('Genau einen bestehenden nativen Kauf auswählen und den belegten Cashanfang vor dem Kauf bestätigen.');
+  const proof=inspection.pairs.find(p=>p.id===selectedIds[0]);if(!proof)fail();
+  const bindings=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale});
+  const dc=bindings.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=bindings.contexts.find(c=>c.sourceId===proof.account.sourceId);
+  if(!dc?.confirmed||!cc?.confirmed)throw Error('Beide eigenen Depot-/Kontozuordnungen aktuell bestätigen.');
+  const assets=model.positions.filter(p=>p.accountId===dc.accountId&&p.isin===proof.isin),cash=model.positions.filter(p=>p.accountId===cc.accountId&&p.kind==='cash'&&p.currency==='EUR');
+  if(assets.length!==1||cash.length!==1)fail();
+  const simulated=augmentModel(model,proof,assets[0].id,cash[0].id,openingDate);
+  return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview:{baseline:JSON.stringify(model),simulated,issues:[],ready:1,duplicates:0,skipped:0,netAugmentation:{version:1,groupId:proof.id,openingDate},rows:[{line:2,status:'ready',row:{positionId:assets[0].id,cashPositionId:cash[0].id}}]}};
+ }catch(e){return blocked(e.message);}
+}
+/** Re-derive the ENTIRE allowed delta; a forged preview cannot borrow this
+ * exception to mutate any unrelated model field or generic imported booking. */
+export function validateNetAugmentationTransition(model,next,marker){
+ keys(marker,'version groupId openingDate');if(marker.version!==1)fail();
+ const b=next.bookings.find(b=>b.netSettlement?.id===marker.groupId);if(!b?.netAugmentation)fail();
+ const expected=augmentModel(model,b.netSettlement,b.positionId,b.cashPositionId,marker.openingDate);
+ if(!equal(expected,next))fail();return true;
+}
 function validateGroup(model,b,j,{removed=false}={}){
  const s=validateNetSettlement(b.netSettlement);
  validateImportSource(b.importSource,b.accountId);validateJournalEntry(j);
@@ -82,6 +173,7 @@ function validateGroup(model,b,j,{removed=false}={}){
  if(units(b.quantityExact)!==units(s.quantityExact)||units(b.amountExactEUR)!==units(s.grossExact)||b.amountEUR!==Number(s.grossExact)||b.unitPrice!==Number(s.unitPriceExact)||b.fxRate!==1)fail();
  if(b.importSource?.sourceId!==s.depot.sourceId||b.importSource?.externalId!==s.depot.externalId||!sourceUnmodified({journalEntries:[j]},b))fail();
  const payload=JSON.parse(b.importSource.sourcePayload);
+ if(b.netAugmentation!==undefined||payload.netAugmentationDigest!==undefined)validateNetAugmentation(b,j);
  if(payload.netSettlementId!==s.id||payload.sourceEvidence?.payloadDigest!==s.depot.payloadDigest||payload.cashPositionId!==c.id||payload.netCashExact!==s.cashExact||payload.tradeAmountEURExact!==s.grossExact)fail();
  if(j.postings.length!==3)fail();
  const asset=j.postings.filter(x=>x.role==='asset'),cash=j.postings.filter(x=>x.role==='cash'),difference=j.postings.filter(x=>x.role==='unresolved-net-amount');
@@ -93,6 +185,7 @@ function validateGroup(model,b,j,{removed=false}={}){
 export function validateFlatexNetSettlements(model){
  const ids=new Set(),sources=new Set(),journalIds=new Set();
  const reserve=s=>{if(ids.has(s.id))fail();ids.add(s.id);for(const source of [s.depot,s.account]){const key=sourceKey(source);if(sources.has(key))fail();sources.add(key);}};
+ if((model.bookings||[]).some(b=>b.netAugmentation!==undefined&&!b.netSettlement))fail();
  for(const b of model.bookings||[])if(b.netSettlement!==undefined){const j=model.journalEntries.find(j=>j.id===b.journalEntryId);reserve(validateGroup(model,b,j));journalIds.add(j.id);}
  for(const j of model.journalEntries||[])if((j.netSettlementId!==undefined||j.status==='unresolved-net-settlement'||j.postings.some(p=>p.role==='unresolved-net-amount'))&&!journalIds.has(j.id))fail();
  if(model.flatexNetRemovals!==undefined){
@@ -111,7 +204,7 @@ export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds
   const selected=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(selected.some(p=>!p))throw Error('Ausgewählte Gruppe geändert oder nicht eindeutig.');
   const binding=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale});
   const draft=structuredClone(model),parsed={headers:[...CSV_FIELDS],rows:[],sourceIdentities:{},sourceName:''};
-  const touched=new Set();let evidenceUpdates=0;
+  const touched=new Set(),augmentedRepeats=[];let evidenceUpdates=0;
   for(const proof of selected.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))){
    validateNetSettlement(proof);
    const dc=binding.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=binding.contexts.find(c=>c.sourceId===proof.account.sourceId);
@@ -146,6 +239,9 @@ export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds
      }else touched.add(pos.id);
     }
    }
+   // Its source payload also binds the retained original. Ordinary CSV rows
+   // cannot reconstruct or overwrite that audit on a later paired replay.
+   if(prior?.netAugmentation){augmentedRepeats.push({line:parsed.rows.length+augmentedRepeats.length+2,status:'duplicate',row:{positionId:p.id,cashPositionId:c.id}});continue;}
    const index=parsed.rows.length+2;
    parsed.rows.push({date:proof.date,type:proof.type,position:p.id,quantity:proof.quantityExact,unitPrice:proof.unitPriceExact,feeEUR:'',taxEUR:'',fxRate:'1',cashPosition:c.id,notes:'Flatex EUR-Paar; ungeklärte Verrechnung, Kosten unbekannt.',externalId:proof.depot.externalId});
    parsed.sourceIdentities[index]={sourceId:proof.depot.sourceId,externalId:proof.depot.externalId,sourceEvidence:{version:1,payloadDigest:proof.depot.payloadDigest},costsVerified:false,netSettlement:proof};
@@ -161,6 +257,7 @@ export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds
    }
   }
   const preview=previewCSV(draft,parsed,Object.fromEntries(CSV_FIELDS.map(k=>[k,k])));
+  preview.rows.push(...augmentedRepeats);preview.duplicates+=augmentedRepeats.length;
   if(preview.issues.length)throw Error(preview.issues[0].message);
   preview.baseline=JSON.stringify(model);preview.evidenceUpdates=evidenceUpdates;
   validateFlatexNetSettlements(preview.simulated);
