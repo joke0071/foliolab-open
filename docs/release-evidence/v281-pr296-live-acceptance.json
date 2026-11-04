@@ -1,0 +1,92 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "d9ff57914dab",
+  "version": 281,
+  "main": "5e24de041622cf5753adc48eebc303ef647e788b",
+  "tree": "6b226b1082f05078257c106d57f6fa07dd97720f",
+  "run": 41861912576,
+  "attempt": 1,
+  "runStatus": "COMPLETED/SUCCESS",
+  "deployJob": 126694855252,
+  "liveJob": 126703248266,
+  "allMandatoryJobs": "SUCCESS",
+  "reusedMainEvidence": "v281-main-artifacts-qualified.json",
+  "reusedIntegrationEvidence": "v281-pr296-integration-acceptance.json",
+  "units": {
+    "passed": 1190,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13341624945,
+      "bytes": 523836,
+      "sha256": "660c42a42d1f1b6ec2ad6551ef9846b5d28da819d937458b20b4c0b2bce56d86",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true,
+      "pagesFiles": 143,
+      "gitBlobMatches": 143
+    },
+    {
+      "id": 13343768183,
+      "bytes": 119645917,
+      "sha256": "873b0f2637856f1bfd3f40a5b39bf3bb76addfe4794a4bc5a78c74494d4a9cbb",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true,
+      "entries": 1252,
+      "jsonReports": 92,
+      "failureFlags": []
+    }
+  ],
+  "production": {
+    "cache": "foliolab-open-v281",
+    "base": "https://foliolab.unperfekt.at/",
+    "coreChecks": 6,
+    "axeScans": 18,
+    "publishedAssets": 144,
+    "proxyCertificateException": false,
+    "separateRegularHTTPS": {
+      "exact": 144,
+      "count": 144,
+      "certificateException": false,
+      "evidence": "v281-regular-https-assets.json"
+    }
+  },
+  "augmentation": {
+    "engines": {
+      "chromium": "141.0.7390.37",
+      "firefox": "157.0",
+      "webkit": "27.2"
+    },
+    "result": "PASS",
+    "chromiumEvidence": "original live job126703248266 at16:27:55Z; shared report overwritten by cross-engine step",
+    "firefoxWebkitEvidence": "actual artifact flatex-net-augmentation/report.json",
+    "checks": [
+      "one share effect/exact original net cash/unknown costs/no external flow",
+      "full original booking/journal audit retained",
+      "one CAS revision/quota/post-put abort/real second writer",
+      "offline/replay/fresh profile encrypted v5 UI restore",
+      "whole group withdrawal/durable reimport tombstone",
+      "seven widths/Axe"
+    ],
+    "pngsDecoded": 21,
+    "viewed": [
+      "chromium-320",
+      "webkit-320",
+      "firefox-1440"
+    ]
+  },
+  "privateOriginal": {
+    "archiveVersion": 15,
+    "hashesChecked": 189,
+    "failures": 0,
+    "qualified": "ORIGINAL_SINGLE_LEG_AUGMENTATION_PASS",
+    "controlledOpening": true,
+    "independentCSVDecimalOracle": true,
+    "candidateMainSameTree": true,
+    "privateValuesPublished": false
+  },
+  "additionalCI": false,
+  "LINK": "blocked; finalized execution anchor missing",
+  "remaining": "UH04 partial: further dialects/multiple legs/FX/special events/historical ending evidence; then UH05; no physical Android claim"
+}
