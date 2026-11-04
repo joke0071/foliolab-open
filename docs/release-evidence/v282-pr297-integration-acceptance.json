@@ -1,0 +1,118 @@
+{
+  "status": "INTEGRATION_ACCEPTED",
+  "owner": "d9ff57914dab",
+  "pr": 297,
+  "base": "5e24de041622cf5753adc48eebc303ef647e788b",
+  "head": "2181b053c5318cba971986685d43a80e4d3609db",
+  "testMerge": "bf8e085c57338b5af576a326d6dbf66dd8ed34aa",
+  "tree": "dfdb6080dad44be0b0d98bc0be615ead8bb061e7",
+  "intendedFiles": 9,
+  "ci": {
+    "run": 41900694174,
+    "attempt": 1,
+    "status": "SUCCESS",
+    "units": 1195,
+    "failures": 0,
+    "skipped": 0,
+    "allRequiredJobs": "SUCCESS"
+  },
+  "wallet": {
+    "run": 41900694140,
+    "job": 126821983355,
+    "status": "SUCCESS",
+    "units": 1195,
+    "failures": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13360105652,
+      "name": "cross-engine-gates-bf8e085c57338b5af576a326d6dbf66dd8ed34aa-3",
+      "bytes": 58262868,
+      "digest": "sha256:a51637f9b50bd7b0c0b95335f135f91f0b330f214904c7331fb846dd675ba97a",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true
+    },
+    {
+      "id": 13359446130,
+      "name": "cross-engine-gates-bf8e085c57338b5af576a326d6dbf66dd8ed34aa-1",
+      "bytes": 59699341,
+      "digest": "sha256:0be35c040e976f6d2aa5c48275f375919fcab55c416fb9cbffc7f44add387be1",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true
+    },
+    {
+      "id": 13359426879,
+      "name": "release-gates-bf8e085c57338b5af576a326d6dbf66dd8ed34aa",
+      "bytes": 62372846,
+      "digest": "sha256:3d784d61a6c07759313147a111d8335e2f206edb06829b90fa137bcc0cfbd6c6",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true
+    },
+    {
+      "id": 13358896129,
+      "name": "cross-engine-gates-bf8e085c57338b5af576a326d6dbf66dd8ed34aa-2",
+      "bytes": 12211824,
+      "digest": "sha256:1e1e11be9da5471f67ad9afbea924e1a06230fce51a3940bf74fa97ad09aa64a",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true
+    },
+    {
+      "id": 13358025814,
+      "name": "ci-stage-bf8e085c57338b5af576a326d6dbf66dd8ed34aa",
+      "bytes": 565,
+      "digest": "sha256:0e0a163249187f897718a5a88255f2d0fc82cc8a2e346a2f1c9a56ee45a0e610",
+      "crc": "PASS",
+      "apiUploadAndLocalHashMatch": true
+    }
+  ],
+  "jsonReports": 141,
+  "failureFlags": [],
+  "augmentation": {
+    "engines": [
+      "chromium141",
+      "firefox157",
+      "webkit27.2"
+    ],
+    "scenarios": [
+      "single-purchase",
+      "complete-buy-sell-batch"
+    ],
+    "result": "PASS",
+    "pngsDecoded": 42,
+    "viewed": [
+      "chromium-batch-320",
+      "webkit-batch-320",
+      "firefox-batch-1440"
+    ],
+    "checks": [
+      "dated nonzero security opening unchanged",
+      "exact old bookings/journals/asset postings retained",
+      "no second share effect; exact net cash; unknown costs; no external flows",
+      "quota/post-put abort; real second-writer CAS; one commit",
+      "offline/replay/fresh-profile encrypted v5 UI restore",
+      "full-group withdrawal; durable reimport tombstone; 7 widths/Axe"
+    ]
+  },
+  "privateOriginal": {
+    "result": "PASS",
+    "groups": 81,
+    "buys": 69,
+    "sells": 12,
+    "independentCSVDecimalOracle": true,
+    "controlledDatedOpenings": true,
+    "nativeBootstrapUIClaimed": false,
+    "privateValuesPublished": false
+  },
+  "review": {
+    "reviews": 0,
+    "threads": 0,
+    "headAndMainUnchanged": true
+  },
+  "LINK": {
+    "finalityAnchor": "privately qualified via explicitly authorized ChainSafe GET; finalized/nonoptimistic/slot/hash/number/timestamp match",
+    "productIntegrated": false
+  },
+  "noManualCIOrRetry": true,
+  "release": "v282 CANDIDATE; main/deployment/production acceptance required"
+}
