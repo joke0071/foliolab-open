@@ -1,5 +1,7 @@
 # UH04 – vorhandenes natives Stückbein sicher um belegtes Nettocash ergänzen
 
+**Historische Aufgabenkarte – als nächster Implementierungsauftrag überholt.** Der Einzelkauf ist seit v281 und der vollständige native Kauf-/Verkaufsstapel seit v282 LIVE_ACCEPTED. Diese Funktionen nicht erneut entwickeln. Der konkrete LINK-Finalitätsanker ist vorhanden; ältere WAITING-Sätze in dieser historischen Karte sind überholt. Aktueller Release-/Ownerstatus im zentralen Checkpoint, aktuelle Restplanung in [UH05_ACCEPTANCE_PREPARATION_2026-11-04.md](UH05_ACCEPTANCE_PREPARATION_2026-11-04.md). Der folgende ursprüngliche Vertrag und seine Reprolocator bleiben als historische Grundlage erhalten.
+
 Vorbereitung während des unveränderten v280-Mainlaufs; **noch keine Implementierung, kein neuer Produktstrang und keine Freigabe**. v280 erst vollständig produktiv abnehmen. [Bisheriger Paarvertrag auf Main](UH04_NET_SETTLEMENT.md), [Original-Aufgabenkarte](UH04_NET_SETTLEMENT_TASKCARD_2026-11-04.md).
 
 ## Nutzerziel und kleinster Umfang
