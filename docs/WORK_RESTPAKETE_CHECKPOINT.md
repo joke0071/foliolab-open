@@ -1,3 +1,13 @@
+## ACTIVE – 35cd9cbceaef / Main wartet auf begrenzten Browser-Load-Retry – 04.11.2026
+
+Main **f4744d67a16315c48bc7e244f44e4abe1c54dd9f**, Tree **6c091be0072a7984f8e5a17c7fbdcc03faeba9e6** unverändert. PR294 ist nach vollständig erfolgreicher Integrationsabnahme gemergt. **v278 bleibt LIVE_ACCEPTED; v279 ist nicht deployed/live abgenommen.** Mainlauf **41805072482 Versuch1** noch IN_PROGRESS: Cross2 SUCCESS, Cross1 **126490063244 FAILURE**, Hauptjob und Cross3 laufen regulär weiter. Keine Actions abgebrochen oder dupliziert; kein neuer Produktcode.
+
+Fehler ausschließlich am abschließenden Pageerror-Check in **browser-cash-terms.mjs:162 / WebKit**: `Script http://127.0.0.1:4188/sw.js load failed` beim bestehenden Test mit absichtlich gestopptem Ursprung. Keine fehlgeschlagene Finanz-/Speicherassertion in diesem Job. Gleicher Test/Tree zuvor in PR-CI erfolgreich und jetzt unverändert lokal in WebKit vollständig PASS. [Originalfehler und begrenzte Einstufung](release-evidence/v279-main-attempt1-browser-load-failure.json). Timing-/Root-Cause nicht abschließend bewiesen. **Erst nach vollständigem Abschluss des aktuellen Versuchs genau ein EFF01-Retry ausschließlich des fehlgeschlagenen Jobs auf unverändertem Main**; noch nicht gestartet. Bei Wiederholung keinen weiteren blinden Retry: konkreter Repro und Ursachenbehebung. Keine Gates abschwächen.
+
+Eine beim erneuten lokalen Artefaktcheck unvollständige PR-Cross1-Kopie wurde durch bestätigtes HTTP206 ausschließlich um fehlende Bytes ergänzt; danach API-/Uploadlog-/Dateihash/CRC und alle140 JSON-Berichte einschließlich Statusfelder vollständig PASS. Kein CI-Retry dafür. Alle privaten Originale/Oracles und neue LINK-Diagnose unverändert bewahrt. Danach bestehende Main-/Produktions-/reguläreHTTPS-Abnahme abschließen, anschließend UH03/UH04/UH05 gemäß Plan. Alle Schutzverträge/EFF01/HND01/Releasefreigabe bleiben erhalten; alleiniger Owner35cd9cbceaef, Zähler0/0. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 35cd9cbceaef / PR294 gemergt / v279 Mainabnahme läuft – 04.11.2026
 
 Alleiniger Owner **35cd9cbceaef**. **PR294** nach vollständiger Pflicht-CI **41802701910 Versuch1 SUCCESS** und Wallet **41802702068 SUCCESS** SHA-geschützt gemergt. Main **f4744d67a16315c48bc7e244f44e4abe1c54dd9f**, Tree **6c091be0072a7984f8e5a17c7fbdcc03faeba9e6** exakt geprüfter Kandidat/Testmerge;18beabsichtigteDateien. [Integrationsabnahme](release-evidence/v279-pr294-integration-acceptance.json):1182Units/0Fehler/0Skips,neueEUR-PaarketteinChromium/Firefox/WebKitPASS,terminaleLogs/echteGateZIPs/API-/Uploadlog-/Dateihash/CRC/138JSONsPASS,neue320pxBildertatsächlichgesichtet,0Kommentare/Reviews/Threads. KeineActionswiederholt/dupliziert/abgebrochen.
