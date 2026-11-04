@@ -1,3 +1,4 @@
+import {validateNetSettlement} from './flatex-net-settlement.js';
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
 import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
@@ -74,7 +75,7 @@ export function captureOpenings(model){
   const baseline={positionId:p.id,quantityExact:String(p.quantityExact??p.quantity),costBasisExact:p.costBasisExact??(p.costBasisEUR==null?null:String(p.costBasisEUR)),realizedPnLExact:p.realizedPnLExact??(p.realizedPnLEUR==null?null:String(p.realizedPnLEUR)),source:'observed-opening',asOf:null};
   if(!opening)model.openingPositions.push(baseline);
   else if(!(model.journalEntries||[]).some(e=>e.postings.some(post=>post.positionId===p.id)))
-    Object.assign(opening,baseline); // Manual or wallet position not yet journal-managed.
+    Object.assign(opening,{...baseline,asOf:opening.asOf??null}); // Manual or wallet position not yet journal-managed.
  }
 }
 /** Atomic journal records are independent of current market valuations. */
@@ -139,8 +140,9 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
  if(kind==='buy'||kind==='sell'){
    const side=kind==='buy'?1n:-1n;
    post('asset',side*cash,p,side*qty);
-   const net=kind==='buy'?-(cash+charges):cash-charges;
+   const net=v.netSettlement?units(v.netSettlement.cashExact):kind==='buy'?-(cash+charges):cash-charges;
    post(linkedCash?'cash':'clearing',net,linkedCash,linkedCash?units(linkedCash.lastCashDeltaExact):null);
+   if(v.netSettlement)post('unresolved-net-amount',-side*cash-units(v.netSettlement.cashExact));
    if(fee)post('fee',fee);
    if(tax)post('tax',tax);
  }else if(kind==='fee'&&p.kind==='crypto'){
@@ -165,7 +167,8 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
  const entry={id:v.id??id(),type:kind,date:v.date,recordedAt:new Date().toISOString(),
   sequence:nextJournalSequence(copy),postings,
   cashPositionId:linkedCash?.id||null,
-  status:kind==='fee'&&p.kind==='crypto'?'unpriced-asset-fee':['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
+  ...(v.netSettlement?{netSettlementId:v.netSettlement.id}:{}),
+  status:v.netSettlement?'unresolved-net-settlement':kind==='fee'&&p.kind==='crypto'?'unpriced-asset-fee':['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
   source:'manual'};
  return validateJournalEntry(entry);
 }
@@ -197,10 +200,16 @@ export function executeTransaction(model,input){
  if(input.tradeAmountEURExact!==undefined&&(!['buy','sell'].includes(kind)||p.currency!=='EUR'))throw Error('Exakter Ausführungsbetrag benötigt einen EUR-Kauf oder -Verkauf.');
  const cash=input.tradeAmountEURExact===undefined?mul(mul(qty,unitPrice),fx):amount(input.tradeAmountEURExact,1n);
  const b=basis(p);let changed=false,linkedCash=null;
+ const net=input.netSettlement;
+ if(net){
+  validateNetSettlement(net);
+  if(!['buy','sell'].includes(kind)||kind!==net.type||input.date!==net.date||p.currency!=='EUR'||p.isin!==net.isin||units(net.quantityExact)!==qty||units(net.grossExact)!==cash||units(net.unitPriceExact)!==unitPrice||!input.cashPositionId||fee!==0n||tax!==0n||b!==null||p.realizedPnLExact!=null||p.realizedPnLEUR!=null)throw Error('Belegter Nettocash erfordert EUR-Paar mit unbekannten Kosten ohne geschützte Kostenbasis.');
+ }
  if(['buy','sell'].includes(kind)&&input.cashPositionId){
    linkedCash=pos(copy,input.cashPositionId);
    if(linkedCash.id===p.id||linkedCash.kind!=='cash'||!['EUR',p.currency].includes(linkedCash.currency))throw Error('Ein passendes Verrechnungskonto in EUR oder Handelswährung wählen.');
-   const eur=kind==='buy'?-(cash+fee+tax):cash-fee-tax;
+   if(net&&(linkedCash.currency!=='EUR'||linkedCash.providerId!==p.providerId||linkedCash.accountId===p.accountId))throw Error('EUR-Nettocash benötigt getrenntes eigenes Konto beim selben Anbieter.');
+   const eur=net?units(net.cashExact):kind==='buy'?-(cash+fee+tax):cash-fee-tax;
    const cashChange=linkedCash.currency==='EUR'?eur:div(eur,fx);
    if(q(linkedCash)+cashChange<0n)throw Error('Verrechnungskonto hat nicht genügend Guthaben.');
    linkedCash.lastCashDeltaExact=exact(cashChange);
@@ -266,7 +275,9 @@ export function executeTransaction(model,input){
  }
  if(!changed)throw Error('Keine Änderung.');
  p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
+ if(net){setBasis(p,null);p.realizedPnLExact=null;p.realizedPnLEUR=null;}
  const entry=remember(copy,p,input,qty,fee,tax,fx,cash);
+ if(net){entry.netSettlement=structuredClone(net);entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;copy.version=5;}
  if(kind==='fee'&&p.kind==='crypto'){entry.amountEUR=null;entry.amountExactEUR=null;entry.unitPrice=null;entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;}
  if(kind==='transfer'||kind==='swap'||kind==='merger')entry.targetQuantityExact=kind==='transfer'?exact(qty):exact(amount(input.targetQuantity,1n));
  if(kind==='split'){entry.ratioNumerator=String(input.ratioNumerator??input.quantity);entry.ratioDenominator=String(input.ratioDenominator??1);}

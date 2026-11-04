@@ -40,7 +40,7 @@ export function portfolioXirr(model,startDate,endDate){
  if(!Array.isArray(model.externalCashFlows))return null;
  // No performance report when acquisitions have no identified source of funds,
  // or when legacy in-kind deliveries/corrections lack a verified external valuation.
- if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&e.status==='unresolved-clearing'))return null;
+ if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&['unresolved-clearing','unresolved-net-settlement'].includes(e.status)))return null;
  if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&(
    ['deliver_in','deliver_out','adjust','correction'].includes(b.type)||
    (['buy','sell'].includes(b.type)&&!b.journalEntryId)
@@ -79,7 +79,7 @@ export function performanceIssues(model,startDate,endDate){
  if(shots.length<2||shots[0].date!==startDate||shots.at(-1).date!==endDate)problems.push('Start- oder Endbewertung fehlt');
  if(shots.some(s=>!knownAmount(s.total)))problems.push('Bewertungsbetrag fehlt');
  if(shots.some(s=>!['observed','manual'].includes(s.valuationStatus)))problems.push('Ungeprüfte oder unvollständige Stichtage');
- if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&e.status==='unresolved-clearing'))problems.push('Kauf oder Verkauf ohne geklärtes Verrechnungskonto');
+ if((model.journalEntries||[]).some(e=>e.date>startDate&&e.date<=endDate&&['unresolved-clearing','unresolved-net-settlement'].includes(e.status)))problems.push('Kauf oder Verkauf mit ungeklärter Verrechnung oder unbekannter Kostenaufteilung');
  if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&(['deliver_in','deliver_out','adjust','correction'].includes(b.type)||(['buy','sell'].includes(b.type)&&!b.journalEntryId))))problems.push('Unbewertete Einlieferung, Korrektur oder historische Buchung');
  if((model.bookings||[]).some(b=>b.date>startDate&&b.date<=endDate&&['deposit','withdraw'].includes(b.type)&&!b.transferMatch&&!(model.externalCashFlows||[]).some(f=>f.id===b.id)))problems.push('Externe Cashflows unvollständig');
  return [...new Set(problems)];

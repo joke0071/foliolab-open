@@ -1,3 +1,4 @@
+import {prepareFlatexNetPreview,prepareFlatexNetWithdrawalPreview} from './flatex-net-settlement.js';
 import {units,exact} from './decimal.js';
 import {previewCSV} from './csv-import.js';
 import {ledgerQuantityAudit} from './transactions.js';
@@ -7,6 +8,8 @@ import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
 
 /** Strict native simulation over the existing CSV/backfill engines. No write API. */
 export function prepareNativeFlatexPreview(model,documents,assignments,options={}){
+ if((options?.mode==='net'||options?.mode==='net-remove')&&Object.keys(options).some(k=>!['mode','stale','selectedIds','openingDate','openingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im EUR-Paarablauf.');
+ if(options?.mode==='net'||options?.mode==='net-remove')return (options.mode==='net'?prepareFlatexNetPreview:prepareFlatexNetWithdrawalPreview)(model,documents,assignments,options);
  if(!options||typeof options!=='object'||Array.isArray(options)||Object.keys(options).some(k=>!['mode','stale'].includes(k))||!['append','backfill'].includes(options.mode)||(options.stale!==undefined&&typeof options.stale!=='boolean'))throw Error('Expliziten nativen Vorschautyp ohne Importoverrides wählen.');
  const prepared=prepareNativeFlatexImport(documents);
  const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});

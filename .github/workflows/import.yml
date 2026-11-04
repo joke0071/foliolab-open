@@ -173,6 +173,7 @@ jobs:
           node tests/browser-flatex-backfill.mjs
           node tests/browser-flatex-native-ui.mjs
           node tests/browser-flatex-native-commit.mjs
+          node tests/browser-flatex-net-settlement.mjs
           node tests/browser-defi-dialog-guidance.mjs
           node tests/browser-audit.mjs
           node tests/browser-dashboard-polish.mjs
@@ -369,6 +370,7 @@ jobs:
             HISTORY_ENGINES=firefox,webkit node tests/browser-history-worker.mjs
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs
+            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs
           fi
       - name: Preserve cross-engine evidence
         if: always()
@@ -467,6 +469,7 @@ jobs:
           UH03_BASE="$ACCEPTANCE_BASE" node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-chromium.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-chromium.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-chromium.log
+          UI_QUALITY_BASE="$ACCEPTANCE_BASE" node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-chromium.log
           PCHAIN_BASE="$ACCEPTANCE_BASE" node tests/browser-pchain-evidence.mjs 2>&1 | tee artifacts/gates/production-pchain-chromium.log
           SONIC_EVIDENCE_BASE="$ACCEPTANCE_BASE" node tests/browser-sonic-staking-evidence.mjs 2>&1 | tee artifacts/gates/production-sonic-chromium.log
           node tests/browser-ui-quality.mjs 2>&1 | tee artifacts/gates/production-ui-chromium.log
@@ -498,6 +501,7 @@ jobs:
           UH03_BASE="$ACCEPTANCE_BASE" HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs 2>&1 | tee artifacts/gates/production-uh03-bitpanda-cross.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-cross.log
           UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-cross.log
+          UI_QUALITY_BASE="$ACCEPTANCE_BASE" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs 2>&1 | tee artifacts/gates/production-flatex-net-cross.log
           LOADING_BASE="$ACCEPTANCE_BASE" LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs 2>&1 | tee artifacts/gates/production-loading-cross.log
           UI_BASE="$ACCEPTANCE_BASE" UI_ENGINES=firefox,webkit node tests/browser-ui-alltag10.mjs 2>&1 | tee artifacts/gates/production-ui-alltag10-cross.log
           UI_BASE="$ACCEPTANCE_BASE" UI_ENGINES=firefox,webkit node tests/browser-ui-textscale.mjs 2>&1 | tee artifacts/gates/production-ui-textscale-cross.log

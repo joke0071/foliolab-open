@@ -13,7 +13,7 @@ export function importSourceKey(source){
  return source?.externalId?JSON.stringify([source.sourceId,source.accountId,source.externalId]):null;
 }
 export function bookingOwnership(model,booking){
- const fields=['date','type','positionId','accountId','quantityExact','quantity','unitPrice','feeEUR','taxEUR','fxRate','amountExactEUR','amountEUR','targetPositionId','cashPositionId','notes','costsVerified'];
+ const fields=['date','type','positionId','accountId','quantityExact','quantity','unitPrice','feeEUR','taxEUR','fxRate','amountExactEUR','amountEUR','targetPositionId','cashPositionId','notes','costsVerified','netSettlement'];
  const entry=model.journalEntries?.find(e=>e.id===booking.journalEntryId);
  return JSON.stringify([fields.map(k=>booking[k]??null),entry??null]);
 }
