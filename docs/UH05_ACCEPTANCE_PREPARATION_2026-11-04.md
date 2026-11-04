@@ -1,6 +1,6 @@
 # UH05 – vorbereitete Gesamtabnahme, noch offen
 
-Fortgeschriebene Vorbereitung nach v282 LIVE_ACCEPTED und integrierter LINK-PR299; deren tatsächliche Produktionsabnahme bleibt gemäß aktuellem Checkpoint zu qualifizieren. Grundlage: [verbindlicher gemeinsamer Importplan, Etappen9/10](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). **Keine zusätzliche CI, keine neue Implementierung und kein UH05-Gesamt-PASS.** Aktuellen Releasezustand ausschließlich dem Checkpoint und Releasebelegen entnehmen.
+Fortgeschriebene Vorbereitung nach v282 und v283 LIVE_ACCEPTED. Die begrenzte LINK-Verknüpfung aus PR299 ist tatsächlich produktiv in Chromium/Firefox/WebKit abgenommen; [Abschlussbeleg](release-evidence/v283-pr299-live-acceptance.json). Grundlage: [verbindlicher gemeinsamer Importplan, Etappen9/10](IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md). **Keine zusätzliche CI, keine neue Implementierung und kein UH05-Gesamt-PASS.** Aktuellen Releasezustand ausschließlich dem Checkpoint und Releasebelegen entnehmen.
 
 Vorhandene Einzelabnahmen sind Bausteine. Weder eine grüne allgemeine FIN-E2E-Suite noch Parser-/Preview-PASS beweist den gemeinsamen Alltagspfad aller fünf Anbieter.
 
