@@ -1,0 +1,27 @@
+{
+  "status": "MAIN_BLOCKED_SINGLE_BROWSER_LOAD_FAILURE",
+  "main": "f4744d67a16315c48bc7e244f44e4abe1c54dd9f",
+  "tree": "6c091be0072a7984f8e5a17c7fbdcc03faeba9e6",
+  "run": 41805072482,
+  "attempt": 1,
+  "job": 126490063244,
+  "failedTest": "tests/browser-cash-terms.mjs:162",
+  "failure": "Expected errors=[]; captured TypeError: Script http://127.0.0.1:4188/sw.js load failed",
+  "context": "Existing test intentionally stops its origin before offline reload and second-tab guard; expected financial/backup/CAS assertions reached final error-list check. No failed financial assertion in this job.",
+  "classification": "Bounded intermittent service-worker load/transport failure in existing offline test; timing/root cause not conclusively established.",
+  "evidence": [
+    "Exact same candidate/testmerge tree passed Firefox/WebKit cash-terms in PR CI41802701910",
+    "Unchanged main-tree local WebKit cash-terms targeted repro PASS",
+    "Original failure log preserved, no assertion/test/product change"
+  ],
+  "failedArtifact": {
+    "id": 13310855284,
+    "bytes": 58618163,
+    "sha256": "14f00a78c08caed221efd2212e3d32db131aa6bad4914559307e1d4a8026f388",
+    "state": "API/upload-log match; failed artifact not accepted as successful gate"
+  },
+  "next": "After current attempt is fully terminal, one EFF01 targeted retry of job126490063244 on unchanged main only; no full-run duplication. If repeated, no further blind retry; reproduce/fix cause.",
+  "retryStarted": false,
+  "deploymentStarted": false,
+  "lastLiveAccepted": "v278"
+}
