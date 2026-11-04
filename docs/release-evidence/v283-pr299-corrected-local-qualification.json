@@ -1,0 +1,70 @@
+{
+  "status": "CORRECTED_CANDIDATE_FROZEN_CI_PENDING",
+  "owner": "1b99027b9ff5",
+  "release": "v283",
+  "pr": 299,
+  "main": "cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a",
+  "head": "af37989c9287bf31edd96afe8f0f794d0301612c",
+  "tree": "aa455dfddd4158d08537cc6f883be75bb0c63371",
+  "testMerge": "f0381ae240df93b7c2e8fd64056d54abc464a7e2",
+  "independentTreeExact": true,
+  "files": 12,
+  "units": {
+    "pass": 1202,
+    "fail": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "localChromium": {
+    "version": "141.0.7390.37",
+    "actualPartialHistoryAndKrakenUI": true,
+    "historyAndPreview320to430Axe": true,
+    "quotaAndPostPutAbortBothHistoryAndImport": true,
+    "realStorageCAS": true,
+    "freshEncryptedV5UIRestore": true,
+    "offlinePWA": true,
+    "replayAndPersistentWholeGroupRollback": true,
+    "externalLookups": 0,
+    "allSevenKrakenScenarios": true,
+    "fullBTC_ETH_SOL_SPLHistoryUI": true
+  },
+  "privateOriginal": {
+    "actualRetainedKrakenAndLedgerAndRawBundle": true,
+    "coreAndActualChromiumUI": "PASS",
+    "independentRetainedDecimalTotalDebit": true,
+    "purePreviewAndOneRevisionPerCommit": true,
+    "recipientAndPartialHistoryUnchanged": true,
+    "reloadReplayAndWholeGroupRollback": true,
+    "controlledSourceOpening": true,
+    "controlledWalletHolding": true,
+    "actualHistoricalBalancesClaimed": false,
+    "externalRequests": 0,
+    "screenshotsSaved": false
+  },
+  "previousRun": {
+    "run": 41914886815,
+    "terminal": "FAILURE",
+    "failedJobs": [
+      126871952464,
+      126871952436
+    ],
+    "cause": "existing history UI test selected first dialog details; now scoped to history output; unchanged assertion",
+    "originalFailureEvidence": "v283-pr299-selector-failure.json",
+    "crossEngine3": "SUCCESS; actual LINK workflow Firefox157/WebKit27.2 PASS on identical product code",
+    "oldRunFinishedBeforePush": true,
+    "noRetryOrCancellation": true
+  },
+  "currentRun": {
+    "mandatory": 41918238201,
+    "wallet": 41918238227,
+    "informational": 41918238217,
+    "attempt": 1,
+    "status": "IN_PROGRESS"
+  },
+  "releaseAccepted": false,
+  "limits": [
+    "Provider-trusted explorer execution plus Beacon finality, no RPC receipt/consensus or receipt-root proof.",
+    "One bounded LINK contract/18 decimals/direct transfer/event; full history eth_call gates unchanged.",
+    "No blanket UH03/ERC20/UH04/UH05 or actual Android hardware acceptance."
+  ]
+}
