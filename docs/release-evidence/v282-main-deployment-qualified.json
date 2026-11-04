@@ -1,0 +1,123 @@
+{
+  "status": "MAIN_AND_DEPLOYMENT_QUALIFIED_LIVE_PENDING",
+  "owner": "1b99027b9ff5",
+  "release": "v282",
+  "main": "cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a",
+  "tree": "dfdb6080dad44be0b0d98bc0be615ead8bb061e7",
+  "run": 41903903810,
+  "attempt": 1,
+  "mainRequiredJobs": "SUCCESS",
+  "deploy": {
+    "job": 126844009099,
+    "result": "SUCCESS",
+    "pagesArtifact": 13361910160,
+    "filesGitBlobExact": 143,
+    "exactShippedSet": true
+  },
+  "units": {
+    "tests": 1195,
+    "pass": 1195,
+    "fail": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13361910160,
+      "name": "github-pages",
+      "digest": "sha256:2b5e73e7e698d27541455ca271a6e848f70d29918b736578248a84f92a15a344",
+      "bytes": 524401,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    },
+    {
+      "id": 13360786552,
+      "name": "cross-engine-gates-cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a-3",
+      "digest": "sha256:87b945f4a4ceddfb41a49df8d00f9c6ae071def4541d41ceaa23e1518ee05bef",
+      "bytes": 58264667,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    },
+    {
+      "id": 13360575136,
+      "name": "cross-engine-gates-cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a-2",
+      "digest": "sha256:cccee7cdbffe9bc86bcb9597af780f62ec67dbd5c573d76b04e02ce62153b1ae",
+      "bytes": 12210422,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    },
+    {
+      "id": 13360551742,
+      "name": "release-gates-cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a",
+      "digest": "sha256:828b21add24107cb2217751ce45185af0aabda0174c8c6e073394de514a4cfe2",
+      "bytes": 62376363,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    },
+    {
+      "id": 13359613183,
+      "name": "cross-engine-gates-cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a-1",
+      "digest": "sha256:473c34ef788146b2b2b6e56ef645baecd8463ab00d2662a5288c0d7e2a629b9c",
+      "bytes": 59702335,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    },
+    {
+      "id": 13358987958,
+      "name": "ci-stage-cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a",
+      "digest": "sha256:736344647b37f1996fbb38205be05863372072fe689500e8445e6ea9acf02337",
+      "bytes": 352,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS"
+    }
+  ],
+  "jsonReports": 141,
+  "failureFlags": [],
+  "augmentation": {
+    "engines": [
+      "Chromium141",
+      "Firefox157",
+      "WebKit27.2"
+    ],
+    "scenarios": [
+      "single-purchase",
+      "complete-buy-sell-batch"
+    ],
+    "result": "PASS",
+    "pngsDecoded": 42,
+    "viewed": [
+      "chromium-batch-320",
+      "webkit-batch-320",
+      "firefox-batch-1440"
+    ],
+    "checks": [
+      "dated nonzero security opening unchanged",
+      "original bookings/journals/asset postings retained",
+      "exact net cash; unknown costs; no external flows",
+      "quota/post-put abort; real second-writer CAS",
+      "offline/replay/fresh-profile encrypted v5 UI restore",
+      "full-group withdrawal; durable reimport tombstone; 7 widths/Axe"
+    ]
+  },
+  "privateOriginal": {
+    "reusedIntegrationEvidence": "v282-pr297-integration-acceptance.json",
+    "identicalTree": true,
+    "groups": 81,
+    "buys": 69,
+    "sells": 12,
+    "controlledOpenings": true,
+    "realHistoricalOpeningClaimed": false
+  },
+  "live": {
+    "job": 126844158052,
+    "status": "IN_PROGRESS",
+    "regularTLSAssetCheck": "IN_PROGRESS"
+  },
+  "noAdditionalCIOrRetry": true,
+  "LINK": {
+    "retainedExecutionChecksRechecked": 15,
+    "rawHashesRechecked": 11,
+    "beaconFinalityHashSlotNumberTimeRechecked": true,
+    "newNetworkRequests": false,
+    "productIntegrated": false
+  }
+}
