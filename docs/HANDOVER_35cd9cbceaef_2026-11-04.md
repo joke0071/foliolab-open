@@ -1,0 +1,64 @@
+# Übergabe 35cd9cbceaef · 04.11.2026
+
+**35cd9cbceaef ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Frühe HND01-Rotation nach umfangreicher wirtschaftlicher Implementierung, Original-/Browser-/Integrationsabnahme und isolierter Main-Fehlerdiagnose. Kein Folgecode; nach HANDOVER_READY keine Implementierung, weitere Retries, Merges oder Deployments durch diesen Owner. Bestehende Actions bleiben unverändert.
+
+## Exakter Releasezustand
+
+- **v278 ist LIVE_ACCEPTED und wird nicht erneut abgenommen.**
+- **PR294 ist gemergt**, Main **f4744d67a16315c48bc7e244f44e4abe1c54dd9f**, Tree **6c091be0072a7984f8e5a17c7fbdcc03faeba9e6** exakt unabhängig berechneter Kandidat/Testmerge. Kandidat **6fa1ec516e6cf1dca7af8814d5c64f19546f0163**, Testmerge **d9fe25ddce9f7bd315b103631dc331a573a4f2c0**. Nur18 beabsichtigte Dateien. Nur historische offene Drafts157/161 mit unveränderten HEADs; kein konkurrierender Produktstrang.
+- PR-CI **41802701910 Versuch1 vollständig SUCCESS**, Wallet **41802702068 SUCCESS**. 1182 Units/0Fehler/0Skips, alle Pflichtbrowser, neue tatsächliche EUR-Paarkette in Chromium/Firefox/WebKit PASS. Abschlusslogs, tatsächliche Gate-ZIPs/API-/Uploadlog-/Dateihashes/CRC,140JSON-Berichte inklusive Fehler-/Statusprüfung, neue320px-Bilder geprüft. Kommentare/Reviews/Threads leer. [Integrationsabnahme](release-evidence/v279-pr294-integration-acceptance.json).
+- **v279 ist NICHT DEPLOYED und NICHT LIVE_ACCEPTED.** Main-/Produktionslauf **41805072482** hat Versuch1 vollständig mit FAILURE abgeschlossen: Hauptjob126490063396/Cross2 126490063318/Cross3 126490063209 SUCCESS; ausschließlich Cross1 **126490063244 FAILURE**. Deploy/Live wurden übersprungen.
+- Nach vollständigem Abschluss wurde **genau ein gezielter EFF01-Retry ausschließlich des fehlgeschlagenen Jobs auf unverändertem Main** angefordert. **Versuch2 IN_PROGRESS**, neuer **Cross1-Job126498552826 IN_PROGRESS**. Aktuell verzeichnete erfolgreiche Jobs: Plan126498552950, Cross2 126498554386, Cross3 126498554552, Haupt126498604834; keine zweite vollständige CI gestartet. Nachfolgende Deploy-/Livejobs frisch ermitteln. [Präzise Main-Teilqualifikation und Retryzustand](release-evidence/v279-main-qualification-pending.json).
+- Eigene Zähler: **0 neue LIVE_ACCEPTED Releases / 0 vollständig produktiv abgenommene Pakete**; ein wirtschaftlicher Produktkandidat erfolgreich integriert.
+
+## Einziger aktueller Main-Blocker und nächste Aktion
+
+Der vorhandene WebKit-Kontokonditionentest erreicht seinen abschließenden Pageerror-Check in `tests/browser-cash-terms.mjs:162` mit **TypeError: Script http://127.0.0.1:4188/sw.js load failed**. Dieser Test stoppt absichtlich seinen Ursprung vor Offline-Reload und Zweittab-Schutz. Keine fehlgeschlagene Finanz-/Speicherassertion in diesem Job. Gleicher Test/Tree in PR-CI erfolgreich; unveränderter Main-Test lokal in WebKit vollständig PASS. Originalfehler bleibt erhalten, Timing-/Root-Cause ist nicht abschließend bewiesen. [Fehlerbeleg und begrenzte Retrybegründung](release-evidence/v279-main-attempt1-browser-load-failure.json).
+
+**Bestehenden Versuch2 verfolgen, nicht nochmals retryen/duplizieren/abbrechen.** Bei Erfolg terminale Cross1-/Deploy-/Live-Logs und echte Artefakte qualifizieren; erst dann tatsächliche Produktion samt neuer EUR-Paarkette und regulären HTTPS-Assethashes vollständig abnehmen. Bei wiederholtem Fehler **kein weiterer blinder Retry**: konkreter Repro/Ursache, kleinste Vorwärtskorrektur samt Regression, keine gelockerte Fehlerassertion. Kein weiterer Produktcode während laufender Releaseprüfung.
+
+Erfolgreiche Main-Haupt-/Cross2-/Cross3-Gates aus Versuch1 sind bereits anhand tatsächlicher ZIPs/API-/Uploadlog-/Dateihash/CRC/124JSONs einschließlich Stage geprüft. Neue EUR-Paarkette tatsächlich in allen3Engines PASS; Main-Chromium-/WebKit320px gesichtet. Nachweise wiederverwenden, keine erneute Gesamtanalyse. Ein unvollständiger lokaler PR-Cross1-Transfer wurde mit bestätigtem HTTP206 nur um fehlende Bytes ergänzt und danach vollständig verifiziert; kein CI-Retry daraus gemacht. Originalfehlversuch nicht als PASS umdeuten.
+
+## Wirtschaftlicher Flatex-Schnitt ist implementiert
+
+[Produktvertrag auf Main](UH04_NET_SETTLEMENT.md), [Aufgabenkarte](UH04_NET_SETTLEMENT_TASKCARD_2026-11-04.md), [lokale/Originalqualifikation](release-evidence/uh04-net-pr294-local-qualification.json).
+
+Explizit ausgewählte eindeutige Depot12/Konto10-EUR-Paare übernehmen über den vorhandenen CSV-/Transaktionskern genau einmal Stückzahl und belegten Nettocash. Beide Quellbereiche, Bankreferenzen, exakte Originalfelder und überlappende Vorkommen gehören zur dauerhaften Wirtschaftsgruppe. Brutto und Nettocash bleiben getrennt; eigener ungeklärter Verrechnungsposten ohne Gebühren-/Steuer-/Ertragsrolle. Kostenbasis/Erfolg bleiben unbekannt, costsVerified=false, Rendite-/Qualitätsstatus wirksam. Keine externen Flüsse oder erfundenen Eröffnungen/Salden. Erster Append braucht ausdrücklich bestätigte belegte Anfangsmengen vor der Auswahl; vorhandene Kosten/Buchungen/abweichende datierte Eröffnungen/Referenzen bleiben geschützt.
+
+Im bestehenden Dialog: Gruppenauswahl, bestätigte Bindung/Anfangsbestände, gemeinsame Simulation, Backup/Zustimmung, frischer Plan, ein atomarer CAS. Tatsächliche Quota/post-put-Abbruch/echter Zweittab-CAS, Offline-Reload, frisches Profil mit verschlüsseltem v5-UI-Restore, Wiederimport und dauerhafte Gruppenrücknahme samt Quellen-/Wiederimportsperre in3Engines bestanden. Bestehende Stück-Append-/Backfillkette regressionsgeprüft. Kein Preview-only-Paket, keine zweite Finanzengine.
+
+Privat zusätzlich **81 echte Originalpaare einzeln UND gemeinsam** gegen unabhängige Python-CSV/Decimal-Sollwerte für signierte Mengen/Kurse/Brutto/Netto/Differenz/Gesamtsummen qualifiziert. Drei Varianten: vertauschte Dateien, umgekehrte Gruppenauswahl, überlappende Datei; wirtschaftlich identischer Zustand und81Dubletten nach v5-Restore. Kontrollierte synthetische Anfangsmengen sind **keine tatsächlichen historischen Anfangs-/Endsalden**. Originale nicht verändern/importieren oder erneut anfordern.
+
+UH04 bleibt insgesamt offen für Depot13-Kontext, Konto8, FX, N:M/Teilfüllungen/Sonderereignisse, bereits vorhandene Einzelbeinergänzung, inkrementelle komplexe Bestände und unabhängige historische Endbestände. Nach tatsächlicher Releaseabnahme UH03/UH04/UH05 gemäß Gesamtplan weiterführen.
+
+## LINK-Diagnose und Freigabe erhalten
+
+Die Übermittlung der vorhandenen LINK-Kennung an **https://eth.llamarpc.com** und **https://eth.drpc.org** bleibt ausdrücklich nutzerfreigegeben; keine erneute Rückfrage. Vorhandene fehlgeschlagene Receiptanfragen: clientseitiger POST über urllib-Datenargument, exakte Root-URLs, JSON-RPC eth_getTransactionReceipt und Content-Type application/json. Alte HTTPError-Header/Bodies wurden nicht erhalten; keine rückwirkende Behauptung über deren genaue Bytes/Redirects oder Proxy-Upstream-Methoden.
+
+Begrenzter neuer **eth_chainId-POST ohne private Kennung**, Redirectfolgen deaktiviert, tatsächliche HTTP-Header/Bodies gesichert: Llama405HTML/openresty, dRPC403/Cloudflare1010, keine Redirect-Antwort. Grundsätzlicher RPC-Zugang hier blockiert. **HTTP405/403 belegen kein fehlendes Chain-Receipt.** Kein weiterer Hashretry nach dem fehlgeschlagenen Basic-Zugang, keine Sperrumgehung. Vollständiger privater lokaler Gegenprobebefehl enthält die bereits vorhandene Kennung und sendet sie erst nach chainId=0x1; keine neue Nutzereingabe/Screenshot-/CSV-Anforderung nötig. Benötigt würden echte Antwortheader und ein vollständiges JSON-RPC-Receipt-Objekt mit Block-/Transaktionsbezug, Status, gasUsed/effectiveGasPrice und vollständigen Rohlogs; nicht null/error/HTML.
+
+Bestehende Explorer-Ausführungs-/kanonische Chain-/Log-/Tokenbelege erhalten. Zusätzlich unabhängig geprüft: tatsächlicher Type2-Effektvgaspreis min(maxFee,BlockbaseFee+maxPriority) stimmt mit gespeichertem RPC-Transaktionsgaspreis und Explorer überein. Präziser alternativ getaggter Explorer-Belegvertrag samt Negativfällen privat spezifiziert, **noch nicht implementiert oder als Ersatz qualifiziert**. Kein RPC-Receipt rekonstruiert, keine ERC20-Brücke freigegeben. Primärquellen im privaten Vertrag: Blockscout gettxinfo-Schema und EIP1559. Gleiche erfolglose Abfragen nicht blind wiederholen; bei weiterem Transportblocker kann der konkret spezifizierte alternative Verifier als späterer begrenzter UH03-Schnitt geprüft werden. Gaszahler/Börsengebühr getrennt halten.
+
+## Private Sicherung und tatsächliche Arbeitskopie
+
+**FolioLab_private_continuation_2026-11-04.tar.gz**, **libfile_42e6c0236610819189e0ba522c74ecfd Version9**, **441794Bytes**, SHA256 **e83de3442cfc779512f33a9a5a2b78304503df6219846f122c9833033ddbc3ca**.113interneDateihashes geprüft, identitätserhaltende Versionsschutz-Ersetzungen6→7→8→9 und Metadaten erfolgreich. Alle Vorgängeroriginale/-Oracles erhalten; **delta-35cd9cbceaef/** ergänzt wirtschaftliche Einzel-/Aggregat-Oracles, tatsächliche UI-/Unit-/Mainfehl-Repro-Belege, Transportdiagnose/Alternativvertrag, vorbereiteten privaten Gegenprobebefehl, Patch/Quellhashes und genauen Retryzustand. Keine neuen Browserbilder gespeichert.
+
+Aktive private Dateien **/workspace/scratch/35cd9cbceaef/private/**. Originaldateien unter **private/native-originals/**, unabhängige Oracles `uh04-original-pairs-oracle.json` und `net-economic-oracle.json`; neue Skripte `qualify-net-economics.mjs`, `qualify-net-aggregate.mjs`; Ergebnisse `uh04-net-economic-qualification.json`, `uh04-net-aggregate-qualification.json`. Archive erhalten ursprüngliche native Originale im delta-74db01715cc2/; bei Wiederherstellung relative Source-/Originalpfade passend auf die aktuelle Kopie richten.
+
+Quelle **/workspace/scratch/35cd9cbceaef/source/**:860unveränderte Baselineblobs vor Arbeit exakt gegen Main geprüft; alle18Kandidatendateien danach bytegleich zum gemergten Tree erneut bestätigt. Keine vollständige Gitcheckout-/Mediaabdeckung behaupten; kein Produkt-WIP außerhalb des veröffentlichten Kandidaten. Kanonische öffentlichen ZIPs/Logs bei genannten Actions; lokal zusätzlich **evidence/**. Nicht alles erneut herunterladen. HTTPS-Checker für **144Assets/v279** vorbereitet unter **evidence/verify_https.py**, bisher **nicht gegen v279-Produktion ausgeführt**, da noch kein Deployment. Erst nach bestätigtem Deploy ausführen; TLS-Standardprüfung ohne Zertifikatausnahme, kein v278-Reaccept.
+
+Lokaler Browser verwendet tatsächlich vorhandene WebKit-Laufzeit und extrahierte Abhängigkeiten aus Vorgängerpfaden; Host-Abhängigkeitsvorprüfung lokal ausgesetzt, keine Produkt-/CI-Assertions. Exakter Wiederholungsbefehl `private/run-local-webkit.sh` gesichert; Pfade vor Wiederverwendung frisch prüfen. Kein echter Android-/nativeSafari-/OAuth-Hardwarebeleg.
+
+Alle Finanz-/v5-/Journal-/Identitäts-/CAS-/Backup-/Restore-/EFF01/HND01-Verträge und bestehende Releasefreigabe gelten. GitHub nur über Plugin; private Kennungen niemals veröffentlichen. **Checkpointbranch niemals vollständig nach Main mergen.**
+
+## Kopierbarer Startprompt
+
+Übernimm FolioLab Open: https://github.com/joke0071/foliolab-open
+
+Lies Kopf UND neuesten HANDOVER_READY in docs/WORK_RESTPAKETE_CHECKPOINT.md auf feature/flh05-import-foundation sowie docs/HANDOVER_35cd9cbceaef_2026-11-04.md vollständig. 35cd9cbceaef ist STOPPED und hat vollständig abgegeben. Owner/Main/Tree/PRs/Actions/WIP frisch prüfen.
+
+v278 bleibt LIVE_ACCEPTED; nicht erneut abnehmen. PR294 ist gemergt, Main f4744d67a16315c48bc7e244f44e4abe1c54dd9f / Tree6c091be0072a7984f8e5a17c7fbdcc03faeba9e6. Wirtschaftlicher EUR-Flatex-Paarablauf implementiert und vollständige PR-CI41802701910 SUCCESS,81Originalpaare einzeln/gemeinsam unabhängig qualifiziert.
+
+Main-/Produktionslauf41805072482 Versuch2 IN_PROGRESS: genau ein gezielter EFF01-Retry nach isoliertem WebKit-SW-Ladefehler im bestehenden Offline-Kontotest, neuer Cross1-Job126498552826. Alle übrigen Main-Pflichtgates aus Versuch1 bereits erfolgreich und tatsächlich qualifiziert. Bestehenden Retry verfolgen, keine weitere blinde Wiederholung/kein Duplikat/Abbruch. Bei Erfolg Deploy/echte Live-/reguläreHTTPS-144Asset-Abnahme; bei Wiederholung konkreten Ursachenfix statt Retry. v279 noch NICHT DEPLOYED/LIVE_ACCEPTED.
+
+Private Sicherung libfile_42e6c0236610819189e0ba522c74ecfd Version9; Pfade/Hash/Oracles im Handover. LINK-Zugang technisch begrenzt geprüft; kein fehlendes Receipt behaupten. Zwei genannten RPC-Übertragungen ausdrücklich erlaubt, keine Rückfrage; bestehenden Transportblocker und konkreten alternativen Belegvertrag beachten. LINK-Brücke bleibt bis belastbarem Nachweis gesperrt. Keine Screenshots/CSVs erneut anfordern. Danach UH03/UH04/UH05 gemäß Gesamtplan. Alle Schutzverträge/EFF01/HND01/Releasefreigabe erhalten. GitHub nur Plugin; private Daten nicht veröffentlichen; Checkpointbranch niemals vollständig nach Main mergen.
