@@ -1,0 +1,123 @@
+{
+  "status": "MAIN_ACCEPTANCE_PENDING_SINGLE_TARGETED_RETRY",
+  "main": "f4744d67a16315c48bc7e244f44e4abe1c54dd9f",
+  "tree": "6c091be0072a7984f8e5a17c7fbdcc03faeba9e6",
+  "run": 41805072482,
+  "attempt1": {
+    "status": "COMPLETED_FAILURE",
+    "test": {
+      "job": 126490063396,
+      "result": "SUCCESS",
+      "units": 1182,
+      "fail": 0,
+      "skip": 0
+    },
+    "cross2": {
+      "job": 126490063318,
+      "result": "SUCCESS"
+    },
+    "cross3": {
+      "job": 126490063209,
+      "result": "SUCCESS"
+    },
+    "cross1": {
+      "job": 126490063244,
+      "result": "FAILURE",
+      "cause": "Existing cash-terms WebKit final pageerror list contains offline-origin sw.js script load failed; all financial checks reached final assertion",
+      "failureEvidence": "v279-main-attempt1-browser-load-failure.json"
+    },
+    "deploy": "SKIPPED",
+    "live": "SKIPPED"
+  },
+  "attempt2": {
+    "status": "in_progress",
+    "head": "f4744d67a16315c48bc7e244f44e4abe1c54dd9f",
+    "singleTargetedRetryAlreadyUsed": true,
+    "cross1Job": 126498552826,
+    "currentJobs": [
+      {
+        "id": 126498552826,
+        "name": "cross-engine (1)",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 126498552950,
+        "name": "Determine FAST / INTEGRATION / RELEASE",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126498553888,
+        "name": "FAST only / UI contract canary — no integration approval",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 126498554386,
+        "name": "cross-engine (2)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126498554552,
+        "name": "cross-engine (3)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 126498604834,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "next": "Follow existing cross1 then dependent deployment/live; no additional blind retry, no duplicate full run."
+  },
+  "newNetUI": "Chromium/Firefox/WebKit PASS in first main attempt, including actual commit/CAS/quota/abort/offline/encrypted v5 fresh-profile UI restore/replay/persistent removal; seven widths/Axe",
+  "screenshotsInspected": [
+    "Main Chromium320",
+    "Main WebKit320"
+  ],
+  "mainArtifactsVerified": [
+    {
+      "id": 13310411991,
+      "bytes": 61168142,
+      "sha256": "ce5928368167ceb991fbc835f4924ddb5c7acb6b0fe05a2cd2b0453c74d7dfff",
+      "entries": 667,
+      "jsons": 60
+    },
+    {
+      "id": 13310061598,
+      "bytes": 12211531,
+      "sha256": "288ff4863e5c6373173072a13710868b5d812a25f8f8b62bc398f265b58dd112",
+      "entries": 92,
+      "jsons": 17
+    },
+    {
+      "id": 13309568861,
+      "bytes": 55399100,
+      "sha256": "831b233db7d7de973b0c8f8250ea009ce6efa1535621fc150f27908d1f3f58be",
+      "entries": 633,
+      "jsons": 46
+    },
+    {
+      "id": 13308734000,
+      "bytes": 352,
+      "sha256": "d72b4d8cafb151a638a6f42a7c79d764efd8bc6938a31c3c6cfca07318ae61b3",
+      "entries": 1,
+      "jsons": 1
+    }
+  ],
+  "verification": "Actual ZIP size/API/upload-log/file SHA/CRC/all JSON parsed/strict status and errors/failures/violations checked; original failed cross1 never accepted",
+  "lastLiveAccepted": "v278",
+  "newDeploymentAccepted": false,
+  "newLiveAccepted": false,
+  "privateBackup": {
+    "id": "libfile_42e6c0236610819189e0ba522c74ecfd",
+    "version": 9,
+    "bytes": 441794,
+    "sha256": "e83de3442cfc779512f33a9a5a2b78304503df6219846f122c9833033ddbc3ca",
+    "internalHashes": 113
+  }
+}
