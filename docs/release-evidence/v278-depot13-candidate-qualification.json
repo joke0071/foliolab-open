@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-04",
+  "owner": "153e89d5df7c",
+  "status": "CANDIDATE_CI_PENDING",
+  "lastAccepted": "v277",
+  "candidate": "v278",
+  "main": "d651f09f93f261ee318a478279586fefd31fcd7f",
+  "mainTree": "6b73950cd0879a7e81f4bbc3046c9b49608a7a9a",
+  "pr": 293,
+  "head": "5cd08aeeaed3b6d880dc22c58207ed03a4541972",
+  "tree": "061b13d7dd33718765d6a6449a5d20af19424dca",
+  "syntheticMerge": "61e4e12fabb6e4a2672604d7e67f80b9172bfe55",
+  "changedFiles": 13,
+  "independentTreeComputation": "PASS; exact candidate and synthetic merge",
+  "privateIdentifierScan": "PASS",
+  "local": {
+    "fullUnits": {
+      "pass": 1173,
+      "fail": 0,
+      "skipped": 0,
+      "note": "Completed run before final additive workflow-contract edits; final affected contract tests separately passed."
+    },
+    "flatexUnits": {
+      "pass": 155,
+      "fail": 0
+    },
+    "workflowAndFlatex": {
+      "pass": 174,
+      "fail": 0
+    },
+    "finalWorkflow": {
+      "pass": 19,
+      "fail": 0
+    },
+    "originalOracle": "PASS; field/date/exact Decimal independent comparison; no source scope inferred; no model writes",
+    "webkitUI": "PASS; includes depot13 auto detection and source quarantine, online/offline, 5 widths/Axe, forced-submit/exact IDB",
+    "webkitExistingCommit": "PASS; append+backfill, backup/current confirmation, Quota/post-put abort, true CAS, exact quantity/null costs/no false flows, replay/undo/encrypted restore/offline",
+    "environment": "Private installed library files; Playwright ldconfig-only preflight bypassed after libraries supplied. Actual WebKit launched and all test assertions ran. No production/test gates relaxed.",
+    "notClaimed": [
+      "local Chromium/Firefox pass",
+      "Android hardware pass",
+      "final full second-run completion summary"
+    ]
+  },
+  "ci": {
+    "run": 41789688499,
+    "attempt": 1,
+    "status": "IN_PROGRESS",
+    "walletRun": 41789688651,
+    "notes": "No retries/cancellations/duplicates; terminal logs and artifacts still require actual review."
+  },
+  "limits": [
+    "13-column parsing/inspection is a bounded independent UH04 increment, not full economic UH04.",
+    "Missing exported depot scope blocks source identity/binding/simulation/commit; generic header and financial guards retained.",
+    "Raw LINK receipt remains unavailable; explorer delta tracked separately.",
+    "UH03/UH04/UH05 and historical coverage still partial/open."
+  ]
+}
