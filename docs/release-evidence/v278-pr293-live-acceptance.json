@@ -1,0 +1,75 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": "v278",
+  "acceptedAt": "2026-11-04T08:09:51.826298+00:00",
+  "owner": "74db01715cc2",
+  "main": "2bf36bf6328fb5f66da29c2c04d3309d206a7aae",
+  "tree": "061b13d7dd33718765d6a6449a5d20af19424dca",
+  "pr": 293,
+  "prHead": "5cd08aeeaed3b6d880dc22c58207ed03a4541972",
+  "prRun": 41789688499,
+  "run": 41791654108,
+  "attempt": 1,
+  "deployJob": 126452504697,
+  "liveJob": 126452632861,
+  "artifact": {
+    "id": 13305109615,
+    "bytes": 115382439,
+    "sha256": "6359fe44129a4ec77210439fc233c81ab21aa898c0a234102f8f176428db5674",
+    "entries": 1206,
+    "CRC": "PASS",
+    "jsonReports": 90,
+    "apiUploadLogActualFileMatch": true
+  },
+  "units": {
+    "passed": 1173,
+    "failed": 0,
+    "skipped": 0
+  },
+  "live": {
+    "result": "PASS",
+    "cache": "foliolab-open-v278",
+    "base": "https://foliolab.unperfekt.at/",
+    "errors": [],
+    "coreGroups": 6,
+    "axeScans": 18,
+    "jsonReportsParsed": 90,
+    "populatedErrorFailureViolationArrays": 0,
+    "uniqueAssets": 143,
+    "allMatchIndependentRegularHttpsAndSource": true,
+    "proxyCertificateException": false,
+    "nativeUIEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "nativeCommitEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "nativeCommitModes": [
+      "append",
+      "backfill"
+    ],
+    "newDepot13OnlineOfflineWidths": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "visualInspected": [
+      "chromium-depot13-online-320",
+      "webkit-depot13-offline-320"
+    ]
+  },
+  "mainArtifactQualification": "v278-main-qualification.json",
+  "regularHttpsReceipt": "v278-regular-https-assets.json",
+  "limits": [
+    "A bounded native depot13 format release; UH04 economics, missing source binding, account8, overlaps, special events and comparable historical ending balances remain open",
+    "No new raw LINK receipt/historical decimals eth_call or ERC20 bridge acceptance",
+    "Synthetic browser profiles; no real Android hardware claim"
+  ],
+  "liveLogSHA256": "bb922a8c6b62398adbce9cb2658688709662ea0a4469b17693c134502b14d33b"
+}
