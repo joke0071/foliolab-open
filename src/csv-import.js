@@ -154,11 +154,11 @@ export function importCSV(model,preview){
  if(!preview.ready&&!preview.evidenceUpdates)return {imported:0,duplicates:preview.duplicates};
  const next=structuredClone(preview.simulated);
  if(preview.netAugmentation!==undefined){
-  if(preview.ready!==1||preview.duplicates!==0||preview.evidenceUpdates||preview.skipped)throw Error('Ungültige Einzelbeinergänzung.');
-  validateNetAugmentationTransition(model,next,preview.netAugmentation);
+  const augmented=validateNetAugmentationTransition(model,next,preview.netAugmentation);
+  if(preview.ready!==augmented||preview.duplicates!==0||preview.evidenceUpdates||preview.skipped)throw Error('Ungültige Stückhistorienergänzung.');
   safeImport(JSON.parse(backup(next)));
   if(!ledgerQuantityAudit(next).ok)throw Error('Ergänzungsjournal und Bestände widersprechen sich.');
-  Object.assign(model,next);return {imported:0,augmented:1,duplicates:0};
+  Object.assign(model,next);return {imported:0,augmented,duplicates:0};
  }
  if(next.bookings.length!==(model.bookings||[]).length+preview.ready||(next.version!==model.version&&!(next.version===5&&[3,4].includes(model.version)&&hasFlatexNetState(next)))||
     model.bookings.some(b=>!next.bookings.some(n=>n.id===b.id&&(JSON.stringify(n)===JSON.stringify(b)||(preview.evidenceUpdates&&netEvidenceExtension(b,n)))))||

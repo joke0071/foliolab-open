@@ -72,23 +72,23 @@ export function validateNetSettlement(proof){
  return proof;
 }
 export const hasFlatexNetState=m=>m?.flatexNetRemovals!==undefined||(m?.bookings||[]).some(b=>b.netSettlement!==undefined)||(m?.journalEntries||[]).some(j=>j.netSettlementId!==undefined||j.status==='unresolved-net-settlement'||j.postings?.some(p=>p.role==='unresolved-net-amount'));
-/** Validate the retained native purchase independently of current ownership.
+/** Validate the retained native trade independently of current ownership.
  * Imported editing and ordinary CSV replay do not acquire this permission. */
-function validateOriginalPurchase(b,j,s){
- if(!b||!j||b.netAugmentation!==undefined||b.netSettlement!==undefined||s.type!=='buy'||b.type!=='buy'||b.date!==s.date||b.journalEntryId!==j.id||j.type!=='buy'||j.date!==b.date||j.source!=='csv'||j.status!=='unresolved-clearing'||j.netSettlementId!==undefined||j.cashPositionId||b.cashPositionId||b.targetPositionId||b.transferMatch||b.external!==false||b.costsVerified!==false||b.feeEUR!==null||b.taxEUR!==null||b.fxRate!==1||b.unitPrice!==Number(s.unitPriceExact)||b.amountEUR!==Number(s.grossExact)||units(b.amountExactEUR)!==units(s.grossExact)||units(b.quantityExact)!==units(s.quantityExact)||b.quantity!==Number(s.quantityExact))fail();
+function validateOriginalTrade(b,j,s){
+ if(!b||!j||b.netAugmentation!==undefined||b.netSettlement!==undefined||!['buy','sell'].includes(s.type)||b.type!==s.type||b.date!==s.date||b.journalEntryId!==j.id||j.type!==s.type||j.date!==b.date||j.source!=='csv'||j.status!=='unresolved-clearing'||j.netSettlementId!==undefined||j.cashPositionId||b.cashPositionId||b.targetPositionId||b.transferMatch||b.external!==false||b.costsVerified!==false||b.feeEUR!==null||b.taxEUR!==null||b.fxRate!==1||b.unitPrice!==Number(s.unitPriceExact)||b.amountEUR!==Number(s.grossExact)||units(b.amountExactEUR)!==units(s.grossExact)||units(b.quantityExact)!==units(s.quantityExact)||b.quantity!==Number(s.quantityExact))fail();
  validateImportSource(b.importSource,b.accountId);validateJournalEntry(j);
  if(b.importSource.sourceId!==s.depot.sourceId||b.importSource.externalId!==s.depot.externalId||!sourceUnmodified({journalEntries:[j]},b))fail();
  const row=JSON.parse(b.importSource.sourcePayload);
  keys(row,'type date positionId quantity unitPrice feeEUR taxEUR fxRate cashPositionId notes externalId sourceEvidence');
  if(row.type!==b.type||row.date!==b.date||row.positionId!==b.positionId||row.cashPositionId||row.notes!==b.notes||row.externalId!==s.depot.externalId||row.feeEUR!==null||row.taxEUR!==null||units(row.quantity)!==units(s.quantityExact)||units(row.unitPrice)!==units(s.unitPriceExact)||units(row.fxRate)!==units('1')||!equal(row.sourceEvidence,{version:1,payloadDigest:s.depot.payloadDigest}))fail();
  if(j.postings.length!==2)fail();
- const [asset,clearing]=j.postings;
- if(asset.role!=='asset'||asset.positionId!==b.positionId||asset.accountId!==b.accountId||units(asset.quantityDeltaExact)!==units(s.quantityExact)||units(asset.amountBookEURExact)!==units(s.grossExact)||clearing.role!=='clearing'||clearing.positionId!==null||clearing.accountId!==null||clearing.quantityDeltaExact!==null||units(clearing.amountBookEURExact)!==-units(s.grossExact))fail();
+ const [asset,clearing]=j.postings,sign=s.type==='buy'?1n:-1n;
+ if(asset.role!=='asset'||asset.positionId!==b.positionId||asset.accountId!==b.accountId||units(asset.quantityDeltaExact)!==sign*units(s.quantityExact)||units(asset.amountBookEURExact)!==sign*units(s.grossExact)||clearing.role!=='clearing'||clearing.positionId!==null||clearing.accountId!==null||clearing.quantityDeltaExact!==null||units(clearing.amountBookEURExact)!==-sign*units(s.grossExact))fail();
 }
 /** One deterministic transition; original IDs, timestamp, sequence and asset
  * posting survive. Exact original booking/journal bytes live in the new audit. */
-function augmentedPurchase(original,journal,proof,cashPositionId){
- validateOriginalPurchase(original,journal,proof);
+function augmentedTrade(original,journal,proof,cashPositionId){
+ validateOriginalTrade(original,journal,proof);
  const b=structuredClone(original),j=structuredClone(journal);
  const audit={version:1,booking:structuredClone(original),journal:structuredClone(journal)};
  b.cashPositionId=cashPositionId;b.netSettlement=structuredClone(proof);b.netAugmentation=audit;
@@ -97,14 +97,14 @@ function augmentedPurchase(original,journal,proof,cashPositionId){
  const cash=j.postings[1];cash.role='cash';cash.positionId=cashPositionId;
  // The account is bound by the caller and checked against the model below.
  cash.accountId=null;cash.quantityDeltaExact=proof.cashExact;cash.amountBookEURExact=proof.cashExact;
- j.postings.push({id:proof.id+'-difference',role:'unresolved-net-amount',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:exact(-units(proof.grossExact)-units(proof.cashExact))});
+ j.postings.push({id:proof.id+'-difference',role:'unresolved-net-amount',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:exact((proof.type==='buy'?-1n:1n)*units(proof.grossExact)-units(proof.cashExact))});
  const row=JSON.parse(original.importSource.sourcePayload);
  Object.assign(row,{cashPositionId,tradeAmountEURExact:proof.grossExact,netSettlementId:proof.id,netCashExact:proof.cashExact,netAugmentationDigest:sourceDigest(JSON.stringify(audit))});
  b.importSource.sourcePayload=JSON.stringify(row);
  return {booking:b,journal:j};
 }
 function completeAugmentation(original,journal,proof,cash){
- const result=augmentedPurchase(original,journal,proof,cash.id);
+ const result=augmentedTrade(original,journal,proof,cash.id);
  result.journal.postings[1].accountId=cash.accountId;
  result.booking.importSource.ownedSnapshot=bookingOwnership({journalEntries:[result.journal]},result.booking);
  return result;
@@ -115,53 +115,78 @@ function validateNetAugmentation(b,j){
  const expected=completeAugmentation(a.booking,a.journal,b.netSettlement,{id:cash.positionId,accountId:cash.accountId});
  if(!equal(expected.booking,b)||!equal(expected.journal,j))fail();
 }
-/** Narrow, explicit single native purchase augmentation. No other dependency,
- * protected cost, reference balance or existing cash effect can be rewritten. */
-function augmentModel(model,proof,assetId,cashId,openingDate){
- validateFlatexNetSettlements(model);validateNetSettlement(proof);
- if(proof.type!=='buy'||!validCalendarDate(openingDate)||openingDate>=proof.date||!ledgerQuantityAudit(model).ok)fail();
- const p=model.positions.find(p=>p.id===assetId),c=model.positions.find(p=>p.id===cashId);
- if(!p||!c||p.id===c.id||p.accountId===c.accountId||p.providerId!==c.providerId||p.currency!=='EUR'||c.currency!=='EUR'||!['etf','stock','fund'].includes(p.kind)||p.isin!==proof.isin||c.kind!=='cash'||p.archived||c.archived||p.wallet?.enabled||c.wallet?.enabled||p.managementSource==='wallet'||c.managementSource==='wallet')fail();
- for(const pos of [p,c])if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)fail();
- const matches=model.bookings.filter(b=>b.accountId===p.accountId&&b.importSource?.sourceId===proof.depot.sourceId&&b.importSource.externalId===proof.depot.externalId);
- if(matches.length!==1)fail();const old=matches[0],j=model.journalEntries.find(j=>j.id===old.journalEntryId);
- validateOriginalPurchase(old,j,proof);if(old.positionId!==p.id)fail();
- const touched=new Set([p.id,c.id]);
- if(model.bookings.some(b=>b.id!==old.id&&[b.positionId,b.cashPositionId,b.targetPositionId].some(id=>touched.has(id)))||model.journalEntries.some(e=>e.id!==j.id&&e.postings.some(x=>touched.has(x.positionId)))||model.externalCashFlows.some(f=>f.id===old.id)||(model.snapshots||[]).some(s=>s.byPosition&&[p.id,c.id].some(id=>Object.hasOwn(s.byPosition,id))&&s.date>=openingDate))fail();
- const sources=[proof.depot,proof.account];
- if((model.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(s=>sources.some(n=>sourceKey(s)===sourceKey(n))))||model.bookings.some(b=>b.id!==old.id&&b.importSource&&sources.some(s=>sourceKey(s)===sourceKey(b.importSource))))fail();
- const assetOpening=model.openingPositions.find(o=>o.positionId===p.id),cashOpening=model.openingPositions.find(o=>o.positionId===c.id);
- if(!assetOpening||units(assetOpening.quantityExact)!==0n||assetOpening.costBasisExact!=null||assetOpening.realizedPnLExact!=null||(assetOpening.asOf!=null&&(!validCalendarDate(assetOpening.asOf)||assetOpening.asOf>=proof.date))||units(p.quantityExact??p.quantity)!==units(proof.quantityExact)||!cashOpening||units(cashOpening.quantityExact)!==units(c.quantityExact??c.quantity)||cashOpening.costBasisExact!=null||cashOpening.realizedPnLExact!=null||(cashOpening.asOf!=null&&cashOpening.asOf!==openingDate))fail();
- const nextCash=units(c.quantityExact??c.quantity)+units(proof.cashExact);if(nextCash<0n)fail();
- const draft=structuredClone(model),changed=completeAugmentation(old,j,proof,c);
- draft.bookings[draft.bookings.findIndex(b=>b.id===old.id)]=changed.booking;
- draft.journalEntries[draft.journalEntries.findIndex(e=>e.id===j.id)]=changed.journal;
- const next=draft.positions.find(p=>p.id===c.id);next.quantityExact=exact(nextCash);next.quantity=Number(next.quantityExact);
- draft.openingPositions.find(o=>o.positionId===c.id).asOf=openingDate;draft.version=5;
- validateFlatexNetSettlements(draft);if(!ledgerQuantityAudit(draft).ok)fail();return draft;
+/** Explicit complete native trade batch: existing share effects and originals
+ * are immutable. Only verified net cash and its unresolved counterpart change. */
+function augmentModel(model,proofs,bindings,openingDate){
+ validateFlatexNetSettlements(model);
+ if(!Array.isArray(proofs)||!proofs.length||proofs.length>2500||new Set(proofs.map(p=>p.id)).size!==proofs.length||!validCalendarDate(openingDate)||!ledgerQuantityAudit(model).ok)fail();
+ const trades=[],touched=new Set(),selected=new Set(),sourceKeys=new Set();
+ for(const proof of proofs){
+  validateNetSettlement(proof);if(!['buy','sell'].includes(proof.type)||openingDate>=proof.date)fail();
+  const binding=bindings.find(b=>b.groupId===proof.id);if(!binding)fail();
+  const p=model.positions.find(p=>p.id===binding.assetId),c=model.positions.find(p=>p.id===binding.cashId);
+  if(!p||!c||p.id===c.id||p.accountId===c.accountId||p.providerId!==c.providerId||p.currency!=='EUR'||c.currency!=='EUR'||!['etf','stock','fund'].includes(p.kind)||p.isin!==proof.isin||c.kind!=='cash'||p.archived||c.archived||p.wallet?.enabled||c.wallet?.enabled||p.managementSource==='wallet'||c.managementSource==='wallet')fail();
+  for(const pos of [p,c])if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)fail();
+  const matches=model.bookings.filter(b=>b.accountId===p.accountId&&b.importSource?.sourceId===proof.depot.sourceId&&b.importSource.externalId===proof.depot.externalId);
+  if(matches.length!==1)fail();const old=matches[0],j=model.journalEntries.find(j=>j.id===old.journalEntryId);
+  validateOriginalTrade(old,j,proof);if(old.positionId!==p.id||selected.has(old.id))fail();
+  for(const source of [proof.depot,proof.account]){const key=sourceKey(source);if(sourceKeys.has(key))fail();sourceKeys.add(key);}
+  selected.add(old.id);touched.add(p.id);touched.add(c.id);trades.push({proof,p,c,old,j});
+ }
+ const journalIds=new Set(trades.map(t=>t.j.id));
+ if(model.bookings.some(b=>!selected.has(b.id)&&[b.positionId,b.cashPositionId,b.targetPositionId].some(id=>touched.has(id)))||model.journalEntries.some(j=>!journalIds.has(j.id)&&j.postings.some(x=>touched.has(x.positionId)))||model.externalCashFlows.some(f=>selected.has(f.id))||(model.snapshots||[]).some(s=>s.byPosition&&[...touched].some(id=>Object.hasOwn(s.byPosition,id))&&s.date>=openingDate))fail();
+ if((model.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(s=>sourceKeys.has(sourceKey(s))))||model.bookings.some(b=>!selected.has(b.id)&&b.importSource&&sourceKeys.has(sourceKey(b.importSource))))fail();
+ // A complete selected history is required for every touched security. Never
+ // infer a new historical opening from today's balance or from a partial batch.
+ for(const id of touched){
+  const p=model.positions.find(p=>p.id===id),o=model.openingPositions.find(o=>o.positionId===id);
+  if(!o||o.costBasisExact!=null||o.realizedPnLExact!=null)fail();
+  if(p.kind==='cash'){
+   if(units(o.quantityExact)!==units(p.quantityExact??p.quantity)||(o.asOf!=null&&o.asOf!==openingDate))fail();
+  }else{
+   if((units(o.quantityExact)!==0n&&!o.asOf)||(o.asOf!=null&&(!validCalendarDate(o.asOf)||o.asOf>openingDate)))fail();
+   const sum=trades.filter(t=>t.p.id===id).reduce((n,t)=>n+(t.proof.type==='buy'?1n:-1n)*units(t.proof.quantityExact),0n);
+   if(units(o.quantityExact)+sum!==units(p.quantityExact??p.quantity))fail();
+  }
+ }
+ const draft=structuredClone(model),cashBalances=new Map();
+ // Date and original journal sequence preserve the already committed timeline.
+ // A batch cannot conceal an intermediate negative cash balance.
+ for(const {proof,c,old,j} of trades.sort((a,b)=>a.proof.date.localeCompare(b.proof.date)||a.j.sequence-b.j.sequence)){
+  const balance=(cashBalances.get(c.id)??units(c.quantityExact??c.quantity))+units(proof.cashExact);if(balance<0n)fail();cashBalances.set(c.id,balance);
+  const changed=completeAugmentation(old,j,proof,c);
+  draft.bookings[draft.bookings.findIndex(b=>b.id===old.id)]=changed.booking;
+  draft.journalEntries[draft.journalEntries.findIndex(e=>e.id===j.id)]=changed.journal;
+ }
+ for(const [id,balance]of cashBalances){const p=draft.positions.find(p=>p.id===id);p.quantityExact=exact(balance);p.quantity=Number(p.quantityExact);draft.openingPositions.find(o=>o.positionId===id).asOf=openingDate;}
+ draft.version=5;validateFlatexNetSettlements(draft);if(!ledgerQuantityAudit(draft).ok)fail();return draft;
 }
 export function prepareFlatexNetAugmentationPreview(model,documents,assignments,{selectedIds=[],openingDate='',openingConfirmed=false,stale=false}={}){
  const inspection=inspectFlatexNetPairs(documents),prepared={...inspection,issues:[]};
  const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
  try{
-  if(stale||!openingConfirmed||selectedIds.length!==1)throw Error('Genau einen bestehenden nativen Kauf auswählen und den belegten Cashanfang vor dem Kauf bestätigen.');
-  const proof=inspection.pairs.find(p=>p.id===selectedIds[0]);if(!proof)fail();
-  const bindings=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale});
-  const dc=bindings.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=bindings.contexts.find(c=>c.sourceId===proof.account.sourceId);
-  if(!dc?.confirmed||!cc?.confirmed)throw Error('Beide eigenen Depot-/Kontozuordnungen aktuell bestätigen.');
-  const assets=model.positions.filter(p=>p.accountId===dc.accountId&&p.isin===proof.isin),cash=model.positions.filter(p=>p.accountId===cc.accountId&&p.kind==='cash'&&p.currency==='EUR');
-  if(assets.length!==1||cash.length!==1)fail();
-  const simulated=augmentModel(model,proof,assets[0].id,cash[0].id,openingDate);
-  return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview:{baseline:JSON.stringify(model),simulated,issues:[],ready:1,duplicates:0,skipped:0,netAugmentation:{version:1,groupId:proof.id,openingDate},rows:[{line:2,status:'ready',row:{positionId:assets[0].id,cashPositionId:cash[0].id}}]}};
+  if(stale||!openingConfirmed||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)throw Error('Bestehende native Stückbuchungen vollständig auswählen und den belegten Cashanfang vor dem Stapel bestätigen.');
+  const proofs=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(proofs.some(p=>!p))fail();
+  const bindings=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale}),resolved=[];
+  for(const proof of proofs){
+   const dc=bindings.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=bindings.contexts.find(c=>c.sourceId===proof.account.sourceId);
+   if(!dc?.confirmed||!cc?.confirmed)throw Error('Beide eigenen Depot-/Kontozuordnungen aktuell bestätigen.');
+   const assets=model.positions.filter(p=>p.accountId===dc.accountId&&p.isin===proof.isin),cash=model.positions.filter(p=>p.accountId===cc.accountId&&p.kind==='cash'&&p.currency==='EUR');
+   if(assets.length!==1||cash.length!==1)fail();resolved.push({groupId:proof.id,assetId:assets[0].id,cashId:cash[0].id});
+  }
+  const simulated=augmentModel(model,proofs,resolved,openingDate);
+  const marker=proofs.length===1?{version:1,groupId:proofs[0].id,openingDate}:{version:2,groupIds:proofs.map(p=>p.id).sort(),openingDate};
+  return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview:{baseline:JSON.stringify(model),simulated,issues:[],ready:proofs.length,duplicates:0,skipped:0,netAugmentation:marker,rows:resolved.map((b,i)=>({line:i+2,status:'ready',row:{positionId:b.assetId,cashPositionId:b.cashId}}))}};
  }catch(e){return blocked(e.message);}
 }
-/** Re-derive the ENTIRE allowed delta; a forged preview cannot borrow this
- * exception to mutate any unrelated model field or generic imported booking. */
+/** Re-derive the ENTIRE allowed delta, including selected count and bindings. */
 export function validateNetAugmentationTransition(model,next,marker){
- keys(marker,'version groupId openingDate');if(marker.version!==1)fail();
- const b=next.bookings.find(b=>b.netSettlement?.id===marker.groupId);if(!b?.netAugmentation)fail();
- const expected=augmentModel(model,b.netSettlement,b.positionId,b.cashPositionId,marker.openingDate);
- if(!equal(expected,next))fail();return true;
+ let ids;
+ if(marker?.version===1){keys(marker,'version groupId openingDate');ids=[marker.groupId];}
+ else{keys(marker,'version groupIds openingDate');if(marker.version!==2||!Array.isArray(marker.groupIds)||marker.groupIds.length<2||marker.groupIds.length>2500||new Set(marker.groupIds).size!==marker.groupIds.length||!equal([...marker.groupIds].sort(),marker.groupIds))fail();ids=marker.groupIds;}
+ const bookings=ids.map(id=>next.bookings.find(b=>b.netSettlement?.id===id));if(bookings.some(b=>!b?.netAugmentation))fail();
+ const expected=augmentModel(model,bookings.map(b=>b.netSettlement),bookings.map(b=>({groupId:b.netSettlement.id,assetId:b.positionId,cashId:b.cashPositionId})),marker.openingDate);
+ if(!equal(expected,next))fail();return ids.length;
 }
 function validateGroup(model,b,j,{removed=false}={}){
  const s=validateNetSettlement(b.netSettlement);
