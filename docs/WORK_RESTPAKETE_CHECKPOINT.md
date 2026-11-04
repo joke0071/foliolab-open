@@ -1,3 +1,11 @@
+## ACTIVE – 01a1a73ba52f / bestätigte Notfallübernahme / PR296 eingefroren – 04.11.2026
+
+Nutzer hat im neuen Work-Chat ausdrücklich bestätigt: alter Work-Lauf f5b53dbf4bae beendet, ausschließlich dieser Chat setzt fort. Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung bei 01a1a73ba52f; keine technische STOPPED-Erklärung des Vorgängers erfunden. Frisch Main4e8c63c9deda58203c3dc637cd80366047d25d18 / Tree94802e05c2ce5ece4b9f4c4eca20ba7b45133259 unverändert, v280LIVE_ACCEPTED. PR296 HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 offen; Pflicht41854091524 und Wallet41854091649 Versuch1SUCCESS,0laufende/0wartendeActions. Keine neue CI/Implementierung. Nächster Schritt: vorhandene tatsächliche CI-Logs/Artefakte und Kandidat qualifizieren; nur bei vollständigen Gates SHA-geschützt mergen, Main/Deploy/Produktion v281 abnehmen; danach UH04→UH05.
+
+PrivateSicherungVersion15 lokal erreichbar,672538Bytes/SHA256521f3c96cd0002025e4db04094e64f1ca20255ee41113782a7eca49dcac7a345 exakt; alle189internenHashesPASS,Patch/Oracle/Original-/LINK-Belege erhalten. FremderWorkspace unverändert. LINKgesperrt: belastbarerFinalitätsanker offen;keineidentischenRPCs/keineNutzerPythonanforderung. EFF01/HND01 und sämtliche Schutz-/Releaseverträge gelten. Checkpointbranch niemals vollständig nachMainmergen. EigeneZähler0LIVE_ACCEPTED/0Produktpakete.
+
+---
+
 ## ACTIVE – f5b53dbf4bae / PR296 eingefroren / LINK-Finalitätsanker offen – 04.11.2026
 
 Einziger fortgesetzter Hauptstrang. [PR296](https://github.com/joke0071/foliolab-open/pull/296) HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 / unabhängig berechneter Tree6b226b1082f05078257c106d57f6fa07dd97720f,11beabsichtigteDateien. Normaler Pflichtlauf41854091524Versuch1IN_PROGRESS; Wallet41854091649SUCCESS. Kandidat einfrieren, keineDuplikate/Abbrüche/blindenRetries. Main4e8c63c9deda58203c3dc637cd80366047d25d18 / v280LIVE_ACCEPTED bleibt unverändert; v281nurKandidat. KeineFolgeimplementierung währendIntegration.
