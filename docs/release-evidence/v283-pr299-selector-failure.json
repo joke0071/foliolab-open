@@ -1,0 +1,21 @@
+{
+  "status": "CI_SELECTOR_FAILURE_REPRODUCED_AND_LOCALLY_CORRECTED",
+  "pr": 299,
+  "head": "a1ebaae04d24db6a381eacd2c414f1f21e9e7b0e",
+  "run": 41914886815,
+  "failedJob": 126871952464,
+  "assertion": "SPL quality disclosure includes closed token account gap",
+  "cause": "hidden new local LINK details became first details element in the dialog; old test selected it globally",
+  "correction": "scope the unchanged disclosure assertion to [data-history=\"output\"] details",
+  "localHistoryBrowser": "PASS Chromium BTC/ETH/SOL/SPL and encrypted restore; full existing test",
+  "assertionsWeakened": false,
+  "oldRunUntouched": true,
+  "pushHeldUntilOldCICompletes": true,
+  "actualFailureArtifact": {
+    "id": 13364771062,
+    "bytes": 9442399,
+    "sha256": "17a23da8eeb50603907a593cf3f73c39f205d89d2803a2460f64692c234d9c51",
+    "CRC": "PASS"
+  },
+  "patch": "--- a/tests/browser-history-ui.mjs\n+++ b/tests/browser-history-ui.mjs\n@@ -72,7 +72,7 @@\n   assert.equal(await d.locator('[data-history=\"start\"]').innerText(),'Neu abrufen');\n   assert.match(await d.locator('[data-history=\"status\"]').innerText(),/Temporäre Seiten fehlen/);\n   ethNetworkFailure=false;\n-  await d.locator('[data-history=\"wallet\"]').selectOption('spl');await d.locator('[data-history=\"start\"]').click();await d.locator('[data-history=\"accept\"]').waitFor({state:'visible',timeout:7000});await d.locator('details').first().evaluate(el=>el.open=true);assert.match(await d.innerText(),/geschlossene Tokenkonten/);await d.locator('[data-history=\"records\"]').evaluate(el=>el.open=true);assert.match(await d.innerText(),/0.000000000000000000000007/);await d.locator('[data-history=\"accept\"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions.length===3);\n+  await d.locator('[data-history=\"wallet\"]').selectOption('spl');await d.locator('[data-history=\"start\"]').click();await d.locator('[data-history=\"accept\"]').waitFor({state:'visible',timeout:7000});await d.locator('[data-history=\"output\"] details').first().evaluate(el=>el.open=true);assert.match(await d.innerText(),/geschlossene Tokenkonten/);await d.locator('[data-history=\"records\"]').evaluate(el=>el.open=true);assert.match(await d.innerText(),/0.000000000000000000000007/);await d.locator('[data-history=\"accept\"]').click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).walletHistory.sessions.length===3);\n   const roundtrip=await page.evaluate(async()=>{const {backup,safeImport}=await import('/src/model.js');const {createCompleteBackup,unpackCompleteBackup}=await import('/src/complete-backup.js');const {configureBackupPassword,encryptWithBackupPassword,decryptPasswordBackup}=await import('/src/backup-vault.js');await configureBackupPassword('cross-chain-test-password','cross-chain-test-password');const m=safeImport(JSON.parse(localStorage.getItem('foliolab-open-v1'))),payload=createCompleteBackup(JSON.parse(backup(m)),null,m.walletHistory);const encrypted=await encryptWithBackupPassword(JSON.stringify(payload));const restored=safeImport(unpackCompleteBackup(JSON.parse(await decryptPasswordBackup(JSON.parse(encrypted),'cross-chain-test-password'))).data);return restored.walletHistory.sessions.map(s=>s.chain).sort();});assert.deepEqual(roundtrip,['btc','eth','sol']);\n   await d.locator('[data-history=\"wallet\"]').selectOption('btc');slow=true;await d.locator('[data-history=\"start\"]').click();await d.locator('[data-history=\"cancel\"]').click();await page.waitForFunction(()=>document.querySelector('#walletHistoryDialog [data-history=\"status\"]').textContent.includes('Abgebrochen'));slow=false;\n   await d.locator('[data-history=\"resume\"]').click();await d.locator('[data-history=\"accept\"]').waitFor({state:'visible',timeout:7000}).catch(async e=>{console.log('UI FAILURE STATE',await d.innerText());throw e;});await d.locator('[data-history=\"discard\"]').click();\n"
+}
