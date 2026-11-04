@@ -1,0 +1,17 @@
+{
+  "status": "OFFLINE_EXECUTION_CONSISTENCY_QUALIFIED_BRIDGE_BLOCKED",
+  "negativeControls": 29,
+  "requestsSent": 0,
+  "productChanged": false,
+  "rawReceiptProduced": false,
+  "blockers": [
+    "missing captured finalized-tag anchor",
+    "immutable tagged alternate proof and current accepted history/source/wallet/baseline binding not yet integrated",
+    "provider complete logset is not receipt-root authentication"
+  ],
+  "limits": [
+    "Static token metadata is not historical eth_call",
+    "No historical balance acceptance",
+    "No ERC20 bridge release"
+  ]
+}
