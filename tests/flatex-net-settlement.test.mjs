@@ -8,7 +8,7 @@ import {reviewNativeFlatexBindings} from '../src/flatex-native-ui.js';
 import {importCSV} from '../src/csv-import.js';
 import {ledgerQuantityAudit,executeTransaction} from '../src/transactions.js';
 import {performanceIssues} from '../src/performance.js';
-import {fixture} from './flatex-net-fixture.mjs';
+import {fixture,laterDocuments} from './flatex-net-fixture.mjs';
 test('independent exact net posting: 2 shares, gross20, cash-21.75, unresolved1.75, unknown costs',()=>{
  const f=fixture(),before=JSON.stringify(f.model),result=prepareFlatexNetPreview(f.model,f.documents,f.assignments,f.options);
  assert.equal(result.eligible,true,result.reason);assert.equal(JSON.stringify(f.model),before);assert.equal(result.preview.ready,1);
@@ -63,4 +63,36 @@ test('pure depot repeat cannot discard the paired cash source or silently create
  const f=fixture();importCSV(f.model,prepareFlatexNetPreview(f.model,f.documents,f.assignments,f.options).preview);
  const {prepareNativeFlatexPreview}=await import('../src/flatex-backfill.js');
  const before=JSON.stringify(f.model),r=prepareNativeFlatexPreview(f.model,[f.documents[0]],f.assignments,{mode:'append'});assert.equal(r.eligible,false);assert.equal(JSON.stringify(f.model),before);
+});
+test('incremental EUR pairs preserve earlier holdings, openings and source records through restore/replay/removal',()=>{
+ for(const type of ['buy','sell']){
+  const f=fixture();importCSV(f.model,prepareFlatexNetPreview(f.model,f.documents,f.assignments,f.options).preview);
+  const old=structuredClone(f.model),docs=laterDocuments({type}),ids=inspectFlatexNetPairs(docs).pairs.map(p=>p.id);
+  const options={selectedIds:ids,openingConfirmed:false};
+  const r=prepareFlatexNetPreview(f.model,docs,f.assignments,options);assert.equal(r.eligible,true,r.reason);assert.equal(r.preview.ready,1);assert.deepEqual(f.model,old);
+  importCSV(f.model,r.preview);assert.equal(f.model.positions[0].quantityExact,type==='buy'?'3':'1');assert.equal(f.model.positions[1].quantityExact,type==='buy'?'66':'90');
+  assert.deepEqual(f.model.openingPositions,old.openingPositions);assert.deepEqual(f.model.bookings.find(b=>b.id===old.bookings[0].id),old.bookings[0]);assert.deepEqual(f.model.journalEntries.find(j=>j.id===old.journalEntries[0].id),old.journalEntries[0]);
+  assert.equal(f.model.externalCashFlows.length,0);assert.equal(f.model.positions[0].costBasisExact,null);assert.equal(ledgerQuantityAudit(f.model).ok,true);
+  const restored=safeImport(JSON.parse(backup(f.model))),again=prepareFlatexNetPreview(restored,[...f.documents,...docs],f.assignments,{selectedIds:[...f.options.selectedIds,...ids]});
+  assert.equal(again.eligible,true,again.reason);assert.equal(again.preview.ready,0);assert.equal(again.preview.duplicates,2);
+  assert.throws(()=>withdrawFlatexNetGroups(restored,f.options.selectedIds),/abhängig/);
+  const removed=safeImport(JSON.parse(backup(withdrawFlatexNetGroups(restored,ids)))),oldRestored=safeImport(JSON.parse(backup(old)));assert.deepEqual(removed.positions,oldRestored.positions);assert.deepEqual(removed.bookings,oldRestored.bookings);
+  assert.equal(prepareFlatexNetPreview(removed,docs,f.assignments,options).eligible,false);
+ }
+});
+test('incremental EUR append rejects backdating, manual dependencies, drift, unconfirmed sources and protected reference balances',()=>{
+ const mutations=[
+  f=>f.docs=laterDocuments({date:'02.01.1999'}),f=>f.docs=laterDocuments({date:'01.01.1999'}),
+  f=>{f.model.positions[0].quantityExact='3';f.model.positions[0].quantity=3;},
+  f=>{f.model.openingPositions[0].asOf=undefined;},f=>{f.model.positions[0].costBasisExact='1';},
+  f=>{f.model.bookings[0].notes='manually changed';},
+  f=>{f.assignments[Object.keys(f.assignments)[0]].confirmed=false;},
+  f=>{f.model.snapshots.push({date:'1999-01-10',byPosition:{cash:'78.25'}});},
+  f=>{executeTransaction(f.model,{type:'buy',date:'1999-01-05',positionId:'etf',cashPositionId:'cash',quantity:1,unitPrice:1});}
+ ];
+ for(const mutate of mutations){
+  const f=fixture();importCSV(f.model,prepareFlatexNetPreview(f.model,f.documents,f.assignments,f.options).preview);f.docs=laterDocuments();mutate(f);
+  const before=JSON.stringify(f.model),ids=inspectFlatexNetPairs(f.docs).pairs.map(p=>p.id),r=prepareFlatexNetPreview(f.model,f.docs,f.assignments,{selectedIds:ids});
+  assert.equal(r.eligible,false);assert.equal(JSON.stringify(f.model),before);
+ }
 });

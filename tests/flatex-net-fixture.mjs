@@ -14,3 +14,8 @@ export function fixture(){
  const options={selectedIds:inspection.pairs.map(p=>p.id),openingDate:'1999-01-01',openingConfirmed:true};
  return {model,documents,assignments,options,inspection};
 }
+export function laterDocuments({date='10.01.1999',type='buy'}={}){
+ const details='ORDER '+(type==='buy'?'Kauf':'Verkauf')+' IE00SYNTH001 200';
+ return [parseFlatexNativeCSV(nativeFlatexCSV('depot',[{1:date,2:date,5:type==='buy'?'1':'-1',7:details,8:'SYN-DEPOT-LATER',9:'12'}])),
+  parseFlatexNativeCSV(nativeFlatexCSV('account',[{0:date,1:date,4:details,5:'SYN-CASH-LATER',6:type==='buy'?'-12,25':'11,75'}]))];
+}

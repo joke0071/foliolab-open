@@ -133,8 +133,17 @@ export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds
     if(draft.bookings.some(b=>b.importSource&&[proof.depot,proof.account].some(s=>importSourceKey(b.importSource)===importSourceKey({...s,accountId:b.accountId}))))throw Error('Bereits vorhandenes Stück-/Cashbein benötigt einen gesonderten Ergänzungsvertrag.');
     for(const pos of [p,c]){
      if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)throw Error('Bestätigte Kosten oder Ergebnisse bleiben geschützt.');
-     if(model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id))||model.journalEntries.some(j=>j.postings.some(x=>x.positionId===pos.id)))throw Error('Erster Paar-Append nur ohne vorhandene abhängige Buchungen.');
-     touched.add(pos.id);
+     const bookings=model.bookings.filter(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id));
+     const journals=model.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id));
+     if(bookings.length||journals.length){
+      // Extend only an intact, chronologically earlier net-pair ledger. Existing
+      // quantities/openings are the baseline, never a new inferred opening.
+      const opening=model.openingPositions.find(o=>o.positionId===pos.id);
+      if(!opening?.asOf||!validCalendarDate(opening.asOf)||opening.asOf>=proof.date||opening.costBasisExact!=null||opening.realizedPnLExact!=null||!ledgerQuantityAudit(model).ok||
+       bookings.some(b=>!b.netSettlement||!sourceUnmodified(model,b)||b.date>=proof.date)||
+       journals.some(j=>j.date>=proof.date||!bookings.some(b=>b.journalEntryId===j.id&&b.netSettlement)))throw Error('Neue EUR-Paare nur nach unveränderten früheren Wirtschaftsgruppen mit belegtem Anfangsbestand. Andere oder gleichdatierte Buchungen benötigen einen gesonderten Abgleich.');
+      if((model.snapshots||[]).some(s=>s.byPosition&&Object.hasOwn(s.byPosition,pos.id)&&s.date>=proof.date))throw Error('Vorhandener Referenzstand benötigt gesonderten Endbestandsabgleich.');
+     }else touched.add(pos.id);
     }
    }
    const index=parsed.rows.length+2;
