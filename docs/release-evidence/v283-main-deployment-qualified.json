@@ -1,0 +1,171 @@
+{
+  "status": "MAIN_AND_DEPLOYMENT_QUALIFIED_LIVE_PENDING",
+  "version": 283,
+  "main": "fa89618a416d53090a134df48b4852f69f3e18ff",
+  "tree": "aa455dfddd4158d08537cc6f883be75bb0c63371",
+  "run": 41921770360,
+  "attempt": 1,
+  "jobs": [
+    {
+      "id": 126895796146,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126895886887,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126895886914,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126895886933,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126895886970,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126895889176,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 126906654659,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 126906799423,
+      "name": "live-acceptance",
+      "status": "in_progress",
+      "conclusion": null
+    }
+  ],
+  "unitTests": {
+    "passed": 1202,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13369016158,
+      "name": "cross-engine-gates-fa89618a416d53090a134df48b4852f69f3e18ff-3",
+      "bytes": 59728984,
+      "sha256": "2e03f2499651c460d10a9767c173ead2317853f84f0df6cdbac882517e905f9b",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 682,
+      "jsonReports": 51,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 28,
+      "linkPNGsDecoded": 12
+    },
+    {
+      "id": 13368147349,
+      "name": "release-gates-fa89618a416d53090a134df48b4852f69f3e18ff",
+      "bytes": 62991792,
+      "sha256": "aa2f79a8f8108a5eaf027306b5bd09ecfdf504ac609e7352f1d9202202b075ef",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 692,
+      "jsonReports": 63,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 14,
+      "linkPNGsDecoded": 6
+    },
+    {
+      "id": 13368110369,
+      "name": "ci-stage-fa89618a416d53090a134df48b4852f69f3e18ff",
+      "bytes": 355,
+      "sha256": "2bb981f638a0c35595a461fc93578249eda91fb0e9a08e2ed622f2bf90e9b5d5",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    },
+    {
+      "id": 13367919415,
+      "name": "github-pages",
+      "bytes": 529657,
+      "sha256": "cee95effaf131ce3f3ffee925da6a5a9bd80be597b19af35d245e7163bd55c27",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    },
+    {
+      "id": 13367369250,
+      "name": "cross-engine-gates-fa89618a416d53090a134df48b4852f69f3e18ff-1",
+      "bytes": 59708722,
+      "sha256": "07395af09eb82dd838ac5ab7c01ea61012c95eaf95131e33856b6ea6a3bcc0cc",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    },
+    {
+      "id": 13366264716,
+      "name": "cross-engine-gates-fa89618a416d53090a134df48b4852f69f3e18ff-2",
+      "bytes": 12211183,
+      "sha256": "84a9322c5b555b9caa13b85a8defc933280536eda9318db0c0af4a5fd9bf6e5c",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    }
+  ],
+  "pages": {
+    "artifact": 13367919415,
+    "exactGitBlobs": 145,
+    "exactShippedSet": true
+  },
+  "regularTLS": {
+    "assets": 146,
+    "matched": 146,
+    "certificateValidation": true,
+    "certificateException": false,
+    "detail": "v283-regular-https-assets.json"
+  },
+  "mainReports": {
+    "json": 147,
+    "failureFlags": 0,
+    "legacyAugmentationPNGsDecoded": 42,
+    "linkPNGsDecoded": 18,
+    "linkEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "limits": [
+    "Production job remains in progress; v283 is not LIVE_ACCEPTED.",
+    "Private original UI uses controlled opening balances; no historical balance claim.",
+    "No new LINK RPC calls, no user Python task, no additional CI."
+  ]
+}
