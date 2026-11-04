@@ -1,0 +1,89 @@
+{
+  "status": "INTEGRATION_ACCEPTED",
+  "pr": 294,
+  "head": "6fa1ec516e6cf1dca7af8814d5c64f19546f0163",
+  "base": "2bf36bf6328fb5f66da29c2c04d3309d206a7aae",
+  "tree": "6c091be0072a7984f8e5a17c7fbdcc03faeba9e6",
+  "testMerge": "d9fe25ddce9f7bd315b103631dc331a573a4f2c0",
+  "ci": {
+    "run": 41802701910,
+    "attempt": 1,
+    "result": "SUCCESS",
+    "wallet": 41802702068
+  },
+  "units": {
+    "tests": 1182,
+    "pass": 1182,
+    "fail": 0,
+    "skip": 0
+  },
+  "changedFiles": 18,
+  "exactExpectedFiles": true,
+  "localTreeIndependentlyComputed": true,
+  "allRequiredLogsChecked": true,
+  "allThreeNewBrowserFlows": "PASS: actual net UI commit, quota/abort/actual CAS/offline/encrypted fresh-profile v5 UI restore/replay/persistent withdrawal/reimport tombstone/seven widths Axe",
+  "screenshotsInspected": [
+    "CI Chromium320",
+    "CI WebKit320"
+  ],
+  "artifacts": [
+    {
+      "id": 13309860590,
+      "name": "dialog-visual-reference",
+      "size": 935690,
+      "digest": "sha256:7659f6c09a8582536c57e289369993d0768cb600f5712e2bf1d783bf41ecc28d",
+      "verification": "upload log/API digest match; representative new-flow images inspected from gate ZIP"
+    },
+    {
+      "id": 13309461735,
+      "name": "release-gates-d9fe25ddce9f7bd315b103631dc331a573a4f2c0",
+      "size": 61172619,
+      "digest": "sha256:03b34c92ecb192fd249067f0f8d9cc696d318e453040924ce0a113b2d9d67d84",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    },
+    {
+      "id": 13309405049,
+      "name": "cross-engine-gates-d9fe25ddce9f7bd315b103631dc331a573a4f2c0-2",
+      "size": 12213555,
+      "digest": "sha256:d721e2c1aed9979d3382657289e52e0d4824d4cab0d3c3b806f0631f982dfe80",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    },
+    {
+      "id": 13309143132,
+      "name": "cross-engine-gates-d9fe25ddce9f7bd315b103631dc331a573a4f2c0-3",
+      "size": 55401319,
+      "digest": "sha256:221ed611823ffc193031e7d321f92e4ed9a512e05622fa4caf934edbf86005e1",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    },
+    {
+      "id": 13308681279,
+      "name": "fast-only-not-integration-d9fe25ddce9f7bd315b103631dc331a573a4f2c0",
+      "size": 2014389,
+      "digest": "sha256:db475c0d602cb97d5377fbad1340eeb86532da0d944481e06d198adbe44e0fb5",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    },
+    {
+      "id": 13308593354,
+      "name": "cross-engine-gates-d9fe25ddce9f7bd315b103631dc331a573a4f2c0-1",
+      "size": 59707924,
+      "digest": "sha256:60bbac9be910b406377f87c327a8c1c75ec19416da28990eb5e0656fffd9da7d",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    },
+    {
+      "id": 13307909238,
+      "name": "ci-stage-d9fe25ddce9f7bd315b103631dc331a573a4f2c0",
+      "size": 687,
+      "digest": "sha256:1d94a740b4d8951f3602a60f5e30637d09ff86d3d7ffe0ecb14f74cfeee5ef03",
+      "verification": "actual ZIP size/SHA256/API/upload-log/CRC/JSON parsing and empty errors/failures/violations checked"
+    }
+  ],
+  "reviews": "0 comments / 0 reviews / 0 threads",
+  "privateEvidence": "Local and aggregate 81-pair independent CSV/Decimal oracles, controlled openings only; backup Version8",
+  "mainUnchangedBeforeMerge": true,
+  "newLiveAcceptance": false,
+  "limits": [
+    "Not actual historical balances or whole UH04 acceptance",
+    "LINK remains blocked; no raw receipt or alternate-verifier acceptance",
+    "No hardware Android/native Safari acceptance"
+  ]
+}
