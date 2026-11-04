@@ -1,0 +1,85 @@
+{
+  "status": "MAIN_ARTIFACTS_QUALIFIED_DEPLOYMENT_PENDING",
+  "sha": "5e24de041622cf5753adc48eebc303ef647e788b",
+  "tree": "6b226b1082f05078257c106d57f6fa07dd97720f",
+  "run": 41861912576,
+  "attempt": 1,
+  "jobs": [
+    126685689136,
+    126685792597,
+    126685792594,
+    126685792551,
+    126685792640
+  ],
+  "units": {
+    "passed": 1190,
+    "failed": 0,
+    "skipped": 0
+  },
+  "artifacts": [
+    {
+      "id": 13341756813,
+      "name": "cross-engine-gates-5e24de041622cf5753adc48eebc303ef647e788b-3",
+      "bytes": 56812503,
+      "digest": "sha256:d81becaba71c1e62e9d05ec7362c0f66354a15c782af2026c59009b57c198a3f",
+      "downloadedHashAndCrc": "PASS",
+      "uploadLogHashMatch": true
+    },
+    {
+      "id": 13341662120,
+      "name": "release-gates-5e24de041622cf5753adc48eebc303ef647e788b",
+      "bytes": 61756311,
+      "digest": "sha256:b3e7d836a4fa2f02fade2f6137e44f1eb30578901f28b0a397414dfcb14002e7",
+      "downloadedHashAndCrc": "PASS",
+      "uploadLogHashMatch": true
+    },
+    {
+      "id": 13340887160,
+      "name": "cross-engine-gates-5e24de041622cf5753adc48eebc303ef647e788b-1",
+      "bytes": 59704675,
+      "digest": "sha256:4ebd6242c2d0fccaf235c5fd240826435b29ab7944fa351d1ec93cd35d0e0f13",
+      "downloadedHashAndCrc": "PASS",
+      "uploadLogHashMatch": true
+    },
+    {
+      "id": 13340587164,
+      "name": "cross-engine-gates-5e24de041622cf5753adc48eebc303ef647e788b-2",
+      "bytes": 12210947,
+      "digest": "sha256:e5983ff3f352a8185c2aa68191315cff86814825c60244752546812daf3b0021",
+      "downloadedHashAndCrc": "PASS",
+      "uploadLogHashMatch": true
+    },
+    {
+      "id": 13339428903,
+      "name": "ci-stage-5e24de041622cf5753adc48eebc303ef647e788b",
+      "bytes": 353,
+      "digest": "sha256:c954617c9e4cee4f1c994cf95bf34a4636db73f02ef175a854e3aa40fbd55b4c",
+      "downloadedHashAndCrc": "PASS",
+      "uploadLogHashMatch": true
+    }
+  ],
+  "jsonReports": 141,
+  "failureFlags": [],
+  "augmentation": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "pngsIntact": 21,
+    "viewed": [
+      "chromium-320",
+      "webkit-320",
+      "firefox-1440"
+    ]
+  },
+  "metadataDiscrepancy": "Run/job endpoints still report queued and empty steps, despite terminal successful logs and matching uploaded artifacts; no runner-stall claim. Dependent deploy job exists with needs=[test,cross-engine].",
+  "deployJob": 126694855252,
+  "production": {
+    "lastObservedSW": "foliolab-open-v280",
+    "regularTLS": true
+  },
+  "next": "Existing deploy then actual production gates; no duplicate CI or subsequent implementation.",
+  "LINK": "blocked; finalized execution anchor missing"
+}
