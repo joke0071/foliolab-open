@@ -1,3 +1,17 @@
+## ACTIVE – 35cd9cbceaef / PR294 gemergt / v279 Mainabnahme läuft – 04.11.2026
+
+Alleiniger Owner **35cd9cbceaef**. **PR294** nach vollständiger Pflicht-CI **41802701910 Versuch1 SUCCESS** und Wallet **41802702068 SUCCESS** SHA-geschützt gemergt. Main **f4744d67a16315c48bc7e244f44e4abe1c54dd9f**, Tree **6c091be0072a7984f8e5a17c7fbdcc03faeba9e6** exakt geprüfter Kandidat/Testmerge;18beabsichtigteDateien. [Integrationsabnahme](release-evidence/v279-pr294-integration-acceptance.json):1182Units/0Fehler/0Skips,neueEUR-PaarketteinChromium/Firefox/WebKitPASS,terminaleLogs/echteGateZIPs/API-/Uploadlog-/Dateihash/CRC/138JSONsPASS,neue320pxBildertatsächlichgesichtet,0Kommentare/Reviews/Threads. KeineActionswiederholt/dupliziert/abgebrochen.
+
+**Main-/Produktionslauf41805072482 Versuch1 IN_PROGRESS. v279 noch NICHT DEPLOYED/LIVE_ACCEPTED. v278 bleibt LIVE_ACCEPTED, keine Wiederabnahme.** Nächster Schritt: bestehendenMain-/Deploy-/Liveabschluss vollständig einschließlich neuerEUR-Paarkette/echterProduktionsassets/reguläremHTTPS abnehmen;keineFolgeimplementierungwährendRelease.
+
+WirtschaftlicheFlatex-ImplementierungistkeinPreview-only-Paket:einatomarerStück-/Nettocashimport,unbekannteKosten/ungeklärteVerrechnung,dauerhaftebeidseitigeQuellen-/Rücknahme-/Wiederimportsperre/v5/Rendite-/Qualitätsschutz. Zusätzlich81Originalpaaregemeinsam mitunabhängigemCSV-/Decimal-SollfürsignierteMengen/Kurse/Brutto/Netto/Differenz/Gesamtsummen in3Datei-/Auswahl-/Überlappungsvarianten+Restore/ReplayPASS;kontrollierteEröffnungen sindkeinetatsächlichenhistorischenSalden. UH04insgesamtweiteroffen.
+
+LINK-ZugangauchchainIdPOSTohneKennungbeiLlama405HTML/dRPC403Cloudflare1010blockiert;keineHashwiederholungnachchainIdFehler,keinfehlendesChainReceiptbehauptet. VorhandeneExplorer-/kanonischeBelegeinklneuqualifiziertemType2-Effektvgaspreisbewahrt;alternativerBelegvertragkonkretspezifiziert,nochkeinErsatzverifier/keineBrückenfreigabe. PrivaterlokalerGegenprobebefehlverwendetdievorhandeneKennung,nachMainnetchainId-Erfolg,ohneerneuteNutzereingabe;keinScreenshot/CSVnachfordern.
+
+PrivateSicherung **libfile_42e6c0236610819189e0ba522c74ecfd Version8**,394727Bytes/SHA256 **43dcabbd036c1a063ba02b0291e0f4470dd65687e90b6dbc63dad91ae2d2f937**,96interneHashesPASS/Versionsschutz+MetadatenPASS. AlteBelegeerhalten;Delta35cd9cbceaefenthältOriginal-/Aggregatoracles/Diagnose/Alternativvertrag/UI-/Unitlogs/Kandidatenpatch. NeuesterprivaterlokalerCounterprobebefehlseitdemohneNutzereingabeergänzt;vorÜbergabeinFolgeversionmitsichern. Quelle/private/Evidenceunter **/workspace/scratch/35cd9cbceaef/** erreichbar,keinneuerProdukt-WIP;Kandidatvollständigremote. DanachUH03/UH04/UH05gemäßGesamtplan. AlleSchutzverträge/EFF01/HND01/Releasefreigabeerhalten;Zähler0/0. GitHubnurPlugin;CheckpointbranchniemalsvollständignachMainmergen.
+
+---
+
 ## ACTIVE – 35cd9cbceaef / PR294 eingefroren in Pflicht-CI – 04.11.2026
 
 AlleinigerOwner **35cd9cbceaef**. Main **2bf36bf6328fb5f66da29c2c04d3309d206a7aae**, Tree **061b13d7dd33718765d6a6449a5d20af19424dca**, **v278 LIVE_ACCEPTED** unverändert/keineWiederabnahme. EinzigerneuerKandidat **PR294** / feature/uh04-flatex-net-settlement, HEAD **6fa1ec516e6cf1dca7af8814d5c64f19546f0163**, Tree **6c091be0072a7984f8e5a17c7fbdcc03faeba9e6** unabhängigberechnet=Testmerge **d9fe25ddce9f7bd315b103631dc331a573a4f2c0**;18beabsichtigteDateien/keineprivatenKennungen. Pflicht-CI **41802701910 Versuch1 IN_PROGRESS**, Wallet **41802702068 SUCCESS**. KeinMerge/Deployment/v279LIVE_ACCEPTED. Nichtduplizieren/abbrechen/blindretryen;Kandidateingefroren.
