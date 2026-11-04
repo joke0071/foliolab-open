@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-04",
+  "status": "PARTIAL_EXTERNAL_RAW_RECEIPT_BLOCKER",
+  "previousSourceAndCanonicalLogProof": "uh03-erc20-link-source-proof-2026-11-04.json",
+  "delta": {
+    "explorerExecutionMetadata": "PASS: transaction/block/time/sender/contract/calldata and complete nonpaginated log set match retained canonical RPC facts",
+    "gasEvidence": "Explorer gasUsed positive and bounded by retained transaction gas limit; gasPrice matches retained transaction. Integer fee product retained privately.",
+    "decimals": "Independent explorer token metadata reports 18 for the exact contract.",
+    "rawReceipt": "Still unavailable: additional distinct RPC/proxy paths returned HTTP403.",
+    "historicalDecimalsCall": "Still HTTP403; metadata is not represented as a historical eth_call."
+  },
+  "limits": [
+    "Explorer gettxinfo is not a raw eth_getTransactionReceipt response.",
+    "No synthesized raw receipt or receipt-status/log-completeness certification.",
+    "No ERC20 product bridge, no whole-history or UH03 completion."
+  ],
+  "privateBackup": {
+    "libraryFileId": "libfile_42e6c0236610819189e0ba522c74ecfd",
+    "version": 3,
+    "sizeBytes": 210832,
+    "sha256": "7f74d32103ab253f324428770f7c6093e300057a44941eea56e66ee4a70476cd"
+  }
+}
