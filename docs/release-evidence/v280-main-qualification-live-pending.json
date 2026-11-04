@@ -1,0 +1,171 @@
+{
+  "status": "MAIN_GATES_AND_DEPLOYMENT_ACCEPTED_LIVE_PENDING",
+  "main": "4e8c63c9deda58203c3dc637cd80366047d25d18",
+  "tree": "94802e05c2ce5ece4b9f4c4eca20ba7b45133259",
+  "run": 41832189388,
+  "attempt": 1,
+  "requiredMainJobs": {
+    "test": 126582002760,
+    "cross1": 126582002590,
+    "cross2": 126582002648,
+    "cross3": 126582002735,
+    "deploy": 126591095765
+  },
+  "allMainGates": "SUCCESS",
+  "liveJob": 126591249969,
+  "liveResult": "IN_PROGRESS",
+  "v280LiveAccepted": false,
+  "stage": {
+    "stage": "RELEASE",
+    "full": true,
+    "css": false,
+    "reason": "Non-PR events always require full regression",
+    "ciContract": false,
+    "base": null,
+    "head": "4e8c63c9deda58203c3dc637cd80366047d25d18",
+    "changes": [],
+    "baseIsAncestor": null,
+    "warning": "Complete existing integration/release gates required."
+  },
+  "units": 1184,
+  "failures": 0,
+  "skips": 0,
+  "newMainEconomicFlow": [
+    "chromium141",
+    "firefox157",
+    "webkit27.2"
+  ],
+  "artifacts": [
+    {
+      "id": 13323536640,
+      "name": "cross-engine-gates-4e8c63c9deda58203c3dc637cd80366047d25d18-2",
+      "bytes": 12213689,
+      "sha256": "345772bd607d46152d02dc07d200f51162f7b49d386f3bd8311d16cf0a1a7247",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsons": 17,
+      "pngsDecoded": 0,
+      "failureFields": [],
+      "selected": []
+    },
+    {
+      "id": 13323420709,
+      "name": "ci-stage-4e8c63c9deda58203c3dc637cd80366047d25d18",
+      "bytes": 354,
+      "sha256": "d15d478c423e24f08cdd2972b4edf450d10c64997229051f5b189062a9e35909",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsons": 1,
+      "pngsDecoded": 0,
+      "failureFields": [],
+      "selected": []
+    },
+    {
+      "id": 13323337868,
+      "name": "cross-engine-gates-4e8c63c9deda58203c3dc637cd80366047d25d18-1",
+      "bytes": 59703210,
+      "sha256": "159b833e7c56344c6a03874abb41e0f0308d64588f5ba8b2bfc1c945eedc56a5",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsons": 15,
+      "pngsDecoded": 0,
+      "failureFields": [],
+      "selected": []
+    },
+    {
+      "id": 13325585076,
+      "name": "release-gates-4e8c63c9deda58203c3dc637cd80366047d25d18",
+      "bytes": 61166365,
+      "sha256": "5c4c2746914567078e53687af8dbcb9e7130a3cb20d1781b506af8b28fae1dcf",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 667,
+      "jsons": 60,
+      "pngsDecoded": 7,
+      "failureFields": [],
+      "selected": [
+        "flatex-net-settlement/chromium-1440.png",
+        "flatex-net-settlement/chromium-320.png",
+        "flatex-net-settlement/chromium-360.png",
+        "flatex-net-settlement/chromium-390.png",
+        "flatex-net-settlement/chromium-412.png",
+        "flatex-net-settlement/chromium-430.png",
+        "flatex-net-settlement/chromium-768.png",
+        "flatex-net-settlement/report.json"
+      ]
+    },
+    {
+      "id": 13323578395,
+      "name": "dialog-visual-reference",
+      "bytes": 935367,
+      "sha256": "4808136336e384d30ab58b96b3de45308411a5df271f43aeca187894be35590e",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsons": 0,
+      "pngsDecoded": 0,
+      "failureFields": [],
+      "selected": []
+    },
+    {
+      "id": 13325560370,
+      "name": "cross-engine-gates-4e8c63c9deda58203c3dc637cd80366047d25d18-3",
+      "bytes": 55407307,
+      "sha256": "5a5f66c6a405baf5a412efa71e76ba94312e4595e1adba09ea7ca4da33c5558a",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 633,
+      "jsons": 46,
+      "pngsDecoded": 14,
+      "failureFields": [],
+      "selected": [
+        "flatex-net-settlement/firefox-1440.png",
+        "flatex-net-settlement/firefox-320.png",
+        "flatex-net-settlement/firefox-360.png",
+        "flatex-net-settlement/firefox-390.png",
+        "flatex-net-settlement/firefox-412.png",
+        "flatex-net-settlement/firefox-430.png",
+        "flatex-net-settlement/firefox-768.png",
+        "flatex-net-settlement/report.json",
+        "flatex-net-settlement/webkit-1440.png",
+        "flatex-net-settlement/webkit-320.png",
+        "flatex-net-settlement/webkit-360.png",
+        "flatex-net-settlement/webkit-390.png",
+        "flatex-net-settlement/webkit-412.png",
+        "flatex-net-settlement/webkit-430.png",
+        "flatex-net-settlement/webkit-768.png"
+      ]
+    },
+    {
+      "id": 13324108069,
+      "name": "github-pages",
+      "bytes": 521090,
+      "sha256": "aae46d0403d4581a84ed67c53bba67503d1ff67a2164ba6ad5a46b2048d0a13e",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsons": 0,
+      "pngsDecoded": 0,
+      "failureFields": [],
+      "selected": []
+    }
+  ],
+  "jsons": 139,
+  "newPNGsDecoded": 21,
+  "pages": {
+    "status": "PASS",
+    "main": "4e8c63c9deda58203c3dc637cd80366047d25d18",
+    "tree": "94802e05c2ce5ece4b9f4c4eca20ba7b45133259",
+    "artifact": 13324108069,
+    "files": 143,
+    "allGitBlobSHAsMatch": true
+  },
+  "limits": [
+    "Production live gate and independent regular HTTPS asset check are still pending",
+    "No LINK bridge acceptance; WAITING_FOR_EXTERNAL_CAPTURE",
+    "UH04 overall partial; historical opening/ending balances are not inferred"
+  ]
+}
