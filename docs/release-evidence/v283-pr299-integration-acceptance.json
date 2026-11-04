@@ -1,0 +1,153 @@
+{
+  "status": "INTEGRATION_ACCEPTED",
+  "owner": "1b99027b9ff5",
+  "release": "v283 CANDIDATE - main/deploy/production acceptance remains required",
+  "pr": 299,
+  "base": "cdcd2d1fdd0b2fe4ee63c85fc5f9e24a972c574a",
+  "head": "af37989c9287bf31edd96afe8f0f794d0301612c",
+  "testMerge": "f0381ae240df93b7c2e8fd64056d54abc464a7e2",
+  "tree": "aa455dfddd4158d08537cc6f883be75bb0c63371",
+  "independentTreeAndApiMatch": true,
+  "intendedFiles": 12,
+  "ci": {
+    "run": 41918238201,
+    "attempt": 1,
+    "status": "COMPLETED/SUCCESS",
+    "units": 1202,
+    "fail": 0,
+    "skipped": 0,
+    "allRequiredJobs": "SUCCESS"
+  },
+  "wallet": {
+    "run": 41918238227,
+    "job": 126883541071,
+    "attempt": 1,
+    "status": "SUCCESS",
+    "units": 1202,
+    "fail": 0,
+    "skipped": 0
+  },
+  "informational": {
+    "run": 41918238217,
+    "status": "SUCCESS"
+  },
+  "artifacts": [
+    {
+      "id": 13367725703,
+      "name": "release-gates-f0381ae240df93b7c2e8fd64056d54abc464a7e2",
+      "bytes": 62985378,
+      "sha256": "cd0e345d13ee5f5b5232124b811a831b28aaf2769268869fbbb03a1472ebb6e8",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 692,
+      "jsonReports": 63,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 14,
+      "linkPNGsDecoded": 6
+    },
+    {
+      "id": 13366545753,
+      "name": "ci-stage-f0381ae240df93b7c2e8fd64056d54abc464a7e2",
+      "bytes": 608,
+      "sha256": "d68e8c1b5f375b76c9617d73a329451ec3ab55e71aaf1b3e75183be502f13b4f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    },
+    {
+      "id": 13366332201,
+      "name": "cross-engine-gates-f0381ae240df93b7c2e8fd64056d54abc464a7e2-1",
+      "bytes": 59706461,
+      "sha256": "b30e073b31ee4382dd39d4a849135ad9750b3d08fa3613e841a8943139a5e219",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    },
+    {
+      "id": 13365634700,
+      "name": "cross-engine-gates-f0381ae240df93b7c2e8fd64056d54abc464a7e2-3",
+      "bytes": 59730560,
+      "sha256": "a93499247e120069840c0ca1a8b05e067de0805b5a7eaa20f971b24e790db971",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 682,
+      "jsonReports": 51,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 28,
+      "linkPNGsDecoded": 12
+    },
+    {
+      "id": 13364899482,
+      "name": "cross-engine-gates-f0381ae240df93b7c2e8fd64056d54abc464a7e2-2",
+      "bytes": 12210429,
+      "sha256": "ad8e8572a8ac92873147fbd6e2bb18d81919212c28419eb1c257602b8d2e8a81",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "failureFlags": [],
+      "augmentationPNGsDecoded": 0,
+      "linkPNGsDecoded": 0
+    }
+  ],
+  "jsonReports": 147,
+  "failureFlags": [],
+  "images": {
+    "legacyAugmentationDecoded": 42,
+    "LINKDecoded": 18,
+    "viewed": [
+      "Chromium LINK preview320",
+      "WebKit LINK preview320",
+      "Firefox LINK preview430"
+    ]
+  },
+  "LINK": {
+    "engines": [
+      "Chromium141",
+      "Firefox157",
+      "WebKit27.2"
+    ],
+    "actualUI": "PASS local partial history consent/acceptance, pure preview, full source principal/separate fee commit, unchanged recipient/history, quota/postput in history and import, storage CAS, 320-430 Axe/seven widths, fresh-profile encrypted v5 actual UI restore, replay, persistent complete-group rollback and offline PWA",
+    "evidenceType": "BlockscoutV2 explorer execution + BeaconV2 finality; no synthetic RPC receipt",
+    "rawPayloadIngestHashChecks": true,
+    "fullHistoryScannerEthCallGatesUnchanged": true
+  },
+  "privateOriginal": {
+    "actualRetainedFilesAndRawPackage": true,
+    "independentRetainedDecimalTotalDebit": true,
+    "coreAndActualChromiumUI": "PASS",
+    "controlledSourceOpening": true,
+    "controlledWalletHolding": true,
+    "realHistoricalBalanceClaimed": false,
+    "externalRequests": 0,
+    "noScreenshots": true
+  },
+  "review": {
+    "reviews": 0,
+    "inlineComments": 0,
+    "unresolvedThreads": 0,
+    "headAndMainUnchanged": true,
+    "mergeableState": "clean"
+  },
+  "originalFailure": {
+    "run": 41914886815,
+    "status": "FAILURE preserved",
+    "cause": "one existing disclosure selector scoped to history output; original assertions retained",
+    "evidence": "v283-pr299-selector-failure.json",
+    "oldRunCompletedBeforeCorrectionPush": true
+  },
+  "noManualCIRetryOrCancellation": true,
+  "limits": [
+    "Only one bounded direct LINK transfer/event on Ethereum; no blanket UH03/ERC20/UH04/UH05 acceptance.",
+    "Provider trust, no independent consensus/receipt root or historical balance proof.",
+    "Actual Android hardware not claimed."
+  ]
+}
