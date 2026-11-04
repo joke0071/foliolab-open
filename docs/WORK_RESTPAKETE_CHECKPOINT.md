@@ -1,3 +1,11 @@
+## ACTIVE – 01a1a73ba52f / v281 Mainlauf arbeitet / widersprüchliche Statusmetadaten – 04.11.2026
+
+**Korrektur zum vorigen Queue-Schluss:** Run-/Jobmetadaten von41861912576 meldenweiterQUEUED/leereSteps,aber terminalePlan-/Cross-engine2-LogsundtatsächlicheArtefaktebelegenAusführung. Runnerstillstandistdamitnichtbelegt. RegulärerRunVersuch1wirdunverändertweiterqualifiziert;keinneuerLauf/Retry/Abbruch. Planlog126685689136terminal,Shard2log126685792551terminal;Artefakte13339428903/13340587164tatsächlichgeladen,API-/Uploadhash/Bytes/CRCPASS. AndereJoblogsnochnichterreichbar(BlobNotFound),keinTestfehlerdarausableiten.
+
+Main5e24de041622cf5753adc48eebc303ef647e788b/Tree6b226b1082f05078257c106d57f6fa07dd97720f unverändert;PR296gemergt,nurhistorischeDrafts157/161offen. AlleinigerOwner01a1a73ba52f. v280letzteLIVE_ACCEPTED-Version;v281Main-/Deployment-/tatsächlicheProduktionsabnahmeoffen. NächsterSchritt: tatsächliche weitereBelege desbestehendenRuns qualifizierenundterminaleStatuswidersprücheauflösen;danachv281abnehmen,UH04→UH05. KeineFolgeimplementierungwährendIntegration. Privatev15/alleSchutzverträgeerhalten;LINKwegenFinalitätsankergesperrt;keineidentischenRPCs/keineNutzerPythonanforderung.
+
+---
+
 ## ACTIVE – 01a1a73ba52f / v281 wartet auf bestehenden Mainlauf41861912576 – 04.11.2026
 
 Notfallwiederherstellung nach ausdrücklicher Nutzerbestätigung abgeschlossen; ausschließlich01a1a73ba52fverantwortlich. PR296 HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 nach [Integrationsabnahme](release-evidence/v281-pr296-integration-acceptance.json) geschütztgemergt. Main5e24de041622cf5753adc48eebc303ef647e788b/Tree6b226b1082f05078257c106d57f6fa07dd97720f exaktKandidat. **v280 bleibt letzte LIVE_ACCEPTED-Version; v281 noch NICHT DEPLOYED/LIVE_ACCEPTED.**
