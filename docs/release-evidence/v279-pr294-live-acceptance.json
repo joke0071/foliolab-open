@@ -1,0 +1,87 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "d1faf1a6a15e",
+  "date": "2026-11-04",
+  "version": "v279",
+  "main": "f4744d67a16315c48bc7e244f44e4abe1c54dd9f",
+  "tree": "6c091be0072a7984f8e5a17c7fbdcc03faeba9e6",
+  "pr": 294,
+  "run": 41805072482,
+  "attempt": 2,
+  "conclusion": "COMPLETED_SUCCESS",
+  "jobs": {
+    "cross1": 126498552826,
+    "deploy": 126503548326,
+    "live": 126503710076
+  },
+  "priorQualifiedEvidence": [
+    "v279-pr294-integration-acceptance.json",
+    "v279-main-qualification-pending.json"
+  ],
+  "originalAttempt1FailurePreserved": "v279-main-attempt1-browser-load-failure.json",
+  "newActionsStarted": 0,
+  "newDeploymentsStarted": 0,
+  "retriesStartedByThisOwner": 0,
+  "artifacts": [
+    {
+      "id": 13312059137,
+      "bytes": 117646455,
+      "sha256": "15c9eae65a446bd619996df5dd11ecba210e3872b4aa0ed997fb7e8a3db310c3",
+      "entries": 1230,
+      "jsons": 91,
+      "statuses": {
+        "PASS": 168,
+        "waiting": 12,
+        "mature-pending": 6,
+        "no-current-request": 3
+      },
+      "hashCrcReports": "PASS"
+    },
+    {
+      "id": 13310852518,
+      "bytes": 59716855,
+      "sha256": "14d371bad88fd8a8c55d4dcf34d7f05f5380bd30fef889d71c14fc9e8811cf31",
+      "entries": 490,
+      "jsons": 15,
+      "statuses": {
+        "PASS": 56
+      },
+      "hashCrcReports": "PASS"
+    },
+    {
+      "id": 13310723909,
+      "bytes": 520766,
+      "sha256": "2053672ffae97ed5515ea1974ac30c127848e0a5f80295b60662576253e02f70",
+      "entries": 1,
+      "jsons": 0,
+      "statuses": {},
+      "hashCrcReports": "PASS"
+    }
+  ],
+  "verification": [
+    "Terminal logs and all terminal job/step results checked; no fatal error markers",
+    "API/upload-log/file sizes and SHA256 match; actual ZIP CRC PASS",
+    "All 106 new JSON reports parsed, recursive error/failure/violation checks PASS; waiting/mature-pending/no-current-request are expected account-state fixtures",
+    "Pages ZIP/TAR 143 files independently Git-blob-SHA checked against exact main tree",
+    "Actual live report PASS, expected SHA/SW v279; 144 asset hashes exact, proxyCertificateException=false, no pageerrors",
+    "New economic EUR native Flatex chain PASS on actual production Chromium/Firefox/WebKit; Chromium persisted report overwritten by cross-engine same report path, original Chromium production log retained and checked",
+    "21 new flow PNGs decoded; actual Chromium320/WebKit320/Firefox1440 images inspected",
+    "Independent regular TLS certificate validation without exceptions:144/144 exact assets"
+  ],
+  "httpsEvidence": "v279-regular-https-assets.json",
+  "newEconomicChain": [
+    "exact gross/net/unallocated difference; unknown costs/no external flows",
+    "actual UI confirmation/backup/one CAS commit",
+    "quota/post-put abort exact no mutation; real second writer CAS conflict",
+    "offline reload/fresh-profile encrypted v5 UI restore/replay",
+    "persistent full-group withdrawal and reimport tombstone",
+    "seven widths/Axe"
+  ],
+  "privateOriginalQualification": "81 original pairs singly and aggregate, independent Python CSV/Decimal, controlled openings only; inherited qualifications retained",
+  "limits": [
+    "UH04 overall remains PARTIAL for remaining dialect/economic classes and actual historical balances",
+    "LINK remains blocked; no raw RPC receipt or alternative verifier accepted",
+    "No physical Android/native Safari/OAuth hardware acceptance"
+  ],
+  "lastReleaseNotReaccepted": "v278"
+}
