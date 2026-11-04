@@ -1,6 +1,6 @@
 /** Versioned provenance, not a second journal. Legacy bookings remain untouched. */
 import {units} from './decimal.js';
-import {FLATEX_NATIVE_COLUMNS} from './flatex-native.js';
+import {nativeFlatexColumns} from './flatex-native.js';
 const nativeReference=v=>typeof v==='string'&&v.trim()!==''&&v.trim()!=='-'&&v.length<=200&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
 /** Reserved optional evidence inside the existing sourcePayload, not a new schema. */
 export function validateNativeSourceEvidence(source){
@@ -37,15 +37,15 @@ export function sourceUnmodified(model,booking){
 
 /** Pure native source offers. No account binding, deduplication or financial rows. */
 export function inspectNativeFlatexSourceIdentities(documents){
- if(!Array.isArray(documents)||!documents.length||documents.length>20||documents.some(d=>d?.kind!=='flatex-native-document-preview'||d.version!==1||!Object.isFrozen(d)||d.ready!==false||d.writeEnabled!==false||!Array.isArray(d.rows)||!Object.isFrozen(d.rows)||!FLATEX_NATIVE_COLUMNS[d.type]))throw Error('Native Flatex-Quelldokumente fehlen oder sind ungeprüft.');
+ if(!Array.isArray(documents)||!documents.length||documents.length>20||documents.some(d=>d?.kind!=='flatex-native-document-preview'||d.version!==1||!Object.isFrozen(d)||d.ready!==false||d.writeEnabled!==false||!Array.isArray(d.rows)||!Object.isFrozen(d.rows)||!nativeFlatexColumns(d)))throw Error('Native Flatex-Quelldokumente fehlen oder sind ungeprüft.');
  const total=documents.reduce((n,d)=>n+d.rows.length,0);if(!total||total>5000)throw Error('Native Quellidentität benötigt 1 bis maximal 5.000 Zeilen.');
  const rows=[],keys=new Map();
  for(const [sourceIndex,d]of documents.entries()){
-  const columns=FLATEX_NATIVE_COLUMNS[d.type],lines=new Set();
+  const columns=nativeFlatexColumns(d),lines=new Set();
   if(!Array.isArray(d.columns)||d.columns.length!==columns.length||columns.some((c,i)=>d.columns[i]?.key!==c.key||d.columns[i]?.header!==c.header||d.columns[i]?.index!==i))throw Error('Native Flatex-Quellspalten ungeprüft.');
   for(const r of d.rows){
    if(!Number.isSafeInteger(r?.line)||r.line<2||lines.has(r.line)||!Object.isFrozen(r)||!Object.isFrozen(r.values)||!Array.isArray(r.fields)||!Object.isFrozen(r.fields)||r.fields.length!==columns.length||!Array.isArray(r.issues)||!Object.isFrozen(r.issues)||r.issues.some(i=>typeof i!=='string')||Object.keys(r.values).length!==columns.length||columns.some((c,i)=>typeof r.values[c.key]!=='string'||r.values[c.key]!==r.fields[i])||(r.order!==null&&typeof r.order?.reference!=='string'))throw Error('Native Flatex-Quellzeile nicht eindeutig prüfbar.');
-   lines.add(r.line);const v=r.values,sourceScope=d.type==='depot'?v.depot:v.account,bankReference=v.transactionReference;
+   lines.add(r.line);const v=r.values,sourceScope=(d.type==='depot'?v.depot:v.account)??'',bankReference=v.transactionReference;
    const sourceId=nativeReference(sourceScope)?'flatex-native-v1:'+d.type+':'+sourceDigest(JSON.stringify(sourceScope)):null;
    const externalId=nativeReference(bankReference)?bankReference:null;
    const payloadDigest=sourceDigest(JSON.stringify(columns.filter(c=>c.key!=='number').map(c=>[c.key,v[c.key]])));

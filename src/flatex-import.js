@@ -25,6 +25,7 @@ export function prepareNativeFlatexImport(documents){
   const reject=(code,message)=>issues.push({...locator,code,message});
   if(doc.type!=='depot'){reject('cash-review','Kontobelege bleiben ungeklärt; keine stille Auslassung oder Cashbuchung.');continue;}
   if(!['order-buy','order-sell'].includes(row.kind)||!row.order){reject('event-review','Kein belegter unstornierter Stückhandelsvorgang.');continue;}
+  if(doc.dialect==='depot13'){reject('source-scope-review','Depotkennung fehlt im 13-Spalten-Export. Quellenzuordnung gesondert belegen; keine Depotkennung aus Dateiname, ISIN oder Order ableiten.');continue;}
   if(source.status!=='candidate-source'||group?.status!=='missing-cash'){
    reject('source-review','Quellen- oder Orderkonflikt muss vor einer Gesamtsimulation geklärt werden.');continue;
   }
