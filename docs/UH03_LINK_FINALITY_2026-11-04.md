@@ -1,3 +1,5 @@
+> **Fortschreibung nach v283 LIVE_ACCEPTED:** Der nachfolgend beschriebene Produktschnitt ist durch PR299 im bestehenden UH03/v5-Kern integriert und tatsächlich produktiv in drei Engines abgenommen. [Abschlussbeleg](release-evidence/v283-pr299-live-acceptance.json), Produktvertrag `docs/UH03_LINK_LOCAL_BRIDGE.md` in Main. Die folgenden Formulierungen „noch erforderlich“/„bis zur Integration gesperrt“ sind der erhaltene historische Auftrag. Kein erneutes LINK-WAITING, keine RPC-POSTs/Nutzer-Pythonaufgaben/Originalneuanforderungen; übrige UH04→UH05-Arbeit bleibt offen.
+
 # UH03 LINK – Finalitätsanker vorhanden, Produktbindung als nächster Schnitt
 
 Aktueller Nachtrag 04.11.2026, Owner d9ff57914dab. Dieser Nachtrag ersetzt nur die frühere externe Finalitätswarteaufgabe; bestehende fachliche Schutzverträge bleiben erhalten. Aktuellen Release/Owner stets dem Checkpoint entnehmen.
