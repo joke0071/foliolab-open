@@ -1,0 +1,1162 @@
+{
+  "base": "https://foliolab.unperfekt.at/",
+  "utc": "2026-11-04T19:37:21.596334+00:00",
+  "regularTLS": true,
+  "certificateException": false,
+  "count": 144,
+  "exact": 144,
+  "assets": [
+    {
+      "path": "icons/flask-192.png",
+      "status": 200,
+      "bytes": 7706,
+      "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/icons/flask-192.png"
+    },
+    {
+      "path": "icons/flask-512.png",
+      "status": 200,
+      "bytes": 21846,
+      "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/icons/flask-512.png"
+    },
+    {
+      "path": "icons/flask-maskable-512.png",
+      "status": 200,
+      "bytes": 14006,
+      "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/icons/flask-maskable-512.png"
+    },
+    {
+      "path": "icons/flask.svg",
+      "status": 200,
+      "bytes": 686,
+      "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/icons/flask.svg"
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "status": 200,
+      "bytes": 5322,
+      "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/solana-rpc.js"
+    },
+    {
+      "path": "src/security-catalog.js",
+      "status": 200,
+      "bytes": 13197,
+      "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/security-catalog.js"
+    },
+    {
+      "path": "src/account-evidence.js",
+      "status": 200,
+      "bytes": 1971,
+      "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/account-evidence.js"
+    },
+    {
+      "path": "src/economic-form-ui.js",
+      "status": 200,
+      "bytes": 1593,
+      "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/economic-form-ui.js"
+    },
+    {
+      "path": "src/wallet-visibility.js",
+      "status": 200,
+      "bytes": 3444,
+      "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-visibility.js"
+    },
+    {
+      "path": "src/request-cache.js",
+      "status": 200,
+      "bytes": 6160,
+      "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/request-cache.js"
+    },
+    {
+      "path": "src/flatex-import.js",
+      "status": 200,
+      "bytes": 14442,
+      "sha256": "c5c641ded63cc7ddafae0cb2e2facf2a3590117c70760b3d8efa1302bc52010c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-import.js"
+    },
+    {
+      "path": "src/pchain-identity.js",
+      "status": 200,
+      "bytes": 3228,
+      "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/pchain-identity.js"
+    },
+    {
+      "path": "src/purchase-evidence-ui.js",
+      "status": 200,
+      "bytes": 6253,
+      "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/purchase-evidence-ui.js"
+    },
+    {
+      "path": "src/booking-history.js",
+      "status": 200,
+      "bytes": 7676,
+      "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/booking-history.js"
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "status": 200,
+      "bytes": 7573,
+      "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/staking-discovery.js"
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "status": 200,
+      "bytes": 12602,
+      "sha256": "6032cda6521cd99a3e6586cab8f4cb1d445440caec8110ab5253efc9682bf110",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-ethereum-bridge.js"
+    },
+    {
+      "path": "src/flatex-backfill.js",
+      "status": 200,
+      "bytes": 10850,
+      "sha256": "1f0b7b0572c2987e56c453714d70578f5c33f08085c6700c44bc64ecdba04540",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-backfill.js"
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "status": 200,
+      "bytes": 14926,
+      "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-solana-bridge.js"
+    },
+    {
+      "path": "src/position-icons.js",
+      "status": 200,
+      "bytes": 1573,
+      "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-icons.js"
+    },
+    {
+      "path": "src/retired-providers.js",
+      "status": 200,
+      "bytes": 608,
+      "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/retired-providers.js"
+    },
+    {
+      "path": "src/booking-insights.js",
+      "status": 200,
+      "bytes": 5108,
+      "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/booking-insights.js"
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "status": 200,
+      "bytes": 2745,
+      "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/xrpl-assets.js"
+    },
+    {
+      "path": "src/flatex-native.js",
+      "status": 200,
+      "bytes": 8386,
+      "sha256": "e713244c029bd661f4999e6c52bc6a10e599f05520162961f8543bd2cb589caa",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-native.js"
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "status": 200,
+      "bytes": 3127,
+      "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-reconciliation.js"
+    },
+    {
+      "path": "src/cash-terms-ui.js",
+      "status": 200,
+      "bytes": 7684,
+      "sha256": "d60565ac037fa2e8499f9095ec382ebaa85ee0de95b1887ab213eff7d416e22e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/cash-terms-ui.js"
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "status": 200,
+      "bytes": 10685,
+      "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/purchase-evidence.js"
+    },
+    {
+      "path": "src/kraken-import-ui.js",
+      "status": 200,
+      "bytes": 19709,
+      "sha256": "0196a0eb91a924124d383fd4d5353e1a9b5f2e9a2d30e198d877b564762b0d53",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-import-ui.js"
+    },
+    {
+      "path": "src/booking-management.js",
+      "status": 200,
+      "bytes": 21757,
+      "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/booking-management.js"
+    },
+    {
+      "path": "src/cash-reconciliation.js",
+      "status": 200,
+      "bytes": 2040,
+      "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/cash-reconciliation.js"
+    },
+    {
+      "path": "src/allocation-ui.js",
+      "status": 200,
+      "bytes": 7236,
+      "sha256": "ce3f8025c5cfbd888b7642173f8b2e298fa3a6efc87363d73fba9031545b6f6a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/allocation-ui.js"
+    },
+    {
+      "path": "src/app.js",
+      "status": 200,
+      "bytes": 288616,
+      "sha256": "872a370b539cf62ba7c63c3d9aeaa0a960ebec3d0fce8282b9f76ff082e96df5",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/app.js"
+    },
+    {
+      "path": "src/decimal.js",
+      "status": 200,
+      "bytes": 3302,
+      "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/decimal.js"
+    },
+    {
+      "path": "src/credential-visibility.js",
+      "status": 200,
+      "bytes": 2268,
+      "sha256": "4a683444a5d98637ad4f2f6a6f42c585b6ce37b2a811577bacbaf0e2b5bc7f9e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/credential-visibility.js"
+    },
+    {
+      "path": "src/flatex-review-export.js",
+      "status": 200,
+      "bytes": 2008,
+      "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-review-export.js"
+    },
+    {
+      "path": "src/marketstack.js",
+      "status": 200,
+      "bytes": 8469,
+      "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/marketstack.js"
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "status": 200,
+      "bytes": 16534,
+      "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-core.js"
+    },
+    {
+      "path": "src/transactions.js",
+      "status": 200,
+      "bytes": 33264,
+      "sha256": "3b3fc129300705568d82c91cdd879839f884816191fd5022b26b8ac3fd506ec7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/transactions.js"
+    },
+    {
+      "path": "src/import-identity.js",
+      "status": 200,
+      "bytes": 11272,
+      "sha256": "912d3066d85182a257145817ee7bba7478cbb4ddb9bfcbd16fe16fce6b529f39",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/import-identity.js"
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "status": 200,
+      "bytes": 3955,
+      "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitpanda-withdrawal-evidence.js"
+    },
+    {
+      "path": "src/position-detail-ui.js",
+      "status": 200,
+      "bytes": 14333,
+      "sha256": "fe139620c0ca5dc4126b45f48efdd68dc9bc203e8bc03a02b04cb149c5676f98",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-detail-ui.js"
+    },
+    {
+      "path": "src/kraken-ledger-ui.js",
+      "status": 200,
+      "bytes": 2670,
+      "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-ledger-ui.js"
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "status": 200,
+      "bytes": 2520,
+      "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/history-evidence-cache.js"
+    },
+    {
+      "path": "src/position-search.js",
+      "status": 200,
+      "bytes": 1514,
+      "sha256": "cf4f10501321535da1f14d60f2b1b6748fa5a47cd917a677573c50a412751f01",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-search.js"
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "status": 200,
+      "bytes": 3002,
+      "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/ethereum-fallback.js"
+    },
+    {
+      "path": "src/historical-csv.js",
+      "status": 200,
+      "bytes": 8496,
+      "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/historical-csv.js"
+    },
+    {
+      "path": "src/unified-bitcoin-ui.js",
+      "status": 200,
+      "bytes": 6766,
+      "sha256": "8c27cfb3b723e1b1cb3f54c4cee62288adc91b64f536770a11823d2813251146",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/unified-bitcoin-ui.js"
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "status": 200,
+      "bytes": 1858,
+      "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-days.js"
+    },
+    {
+      "path": "src/solana-history.js",
+      "status": 200,
+      "bytes": 16250,
+      "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/solana-history.js"
+    },
+    {
+      "path": "src/valuation-status.js",
+      "status": 200,
+      "bytes": 1659,
+      "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/valuation-status.js"
+    },
+    {
+      "path": "src/market-diagnostics.js",
+      "status": 200,
+      "bytes": 5651,
+      "sha256": "7e55e3b411600bfd6b01cda5279792294a4a48f08fae5ad58005bade4408923c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/market-diagnostics.js"
+    },
+    {
+      "path": "src/coin-identity.js",
+      "status": 200,
+      "bytes": 643,
+      "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/coin-identity.js"
+    },
+    {
+      "path": "src/portfolio-edit-actions.js",
+      "status": 200,
+      "bytes": 5144,
+      "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/portfolio-edit-actions.js"
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "status": 200,
+      "bytes": 6450,
+      "sha256": "bbd16b054ea5a84efc13458b0c57b888cf6246aa5ded40002c8afb2a2fb5a11a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-settlement-audit.js"
+    },
+    {
+      "path": "src/csv-batch.js",
+      "status": 200,
+      "bytes": 3754,
+      "sha256": "651cd0ed88fd8758f7156453758511c1cb5427fba024580e877df8bd787fc59e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/csv-batch.js"
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "status": 200,
+      "bytes": 5695,
+      "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-valuation.js"
+    },
+    {
+      "path": "src/kraken-import.js",
+      "status": 200,
+      "bytes": 26908,
+      "sha256": "c7e84ca64380ccc8d71fc5ed83bfb5345c960a3b357df4b7cc81ac937b2a151d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-import.js"
+    },
+    {
+      "path": "src/csv-records.js",
+      "status": 200,
+      "bytes": 1776,
+      "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/csv-records.js"
+    },
+    {
+      "path": "src/bitcoin-history.js",
+      "status": 200,
+      "bytes": 15708,
+      "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitcoin-history.js"
+    },
+    {
+      "path": "src/transfer-matching-ui.js",
+      "status": 200,
+      "bytes": 12170,
+      "sha256": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/transfer-matching-ui.js"
+    },
+    {
+      "path": "src/bitpanda-preview-ui.js",
+      "status": 200,
+      "bytes": 2654,
+      "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitpanda-preview-ui.js"
+    },
+    {
+      "path": "src/drive-backup.js",
+      "status": 200,
+      "bytes": 27407,
+      "sha256": "d5a90bcce821c3b356ff33e3802cac7ad5ae01c6b02923235fa067ba0b9ae920",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/drive-backup.js"
+    },
+    {
+      "path": "src/wallet-history-calculation.js",
+      "status": 200,
+      "bytes": 2576,
+      "sha256": "81283566517daac6011ca4744f689c292ee017c7d2f1eff1c94832962f20d50b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-calculation.js"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "status": 200,
+      "bytes": 10638,
+      "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/alpha-vantage.js"
+    },
+    {
+      "path": "src/browser-portfolio-storage.js",
+      "status": 200,
+      "bytes": 14769,
+      "sha256": "94dd30dfb41e72a26af768bddf1d2220f8a790f42c19c212c0b75bd02a45adbc",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/browser-portfolio-storage.js"
+    },
+    {
+      "path": "src/performance.js",
+      "status": 200,
+      "bytes": 7230,
+      "sha256": "5d594a45db88f18d0e272a3b71c6339b7809984c747dd0fc6c3e86dd3e90ca20",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/performance.js"
+    },
+    {
+      "path": "src/market.js",
+      "status": 200,
+      "bytes": 32527,
+      "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/market.js"
+    },
+    {
+      "path": "src/bitpanda-import.js",
+      "status": 200,
+      "bytes": 19887,
+      "sha256": "e1c75d4c65f1811270918709e1afd4f24518b61571ed95c2ad66114fd6ee6ad6",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitpanda-import.js"
+    },
+    {
+      "path": "src/assets.js",
+      "status": 200,
+      "bytes": 2116,
+      "sha256": "7601b375d1cc7572b9eeb6f2a3fb988a4040e8b32463db6ae3f0a7c4e44e1acf",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/assets.js"
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "status": 200,
+      "bytes": 21164,
+      "sha256": "710fcb9706f766d750ba610abc948873aa2cc360667d12d909d4a73facc1cbd7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-native-ui.js"
+    },
+    {
+      "path": "src/cash-terms.js",
+      "status": 200,
+      "bytes": 5600,
+      "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/cash-terms.js"
+    },
+    {
+      "path": "src/model.js",
+      "status": 200,
+      "bytes": 31556,
+      "sha256": "ab4f1f2f2bd494611785b4ed7858a8e7d68e0c5103e276471247a09936fcb2f1",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/model.js"
+    },
+    {
+      "path": "src/position-history.js",
+      "status": 200,
+      "bytes": 8798,
+      "sha256": "ba83f32d5f670c14b270fb79546a9caadab3f0caf6dfbde23a47558757ffcfce",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-history.js"
+    },
+    {
+      "path": "src/asset-wizard-core.js",
+      "status": 200,
+      "bytes": 6192,
+      "sha256": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/asset-wizard-core.js"
+    },
+    {
+      "path": "src/format.js",
+      "status": 200,
+      "bytes": 5025,
+      "sha256": "69acdbdbdb297cafd13634e5fe4ce8b4e34417077bf4f0e5459c4931d05f728e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/format.js"
+    },
+    {
+      "path": "src/booking-insights-ui.js",
+      "status": 200,
+      "bytes": 3674,
+      "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/booking-insights-ui.js"
+    },
+    {
+      "path": "src/reference-listings.js",
+      "status": 200,
+      "bytes": 3170,
+      "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/reference-listings.js"
+    },
+    {
+      "path": "src/ledger-live.js",
+      "status": 200,
+      "bytes": 10006,
+      "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/ledger-live.js"
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "status": 200,
+      "bytes": 30915,
+      "sha256": "166b20785720d08cdbd79049f029aad2645687373730eb2be34f5c91fabfd1b0",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-net-settlement.js"
+    },
+    {
+      "path": "src/staking-catalog.js",
+      "status": 200,
+      "bytes": 7494,
+      "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/staking-catalog.js"
+    },
+    {
+      "path": "src/loading-ui.js",
+      "status": 200,
+      "bytes": 1664,
+      "sha256": "0ed29228cb0d955b3466117540975d59aabb47d5100306ced27c6025d3c19854",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/loading-ui.js"
+    },
+    {
+      "path": "src/instrument-catalog.js",
+      "status": 200,
+      "bytes": 10218,
+      "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/instrument-catalog.js"
+    },
+    {
+      "path": "src/csv-import.js",
+      "status": 200,
+      "bytes": 15512,
+      "sha256": "703b717bf05ec7af8bd4bb012ec15379054e005f7108505f76b47456d3586938",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/csv-import.js"
+    },
+    {
+      "path": "src/wallet-history-ui.js",
+      "status": 200,
+      "bytes": 22885,
+      "sha256": "9d14e0a663b283132172b29559ecb07480bb3127c0940d1c13d5107f04826bde",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-ui.js"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "status": 200,
+      "bytes": 3335,
+      "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/backup-limits.js"
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "status": 200,
+      "bytes": 2939,
+      "sha256": "df26d901fe5563d84551ce58d65712cf643bc61dcc48028b1924b5af60601e7f",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-withdrawal-evidence.js"
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "status": 200,
+      "bytes": 10921,
+      "sha256": "8dcd12004e9fc5fa9f268f4f24957ca2118d9e752dc326c7d024a75c2cb7016c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-settlements.js"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "status": 200,
+      "bytes": 8034,
+      "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-state.js"
+    },
+    {
+      "path": "src/position-bookings.js",
+      "status": 200,
+      "bytes": 1788,
+      "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-bookings.js"
+    },
+    {
+      "path": "src/chart-periods.js",
+      "status": 200,
+      "bytes": 6743,
+      "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/chart-periods.js"
+    },
+    {
+      "path": "src/position-selection.js",
+      "status": 200,
+      "bytes": 9790,
+      "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-selection.js"
+    },
+    {
+      "path": "src/historical-portfolio-value.js",
+      "status": 200,
+      "bytes": 7620,
+      "sha256": "f7a25d400322f493de76e1d6f8735af746e11d4f8d5bde141ad4155d9bfd8d66",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/historical-portfolio-value.js"
+    },
+    {
+      "path": "src/backup-vault.js",
+      "status": 200,
+      "bytes": 6865,
+      "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/backup-vault.js"
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "status": 200,
+      "bytes": 2099,
+      "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/eodhd-worker-client.js"
+    },
+    {
+      "path": "src/bitpanda-preview.js",
+      "status": 200,
+      "bytes": 5398,
+      "sha256": "be6dc214ff9213c95d8d968052f9c866a00dfc6263ce6f0b2323448f4c6c59d7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitpanda-preview.js"
+    },
+    {
+      "path": "src/position-quality-review.js",
+      "status": 200,
+      "bytes": 4638,
+      "sha256": "f708514846a4950d485abacea4e2e8ba88866ef1213230fc8b96425ff864fa2b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/position-quality-review.js"
+    },
+    {
+      "path": "src/wallet-history-days-worker.js",
+      "status": 200,
+      "bytes": 500,
+      "sha256": "126784f8937c9891df3c424b9e136c8095231dd081e8ac388e4b981957969c93",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-history-days-worker.js"
+    },
+    {
+      "path": "src/blockchain-adapters.js",
+      "status": 200,
+      "bytes": 3546,
+      "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/blockchain-adapters.js"
+    },
+    {
+      "path": "src/pchain-evidence.js",
+      "status": 200,
+      "bytes": 4071,
+      "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/pchain-evidence.js"
+    },
+    {
+      "path": "src/reference-management.js",
+      "status": 200,
+      "bytes": 11681,
+      "sha256": "40ab1bf09783d6c05ac12aba7f8d686b1a5b54989da2087a3d2817c3605192c9",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/reference-management.js"
+    },
+    {
+      "path": "src/ledger-live-ui.js",
+      "status": 200,
+      "bytes": 3810,
+      "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/ledger-live-ui.js"
+    },
+    {
+      "path": "src/defi.js",
+      "status": 200,
+      "bytes": 1911,
+      "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/defi.js"
+    },
+    {
+      "path": "src/complete-backup.js",
+      "status": 200,
+      "bytes": 4212,
+      "sha256": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/complete-backup.js"
+    },
+    {
+      "path": "src/quote-quality.js",
+      "status": 200,
+      "bytes": 3548,
+      "sha256": "e97828bd6b10976faa264ec839a78779f3c64d948a96a980c2fbb886a69d8be7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/quote-quality.js"
+    },
+    {
+      "path": "src/header-status.js",
+      "status": 200,
+      "bytes": 6611,
+      "sha256": "98b68f05d8eaede72032411b6f0ff17febdb17d60de20ce6578c06caa1e231f0",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/header-status.js"
+    },
+    {
+      "path": "src/kraken-source-plan.js",
+      "status": 200,
+      "bytes": 5669,
+      "sha256": "81ba98accde72711e58e58c5d8ccfe2b8bb379f1278d1119ada9e49c31ce306e",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-source-plan.js"
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "status": 200,
+      "bytes": 11504,
+      "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitcoin-hd.js"
+    },
+    {
+      "path": "src/atomic-storage.js",
+      "status": 200,
+      "bytes": 10053,
+      "sha256": "f7794c4f109e255b05b7131a2b0fc8e75b8e37018df348230e881b59039708cb",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/atomic-storage.js"
+    },
+    {
+      "path": "src/crypto-backup.js",
+      "status": 200,
+      "bytes": 2202,
+      "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/crypto-backup.js"
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "status": 200,
+      "bytes": 10415,
+      "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/historical-position-value.js"
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "status": 200,
+      "bytes": 17410,
+      "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/unified-bitcoin.js"
+    },
+    {
+      "path": "src/sonic-staking-evidence.js",
+      "status": 200,
+      "bytes": 4545,
+      "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/sonic-staking-evidence.js"
+    },
+    {
+      "path": "src/blocked-reasons-ui.js",
+      "status": 200,
+      "bytes": 2921,
+      "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/blocked-reasons-ui.js"
+    },
+    {
+      "path": "src/refresh-ui.js",
+      "status": 200,
+      "bytes": 891,
+      "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/refresh-ui.js"
+    },
+    {
+      "path": "src/dialog-discard.js",
+      "status": 200,
+      "bytes": 590,
+      "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/dialog-discard.js"
+    },
+    {
+      "path": "src/flatex-cash-audit.js",
+      "status": 200,
+      "bytes": 3536,
+      "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-cash-audit.js"
+    },
+    {
+      "path": "src/security-discovery.js",
+      "status": 200,
+      "bytes": 3716,
+      "sha256": "507d8da0447ec8d9209db63d450da0faf10c81d5bece7cbfdaa755a07010220c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/security-discovery.js"
+    },
+    {
+      "path": "src/dashboard-ui.js",
+      "status": 200,
+      "bytes": 15764,
+      "sha256": "bca72919b37f3596612e089204b34c5bf727014a063f5cb826e05cd00b39fc62",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/dashboard-ui.js"
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "status": 200,
+      "bytes": 2690,
+      "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/public-instruments-client.js"
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "status": 200,
+      "bytes": 9490,
+      "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-bitcoin-bridge.js"
+    },
+    {
+      "path": "src/bitpanda-import-ui.js",
+      "status": 200,
+      "bytes": 12962,
+      "sha256": "e88935460453b7e1e48691c4fcc6fd15a8e3855d74b2f40f55e4b02cb556e535",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bitpanda-import-ui.js"
+    },
+    {
+      "path": "src/capital-flows.js",
+      "status": 200,
+      "bytes": 1846,
+      "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/capital-flows.js"
+    },
+    {
+      "path": "src/legacy-quote-audit.js",
+      "status": 200,
+      "bytes": 3139,
+      "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/legacy-quote-audit.js"
+    },
+    {
+      "path": "src/startup.js",
+      "status": 200,
+      "bytes": 919,
+      "sha256": "ba5bce5a6cc763ac79c2dd7c745692c6f0128bc9daec2b95ddd02e708611a488",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/startup.js"
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "status": 200,
+      "bytes": 6000,
+      "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/interest-scenario.js"
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "status": 200,
+      "bytes": 6350,
+      "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/bnb-token-scanner.js"
+    },
+    {
+      "path": "src/flatex-cost-basis.js",
+      "status": 200,
+      "bytes": 1385,
+      "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/flatex-cost-basis.js"
+    },
+    {
+      "path": "src/booking-history-ui.js",
+      "status": 200,
+      "bytes": 20508,
+      "sha256": "4029dc357f16f44d158856abf3e86df5b8fa3982bffbe59a4f2fd42e70e343f4",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/booking-history-ui.js"
+    },
+    {
+      "path": "src/onboarding-suggestions.js",
+      "status": 200,
+      "bytes": 3997,
+      "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/onboarding-suggestions.js"
+    },
+    {
+      "path": "src/eodhd-transport.js",
+      "status": 200,
+      "bytes": 1290,
+      "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/eodhd-transport.js"
+    },
+    {
+      "path": "src/security-sources.js",
+      "status": 200,
+      "bytes": 9505,
+      "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/security-sources.js"
+    },
+    {
+      "path": "src/ethereum-history.js",
+      "status": 200,
+      "bytes": 23086,
+      "sha256": "070863c673654e44c58226f4ebe9cadc0260460b7d14a59a7f225ad31bc9d06c",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/ethereum-history.js"
+    },
+    {
+      "path": "src/asset-wizard.js",
+      "status": 200,
+      "bytes": 35600,
+      "sha256": "2d27329ec83a15bc5884363c6a5c55927ce05da0fd3ba2254c617c7ad893a081",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/asset-wizard.js"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "status": 200,
+      "bytes": 6948,
+      "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/crypto-fallbacks.js"
+    },
+    {
+      "path": "src/kraken-ledger.js",
+      "status": 200,
+      "bytes": 5612,
+      "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/kraken-ledger.js"
+    },
+    {
+      "path": "src/account-opening.js",
+      "status": 200,
+      "bytes": 759,
+      "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/account-opening.js"
+    },
+    {
+      "path": "src/wallet-scan-update.js",
+      "status": 200,
+      "bytes": 1707,
+      "sha256": "00b7c5beb98cf0cc3c639c9747c60646ffe38e4bcb8cf4ce1b1bb1c8a7203acf",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/wallet-scan-update.js"
+    },
+    {
+      "path": "src/interest-account.js",
+      "status": 200,
+      "bytes": 1759,
+      "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/interest-account.js"
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "status": 200,
+      "bytes": 9479,
+      "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/native-staking-networks.js"
+    },
+    {
+      "path": "src/interest-ui.js",
+      "status": 200,
+      "bytes": 9433,
+      "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/src/interest-ui.js"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "status": 200,
+      "bytes": 930,
+      "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/manifest.webmanifest"
+    },
+    {
+      "path": "styles.css",
+      "status": 200,
+      "bytes": 166438,
+      "sha256": "5dacc2140b7c7e101f15524335c2730bd29c4e6476f65571104263c78f3ab40a",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/styles.css"
+    },
+    {
+      "path": "sw.js",
+      "status": 200,
+      "bytes": 5296,
+      "sha256": "eaafeeccb1c6e9ef72f9aa609841e6fe64b57069809195d20f701b151c9c32d7",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/sw.js"
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 49019,
+      "sha256": "6b103c76e2944caf8ea53aa63ecb80397b21cbd590d37aaebc2eb2c95df92182",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/index.html"
+    },
+    {
+      "path": "./",
+      "status": 200,
+      "bytes": 49019,
+      "sha256": "6b103c76e2944caf8ea53aa63ecb80397b21cbd590d37aaebc2eb2c95df92182",
+      "exact": true,
+      "url": "https://foliolab.unperfekt.at/"
+    }
+  ]
+}
