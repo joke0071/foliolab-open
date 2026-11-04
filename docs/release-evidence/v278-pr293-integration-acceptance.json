@@ -1,0 +1,167 @@
+{
+  "status": "INTEGRATION_ACCEPTED_MAIN_PENDING",
+  "pr": 293,
+  "head": "5cd08aeeaed3b6d880dc22c58207ed03a4541972",
+  "testedMerge": "61e4e12fabb6e4a2672604d7e67f80b9172bfe55",
+  "tree": "061b13d7dd33718765d6a6449a5d20af19424dca",
+  "main": "2bf36bf6328fb5f66da29c2c04d3309d206a7aae",
+  "run": 41789688499,
+  "attempt": 1,
+  "jobs": "ALL_SUCCESS",
+  "units": {
+    "pass": 1173,
+    "fail": 0,
+    "skip": 0
+  },
+  "artifacts": [
+    {
+      "id": 13303601583,
+      "sha256": "sha256:bc7a6fb9386a0a39b3b1e349b7b1b47f2ef73870b22713b52590178dd914abc9",
+      "bytes": 59546896,
+      "files": 490,
+      "jsons": 15,
+      "CRC": "PASS",
+      "reports": [
+        "booking-management.json",
+        "position-archive.json",
+        "price-csv-tools/report.json",
+        "readability/report.json",
+        "storage-fixture/firefox-1793776247945.json",
+        "storage-fixture/firefox-1793776549635.json",
+        "storage-fixture/firefox-1793776560238.json",
+        "storage-fixture/webkit-1793776251472.json",
+        "storage-fixture/webkit-1793776565909.json",
+        "storage-fixture/webkit-1793776572817.json",
+        "transfer-states.json",
+        "ui-alltag10/long-press.json",
+        "ui-textscale/report.json",
+        "ui07/firefox-report.json",
+        "ui07/webkit-report.json"
+      ]
+    },
+    {
+      "id": 13303377393,
+      "sha256": "sha256:9c352aa2a02f00021c8e7605a94e0698e2356fe9558188184d1fe1ddd5ee9cba",
+      "bytes": 935688,
+      "files": 20,
+      "jsons": 0,
+      "CRC": "PASS",
+      "reports": []
+    },
+    {
+      "id": 13303218278,
+      "sha256": "sha256:fdd79c3a66d71f8c2b291a22f212ee24ebb6881fde6f7991cc6f2d2007453544",
+      "bytes": 60503009,
+      "files": 659,
+      "jsons": 59,
+      "CRC": "PASS",
+      "reports": [
+        "alpha-vantage.json",
+        "bitpanda-evidence-chromium.json",
+        "bitpanda-preview/report.json",
+        "blocked-reasons/report.json",
+        "booking-management.json",
+        "cash-account-ux.json",
+        "chart-tooltip/report.json",
+        "chromium-position-removal-sw-baseline.json",
+        "fin-e2e/chromium.json",
+        "flatex-native-amounts-chromium.json",
+        "flatex-native-binding/report.json",
+        "flatex-native-chromium.json",
+        "flatex-native-commit/report.json",
+        "flatex-native-identity-chromium.json",
+        "flatex-native-projection-chromium.json",
+        "flatex-native-simulation-ui/report.json",
+        "flatex-native-ui/report.json",
+        "flatex-order-links-chromium.json",
+        "flh03-abce.json",
+        "header-status/report.json",
+        "history-worker/chromium-controller.json",
+        "kraken-ledger/report.json",
+        "loading-pwa/chromium.json",
+        "management-parity/report.json",
+        "marketstack.json",
+        "missing-position-value/report.json",
+        "pchain-evidence-chromium.json",
+        "plain-backup-limits/chromium.json",
+        "position-archive.json",
+        "price-csv-tools/report.json",
+        "provider-retirement.json",
+        "pwa-update/report.json",
+        "readability/report.json",
+        "recovery-limits/report-chromium.json",
+        "reference-management/chromium-sw-baseline.json",
+        "reference-management/report.json",
+        "reference-removal/report.json",
+        "sonic-evidence-chromium.json",
+        "storage-fixture/chromium-1793776006774.json",
+        "storage-fixture/chromium-1793776017554.json",
+        "storage-fixture/chromium-1793776012222.json",
+        "storage-fixture/chromium-1793776022678.json",
+        "storage-fixture/chromium-1793776027956.json",
+        "storage-fixture/chromium-1793776033093.json",
+        "storage-fixture/chromium-1793776038255.json",
+        "storage-fixture/chromium-1793776042783.json",
+        "storage-fixture/chromium-1793776068645.json",
+        "storage-fixture/chromium-1793776228865.json",
+        "storage-fixture/chromium-1793776224303.json",
+        "storage-fixture/chromium-1793776665419.json",
+        "storage-fixture/chromium-1793776670939.json",
+        "transfer-states.json",
+        "ui-alltag10/chromium-real-touch-pan.json",
+        "ui-alltag10/chromium-real-touch-press.json",
+        "ui-alltag10/long-press.json",
+        "ui-audit-controls/report.json",
+        "ui-quality.json",
+        "ui-textscale/report.json",
+        "ui07/chromium-report.json"
+      ]
+    },
+    {
+      "id": 13302753469,
+      "bytes": 12212313,
+      "files": 92,
+      "sha256": "8f05d3947660fbcb7a50b31256d9ab7f710344199af6ae1545da420d19442254",
+      "CRC": "PASS"
+    },
+    {
+      "id": 13302954369,
+      "bytes": 53925164,
+      "files": 618,
+      "jsons": 45,
+      "sha256": "4d75d9faefe406cd8f4a389dd9a97b5df8f479797c49da4267ecf001f6ce67c4",
+      "CRC": "PASS"
+    }
+  ],
+  "review": {
+    "diffFiles": 13,
+    "allRelevantLocalBlobsMatchRemote": true,
+    "syntheticMergeTreeEqualsMain": true,
+    "privateChainIdentifiersAbsent": true,
+    "reviews": 0,
+    "threads": 0,
+    "visualInspected": [
+      "chromium-depot13-online-320",
+      "webkit-depot13-offline-320"
+    ],
+    "nativeUI": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "nativeCommitModes": [
+      "append",
+      "backfill"
+    ],
+    "nativeCommitEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "nextRun": 41791654108,
+  "limits": [
+    "v278 not LIVE_ACCEPTED; main/deploy/live/regular HTTPS pending",
+    "UH04 remains incomplete; source scope and financial posting still guarded"
+  ]
+}
