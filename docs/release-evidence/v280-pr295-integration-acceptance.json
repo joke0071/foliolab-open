@@ -1,0 +1,118 @@
+{
+  "status": "INTEGRATION_ACCEPTED",
+  "pr": 295,
+  "head": "2ba3604a891df5e46162a84559190831fff2554d",
+  "base": "f4744d67a16315c48bc7e244f44e4abe1c54dd9f",
+  "testMerge": "6c5430e735a8069c3a9a195a89566694ce773fce",
+  "tree": "94802e05c2ce5ece4b9f4c4eca20ba7b45133259",
+  "independentTreeMatch": true,
+  "mainWorkflow": 41824535130,
+  "walletWorkflow": 41824535129,
+  "attempt": 1,
+  "requiredJobs": "SUCCESS",
+  "expectedSkips": [
+    "FAST-only canary",
+    "PR deploy",
+    "PR live-acceptance"
+  ],
+  "units": 1184,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "newEconomicFlow": [
+    "chromium141",
+    "firefox157",
+    "webkit27.2"
+  ],
+  "checks": [
+    "actual UI later-pair commit; preserved earlier booking/journal/openings",
+    "independent 81 original pairs in32 chronological commits; controlled openings only",
+    "quota/post-put abort/real second-writer CAS",
+    "offline reload/fresh-profile encrypted v5 UI restore/replay",
+    "persistent latest-group removal/reimport tombstone",
+    "seven widths/Axe",
+    "actual ZIP API-uploadlog-file SHA256/CRC/all139JSONs/21PNGs decoded"
+  ],
+  "imagesInspected": [
+    "chromium320",
+    "webkit320",
+    "firefox1440"
+  ],
+  "reviews": 0,
+  "reviewThreads": 0,
+  "artifacts": [
+    {
+      "id": 13319177678,
+      "name": "cross-engine-gates-6c5430e735a8069c3a9a195a89566694ce773fce-1",
+      "bytes": 59707604,
+      "sha256": "d1d18bc5913a2c8cdf12eb09fed0430028916e3449967e21c52507970ac40817",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsons": 15,
+      "pngsDecoded": 0,
+      "failureFields": []
+    },
+    {
+      "id": 13319155499,
+      "name": "ci-stage-6c5430e735a8069c3a9a195a89566694ce773fce",
+      "bytes": 563,
+      "sha256": "35d1f6ebaae95a3e7866c83fa25af6db53e35c8686c42f6b9820b95a76b0bcc1",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsons": 1,
+      "pngsDecoded": 0,
+      "failureFields": []
+    },
+    {
+      "id": 13319132574,
+      "name": "release-gates-6c5430e735a8069c3a9a195a89566694ce773fce",
+      "bytes": 61166381,
+      "sha256": "6b80d738208d1eb928a7a9985bdad19ce81a1410e93033b1375865e37036873d",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 667,
+      "jsons": 60,
+      "pngsDecoded": 7,
+      "failureFields": []
+    },
+    {
+      "id": 13319013308,
+      "name": "cross-engine-gates-6c5430e735a8069c3a9a195a89566694ce773fce-3",
+      "bytes": 55400641,
+      "sha256": "5dc79a800cf048c8abe58d6e8922973ed60f708ee2f993adca3bf8c5184cf1d5",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 633,
+      "jsons": 46,
+      "pngsDecoded": 14,
+      "failureFields": []
+    },
+    {
+      "id": 13318444303,
+      "name": "dialog-visual-reference",
+      "bytes": 935693,
+      "sha256": "bdfee1a196e981592fc991b42f945247a86a6bbacaa981f617d90cf3ccac7a20",
+      "APIUploadLogFileMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsons": 0,
+      "pngsDecoded": 0,
+      "failureFields": []
+    },
+    {
+      "id": 13319371502,
+      "bytes": 12210160,
+      "sha256": "2f026bc7e961923925a8b3d66424ffc730ccab109f9f320a4695afb722ac786d",
+      "CRC": "PASS",
+      "entries": 92,
+      "jsons": 17,
+      "failureFields": []
+    }
+  ],
+  "limits": [
+    "Not a Main/deployment/production acceptance",
+    "No LINK acceptance; WAITING_FOR_EXTERNAL_CAPTURE",
+    "UH04 overall remains partial; no inferred historical balances"
+  ]
+}
