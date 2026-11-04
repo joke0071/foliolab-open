@@ -1,3 +1,15 @@
+## ACTIVE – f5b53dbf4bae / PR296 eingefroren / LINK-Finalitätsanker offen – 04.11.2026
+
+Einziger fortgesetzter Hauptstrang. [PR296](https://github.com/joke0071/foliolab-open/pull/296) HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 / unabhängig berechneter Tree6b226b1082f05078257c106d57f6fa07dd97720f,11beabsichtigteDateien. Normaler Pflichtlauf41854091524Versuch1IN_PROGRESS; Wallet41854091649SUCCESS. Kandidat einfrieren, keineDuplikate/Abbrüche/blindenRetries. Main4e8c63c9deda58203c3dc637cd80366047d25d18 / v280LIVE_ACCEPTED bleibt unverändert; v281nurKandidat. KeineFolgeimplementierung währendIntegration.
+
+UH04 ausdrücklicheCashergänzung implementiert: vollständigealteBuchung/Journalaudit,identischeStückwirkung,nurOriginalNettocash,unbekannteKosten,engerneuabgeleiteterGesamtdelta,geschützterCashanfang/Abhängigkeiten/Referenzen,v5/Rücknahme/Wiederimportsperre. Lokal1189Units0Fehler0Skips plusanschließendersechstergerichteterNegativtestPASS,SyntaxPASS,kontrollierterOriginalkaufgegenunabhängigenCSV/DecimalOraclePASS,Chromium141UI7Breiten/Axe/Quota/post-putAbort/echterZweittabCAS/Offline/frischesverschlüsseltesv5UIRestore/Replay/RücknahmePASS,320Bildgesichtet. Pflicht-CI/Artefakt-/Main-/Liveabnahmen bleibenoffen. ProduktvertragimPR docs/UH04_NATIVE_CASH_AUGMENTATION.md.
+
+LINK nachausdrücklicherNutzerfreigabenurbei eth.blockscout.com regulärlesendgeprüft:5gezielteGETs(Transaktion,Logs,BlockHash,BlockNummer,BlockTransaktionen),15unabhängigeOriginalprüfungenPASS einschließlichkonkreterkanonischerInklusionamIndex. EigenerBelegtypblockscout-v2-explorer-execution,keinRPCReceiptbehauptet. **PräziseverbleibendeChainbeleglücke: tatsächlichalsfinalizederfassterAusführungsblockankermitkonsistenterBindungandenkanonischenTransaktionsblock.** KeineRPCWiederholungen/Umgehung/anderenAnbieter/CSVsübertragen;keineweitereNutzerPythonAusführungnötig. LINKbleibtgesperrt,Produktbindungnichterweitert.
+
+PrivateSicherung libfile_42e6c0236610819189e0ba522c74ecfdVersion15,672538Bytes/SHA256521f3c96cd0002025e4db04094e64f1ca20255ee41113782a7eca49dcac7a345,189interneDateihashes,alte154Originaldateienbytegleicherhalten. Delta-f5b53dbf4baeenthältAndroidZIP,neueRohantworten/Abfrageparameter/Header/UTC/Hashes,15fachOriginalabgleich,Originalrepro,Patch/Kandidatmanifest/lokaleLogs/Berichte,keineneuenBrowserbilder. Quelle/privateunter /workspace/scratch/f5b53dbf4bae/. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) undalleSchutzverträgegelten;CheckpointbranchniekomplettnachMainmergen. EigeneZähler0LIVE_ACCEPTED/0vollständigeProduktpakete.
+
+---
+
 ## ACTIVE – f5b53dbf4bae / UH04 Einzelbeinergänzung / LINK-GET-Zugang – 04.11.2026
 
 Fortsetzung des bestehenden Hauptstrangs; alleiniger Work-Owner f5b53dbf4bae, Vorgänger 8e88691c253e bestätigt STOPPED. Main 4e8c63c9deda58203c3dc637cd80366047d25d18 / Tree 94802e05c2ce5ece4b9f4c4eca20ba7b45133259, v280 LIVE_ACCEPTED unverändert. Frisch nur historische Drafts157/161, 0 laufende/0 wartende Actions; keine neue CI/kein Produktkandidat.
