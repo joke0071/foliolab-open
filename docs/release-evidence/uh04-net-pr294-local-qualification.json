@@ -24,7 +24,18 @@
       "exact gross/net/unallocated difference",
       "common economic commit/v5 restore/replay/full-group removal/reimport block"
     ],
-    "actualHistoricalBalancesAccepted": false
+    "actualHistoricalBalancesAccepted": false,
+    "aggregate": {
+      "status": "PASS",
+      "pairs": 81,
+      "variants": 3,
+      "checks": [
+        "independent CSV/Decimal signed quantities/unit prices/gross/net/unallocated difference",
+        "all 81 selected groups in one common atomic import; exact aggregate cash/holdings",
+        "reversed files/reversed selection/overlapping file; 81 duplicates after v5 restore"
+      ],
+      "controlledOpeningOnly": true
+    }
   },
   "localBrowser": {
     "engine": "WebKit",
@@ -70,15 +81,24 @@
       "No new private-hash query after failed basic chainId",
       "Explorer evidence retained; no raw receipt reconstructed and no equivalent substitute verifier accepted"
     ],
-    "localCounterprobePrepared": true
+    "localCounterprobePrepared": true,
+    "alternative": {
+      "status": "SPECIFIED_NOT_IMPLEMENTED_OR_ACCEPTED",
+      "type2EffectivePriceConsistency": "PASS against canonical block baseFee and transaction caps, both retained transaction and explorer gasPrice",
+      "sources": [
+        "https://docs.blockscout.com/devs/apis/rpc/transaction",
+        "https://eips.ethereum.org/EIPS/eip-1559"
+      ],
+      "remaining": "Explicit source-tagged alternate verifier, pagination/log completeness and negative controls; no RPC receipt reconstructed."
+    }
   },
   "lastLiveAccepted": "v278",
   "newMergeDeployOrLiveAcceptance": false,
   "privateBackup": {
     "libraryFileId": "libfile_42e6c0236610819189e0ba522c74ecfd",
-    "version": 7,
-    "bytes": 388956,
-    "sha256": "363227e81158aaa8e91d9f60b53e9347dd8db14d61779307365146d20dd065f2",
-    "verifiedInternalFiles": 90
+    "version": 8,
+    "bytes": 394727,
+    "sha256": "43dcabbd036c1a063ba02b0291e0f4470dd65687e90b6dbc63dad91ae2d2f937",
+    "verifiedInternalFiles": 96
   }
 }
