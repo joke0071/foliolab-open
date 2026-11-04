@@ -1,3 +1,4 @@
+import {validateNetSettlement,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension} from './flatex-net-settlement.js';
 import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
@@ -69,7 +70,14 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    const costsKnown=!trade||(feeKnown&&taxKnown);
    if(trade){if(!feeKnown)row.feeEUR=null;if(!taxKnown)row.taxEUR=null;}
    const identity={sourceId:origin?.sourceId||sourceId,externalId:origin?.externalId??ref,sourceEvidence:origin?.sourceEvidence};
-   const evidence=validateNativeSourceEvidence(identity),sourceRow=evidence?{...row,sourceEvidence:evidence}:row;
+   const evidence=validateNativeSourceEvidence(identity);
+   if(origin?.netSettlement){
+    const n=validateNetSettlement(origin.netSettlement);
+    if(!evidence||identity.sourceId!==n.depot.sourceId||identity.externalId!==n.depot.externalId||evidence.payloadDigest!==n.depot.payloadDigest||costsKnown||!c)throw Error('Nettocash ohne passende native Paarherkunft.');
+    row.netSettlement=structuredClone(n);row.tradeAmountEURExact=n.grossExact;
+   }
+   const sourceRow=evidence?{...row,sourceEvidence:evidence}:row;
+   if(row.netSettlement){delete sourceRow.netSettlement;sourceRow.netSettlementId=origin.netSettlement.id;sourceRow.netCashExact=origin.netSettlement.cashExact;}
    const source={version:1,sourceId:identity.sourceId,accountId:pos.accountId,
     externalId:identity.externalId,sourcePayload:JSON.stringify(sourceRow),fileId:origin?.fileId||fileDigest+':'+item.index,occurrence:1,ownership:'imported',ownedSnapshot:''};
    // An omitted settlement selection on repeat import cannot erase the
@@ -121,7 +129,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    });
    if(legacy||candidate)throw sourceConflict('Mögliche bereits vorhandene Buchung aus einer anderen oder älteren Datei. Bitte ausdrücklich prüfen; keine automatische Übernahme.');
    if(!costsKnown){
-    if(c)throw Error('Gebühren oder Steuern fehlen. Für eine Geldbuchung bitte belegte Werte (auch 0) in der CSV angeben; sonst ohne Verrechnungskonto nur Stückzahlen übernehmen.');
+    if(c&&!row.netSettlement)throw Error('Gebühren oder Steuern fehlen. Für eine Geldbuchung bitte belegte Werte (auch 0) in der CSV angeben; sonst ohne Verrechnungskonto nur Stückzahlen übernehmen.');
     if(pos.costBasisExact!=null||pos.costBasisEUR!=null||pos.realizedPnLExact!=null||pos.realizedPnLEUR!=null)
      throw Error('Unbekannte Nebenkosten: vorhandene bestätigte Anschaffungskosten bleiben geschützt. Bitte Abrechnung ergänzen.');
    }
@@ -143,12 +151,12 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
 export function importCSV(model,preview){
  if(typeof preview.baseline!=='string'||preview.baseline!==JSON.stringify(model))throw Error('Das Portfolio wurde seit der CSV-Vorschau verändert. Bitte Vorschau erneut erstellen.');
  if(preview.issues.length)throw Error('CSV enthält fehlerhafte Zeilen – vor Import korrigieren.');
- if(!preview.ready)return {imported:0,duplicates:preview.duplicates};
+ if(!preview.ready&&!preview.evidenceUpdates)return {imported:0,duplicates:preview.duplicates};
  const next=structuredClone(preview.simulated);
- if(next.bookings.length!==(model.bookings||[]).length+preview.ready||next.version!==model.version||
-    model.bookings.some(b=>!next.bookings.some(n=>n.id===b.id&&JSON.stringify(n)===JSON.stringify(b)))||
+ if(next.bookings.length!==(model.bookings||[]).length+preview.ready||(next.version!==model.version&&!(next.version===5&&[3,4].includes(model.version)&&hasFlatexNetState(next)))||
+    model.bookings.some(b=>!next.bookings.some(n=>n.id===b.id&&(JSON.stringify(n)===JSON.stringify(b)||(preview.evidenceUpdates&&netEvidenceExtension(b,n)))))||
     model.journalEntries.some(e=>!next.journalEntries.some(n=>n.id===e.id&&JSON.stringify(n)===JSON.stringify(e))))throw Error('CSV-Vorschau stimmt nicht zum Datenmodell.');
- safeImport(JSON.parse(backup(next)));
+ validateFlatexNetSettlements(next);safeImport(JSON.parse(backup(next)));
  if(!ledgerQuantityAudit(next).ok)throw Error('CSV-Journal und Bestände widersprechen sich. Nichts übernommen.');
  Object.assign(model,next);return {imported:preview.ready,duplicates:preview.duplicates};
 }

@@ -1,3 +1,4 @@
+import {hasFlatexNetState,validateFlatexNetSettlements} from './flatex-net-settlement.js';
 import {validateKrakenSolanaBridges,hasKrakenSolanaState} from './kraken-solana-bridge.js';
 import {validateKrakenEthereumBridges,hasKrakenEthereumState} from './kraken-ethereum-bridge.js';
 import {validateBitpandaWithdrawals,hasBitpandaWithdrawals} from './bitpanda-withdrawal-evidence.js';
@@ -166,7 +167,7 @@ const uniqueIds=(array,label)=>{const ids=new Set();for(const x of array){if(!x.
 /** Importiert v1/v2-Backups ohne erfundene Transaktionen als dokumentierte v3-Eröffnungsbestände. */
 /** Opt into a future-rejecting format before introducing economic/source contracts older clients would drop. */
 export function assertDataVersion(model){
- if(![3,4,5].includes(model?.version)||(model.version!==5&&(model.version===4)!==(model.bookingPresentation!==undefined))||(hasUnifiedBitcoinState(model)||hasBitpandaWithdrawals(model)||hasKrakenEthereumState(model)||hasKrakenSolanaState(model))!==(model.version===5))throw Error('Datenversion und geschützte Import-/Archivmetadaten widersprechen sich.');
+ if(![3,4,5].includes(model?.version)||(model.version!==5&&(model.version===4)!==(model.bookingPresentation!==undefined))||(hasUnifiedBitcoinState(model)||hasBitpandaWithdrawals(model)||hasKrakenEthereumState(model)||hasKrakenSolanaState(model)||hasFlatexNetState(model))!==(model.version===5))throw Error('Datenversion und geschützte Import-/Archivmetadaten widersprechen sich.');
 }
 export function safeImport(raw){
   // Archive-capable portfolios opt into v4 only on explicit archive commit.
@@ -179,6 +180,7 @@ export function safeImport(raw){
   if(raw.version>=2&&!Array.isArray(raw.accounts))throw Error('Die Kontendaten des Backups fehlen.');
   if(raw.providers.length>500||raw.positions.length>5000||raw.snapshots.length>15000||(raw.accounts||[]).length>2000||!Array.isArray(raw.bookings||[])||(raw.bookings||[]).length>25000||(raw.journalEntries||[]).length>25000||(raw.openingPositions||[]).length>5000)throw Error('Backup überschreitet die vorgesehenen Größenlimits oder ist beschädigt.');
   const m=blankModel();
+  if(raw.flatexNetRemovals!==undefined)m.flatexNetRemovals=structuredClone(raw.flatexNetRemovals);
   if(raw.walletHistory!==undefined)m.walletHistory=validateWalletHistory(raw.walletHistory);
   if(raw.purchaseEvidence!==undefined)m.purchaseEvidence=validatePurchaseEvidence(raw.purchaseEvidence);
   m.providers=raw.providers.map(createProvider);uniqueIds(m.providers,'Anbietern');
@@ -244,7 +246,7 @@ export function safeImport(raw){
         throw Error('Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich.');
     }
   }
-  validateTransferMatches(m);
+  validateTransferMatches(m);validateFlatexNetSettlements(m);
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
@@ -279,7 +281,7 @@ export function safeImport(raw){
   assertDataVersion(m);
   return m;
 }
-export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -301,7 +303,7 @@ export function persist(model,storage=globalThis.localStorage){
  // once another tab has activated transactional IndexedDB.
  if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
   throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
- assertDataVersion(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);
+ assertDataVersion(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);
  if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');

@@ -22,6 +22,7 @@ export function positionQualityReview(model,now=Date.now()){
   const h=historyAction(model,p),supported=h?.action==='wallet-history';
   add(p.id,{key:'position:'+p.id+':continuation',category:'history',label:'Historienabruf nicht abgeschlossen',source:'Gespeicherter Fortsetzungsstand',asOf:timestamp(pending.updatedAt),severity:'info',action:supported?'wallet-history':'edit-position',actionLabel:supported?'Historie fortsetzen':'Walletdaten prüfen'});
  }
+ for(const b of model.bookings||[])if(b.netSettlement)for(const id of [b.positionId,b.cashPositionId])add(id,{key:'position:'+id+':net-settlement',category:'history',label:'Flatex-Nettocash belegt; Verrechnung und Kostenaufteilung ungeklärt',source:'Depot-/Kontopaar',asOf:null,severity:'warning',action:'edit-position',actionLabel:'Nachweise prüfen'});
  for(const item of legacyQuoteDiscrepancies(model))add(item.id,{key:'position:'+item.id+':exact-quote',category:'quote',label:'Anzeige- und Exaktkurs weichen ab',source:'Lokale Präzisionsprüfung',asOf:null,severity:'warning',action:'review-legacy-quote',actionLabel:'Kurswerte abgleichen'});
  return [...groups.values()];
 }
