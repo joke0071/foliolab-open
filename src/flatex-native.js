@@ -9,6 +9,17 @@ export const FLATEX_NATIVE_COLUMNS=Object.freeze({
  account:schema(['Buchtag','Valuta','BIC / BLZ','IBAN / Kontonummer','Buchungsinformationen','TA-Nr.','Betrag','','Auftraggeberkonto','Konto'],
   ['bookingDate','valueDate','counterpartyBIC','counterpartyAccount','details','transactionReference','amount','amountCurrency','originatorAccount','account'])
 });
+// A separate original dialect: these exports do not contain a depot scope.
+// Keep their fields intact; a filename/ISIN/order is never a replacement scope.
+export const FLATEX_DEPOT13_COLUMNS=schema(
+ ['Buchungstag','Valuta','Bezeichnung','ISIN','Nominal (Stk.)','','Betrag','','Kurs','','Devisenkurs','TA.-Nr.','Buchungsinformation'],
+ ['bookingDate','valueDate','description','isin','nominal','unit','amount','amountCurrency','rate','priceCurrency','fxRate','transactionReference','details']);
+export function nativeFlatexColumns(document){
+ if(document?.dialect==='depot13')return document.type==='depot'?FLATEX_DEPOT13_COLUMNS:null;
+ if(document?.dialect!==undefined)return null;
+ return FLATEX_NATIVE_COLUMNS[document?.type]??null;
+}
+const matchesHeaders=(columns,headers)=>columns.length===headers.length&&columns.every((c,i)=>c.header===headers[i]);
 const unknown=v=>v==null||v===''||v==='-';
 // https://encoding.spec.whatwg.org/index-windows-1252.txt
 // Explicit C1 mapping avoids observed runtime variation (0x80 -> U+0080).
@@ -20,7 +31,7 @@ function decodeCP1252(bytes){
 }
 export const looksLikeFlatexNativeCSV=lexed=>{
  const h=lexed?.records?.[0]?.cells?.map(v=>v.trim());
- return Boolean(h&&h.includes('')&&['Buchtag','Valuta','Buchungsinformationen','TA-Nr.'].filter(k=>h.includes(k)).length>=3);
+ return Boolean(h&&(matchesHeaders(FLATEX_DEPOT13_COLUMNS,h)||h.includes('')&&['Buchtag','Valuta','Buchungsinformationen','TA-Nr.'].filter(k=>h.includes(k)).length>=3));
 };
 function sourceDate(s){
  const m=/^(\d\d)\.(\d\d)\.(\d{4})$/.exec(s);
@@ -46,12 +57,13 @@ function sourceKind(details){
 function project(input,encoding){
  if(typeof input!=='string'||input.includes('\u0000')||input.includes('\ufffd'))throw Error('Flatex: verlustfrei decodierten CSV-Text ohne NUL oder Ersatzzeichen verwenden.');
  const {records}=readCSVRecords(input,{delimiter:';'}),headers=records[0].cells.map(v=>v.trim());
- const type=Object.keys(FLATEX_NATIVE_COLUMNS).find(k=>{
+ const dialect=matchesHeaders(FLATEX_DEPOT13_COLUMNS,headers)?'depot13':undefined;
+ const type=dialect?'depot':Object.keys(FLATEX_NATIVE_COLUMNS).find(k=>{
   const columns=FLATEX_NATIVE_COLUMNS[k];return columns.length===headers.length&&columns.every((c,i)=>c.header===headers[i]);
  });
- if(!type)throw Error('Flatex: bestätigtes 12-Spalten-Depot- oder 10-Spalten-Kontoschema einschließlich Leerüberschriften erforderlich.');
+ if(!type)throw Error('Flatex: bestätigtes 12-/13-Spalten-Depot- oder 10-Spalten-Kontoschema einschließlich Leerüberschriften erforderlich.');
  if(records.length<2)throw Error('Flatex: mindestens eine Datenzeile erforderlich.');
- const columns=FLATEX_NATIVE_COLUMNS[type];
+ const columns=dialect?FLATEX_DEPOT13_COLUMNS:FLATEX_NATIVE_COLUMNS[type];
  const rows=records.slice(1).map(record=>{
   const fields=record.cells.map(v=>v.trim());
   if(fields.length!==columns.length)throw Error('Flatex: abweichende Spaltenanzahl im Originalformat.');
@@ -61,12 +73,13 @@ function project(input,encoding){
   for(const key of ['bookingDate','valueDate']){
    dates[key]=null;try{dates[key]=sourceDate(values[key]);}catch{issues.push(key+': Quelltag ungültig oder unbekannt.');}
   }
-  for(const key of type==='depot'?['nominal','rate']:['amount']){
+  for(const key of dialect?['nominal','rate','amount','fxRate']:type==='depot'?['nominal','rate']:['amount']){
    numbers[key]=null;
    if(unknown(values[key]))issues.push(key+': Quellzahl unbekannt, nicht als 0 ergänzt.');
    else try{numbers[key]=sourceNumber(values[key]);}catch{issues.push(key+': deutsche Quellzahl nicht exakt lesbar.');}
   }
-  for(const key of type==='depot'?['unit','priceCurrency']:['amountCurrency'])if(unknown(values[key]))issues.push(key+': Einheit/Währung unbekannt; keine Annahme.');
+  for(const key of dialect?['unit','priceCurrency','amountCurrency']:type==='depot'?['unit','priceCurrency']:['amountCurrency'])if(unknown(values[key]))issues.push(key+': Einheit/Währung unbekannt; keine Annahme.');
+  if(dialect)issues.push('Depotkennung fehlt in diesem Export; Quellenzuordnung vor einer Übernahme gesondert belegen.');
   const kind=sourceKind(values.details);
   if(kind==='unclassified')issues.push('Quellereignis ungeklärt; keine Buchungsannahme.');
   const m=/(?:^|\s)ORDER\s+(Kauf|Verkauf)\s+([A-Z]{2}[A-Z0-9]{10})\s+(\d+)\s*$/i.exec(values.details);
@@ -78,7 +91,7 @@ function project(input,encoding){
  const refs=new Map();
  for(const r of rows)if(!unknown(r.values.transactionReference)){const ref=r.values.transactionReference,list=refs.get(ref)||[];list.push(r);refs.set(ref,list);}
  for(const list of refs.values())if(list.length>1){const same=new Set(list.map(r=>JSON.stringify(r.fields))).size===1;for(const r of list)r.issues.push(same?'Identische Bankreferenz-Zeilen; alle Zeilen bleiben erhalten.':'Widersprüchliche Bankreferenz-Zeilen; keine automatische Auflösung.');}
- return Object.freeze({kind:'flatex-native-document-preview',version:1,type,encoding,columns,rows:Object.freeze(rows.map(r=>Object.freeze({...r,issues:Object.freeze(r.issues)}))),ready:false,writeEnabled:false,
+ return Object.freeze({kind:'flatex-native-document-preview',version:1,type,...(dialect?{dialect}:{}),encoding,columns,rows:Object.freeze(rows.map(r=>Object.freeze({...r,issues:Object.freeze(r.issues)}))),ready:false,writeEnabled:false,
   reason:'Nur lokale Originalformatprüfung. Keine Buchungen, Gegenbeine, Gebühren, Steuern, Bestände oder externen Kapitalflüsse werden daraus erzeugt.'});
 }
 export function parseFlatexNativeCSV(input){

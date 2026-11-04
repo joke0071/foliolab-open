@@ -48,7 +48,10 @@ export function flatexNativeSimulationMarkup(result,{mode='',disabled=false,mode
  let output='';
  if(result){
   if(!mode||result.kind!=='flatex-native-trade-preview'||result.ready!==false||result.writeEnabled!==false||typeof result.eligible!=='boolean'||(!result.eligible&&result.preview!==null))throw Error('Ungeprüfte Stückhistorien-Simulation.');
-  if(!result.eligible)output='<p id="flatexSimulationResult" class="small-help">Simulation gesperrt: '+esc(result.reason)+'</p>';
+  if(!result.eligible){
+   const issues=result.prepared?.issues||[];
+   output='<div id="flatexSimulationResult"><p class="small-help">Simulation gesperrt: '+esc(result.reason)+'</p>'+(issues.length?'<p>'+issues.length+' zeilenbezogene Prüfhinweise</p><ul>'+issues.slice(0,20).map(i=>'<li>Datei '+(i.sourceIndex+1)+' · Zeile '+i.line+': '+esc(i.message)+'</li>').join('')+'</ul>'+(issues.length>20?'<p class="small-help">'+(issues.length-20)+' weitere Hinweise in den Quellzeilen prüfen.</p>':''):'')+'</div>';
+  }
   else{
    const p=result.preview;
    if(!model||p?.baseline!==JSON.stringify(model)||p.issues.length||p.skipped)throw Error('Datenstand der Simulation nicht aktuell.');
@@ -100,6 +103,7 @@ export function flatexNativeMarkup(documents,{limit=50,orderLinks=null,orderLimi
    '<p>Buchtag: '+show(r.dates.bookingDate)+' · Valuta: '+show(r.dates.valueDate)+'</p>'+
    '<p>Bank-Transaktionsreferenz: '+show(v.transactionReference)+' · Orderreferenz im Quelltext: '+show(r.order?.reference)+'. Keine bestätigte Gegenbuchung.</p>'+
    (depot?'<p>Nominal laut Export: '+show(n.nominal)+' '+show(v.unit)+' · Kurs laut Export: '+show(n.rate)+' '+show(v.priceCurrency)+'</p>':'<p>Betrag laut Export: '+show(n.amount)+' '+show(v.amountCurrency)+'. Keine bestätigte externe Ein- oder Auszahlung.</p>')+
+   (d.dialect==='depot13'?'<p>Betrag laut Export: '+show(n.amount)+' '+show(v.amountCurrency)+' · Devisenkurs laut Export: '+show(n.fxRate)+'. Keine bestätigte Nettoabrechnung, Gebühren- oder Steueraufteilung.</p><p class="small-help">Depotkennung fehlt in diesem Export. Eine belegte Quellenzuordnung ist vor der Übernahme erforderlich.</p>':'')+
    '<details><summary>Geparste Quellfelder</summary><dl>'+d.columns.map(c=>'<dt>'+esc(c.header||({unit:'Einheit',priceCurrency:'Kurswährung',amountCurrency:'Betragswährung'}[c.key]||c.key)+' (ohne Spaltenüberschrift)')+'</dt><dd>'+show(v[c.key])+'</dd>').join('')+'</dl></details>'+
    (r.issues.length?'<ul>'+r.issues.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul>':'')+'</div></details>';
  }).join('');

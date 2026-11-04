@@ -36,6 +36,14 @@ function originalContractWithOnlyPinnedCaches(source) {
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
+  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-chromium.log\n",
+  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-chromium.log\n",
+  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs 2>&1 | tee artifacts/gates/production-flatex-native-ui-cross.log\n",
+  "          UI_QUALITY_BASE=\"$ACCEPTANCE_BASE\" UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs 2>&1 | tee artifacts/gates/production-flatex-native-commit-cross.log\n",
+  "          node tests/browser-flatex-native-ui.mjs\n",
+  "          node tests/browser-flatex-native-commit.mjs\n",
+  "            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-ui.mjs\n",
+  "            UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-native-commit.mjs\n",
   "          node tests/browser-price-csv-tools.mjs\n",
   "            UI_ENGINES=firefox,webkit node tests/browser-price-csv-tools.mjs\n",
   "          UI_BASE=\"$ACCEPTANCE_BASE\" node tests/browser-price-csv-tools.mjs 2>&1 | tee artifacts/gates/production-price-csv-tools-chromium.log\n",

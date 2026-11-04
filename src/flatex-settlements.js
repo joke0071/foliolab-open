@@ -69,7 +69,7 @@ export function inspectNativeFlatexOrderLinks(documents,{maxDays=7}={}){
   for(const row of doc.rows){
    if(!Number.isSafeInteger(row?.line)||row.line<2||lines.has(row.line)||!Object.isFrozen(row)||!Object.isFrozen(row.values)||!Object.isFrozen(row.numbers)||!Object.isFrozen(row.dates)||typeof row.kind!=='string'||typeof row.values.details!=='string'||typeof row.values.transactionReference!=='string')throw Error('Native Flatex-Quellzeile nicht eindeutig prüfbar.');
    lines.add(row.line);
-   const v=row.values,scope=doc.type==='depot'?v.depot:v.account,ref=v.transactionReference,order=row.order;
+   const v=row.values,scope=(doc.type==='depot'?v.depot:v.account)??'',ref=v.transactionReference,order=row.order;
    if(typeof scope!=='string'||(order!==null&&(!order||!['buy','sell'].includes(order.type)||!/^\d+$/.test(order.reference)||!/^[A-Z]{2}[A-Z0-9]{10}$/.test(order.isin))))throw Error('Native Flatex-Quellreferenzen nicht prüfbar.');
    const locator={sourceIndex,line:row.line,sourceType:doc.type,sourceScope:scope,bankReference:ref,orderReference:order?.reference??null,kind:row.kind};
    const e={doc,row,scope,ref,order,locator,reasons:[],overlap:false,conflict:false};entries.push(e);

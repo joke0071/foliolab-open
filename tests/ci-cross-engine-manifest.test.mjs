@@ -13,7 +13,7 @@ const oldSecond=[pwaCommand,...manifest.shards['2'].flatMap(c=>c==='node tests/b
 const split=oldSecond.indexOf('UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs');
 assert.ok(split>0);
 const expectedShards={'1':manifest.shards['1'].flatMap(c=>c==='node tests/browser-atomic-storage-cross-engine.mjs'?[c,...periodCommands]:[c]),'2':oldSecond.slice(0,split),'3':oldSecond.slice(split)};
-const uiCommands=['ui-alltag10','ui-textscale','price-csv-tools'].map(name=>'UI_ENGINES=firefox,webkit node tests/browser-'+name+'.mjs');
+const uiCommands=[...['ui-alltag10','ui-textscale','price-csv-tools'].map(name=>'UI_ENGINES=firefox,webkit node tests/browser-'+name+'.mjs'),...['flatex-native-ui','flatex-native-commit'].map(name=>'UI_QUALITY_ENGINES=firefox,webkit node tests/browser-'+name+'.mjs')];
 const loadingCommand='LOADING_ENGINES=firefox,webkit node tests/browser-loading-pwa.mjs';
 const bitpandaCommand='HISTORY_ENGINES=firefox,webkit node tests/browser-bitpanda-import.mjs';
 const uh03Command='HISTORY_ENGINES=firefox,webkit node tests/browser-kraken-import.mjs';
