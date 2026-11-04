@@ -1,3 +1,13 @@
+## ACTIVE – 01a1a73ba52f / v281 wartet auf bestehenden Mainlauf41861912576 – 04.11.2026
+
+Notfallwiederherstellung nach ausdrücklicher Nutzerbestätigung abgeschlossen; ausschließlich01a1a73ba52fverantwortlich. PR296 HEAD810ebf52b775a0dd6d8465e1ac7d0eb6b422baf2 nach [Integrationsabnahme](release-evidence/v281-pr296-integration-acceptance.json) geschütztgemergt. Main5e24de041622cf5753adc48eebc303ef647e788b/Tree6b226b1082f05078257c106d57f6fa07dd97720f exaktKandidat. **v280 bleibt letzte LIVE_ACCEPTED-Version; v281 noch NICHT DEPLOYED/LIVE_ACCEPTED.**
+
+[Exakter Wartezustand](release-evidence/v281-main-waiting.json): automatischregulärerRun41861912576Versuch1,Main-PflichtjobsweiterQUEUED,FASTSKIPPED;Deploy/Live nochnichtbegonnen,keineausstehendeDeploymentfreigabe. KeinFehlerbeleg/Retrygrund. **NächsterSchritt:ausschließlichbestehendenRun41861912576fortsetzen/sichten,keinDuplikat/Abbruch/Pipelinewechsel;erstnachvollständigerMain-/Deploy-/echterProduktionsabnahmev281freigeben,dannUH04→UH05.** WährendoffenerIntegrationkeineFolgeimplementierung. KeineHintergrundfortsetzungbehauptet;dieserOwnerhatnichtabgegeben.
+
+PrivatVersion15unverändertgesichert,189HashesPASS;Originalreprogegen869exakteKandidatenblobsPASS,113fehlendehistorischeBlobskeinVollcheckoutbehauptet. LINKgesperrtwegenFinalitätsanker;keineidentischenRPCs/keineNutzerPythonanforderung. EFF01/HND01/alleSchutzverträgegelten;CheckpointbranchniemalsvollständignachMainmergen. EigeneZähler0LIVE_ACCEPTED/0abgeschlosseneProduktpakete.
+
+---
+
 ## ACTIVE – 01a1a73ba52f / PR296 gemergt / v281 Main-Abnahme läuft – 04.11.2026
 
 PR296 nach [Integrationsabnahme](release-evidence/v281-pr296-integration-acceptance.json) HEAD-geschützt gemergt. Main5e24de041622cf5753adc48eebc303ef647e788b / Tree6b226b1082f05078257c106d57f6fa07dd97720f entspricht geprüftemKandidaten/Testmerge. Pflicht41854091524/Wallet41854091649Versuch1SUCCESS; tatsächlicheZIPs/API-/Uploadloghash/CRC/141JSONs/21AugmentationsPNG/3gesichtet/OriginalOraclePASS. 1190Tests0Fehler0Skips. KeineDuplikate/Retries/Abbrüche.
