@@ -1,4 +1,4 @@
-import {validateNetSettlement,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension} from './flatex-net-settlement.js';
+import {validateNetSettlement,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension,validateNetAugmentationTransition} from './flatex-net-settlement.js';
 import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
@@ -153,6 +153,13 @@ export function importCSV(model,preview){
  if(preview.issues.length)throw Error('CSV enthält fehlerhafte Zeilen – vor Import korrigieren.');
  if(!preview.ready&&!preview.evidenceUpdates)return {imported:0,duplicates:preview.duplicates};
  const next=structuredClone(preview.simulated);
+ if(preview.netAugmentation!==undefined){
+  if(preview.ready!==1||preview.duplicates!==0||preview.evidenceUpdates||preview.skipped)throw Error('Ungültige Einzelbeinergänzung.');
+  validateNetAugmentationTransition(model,next,preview.netAugmentation);
+  safeImport(JSON.parse(backup(next)));
+  if(!ledgerQuantityAudit(next).ok)throw Error('Ergänzungsjournal und Bestände widersprechen sich.');
+  Object.assign(model,next);return {imported:0,augmented:1,duplicates:0};
+ }
  if(next.bookings.length!==(model.bookings||[]).length+preview.ready||(next.version!==model.version&&!(next.version===5&&[3,4].includes(model.version)&&hasFlatexNetState(next)))||
     model.bookings.some(b=>!next.bookings.some(n=>n.id===b.id&&(JSON.stringify(n)===JSON.stringify(b)||(preview.evidenceUpdates&&netEvidenceExtension(b,n)))))||
     model.journalEntries.some(e=>!next.journalEntries.some(n=>n.id===e.id&&JSON.stringify(n)===JSON.stringify(e))))throw Error('CSV-Vorschau stimmt nicht zum Datenmodell.');

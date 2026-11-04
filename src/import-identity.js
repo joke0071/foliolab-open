@@ -14,6 +14,9 @@ export function importSourceKey(source){
 }
 export function bookingOwnership(model,booking){
  const fields=['date','type','positionId','accountId','quantityExact','quantity','unitPrice','feeEUR','taxEUR','fxRate','amountExactEUR','amountEUR','targetPositionId','cashPositionId','notes','costsVerified','netSettlement'];
+ // Preserve existing snapshot bytes for every old booking. Only the explicit
+ // cash augmentation opts into the additional, durable original-source audit.
+ if(booking.netAugmentation!==undefined)fields.push('netAugmentation');
  const entry=model.journalEntries?.find(e=>e.id===booking.journalEntryId);
  return JSON.stringify([fields.map(k=>booking[k]??null),entry??null]);
 }
