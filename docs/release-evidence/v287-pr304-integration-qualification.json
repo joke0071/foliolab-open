@@ -1,0 +1,146 @@
+{
+  "status": "INTEGRATION_ACCEPTED",
+  "pr": 304,
+  "head": "1fbf40f7c338017ab29720474db6eb91c33264fc",
+  "tree": "9155c36e5b00cf49551277eede11a55debcb4ab1",
+  "base": "588d3d3900477e4b3591917634b4f718d3465b0d",
+  "run": 42033599999,
+  "attempt": 1,
+  "walletRun": 42033600087,
+  "units": 1214,
+  "failures": 0,
+  "skips": 0,
+  "artifacts": [
+    {
+      "id": 13416619691,
+      "name": "ci-stage-58250140fe4457072b145821715c40a31956f346",
+      "bytes": 607,
+      "sha256": "eb80f2e69fe0417429d76d4b46adf0c6688a1bc224246d6c36850e57c73d8d40",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13417222800,
+      "name": "cross-engine-gates-58250140fe4457072b145821715c40a31956f346-2",
+      "bytes": 12214663,
+      "sha256": "40969ec0e3147224a93a0e2bcc3411bf031e96aa02f57439aa38dfd0b38fb2c1",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13417339792,
+      "name": "dialog-visual-reference",
+      "bytes": 934537,
+      "sha256": "13e9eba94a6e9ebcaf13568d44fa4e7bd615b89958410b8d63620871acbb0596",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13417952749,
+      "name": "cross-engine-gates-58250140fe4457072b145821715c40a31956f346-1",
+      "bytes": 59708973,
+      "sha256": "5e1354b6718727475d64fae72f71e8acf364427e9593cbb470e21bfb43d43a87",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13418088796,
+      "name": "release-gates-58250140fe4457072b145821715c40a31956f346",
+      "bytes": 63864398,
+      "sha256": "4f22821b8fdd8d02c504edab0de6815a00dbf6286eea542775486590e3f431df",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 707,
+      "jsonReports": 67,
+      "pngsDecoded": 637,
+      "failureFlags": []
+    },
+    {
+      "id": 13418338780,
+      "name": "cross-engine-gates-58250140fe4457072b145821715c40a31956f346-3",
+      "bytes": 61800151,
+      "sha256": "67972627efb790a8ce83e5daac131bd8496dbc8e6266badf575c7040f45b53dd",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 708,
+      "jsonReports": 55,
+      "pngsDecoded": 652,
+      "failureFlags": []
+    }
+  ],
+  "jsonReports": 155,
+  "pngsDecoded": 1857,
+  "sharedImport": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "all five native sources, overlapping and duplicate exports, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "all five native sources, overlapping and duplicate exports, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "all five native sources, overlapping and duplicate exports, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "visualsReviewed": [
+    "Chromium141/390",
+    "Firefox157/390",
+    "WebKit27.2/390"
+  ],
+  "ciStarted": 0,
+  "retries": 0,
+  "cancelled": 0,
+  "privateVersionVerified": 39,
+  "privateManifestHashes": 452,
+  "limits": "Controlled synthetic balances; previous private original evidence reused at unchanged relevant source; no historical ownership/balance, missing Wallet/Staking never zero; UH04/UH05 PARTIAL",
+  "release": "v287 NOT LIVE_ACCEPTED",
+  "owner": "cfb12adcc050"
+}
