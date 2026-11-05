@@ -1,3 +1,13 @@
+## ACTIVE – e963a4b02c5f / PR305 READY / ausdrücklich freigegebener Pflichtübergang – 05.11.2026
+
+Der Nutzer hat mit „Ja“ ausdrücklich den zusätzlichen vollständigen CI-Lauf durch den notwendigen Draft→ready_for_review-Übergang sowie anschließenden geschützten Merge und Produktionsabnahme freigegeben. Diese eng begrenzte Ausnahme ist erteilt; nicht erneut fragen. PR305 ist jetzt READY, HEAD `ecdba24bc96b61a213bcdadbe304fe84be1ec20e` unverändert. Genau ein neuer regulärer Pflichtlauf **42104247738 Versuch1 IN_PROGRESS** entstand automatisch. Keine manuelle Dispatch-/Retry-/Abbruchaktion, keine Produktänderung. Wallet42093402680SUCCESS bleibt vorhandener unveränderter Nachweis; für den Ready-Übergang entstand bislang kein neuer Walletlauf. Früherer vollständig qualifizierter Lauf42093402676SUCCESS bleibt erhalten.
+
+Bestehende Source-/Tree-/Original-/Finanz-/Artefaktnachweise wiederverwenden; neue tatsächlich erzeugte ZIPs eigenständig API-/Uploadlog-/lokaleHash-/Bytes-/CRC-/JSON-/PNG-prüfen und neue datierte Kette in allen3Engines samt tatsächlichenBildern qualifizieren. Nur bei vollständigen Gates, frischem Main/HEAD/Reviews erwarteten HEAD geschützt mergen. Danach genau Mainlauf/Pages/Deploy/reguläresTLS/SWv288/tatsächliche Produktion. v288 weiterhin NICHT DEPLOYED/LIVE_ACCEPTED, v287 nicht wiederabnehmen.
+
+PrivateV45 wurde frisch materialisiert und alle652Manifestdateien unabhängig hashgeprüft; Bytes4176132/SHA25698581100d984265b2f3a2431a6dda568a8fc6f199deaf60e52f1e102dd8008c6 unverändert. Alle Schutzverträge/Folgeaufträge und alleiniger Owner erhalten; GitHub nurPlugin; Checkpointbranch niemals vollständig nachMain.
+
+---
+
 ## ACTIVE / ENTSCHEIDUNG AUSSTEHEND – e963a4b02c5f / PR305 vollständig integrationsqualifiziert / Draft-Übergang – 05.11.2026
 
 **PR305 ist vollständig INTEGRATION_QUALIFIED, aber NICHT gemergt. v288 ist weder DEPLOYED noch LIVE_ACCEPTED. v287 bleibt LIVE_ACCEPTED und wird nicht erneut abgenommen.** Alleiniger Owner e963a4b02c5f nach bestätigter HND01-Abgabe c9e345093749; keine weitere Übernahme/kein Parallelstrang.
