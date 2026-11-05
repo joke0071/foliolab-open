@@ -1,0 +1,215 @@
+{
+  "release": "v288",
+  "status": "READY_INTEGRATION_QUALIFIED",
+  "owner": "e963a4b02c5f",
+  "pr": 305,
+  "main": "315de8c236b8bd05d891ebe159858e6537784edd",
+  "mainTree": "9155c36e5b00cf49551277eede11a55debcb4ab1",
+  "head": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+  "tree": "6951d60948282c5aa2d9c9f8144a6bb5d5acfefd",
+  "syntheticMerge": "97c79dabe754d4fa528391faf98aa3806b4e50c9",
+  "treeIndependentlyComputed": true,
+  "requiredRun": {
+    "id": 42104247738,
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "walletRun": {
+    "id": 42093402680,
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "units": {
+    "tests": 1220,
+    "pass": 1220,
+    "fail": 0,
+    "skip": 0
+  },
+  "artifacts": {
+    "zipCount": 6,
+    "jsonReports": 160,
+    "pngsDecoded": 1863,
+    "binding": "API digest and upload log and local bytes/SHA256/CRC; recursive JSON error flags absent; all PNGs decoded",
+    "receipts": [
+      {
+        "id": 13451077501,
+        "name": "cross-engine-gates-97c79dabe754d4fa528391faf98aa3806b4e50c9-1",
+        "bytes": 59704956,
+        "sha256": "fe2e98a30804d6239f0743caeeeb4a4730766b998071464bb973b7a2bd4d1c57",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 490,
+        "jsonReports": 15,
+        "pngsDecoded": 474,
+        "failureFlags": []
+      },
+      {
+        "id": 13452796464,
+        "name": "dialog-visual-reference",
+        "bytes": 934537,
+        "sha256": "2b3d515f4a9520e4f28e54abef05ef132bf4c6c6eca0560a060f59009f8d98dd",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 20,
+        "jsonReports": 0,
+        "pngsDecoded": 20,
+        "failureFlags": []
+      },
+      {
+        "id": 13452133027,
+        "name": "release-gates-97c79dabe754d4fa528391faf98aa3806b4e50c9",
+        "bytes": 64006245,
+        "sha256": "3537e87293d887f5190598f049930d662489c5018be975b80b5ee008032180ac",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 711,
+        "jsonReports": 69,
+        "pngsDecoded": 639,
+        "failureFlags": []
+      },
+      {
+        "id": 13451850353,
+        "name": "ci-stage-97c79dabe754d4fa528391faf98aa3806b4e50c9",
+        "bytes": 630,
+        "sha256": "7fa4a27e6bc5460d9bd885accad2ad0b6c4de8c4d57773578096e7b8a59586c7",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 1,
+        "jsonReports": 1,
+        "pngsDecoded": 0,
+        "failureFlags": []
+      },
+      {
+        "id": 13452510381,
+        "name": "cross-engine-gates-97c79dabe754d4fa528391faf98aa3806b4e50c9-2",
+        "bytes": 12216434,
+        "sha256": "52ea8f1bf3e538496a7b86b071c55c359c5dfefe4c7480dcaf863909d66ced67",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 92,
+        "jsonReports": 17,
+        "pngsDecoded": 74,
+        "failureFlags": []
+      },
+      {
+        "id": 13452472941,
+        "name": "cross-engine-gates-97c79dabe754d4fa528391faf98aa3806b4e50c9-3",
+        "bytes": 62168234,
+        "sha256": "29e03f6b8c52d105989689917c6a4c28427775237ff26dda2a4a6a6062e1d19c",
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "entries": 715,
+        "jsonReports": 58,
+        "pngsDecoded": 656,
+        "failureFlags": []
+      }
+    ]
+  },
+  "datedReconciliation": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "actualCIReports": true,
+    "actualCIImagesReviewed": true,
+    "checks": [
+      "both source dialects; earlier/later reconciliation",
+      "unchanged original bookings/journals/openings/references",
+      "independent integer balances; unknown costs retained",
+      "one CAS; consent reset; quota; post-put abort; actual peer tab",
+      "exact full Undo; offline repeat; encrypted fresh-profile restore",
+      "five mobile widths; Axe; no financial-provider requests"
+    ],
+    "bindings": {
+      "firefox": {
+        "artifact": "13452472941",
+        "report": {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "both dialects, later and earlier dated reconciliation",
+            "unchanged old bookings/journals/openings/references; independent integer balances",
+            "consent reset, one CAS, quota/post-put, actual peer tab",
+            "exact full Undo, offline repeat, encrypted fresh-profile restore",
+            "five mobile widths/Axe, no financial-provider requests"
+          ]
+        }
+      },
+      "webkit": {
+        "artifact": "13452472941",
+        "report": {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "both dialects, later and earlier dated reconciliation",
+            "unchanged old bookings/journals/openings/references; independent integer balances",
+            "consent reset, one CAS, quota/post-put, actual peer tab",
+            "exact full Undo, offline repeat, encrypted fresh-profile restore",
+            "five mobile widths/Axe, no financial-provider requests"
+          ]
+        }
+      },
+      "chromium": {
+        "artifact": "13452133027",
+        "report": {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "both dialects, later and earlier dated reconciliation",
+            "unchanged old bookings/journals/openings/references; independent integer balances",
+            "consent reset, one CAS, quota/post-put, actual peer tab",
+            "exact full Undo, offline repeat, encrypted fresh-profile restore",
+            "five mobile widths/Axe, no financial-provider requests"
+          ]
+        }
+      }
+    }
+  },
+  "reviews": [],
+  "unresolvedThreads": [],
+  "mergeableState": "clean",
+  "draft": false,
+  "blocker": {
+    "resolved": true,
+    "userAuthorization": "Ja; precisely the required Ready-transition extra run and following guarded merge/production acceptance"
+  },
+  "previousFailure": {
+    "run": 42065621234,
+    "attempt": 1,
+    "conclusion": "failure",
+    "job": 127378937634,
+    "test": "browser-ui-quality.mjs:51, WebKit logo-beta0 expected2",
+    "locallyReproduced": false,
+    "retained": true
+  },
+  "correction": {
+    "commit": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+    "path": "tests/browser-ui-quality.mjs",
+    "scope": "Await actual active controlling app worker before fixture reload; failure-only state report.",
+    "assertionsUnchanged": true,
+    "deadlinesUnchanged": true,
+    "workflowUnchanged": true,
+    "productFilesUnchanged": true,
+    "localPrimaryUI": "Firefox157/WebKit27.2 PASS,37 scans each"
+  },
+  "lastLiveAccepted": "v287; do not repeat",
+  "v288Deployed": false,
+  "v288LiveAccepted": false,
+  "scope": "UH04/UH05 remain PARTIAL. No historical ownership/balance/market-price acceptance. Wallet/staking missing remains UNKNOWN. All original/private/finance/journal/v5/IDB/CAS/backup/restore/offline/privacy/UI300/QUALITY298/CI229 contracts retained.",
+  "retries": 0,
+  "cancelled": 0,
+  "manualWorkflowDispatches": 0,
+  "priorQualifiedRun": 42093402676,
+  "readyTransitionExtraRuns": 1,
+  "readyTransitionUserAuthorized": true,
+  "priorDraftMergeAttempt": {
+    "expectedHead": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+    "result": "GitHub API 405: Pull Request is still a draft",
+    "mainUnchanged": true
+  }
+}
