@@ -1,0 +1,109 @@
+{
+  "status": "INTEGRATION_ACCEPTED_NOT_MERGED_OR_LIVE",
+  "pr": 302,
+  "head": "33b248d77571fd1de0fb854aba64b7be15589122",
+  "tree": "5578c6b7c00894f87443c1e4edde3c0b28886294",
+  "syntheticMerge": "294117a8cb4975efc7dbfc9577c079a5b1212061",
+  "baseMain": "c430039d61514ffaf8126ffe30052d94ecfe243d",
+  "requiredRun": 41992425719,
+  "requiredAttempt": 1,
+  "requiredConclusion": "SUCCESS",
+  "walletRun": 41992425765,
+  "walletConclusion": "SUCCESS",
+  "units": 1211,
+  "failures": 0,
+  "skips": 0,
+  "artifacts": [
+    {
+      "id": 13399925864,
+      "name": "release-gates-294117a8cb4975efc7dbfc9577c079a5b1212061",
+      "bytes": 63715921,
+      "sha256": "10b59eacae78d87795d92039585152069f84719f28ecdd2cb34292420bf69175",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 703,
+      "jsonReports": 65,
+      "failureFlags": [],
+      "pngsDecoded": 635
+    },
+    {
+      "id": 13399307181,
+      "name": "cross-engine-gates-294117a8cb4975efc7dbfc9577c079a5b1212061-1",
+      "bytes": 59705766,
+      "sha256": "8d34c74b0ef38ac8153c180e8bbc8441181ef1093563c03aab5655430d9ccb7d",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "failureFlags": [],
+      "pngsDecoded": 474
+    },
+    {
+      "id": 13399300865,
+      "name": "cross-engine-gates-294117a8cb4975efc7dbfc9577c079a5b1212061-2",
+      "bytes": 12213857,
+      "sha256": "a7670eb0162b16d23a4c00be43cfb95a7a79b1bdf3570cbfc984bd03709170d3",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "failureFlags": [],
+      "pngsDecoded": 74
+    },
+    {
+      "id": 13399187416,
+      "name": "dialog-visual-reference",
+      "bytes": 934865,
+      "sha256": "5ae68cb1eff1e4fd3b343aba42b5fbe652e3eed10dc8596fb976bd97cd7585a6",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "failureFlags": [],
+      "pngsDecoded": 20
+    },
+    {
+      "id": 13397714093,
+      "name": "ci-stage-294117a8cb4975efc7dbfc9577c079a5b1212061",
+      "bytes": 614,
+      "sha256": "aec102e7e9c3317614ff90a64a210a032927eab0b435954251d39ea7de634463",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "failureFlags": [],
+      "pngsDecoded": 0
+    },
+    {
+      "id": 13399442741,
+      "name": "cross-engine-gates-294117a8cb4975efc7dbfc9577c079a5b1212061-3",
+      "bytes": 61436538,
+      "sha256": "ef73912ee675474cbfc4e5d1a690b8306ce345bde90885bb5223378e79cde0d1",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 702,
+      "jsonReports": 53,
+      "failureFlags": [],
+      "pngsDecoded": 648
+    }
+  ],
+  "jsonReports": 151,
+  "pngsDecoded": 1851,
+  "newActualUI": "Chromium/Firefox/WebKit PASS; both dialects and actual Bitpanda/Flatex UI in both orders; independent quantities/cash/fees/CAS/rollback/offline/encrypted v5 fresh restore/withdrawal; 7 widths/Axe",
+  "newScreenshotsViewed": [
+    "chromium-context-390",
+    "firefox-context-390",
+    "webkit-context-390"
+  ],
+  "privateOriginalActualUI": {
+    "files": 10,
+    "rows": 507,
+    "pairs": 24,
+    "result": "PASS",
+    "limits": "Controlled independent Python Decimal starting/ending quantities and declared source scopes; not real historical balances or ownership"
+  },
+  "scope": "Bounded EUR closing-balance backfill; no common all-five atomic import; UH04/UH05 remain PARTIAL",
+  "workflowChanged": false,
+  "ciDuplicatedOrCancelled": false,
+  "retries": 0
+}
