@@ -5,9 +5,14 @@ import {ledgerQuantityAudit} from './transactions.js';
 import {reconcileFlatexPositions,flatexCustodyAccounts} from './flatex-reconciliation.js';
 import {prepareNativeFlatexImport} from './flatex-import.js';
 import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
+import {prepareFlatexNetReconciliationPreview} from './flatex-net-reconciliation.js';
 
 /** Strict native simulation over the existing CSV/backfill engines. No write API. */
 export function prepareNativeFlatexPreview(model,documents,assignments,options={}){
+ if(options?.mode==='net-reconcile'){
+  if(Object.keys(options).some(k=>!['mode','stale','selectedIds','observations','confirmed'].includes(k)))throw Error('Unzulässige Optionen im datierten Bestandsabgleich.');
+  return prepareFlatexNetReconciliationPreview(model,documents,assignments,options);
+ }
  if(options?.mode==='net-backfill'){if(Object.keys(options).some(k=>!['mode','stale','selectedIds','openingDate','openingConfirmed','openingQuantities','expectedClosing','closingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im Endbestandsabgleich.');return prepareFlatexNetBackfillPreview(model,documents,assignments,options);}
 
  if(['net','net-remove','net-augment'].includes(options?.mode)&&Object.keys(options).some(k=>!['mode','stale','selectedIds','openingDate','openingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im EUR-Paarablauf.');

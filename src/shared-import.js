@@ -65,7 +65,7 @@ export function previewSharedImport(model,sources,choices,{at=new Date().toISOSt
   reports.push({provider:'Bitpanda',ready:p.ready,duplicates:p.duplicates,excluded:p.excluded,details:p.groups.map(g=>({id:g.id,status:g.status,text:g.message||g.actions?.map(a=>a.type+' · '+(a.quantityExact??a.quantity??'')+' · '+(a.notes||'')).join('; ')||'Bereits vorhanden'})),note:'Endbestände und Gebührenmodus geprüft. Ungeklärte Transfers und Staking bleiben offen.'});
  }
  if(sources.flatex.length){
-  const c=choices.flatex;if(!c?.confirmed||!['append','backfill','net','net-backfill','net-augment'].includes(c.options?.mode))throw Error('Flatex: Zuordnung und Importmodus prüfen.');
+  const c=choices.flatex;if(!c?.confirmed||!['append','backfill','net','net-backfill','net-augment','net-reconcile'].includes(c.options?.mode))throw Error('Flatex: Zuordnung und Importmodus prüfen.');
   const inspection=inspectFlatexNetPairs(sources.flatex.map(f=>f.document)),excluded=c.options.mode.startsWith('net')?inspection.reviewCount+inspection.pairs.filter(p=>!c.options.selectedIds?.includes(p.id)).length:0;
   if(excluded&&!c.partialConfirmed)throw Error('Flatex: ungeklärte und nicht ausgewählte Restgruppen ausdrücklich offen lassen.');
   const p=prepareNativeFlatexPreview(draft,sources.flatex.map(f=>f.document),c.assignments,c.options);

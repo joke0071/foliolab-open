@@ -7,6 +7,7 @@ import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
 import {units,exact} from './decimal.js';
 import {validCalendarDate,ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
 import {previewCSV,CSV_FIELDS} from './csv-import.js';
+import {validateFlatexNetReconciliations} from './flatex-net-reconciliation.js';
 const fail=()=>{throw Error('Flatex-Nettogruppe oder Quellenbeleg widersprüchlich.');};
 const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const keys=(o,list)=>{if(!o||Array.isArray(o)||Object.keys(o).sort().join('|')!==list.split(' ').sort().join('|'))fail();};
@@ -206,7 +207,14 @@ function validateGroup(model,b,j,{removed=false}={}){
  if(units(b.quantityExact)!==units(s.quantityExact)||units(b.amountExactEUR)!==units(s.grossExact)||b.amountEUR!==Number(s.grossExact)||b.unitPrice!==Number(s.unitPriceExact)||b.fxRate!==1)fail();
  if(b.importSource?.sourceId!==s.depot.sourceId||b.importSource?.externalId!==s.depot.externalId||!sourceUnmodified({journalEntries:[j]},b))fail();
  const payload=JSON.parse(b.importSource.sourcePayload);
- if(b.netAugmentation!==undefined||payload.netAugmentationDigest!==undefined)validateNetAugmentation(b,j);
+ if(b.netAugmentation?.version===2){
+  // Versioned capability: old v287 validators reject this reserved audit tag.
+  keys(b.netAugmentation,'version reconciliationId');
+  if(!b.netReconciliation||b.netAugmentation.reconciliationId!==b.netReconciliation.id||payload.netAugmentationDigest!==undefined)fail();
+ }else{
+  if(b.netReconciliation!==undefined)fail();
+  if(b.netAugmentation!==undefined||payload.netAugmentationDigest!==undefined)validateNetAugmentation(b,j);
+ }
  if(payload.netSettlementId!==s.id||payload.sourceEvidence?.payloadDigest!==s.depot.payloadDigest||payload.cashPositionId!==c.id||payload.netCashExact!==s.cashExact||payload.tradeAmountEURExact!==s.grossExact)fail();
  if(j.postings.length!==3)fail();
  const asset=j.postings.filter(x=>x.role==='asset'),cash=j.postings.filter(x=>x.role==='cash'),difference=j.postings.filter(x=>x.role==='unresolved-net-amount');
@@ -225,7 +233,7 @@ export function validateFlatexNetSettlements(model){
   if(!Array.isArray(model.flatexNetRemovals)||model.flatexNetRemovals.length>2500)fail();
   for(const r of model.flatexNetRemovals){keys(r,'version booking journal');if(r.version!==1||model.bookings.some(b=>b.id===r.booking?.id)||model.journalEntries.some(j=>j.id===r.journal?.id))fail();reserve(validateGroup(model,r.booking,r.journal,{removed:true}));}
  }
- return model;
+ return validateFlatexNetReconciliations(model);
 }
 /** Explicit selected groups only; unrelated unresolved rows remain visible. */
 export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds=[],openingDate='',openingConfirmed=false,stale=false,mode}={}){
@@ -363,6 +371,7 @@ export function prepareFlatexNetBackfillPreview(model,documents,assignments,opti
 export function withdrawFlatexNetGroups(model,ids){
  validateFlatexNetSettlements(model);
  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length)throw Error('Wirtschaftsgruppen ausdrücklich auswählen.');
+ if(model.bookings.some(b=>b.netReconciliation?.groupIds.some(id=>ids.includes(id))))throw Error('Datierter Bestandsabgleich schützt diese Gruppen. Nur vollständiges Sitzungs-Undo oder geprüftes Backup wiederherstellen.');
  const selected=ids.map(id=>model.bookings.find(b=>b.netSettlement?.id===id));if(selected.some(b=>!b))throw Error('Aktive Wirtschaftsgruppe fehlt.');
  const chosen=new Set(selected.map(b=>b.journalEntryId));
  for(const b of selected){const j=model.journalEntries.find(j=>j.id===b.journalEntryId),touched=new Set([b.positionId,b.cashPositionId]);
