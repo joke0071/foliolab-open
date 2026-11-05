@@ -1,0 +1,880 @@
+{
+  "status": "PASS",
+  "main": "c430039d61514ffaf8126ffe30052d94ecfe243d",
+  "tree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+  "artifact": 13392649882,
+  "files": [
+    {
+      "path": "index.html",
+      "bytes": 49019,
+      "gitBlob": "65f4b834a6089820629530c0028b6e85a7a14bd0",
+      "sha256": "6b103c76e2944caf8ea53aa63ecb80397b21cbd590d37aaebc2eb2c95df92182"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "bytes": 930,
+      "gitBlob": "60f13ef827812f0066043295f65316b6144e618c",
+      "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd"
+    },
+    {
+      "path": "src/ledger-live.js",
+      "bytes": 10006,
+      "gitBlob": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+      "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc"
+    },
+    {
+      "path": "src/public-instruments-client.js",
+      "bytes": 2690,
+      "gitBlob": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+      "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589"
+    },
+    {
+      "path": "src/capital-flows.js",
+      "bytes": 1846,
+      "gitBlob": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c",
+      "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704"
+    },
+    {
+      "path": "src/wallet-history-ui.js",
+      "bytes": 25785,
+      "gitBlob": "012f97dcdf3b5da96627be04c70f87c00dcaef8e",
+      "sha256": "f73d71a43c27f2cfc0536f2db238218f1a8ded77c1962162e5f2404064ee791e"
+    },
+    {
+      "path": "src/kraken-withdrawal-evidence.js",
+      "bytes": 2939,
+      "gitBlob": "99b68062733ef985892a2643e5925775e3cf7894",
+      "sha256": "df26d901fe5563d84551ce58d65712cf643bc61dcc48028b1924b5af60601e7f"
+    },
+    {
+      "path": "src/purchase-evidence.js",
+      "bytes": 10685,
+      "gitBlob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+      "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43"
+    },
+    {
+      "path": "src/onboarding-suggestions.js",
+      "bytes": 3997,
+      "gitBlob": "2c045c706fb7cf3090d8a462f36834ade5e2dee7",
+      "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626"
+    },
+    {
+      "path": "src/xrpl-assets.js",
+      "bytes": 2745,
+      "gitBlob": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+      "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1"
+    },
+    {
+      "path": "src/dialog-discard.js",
+      "bytes": 590,
+      "gitBlob": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3",
+      "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030"
+    },
+    {
+      "path": "src/flatex-import.js",
+      "bytes": 14442,
+      "gitBlob": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69",
+      "sha256": "c5c641ded63cc7ddafae0cb2e2facf2a3590117c70760b3d8efa1302bc52010c"
+    },
+    {
+      "path": "src/pchain-identity.js",
+      "bytes": 3228,
+      "gitBlob": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d",
+      "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460"
+    },
+    {
+      "path": "src/flatex-cash-audit.js",
+      "bytes": 3536,
+      "gitBlob": "484a7fba8494f912d4968df553a3fa7bfdc913d5",
+      "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b"
+    },
+    {
+      "path": "src/request-cache.js",
+      "bytes": 6160,
+      "gitBlob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+      "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1"
+    },
+    {
+      "path": "src/solana-rpc.js",
+      "bytes": 5322,
+      "gitBlob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+      "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b"
+    },
+    {
+      "path": "src/assets.js",
+      "bytes": 2116,
+      "gitBlob": "4ccc409818140dda267a345088b47bfa59e851c2",
+      "sha256": "7601b375d1cc7572b9eeb6f2a3fb988a4040e8b32463db6ae3f0a7c4e44e1acf"
+    },
+    {
+      "path": "src/kraken-import-ui.js",
+      "bytes": 22184,
+      "gitBlob": "c27ee7c3772d1353059d1e078773569ed6c5637f",
+      "sha256": "07db8f08838ec9082a2a64e1f93aa85934f7d8db2d0e1ac1bb41eadec0b12200"
+    },
+    {
+      "path": "src/legacy-quote-audit.js",
+      "bytes": 3139,
+      "gitBlob": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e",
+      "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3"
+    },
+    {
+      "path": "src/csv-records.js",
+      "bytes": 1776,
+      "gitBlob": "a38aad028a30776022c6c8950a2699a6694962b4",
+      "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921"
+    },
+    {
+      "path": "src/chart-periods.js",
+      "bytes": 6743,
+      "gitBlob": "e7ca59776ce800626ce5309887206baf4b25625f",
+      "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359"
+    },
+    {
+      "path": "src/crypto-fallbacks.js",
+      "bytes": 6948,
+      "gitBlob": "1151f42b1315241805923b848a7a2efdf65528ac",
+      "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a"
+    },
+    {
+      "path": "src/kraken-bitcoin-bridge.js",
+      "bytes": 9490,
+      "gitBlob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+      "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639"
+    },
+    {
+      "path": "src/backup-vault.js",
+      "bytes": 6865,
+      "gitBlob": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0",
+      "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+    },
+    {
+      "path": "src/history-evidence-cache.js",
+      "bytes": 2520,
+      "gitBlob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+      "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c"
+    },
+    {
+      "path": "src/staking-discovery.js",
+      "bytes": 7573,
+      "gitBlob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+      "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e"
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "bytes": 22791,
+      "gitBlob": "f4ef74d75e2a89fb8deaf130ac2549bd552a884f",
+      "sha256": "ea515a1d648bf9084daf87f6f9af7eb140135314cc737f59f0d0a87fe3b85a80"
+    },
+    {
+      "path": "src/performance.js",
+      "bytes": 7230,
+      "gitBlob": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a",
+      "sha256": "5d594a45db88f18d0e272a3b71c6339b7809984c747dd0fc6c3e86dd3e90ca20"
+    },
+    {
+      "path": "src/app.js",
+      "bytes": 290879,
+      "gitBlob": "2a9e99ed0e0ad1c5fed6bd330868cae173a9a07e",
+      "sha256": "cf00b3dd5fe592d9ef9b2952f16364add58118121d614350d3b0e6d406ce2cc9"
+    },
+    {
+      "path": "src/blocked-reasons-ui.js",
+      "bytes": 2921,
+      "gitBlob": "93f5550fb59337ce3c78642b9b36c8acd5dc1381",
+      "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98"
+    },
+    {
+      "path": "src/csv-import.js",
+      "bytes": 15539,
+      "gitBlob": "f3373847f38d89c9c69f964a3541f8fbe7ded7e0",
+      "sha256": "1ca54581a5bd9576b9ef3916c8d0eef3ecb29081a4a1f55086cb8129b9676821"
+    },
+    {
+      "path": "src/blockchain-adapters.js",
+      "bytes": 3546,
+      "gitBlob": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16",
+      "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8"
+    },
+    {
+      "path": "src/cash-reconciliation.js",
+      "bytes": 2040,
+      "gitBlob": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda",
+      "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4"
+    },
+    {
+      "path": "src/bitpanda-import-ui.js",
+      "bytes": 12962,
+      "gitBlob": "8ba3c25c93872b031ccc54e0c2f1a9962f864c56",
+      "sha256": "e88935460453b7e1e48691c4fcc6fd15a8e3855d74b2f40f55e4b02cb556e535"
+    },
+    {
+      "path": "src/bitcoin-history.js",
+      "bytes": 15708,
+      "gitBlob": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1",
+      "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8"
+    },
+    {
+      "path": "src/position-quality-review.js",
+      "bytes": 4638,
+      "gitBlob": "f9bf88aba5d709e5ff794d5b488ea2482f61019c",
+      "sha256": "f708514846a4950d485abacea4e2e8ba88866ef1213230fc8b96425ff864fa2b"
+    },
+    {
+      "path": "src/historical-csv.js",
+      "bytes": 8496,
+      "gitBlob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+      "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b"
+    },
+    {
+      "path": "src/wallet-history-valuation.js",
+      "bytes": 5695,
+      "gitBlob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+      "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a"
+    },
+    {
+      "path": "src/kraken-link-bridge.js",
+      "bytes": 4815,
+      "gitBlob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+      "sha256": "6e15a9f665549cc3f7516a9041036fc16cee7be36cd9b1fddff35b57e73bd649"
+    },
+    {
+      "path": "src/flatex-native.js",
+      "bytes": 10291,
+      "gitBlob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e"
+    },
+    {
+      "path": "src/complete-backup.js",
+      "bytes": 4212,
+      "gitBlob": "1f9e6ae63528cf2ffa79a876f357e6fabed258d4",
+      "sha256": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4"
+    },
+    {
+      "path": "src/import-identity.js",
+      "bytes": 11488,
+      "gitBlob": "9df969c25808a355b76fc3be01cd905366c8106a",
+      "sha256": "4820924c47ff7c94e1eb1f5e64fcbe09a0774c5e47591a097862f92e9c7b58ef"
+    },
+    {
+      "path": "src/wallet-scan-update.js",
+      "bytes": 1707,
+      "gitBlob": "882bcac821c0ca94d38c02955de187faba757057",
+      "sha256": "00b7c5beb98cf0cc3c639c9747c60646ffe38e4bcb8cf4ce1b1bb1c8a7203acf"
+    },
+    {
+      "path": "src/retired-providers.js",
+      "bytes": 608,
+      "gitBlob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+      "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279"
+    },
+    {
+      "path": "src/wallet-visibility.js",
+      "bytes": 3444,
+      "gitBlob": "fa4b9e49fff050b82d287409af37562b72e97b07",
+      "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d"
+    },
+    {
+      "path": "src/portfolio-edit-actions.js",
+      "bytes": 5144,
+      "gitBlob": "3412841500a16abd99aa37e2603603e676d2ad94",
+      "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04"
+    },
+    {
+      "path": "src/cash-terms.js",
+      "bytes": 5600,
+      "gitBlob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+      "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0"
+    },
+    {
+      "path": "src/interest-ui.js",
+      "bytes": 9433,
+      "gitBlob": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248",
+      "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7"
+    },
+    {
+      "path": "src/flatex-reconciliation.js",
+      "bytes": 3127,
+      "gitBlob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+      "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6"
+    },
+    {
+      "path": "src/asset-wizard.js",
+      "bytes": 35600,
+      "gitBlob": "3a863542ab6d02ce0def12c735f31069293efb60",
+      "sha256": "2d27329ec83a15bc5884363c6a5c55927ce05da0fd3ba2254c617c7ad893a081"
+    },
+    {
+      "path": "src/security-catalog.js",
+      "bytes": 13197,
+      "gitBlob": "b5edf8651d6a3157a80c0087d28f6482d198e161",
+      "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9"
+    },
+    {
+      "path": "src/bitpanda-preview.js",
+      "bytes": 5398,
+      "gitBlob": "38ed3103272fe7110387c68f24f889e1a88f7ca6",
+      "sha256": "be6dc214ff9213c95d8d968052f9c866a00dfc6263ce6f0b2323448f4c6c59d7"
+    },
+    {
+      "path": "src/flatex-review-export.js",
+      "bytes": 2008,
+      "gitBlob": "1de187107010784e4a8d0f47e74d3bad17e2f4fd",
+      "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec"
+    },
+    {
+      "path": "src/historical-position-value.js",
+      "bytes": 10415,
+      "gitBlob": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+      "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73"
+    },
+    {
+      "path": "src/asset-wizard-core.js",
+      "bytes": 6192,
+      "gitBlob": "bcd7d08446adff32223374cce1e8f1f569c214fa",
+      "sha256": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c"
+    },
+    {
+      "path": "src/crypto-backup.js",
+      "bytes": 2202,
+      "gitBlob": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4",
+      "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc"
+    },
+    {
+      "path": "src/kraken-source-plan.js",
+      "bytes": 5669,
+      "gitBlob": "c35231c6886d1dc2f4e2d663c4586e1f30f21fc5",
+      "sha256": "81ba98accde72711e58e58c5d8ccfe2b8bb379f1278d1119ada9e49c31ce306e"
+    },
+    {
+      "path": "src/staking-catalog.js",
+      "bytes": 7494,
+      "gitBlob": "8a4b4b1206b6949176e6b21a72acea4911467884",
+      "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025"
+    },
+    {
+      "path": "src/bnb-token-scanner.js",
+      "bytes": 6350,
+      "gitBlob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+      "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c"
+    },
+    {
+      "path": "src/account-opening.js",
+      "bytes": 759,
+      "gitBlob": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50",
+      "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b"
+    },
+    {
+      "path": "src/kraken-ethereum-bridge.js",
+      "bytes": 12912,
+      "gitBlob": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+      "sha256": "d5328824d40dc05e744a6c8c4879e6a9bed2d5834d8a765796d46e021006a3b1"
+    },
+    {
+      "path": "src/position-detail-ui.js",
+      "bytes": 14333,
+      "gitBlob": "157c9720e120a5b38ebbb954d29baa91601f9d15",
+      "sha256": "fe139620c0ca5dc4126b45f48efdd68dc9bc203e8bc03a02b04cb149c5676f98"
+    },
+    {
+      "path": "src/unified-bitcoin-ui.js",
+      "bytes": 6766,
+      "gitBlob": "1893fc655d4f910ecacfc6949250fde82a0dc580",
+      "sha256": "8c27cfb3b723e1b1cb3f54c4cee62288adc91b64f536770a11823d2813251146"
+    },
+    {
+      "path": "src/loading-ui.js",
+      "bytes": 1664,
+      "gitBlob": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83",
+      "sha256": "0ed29228cb0d955b3466117540975d59aabb47d5100306ced27c6025d3c19854"
+    },
+    {
+      "path": "src/purchase-evidence-ui.js",
+      "bytes": 6253,
+      "gitBlob": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634",
+      "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0"
+    },
+    {
+      "path": "src/booking-management.js",
+      "bytes": 21757,
+      "gitBlob": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+      "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9"
+    },
+    {
+      "path": "src/unified-bitcoin.js",
+      "bytes": 17410,
+      "gitBlob": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+      "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603"
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "bytes": 6519,
+      "gitBlob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261"
+    },
+    {
+      "path": "src/position-bookings.js",
+      "bytes": 1788,
+      "gitBlob": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19",
+      "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be"
+    },
+    {
+      "path": "src/atomic-storage.js",
+      "bytes": 10053,
+      "gitBlob": "294861aca7b65fffd423b26f50c176a04659340f",
+      "sha256": "f7794c4f109e255b05b7131a2b0fc8e75b8e37018df348230e881b59039708cb"
+    },
+    {
+      "path": "src/kraken-ledger.js",
+      "bytes": 5612,
+      "gitBlob": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+      "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6"
+    },
+    {
+      "path": "src/decimal.js",
+      "bytes": 3302,
+      "gitBlob": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+      "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611"
+    },
+    {
+      "path": "src/economic-form-ui.js",
+      "bytes": 1593,
+      "gitBlob": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f",
+      "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200"
+    },
+    {
+      "path": "src/coin-identity.js",
+      "bytes": 643,
+      "gitBlob": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+      "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26"
+    },
+    {
+      "path": "src/refresh-ui.js",
+      "bytes": 891,
+      "gitBlob": "cd4b56d8d392c90f638b089c91e721a13c3a7d29",
+      "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a"
+    },
+    {
+      "path": "src/credential-visibility.js",
+      "bytes": 2268,
+      "gitBlob": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a",
+      "sha256": "4a683444a5d98637ad4f2f6a6f42c585b6ce37b2a811577bacbaf0e2b5bc7f9e"
+    },
+    {
+      "path": "src/csv-batch.js",
+      "bytes": 3754,
+      "gitBlob": "39c8d8f2fc92fece503048ea321264406908d9d3",
+      "sha256": "651cd0ed88fd8758f7156453758511c1cb5427fba024580e877df8bd787fc59e"
+    },
+    {
+      "path": "src/cash-terms-ui.js",
+      "bytes": 7684,
+      "gitBlob": "4809fc05f141d39ad7e378c44d6e7a287995024c",
+      "sha256": "d60565ac037fa2e8499f9095ec382ebaa85ee0de95b1887ab213eff7d416e22e"
+    },
+    {
+      "path": "src/startup.js",
+      "bytes": 919,
+      "gitBlob": "4121fea8edcd900d456f1dc87abd06d7012aed6b",
+      "sha256": "ba5bce5a6cc763ac79c2dd7c745692c6f0128bc9daec2b95ddd02e708611a488"
+    },
+    {
+      "path": "src/format.js",
+      "bytes": 5025,
+      "gitBlob": "8857db66fc5a02b5db753de3e77e49a88be9c977",
+      "sha256": "69acdbdbdb297cafd13634e5fe4ce8b4e34417077bf4f0e5459c4931d05f728e"
+    },
+    {
+      "path": "src/pchain-evidence.js",
+      "bytes": 4071,
+      "gitBlob": "3c248f1087f0d3273811c50715a1cf888e6d55ed",
+      "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8"
+    },
+    {
+      "path": "src/quote-quality.js",
+      "bytes": 3548,
+      "gitBlob": "b4e4dac38e8f0d59a97715c6ac494e4744d3a65a",
+      "sha256": "e97828bd6b10976faa264ec839a78779f3c64d948a96a980c2fbb886a69d8be7"
+    },
+    {
+      "path": "src/link-explorer-evidence.js",
+      "bytes": 10145,
+      "gitBlob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+      "sha256": "4e85163574dc115233eb6ff346ab29c548a0bd7e2c9688170fb0e03071dabe84"
+    },
+    {
+      "path": "src/wallet-history-days.js",
+      "bytes": 1858,
+      "gitBlob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+      "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3"
+    },
+    {
+      "path": "src/solana-history.js",
+      "bytes": 16250,
+      "gitBlob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+      "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070"
+    },
+    {
+      "path": "src/account-evidence.js",
+      "bytes": 1971,
+      "gitBlob": "3024e91230fc586a4c9f1e4a0746a815794e1d18",
+      "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1"
+    },
+    {
+      "path": "src/backup-limits.js",
+      "bytes": 3335,
+      "gitBlob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+      "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f"
+    },
+    {
+      "path": "src/position-history.js",
+      "bytes": 8798,
+      "gitBlob": "69bae9bb2126ad9a9cf9207543f1176a68ffe2fb",
+      "sha256": "ba83f32d5f670c14b270fb79546a9caadab3f0caf6dfbde23a47558757ffcfce"
+    },
+    {
+      "path": "src/drive-backup.js",
+      "bytes": 27407,
+      "gitBlob": "e93573b9b39010a30ee0c2aa4465340f00de2ef7",
+      "sha256": "d5a90bcce821c3b356ff33e3802cac7ad5ae01c6b02923235fa067ba0b9ae920"
+    },
+    {
+      "path": "src/native-staking-networks.js",
+      "bytes": 9479,
+      "gitBlob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+      "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2"
+    },
+    {
+      "path": "src/ethereum-fallback.js",
+      "bytes": 3002,
+      "gitBlob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+      "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e"
+    },
+    {
+      "path": "src/market.js",
+      "bytes": 32527,
+      "gitBlob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+      "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a"
+    },
+    {
+      "path": "src/kraken-import.js",
+      "bytes": 26923,
+      "gitBlob": "8248a184ff91f13b79e28aea9c58216e7936c9de",
+      "sha256": "027f22460ec0715063277178368501c068fe1635f82abfb3810fafdf032b5f82"
+    },
+    {
+      "path": "src/position-selection.js",
+      "bytes": 9790,
+      "gitBlob": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+      "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d"
+    },
+    {
+      "path": "src/interest-scenario.js",
+      "bytes": 6000,
+      "gitBlob": "332037a4d578c8128121f799165db3a749a82239",
+      "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89"
+    },
+    {
+      "path": "src/booking-insights-ui.js",
+      "bytes": 3674,
+      "gitBlob": "249e18771d565045a809d6b636016b3d488a40b9",
+      "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e"
+    },
+    {
+      "path": "src/wallet-history-days-worker.js",
+      "bytes": 500,
+      "gitBlob": "f0389e11f47eb92ce06a3ea2804a1ea343256245",
+      "sha256": "126784f8937c9891df3c424b9e136c8095231dd081e8ac388e4b981957969c93"
+    },
+    {
+      "path": "src/historical-portfolio-value.js",
+      "bytes": 7620,
+      "gitBlob": "3a49409f21ed1e51c18b641127d461a4898423d1",
+      "sha256": "f7a25d400322f493de76e1d6f8735af746e11d4f8d5bde141ad4155d9bfd8d66"
+    },
+    {
+      "path": "src/booking-insights.js",
+      "bytes": 5108,
+      "gitBlob": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36",
+      "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c"
+    },
+    {
+      "path": "src/bitpanda-import.js",
+      "bytes": 19887,
+      "gitBlob": "b42e81350784dd4f4654dfc90c7461e2189e770b",
+      "sha256": "e1c75d4c65f1811270918709e1afd4f24518b61571ed95c2ad66114fd6ee6ad6"
+    },
+    {
+      "path": "src/defi.js",
+      "bytes": 1911,
+      "gitBlob": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+      "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd"
+    },
+    {
+      "path": "src/eodhd-worker-client.js",
+      "bytes": 2099,
+      "gitBlob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+      "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f"
+    },
+    {
+      "path": "src/flatex-cost-basis.js",
+      "bytes": 1385,
+      "gitBlob": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1",
+      "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9"
+    },
+    {
+      "path": "src/position-icons.js",
+      "bytes": 1573,
+      "gitBlob": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+      "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758"
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "bytes": 33790,
+      "gitBlob": "b3b1bdf1e501c6212c1c906e1bc9d8729179cc47",
+      "sha256": "22207082faec24ae544d3409b868d577f8997fcfab312133f56159e4e7098517"
+    },
+    {
+      "path": "src/wallet-history-core.js",
+      "bytes": 16534,
+      "gitBlob": "edcbe5570a903271d07ddc637bd876071e85a40a",
+      "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090"
+    },
+    {
+      "path": "src/wallet-history-calculation.js",
+      "bytes": 2576,
+      "gitBlob": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7",
+      "sha256": "81283566517daac6011ca4744f689c292ee017c7d2f1eff1c94832962f20d50b"
+    },
+    {
+      "path": "src/position-search.js",
+      "bytes": 1514,
+      "gitBlob": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc",
+      "sha256": "cf4f10501321535da1f14d60f2b1b6748fa5a47cd917a677573c50a412751f01"
+    },
+    {
+      "path": "src/wallet-history-state.js",
+      "bytes": 8034,
+      "gitBlob": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+      "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c"
+    },
+    {
+      "path": "src/market-diagnostics.js",
+      "bytes": 5651,
+      "gitBlob": "030b05243edf7e956dfdea404e92dd30e12a0e9a",
+      "sha256": "7e55e3b411600bfd6b01cda5279792294a4a48f08fae5ad58005bade4408923c"
+    },
+    {
+      "path": "src/ledger-live-ui.js",
+      "bytes": 3810,
+      "gitBlob": "ee847ff772e1c109c0837616fdc84f7f909e6ae9",
+      "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a"
+    },
+    {
+      "path": "src/browser-portfolio-storage.js",
+      "bytes": 14769,
+      "gitBlob": "f9be5fe41e861ede12f66960dae59d582510d098",
+      "sha256": "94dd30dfb41e72a26af768bddf1d2220f8a790f42c19c212c0b75bd02a45adbc"
+    },
+    {
+      "path": "src/transfer-matching-ui.js",
+      "bytes": 12170,
+      "gitBlob": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e",
+      "sha256": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d"
+    },
+    {
+      "path": "src/allocation-ui.js",
+      "bytes": 7236,
+      "gitBlob": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+      "sha256": "ce3f8025c5cfbd888b7642173f8b2e298fa3a6efc87363d73fba9031545b6f6a"
+    },
+    {
+      "path": "src/dashboard-ui.js",
+      "bytes": 15764,
+      "gitBlob": "16b9207714c778a945763bb3bd7cee2c29cc4f60",
+      "sha256": "bca72919b37f3596612e089204b34c5bf727014a063f5cb826e05cd00b39fc62"
+    },
+    {
+      "path": "src/reference-management.js",
+      "bytes": 11681,
+      "gitBlob": "1fa1ae41a5dcd81ed9cdeaee709dfae7f7fb46a0",
+      "sha256": "40ab1bf09783d6c05ac12aba7f8d686b1a5b54989da2087a3d2817c3605192c9"
+    },
+    {
+      "path": "src/security-sources.js",
+      "bytes": 9505,
+      "gitBlob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+      "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d"
+    },
+    {
+      "path": "src/bitpanda-withdrawal-evidence.js",
+      "bytes": 3955,
+      "gitBlob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+      "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586"
+    },
+    {
+      "path": "src/transactions.js",
+      "bytes": 33264,
+      "gitBlob": "02731e40ea7ecf32d28da4b02cda7cbda8528171",
+      "sha256": "3b3fc129300705568d82c91cdd879839f884816191fd5022b26b8ac3fd506ec7"
+    },
+    {
+      "path": "src/bitpanda-preview-ui.js",
+      "bytes": 2654,
+      "gitBlob": "5fc4467fc103116b5cc2d1cb4a50683c64085988",
+      "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d"
+    },
+    {
+      "path": "src/instrument-catalog.js",
+      "bytes": 10218,
+      "gitBlob": "8012ff3fe03d60b24aff246f7e4ea73170159ea1",
+      "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7"
+    },
+    {
+      "path": "src/sonic-staking-evidence.js",
+      "bytes": 4545,
+      "gitBlob": "eefd659b275830d83d4ae36709cce0475ce9e7cd",
+      "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f"
+    },
+    {
+      "path": "src/valuation-status.js",
+      "bytes": 1659,
+      "gitBlob": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb",
+      "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c"
+    },
+    {
+      "path": "src/flatex-backfill.js",
+      "bytes": 10850,
+      "gitBlob": "a056ef28a5bc54ae868c79c31f2c42d610cded84",
+      "sha256": "1f0b7b0572c2987e56c453714d70578f5c33f08085c6700c44bc64ecdba04540"
+    },
+    {
+      "path": "src/ethereum-history.js",
+      "bytes": 23086,
+      "gitBlob": "21e056201e74bbb6490e74c430601af839699d71",
+      "sha256": "070863c673654e44c58226f4ebe9cadc0260460b7d14a59a7f225ad31bc9d06c"
+    },
+    {
+      "path": "src/bitcoin-hd.js",
+      "bytes": 11504,
+      "gitBlob": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+      "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6"
+    },
+    {
+      "path": "src/interest-account.js",
+      "bytes": 1759,
+      "gitBlob": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d",
+      "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a"
+    },
+    {
+      "path": "src/kraken-ledger-ui.js",
+      "bytes": 2670,
+      "gitBlob": "2b3436487f0e78c66e783d46f90baefb5fa2692f",
+      "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b"
+    },
+    {
+      "path": "src/alpha-vantage.js",
+      "bytes": 10638,
+      "gitBlob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+      "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83"
+    },
+    {
+      "path": "src/reference-listings.js",
+      "bytes": 3170,
+      "gitBlob": "3ba091983e64a631ad187ebb302299380db49c02",
+      "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0"
+    },
+    {
+      "path": "src/eodhd-transport.js",
+      "bytes": 1290,
+      "gitBlob": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72",
+      "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82"
+    },
+    {
+      "path": "src/kraken-solana-bridge.js",
+      "bytes": 14926,
+      "gitBlob": "782cab38bb79daa0886c6ab66559f61792279dd1",
+      "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e"
+    },
+    {
+      "path": "src/booking-history.js",
+      "bytes": 7676,
+      "gitBlob": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+      "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93"
+    },
+    {
+      "path": "src/security-discovery.js",
+      "bytes": 3716,
+      "gitBlob": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9",
+      "sha256": "507d8da0447ec8d9209db63d450da0faf10c81d5bece7cbfdaa755a07010220c"
+    },
+    {
+      "path": "src/header-status.js",
+      "bytes": 6611,
+      "gitBlob": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd",
+      "sha256": "98b68f05d8eaede72032411b6f0ff17febdb17d60de20ce6578c06caa1e231f0"
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "bytes": 10959,
+      "gitBlob": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89"
+    },
+    {
+      "path": "src/model.js",
+      "bytes": 31556,
+      "gitBlob": "41d04c6505b41250a08c0457839d49f8f1061706",
+      "sha256": "ab4f1f2f2bd494611785b4ed7858a8e7d68e0c5103e276471247a09936fcb2f1"
+    },
+    {
+      "path": "src/marketstack.js",
+      "bytes": 8469,
+      "gitBlob": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+      "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456"
+    },
+    {
+      "path": "src/booking-history-ui.js",
+      "bytes": 20508,
+      "gitBlob": "61212dc0c360a44dbd261ecd70f2314bc4a2e857",
+      "sha256": "4029dc357f16f44d158856abf3e86df5b8fa3982bffbe59a4f2fd42e70e343f4"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 5360,
+      "gitBlob": "37fa0291a33148ad6e3ddfc27a26a1d447652cbe",
+      "sha256": "c612aea836b7cf997162ca78a3183c37421ef2a99eb4ccce4df5cd20a2c3c6e4"
+    },
+    {
+      "path": "styles.css",
+      "bytes": 166438,
+      "gitBlob": "475153be577d73b3fc6c99450aef60f08c6ff0f6",
+      "sha256": "5dacc2140b7c7e101f15524335c2730bd29c4e6476f65571104263c78f3ab40a"
+    },
+    {
+      "path": "icons/flask.svg",
+      "bytes": 686,
+      "gitBlob": "823323630cb3fe1b9a6342e9d6e5421554c1194d",
+      "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1"
+    },
+    {
+      "path": "icons/flask-512.png",
+      "bytes": 21846,
+      "gitBlob": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0",
+      "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167"
+    },
+    {
+      "path": "icons/flask-maskable-512.png",
+      "bytes": 14006,
+      "gitBlob": "645419333138793ef88441a53d2f362e324fed4a",
+      "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d"
+    },
+    {
+      "path": "icons/flask-192.png",
+      "bytes": 7706,
+      "gitBlob": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b",
+      "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119"
+    }
+  ],
+  "count": 145,
+  "allExactMainGitBlobs": true
+}
