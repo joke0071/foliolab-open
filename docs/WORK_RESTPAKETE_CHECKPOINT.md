@@ -1,3 +1,11 @@
+## ACTIVE – adb3e8e542d6 / HND01 übernommen / UH04 Depot13→UH05 – 05.11.2026
+
+Alleiniger Owner Work/root adb3e8e542d6. Übernahme von 1b99027b9ff5 STOPPED/HANDOVER_READY nach vollständiger Übergabelektüre und frischem Abgleich: Main fa89618a416d53090a134df48b4852f69f3e18ff / Tree aa455dfddd4158d08537cc6f883be75bb0c63371, PR299 gemergt, nur historische Drafts157/161,0 laufende/0 wartende Actions. v283 LIVE_ACCEPTED bleibt bestehen, keine Wiederabnahme. Private Sicherung libfile_42e6c0236610819189e0ba522c74ecfd Version25 / SHA256 c6f059641f356522b0bcf7131c31bdfa977b742959a47472adf6004169df8487 /280 interne Hashes frisch PASS. Kein übernommener Produkt-WIP.
+
+Ein einzelner Strang: UH04 Depot13/Konto8 mit explizit belegtem Quellkontext, eindeutigen Gegenbeinen und wirtschaftlicher Übernahme im bestehenden Journal; Original-/Decimal-/Restore-/Replay-/Rücknahmeprüfung. Keine Kennung aus Dateiname/ISIN/Order/Depot12 ableiten, keine zweite Engine oder Preview-only-Abnahme. Danach UH05 gemäß bestehender Vorbereitung. Bereits akzeptierte v281/v282/LINK-Funktionen nicht neu entwickeln; keine LINK-RPC-POSTs/Originalneuanforderung. UI300/QUALITY298/CI229 erhalten, Priorität UH04→UH05. EFF01/HND01 und alle Schutzverträge unverändert; GitHub nur Plugin, Checkpointbranch nie vollständig nach Main.
+
+---
+
 ## HANDOVER_READY – 1b99027b9ff5 STOPPED / v282 und v283 LIVE_ACCEPTED / UH04→UH05 – 04.11.2026
 
 **1b99027b9ff5 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** HND01 nach zwei eigenen LIVE_ACCEPTED Releases (v282/v283),zwei abgeschlossenen Releasepaketen. [Vollständige Übergabe und kopierbarer Startprompt](HANDOVER_1b99027b9ff5_2026-11-04.md). Nach Abgabe keine neue Implementierung/PR/Merge/Deploy/Retry durch diesen Owner;bis ausdrücklicher Übernahme kein aktiver schreibender Owner.
