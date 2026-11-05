@@ -1,0 +1,129 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "7c7c6b56c972ca623b4c864fc7578685de912aab",
+  "tree": "5578c6b7c00894f87443c1e4edde3c0b28886294",
+  "run": 41995099242,
+  "attempt": 1,
+  "artifacts": [
+    {
+      "id": 13401740002,
+      "bytes": 61437617,
+      "sha256": "93b02a119071a9e8e574aea79a20df03f347a5b0964d3ba94ffccd726fdd84ec",
+      "CRC": "PASS",
+      "entries": 702,
+      "jsonReports": 53,
+      "pngsDecoded": 648,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13401161355,
+      "bytes": 63708914,
+      "sha256": "45d9e347a9bbe192b792e2639ba1a98d678f4cfd058a972a65f2f8d7eb24c5e4",
+      "CRC": "PASS",
+      "entries": 703,
+      "jsonReports": 65,
+      "pngsDecoded": 635,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13401142165,
+      "bytes": 534789,
+      "sha256": "81e91fd02280c52c8846bc815dd3cff4ab3057f786daae6039657c30f61ee273",
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13400552264,
+      "bytes": 59706624,
+      "sha256": "975986e06bb535ce853619d99c73b8a8309d8a94982dfd95e93930d8c9693492",
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13400324523,
+      "bytes": 934443,
+      "sha256": "99ebdf0a43c430a075ffa36c1837e85cfcceb2eec898772f821ad9984260d521",
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13399901818,
+      "bytes": 354,
+      "sha256": "9ebbbdf774d6ff0fc90362d6b0344bd70b3e78d558cee57e916b958ae1d0fc7e",
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13399659205,
+      "bytes": 12216888,
+      "sha256": "61d4e7ed3e252f41dbd0123bc8d2244a15af4b8ef8142aed0e26673f30a92bfb",
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "flags": [],
+      "uploadLogMatch": true
+    },
+    {
+      "id": 13403067192,
+      "bytes": 126217217,
+      "sha256": "9ed9c79971e9cf14aea1f9b3ed9287377e0b4b22486330995fea7ae0ef7c9f59",
+      "CRC": "PASS",
+      "entries": 1332,
+      "jsonReports": 100,
+      "pngsDecoded": 1193,
+      "flags": [],
+      "uploadLogMatch": true
+    }
+  ],
+  "pagesGitBlobMatches": 145,
+  "productionTLSAssetMatches": 146,
+  "cache": "foliolab-open-v285",
+  "productionBase": "https://foliolab.unperfekt.at/",
+  "proxyCertificateException": false,
+  "units": 1211,
+  "failures": 0,
+  "skips": 0,
+  "newUI": "Chromium/Firefox/WebKit; both dialects and both provider orders; CAS/quota/post-put/offline/encrypted fresh v5 restore/replay/persistent withdrawal PASS",
+  "scope": "Bounded EUR closing balance backfill. UH04/UH05 remain PARTIAL; no historical balance/ownership or all-five atomic import acceptance.",
+  "ciStartedRepeatedCancelled": 0,
+  "release": "v285",
+  "owner": "47c433acbb15",
+  "pr": 302,
+  "deploymentJob": 127145628823,
+  "liveJob": 127145793678,
+  "visualReview": [
+    "actual production Chromium context390",
+    "actual production Firefox context390",
+    "actual production WebKit context390"
+  ],
+  "privateOriginalEvidence": {
+    "files": 10,
+    "rows": 507,
+    "pairs": 24,
+    "core": "PASS",
+    "actualUI": "PASS",
+    "independentOracle": "Python Decimal controls",
+    "limits": "Controlled source declarations and opening/closing quantities. No real historical ownership or balance acceptance."
+  },
+  "priorIntegrationEvidence": "v285-pr302-integration-acceptance.json",
+  "hardwareAcceptance": false
+}
