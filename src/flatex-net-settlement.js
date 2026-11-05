@@ -1,5 +1,5 @@
 /** Bounded EUR Depot12/Konto10 groups over the existing CSV/journal core. */
-import {parseFlatexNativeCSV,FLATEX_NATIVE_COLUMNS} from './flatex-native.js';
+import {parseFlatexNativeCSV,FLATEX_NATIVE_COLUMNS,FLATEX_DEPOT13_COLUMNS,FLATEX_ACCOUNT8_COLUMNS,bindNativeFlatexSourceContext} from './flatex-native.js';
 import {inspectNativeFlatexSourceIdentities,sourceDigest,sourceUnmodified,bookingOwnership,importSourceKey,validateImportSource} from './import-identity.js';
 import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {auditNativeFlatexSettlementAmounts} from './flatex-settlement-audit.js';
@@ -11,9 +11,10 @@ const fail=()=>{throw Error('Flatex-Nettogruppe oder Quellenbeleg widersprüchli
 const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const keys=(o,list)=>{if(!o||Array.isArray(o)||Object.keys(o).sort().join('|')!==list.split(' ').sort().join('|'))fail();};
 const quote=s=>'"'+String(s).replaceAll('"','""')+'"';
-function documentFor(type,fields){
- const columns=FLATEX_NATIVE_COLUMNS[type];if(!columns||!Array.isArray(fields)||fields.length!==columns.length||fields.some(v=>typeof v!=='string'||v.length>300))fail();
- return parseFlatexNativeCSV([columns.map(c=>quote(c.header)).join(';'),fields.map(quote).join(';')].join('\n'));
+function documentFor(type,fields,source={}){
+ const columns=source.dialect==='depot13'&&type==='depot'?FLATEX_DEPOT13_COLUMNS:source.dialect==='account8'&&type==='account'?FLATEX_ACCOUNT8_COLUMNS:source.dialect===undefined?FLATEX_NATIVE_COLUMNS[type]:null;if(!columns||!Array.isArray(fields)||fields.length!==columns.length||fields.some(v=>typeof v!=='string'||v.length>300))fail();
+ const doc=parseFlatexNativeCSV([columns.map(c=>quote(c.header)).join(';'),fields.map(quote).join(';')].join('\n'));
+ return source.dialect?bindNativeFlatexSourceContext(doc,source.sourceContext):doc;
 }
 const sourceKey=s=>JSON.stringify([s.sourceId,s.externalId]);
 const groupId=(depot,account)=>'fn-'+sourceDigest(JSON.stringify([sourceKey(depot),sourceKey(account)]));
@@ -25,16 +26,21 @@ export function inspectFlatexNetPairs(documents){
  const digests=documents.map(doc=>sourceDigest(JSON.stringify([doc.type,doc.rows.map(r=>r.fields)])));
  for(const [di,doc] of documents.entries())for(const row of doc.rows){
   const identity=byLocator.get(JSON.stringify([di,row.line]));
-  if(doc.dialect||!identity.sourceId||!identity.externalId)continue;
+  if(!identity.sourceId||!identity.externalId)continue;
   const k=sourceKey(identity),previous=seen.get(k);
   const occurrence={documentDigest:digests[di],line:row.line,fields:[...row.fields]};
   if(previous){if(previous.payloadDigest!==identity.payloadDigest)previous.conflict=true;if(!previous.occurrences.some(o=>o.documentDigest===occurrence.documentDigest&&o.line===occurrence.line))previous.occurrences.push(occurrence);continue;}
-  const s={type:doc.type,sourceId:identity.sourceId,externalId:identity.externalId,payloadDigest:identity.payloadDigest,fields:[...row.fields],occurrences:[occurrence]};
+  const s={type:doc.type,...(doc.dialect?{dialect:doc.dialect,sourceContext:{...doc.sourceContext}}:{}),sourceId:identity.sourceId,externalId:identity.externalId,payloadDigest:identity.payloadDigest,fields:[...row.fields],occurrences:[occurrence]};
   seen.set(k,s);unique.push(s);
  }
- const types=['depot','account'].filter(type=>unique.some(s=>s.type===type));
- const grouped=types.map(type=>unique.filter(s=>s.type===type));
- const docs=grouped.map((rows,i)=>parseFlatexNativeCSV([FLATEX_NATIVE_COLUMNS[types[i]].map(c=>quote(c.header)).join(';'),...rows.map(s=>s.fields.map(quote).join(';'))].join('\n')));
+ const buckets=new Map();
+ for(const s of unique){const k=JSON.stringify([s.type,s.dialect??null,s.sourceContext??null]),list=buckets.get(k)||[];list.push(s);buckets.set(k,list);}
+ const grouped=[...buckets.values()];
+ const docs=grouped.map(rows=>{
+  const first=rows[0],single=documentFor(first.type,first.fields,first);
+  const doc=parseFlatexNativeCSV([single.columns.map(c=>quote(c.header)).join(';'),...rows.map(s=>s.fields.map(quote).join(';'))].join('\n'));
+  return first.dialect?bindNativeFlatexSourceContext(doc,first.sourceContext):doc;
+ });
  if(!docs.length)return {identities,pairs:[],reviewCount:identities.rows.length};
  const links=inspectNativeFlatexOrderLinks(docs,{maxDays:0}),audit=auditNativeFlatexSettlementAmounts(docs,{maxDays:0});
  const pairs=[];
@@ -43,7 +49,8 @@ export function inspectFlatexNetPairs(documents){
   const depot=grouped[g.depot[0].sourceIndex][g.depot[0].line-2],account=grouped[g.cash[0].sourceIndex][g.cash[0].line-2];
   if(depot.conflict||account.conflict)continue;
   const d=docs[g.depot[0].sourceIndex].rows.find(r=>r.line===g.depot[0].line),c=docs[g.cash[0].sourceIndex].rows.find(r=>r.line===g.cash[0].line);
-  if(d.dates.bookingDate!==c.dates.bookingDate||d.dates.valueDate!==c.dates.valueDate||d.values.unit!=='Stk.')continue;
+  if(d.dates.bookingDate!==c.dates.bookingDate||d.dates.valueDate!==c.dates.valueDate||d.values.unit!==(depot.dialect==='depot13'?'Stück':'Stk.'))continue;
+  if(depot.dialect==='depot13'&&(d.numbers.fxRate!=='1'||d.values.amountCurrency!=='EUR'))continue;
   const q=units(d.numbers.nominal);
   pairs.push({version:1,id:groupId(depot,account),orderReference:g.orderReference,type:g.type,date:d.dates.bookingDate,valueDate:d.dates.valueDate,isin:g.isin,quantityExact:exact(q<0n?-q:q),unitPriceExact:d.numbers.rate,grossExact:a.grossExact,cashExact:a.cashExact,differenceExact:a.differenceExact,depot,account});
  }
@@ -54,15 +61,16 @@ export function validateNetSettlement(proof){
  if(proof.version!==1||!/^fn-[a-f0-9]{64}$/.test(proof.id))fail();
  const docs=[];
  for(const type of ['depot','account']){
-  const s=proof[type];keys(s,'type sourceId externalId payloadDigest fields occurrences');
+  const s=proof[type];keys(s,'type sourceId externalId payloadDigest fields occurrences'+(s.dialect!==undefined?' dialect sourceContext':''));
+  if((s.dialect===undefined&&s.sourceContext!==undefined)||(s.dialect!==undefined&&!['depot13','account8'].includes(s.dialect)))fail();
   if(s.type!==type||!Array.isArray(s.occurrences)||!s.occurrences.length||s.occurrences.length>20)fail();
-  const doc=documentFor(type,s.fields),id=inspectNativeFlatexSourceIdentities([doc]).rows[0];
+  const doc=documentFor(type,s.fields,s),id=inspectNativeFlatexSourceIdentities([doc]).rows[0];
   if(id.status!=='candidate-source'||s.sourceId!==id.sourceId||s.externalId!==id.externalId||s.payloadDigest!==id.payloadDigest)fail();
   const seen=new Set();
   for(const o of s.occurrences){
    keys(o,'documentDigest line fields');if(!/^[a-f0-9]{64}$/.test(o.documentDigest)||!Number.isSafeInteger(o.line)||o.line<2||o.line>5001)fail();
    const key=JSON.stringify([o.documentDigest,o.line]);if(seen.has(key))fail();seen.add(key);
-   const other=inspectNativeFlatexSourceIdentities([documentFor(type,o.fields)]).rows[0];
+   const other=inspectNativeFlatexSourceIdentities([documentFor(type,o.fields,s)]).rows[0];
    if(other.payloadDigest!==s.payloadDigest||other.sourceId!==s.sourceId||other.externalId!==s.externalId)fail();
   }
   if(!s.occurrences.some(o=>equal(o.fields,s.fields)))fail();docs.push(doc);
