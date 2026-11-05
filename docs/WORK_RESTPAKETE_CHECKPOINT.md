@@ -4,6 +4,8 @@ Erster Mainlauf41976188591 Versuch1 vollständig beendet:Test127075574717,Cross1
 
 Nach vollständigem Abschluss und frischemMain-/Ownerabgleich **genau EIN gezielter EFF01-Retry ausschließlich des fehlgeschlagenen Jobs erfolgreich angefordert**. Derselbe Lauf41976188591 jetzt Versuch2 IN_PROGRESS,neuer Cross3 Job127081562607. Keine bestandenen Jobs neu beauftragt,keine Produkt-/Test-/Gate-/Timeoutänderung,keinAbbruch/keinPipelineDuplikat. **Kein weiterer blinder Retry bei Wiederholung.** NächsterSchritt bestehenden Versuch2 bis vollständigemCross3/Deployment/tatsächlichemLiveabschluss verfolgen;erst dann UH05. AlleinigerOwneradb3e8e542d6. v283 bleibtletzteLIVE_ACCEPTEDohneWiederabnahme. Übrige aktuelleBelege/PrivateVersion28 im folgendenStatus erhalten.
 
+Private Sicherung aktualisiert: libfile_42e6c0236610819189e0ba522c74ecfd **Version29**,1713668Bytes/SHA25615f3fc623d73aef7b572ce748e5d6f291dc301c95d5e360a7e41496bbc18dca4,338interneHashdateien/alle330Vorgänger bytegleich. Wiedereinstieg delta-adb3e8e542d6/v284-main-targeted-retry/STATE.json mit Originalfehler/ZIPbindung,RetryCount1,neuemCross3Job127081562607 undbeidenUH05-Repros. Versuch2-API vergibtneueIDs fürbestandeneJobs,führtderen ursprünglicheVersuch1-Zeitstempel/Ergebnisse weiter;keine weiterenJobs neuangefordert. Keine neuenBrowserbilderarchiviert. Sourcecopy unter /workspace/scratch/adb3e8e542d6/source ist ausverifiziertenBlobs rekonstruiert,lokale .gitBaseline istkeinRemotecheckout;GitHubnurPlugin und keineGit-CLI-Remoteoperation.
+
 ---
 
 ## ACTIVE – adb3e8e542d6 / v284 Main-Fehler erhalten / KEIN Retry bisher – 05.11.2026
