@@ -1,0 +1,40 @@
+{
+  "result": "PASS",
+  "baseMain": "588d3d3900477e4b3591917634b4f718d3465b0d",
+  "scope": "Local pure existing-kernel synthetic shared portfolio; not UI/IDB/atomic all-five acceptance",
+  "nativeCSVReaders": true,
+  "overlappingBittrSubsetAndDuplicateLedger": true,
+  "duplicateKrakenAndBitpandaFiles": true,
+  "orders": 120,
+  "providerSources": [
+    "Bittr",
+    "Ledger Live",
+    "Kraken",
+    "Bitpanda",
+    "Flatex AT"
+  ],
+  "plainRestores": 600,
+  "reverseReplays": 600,
+  "encryptedV5Restore": true,
+  "expectedQuantities": {
+    "wallet": "0.0248",
+    "p0": "100",
+    "p1": "3",
+    "p2": "0.00000083",
+    "bp0": "3.1",
+    "bp1": "99",
+    "etf": "2",
+    "cash": "78.25"
+  },
+  "expectedBookings": 6,
+  "expectedExternalFundingEUR": "1000",
+  "expectedKrakenFeeBTC": "0.00000017",
+  "unknownFlatexCostsRetained": true,
+  "elapsedMs": 7643,
+  "limits": [
+    "controlled synthetic openings and source scopes",
+    "no common five-provider UI or single CAS commit",
+    "no private-original joint validation",
+    "no full wallet/staking coverage or historical ownership acceptance"
+  ]
+}
