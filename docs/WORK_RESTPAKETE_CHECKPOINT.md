@@ -1,3 +1,11 @@
+## ACTIVE – adb3e8e542d6 / v284 Mainversuch2 / EIN gezielter Retry gestartet – 05.11.2026
+
+Erster Mainlauf41976188591 Versuch1 vollständig beendet:Test127075574717,Cross1 127075574727,Cross2 127075574690 SUCCESS;Cross3 127075574645 FAILURE an bestehender statischer WebKit-Logoassertion0statt2. Deploy/Live vertragsgemäßSKIPPED,noch keinv284DEPLOYED/LIVE_ACCEPTED. Fehler/OriginalZIP/Diagnose im verlinkten Beleg darunter erhalten. Main c430039d61514ffaf8126ffe30052d94ecfe243d / Treec94f1043fdf45bdc680642a79358b4d83a722d4e unverändert.
+
+Nach vollständigem Abschluss und frischemMain-/Ownerabgleich **genau EIN gezielter EFF01-Retry ausschließlich des fehlgeschlagenen Jobs erfolgreich angefordert**. Derselbe Lauf41976188591 jetzt Versuch2 IN_PROGRESS,neuer Cross3 Job127081562607. Keine bestandenen Jobs neu beauftragt,keine Produkt-/Test-/Gate-/Timeoutänderung,keinAbbruch/keinPipelineDuplikat. **Kein weiterer blinder Retry bei Wiederholung.** NächsterSchritt bestehenden Versuch2 bis vollständigemCross3/Deployment/tatsächlichemLiveabschluss verfolgen;erst dann UH05. AlleinigerOwneradb3e8e542d6. v283 bleibtletzteLIVE_ACCEPTEDohneWiederabnahme. Übrige aktuelleBelege/PrivateVersion28 im folgendenStatus erhalten.
+
+---
+
 ## ACTIVE – adb3e8e542d6 / v284 Main-Fehler erhalten / KEIN Retry bisher – 05.11.2026
 
 Main c430039d61514ffaf8126ffe30052d94ecfe243d / Treec94f1043fdf45bdc680642a79358b4d83a722d4e unverändert,PR301 gemergt/finale PR-CI vollständig qualifiziert. Mainlauf41976188591 Versuch1 noch IN_PROGRESS;Cross1/2 SUCCESS,Cross3 Job127075574645 FAILURE an bestehender WebKit-Assertion browser-ui-quality.mjs51: statische .logo-beta0 statt2. VorherFirefox/FlatexFinanz/IDB/CAS/RestoreprüfungenPASS. [Fehler/OriginalZIP](release-evidence/v284-main-initial-cross3-failure.json) API-/Uploadlog-/Bytehash/CRC erhalten;unveränderter Index enthält2statischeBadges,keineRuntimeentfernung,identischerTree/Test zuvor inbeidenPR-LäufenWebKitPASS. Transiente Navigations-/Fixture-Lifecycleursache ist eine begründete Einordnung,keine bewiesene exakteRootcause.
