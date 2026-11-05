@@ -1,3 +1,11 @@
+## ACTIVE – cfb12adcc050 / PR304 MERGED / v287 MAIN_RELEASE_PENDING – 05.11.2026
+
+PR304 nach vollständiger regulärer Integrationsqualifikation geschützt auf erwartetem HEAD `1fbf40f7c338017ab29720474db6eb91c33264fc` gemergt. Main `315de8c236b8bd05d891ebe159858e6537784edd`, Tree `9155c36e5b00cf49551277eede11a55debcb4ab1` exakt gleich akzeptiertem Kandidaten/synthetischem Merge. Vor Merge Main/HEAD/Reviews/Threads/Gates frisch unverändert; mergeable_state clean, keine offenen Reviews. [Integrationsbeleg](release-evidence/v287-pr304-integration-qualification.json): Lauf42033599999 Versuch1 SUCCESS,Wallet42033600087 SUCCESS,1214Units0Fehler0Skips,6tatsächlicheZIPs/155JSONs/1857PNGs API-/Uploadlog-/lokalHash-/Bytes-/CRC-/Fehlerflags-/DecodingPASS. Neue gemeinsame Fünfanbieter-UI in Chromium141/Firefox157/WebKit27.2 einschließlich EinmalCAS/Quota/postput/echtemZweittab/Undo/Wiederimport/Offline/verschlüsseltemv5FreshRestore/fünfBreiten/AxePASS,alle3Bildergesichtet.
+
+Genau entstandener Mainlauf **42036785990 Versuch1 IN_PROGRESS**, unverändert qualifizieren. Main/Pages-Gitblobidentität/Deployment/reguläresTLS/Assets/SWv287/tatsächlicheProduktionskette in3Engines stehen noch aus. **v287 NICHT LIVE_ACCEPTED; v286 bleibt letzte akzeptierte Version und wird nicht wiederabgenommen.** Keine zweiteCI/Retry/Abbruch/Produktänderung während laufenderQualifikation. Keine pauschale historische Eigentums-/Saldo-/N:M-/FX-/Wallet-/Stakingabnahme; UH04/UH05PARTIAL,fehlendniemalsNull. Danach inkrementelleEndbestandsrekonstruktion bereitsjournalisierterBereiche über bestehendeEngine. Alle Originale/Oracles/Verträge/Folgeaufträge erhalten. PrivateVersion39 mit452Hashes geprüft; neueBelege werden ergänzt.
+
+---
+
 ## ACTIVE – cfb12adcc050 / HND01 übernommen / PR304 Integrationsqualifikation – 05.11.2026
 
 Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von `005a9fa04e48` übernommen. Main `588d3d3900477e4b3591917634b4f718d3465b0d`, PR304 HEAD `1fbf40f7c338017ab29720474db6eb91c33264fc` / Tree `9155c36e5b00cf49551277eede11a55debcb4ab1` frisch unverändert; keine Reviews/Inlinebefunde, nur historische Drafts157/161 zusätzlich offen. Private Sicherung Version39 mit erwartetem SHA256 vorhanden, Originale/Oracles erhalten. v286 LIVE_ACCEPTED nicht wiederabnehmen; v287 noch nicht akzeptiert.
