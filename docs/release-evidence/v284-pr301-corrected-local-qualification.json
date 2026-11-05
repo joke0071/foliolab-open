@@ -1,0 +1,186 @@
+{
+  "status": "CORRECTED_LOCAL_QUALIFIED_FINAL_CI_PENDING",
+  "at": "2026-11-05T05:26:52.313033+00:00",
+  "owner": "adb3e8e542d6",
+  "release": "v284",
+  "pr": 301,
+  "parentMain": "fa89618a416d53090a134df48b4852f69f3e18ff",
+  "head": "18e015d637504f05d2821ddfd6603e5145bf1900",
+  "tree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+  "testMerge": "23d18517e734cc958a3e5a91045ec7dece58ef3c",
+  "independentBlobAndTreeMatch": true,
+  "files": [
+    {
+      "path": "docs/UH04_DEPOT13_NATIVE.md",
+      "sha": "8eba328d2b56d1c0b8a358cfead96a12cc25b752",
+      "sha256": "1c8be9aff35cfe6f996d25469d38a5d78fb34e0b8f203487ba58b8e14164a0a5",
+      "bytes": 3645
+    },
+    {
+      "path": "src/app.js",
+      "sha": "2a9e99ed0e0ad1c5fed6bd330868cae173a9a07e",
+      "sha256": "cf00b3dd5fe592d9ef9b2952f16364add58118121d614350d3b0e6d406ce2cc9",
+      "bytes": 290879
+    },
+    {
+      "path": "src/flatex-native-ui.js",
+      "sha": "f4ef74d75e2a89fb8deaf130ac2549bd552a884f",
+      "sha256": "ea515a1d648bf9084daf87f6f9af7eb140135314cc737f59f0d0a87fe3b85a80",
+      "bytes": 22791
+    },
+    {
+      "path": "src/flatex-native.js",
+      "sha": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e",
+      "bytes": 10291
+    },
+    {
+      "path": "src/flatex-net-settlement.js",
+      "sha": "b3b1bdf1e501c6212c1c906e1bc9d8729179cc47",
+      "sha256": "22207082faec24ae544d3409b868d577f8997fcfab312133f56159e4e7098517",
+      "bytes": 33790
+    },
+    {
+      "path": "src/flatex-settlement-audit.js",
+      "sha": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261",
+      "bytes": 6519
+    },
+    {
+      "path": "src/flatex-settlements.js",
+      "sha": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89",
+      "bytes": 10959
+    },
+    {
+      "path": "src/import-identity.js",
+      "sha": "9df969c25808a355b76fc3be01cd905366c8106a",
+      "sha256": "4820924c47ff7c94e1eb1f5e64fcbe09a0774c5e47591a097862f92e9c7b58ef",
+      "bytes": 11488
+    },
+    {
+      "path": "sw.js",
+      "sha": "37fa0291a33148ad6e3ddfc27a26a1d447652cbe",
+      "sha256": "c612aea836b7cf997162ca78a3183c37421ef2a99eb4ccce4df5cd20a2c3c6e4",
+      "bytes": 5360
+    },
+    {
+      "path": "tests/browser-flatex-net-settlement.mjs",
+      "sha": "fe1e0dc89ade0e2f6817631d40cedd71e873cf3d",
+      "sha256": "5e4bd8cb7d008099e2d1c364d9241b02de8ee7f0dbd4fac8a5d97bd8763c686f",
+      "bytes": 16710
+    },
+    {
+      "path": "tests/browser-flatex-context.mjs",
+      "sha": "852b061c5076697f1654cf121c3bcc8d816d35f2",
+      "sha256": "651c780bad19735219ba1534428b1ba42da57240b39f93e455b9bf35dad2a960",
+      "bytes": 102
+    },
+    {
+      "path": "tests/flatex-context-fixture.mjs",
+      "sha": "f8687944f0c339be1841c6deae3b3be409470ae2",
+      "sha256": "f460c21a8071ec4333ed28704658434f7af2c433948ad59563a3e9b859500f10",
+      "bytes": 1682
+    },
+    {
+      "path": "tests/flatex-context.test.mjs",
+      "sha": "72aa7f953b6935d5f00528fa92181d4325efde65",
+      "sha256": "b0eff82cedfc30724d5f4246314116beebba51d47850f2f083e23471e079f07a",
+      "bytes": 7003
+    }
+  ],
+  "units": {
+    "total": 1207,
+    "pass": 1207,
+    "fail": 0,
+    "skip": 0
+  },
+  "syntax": "PASS",
+  "chromium": {
+    "version": "141.0.7390.37",
+    "netAndSingleBatchAugmentation": "PASS",
+    "depot13Konto8": "PASS",
+    "checks": [
+      "exact selected-source scoping and scope-edit invalidation",
+      "automatic Windows-1252 multi-file detection",
+      "actual UI backup/consent/one CAS commit/Undo/recommit",
+      "Quota/post-put abort/real second writer CAS no partial mutation",
+      "offline reload/replay/encrypted v5 fresh-profile UI restore",
+      "durable withdrawal/reimport tombstone",
+      "seven widths/Axe; 320px simulation and source declaration visually inspected"
+    ]
+  },
+  "privateOriginalQualification": {
+    "files": 10,
+    "rows": 507,
+    "uniquePairs": 24,
+    "oracle": "independent Python CSV/Decimal/calendar, every source field checked",
+    "economicCore": "PASS",
+    "actualOriginalUI": "PASS",
+    "controlledContextAndOpening": true,
+    "historicalOwnershipOrRealBalancesAccepted": false,
+    "privateDataPublished": false
+  },
+  "review": [
+    "existing CSV/journal/v5/CAS/Undo/backup engines remain authoritative",
+    "fixed dialect headers and all raw parsed fields retained",
+    "source declaration canonicalized, separately confirmed, persisted and hash-bound",
+    "no scope from filename/ISIN/order/counterparty/another selected file",
+    "cross-dialect differing payloads conflict, no automatic equivalence",
+    "one explicit net cash leg; gross/cash/difference exact; fee/tax/basis unknown",
+    "restores reject altered declarations/raw fields/dialect/FX; old readers reject expanded proof shape",
+    "workflow bytes and mandatory historical gate commands unchanged; context suite is additive through existing net test entry point"
+  ],
+  "limits": [
+    "UH04/UH05 remain PARTIAL overall",
+    "N:M/partial fills, FX, corporate events and independent historical balances require separate qualification",
+    "No Android hardware/native Safari/OAuth claim",
+    "v283 stays LIVE_ACCEPTED; v284 awaits complete CI/Main/Deploy/Live/TLS"
+  ],
+  "ci": {
+    "initialRequiredRun": 41972184188,
+    "initialWalletRun": 41972184537,
+    "initialConclusion": "SUCCESS",
+    "requiredRun": 41973944160,
+    "walletRun": 41973944156,
+    "attempt": 1,
+    "required": "IN_PROGRESS",
+    "cancelled": false,
+    "sameCodeDuplicateRun": false
+  },
+  "initialHead": "37911859caa1bb9fe8c76515cdf87196a2da0d43",
+  "initialTree": "9a40a012b6e55cfd8a7efd1feb095e6419db9e4c",
+  "initialTestMerge": "384fb678d6bc4e9202aac1c187b9751643b792b4",
+  "focusCorrection": {
+    "reason": "initial confirmation focuses disabled input; actual activeElement BODY",
+    "result": "visible Edit button receives focus; edit returns focus to source input",
+    "independentRepro": {
+      "result": "PASS",
+      "checks": [
+        {
+          "candidate": "initial",
+          "focus": {
+            "tag": "BODY",
+            "id": "",
+            "edit": null
+          }
+        },
+        {
+          "candidate": "corrected",
+          "focus": {
+            "tag": "BUTTON",
+            "id": "",
+            "edit": "0"
+          }
+        }
+      ]
+    },
+    "scope": [
+      "src/app.js: one focus target",
+      "tests/browser-flatex-net-settlement.mjs: confirm/edit assertions"
+    ],
+    "financialCodeUnchanged": true,
+    "localFullContextChromium": "PASS",
+    "originalQualificationReused": "source parsing, identities, postings, restore and withdrawal code identical; focus-target-only app delta"
+  }
+}
