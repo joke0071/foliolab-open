@@ -1,0 +1,95 @@
+{
+  "release": "v288",
+  "status": "INTEGRATION_QUALIFIED_DRAFT_TRANSITION_BLOCKED",
+  "owner": "e963a4b02c5f",
+  "pr": 305,
+  "main": "315de8c236b8bd05d891ebe159858e6537784edd",
+  "mainTree": "9155c36e5b00cf49551277eede11a55debcb4ab1",
+  "head": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+  "tree": "6951d60948282c5aa2d9c9f8144a6bb5d5acfefd",
+  "syntheticMerge": "97c79dabe754d4fa528391faf98aa3806b4e50c9",
+  "treeIndependentlyComputed": true,
+  "requiredRun": {
+    "id": 42093402676,
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "walletRun": {
+    "id": 42093402680,
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "units": {
+    "tests": 1220,
+    "pass": 1220,
+    "fail": 0,
+    "skip": 0
+  },
+  "artifacts": {
+    "zipCount": 6,
+    "jsonReports": 160,
+    "pngsDecoded": 1863,
+    "binding": "API digest and upload log and local bytes/SHA256/CRC; recursive JSON error flags absent; all PNGs decoded"
+  },
+  "datedReconciliation": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "actualCIReports": true,
+    "actualCIImagesReviewed": true,
+    "checks": [
+      "both source dialects; earlier/later reconciliation",
+      "unchanged original bookings/journals/openings/references",
+      "independent integer balances; unknown costs retained",
+      "one CAS; consent reset; quota; post-put abort; actual peer tab",
+      "exact full Undo; offline repeat; encrypted fresh-profile restore",
+      "five mobile widths; Axe; no financial-provider requests"
+    ]
+  },
+  "reviews": [],
+  "unresolvedThreads": [],
+  "mergeableState": "clean",
+  "draft": true,
+  "mergeAttempt": {
+    "expectedHead": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+    "result": "GitHub API 405: Pull Request is still a draft",
+    "mainUnchanged": true
+  },
+  "blocker": {
+    "code": "DRAFT_READY_TRANSITION_TRIGGERS_SAME_CODE_FULL_CI",
+    "workflow": ".github/workflows/import.yml",
+    "event": "pull_request.ready_for_review",
+    "classifier": "tests/ci-stage-plan.mjs: ready_for_review requires full integration",
+    "constraint": "Do not duplicate CI; no ready transition without user's explicit exception for the required extra run.",
+    "next": "With exception: mark PR305 ready, qualify exactly automatically created integration/wallet runs; only with complete evidence guarded merge expected HEAD; then Main/Pages/TLS/SWv288/actual production."
+  },
+  "previousFailure": {
+    "run": 42065621234,
+    "attempt": 1,
+    "conclusion": "failure",
+    "job": 127378937634,
+    "test": "browser-ui-quality.mjs:51, WebKit logo-beta0 expected2",
+    "locallyReproduced": false,
+    "retained": true
+  },
+  "correction": {
+    "commit": "ecdba24bc96b61a213bcdadbe304fe84be1ec20e",
+    "path": "tests/browser-ui-quality.mjs",
+    "scope": "Await actual active controlling app worker before fixture reload; failure-only state report.",
+    "assertionsUnchanged": true,
+    "deadlinesUnchanged": true,
+    "workflowUnchanged": true,
+    "productFilesUnchanged": true,
+    "localPrimaryUI": "Firefox157/WebKit27.2 PASS,37 scans each"
+  },
+  "lastLiveAccepted": "v287; do not repeat",
+  "v288Deployed": false,
+  "v288LiveAccepted": false,
+  "scope": "UH04/UH05 remain PARTIAL. No historical ownership/balance/market-price acceptance. Wallet/staking missing remains UNKNOWN. All original/private/finance/journal/v5/IDB/CAS/backup/restore/offline/privacy/UI300/QUALITY298/CI229 contracts retained.",
+  "retries": 0,
+  "cancelled": 0,
+  "manualWorkflowDispatches": 0
+}
