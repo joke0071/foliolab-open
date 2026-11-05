@@ -1,0 +1,75 @@
+{
+  "owner": "d9c1c77a8961",
+  "status": "LOCAL_CANDIDATE_ONLY_NOT_CI_OR_LIVE_ACCEPTED",
+  "baseMain": "c430039d61514ffaf8126ffe30052d94ecfe243d",
+  "baseTree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+  "target": "v285",
+  "scope": "Bounded native EUR closing-balance backfill through existing engines; UH04/UH05 overall PARTIAL",
+  "unit": {
+    "tests": 1211,
+    "failures": 0,
+    "skips": 0
+  },
+  "syntax": "PASS",
+  "browser": {
+    "scope": "Controlled independent openings/closing balances, actual provider UI; no real historic balance acceptance",
+    "engines": [
+      {
+        "engine": "chromium",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "results": [
+          {
+            "dialect": "native",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          },
+          {
+            "dialect": "context",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          }
+        ]
+      }
+    ],
+    "result": "PASS"
+  },
+  "existingTargetedChromium": [
+    "native net settlement",
+    "single and batch net augmentation",
+    "Depot13/Konto8 source-context UI"
+  ],
+  "privateOriginal": {
+    "files": 10,
+    "rows": 507,
+    "pairs": 24,
+    "independentCSVDecimal": "PASS",
+    "controlledStartingAndClosingBalances": true,
+    "historicalBalancesAccepted": false
+  },
+  "workflowBytesChanged": false,
+  "limits": [
+    "No common one-click commit across all five providers",
+    "No original historical ownership/opening/closing acceptance",
+    "Incremental backfill of journal-managed balances, FX, N:M and special events remain open",
+    "No physical Android/native Safari acceptance"
+  ]
+}
