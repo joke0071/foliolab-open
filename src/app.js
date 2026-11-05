@@ -1,3 +1,4 @@
+import {createSharedImportUI} from './shared-import-ui.js';
 import {bindNativeFlatexSourceContext} from './flatex-native.js';
 import {flatexNativeSourceContextMarkup} from './flatex-native-ui.js';
 import {inspectFlatexNetPairs} from './flatex-net-settlement.js';
@@ -1366,6 +1367,24 @@ function flatexWouldDoubleCount(current,prepared,accountId){
  return prepared.parsed.rows.some(row=>current.positions.some(p=>p.accountId===accountId&&String(p.isin||'').toUpperCase()===row.position&&Number(p.quantityExact??p.quantity)>0&&!(current.journalEntries||[]).some(entry=>entry.postings?.some(post=>post.positionId===p.id))));
 }
 // Imported broker files stay entirely in the browser. A verified dry-run precedes any write.
+function openSharedCSVImport(){
+ let controller;
+ showDialog('Gemeinsamer Import','BUCHUNGEN','<div id="sharedImportHost"></div>',async()=>{
+  const active=editor;
+  try{
+   const draft=await controller.candidate();
+   if(editor!==active||!$('editDialog').open)throw Error('Importdialog geändert.');
+   const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
+   try{model=draft;await save();}catch(error){if(model===draft)model=previous;throw error;}finally{$('dialogFields').inert=false;}
+   csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Gemeinsamen Import einmal atomar gespeichert. Offene Bereiche bleiben ungeklärt.');
+  }catch(error){controller.invalidate();throw error;}
+ });
+ const sharedEditor=editor;
+ controller=createSharedImportUI({host:$('sharedImportHost'),getModel:()=>model,assertCurrent:()=>portfolioStore.assertCurrent(),isActive:()=>editor===sharedEditor&&$('editDialog').open,onReady:ready=>{sharedEditor.submitBlocked=!ready;$('saveDialog').disabled=!ready;$('saveDialog').textContent='Gesamten Import übernehmen';},downloadBackup:()=>{
+  const href=URL.createObjectURL(localJSONBackupFile(backup(model,{includeHistory:true}))),link=document.createElement('a');link.href=href;link.download='foliolab-vor-gemeinsamem-import.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(href),1000);
+ }});
+ sharedEditor.invalidateNativeSimulation=()=>controller.invalidate();
+}
 function openCSVImport(){
  const positions=model.positions.filter(p=>!p.wallet?.enabled);
 
@@ -1402,7 +1421,7 @@ function openCSVImport(){
  };
  showDialog('CSV importieren','BUCHUNGEN',
   '<p class="dialog-intro">Wähle allgemeine Buchungen, Flatex-, Ledger-Live-, Kraken-Ledger- oder Bitpanda-Exporte. Ledger Live bleibt eine lokale Prüfvorschau. Kraken- und Bitpanda-Vorgänge können nach expliziter Zuordnung und Bestandsprüfung übernommen werden. Ausgewählte eindeutige EUR-Depot-/Kontopaare können nach bestätigten Anfangsbeständen mit Stück- und Nettocashwirkung übernommen werden. Andere Flatex-Kontoumsätze bleiben zur Prüfung offen. Alle Dateien bleiben auf deinem Gerät.</p>'+
-  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – prüfen und übernehmen</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Buchungen prüfen</option></select></label>'+
+  '<label class="field"><span>Importformat</span><select id="csvSource"><option value="auto">Automatisch erkennen</option><option value="shared">Mehrere Anbieter gemeinsam prüfen</option><option value="generic">Allgemeine Buchungs-CSV</option><option value="flatex">Flatex Österreich – Beta</option><option value="flatex-native">Flatex Originalformat – prüfen und übernehmen</option><option value="ledger">Ledger Live – Vorschau</option><option value="kraken">Kraken Ledger – Vorschau</option><option value="bitpanda">Bitpanda – Buchungen prüfen</option></select></label>'+
    '<div id="csvGeneralFiles"><label class="field"><span>CSV-Datei(en) (je maximal 2 MB)</span><input id="csvFile" type="file" accept=".csv,text/csv,text/plain" multiple></label></div>'+
    '<div id="csvFlatexNativeFiles" class="hidden"><label class="field"><span>Depotumsätze</span><input id="csvFlatexDepot" type="file" accept=".csv,text/csv,text/plain" multiple></label><label class="field"><span>Kontoumsätze</span><input id="csvFlatexAccount" type="file" accept=".csv,text/csv,text/plain" multiple></label><p class="small-help">Einzeln oder gemeinsam, auch mehrere Teil-Dateien. Je Datei maximal 2 MB, insgesamt 20 Dateien und 5.000 Zeilen. Ausgewählte EUR-Depot-/Kontopaare sind nach Prüfung übernehmbar.</p></div>'+
    '<div id="csvBrokerStatus" role="status"></div>'+
@@ -1876,6 +1895,7 @@ function openCSVImport(){
  $('csvFlatexDepot').addEventListener('change',chooseCSV);
  $('csvFlatexAccount').addEventListener('change',chooseCSV);
  $('csvSource').addEventListener('change',()=>{
+  if($('csvSource').value==='shared'){openSharedCSVImport();return;}
   const native=$('csvSource').value==='flatex-native';
   if(native!==nativeFileMode){$('csvFile').value='';$('csvFlatexDepot').value='';$('csvFlatexAccount').value='';nativeFileMode=native;}
   $('csvGeneralFiles').classList.toggle('hidden',native);$('csvFlatexNativeFiles').classList.toggle('hidden',!native);chooseCSV();

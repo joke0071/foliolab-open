@@ -58,6 +58,8 @@ export function canUndoCSV(model,receipt){return Boolean(receipt&&receipt.after=
 export function undoCSV(model,receipt){
  if(!canUndoCSV(model,receipt))throw Error('Portfolio seit dem Import verändert. Rückgängig gesperrt; bitte Backup oder einzelne Belege prüfen.');
  safeImport(JSON.parse(receipt.before));
- Object.assign(model,JSON.parse(receipt.before));
+ const previous=JSON.parse(receipt.before);
+ for(const key of Object.keys(model))if(!Object.hasOwn(previous,key))delete model[key];
+ Object.assign(model,previous);
 }
 
