@@ -29,7 +29,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await page.locator('#flatexNativeBindings').waitFor();await disclose('flatexNativeBindings');
   if(scoped){
    assert.ok(await page.locator('#flatexBindingAccount-0').isDisabled());
-   for(const [i,scope] of [[0,'SYN-DECLARED-DEPOT'],[1,'SYN-DECLARED-CASH']]){await page.locator('#flatexScope-'+i).fill(scope);await page.locator('#flatexScopeConfirm-'+i).check();await page.locator('[data-flatex-scope=\"'+i+'\"]').click();}
+   for(const [i,scope] of [[0,'SYN-DECLARED-DEPOT'],[1,'SYN-DECLARED-CASH']]){await page.locator('#flatexScope-'+i).fill(scope);await page.locator('#flatexScopeConfirm-'+i).check();await page.locator('[data-flatex-scope=\"'+i+'\"]').click();assert.equal(await page.evaluate(()=>document.activeElement?.dataset.flatexScopeEdit),String(i));}
   }
   for(const [i,account]of [[0,'d'],[1,'c']]){await page.locator('#flatexBindingAccount-'+i).selectOption(account);await page.waitForFunction(i=>!document.getElementById('flatexBindingConfirm-'+i).disabled,i);await page.locator('#flatexBindingConfirm-'+i).check();}
   await disclose('flatexNativeSimulation');
@@ -49,7 +49,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await approve();
   if(scoped){
    assert.ok(await page.locator('#flatexScope-0').isDisabled());
-   await page.locator('[data-flatex-scope-edit="0"]').click();assert.equal(await page.locator('#flatexNativeAccept').count(),0);assert.ok(await page.locator('#saveDialog').isDisabled());assert.ok(await page.locator('#flatexBindingAccount-0').isDisabled());assert.deepEqual(await read(),before);
+   await page.locator('[data-flatex-scope-edit="0"]').click();assert.equal(await page.locator('#flatexNativeAccept').count(),0);assert.ok(await page.locator('#saveDialog').isDisabled());assert.ok(await page.locator('#flatexBindingAccount-0').isDisabled());assert.deepEqual(await read(),before);assert.equal(await page.evaluate(()=>document.activeElement?.id),'flatexScope-0');
    await page.locator('#cancelDialog').click();await open();await select();await simulate();await approve();
   }
   for(const width of [320,360,390,412,430,768,1440]){

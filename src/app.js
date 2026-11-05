@@ -1618,7 +1618,7 @@ function openCSVImport(){
     const identities=inspectNativeFlatexSourceIdentities(docs),links=inspectNativeFlatexOrderLinks(docs),amounts=auditNativeFlatexSettlementAmounts(docs);
     flatexNativeDocuments=documents;flatexSourceIdentities=identities;flatexNativeLinks=links;flatexNativeAmounts=amounts;
     flatexBindings={};flatexBindingAction++;flatexNetSelected=[];flatexSimulation=null;clearNativeApproval();
-    renderFlatexNative();$('flatexScope-'+i).focus();
+    renderFlatexNative();$('csvReview').querySelector('[data-flatex-scope-edit="'+i+'"]').focus();
    }catch(error){$('flatexScopeStatus-'+i).textContent=error.message;}
   }));
   $('csvReview').querySelectorAll('[data-flatex-scope-edit]').forEach(button=>button.addEventListener('click',()=>{
