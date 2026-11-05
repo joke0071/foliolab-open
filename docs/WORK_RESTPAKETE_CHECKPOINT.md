@@ -1,3 +1,11 @@
+## ACTIVE – cfb12adcc050 / HND01 übernommen / PR304 Integrationsqualifikation – 05.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von `005a9fa04e48` übernommen. Main `588d3d3900477e4b3591917634b4f718d3465b0d`, PR304 HEAD `1fbf40f7c338017ab29720474db6eb91c33264fc` / Tree `9155c36e5b00cf49551277eede11a55debcb4ab1` frisch unverändert; keine Reviews/Inlinebefunde, nur historische Drafts157/161 zusätzlich offen. Private Sicherung Version39 mit erwartetem SHA256 vorhanden, Originale/Oracles erhalten. v286 LIVE_ACCEPTED nicht wiederabnehmen; v287 noch nicht akzeptiert.
+
+Bestehender Pflichtlauf42033599999 Versuch1 läuft; Wallet42033600087 Versuch1 SUCCESS. Keine Produktänderung/CI-Duplizierung/Retry/Abbruch. Tatsächliche Crossengine-Artefakte1/2 bereits API-/Uploadlog-/lokaleHash-/Byte-/CRC-/JSON-/PNG-geprüft; vollständiger Lauf und neue gemeinsame UI in allen3Engines bleiben Pflicht vor geschütztem Merge. Danach Main/Pages/Deploy/TLS/SW/echteProduktion. UH05 danach inkrementelle Endbestandsrekonstruktion; alle Schutzverträge/Originale/Backups/Folgeaufträge erhalten, fehlendeWallets/Staking niemalsNull, keine zweiteEngine. Checkpointbranch niemals vollständig nachMain.
+
+---
+
 ## HANDOVER_READY – 005a9fa04e48 STOPPED / PR304 eingefroren / v287 INTEGRATION_PENDING – 05.11.2026
 
 **005a9fa04e48 ist STOPPED und gibt die Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Sicherer HND01-Punkt nach Implementierung/lokalerQualifikation/privaterSicherung des einzigenKandidaten; reguläreIntegrations-CIläuft. [VollständigeFortsetzung](HANDOVER_005a9fa04e48_2026-11-05.md). NachAbgabekeineweitereImplementierung/PR/Merge/Deployment/RetrydurchdiesenWork-Chat. LaufendeActionsunverändertlassen;keinParallelstrang.
