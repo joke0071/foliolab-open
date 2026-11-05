@@ -1,6 +1,6 @@
 /** Versioned provenance, not a second journal. Legacy bookings remain untouched. */
 import {units} from './decimal.js';
-import {nativeFlatexColumns} from './flatex-native.js';
+import {nativeFlatexColumns,nativeFlatexScope,FLATEX_MISSING_SCOPE} from './flatex-native.js';
 const nativeReference=v=>typeof v==='string'&&v.trim()!==''&&v.trim()!=='-'&&v.length<=200&&!/[\u0000-\u001f\u007f-\u009f]/.test(v);
 /** Reserved optional evidence inside the existing sourcePayload, not a new schema. */
 export function validateNativeSourceEvidence(source){
@@ -48,11 +48,11 @@ export function inspectNativeFlatexSourceIdentities(documents){
   if(!Array.isArray(d.columns)||d.columns.length!==columns.length||columns.some((c,i)=>d.columns[i]?.key!==c.key||d.columns[i]?.header!==c.header||d.columns[i]?.index!==i))throw Error('Native Flatex-Quellspalten ungeprüft.');
   for(const r of d.rows){
    if(!Number.isSafeInteger(r?.line)||r.line<2||lines.has(r.line)||!Object.isFrozen(r)||!Object.isFrozen(r.values)||!Array.isArray(r.fields)||!Object.isFrozen(r.fields)||r.fields.length!==columns.length||!Array.isArray(r.issues)||!Object.isFrozen(r.issues)||r.issues.some(i=>typeof i!=='string')||Object.keys(r.values).length!==columns.length||columns.some((c,i)=>typeof r.values[c.key]!=='string'||r.values[c.key]!==r.fields[i])||(r.order!==null&&typeof r.order?.reference!=='string'))throw Error('Native Flatex-Quellzeile nicht eindeutig prüfbar.');
-   lines.add(r.line);const v=r.values,sourceScope=(d.type==='depot'?v.depot:v.account)??'',bankReference=v.transactionReference;
+   lines.add(r.line);const v=r.values,sourceScope=nativeFlatexScope(d,r),bankReference=v.transactionReference;
    const sourceId=nativeReference(sourceScope)?'flatex-native-v1:'+d.type+':'+sourceDigest(JSON.stringify(sourceScope)):null;
    const externalId=nativeReference(bankReference)?bankReference:null;
-   const payloadDigest=sourceDigest(JSON.stringify(columns.filter(c=>c.key!=='number').map(c=>[c.key,v[c.key]])));
-   const entry={sourceIndex,line:r.line,sourceType:d.type,sourceScope,bankReference,orderReference:r.order?.reference??null,sourceId,externalId,payloadDigest,status:'source-review',identity:null,reasons:[...r.issues]};rows.push(entry);
+   const payloadDigest=sourceDigest(JSON.stringify([...columns.filter(c=>c.key!=='number').map(c=>[c.key,v[c.key]]),...(d.sourceContext?[['sourceContext',d.sourceContext]]:[])]));
+   const entry={sourceIndex,line:r.line,sourceType:d.type,sourceScope,bankReference,orderReference:r.order?.reference??null,sourceId,externalId,payloadDigest,status:'source-review',identity:null,reasons:r.issues.filter(i=>!(d.sourceContext&&i===(d.type==='depot'?FLATEX_MISSING_SCOPE:FLATEX_MISSING_SCOPE.replace('Depotkennung','Kontokennung'))))};rows.push(entry);
    if(!sourceId||!externalId)entry.reasons.push('Quellkontext oder Bankreferenz fehlt oder ist ungeklärt; kein Ersatzschlüssel.');
    else{const key=JSON.stringify([sourceId,externalId]),list=keys.get(key)||[];list.push(entry);keys.set(key,list);}
   }

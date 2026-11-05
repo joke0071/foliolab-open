@@ -82,7 +82,7 @@ export function auditNativeFlatexSettlementAmounts(documents,{maxDays=7}={}){
    entry.reasons.push('Quellevidenz ungeklärt; keine Betragsfreigabe.');return entry;
   }
   const [depot,cash]=locators.map(l=>rows.get(key(l)));
-  if(depot.values.unit!=='Stk.'){
+  if(depot.values.unit!==(documents[group.depot[0].sourceIndex].dialect==='depot13'?'Stück':'Stk.')){
    entry.reasons.push('Nur ausdrücklich belegte Stücknotierung; keine Prozent- oder Nennwertannahme.');return entry;
   }
   const nominal=units(depot.numbers.nominal);

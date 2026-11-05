@@ -1,3 +1,5 @@
+import {bindNativeFlatexSourceContext} from './flatex-native.js';
+import {flatexNativeSourceContextMarkup} from './flatex-native-ui.js';
 import {inspectFlatexNetPairs} from './flatex-net-settlement.js';
 import {setLoading} from './loading-ui.js';
 import {clearAlphaCache} from './alpha-vantage.js';
@@ -1606,6 +1608,27 @@ function openCSVImport(){
   if(staging.stale){flatexSimulation=null;clearNativeApproval();flatexSimulationStatus='Datenstand geändert – neu laden.';}
   $('csvBrokerStatus').textContent='Flatex-Originalformat erkannt. Stückhistorie vor jeder Übernahme vollständig prüfen.';
   $('csvMapping').innerHTML='';$('csvReview').innerHTML=flatexNativeMarkup(flatexNativeDocuments,{limit:flatexNativeLimit,orderLinks:flatexNativeLinks,orderLimit:flatexOrderLimit,legLimits:flatexLegLimits,staging,bindingLimit:flatexBindingLimit,amountAudit:flatexNativeAmounts});
+  $('flatexNativeBindings').insertAdjacentHTML('beforebegin',flatexNativeSourceContextMarkup(flatexNativeDocuments,{disabled:staging.stale}));
+  $('csvReview').querySelectorAll('[data-flatex-scope]').forEach(button=>button.addEventListener('click',()=>{
+   const i=Number(button.dataset.flatexScope);
+   try{
+    if(staging.stale||saving||busy||otherTabChangedPortfolio||loadFailure)throw Error('Datenstand geändert – neu laden.');
+    const f=flatexNativeDocuments[i],document=bindNativeFlatexSourceContext(f.document,{scope:$('flatexScope-'+i).value.trim(),confirmed:$('flatexScopeConfirm-'+i).checked});
+    const documents=flatexNativeDocuments.map((v,j)=>j===i?{...v,document}:v),docs=documents.map(f=>f.document);
+    const identities=inspectNativeFlatexSourceIdentities(docs),links=inspectNativeFlatexOrderLinks(docs),amounts=auditNativeFlatexSettlementAmounts(docs);
+    flatexNativeDocuments=documents;flatexSourceIdentities=identities;flatexNativeLinks=links;flatexNativeAmounts=amounts;
+    flatexBindings={};flatexBindingAction++;flatexNetSelected=[];flatexSimulation=null;clearNativeApproval();
+    renderFlatexNative();$('csvReview').querySelector('[data-flatex-scope-edit="'+i+'"]').focus();
+   }catch(error){$('flatexScopeStatus-'+i).textContent=error.message;}
+  }));
+  $('csvReview').querySelectorAll('[data-flatex-scope-edit]').forEach(button=>button.addEventListener('click',()=>{
+   if(staging.stale||saving||busy||otherTabChangedPortfolio||loadFailure)return;
+   const i=Number(button.dataset.flatexScopeEdit),{sourceContext,...raw}=flatexNativeDocuments[i].document;
+   flatexNativeDocuments=flatexNativeDocuments.map((f,j)=>j===i?{...f,document:Object.freeze(raw)}:f);
+   const docs=flatexNativeDocuments.map(f=>f.document);
+   flatexSourceIdentities=inspectNativeFlatexSourceIdentities(docs);flatexNativeLinks=inspectNativeFlatexOrderLinks(docs);flatexNativeAmounts=auditNativeFlatexSettlementAmounts(docs);
+   flatexBindings={};flatexBindingAction++;flatexNetSelected=[];flatexSimulation=null;clearNativeApproval();renderFlatexNative();$('flatexScope-'+i).focus();
+  }));
   $('flatexNativeBindings').insertAdjacentHTML('afterend',flatexNativeSimulationMarkup(flatexSimulation,{mode:flatexSimulationMode,disabled:staging.stale,model}));
   if(['net','net-remove','net-augment'].includes(flatexSimulationMode)){
    const pairs=inspectFlatexNetPairs(flatexNativeDocuments.map(f=>f.document));
@@ -1734,7 +1757,7 @@ function openCSVImport(){
    if(generation!==selectionGeneration||editor!==importEditor||!$('editDialog').open)return;
    const bitcoinBundle=inputs.some(f=>{try{return parseCSV(f.text).headers.includes('Bitcoin Transaction ID');}catch{return false;}});
    if(bitcoinBundle){if(!['auto','ledger'].includes(source))throw Error('Bittr-/Ledger-Dateien über die automatische Erkennung gemeinsam prüfen.');if(model.positions.filter(p=>p.wallet?.enabled&&p.wallet.chain.startsWith('btc')).length!==1)throw Error('Genau eine Bitcoin-Wallet erforderlich. Wallet-Zuordnung zuerst klären.');$('editDialog').close();await walletHistoryUI.openBitcoinFiles(files,$('addBooking'));return;}
-   const native=inputs.some(f=>{try{return looksLikeFlatexNativeCSV(readCSVRecords(f.text,{delimiter:';'}));}catch{return false;}});
+   const native=inputs.some(f=>{try{readFlatexNativeBytes(f.bytes);return true;}catch{return false;}});
    if(source==='flatex-native'||native){
     flatexNativeMode=true;importEditor.submitBlocked=true;
     if(!['auto','flatex-native'].includes(source))throw Error('Flatex-Originale bitte über die native Flatex-Vorschau prüfen, nicht als allgemeine oder andere Buchungen.');

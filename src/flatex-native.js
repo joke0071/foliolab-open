@@ -14,7 +14,28 @@ export const FLATEX_NATIVE_COLUMNS=Object.freeze({
 export const FLATEX_DEPOT13_COLUMNS=schema(
  ['Buchungstag','Valuta','Bezeichnung','ISIN','Nominal (Stk.)','','Betrag','','Kurs','','Devisenkurs','TA.-Nr.','Buchungsinformation'],
  ['bookingDate','valueDate','description','isin','nominal','unit','amount','amountCurrency','rate','priceCurrency','fxRate','transactionReference','details']);
+export const FLATEX_ACCOUNT8_COLUMNS=schema(
+ ['Buchungstag','Valuta','Empfänger','Zahlungspfl.','TA.Nr.','Buchungsinformationen','Betrag',''],
+ ['bookingDate','valueDate','recipient','payer','transactionReference','details','amount','amountCurrency']);
+export const FLATEX_MISSING_SCOPE='Depotkennung fehlt in diesem Export; Quellenzuordnung vor einer Übernahme gesondert belegen.';
+const validScope=s=>typeof s==='string'&&s===s.trim()&&s!==''&&s!=='-'&&s.length<=120&&!/[\u0000-\u001f\u007f-\u009f]/.test(s);
+export function nativeFlatexScope(document,row){
+ if(['depot13','account8'].includes(document?.dialect)){
+  const c=document.sourceContext;
+  if(c===undefined)return '';
+  if(!c||Object.keys(c).sort().join(',')!=='confirmed,scope,version'||c.version!==1||c.confirmed!==true||!validScope(c.scope))throw Error('Explizite Flatex-Quellenkennung ungeprüft.');
+  return c.scope;
+ }
+ if(document?.sourceContext!==undefined)throw Error('Originale Quellenkennung darf nicht ersetzt werden.');
+ return (document.type==='depot'?row.values.depot:row.values.account)??'';
+}
+/** Explicit user declaration for this exact document, never inferred from other files. */
+export function bindNativeFlatexSourceContext(document,{scope,confirmed}={}){
+ if(!Object.isFrozen(document)||!['depot13','account8'].includes(document.dialect)||!nativeFlatexColumns(document)||confirmed!==true||!validScope(scope))throw Error('Depot-/Kontokennung anhand des eigenen Auszugs eingeben und bestätigen.');
+ return Object.freeze({...document,sourceContext:Object.freeze({version:1,scope,confirmed:true})});
+}
 export function nativeFlatexColumns(document){
+ if(document?.dialect==='account8')return document.type==='account'?FLATEX_ACCOUNT8_COLUMNS:null;
  if(document?.dialect==='depot13')return document.type==='depot'?FLATEX_DEPOT13_COLUMNS:null;
  if(document?.dialect!==undefined)return null;
  return FLATEX_NATIVE_COLUMNS[document?.type]??null;
@@ -31,7 +52,7 @@ function decodeCP1252(bytes){
 }
 export const looksLikeFlatexNativeCSV=lexed=>{
  const h=lexed?.records?.[0]?.cells?.map(v=>v.trim());
- return Boolean(h&&(matchesHeaders(FLATEX_DEPOT13_COLUMNS,h)||h.includes('')&&['Buchtag','Valuta','Buchungsinformationen','TA-Nr.'].filter(k=>h.includes(k)).length>=3));
+ return Boolean(h&&(matchesHeaders(FLATEX_ACCOUNT8_COLUMNS,h)||matchesHeaders(FLATEX_DEPOT13_COLUMNS,h)||h.includes('')&&['Buchtag','Valuta','Buchungsinformationen','TA-Nr.'].filter(k=>h.includes(k)).length>=3));
 };
 function sourceDate(s){
  const m=/^(\d\d)\.(\d\d)\.(\d{4})$/.exec(s);
@@ -57,13 +78,13 @@ function sourceKind(details){
 function project(input,encoding){
  if(typeof input!=='string'||input.includes('\u0000')||input.includes('\ufffd'))throw Error('Flatex: verlustfrei decodierten CSV-Text ohne NUL oder Ersatzzeichen verwenden.');
  const {records}=readCSVRecords(input,{delimiter:';'}),headers=records[0].cells.map(v=>v.trim());
- const dialect=matchesHeaders(FLATEX_DEPOT13_COLUMNS,headers)?'depot13':undefined;
- const type=dialect?'depot':Object.keys(FLATEX_NATIVE_COLUMNS).find(k=>{
+ const dialect=matchesHeaders(FLATEX_DEPOT13_COLUMNS,headers)?'depot13':matchesHeaders(FLATEX_ACCOUNT8_COLUMNS,headers)?'account8':undefined;
+ const type=dialect?(dialect==='depot13'?'depot':'account'):Object.keys(FLATEX_NATIVE_COLUMNS).find(k=>{
   const columns=FLATEX_NATIVE_COLUMNS[k];return columns.length===headers.length&&columns.every((c,i)=>c.header===headers[i]);
  });
- if(!type)throw Error('Flatex: bestätigtes 12-/13-Spalten-Depot- oder 10-Spalten-Kontoschema einschließlich Leerüberschriften erforderlich.');
+ if(!type)throw Error('Flatex: bestätigtes 12-/13-Spalten-Depot- oder 8-/10-Spalten-Kontoschema einschließlich Leerüberschriften erforderlich.');
  if(records.length<2)throw Error('Flatex: mindestens eine Datenzeile erforderlich.');
- const columns=dialect?FLATEX_DEPOT13_COLUMNS:FLATEX_NATIVE_COLUMNS[type];
+ const columns=dialect==='depot13'?FLATEX_DEPOT13_COLUMNS:dialect==='account8'?FLATEX_ACCOUNT8_COLUMNS:FLATEX_NATIVE_COLUMNS[type];
  const rows=records.slice(1).map(record=>{
   const fields=record.cells.map(v=>v.trim());
   if(fields.length!==columns.length)throw Error('Flatex: abweichende Spaltenanzahl im Originalformat.');
@@ -73,13 +94,13 @@ function project(input,encoding){
   for(const key of ['bookingDate','valueDate']){
    dates[key]=null;try{dates[key]=sourceDate(values[key]);}catch{issues.push(key+': Quelltag ungültig oder unbekannt.');}
   }
-  for(const key of dialect?['nominal','rate','amount','fxRate']:type==='depot'?['nominal','rate']:['amount']){
+  for(const key of dialect==='depot13'?['nominal','rate','amount','fxRate']:type==='depot'?['nominal','rate']:['amount']){
    numbers[key]=null;
    if(unknown(values[key]))issues.push(key+': Quellzahl unbekannt, nicht als 0 ergänzt.');
    else try{numbers[key]=sourceNumber(values[key]);}catch{issues.push(key+': deutsche Quellzahl nicht exakt lesbar.');}
   }
-  for(const key of dialect?['unit','priceCurrency','amountCurrency']:type==='depot'?['unit','priceCurrency']:['amountCurrency'])if(unknown(values[key]))issues.push(key+': Einheit/Währung unbekannt; keine Annahme.');
-  if(dialect)issues.push('Depotkennung fehlt in diesem Export; Quellenzuordnung vor einer Übernahme gesondert belegen.');
+  for(const key of dialect==='depot13'?['unit','priceCurrency','amountCurrency']:type==='depot'?['unit','priceCurrency']:['amountCurrency'])if(unknown(values[key]))issues.push(key+': Einheit/Währung unbekannt; keine Annahme.');
+  if(dialect)issues.push(type==='depot'?FLATEX_MISSING_SCOPE:FLATEX_MISSING_SCOPE.replace('Depotkennung','Kontokennung'));
   const kind=sourceKind(values.details);
   if(kind==='unclassified')issues.push('Quellereignis ungeklärt; keine Buchungsannahme.');
   const m=/(?:^|\s)ORDER\s+(Kauf|Verkauf)\s+([A-Z]{2}[A-Z0-9]{10})\s+(\d+)\s*$/i.exec(values.details);

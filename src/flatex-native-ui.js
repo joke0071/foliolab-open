@@ -112,3 +112,13 @@ export function flatexNativeMarkup(documents,{limit=50,orderLinks=null,orderLimi
   '<p class="small-help">Keine Buchungsübernahme. Dateien und mögliche Überlappungen bleiben getrennt; Order- und Cashzuordnung sind noch nicht bestätigt. Für getrennte Uploads „Flatex Originalformat – Vorschau“ wählen.</p>'+(staging?flatexNativeBindingMarkup(staging,{limit:bindingLimit}):'')+(orderLinks?flatexNativeOrderMarkup(documents,orderLinks,{limit:orderLimit,legLimits,amountAudit,staging}):'')+rows+
   (all.length>limit?'<button type="button" id="flatexNativeShowMore" class="btn outline">Weitere '+Math.min(50,all.length-limit)+' Zeilen anzeigen</button>':'')+'</div>';
 }
+
+
+/** Each scope declaration belongs only to the displayed original document. */
+export function flatexNativeSourceContextMarkup(documents,{disabled=false}={}){
+ return documents.map((f,i)=>{
+  const d=f.document;if(!['depot13','account8'].includes(d.dialect))return '';
+  const c=d.sourceContext;
+  return '<fieldset class="dialog-group"><legend>Datei '+(i+1)+' · '+show(f.name)+'</legend><p class="small-help">Dieser Export enthält keine '+(d.type==='depot'?'Depotkennung':'Kontokennung')+'. Übertrage die Kennung aus deinem Flatex-Auszug. Dateiname, ISIN, Order und andere Dateien belegen sie nicht. Die Angabe gilt nur für diese Datei und bleibt im übernommenen Beleg erhalten.</p><label class="field"><span>'+ (d.type==='depot'?'Depotkennung laut Auszug':'Kontokennung laut Auszug')+'</span><input id="flatexScope-'+i+'" maxlength="120" value="'+esc(c?.scope||'')+'" '+(disabled||c?'disabled':'')+'></label><label class="flatex-binding-confirm"><input type="checkbox" id="flatexScopeConfirm-'+i+'" '+(disabled||c?'disabled':'')+'>Ich habe die Quellenkennung und die Zugehörigkeit dieser Datei zu meinem eigenen Depot/Konto anhand des Auszugs geprüft.</label>'+(c?'<p class="small-help">Bestätigte Quellenkennung: '+show(c.scope)+'</p>':'')+'<button type="button" class="btn outline" data-flatex-scope="'+i+'" '+(disabled||c?'disabled':'')+'>Quellenkennung bestätigen</button>'+(c?'<button type="button" class="btn outline" data-flatex-scope-edit="'+i+'" '+(disabled?'disabled':'')+'>Quellenkennung ändern</button>':'')+'<p id="flatexScopeStatus-'+i+'" role="status"></p></fieldset>';
+ }).join('');
+}
