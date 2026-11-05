@@ -1,3 +1,11 @@
+## ACTIVE – e963a4b02c5f / HND01 übernommen / PR305 Integrationsfehler wird untersucht – 05.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung nach bestätigter STOPPED/HANDOVER_READY-Abgabe von c9e345093749 und Nutzerauftrag „Weitermachen“ übernommen. Main315de8c236b8bd05d891ebe159858e6537784edd/Tree9155c36e5b00cf49551277eede11a55debcb4ab1 und PR305HEAD6fb4457739c06c25ba7dbfa88ad63d8ad94893f3 unverändert; keine Reviews/Threads, nur historische Drafts157/161 zusätzlich offen. PrivateV43:2927264Bytes/SHA2563ea53de44a116dfcf5c2ed6bf3878ccc10c51d4a5592a1e4de7907251547c1ed und alle610Manifestdateien unabhängig geprüft. Kein ungesicherter Produkt-WIP.
+
+Pflichtlauf42065621234Versuch1 tatsächlich FAILURE, Wallet42065621277SUCCESS. Test und Cross1/2SUCCESS; Cross3Job127378937634 scheitert in tests/browser-ui-quality.mjs:51 bei WebKit (0 statt2 statische logo-beta; Firefox vollständige primäre UI-KettePASS). Sechs originale ZIPs API-/lokaleSHA256-/Bytes-/CRCPASS; alle126JSONs syntaktisch lesbar/1729PNGs dekodierbar. Keine vollständige Integrationsabnahme/keinMerge/keinv288LIVE_ACCEPTED. Originalfehler bleibt erhalten, keinRetry/Abbruch/CI-Duplikat. Diagnose an unverändertem Kandidaten vor Entscheidung über Korrektur oder begründeten Einzeljobretry. v287LIVE_ACCEPTED nicht wiederabnehmen; alle Schutzverträge/Folgeaufträge erhalten; GitHub nurPlugin, Checkpointbranch niemals vollständig nachMain.
+
+---
+
 ## HANDOVER_READY – c9e345093749 STOPPED / PR305 eingefroren / v288 INTEGRATION_PENDING – 05.11.2026
 
 **c9e345093749 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Sicherer früher HND01-Punkt nach v287-Abschluss und fertig lokal qualifiziertem, remote eingefrorenem Kandidaten. [Vollständige Übergabe mit kopierbarem Fortsetzungsprompt](HANDOVER_c9e345093749_2026-11-05.md). Nach Abgabe keine neue Implementierung, PR, Merge, Deployment oder Retry durch diesen Chat. Laufende Actions unverändert lassen.
