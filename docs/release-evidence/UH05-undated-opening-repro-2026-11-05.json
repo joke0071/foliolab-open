@@ -1,0 +1,32 @@
+{
+  "scope": "read-only UH05 source-order investigation; current merged runtime unchanged",
+  "result": "REPRODUCED_ORDER_DEPENDENCE",
+  "flatexThenBitpanda": {
+    "eligible": true,
+    "bookings": 3
+  },
+  "bitpandaThenFlatex": {
+    "eligible": false,
+    "reason": "Vorhandene Eröffnung bleibt geschützt; Datum und Menge müssen exakt passen.",
+    "openingBeforeFlatex": [
+      {
+        "positionId": "etf",
+        "quantityExact": "0",
+        "costBasisExact": null,
+        "realizedPnLExact": null,
+        "source": "observed-opening",
+        "asOf": null
+      },
+      {
+        "positionId": "cash",
+        "quantityExact": "100",
+        "costBasisExact": null,
+        "realizedPnLExact": null,
+        "source": "observed-opening",
+        "asOf": null
+      }
+    ]
+  },
+  "finding": "Unrelated import captureOpenings creates undated observed Flatex openings. Net first-import currently rejects null asOf even when quantities are unchanged and date explicitly confirmed.",
+  "next": "After v284 LIVE_ACCEPTED, add shared all-provider acceptance and narrowly qualify dating unchanged undated observed openings with explicit first-import consent; retain dated openings, quantities, costs, dependencies, reference/CAS guards."
+}
