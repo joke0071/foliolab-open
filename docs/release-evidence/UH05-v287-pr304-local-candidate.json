@@ -1,0 +1,57 @@
+{
+  "status": "LOCAL_CANDIDATE_INTEGRATION_PENDING",
+  "candidateHead": "1fbf40f7c338017ab29720474db6eb91c33264fc",
+  "candidateTree": "9155c36e5b00cf49551277eede11a55debcb4ab1",
+  "baseMain": "588d3d3900477e4b3591917634b4f718d3465b0d",
+  "pr": 304,
+  "units": {
+    "pass": 1214,
+    "fail": 0,
+    "skip": 0
+  },
+  "localSharedUI": {
+    "engine": "Chromium141.0.7390.37",
+    "result": "PASS",
+    "atomicCAS": true,
+    "quota": true,
+    "postPutAbort": true,
+    "realSecondTab": true,
+    "exactUndo": true,
+    "replayNoCommit": true,
+    "offline": true,
+    "encryptedFreshUIRestore": true,
+    "mobileWidths": [
+      320,
+      360,
+      390,
+      412,
+      430
+    ],
+    "axeViolations": 0
+  },
+  "privateOriginals": {
+    "files": 10,
+    "rows": 507,
+    "pairs": 24,
+    "combinedWith": "four additional synthetic sources",
+    "jointKernel": "PASS",
+    "actualJointUI": "PASS",
+    "limits": "controlled source scopes and independent opening/closing controls, no historic ownership/balance acceptance"
+  },
+  "integration": {
+    "run": 42033599999,
+    "attempt": 1,
+    "status": "IN_PROGRESS",
+    "walletRun": 42033600087,
+    "walletStatus": "SUCCESS",
+    "stage": "INTEGRATION full=true"
+  },
+  "releaseAccepted": false,
+  "limits": [
+    "UH05 remains PARTIAL",
+    "Ledger/staking missing never zero",
+    "No local Firefox/WebKit or Android hardware PASS",
+    "Incremental backfill of already journaled scopes pending"
+  ],
+  "privateBackupVersion": 39
+}
