@@ -1,0 +1,241 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "588d3d3900477e4b3591917634b4f718d3465b0d",
+  "tree": "ab8ccb62fb991858b7d508ba486922c93c341cf7",
+  "run": 42020483330,
+  "attempt": 1,
+  "pagesGitBlobMatches": 145,
+  "productionTLSAssetMatches": 146,
+  "cache": "foliolab-open-v286",
+  "proxyCertificateException": false,
+  "productionBase": "https://foliolab.unperfekt.at/",
+  "newSelectionReports": {
+    "scope": "41 synthetic pairs plus one unmatched depot row; explicit selection only, existing financial core",
+    "engines": [
+      {
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "41 pairs selected including offscreen rows; unmatched source not selected",
+          "clear all including hidden rows; explicit single selection retained",
+          "no mutation before commit; selection revokes backup and consent",
+          "one existing CAS commit; independent 82 shares and EUR9108.25; costs unknown",
+          "actual Undo/recommit/reload/full-group withdrawal,41 tombstones",
+          "five widths/Axe/focus"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "41 pairs selected including offscreen rows; unmatched source not selected",
+          "clear all including hidden rows; explicit single selection retained",
+          "no mutation before commit; selection revokes backup and consent",
+          "one existing CAS commit; independent 82 shares and EUR9108.25; costs unknown",
+          "actual Undo/recommit/reload/full-group withdrawal,41 tombstones",
+          "five widths/Axe/focus"
+        ]
+      }
+    ],
+    "result": "PASS"
+  },
+  "backfillReport": {
+    "scope": "Controlled independent openings/closing balances, actual provider UI; no real historic balance acceptance",
+    "engines": [
+      {
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "results": [
+          {
+            "dialect": "native",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          },
+          {
+            "dialect": "context",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          }
+        ]
+      },
+      {
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "results": [
+          {
+            "dialect": "native",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          },
+          {
+            "dialect": "context",
+            "result": "PASS",
+            "checks": [
+              "actual Bitpanda/Flatex UI in both orders",
+              "exact independent openings/end balances; no doubled holdings/cash",
+              "undo/recommit/repeat/zero cost invention",
+              "control edit invalidates consent; quota/post-put rollback",
+              "offline reload/encrypted v5 restore in fresh context",
+              "persistent group withdrawal/tombstone",
+              "real second-tab CAS",
+              "seven widths/Axe"
+            ]
+          }
+        ]
+      }
+    ],
+    "result": "PASS"
+  },
+  "chromiumEvidence": "separate production-flatex-net-chromium.log and retained actual screenshot; common JSON overwritten by cross-engine invocation",
+  "ciStartedRepeatedCancelled": 0,
+  "release": "v286",
+  "pr": 303,
+  "deploy": 127230118601,
+  "live": 127230356466,
+  "workflowConclusion": "SUCCESS",
+  "units": 1211,
+  "failures": 0,
+  "skips": 0,
+  "artifacts": [
+    {
+      "id": 13411328334,
+      "name": "dialog-visual-reference",
+      "bytes": 934754,
+      "sha256": "a74f88df9339fe69f64bb13b00a97b4045e1e5fb323bd13ea50ae835345e496c",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13411333336,
+      "name": "release-gates-588d3d3900477e4b3591917634b4f718d3465b0d",
+      "bytes": 63800021,
+      "sha256": "56e474e638253f4c57df333bdca0f786fda3310d9fe6c176b5976b7b424ae3a8",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 705,
+      "jsonReports": 66,
+      "pngsDecoded": 636,
+      "failureFlags": []
+    },
+    {
+      "id": 13411956485,
+      "name": "cross-engine-gates-588d3d3900477e4b3591917634b4f718d3465b0d-2",
+      "bytes": 12216452,
+      "sha256": "72ca3e731174b629431528676b55a592bb6092ab336822a7807ef2fd7da0dbac",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13411985289,
+      "name": "ci-stage-588d3d3900477e4b3591917634b4f718d3465b0d",
+      "bytes": 356,
+      "sha256": "460e0a5e2ec015d303f24711804a9cb2c6f15e2acb8792cac95787d76d1638f6",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13412411474,
+      "name": "cross-engine-gates-588d3d3900477e4b3591917634b4f718d3465b0d-1",
+      "bytes": 59691908,
+      "sha256": "7f62644b6f15fd5a68f02e8d351fd5e68320dfaa675adc2c08a90b661c7d9b3a",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13412726717,
+      "name": "cross-engine-gates-588d3d3900477e4b3591917634b4f718d3465b0d-3",
+      "bytes": 61618903,
+      "sha256": "a9b2d985a112b93bd2c1c903f1ef57611e77240ac0ccaeff36c20fddefb97ae7",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 705,
+      "jsonReports": 54,
+      "pngsDecoded": 650,
+      "failureFlags": []
+    },
+    {
+      "id": 13412926286,
+      "name": "github-pages",
+      "bytes": 535116,
+      "sha256": "624ef5cb48f144de1202cee3f80ae5b80332850dc577d5e60d40939206027f41",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13414332036,
+      "name": "production-live-acceptance-588d3d3900477e4b3591917634b4f718d3465b0d",
+      "bytes": 126480213,
+      "sha256": "e902ce874805a0ac9fab62568bed6351a942d0d51bc640bf1578776dbe490c96",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1336,
+      "jsonReports": 101,
+      "pngsDecoded": 1196,
+      "failureFlags": []
+    }
+  ],
+  "totalJsonReports": 254,
+  "totalPngsDecoded": 3050,
+  "productionVisualsReviewed": [
+    "Chromium 141.0.7390.37 / selection 390px",
+    "Firefox 157.0 / selection 390px",
+    "WebKit 27.2 / selection 390px"
+  ],
+  "scope": "Explicit EUR pair bulk selection including hidden pairs, clear all, consent invalidation, independent 82 shares/EUR9108.25; original UI 10files/507rows/24pairs reused at identical relevant code. Controlled openings/closings only; no historical ownership/balance acceptance. UH04/UH05 PARTIAL; no common all-five atomic commit; Ledger/staking coverage PARTIAL/UNKNOWN.",
+  "ciStarted": 0,
+  "retries": 0,
+  "cancelled": 0,
+  "priorRelease": "v285 not reaccepted",
+  "owner": "d0bff05d0d1b"
+}
