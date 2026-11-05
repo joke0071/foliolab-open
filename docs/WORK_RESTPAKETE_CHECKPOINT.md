@@ -1,3 +1,13 @@
+## ACTIVE – adb3e8e542d6 / v284 Main-Fehler erhalten / KEIN Retry bisher – 05.11.2026
+
+Main c430039d61514ffaf8126ffe30052d94ecfe243d / Treec94f1043fdf45bdc680642a79358b4d83a722d4e unverändert,PR301 gemergt/finale PR-CI vollständig qualifiziert. Mainlauf41976188591 Versuch1 noch IN_PROGRESS;Cross1/2 SUCCESS,Cross3 Job127075574645 FAILURE an bestehender WebKit-Assertion browser-ui-quality.mjs51: statische .logo-beta0 statt2. VorherFirefox/FlatexFinanz/IDB/CAS/RestoreprüfungenPASS. [Fehler/OriginalZIP](release-evidence/v284-main-initial-cross3-failure.json) API-/Uploadlog-/Bytehash/CRC erhalten;unveränderter Index enthält2statischeBadges,keineRuntimeentfernung,identischerTree/Test zuvor inbeidenPR-LäufenWebKitPASS. Transiente Navigations-/Fixture-Lifecycleursache ist eine begründete Einordnung,keine bewiesene exakteRootcause.
+
+**Noch kein Retry und keine Produkt-/Test-/Gateänderung.** Erst gesamten Versuch1 regulär fertiglaufen lassen;danach frischenStand prüfen und höchstens einmal gezielt ausschließlich fehlgeschlagenen Job127075574645 auf unverändertem Main wiederholen. Bestandene Jobs erhalten,kein ganzerPipeline-Neustart/keinAbbruch. Bei erneuter Assertion keine weitere blindeWiederholung,sondern gezielter LifecycleRepro/Fix. Noch KEIN v284 DEPLOYED/LIVE_ACCEPTED;v283 bleibtletzteLIVE_ACCEPTEDohneWiederabnahme. Erst danach UH05.
+
+UH05 nurlesend vorbereitet: [Quellreihenfolge/undatierteEröffnung](release-evidence/UH05-undated-opening-repro-2026-11-05.json) und [zusätzlicher tatsächlicher UI-Referenzschutz](release-evidence/UH05-actual-ui-reference-guard-repro-2026-11-05.json) reproduziert. NullasOf allein zu erlauben löst den tatsächlichenUI-Pfad nicht;Referenz-/Endbestands-/Kosten-/Manual-/CAS-Schutz nicht für einen gemeinsamenPASS lockern. Gemeinsamen atomaren Plan/Commit oder separat belegtenBackfill/Endbestandsschnitt im bestehendenKernqualifizieren. Keine zweiteImplementierung währendMainrelease.
+
+---
+
 ## ACTIVE – adb3e8e542d6 / PR301 MERGED / v284 MAIN_CI_PENDING – 05.11.2026
 
 Alleiniger Owner adb3e8e542d6. PR301 gemergt;Main c430039d61514ffaf8126ffe30052d94ecfe243d / Tree c94f1043fdf45bdc680642a79358b4d83a722d4e exakt final qualifizierter Kandidat. Bestehender regulärer Mainlauf41976188591 Versuch1 IN_PROGRESS. Noch KEIN v284 DEPLOYED/LIVE_ACCEPTED;v283 bleibt letzte LIVE_ACCEPTED-Basis ohne Wiederabnahme. Kein Folgeprodukt vor vollständigem Main-/Deployment-/Live-/TLS-Abschluss;keine CI duplizieren/abbrechen.
