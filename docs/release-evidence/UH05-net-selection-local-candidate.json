@@ -1,0 +1,24 @@
+{
+  "owner": "47c433acbb15",
+  "status": "LOCAL_QUALIFIED_REMOTE_BRANCH_NO_PR_NO_CI",
+  "baseMain": "7c7c6b56c972ca623b4c864fc7578685de912aab",
+  "lastAccepted": "v285 LIVE_ACCEPTED",
+  "branch": "feature/uh05-net-group-selection",
+  "head": "92cd4994c94f22cf4d2adb78ce05a6ec91d34072",
+  "tree": "ab8ccb62fb991858b7d508ba486922c93c341cf7",
+  "files": 6,
+  "localUnits": {
+    "suitePass": 1191,
+    "suiteInfrastructureFailures": 2,
+    "restoredWorkflowTestsPass": 8,
+    "restoredManifestTestsPass": 12,
+    "totalPassed": 1211,
+    "productFailures": 0,
+    "note": "Full parallel run stopped without summary; controlled concurrency2 completed with two missing local workflow/manifest files. Exact baseline restored; only those failing files rerun,20 tests pass. No test/gate weakened."
+  },
+  "localChromium": "existing both-dialect/both-provider-order end-balance suite + new41-pair full UI PASS",
+  "firefoxWebkit": "NOT_RUN_LOCALLY; executables absent. Existing v285 evidence is not acceptance of changed code.",
+  "ci": "none started; no PR,merge or deployment",
+  "next": "Qualify frozen six-file candidate in normal required integration CI, then only after full gates merge/Main/deploy/live. No v286 acceptance yet.",
+  "limits": "selection usability only. No all-five atomic import,incremental backfill,N:M/FX/staking completeness claims."
+}
