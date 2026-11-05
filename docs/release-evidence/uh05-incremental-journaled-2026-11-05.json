@@ -1,0 +1,76 @@
+{
+  "main": "315de8c236b8bd05d891ebe159858e6537784edd",
+  "scope": "Synthetic executable next-contract diagnostic, not a new product feature or historical balance acceptance",
+  "results": [
+    {
+      "dialect": "Depot12/Konto10",
+      "case": "later pair with intact earlier ledger, no reference",
+      "result": "PASS",
+      "cash": "90",
+      "shares": "1",
+      "priorBookingEconomicIdentity": "unchanged; source occurrences legitimately augmented",
+      "priorJournalOpeningBytes": "unchanged",
+      "restoreReplay": "two duplicates, zero new"
+    },
+    {
+      "dialect": "Depot12/Konto10",
+      "case": "same economically valid continuation after a current reference exists",
+      "result": "BLOCKED_AS_DESIGNED",
+      "appendReason": "Vorhandener Referenzstand benötigt gesonderten Endbestandsabgleich.",
+      "backfillReason": "Vorhandene und neue Gruppen getrennt prüfen; kein teilweiser Endbestandsersatz.",
+      "sourceBytesUnchanged": true,
+      "independentContinuation": {
+        "shares": "1",
+        "cash": "90"
+      },
+      "currentLedgerBalance": {
+        "shares": "2",
+        "cash": "78.25"
+      },
+      "missingContract": "Explicit dated later closing observation and existing reference treatment; observed quantities must not silently replace ledger current state"
+    },
+    {
+      "dialect": "Depot12/Konto10",
+      "case": "earlier source arrives after later group has been journaled",
+      "result": "BLOCKED_AS_DESIGNED",
+      "reason": "Neue EUR-Paare nur nach unveränderten früheren Wirtschaftsgruppen mit belegtem Anfangsbestand. Andere oder gleichdatierte Buchungen benötigen einen gesonderten Abgleich.",
+      "sourceBytesUnchanged": true,
+      "existingIdentities": "not renumbered or regenerated"
+    },
+    {
+      "dialect": "Depot13/Konto8",
+      "case": "later pair with intact earlier ledger, no reference",
+      "result": "PASS",
+      "cash": "90",
+      "shares": "1",
+      "priorBookingEconomicIdentity": "unchanged; source occurrences legitimately augmented",
+      "priorJournalOpeningBytes": "unchanged",
+      "restoreReplay": "two duplicates, zero new"
+    },
+    {
+      "dialect": "Depot13/Konto8",
+      "case": "same economically valid continuation after a current reference exists",
+      "result": "BLOCKED_AS_DESIGNED",
+      "appendReason": "Vorhandener Referenzstand benötigt gesonderten Endbestandsabgleich.",
+      "backfillReason": "Vorhandene und neue Gruppen getrennt prüfen; kein teilweiser Endbestandsersatz.",
+      "sourceBytesUnchanged": true,
+      "independentContinuation": {
+        "shares": "1",
+        "cash": "90"
+      },
+      "currentLedgerBalance": {
+        "shares": "2",
+        "cash": "78.25"
+      },
+      "missingContract": "Explicit dated later closing observation and existing reference treatment; observed quantities must not silently replace ledger current state"
+    },
+    {
+      "dialect": "Depot13/Konto8",
+      "case": "earlier source arrives after later group has been journaled",
+      "result": "BLOCKED_AS_DESIGNED",
+      "reason": "Neue EUR-Paare nur nach unveränderten früheren Wirtschaftsgruppen mit belegtem Anfangsbestand. Andere oder gleichdatierte Buchungen benötigen einen gesonderten Abgleich.",
+      "sourceBytesUnchanged": true,
+      "existingIdentities": "not renumbered or regenerated"
+    }
+  ]
+}
