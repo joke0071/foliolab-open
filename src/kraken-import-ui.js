@@ -9,7 +9,7 @@ import {previewKrakenImport,previewKrakenWithdrawal} from './kraken-import.js';
 import {sourceUnmodified} from './import-identity.js';
 import {escapeHTML as esc} from './model.js';
 /** All selections are ephemeral until the enclosing dialog performs its canonical CAS commit. */
-export function createKrakenImportUI({host,inputs,getModel,onApproval}){
+export function createKrakenImportUI({host,inputs,getModel,onApproval,allowUnchanged=false}){
  const source=prepareKrakenSourcePlan(inputs),streams=[...new Map(source.observations.map(r=>[r.streamId,r])).values()];
  const assignments={},selected=new Set(source.groups.map(g=>g.id)),external=new Set();let plan=null,approved=false,limit=50,bindingLimit=20,bitcoinBridge=null,ethereumBridge=null,solanaBridge=null,lookupGeneration=0,lookupController=null;
  // Only a unique previously confirmed source binding may be restored.
@@ -59,7 +59,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
  const isSolana=()=>el('operation').value==='solana-bridge';
  const isEthereum=()=>el('operation').value==='ethereum-bridge';
  const options=()=>({solanaBridge:isSolana()?solanaBridge:null,ethereumBridge:isEthereum()||isLink()?ethereumBridge:null,bitcoinBridge:el('operation').value==='bridge'?bitcoinBridge:null,operation:el('operation').value,selectedGroups:[...selected],externalReferences:[...external],openingConfirmed:el('opening').checked});
- const notify=()=>onApproval(Boolean(approved&&plan?.ready&&!plan.issues.length&&plan.baseline===JSON.stringify(getModel())&&(!plan.excluded||el('partial').checked)));
+ const notify=()=>onApproval(Boolean(approved&&(plan?.ready||allowUnchanged&&plan?.duplicates)&&!plan.issues.length&&plan.baseline===JSON.stringify(getModel())&&(!plan.excluded||el('partial').checked)));
  const invalidate=({clearProof=true}={})=>{++lookupGeneration;lookupController?.abort();if(clearProof){bitcoinBridge=null;ethereumBridge=null;solanaBridge=null;}plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
  function renderBindings(){
   el('bindings').innerHTML=streams.slice(0,bindingLimit).map(row=>{
@@ -112,9 +112,9 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval}){
    }else{if(el('operation').value==='bridge'&&!bitcoinBridge||(isEthereum()||isLink())&&!ethereumBridge||isSolana()&&!solanaBridge)throw Error('Auszahlungsbeleg zuerst abgleichen.');plan=previewKrakenImport(getModel(),inputs,assignments,options());el('status').textContent=plan.ready+' neue Gruppen · '+plan.duplicates+' bereits vorhanden · '+plan.issues.length+' gesperrt · '+plan.excluded+' nicht ausgewählt. Noch nichts gespeichert.';}
   }
   catch(e){el('status').textContent='Keine Übernahme: '+e.message;}
-  el('approve').disabled=!plan||!plan.ready||Boolean(plan.issues.length);renderGroups();notify();
+  el('approve').disabled=!plan||!(plan.ready||allowUnchanged&&plan.duplicates)||Boolean(plan.issues.length);renderGroups();notify();
  };
  el('more').onclick=()=>{limit+=50;renderGroups();};
  renderBridge();renderBindings();renderGroups();notify();
- return {approved(){if(!approved||!plan||plan.issues.length||!plan.ready||plan.baseline!==JSON.stringify(getModel())||plan.excluded&&!el('partial').checked)return null;return {...options(),assignments:{...assignments},baseline:plan.baseline,confirmed:true,partialConfirmed:el('partial').checked};},resetApproval(){invalidate();}};
+ return {approved(){if(!approved||!plan||plan.issues.length||!(plan.ready||allowUnchanged&&plan.duplicates)||plan.baseline!==JSON.stringify(getModel())||plan.excluded&&!el('partial').checked)return null;return {...options(),assignments:{...assignments},baseline:plan.baseline,confirmed:true,partialConfirmed:el('partial').checked};},revokeApproval(){approved=false;el('approve').checked=false;notify();},resetApproval(){invalidate();}};
 }

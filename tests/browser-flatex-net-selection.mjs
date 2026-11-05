@@ -49,3 +49,5 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  }finally{await context.close();await browser.close();}
 }
 report.result='PASS';writeFileSync(dir+'/report.json',JSON.stringify(report,null,2));finish();
+
+await import('./browser-shared-import.mjs');
