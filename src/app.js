@@ -1374,7 +1374,10 @@ function openSharedCSVImport(){
   try{
    const draft=await controller.candidate();
    if(editor!==active||!$('editDialog').open)throw Error('Importdialog geändert.');
-   const before=JSON.stringify(model),previous=model;snapshot(draft);$('dialogFields').inert=true;
+   const before=JSON.stringify(model),previous=model;
+   // Dated reconciliation preserves every existing independent reference.
+   if(!draft.bookings.some(b=>b.netReconciliation&&!model.bookings.some(old=>old.id===b.id)))snapshot(draft);
+   $('dialogFields').inert=true;
    try{model=draft;await save();}catch(error){if(model===draft)model=previous;throw error;}finally{$('dialogFields').inert=false;}
    csvReceipt=csvUndoReceipt(before,model);renderBookings();notify('Gemeinsamen Import einmal atomar gespeichert. Offene Bereiche bleiben ungeklärt.');
   }catch(error){controller.invalidate();throw error;}

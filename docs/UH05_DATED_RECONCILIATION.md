@@ -1,0 +1,23 @@
+# UH05 – datierter Abgleich journalisierter EUR-Bereiche
+
+Nutzerziel: zusätzliche frühere oder spätere Originalpaare im bestehenden gemeinsamen CSV-Import übernehmen, wenn unabhängig belegte Anfangs-, End- und Referenzwerte vollständig zur Chronologie passen. Basis v287 Main315de8c236b8bd05d891ebe159858e6537784edd; Kandidat v288, noch nicht produktiv abgenommen.
+
+## Vertrag
+
+- Neuer gemeinsamer Flatex-Modus `net-reconcile`. Quelle und eigene Konto-/Depotzuordnung wie bisher ausdrücklich bestätigen. Alle über bestehende Nettogruppen verbundenen Positionen gehören zum selben Prüfbereich. Belegte Mengen, Daten, historische EUR-Preise, Positionswerte und Belegreferenzen für Anfang/Ende und jede betroffene gespeicherte Referenz eingeben.
+- Der Anfang muss exakt zu den bestehenden datierten Eröffnungen passen. Keinen Anfang aus heutigen Mengen minus Historie ableiten. Geschützte Kostenbasis/Ergebnisse, Fremd-/Wallet-/Ergänzungsbuchungen, Tombstones, geänderte Quellpayloads, unbekannte Chronologie, negative Zwischenbestände und widersprüchliche Werte sperren den Bereich. Ungeklärte Nettodifferenzen bleiben unbekannte Kosten; kein PnL aus fehlenden Gebühren ableiten.
+- Eine getrennte Simulation setzt nur den betroffenen EUR-Bereich auf seine bereits belegten Eröffnungen zurück. Vorhandene und neue Originalpaare laufen chronologisch durch den vorhandenen Paar-/CSV-/Transaktionskern. Ursprüngliche Wirtschaftsbeiträge werden dagegen verglichen; anschließend bleiben alte Buchungen/Journale einschließlich IDs, Sequenzen, Zeitstempeln und Quellen vollständig erhalten. Neue Journale erhalten neue monotone Sequenzen. Der normale Append-/Backfillpfad bleibt unverändert gesperrt, wo er bisher gesperrt war.
+- Der bestehende Journalprüfer prüft die unabhängigen Mengen an jedem Belegtag. Historischer Preis × Menge muss exakt dem belegten EUR-Wert entsprechen; für Cash gilt EUR/EUR=1. Referenzen einschließlich Revisionen werden nicht überschrieben. Überarbeitete, manuelle Gesamt- oder außerhalb des belegten Zeitraums liegende betroffene Referenzen bleiben in diesem begrenzten Schnitt gesperrt. Gleichdatierte Gruppen benötigen einen eigenen Reihenfolgenachweis und bleiben gesperrt. Grenzen: 20 gekoppelte Positionen, 24 Referenzstände, 2500 Gruppen, 520 Beobachtungen, 512 KB Audit.
+- Audit im neuen Buchungsanker `netReconciliation`, mit geschützten Originaldigests, Quellen-/Konten-/Bewertungsbezug und Referenzkopien. Reservierter Untertyp `netAugmentation.version=2` bindet die Auditkennung; der unveränderte v287-Leser lehnt diesen unbekannten Untertyp nachweislich ab. Kein stilles Entfernen neuer Schutzmetadaten durch alte Leser, kein neuer Top-Level-Datenstand. Bestehende v5-Bestände ohne neuen Audit bleiben unverändert.
+- Der gemeinsame Editor überspringt für diesen Abgleich die automatische Neufassung des aktuellen Referenzstands. Alle Freigaben werden bei geänderten Daten widerrufen. Backup, Gesamtfreigabe und genau ein bestehender IDB/CAS-Commit bleiben erforderlich. Vollständiges Sitzungs-Undo stellt den exakten Ausgang wieder her; eine isolierte dauerhafte Rücknahme referenzierter Gruppen bleibt gesperrt.
+
+## Abnahme
+
+1. Beide Dialekte: zusätzliche spätere Gruppe und frühere Nachbuchung, unabhängige Integer-Sollwerte, vollständiger Original-/Journal-/Eröffnungs-/Referenzerhalt, Restore/Wiederimport, widersprüchliche Belege und alte Schutzmodi.
+2. Gemeinsame tatsächliche UI in Chromium/Firefox/WebKit: fünf Mobilbreiten/Axe, Freigabereset, ein CAS, Quota/post-put, echter Zweittab, exaktes Undo, Offline-Wiederimport, verschlüsselter Restore im frischen Profil. Neue Kette verpflichtend am bestehenden Flatex-Entry eingebunden; Workflow unverändert.
+3. Private zehn Originaldateien/507 Zeilen/24 Paare mit vorhandenen CSV-/Datums-/Python-Decimal-Oracles; zusätzlich zwei Originalpaare in beiden Richtungen mit kontrollierten Anfangs-/Endmengen und ausdrücklich synthetischer EUR-Einheitsbewertung. Kein realer historischer Eigentums-/Saldo- oder Marktpreisnachweis.
+4. Reguläre eingefrorene Integrations-CI/Finanz-/Browser-/Sicherheitsgates, erwarteter HEAD/Tree, Reviews, geschützter Merge; danach Main/Pages/TLS/SWv288 und tatsächliche Produktion. Erst dann LIVE_ACCEPTED. Bestehende v287-Abnahme nicht wiederholen.
+
+## Offene Folgeschnitte
+
+N:M, FX, andere Wallet-/Staking- und wirtschaftliche Sonderfälle bleiben PARTIAL/UNKNOWN. Fehlendes niemals als Nullbestand behandeln. Keine zweite Finanzengine, keine neuen Chainabfragen, keine erneute Originalanforderung. EFF01/HND01, UI-REFRESH01 #300, QUALITY298, CI229 und alle übrigen Schutzverträge/Folgeaufträge bleiben erhalten. Checkpointbranch niemals vollständig nach Main mergen.
