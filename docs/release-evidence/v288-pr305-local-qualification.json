@@ -1,0 +1,145 @@
+{
+  "candidate": "v288",
+  "status": "LOCAL_QUALIFIED / INTEGRATION_PENDING",
+  "time": "2026-11-05T16:35:33.231175+00:00",
+  "pr": 305,
+  "base": "315de8c236b8bd05d891ebe159858e6537784edd",
+  "head": "6fb4457739c06c25ba7dbfa88ad63d8ad94893f3",
+  "tree": "ce9a72c9a1f55783892905b2d3e9547f59707a54",
+  "syntheticMerge": "d2e63a1da9d5763f4bc9f4317b92b6f3d4ddb191",
+  "independentlyComputedTreeMatchesAPI": true,
+  "files": 13,
+  "units": {
+    "tests": 1220,
+    "passed": 1220,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "browserReports": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "both dialects, later and earlier dated reconciliation",
+        "unchanged old bookings/journals/openings/references; independent integer balances",
+        "consent reset, one CAS, quota/post-put, actual peer tab",
+        "exact full Undo, offline repeat, encrypted fresh-profile restore",
+        "five mobile widths/Axe, no financial-provider requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "both dialects, later and earlier dated reconciliation",
+        "unchanged old bookings/journals/openings/references; independent integer balances",
+        "consent reset, one CAS, quota/post-put, actual peer tab",
+        "exact full Undo, offline repeat, encrypted fresh-profile restore",
+        "five mobile widths/Axe, no financial-provider requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "both dialects, later and earlier dated reconciliation",
+        "unchanged old bookings/journals/openings/references; independent integer balances",
+        "consent reset, one CAS, quota/post-put, actual peer tab",
+        "exact full Undo, offline repeat, encrypted fresh-profile restore",
+        "five mobile widths/Axe, no financial-provider requests"
+      ]
+    }
+  ],
+  "originalRegression": {
+    "result": "PASS",
+    "originalFiles": 10,
+    "originalRows": 507,
+    "originalPairs": 24,
+    "totalBookings": 29,
+    "privateJointKernel": true,
+    "oracle": "existing independent CSV fields and Python Decimal control balances",
+    "checks": [
+      "all original source bytes and declared controlled scopes",
+      "one joint draft with other four synthetic sources",
+      "24 original net pairs, unknown fees/taxes, no position overwrite",
+      "joint complete restore/reimport/exact undo"
+    ],
+    "limits": [
+      "controlled scopes and openings; no real historical ownership/balance acceptance",
+      "private original joint UI still separate; Ledger and staking incomplete"
+    ]
+  },
+  "newOriginalKernel": {
+    "result": "PASS",
+    "originalFiles": 10,
+    "originalRows": 507,
+    "selectedOriginalPairs": 2,
+    "results": [
+      {
+        "direction": "later addition",
+        "result": "PASS"
+      },
+      {
+        "direction": "earlier insertion",
+        "result": "PASS"
+      }
+    ],
+    "oracle": "Independent Python Decimal, exact CSV/date/field/hash comparison",
+    "limits": [
+      "Controlled source/account/opening declarations",
+      "Synthetic EUR unit valuations, not historic market prices",
+      "No real ownership or historical account balance acceptance"
+    ]
+  },
+  "newOriginalUI": {
+    "engine": "chromium",
+    "result": "PASS",
+    "originalFiles": 10,
+    "rows": 507,
+    "selectedPairs": 2,
+    "directions": [
+      "later addition",
+      "earlier insertion"
+    ],
+    "screenshotsStored": 0,
+    "scope": "Controlled openings/endings and declared sources; synthetic EUR unit valuation; no historical ownership/account-balance/market-price acceptance"
+  },
+  "legacyReader": {
+    "result": "v287 rejects new reserved versioned audit tag",
+    "originalGitBlobs": {
+      "src/model.js": "41d04c6505b41250a08c0457839d49f8f1061706",
+      "src/flatex-net-settlement.js": "85a5b997b06ec9af3fdf0351922dcd729c2a79d1"
+    }
+  },
+  "environment": {
+    "playwright": "1.64.1",
+    "axe": "4.10.3",
+    "chromium": "141.0.7390.37 via explicit pinned shell",
+    "firefox": "157.0; MOZ_DISABLE_CONTENT_SANDBOX=1 required by local container",
+    "webkit": "27.2; local Ubuntu24.04 dependency extraction",
+    "note": "Actual regular integration remains mandatory; local Chromium driver differs from CI Chromium1.56.1"
+  },
+  "stageArtifact": {
+    "id": 13434446457,
+    "bytes": 622,
+    "sha256": "b756ac843a6ffcfe0525fc0a652a2c667eeb2d5d46c445ac9d244c37e3292ee8",
+    "apiUploadLocalMatch": true,
+    "CRC": "PASS"
+  },
+  "ci": {
+    "required": 42065621234,
+    "wallet": 42065621277,
+    "attempt": 1,
+    "status": "IN_PROGRESS at freeze"
+  },
+  "limits": [
+    "v287 remains LIVE_ACCEPTED, do not repeat",
+    "No v288 deployment or LIVE_ACCEPTED yet",
+    "UH04/UH05 PARTIAL; N:M/FX/wallet/staking and UI300 preserved",
+    "No workflow/timeout/financial assertion weakening; no retries/cancellations"
+  ]
+}
