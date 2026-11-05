@@ -1,3 +1,9 @@
+## ACTIVE – d0bff05d0d1b / bestätigte HND01-Übernahme / v286 Mainqualifikation – 05.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung bei d0bff05d0d1b; 47c433acbb15 ist bestätigt STOPPED/HANDOVER_READY. Main `588d3d3900477e4b3591917634b4f718d3465b0d` / Tree `ab8ccb62fb991858b7d508ba486922c93c341cf7` frisch unverändert, PR303 gemergt, nur geparkte Drafts157/161 offen. Bestehender Mainlauf42020483330 Versuch1 IN_PROGRESS; zuerst tatsächliche Main-/Pages-/Deploy-/Liveartefakte und TLS/SWv286 vollständig qualifizieren. v286 noch NICHT LIVE_ACCEPTED; v285 nicht erneut abnehmen. Keine neue CI, kein Retry/Abbruch, kein Produkt-WIP. Private Version36 lokal exakt bestätigt:2138762Bytes/SHA256 5a64969cbc7308bfb95770225a218addb9c6a86b6e9e76a6681b7d97d99642e3; Originale erhalten. Danach UH05 gemeinsamer Fünfanbieter-/Blockchainabgleich und inkrementelle Bestandskontrollen; fehlende Ledger-/Stakinganzeige niemals Nullbeleg. EFF01/HND01/alle Schutzverträge gelten, GitHub nur Plugin, Checkpointbranch niemals komplett nachMain. Eigene Zähler0LIVE_ACCEPTED/0Produktpakete.
+
+---
+
 ## HANDOVER_READY – 47c433acbb15 STOPPED / PR303 MERGED / v286 MAIN_CI_PENDING – 05.11.2026
 
 **47c433acbb15 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Frühe sichere HND01-Rotation wegen umfangreichen Kontexts und vieler Tool-/Artefaktausgaben. [Vollständige Übergabe und kopierbarer Startprompt](HANDOVER_47c433acbb15_2026-11-05.md). Nach Abgabe keine neue Implementierung/PR/Merge/Deployment/Retry durch diesen Owner;bis ausdrücklicher Übernahme kein aktiver schreibender Owner. Laufende GitHub Actions unverändert lassen.
