@@ -1,7 +1,7 @@
 import {manageList} from './browser-management-mode.mjs';
 import {localeDisplayBrowserContract} from './locale-display-browser-contract.mjs';
 import {structuredQualityBrowserContract} from './structured-quality-browser-contract.mjs';
-import {browserGateDeadline} from './browser-gate-deadline.mjs';
+import {browserGateDeadline,waitForAppServiceWorker} from './browser-gate-deadline.mjs';
 // Each imported module owns an isolated browser and awaits its full acceptance
 // suite. Static async imports start those browsers together; keep every gate,
 // but finish one module before starting the next against the same live host.
@@ -44,11 +44,19 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const record=()=>p.evaluate(async()=>{const {openPortfolioDB,readUnverifiedRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return await readUnverifiedRecord(db);}finally{db.close();}});
  const scan=async label=>{await p.evaluate(async()=>{await Promise.all(document.getAnimations().filter(a=>Number.isFinite(a.effect?.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));});assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,targets:v.nodes.map(n=>n.target)}))),[],label);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' page overflow');};
  try{
-  await p.goto(base);await ready();await p.evaluate(async()=>{
+  await p.goto(base);await ready();
+  // Complete the application's real first worker claim before fixture reload.
+  await waitForAppServiceWorker(p);
+  await p.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated');
+  await p.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'provider',name:'Synthetic UI provider'}));m.accounts.push(createAccount({id:'a',name:'Synthetic account',providerId:'provider',type:'securities',cashTerms:{version:1,status:'free',fixedTerm:false,outcome:'unconfirmed'}},m));
    m.positions.push(createPosition({id:'cash',providerId:'provider',accountId:'a',name:'Synthetic cash',kind:'cash',quantity:1000,price:1},m));m.positions.push(createPosition({id:'etf',providerId:'provider',accountId:'a',name:'Synthetic ETF with a long readable title',kind:'etf',quantity:0,price:100},m));m.positions.push(createPosition({id:'crypto',providerId:'provider',accountId:'a',name:'Synthetic crypto',kind:'crypto',quantity:1,price:10},m));executeTransaction(m,{positionId:'etf',cashPositionId:'cash',date:'2023-01-02',type:'buy',quantity:2.123456789,unitPrice:100,feeEUR:0,taxEUR:0});m.openingPositions.find(o=>o.positionId==='cash').asOf='2023-01-01';m.priceHistories.etf={currency:'EUR',source:'CSV (selbst geprüft)',points:[{date:'2023-01-02',total:100},{date:'2023-01-03',total:105},{date:'2023-01-04',total:110}]};const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await p.reload();await ready();const before=await record(),scans=[];
-  assert.equal(await p.locator('.logo-beta').count(),2,'one badge per original logo');
+  try{assert.equal(await p.locator('.logo-beta').count(),2,'one badge per original logo');}
+  catch(error){
+   writeFileSync(`artifacts/gates/ui-quality-${engine}-startup-failure.json`,JSON.stringify({engine,errors,state:await p.evaluate(()=>({url:location.href,timeOrigin:performance.timeOrigin,readyState:document.readyState,controller:navigator.serviceWorker.controller?.scriptURL??null,controllerState:navigator.serviceWorker.controller?.state??null,storage:document.getElementById('portfolioStorageState')?.textContent??null,logos:[...document.querySelectorAll('.logo')].map(e=>e.outerHTML)}))},null,2));
+   throw error;
+  }
   assert.equal(await p.locator('#cashTermsOverview').evaluate(e=>!!e.previousElementSibling?.matches('.provider-accordion')),true,'liquidity below providers');assert.equal(await p.locator('#cashTermsOverview').getAttribute('open'),null);
   for(const width of [320,390,430,768,1440]){
    await p.setViewportSize({width,height:560});assert.equal(await p.locator('.logo-beta:visible').count(),1);if(width<=720)assert.equal(await p.locator('.mobile-header').evaluate(e=>{const a=e.querySelector('.logo').getBoundingClientRect(),b=e.querySelector('.header-status-actions').getBoundingClientRect();return a.right<=b.left;}),true,'Beta logo does not overlap storage status');
