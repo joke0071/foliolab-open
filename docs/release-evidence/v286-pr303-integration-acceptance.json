@@ -1,0 +1,110 @@
+{
+  "status": "INTEGRATION_ACCEPTED_NOT_YET_MERGED_OR_LIVE",
+  "pr": 303,
+  "head": "92cd4994c94f22cf4d2adb78ce05a6ec91d34072",
+  "tree": "ab8ccb62fb991858b7d508ba486922c93c341cf7",
+  "syntheticMerge": "44e0d1f30010cf5723f192d759127368bb885559",
+  "baseMain": "7c7c6b56c972ca623b4c864fc7578685de912aab",
+  "requiredRun": 42017560112,
+  "walletRun": 42017560181,
+  "attempt": 1,
+  "units": 1211,
+  "failures": 0,
+  "skips": 0,
+  "artifacts": [
+    {
+      "id": 13409918162,
+      "name": "cross-engine-gates-44e0d1f30010cf5723f192d759127368bb885559-2",
+      "bytes": 12215664,
+      "sha256": "820261506215420230a87ef6d788aa950d92ba59baa061ae865d30796b0adc7f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13410458942,
+      "name": "cross-engine-gates-44e0d1f30010cf5723f192d759127368bb885559-3",
+      "bytes": 61618107,
+      "sha256": "0201ebabd322ea2791f01b2af2046e15f3a4010fcd694395ef6f9e15cb3bd9fa",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 705,
+      "jsonReports": 54,
+      "pngsDecoded": 650,
+      "failureFlags": []
+    },
+    {
+      "id": 13410211883,
+      "name": "ci-stage-44e0d1f30010cf5723f192d759127368bb885559",
+      "bytes": 551,
+      "sha256": "3b3748469689a55bc7c890c5a964c14615312089d3d9ada434ed8ccbd832cbb4",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13410583348,
+      "name": "release-gates-44e0d1f30010cf5723f192d759127368bb885559",
+      "bytes": 63785657,
+      "sha256": "7b96f6074a85e45fa4f88039aa847896995fc25aaab90d8aeecf6440aafae7fd",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 705,
+      "jsonReports": 66,
+      "pngsDecoded": 636,
+      "failureFlags": []
+    },
+    {
+      "id": 13410473035,
+      "name": "cross-engine-gates-44e0d1f30010cf5723f192d759127368bb885559-1",
+      "bytes": 59701802,
+      "sha256": "58bf35e4c8681932f3c6d5a700e03ac251e548247feb490247685e9cfd19693c",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13410199806,
+      "name": "dialog-visual-reference",
+      "bytes": 934538,
+      "sha256": "faf2a23dab17707c68c2c44a55c3d9d42820dfe2e8da065bd864f67d50366aee",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    }
+  ],
+  "jsonReports": 153,
+  "pngsDecoded": 1854,
+  "newActualUI": "Chromium141.0.7390.37/Firefox157.0/WebKit27.2 PASS;41 pairs/offscreen selection/clear/approval invalidation/exact commit/Undo/recommit/reload/41 tombstones/mobile Axe",
+  "visualReview": [
+    "actual CI Chromium390",
+    "actual CI Firefox390",
+    "actual CI WebKit390"
+  ],
+  "privateOriginalUI": {
+    "files": 10,
+    "rows": 507,
+    "pairs": 24,
+    "result": "PASS",
+    "newPath": "bulk select24 including4 offscreen;actual commit/Undo/recommit/replay/removal/tombstone",
+    "limits": "controlled Decimal opening/closing values and declared scopes,not real historical balances or ownership;no screenshots,external requests blocked"
+  },
+  "reviewThreadsComments": "empty",
+  "workflowChanged": false,
+  "retries": 0,
+  "duplicateRuns": 0,
+  "cancelled": 0,
+  "scope": "bounded UH05 selection;all-five atomic import and complete wallet/staking coverage not accepted;UH05 remains PARTIAL"
+}
