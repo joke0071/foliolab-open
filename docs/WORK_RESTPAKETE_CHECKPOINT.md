@@ -1,3 +1,13 @@
+## ACTIVE – 47c433acbb15 / kontrollierte HND01-/EFF01-Notfallübernahme / v285-Abschlussprüfung – 05.11.2026
+
+Der Nutzer hat d9c1c77a8961 die weitere Entwicklungs-, Integrations- und Releasezuständigkeit ausdrücklich entzogen und ausschließlich diesen Work-Chat 47c433acbb15 beauftragt. Keine STOPPED-Abgabe des Vorgängers behauptet. Frischer Plugin-Abgleich: Main 7c7c6b56c972ca623b4c864fc7578685de912aab / Tree 5578c6b7c00894f87443c1e4edde3c0b28886294 unverändert; Checkpointhead 7a7636cbd01c08eae62628fc32f11b8771a3fcc3 seit 08:33:08Z unverändert; nur historische Drafts #157/#161, keine laufenden oder wartenden Actions, kein neuer Produktkandidat oder sichtbare konkurrierende Aktivität. Damit alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner 47c433acbb15. Keine Behauptung über technisch unbeobachtbare alte Chatausführung.
+
+Bestehender v285-Mainlauf 41995099242 Versuch 1 vollständig SUCCESS einschließlich Deploy 127145628823 und tatsächlichem Livejob 127145793678. Noch keine LIVE_ACCEPTED-Erklärung: tatsächliche Abschlussartefakte und Fachberichte werden qualifiziert. Keine CI gestartet, wiederholt oder abgebrochen; v284 nicht erneut abnehmen. Private Sicherung Version 33 erreichbar, Archiv-SHA256 1fcf316b5f0590e5bfb753c206bada67492d990fc16c8274340e1b7c52769933 und alle 370 internen Hashes PASS. Originale/Decimaloracles erhalten.
+
+Danach UH05 fortsetzen; kein gemeinsamer Fünfanbieter-Einmalcommit und kein UH05-Gesamtabschluss behauptet. Ledger-/Staking-Nachtrag #174 verbindlich: fehlende Anzeige ist kein Null-/Vollständigkeitsbeleg, Abdeckung PARTIAL/UNKNOWN ausweisen. Private Screenshots/Originale bleiben privat. UI #300, QUALITY #298 und CI #229 erhalten. Sämtliche Finanz-/v5-/Journal-/IDB-/CAS-/Backup-/Restore-/Offline-/Datenschutzverträge unverändert, GitHub nur Plugin, Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – d9c1c77a8961 / PR302 MERGED / v285 MAIN_CI_PENDING – 05.11.2026
 
 Main7c7c6b56c972ca623b4c864fc7578685de912aab/Tree5578c6b7c00894f87443c1e4edde3c0b28886294 exakt zum finalgeprüftenKandidaten33b248d77571fd1de0fb854aba64b7be15589122 undsynthetischenMerge294117a8cb4975efc7dbfc9577c079a5b1212061. [PR302-Integrationsabnahme](release-evidence/v285-pr302-integration-acceptance.json):Pflicht41992425719/Wallet41992425765 Versuch1 SUCCESS,1211Units0Fehler0Skips,alle6tatsächlichenZIPs API/Uploadlog/SHA256/Bytes/CRC PASS,151JSONs ohneFehlerflags/1851PNGsdekodiert. Neue tatsächlicheUI inChromium/Firefox/WebKitPASS,3neueEnginebildergesichtet. Private10Originale/507Zeilen/24PaareauchimneuenOriginal-UI-EndbestandsablaufPASS,kontrollierteDecimalanfänge/-enden;keinehistorischeSaldo-/Eigentumsabnahme. Reviews/Kommentareleer,MainvorMergeunverändert,erwarteterHEADgeschütztgemergt.
