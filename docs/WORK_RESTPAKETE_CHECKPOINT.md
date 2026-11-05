@@ -1,3 +1,9 @@
+## ACTIVE – 47c433acbb15 / PR303 eingefroren / v286 INTEGRATION_PENDING – 05.11.2026
+
+Nutzer hat reguläre Integration/Merge/Main/Deployment/tatsächlicheProduktionsabnahme ausdrücklich beauftragt. [PR303](https://github.com/joke0071/foliolab-open/pull/303),HEAD`92cd4994c94f22cf4d2adb78ce05a6ec91d34072`/Tree`ab8ccb62fb991858b7d508ba486922c93c341cf7`,6Dateien/1Commit auf Main`7c7c6b56c972ca623b4c864fc7578685de912aab`;synthetischerMerge`44e0d1f30010cf5723f192d759127368bb885559`. Pflichtlauf42017560112 und Wallet42017560181 Versuch1 IN_PROGRESS. KeineÄnderung währendCI/keinRetry/keinAbbruch/keinDuplikat. NochKEINv286LIVE_ACCEPTED;v285bleibtletzteabgenommeneBasis ohneWiederabnahme. NächsterSchritt vorhandeneCI/Artefakte qualifizieren,dann ausschließlich bei vollständigenGates geschützterMerge/Main/Deploy/Live. AlleinigerOwner47c433acbb15,keinParallelstrang. LokaleQualifikation/privateVersion34/alleOriginale/Schutzverträge ausfolgendenBlöckenunverändert;UH05weiterPARTIAL,UI300erhalten.
+
+---
+
 ## ACTIVE – 47c433acbb15 / v285 LIVE_ACCEPTED / UH05 Gruppenauswahl lokal qualifiziert – 05.11.2026
 
 v285 LIVE_ACCEPTED bleibt Produktivbasis,Main `7c7c6b56c972ca623b4c864fc7578685de912aab`/Tree`5578c6b7c00894f87443c1e4edde3c0b28886294`; [vollständiger Abschlussbeleg](release-evidence/v285-pr302-live-acceptance.json). Keine Wiederabnahme/CI/Retry/Abbruch zu v285.
