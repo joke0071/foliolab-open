@@ -1,0 +1,19 @@
+{
+  "artifact": 13392302680,
+  "bytes": 49226307,
+  "sha256": "710c9503c442d45fc519a444e793d289e68ef82c0d0ccd830b591ded0142fdcf",
+  "CRC": "PASS",
+  "entries": 550,
+  "retainedUiReportEngines": [
+    {
+      "engine": "firefox",
+      "result": null
+    }
+  ],
+  "jobConclusion": "FAILURE",
+  "assertion": "WebKit static .logo-beta count0 expected2 at browser-ui-quality.mjs51",
+  "sourceTree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+  "identicalFinalPRCross3": "41973944160/127068401346 SUCCESS",
+  "diagnosis": "Transient navigation/lifecycle failure inferred: both badges are static unchanged index HTML, no runtime code removes them, same tree/test passed in initial/final PR, Firefox prior phase passed. Exact WebKit root cause not independently proven.",
+  "policy": "At most one targeted unchanged failed-job retry after entire attempt completes. Preserve error; repeated failure requires focused lifecycle fix, no assertion/timeout/gate relaxation."
+}
