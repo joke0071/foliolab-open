@@ -297,6 +297,68 @@ export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds
   return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview};
  }catch(e){return blocked(e.message);}
 }
+/** Reconstruct an unjournaled observed closing balance from separately supplied
+ * dated openings. The regular pair engine performs every economic posting.
+ * Nothing is inferred by subtracting trades from today's holdings.
+ * Existing reference values are retained byte for byte, and only observations
+ * strictly AFTER the selected history can coexist with this bounded backfill.
+ */
+export function prepareFlatexNetBackfillPreview(model,documents,assignments,options={}){
+ const inspection=inspectFlatexNetPairs(documents);
+ const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared:{...inspection,issues:[]}});
+ try{
+  validateFlatexNetSettlements(model);
+  const {selectedIds=[],openingDate='',openingConfirmed=false,openingQuantities={},expectedClosing={},closingConfirmed=false,stale=false}=options;
+  if(stale||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)throw Error('Eindeutige EUR-Paare ausdrücklich auswählen.');
+  const proofs=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));
+  if(proofs.some(p=>!p))throw Error('Ausgewählte Gruppe geändert oder nicht eindeutig.');
+  if((model.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(s=>proofs.some(p=>[p.depot,p.account].some(n=>sourceKey(s)===sourceKey(n))))))throw Error('Zurückgenommene Wirtschaftsgruppe bleibt gegen Wiederimport gesperrt.');
+  // Exact repeats use the existing identity/evidence rules, never reopen a balance.
+  const prior=proofs.filter(p=>model.bookings.some(b=>b.netSettlement?.id===p.id));
+  if(prior.length===proofs.length)return prepareFlatexNetPreview(model,documents,assignments,{selectedIds,stale});
+  if(prior.length)throw Error('Vorhandene und neue Gruppen getrennt prüfen; kein teilweiser Endbestandsersatz.');
+  const binding=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale}),ids=new Set();
+  for(const proof of proofs){
+   const dc=binding.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=binding.contexts.find(c=>c.sourceId===proof.account.sourceId);
+   if(!dc?.confirmed||!cc?.confirmed||dc.accountId===cc.accountId)throw Error('Beide eigenen Depot-/Kontozuordnungen aktuell bestätigen.');
+   const asset=model.positions.filter(p=>p.accountId===dc.accountId&&p.isin===proof.isin),cash=model.positions.filter(p=>p.accountId===cc.accountId&&p.kind==='cash'&&p.currency==='EUR'&&!p.wallet?.enabled);
+   if(asset.length!==1||cash.length!==1)throw Error('Jede ISIN und jedes Cashkonto eindeutig zuordnen.');
+   ids.add(asset[0].id);ids.add(cash[0].id);
+  }
+  const first=proofs.map(p=>p.date).sort()[0],last=proofs.map(p=>p.date).sort().at(-1);
+  if(!openingConfirmed||!closingConfirmed||!validCalendarDate(openingDate)||openingDate>=first)throw Error('Belegte Anfangsmengen vor der Historie und unabhängige Endbestände ausdrücklich bestätigen.');
+  if(!openingQuantities||typeof openingQuantities!=='object'||Array.isArray(openingQuantities)||!expectedClosing||typeof expectedClosing!=='object'||Array.isArray(expectedClosing)||[openingQuantities,expectedClosing].some(o=>Object.keys(o).sort().join('|')!==[...ids].sort().join('|')))throw Error('Für jede betroffene Position genau eine belegte Anfangsmenge und einen Endbestand eingeben.');
+  if(!ledgerQuantityAudit(model).ok)throw Error('Vorhandenes Journal widerspricht den Beständen.');
+  for(const id of ids){
+   const p=model.positions.find(p=>p.id===id),o=model.openingPositions.find(o=>o.positionId===id);
+   if(p.wallet?.enabled||p.managementSource==='wallet'||p.archived||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,o?.costBasisExact,o?.realizedPnLExact].some(v=>v!=null)||o&&(o.source!=='observed-opening'||o.asOf!=null||units(o.quantityExact)!==units(p.quantityExact??p.quantity)))throw Error('Datierte Eröffnungen, Wallets und bestätigte Kosten oder Ergebnisse bleiben geschützt.');
+   if(model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(id))||model.journalEntries.some(j=>j.postings.some(p=>p.positionId===id)))throw Error('Vorhandene Buchungen oder Journale im betroffenen Bereich benötigen einen gesonderten Abgleich.');
+   if(typeof openingQuantities[id]!=='string'||!openingQuantities[id].trim()||units(openingQuantities[id])<0n||typeof expectedClosing[id]!=='string'||!expectedClosing[id].trim()||units(expectedClosing[id])!==units(p.quantityExact??p.quantity))throw Error('Unabhängiger Endbestand muss exakt dem beobachteten Bestand entsprechen; Anfangsmenge nicht ableiten.');
+  }
+  for(const s of model.snapshots||[]){
+   if(!s.byPosition)throw Error('Ein Gesamt- oder manueller Referenzstand benötigt einen gesonderten Abgleich.');
+   if([...ids].some(id=>Object.hasOwn(s.byPosition,id))&&(s.source!=='current'||s.date<=last))throw Error('Referenzstände innerhalb oder vor der Historie bleiben geschützt.');
+  }
+  const draft=structuredClone(model);
+  // Remove references only on the detached simulation; restore their exact bytes
+  // below after proving the entire closing quantity is unchanged.
+  draft.snapshots=[];
+  draft.openingPositions=draft.openingPositions.filter(o=>!ids.has(o.positionId));
+  for(const id of ids){const p=draft.positions.find(p=>p.id===id);p.quantityExact=exact(units(openingQuantities[id]));p.quantity=Number(p.quantityExact);}
+  const result=prepareFlatexNetPreview(draft,documents,assignments,{selectedIds,openingDate,openingConfirmed:true,stale});
+  if(!result.eligible)throw Error(result.reason);
+  for(const id of ids){const p=result.preview.simulated.positions.find(p=>p.id===id);if(units(p.quantityExact??p.quantity)!==units(expectedClosing[id]))throw Error('Die ausgewählten Paare ergeben nicht exakt die unabhängig belegten Endbestände.');}
+  result.preview.simulated.snapshots=structuredClone(model.snapshots);
+  // Even presentation/quote fields of observed positions stay byte-identical.
+  result.preview.simulated.positions=structuredClone(model.positions);
+  const openings=result.preview.simulated.openingPositions;
+  result.preview.simulated.openingPositions=[...structuredClone(model.openingPositions.filter(o=>!ids.has(o.positionId))),...openings.filter(o=>ids.has(o.positionId))];
+  if(!ledgerQuantityAudit(result.preview.simulated).ok)throw Error('Historie und unveränderte Endbestände widersprechen sich.');
+  result.preview.baseline=JSON.stringify(model);
+  result.preview.netBackfill=true;
+  return result;
+ }catch(e){return blocked(e.message);}
+}
 /** Persistent guarded full-group withdrawal, not source erasure or session undo. */
 export function withdrawFlatexNetGroups(model,ids){
  validateFlatexNetSettlements(model);

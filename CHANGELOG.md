@@ -1,3 +1,9 @@
+## v285 – begrenzter EUR-Endbestandsabgleich
+
+- Historische eindeutige Flatex-EUR-Paare lassen sich anhand separat belegter Anfangsmengen mit bereits beobachteten Endbeständen abgleichen. Bestände und spätere Referenzwerte bleiben erhalten; Kosten bleiben unbekannt.
+- Datierte Eröffnungen, vorhandene Buchungen, Quellenkonflikte und Referenzen innerhalb der ausgewählten Historie bleiben geschützt.
+- UH04/UH05 bleiben insgesamt PARTIAL; gemeinsamer Einmalimport aller Anbieter und weitere historische Endsalden sind nicht freigegeben.
+
 ## PWA-Revision v88 — 2026-10-23
 
 - Abbruchfester Rückwechsel von IndexedDB zu localStorage: Ein minimaler, schlüsselfreier Rückwechsel-Marker ermöglicht das Wiederherstellen der zuletzt bestätigten lokalen Kopie, wenn der Browser nach dem atomaren IndexedDB-Lösch-Commit, aber vor dem Entfernen des Modusmarkers abstürzt.

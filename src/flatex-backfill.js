@@ -1,4 +1,4 @@
-import {prepareFlatexNetPreview,prepareFlatexNetWithdrawalPreview,prepareFlatexNetAugmentationPreview} from './flatex-net-settlement.js';
+import {prepareFlatexNetPreview,prepareFlatexNetWithdrawalPreview,prepareFlatexNetAugmentationPreview,prepareFlatexNetBackfillPreview} from './flatex-net-settlement.js';
 import {units,exact} from './decimal.js';
 import {previewCSV} from './csv-import.js';
 import {ledgerQuantityAudit} from './transactions.js';
@@ -8,6 +8,8 @@ import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
 
 /** Strict native simulation over the existing CSV/backfill engines. No write API. */
 export function prepareNativeFlatexPreview(model,documents,assignments,options={}){
+ if(options?.mode==='net-backfill'){if(Object.keys(options).some(k=>!['mode','stale','selectedIds','openingDate','openingConfirmed','openingQuantities','expectedClosing','closingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im Endbestandsabgleich.');return prepareFlatexNetBackfillPreview(model,documents,assignments,options);}
+
  if(['net','net-remove','net-augment'].includes(options?.mode)&&Object.keys(options).some(k=>!['mode','stale','selectedIds','openingDate','openingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im EUR-Paarablauf.');
  if(['net','net-remove','net-augment'].includes(options?.mode))return (options.mode==='net'?prepareFlatexNetPreview:options.mode==='net-remove'?prepareFlatexNetWithdrawalPreview:prepareFlatexNetAugmentationPreview)(model,documents,assignments,options);
  if(!options||typeof options!=='object'||Array.isArray(options)||Object.keys(options).some(k=>!['mode','stale'].includes(k))||!['append','backfill'].includes(options.mode)||(options.stale!==undefined&&typeof options.stale!=='boolean'))throw Error('Expliziten nativen Vorschautyp ohne Importoverrides wählen.');
