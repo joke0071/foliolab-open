@@ -1,3 +1,15 @@
+## ACTIVE – adb3e8e542d6 / v284 DEPLOYED / tatsächliche LIVE_ACCEPTANCE_PENDING – 05.11.2026
+
+Main c430039d61514ffaf8126ffe30052d94ecfe243d / Treec94f1043fdf45bdc680642a79358b4d83a722d4e exakt qualifizierter PR301-Baum. [Main-/Deploymentabnahme](release-evidence/v284-main-deployment-qualified.json): bestehender Lauf41976188591 Versuch2,einziger gezielter Cross3-Retry127081562607 SUCCESS,vorher erfolgreicheJobs originalzeitgestützt wiederverwendet,Deploy127087706209 SUCCESS. Keine Produkt-/Test-/Gate-/Timeoutänderung/keinAbbruch. Erster statischerWebKit-LogoFehler undOriginalZIP separat erhalten;keinweitererRetry.
+
+1207Units0Fehler0Skips;7tatsächliche erfolgreicheMain/PagesZIPs API-/Uploadlog-/lokaleSHA256/Bytes/CRC PASS,149JSONs ohneFehlerflags,1845PNGs dekodiert. [Pages145Dateien exaktzuMainGitblobs](release-evidence/v284-pages-tree-qualification.json). [ReguläresTLS146/146 auf tatsächlicher Produktion](release-evidence/v284-regular-https-assets.json) PASS,SWv284,keine Zertifikatsausnahme/keinefehlgeschlagenenAssets. Neue Kontextkette inMainChromium/Firefox/WebKitPASS,ursprünglicheOriginal24Paare/507Zeilen weiterrelevant ohnehistorischeSaldo-/Eigentumsbehauptung.
+
+**Livejob127087809698 IN_PROGRESS gegen tatsächlicheProduktion. Noch KEIN v284 LIVE_ACCEPTED.** Zuerst vollständiges Liveprotokoll/actualZIP/API-/Uploadlog-/SHA256/Bytes/CRC/neue Kontextberichte und3Engine-Bilderqualifizieren. Kein Folgeprodukt vorReleaseabschluss;v283 bleibtletzteLIVE_ACCEPTEDBasis ohneWiederabnahme.
+
+PrivateSicherung libfile_42e6c0236610819189e0ba522c74ecfd **Version30**,1714930Bytes/SHA25623b893e56180a178cc9208130a36e4ad65d3ae825dc561eaea59699972c27d47,339Hashdateien/alle338Vorgänger bytegleich. Wiedereinstieg delta-adb3e8e542d6/v284-live-pending/STATE.json;alleOriginale/Oracles/Fehler/Repros erhalten,keine neuenBrowserbilder. Kein ungesicherter ProduktWIP;Quellkopie istkeinRemote-Gitcheckout. AlleinigerOwneradb3e8e542d6. DanachUH05 tatsächlichen gemeinsamenUI-/Endbestandsablauf anhand [ausführbaremZweidialekt-Repro](release-evidence/UH05-source-order-reproducer-2026-11-05.mjs) qualifizieren;undatierteEröffnung UND vorhandenerReferenzstand sindgetrennteSchutzgrenzen. KeinschnellerGuardlockereralsErsatzfürgemeinsamenImport. UH04/UH05insgesamtPARTIAL,UI300/QUALITY298/CI229 erhalten;EFF01/HND01,GitHubnurPlugin,CheckpointbranchniekomplettnachMain. EigeneZähler0LIVE_ACCEPTED/0abgeschlosseneReleasepakete.
+
+---
+
 ## ACTIVE – adb3e8e542d6 / v284 Mainversuch2 / EIN gezielter Retry gestartet – 05.11.2026
 
 Erster Mainlauf41976188591 Versuch1 vollständig beendet:Test127075574717,Cross1 127075574727,Cross2 127075574690 SUCCESS;Cross3 127075574645 FAILURE an bestehender statischer WebKit-Logoassertion0statt2. Deploy/Live vertragsgemäßSKIPPED,noch keinv284DEPLOYED/LIVE_ACCEPTED. Fehler/OriginalZIP/Diagnose im verlinkten Beleg darunter erhalten. Main c430039d61514ffaf8126ffe30052d94ecfe243d / Treec94f1043fdf45bdc680642a79358b4d83a722d4e unverändert.
