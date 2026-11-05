@@ -1,0 +1,194 @@
+{
+  "status": "DEPLOYED_LIVE_ACCEPTANCE_PENDING",
+  "at": "2026-11-05T06:29:38.340126+00:00",
+  "release": "v284",
+  "pr": 301,
+  "main": "c430039d61514ffaf8126ffe30052d94ecfe243d",
+  "tree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+  "candidateHead": "18e015d637504f05d2821ddfd6603e5145bf1900",
+  "exactQualifiedCandidateTree": true,
+  "mainRun": 41976188591,
+  "attempt": 2,
+  "units": {
+    "tests": 1207,
+    "pass": 1207,
+    "fail": 0,
+    "skipped": 0
+  },
+  "requiredJobs": {
+    "test": {
+      "originalExecution": 127075574717,
+      "attempt2PreservedRecord": 127081564289,
+      "result": "SUCCESS"
+    },
+    "cross1": {
+      "originalExecution": 127075574727,
+      "attempt2PreservedRecord": 127081622771,
+      "result": "SUCCESS"
+    },
+    "cross2": {
+      "originalExecution": 127075574690,
+      "attempt2PreservedRecord": 127081617608,
+      "result": "SUCCESS"
+    },
+    "cross3": {
+      "originalFailure": 127075574645,
+      "targetedRetry": 127081562607,
+      "result": "SUCCESS"
+    },
+    "deploy": {
+      "id": 127087706209,
+      "result": "SUCCESS"
+    }
+  },
+  "successfulJobsReused": "New attempt2 metadata IDs retain original attempt1 execution timestamps; only failed Cross3 explicitly rerun.",
+  "initialFailure": {
+    "artifact": 13392302680,
+    "bytes": 49226307,
+    "sha256": "710c9503c442d45fc519a444e793d289e68ef82c0d0ccd830b591ded0142fdcf",
+    "CRC": "PASS",
+    "entries": 550,
+    "retainedUiReportEngines": [
+      {
+        "engine": "firefox",
+        "result": null
+      }
+    ],
+    "jobConclusion": "FAILURE",
+    "assertion": "WebKit static .logo-beta count0 expected2 at browser-ui-quality.mjs51",
+    "sourceTree": "c94f1043fdf45bdc680642a79358b4d83a722d4e",
+    "identicalFinalPRCross3": "41973944160/127068401346 SUCCESS",
+    "diagnosis": "Transient navigation/lifecycle failure inferred: both badges are static unchanged index HTML, no runtime code removes them, same tree/test passed in initial/final PR, Firefox prior phase passed. Exact WebKit root cause not independently proven.",
+    "policy": "At most one targeted unchanged failed-job retry after entire attempt completes. Preserve error; repeated failure requires focused lifecycle fix, no assertion/timeout/gate relaxation."
+  },
+  "targetedRetryCount": 1,
+  "codeTestGateOrTimeoutChangesForRetry": false,
+  "artifacts": [
+    {
+      "id": 13392785901,
+      "name": "release-gates-c430039d61514ffaf8126ffe30052d94ecfe243d",
+      "bytes": 63583524,
+      "sha256": "e289bbca1abb4b5d55d77d801fd2235c16b94270fafea34e71ba52e7febcf8c1",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 700,
+      "jsonReports": 64,
+      "failureFlags": [],
+      "pngsDecoded": 633
+    },
+    {
+      "id": 13392074635,
+      "name": "dialog-visual-reference",
+      "bytes": 934537,
+      "sha256": "ea71da3018e4f7223c87868079e84551fb6b2b59ba293d40eec1cc437e30b560",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "failureFlags": [],
+      "pngsDecoded": 20
+    },
+    {
+      "id": 13391752011,
+      "name": "ci-stage-c430039d61514ffaf8126ffe30052d94ecfe243d",
+      "bytes": 353,
+      "sha256": "a09ed38bbf888514619008b3e7781a3b70c74ce7857c0c0e846c31d53715c51e",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "failureFlags": [],
+      "pngsDecoded": 0
+    },
+    {
+      "id": 13391739587,
+      "name": "cross-engine-gates-c430039d61514ffaf8126ffe30052d94ecfe243d-1",
+      "bytes": 59706057,
+      "sha256": "ed30146e1a9b937bbe0e6db0f5365bf3357f7338b58081894e4b977803ced305",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "failureFlags": [],
+      "pngsDecoded": 474
+    },
+    {
+      "id": 13391548227,
+      "name": "cross-engine-gates-c430039d61514ffaf8126ffe30052d94ecfe243d-2",
+      "bytes": 12216481,
+      "sha256": "8e38a65a034b4676024740e2418a13baa02decd5f32a5f00092dcdf19821ec50",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "failureFlags": [],
+      "pngsDecoded": 74
+    },
+    {
+      "id": 13393402091,
+      "name": "cross-engine-gates-c430039d61514ffaf8126ffe30052d94ecfe243d-3",
+      "bytes": 61137099,
+      "sha256": "1eb4aa752d1e00c5eaa8a71125bb762e400d6ed70fe92366e548ecda9e4aab97",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 697,
+      "jsonReports": 52,
+      "failureFlags": [],
+      "pngsDecoded": 644
+    },
+    {
+      "id": 13392649882,
+      "name": "github-pages",
+      "bytes": 531273,
+      "sha256": "df454e692c3e125b0c462888a74a63d7a65dc42f1ccb768228484e0eafb95818",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "failureFlags": [],
+      "pngsDecoded": 0
+    }
+  ],
+  "artifactChecks": {
+    "acceptedZIPs": 7,
+    "apiUploadLogLocalHashBytesCRC": "PASS",
+    "jsonReports": 149,
+    "failureFlags": 0,
+    "pngsDecoded": 1845,
+    "initialFailedZIPPreservedSeparately": 13392302680
+  },
+  "pages": {
+    "artifact": 13392649882,
+    "files": 145,
+    "exactMainGitBlobs": "PASS",
+    "report": "v284-pages-tree-qualification.json"
+  },
+  "regularHTTPS": {
+    "result": "PASS",
+    "sha": "c430039d61514ffaf8126ffe30052d94ecfe243d",
+    "base": "https://foliolab.unperfekt.at/",
+    "cache": "foliolab-open-v284",
+    "at": "2026-11-05T06:27:44.738819+00:00",
+    "tlsCertificateValidation": true,
+    "proxyCertificateException": false,
+    "count": 146,
+    "matched": 146,
+    "failures": []
+  },
+  "sourceAcceptance": [
+    "private10 originals/507 rows/24 pairs independent CSV/Decimal/calendar + actual controlled UI",
+    "actual net context chain Chromium/Firefox/WebKit; scope changes/focus/one CAS/Undo/offline/replay/fresh encrypted v5 UI restore/durable withdrawal",
+    "initial/final PR complete success; exact Main tree preserved"
+  ],
+  "live": {
+    "id": 127087809698,
+    "status": "IN_PROGRESS",
+    "LIVE_ACCEPTED": false
+  },
+  "limits": [
+    "UH04/UH05 overall remain PARTIAL; no historical ownership/real opening/end balances accepted",
+    "N:M/FX/corporate events and actual shared provider UI/reference balance boundary remain separate",
+    "No native Safari/Android hardware/OAuth claim",
+    "v283 remains last LIVE_ACCEPTED until actual Live acceptance completes"
+  ]
+}
