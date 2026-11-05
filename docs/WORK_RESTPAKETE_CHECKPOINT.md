@@ -1,8 +1,16 @@
+## ACTIVE – c9e345093749 / v287 LIVE_ACCEPTED / UH05 fortsetzen – 05.11.2026
+
+**v287 LIVE_ACCEPTED.** Main315de8c236b8bd05d891ebe159858e6537784edd/Tree9155c36e5b00cf49551277eede11a55debcb4ab1 unverändert,PR304gemergt. [Vollständiger Abschlussbeleg](release-evidence/v287-pr304-live-acceptance.json). Ursprünglicher Mainlauf42036785990Versuch1 bleibt korrekt CANCELLED,Deploy127288727639SUCCESS. Liveabbruch bei35Minutenlimit,keinProduktassertionsfehler imOriginalprotokoll. KeinRetry/keineCI-Duplizierung/keinAbbruchdurchdiesenOwner/keineTimeout-oderTeständerung. Fehlender WebKitFIN-E2E-Abschluss undFirefox/WebKitTransferprüfungen mit exaktMainTests undPlaywright1.64.1/Axe4.10.3 separatgegen tatsächlicheProduktion vollständigPASS ergänzt. Diese tatsächlichen Nachweise schließen die Abnahmelücke;kein grüner Workflowstatus erfunden.
+
+1214Units0Fehler0Skips;7bestehendeMainZIPs/148PagesGitblobs gebunden. OriginalLiveZIP13424935675 API-/Uploadlog-/SHA256-/Bytes-/CRCPASS,99JSONsohneFehlerflags/1149PNGsdekodiert;gemeinsamerFünfanbieterImport3EnginesPASS/3Bildergesichtet. Erneuter regulärerTLS-Abgleich149Requests alleexakt/SWv287,keineZertifikatsausnahmen. v286nichtwiederabgenommen. AlleinigeSchreibzuständigkeit c9e345093749 nach ausdrücklichemNutzerentzuggegenübercfb12adcc050;keinebehaupteteSTOPPED-ErklärungdesVorgängers.
+
+NächsterFachschnitt UH05 inkrementellerEndbestandsabgleich bereitsjournalisierterBereiche im bestehendenKern;keinezweiteFinanzengine/keineGuardsfürPASSlockern. UH04/UH05weiterPARTIAL,fehlendeWallets/StakingniemalsNull. PrivateV40/466Hashes/452V39Dateienfrischintakt;neuerReleasebelegundErgänzungstestswerdenidentitätserhaltendgesichert. AlleOriginale/Oracles/Schutzverträge/Folgeaufträgeerhalten;GitHubnurPlugin/CheckpointbranchniekomplettnachMain. EigeneZähler1LIVE_ACCEPTED/1Releasepaket.
+
+---
+
 ## ACTIVE – c9e345093749 / ausdrückliche Notfallablösung / v287 LIVE_ACCEPTANCE_PENDING – 05.11.2026
 
-Der Nutzer hat cfb12adcc050 ausdrücklich die Schreibzuständigkeit entzogen und sie allein diesem Work-Chat c9e345093749 übertragen. Vorheriger Owner abgelöst; keine behauptete STOPPED-Erklärung des Vorgängers. Main 315de8c236b8bd05d891ebe159858e6537784edd / Tree 9155c36e5b00cf49551277eede11a55debcb4ab1 unverändert, PR304 gemergt, nur historische Drafts157/161 offen. Mainlauf42036785990 Versuch1 COMPLETED/CANCELLED, Livejob127288919701 beendet; keine laufenden Actions/kein Retry. v286 bleibt LIVE_ACCEPTED, nicht erneut abnehmen; v287 DEPLOYED, noch NICHT LIVE_ACCEPTED.
-
-Lesende Notfallprüfung: private Version40 SHA256 9dac1e9cfce6aa6de12bf584917e5301a6334095a8404aea854b0199e90db8f3, alle466Hashes/452V39Vorgänger PASS. Liveartefakt13424935675 tatsächlich geladen,122891375Bytes/SHA25672f28a1716f2c94de6b65b8bcb791e5a109b00257713d35ca892119625a65fa2 exakt Uploadlog/CRC;99JSONs ohne Fehlerflags/1149PNGs dekodiert. Produktionslog149Assets exakt/SWv287/ChromiumPASS,neue gemeinsame UI inFirefox/WebKitPASS. Abbruch nach etwa35Minuten bei35MinutenJoblimit spricht für Timeout,keine fehlerhafte Produktassertion im Log;WebKitFIN-E2E-Abschluss und nachfolgende CrossengineTransferabnahme fehlen. Kein blinder Retry/keine Timeoutlockerung. Nächster Schritt unveränderte fehlende Pflichtprüfungen gezielt gegen tatsächliche Produktion ergänzen und vorhandene bestandene Nachweise binden;erst bei vollständiger Produktionsabnahme LIVE_ACCEPTED. Danach UH05 inkrementeller Endbestandsabgleich journalisierter Bereiche. AlleOriginale/Verträge erhalten,fehlendeWallets/StakingniemalsNull;GitHubnurPlugin/CheckpointbranchniekomplettnachMain.
+Der Nutzer hat cfb12adcc050 ausdrücklich die Schreibzuständigkeit entzogen und sie allein diesem Work-Chat c9e345093749 übertragen.
 
 ---
 
