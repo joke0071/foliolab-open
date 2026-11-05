@@ -1,0 +1,9 @@
+{
+  "scope": "read-only synthetic UH05 follow-up, not an implementation or guard exception",
+  "status": "SECOND_GUARD_REPRODUCED",
+  "snapshotSource": "current",
+  "snapshotDate": "2026-11-05",
+  "reason": "Vorhandener Referenzstand benötigt gesonderten Endbestandsabgleich.",
+  "finding": "Actual provider UI calls snapshot(draft) for all positions. Dating undated observed openings alone does not solve the real joint UI path; existing reference/balance protection then blocks.",
+  "next": "Preserve true dated openings/costs/manual references/current end balances. Design the shared actual UI and source-order acceptance through existing cores with one atomic plan/commit, or a separately proven backfill/end-balance contract. Do not simply relax both guards to obtain a passing synthetic test."
+}
