@@ -155,7 +155,8 @@
     "jsonReports": 149,
     "failureFlags": 0,
     "pngsDecoded": 1845,
-    "initialFailedZIPPreservedSeparately": 13392302680
+    "initialFailedZIPPreservedSeparately": 13392302680,
+    "scope": "Seven successful Main/Pages ZIPs; actual Live ZIP separately qualified under live.artifact"
   },
   "pages": {
     "artifact": 13392649882,
@@ -250,8 +251,7 @@
   "limits": [
     "UH04/UH05 overall remain PARTIAL; no historical ownership/real opening/end balances accepted",
     "N:M/FX/corporate events and actual shared provider UI/reference balance boundary remain separate",
-    "No native Safari/Android hardware/OAuth claim",
-    "v283 remains last LIVE_ACCEPTED until actual Live acceptance completes"
+    "No native Safari/Android hardware/OAuth claim"
   ],
   "owner": "adb3e8e542d6",
   "freshFinalState": {
