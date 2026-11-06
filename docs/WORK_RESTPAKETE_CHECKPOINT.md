@@ -1,3 +1,13 @@
+## ACTIVE – 0bfa85b5b416 / HND01 übernommen / PR310 QUALIFICATION – 06.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von e8b533803735 übernommen. Frisch geprüft: Main `9bf59ae6559bc7199c343acb155b8c50b8b2110b`, Tree `e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e`; PR310 unverändert `5869e6fabf39abb90dc5fe566aa0b0922da54251`. Nur historische Drafts157/161 zusätzlich offen, vorhandene Actions beendet; zweimaliger vollständiger Branchrefabgleich unverändert, keine konkurrierende Schreibaktivität erkennbar. GitHub-Befund ist kein technischer Chatstillstandsbeweis. Kein ungesicherter Produkt-WIP laut Übergabe.
+
+Private Sicherung Version67 frisch bytegeprüft:19.009.333Bytes/SHA256 `07e8fd0ecc85fcca72371734eea6fadcefd9be7114c2de0a3380be7892fc9b56`; alle3948Manifestdateien PASS. Integrationslauf42271163151 Versuch1 und Wallet42271163392 SUCCESS; siebenZIPs/API-/Upload-/lokaleHashes/Größen/CRC,197JSON ohne Fehlerflags und1940dekodiertePNGs geprüft. Visuelle/Fachberichtqualifikation noch in Arbeit. Reviews/Threads leer, Diff exakt2Dateien/nur Gesamtbudget35→55 und versiegelte Vertragsprüfung. Noch kein Merge durch diesen Owner.
+
+v292 bleibt DEPLOYED / NICHT LIVE_ACCEPTED; v291 nicht erneut abnehmen. Nächster Schritt: vollständige PR310-Qualifikation, frischer erwarteterHead/Base/Tree/OwnerGuard, kontrollierterMerge; ausschließlich automatischen Mainlauf/Deployment/vollständige tatsächlicheHTTPS-Produktion qualifizieren. Alle EFF01/HND01- und übrigen Schutzverträge/offenen Aufträge erhalten. GitHub nurPlugin; keine CI duplizieren/abbrechen, kein weiterer blinderRetry des altenLivejobs, Checkpointbranch niemals nachMain.
+
+---
+
 ## HANDOVER_READY – e8b533803735 STOPPED / PR310 eingefroren / v292 DEPLOYED, NICHT LIVE_ACCEPTED – 06.11.2026
 
 **e8b533803735 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Frühe sichere HND01-Rotation nach langem CI-/Live-Lauf und gesicherter notwendiger CI-Reparatur. [Vollständige Übergabe und Startprompt](HANDOVER_e8b533803735_2026-11-06.md). Bestehende Actions unverändert lassen; kein weiterer Produkt-/Integrationsstrang durch diesenChat.
