@@ -1,0 +1,100 @@
+{
+  "status": "LOCAL_QUALIFIED",
+  "baseMain": "cef91b3a8b2baa0c9598178a4fa486877283df45",
+  "baseTree": "6951d60948282c5aa2d9c9f8144a6bb5d5acfefd",
+  "candidateVersion": "v289",
+  "unitTests": 1227,
+  "unitFailures": 0,
+  "syntax": "PASS",
+  "historicBoundaryCases": 18,
+  "candidateBoundaryCases": 18,
+  "independentPythonDecimalGroups": 6,
+  "privateRegression": {
+    "oldNativePairs": 81,
+    "buys": 69,
+    "sells": 12,
+    "result": "PASS",
+    "privateTwoFillOriginalPresent": false,
+    "privateFormatCombinations": [
+      [
+        12,
+        10
+      ],
+      [
+        13,
+        8
+      ]
+    ],
+    "exporterProvenance": "UNKNOWN",
+    "completePrivateHistoryAccepted": false
+  },
+  "engines": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.0",
+      "result": "PASS",
+      "checks": [
+        "two executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "two executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "two executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "visualScreenshotsInspected": 3,
+  "environment": {
+    "playwright": "1.64.1",
+    "axe": "4.10.3",
+    "chromiumBinary": "@sparticuz/chromium 141.0.0, unpacked with no package dependency shipped",
+    "firefox": "MOZ_DISABLE_CONTENT_SANDBOX=1 on isolated host due usernamespace EPERM",
+    "webkit": "27.2",
+    "hardwareAccepted": false
+  },
+  "ciStarted": false,
+  "merged": false,
+  "productionAccepted": false,
+  "scope": "Exactly two distinct EUR execution sources plus one documentary cash source; source-group v2, existing transaction/journal/CSV/shared UI/CAS/Undo/restore only",
+  "blocked": [
+    "arbitrary N:M",
+    "FX",
+    "partial pre-imported membership",
+    "unknown references",
+    "cancellations",
+    "changed source payload",
+    "protected reference balances",
+    "backdated/ambiguous journal history",
+    "2:1 cost allocation",
+    "2:1 historical backfill or permanent withdrawal"
+  ]
+}

@@ -98,4 +98,4 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
 }
 report.result='PASS';writeFileSync('artifacts/gates/'+artifactDir+'/report.json',JSON.stringify(report,null,2));finish();
 
-if(!scoped){await import('./browser-flatex-net-augmentation.mjs');await import('./browser-flatex-context.mjs');await import('./browser-flatex-net-backfill.mjs');}
+if(!scoped){await import('./browser-flatex-two-fill.mjs');await import('./browser-flatex-net-augmentation.mjs');await import('./browser-flatex-context.mjs');await import('./browser-flatex-net-backfill.mjs');}
