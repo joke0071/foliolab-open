@@ -1,1655 +1,955 @@
 {
-  "status": "FINAL_HEAD_INTEGRATION_PENDING",
+  "status": "INTEGRATION_QUALIFIED / NOT_DEPLOYED",
   "owner": "414503ed33c6",
   "PR": 307,
   "head": "2edbf55dcf1e29b82f4f3e6952ed61fba71d6683",
+  "testedMerge": "e6a37ca0bc163847194a56babc3d01d8f6238044",
   "tree": "bded2aa81095b59bf15628290e36c32481a76417",
-  "main": "652e80bcb31aec13c85a0457332bdf53cf98a521",
-  "initialHeadQualification": {
-    "status": "COMPLETED / FAILURE / DIAGNOSED_FIXTURE_ONLY",
-    "run": 42210661072,
-    "attempt": 1,
-    "candidate": "cca58595542e885bf21654095b921f37517e78c2",
-    "testedMerge": "d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
-    "tree": "a997d1c142903ddbed71056a91eee263fba9d4c1",
-    "units": {
-      "tests": 1242,
-      "pass": 1242,
-      "fail": 0,
-      "skip": 0
+  "mainBeforeMerge": "652e80bcb31aec13c85a0457332bdf53cf98a521",
+  "run": 42217128559,
+  "attempt": 1,
+  "conclusion": "SUCCESS",
+  "units": {
+    "pass": 1243,
+    "fail": 0,
+    "skip": 0
+  },
+  "allThreeBrowserShards": "SUCCESS",
+  "newIntegrityChainAllThreeIncludingNativeBoundary": "PASS",
+  "walletRun": 42217128661,
+  "walletTests": {
+    "pass": 1243,
+    "fail": 0,
+    "skip": 0
+  },
+  "publicAuditRun": 42217128536,
+  "publicAuditConclusion": "SUCCESS",
+  "artifacts": [
+    {
+      "id": 13501687644,
+      "name": "cross-engine-gates-e6a37ca0bc163847194a56babc3d01d8f6238044-2",
+      "sha256": "f003d7e26de8885b93131309b3208cd291ec6e49e8621d65095027b7211f330b",
+      "bytes": 12215281,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "alpha-vantage.json",
+          "result": null
+        },
+        {
+          "path": "cash-account-ux.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/firefox.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/webkit.json",
+          "result": null
+        },
+        {
+          "path": "firefox-position-removal-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flh03-abce.json",
+          "result": null
+        },
+        {
+          "path": "loading-pwa/firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "loading-pwa/webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "marketstack.json",
+          "result": null
+        },
+        {
+          "path": "pchain-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "plain-backup-limits/webkit.json",
+          "result": null
+        },
+        {
+          "path": "plain-backup-limits/firefox.json",
+          "result": null
+        },
+        {
+          "path": "provider-retirement.json",
+          "result": null
+        },
+        {
+          "path": "pwa-update/report.json",
+          "result": null
+        },
+        {
+          "path": "recovery-limits/report-firefox-webkit.json",
+          "result": null
+        },
+        {
+          "path": "sonic-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "webkit-position-removal-sw-baseline.json",
+          "result": "PASS"
+        }
+      ]
     },
-    "firstBrowserIntegrity": "chromium PASS",
-    "knownFailures": [
-      {
-        "job": 127868316492,
-        "cause": "UI07 independent manual model composition duplicates global journal sequence",
-        "fixedLocallyThreeEngines": true
-      },
-      {
-        "job": 127868316585,
-        "cause": "UI07 independent manual model composition duplicates global journal sequence",
-        "fixedLocallyThreeEngines": true
-      }
-    ],
-    "successfulCrossShard": 2,
-    "crossShard3": "SUCCESS",
-    "receipts": [
-      {
-        "id": 13500025288,
-        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-2",
-        "sha256": "4ad6298ebb61c7e3588378a6c582541b759af21282e4be2200b40a504c399f68",
-        "bytes": 12216108,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 17,
-        "pngsDecoded": 74,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "alpha-vantage.json",
-            "result": null
-          },
-          {
-            "path": "cash-account-ux.json",
-            "result": null
-          },
-          {
-            "path": "fin-e2e/firefox.json",
-            "result": null
-          },
-          {
-            "path": "fin-e2e/webkit.json",
-            "result": null
-          },
-          {
-            "path": "firefox-position-removal-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flh03-abce.json",
-            "result": null
-          },
-          {
-            "path": "loading-pwa/firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "loading-pwa/webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "pchain-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "marketstack.json",
-            "result": null
-          },
-          {
-            "path": "plain-backup-limits/firefox.json",
-            "result": null
-          },
-          {
-            "path": "plain-backup-limits/webkit.json",
-            "result": null
-          },
-          {
-            "path": "provider-retirement.json",
-            "result": null
-          },
-          {
-            "path": "pwa-update/report.json",
-            "result": null
-          },
-          {
-            "path": "recovery-limits/report-firefox-webkit.json",
-            "result": null
-          },
-          {
-            "path": "sonic-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "webkit-position-removal-sw-baseline.json",
-            "result": "PASS"
-          }
-        ]
-      },
-      {
-        "id": 13498924164,
-        "name": "release-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
-        "sha256": "421bca4549bd36d3894a682ef784caa53039b1971aa0707b00c58298f146682d",
-        "bytes": 55447397,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 74,
-        "pngsDecoded": 534,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "alpha-vantage.json",
-            "result": null
-          },
-          {
-            "path": "bitpanda-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "bitpanda-preview/report.json",
-            "result": null
-          },
-          {
-            "path": "blocked-reasons/report.json",
-            "result": null
-          },
-          {
-            "path": "booking-management.json",
-            "result": null
-          },
-          {
-            "path": "cash-account-ux.json",
-            "result": null
-          },
-          {
-            "path": "chart-tooltip/report.json",
-            "result": null
-          },
-          {
-            "path": "chromium-position-removal-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "fin-e2e/chromium.json",
-            "result": null
-          },
-          {
-            "path": "flatex-context/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-amounts-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-binding/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-commit/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-projection-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-identity-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-simulation-ui/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-ui/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-net-augmentation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-backfill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-selection/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-settlement/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-order-links-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flh03-abce.json",
-            "result": null
-          },
-          {
-            "path": "header-status/report.json",
-            "result": null
-          },
-          {
-            "path": "history-worker/chromium-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-ledger/report.json",
-            "result": null
-          },
-          {
-            "path": "kraken-link/chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "loading-pwa/chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "management-parity/report.json",
-            "result": null
-          },
-          {
-            "path": "marketstack.json",
-            "result": null
-          },
-          {
-            "path": "missing-position-value/report.json",
-            "result": null
-          },
-          {
-            "path": "pchain-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "plain-backup-limits/chromium.json",
-            "result": null
-          },
-          {
-            "path": "position-archive.json",
-            "result": null
-          },
-          {
-            "path": "price-csv-tools/report.json",
-            "result": null
-          },
-          {
-            "path": "provider-retirement.json",
-            "result": null
-          },
-          {
-            "path": "pwa-update/report.json",
-            "result": null
-          },
-          {
-            "path": "readability/report.json",
-            "result": null
-          },
-          {
-            "path": "recovery-limits/report-chromium.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/chromium-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-management/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-removal/report.json",
-            "result": null
-          },
-          {
-            "path": "shared-import/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964753721.json",
-            "result": "PASS"
-          },
-          {
-            "path": "sonic-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964748219.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964759118.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964764407.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964769403.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964774486.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964779550.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964784507.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964788893.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964813905.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964960792.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793964964896.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "ui-alltag10/chromium-real-touch-pan.json",
-            "result": null
-          },
-          {
-            "path": "two-fill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "ui-alltag10/chromium-real-touch-press.json",
-            "result": null
-          },
-          {
-            "path": "ui-alltag10/long-press.json",
-            "result": null
-          },
-          {
-            "path": "ui-audit-controls/report.json",
-            "result": null
-          },
-          {
-            "path": "ui-quality.json",
-            "result": null
-          },
-          {
-            "path": "ui-textscale/report.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-430-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report.json",
-            "result": "PASS"
-          }
-        ]
-      },
-      {
-        "id": 13497279662,
-        "name": "ci-stage-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
-        "sha256": "5ada6b1d9026a4cb06f99662ad3f5568a9b524e3bbfb651d1fa41188f470cef9",
-        "bytes": 812,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 1,
-        "pngsDecoded": 0,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "plan.json",
-            "result": null
-          }
-        ]
-      },
-      {
-        "id": 13500451824,
-        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-3",
-        "sha256": "c691cf035a0b6055ecef10905f0aef40f849117e1dde42d7654b3a9a1ae44d2f",
-        "bytes": 63135386,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 74,
-        "pngsDecoded": 668,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "bitpanda-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "bitpanda-preview/report.json",
-            "result": null
-          },
-          {
-            "path": "blocked-reasons/report.json",
-            "result": null
-          },
-          {
-            "path": "chart-tooltip/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-context/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-amounts-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-binding/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-commit/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-projection-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-identity-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-simulation-ui/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-ui/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-net-augmentation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-backfill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-selection/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-settlement/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-order-links-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "header-status/report.json",
-            "result": null
-          },
-          {
-            "path": "history-worker/firefox-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "history-worker/webkit-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-ledger/report.json",
-            "result": null
-          },
-          {
-            "path": "kraken-link/firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-link/webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "management-parity/report.json",
-            "result": null
-          },
-          {
-            "path": "missing-position-value/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/firefox-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-management/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/webkit-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-removal/report.json",
-            "result": null
-          },
-          {
-            "path": "shared-import/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793964698700.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793964714160.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965387778.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965410719.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965447304.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965464919.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965429097.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965482720.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965500325.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965517317.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793965525390.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793964707040.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793964730462.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965400501.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965419159.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965437340.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965455291.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965472915.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965490697.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965508150.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965532659.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793965538901.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "ui-audit-controls/report.json",
-            "result": null
-          },
-          {
-            "path": "ui-quality.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-430-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/webkit-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-430-axe.json",
-            "result": null
-          }
-        ]
-      },
-      {
-        "id": 13498483404,
-        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-1",
-        "sha256": "0a2294f41070ea9369ebd45d61338baa47105f42707d5b36e82711062e3c9011",
-        "bytes": 310437,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 0,
-        "pngsDecoded": 6,
-        "failureFlags": [],
-        "reports": []
-      },
-      {
-        "id": 13499231648,
-        "name": "dialog-visual-reference",
-        "sha256": "4e2fdf402a1779a94e251cd628aebb236ee6957729d2abcad06690b2cfdaf2fc",
-        "bytes": 935920,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 0,
-        "pngsDecoded": 20,
-        "failureFlags": [],
-        "reports": []
-      }
-    ],
-    "artifactCount": 6,
-    "jsonReports": 166,
-    "pngsDecoded": 1302,
-    "workflowRetries": 0,
-    "workflowCancellations": 0,
-    "followupCommitUnpublished": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
-    "newIntegrityBrowser": {
-      "chromium": "PASS",
-      "firefox": "PASS",
-      "webkit": "PASS"
+    {
+      "id": 13502044006,
+      "name": "cross-engine-gates-e6a37ca0bc163847194a56babc3d01d8f6238044-1",
+      "sha256": "3ddace0421670138a764310228ae56a1ce5891a862b2b8a1f015f79518fa93af",
+      "bytes": 59703253,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "booking-management.json",
+          "result": null
+        },
+        {
+          "path": "position-archive.json",
+          "result": null
+        },
+        {
+          "path": "price-csv-tools/report.json",
+          "result": null
+        },
+        {
+          "path": "readability/report.json",
+          "result": null
+        },
+        {
+          "path": "storage-fixture/firefox-1793968144890.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968450942.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968461872.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968148477.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968467787.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968474899.json",
+          "result": "PASS"
+        },
+        {
+          "path": "transfer-states.json",
+          "result": null
+        },
+        {
+          "path": "ui-alltag10/long-press.json",
+          "result": null
+        },
+        {
+          "path": "ui-textscale/report.json",
+          "result": null
+        },
+        {
+          "path": "ui07/firefox-report.json",
+          "result": null
+        },
+        {
+          "path": "ui07/webkit-report.json",
+          "result": null
+        }
+      ]
+    },
+    {
+      "id": 13502415506,
+      "name": "ci-stage-e6a37ca0bc163847194a56babc3d01d8f6238044",
+      "sha256": "98d53b15aa127a15a8813724c14e49414f2976de69b1e5d4b610b41e6166f982",
+      "bytes": 897,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "plan.json",
+          "result": null
+        }
+      ]
+    },
+    {
+      "id": 13502528620,
+      "name": "cross-engine-gates-e6a37ca0bc163847194a56babc3d01d8f6238044-3",
+      "sha256": "7be7b2ef57ba384cbdb6cbee7c75945f5fa305624c18ecbe9605db39d0512551",
+      "bytes": 63133219,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 74,
+      "pngsDecoded": 668,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "bitpanda-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "bitpanda-preview/report.json",
+          "result": null
+        },
+        {
+          "path": "blocked-reasons/report.json",
+          "result": null
+        },
+        {
+          "path": "chart-tooltip/report.json",
+          "result": null
+        },
+        {
+          "path": "flatex-context/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-amounts-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-binding/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-commit/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-identity-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-projection-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-simulation-ui/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-ui/report.json",
+          "result": null
+        },
+        {
+          "path": "flatex-net-augmentation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-backfill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-selection/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-settlement/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-order-links-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "header-status/report.json",
+          "result": null
+        },
+        {
+          "path": "history-worker/firefox-controller.json",
+          "result": "PASS"
+        },
+        {
+          "path": "history-worker/webkit-controller.json",
+          "result": "PASS"
+        },
+        {
+          "path": "kraken-ledger/report.json",
+          "result": null
+        },
+        {
+          "path": "kraken-link/firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "kraken-link/webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "management-parity/report.json",
+          "result": null
+        },
+        {
+          "path": "missing-position-value/report.json",
+          "result": null
+        },
+        {
+          "path": "reference-management/report.json",
+          "result": null
+        },
+        {
+          "path": "reference-management/firefox-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-management/webkit-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-removal/report.json",
+          "result": null
+        },
+        {
+          "path": "shared-import/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793967865786.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793967879063.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968459727.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968495976.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968479384.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968511501.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968558068.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968543358.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968526709.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968572572.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793968579401.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793967872838.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793967893254.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968470410.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968486833.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968518258.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968502843.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968534009.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968550004.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968564758.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968585522.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793968590777.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report-firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "ui-audit-controls/report.json",
+          "result": null
+        },
+        {
+          "path": "ui-quality.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/firefox-320-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/firefox-360-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/firefox-390-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/firefox-412-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/firefox-430-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/report-firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "v289-review-integrity/report-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "v289-review-integrity/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "v289-review-integrity/webkit-320-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/webkit-360-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/webkit-390-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/webkit-412-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/webkit-430-axe.json",
+          "result": null
+        }
+      ]
+    },
+    {
+      "id": 13502558264,
+      "name": "dialog-visual-reference",
+      "sha256": "ac5148622bcd89091e3b4a19c919aea7e713e6e1779be3a487e6779071d12ae3",
+      "bytes": 935598,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": [],
+      "reports": []
+    },
+    {
+      "id": 13503016707,
+      "name": "release-gates-e6a37ca0bc163847194a56babc3d01d8f6238044",
+      "sha256": "e55753d2c61da73732142b7b01a6e27eed5132e75531e0e2c421003ed78bd7e0",
+      "bytes": 64409653,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 78,
+      "pngsDecoded": 645,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "alpha-vantage.json",
+          "result": null
+        },
+        {
+          "path": "bitpanda-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "bitpanda-preview/report.json",
+          "result": null
+        },
+        {
+          "path": "blocked-reasons/report.json",
+          "result": null
+        },
+        {
+          "path": "booking-management.json",
+          "result": null
+        },
+        {
+          "path": "cash-account-ux.json",
+          "result": null
+        },
+        {
+          "path": "chart-tooltip/report.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/chromium.json",
+          "result": null
+        },
+        {
+          "path": "chromium-position-removal-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-context/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-amounts-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-binding/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-commit/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-identity-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-projection-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-simulation-ui/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-ui/report.json",
+          "result": null
+        },
+        {
+          "path": "flatex-net-augmentation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-backfill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-selection/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-settlement/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-order-links-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flh03-abce.json",
+          "result": null
+        },
+        {
+          "path": "header-status/report.json",
+          "result": null
+        },
+        {
+          "path": "history-worker/chromium-controller.json",
+          "result": "PASS"
+        },
+        {
+          "path": "kraken-ledger/report.json",
+          "result": null
+        },
+        {
+          "path": "kraken-link/chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "loading-pwa/chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "management-parity/report.json",
+          "result": null
+        },
+        {
+          "path": "marketstack.json",
+          "result": null
+        },
+        {
+          "path": "missing-position-value/report.json",
+          "result": null
+        },
+        {
+          "path": "pchain-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "plain-backup-limits/chromium.json",
+          "result": null
+        },
+        {
+          "path": "position-archive.json",
+          "result": null
+        },
+        {
+          "path": "price-csv-tools/report.json",
+          "result": null
+        },
+        {
+          "path": "provider-retirement.json",
+          "result": null
+        },
+        {
+          "path": "pwa-update/report.json",
+          "result": null
+        },
+        {
+          "path": "readability/report.json",
+          "result": null
+        },
+        {
+          "path": "recovery-limits/report-chromium.json",
+          "result": null
+        },
+        {
+          "path": "reference-management/chromium-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-management/report.json",
+          "result": null
+        },
+        {
+          "path": "reference-removal/report.json",
+          "result": null
+        },
+        {
+          "path": "shared-import/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "sonic-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967920215.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967927020.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967933631.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967940159.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967946527.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967952906.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967959150.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967965038.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793967970489.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793968001419.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793968185854.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793968191417.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793968860759.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793968867058.json",
+          "result": "PASS"
+        },
+        {
+          "path": "transfer-states.json",
+          "result": null
+        },
+        {
+          "path": "two-fill/report-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "ui-alltag10/chromium-real-touch-press.json",
+          "result": null
+        },
+        {
+          "path": "ui-alltag10/chromium-real-touch-pan.json",
+          "result": null
+        },
+        {
+          "path": "ui-alltag10/long-press.json",
+          "result": null
+        },
+        {
+          "path": "ui-audit-controls/report.json",
+          "result": null
+        },
+        {
+          "path": "ui-quality.json",
+          "result": null
+        },
+        {
+          "path": "ui-textscale/report.json",
+          "result": null
+        },
+        {
+          "path": "ui07/chromium-report.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/chromium-320-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/chromium-360-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/chromium-390-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/chromium-412-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/chromium-430-axe.json",
+          "result": null
+        },
+        {
+          "path": "v289-review-integrity/report-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "v289-review-integrity/report.json",
+          "result": "PASS"
+        }
+      ]
     }
-  },
-  "currentRun": 42217128559,
-  "currentAttempt": 1,
-  "workflowDispatches": 0,
-  "workflowRetries": 0,
-  "workflowCancellations": 0,
-  "sourceUnchangedSinceFirstCandidate": false,
-  "backup": {
-    "version": 54,
-    "bytes": 10310959,
-    "sha256": "23687316c36cd822b359f3c1f7a42c8749abbf601abfa895ecf5874d49357f62",
-    "manifestFiles": 2156,
-    "preservedV53Files": 1834
-  },
-  "release": "v290 NOT DEPLOYED / NOT LIVE_ACCEPTED; v289 remains LIVE_ACCEPTED",
-  "priorSuccessfulHead": {
-    "status": "SUCCESS / PRE_NATIVE_BOUNDARY_HEAD / NOT_MERGEABLE_FOR_TASK",
-    "run": 42213861242,
-    "attempt": 1,
-    "head": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
-    "testedMerge": "079ae4679c27f17af6fdb8f8540cd463146915c0",
-    "tree": "f250d5fbf14f5d556960c70266d4dd78a1068b39",
-    "units": {
-      "pass": 1242,
-      "fail": 0,
-      "skip": 0
-    },
-    "allThreeBrowserShards": "SUCCESS",
-    "newOriginalReviewChainAllThree": "PASS",
-    "UI07AllThree": "66 scans each PASS",
-    "walletRun": 42213861199,
-    "walletResult": "SUCCESS 1242/1242",
-    "publicAuditRun": 42213861326,
-    "publicAuditResult": "SUCCESS",
-    "artifacts": [
+  ],
+  "artifactCount": 6,
+  "jsonReports": 185,
+  "pngsDecoded": 1881,
+  "identities": {
+    "result": "PASS",
+    "virtualMerge": "e6a37ca0bc163847194a56babc3d01d8f6238044",
+    "tree": "bded2aa81095b59bf15628290e36c32481a76417",
+    "identities": [
       {
-        "id": 13500147480,
-        "name": "ci-stage-079ae4679c27f17af6fdb8f8540cd463146915c0",
-        "sha256": "1bed4559e4ca6d1ebcb16209eeb813d402b89c9515b00a60e46eda49b9c14c40",
-        "bytes": 849,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 1,
-        "pngsDecoded": 0,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "plan.json",
-            "result": null
-          }
-        ]
-      },
-      {
-        "id": 13501027225,
-        "name": "cross-engine-gates-079ae4679c27f17af6fdb8f8540cd463146915c0-3",
-        "sha256": "4619cbb8c66418816ae48ee64d9145d44e2eff5872e513fbaf09288cb0f0f2ab",
-        "bytes": 63133096,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 74,
-        "pngsDecoded": 668,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "bitpanda-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "bitpanda-preview/report.json",
-            "result": null
-          },
-          {
-            "path": "blocked-reasons/report.json",
-            "result": null
-          },
-          {
-            "path": "chart-tooltip/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-context/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-amounts-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-binding/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-commit/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-identity-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-projection-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-simulation-ui/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-ui/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-net-augmentation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-backfill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-selection/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-settlement/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-order-links-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "header-status/report.json",
-            "result": null
-          },
-          {
-            "path": "history-worker/firefox-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "history-worker/webkit-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-ledger/report.json",
-            "result": null
-          },
-          {
-            "path": "kraken-link/firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-link/webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "management-parity/report.json",
-            "result": null
-          },
-          {
-            "path": "missing-position-value/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/firefox-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-management/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/webkit-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-removal/report.json",
-            "result": null
-          },
-          {
-            "path": "shared-import/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966311809.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966299248.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966853240.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966871270.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966885671.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966900072.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966914207.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966928048.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966941937.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966955200.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966961603.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966305999.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966324207.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966863127.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966877574.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966891899.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966906516.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966920346.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966934196.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966947997.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966967175.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966971980.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "ui-audit-controls/report.json",
-            "result": null
-          },
-          {
-            "path": "ui-quality.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/firefox-430-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/report-firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/webkit-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/webkit-430-axe.json",
-            "result": null
-          }
-        ]
-      },
-      {
-        "id": 13501496332,
-        "name": "release-gates-079ae4679c27f17af6fdb8f8540cd463146915c0",
-        "sha256": "1fe8abd30a87a90005e02aabf6b090f07f10a8f86ecade1e4e23d99c44a87eca",
-        "bytes": 64405935,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 78,
-        "pngsDecoded": 645,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "alpha-vantage.json",
-            "result": null
-          },
-          {
-            "path": "bitpanda-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "bitpanda-preview/report.json",
-            "result": null
-          },
-          {
-            "path": "blocked-reasons/report.json",
-            "result": null
-          },
-          {
-            "path": "booking-management.json",
-            "result": null
-          },
-          {
-            "path": "cash-account-ux.json",
-            "result": null
-          },
-          {
-            "path": "chart-tooltip/report.json",
-            "result": null
-          },
-          {
-            "path": "chromium-position-removal-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "fin-e2e/chromium.json",
-            "result": null
-          },
-          {
-            "path": "flatex-context/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-amounts-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-binding/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-commit/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-identity-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-projection-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-simulation-ui/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-native-ui/report.json",
-            "result": null
-          },
-          {
-            "path": "flatex-net-augmentation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-backfill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-selection/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-net-settlement/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-order-links-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flatex-reconciliation/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flh03-abce.json",
-            "result": null
-          },
-          {
-            "path": "header-status/report.json",
-            "result": null
-          },
-          {
-            "path": "history-worker/chromium-controller.json",
-            "result": "PASS"
-          },
-          {
-            "path": "kraken-ledger/report.json",
-            "result": null
-          },
-          {
-            "path": "kraken-link/chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "loading-pwa/chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "management-parity/report.json",
-            "result": null
-          },
-          {
-            "path": "marketstack.json",
-            "result": null
-          },
-          {
-            "path": "missing-position-value/report.json",
-            "result": null
-          },
-          {
-            "path": "pchain-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "plain-backup-limits/chromium.json",
-            "result": null
-          },
-          {
-            "path": "position-archive.json",
-            "result": null
-          },
-          {
-            "path": "price-csv-tools/report.json",
-            "result": null
-          },
-          {
-            "path": "provider-retirement.json",
-            "result": null
-          },
-          {
-            "path": "pwa-update/report.json",
-            "result": null
-          },
-          {
-            "path": "readability/report.json",
-            "result": null
-          },
-          {
-            "path": "recovery-limits/report-chromium.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/report.json",
-            "result": null
-          },
-          {
-            "path": "reference-management/chromium-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "reference-removal/report.json",
-            "result": null
-          },
-          {
-            "path": "shared-import/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "sonic-evidence-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966356035.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966362556.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966368966.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966375221.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966381364.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966387542.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966393610.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966399317.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966404591.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966434704.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966616614.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793966622022.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793967265236.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/chromium-1793967271454.json",
-            "result": "PASS"
-          },
-          {
-            "path": "transfer-states.json",
-            "result": null
-          },
-          {
-            "path": "two-fill/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "two-fill/report.json",
-            "result": "PASS"
-          },
-          {
-            "path": "ui-alltag10/chromium-real-touch-pan.json",
-            "result": null
-          },
-          {
-            "path": "ui-alltag10/chromium-real-touch-press.json",
-            "result": null
-          },
-          {
-            "path": "ui-alltag10/long-press.json",
-            "result": null
-          },
-          {
-            "path": "ui-audit-controls/report.json",
-            "result": null
-          },
-          {
-            "path": "ui-quality.json",
-            "result": null
-          },
-          {
-            "path": "ui-textscale/report.json",
-            "result": null
-          },
-          {
-            "path": "ui07/chromium-report.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-320-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-360-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-390-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-412-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/chromium-430-axe.json",
-            "result": null
-          },
-          {
-            "path": "v289-review-integrity/report-chromium.json",
-            "result": "PASS"
-          },
-          {
-            "path": "v289-review-integrity/report.json",
-            "result": "PASS"
-          }
-        ]
-      },
-      {
-        "id": 13501141238,
-        "name": "cross-engine-gates-079ae4679c27f17af6fdb8f8540cd463146915c0-1",
-        "sha256": "02d42e8f1d2cf543dba9e2de5be11625a8f9f264a44310e7c15ed8750f335e51",
-        "bytes": 59707203,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 15,
-        "pngsDecoded": 474,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "booking-management.json",
-            "result": null
-          },
-          {
-            "path": "position-archive.json",
-            "result": null
-          },
-          {
-            "path": "price-csv-tools/report.json",
-            "result": null
-          },
-          {
-            "path": "readability/report.json",
-            "result": null
-          },
-          {
-            "path": "storage-fixture/firefox-1793966582709.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966886290.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/firefox-1793966896934.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966586390.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966902747.json",
-            "result": "PASS"
-          },
-          {
-            "path": "storage-fixture/webkit-1793966909840.json",
-            "result": "PASS"
-          },
-          {
-            "path": "transfer-states.json",
-            "result": null
-          },
-          {
-            "path": "ui-alltag10/long-press.json",
-            "result": null
-          },
-          {
-            "path": "ui-textscale/report.json",
-            "result": null
-          },
-          {
-            "path": "ui07/firefox-report.json",
-            "result": null
-          },
-          {
-            "path": "ui07/webkit-report.json",
-            "result": null
-          }
-        ]
-      },
-      {
-        "id": 13500699191,
-        "name": "dialog-visual-reference",
-        "sha256": "d7ac74dfe61578b21872de60e45fe131e5acfe48071ac1999f2093dbef5fa88c",
-        "bytes": 935501,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 0,
-        "pngsDecoded": 20,
-        "failureFlags": [],
-        "reports": []
-      },
-      {
-        "id": 13499774419,
-        "name": "cross-engine-gates-079ae4679c27f17af6fdb8f8540cd463146915c0-2",
-        "sha256": "0ddda981763241f3d3de172333eabbdc2d5d04f59dcd03fcf2e29eebcfb959c5",
-        "bytes": 12215602,
-        "apiUploadLogLocalMatch": true,
-        "CRC": "PASS",
-        "jsonReports": 17,
-        "pngsDecoded": 74,
-        "failureFlags": [],
-        "reports": [
-          {
-            "path": "alpha-vantage.json",
-            "result": null
-          },
-          {
-            "path": "cash-account-ux.json",
-            "result": null
-          },
-          {
-            "path": "fin-e2e/firefox.json",
-            "result": null
-          },
-          {
-            "path": "fin-e2e/webkit.json",
-            "result": null
-          },
-          {
-            "path": "firefox-position-removal-sw-baseline.json",
-            "result": "PASS"
-          },
-          {
-            "path": "flh03-abce.json",
-            "result": null
-          },
-          {
-            "path": "loading-pwa/firefox.json",
-            "result": "PASS"
-          },
-          {
-            "path": "loading-pwa/webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "marketstack.json",
-            "result": null
-          },
-          {
-            "path": "pchain-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "plain-backup-limits/firefox.json",
-            "result": null
-          },
-          {
-            "path": "plain-backup-limits/webkit.json",
-            "result": null
-          },
-          {
-            "path": "provider-retirement.json",
-            "result": null
-          },
-          {
-            "path": "pwa-update/report.json",
-            "result": null
-          },
-          {
-            "path": "recovery-limits/report-firefox-webkit.json",
-            "result": null
-          },
-          {
-            "path": "sonic-evidence-firefox-webkit.json",
-            "result": "PASS"
-          },
-          {
-            "path": "webkit-position-removal-sw-baseline.json",
-            "result": "PASS"
-          }
-        ]
+        "artifact": "13503016707",
+        "path": "tested-sha.txt",
+        "sha": "e6a37ca0bc163847194a56babc3d01d8f6238044"
       }
     ],
-    "artifactCount": 6,
-    "jsonReports": 185,
-    "pngsDecoded": 1881,
-    "mergeHold": "Additional reproduced native contract metadata bypass requires final new-head qualification; this successful older head must not merge",
-    "nextCommit": "2edbf55dcf1e29b82f4f3e6952ed61fba71d6683",
-    "nextTree": "bded2aa81095b59bf15628290e36c32481a76417",
-    "workflowReruns": 0,
-    "workflowCancellations": 0,
-    "manualDispatches": 0
+    "actualNativeBoundaryReports": [
+      {
+        "artifact": "13502528620",
+        "path": "v289-review-integrity/report-firefox.json",
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "artifact": "13502528620",
+        "path": "v289-review-integrity/report-webkit.json",
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "artifact": "13503016707",
+        "path": "v289-review-integrity/report-chromium.json",
+        "engine": "chromium",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      }
+    ]
   },
-  "currentWalletRun": 42217128661,
-  "currentPublicAudit": 42217128536,
-  "nativeBoundaryCorrection": "One helper now uses contract only where the existing balance reader uses it; actual fixed-source synthetic negative, 1243 current units, original81 and Chromium/Firefox local chain pass; mandatory final WebKit CI required"
+  "imagesReviewed": [
+    {
+      "artifact": 13503016707,
+      "path": "v289-review-integrity/chromium-390.png",
+      "sha256": "a83a4a5842779955334877132f3cbe4aa0f1fb0d3ffe636ec52cedcd2e60689b",
+      "actuallyViewed": true
+    },
+    {
+      "artifact": 13502528620,
+      "path": "v289-review-integrity/firefox-390.png",
+      "sha256": "a37c88f19257499ff17686c5606b28a9116c6d1bb00b7e14cfb368efd5131eb1",
+      "actuallyViewed": true
+    },
+    {
+      "artifact": 13502528620,
+      "path": "v289-review-integrity/webkit-390.png",
+      "sha256": "37eedefe4a4bad5461a44f3eb3b80dd17fba38f34d5e5b0ec031c039abcbfa1c",
+      "actuallyViewed": true
+    }
+  ],
+  "original81": "PASS unchanged independent Decimal oracle on final source; no complete history/hardware/new real2:1 claim",
+  "priorRunsPreserved": [
+    42210661072,
+    42213861242
+  ],
+  "manualWorkflowDispatches": 0,
+  "workflowReruns": 0,
+  "workflowCancellations": 0,
+  "next": "Fresh reviews/Main/head and protected merge, then actual automatic Main release/deployment/Pages/Gitblob/TLS/SWv290/three-engine production acceptance"
 }
