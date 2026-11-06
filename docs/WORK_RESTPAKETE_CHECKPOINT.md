@@ -1,3 +1,15 @@
+## ACTIVE – 82ce3d0130ba / EFF01-Notfallablösung / v291 Produktionsnachweise qualifiziert – 06.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach ausdrücklichem Nutzerentzug gegenüber `414503ed33c6` auf **82ce3d0130ba** übertragen. **Keine bestätigte STOPPED-/HANDOVER_READY-Erklärung des alten Owners vorhanden oder behauptet.** Zwei lesende Ref-Inventare unverändert (272 Refs); Main `6b020461aec68b6281dbc00e32c953dc6cec14cb` / Tree `6cc86610f633d4e93665d7f53c40282144c9df28`, Checkpoint `587eaa7eaa43a08c09cc20ae5836da8151825d96`; keine neueren Produkt-/Checkpoint-Schreibvorgänge, nur historische offene Drafts157/161, keine laufenden Actions. Das ist ein beobachteter kollisionsfreier Stand, kein technischer Beweis einer beendeten Chat-Sitzung. Erste Mutation ausschließlich erwarteter Checkpoint-Head, bei Leasekonflikt stoppen und prüfen.
+
+Private Sicherung **Version60** vollständig materialisiert: 15.492.688 Bytes, SHA256 `a935c85f4d416843b07a467555f486d7c26544b91bd56d6c0c053291387c790b`; **alle3.441 Manifestdateien hashgleich**. Originale, alte WIP-/Übergabe-/Releasebelege unverändert erhalten. Kein ungesicherter neuer Produkt-WIP gefunden; bisheriger finale Quellstand privat vorhanden.
+
+Bestehender Mainlauf **42240526403 Versuch1 vollständig SUCCESS**, einschließlich Deployment127979568480 und Produktion127982523356. Abschließendes tatsächliches Produktions-ZIP13518884397 mit API-/Uploadlog-/lokalem SHA256 `8bd32e3e79a36d5daf8c5405e90ee475a4ae709f53ea7cb28a671c62852ffa84`, 126.200.048 Bytes, CRC PASS, **132JSON-Berichte ohne Fehlerflags /1.253PNGs dekodiert** qualifiziert; UI300/Partial-Stichtag, native Integrität und2:1 EUR/CAS/Quota/post-put/Zweittab/Undo/v5FreshRestore/Offline in Chromium/Firefox/WebKit PASS. Sechs tatsächliche UI300-/Partial-Produktionsbilder gesichtet. Vorhandene Pages-/151Gitblobs-/152reguläreTLS-/SWv291-Belege werden identisch wiederverwendet.
+
+Nächster serieller Schritt: vollständigen v291-Abschlussbeleg und private Delta-Sicherung sichern, dann genau3:1 EUR anhand des vorhandenen18-Fall-Repros und eines vor Implementierung unabhängigen Decimal-/Journal-/Persistenzoracles. v289/v290 bleiben akzeptiert, keine erneute Abnahme. UI300-Nachträge, alle weiteren N:M/FX/Referenz/Wallet/Staking- und Produktaufträge bleiben offen. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) unverändert; GitHub nur Plugin, kein Checkpointbranch-Merge, keine CI gestartet/wiederholt/abgebrochen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / v291 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
 
 **v291 ist deployed, noch nicht LIVE_ACCEPTED.** Main `6b020461aec68b6281dbc00e32c953dc6cec14cb`, Tree `6cc86610f633d4e93665d7f53c40282144c9df28`, kontrollierter PR308-Merge mit Head-/Base-/Gate-/Reviewprüfung. Owner **414503ed33c6 allein ACTIVE**.
