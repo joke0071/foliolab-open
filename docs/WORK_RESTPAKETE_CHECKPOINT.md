@@ -1,3 +1,13 @@
+## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / LIVE_FAILED, NICHT LIVE_ACCEPTED – 06.11.2026
+
+PR310/Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. Mainlauf42277596230 Versuch1:1252Tests/0Fehler/Skips, sämtliche3Cross-Enginejobs/Deployment SUCCESS;7ZIPs/196JSON/1917PNGs/API-/Upload-/lokalerHash/Größe/CRC und151PagesGitblobs qualifiziert. GewöhnlichesTLS151Assets+Root nachDeployment PASS; SWv292 unverändert.
+
+**Livejob128111377213 FAIL**: ersterNavigationstimeout30000ms bei `#mobileNav [data-page="more"]`, nach152korrektenHTTPS-Assethashes/133geladenenAssets, keinepageerrors. GleichesSymptomwieOriginal128049757017; ausdrücklich **kein55MinutenGesamtbudgettimeout**. EinKernprüfpunkt/0Axe; weitereFinanz-/CAS-/Recovery-/Offline-/DreiEngineprüfungen nicht erreicht. Originalartefakt13534394580/306.947Bytes/SHA256 `19453c08e3acd2f0b2fdde021526e4288ff8a2f1fbe764e348ff65e729b1ccac` mitAPI-/Upload-/lokalemHash/Größe/CRC undFAIL-Bericht erhalten. [Fehlerbeleg](release-evidence/v292-pr310-live-failure.json).
+
+**Kein Retry/Rerun ausgelöst.** Jetzt wiederkehrendeStartursache gezielt reproduzieren/instrumentieren; drei frische lokaleChromium141Starts/IDB/nav PASS erklärenCI-Ursache noch nicht. Exakter unveränderterCoretest lokal zurDiagnose läuft; lokaleProxyzertifikatsausnahme getrennt vongewöhnlichemTLS. KeineAssertion/Frist/Engine/Gate gelockert. **v292 NICHT LIVE_ACCEPTED**, v291nicht erneutabnehmen; keineFolgeimplementierung. AlleSchutzverträge/offenenAufträge erhalten. AlleinigerOwner0bfa85b5b416ACTIVE; CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
 
 PR310/Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. Automatischer Mainlauf42277596230 Versuch1:1252Tests/0Fehler/Skips, Hauptjob/alle3Cross-Enginejobs/Deployment128111104665 SUCCESS. Sieben tatsächlicheZIPs/API-/Uploadlog-/lokalerHash/Größe/CRC PASS;196JSON ohneFehlerflags/1917dekodiertePNGs. Pages13534824155 enthält151exakteMainGitblobs; SWv292/Appassets unverändert. [Main-/Deploybeleg](release-evidence/v292-pr310-main-deployed.json), [Integration](release-evidence/v292-pr310-integration-qualified.json).
