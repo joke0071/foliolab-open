@@ -1,3 +1,11 @@
+## ACTIVE – bd0f0f98ad61 / reguläre HND01-Übernahme / UH05 2:1 EUR – 06.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von 2e0dc8902157 und Nutzerauftrag übernommen. Pflichtübergabe und 18 N:M-Reproduktionen vollständig gelesen. Frisch geprüft: Main cef91b3a8b2baa0c9598178a4fa486877283df45 / Tree 6951d60948282c5aa2d9c9f8144a6bb5d5acfefd unverändert; Checkpoint b95fe4c8ffb3899a41c1f95561a5f4d0259a4523, nur historische Drafts157/161 offen, keine laufenden oder wartenden Actions, kein neuer Produkt-WIP erkennbar. Private V48:5481565Bytes/SHA256 f6d17a4b9740e245632bf25f1a91e4eb87f1448cc8f3d90e59e20028388d48c3 und alle845Manifestdateien unabhängig PASS. Lokale Quellkopie über GitHub-Plugin bezogen; kein Remote-Gitcheckout.
+
+v288 bleibt LIVE_ACCEPTED, keine erneute Abnahme; Originalmainlauf42108246987 bleibt CANCELLED. Nächster enger Schnitt: genau zwei eigenständige EUR-Ausführungen derselben Order mit genau einem Cashbeleg im bestehenden gemeinsamen Importkern. Vollständige Quellen-/Konten-/Order-/ISIN-/Richtungs-/Datums-/Identitätsbindung, keine erfundenen Kosten oder pauschale N:M-/FX-Freigabe. UI/CAS/Undo/Replay/Restore und negative Finanzfälle vor Integration vollständig qualifizieren. UI300/QUALITY298/CI229/Android und alle Schutzverträge erhalten; GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nachMain; private Originale nicht veröffentlichen.
+
+---
+
 ## HANDOVER_READY – 2e0dc8902157 STOPPED / v288 LIVE_ACCEPTED / UH05 N:M reproduziert – 06.11.2026
 
 **2e0dc8902157 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Sicherer HND01-Punkt nach vollständig abgeschlossenemRelease und reproduzierbarerN:M-Fortsetzung. [VollständigeÜbergabe](HANDOVER_2e0dc8902157_2026-11-06.md). NachAbschlussdieserDokumentation keineweitereImplementierung/PR/Merge/Deployment/CI/RetrydurchdiesenOwner. KeineHintergrundfortsetzung/keineparalleleImplementierung. KeinungesicherterProdukt-WIP/keinneuerKandidat.
