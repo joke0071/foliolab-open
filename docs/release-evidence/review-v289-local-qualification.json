@@ -1,0 +1,1124 @@
+{
+  "status": "LOCAL_QUALIFIED / NOT_INTEGRATED",
+  "owner": "414503ed33c6",
+  "base": "652e80bcb31aec13c85a0457332bdf53cf98a521",
+  "baseTree": "ee506c874fa9578f1daf3387da24b299bba5103e",
+  "candidateSW": "foliolab-open-v290",
+  "reviewOriginalSHA256": "57afe93cbf78c78156aab31eb6e4fa03e8dbe4c1531b527f7554ad9513fd88fa",
+  "baselineReproduction": {
+    "main": "652e80bcb31aec13c85a0457332bdf53cf98a521",
+    "tree": "ee506c874fa9578f1daf3387da24b299bba5103e",
+    "scope": "Entirely synthetic owner-run diagnostic on exact v289 source; expected old defects, not current capabilities or release reacceptance",
+    "findings": {
+      "H1": {
+        "result": "REPRODUCED",
+        "offeredAdditionalTrades": 2,
+        "previewMutatedInput": false
+      },
+      "H2": {
+        "result": "REPRODUCED",
+        "observedQuantity": "2",
+        "recordedOpening": "1",
+        "restoreError": "Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen."
+      },
+      "H3": {
+        "result": "REPRODUCED",
+        "expectedSingleRepresentationTotalEUR": "200",
+        "actualTotalEUR": "300"
+      },
+      "M1": {
+        "result": "REPRODUCED",
+        "caseDistinctMintKeysCollide": true
+      },
+      "M2": {
+        "result": "REPRODUCED",
+        "undatedAutomaticEndpoint": "observed",
+        "twr": 0.10000000000000009
+      },
+      "M3": {
+        "result": "REPRODUCED",
+        "mismatchedModernDateAccepted": true,
+        "duplicateModernSequenceAccepted": true
+      }
+    },
+    "result": "REPRODUCED"
+  },
+  "units": {
+    "fullSuite": 1241,
+    "pass": 1241,
+    "fail": 0,
+    "skip": 0,
+    "concurrency": 2,
+    "additionalMandatoryGate": 1,
+    "initialResourceFailuresRetained": true,
+    "assertionsOrTimeoutsChanged": false
+  },
+  "syntax": "PASS",
+  "browser": {
+    "base": "http://127.0.0.1:4185/",
+    "scope": "Synthetic H1/H2/H3/M1/M2/M3; no original or hardware acceptance",
+    "engines": [
+      {
+        "engine": "chromium",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      }
+    ],
+    "result": "PASS"
+  },
+  "originalRegression": {
+    "status": "ORIGINAL_NATIVE_BUY_SELL_BATCH_PASS",
+    "groups": 81,
+    "buys": 69,
+    "sells": 12,
+    "independentCSVDecimalOracle": true,
+    "exactNetCash": true,
+    "originalAssetPostingsUnchanged": true,
+    "fullOldAuditPreserved": true,
+    "unknownCosts": true,
+    "noExternalFlows": true,
+    "v5Restore": true,
+    "replayAndWithdrawal": true,
+    "controlledOpening": true,
+    "completePrivateHistoryClaimed": false,
+    "setup": "controlled dated original openings + existing native parser/CSV core; no native bootstrap UI claim",
+    "productReleased": false
+  },
+  "finE2E": {
+    "base": "http://127.0.0.1:4185/",
+    "scope": "FIN-E2E01 cash + FX/partial-fill continuation: production APIs + actual IDB + UI encrypted export/fresh restore; no hardware claim",
+    "engines": [
+      {
+        "engine": "chromium",
+        "status": "PASS",
+        "steps": [
+          "import",
+          "correct",
+          "match",
+          "remove",
+          "undo",
+          "reimport",
+          "archive",
+          "restore-archive",
+          "trade",
+          "remove-again",
+          "history",
+          "fx-import",
+          "fx-sell",
+          "fx-archive",
+          "fx-restore",
+          "fx-reimport"
+        ],
+        "checks": [
+          "exact oracle after every CAS commit",
+          "cancel/stale/quota/post-put abort preserve bytes+revision",
+          "delete/reimport/undo",
+          "distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle",
+          "FX source conflicts/guards/archival + quota/post-put abort",
+          "actual second tab CAS",
+          "7 widths/Axe",
+          "offline reload",
+          "UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "status": "PASS",
+        "steps": [
+          "import",
+          "correct",
+          "match",
+          "remove",
+          "undo",
+          "reimport",
+          "archive",
+          "restore-archive",
+          "trade",
+          "remove-again",
+          "history",
+          "fx-import",
+          "fx-sell",
+          "fx-archive",
+          "fx-restore",
+          "fx-reimport"
+        ],
+        "checks": [
+          "exact oracle after every CAS commit",
+          "cancel/stale/quota/post-put abort preserve bytes+revision",
+          "delete/reimport/undo",
+          "distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle",
+          "FX source conflicts/guards/archival + quota/post-put abort",
+          "actual second tab CAS",
+          "7 widths/Axe",
+          "offline reload",
+          "UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "status": "PASS",
+        "steps": [
+          "import",
+          "correct",
+          "match",
+          "remove",
+          "undo",
+          "reimport",
+          "archive",
+          "restore-archive",
+          "trade",
+          "remove-again",
+          "history",
+          "fx-import",
+          "fx-sell",
+          "fx-archive",
+          "fx-restore",
+          "fx-reimport"
+        ],
+        "checks": [
+          "exact oracle after every CAS commit",
+          "cancel/stale/quota/post-put abort preserve bytes+revision",
+          "delete/reimport/undo",
+          "distinct equal USD partial fills + historical FX + EUR settlement + partial sale journal oracle",
+          "FX source conflicts/guards/archival + quota/post-put abort",
+          "actual second tab CAS",
+          "7 widths/Axe",
+          "offline reload",
+          "UI v2 download + fresh context UI restore + deleted identity + all FX source duplicates"
+        ]
+      }
+    ]
+  },
+  "workflowUnchanged": true,
+  "manualCIStarts": 0,
+  "workflowRetries": 0,
+  "priorRelease": "v289 remains LIVE_ACCEPTED, no repeat acceptance",
+  "scope": "All six review findings separately reproduced and locally qualified; no 3:1 expansion; UI300 next after protected correction release",
+  "localEnvironment": "Playwright1.64.1/Axe4.10.3; Chromium141 cached shell override; Firefox requires MOZ_DISABLE_CONTENT_SANDBOX=1 in isolated host; native app SW retained; provider responses are deterministic window-fetch fixtures with zero unexpected requests. No device-hardware acceptance.",
+  "imagesReviewed": [
+    {
+      "path": "v289-review-integrity/chromium-390.png",
+      "sha256": "a83a4a5842779955334877132f3cbe4aa0f1fb0d3ffe636ec52cedcd2e60689b",
+      "actuallyViewed": true
+    },
+    {
+      "path": "v289-review-integrity/firefox-390.png",
+      "sha256": "a37c88f19257499ff17686c5606b28a9116c6d1bb00b7e14cfb368efd5131eb1",
+      "actuallyViewed": true
+    },
+    {
+      "path": "v289-review-integrity/webkit-390.png",
+      "sha256": "37eedefe4a4bad5461a44f3eb3b80dd17fba38f34d5e5b0ec031c039abcbfa1c",
+      "actuallyViewed": true
+    }
+  ],
+  "contrastCorrection": {
+    "scope": "three wallet-scan text colours only",
+    "initialAxeReportRetained": true,
+    "finalFiveWidthsAllEngines": "PASS"
+  },
+  "workflowGitBlob": "2dc40d59e94d1760c1f83b0d3d0aa586eb5b97a9",
+  "localCoreProbe": {
+    "sha": "b9ae4b6a39e0045fb723e1f09cc69fe3c9f33e8b",
+    "cache": "foliolab-open-v290",
+    "base": "http://127.0.0.1:4185/",
+    "startedAt": "2026-11-06T11:21:35.349Z",
+    "proxyCertificateException": false,
+    "assetHashes": [
+      {
+        "path": "./src/wallet-identity.js",
+        "sha256": "5b4fa7da6be8b9c397c8b29191e401d85308fe7b761bc4342c6c89980c888a3b"
+      },
+      {
+        "path": "./src/shared-import.js",
+        "sha256": "fb1ee15f3802f881a8d337bc268dd3162622dcc8bc8a28ff8e5feb7051fd7d0c"
+      },
+      {
+        "path": "./src/flatex-net-reconciliation.js",
+        "sha256": "1fbc1203716c4498122ebbd0c917b434faa469083eee58576f804d425fe28c32"
+      },
+      {
+        "path": "./src/shared-flatex-reconciliation-ui.js",
+        "sha256": "93dfd7d6e91ea018eafe737a3148048c3a0a3bfcce8e4fd6609d8bca06711a28"
+      },
+      {
+        "path": "./src/shared-flatex-ui.js",
+        "sha256": "debf5ede5be8954bec4d4c431f410ca9a4ca09a1238519164936e153cfe4694c"
+      },
+      {
+        "path": "./src/link-explorer-evidence.js",
+        "sha256": "4e85163574dc115233eb6ff346ab29c548a0bd7e2c9688170fb0e03071dabe84"
+      },
+      {
+        "path": "./src/shared-import-ui.js",
+        "sha256": "a61c4b1700750bf3d38b8df7b7580b072c749409dcaa012b1397ab1b63e13d67"
+      },
+      {
+        "path": "./",
+        "sha256": "6b103c76e2944caf8ea53aa63ecb80397b21cbd590d37aaebc2eb2c95df92182"
+      },
+      {
+        "path": "./src/kraken-link-bridge.js",
+        "sha256": "6e15a9f665549cc3f7516a9041036fc16cee7be36cd9b1fddff35b57e73bd649"
+      },
+      {
+        "path": "./src/loading-ui.js",
+        "sha256": "0ed29228cb0d955b3466117540975d59aabb47d5100306ced27c6025d3c19854"
+      },
+      {
+        "path": "./src/startup.js",
+        "sha256": "ba5bce5a6cc763ac79c2dd7c745692c6f0128bc9daec2b95ddd02e708611a488"
+      },
+      {
+        "path": "./icons/flask-192.png",
+        "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119"
+      },
+      {
+        "path": "./icons/flask-512.png",
+        "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167"
+      },
+      {
+        "path": "./src/flatex-net-settlement.js",
+        "sha256": "e8db2b95e673ed3b65951ad6fb0f36fcdbba6b4d3dbc2f79fa183050e482f128"
+      },
+      {
+        "path": "./icons/flask-maskable-512.png",
+        "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d"
+      },
+      {
+        "path": "./src/unified-bitcoin.js",
+        "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603"
+      },
+      {
+        "path": "./src/unified-bitcoin-ui.js",
+        "sha256": "8c27cfb3b723e1b1cb3f54c4cee62288adc91b64f536770a11823d2813251146"
+      },
+      {
+        "path": "./src/retired-providers.js",
+        "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279"
+      },
+      {
+        "path": "./src/backup-limits.js",
+        "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f"
+      },
+      {
+        "path": "./src/alpha-vantage.js",
+        "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83"
+      },
+      {
+        "path": "./src/header-status.js",
+        "sha256": "98b68f05d8eaede72032411b6f0ff17febdb17d60de20ce6578c06caa1e231f0"
+      },
+      {
+        "path": "./src/blocked-reasons-ui.js",
+        "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98"
+      },
+      {
+        "path": "./src/marketstack.js",
+        "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456"
+      },
+      {
+        "path": "./src/flatex-native-ui.js",
+        "sha256": "46f7470f9095c1d47c2d59bfeb9a172a2c5fff87e9ffca5ead0ca09005dc9c50"
+      },
+      {
+        "path": "./src/flatex-native.js",
+        "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e"
+      },
+      {
+        "path": "./src/csv-records.js",
+        "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921"
+      },
+      {
+        "path": "./src/bitpanda-withdrawal-evidence.js",
+        "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586"
+      },
+      {
+        "path": "./src/bitpanda-import-ui.js",
+        "sha256": "ea6d1af3a3449bf5fd1f2b79e21ba01f9ce436c19292ebf96df956d1d165a14d"
+      },
+      {
+        "path": "./src/bitpanda-preview-ui.js",
+        "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d"
+      },
+      {
+        "path": "./src/bitpanda-preview.js",
+        "sha256": "be6dc214ff9213c95d8d968052f9c866a00dfc6263ce6f0b2323448f4c6c59d7"
+      },
+      {
+        "path": "./src/bitpanda-import.js",
+        "sha256": "e1c75d4c65f1811270918709e1afd4f24518b61571ed95c2ad66114fd6ee6ad6"
+      },
+      {
+        "path": "./src/kraken-ledger.js",
+        "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6"
+      },
+      {
+        "path": "./src/kraken-ledger-ui.js",
+        "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b"
+      },
+      {
+        "path": "./src/kraken-source-plan.js",
+        "sha256": "81ba98accde72711e58e58c5d8ccfe2b8bb379f1278d1119ada9e49c31ce306e"
+      },
+      {
+        "path": "./src/kraken-bitcoin-bridge.js",
+        "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639"
+      },
+      {
+        "path": "./src/kraken-solana-bridge.js",
+        "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e"
+      },
+      {
+        "path": "./src/kraken-import-ui.js",
+        "sha256": "f7e8411a965c435ddf7a7d74939db0f175edc68172ac049f8bc59f146602ab4b"
+      },
+      {
+        "path": "./src/kraken-import.js",
+        "sha256": "027f22460ec0715063277178368501c068fe1635f82abfb3810fafdf032b5f82"
+      },
+      {
+        "path": "./src/kraken-ethereum-bridge.js",
+        "sha256": "d5328824d40dc05e744a6c8c4879e6a9bed2d5834d8a765796d46e021006a3b1"
+      },
+      {
+        "path": "./src/kraken-withdrawal-evidence.js",
+        "sha256": "df26d901fe5563d84551ce58d65712cf643bc61dcc48028b1924b5af60601e7f"
+      },
+      {
+        "path": "./src/pchain-identity.js",
+        "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460"
+      },
+      {
+        "path": "./src/reference-management.js",
+        "sha256": "40ab1bf09783d6c05ac12aba7f8d686b1a5b54989da2087a3d2817c3605192c9"
+      },
+      {
+        "path": "./src/sonic-staking-evidence.js",
+        "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f"
+      },
+      {
+        "path": "./src/pchain-evidence.js",
+        "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8"
+      },
+      {
+        "path": "./src/ledger-live.js",
+        "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc"
+      },
+      {
+        "path": "./src/account-evidence.js",
+        "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1"
+      },
+      {
+        "path": "./src/ledger-live-ui.js",
+        "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a"
+      },
+      {
+        "path": "./src/booking-management.js",
+        "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9"
+      },
+      {
+        "path": "./src/csv-batch.js",
+        "sha256": "deb17dd33931c138ffd12813929ff347458988204ca7de169caa5e182a5e40b9"
+      },
+      {
+        "path": "./src/historical-portfolio-value.js",
+        "sha256": "f7a25d400322f493de76e1d6f8735af746e11d4f8d5bde141ad4155d9bfd8d66"
+      },
+      {
+        "path": "./src/history-evidence-cache.js",
+        "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c"
+      },
+      {
+        "path": "./src/interest-account.js",
+        "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a"
+      },
+      {
+        "path": "./src/purchase-evidence-ui.js",
+        "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0"
+      },
+      {
+        "path": "./src/interest-ui.js",
+        "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7"
+      },
+      {
+        "path": "./src/purchase-evidence.js",
+        "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43"
+      },
+      {
+        "path": "./src/historical-position-value.js",
+        "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73"
+      },
+      {
+        "path": "./src/interest-scenario.js",
+        "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89"
+      },
+      {
+        "path": "./src/cash-reconciliation.js",
+        "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4"
+      },
+      {
+        "path": "./src/cash-terms.js",
+        "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0"
+      },
+      {
+        "path": "./src/cash-terms-ui.js",
+        "sha256": "d60565ac037fa2e8499f9095ec382ebaa85ee0de95b1887ab213eff7d416e22e"
+      },
+      {
+        "path": "./src/wallet-history-valuation.js",
+        "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a"
+      },
+      {
+        "path": "./src/solana-history.js",
+        "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070"
+      },
+      {
+        "path": "./src/wallet-history-days-worker.js",
+        "sha256": "126784f8937c9891df3c424b9e136c8095231dd081e8ac388e4b981957969c93"
+      },
+      {
+        "path": "./src/wallet-history-calculation.js",
+        "sha256": "81283566517daac6011ca4744f689c292ee017c7d2f1eff1c94832962f20d50b"
+      },
+      {
+        "path": "./src/wallet-history-days.js",
+        "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3"
+      },
+      {
+        "path": "./src/wallet-history-ui.js",
+        "sha256": "f73d71a43c27f2cfc0536f2db238218f1a8ded77c1962162e5f2404064ee791e"
+      },
+      {
+        "path": "./src/wallet-history-state.js",
+        "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c"
+      },
+      {
+        "path": "./src/ethereum-history.js",
+        "sha256": "070863c673654e44c58226f4ebe9cadc0260460b7d14a59a7f225ad31bc9d06c"
+      },
+      {
+        "path": "./src/wallet-history-core.js",
+        "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090"
+      },
+      {
+        "path": "./src/import-identity.js",
+        "sha256": "6004bdb6818eb6a31440c7560f764d15581da4898340213fc97cdda8de2bb9ea"
+      },
+      {
+        "path": "./index.html",
+        "sha256": "6b103c76e2944caf8ea53aa63ecb80397b21cbd590d37aaebc2eb2c95df92182"
+      },
+      {
+        "path": "./src/bitcoin-history.js",
+        "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8"
+      },
+      {
+        "path": "./src/economic-form-ui.js",
+        "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200"
+      },
+      {
+        "path": "./styles.css",
+        "sha256": "bf2a0affee11b9123080b38871b32f8427979a0ebaef5aff642490d7dd6df609"
+      },
+      {
+        "path": "./src/dialog-discard.js",
+        "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030"
+      },
+      {
+        "path": "./src/credential-visibility.js",
+        "sha256": "4a683444a5d98637ad4f2f6a6f42c585b6ce37b2a811577bacbaf0e2b5bc7f9e"
+      },
+      {
+        "path": "./src/backup-vault.js",
+        "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4"
+      },
+      {
+        "path": "./src/drive-backup.js",
+        "sha256": "d5a90bcce821c3b356ff33e3802cac7ad5ae01c6b02923235fa067ba0b9ae920"
+      },
+      {
+        "path": "./src/app.js",
+        "sha256": "d7d126997349757e4b66ac72249380ceef5bb859b79fce51bae2b8709c49cde8"
+      },
+      {
+        "path": "./src/portfolio-edit-actions.js",
+        "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04"
+      },
+      {
+        "path": "./src/complete-backup.js",
+        "sha256": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4"
+      },
+      {
+        "path": "./src/account-opening.js",
+        "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b"
+      },
+      {
+        "path": "./src/position-selection.js",
+        "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d"
+      },
+      {
+        "path": "./src/coin-identity.js",
+        "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26"
+      },
+      {
+        "path": "./src/position-search.js",
+        "sha256": "cf4f10501321535da1f14d60f2b1b6748fa5a47cd917a677573c50a412751f01"
+      },
+      {
+        "path": "./src/asset-wizard.js",
+        "sha256": "2d27329ec83a15bc5884363c6a5c55927ce05da0fd3ba2254c617c7ad893a081"
+      },
+      {
+        "path": "./src/asset-wizard-core.js",
+        "sha256": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c"
+      },
+      {
+        "path": "./src/public-instruments-client.js",
+        "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589"
+      },
+      {
+        "path": "./src/refresh-ui.js",
+        "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a"
+      },
+      {
+        "path": "./src/market-diagnostics.js",
+        "sha256": "7e55e3b411600bfd6b01cda5279792294a4a48f08fae5ad58005bade4408923c"
+      },
+      {
+        "path": "./src/dashboard-ui.js",
+        "sha256": "bca72919b37f3596612e089204b34c5bf727014a063f5cb826e05cd00b39fc62"
+      },
+      {
+        "path": "./src/quote-quality.js",
+        "sha256": "861a8e75afe8177eb12e558143321df88ef1da38a82fc8b5328328799e23660e"
+      },
+      {
+        "path": "./src/chart-periods.js",
+        "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359"
+      },
+      {
+        "path": "./src/position-history.js",
+        "sha256": "ba83f32d5f670c14b270fb79546a9caadab3f0caf6dfbde23a47558757ffcfce"
+      },
+      {
+        "path": "./src/eodhd-transport.js",
+        "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82"
+      },
+      {
+        "path": "./src/eodhd-worker-client.js",
+        "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f"
+      },
+      {
+        "path": "./src/security-sources.js",
+        "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d"
+      },
+      {
+        "path": "./src/security-discovery.js",
+        "sha256": "507d8da0447ec8d9209db63d450da0faf10c81d5bece7cbfdaa755a07010220c"
+      },
+      {
+        "path": "./src/onboarding-suggestions.js",
+        "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626"
+      },
+      {
+        "path": "./src/reference-listings.js",
+        "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0"
+      },
+      {
+        "path": "./src/security-catalog.js",
+        "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9"
+      },
+      {
+        "path": "./src/crypto-fallbacks.js",
+        "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a"
+      },
+      {
+        "path": "./src/instrument-catalog.js",
+        "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7"
+      },
+      {
+        "path": "./src/historical-csv.js",
+        "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b"
+      },
+      {
+        "path": "./src/position-detail-ui.js",
+        "sha256": "fe139620c0ca5dc4126b45f48efdd68dc9bc203e8bc03a02b04cb149c5676f98"
+      },
+      {
+        "path": "./src/position-bookings.js",
+        "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be"
+      },
+      {
+        "path": "./src/flatex-review-export.js",
+        "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec"
+      },
+      {
+        "path": "./src/allocation-ui.js",
+        "sha256": "ce3f8025c5cfbd888b7642173f8b2e298fa3a6efc87363d73fba9031545b6f6a"
+      },
+      {
+        "path": "./src/position-quality-review.js",
+        "sha256": "5c147ddc5d138065b1ab912129ac06f693107d98632dde35674524e5da7749db"
+      },
+      {
+        "path": "./src/atomic-storage.js",
+        "sha256": "f7794c4f109e255b05b7131a2b0fc8e75b8e37018df348230e881b59039708cb"
+      },
+      {
+        "path": "./src/browser-portfolio-storage.js",
+        "sha256": "94dd30dfb41e72a26af768bddf1d2220f8a790f42c19c212c0b75bd02a45adbc"
+      },
+      {
+        "path": "./src/legacy-quote-audit.js",
+        "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3"
+      },
+      {
+        "path": "./src/valuation-status.js",
+        "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c"
+      },
+      {
+        "path": "./src/model.js",
+        "sha256": "7961f067db956547c47460a5c4c2c33eb474edca53cf163d6f705780e9f89e5a"
+      },
+      {
+        "path": "./src/decimal.js",
+        "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611"
+      },
+      {
+        "path": "./src/assets.js",
+        "sha256": "d08a1792af9ec0a43742bd2adea90b04253e7e7076df559270ab72d9cf62d5d0"
+      },
+      {
+        "path": "./src/transfer-matching-ui.js",
+        "sha256": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d"
+      },
+      {
+        "path": "./src/transactions.js",
+        "sha256": "3b3fc129300705568d82c91cdd879839f884816191fd5022b26b8ac3fd506ec7"
+      },
+      {
+        "path": "./src/blockchain-adapters.js",
+        "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8"
+      },
+      {
+        "path": "./src/performance.js",
+        "sha256": "5d594a45db88f18d0e272a3b71c6339b7809984c747dd0fc6c3e86dd3e90ca20"
+      },
+      {
+        "path": "./src/market.js",
+        "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a"
+      },
+      {
+        "path": "./src/staking-discovery.js",
+        "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e"
+      },
+      {
+        "path": "./src/solana-rpc.js",
+        "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b"
+      },
+      {
+        "path": "./src/bnb-token-scanner.js",
+        "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c"
+      },
+      {
+        "path": "./src/wallet-scan-update.js",
+        "sha256": "24678d81be9a24e626a752f8b647fa069ed27eb96f097a0653e27c563742672e"
+      },
+      {
+        "path": "./src/native-staking-networks.js",
+        "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2"
+      },
+      {
+        "path": "./src/ethereum-fallback.js",
+        "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e"
+      },
+      {
+        "path": "./src/staking-catalog.js",
+        "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025"
+      },
+      {
+        "path": "./src/wallet-visibility.js",
+        "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d"
+      },
+      {
+        "path": "./src/request-cache.js",
+        "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1"
+      },
+      {
+        "path": "./src/csv-import.js",
+        "sha256": "1d0402f4fde8b4cd42e78dd630042ef860b5972f9c02930f9c1c93ab5f008fe0"
+      },
+      {
+        "path": "./src/flatex-reconciliation.js",
+        "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6"
+      },
+      {
+        "path": "./src/flatex-import.js",
+        "sha256": "c5c641ded63cc7ddafae0cb2e2facf2a3590117c70760b3d8efa1302bc52010c"
+      },
+      {
+        "path": "./src/flatex-backfill.js",
+        "sha256": "25a4b664803cf13647b7829fa78140dda0d106992e894b1d95e9ec4075705486"
+      },
+      {
+        "path": "./src/flatex-cost-basis.js",
+        "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9"
+      },
+      {
+        "path": "./src/flatex-settlements.js",
+        "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89"
+      },
+      {
+        "path": "./src/flatex-settlement-audit.js",
+        "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261"
+      },
+      {
+        "path": "./src/flatex-cash-audit.js",
+        "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b"
+      },
+      {
+        "path": "./src/booking-history.js",
+        "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93"
+      },
+      {
+        "path": "./src/booking-history-ui.js",
+        "sha256": "4029dc357f16f44d158856abf3e86df5b8fa3982bffbe59a4f2fd42e70e343f4"
+      },
+      {
+        "path": "./src/booking-insights-ui.js",
+        "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e"
+      },
+      {
+        "path": "./src/booking-insights.js",
+        "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c"
+      },
+      {
+        "path": "./src/capital-flows.js",
+        "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704"
+      },
+      {
+        "path": "./src/bitcoin-hd.js",
+        "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6"
+      },
+      {
+        "path": "./src/xrpl-assets.js",
+        "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1"
+      },
+      {
+        "path": "./src/defi.js",
+        "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd"
+      },
+      {
+        "path": "./src/position-icons.js",
+        "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758"
+      },
+      {
+        "path": "./src/format.js",
+        "sha256": "69acdbdbdb297cafd13634e5fe4ce8b4e34417077bf4f0e5459c4931d05f728e"
+      },
+      {
+        "path": "./src/crypto-backup.js",
+        "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc"
+      },
+      {
+        "path": "./icons/flask.svg",
+        "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1"
+      },
+      {
+        "path": "./manifest.webmanifest",
+        "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd"
+      },
+      {
+        "path": "./sw.js",
+        "sha256": "b6f6b9f9e869c661fecddee53ab7dba36122a6614b1f2ede894643e8b5da3cbf"
+      }
+    ],
+    "loadedAssets": [
+      "./",
+      "./icons/flask.svg",
+      "./styles.css",
+      "./src/startup.js",
+      "./src/drive-backup.js",
+      "./src/app.js",
+      "./src/shared-import-ui.js",
+      "./src/flatex-native.js",
+      "./src/flatex-native-ui.js",
+      "./src/flatex-net-settlement.js",
+      "./src/loading-ui.js",
+      "./src/alpha-vantage.js",
+      "./src/backup-limits.js",
+      "./src/header-status.js",
+      "./src/blocked-reasons-ui.js",
+      "./src/import-identity.js",
+      "./src/bitpanda-preview.js",
+      "./src/bitpanda-preview-ui.js",
+      "./src/csv-records.js",
+      "./src/bitpanda-import-ui.js",
+      "./src/bitpanda-import.js",
+      "./src/flatex-settlements.js",
+      "./src/reference-management.js",
+      "./src/kraken-ledger.js",
+      "./src/ledger-live-ui.js",
+      "./src/kraken-ledger-ui.js",
+      "./src/ledger-live.js",
+      "./src/kraken-import-ui.js",
+      "./src/account-evidence.js",
+      "./src/historical-portfolio-value.js",
+      "./src/kraken-import.js",
+      "./src/booking-management.js",
+      "./src/position-selection.js",
+      "./src/position-quality-review.js",
+      "./src/transfer-matching-ui.js",
+      "./src/interest-account.js",
+      "./src/cash-reconciliation.js",
+      "./src/booking-history-ui.js",
+      "./src/booking-history.js",
+      "./src/interest-ui.js",
+      "./src/cash-terms.js",
+      "./src/cash-terms-ui.js",
+      "./src/model.js",
+      "./src/wallet-history-ui.js",
+      "./src/market.js",
+      "./src/position-icons.js",
+      "./src/credential-visibility.js",
+      "./src/format.js",
+      "./src/dialog-discard.js",
+      "./src/economic-form-ui.js",
+      "./src/dashboard-ui.js",
+      "./src/chart-periods.js",
+      "./src/position-detail-ui.js",
+      "./src/position-history.js",
+      "./src/onboarding-suggestions.js",
+      "./src/crypto-fallbacks.js",
+      "./src/historical-csv.js",
+      "./src/security-sources.js",
+      "./src/security-discovery.js",
+      "./src/allocation-ui.js",
+      "./src/asset-wizard.js",
+      "./src/valuation-status.js",
+      "./src/position-search.js",
+      "./src/public-instruments-client.js",
+      "./src/bitcoin-hd.js",
+      "./src/refresh-ui.js",
+      "./src/transactions.js",
+      "./src/market-diagnostics.js",
+      "./src/booking-insights-ui.js",
+      "./src/browser-portfolio-storage.js",
+      "./src/quote-quality.js",
+      "./src/capital-flows.js",
+      "./src/wallet-scan-update.js",
+      "./src/wallet-identity.js",
+      "./src/blockchain-adapters.js",
+      "./src/performance.js",
+      "./src/solana-rpc.js",
+      "./src/staking-catalog.js",
+      "./src/legacy-quote-audit.js",
+      "./src/csv-batch.js",
+      "./src/wallet-visibility.js",
+      "./src/flatex-import.js",
+      "./src/csv-import.js",
+      "./src/flatex-settlement-audit.js",
+      "./src/flatex-cost-basis.js",
+      "./src/flatex-cash-audit.js",
+      "./src/flatex-reconciliation.js",
+      "./src/flatex-backfill.js",
+      "./src/flatex-review-export.js",
+      "./src/defi.js",
+      "./src/complete-backup.js",
+      "./src/account-opening.js",
+      "./src/backup-vault.js",
+      "./src/portfolio-edit-actions.js",
+      "./src/shared-import.js",
+      "./src/decimal.js",
+      "./src/shared-flatex-ui.js",
+      "./src/reference-listings.js",
+      "./src/request-cache.js",
+      "./src/flatex-net-reconciliation.js",
+      "./src/bitpanda-withdrawal-evidence.js",
+      "./src/kraken-link-bridge.js",
+      "./src/link-explorer-evidence.js",
+      "./src/historical-position-value.js",
+      "./src/purchase-evidence.js",
+      "./src/kraken-solana-bridge.js",
+      "./src/kraken-ethereum-bridge.js",
+      "./src/kraken-withdrawal-evidence.js",
+      "./src/assets.js",
+      "./src/history-evidence-cache.js",
+      "./src/kraken-source-plan.js",
+      "./src/interest-scenario.js",
+      "./src/kraken-bitcoin-bridge.js",
+      "./src/unified-bitcoin.js",
+      "./src/coin-identity.js",
+      "./src/wallet-history-state.js",
+      "./src/retired-providers.js",
+      "./src/native-staking-networks.js",
+      "./src/unified-bitcoin-ui.js",
+      "./src/purchase-evidence-ui.js",
+      "./src/wallet-history-valuation.js",
+      "./src/wallet-history-calculation.js",
+      "./src/wallet-history-days.js",
+      "./src/bitcoin-history.js",
+      "./src/solana-history.js",
+      "./src/ethereum-history.js",
+      "./src/wallet-history-core.js",
+      "./src/marketstack.js",
+      "./src/position-bookings.js",
+      "./src/ethereum-fallback.js",
+      "./src/xrpl-assets.js",
+      "./src/staking-discovery.js",
+      "./src/bnb-token-scanner.js",
+      "./src/security-catalog.js",
+      "./src/instrument-catalog.js",
+      "./src/eodhd-worker-client.js",
+      "./src/asset-wizard-core.js",
+      "./src/atomic-storage.js",
+      "./src/booking-insights.js",
+      "./src/shared-flatex-reconciliation-ui.js"
+    ],
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "scans": [
+      {
+        "label": "320 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "320 history",
+        "violations": 0
+      },
+      {
+        "label": "320 positions",
+        "violations": 0
+      },
+      {
+        "label": "320 bookings",
+        "violations": 0
+      },
+      {
+        "label": "320 more",
+        "violations": 0
+      },
+      {
+        "label": "390 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "390 history",
+        "violations": 0
+      },
+      {
+        "label": "390 positions",
+        "violations": 0
+      },
+      {
+        "label": "390 bookings",
+        "violations": 0
+      },
+      {
+        "label": "390 more",
+        "violations": 0
+      },
+      {
+        "label": "1440 dashboard",
+        "violations": 0
+      },
+      {
+        "label": "1440 history",
+        "violations": 0
+      },
+      {
+        "label": "1440 positions",
+        "violations": 0
+      },
+      {
+        "label": "1440 bookings",
+        "violations": 0
+      },
+      {
+        "label": "1440 more",
+        "violations": 0
+      },
+      {
+        "label": "ETF history",
+        "violations": 0
+      },
+      {
+        "label": "saved synthetic crypto history",
+        "violations": 0
+      },
+      {
+        "label": "split transfer preview",
+        "violations": 0
+      }
+    ],
+    "finishedAt": "2026-11-06T11:22:01.742Z",
+    "result": "PASS",
+    "errors": []
+  },
+  "localCoreProbeScope": "HTTP candidate diagnostic, not actual production acceptance; real release remains pending",
+  "legacyBindingRegression": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "scope": "Existing native scope/account/source/manual/reset/paging/five widths/Axe/CAS/offline and amount-confirmation gates, followed by mandatory new integrity chain; wrong-account assertions now reject the reproduced H1 defect"
+  }
+}

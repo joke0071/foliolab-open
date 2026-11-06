@@ -1,0 +1,38 @@
+{
+  "main": "652e80bcb31aec13c85a0457332bdf53cf98a521",
+  "tree": "ee506c874fa9578f1daf3387da24b299bba5103e",
+  "scope": "Entirely synthetic owner-run diagnostic on exact v289 source; expected old defects, not current capabilities or release reacceptance",
+  "findings": {
+    "H1": {
+      "result": "REPRODUCED",
+      "offeredAdditionalTrades": 2,
+      "previewMutatedInput": false
+    },
+    "H2": {
+      "result": "REPRODUCED",
+      "observedQuantity": "2",
+      "recordedOpening": "1",
+      "restoreError": "Backup: Journal und aktuelle Positionsmengen stimmen nicht überein. Import abgebrochen."
+    },
+    "H3": {
+      "result": "REPRODUCED",
+      "expectedSingleRepresentationTotalEUR": "200",
+      "actualTotalEUR": "300"
+    },
+    "M1": {
+      "result": "REPRODUCED",
+      "caseDistinctMintKeysCollide": true
+    },
+    "M2": {
+      "result": "REPRODUCED",
+      "undatedAutomaticEndpoint": "observed",
+      "twr": 0.10000000000000009
+    },
+    "M3": {
+      "result": "REPRODUCED",
+      "mismatchedModernDateAccepted": true,
+      "duplicateModernSequenceAccepted": true
+    }
+  },
+  "result": "REPRODUCED"
+}

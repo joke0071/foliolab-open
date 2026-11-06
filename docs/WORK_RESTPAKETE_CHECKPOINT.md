@@ -1,3 +1,19 @@
+## ACTIVE – 414503ed33c6 / Review verifiziert / v290 LOCAL_QUALIFIED – 06.11.2026
+
+Der unabhängige ausschließlich lesende Extra-High-Review ist abgeschlossen. Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner bleibt **414503ed33c6 ACTIVE**. [Vollständiger unveränderter Originalbericht](reviews/V289_INDEPENDENT_REVIEW_2026-11-06.md), SHA256 `57afe93cbf78c78156aab31eb6e4fa03e8dbe4c1531b527f7554ad9513fd88fa`. Der Reviewer führte keine Reproduktionen aus; H1/H2/H3/M1/M2/M3 wurden nun vom Owner einzeln synthetisch auf dem festen v289-Stand reproduziert.
+
+[Begrenzte Korrekturen und Reihenfolge](V289_REVIEW_REMEDIATION_2026-11-06.md), [tatsächliche lokale Qualifikation](release-evidence/review-v289-local-qualification.json). Kandidat `cca58595542e885bf21654095b921f37517e78c2`, exakt rekonstruierter voller Main-basierter Tree `a997d1c142903ddbed71056a91eee263fba9d4c1`, SWv290. Noch **nicht integriert, deployed oder LIVE_ACCEPTED**. Allgemeiner CSV-Schlüssel und Workflowbodies unverändert; keine automatische Zusammenführung vorhandener Wallet-Historien.
+
+1.241/1.241 vollständige Units mit begrenzter Parallelität PASS, zusätzlich neuer verbindlicher Orchestrierungstest PASS; Syntax PASS. Neue UI-/IDB-Negativkette, bestehende native Binding-/Betragskette und FIN-E2E jeweils Chromium/Firefox/WebKit PASS; Quota, post-put-Abbruch, echter Zweittab-CAS, verschlüsselter Fresh-Restore, Offline, fünf Mobilbreiten/Axe. 81 bestehende Originalgruppen mit unverändertem unabhängigen Decimaloracle PASS. Keine vollständige private Historie, Hardwareabnahme oder echte neue private 2:1-Gruppe behauptet. Fehlgeschlagene lokale Erstversuche bleiben nachvollziehbar erhalten; keine abgeschwächten Assertions oder Fristen.
+
+**Private Sicherung Version 52 erfolgreich:** 8.306.062 Bytes, SHA256 `75a8c86e7fce068c828960d63ffec1e9d2fcbed0734bce6159bd2a4391964344`, stabile ID `libfile_42e6c0236610819189e0ba522c74ecfd`. 1.533 Manifestdateien am tatsächlichen Archiv geprüft; sämtliche 1.439 V51-Dateien bytegleich erhalten. Neuer Einstieg `delta-414503ed33c6/v289-review-integrity/STATE.json`. Alle Originale und älteren Belege erhalten; keine neuen Browserbilder/ZIPs archiviert.
+
+Frisch geprüft: Main weiterhin `652e80bcb31aec13c85a0457332bdf53cf98a521` / Tree `ee506c874fa9578f1daf3387da24b299bba5103e`, nur historische Drafts #157/#161 offen, keine laufenden/wartenden Actions, kein konkurrierender Owner/WIP erkennbar. **v289 bleibt LIVE_ACCEPTED, keine erneute Abnahme.** Nächster Schritt: eingefrorenen Korrekturkandidaten einmal regulär als Ready-PR qualifizieren und geschützt integrieren; erst vollständige tatsächliche v290-Produktion abnehmen. Keine CI-Duplikate, Retries oder Abbrüche.
+
+Danach begrenzter UI-REFRESH01-Release #300 mit Dashboard, Navigation, kompakten belegten Kennzahlen und bestehendem Prüfbereich. **3:1 EUR zurückgestellt.** Alle N:M-/FX-/Referenz-/Wallet-/Stakingreste, UI300 samt Nachträgen, QUALITY298, CI229, Android und alle übrigen Folgeaufträge sowie EFF01/HND01-/Finanz-/Journal-/Identitäts-/CAS-/Backup-/Restoreverträge erhalten. GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / v289 LIVE_ACCEPTED / REVIEW_CHECKPOINT_READY – 06.11.2026
 
 **Sicherer Checkpoint nach vollständiger v289-Abnahme erreicht.** Alleiniger Entwicklungs-, QA-, Integrations- und Releaseowner bleibt **414503ed33c6 ACTIVE**; keine STOPPED-/HND01-Abgabe und kein paralleler Produktstrang. Der vorgesehene unabhängige Extra-High-Architektur- und Finanzreview ist ausschließlich lesend vorbereitet und wurde noch nicht durchgeführt. [Fester Reviewauftrag](REVIEW_v289_2026-11-06.md).
