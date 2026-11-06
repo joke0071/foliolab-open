@@ -1,3 +1,13 @@
+## ACTIVE – 414503ed33c6 / v289 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
+
+Main `652e80bcb31aec13c85a0457332bdf53cf98a521` / Tree `ee506c874fa9578f1daf3387da24b299bba5103e` unverändert. Bestehender Mainlauf42191012639 Versuch1:1227Units/0Fehler/0Skips,Chromium/alle3Cross-ShardsSUCCESS;Deployjob127812493407SUCCESS.7tatsächlicheMainZIPs API-/Uploadlog-/lokaleSHA256-/Bytes-/CRCPASS,165JSONs ohneFehlerflags,1866PNGsdekodiert. Pages-Artefakt13491221421 enthält150exakteMainGitblobs.151unabhängigeHTTPS-URL-PrüfungenmitreguläremTLS/ohneZertifikatsbypass/SWv289PASS.
+
+Livejob127812651065IN_PROGRESS:ChromiumproduktivSUCCESS,Firefox/WebKitlaufen. [Beleg](release-evidence/v289-pr306-live-acceptance.json) bleibt ausdrücklichDEPLOYED/LIVE_ACCEPTANCE_PENDING. KEINv289LIVE_ACCEPTEDvorSuiteabschlussundtatsächlicherArtefakt-/Bildqualifikation. LokaleZusatzbrowserwegenHostproxy-/Zertifikat-/SW-Transportnichtqualifiziert,keinenProduktionsPASSdarausableiten;Originalfehlererhalten. KeineCI/Retry/Abbruch/Produkt-/Assertion-/Frist-/Workflowänderung. v288nichtwiederabgenommen.
+
+[VorbereiteterfestgebundenernurlesenderReview](REVIEW_v289_2026-11-06.md),alleinigerOwnerbleibt414503ed33c6ACTIVE. [UH05-Fortsetzungsdiagnose](UH05_NEXT_AFTER_v289_2026-11-06.md):18zusätzliche3:1/4:1/3:2/2:3-/FX-/QuellgrenzenreinlesendPASS,keineneueImportfähigkeit;6unabhängigeDecimalillustrationenausdrücklichkeineImplementierungsabnahme. Produktweiter eingefroren. Neue2:1Nachweisesynthetisch/keinOriginalfall,81bisherigeOriginalgruppenbelegeunverändert.PrivateV50alle1115Manifestdateienbytegleich. UI300samt10Nachträgen/QUALITY298/CI229frischabgeglichen,Android/Folgeaufträge/alleSchutzverträgeerhalten. GitHubnurPlugin/CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 414503ed33c6 / reguläre HND01-Übernahme / v289 RELEASE_PENDING – 06.11.2026
 
 Alleinige Entwicklungs-, QA-, Integrations- und Releaseverantwortung nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von bd0f0f98ad61 und Nutzerauftrag übernommen. Übergabe vollständig und neuesten Checkpoint gelesen. Frisch: Main `652e80bcb31aec13c85a0457332bdf53cf98a521`, Tree `ee506c874fa9578f1daf3387da24b299bba5103e`; PR306 MERGED, keine Reviews, nur historische Drafts157/161 offen. Einziger laufender Actionlauf42191012639 Versuch1, keine wartenden Läufe; kein neuer Produkt-WIP erkennbar. Private Sicherung V50 unabhängig:6690146Bytes, SHA256b9f9c6e51e174529ffef1f9dc197b1884126884b2ca617e82f0293684723d599, alle1115Manifestdateien PASS.
