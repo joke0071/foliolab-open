@@ -1,0 +1,325 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "accepted": true,
+  "owner": "0bfa85b5b416",
+  "date": "2026-11-06",
+  "version": "v292",
+  "main": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+  "tree": "129c9cac1391f7a306087395c6fc42a01e8d0d4b",
+  "featurePR": 309,
+  "budgetPR": 310,
+  "diagnosticsPR": 311,
+  "mainRun": 42288193893,
+  "attempt": 1,
+  "liveJob": 128146022885,
+  "units": {
+    "tests": 1258,
+    "pass": 1258,
+    "failures": 0,
+    "skips": 0
+  },
+  "checks": "Required full main/cross-engine/deploy/actual production checks SUCCESS; FAST correctly skipped",
+  "artifacts": [
+    {
+      "id": 13538937139,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-2",
+      "bytes": 11605387,
+      "sha256": "8ad2ea6b4ac56c1f024441472af5bcfc361e88c2b63f65175b3382eb80e5fd8c",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13538833712,
+      "name": "dialog-visual-reference",
+      "bytes": 934041,
+      "sha256": "7d7281ffb6d83e7232abbf008b4671c58a8cc7ae5cea56fd83fe9149f70d7aae",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13538768946,
+      "name": "release-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+      "bytes": 61924925,
+      "sha256": "92ddca54a57eb6ad08096ac6cd485028e59402fa0520746a78e69b3fcdaadbe5",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 742,
+      "jsonReports": 82,
+      "pngsDecoded": 657,
+      "failureFlags": []
+    },
+    {
+      "id": 13538274219,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-1",
+      "bytes": 58287007,
+      "sha256": "62c11b238a678bd3ebce64cb919f0f5b6a957aaccc02f0f169e03d66af65cab6",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13538192660,
+      "name": "ci-stage-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+      "bytes": 353,
+      "sha256": "da4973fc5c493b7787cb479aac3f0ebfc72e7e53af4c202b2b0a20e2edf67aa7",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13539732664,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-3",
+      "bytes": 63292423,
+      "sha256": "1d973416bed2972b68a6b6a2d9f6647687459815e4e67e6f884830d77b82da69",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 774,
+      "jsonReports": 81,
+      "pngsDecoded": 692,
+      "failureFlags": []
+    },
+    {
+      "id": 13539692892,
+      "name": "github-pages",
+      "bytes": 555755,
+      "sha256": "944b82f3b52a1503d58f0c57086e8083796c517f7ee07b117591213a60c57b79",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13542356531,
+      "name": "production-live-acceptance-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+      "bytes": 126764301,
+      "sha256": "4af7fafb947160271f7f8887676c610e32893aaaedabcf75b70d37498c8f0cc0",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1437,
+      "jsonReports": 139,
+      "pngsDecoded": 1259,
+      "failureFlags": []
+    }
+  ],
+  "artifactSummary": {
+    "ZIPs": 8,
+    "JSON": 335,
+    "decodedPNGs": 3176,
+    "failureFlags": []
+  },
+  "identity": {
+    "pagesArtifact": 13539692892,
+    "exactExpectedPagesAssets": 151,
+    "allMainGitBlobsMatch": true,
+    "ordinaryTLSAssets": 151,
+    "rootIndexMatch": true,
+    "strictProductionHTTPSAssets": 152,
+    "actuallyLoadedAssets": 139,
+    "SW": "foliolab-open-v292",
+    "allShippedAssetsUnchangedByPR310And311": true
+  },
+  "production": {
+    "result": "PASS",
+    "main": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "strictTLSAssetMatches": 152,
+    "loadedAssets": 139,
+    "coreAssetHashesMatchIndependentOrdinaryTLS": true,
+    "productionCoverage": {
+      "finance": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "recovery": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "ui": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "transfers": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ]
+    },
+    "threeFill": [
+      {
+        "engine": "chromium",
+        "dialect": "depot12/account10",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "chromium",
+        "dialect": "depot13/account8",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "dialect": "depot12/account10",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "dialect": "depot13/account8",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "dialect": "depot12/account10",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "dialect": "depot13/account8",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "three executions and one cash document, both file orders",
+          "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      }
+    ],
+    "boundedLogImagesMatchActualZIP": [
+      {
+        "id": "c5-positions",
+        "path": "artifacts/gates/ui-positions-390.png",
+        "bytes": 86366,
+        "sha256": "87b80a3454228e14120a3444e39d9baae1e515fd5ac3f0aad7fba37327a8af81",
+        "release": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36"
+      },
+      {
+        "id": "c5-bookings",
+        "path": "artifacts/gates/c5-bookings-390.png",
+        "bytes": 36706,
+        "sha256": "f738cb91b81b03a4cbbbcf7f7e08af6d00b283032042fc58b7420b0f7495ed75",
+        "release": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36"
+      },
+      {
+        "id": "c5-connections",
+        "path": "artifacts/gates/c5-connections-390.png",
+        "bytes": 127541,
+        "sha256": "235d76cf8ed833503467b9cb8eda8dd2d56c3e6cbc042be369f9925fd289eabb",
+        "release": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36"
+      },
+      {
+        "id": "c5-connections-viewport",
+        "path": "artifacts/gates/c5-connections-viewport-390.png",
+        "bytes": 52493,
+        "sha256": "5306735d7351b463a84a427af3d0ac3595b73b27a1c6feca28acef84eae9eea9",
+        "release": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36"
+      }
+    ],
+    "rootCause": "Earlier initial navigation cause unknown; no recurrence/no retry in this complete run",
+    "scopeLimits": [
+      "Synthetic isolated browser profiles; no hardware/native Safari/OAuth claim",
+      "Generic FIN-E2E FX regression does not prove native Flatex N:M FX support"
+    ]
+  },
+  "visualReview": "All six actual HTTPS three-fill engine/dialect screenshots plus four bounded C5 images inspected. All four bounded image bytes/SHA/size/release labels independently match actual ZIP and emitted log chunks.",
+  "startupHistory": {
+    "firstFailureJob": 128049757017,
+    "old35MinuteTimeoutJob": 128054318221,
+    "secondFirstNavigationFailureJob": 128111377213,
+    "allOriginalFailuresRetained": true,
+    "cause": "UNKNOWN; no startup-fix claim",
+    "currentCompleteLiveJob": 128146022885,
+    "currentRunRetryCount": 0,
+    "currentInitialNavigation": "PASS within unchanged core gate",
+    "followup": "Keep recurring-startup diagnosis in QUALITY-TRUST01; do not infer a solved cause from this PASS"
+  },
+  "protections": {
+    "originalAssertionsCommandsEnginesIndividualDeadlinesPreserved": true,
+    "originalCoreReconstructionSHA256": "f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3",
+    "manualWorkflowOrJobReruns": 0,
+    "manualCancellations": 0,
+    "duplicateCI": false,
+    "checkpointBranchMerged": false,
+    "unsavedProductWIP": false,
+    "nativeBranchProtectionClaim": false
+  },
+  "previousAccepted": "v291; not reaccepted",
+  "otherOrders": "UH05 remaining N:M/FX/historical references/wallet/staking, UI300 all additions, QUALITY298, CI229, Android and all protections remain active/partial as previously scoped",
+  "lastConfirmedPrivateBackup": {
+    "version": 71,
+    "manifestFiles": 4627,
+    "allEarlierOriginalsPreserved": true
+  },
+  "next": "Continue UH05 read-only remaining-boundary/source-evidence groundwork on exact accepted main, retain independent Decimal oracles, then prepare a safe early HND01 rotation."
+}
