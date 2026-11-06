@@ -1,3 +1,13 @@
+## ACTIVE – 0bfa85b5b416 / PR311 eingefroren / v292 LIVE_FAILED, NICHT LIVE_ACCEPTED – 06.11.2026
+
+Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. PR310gemergt, volleIntegration/Main/Deployment/Pages151Gitblobs/TLS151Assets+Root/SWv292 qualifiziert; ursprünglicherLivejob128111377213 nach152HTTPSAssethashes erneutam erstenNav30s gescheitert. KeineFinanzabnahme/keinGesamtbudgettimeout/keinRetry. [Originalfehler](release-evidence/v292-pr310-live-failure.json).
+
+**Einziger Kandidat [PR311](https://github.com/joke0071/foliolab-open/pull/311)**, Branch `test/v292-live-startup-evidence-0bfa85b5b416`, Head `98ebf55448d1c4059c0817d6afdaad5a369f1390`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`; einCommit/exakt4Testdateien. Nurbegrenzte reinlesendeStart-/Nav-/Request-Fehlerdiagnostik, **keineUrsachenbehebungbehauptet**. KeineAppassets/SW/Workflowbefehle/Engines/Assertions/Einzelfristen/Finanz-/Speicherlogik geändert. Bytevertragrekonstruiert vollständigenursprünglichenCoretest. Lokal32Vertragstests/0Fehler/Skips PASS; kontrollierteChromium141Modul-/Speicherwartefälle getrennt/ursprünglicherTimeout/Ready-Nachlauf/exakteIDBNichtmutation PASS. OriginalerundinstrumentiertervollständigerCoretest aufechtemHTTPS PASS:6Gruppen/18Axe/152Assetmatches; lokalerProxyzertifikatsausnahme getrenntvomgewöhnlichenTLS. **CI-Ursache weiterhinUNKNOWN**, lokaleProben sindkeinCI-Ursachenbeweis. [Kandidatenbeleg](release-evidence/v292-pr311-startup-evidence-candidate.json).
+
+**Bestehende automatische Integration42284292735 Versuch1 undWallet42284292730 IN_PROGRESS**, Kandidat eingefroren. Vollqualifizieren, dannfrischerHead/Base/Tree/Review/OwnerGuard undkontrollierterMerge; ausschließlichautomatischenMain-/vollständigenProduktionslaufverwenden. WiederkehrendenStartfehlerjetztmit tatsächlichenneuenDiagnosedaten auswerten. KeinblinderRetry/keineCI-Duplikate/Abbrüche, keineFolgeimplementierung. **v292 NICHT LIVE_ACCEPTED**, v291nicht erneutabnehmen. AlleSchutzverträge/offenenProduktaufträge erhalten; alleinigerOwner0bfa85b5b416ACTIVE; CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / LIVE_FAILED, NICHT LIVE_ACCEPTED – 06.11.2026
 
 PR310/Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. Mainlauf42277596230 Versuch1:1252Tests/0Fehler/Skips, sämtliche3Cross-Enginejobs/Deployment SUCCESS;7ZIPs/196JSON/1917PNGs/API-/Upload-/lokalerHash/Größe/CRC und151PagesGitblobs qualifiziert. GewöhnlichesTLS151Assets+Root nachDeployment PASS; SWv292 unverändert.
