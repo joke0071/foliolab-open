@@ -1,0 +1,48 @@
+{
+  "status": "FROZEN / INTEGRATION_PENDING / v292_NOT_LIVE_ACCEPTED",
+  "owner": "0bfa85b5b416",
+  "pr": 311,
+  "branch": "test/v292-live-startup-evidence-0bfa85b5b416",
+  "head": "98ebf55448d1c4059c0817d6afdaad5a369f1390",
+  "tree": "129c9cac1391f7a306087395c6fc42a01e8d0d4b",
+  "base": "33995738aefd440f5d9ac573b260be4b9d5eadbe",
+  "files": [
+    "tests/browser-live-acceptance.mjs",
+    "tests/live-startup-diagnostics.mjs",
+    "tests/live-startup-diagnostics.test.mjs",
+    "tests/browser-live-startup-diagnostics.mjs"
+  ],
+  "scope": "Only bounded read-only failure evidence, no startup-fix claim",
+  "checks": {
+    "targetedTests": 32,
+    "failures": 0,
+    "skips": 0,
+    "originalCoreBytesReconstructedSHA256": "f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3",
+    "controlledNegatives": [
+      "pending existing portfolio write lock; original timeout retained; later ready after release; exact IDB nonmutation",
+      "held atomic-storage module response, distinguished from storage wait"
+    ],
+    "engine": "Chromium141.0.7390.37",
+    "playwright": "1.56.1",
+    "axe": "4.10.3",
+    "originalAndInstrumentedHTTPSCore": {
+      "result": "PASS",
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 152,
+      "proxyCertificateException": true,
+      "ordinaryTLS": "separate 151 assets plus root PASS"
+    }
+  },
+  "preserved": "All workflow commands, app assets, SWv292, assertions, deadlines, engines, finance/storage/backup logic unchanged",
+  "originalFailure": {
+    "run": 42277596230,
+    "job": 128111377213,
+    "artifact": 13534394580,
+    "retained": true,
+    "retry": false
+  },
+  "rootCause": "UNKNOWN; controlled negatives/local PASS are not CI-cause proof",
+  "next": "Qualify existing PR311 full integration, then exact-head guarded merge only if complete; qualify automatic main and actual full production. Preserve actual failure diagnostics if startup recurs.",
+  "otherOrders": "All UH05/UI300/QUALITY298/CI229/Android/protection orders preserved"
+}
