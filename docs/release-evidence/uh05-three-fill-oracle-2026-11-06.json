@@ -1,0 +1,1300 @@
+{
+  "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+  "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+  "scope": "SYNTHETIC future expected values, not implemented capability or production/private-original acceptance",
+  "oracle": "Python Decimal precision80; no product arithmetic; every journal independently balanced",
+  "cases": [
+    {
+      "name": "unequal-integer-buy",
+      "direction": "buy",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1",
+        "2",
+        "3"
+      ],
+      "prices": [
+        "10",
+        "10",
+        "10"
+      ],
+      "quantityExact": "6",
+      "grossExact": "60",
+      "cashExact": "-63",
+      "differenceExact": "-3",
+      "end": {
+        "asset": "26",
+        "cash": "937"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "1",
+              "amountBookEURExact": "10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-10"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "2",
+          "unitPriceExact": "10",
+          "grossExact": "20",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "2",
+              "amountBookEURExact": "20"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-20"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "3",
+          "unitPriceExact": "10",
+          "grossExact": "30",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "3",
+              "amountBookEURExact": "30"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-30"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "-63",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "-63",
+              "amountBookEURExact": "-63"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "60"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "unequal-integer-sell",
+      "direction": "sell",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1",
+        "2",
+        "3"
+      ],
+      "prices": [
+        "10",
+        "10",
+        "10"
+      ],
+      "quantityExact": "6",
+      "grossExact": "60",
+      "cashExact": "57",
+      "differenceExact": "-3",
+      "end": {
+        "asset": "14",
+        "cash": "1057"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-1",
+              "amountBookEURExact": "-10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "10"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "2",
+          "unitPriceExact": "10",
+          "grossExact": "20",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-2",
+              "amountBookEURExact": "-20"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "20"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "3",
+          "unitPriceExact": "10",
+          "grossExact": "30",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-3",
+              "amountBookEURExact": "-30"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "30"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "57",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "57",
+              "amountBookEURExact": "57"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-60"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "equal-distinct-identities-buy",
+      "direction": "buy",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1",
+        "1",
+        "1"
+      ],
+      "prices": [
+        "10",
+        "10",
+        "10"
+      ],
+      "quantityExact": "3",
+      "grossExact": "30",
+      "cashExact": "-32",
+      "differenceExact": "-2",
+      "end": {
+        "asset": "23",
+        "cash": "968"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "1",
+              "amountBookEURExact": "10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-10"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "1",
+              "amountBookEURExact": "10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-10"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "1",
+              "amountBookEURExact": "10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-10"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "-32",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "-32",
+              "amountBookEURExact": "-32"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "30"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "equal-distinct-identities-sell",
+      "direction": "sell",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1",
+        "1",
+        "1"
+      ],
+      "prices": [
+        "10",
+        "10",
+        "10"
+      ],
+      "quantityExact": "3",
+      "grossExact": "30",
+      "cashExact": "28",
+      "differenceExact": "-2",
+      "end": {
+        "asset": "17",
+        "cash": "1028"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-1",
+              "amountBookEURExact": "-10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "10"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-1",
+              "amountBookEURExact": "-10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "10"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "1",
+          "unitPriceExact": "10",
+          "grossExact": "10",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-1",
+              "amountBookEURExact": "-10"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "10"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "28",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "28",
+              "amountBookEURExact": "28"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-30"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fractional-unequal-prices-buy",
+      "direction": "buy",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "0.125",
+        "0.25",
+        "0.5"
+      ],
+      "prices": [
+        "8",
+        "12",
+        "4"
+      ],
+      "quantityExact": "0.875",
+      "grossExact": "6",
+      "cashExact": "-6.02",
+      "differenceExact": "-0.02",
+      "end": {
+        "asset": "20.875",
+        "cash": "993.98"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "0.125",
+          "unitPriceExact": "8",
+          "grossExact": "1",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.125",
+              "amountBookEURExact": "1"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-1"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "0.25",
+          "unitPriceExact": "12",
+          "grossExact": "3",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.25",
+              "amountBookEURExact": "3"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-3"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.5",
+          "unitPriceExact": "4",
+          "grossExact": "2",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.5",
+              "amountBookEURExact": "2"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-2"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "-6.02",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "-6.02",
+              "amountBookEURExact": "-6.02"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "6"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "0.02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "fractional-unequal-prices-sell",
+      "direction": "sell",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "0.125",
+        "0.25",
+        "0.5"
+      ],
+      "prices": [
+        "8",
+        "12",
+        "4"
+      ],
+      "quantityExact": "0.875",
+      "grossExact": "6",
+      "cashExact": "5.98",
+      "differenceExact": "-0.02",
+      "end": {
+        "asset": "19.125",
+        "cash": "1005.98"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "0.125",
+          "unitPriceExact": "8",
+          "grossExact": "1",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.125",
+              "amountBookEURExact": "-1"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "1"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "0.25",
+          "unitPriceExact": "12",
+          "grossExact": "3",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.25",
+              "amountBookEURExact": "-3"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "3"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.5",
+          "unitPriceExact": "4",
+          "grossExact": "2",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.5",
+              "amountBookEURExact": "-2"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "2"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "5.98",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "5.98",
+              "amountBookEURExact": "5.98"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-6"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "0.02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zero-group-difference-buy",
+      "direction": "buy",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1.25",
+        "2.5",
+        "0.25"
+      ],
+      "prices": [
+        "4",
+        "8",
+        "20"
+      ],
+      "quantityExact": "4",
+      "grossExact": "30",
+      "cashExact": "-30",
+      "differenceExact": "0",
+      "end": {
+        "asset": "24",
+        "cash": "970"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1.25",
+          "unitPriceExact": "4",
+          "grossExact": "5",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "1.25",
+              "amountBookEURExact": "5"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-5"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "2.5",
+          "unitPriceExact": "8",
+          "grossExact": "20",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "2.5",
+              "amountBookEURExact": "20"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-20"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.25",
+          "unitPriceExact": "20",
+          "grossExact": "5",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.25",
+              "amountBookEURExact": "5"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-5"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "-30",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "-30",
+              "amountBookEURExact": "-30"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "30"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "zero-group-difference-sell",
+      "direction": "sell",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "1.25",
+        "2.5",
+        "0.25"
+      ],
+      "prices": [
+        "4",
+        "8",
+        "20"
+      ],
+      "quantityExact": "4",
+      "grossExact": "30",
+      "cashExact": "30",
+      "differenceExact": "0",
+      "end": {
+        "asset": "16",
+        "cash": "1030"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "1.25",
+          "unitPriceExact": "4",
+          "grossExact": "5",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-1.25",
+              "amountBookEURExact": "-5"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "5"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "2.5",
+          "unitPriceExact": "8",
+          "grossExact": "20",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-2.5",
+              "amountBookEURExact": "-20"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "20"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.25",
+          "unitPriceExact": "20",
+          "grossExact": "5",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.25",
+              "amountBookEURExact": "-5"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "5"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "30",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "30",
+              "amountBookEURExact": "30"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-30"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "positive-group-difference-buy",
+      "direction": "buy",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "0.125",
+        "0.25",
+        "0.5"
+      ],
+      "prices": [
+        "8",
+        "12",
+        "4"
+      ],
+      "quantityExact": "0.875",
+      "grossExact": "6",
+      "cashExact": "-5.98",
+      "differenceExact": "0.02",
+      "end": {
+        "asset": "20.875",
+        "cash": "994.02"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "0.125",
+          "unitPriceExact": "8",
+          "grossExact": "1",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.125",
+              "amountBookEURExact": "1"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-1"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "0.25",
+          "unitPriceExact": "12",
+          "grossExact": "3",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.25",
+              "amountBookEURExact": "3"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-3"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.5",
+          "unitPriceExact": "4",
+          "grossExact": "2",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "0.5",
+              "amountBookEURExact": "2"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-2"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "-5.98",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "-5.98",
+              "amountBookEURExact": "-5.98"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "6"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-0.02"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "positive-group-difference-sell",
+      "direction": "sell",
+      "opening": {
+        "asset": "20",
+        "cash": "1000",
+        "asOf": "1999-01-01"
+      },
+      "date": "1999-01-04",
+      "valueDate": "1999-01-06",
+      "quantities": [
+        "0.125",
+        "0.25",
+        "0.5"
+      ],
+      "prices": [
+        "8",
+        "12",
+        "4"
+      ],
+      "quantityExact": "0.875",
+      "grossExact": "6",
+      "cashExact": "6.02",
+      "differenceExact": "0.02",
+      "end": {
+        "asset": "19.125",
+        "cash": "1006.02"
+      },
+      "expectedBookings": 4,
+      "expectedJournals": 4,
+      "expectedPostings": 9,
+      "expectedExternalFlows": 0,
+      "expectedCASRevisions": 1,
+      "members": [
+        {
+          "role": "fill-0",
+          "bankIdentity": "SYN-THREE-FILL-0",
+          "quantityExact": "0.125",
+          "unitPriceExact": "8",
+          "grossExact": "1",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.125",
+              "amountBookEURExact": "-1"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "1"
+            }
+          ]
+        },
+        {
+          "role": "fill-1",
+          "bankIdentity": "SYN-THREE-FILL-1",
+          "quantityExact": "0.25",
+          "unitPriceExact": "12",
+          "grossExact": "3",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.25",
+              "amountBookEURExact": "-3"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "3"
+            }
+          ]
+        },
+        {
+          "role": "fill-2",
+          "bankIdentity": "SYN-THREE-FILL-2",
+          "quantityExact": "0.5",
+          "unitPriceExact": "4",
+          "grossExact": "2",
+          "cashAllocated": null,
+          "feeEUR": null,
+          "taxEUR": null,
+          "costBasisEUR": null,
+          "postings": [
+            {
+              "role": "asset",
+              "quantityDeltaExact": "-0.5",
+              "amountBookEURExact": "-2"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "2"
+            }
+          ]
+        },
+        {
+          "role": "cash",
+          "bankIdentity": "SYN-THREE-CASH",
+          "cashExact": "6.02",
+          "feeEUR": null,
+          "taxEUR": null,
+          "postings": [
+            {
+              "role": "cash",
+              "quantityDeltaExact": "6.02",
+              "amountBookEURExact": "6.02"
+            },
+            {
+              "role": "clearing",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-6"
+            },
+            {
+              "role": "unresolved-net-amount",
+              "quantityDeltaExact": null,
+              "amountBookEURExact": "-0.02"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "result": "ORACLE_SELF_CHECK_PASS / IMPLEMENTATION_PENDING"
+}
+

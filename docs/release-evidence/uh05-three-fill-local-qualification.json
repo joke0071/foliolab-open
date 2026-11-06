@@ -1,0 +1,141 @@
+{
+  "status": "LOCAL_QUALIFIED / INTEGRATION_PENDING",
+  "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+  "mainTree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+  "owner": "b1b383f4f228",
+  "version": "v292",
+  "unitTests": 1252,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "syntax": "PASS",
+  "independentDecimalCases": 10,
+  "coreOracleCombinations": 40,
+  "originalGroups": 81,
+  "actualOldV291RejectsV3": true,
+  "unchangedV2ProofAndIdComparison": "PASS",
+  "browserReports": [
+    {
+      "engine": "chromium",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "dialect": "depot13/account8",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot13/account8",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot12/account10",
+      "version": "26.5",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot13/account8",
+      "version": "26.5",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "one CAS revision, independent quantities/cash/fees, no invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "browserIDBOracleCasesPerEngineAndDialect": 10,
+  "actualBrowserUI": [
+    "two dialects per engine",
+    "one CAS revision",
+    "four bookings/four journals/nine postings/one cash",
+    "quota and post-put old raw/revision preserved",
+    "real second-tab CAS conflict",
+    "approval invalidation",
+    "session Undo/reversed recommit/reimport",
+    "encrypted v5 FreshRestore",
+    "offline reload",
+    "five widths and Axe"
+  ],
+  "limits": [
+    "synthetic three-fill; no private three-fill original",
+    "local Chromium141/Firefox157/WebKit26.5; Playwright1.62.1",
+    "no hardware or whole-history claim",
+    "no integration/release/production acceptance yet"
+  ],
+  "sourceSHA256": {
+    "src/flatex-net-settlement.js": "d7ea3b615ed048d8c76b3de22207ecdb24505941387e443935f356400b615835",
+    "src/shared-flatex-ui.js": "af0743d8a4b5ed8d99fbf253962a58d8783e9acec9a25be8973c05b69aa23e39",
+    "src/shared-import.js": "8234863fb1564344b31ca1f3d455a92973da2e00a8878bf4ba39fb646f041f6a",
+    "sw.js": "b0c485a28e0c98537b33e6f75908338764894627faea99eae3115a2471065082",
+    "tests/browser-flatex-net-settlement.mjs": "13ee2f8f114471cddd0fba322f11a48608a11559527b4279b683023528739803",
+    "tests/browser-flatex-three-fill.mjs": "708a4df2f6a96a15bd430dcf3a4d2f63deba3987ef36b617978a558ead050b8f",
+    "tests/flatex-three-fill-fixture.mjs": "a29a1e33196f79086dd7c808052632fe8695e6610258526795a773661ee2daf1",
+    "tests/flatex-three-fill-oracle.mjs": "65feddc2338d7452d1a2283f3210cb61d3a86e16eddb21d6753c5addd280b0c8",
+    "tests/flatex-three-fill.test.mjs": "0e4a5c9bcbef5556a6e879e0aa46b00fe075c3d2a2a286f2d092e926b583eb1a",
+    "docs/release-evidence/uh05-three-fill-oracle-2026-11-06.json": "783d7dc7b74b59a5cc0c0be5e3f7f7f96b60f9c59f1039189a077c9925891e32",
+    "docs/repros/UH05_THREE_FILL_ORACLE_2026-11-06.py": "15bebd96cbed71b99ff260f38d8ee90002fef80668fc40da518fa3891784b857",
+    "docs/UH05_THREE_FILL_IMPLEMENTATION_2026-11-06.md": "cb582129fa2d7c7ad06eb1819b008b1b24ca965295978e2fab37eda5d90298ef"
+  }
+}
