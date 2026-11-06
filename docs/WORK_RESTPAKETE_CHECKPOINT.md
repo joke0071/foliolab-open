@@ -1,3 +1,13 @@
+## ACTIVE – 414503ed33c6 / PR307 MERGE_HOLD / zusätzlicher H3-Negativfall – 06.11.2026
+
+**PR307 derzeit nicht mergen**, auch bei erfolgreichem laufendem Integrationslauf `42213861242` auf Head `f761a8ccaf4fde0d5cc63e211fde2a76bc51c212`. Bei weiterer gezielter Identitätsanalyse wurde ein zusätzlicher H3-Fall tatsächlich synthetisch reproduziert: Eine native EVM-Wallet mit derselben Adresse erhält durch ein beliebiges, vom Saldenleser ignoriertes `contract`-Metadatum einen anderen Holdingkey und kann erneut angerechnet werden (synthetisch 100→200 EUR nur für die Wallets; keine privaten Originalwerte). Gewünschter Negativtest schlug auf dem aktuellen Kandidaten fehl.
+
+Eng begrenzte lokale Korrektur in `src/wallet-identity.js`: Contract wird nur für die bestehenden Token-/Validator-/Stake-Leser als Identitätsbestandteil verwendet; native Leser ignorieren dieses wirkungslose Zusatzfeld. Keine gespeicherten Walletfelder/IDs/Journale oder Historien automatisch umschreiben oder zusammenführen. Neuer Test verlangt Sperre des Neuzugangs, identische native Keys trotz wirkungslosem Feld sowie unveränderte Bestände/Journale/Eröffnungen und sichtbare Legacydubletten. Alle 16 gezielten Reviewtests lokal PASS. Vollständige Units und ergänzte tatsächliche Browser-/IDB-Kette laufen lokal; noch kein neuer Remote-Head oder Abnahmeclaim.
+
+Bestehenden CI-Versuch unverändert zu Ende qualifizieren, keine Abbrüche/Retry/Duplikate. Danach erst den vollständig nachgewiesenen kleinen H3-Nachtrag sichern und als neuen PR307-Head regulär qualifizieren. Private bestätigte Sicherung bleibt V53; sie enthält den eingefrorenen bisherigen Head und alle Originale. Neuer WIP ist ausdrücklich noch lokal und wird vor Veröffentlichung zusätzlich gesichert. Owner **414503ed33c6 bleibt allein ACTIVE**; v289 LIVE_ACCEPTED unverändert. UI300 danach vor 3:1 EUR; alle übrigen Verträge/Aufträge bleiben erhalten. GitHub nur Plugin; Checkpointbranch nie vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / PR307 v290 INTEGRATION_PENDING – 06.11.2026
 
 Alleiniger Owner **414503ed33c6 ACTIVE**. [PR #307](https://github.com/joke0071/foliolab-open/pull/307), eingefrorener Head `f761a8ccaf4fde0d5cc63e211fde2a76bc51c212`, voller Main-basierter Tree `f250d5fbf14f5d556960c70266d4dd78a1068b39`. [Integrationsevidenz](release-evidence/v290-pr307-integration.json).
