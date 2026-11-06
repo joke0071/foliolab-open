@@ -1,0 +1,11 @@
+{
+  "result": "REPRODUCED",
+  "finding": "H3 unused native metadata bypass",
+  "sourceHead": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
+  "walletKeyGitBlob": "18df72e535d175a44218c7fe4eb700359c0657b9",
+  "scope": "Fully synthetic; fixed pre-correction product bytes, no original or release acceptance",
+  "expectedSingleHoldingEUR": "100",
+  "actualTotalEUR": "200",
+  "countedWallets": 2,
+  "detectedGroups": 0
+}
