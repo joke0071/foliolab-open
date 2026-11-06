@@ -1,3 +1,19 @@
+## ACTIVE – 414503ed33c6 / PR307 v290 INTEGRATION_PENDING – 06.11.2026
+
+Alleiniger Owner **414503ed33c6 ACTIVE**. [PR #307](https://github.com/joke0071/foliolab-open/pull/307), eingefrorener Head `f761a8ccaf4fde0d5cc63e211fde2a76bc51c212`, voller Main-basierter Tree `f250d5fbf14f5d556960c70266d4dd78a1068b39`. [Integrationsevidenz](release-evidence/v290-pr307-integration.json).
+
+Erster regulärer Integrationslauf **42210661072 Versuch 1 completed/failure**, vollständig diagnostiziert und erhalten: 1.242/1.242 Units, 0 Fehler/Skips; neue Integritätskette in Chromium/Firefox/WebKit PASS; Cross-Shards 2/3 SUCCESS. Chromium und Shard 1 stoppten am selben alten UI07-Setup: unabhängige synthetische manuelle Modelle starteten jeweils mit Journalsequenz 1. Der neue Leser wies die Dubletten wie vorgesehen ab. Sechs tatsächliche ZIPs mit API-/Uploadlog-/lokaler SHA256, Bytes und CRC geprüft; 166 JSONs ohne Fehlerflags, 1.302 PNGs dekodiert. Das macht den fehlgeschlagenen Gesamtlauf ausdrücklich nicht SUCCESS.
+
+Nur Testdaten und Dokumentation nachgebessert: UI07 erhält eine eindeutige globale Reihenfolge ausschließlich seiner ungeschützten synthetischen manuellen Journale; beide Benchmarkbauer bekommen unterschiedliche synthetische Walletadressen bei gleichen Anzahlen/Beständen. UI07 lokal alle drei Engines jeweils 66 Scans/sechs Breiten/200%-Zoom/Axe/Fokus/exakte Nichtmutation PASS; tatsächliche Benchmarkbauer mit vorgesehenen 0/3.000 Buchungen und safeImport PASS. Fachliche Produktbytes und Workflowbodies seit erstem Kandidaten unverändert. Zusätzliche lokale Host-/CWD-Versuche bleiben unqualifiziert dokumentiert. Kein abgeschwächter Gate oder Frist, kein Workflowabbruch, Retry oder manueller Dispatch.
+
+Neuen Head erst nach Abschluss aller Jobs des ersten Versuchs veröffentlicht. Aktueller regulärer Integrationslauf **42213861242 Versuch 1**, Walletchecks **42213861199**, informativer öffentlicher Audit **42213861326**. Diese vorhandenen automatischen Läufe qualifizieren; keine Duplizierung. Noch kein Merge/Deployment/v290 LIVE_ACCEPTED.
+
+**Private Sicherung Version 53 erfolgreich**, stabile ID `libfile_42e6c0236610819189e0ba522c74ecfd`: 9.056.463 Bytes, SHA256 `f660719aea9bec401fb27142c38fcad119499f1b6f49f97e86bbe3db356dd973`. Alle 1.834 Manifestdateien am tatsächlichen Archiv geprüft; alle 1.533 V52-Dateien bytegleich erhalten. Einstieg `delta-414503ed33c6/v290-fixture-followup/STATE.json`. Alle Originale/alten Belege erhalten; keine neuen Browserbilder/ZIPs archiviert.
+
+Main frisch unverändert `652e80bcb31aec13c85a0457332bdf53cf98a521`, **v289 bleibt LIVE_ACCEPTED und wird nicht wieder abgenommen**. Keine zweite Schreibzuständigkeit. Nach vollständigem Integritätsrelease begrenzter UI300-Schnitt vor 3:1 EUR; alle offenen N:M-/FX-/Referenz-/Wallet-/Stakingfälle, UI300-Nachträge und übrigen Folgeaufträge erhalten. Alle Finanz-, Journal-, Identitäts-, IDB-/CAS-, Backup-/Restore-, PWA-, EFF01-/HND01-Schutzverträge gelten; GitHub nur Plugin, Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / Review verifiziert / v290 LOCAL_QUALIFIED – 06.11.2026
 
 Der unabhängige ausschließlich lesende Extra-High-Review ist abgeschlossen. Alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner bleibt **414503ed33c6 ACTIVE**. [Vollständiger unveränderter Originalbericht](reviews/V289_INDEPENDENT_REVIEW_2026-11-06.md), SHA256 `57afe93cbf78c78156aab31eb6e4fa03e8dbe4c1531b527f7554ad9513fd88fa`. Der Reviewer führte keine Reproduktionen aus; H1/H2/H3/M1/M2/M3 wurden nun vom Owner einzeln synthetisch auf dem festen v289-Stand reproduziert.

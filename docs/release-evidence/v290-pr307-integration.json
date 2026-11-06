@@ -1,0 +1,804 @@
+{
+  "status": "INTEGRATION_PENDING",
+  "owner": "414503ed33c6",
+  "PR": 307,
+  "head": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
+  "tree": "f250d5fbf14f5d556960c70266d4dd78a1068b39",
+  "main": "652e80bcb31aec13c85a0457332bdf53cf98a521",
+  "initialHeadQualification": {
+    "status": "COMPLETED / FAILURE / DIAGNOSED_FIXTURE_ONLY",
+    "run": 42210661072,
+    "attempt": 1,
+    "candidate": "cca58595542e885bf21654095b921f37517e78c2",
+    "testedMerge": "d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
+    "tree": "a997d1c142903ddbed71056a91eee263fba9d4c1",
+    "units": {
+      "tests": 1242,
+      "pass": 1242,
+      "fail": 0,
+      "skip": 0
+    },
+    "firstBrowserIntegrity": "chromium PASS",
+    "knownFailures": [
+      {
+        "job": 127868316492,
+        "cause": "UI07 independent manual model composition duplicates global journal sequence",
+        "fixedLocallyThreeEngines": true
+      },
+      {
+        "job": 127868316585,
+        "cause": "UI07 independent manual model composition duplicates global journal sequence",
+        "fixedLocallyThreeEngines": true
+      }
+    ],
+    "successfulCrossShard": 2,
+    "crossShard3": "SUCCESS",
+    "receipts": [
+      {
+        "id": 13500025288,
+        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-2",
+        "sha256": "4ad6298ebb61c7e3588378a6c582541b759af21282e4be2200b40a504c399f68",
+        "bytes": 12216108,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 17,
+        "pngsDecoded": 74,
+        "failureFlags": [],
+        "reports": [
+          {
+            "path": "alpha-vantage.json",
+            "result": null
+          },
+          {
+            "path": "cash-account-ux.json",
+            "result": null
+          },
+          {
+            "path": "fin-e2e/firefox.json",
+            "result": null
+          },
+          {
+            "path": "fin-e2e/webkit.json",
+            "result": null
+          },
+          {
+            "path": "firefox-position-removal-sw-baseline.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flh03-abce.json",
+            "result": null
+          },
+          {
+            "path": "loading-pwa/firefox.json",
+            "result": "PASS"
+          },
+          {
+            "path": "loading-pwa/webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "pchain-evidence-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "marketstack.json",
+            "result": null
+          },
+          {
+            "path": "plain-backup-limits/firefox.json",
+            "result": null
+          },
+          {
+            "path": "plain-backup-limits/webkit.json",
+            "result": null
+          },
+          {
+            "path": "provider-retirement.json",
+            "result": null
+          },
+          {
+            "path": "pwa-update/report.json",
+            "result": null
+          },
+          {
+            "path": "recovery-limits/report-firefox-webkit.json",
+            "result": null
+          },
+          {
+            "path": "sonic-evidence-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "webkit-position-removal-sw-baseline.json",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "id": 13498924164,
+        "name": "release-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
+        "sha256": "421bca4549bd36d3894a682ef784caa53039b1971aa0707b00c58298f146682d",
+        "bytes": 55447397,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 74,
+        "pngsDecoded": 534,
+        "failureFlags": [],
+        "reports": [
+          {
+            "path": "alpha-vantage.json",
+            "result": null
+          },
+          {
+            "path": "bitpanda-evidence-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "bitpanda-preview/report.json",
+            "result": null
+          },
+          {
+            "path": "blocked-reasons/report.json",
+            "result": null
+          },
+          {
+            "path": "booking-management.json",
+            "result": null
+          },
+          {
+            "path": "cash-account-ux.json",
+            "result": null
+          },
+          {
+            "path": "chart-tooltip/report.json",
+            "result": null
+          },
+          {
+            "path": "chromium-position-removal-sw-baseline.json",
+            "result": "PASS"
+          },
+          {
+            "path": "fin-e2e/chromium.json",
+            "result": null
+          },
+          {
+            "path": "flatex-context/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-amounts-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-binding/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-commit/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-projection-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-identity-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-simulation-ui/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-ui/report.json",
+            "result": null
+          },
+          {
+            "path": "flatex-net-augmentation/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-backfill/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-selection/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-settlement/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-order-links-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-reconciliation/report-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-reconciliation/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flh03-abce.json",
+            "result": null
+          },
+          {
+            "path": "header-status/report.json",
+            "result": null
+          },
+          {
+            "path": "history-worker/chromium-controller.json",
+            "result": "PASS"
+          },
+          {
+            "path": "kraken-ledger/report.json",
+            "result": null
+          },
+          {
+            "path": "kraken-link/chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "loading-pwa/chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "management-parity/report.json",
+            "result": null
+          },
+          {
+            "path": "marketstack.json",
+            "result": null
+          },
+          {
+            "path": "missing-position-value/report.json",
+            "result": null
+          },
+          {
+            "path": "pchain-evidence-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "plain-backup-limits/chromium.json",
+            "result": null
+          },
+          {
+            "path": "position-archive.json",
+            "result": null
+          },
+          {
+            "path": "price-csv-tools/report.json",
+            "result": null
+          },
+          {
+            "path": "provider-retirement.json",
+            "result": null
+          },
+          {
+            "path": "pwa-update/report.json",
+            "result": null
+          },
+          {
+            "path": "readability/report.json",
+            "result": null
+          },
+          {
+            "path": "recovery-limits/report-chromium.json",
+            "result": null
+          },
+          {
+            "path": "reference-management/chromium-sw-baseline.json",
+            "result": "PASS"
+          },
+          {
+            "path": "reference-management/report.json",
+            "result": null
+          },
+          {
+            "path": "reference-removal/report.json",
+            "result": null
+          },
+          {
+            "path": "shared-import/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964753721.json",
+            "result": "PASS"
+          },
+          {
+            "path": "sonic-evidence-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964748219.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964759118.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964764407.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964769403.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964774486.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964779550.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964784507.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964788893.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964813905.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964960792.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/chromium-1793964964896.json",
+            "result": "PASS"
+          },
+          {
+            "path": "two-fill/report-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "ui-alltag10/chromium-real-touch-pan.json",
+            "result": null
+          },
+          {
+            "path": "two-fill/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "ui-alltag10/chromium-real-touch-press.json",
+            "result": null
+          },
+          {
+            "path": "ui-alltag10/long-press.json",
+            "result": null
+          },
+          {
+            "path": "ui-audit-controls/report.json",
+            "result": null
+          },
+          {
+            "path": "ui-quality.json",
+            "result": null
+          },
+          {
+            "path": "ui-textscale/report.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/chromium-320-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/chromium-360-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/chromium-390-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/chromium-412-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/chromium-430-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/report-chromium.json",
+            "result": "PASS"
+          },
+          {
+            "path": "v289-review-integrity/report.json",
+            "result": "PASS"
+          }
+        ]
+      },
+      {
+        "id": 13497279662,
+        "name": "ci-stage-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f",
+        "sha256": "5ada6b1d9026a4cb06f99662ad3f5568a9b524e3bbfb651d1fa41188f470cef9",
+        "bytes": 812,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 1,
+        "pngsDecoded": 0,
+        "failureFlags": [],
+        "reports": [
+          {
+            "path": "plan.json",
+            "result": null
+          }
+        ]
+      },
+      {
+        "id": 13500451824,
+        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-3",
+        "sha256": "c691cf035a0b6055ecef10905f0aef40f849117e1dde42d7654b3a9a1ae44d2f",
+        "bytes": 63135386,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 74,
+        "pngsDecoded": 668,
+        "failureFlags": [],
+        "reports": [
+          {
+            "path": "bitpanda-evidence-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "bitpanda-preview/report.json",
+            "result": null
+          },
+          {
+            "path": "blocked-reasons/report.json",
+            "result": null
+          },
+          {
+            "path": "chart-tooltip/report.json",
+            "result": null
+          },
+          {
+            "path": "flatex-context/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-amounts-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-binding/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-commit/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-projection-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-identity-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-simulation-ui/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-native-ui/report.json",
+            "result": null
+          },
+          {
+            "path": "flatex-net-augmentation/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-backfill/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-selection/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-net-settlement/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-order-links-firefox-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-reconciliation/report-firefox.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-reconciliation/report-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "flatex-reconciliation/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "header-status/report.json",
+            "result": null
+          },
+          {
+            "path": "history-worker/firefox-controller.json",
+            "result": "PASS"
+          },
+          {
+            "path": "history-worker/webkit-controller.json",
+            "result": "PASS"
+          },
+          {
+            "path": "kraken-ledger/report.json",
+            "result": null
+          },
+          {
+            "path": "kraken-link/firefox.json",
+            "result": "PASS"
+          },
+          {
+            "path": "kraken-link/webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "management-parity/report.json",
+            "result": null
+          },
+          {
+            "path": "missing-position-value/report.json",
+            "result": null
+          },
+          {
+            "path": "reference-management/firefox-sw-baseline.json",
+            "result": "PASS"
+          },
+          {
+            "path": "reference-management/report.json",
+            "result": null
+          },
+          {
+            "path": "reference-management/webkit-sw-baseline.json",
+            "result": "PASS"
+          },
+          {
+            "path": "reference-removal/report.json",
+            "result": null
+          },
+          {
+            "path": "shared-import/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793964698700.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793964714160.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965387778.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965410719.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965447304.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965464919.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965429097.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965482720.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965500325.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965517317.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/firefox-1793965525390.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793964707040.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793964730462.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965400501.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965419159.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965437340.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965455291.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965472915.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965490697.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965508150.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965532659.json",
+            "result": "PASS"
+          },
+          {
+            "path": "storage-fixture/webkit-1793965538901.json",
+            "result": "PASS"
+          },
+          {
+            "path": "two-fill/report-firefox.json",
+            "result": "PASS"
+          },
+          {
+            "path": "two-fill/report-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "two-fill/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "ui-audit-controls/report.json",
+            "result": null
+          },
+          {
+            "path": "ui-quality.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/firefox-320-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/firefox-360-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/firefox-390-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/firefox-412-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/firefox-430-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/report-firefox.json",
+            "result": "PASS"
+          },
+          {
+            "path": "v289-review-integrity/report-webkit.json",
+            "result": "PASS"
+          },
+          {
+            "path": "v289-review-integrity/report.json",
+            "result": "PASS"
+          },
+          {
+            "path": "v289-review-integrity/webkit-320-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/webkit-360-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/webkit-390-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/webkit-412-axe.json",
+            "result": null
+          },
+          {
+            "path": "v289-review-integrity/webkit-430-axe.json",
+            "result": null
+          }
+        ]
+      },
+      {
+        "id": 13498483404,
+        "name": "cross-engine-gates-d0c4fbf00398800cb5462dc1f8f09b9a13da2e7f-1",
+        "sha256": "0a2294f41070ea9369ebd45d61338baa47105f42707d5b36e82711062e3c9011",
+        "bytes": 310437,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 0,
+        "pngsDecoded": 6,
+        "failureFlags": [],
+        "reports": []
+      },
+      {
+        "id": 13499231648,
+        "name": "dialog-visual-reference",
+        "sha256": "4e2fdf402a1779a94e251cd628aebb236ee6957729d2abcad06690b2cfdaf2fc",
+        "bytes": 935920,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 0,
+        "pngsDecoded": 20,
+        "failureFlags": [],
+        "reports": []
+      }
+    ],
+    "artifactCount": 6,
+    "jsonReports": 166,
+    "pngsDecoded": 1302,
+    "workflowRetries": 0,
+    "workflowCancellations": 0,
+    "followupCommitUnpublished": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
+    "newIntegrityBrowser": {
+      "chromium": "PASS",
+      "firefox": "PASS",
+      "webkit": "PASS"
+    }
+  },
+  "currentRun": 42213861242,
+  "currentAttempt": 1,
+  "workflowDispatches": 0,
+  "workflowRetries": 0,
+  "workflowCancellations": 0,
+  "sourceUnchangedSinceFirstCandidate": true,
+  "backup": {
+    "version": 53,
+    "bytes": 9056463,
+    "sha256": "f660719aea9bec401fb27142c38fcad119499f1b6f49f97e86bbe3db356dd973",
+    "manifestFiles": 1834,
+    "preservedV52Files": 1533
+  },
+  "release": "v290 NOT DEPLOYED / NOT LIVE_ACCEPTED; v289 remains LIVE_ACCEPTED"
+}
