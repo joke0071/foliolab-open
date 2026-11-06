@@ -1,0 +1,206 @@
+{
+  "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+  "scope": "SYNTHETIC read-only missing-capability diagnosis; no supported N:M/FX import, no production or private-original acceptance",
+  "cases": 18,
+  "results": [
+    {
+      "name": "three-buy-one-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-sell-one-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-sell-one-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-equal-distinct-bank-identities",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-equal-distinct-bank-identities",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "four-buy-one-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "four-buy-one-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-two-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-two-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-three-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-three-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-eur-cash",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "source-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-eur-cash",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "source-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-exact-export-overlap",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "overlap-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-exact-export-overlap",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "overlap-review"
+      ],
+      "identityConflicts": 0,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-conflicting-bank-payload",
+      "reverse": false,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "conflict"
+      ],
+      "identityConflicts": 2,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-conflicting-bank-payload",
+      "reverse": true,
+      "offered": 0,
+      "reviewCount": 1,
+      "diagnostic": [
+        "conflict"
+      ],
+      "identityConflicts": 2,
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS"
+}

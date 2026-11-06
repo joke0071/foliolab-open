@@ -1,0 +1,189 @@
+{
+  "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+  "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+  "scope": "Synthetic 3:1 baseline on unchanged v291; independent future oracle is not an implemented capability",
+  "cases": 20,
+  "results": [
+    {
+      "name": "unequal-integer-buy",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "unequal-integer-buy",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "unequal-integer-sell",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "unequal-integer-sell",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "equal-distinct-identities-buy",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "equal-distinct-identities-buy",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "equal-distinct-identities-sell",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "equal-distinct-identities-sell",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "fractional-unequal-prices-buy",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "fractional-unequal-prices-buy",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "fractional-unequal-prices-sell",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "fractional-unequal-prices-sell",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "zero-group-difference-buy",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "zero-group-difference-buy",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "zero-group-difference-sell",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "zero-group-difference-sell",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "positive-group-difference-buy",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "positive-group-difference-buy",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "positive-group-difference-sell",
+      "reverse": false,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    },
+    {
+      "name": "positive-group-difference-sell",
+      "reverse": true,
+      "offered": 0,
+      "eligible": false,
+      "canonicalModelUnchanged": true,
+      "documentsUnchanged": true,
+      "result": "BLOCKED_AS_DESIGNED"
+    }
+  ],
+  "result": "PASS"
+}
