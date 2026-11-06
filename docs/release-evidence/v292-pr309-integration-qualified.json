@@ -1,0 +1,186 @@
+{
+  "status": "INTEGRATION_QUALIFIED_MERGED",
+  "owner": "e8b533803735",
+  "pr": 309,
+  "candidateHead": "2f9a6b6505f58c14cdf9a14b22fc147ca68c88b2",
+  "testedMerge": "c5bcdd404dd8cd6adc179894069909bc2c841f61",
+  "main": "9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+  "tree": "e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e",
+  "integrationRun": 42255819752,
+  "attempt": 1,
+  "walletRun": 42255819811,
+  "mainRun": 42259048695,
+  "units": 1252,
+  "failures": 0,
+  "skips": 0,
+  "artifacts": [
+    {
+      "id": 13521514681,
+      "name": "ci-stage-c5bcdd404dd8cd6adc179894069909bc2c841f61",
+      "bytes": 659,
+      "sha256": "2a7cc74812870d28b7281b298c84312f378b0fba2caa138681a3a02781497534",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13522897602,
+      "name": "cross-engine-gates-c5bcdd404dd8cd6adc179894069909bc2c841f61-2",
+      "bytes": 11602316,
+      "sha256": "b908e974a6af0b64caf24eaebc000c8295890a1751d69ee106bd7aafe22fed1b",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13522924496,
+      "name": "dialog-visual-reference",
+      "bytes": 934097,
+      "sha256": "09db5ac813fb2b88648c21ed7d1bba142ef55737f8380d69d7dd8def0f55e10b",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13523307868,
+      "name": "cross-engine-gates-c5bcdd404dd8cd6adc179894069909bc2c841f61-1",
+      "bytes": 58291363,
+      "sha256": "6b368b9b1a0a62fe9d9a61b0e011c26b992b5778bad5806c091bdc6d3ffa886f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13523607260,
+      "name": "cross-engine-gates-c5bcdd404dd8cd6adc179894069909bc2c841f61-3",
+      "bytes": 63295758,
+      "sha256": "bf158d2f612e3511a5b73e30f835b125e71a636c29a2ddef1314dd99b54dff06",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 774,
+      "jsonReports": 81,
+      "pngsDecoded": 692,
+      "failureFlags": []
+    },
+    {
+      "id": 13523991208,
+      "name": "release-gates-c5bcdd404dd8cd6adc179894069909bc2c841f61",
+      "bytes": 61932559,
+      "sha256": "d598468d22b13448fe62b92608b16851e816909bd35d333300de31679d716f56",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 742,
+      "jsonReports": 82,
+      "pngsDecoded": 657,
+      "failureFlags": []
+    }
+  ],
+  "threeFill": [
+    {
+      "engine": "chromium",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "dialect": "depot13/account8",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot13/account8",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot13/account8",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "visualReview": "All six three-fill engine/dialect screenshots inspected",
+  "production": "PENDING; v292 not LIVE_ACCEPTED",
+  "actionsDuplicatedOrCancelled": false,
+  "nativeBranchProtectionClaim": false
+}
