@@ -51,7 +51,7 @@
     "concurrency": 2,
     "additionalMandatoryGate": 1,
     "initialResourceFailuresRetained": true,
-    "assertionsOrTimeoutsChanged": false
+    "resourceRecoveryChangedAssertionsOrTimeouts": false
   },
   "syntax": "PASS",
   "browser": {
@@ -1120,5 +1120,38 @@
     ],
     "result": "PASS",
     "scope": "Existing native scope/account/source/manual/reset/paging/five widths/Axe/CAS/offline and amount-confirmation gates, followed by mandatory new integrity chain; wrong-account assertions now reject the reproduced H1 defect"
+  },
+  "ui07FixtureFollowup": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "result": "PASS",
+    "scansPerEngine": 66,
+    "widths": [
+      320,
+      390,
+      430,
+      768,
+      1024,
+      1440
+    ],
+    "zoomPercent": 200,
+    "dataAndRevisionUnchanged": true,
+    "initialCI": {
+      "run": 42210661072,
+      "attempt": 1,
+      "failedJob": 127868316492,
+      "cause": "Independent synthetic manual fixtures composed with duplicate sequence 1; safeImport correctly rejected them",
+      "runStatus": "still completing other jobs at this documentation point"
+    },
+    "correction": "Unique global order assigned only to unprotected manual fixture journals before composition; no product, timeout or safety assertion change",
+    "benchmarkActualBuilders": {
+      "mixed3000": "PASS",
+      "controlled0": "PASS",
+      "controlled3000": "PASS"
+    },
+    "benchmarkCorrection": "Distinct synthetic EVM addresses preserve fixture position kinds, counts, quantities and booked values"
   }
 }
