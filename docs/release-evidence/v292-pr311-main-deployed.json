@@ -1,0 +1,127 @@
+{
+  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "owner": "0bfa85b5b416",
+  "main": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+  "tree": "129c9cac1391f7a306087395c6fc42a01e8d0d4b",
+  "pr": 311,
+  "mainRun": 42288193893,
+  "attempt": 1,
+  "units": 1258,
+  "failures": 0,
+  "skips": 0,
+  "mainCrossEngine": "All three shards SUCCESS; all six actual three-fill engine/dialect reports PASS",
+  "artifacts": [
+    {
+      "id": 13538937139,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-2",
+      "bytes": 11605387,
+      "sha256": "8ad2ea6b4ac56c1f024441472af5bcfc361e88c2b63f65175b3382eb80e5fd8c",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13538833712,
+      "name": "dialog-visual-reference",
+      "bytes": 934041,
+      "sha256": "7d7281ffb6d83e7232abbf008b4671c58a8cc7ae5cea56fd83fe9149f70d7aae",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13538768946,
+      "name": "release-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+      "bytes": 61924925,
+      "sha256": "92ddca54a57eb6ad08096ac6cd485028e59402fa0520746a78e69b3fcdaadbe5",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 742,
+      "jsonReports": 82,
+      "pngsDecoded": 657,
+      "failureFlags": []
+    },
+    {
+      "id": 13538274219,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-1",
+      "bytes": 58287007,
+      "sha256": "62c11b238a678bd3ebce64cb919f0f5b6a957aaccc02f0f169e03d66af65cab6",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13538192660,
+      "name": "ci-stage-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+      "bytes": 353,
+      "sha256": "da4973fc5c493b7787cb479aac3f0ebfc72e7e53af4c202b2b0a20e2edf67aa7",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13539732664,
+      "name": "cross-engine-gates-2ca2e03ca1ba203f587f79444fdb43fc4ea62b36-3",
+      "bytes": 63292423,
+      "sha256": "1d973416bed2972b68a6b6a2d9f6647687459815e4e67e6f884830d77b82da69",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 774,
+      "jsonReports": 81,
+      "pngsDecoded": 692,
+      "failureFlags": []
+    },
+    {
+      "id": 13539692892,
+      "name": "github-pages",
+      "bytes": 555755,
+      "sha256": "944b82f3b52a1503d58f0c57086e8083796c517f7ee07b117591213a60c57b79",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    }
+  ],
+  "pages": {
+    "artifact": 13539692892,
+    "matches": 151,
+    "exactExpectedAssetSet": true,
+    "allGitBlobsMatchMain": true
+  },
+  "ordinaryTLS": {
+    "result": "PASS",
+    "assetMatches": 151,
+    "rootIndexMatch": true,
+    "requests": 152,
+    "certificateException": false
+  },
+  "shippedAssets": "All151unchanged, SWv292",
+  "deploymentJob": 128145853225,
+  "deployment": "SUCCESS",
+  "live": {
+    "job": 128146022885,
+    "chromiumStep": "SUCCESS; final ZIP qualification remains pending",
+    "crossStep": "IN_PROGRESS / Firefox and WebKit",
+    "budgetMinutes": 55,
+    "allOriginalCommandsAssertionsDeadlinesEnginesPreserved": true,
+    "accepted": false
+  },
+  "startup": "Original first-navigation failures retained; cause unknown. Current Chromium production step passed; no startup-fix claim.",
+  "manualRerunDuplicateOrCancellation": false,
+  "lastAccepted": "v291; do not reaccept",
+  "next": "Qualify existing complete live run and actual reports/images; v292 cannot be accepted from deployment or partial production."
+}
