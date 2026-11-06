@@ -1,3 +1,17 @@
+## ACTIVE – 414503ed33c6 / v289 LIVE_ACCEPTED – 06.11.2026
+
+**v289 LIVE_ACCEPTED.** Main `652e80bcb31aec13c85a0457332bdf53cf98a521`, Tree `ee506c874fa9578f1daf3387da24b299bba5103e`, PR #306. Der bestehende Mainlauf **42191012639, Versuch 1, completed / success** ist vollständig qualifiziert. 1.227 Tests, 0 Fehler, 0 Skips; Chromium und alle drei Cross-Engine-Shards sowie Deployment und reguläre Produktionssuite erfolgreich. Keine zusätzliche CI, kein Workflow-Retry, kein Abbruch und keine Produkt-, Test-, Assertion-, Frist- oder Workflowänderung.
+
+[Vollständiger Abschlussbeleg](release-evidence/v289-pr306-live-acceptance.json): acht tatsächliche ZIPs nach API-Digest, Uploadlog, lokaler SHA256, Größe und CRC geprüft; 275 JSON-Berichte ohne Fehlerflags und 3.074 PNGs dekodiert. Pages-Artefakt 13491221421 enthält 150 exakte Main-Gitblobs; 151 unabhängige HTTPS-URL-Prüfungen mit regulärem TLS und SWv289 stimmen bytegenau. Live-Artefakt 13493850441 ist vollständig qualifiziert. Die tatsächliche Produktionskette einschließlich neuem 2:1-EUR-Import, CAS/Quota/post-put/Zweittab/Undo/Offline/Wiederimport/Fresh-Restore und fünf Mobilbreiten/Axe besteht in Chromium141, Firefox157 und WebKit27.2. Drei tatsächliche 2:1-Produktionsbilder gesichtet. Regulärer Core-Bericht: sechs Prüfgruppen, 18 Axe-Scans, 151 Assetmatches, keine Zertifikatsausnahme. Keine lokale Browserergänzung für die Abnahme verwendet; unqualifizierte lokale Transportversuche bleiben transparent im Beleg erhalten.
+
+**Neue 2:1-Nachweise bleiben synthetisch; kein echter privater 2:1-Originalfall vorhanden.** Die 81 bisherigen Originalgruppen und alle Originaldateien sind erhalten; Originalregression wurde nicht als vollständige private Historie oder Eigentumsnachweis ausgegeben. v288 bleibt akzeptiert und wurde nicht erneut abgenommen. UH04/UH05 bleiben PARTIAL; fehlende Wallet-/Stakingbestände bleiben UNKNOWN.
+
+[Fest gebundener unabhängiger Reviewauftrag](REVIEW_v289_2026-11-06.md) vorbereitet: Extra-High, ausschließlich lesend, ohne Übernahme der Schreibzuständigkeit. Owner **414503ed33c6 bleibt allein ACTIVE**. Kein neuer Produktkandidat oder PR. [UH05-Fortsetzung](UH05_NEXT_AFTER_v289_2026-11-06.md): 18 zusätzliche reine N:M-Grenzreproduktionen auf exakt v289 und sechs unabhängige Decimalillustrationen gesichert; keine neue N:M-/FX-Importfähigkeit behauptet. Nächster enger Einstieg ist 3:1 EUR im vorhandenen Kern; Referenz-, FX-, Wallet- und Stakingfälle bleiben gesondert nachzuweisen.
+
+Private V50 wurde mit allen 1.115 Manifestdateien unabhängig bestätigt und bleibt vollständig erhalten; die abschließende erweiterte Sicherung und ihr bestätigter Versions-/Hashbeleg folgen unmittelbar. UI-REFRESH01 #300 mit allen zehn Nachträgen, QUALITY298, CI229 und Android-/Folgeaufträge frisch abgeglichen und unverändert erhalten. Alle Schutzverträge gelten. GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / v289 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
 
 Main `652e80bcb31aec13c85a0457332bdf53cf98a521` / Tree `ee506c874fa9578f1daf3387da24b299bba5103e` unverändert. Bestehender Mainlauf42191012639 Versuch1:1227Units/0Fehler/0Skips,Chromium/alle3Cross-ShardsSUCCESS;Deployjob127812493407SUCCESS.7tatsächlicheMainZIPs API-/Uploadlog-/lokaleSHA256-/Bytes-/CRCPASS,165JSONs ohneFehlerflags,1866PNGsdekodiert. Pages-Artefakt13491221421 enthält150exakteMainGitblobs.151unabhängigeHTTPS-URL-PrüfungenmitreguläremTLS/ohneZertifikatsbypass/SWv289PASS.

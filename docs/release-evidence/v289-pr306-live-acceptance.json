@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "status": "LIVE_ACCEPTED",
   "owner": "414503ed33c6",
   "release": "v289",
   "main": "652e80bcb31aec13c85a0457332bdf53cf98a521",
@@ -27,7 +27,9 @@
   },
   "liveJob": {
     "id": 127812651065,
-    "status": "in_progress"
+    "status": "completed",
+    "conclusion": "success",
+    "configuredTimeoutMinutes": 35
   },
   "artifacts": [
     {
@@ -778,12 +780,465 @@
           "result": null
         }
       ]
+    },
+    {
+      "id": 13493850441,
+      "name": "production-live-acceptance-652e80bcb31aec13c85a0457332bdf53cf98a521",
+      "sha256": "5a64d73861a791fcbd61558369a0c93ed9b6463111bd59a07bb047b189868ae7",
+      "bytes": 127524573,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 110,
+      "pngsDecoded": 1208,
+      "failureFlags": [],
+      "reports": [
+        {
+          "path": "alpha-vantage.json",
+          "result": null
+        },
+        {
+          "path": "bitpanda-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "bitpanda-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "bitpanda-preview/report.json",
+          "result": null
+        },
+        {
+          "path": "blocked-reasons/report.json",
+          "result": null
+        },
+        {
+          "path": "cash-account-ux.json",
+          "result": null
+        },
+        {
+          "path": "chart-tooltip/report.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/chromium.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/firefox.json",
+          "result": null
+        },
+        {
+          "path": "fin-e2e/webkit.json",
+          "result": null
+        },
+        {
+          "path": "flatex-context/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-amounts-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-amounts-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-binding/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-commit/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-identity-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-identity-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-projection-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-projection-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-simulation-ui/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-native-ui/report.json",
+          "result": null
+        },
+        {
+          "path": "flatex-net-augmentation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-backfill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-selection/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-net-settlement/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-order-links-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-order-links-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "flatex-reconciliation/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "header-status/report.json",
+          "result": null
+        },
+        {
+          "path": "kraken-ledger/report.json",
+          "result": null
+        },
+        {
+          "path": "kraken-link/chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "kraken-link/firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "kraken-link/webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "live/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "loading-pwa/chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "loading-pwa/firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "loading-pwa/webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "management-parity/report.json",
+          "result": null
+        },
+        {
+          "path": "marketstack.json",
+          "result": null
+        },
+        {
+          "path": "missing-position-value/report.json",
+          "result": null
+        },
+        {
+          "path": "pchain-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "plain-backup-limits/chromium.json",
+          "result": null
+        },
+        {
+          "path": "pchain-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "plain-backup-limits/firefox.json",
+          "result": null
+        },
+        {
+          "path": "plain-backup-limits/webkit.json",
+          "result": null
+        },
+        {
+          "path": "price-csv-tools/report.json",
+          "result": null
+        },
+        {
+          "path": "production-transfers-chromium.json",
+          "result": null
+        },
+        {
+          "path": "production-transfers-cross.json",
+          "result": null
+        },
+        {
+          "path": "production-ui-chromium.json",
+          "result": null
+        },
+        {
+          "path": "production-ui-cross.json",
+          "result": null
+        },
+        {
+          "path": "provider-retirement.json",
+          "result": null
+        },
+        {
+          "path": "recovery-limits/report-chromium.json",
+          "result": null
+        },
+        {
+          "path": "recovery-limits/report-firefox-webkit.json",
+          "result": null
+        },
+        {
+          "path": "reference-management/chromium-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-management/firefox-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-management/report.json",
+          "result": null
+        },
+        {
+          "path": "reference-management/webkit-sw-baseline.json",
+          "result": "PASS"
+        },
+        {
+          "path": "reference-removal/report.json",
+          "result": null
+        },
+        {
+          "path": "shared-import/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "sonic-evidence-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "sonic-evidence-firefox-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956840581.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956847036.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956853385.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956859488.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956865532.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956873089.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956880011.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956886056.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793956891277.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793957051358.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/chromium-1793957056365.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957368152.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957392434.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957410675.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957445711.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957428388.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957463191.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957480493.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957497419.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793957505107.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793958132240.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/firefox-1793958147062.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957382668.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957400921.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957419081.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957436465.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957453809.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957488558.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957471338.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957513253.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793957519924.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793958140212.json",
+          "result": "PASS"
+        },
+        {
+          "path": "storage-fixture/webkit-1793958161999.json",
+          "result": "PASS"
+        },
+        {
+          "path": "transfer-states.json",
+          "result": null
+        },
+        {
+          "path": "two-fill/report-chromium.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report-firefox.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report-webkit.json",
+          "result": "PASS"
+        },
+        {
+          "path": "two-fill/report.json",
+          "result": "PASS"
+        },
+        {
+          "path": "ui-alltag10/chromium-real-touch-pan.json",
+          "result": null
+        },
+        {
+          "path": "ui-alltag10/chromium-real-touch-press.json",
+          "result": null
+        },
+        {
+          "path": "ui-alltag10/long-press.json",
+          "result": null
+        },
+        {
+          "path": "ui-audit-controls/report.json",
+          "result": null
+        },
+        {
+          "path": "ui-quality.json",
+          "result": null
+        },
+        {
+          "path": "ui-textscale/report.json",
+          "result": null
+        }
+      ]
     }
   ],
   "counts": {
-    "artifacts": 7,
-    "jsonReports": 165,
-    "pngsDecoded": 1866
+    "artifacts": 8,
+    "jsonReports": 275,
+    "pngsDecoded": 3074
   },
   "productionAssets": {
     "result": "PASS",
@@ -1870,10 +2325,10 @@
       "production-two-fill.log",
       "production-two-fill-proxy.log",
       "supplemental-test-identity.json"
-    ]
+    ],
+    "requiredProductionGate": "Regular existing GitHub job completed SUCCESS; no supplemental browser PASS needed or used."
   },
   "manualCIStarts": 0,
-  "retries": 0,
   "cancelledByThisOwner": 0,
   "updatedAt": "2026-11-06T09:24:28.060701+00:00",
   "nextBoundaryDiagnostic": {
@@ -1881,5 +2336,121 @@
     "cases": 18,
     "result": "PASS",
     "report": "uh05-next-nm-boundary-2026-11-06.json"
+  },
+  "workflowRetries": 0,
+  "localTransportAttempts": [
+    {
+      "scope": "tracked two-fill test on actual production",
+      "outcome": "ERR_EMPTY_RESPONSE before app ready",
+      "certificateException": false
+    },
+    {
+      "scope": "proxy navigation preflight only",
+      "outcome": "ERR_CERT_AUTHORITY_INVALID",
+      "certificateException": false
+    },
+    {
+      "scope": "unchanged tracked two-fill test on actual production via explicit proxy runtime",
+      "outcome": "app ready; application service-worker activation timed out at unchanged 60000ms; no product PASS claimed",
+      "certificateException": true
+    }
+  ],
+  "acceptedAt": "2026-11-06T09:56:40.230502+00:00",
+  "originalWorkflowConclusion": "success",
+  "remaining": [],
+  "actualProduction": {
+    "base": "https://foliolab.unperfekt.at/",
+    "core": {
+      "result": "PASS",
+      "groups": 6,
+      "axeScans": 18,
+      "assetMatches": 151,
+      "proxyCertificateException": false,
+      "checks": [
+        "all published precache files + service worker and actual loaded application bytes match checkout",
+        "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+        "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+        "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+        "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+        "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+      ]
+    },
+    "twoFill": {
+      "result": "PASS",
+      "scope": "SYNTHETIC fixtures executed against actual production; no real private 2:1 original acceptance",
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        }
+      ],
+      "images": [
+        {
+          "path": "two-fill/chromium-390.png",
+          "sha256": "87580f1b42ede069768474d56f5b42271e7964ff825ad35524aa9378485bfa78",
+          "actuallyReviewed": true
+        },
+        {
+          "path": "two-fill/firefox-390.png",
+          "sha256": "ea6d7f78c15e94c833d962611d6af7c0d7bc770c28561466f7ff58ece69e478a",
+          "actuallyReviewed": true
+        },
+        {
+          "path": "two-fill/webkit-390.png",
+          "sha256": "ff0f83c89eb0f1fc9c286941cdf52b17aed14a84defe7c2eed487389a04fd485",
+          "actuallyReviewed": true
+        }
+      ]
+    },
+    "finE2E": "Chromium/Firefox/WebKit PASS including generic USD partial fills and historical FX, exact CAS/Undo/Offline/FreshRestore",
+    "uiAndTransferStates": "Chromium/Firefox/WebKit PASS",
+    "supplementalNeeded": false
+  },
+  "takeover": {
+    "regularHND01": true,
+    "previousOwner": "bd0f0f98ad61",
+    "explicitlyStopped": true,
+    "privateV50Bytes": 6690146,
+    "privateV50SHA256": "b9f9c6e51e174529ffef1f9dc197b1884126884b2ca617e82f0293684723d599",
+    "all1115ManifestFilesPreserved": true,
+    "priorReleaseNotRepeated": "v288"
   }
 }
