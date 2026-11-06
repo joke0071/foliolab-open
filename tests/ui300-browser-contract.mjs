@@ -46,5 +46,16 @@ export async function ui300BrowserContract({p,nav,record,scan,engine,scans}){
  await nav('more');assert.equal(await p.locator('#pageKicker').isVisible(),false);
  await nav('dashboard');await p.context().setOffline(true);await p.reload();await ready();assert.match(await p.locator('#totalValue').innerText(),/130,00/);await p.context().setOffline(false);
  assert.deepEqual(await record(),before,'period, navigation, reflow, keyboard and offline reload preserve exact canonical bytes and revision');
- await writeFile(`${out}/report-${engine}.json`,JSON.stringify({engine,result:'PASS',base:p.url().split('?')[0],checks:['7 widths/44px/Axe','no hero or tiles; brand and five semantic destinations retained','zero group chip hidden','exact selected-period endpoints; explicit cashflow scope','200% text stress/short viewport (not physical zoom or hardware)','offline actual reload; exact canonical bytes/revision']},null,2));
+ await p.setViewportSize({width:390,height:900});
+ // A real automatic snapshot from an undated quote is already partial. The
+ // new compact difference must retain that uncertainty, never turn it into loss.
+ await p.evaluate(async()=>{
+  const {createPosition,snapshot}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage(),m=await s.initialize();
+  m.positions.push(createPosition({id:'ui300-undated',providerId:'ui300-p',accountId:'ui300-a',kind:'etf',name:'SYNTHETIC undated',quantity:1,price:20},m));snapshot(m);await s.save(m);s.close();
+ });await p.reload();await ready();await nav('dashboard');const partialBefore=await record();
+ assert.equal(JSON.parse(partialBefore.raw).snapshots.at(-1).valuationStatus,'partial');
+ assert.equal(await p.locator('#dashboardChange').innerText(),'–');assert.match(await p.locator('#dashboardChangeHint').innerText(),/unvollständig bewerteten Stichtag/);
+ await p.locator('#dashboardReview').click();assert.ok(await p.locator('#qualityReviewPanel').isVisible());await p.locator('[data-action=close-quality-review]').click();assert.deepEqual(await record(),partialBefore,'partial snapshot remains byte exact and review does not write');
+ await scan('UI300 partial automatic snapshot');await p.screenshot({path:`${out}/${engine}-partial-observation.png`,fullPage:true});
+ await writeFile(`${out}/report-${engine}.json`,JSON.stringify({engine,result:'PASS',base:p.url().split('?')[0],checks:['7 widths/44px/Axe','no hero or tiles; brand and five semantic destinations retained','zero group chip hidden','exact selected-period endpoints; explicit cashflow scope','200% text stress/short viewport (not physical zoom or hardware)','offline actual reload; exact canonical bytes/revision','partial automatic snapshot remains unavailable without writes']},null,2));
 }

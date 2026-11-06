@@ -18,3 +18,11 @@ test('UI300 incomplete periods never invent a zero or bridge reconstructed gaps'
  assert.equal(wealthChangePresentation({basis:'observed'},[{date:'2026-01-01',total:5},{date:'2026-01-02',total:5}],money,dates,{period:true}).delta,'0');
  assert.equal(wealthChangePresentation({basis:'observed'},[{date:'2026-01-01',total:5},{date:'2026-01-02',total:2}],money,dates,{period:true}).delta,'-3');
 });
+
+test('UI300 partial automatic observations never become comparable period endpoints or bridges',()=>{
+ const rows=[{date:'2026-01-01',total:100,valuationStatus:'manual'},{date:'2026-01-02',total:20,valuationStatus:'partial',source:'current'},{date:'2026-01-03',total:120,valuationStatus:'observed'}];
+ const before=structuredClone(rows);
+ for(const selected of [rows,rows.slice(0,2),rows.slice(1)]){const view=wealthChangePresentation({basis:'observed'},selected,money,dates,{period:true});assert.equal(view.delta,null);assert.equal(view.value,'–');assert.match(view.note,/unvollständig bewerteten Stichtag/);}
+ assert.equal(wealthChangePresentation({basis:'observed'},[rows[0],rows[2]],money,dates,{period:true}).delta,'20');
+ assert.equal(wealthChangePresentation({basis:'observed'},rows,money,dates).delta,'100','legacy last-two presentation scope remains unchanged');assert.deepEqual(rows,before);
+});

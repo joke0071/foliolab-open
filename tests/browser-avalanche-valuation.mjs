@@ -16,12 +16,10 @@ try{
   });
  },addr);
  await page.reload();
- await page.locator('#totalHint').waitFor();
- const initial=await page.locator('#totalHint button').innerText();
+ await page.locator('#dashboardReview').waitFor();
+ const initial=await page.locator('#dashboardReview').innerText();
  assert.match(initial,/1 Position prüfen/);
- const details=await page.locator('#totalHint button').getAttribute('title');
- assert.match(details,/1 mit zuletzt gespeichertem Wert/);
- assert.doesNotMatch(details,/veraltet/);
+ await page.locator('#dashboardReview').click();assert.match(await page.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 1 Position/);assert.match(await page.locator('.quality-review-card').innerText(),/Zuletzt gespeicherter Wert/);assert.doesNotMatch(await page.locator('.quality-review-card').innerText(),/Kurs älter als 7 Tage/);await page.locator('[data-action=close-quality-review]').click();
  await page.route('https://cccscan.org/**',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({coin_balance:null})}));
  await page.route('https://api.avax.network/**',r=>{
   const payload=r.request().postDataJSON();

@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_QUALIFIED / INTEGRATION_PENDING",
+  "status": "LOCAL_FOLLOWUP_QUALIFIED / FIRST_CI_NOT_ACCEPTED",
   "owner": "414503ed33c6",
   "release": "v291 candidate",
   "issue": 300,
@@ -7,10 +7,10 @@
   "baseTree": "bded2aa81095b59bf15628290e36c32481a76417",
   "priorRelease": "v290 LIVE_ACCEPTED; v289 not reaccepted",
   "units": {
-    "pass": 1245,
+    "pass": 1246,
     "fail": 0,
     "skip": 0,
-    "logSHA256": "75807ea83c803658ea17fd59a07f97f7b7cbdb153846a2a0b90f832bd1c204d7"
+    "logSHA256": "7cd0888697b511608f78292d61e7055338b58f4f9b2dbd823b40104210831ca7"
   },
   "originalRegression": {
     "groups": 81,
@@ -24,40 +24,43 @@
     {
       "engine": "chromium",
       "result": "PASS",
-      "base": "http://127.0.0.1:4185/",
+      "base": "http://127.0.0.1:4188/",
       "checks": [
         "7 widths/44px/Axe",
         "no hero or tiles; brand and five semantic destinations retained",
         "zero group chip hidden",
         "exact selected-period endpoints; explicit cashflow scope",
         "200% text stress/short viewport (not physical zoom or hardware)",
-        "offline actual reload; exact canonical bytes/revision"
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
       ]
     },
     {
       "engine": "firefox",
       "result": "PASS",
-      "base": "http://127.0.0.1:4185/",
+      "base": "http://127.0.0.1:4188/",
       "checks": [
         "7 widths/44px/Axe",
         "no hero or tiles; brand and five semantic destinations retained",
         "zero group chip hidden",
         "exact selected-period endpoints; explicit cashflow scope",
         "200% text stress/short viewport (not physical zoom or hardware)",
-        "offline actual reload; exact canonical bytes/revision"
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
       ]
     },
     {
       "engine": "webkit",
       "result": "PASS",
-      "base": "http://127.0.0.1:4185/",
+      "base": "http://127.0.0.1:4188/",
       "checks": [
         "7 widths/44px/Axe",
         "no hero or tiles; brand and five semantic destinations retained",
         "zero group chip hidden",
         "exact selected-period endpoints; explicit cashflow scope",
         "200% text stress/short viewport (not physical zoom or hardware)",
-        "offline actual reload; exact canonical bytes/revision"
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
       ]
     }
   ],
@@ -81,6 +84,18 @@
     {
       "file": "chromium-text200-short.png",
       "sha256": "55e93eada2dd731b56bca9183d551d591105bfcd371323e074c3f2107b41aaf9"
+    },
+    {
+      "file": "chromium-partial-observation.png",
+      "sha256": "6381d7b45fe7da0d3fc56036e0354baef1e8f99f35ff6822f200aac421da486b"
+    },
+    {
+      "file": "firefox-partial-observation.png",
+      "sha256": "9a0e2d7455bd36b65f0c19b7f1a1bbd7b8a8ad4bbda404f16494dd9d65db9043"
+    },
+    {
+      "file": "webkit-partial-observation.png",
+      "sha256": "436fdb035343720b8d688b1e4f02c82d134278ef9e5b4bedbd507956a2f1258b"
     }
   ],
   "preservation": [
@@ -92,7 +107,12 @@
   "localAttemptNotes": [
     "Initial new test used numeric dates instead of existing named German date format; corrected assertion.",
     "Then fixed-date fixture had no samples in current seven-day period; changed synthetic fixture to relative dates, no application filter change.",
-    "New polish assertion omitted currency symbol in negative display; corrected expectation retaining signed value."
+    "New polish assertion omitted currency symbol in negative display; corrected expectation retaining signed value.",
+    "Workspace was lost after successful V57 backup. V57 archive and all2774 manifest files verified; 152 application and396 test/worker Gitblobs restored through plugin, plus unchanged workflows and CI manifests.",
+    "Full units first launched from wrong working directory and stopped locally; following runs identified missing restored CI fixture JSONs. After restoring both unchanged fixture files, 1246/1246 passed. No CI cancellation.",
+    "Restored browser dependencies are local only; pinned SHA512 verification and bundled libsoup used. Browser drivers/executables are explicitly selected; this is not a hardware claim.",
+    "Two additional legacy selectors (#totalHint button) found by actual CI and complete restored test search; adapted to actual direct review without dropping warning/financial checks.",
+    "New partial-observation negative repro was executed on exact hash-guarded first candidate; only new period presentation blocks explicit partial evidence."
   ],
   "limitations": [
     "200% synthetic text stress; no physical browser-zoom or hardware claim",
@@ -111,6 +131,49 @@
       "header storage/Drive status",
       "valuation drilldown"
     ],
-    "logSHA256": "6789805b8bf2a4faa445280110af579aafa8bf8d164b42cae5c7fffec170ff12"
+    "logSHA256": "6789805b8bf2a4faa445280110af579aafa8bf8d164b42cae5c7fffec170ff12",
+    "additionalPassingSuites": [
+      "browser-audit:100 holdings,six viewports,XSS,ledger deletion guards",
+      "avalanche:derived warning distinct from stale,protected refresh explorer/RPC fallback"
+    ]
+  },
+  "additionalBoundary": {
+    "before": {
+      "result": "BASELINE_DEFECT_REPRODUCED",
+      "baselineHead": "1aa742996482c776ae0673090a1245af4ed2a1b0",
+      "expectedDelta": null,
+      "actual": {
+        "value": "-80",
+        "note": "2026-11-05 – 2026-11-06 · inkl. Geldflüsse · keine Rendite",
+        "delta": "-80"
+      },
+      "scope": "synthetic presentation only; modern partial automatic snapshot is not a fully comparable observation"
+    },
+    "after": {
+      "value": "–",
+      "note": "Gewählter Zeitraum enthält einen unvollständig bewerteten Stichtag.",
+      "delta": null
+    },
+    "scope": "presentation only; no snapshots/history mutation"
+  },
+  "firstIntegration": {
+    "run": 42231382145,
+    "attempt": 1,
+    "head": "1aa742996482c776ae0673090a1245af4ed2a1b0",
+    "testedMerge": "db50202effae78213cd2261bce9fe0e255e7fc16",
+    "tree": "eff9629055eb953cc870e3831715924c591e5d72",
+    "primary": "FAILED: browser-audit.mjs old #totalHint button selector",
+    "shards1and2": "SUCCESS",
+    "shard3": "SUCCESS",
+    "accepted": false,
+    "status": "completed",
+    "conclusion": "failure",
+    "allThreeShards": "SUCCESS",
+    "workflowCancelled": false,
+    "workflowRerun": false,
+    "actualArchives": 5,
+    "jsonReports": 181,
+    "decodedPNGs": 1762,
+    "archivesIntegrity": "API/uploadlog/local SHA256 and bytes, CRC PASS"
   }
 }

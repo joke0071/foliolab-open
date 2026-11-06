@@ -11,10 +11,12 @@ export function wealthChangePresentation(wealth, samples, money, dateLabel, {per
   let comparable=samples;
   const broken=wealth.basis==='reconstructed'&&samples.some((s,i)=>i>0&&s.breakBefore);
   if(broken&&!period){const boundary=samples.findLastIndex((s,i)=>i>0&&s.breakBefore);comparable=samples.slice(boundary);}
-  const usable=['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2&&!(period&&broken);
+  const partial=period&&samples.some(s=>s.valuationStatus==='partial');
+  const usable=!partial&&['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2&&!(period&&broken);
   const previous=usable?(period||wealth.basis==='reconstructed'?comparable[0]:comparable.at(-2)):null,latest=usable?comparable.at(-1):null;
   const delta=usable?exact(units(latest.totalEURExact??latest.total)-units(previous.totalEURExact??previous.total)):null;
   const foot=delta!==null?dateLabel(previous.date)+' – '+dateLabel(latest.date)+' · inkl. Geldflüsse · keine Rendite':
+    partial?'Gewählter Zeitraum enthält einen unvollständig bewerteten Stichtag.':
     wealth.basis==='partial'?'Teilportfolio: vollständige Bestands-, Kurs- oder FX-Nachweise fehlen.':
     period&&broken?'Gewählter Zeitraum nicht durchgehend vergleichbar belegt.':
     samples.length?'Ein weiterer vergleichbar belegter Zeitpunkt fehlt.':wealth.reason;
