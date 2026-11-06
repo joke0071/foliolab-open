@@ -53,8 +53,8 @@ try{
  });
  await page.reload();
  await page.locator('#sidebarNav [data-page="dashboard"]').click();
- assert.match(await page.locator('#totalHint button').innerText(),/1 Position prüfen/);
-  assert.match(await page.locator('#totalHint button').getAttribute('title'),/Bewertung eingeschränkt: 1 ohne Kurs/);
+ assert.match(await page.locator('#dashboardReview').innerText(),/100 Positionen prüfen/,'one group per position, including source-only cases');
+ await page.locator('#dashboardReview').click();assert.match(await page.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 1 Position/);assert.match(await page.locator('[data-review-position=test-2]').innerText(),/Kurs fehlt/);await page.locator('[data-action=close-quality-review]').click();
  await page.evaluate(async()=>{
   const {load,persist}=await import('/src/model.js'),{executeTransaction}=await import('/src/transactions.js');
   const m=load();

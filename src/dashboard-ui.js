@@ -6,6 +6,23 @@ import {compactMoney as compactAmount} from './format.js';
 /** Presentation-only dashboard helpers. Never imply performance when only wealth history exists. */
 export {compactAmount};
 
+// Display the exact wealth difference; this is not a return calculation.
+export function wealthChangePresentation(wealth, samples, money, dateLabel, {period=false}={}) {
+  let comparable=samples;
+  const broken=wealth.basis==='reconstructed'&&samples.some((s,i)=>i>0&&s.breakBefore);
+  if(broken&&!period){const boundary=samples.findLastIndex((s,i)=>i>0&&s.breakBefore);comparable=samples.slice(boundary);}
+  const partial=period&&samples.some(s=>s.valuationStatus==='partial');
+  const usable=!partial&&['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2&&!(period&&broken);
+  const previous=usable?(period||wealth.basis==='reconstructed'?comparable[0]:comparable.at(-2)):null,latest=usable?comparable.at(-1):null;
+  const delta=usable?exact(units(latest.totalEURExact??latest.total)-units(previous.totalEURExact??previous.total)):null;
+  const foot=delta!==null?dateLabel(previous.date)+' – '+dateLabel(latest.date)+' · inkl. Geldflüsse · keine Rendite':
+    partial?'Gewählter Zeitraum enthält einen unvollständig bewerteten Stichtag.':
+    wealth.basis==='partial'?'Teilportfolio: vollständige Bestands-, Kurs- oder FX-Nachweise fehlen.':
+    period&&broken?'Gewählter Zeitraum nicht durchgehend vergleichbar belegt.':
+    samples.length?'Ein weiterer vergleichbar belegter Zeitpunkt fehlt.':wealth.reason;
+  return {value:delta===null?'–':(units(delta)>0n?'+':'')+money(Number(delta)),note:foot,delta};
+}
+
 export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealth=historicalWealthView(model)) {
   const data = model.positions;
   const partitions = [
@@ -19,19 +36,8 @@ export function renderSummaryTiles(model, money, valueEUR, esc, dateLabel, wealt
     const note = section.items.length+' '+section.unit+(view.note?' · '+view.note:'');
     return [section.title,view.value,note];
   });
-  const samples=wealth.samples;
-  let comparable=samples;
-  if(wealth.basis==='reconstructed'){
-    const boundary=samples.findLastIndex((s,i)=>i>0&&s.breakBefore);
-    if(boundary>=0)comparable=samples.slice(boundary);
-  }
-  const usable=['observed','reconstructed'].includes(wealth.basis)&&comparable.length>=2;
-  const previous=usable?(wealth.basis==='observed'?comparable.at(-2):comparable[0]):null,latest=usable?comparable.at(-1):null;
-  const delta=usable?exact(units(latest.totalEURExact??latest.total)-units(previous.totalEURExact??previous.total)):null;
-  const foot=delta!==null?dateLabel(previous.date)+' – '+dateLabel(latest.date)+' · inkl. Geldflüsse · keine Rendite':
-    wealth.basis==='partial'?'Teilportfolio: vollständige Bestands-, Kurs- oder FX-Nachweise fehlen.':
-    samples.length?'Ein weiterer vergleichbar belegter Zeitpunkt fehlt.':wealth.reason;
-  tiles.push(['Veränderung',delta===null?'–':(units(delta)>0n?'+':'')+money(Number(delta)),foot]);
+  const change=wealthChangePresentation(wealth,wealth.samples,money,dateLabel);
+  tiles.push(['Veränderung',change.value,change.note]);
   return tiles.map(([label,value,foot]) =>
     '<div class="stat"><div class="stat-label">'+esc(label)+'</div><div class="stat-value">'+esc(value)+'</div><div class="stat-hint">'+esc(foot)+'</div></div>'
   ).join('');

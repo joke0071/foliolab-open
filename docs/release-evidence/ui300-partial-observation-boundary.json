@@ -1,0 +1,19 @@
+{
+  "before": {
+    "result": "BASELINE_DEFECT_REPRODUCED",
+    "baselineHead": "1aa742996482c776ae0673090a1245af4ed2a1b0",
+    "expectedDelta": null,
+    "actual": {
+      "value": "-80",
+      "note": "2026-11-05 – 2026-11-06 · inkl. Geldflüsse · keine Rendite",
+      "delta": "-80"
+    },
+    "scope": "synthetic presentation only; modern partial automatic snapshot is not a fully comparable observation"
+  },
+  "after": {
+    "value": "–",
+    "note": "Gewählter Zeitraum enthält einen unvollständig bewerteten Stichtag.",
+    "delta": null
+  },
+  "scope": "presentation only; no snapshots/history mutation"
+}

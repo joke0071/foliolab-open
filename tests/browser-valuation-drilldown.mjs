@@ -22,18 +22,16 @@ try{
  await page.reload();
  const state=()=>page.evaluate(()=>({portfolio:localStorage.getItem('foliolab-open-v1'),settings:localStorage.getItem('foliolab-open-settings-v1')}));
  const before=await state();
- assert.equal((await page.locator('#totalHint button').innerText()).trim(),'2 Positionen prüfen');
+ assert.equal((await page.locator('#dashboardReview').innerText()).trim(),'3 Positionen prüfen');
  await page.locator('#mobileNav [data-page="positions"]').click();
  assert.equal(await page.locator('#positionQuoteDetails').isVisible(),false,'global technical quote panel removed from overview');
  await page.locator('#positionSearch').fill('keine solche Position');await page.locator('#positionSort').selectOption('name');await page.locator('#positionArchiveFilter').selectOption('archived');
  await page.locator('#mobileNav [data-page="dashboard"]').click();
  for(const width of [320,360,390,412,430,1440]){
   await page.setViewportSize({width,height:900});
-  const toggle=page.locator('#heroReviewToggle');
-  assert.equal(await toggle.getAttribute('aria-expanded'),'false');await toggle.focus();await page.keyboard.press('Enter');
-  assert.equal(await toggle.getAttribute('aria-expanded'),'true');assert.ok(!page.url().includes('page=positions'));
-  assert.match(await page.locator('#heroQualitySummary').innerText(),/1 Fehlende Kurse/);assert.match(await page.locator('#heroQualitySummary').innerText(),/1 Veraltete Kursdaten/);
-  await page.locator('[data-action="open-quality-review"]').click();assert.ok(page.url().includes('page=positions'));
+  const toggle=page.locator('#dashboardReview');
+  assert.equal(await toggle.getAttribute('aria-expanded'),null);await toggle.focus();await page.keyboard.press('Enter');
+  assert.ok(page.url().includes('page=positions'));
   assert.equal(await page.locator('#qualityReviewHeading').evaluate(el=>document.activeElement===el),true);
   assert.equal(await page.locator('#qualityReviewList .quality-review-card').count(),3,'fresh unverified source is distinct from two valuation warnings');
   assert.match(await page.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 2 Positionen/);
@@ -44,7 +42,7 @@ try{
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await mkdir('artifacts/gates/structured-quality',{recursive:true});await page.screenshot({path:'artifacts/gates/structured-quality/review-'+engine+'-'+width+'.png',fullPage:true});
   await page.locator('[data-action="close-quality-review"]').click();assert.equal(await toggle.evaluate(el=>document.activeElement===el),true);
-  await toggle.click();assert.equal(await toggle.getAttribute('aria-expanded'),'false');await toggle.evaluate(async el=>{await Promise.all(el.getAnimations({subtree:true}).map(a=>a.finished.catch(()=>{})));});
+  await toggle.evaluate(async el=>{await Promise.all(el.getAnimations({subtree:true}).map(a=>a.finished.catch(()=>{})));});
   await page.screenshot({path:'artifacts/gates/structured-quality/hero-'+engine+'-'+width+'.png'});
  }
  assert.deepEqual(await state(),before,'disclosure, review, filtering and return never write portfolio');

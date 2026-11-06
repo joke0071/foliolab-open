@@ -29,10 +29,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    }
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await p.screenshot({path:`${out}/${engine}-${width}-positions.png`,fullPage:true});
    await nav('dashboard');
-   assert.match(await p.locator('#heroValueLabel').innerText(),/Bekannte Teilsumme/);assert.equal(await p.locator('#totalValue').innerText(),money(3));
-   assert.match(await p.locator('#summaryStats').innerText(),/Bekannte Teilsumme · 1 Position ohne Kurs/);assert.equal(await p.locator('#donutShare').innerText(),'Teilsumme');
+   assert.match(await p.locator('#dashboardValueLabel').innerText(),/Bekannte Teilsumme/);assert.equal(await p.locator('#totalValue').innerText(),money(3));
+   assert.match(await p.locator('#totalHint').innerText(),/Bekannte Teilsumme · 2 Positionen ohne Kurs/);assert.equal(await p.locator('#donutShare').innerText(),'Teilsumme');
    assert.match(await p.locator('#allocationLegend').innerText(),/2 Positionen ohne Kurs/);
-   await p.locator('#heroReviewToggle').click();assert.match(await p.locator('#heroQualitySummary').innerText(),/Bekannte Teilsumme · 2 Positionen ohne Kurs/);await p.locator('#heroReviewToggle').click();
+   assert.match(await p.locator('#totalHint').innerText(),/Bekannte Teilsumme · 2 Positionen ohne Kurs/);await p.locator('#dashboardReview').click();assert.ok(await p.locator('#qualityReviewPanel').isVisible());await p.locator('[data-action=close-quality-review]').click();
    await p.locator('[data-provider-id="p"]>summary').click();
    for(const id of ['missing-etf','missing-crypto','zero-holding','sourced-zero','positive'])assert.equal(await p.locator('[data-position-id="'+id+'"] .provider-holding-right strong').innerText(),id.startsWith('missing-')?'Nicht bewertet':money(id==='positive'?3:0));
    assert.match(await p.locator('.aggregate-provider-note').innerText(),/Bekannte Teilsumme · 2 Positionen ohne Kurs/);assert.match(await p.locator('.aggregate-account-note').innerText(),/2 Positionen ohne Kurs/);
@@ -45,7 +45,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const fixture=structuredClone(missingOnly);if(sourced)for(const position of fixture.positions)position.quoteSource='SYNTHETIC proven zero';
    await p.evaluate(async fixture=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();await s.initialize();await s.save(fixture);s.close();},fixture);await p.reload();await ready();const unchanged=await state();
    assert.equal(await p.locator('#totalValue').innerText(),sourced?money(0):'Nicht bewertet');
-   assert.match(await p.locator('#heroValueLabel').innerText(),sourced?/Gesamtvermögen/:/Vermögen nicht bewertet/);
+   assert.match(await p.locator('#dashboardValueLabel').innerText(),sourced?/Gesamtvermögen/:/Vermögen nicht bewertet/);
    assert.equal(await p.locator('#donutTotal').innerText(),sourced?'€ 0':'–');
    assert.equal(await p.locator('#donutTotal').getAttribute('title'),sourced?money(0):'Nicht bewertet');
    assert.equal(await p.locator('#donutShare').innerText(),sourced?'Gesamtwert':'Nicht bewertet');
