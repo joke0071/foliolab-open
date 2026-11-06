@@ -1,0 +1,229 @@
+{
+  "status": "DEPLOYED / LIVE_RETRY_PENDING",
+  "main": "9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+  "tree": "e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e",
+  "run": 42259048695,
+  "deployJob": 128045832852,
+  "failedOriginalLiveJob": 128049757017,
+  "artifacts": [
+    {
+      "id": 13523782569,
+      "name": "ci-stage-9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+      "bytes": 353,
+      "sha256": "892b2dcaf4b2c6b61c23aa4de8d2e0ec6b106d600122cfaeb72d248d74befb64",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13525342166,
+      "name": "dialog-visual-reference",
+      "bytes": 934094,
+      "sha256": "7f40cd891f93d5ada42e7057d09f6080dc5da2114d59c3f547eaafd4fc2e2802",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13525317168,
+      "name": "release-gates-9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+      "bytes": 61929480,
+      "sha256": "efa9ec9d692c9bb16defde1557ad584dc1ce145adaddafb54a5010b39147f6b0",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 742,
+      "jsonReports": 82,
+      "pngsDecoded": 657,
+      "failureFlags": []
+    },
+    {
+      "id": 13525193152,
+      "name": "github-pages",
+      "bytes": 555759,
+      "sha256": "7e1496a813e35976c1c849832a0bc006130ee1943cc99b09cffb4a94423848d2",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13526850428,
+      "name": "production-live-acceptance-9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+      "attempt": 1,
+      "bytes": 306772,
+      "sha256": "b9480ea3e8ca51c771d00861d679a365ba9302361f9b504ca5460c8ea5384c1f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 9,
+      "jsonReports": 1,
+      "pngsDecoded": 6,
+      "acceptanceResult": "FAIL",
+      "failure": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#mobileNav [data-page=\"more\"]')\n",
+      "originalRetained": true
+    },
+    {
+      "id": 13524003612,
+      "name": "cross-engine-gates-9bf59ae6559bc7199c343acb155b8c50b8b2110b-1",
+      "bytes": 58286723,
+      "sha256": "41984f705221c72cc5ffc335c5d74bcf2f857d6b40ee8450853bb59b643e0b7a",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 490,
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13524107345,
+      "name": "cross-engine-gates-9bf59ae6559bc7199c343acb155b8c50b8b2110b-2",
+      "bytes": 11605581,
+      "sha256": "3abea39f89075b1a9862ad9935f473e2aec6f45f2bb8b394d906fabec527cf1e",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 92,
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13524609418,
+      "name": "cross-engine-gates-9bf59ae6559bc7199c343acb155b8c50b8b2110b-3",
+      "bytes": 63292428,
+      "sha256": "bee7d9ac8be250cfd7769731b5e4d893e46016985a552662eb334980c8e7d686",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 774,
+      "jsonReports": 81,
+      "pngsDecoded": 692,
+      "failureFlags": []
+    }
+  ],
+  "mainThreeFill": [
+    {
+      "engine": "chromium",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "dialect": "depot13/account8",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot13/account8",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot13/account8",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "ordinaryTLS": {
+    "assetMatches": 151,
+    "rootIndexMatch": true,
+    "requests": 152
+  },
+  "independentUnmodifiedCore": {
+    "result": "PASS",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "scans": 18,
+    "proxyCertificateException": true,
+    "browser": "Chromium141",
+    "playwright": "1.62.1",
+    "axe": "4.10.3",
+    "testGitBlob": "558b8ec4af77c2c7053f27efd196558e7e41c5cf"
+  },
+  "retry": {
+    "scope": "Only failed live job",
+    "count": 1,
+    "cause": "Initial navigation timeout, exact cause unknown; not reproduced in 2 fresh starts and unchanged full core gate"
+  },
+  "accepted": false
+}
