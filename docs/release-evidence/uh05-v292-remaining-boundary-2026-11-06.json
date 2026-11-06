@@ -1,0 +1,376 @@
+{
+  "main": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+  "tree": "129c9cac1391f7a306087395c6fc42a01e8d0d4b",
+  "version": "v292 LIVE_ACCEPTED",
+  "scope": "SYNTHETIC read-only proof-inspection boundary only; no new N:M/FX import, model/IDB writes, private-original or production acceptance",
+  "cases": 26,
+  "offeredCases": 8,
+  "blockedCases": 18,
+  "results": [
+    {
+      "name": "three-buy-one-cash",
+      "reverse": false,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash",
+      "reverse": true,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-sell-one-cash",
+      "reverse": false,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-sell-one-cash",
+      "reverse": true,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-equal-distinct-bank-identities",
+      "reverse": false,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-equal-distinct-bank-identities",
+      "reverse": true,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "four-buy-one-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "four-buy-one-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-two-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-two-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-three-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-three-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-eur-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "source-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-eur-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "source-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-exact-export-overlap",
+      "reverse": false,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "overlap-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-exact-export-overlap",
+      "reverse": true,
+      "expectedOffers": 1,
+      "actualOffers": 1,
+      "proofVersion": 3,
+      "reviewCount": 0,
+      "documentaryStatus": [
+        "overlap-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-conflicting-bank-payload",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "conflict"
+      ],
+      "identityConflicts": 2,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-buy-one-cash-conflicting-bank-payload",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "conflict"
+      ],
+      "identityConflicts": 2,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "one-buy-two-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-cash-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "one-buy-two-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-cash-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "one-sell-two-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-cash-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "one-sell-two-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-cash-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-two-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "two-buy-two-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-usd-cash",
+      "reverse": false,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    },
+    {
+      "name": "three-usd-one-usd-cash",
+      "reverse": true,
+      "expectedOffers": 0,
+      "actualOffers": 0,
+      "proofVersion": null,
+      "reviewCount": 1,
+      "documentaryStatus": [
+        "multiple-depot-review"
+      ],
+      "identityConflicts": 0,
+      "sourceBytesUnchanged": true,
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS"
+}
