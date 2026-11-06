@@ -1,3 +1,12 @@
+## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / Chromium SUCCESS, vollständige Live-Abnahme offen – 06.11.2026
+
+- Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Mainlauf42288193893 Versuch1:1258Tests/0Fehler/Skips, alle3Cross-Enginejobs undDeployment128145853225 SUCCESS. [Main-/Deploybeleg](release-evidence/v292-pr311-main-deployed.json).
+- Sieben tatsächlicheZIPs/API-/Upload-/lokalerHash/Größe/CRC PASS;196JSON ohneFehlerflags/1917dekodiertePNGs. Alle6aktuellen3:1Engine-/Dialektberichte PASS. Pages13539692892:genau151erwarteteAppdateien, sämtlicheMainGitblobs exakt. GewöhnlichesTLS151Assets+Root nachDeployment PASS; keineZertifikatsausnahme. App/SWv292 unverändert.
+- **Livejob128146022885 IN_PROGRESS**. VollständigerChromium-Produktionsschritt SUCCESS, Firefox/WebKit-Installation SUCCESS, produktiveCross-Suite läuft. FinaleZIP-/Berichts-/Bildqualifikation stehtaus. **v292 NICHT LIVE_ACCEPTED**; v291nicht erneutabnehmen. FrühereersteNavfehler erhalten/UrsacheUNKNOWN; aktuellerChromiumschrittbestandohneRetry. KeineUrsachenbehebungbehauptet.
+- KeineCI wiederholt/dupliziert/abgebrochen, keinneuerProduktstrang. NächsterSchritt: ausschließlich bestehendenLivejob samtvollständigenFinanz-/CAS-/Recovery-/Offline-/3:1-Prüfungenaller3Engines bis tatsächlichemAbschluss qualifizieren. AlleAufträge/Schutzverträge/EFF01/HND01 erhalten; alleinigerOwner0bfa85b5b416ACTIVE; CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / PR311 MERGED / v292 RELEASE_IN_PROGRESS – 06.11.2026
 
 - PR311 kontrolliert mit erwartetem Head `98ebf55448d1c4059c0817d6afdaad5a369f1390` gemergt. Main **`2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`**, Tree **`129c9cac1391f7a306087395c6fc42a01e8d0d4b`** exakt gleich geprüftem Kandidaten/virtuellemMerge.
