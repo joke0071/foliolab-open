@@ -59,9 +59,10 @@ try {
    }
    assert.equal(await page.locator('#snapshotManager').getAttribute('open'),null);
    await page.locator(nav+' [data-page="dashboard"]').click();
-   assert.ok(await page.locator('#summaryStats .stat').count()===4);
-   const summary=await page.locator('#summaryStats').innerText();
-   for(const heading of ['Wertpapiere','Guthaben','Kryptowährungen','Veränderung'])assert.match(summary,new RegExp(heading));
+   assert.equal(await page.locator('.hero,#summaryStats').count(),0);
+   assert.match(await page.locator('#dashboardValueLabel').innerText(),/Gesamtvermögen/);
+   assert.match(await page.locator('#dashboardChangeHint').innerText(),/inkl. Geldflüsse · keine Rendite/);
+   assert.match(await page.locator('#dashboardChange').innerText(),/-.*150,00/);
    assert.ok(await page.locator('#miniChart .chart-y-labels').isVisible());
    const axis=await page.locator('#miniChart .chart-y-labels span').allTextContents();
    assert.deepEqual(axis,['930 €','818 €','705 €'],'readable EUR labels retain the fixture bounds and rounded middle tick');

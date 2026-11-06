@@ -44,7 +44,7 @@ import {positionIconName} from './position-icons.js';
 import {installCredentialVisibility} from './credential-visibility.js';
 import {createDialogDiscardGuard} from './dialog-discard.js';
 import {economicFormGuidance} from './economic-form-ui.js';
-import {renderSummaryTiles,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
+import {wealthChangePresentation,renderProviderAccounts,drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {groupExtraWealthPeriods,layoutPeriodMore,bindPeriodMore,renderChartPeriodButtons,filterChartPeriod,syncChartPeriodButtons} from './chart-periods.js';
 import {positionDetailMarkup,loadPositionDetail} from './position-detail-ui.js';
 import {availablePositionPeriods} from './position-history.js';
@@ -96,7 +96,7 @@ let model,loadFailure=null;try{model=await portfolioStore.initialize();}catch(e)
 let headerStatus=null,lastStorageError='';
 let saving=false,recoveryDownloaded=false,recoveryOriginal=null,csvReceipt=null;
 let incomeYear='',incomeAccount='',incomeLimit=100;
-let reviewKind='all',reviewAccount='',qualityReviewOpen=false,qualityReviewOrigin='positions',heroReviewExpanded=false,qualityReviewLimit=50;
+let reviewKind='all',reviewAccount='',qualityReviewOpen=false,qualityReviewOrigin='positions',qualityReviewLimit=50;
 let qualityReviewInitialIds=new Set();
 let otherTabChangedPortfolio=false;
 let referenceSelecting=false,selectedReferenceIds=[],referenceVisibleIds=[],referenceMatchingIds=[],referenceLimit=100,referenceRemovalReceipt=null;
@@ -138,7 +138,7 @@ function notify(message,error=false){const box=$('toast');box.textContent=messag
 function empty(message){return `<div class="empty">${esc(message)}</div>`;}
 function options(values,selected){return values.map(([id,label])=>`<option value="${esc(id)}" ${id===selected?'selected':''}>${esc(label)}</option>`).join('');}
 function field(label,name,val='',type='text',attributes=''){return `<label class="field"><span>${label}</span><input name="${name}" type="${type}" value="${esc(val)}" ${attributes}></label>`;}
-function go(next,{review=false}={}){qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
+function go(next,{review=false}={}){qualityReviewOpen=next==='positions'&&review;if(!PAGES.some(x=>x[0]===next))next='dashboard';if(next!=='history'){referenceSelecting=false;selectedReferenceIds=[];}page=next;document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===next+'Page'));document.querySelectorAll('[data-page]').forEach(x=>{const active=x.dataset.page===next;x.classList.toggle('active',active);x.setAttribute('aria-current',active?'page':'false');});const [,title,,kicker]=PAGES.find(x=>x[0]===next);$('pageTitle').textContent=next==='history'?'Vermögensentwicklung':title;$('pageDescription').textContent=PAGE_DESCRIPTIONS[next]||'';$('pageKicker').textContent=kicker;$('pageKicker').hidden=['dashboard','more'].includes(next);history.replaceState(null,'',location.pathname+(next==='dashboard'?'':`?page=${next}`));window.scrollTo({top:0,behavior:'instant'});render();}
 function initNav(){const build=(mobile=false)=>PAGES.map(([key,label,ico])=>`<button type="button" data-page="${key}" aria-label="${label}">${svg(ico)} <span>${label}</span></button>`).join('');$('sidebarNav').innerHTML=build();$('mobileNav').innerHTML=build(true);document.querySelectorAll('[data-history-icon]').forEach(el=>{el.innerHTML=svg(el.dataset.historyIcon,17);});$('refreshIcon').innerHTML=svg('refresh',17);$('folderIcon').innerHTML=svg('folder',26);$('settingsGear').innerHTML=svg('gear',19);$('accountsIcon').innerHTML=svg('bank',19);$('securityIcon').innerHTML=svg('shield',19);document.querySelectorAll('[data-page]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.page)));document.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>go(btn.dataset.go)));go(new URL(location.href).searchParams.get('page')||'dashboard');}
 function recoveryControlAllowed(control){return control.matches('[data-page],[data-header-status],.header-status-dialog button,.icon-close')||['downloadRaw','recoverBackup','backupFile','installButton','cancelDialog','closeDialog','wizardClose','wizardPrev'].includes(control.id);}
 function syncPortfolioState(){
@@ -151,7 +151,7 @@ function syncPortfolioState(){
  headerStatus?.refresh();
  $('portfolioStorageState').textContent=unavailable?'Speicher nicht verfügbar. Keine Änderungen gespeichert.':conflict?'Datenstand veraltet. Bitte neu laden.':portfolioStore.isIndexedDB?'Transaktionale IndexedDB aktiv':'Bisheriger Browser-Speicher aktiv';
  if(unavailable){
-  $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';
+  $('totalValue').textContent='–';$('totalHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardChange').textContent='–';$('dashboardChangeHint').textContent='Portfolio derzeit nicht lesbar.';$('dashboardReview').hidden=true;
   $('onboarding').classList.add('hidden');$('onboarding').replaceChildren();
   $('providerSettings').textContent='Anbieter und Konten derzeit nicht verfügbar.';
   for(const id of ['dashboardPage','historyPage','positionsPage','bookingsPage']){
@@ -167,7 +167,7 @@ function syncPortfolioState(){
  }else{
   const aggregate=aggregateValuePresentation(model.positions,totalEUR(model),money);
   $('totalValue').textContent=aggregate.value;
-  $('heroValueLabel').textContent='✧ '+(aggregate.allUnknown?'Vermögen nicht bewertet':aggregate.missing?'Bekannte Teilsumme':'Gesamtvermögen');
+  $('dashboardValueLabel').textContent=(aggregate.allUnknown?'Vermögen nicht bewertet':aggregate.missing?'Bekannte Teilsumme':'Gesamtvermögen');
   document.querySelectorAll('.portfolio-unavailable-message').forEach(node=>node.remove());
   document.querySelectorAll('[data-recovery-disabled]').forEach(control=>{control.disabled=false;delete control.dataset.recoveryDisabled;});
  }
@@ -180,7 +180,7 @@ function openQualityReview(){
 }
 function closeQualityReview(){
  const origin=qualityReviewOrigin==='dashboard'?'dashboard':'positions';go(origin);
- const target=origin==='dashboard'?$('heroReviewToggle'):$('positionFilters').querySelector('[data-filter="__review"]');
+ const target=origin==='dashboard'?(!$('dashboardReview').hidden?$('dashboardReview'):null):$('positionFilters').querySelector('[data-filter="__review"]');
  if(target)target.focus({preventScroll:true});else{$('pageTitle').tabIndex=-1;$('pageTitle').focus({preventScroll:true});}
 }
 const reviewLabels={missing:'Fehlende Kurse',outdated:'Veraltete Kursdaten',derived:'Abgeleitete Bewertungen',review:'Unklare Kursstände'};
@@ -213,25 +213,14 @@ function renderQualityReview(review,items){
  }).join(''):empty(review.groups.length?'Keine Positionen für diese Prüffilter.':'Aktuell keine Prüfhinweise.');
  $('qualityReviewMore').innerHTML=ordered.length>qualityReviewLimit?'<button type="button" class="btn outline" data-action="more-quality-review">Weitere '+Math.min(50,ordered.length-qualityReviewLimit)+' Positionen anzeigen</button>':'';
 }
-function renderDashboard(){const total=totalEUR(model),positions=model.positions.length,providers=model.providers.length,crypto=model.positions.filter(p=>p.kind==='crypto').reduce((sum,p)=>sum+valueEUR(p),0);const aggregate=aggregateValuePresentation(model.positions,total,money);$('totalValue').textContent=aggregate.value;
-  const issues=valuationIssues(model),hint=$('totalHint'),summary=$('heroQualitySummary');
-  $('totalValue').classList.toggle('hero-value-long',money(total).length>16);
-  summary.replaceChildren();summary.hidden=!heroReviewExpanded;
-  hint.replaceChildren();
-  if(issues.length){
-   const review=document.createElement('button');
-   review.type='button';review.id='heroReviewToggle';review.className='hero-valuation-link';
-   review.innerHTML=`${issues.length} Position${issues.length===1?'':'en'} prüfen <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>`;
-   review.setAttribute('aria-expanded',String(heroReviewExpanded));review.setAttribute('aria-controls','heroQualitySummary');
-   review.title=valuationHeadline(valuationWarnings(model))||'Betroffene Positionen ansehen';
-   review.setAttribute('aria-label',`${issues.length} Position${issues.length===1?'':'en'} mit eingeschränkter Bewertung anzeigen`);
-   review.addEventListener('click',()=>{heroReviewExpanded=!heroReviewExpanded;review.setAttribute('aria-expanded',String(heroReviewExpanded));summary.hidden=!heroReviewExpanded;});
-   summary.innerHTML=(aggregate.note?'<p>'+esc(aggregate.note)+'</p>':'')+'<div class="hero-quality-counts">'+reviewCountsMarkup(valuationWarnings(model))+'</div><button type="button" class="btn outline" data-action="open-quality-review">Prüfbereich öffnen</button>';
-   hint.append(review);
-  }else{heroReviewExpanded=false;summary.hidden=true;hint.textContent=`${positions} Position${positions===1?'':'en'} bei ${providers} Anbieter${providers===1?'':'n'}`;}
+function renderDashboard(){const total=totalEUR(model);const aggregate=aggregateValuePresentation(model.positions,total,money);$('totalValue').textContent=aggregate.value;
+  $('totalHint').textContent=aggregate.note||'';
+  const review=structuredQualityReview(model),chip=$('dashboardReview');
+  chip.hidden=!review.groups.length;
+  chip.textContent=review.groups.length+' Position'+(review.groups.length===1?'':'en')+' prüfen';
+  chip.setAttribute('aria-label',chip.textContent+' · Prüfbereich öffnen');
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    const wealth=wealthView();
-   $('summaryStats').innerHTML=renderSummaryTiles(model,money,valueEUR,esc,dateLabel,wealth);
   const alloc=allocationBreakdown(model,valueEUR,TYPES);
   const previousKey=$('allocationLegend').querySelector('[data-allocation-key][aria-pressed="true"]')?.dataset.allocationKey||null;
   const pie=renderAllocationDonut(alloc,{money,esc,colors,netTotal:total,selectedKey:previousKey,valuation:aggregate});
@@ -247,6 +236,8 @@ function renderDashboard(){const total=totalEUR(model),positions=model.positions
   const shots=wealth.samples;
   $('miniHistoryStatus').textContent=wealth.basis==='observed'?'Datenbasis: Stichtage':wealth.label;
   const visible=filterChartPeriod(shots,'wealth',miniRange);
+  const change=wealthChangePresentation(wealth,visible,money,dateLabel,{period:true});
+  $('dashboardChange').textContent=change.value;$('dashboardChangeHint').textContent=change.note;
   $('miniChart').innerHTML=drawChart(visible);
   attachChartInteractions($('miniChart'));
   syncChartPeriodButtons($('miniChartPeriods'),'data-mini-range',miniRange,

@@ -1989,3 +1989,29 @@
 }
 
 .flatex-net-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.flatex-net-actions .btn{max-width:100%;white-space:normal;min-height:44px}
+
+/* UI300: one compact wealth summary at the existing chart, with a direct review entry. */
+.dashboard-review-entry:has([hidden]){display:none}
+.dashboard-review-entry{display:flex;justify-content:flex-end;margin:0 0 12px}
+.dashboard-review-chip{min-height:44px;max-width:100%;padding:9px 14px;border:1px solid #d8e3da;border-radius:24px;background:#f4f7f3;color:#315b43;font-size:13px;font-weight:650;line-height:1.4;text-align:left}
+.dashboard-review-chip::before{content:'!';display:inline-grid;place-items:center;width:17px;height:17px;margin-right:8px;border:1px solid currentColor;border-radius:50%;font-weight:750}
+.dashboard-review-chip:hover{background:#e8f1e8}
+.dashboard-metrics{display:flex;flex-wrap:wrap;gap:18px 32px;margin:4px 0 20px;align-items:flex-start}
+.dashboard-metrics>div{min-width:0;flex:1 1 180px}
+.dashboard-metric-label{display:block;color:#506b59;font-size:12px;line-height:1.5}
+.dashboard-metrics strong{display:block;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.25;margin:5px 0 0}
+#totalValue{font-size:clamp(24px,3vw,32px);font-weight:750;letter-spacing:-.7px}
+#dashboardChange{font-size:18px;font-weight:650}
+.dashboard-metrics .small-help{margin:5px 0 0;line-height:1.5}
+#pageKicker[hidden],#dashboardReview[hidden]{display:none!important}
+@media(max-width:720px){
+ .mobile-nav{border-top:0;box-shadow:none}
+ .mobile-nav button,.mobile-nav button.active{background:transparent;border:0;box-shadow:none;min-height:44px;color:#53675b}
+ .mobile-nav button.active{color:#245b3f;font-weight:850}
+ .mobile-nav button.active svg{stroke-width:2.4}
+ .mobile-nav button.active span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+ .mobile-nav button:focus-visible{outline:2px solid #245b3f;outline-offset:-2px}
+ .dashboard-review-entry{margin-bottom:10px}
+ .dashboard-metrics{gap:14px;margin-bottom:16px}
+ .dashboard-metrics>div{flex-basis:100%}
+}

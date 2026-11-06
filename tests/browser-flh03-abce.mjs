@@ -27,7 +27,7 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
   const original=await read();await p.reload();await p.locator('#downloadRaw').waitFor();
   for(const [width,height] of [[320,360],[390,844],[430,740],[667,320],[768,500],[1024,768],[1440,900]]){
    await p.setViewportSize({width,height});await nav('dashboard');
-   assert.equal(await p.locator('#onboarding').isVisible(),false);assert.equal(await p.locator('#summaryStats').isVisible(),false);
+   assert.equal(await p.locator('#onboarding').isVisible(),false);assert.equal(await p.locator('#summaryStats').count(),0);assert.equal(await p.locator('#dashboardChange').innerText(),'–');
    assert.equal(await p.locator('#totalValue').textContent(),'–');
    for(const id of ['localPortfolioStatus','mobilePortfolioStatus'])assert.match(await p.locator('#'+id).textContent(),/nicht verfügbar/);
    await scan('recovery '+width+'x'+height);
@@ -52,10 +52,10 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
    const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
   },base);
   await p.reload();await nav('dashboard');const proven=await read();
-  assert.match(await p.locator('#summaryStats .stat').last().innerText(),/60,00/);assert.match(await p.locator('#summaryStats .stat').last().innerText(),/inkl. Geldflüsse · keine Rendite/);
-  assert.ok(!(await p.locator('#summaryStats').innerText()).includes('Stichtage nötig'));assert.deepEqual(await read(),proven);
+  assert.match(await p.locator('.dashboard-change').last().innerText(),/60,00/);assert.match(await p.locator('.dashboard-change').last().innerText(),/inkl. Geldflüsse · keine Rendite/);
+  assert.ok(!(await p.locator('.dashboard-change').innerText()).includes('Stichtage nötig'));assert.deepEqual(await read(),proven);
   await p.evaluate(async base=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base));const s=new PortfolioStorage(),m=await s.initialize();m.openingPositions.find(p=>p.positionId==='cash').asOf=null;await s.save(m);s.close();},base);
-  await p.reload();await nav('dashboard');assert.match(await p.locator('#summaryStats .stat').last().innerText(),/Teilportfolio/);assert.equal(await p.locator('#summaryStats .stat-value').last().innerText(),'–');
+  await p.reload();await nav('dashboard');assert.match(await p.locator('.dashboard-change').last().innerText(),/Teilportfolio/);assert.equal(await p.locator('#dashboardChange').innerText(),'–');
   await p.evaluate(async ({base,record})=>{const {PortfolioStorage}=await import(new URL('src/browser-portfolio-storage.js',base)),{safeImport}=await import(new URL('src/model.js',base));const s=new PortfolioStorage();await s.initialize();const m=safeImport(JSON.parse(record.raw));m.settings=record.settings;await s.save(m);s.close();},{base,record:proven});
   await p.reload();await nav('dashboard');const provenRestored=await read();
   // C: all relevant nested disclosures actually open, including the six retained help nodes after direct EODHD retirement.

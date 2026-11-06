@@ -19,20 +19,19 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
  await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));
  await nav('positions');await p.locator('#positionSearch').fill('SYNTHETIC unmatched search');await p.locator('#positionSort').selectOption('name');await p.locator('#positionArchiveFilter').selectOption('active');
  const before=await record();
- for(const width of [320,360,390,412,430,1440]){
+ for(const width of [320,360,390,412,430,768,1440]){
   await p.setViewportSize({width,height:900});await nav('dashboard');
-  const toggle=p.locator('#heroReviewToggle');assert.match(await toggle.innerText(),/3 Positionen prüfen/);assert.equal(await toggle.getAttribute('aria-expanded'),'false');
-  assert.ok(await p.locator('#totalValue').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const card=el.closest('.hero').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=card.left&&r.right<=card.right&&r.top>=card.top&&r.bottom<=card.bottom);}),'entire large hero amount fits');
-  await toggle.focus();await p.keyboard.press('Enter');assert.equal(await toggle.getAttribute('aria-expanded'),'true');assert.ok(await p.locator('#dashboardPage').isVisible(),'disclosure does not navigate');
-  await p.locator('[data-action=open-quality-review]').click();assert.ok(await p.locator('#qualityReviewPanel').isVisible());assert.equal(await p.locator('#qualityReviewHeading').evaluate(el=>el===document.activeElement),true);
+  const toggle=p.locator('#dashboardReview');assert.match(await toggle.innerText(),/4 Positionen prüfen/);assert.equal(await toggle.getAttribute('aria-expanded'),null);
+  assert.ok(await p.locator('#totalValue').evaluate(el=>{const range=document.createRange();range.selectNodeContents(el);const card=el.closest('.dashboard-metrics').getBoundingClientRect();return [...range.getClientRects()].every(r=>r.left>=card.left&&r.right<=card.right&&r.top>=card.top&&r.bottom<=card.bottom);}),'entire large compact amount fits');
+  await toggle.focus();await p.keyboard.press('Enter');assert.ok(await p.locator('#qualityReviewPanel').isVisible());assert.equal(await p.locator('#qualityReviewHeading').evaluate(el=>el===document.activeElement),true);
   assert.equal(await p.locator('.quality-review-card').count(),4,'three valuation issues and one additional provenance issue');assert.ok(await p.locator('[data-review-position=quality-missing]').isVisible(),'archived warning is included independently of normal view');
   assert.match(await p.locator('#qualityReviewSummary').innerText(),/Aktuelle Bewertung: 3 Positionen/);assert.equal(await p.locator('#positionSearch').inputValue(),'SYNTHETIC unmatched search');assert.equal(await p.locator('#positionSort').inputValue(),'name');assert.equal(await p.locator('#positionArchiveFilter').inputValue(),'active');
   assert.equal(await p.locator('#positionList .holding-expand[open]').count(),0);await scan('dedicated quality review '+width);scans.push({page:'structured-quality',width,height:900});
   await mkdir('artifacts/gates/structured-quality',{recursive:true});await p.screenshot({path:'artifacts/gates/structured-quality/'+engine+'-'+width+'.png',fullPage:true});
-  await p.locator('[data-action=close-quality-review]').click();assert.equal(await toggle.evaluate(el=>el===document.activeElement),true);await toggle.click();assert.equal(await toggle.getAttribute('aria-expanded'),'false');
+  await p.locator('[data-action=close-quality-review]').click();assert.equal(await toggle.evaluate(el=>el===document.activeElement),true);assert.equal(await toggle.getAttribute('aria-expanded'),null);
  }
- assert.deepEqual(await record(),before,'all disclosure/review/return/filters are read-only');
- await p.locator('#heroReviewToggle').click();await p.locator('[data-action=open-quality-review]').click();
+ assert.deepEqual(await record(),before,'all direct review/return/filters are read-only');
+ await p.locator('#dashboardReview').click();
  await p.context().setOffline(true);await nav('positions');await p.locator('[data-filter=__review]').click();assert.ok(await p.locator('[data-action=refresh-quality-sources]').isDisabled(),'offline source action is disabled');await p.context().setOffline(false);
  assert.deepEqual(await record(),before,'offline navigation does not write');
  await p.locator('[data-review-position=quality-missing] [data-action=edit-position]').click();await p.locator('#dialogFields [name=price]').fill('42');
@@ -45,5 +44,5 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
  assert.equal(await p.evaluate(()=>document.activeElement.dataset.id),'quality-missing','focus returns to the matching refreshed card');
  const after=await record(),old=JSON.parse(before.raw),updated=JSON.parse(after.raw);assert.equal(after.revision,before.revision+1);assert.equal(updated.positions.find(x=>x.id==='quality-missing').priceExact,'42');assert.ok(!updated.positions.find(x=>x.id==='quality-missing').quoteQuality);
  assert.deepEqual(updated.positions.filter(x=>x.id!=='quality-missing'),old.positions.filter(x=>x.id!=='quality-missing'));for(const key of ['journalEntries','bookings','externalCashFlows','openingPositions'])assert.deepEqual(updated[key],old[key],'existing editor preserves '+key);
- console.log(engine+': actual delivered quality review,6 widths/Axe/archived/source scopes/focus/offline/no writes; explicit editor correction/progress/one revision PASS');
+ console.log(engine+': actual delivered quality review,7 widths/Axe/archived/source scopes/focus/offline/no writes; explicit editor correction/progress/one revision PASS');
 }
