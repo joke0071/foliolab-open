@@ -1,3 +1,11 @@
+## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
+
+PR310/Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. Automatischer Mainlauf42277596230 Versuch1:1252Tests/0Fehler/Skips, Hauptjob/alle3Cross-Enginejobs/Deployment128111104665 SUCCESS. Sieben tatsächlicheZIPs/API-/Uploadlog-/lokalerHash/Größe/CRC PASS;196JSON ohneFehlerflags/1917dekodiertePNGs. Pages13534824155 enthält151exakteMainGitblobs; SWv292/Appassets unverändert. [Main-/Deploybeleg](release-evidence/v292-pr310-main-deployed.json), [Integration](release-evidence/v292-pr310-integration-qualified.json).
+
+**Livejob128111377213 IN_PROGRESS**: tatsächlicheHTTPS-Produktion im unveränderten vollständigenChromium/Firefox/WebKit-Prüfmanifest, jetzt55MinutenGesamtbudget. **v292 NICHT LIVE_ACCEPTED.** Erst sämtlicheLiveprüfungen/Logs/Artefakte/Browsernachweise/Pages/TLS abschließen. v291nicht erneutabnehmen. Keine CI dupliziert/abgebrochen/wiederholt, keinneuerProduktstrang. PrivateV68 mitallen3948V67Original-/Belegdateien bytegleich erhalten. Alle weiterenUH05-/UI300-/QUALITY298-/CI229-/Androidaufträge undSchutzverträge erhalten. AlleinigerOwner0bfa85b5b416ACTIVE; CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / PR310 MERGED / v292 RELEASE_IN_PROGRESS – 06.11.2026
 
 PR310 kontrolliert mit erwartetem Head `5869e6fabf39abb90dc5fe566aa0b0922da54251` gemergt. Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd` exakt gleich geprüftem Kandidaten/virtuellemMerge. [Vollständige Integration](release-evidence/v292-pr310-integration-qualified.json):42271163151 Versuch1 SUCCESS,1252Tests/0Fehler/Skips, Wallet42271163392SUCCESS,7ZIPs/197JSON/1940dekodiertePNGs/API-/Upload-/lokalerHash+Größe/CRC PASS; alle6neuen3:1Engine-/Dialektberichte undBilder geprüft. FrischeBase/Head/Tree/Reviews/Threads/OwnerGuard PASS. NativeBranchProtection nicht behauptet.
