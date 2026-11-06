@@ -53,9 +53,11 @@ test('external cash classification, rewards, principal transfer and fees reverse
 });
 test('archive cleanup preserves v5 and independent reference archive',()=>{
  for(const reference of [false,true]){
-  const f=imported(),btc=ledgerEvidence(ledgerModel()),input={receipts:btc.purchaseEvidence.receipts,operations:[]},protectedModel=confirmUnifiedBitcoin(btc,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(btc,input,'wallet').baseline});
-  for(const key of ['providers','accounts','positions','openingPositions','bookings','journalEntries','externalCashFlows'])f.next[key].push(...protectedModel[key]);
-  f.next.version=5;f.next.purchaseEvidence=protectedModel.purchaseEvidence;f.next.walletHistory=protectedModel.walletHistory;
+  const f=imported(),btc=ledgerEvidence(ledgerModel()),input={receipts:btc.purchaseEvidence.receipts,operations:[]};
+  // Compose the sources before creating protected journals, using the real global sequence.
+  for(const key of ['providers','accounts','positions','openingPositions','bookings','journalEntries','externalCashFlows'])f.next[key].push(...btc[key]);
+  f.next.purchaseEvidence=btc.purchaseEvidence;f.next.walletHistory=btc.walletHistory;
+  f.next=confirmUnifiedBitcoin(f.next,input,'wallet',{confirmed:true,externalFunding:true,baseline:previewUnifiedBitcoin(f.next,input,'wallet').baseline});
   if(reference)f.next.snapshots.push({id:'shot',date:'1999-01-01',total:0,totalEURExact:'0',source:'legacy',valuationStatus:'unknown',quoteTimes:[],revisions:[],note:''});
   setArchivePresentation(f.next,{bookingIds:f.next.bookings.filter(b=>b.importSource?.sourceId==='kraken-uh03-v1').map(b=>b.id),referenceIds:reference?['shot']:[]});
   const end=withdraw(f);assert.equal(end.version,5);

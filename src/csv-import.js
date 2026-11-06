@@ -1,5 +1,5 @@
 import {validateNetSettlement,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension,validateNetAugmentationTransition} from './flatex-net-settlement.js';
-import {importSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
+import {importSourceKey,nativeBankSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
 import {safeImport,backup} from './model.js';
@@ -88,6 +88,8 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
     return JSON.stringify(previous)===JSON.stringify(current);
    };
    const key=importSourceKey(source);
+   if(evidence&&draft.bookings.some(b=>nativeBankSourceKey(b.importSource)===nativeBankSourceKey(source)&&b.accountId!==source.accountId))
+    throw sourceConflict('Diese native Bankquelle wurde bereits einem anderen Portfolio-Konto zugeordnet. Keine erneute Buchungswirkung.');
    if(removed.some(prior=>(prior.accountId===source.accountId&&((source.externalId&&prior.externalId===source.externalId)||prior.fileId===source.fileId||(!source.externalId&&(()=>{const old=JSON.parse(prior.sourcePayload);return old.positionId===row.positionId&&old.date===row.date&&old.type===row.type;})())))))
     throw sourceConflict('Diese Quelle könnte eine ausdrücklich gelöschte Importbuchung erneut anlegen. Kein automatischer Wiederimport; Rücknahme oder geprüfte Sicherung verwenden.');
    const matches=key?draft.bookings.filter(b=>importSourceKey(b.importSource)===key):[];

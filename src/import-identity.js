@@ -12,6 +12,10 @@ export function validateNativeSourceEvidence(source){
 export function importSourceKey(source){
  return source?.externalId?JSON.stringify([source.sourceId,source.accountId,source.externalId]):null;
 }
+/** Native bank identity already includes its bank scope; a local account cannot create a new source. */
+export function nativeBankSourceKey(source){
+ return /^flatex-native-v1:(depot|account):[a-f0-9]{64}$/.test(source?.sourceId||'')&&source?.externalId?JSON.stringify([source.sourceId,source.externalId]):null;
+}
 export function bookingOwnership(model,booking){
  const fields=['date','type','positionId','accountId','quantityExact','quantity','unitPrice','feeEUR','taxEUR','fxRate','amountExactEUR','amountEUR','targetPositionId','cashPositionId','notes','costsVerified','netSettlement'];
  // Preserve existing snapshot bytes for every old booking. Only the explicit

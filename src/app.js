@@ -70,6 +70,7 @@ import {capitalReferenceSeries} from './capital-flows.js';
 import {NETWORKS,getAdapter} from './blockchain-adapters.js';
 import {solanaRpcRead} from './solana-rpc.js';
 import {updateScannedWalletPosition} from './wallet-scan-update.js';
+import {walletHoldingKey} from './wallet-identity.js';
 import {legacyQuoteDiscrepancies,verifiedCurrentQuote,applyVerifiedQuoteRepair} from './legacy-quote-audit.js';
 import {STAKING_ASSETS,STAKING_MODES,lookupStakingAsset} from './staking-catalog.js';
 import {partitionWalletAssets,walletTokenVisibility} from './wallet-visibility.js';
@@ -1227,25 +1228,34 @@ function openWalletImport(){
    // Fail before changing the model if an ambiguous storage choice remains.
    if(!v.providerId||(v.providerId!=='__new__'&&!model.providers.some(p=>p.id===v.providerId)))throw Error('Bitte den Wallet-Anbieter auswählen.');
    if(!v.accountId||(v.accountId!=='__new__'&&!model.accounts.some(a=>a.id===v.accountId&&a.providerId===v.providerId)))throw Error('Bitte das Wallet-Konto auswählen.');
+   const selectedKeys=new Set();
+   for(const asset of chosen){
+    const key=walletHoldingKey({enabled:true,chain:asset.chain,chainId:asset.chainId,address:String(v.address).trim(),contract:asset.contract||''});
+    const matches=model.positions.filter(p=>walletHoldingKey(p.wallet)===key);
+    if(selectedKeys.has(key)||matches.length>1||matches.some(p=>p.accountId!==v.accountId))throw Error('Diese konkrete Walletposition ist bereits erfasst. Bestehendes Konto verwenden; Historien werden nicht automatisch zusammengeführt.');
+    selectedKeys.add(key);
+   }
+   const draft=structuredClone(model);
    let providerId=v.providerId;
    if(providerId==='__new__'){
     const provider=createProvider({name:v.providerName||'Meine Wallet',type:'wallet'});
-    model.providers.push(provider);providerId=provider.id;
+    draft.providers.push(provider);providerId=provider.id;
    }
    let accountId=v.accountId;
    if(accountId==='__new__'){
-    const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},model);
-    model.accounts.push(account);accountId=account.id;
+    const account=createAccount({providerId,name:'Kryptowallet',type:'wallet'},draft);
+    draft.accounts.push(account);accountId=account.id;
    }
-   if(!model.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
+   if(!draft.accounts.some(a=>a.id===accountId&&a.providerId===providerId))throw Error('Bitte ein gültiges Wallet-Konto auswählen.');
    let added=0,updated=0;
    for(const asset of chosen){
-    const existing=model.positions.find(p=>p.accountId===accountId&&p.wallet?.enabled&&p.wallet.address.toLowerCase()===String(v.address).trim().toLowerCase()&&p.wallet.chain===asset.chain&&(p.wallet.chainId||1)===(asset.chainId||1)&&String(p.wallet.contract||'').toLowerCase()===String(asset.contract||'').toLowerCase());
-    if(existing){updateScannedWalletPosition(existing,asset,{model});updated++;continue;}
-    const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},model);
-    model.positions.push(position);added++;
+    const key=walletHoldingKey({enabled:true,chain:asset.chain,chainId:asset.chainId,address:String(v.address).trim(),contract:asset.contract||''});
+    const existing=draft.positions.find(p=>walletHoldingKey(p.wallet)===key);
+    if(existing){updateScannedWalletPosition(existing,asset,{model:draft});updated++;continue;}
+    const position=createPosition({kind:'crypto',providerId,accountId,name:asset.name,symbol:asset.symbol,coinId:asset.coinId,quantity:asset.quantityExact??asset.quantity,price:asset.price||0,currency:'EUR',wallet:{enabled:true,chain:asset.chain,address:String(v.address).trim(),contract:asset.contract||'',chainId:asset.chainId||1,decimals:asset.decimals,addressType:asset.addressType||v.hdAddressType||'auto'}},draft);
+    draft.positions.push(position);added++;
    }
-   if(added||updated){snapshot(model);await save();go('positions');}
+   if(added||updated){snapshot(draft);const previous=model;try{model=draft;await save();}catch(error){if(model===draft)model=previous;throw error;}go('positions');}
    notify(added+' neu · '+updated+' aktualisiert. Nicht erkannte Coins bleiben erhalten.');
   });
  $('saveDialog').disabled=true;
@@ -2148,8 +2158,7 @@ async function refreshAll(){
    try{
     const hdScan=p.wallet.chain==='btc-hd'?await scanBitcoinAccount(p.wallet.address,{fetcher:walletFetch,addressType:p.wallet.addressType||'auto'}):null;
     const exactQty=hdScan?.quantityExact??await walletBalanceExact(p.wallet,model.settings,walletFetch);
-    if(hdScan?.addressType)p.wallet.addressType=hdScan.addressType;
-    p.quantityExact=exactQty;p.quantity=Number(exactQty);p.updatedAt=now;successes++;
+    updateScannedWalletPosition(p,{chain:p.wallet.chain,quantityExact:exactQty,addressType:hdScan?.addressType},{updatedAt:now,model});successes++;
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
   if(successes){snapshot(model);await save();}else render();

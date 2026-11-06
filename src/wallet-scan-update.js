@@ -11,6 +11,11 @@ export function updateScannedWalletPosition(existing,asset,{updatedAt=new Date()
  if(units(quantityExact)<0n)throw Error('Wallet-Bestand darf nicht negativ sein.');
  const hasFreshPrice=Number.isFinite(asset.price)&&asset.price>0;
  const priceExact=hasFreshPrice?exact(units(asset.price)):null;
+ const opening=model?.openingPositions?.find(o=>o.positionId===existing.id);
+ const quantityManaged=Boolean(model?.journalEntries?.some(j=>j.postings.some(p=>p.positionId===existing.id&&p.quantityDeltaExact!=null)));
+ if(model&&units(quantityExact)!==units(existing.quantityExact??existing.quantity)&&
+    (quantityManaged||opening&&(opening.source!=='observed-opening'||opening.asOf!==null)))
+  throw Error('Wallet-Bestand besitzt einen datierten Anfang oder mengenwirksame Buchungen. Neue Beobachtung gesondert abgleichen.');
  existing.quantityExact=quantityExact;
  existing.quantity=Number(quantityExact);
  existing.updatedAt=updatedAt;
@@ -21,15 +26,10 @@ export function updateScannedWalletPosition(existing,asset,{updatedAt=new Date()
   existing.currency='EUR';
   existing.fxRate=1;
   existing.fxRateExact='1';
+  existing.quoteSource='Wallet-Scan';existing.quoteQuality='provider-undated';existing.quoteAsOf=null;existing.quoteFetchedAt=updatedAt;existing.priceStatus=null;
  }
  // An observed opening remains the current scan baseline for acquisition-only backfills.
  // A real quantity-managed journal is never rebased by a rescan.
- if(model){
-  const entries=model.journalEntries.filter(j=>j.postings.some(p=>p.positionId===existing.id));
-  if(entries.length&&entries.every(j=>j.source==='unified-bitcoin'&&j.postings.every(p=>p.quantityDeltaExact===null))){
-   const opening=model.openingPositions.find(o=>o.positionId===existing.id);
-   if(opening&&opening.source==='observed-opening'&&opening.asOf===null)opening.quantityExact=quantityExact;
-  }
- }
+ if(opening&&opening.source==='observed-opening'&&opening.asOf===null&&!quantityManaged)opening.quantityExact=quantityExact;
  return existing;
 }

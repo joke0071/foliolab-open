@@ -21,7 +21,7 @@ for(const bookings of [10000])for(const cpuRate of [4]){
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js');const {executeTransaction}=await import('/src/transactions.js');const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;
    for(let n=0;n<3;n++){m.providers.push(createProvider({id:'mixed-p'+n,name:'SYNTHETIC Mixed '+n}));m.accounts.push(createAccount({id:'mixed-a'+n,providerId:'mixed-p'+n,name:'SYNTHETIC Account '+n,type:n===2?'checking':'securities'},m));}
-   for(let n=0;n<19;n++){const group=n%3;m.positions.push(createPosition({id:'mixed-'+n,providerId:'mixed-p'+group,accountId:'mixed-a'+group,name:'SYNTHETIC '+n,kind:['etf','crypto','cash'][group],symbol:group===1?'ETH':'SYN'+n,quantity:10,price:group===2?1:100,currency:'EUR',...(group===1?{coinId:'ethereum',wallet:{enabled:true,chain:'evm',chainId:1,address:'0x1111111111111111111111111111111111111111'}}:{})},m));}
+   for(let n=0;n<19;n++){const group=n%3;m.positions.push(createPosition({id:'mixed-'+n,providerId:'mixed-p'+group,accountId:'mixed-a'+group,name:'SYNTHETIC '+n,kind:['etf','crypto','cash'][group],symbol:group===1?'ETH':'SYN'+n,quantity:10,price:group===2?1:100,currency:'EUR',...(group===1?{coinId:'ethereum',wallet:{enabled:true,chain:'evm',chainId:1,address:'0x'+(n+1).toString(16).padStart(40,'0')}}:{})},m));}
    const bookable=m.positions.filter(p=>!p.wallet?.enabled),allBookings=[],allJournal=[];let initialOpenings;
    // Bound fixture-construction cloning only. Each transaction still runs through
    // the real journal operation; holdings/basis/openings carry across batches.

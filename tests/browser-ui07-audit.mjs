@@ -8,7 +8,13 @@ for(const engine of (process.env.UI07_ENGINES||'chromium').split(',')){
  try{
   await page.addInitScript({content:axe});await page.goto('http://127.0.0.1:4173/tests/storage-origin.html');
   const h=historyFixture(),model=h.model;
-  for(const other of [annualFixture().model,transferFixture()])for(const key of ['providers','accounts','positions','bookings','journalEntries','openingPositions','externalCashFlows','snapshots'])model[key].push(...other[key]);
+  for(const other of [annualFixture().model,transferFixture()]){
+   // Independent synthetic manual fixtures each start at sequence 1. Compose a
+   // valid portfolio-wide order before saving; no protected original audits.
+   let sequence=Math.max(0,...model.journalEntries.map(j=>j.sequence||0));
+   for(const entry of other.journalEntries){assert.equal(entry.source,'manual');assert.equal(entry.importSource,undefined);assert.equal(entry.managementAudit,undefined);entry.sequence=++sequence;}
+   for(const key of ['providers','accounts','positions','bookings','journalEntries','openingPositions','externalCashFlows','snapshots'])model[key].push(...other[key]);
+  }
   model.settings.autoRefresh=false;
   await page.evaluate(async m=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const {snapshot}=await import('/src/model.js');for(let i=7;i>=0;i--){const date=new Date(Date.now()-i*864e5).toISOString().slice(0,10);snapshot(m,date,'Synthetisch bestätigter Stichtag',{manualTotalEUR:String(30000+(7-i)*100)});}const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();},model);
   await page.goto('http://127.0.0.1:4173/');
