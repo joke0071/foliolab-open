@@ -1,3 +1,17 @@
+## v292 – LIVE_ACCEPTED / Owner0bfa85b5b416 ACTIVE – 06.11.2026
+
+**Dieser vollständig belegte Abschluss übersteuert alle älteren DEPLOYED-/PENDING-/FAIL-Zeilen darunter.** Main **`2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`**, Tree **`129c9cac1391f7a306087395c6fc42a01e8d0d4b`**, SW **`foliolab-open-v292`**. [Vollständiger Abschlussbeleg](release-evidence/v292-pr311-live-acceptance.json).
+
+- Automatischer Mainlauf **42288193893 Versuch1 vollständig SUCCESS**, einschließlich aller1258Tests/0Fehler/Skips, sämtlicher3Cross-Enginejobs, Deployment und tatsächlicher vollständiger HTTPS-Produktion. Livejob **128146022885 SUCCESS** in Chromium/Firefox/WebKit, einschließlich Finanz-/CAS-/Recovery-/Offline-/Backup-/Restore-/3:1-Ketten.
+- Acht tatsächlicheZIPs/API-/Uploadlog-/lokalerSHA256/Größe/CRC PASS; **335JSON ohneFehlerflags,3176PNGs vollständig dekodiert**. Pages151exakteerwarteteMainGitblobs; gewöhnlichesTLS151Assets+Root und produktive152Assethashes exakt. Tatsächlich geladene139Appassets/Sourcechecks PASS, keineProduktions-Zertifikatsausnahme.
+- Alle6produktiven3:1Engine-/Dialektberichte PASS (10unabhängigeDecimalfälle jeLauf/echtekanonischeIDB-/CAS-/Quota-/post-put-/Zweittab-/Undo-/Wiederimport-/verschlüsselteFreshRestore-/Offlinekette). SechszugehörigeBilder und4aktuelleC5Bilder gesichtet; alle4begrenztenLogbilder byte-/hash-/größen-/releasegleich mitZIP.
+- PR309/310/311 gemergt. PR310 änderte nurGesamtbudget35→55 undCI-Vertrag; PR311 nur4Testdateien fürbegrenzte Fehlerdiagnostik. AlleAppassets/SW/Assertions/Befehle/Engines/Einzelfristen unverändert; vollständigerursprünglicherCoretest perBytevertrag geschützt. KeineCI wiederholt/dupliziert/abgebrochen. FrühereNav-/35Minutenfehler vollständig erhalten; StartursacheweiterUNKNOWN, **keineUrsachenbehebungbehauptet**. AktuellerProduktionslauf bestandohneRetry; Diagnosefolgeauftrag inQUALITY298 erhalten.
+- v291nicht erneutabgenommen. KeinHardware-/nativeSafari-/OAuth-/privater3:1Original-/Vollhistorienclaim. GenerischerFIN-E2E-USD-PASS istkeine nativeFlatex-N:M-FX-Freigabe. AlleOriginale/Oracles undSchutzverträge erhalten; zuletztbestätigteSicherungV71/4627Manifestdateien, Abschlusssicherungfolgt.
+
+**NächsterSchritt:** UH05 aufexaktemakzeptiertemMain weiterführen: verbleibendeMehrcash-/FX-/Referenzgrenzen mitbestehendenOriginalen/Decimaloracles konkretprüfen, keineunbelegtenKostenbasen/Anfangsbestände oderfehlendenWallet-/StakingwertealsNull. UI300sämtlicheNachträge/QUALITY298/CI229/AndroidundübrigeAufträge bleiben erhalten. NachderbegrenztenVorarbeit früher sichererHND01-Punkt nachlangemRelease-/QA-Kontext; nochkeineAbgabe. AlleinigerOwner0bfa85b5b416ACTIVE; CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / v292 DEPLOYED / Chromium SUCCESS, vollständige Live-Abnahme offen – 06.11.2026
 
 - Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Mainlauf42288193893 Versuch1:1258Tests/0Fehler/Skips, alle3Cross-Enginejobs undDeployment128145853225 SUCCESS. [Main-/Deploybeleg](release-evidence/v292-pr311-main-deployed.json).
