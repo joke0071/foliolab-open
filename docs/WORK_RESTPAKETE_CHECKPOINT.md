@@ -1,3 +1,11 @@
+## ACTIVE – 0bfa85b5b416 / PR310 MERGED / v292 RELEASE_IN_PROGRESS – 06.11.2026
+
+PR310 kontrolliert mit erwartetem Head `5869e6fabf39abb90dc5fe566aa0b0922da54251` gemergt. Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd` exakt gleich geprüftem Kandidaten/virtuellemMerge. [Vollständige Integration](release-evidence/v292-pr310-integration-qualified.json):42271163151 Versuch1 SUCCESS,1252Tests/0Fehler/Skips, Wallet42271163392SUCCESS,7ZIPs/197JSON/1940dekodiertePNGs/API-/Upload-/lokalerHash+Größe/CRC PASS; alle6neuen3:1Engine-/Dialektberichte undBilder geprüft. FrischeBase/Head/Tree/Reviews/Threads/OwnerGuard PASS. NativeBranchProtection nicht behauptet.
+
+**Automatischer Mainlauf42277596230 Versuch1 IN_PROGRESS.** Keine CI dupliziert/abgebrochen/neu gestartet. Ausschließlich diesen Lauf bis vollständiger Unit-/Cross-Engine-/Deploy-/Pages-/Gitblob-/TLS-/SWv292-/tatsächlicherHTTPS-Produktion qualifizieren. Appassets unverändert; nurCI-Gesamtbudget55Minuten. **v292 weiterhin NICHT LIVE_ACCEPTED**, v291nicht erneutabnehmen. Noch keine neue Produktimplementierung. Alle offenenAufträge/Schutzverträge/EFF01/HND01 erhalten. AlleinigerOwner0bfa85b5b416ACTIVE; Checkpointbranch niemals nachMain.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / HND01 übernommen / PR310 QUALIFICATION – 06.11.2026
 
 Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von e8b533803735 übernommen. Frisch geprüft: Main `9bf59ae6559bc7199c343acb155b8c50b8b2110b`, Tree `e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e`; PR310 unverändert `5869e6fabf39abb90dc5fe566aa0b0922da54251`. Nur historische Drafts157/161 zusätzlich offen, vorhandene Actions beendet; zweimaliger vollständiger Branchrefabgleich unverändert, keine konkurrierende Schreibaktivität erkennbar. GitHub-Befund ist kein technischer Chatstillstandsbeweis. Kein ungesicherter Produkt-WIP laut Übergabe.
