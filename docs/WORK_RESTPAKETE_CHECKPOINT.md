@@ -1,3 +1,17 @@
+## ACTIVE – 5ee91c771f2c / Sparplanrolle bestätigt, konkrete Originalzeilen fehlen – 06.11.2026
+
+Die Nutzerbestätigung klärt die Portfolioabgrenzung des neu privat belegten Sparplanfalls: Finanzierung vom eigenen externen Girokonto, dieses Konto ausdrücklich nicht in FolioLab anlegen. Gutschrift als externer Kapitalzufluss, ETF-Kauf als interne Umschichtung; Einzahlung ist weder Gewinn noch Rendite. Keine pauschale Rollenfreigabe sämtlicher357 historischer Gutschriften. [Aktualisierter enger Vertrag und konkrete Quellenlücke](UH05_FUNDING_ROLES_2026-11-06.md).
+
+Beide neuen Bilder vollständig privat gesichtet. Eine vollständig sichtbare Gutschrift/Settlementbeziehung wurde über Original-ISIN und Orderreferenz geprüft; weitere Zeilen sind teilweise verdeckt oder außerhalb des Bildes. Vollständige Depotausführungen mit Mengen/Kursen fehlen. Vorhandene größere Depot-/Konto-CSVs und erhaltene Dialektdateien enthalten weder den neuen Screenshotzeitraum noch dessen konkret sichtbare Orderreferenzen. Buchtag und Valuta getrennt erhalten. Kein rekonstruierter Original-CSV, keine erfundenen Anfangsbestände/Kosten/Gegenbuchungen.
+
+**Nächster Schritt:** native Flatex-Depot- und Kontoumsatzzeilen für den privat dokumentierten neuen Sparplanzeitraum bereitstellen lassen, einschließlich aller Finanzierungs-/Ausführungszeilen. Kein weiterer Girokontoexport nötig. Danach den belegten Fall im vorhandenen Import-/Settlement-/Journal-/CAS-Kern bis gemeinsamer UI, atomarem Commit, Undo, Wiederimport, Quota/post-put, Zweittab, Offline und verschlüsseltem Restore umsetzen; reguläre Drei-Engine-Integration und tatsächliche Produktion bleiben Pflicht.
+
+**Private SicherungV74 erfolgreich:** 22.929.314Bytes / SHA256 `fb3638ae427b5230086da473b476c51770928b01eb31ea3681206ce89125bb5e`; alle4803 Manifestdateien am Archiv geprüft, alle4795 V73-Dateien und früheren Originale bytegleich erhalten. Einstieg `delta-5ee91c771f2c/uh05-sparplan-private-evidence/STATE.json`. Die beiden neuen Originalbilder erstmals inV74, nicht rückwirkend inV73. Bilder, persönliche Beträge/Identitäten, Originalreferenzen und Bildhashes bleiben ausschließlich privat.
+
+v292 unverändert LIVE_ACCEPTED, Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`; nicht erneut abnehmen. Kein Produkt-WIP/Produktbranch/PR/neuer CI-Lauf/Deployment. Alle Originale, Oracles, Schutzverträge und offenen UH05-/UI300-/QUALITY298-/CI229-/Android-/Wallet-/Stakingaufträge erhalten. Owner5ee91c771f2c ACTIVE; Checkpointbranch niemals nach Main.
+
+---
+
 ## ACTIVE – 5ee91c771f2c / UH05: Originalabgleich bestanden, Cashrolle offen – 06.11.2026
 
 v292 bleibt LIVE_ACCEPTED auf Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36` / Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Keine erneute Abnahme oder CI. Alleinübernahme nach inzwischen bestätigtem STOPPED/HANDOVER_READY von 0bfa85b5b416 in Commit `184faf2de7c225b7a45b6a829580a313e1f08dd6` dokumentiert: `55e1c0d51a22873045c204cc10a834418e3c0f79`. Keine konkurrierenden Refänderungen; kein Produkt-WIP oder aktiver Produkt-PR. Historische Drafts157/161 bleiben geparkt.
