@@ -1,3 +1,11 @@
+## ACTIVE – 414503ed33c6 / reguläre HND01-Übernahme / v289 RELEASE_PENDING – 06.11.2026
+
+Alleinige Entwicklungs-, QA-, Integrations- und Releaseverantwortung nach ausdrücklicher STOPPED/HANDOVER_READY-Abgabe von bd0f0f98ad61 und Nutzerauftrag übernommen. Übergabe vollständig und neuesten Checkpoint gelesen. Frisch: Main `652e80bcb31aec13c85a0457332bdf53cf98a521`, Tree `ee506c874fa9578f1daf3387da24b299bba5103e`; PR306 MERGED, keine Reviews, nur historische Drafts157/161 offen. Einziger laufender Actionlauf42191012639 Versuch1, keine wartenden Läufe; kein neuer Produkt-WIP erkennbar. Private Sicherung V50 unabhängig:6690146Bytes, SHA256b9f9c6e51e174529ffef1f9dc197b1884126884b2ca617e82f0293684723d599, alle1115Manifestdateien PASS.
+
+Produkt eingefroren. Bestehenden Mainlauf42191012639 ohne Duplikat/Retry/Abbruch qualifizieren, dann Deployment/Pages-Gitblobs/reguläresTLS/Assets/SWv289 und tatsächliche Produktion einschließlich 2:1-EUR-Kette in Chromium/Firefox/WebKit. KEIN v289 LIVE_ACCEPTED vor vollständigen Nachweisen. v288 nicht erneut abnehmen. Danach sicherer Checkpoint für vorgesehenen unabhängigen nur lesenden Extra-High-Review; keine Abgabe der Schreibzuständigkeit. Neue 2:1-Nachweise synthetisch,81 bisherige Originalgruppen unverändert erhalten. UI300/Folgeaufträge und alle Schutzverträge erhalten; GitHub ausschließlich Plugin, Checkpointbranch nie vollständig nachMain.
+
+---
+
 ## HANDOVER_READY – bd0f0f98ad61 STOPPED / PR306 MERGED / v289 MAIN_RELEASE_PENDING – 06.11.2026
 
 **bd0f0f98ad61 ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** SichererHND01-PunktnachvollständigerIntegrationsqualifikationundgeschütztemMerge. [VollständigeÜbergabe](HANDOVER_bd0f0f98ad61_2026-11-06.md). NachAbschlussdieserDokumentationkeineweitereImplementierung/PR/Merge/CI/Deployment/RetrydurchdiesenOwner. KeineHintergrundfortsetzung/keinungesicherterProdukt-WIP/keinneuerKandidat. BestehendenMainlaufnichtabbrechenoderduplizieren.
