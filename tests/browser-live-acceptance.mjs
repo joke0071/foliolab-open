@@ -1,5 +1,6 @@
 import {manageList} from './browser-management-mode.mjs';
 import {clickDisclosed} from './browser-disclosures.mjs';
+import {observeLiveStartup} from './live-startup-diagnostics.mjs';
 // Manual release gate: actual published bytes, isolated synthetic profiles, no API credentials.
 // Run from the matching release checkout: RELEASE_SHA=<sha> node tests/browser-live-acceptance.mjs
 import assert from 'node:assert/strict';
@@ -22,6 +23,7 @@ const browser=await chromium.launch({headless:true,args:useProxy?['--ignore-cert
 // This is transport setup only; HTTPS certificate validation is not part of this acceptance.
 const options={ignoreHTTPSErrors:useProxy,viewport:{width:390,height:900},acceptDownloads:true};
 const report={sha,cache,base,startedAt:new Date().toISOString(),proxyCertificateException:useProxy,assetHashes:[],loadedAssets:[],checks:[],scans:[]},contexts=[],errors=[];
+let diagnoseStartup=null;
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const local=async path=>readFile(path==='./'?'index.html':path.replace(/^\.\//,''));
 const context=async()=>{const c=await browser.newContext(options);contexts.push(c);await c.route('**/*',r=>new URL(r.request().url()).origin===new URL(base).origin?r.continue():r.abort());return c;};
@@ -33,6 +35,7 @@ try{
  await mkdir('artifacts/gates/live',{recursive:true});
  const c=await context(),p=await c.newPage();await p.addInitScript({content:axe});p.on('pageerror',e=>errors.push(e.message));
  const observed=[];p.on('response',r=>{if(r.url().startsWith(base))observed.push(r);});
+ diagnoseStartup=await observeLiveStartup(p,base);
  assert.equal((await p.goto(base,{waitUntil:'networkidle'})).status(),200);
  // Independent HTTP requests bypass browser/SW caches and compare every deployed precache byte.
  const paths=[...assets,'./sw.js'];let next=0;
@@ -71,4 +74,4 @@ try{
  await p.waitForFunction(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?.active?.state==='activated';},null,{timeout:60000});await p.reload();await p.waitForFunction(()=>!!navigator.serviceWorker.controller);const reg=await p.evaluate(async()=>{const r=await navigator.serviceWorker.ready;await r.update();return {url:r.active.scriptURL,caches:await caches.keys()};});assert.ok(reg.caches.includes(cache));assert.equal(reg.caches.filter(k=>k.startsWith('foliolab-open-')).length,1);
  await c.setOffline(true);await p.reload();await nav(p,'positions');assert.ok(await p.locator('#positionList').innerText().then(t=>t.includes('SYNTHETIC Live ETH')));await nav(p,'bookings');assert.ok(await p.locator('#bookingList .history-row').count()>0);await nav(p,'more');await p.locator('#addProvider').click();await p.locator('#providerName').fill('SYNTHETIC offline saved');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});await p.reload();assert.ok((await state(p)).providers.some(x=>x.name==='SYNTHETIC offline saved'));report.checks.push('actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload');
  assert.deepEqual(errors,[]);report.finishedAt=new Date().toISOString();report.result='PASS';console.log('LIVE acceptance PASS: '+report.checks.length+' groups, '+report.scans.length+' Axe scans, '+paths.length+' asset matches');
-}catch(error){report.result='FAIL';report.failure=String(error);throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}
+}catch(error){report.result='FAIL';report.failure=String(error);if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();throw error;}finally{report.errors=errors;await writeFile('artifacts/gates/live/report.json',JSON.stringify(report,null,2));for(const c of contexts)await c.close();await browser.close();}
