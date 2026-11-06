@@ -1,1 +1,1975 @@
-{"status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING", "owner": "414503ed33c6", "release": "v291", "PR": 308, "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "tree": "6cc86610f633d4e93665d7f53c40282144c9df28", "baseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5", "integrationRun": 42235829073, "integrationAttempt": 1, "walletRun": 42235829005, "sw": "foliolab-open-v291", "manualWorkflowDispatches": 0, "workflowReruns": 0, "workflowCancellations": 0, "priorReleases": "v289/v290 remain LIVE_ACCEPTED; not reaccepted", "limitations": ["2:1 EUR still synthetic, no real private2:1 original", "81 original groups are not a full private history or ownership claim", "No physical browser zoom or Android/iOS hardware claim"], "next": "Finish existing integration; protected merge only after qualification; actual Main attempt1/deployment/Pages/TLS/SW/three-engine production then accept.", "integration": {"status": "INTEGRATION_QUALIFIED / NOT_MERGED / NOT_DEPLOYED", "owner": "414503ed33c6", "release": "v291", "PR": 308, "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "tree": "6cc86610f633d4e93665d7f53c40282144c9df28", "testedMerge": "7cd051e9898521398d00976ea3909110ef1c9bce", "baseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5", "run": 42235829073, "attempt": 1, "conclusion": "SUCCESS", "units": {"pass": 1246, "fail": 0, "skip": 0}, "walletRun": 42235829005, "walletUnits": {"pass": 1246, "fail": 0, "skip": 0}, "allThreeBrowserShards": "SUCCESS", "artifacts": [{"id": 13515590847, "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-3", "sha256": "261fed9fac479771b2b78e45d721fb76e83d25dc1c9db8c2017a29a2b85ba06c", "bytes": 62891255, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 76, "pngsDecoded": 688, "failureFlags": []}, {"id": 13512737189, "name": "release-gates-7cd051e9898521398d00976ea3909110ef1c9bce", "sha256": "11b8fafba22391504ddf16404254d568cce9bcb139f2b4468ee886e8b7c26b55", "bytes": 61754280, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 79, "pngsDecoded": 655, "failureFlags": []}, {"id": 13511816756, "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-2", "sha256": "dc06a87f3bd926ed768f54481ad2fd5be7372fd5008d042c0bdba8c591aef1d8", "bytes": 11603271, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 17, "pngsDecoded": 74, "failureFlags": []}, {"id": 13512032944, "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-1", "sha256": "a7e2f963eb9ac27b630a02bddc5be2cd319c920a6f14a86f271ac5e56672eda0", "bytes": 58284054, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 15, "pngsDecoded": 474, "failureFlags": []}, {"id": 13512892128, "name": "dialog-visual-reference", "sha256": "c67a38cf7f1dd916258f6939f6c5c9fd1694f495ddc28505b9f8703d12a3c6f4", "bytes": 934090, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 0, "pngsDecoded": 20, "failureFlags": []}, {"id": 13512665281, "name": "ci-stage-7cd051e9898521398d00976ea3909110ef1c9bce", "sha256": "a364d8acb5d118771fe7a373910658998cd85ebf4f32f0bdebdb3229d7e9fddf", "bytes": 775, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 1, "pngsDecoded": 0, "failureFlags": []}], "artifactQualification": {"actualArchives": 6, "jsonReports": 188, "decodedPNGs": 1911, "failureFlags": []}, "UI300": [{"engine": "chromium", "result": "PASS", "base": "http://127.0.0.1:4173/", "checks": ["7 widths/44px/Axe", "no hero or tiles; brand and five semantic destinations retained", "zero group chip hidden", "exact selected-period endpoints; explicit cashflow scope", "200% text stress/short viewport (not physical zoom or hardware)", "offline actual reload; exact canonical bytes/revision", "partial automatic snapshot remains unavailable without writes"]}, {"engine": "firefox", "result": "PASS", "base": "http://127.0.0.1:4173/", "checks": ["7 widths/44px/Axe", "no hero or tiles; brand and five semantic destinations retained", "zero group chip hidden", "exact selected-period endpoints; explicit cashflow scope", "200% text stress/short viewport (not physical zoom or hardware)", "offline actual reload; exact canonical bytes/revision", "partial automatic snapshot remains unavailable without writes"]}, {"engine": "webkit", "result": "PASS", "base": "http://127.0.0.1:4173/", "checks": ["7 widths/44px/Axe", "no hero or tiles; brand and five semantic destinations retained", "zero group chip hidden", "exact selected-period endpoints; explicit cashflow scope", "200% text stress/short viewport (not physical zoom or hardware)", "offline actual reload; exact canonical bytes/revision", "partial automatic snapshot remains unavailable without writes"]}], "regressionSuites": {"two-fill": [{"engine": "chromium", "version": "141.0.7390.37", "result": "PASS", "checks": ["two executions and one cash document, both file orders", "one CAS revision, independent quantities/cash/fees, no invented costs", "selection revokes all approvals; full zero-write quota/post-put rollback", "actual Undo/recommit/reimport/offline reload", "encrypted v5 backup and actual restore in fresh profile", "real second-tab race at canonical save", "five widths/Axe, no external requests"]}, {"engine": "firefox", "version": "157.0", "result": "PASS", "checks": ["two executions and one cash document, both file orders", "one CAS revision, independent quantities/cash/fees, no invented costs", "selection revokes all approvals; full zero-write quota/post-put rollback", "actual Undo/recommit/reimport/offline reload", "encrypted v5 backup and actual restore in fresh profile", "real second-tab race at canonical save", "five widths/Axe, no external requests"]}, {"engine": "webkit", "version": "27.2", "result": "PASS", "checks": ["two executions and one cash document, both file orders", "one CAS revision, independent quantities/cash/fees, no invented costs", "selection revokes all approvals; full zero-write quota/post-put rollback", "actual Undo/recommit/reimport/offline reload", "encrypted v5 backup and actual restore in fresh profile", "real second-tab race at canonical save", "five widths/Axe, no external requests"]}], "v289-review-integrity": [{"engine": "chromium", "version": "141.0.7390.37", "result": "PASS", "checks": ["H1 changed local account/real upload/forced submit exact no mutation", "H2 global refresh after cash booking/one CAS/exact journal", "quota/post-put abort keep bytes and revision", "dated opening protected", "real competing tab wins at canonical CAS boundary", "H3 real wallet discovery under second account rejected", "H3 unused native contract field blocked before canonical IDB commit", "five widths/Axe and actual error screenshot", "M2 undated price remains partial", "M3 tampered date rejected without writes", "encrypted fresh-profile UI restore and offline reload", "deterministic provider fetch fixture; no live provider calls"]}, {"engine": "firefox", "version": "157.0", "result": "PASS", "checks": ["H1 changed local account/real upload/forced submit exact no mutation", "H2 global refresh after cash booking/one CAS/exact journal", "quota/post-put abort keep bytes and revision", "dated opening protected", "real competing tab wins at canonical CAS boundary", "H3 real wallet discovery under second account rejected", "H3 unused native contract field blocked before canonical IDB commit", "five widths/Axe and actual error screenshot", "M2 undated price remains partial", "M3 tampered date rejected without writes", "encrypted fresh-profile UI restore and offline reload", "deterministic provider fetch fixture; no live provider calls"]}, {"engine": "webkit", "version": "27.2", "result": "PASS", "checks": ["H1 changed local account/real upload/forced submit exact no mutation", "H2 global refresh after cash booking/one CAS/exact journal", "quota/post-put abort keep bytes and revision", "dated opening protected", "real competing tab wins at canonical CAS boundary", "H3 real wallet discovery under second account rejected", "H3 unused native contract field blocked before canonical IDB commit", "five widths/Axe and actual error screenshot", "M2 undated price remains partial", "M3 tampered date rejected without writes", "encrypted fresh-profile UI restore and offline reload", "deterministic provider fetch fixture; no live provider calls"]}]}, "actualImages": [{"path": "qa/ui300-ci-42235829073/artifacts/13512737189/ui300/chromium-390.png", "sha256": "8f1870d19704771eb0642d3dbbbcd8c65691529fae42af5d3dbab3f3d96f7150", "visuallyInspected": true}, {"path": "qa/ui300-ci-42235829073/artifacts/13512737189/ui300/chromium-partial-observation.png", "sha256": "6381d7b45fe7da0d3fc56036e0354baef1e8f99f35ff6822f200aac421da486b", "visuallyInspected": true}, {"path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/firefox-390.png", "sha256": "223a20085825bf63f39d27147d83ab80468e2d5b39e36b9cb3399ad996e0d441", "visuallyInspected": true}, {"path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/firefox-partial-observation.png", "sha256": "9a0e2d7455bd36b65f0c19b7f1a1bbd7b8a8ad4bbda404f16494dd9d65db9043", "visuallyInspected": true}, {"path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/webkit-390.png", "sha256": "30ecaaee0a4f917998447dabbcf7490fc85c0621b636f3511255ae252883bab8", "visuallyInspected": true}, {"path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/webkit-partial-observation.png", "sha256": "436fdb035343720b8d688b1e4f02c82d134278ef9e5b4bedbd507956a2f1258b", "visuallyInspected": true}], "mergeGuard": {"expectedHead": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "expectedBaseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5", "testedMerge": "7cd051e9898521398d00976ea3909110ef1c9bce", "mergeable": true, "mergeableState": "clean", "reviews": {"reviews": []}, "threads": {"review_threads": []}, "checks": [{"id": 127966374687, "name": "live-acceptance", "status": "completed", "conclusion": "skipped", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T15:04:54Z"}, {"id": 127966373646, "name": "deploy", "status": "completed", "conclusion": "skipped", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T15:04:54Z"}, {"id": 127953152837, "name": "FAST only / UI contract canary — no integration approval", "status": "completed", "conclusion": "skipped", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:39:24Z"}, {"id": 127953149529, "name": "cross-engine (2)", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:47:31Z"}, {"id": 127953149470, "name": "cross-engine (3)", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T15:04:54Z"}, {"id": 127953149428, "name": "cross-engine (1)", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:52:41Z"}, {"id": 127953149345, "name": "test", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:52:02Z"}, {"id": 127953047996, "name": "Determine FAST / INTEGRATION / RELEASE", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:39:24Z"}, {"id": 127953046844, "name": "tests", "status": "completed", "conclusion": "success", "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90", "completedAt": "2026-11-06T14:39:58Z"}], "nativeBranchProtectionObserved": false, "nativeRulesets": [], "guardMeaning": "HND01 owner checks and expected-head merge lease; no claim that GitHub native branch protection is enabled; no bypass or settings change"}, "manualWorkflowDispatches": 0, "workflowReruns": 0, "workflowCancellations": 0, "priorReleases": "v289/v290 LIVE_ACCEPTED; not reaccepted", "limitations": ["2:1 EUR remains synthetic without real private2:1 original", "81 original groups do not claim full private history or ownership", "No physical zoom/hardware claim"], "next": "After private backup and fresh final guard, expected-head controlled merge; qualify automatic Main attempt1/deployment/actual production before LIVE_ACCEPTED."}, "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb", "protectedMerge": {"expectedHeadGuard": true, "mandatoryChecksVerified": true, "reviewsAndThreadsFresh": true, "nativeBranchProtectionObserved": false, "nativeRulesets": [], "noSettingsChangedOrBypass": true}, "backupBeforeMerge": {"version": 60, "bytes": 15492688, "sha256": "a935c85f4d416843b07a467555f486d7c26544b91bd56d6c0c053291387c790b", "manifestFiles": 3441, "preservedV59Files": 3210}, "mainRun": 42240526403, "mainAttempt": 1, "mainUnits": {"pass": 1246, "fail": 0, "skip": 0}, "mainBrowserGates": "Chromium and all three shards SUCCESS", "deployment": {"job": 127979568480, "conclusion": "SUCCESS"}, "pages": {"result": "PASS", "files": 151, "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb", "tree": "6cc86610f633d4e93665d7f53c40282144c9df28", "artifactId": 13515747947, "artifactSHA256": "2e5ac92ac591841e8ee69ba430b2f8c9726ce87e8a0592e11adf362d739f92f6", "noUnexpectedFilesOrLinks": true, "sw": "foliolab-open-v291", "gitblobs": {"index.html": "5d6528361b7dba3d1a17cf2711283d97c1b67e07", "manifest.webmanifest": "60f13ef827812f0066043295f65316b6144e618c", "src/ledger-live.js": "d864f6d36d933e5a1919cce4d88990cd513f9093", "src/public-instruments-client.js": "b98c2e5966815cbe7673e2a789661f8a31e637bd", "src/shared-import.js": "4a637e0b68bda7d28e2182458917ce63d133a4e9", "src/capital-flows.js": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c", "src/wallet-history-ui.js": "012f97dcdf3b5da96627be04c70f87c00dcaef8e", "src/kraken-withdrawal-evidence.js": "99b68062733ef985892a2643e5925775e3cf7894", "src/purchase-evidence.js": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90", "src/wallet-identity.js": "7337ad57a531189676f747fdf6d1a925170f4004", "src/onboarding-suggestions.js": "2c045c706fb7cf3090d8a462f36834ade5e2dee7", "src/xrpl-assets.js": "db6c208030f0d21c528cafaf47d4a51b22055e53", "src/dialog-discard.js": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3", "src/flatex-import.js": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69", "src/pchain-identity.js": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d", "src/flatex-cash-audit.js": "484a7fba8494f912d4968df553a3fa7bfdc913d5", "src/request-cache.js": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89", "src/solana-rpc.js": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d", "src/assets.js": "054ba656af6145f96bf93a566009ed40f45603cb", "src/kraken-import-ui.js": "5371d97918d5ec919a039d8ca7ba3d02de344f0f", "src/legacy-quote-audit.js": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e", "src/csv-records.js": "a38aad028a30776022c6c8950a2699a6694962b4", "src/chart-periods.js": "e7ca59776ce800626ce5309887206baf4b25625f", "src/crypto-fallbacks.js": "1151f42b1315241805923b848a7a2efdf65528ac", "src/kraken-bitcoin-bridge.js": "ae451f421b8442a46f0fd97925f5f736d4b44fc3", "src/backup-vault.js": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0", "src/history-evidence-cache.js": "c87b64284e074993fbdf5673ba1f4c5cf926f02e", "src/staking-discovery.js": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a", "src/flatex-native-ui.js": "d52e116b9280147495316666289962d21988ba3c", "src/performance.js": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a", "src/app.js": "a47ab34c1cc1232c9e6c2cbb11b5419bdde11609", "src/blocked-reasons-ui.js": "93f5550fb59337ce3c78642b9b36c8acd5dc1381", "src/csv-import.js": "e69e14525e7ef1a5b86b3c0e16023ea0a5d106c9", "src/blockchain-adapters.js": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16", "src/cash-reconciliation.js": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda", "src/shared-flatex-ui.js": "c7b009b4fceae6e8f7b79a973309e86e855a0ea9", "src/bitpanda-import-ui.js": "e87f56685ee33026ce64d677a0a8e7f4517061f0", "src/bitcoin-history.js": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1", "src/position-quality-review.js": "d0388ef31be71e8e0627cf8c830d410c49ab864f", "src/historical-csv.js": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4", "src/wallet-history-valuation.js": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4", "src/kraken-link-bridge.js": "48d8b4594c0c33635bf93a88f51f64c95fe8e423", "src/flatex-native.js": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2", "src/complete-backup.js": "1f9e6ae63528cf2ffa79a876f357e6fabed258d4", "src/import-identity.js": "3af3a5b826db9cde851c85874701c1b92143987a", "src/wallet-scan-update.js": "0924d07398250b2c6ba778455391cb0052bdd33c", "src/retired-providers.js": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731", "src/wallet-visibility.js": "fa4b9e49fff050b82d287409af37562b72e97b07", "src/portfolio-edit-actions.js": "3412841500a16abd99aa37e2603603e676d2ad94", "src/shared-flatex-reconciliation-ui.js": "c836f5a5ee0f3208978b7df1fb658bfb530805bb", "src/shared-import-ui.js": "fb28c9bbc44ed7729383df1d619ddf3d532000dd", "src/cash-terms.js": "e0bc7723f1da10ebfedeaebd89905749a3e24c77", "src/interest-ui.js": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248", "src/flatex-reconciliation.js": "fdafc8f2f1a86d706a049c3b91545551cccf0af9", "src/asset-wizard.js": "3a863542ab6d02ce0def12c735f31069293efb60", "src/security-catalog.js": "b5edf8651d6a3157a80c0087d28f6482d198e161", "src/bitpanda-preview.js": "38ed3103272fe7110387c68f24f889e1a88f7ca6", "src/flatex-review-export.js": "1de187107010784e4a8d0f47e74d3bad17e2f4fd", "src/historical-position-value.js": "0c6f714150b3d78e4e3086f275d63943d36b43ba", "src/asset-wizard-core.js": "bcd7d08446adff32223374cce1e8f1f569c214fa", "src/crypto-backup.js": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4", "src/kraken-source-plan.js": "c35231c6886d1dc2f4e2d663c4586e1f30f21fc5", "src/staking-catalog.js": "8a4b4b1206b6949176e6b21a72acea4911467884", "src/bnb-token-scanner.js": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5", "src/account-opening.js": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50", "src/kraken-ethereum-bridge.js": "d9b14aa5806089767d43e049df70bbb70507a5ae", "src/position-detail-ui.js": "157c9720e120a5b38ebbb954d29baa91601f9d15", "src/unified-bitcoin-ui.js": "1893fc655d4f910ecacfc6949250fde82a0dc580", "src/loading-ui.js": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83", "src/purchase-evidence-ui.js": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634", "src/booking-management.js": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5", "src/unified-bitcoin.js": "fe27c60e3181596b2ec792081ede2d5861fb00e2", "src/flatex-settlement-audit.js": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63", "src/position-bookings.js": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19", "src/atomic-storage.js": "294861aca7b65fffd423b26f50c176a04659340f", "src/kraken-ledger.js": "ba9f306137f2a7c2cbe120686fe3930738adf4ff", "src/decimal.js": "7896c75407ff67763bc9c969ea203f6e5f1b529a", "src/economic-form-ui.js": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f", "src/coin-identity.js": "e7681a4b1cab7c41c950ea1b8999963148340f5f", "src/refresh-ui.js": "cd4b56d8d392c90f638b089c91e721a13c3a7d29", "src/credential-visibility.js": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a", "src/csv-batch.js": "0356e6cd8550f3107742603da2fde9fa7fbcc7df", "src/cash-terms-ui.js": "4809fc05f141d39ad7e378c44d6e7a287995024c", "src/startup.js": "4121fea8edcd900d456f1dc87abd06d7012aed6b", "src/format.js": "8857db66fc5a02b5db753de3e77e49a88be9c977", "src/pchain-evidence.js": "3c248f1087f0d3273811c50715a1cf888e6d55ed", "src/quote-quality.js": "e4d8e5dee05932ec28788ea101d0bc6c09b354ba", "src/link-explorer-evidence.js": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b", "src/flatex-net-reconciliation.js": "2d39c199135dc9348271271c60b36876c4660936", "src/wallet-history-days.js": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24", "src/solana-history.js": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1", "src/account-evidence.js": "3024e91230fc586a4c9f1e4a0746a815794e1d18", "src/backup-limits.js": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5", "src/position-history.js": "69bae9bb2126ad9a9cf9207543f1176a68ffe2fb", "src/drive-backup.js": "e93573b9b39010a30ee0c2aa4465340f00de2ef7", "src/native-staking-networks.js": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a", "src/ethereum-fallback.js": "16cab7de80658d72ef01f829e70ebfb75a41e6f8", "src/market.js": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41", "src/kraken-import.js": "8248a184ff91f13b79e28aea9c58216e7936c9de", "src/position-selection.js": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2", "src/interest-scenario.js": "332037a4d578c8128121f799165db3a749a82239", "src/booking-insights-ui.js": "249e18771d565045a809d6b636016b3d488a40b9", "src/wallet-history-days-worker.js": "f0389e11f47eb92ce06a3ea2804a1ea343256245", "src/historical-portfolio-value.js": "3a49409f21ed1e51c18b641127d461a4898423d1", "src/booking-insights.js": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36", "src/bitpanda-import.js": "b42e81350784dd4f4654dfc90c7461e2189e770b", "src/defi.js": "12fbc404d61ce4412cf9120712ea2ed719da4405", "src/eodhd-worker-client.js": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9", "src/flatex-cost-basis.js": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1", "src/position-icons.js": "3630fee430d88897294f3f9b81e3473dc4c703cc", "src/flatex-net-settlement.js": "f7d8f011bb020becd57a76aadff2cf9628a60a2a", "src/wallet-history-core.js": "edcbe5570a903271d07ddc637bd876071e85a40a", "src/wallet-history-calculation.js": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7", "src/position-search.js": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc", "src/wallet-history-state.js": "f87f593a4ec2be99f351037cec48316acb8db6a3", "src/market-diagnostics.js": "030b05243edf7e956dfdea404e92dd30e12a0e9a", "src/ledger-live-ui.js": "ee847ff772e1c109c0837616fdc84f7f909e6ae9", "src/browser-portfolio-storage.js": "f9be5fe41e861ede12f66960dae59d582510d098", "src/transfer-matching-ui.js": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e", "src/allocation-ui.js": "583ab225b84160e8523d1601f8bf0122c4b8770c", "src/dashboard-ui.js": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb", "src/reference-management.js": "1fa1ae41a5dcd81ed9cdeaee709dfae7f7fb46a0", "src/security-sources.js": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d", "src/bitpanda-withdrawal-evidence.js": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1", "src/transactions.js": "02731e40ea7ecf32d28da4b02cda7cbda8528171", "src/bitpanda-preview-ui.js": "5fc4467fc103116b5cc2d1cb4a50683c64085988", "src/instrument-catalog.js": "8012ff3fe03d60b24aff246f7e4ea73170159ea1", "src/sonic-staking-evidence.js": "eefd659b275830d83d4ae36709cce0475ce9e7cd", "src/valuation-status.js": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb", "src/flatex-backfill.js": "a224457e9bcc5e90e2ecb476c49eabc675937997", "src/ethereum-history.js": "21e056201e74bbb6490e74c430601af839699d71", "src/bitcoin-hd.js": "4be2e9af21fd5d66c37938727a43d956292fd6bf", "src/interest-account.js": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d", "src/kraken-ledger-ui.js": "2b3436487f0e78c66e783d46f90baefb5fa2692f", "src/alpha-vantage.js": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2", "src/reference-listings.js": "3ba091983e64a631ad187ebb302299380db49c02", "src/eodhd-transport.js": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72", "src/kraken-solana-bridge.js": "782cab38bb79daa0886c6ab66559f61792279dd1", "src/booking-history.js": "77d23820cacdbe9a1efb1112eb609241e88c190d", "src/security-discovery.js": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9", "src/header-status.js": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd", "src/flatex-settlements.js": "16214b0406a740200585f726e9c9b90cb6007dec", "src/model.js": "83aab32967ca4ebb48350d4e04d1a4d4cead6b54", "src/marketstack.js": "a686d3010a804db0d324c45324f7e5b9f5deafae", "src/booking-history-ui.js": "61212dc0c360a44dbd261ecd70f2314bc4a2e857", "sw.js": "b62eab832c49ead52c8ed9c0871c31ee6b1a1efb", "styles.css": "83a190d6fb30db94f7e32a3029dfb6568ee3df2a", "icons/flask.svg": "823323630cb3fe1b9a6342e9d6e5421554c1194d", "icons/flask-512.png": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0", "icons/flask-maskable-512.png": "645419333138793ef88441a53d2f362e324fed4a", "icons/flask-192.png": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b"}}, "regularTLSAssets": {"result": "PASS", "regularTLS": true, "certificateBypass": false, "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb", "tree": "6cc86610f633d4e93665d7f53c40282144c9df28", "assets": [{"path": "index.html", "status": 200, "gitBlob": "5d6528361b7dba3d1a17cf2711283d97c1b67e07", "sha256": "95405b5f014f9826db59a7f444b75f18d6f347045f571a305133e1c9531df842", "bytes": 48455}, {"path": "manifest.webmanifest", "status": 200, "gitBlob": "60f13ef827812f0066043295f65316b6144e618c", "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd", "bytes": 930}, {"path": "src/ledger-live.js", "status": 200, "gitBlob": "d864f6d36d933e5a1919cce4d88990cd513f9093", "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc", "bytes": 10006}, {"path": "src/public-instruments-client.js", "status": 200, "gitBlob": "b98c2e5966815cbe7673e2a789661f8a31e637bd", "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589", "bytes": 2690}, {"path": "src/shared-import.js", "status": 200, "gitBlob": "4a637e0b68bda7d28e2182458917ce63d133a4e9", "sha256": "fb1ee15f3802f881a8d337bc268dd3162622dcc8bc8a28ff8e5feb7051fd7d0c", "bytes": 8988}, {"path": "src/capital-flows.js", "status": 200, "gitBlob": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c", "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704", "bytes": 1846}, {"path": "src/wallet-history-ui.js", "status": 200, "gitBlob": "012f97dcdf3b5da96627be04c70f87c00dcaef8e", "sha256": "f73d71a43c27f2cfc0536f2db238218f1a8ded77c1962162e5f2404064ee791e", "bytes": 25785}, {"path": "src/kraken-withdrawal-evidence.js", "status": 200, "gitBlob": "99b68062733ef985892a2643e5925775e3cf7894", "sha256": "df26d901fe5563d84551ce58d65712cf643bc61dcc48028b1924b5af60601e7f", "bytes": 2939}, {"path": "src/purchase-evidence.js", "status": 200, "gitBlob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90", "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43", "bytes": 10685}, {"path": "src/wallet-identity.js", "status": 200, "gitBlob": "7337ad57a531189676f747fdf6d1a925170f4004", "sha256": "12f327f8ca13240aa8b58dcf08603eec549f2895a4f3293daf4679f2ce5a5982", "bytes": 2031}, {"path": "src/onboarding-suggestions.js", "status": 200, "gitBlob": "2c045c706fb7cf3090d8a462f36834ade5e2dee7", "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626", "bytes": 3997}, {"path": "src/xrpl-assets.js", "status": 200, "gitBlob": "db6c208030f0d21c528cafaf47d4a51b22055e53", "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1", "bytes": 2745}, {"path": "src/dialog-discard.js", "status": 200, "gitBlob": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3", "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030", "bytes": 590}, {"path": "src/flatex-import.js", "status": 200, "gitBlob": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69", "sha256": "c5c641ded63cc7ddafae0cb2e2facf2a3590117c70760b3d8efa1302bc52010c", "bytes": 14442}, {"path": "src/pchain-identity.js", "status": 200, "gitBlob": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d", "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460", "bytes": 3228}, {"path": "src/flatex-cash-audit.js", "status": 200, "gitBlob": "484a7fba8494f912d4968df553a3fa7bfdc913d5", "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b", "bytes": 3536}, {"path": "src/request-cache.js", "status": 200, "gitBlob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89", "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1", "bytes": 6160}, {"path": "src/solana-rpc.js", "status": 200, "gitBlob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d", "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b", "bytes": 5322}, {"path": "src/assets.js", "status": 200, "gitBlob": "054ba656af6145f96bf93a566009ed40f45603cb", "sha256": "d08a1792af9ec0a43742bd2adea90b04253e7e7076df559270ab72d9cf62d5d0", "bytes": 2208}, {"path": "src/kraken-import-ui.js", "status": 200, "gitBlob": "5371d97918d5ec919a039d8ca7ba3d02de344f0f", "sha256": "f7e8411a965c435ddf7a7d74939db0f175edc68172ac049f8bc59f146602ab4b", "bytes": 22382}, {"path": "src/legacy-quote-audit.js", "status": 200, "gitBlob": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e", "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3", "bytes": 3139}, {"path": "src/csv-records.js", "status": 200, "gitBlob": "a38aad028a30776022c6c8950a2699a6694962b4", "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921", "bytes": 1776}, {"path": "src/chart-periods.js", "status": 200, "gitBlob": "e7ca59776ce800626ce5309887206baf4b25625f", "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359", "bytes": 6743}, {"path": "src/crypto-fallbacks.js", "status": 200, "gitBlob": "1151f42b1315241805923b848a7a2efdf65528ac", "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a", "bytes": 6948}, {"path": "src/kraken-bitcoin-bridge.js", "status": 200, "gitBlob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3", "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639", "bytes": 9490}, {"path": "src/backup-vault.js", "status": 200, "gitBlob": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0", "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4", "bytes": 6865}, {"path": "src/history-evidence-cache.js", "status": 200, "gitBlob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e", "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c", "bytes": 2520}, {"path": "src/staking-discovery.js", "status": 200, "gitBlob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a", "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e", "bytes": 7573}, {"path": "src/flatex-native-ui.js", "status": 200, "gitBlob": "d52e116b9280147495316666289962d21988ba3c", "sha256": "46f7470f9095c1d47c2d59bfeb9a172a2c5fff87e9ffca5ead0ca09005dc9c50", "bytes": 23212}, {"path": "src/performance.js", "status": 200, "gitBlob": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a", "sha256": "5d594a45db88f18d0e272a3b71c6339b7809984c747dd0fc6c3e86dd3e90ca20", "bytes": 7230}, {"path": "src/app.js", "status": 200, "gitBlob": "a47ab34c1cc1232c9e6c2cbb11b5419bdde11609", "sha256": "27e11017f1c1f9b357aedbf0b972374ed8cc52e97dd513d07628c31235242f35", "bytes": 297619}, {"path": "src/blocked-reasons-ui.js", "status": 200, "gitBlob": "93f5550fb59337ce3c78642b9b36c8acd5dc1381", "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98", "bytes": 2921}, {"path": "src/csv-import.js", "status": 200, "gitBlob": "e69e14525e7ef1a5b86b3c0e16023ea0a5d106c9", "sha256": "1d0402f4fde8b4cd42e78dd630042ef860b5972f9c02930f9c1c93ab5f008fe0", "bytes": 15838}, {"path": "src/blockchain-adapters.js", "status": 200, "gitBlob": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16", "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8", "bytes": 3546}, {"path": "src/cash-reconciliation.js", "status": 200, "gitBlob": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda", "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4", "bytes": 2040}, {"path": "src/shared-flatex-ui.js", "status": 200, "gitBlob": "c7b009b4fceae6e8f7b79a973309e86e855a0ea9", "sha256": "debf5ede5be8954bec4d4c431f410ca9a4ca09a1238519164936e153cfe4694c", "bytes": 8935}, {"path": "src/bitpanda-import-ui.js", "status": 200, "gitBlob": "e87f56685ee33026ce64d677a0a8e7f4517061f0", "sha256": "ea6d1af3a3449bf5fd1f2b79e21ba01f9ce436c19292ebf96df956d1d165a14d", "bytes": 13126}, {"path": "src/bitcoin-history.js", "status": 200, "gitBlob": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1", "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8", "bytes": 15708}, {"path": "src/position-quality-review.js", "status": 200, "gitBlob": "d0388ef31be71e8e0627cf8c830d410c49ab864f", "sha256": "5c147ddc5d138065b1ab912129ac06f693107d98632dde35674524e5da7749db", "bytes": 5046}, {"path": "src/historical-csv.js", "status": 200, "gitBlob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4", "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b", "bytes": 8496}, {"path": "src/wallet-history-valuation.js", "status": 200, "gitBlob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4", "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a", "bytes": 5695}, {"path": "src/kraken-link-bridge.js", "status": 200, "gitBlob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423", "sha256": "6e15a9f665549cc3f7516a9041036fc16cee7be36cd9b1fddff35b57e73bd649", "bytes": 4815}, {"path": "src/flatex-native.js", "status": 200, "gitBlob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2", "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e", "bytes": 10291}, {"path": "src/complete-backup.js", "status": 200, "gitBlob": "1f9e6ae63528cf2ffa79a876f357e6fabed258d4", "sha256": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4", "bytes": 4212}, {"path": "src/import-identity.js", "status": 200, "gitBlob": "3af3a5b826db9cde851c85874701c1b92143987a", "sha256": "6004bdb6818eb6a31440c7560f764d15581da4898340213fc97cdda8de2bb9ea", "bytes": 11864}, {"path": "src/wallet-scan-update.js", "status": 200, "gitBlob": "0924d07398250b2c6ba778455391cb0052bdd33c", "sha256": "24678d81be9a24e626a752f8b647fa069ed27eb96f097a0653e27c563742672e", "bytes": 2102}, {"path": "src/retired-providers.js", "status": 200, "gitBlob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731", "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279", "bytes": 608}, {"path": "src/wallet-visibility.js", "status": 200, "gitBlob": "fa4b9e49fff050b82d287409af37562b72e97b07", "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d", "bytes": 3444}, {"path": "src/portfolio-edit-actions.js", "status": 200, "gitBlob": "3412841500a16abd99aa37e2603603e676d2ad94", "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04", "bytes": 5144}, {"path": "src/shared-flatex-reconciliation-ui.js", "status": 200, "gitBlob": "c836f5a5ee0f3208978b7df1fb658bfb530805bb", "sha256": "93dfd7d6e91ea018eafe737a3148048c3a0a3bfcce8e4fd6609d8bca06711a28", "bytes": 4435}, {"path": "src/shared-import-ui.js", "status": 200, "gitBlob": "fb28c9bbc44ed7729383df1d619ddf3d532000dd", "sha256": "a61c4b1700750bf3d38b8df7b7580b072c749409dcaa012b1397ab1b63e13d67", "bytes": 10922}, {"path": "src/cash-terms.js", "status": 200, "gitBlob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77", "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0", "bytes": 5600}, {"path": "src/interest-ui.js", "status": 200, "gitBlob": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248", "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7", "bytes": 9433}, {"path": "src/flatex-reconciliation.js", "status": 200, "gitBlob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9", "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6", "bytes": 3127}, {"path": "src/asset-wizard.js", "status": 200, "gitBlob": "3a863542ab6d02ce0def12c735f31069293efb60", "sha256": "2d27329ec83a15bc5884363c6a5c55927ce05da0fd3ba2254c617c7ad893a081", "bytes": 35600}, {"path": "src/security-catalog.js", "status": 200, "gitBlob": "b5edf8651d6a3157a80c0087d28f6482d198e161", "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9", "bytes": 13197}, {"path": "src/bitpanda-preview.js", "status": 200, "gitBlob": "38ed3103272fe7110387c68f24f889e1a88f7ca6", "sha256": "be6dc214ff9213c95d8d968052f9c866a00dfc6263ce6f0b2323448f4c6c59d7", "bytes": 5398}, {"path": "src/flatex-review-export.js", "status": 200, "gitBlob": "1de187107010784e4a8d0f47e74d3bad17e2f4fd", "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec", "bytes": 2008}, {"path": "src/historical-position-value.js", "status": 200, "gitBlob": "0c6f714150b3d78e4e3086f275d63943d36b43ba", "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73", "bytes": 10415}, {"path": "src/asset-wizard-core.js", "status": 200, "gitBlob": "bcd7d08446adff32223374cce1e8f1f569c214fa", "sha256": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c", "bytes": 6192}, {"path": "src/crypto-backup.js", "status": 200, "gitBlob": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4", "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc", "bytes": 2202}, {"path": "src/kraken-source-plan.js", "status": 200, "gitBlob": "c35231c6886d1dc2f4e2d663c4586e1f30f21fc5", "sha256": "81ba98accde72711e58e58c5d8ccfe2b8bb379f1278d1119ada9e49c31ce306e", "bytes": 5669}, {"path": "src/staking-catalog.js", "status": 200, "gitBlob": "8a4b4b1206b6949176e6b21a72acea4911467884", "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025", "bytes": 7494}, {"path": "src/bnb-token-scanner.js", "status": 200, "gitBlob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5", "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c", "bytes": 6350}, {"path": "src/account-opening.js", "status": 200, "gitBlob": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50", "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b", "bytes": 759}, {"path": "src/kraken-ethereum-bridge.js", "status": 200, "gitBlob": "d9b14aa5806089767d43e049df70bbb70507a5ae", "sha256": "d5328824d40dc05e744a6c8c4879e6a9bed2d5834d8a765796d46e021006a3b1", "bytes": 12912}, {"path": "src/position-detail-ui.js", "status": 200, "gitBlob": "157c9720e120a5b38ebbb954d29baa91601f9d15", "sha256": "fe139620c0ca5dc4126b45f48efdd68dc9bc203e8bc03a02b04cb149c5676f98", "bytes": 14333}, {"path": "src/unified-bitcoin-ui.js", "status": 200, "gitBlob": "1893fc655d4f910ecacfc6949250fde82a0dc580", "sha256": "8c27cfb3b723e1b1cb3f54c4cee62288adc91b64f536770a11823d2813251146", "bytes": 6766}, {"path": "src/loading-ui.js", "status": 200, "gitBlob": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83", "sha256": "0ed29228cb0d955b3466117540975d59aabb47d5100306ced27c6025d3c19854", "bytes": 1664}, {"path": "src/purchase-evidence-ui.js", "status": 200, "gitBlob": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634", "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0", "bytes": 6253}, {"path": "src/booking-management.js", "status": 200, "gitBlob": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5", "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9", "bytes": 21757}, {"path": "src/unified-bitcoin.js", "status": 200, "gitBlob": "fe27c60e3181596b2ec792081ede2d5861fb00e2", "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603", "bytes": 17410}, {"path": "src/flatex-settlement-audit.js", "status": 200, "gitBlob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63", "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261", "bytes": 6519}, {"path": "src/position-bookings.js", "status": 200, "gitBlob": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19", "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be", "bytes": 1788}, {"path": "src/atomic-storage.js", "status": 200, "gitBlob": "294861aca7b65fffd423b26f50c176a04659340f", "sha256": "f7794c4f109e255b05b7131a2b0fc8e75b8e37018df348230e881b59039708cb", "bytes": 10053}, {"path": "src/kraken-ledger.js", "status": 200, "gitBlob": "ba9f306137f2a7c2cbe120686fe3930738adf4ff", "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6", "bytes": 5612}, {"path": "src/decimal.js", "status": 200, "gitBlob": "7896c75407ff67763bc9c969ea203f6e5f1b529a", "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611", "bytes": 3302}, {"path": "src/economic-form-ui.js", "status": 200, "gitBlob": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f", "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200", "bytes": 1593}, {"path": "src/coin-identity.js", "status": 200, "gitBlob": "e7681a4b1cab7c41c950ea1b8999963148340f5f", "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26", "bytes": 643}, {"path": "src/refresh-ui.js", "status": 200, "gitBlob": "cd4b56d8d392c90f638b089c91e721a13c3a7d29", "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a", "bytes": 891}, {"path": "src/credential-visibility.js", "status": 200, "gitBlob": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a", "sha256": "4a683444a5d98637ad4f2f6a6f42c585b6ce37b2a811577bacbaf0e2b5bc7f9e", "bytes": 2268}, {"path": "src/csv-batch.js", "status": 200, "gitBlob": "0356e6cd8550f3107742603da2fde9fa7fbcc7df", "sha256": "deb17dd33931c138ffd12813929ff347458988204ca7de169caa5e182a5e40b9", "bytes": 3868}, {"path": "src/cash-terms-ui.js", "status": 200, "gitBlob": "4809fc05f141d39ad7e378c44d6e7a287995024c", "sha256": "d60565ac037fa2e8499f9095ec382ebaa85ee0de95b1887ab213eff7d416e22e", "bytes": 7684}, {"path": "src/startup.js", "status": 200, "gitBlob": "4121fea8edcd900d456f1dc87abd06d7012aed6b", "sha256": "ba5bce5a6cc763ac79c2dd7c745692c6f0128bc9daec2b95ddd02e708611a488", "bytes": 919}, {"path": "src/format.js", "status": 200, "gitBlob": "8857db66fc5a02b5db753de3e77e49a88be9c977", "sha256": "69acdbdbdb297cafd13634e5fe4ce8b4e34417077bf4f0e5459c4931d05f728e", "bytes": 5025}, {"path": "src/pchain-evidence.js", "status": 200, "gitBlob": "3c248f1087f0d3273811c50715a1cf888e6d55ed", "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8", "bytes": 4071}, {"path": "src/quote-quality.js", "status": 200, "gitBlob": "e4d8e5dee05932ec28788ea101d0bc6c09b354ba", "sha256": "861a8e75afe8177eb12e558143321df88ef1da38a82fc8b5328328799e23660e", "bytes": 4322}, {"path": "src/link-explorer-evidence.js", "status": 200, "gitBlob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b", "sha256": "4e85163574dc115233eb6ff346ab29c548a0bd7e2c9688170fb0e03071dabe84", "bytes": 10145}, {"path": "src/flatex-net-reconciliation.js", "status": 200, "gitBlob": "2d39c199135dc9348271271c60b36876c4660936", "sha256": "1fbc1203716c4498122ebbd0c917b434faa469083eee58576f804d425fe28c32", "bytes": 17158}, {"path": "src/wallet-history-days.js", "status": 200, "gitBlob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24", "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3", "bytes": 1858}, {"path": "src/solana-history.js", "status": 200, "gitBlob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1", "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070", "bytes": 16250}, {"path": "src/account-evidence.js", "status": 200, "gitBlob": "3024e91230fc586a4c9f1e4a0746a815794e1d18", "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1", "bytes": 1971}, {"path": "src/backup-limits.js", "status": 200, "gitBlob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5", "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f", "bytes": 3335}, {"path": "src/position-history.js", "status": 200, "gitBlob": "69bae9bb2126ad9a9cf9207543f1176a68ffe2fb", "sha256": "ba83f32d5f670c14b270fb79546a9caadab3f0caf6dfbde23a47558757ffcfce", "bytes": 8798}, {"path": "src/drive-backup.js", "status": 200, "gitBlob": "e93573b9b39010a30ee0c2aa4465340f00de2ef7", "sha256": "d5a90bcce821c3b356ff33e3802cac7ad5ae01c6b02923235fa067ba0b9ae920", "bytes": 27407}, {"path": "src/native-staking-networks.js", "status": 200, "gitBlob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a", "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2", "bytes": 9479}, {"path": "src/ethereum-fallback.js", "status": 200, "gitBlob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8", "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e", "bytes": 3002}, {"path": "src/market.js", "status": 200, "gitBlob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41", "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a", "bytes": 32527}, {"path": "src/kraken-import.js", "status": 200, "gitBlob": "8248a184ff91f13b79e28aea9c58216e7936c9de", "sha256": "027f22460ec0715063277178368501c068fe1635f82abfb3810fafdf032b5f82", "bytes": 26923}, {"path": "src/position-selection.js", "status": 200, "gitBlob": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2", "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d", "bytes": 9790}, {"path": "src/interest-scenario.js", "status": 200, "gitBlob": "332037a4d578c8128121f799165db3a749a82239", "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89", "bytes": 6000}, {"path": "src/booking-insights-ui.js", "status": 200, "gitBlob": "249e18771d565045a809d6b636016b3d488a40b9", "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e", "bytes": 3674}, {"path": "src/wallet-history-days-worker.js", "status": 200, "gitBlob": "f0389e11f47eb92ce06a3ea2804a1ea343256245", "sha256": "126784f8937c9891df3c424b9e136c8095231dd081e8ac388e4b981957969c93", "bytes": 500}, {"path": "src/historical-portfolio-value.js", "status": 200, "gitBlob": "3a49409f21ed1e51c18b641127d461a4898423d1", "sha256": "f7a25d400322f493de76e1d6f8735af746e11d4f8d5bde141ad4155d9bfd8d66", "bytes": 7620}, {"path": "src/booking-insights.js", "status": 200, "gitBlob": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36", "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c", "bytes": 5108}, {"path": "src/bitpanda-import.js", "status": 200, "gitBlob": "b42e81350784dd4f4654dfc90c7461e2189e770b", "sha256": "e1c75d4c65f1811270918709e1afd4f24518b61571ed95c2ad66114fd6ee6ad6", "bytes": 19887}, {"path": "src/defi.js", "status": 200, "gitBlob": "12fbc404d61ce4412cf9120712ea2ed719da4405", "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd", "bytes": 1911}, {"path": "src/eodhd-worker-client.js", "status": 200, "gitBlob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9", "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f", "bytes": 2099}, {"path": "src/flatex-cost-basis.js", "status": 200, "gitBlob": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1", "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9", "bytes": 1385}, {"path": "src/position-icons.js", "status": 200, "gitBlob": "3630fee430d88897294f3f9b81e3473dc4c703cc", "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758", "bytes": 1573}, {"path": "src/flatex-net-settlement.js", "status": 200, "gitBlob": "f7d8f011bb020becd57a76aadff2cf9628a60a2a", "sha256": "e8db2b95e673ed3b65951ad6fb0f36fcdbba6b4d3dbc2f79fa183050e482f128", "bytes": 58504}, {"path": "src/wallet-history-core.js", "status": 200, "gitBlob": "edcbe5570a903271d07ddc637bd876071e85a40a", "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090", "bytes": 16534}, {"path": "src/wallet-history-calculation.js", "status": 200, "gitBlob": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7", "sha256": "81283566517daac6011ca4744f689c292ee017c7d2f1eff1c94832962f20d50b", "bytes": 2576}, {"path": "src/position-search.js", "status": 200, "gitBlob": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc", "sha256": "cf4f10501321535da1f14d60f2b1b6748fa5a47cd917a677573c50a412751f01", "bytes": 1514}, {"path": "src/wallet-history-state.js", "status": 200, "gitBlob": "f87f593a4ec2be99f351037cec48316acb8db6a3", "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c", "bytes": 8034}, {"path": "src/market-diagnostics.js", "status": 200, "gitBlob": "030b05243edf7e956dfdea404e92dd30e12a0e9a", "sha256": "7e55e3b411600bfd6b01cda5279792294a4a48f08fae5ad58005bade4408923c", "bytes": 5651}, {"path": "src/ledger-live-ui.js", "status": 200, "gitBlob": "ee847ff772e1c109c0837616fdc84f7f909e6ae9", "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a", "bytes": 3810}, {"path": "src/browser-portfolio-storage.js", "status": 200, "gitBlob": "f9be5fe41e861ede12f66960dae59d582510d098", "sha256": "94dd30dfb41e72a26af768bddf1d2220f8a790f42c19c212c0b75bd02a45adbc", "bytes": 14769}, {"path": "src/transfer-matching-ui.js", "status": 200, "gitBlob": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e", "sha256": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d", "bytes": 12170}, {"path": "src/allocation-ui.js", "status": 200, "gitBlob": "583ab225b84160e8523d1601f8bf0122c4b8770c", "sha256": "ce3f8025c5cfbd888b7642173f8b2e298fa3a6efc87363d73fba9031545b6f6a", "bytes": 7236}, {"path": "src/dashboard-ui.js", "status": 200, "gitBlob": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb", "sha256": "370ef24ed1d9ea299773bb017016881b2134bdaab27d74c888e2e2a0e29b8cb5", "bytes": 16366}, {"path": "src/reference-management.js", "status": 200, "gitBlob": "1fa1ae41a5dcd81ed9cdeaee709dfae7f7fb46a0", "sha256": "40ab1bf09783d6c05ac12aba7f8d686b1a5b54989da2087a3d2817c3605192c9", "bytes": 11681}, {"path": "src/security-sources.js", "status": 200, "gitBlob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d", "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d", "bytes": 9505}, {"path": "src/bitpanda-withdrawal-evidence.js", "status": 200, "gitBlob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1", "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586", "bytes": 3955}, {"path": "src/transactions.js", "status": 200, "gitBlob": "02731e40ea7ecf32d28da4b02cda7cbda8528171", "sha256": "3b3fc129300705568d82c91cdd879839f884816191fd5022b26b8ac3fd506ec7", "bytes": 33264}, {"path": "src/bitpanda-preview-ui.js", "status": 200, "gitBlob": "5fc4467fc103116b5cc2d1cb4a50683c64085988", "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d", "bytes": 2654}, {"path": "src/instrument-catalog.js", "status": 200, "gitBlob": "8012ff3fe03d60b24aff246f7e4ea73170159ea1", "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7", "bytes": 10218}, {"path": "src/sonic-staking-evidence.js", "status": 200, "gitBlob": "eefd659b275830d83d4ae36709cce0475ce9e7cd", "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f", "bytes": 4545}, {"path": "src/valuation-status.js", "status": 200, "gitBlob": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb", "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c", "bytes": 1659}, {"path": "src/flatex-backfill.js", "status": 200, "gitBlob": "a224457e9bcc5e90e2ecb476c49eabc675937997", "sha256": "25a4b664803cf13647b7829fa78140dda0d106992e894b1d95e9ec4075705486", "bytes": 11612}, {"path": "src/ethereum-history.js", "status": 200, "gitBlob": "21e056201e74bbb6490e74c430601af839699d71", "sha256": "070863c673654e44c58226f4ebe9cadc0260460b7d14a59a7f225ad31bc9d06c", "bytes": 23086}, {"path": "src/bitcoin-hd.js", "status": 200, "gitBlob": "4be2e9af21fd5d66c37938727a43d956292fd6bf", "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6", "bytes": 11504}, {"path": "src/interest-account.js", "status": 200, "gitBlob": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d", "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a", "bytes": 1759}, {"path": "src/kraken-ledger-ui.js", "status": 200, "gitBlob": "2b3436487f0e78c66e783d46f90baefb5fa2692f", "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b", "bytes": 2670}, {"path": "src/alpha-vantage.js", "status": 200, "gitBlob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2", "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83", "bytes": 10638}, {"path": "src/reference-listings.js", "status": 200, "gitBlob": "3ba091983e64a631ad187ebb302299380db49c02", "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0", "bytes": 3170}, {"path": "src/eodhd-transport.js", "status": 200, "gitBlob": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72", "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82", "bytes": 1290}, {"path": "src/kraken-solana-bridge.js", "status": 200, "gitBlob": "782cab38bb79daa0886c6ab66559f61792279dd1", "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e", "bytes": 14926}, {"path": "src/booking-history.js", "status": 200, "gitBlob": "77d23820cacdbe9a1efb1112eb609241e88c190d", "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93", "bytes": 7676}, {"path": "src/security-discovery.js", "status": 200, "gitBlob": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9", "sha256": "507d8da0447ec8d9209db63d450da0faf10c81d5bece7cbfdaa755a07010220c", "bytes": 3716}, {"path": "src/header-status.js", "status": 200, "gitBlob": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd", "sha256": "98b68f05d8eaede72032411b6f0ff17febdb17d60de20ce6578c06caa1e231f0", "bytes": 6611}, {"path": "src/flatex-settlements.js", "status": 200, "gitBlob": "16214b0406a740200585f726e9c9b90cb6007dec", "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89", "bytes": 10959}, {"path": "src/model.js", "status": 200, "gitBlob": "83aab32967ca4ebb48350d4e04d1a4d4cead6b54", "sha256": "7961f067db956547c47460a5c4c2c33eb474edca53cf163d6f705780e9f89e5a", "bytes": 32255}, {"path": "src/marketstack.js", "status": 200, "gitBlob": "a686d3010a804db0d324c45324f7e5b9f5deafae", "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456", "bytes": 8469}, {"path": "src/booking-history-ui.js", "status": 200, "gitBlob": "61212dc0c360a44dbd261ecd70f2314bc4a2e857", "sha256": "4029dc357f16f44d158856abf3e86df5b8fa3982bffbe59a4f2fd42e70e343f4", "bytes": 20508}, {"path": "sw.js", "status": 200, "gitBlob": "b62eab832c49ead52c8ed9c0871c31ee6b1a1efb", "sha256": "ec986c4c5b6208e5db6ee42808e098f55c203d79553c79f00ec74654da3601ba", "bytes": 5548}, {"path": "styles.css", "status": 200, "gitBlob": "83a190d6fb30db94f7e32a3029dfb6568ee3df2a", "sha256": "9bbc654d3f63d5c5e7935c893f6bc49a2ac56cbb92bde8598b77d385faab138b", "bytes": 168519}, {"path": "icons/flask.svg", "status": 200, "gitBlob": "823323630cb3fe1b9a6342e9d6e5421554c1194d", "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1", "bytes": 686}, {"path": "icons/flask-512.png", "status": 200, "gitBlob": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0", "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167", "bytes": 21846}, {"path": "icons/flask-maskable-512.png", "status": 200, "gitBlob": "645419333138793ef88441a53d2f362e324fed4a", "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d", "bytes": 14006}, {"path": "icons/flask-192.png", "status": 200, "gitBlob": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b", "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119", "bytes": 7706}, {"path": "", "status": 200, "gitBlob": "5d6528361b7dba3d1a17cf2711283d97c1b67e07", "sha256": "95405b5f014f9826db59a7f444b75f18d6f347045f571a305133e1c9531df842", "bytes": 48455}], "sw": "foliolab-open-v291", "checkedAt": "2026-11-06T15:40:08.569797+00:00"}, "mainGateArtifacts": [{"id": 13516912403, "name": "dialog-visual-reference", "sha256": "d9bfb981b91b235109b5eb56ff85daef86ef9257439db7f297d23fc56a2093d6", "bytes": 934094, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 0, "pngsDecoded": 20, "failureFlags": []}, {"id": 13515166947, "name": "ci-stage-6b020461aec68b6281dbc00e32c953dc6cec14cb", "sha256": "5a94cd91e98386cfbeb2c5e05645de239200970ddcf94832efed945ac54acabd", "bytes": 354, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 1, "pngsDecoded": 0, "failureFlags": []}, {"id": 13517107768, "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-3", "sha256": "228d3058be827ff26287aa84b81c90cdb6eb49507ade676927545c8bbf2128cc", "bytes": 62886425, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 76, "pngsDecoded": 688, "failureFlags": []}, {"id": 13517662167, "name": "release-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb", "sha256": "2e95090941166b751981e70e8664d5149792c131835d198fe75e95720c1ee582", "bytes": 61764670, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 79, "pngsDecoded": 655, "failureFlags": []}, {"id": 13515747947, "name": "github-pages", "sha256": "2e5ac92ac591841e8ee69ba430b2f8c9726ce87e8a0592e11adf362d739f92f6", "bytes": 555548, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 0, "pngsDecoded": 0, "failureFlags": []}, {"id": 13517265823, "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-2", "sha256": "a19884f39bcb02b00b4f9503bdba99b4a28a06ba6af99a4c153c0207d1d54e24", "bytes": 11602227, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 17, "pngsDecoded": 74, "failureFlags": []}, {"id": 13516826428, "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-1", "sha256": "8952f066cd6aa98d7e3bd29b5b40c4d00e5eeaf007e1f191ba48a461cb1aabd4", "bytes": 58289795, "apiUploadLogLocalMatch": true, "CRC": "PASS", "jsonReports": 15, "pngsDecoded": 474, "failureFlags": []}], "mainArtifactQualification": {"actualArchives": 7, "jsonReports": 188, "decodedPNGs": 1911, "failureFlags": []}, "production": {"job": 127982523356, "status": "IN_PROGRESS", "currentStep": "Verify published bytes, core flows and targeted UI in Chromium", "result": "PENDING"}}
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "82ce3d0130ba",
+  "release": "v291",
+  "PR": 308,
+  "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+  "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+  "baseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5",
+  "integrationRun": 42235829073,
+  "integrationAttempt": 1,
+  "walletRun": 42235829005,
+  "sw": "foliolab-open-v291",
+  "manualWorkflowDispatches": 0,
+  "workflowReruns": 0,
+  "workflowCancellations": 0,
+  "priorReleases": "v289/v290 remain LIVE_ACCEPTED; not reaccepted",
+  "limitations": [
+    "2:1 EUR still synthetic, no real private2:1 original",
+    "81 original groups are not a full private history or ownership claim",
+    "No physical browser zoom or Android/iOS hardware claim"
+  ],
+  "next": "UH05 bounded 3:1 EUR; independent oracle and versioned complete membership before implementation",
+  "integration": {
+    "status": "INTEGRATION_QUALIFIED / NOT_MERGED / NOT_DEPLOYED",
+    "owner": "414503ed33c6",
+    "release": "v291",
+    "PR": 308,
+    "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+    "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+    "testedMerge": "7cd051e9898521398d00976ea3909110ef1c9bce",
+    "baseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5",
+    "run": 42235829073,
+    "attempt": 1,
+    "conclusion": "SUCCESS",
+    "units": {
+      "pass": 1246,
+      "fail": 0,
+      "skip": 0
+    },
+    "walletRun": 42235829005,
+    "walletUnits": {
+      "pass": 1246,
+      "fail": 0,
+      "skip": 0
+    },
+    "allThreeBrowserShards": "SUCCESS",
+    "artifacts": [
+      {
+        "id": 13515590847,
+        "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-3",
+        "sha256": "261fed9fac479771b2b78e45d721fb76e83d25dc1c9db8c2017a29a2b85ba06c",
+        "bytes": 62891255,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 76,
+        "pngsDecoded": 688,
+        "failureFlags": []
+      },
+      {
+        "id": 13512737189,
+        "name": "release-gates-7cd051e9898521398d00976ea3909110ef1c9bce",
+        "sha256": "11b8fafba22391504ddf16404254d568cce9bcb139f2b4468ee886e8b7c26b55",
+        "bytes": 61754280,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 79,
+        "pngsDecoded": 655,
+        "failureFlags": []
+      },
+      {
+        "id": 13511816756,
+        "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-2",
+        "sha256": "dc06a87f3bd926ed768f54481ad2fd5be7372fd5008d042c0bdba8c591aef1d8",
+        "bytes": 11603271,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 17,
+        "pngsDecoded": 74,
+        "failureFlags": []
+      },
+      {
+        "id": 13512032944,
+        "name": "cross-engine-gates-7cd051e9898521398d00976ea3909110ef1c9bce-1",
+        "sha256": "a7e2f963eb9ac27b630a02bddc5be2cd319c920a6f14a86f271ac5e56672eda0",
+        "bytes": 58284054,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 15,
+        "pngsDecoded": 474,
+        "failureFlags": []
+      },
+      {
+        "id": 13512892128,
+        "name": "dialog-visual-reference",
+        "sha256": "c67a38cf7f1dd916258f6939f6c5c9fd1694f495ddc28505b9f8703d12a3c6f4",
+        "bytes": 934090,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 0,
+        "pngsDecoded": 20,
+        "failureFlags": []
+      },
+      {
+        "id": 13512665281,
+        "name": "ci-stage-7cd051e9898521398d00976ea3909110ef1c9bce",
+        "sha256": "a364d8acb5d118771fe7a373910658998cd85ebf4f32f0bdebdb3229d7e9fddf",
+        "bytes": 775,
+        "apiUploadLogLocalMatch": true,
+        "CRC": "PASS",
+        "jsonReports": 1,
+        "pngsDecoded": 0,
+        "failureFlags": []
+      }
+    ],
+    "artifactQualification": {
+      "actualArchives": 6,
+      "jsonReports": 188,
+      "decodedPNGs": 1911,
+      "failureFlags": []
+    },
+    "UI300": [
+      {
+        "engine": "chromium",
+        "result": "PASS",
+        "base": "http://127.0.0.1:4173/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "result": "PASS",
+        "base": "http://127.0.0.1:4173/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "base": "http://127.0.0.1:4173/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      }
+    ],
+    "regressionSuites": {
+      "two-fill": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ]
+        }
+      ],
+      "v289-review-integrity": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ]
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ]
+        }
+      ]
+    },
+    "actualImages": [
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13512737189/ui300/chromium-390.png",
+        "sha256": "8f1870d19704771eb0642d3dbbbcd8c65691529fae42af5d3dbab3f3d96f7150",
+        "visuallyInspected": true
+      },
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13512737189/ui300/chromium-partial-observation.png",
+        "sha256": "6381d7b45fe7da0d3fc56036e0354baef1e8f99f35ff6822f200aac421da486b",
+        "visuallyInspected": true
+      },
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/firefox-390.png",
+        "sha256": "223a20085825bf63f39d27147d83ab80468e2d5b39e36b9cb3399ad996e0d441",
+        "visuallyInspected": true
+      },
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/firefox-partial-observation.png",
+        "sha256": "9a0e2d7455bd36b65f0c19b7f1a1bbd7b8a8ad4bbda404f16494dd9d65db9043",
+        "visuallyInspected": true
+      },
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/webkit-390.png",
+        "sha256": "30ecaaee0a4f917998447dabbcf7490fc85c0621b636f3511255ae252883bab8",
+        "visuallyInspected": true
+      },
+      {
+        "path": "qa/ui300-ci-42235829073/artifacts/13515590847/ui300/webkit-partial-observation.png",
+        "sha256": "436fdb035343720b8d688b1e4f02c82d134278ef9e5b4bedbd507956a2f1258b",
+        "visuallyInspected": true
+      }
+    ],
+    "mergeGuard": {
+      "expectedHead": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+      "expectedBaseMain": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5",
+      "testedMerge": "7cd051e9898521398d00976ea3909110ef1c9bce",
+      "mergeable": true,
+      "mergeableState": "clean",
+      "reviews": {
+        "reviews": []
+      },
+      "threads": {
+        "review_threads": []
+      },
+      "checks": [
+        {
+          "id": 127966374687,
+          "name": "live-acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T15:04:54Z"
+        },
+        {
+          "id": 127966373646,
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "skipped",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T15:04:54Z"
+        },
+        {
+          "id": 127953152837,
+          "name": "FAST only / UI contract canary \u2014 no integration approval",
+          "status": "completed",
+          "conclusion": "skipped",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:39:24Z"
+        },
+        {
+          "id": 127953149529,
+          "name": "cross-engine (2)",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:47:31Z"
+        },
+        {
+          "id": 127953149470,
+          "name": "cross-engine (3)",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T15:04:54Z"
+        },
+        {
+          "id": 127953149428,
+          "name": "cross-engine (1)",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:52:41Z"
+        },
+        {
+          "id": 127953149345,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:52:02Z"
+        },
+        {
+          "id": 127953047996,
+          "name": "Determine FAST / INTEGRATION / RELEASE",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:39:24Z"
+        },
+        {
+          "id": 127953046844,
+          "name": "tests",
+          "status": "completed",
+          "conclusion": "success",
+          "head": "758c574840b8d24e6025ef6e32f48fc4e936bd90",
+          "completedAt": "2026-11-06T14:39:58Z"
+        }
+      ],
+      "nativeBranchProtectionObserved": false,
+      "nativeRulesets": [],
+      "guardMeaning": "HND01 owner checks and expected-head merge lease; no claim that GitHub native branch protection is enabled; no bypass or settings change"
+    },
+    "manualWorkflowDispatches": 0,
+    "workflowReruns": 0,
+    "workflowCancellations": 0,
+    "priorReleases": "v289/v290 LIVE_ACCEPTED; not reaccepted",
+    "limitations": [
+      "2:1 EUR remains synthetic without real private2:1 original",
+      "81 original groups do not claim full private history or ownership",
+      "No physical zoom/hardware claim"
+    ],
+    "next": "After private backup and fresh final guard, expected-head controlled merge; qualify automatic Main attempt1/deployment/actual production before LIVE_ACCEPTED."
+  },
+  "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+  "protectedMerge": {
+    "expectedHeadGuard": true,
+    "mandatoryChecksVerified": true,
+    "reviewsAndThreadsFresh": true,
+    "nativeBranchProtectionObserved": false,
+    "nativeRulesets": [],
+    "noSettingsChangedOrBypass": true
+  },
+  "backupBeforeMerge": {
+    "version": 60,
+    "bytes": 15492688,
+    "sha256": "a935c85f4d416843b07a467555f486d7c26544b91bd56d6c0c053291387c790b",
+    "manifestFiles": 3441,
+    "preservedV59Files": 3210
+  },
+  "mainRun": 42240526403,
+  "mainAttempt": 1,
+  "mainUnits": {
+    "pass": 1246,
+    "fail": 0,
+    "skip": 0
+  },
+  "mainBrowserGates": "Chromium and all three shards SUCCESS",
+  "deployment": {
+    "job": 127979568480,
+    "conclusion": "SUCCESS"
+  },
+  "pages": {
+    "result": "PASS",
+    "files": 151,
+    "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+    "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+    "artifactId": 13515747947,
+    "artifactSHA256": "2e5ac92ac591841e8ee69ba430b2f8c9726ce87e8a0592e11adf362d739f92f6",
+    "noUnexpectedFilesOrLinks": true,
+    "sw": "foliolab-open-v291",
+    "gitblobs": {
+      "index.html": "5d6528361b7dba3d1a17cf2711283d97c1b67e07",
+      "manifest.webmanifest": "60f13ef827812f0066043295f65316b6144e618c",
+      "src/ledger-live.js": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+      "src/public-instruments-client.js": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+      "src/shared-import.js": "4a637e0b68bda7d28e2182458917ce63d133a4e9",
+      "src/capital-flows.js": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c",
+      "src/wallet-history-ui.js": "012f97dcdf3b5da96627be04c70f87c00dcaef8e",
+      "src/kraken-withdrawal-evidence.js": "99b68062733ef985892a2643e5925775e3cf7894",
+      "src/purchase-evidence.js": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+      "src/wallet-identity.js": "7337ad57a531189676f747fdf6d1a925170f4004",
+      "src/onboarding-suggestions.js": "2c045c706fb7cf3090d8a462f36834ade5e2dee7",
+      "src/xrpl-assets.js": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+      "src/dialog-discard.js": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3",
+      "src/flatex-import.js": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69",
+      "src/pchain-identity.js": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d",
+      "src/flatex-cash-audit.js": "484a7fba8494f912d4968df553a3fa7bfdc913d5",
+      "src/request-cache.js": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+      "src/solana-rpc.js": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+      "src/assets.js": "054ba656af6145f96bf93a566009ed40f45603cb",
+      "src/kraken-import-ui.js": "5371d97918d5ec919a039d8ca7ba3d02de344f0f",
+      "src/legacy-quote-audit.js": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e",
+      "src/csv-records.js": "a38aad028a30776022c6c8950a2699a6694962b4",
+      "src/chart-periods.js": "e7ca59776ce800626ce5309887206baf4b25625f",
+      "src/crypto-fallbacks.js": "1151f42b1315241805923b848a7a2efdf65528ac",
+      "src/kraken-bitcoin-bridge.js": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+      "src/backup-vault.js": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0",
+      "src/history-evidence-cache.js": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+      "src/staking-discovery.js": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+      "src/flatex-native-ui.js": "d52e116b9280147495316666289962d21988ba3c",
+      "src/performance.js": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a",
+      "src/app.js": "a47ab34c1cc1232c9e6c2cbb11b5419bdde11609",
+      "src/blocked-reasons-ui.js": "93f5550fb59337ce3c78642b9b36c8acd5dc1381",
+      "src/csv-import.js": "e69e14525e7ef1a5b86b3c0e16023ea0a5d106c9",
+      "src/blockchain-adapters.js": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16",
+      "src/cash-reconciliation.js": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda",
+      "src/shared-flatex-ui.js": "c7b009b4fceae6e8f7b79a973309e86e855a0ea9",
+      "src/bitpanda-import-ui.js": "e87f56685ee33026ce64d677a0a8e7f4517061f0",
+      "src/bitcoin-history.js": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1",
+      "src/position-quality-review.js": "d0388ef31be71e8e0627cf8c830d410c49ab864f",
+      "src/historical-csv.js": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+      "src/wallet-history-valuation.js": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+      "src/kraken-link-bridge.js": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+      "src/flatex-native.js": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+      "src/complete-backup.js": "1f9e6ae63528cf2ffa79a876f357e6fabed258d4",
+      "src/import-identity.js": "3af3a5b826db9cde851c85874701c1b92143987a",
+      "src/wallet-scan-update.js": "0924d07398250b2c6ba778455391cb0052bdd33c",
+      "src/retired-providers.js": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+      "src/wallet-visibility.js": "fa4b9e49fff050b82d287409af37562b72e97b07",
+      "src/portfolio-edit-actions.js": "3412841500a16abd99aa37e2603603e676d2ad94",
+      "src/shared-flatex-reconciliation-ui.js": "c836f5a5ee0f3208978b7df1fb658bfb530805bb",
+      "src/shared-import-ui.js": "fb28c9bbc44ed7729383df1d619ddf3d532000dd",
+      "src/cash-terms.js": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+      "src/interest-ui.js": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248",
+      "src/flatex-reconciliation.js": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+      "src/asset-wizard.js": "3a863542ab6d02ce0def12c735f31069293efb60",
+      "src/security-catalog.js": "b5edf8651d6a3157a80c0087d28f6482d198e161",
+      "src/bitpanda-preview.js": "38ed3103272fe7110387c68f24f889e1a88f7ca6",
+      "src/flatex-review-export.js": "1de187107010784e4a8d0f47e74d3bad17e2f4fd",
+      "src/historical-position-value.js": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+      "src/asset-wizard-core.js": "bcd7d08446adff32223374cce1e8f1f569c214fa",
+      "src/crypto-backup.js": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4",
+      "src/kraken-source-plan.js": "c35231c6886d1dc2f4e2d663c4586e1f30f21fc5",
+      "src/staking-catalog.js": "8a4b4b1206b6949176e6b21a72acea4911467884",
+      "src/bnb-token-scanner.js": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+      "src/account-opening.js": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50",
+      "src/kraken-ethereum-bridge.js": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+      "src/position-detail-ui.js": "157c9720e120a5b38ebbb954d29baa91601f9d15",
+      "src/unified-bitcoin-ui.js": "1893fc655d4f910ecacfc6949250fde82a0dc580",
+      "src/loading-ui.js": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83",
+      "src/purchase-evidence-ui.js": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634",
+      "src/booking-management.js": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+      "src/unified-bitcoin.js": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+      "src/flatex-settlement-audit.js": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+      "src/position-bookings.js": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19",
+      "src/atomic-storage.js": "294861aca7b65fffd423b26f50c176a04659340f",
+      "src/kraken-ledger.js": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+      "src/decimal.js": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+      "src/economic-form-ui.js": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f",
+      "src/coin-identity.js": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+      "src/refresh-ui.js": "cd4b56d8d392c90f638b089c91e721a13c3a7d29",
+      "src/credential-visibility.js": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a",
+      "src/csv-batch.js": "0356e6cd8550f3107742603da2fde9fa7fbcc7df",
+      "src/cash-terms-ui.js": "4809fc05f141d39ad7e378c44d6e7a287995024c",
+      "src/startup.js": "4121fea8edcd900d456f1dc87abd06d7012aed6b",
+      "src/format.js": "8857db66fc5a02b5db753de3e77e49a88be9c977",
+      "src/pchain-evidence.js": "3c248f1087f0d3273811c50715a1cf888e6d55ed",
+      "src/quote-quality.js": "e4d8e5dee05932ec28788ea101d0bc6c09b354ba",
+      "src/link-explorer-evidence.js": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+      "src/flatex-net-reconciliation.js": "2d39c199135dc9348271271c60b36876c4660936",
+      "src/wallet-history-days.js": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+      "src/solana-history.js": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+      "src/account-evidence.js": "3024e91230fc586a4c9f1e4a0746a815794e1d18",
+      "src/backup-limits.js": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+      "src/position-history.js": "69bae9bb2126ad9a9cf9207543f1176a68ffe2fb",
+      "src/drive-backup.js": "e93573b9b39010a30ee0c2aa4465340f00de2ef7",
+      "src/native-staking-networks.js": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+      "src/ethereum-fallback.js": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+      "src/market.js": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+      "src/kraken-import.js": "8248a184ff91f13b79e28aea9c58216e7936c9de",
+      "src/position-selection.js": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+      "src/interest-scenario.js": "332037a4d578c8128121f799165db3a749a82239",
+      "src/booking-insights-ui.js": "249e18771d565045a809d6b636016b3d488a40b9",
+      "src/wallet-history-days-worker.js": "f0389e11f47eb92ce06a3ea2804a1ea343256245",
+      "src/historical-portfolio-value.js": "3a49409f21ed1e51c18b641127d461a4898423d1",
+      "src/booking-insights.js": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36",
+      "src/bitpanda-import.js": "b42e81350784dd4f4654dfc90c7461e2189e770b",
+      "src/defi.js": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+      "src/eodhd-worker-client.js": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+      "src/flatex-cost-basis.js": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1",
+      "src/position-icons.js": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+      "src/flatex-net-settlement.js": "f7d8f011bb020becd57a76aadff2cf9628a60a2a",
+      "src/wallet-history-core.js": "edcbe5570a903271d07ddc637bd876071e85a40a",
+      "src/wallet-history-calculation.js": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7",
+      "src/position-search.js": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc",
+      "src/wallet-history-state.js": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+      "src/market-diagnostics.js": "030b05243edf7e956dfdea404e92dd30e12a0e9a",
+      "src/ledger-live-ui.js": "ee847ff772e1c109c0837616fdc84f7f909e6ae9",
+      "src/browser-portfolio-storage.js": "f9be5fe41e861ede12f66960dae59d582510d098",
+      "src/transfer-matching-ui.js": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e",
+      "src/allocation-ui.js": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+      "src/dashboard-ui.js": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb",
+      "src/reference-management.js": "1fa1ae41a5dcd81ed9cdeaee709dfae7f7fb46a0",
+      "src/security-sources.js": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+      "src/bitpanda-withdrawal-evidence.js": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+      "src/transactions.js": "02731e40ea7ecf32d28da4b02cda7cbda8528171",
+      "src/bitpanda-preview-ui.js": "5fc4467fc103116b5cc2d1cb4a50683c64085988",
+      "src/instrument-catalog.js": "8012ff3fe03d60b24aff246f7e4ea73170159ea1",
+      "src/sonic-staking-evidence.js": "eefd659b275830d83d4ae36709cce0475ce9e7cd",
+      "src/valuation-status.js": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb",
+      "src/flatex-backfill.js": "a224457e9bcc5e90e2ecb476c49eabc675937997",
+      "src/ethereum-history.js": "21e056201e74bbb6490e74c430601af839699d71",
+      "src/bitcoin-hd.js": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+      "src/interest-account.js": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d",
+      "src/kraken-ledger-ui.js": "2b3436487f0e78c66e783d46f90baefb5fa2692f",
+      "src/alpha-vantage.js": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+      "src/reference-listings.js": "3ba091983e64a631ad187ebb302299380db49c02",
+      "src/eodhd-transport.js": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72",
+      "src/kraken-solana-bridge.js": "782cab38bb79daa0886c6ab66559f61792279dd1",
+      "src/booking-history.js": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+      "src/security-discovery.js": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9",
+      "src/header-status.js": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd",
+      "src/flatex-settlements.js": "16214b0406a740200585f726e9c9b90cb6007dec",
+      "src/model.js": "83aab32967ca4ebb48350d4e04d1a4d4cead6b54",
+      "src/marketstack.js": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+      "src/booking-history-ui.js": "61212dc0c360a44dbd261ecd70f2314bc4a2e857",
+      "sw.js": "b62eab832c49ead52c8ed9c0871c31ee6b1a1efb",
+      "styles.css": "83a190d6fb30db94f7e32a3029dfb6568ee3df2a",
+      "icons/flask.svg": "823323630cb3fe1b9a6342e9d6e5421554c1194d",
+      "icons/flask-512.png": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0",
+      "icons/flask-maskable-512.png": "645419333138793ef88441a53d2f362e324fed4a",
+      "icons/flask-192.png": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b"
+    }
+  },
+  "regularTLSAssets": {
+    "result": "PASS",
+    "regularTLS": true,
+    "certificateBypass": false,
+    "main": "6b020461aec68b6281dbc00e32c953dc6cec14cb",
+    "tree": "6cc86610f633d4e93665d7f53c40282144c9df28",
+    "assets": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "gitBlob": "5d6528361b7dba3d1a17cf2711283d97c1b67e07",
+        "sha256": "95405b5f014f9826db59a7f444b75f18d6f347045f571a305133e1c9531df842",
+        "bytes": 48455
+      },
+      {
+        "path": "manifest.webmanifest",
+        "status": 200,
+        "gitBlob": "60f13ef827812f0066043295f65316b6144e618c",
+        "sha256": "95fe1b7bebad698aecda142122597973fbbbff8db920e3e4a0e52f08a05a09bd",
+        "bytes": 930
+      },
+      {
+        "path": "src/ledger-live.js",
+        "status": 200,
+        "gitBlob": "d864f6d36d933e5a1919cce4d88990cd513f9093",
+        "sha256": "043200cea18aff6eb4495dd88eaa0cd85e59b46ca5386cd862ca04abca28f2cc",
+        "bytes": 10006
+      },
+      {
+        "path": "src/public-instruments-client.js",
+        "status": 200,
+        "gitBlob": "b98c2e5966815cbe7673e2a789661f8a31e637bd",
+        "sha256": "1a25848c84e111718163a07bba454d6cc95379af49473b051819d1c58d473589",
+        "bytes": 2690
+      },
+      {
+        "path": "src/shared-import.js",
+        "status": 200,
+        "gitBlob": "4a637e0b68bda7d28e2182458917ce63d133a4e9",
+        "sha256": "fb1ee15f3802f881a8d337bc268dd3162622dcc8bc8a28ff8e5feb7051fd7d0c",
+        "bytes": 8988
+      },
+      {
+        "path": "src/capital-flows.js",
+        "status": 200,
+        "gitBlob": "e00218e4d3a6a5a0d4e2dbe8d5ab2147be91de9c",
+        "sha256": "3f7fe4c710fdf1abbb0dc9f995e6129a9ae46388fad7900e1665110dc8992704",
+        "bytes": 1846
+      },
+      {
+        "path": "src/wallet-history-ui.js",
+        "status": 200,
+        "gitBlob": "012f97dcdf3b5da96627be04c70f87c00dcaef8e",
+        "sha256": "f73d71a43c27f2cfc0536f2db238218f1a8ded77c1962162e5f2404064ee791e",
+        "bytes": 25785
+      },
+      {
+        "path": "src/kraken-withdrawal-evidence.js",
+        "status": 200,
+        "gitBlob": "99b68062733ef985892a2643e5925775e3cf7894",
+        "sha256": "df26d901fe5563d84551ce58d65712cf643bc61dcc48028b1924b5af60601e7f",
+        "bytes": 2939
+      },
+      {
+        "path": "src/purchase-evidence.js",
+        "status": 200,
+        "gitBlob": "12932fab05ee113e2cbe6f4edb081bebf1c7fe90",
+        "sha256": "8b02569d0df5561f01964fa014bd8ec7d6d01b863ca3281a52c6e52a4f7cdc43",
+        "bytes": 10685
+      },
+      {
+        "path": "src/wallet-identity.js",
+        "status": 200,
+        "gitBlob": "7337ad57a531189676f747fdf6d1a925170f4004",
+        "sha256": "12f327f8ca13240aa8b58dcf08603eec549f2895a4f3293daf4679f2ce5a5982",
+        "bytes": 2031
+      },
+      {
+        "path": "src/onboarding-suggestions.js",
+        "status": 200,
+        "gitBlob": "2c045c706fb7cf3090d8a462f36834ade5e2dee7",
+        "sha256": "7f3c98b3ca390bdbe2ddbb272deaf37e867eec8f3c7e16148373c9267920b626",
+        "bytes": 3997
+      },
+      {
+        "path": "src/xrpl-assets.js",
+        "status": 200,
+        "gitBlob": "db6c208030f0d21c528cafaf47d4a51b22055e53",
+        "sha256": "11d0cd30573a42ced4fcb7b0383920935a434ea7ae39aafc40ba2a4113ac14c1",
+        "bytes": 2745
+      },
+      {
+        "path": "src/dialog-discard.js",
+        "status": 200,
+        "gitBlob": "7d0674bfb61c0ecf669f50a670ebb54ab2cca0f3",
+        "sha256": "e3a2df218d433f40c8c6c85e97d0449ec745d3f9ec7883941080639a89fc7030",
+        "bytes": 590
+      },
+      {
+        "path": "src/flatex-import.js",
+        "status": 200,
+        "gitBlob": "c35ec8ab49656e6b05e4a2ac64fa85199a2f3d69",
+        "sha256": "c5c641ded63cc7ddafae0cb2e2facf2a3590117c70760b3d8efa1302bc52010c",
+        "bytes": 14442
+      },
+      {
+        "path": "src/pchain-identity.js",
+        "status": 200,
+        "gitBlob": "1bf4ddb8e5d91b8bce888a2da711dcb01f66a34d",
+        "sha256": "f89b3a254e80303b9f4511f15ec2947dbfc260daef5dbdc344aa7469450ae460",
+        "bytes": 3228
+      },
+      {
+        "path": "src/flatex-cash-audit.js",
+        "status": 200,
+        "gitBlob": "484a7fba8494f912d4968df553a3fa7bfdc913d5",
+        "sha256": "b15b96546af824f979856af0b6679485a0dd3ec9a0b8f7573cd8c0909a685e2b",
+        "bytes": 3536
+      },
+      {
+        "path": "src/request-cache.js",
+        "status": 200,
+        "gitBlob": "0a80412ffdc727c3a67a71cdfdf0b0d2a8b08e89",
+        "sha256": "dd429d3d216403d7a24b4133138dfa018825a4c8b09a24079162bbbcf062a1e1",
+        "bytes": 6160
+      },
+      {
+        "path": "src/solana-rpc.js",
+        "status": 200,
+        "gitBlob": "1650bfbd6d037a47cbb90d2f8329f8e428982c7d",
+        "sha256": "5dc794185834b683bb4021d58cf2ecabc80828b15742b07cc5ea65ab95fc547b",
+        "bytes": 5322
+      },
+      {
+        "path": "src/assets.js",
+        "status": 200,
+        "gitBlob": "054ba656af6145f96bf93a566009ed40f45603cb",
+        "sha256": "d08a1792af9ec0a43742bd2adea90b04253e7e7076df559270ab72d9cf62d5d0",
+        "bytes": 2208
+      },
+      {
+        "path": "src/kraken-import-ui.js",
+        "status": 200,
+        "gitBlob": "5371d97918d5ec919a039d8ca7ba3d02de344f0f",
+        "sha256": "f7e8411a965c435ddf7a7d74939db0f175edc68172ac049f8bc59f146602ab4b",
+        "bytes": 22382
+      },
+      {
+        "path": "src/legacy-quote-audit.js",
+        "status": 200,
+        "gitBlob": "ce9e538c8ec75fdd0c394d09752e98b9ba0b793e",
+        "sha256": "d7b7881a05562db14866de68c4ccb678307f0d9d2010e3e106d0797ab799efa3",
+        "bytes": 3139
+      },
+      {
+        "path": "src/csv-records.js",
+        "status": 200,
+        "gitBlob": "a38aad028a30776022c6c8950a2699a6694962b4",
+        "sha256": "b1e734573e83462808feeca127abfd3f1f0301e3808783716eb37355a1a85921",
+        "bytes": 1776
+      },
+      {
+        "path": "src/chart-periods.js",
+        "status": 200,
+        "gitBlob": "e7ca59776ce800626ce5309887206baf4b25625f",
+        "sha256": "265a29384356fa52a593cfd6d6cb7aa364d25a3cbe90560f444ab201f095d359",
+        "bytes": 6743
+      },
+      {
+        "path": "src/crypto-fallbacks.js",
+        "status": 200,
+        "gitBlob": "1151f42b1315241805923b848a7a2efdf65528ac",
+        "sha256": "2ee7b4fcfda13a297dc006e30bf4e389f6c61a3358debbca2e557e8d863f613a",
+        "bytes": 6948
+      },
+      {
+        "path": "src/kraken-bitcoin-bridge.js",
+        "status": 200,
+        "gitBlob": "ae451f421b8442a46f0fd97925f5f736d4b44fc3",
+        "sha256": "79b6111ebd5811cc710e0126d98aec0466fc9dd2f9476bab5e81c33452299639",
+        "bytes": 9490
+      },
+      {
+        "path": "src/backup-vault.js",
+        "status": 200,
+        "gitBlob": "7a19b4bd816324dca029b3398ea1f4b7fe5494b0",
+        "sha256": "a8dd6fbd3e93762d9cf55e27c25706723ebec683cd7a482358d531f4b304c6f4",
+        "bytes": 6865
+      },
+      {
+        "path": "src/history-evidence-cache.js",
+        "status": 200,
+        "gitBlob": "c87b64284e074993fbdf5673ba1f4c5cf926f02e",
+        "sha256": "5a2e4d3d2bc0c08947b3e726a4babfffba8a4e1cb4a4b9d666f62eb60708e64c",
+        "bytes": 2520
+      },
+      {
+        "path": "src/staking-discovery.js",
+        "status": 200,
+        "gitBlob": "d64c0b1a47beebae5481c9c503b0f54ab6875c2a",
+        "sha256": "c297432acddc3251e78cfa05d42bdc6b21fbc6aeb1cee2c3289d30fa14753a2e",
+        "bytes": 7573
+      },
+      {
+        "path": "src/flatex-native-ui.js",
+        "status": 200,
+        "gitBlob": "d52e116b9280147495316666289962d21988ba3c",
+        "sha256": "46f7470f9095c1d47c2d59bfeb9a172a2c5fff87e9ffca5ead0ca09005dc9c50",
+        "bytes": 23212
+      },
+      {
+        "path": "src/performance.js",
+        "status": 200,
+        "gitBlob": "4f4a4104b092b6a98e2c3b77a8cadcb6a5d6b53a",
+        "sha256": "5d594a45db88f18d0e272a3b71c6339b7809984c747dd0fc6c3e86dd3e90ca20",
+        "bytes": 7230
+      },
+      {
+        "path": "src/app.js",
+        "status": 200,
+        "gitBlob": "a47ab34c1cc1232c9e6c2cbb11b5419bdde11609",
+        "sha256": "27e11017f1c1f9b357aedbf0b972374ed8cc52e97dd513d07628c31235242f35",
+        "bytes": 297619
+      },
+      {
+        "path": "src/blocked-reasons-ui.js",
+        "status": 200,
+        "gitBlob": "93f5550fb59337ce3c78642b9b36c8acd5dc1381",
+        "sha256": "468c8bcc96a858ea73e751738a7b50770d1997b7f5d146e98d5b37c1ca5ede98",
+        "bytes": 2921
+      },
+      {
+        "path": "src/csv-import.js",
+        "status": 200,
+        "gitBlob": "e69e14525e7ef1a5b86b3c0e16023ea0a5d106c9",
+        "sha256": "1d0402f4fde8b4cd42e78dd630042ef860b5972f9c02930f9c1c93ab5f008fe0",
+        "bytes": 15838
+      },
+      {
+        "path": "src/blockchain-adapters.js",
+        "status": 200,
+        "gitBlob": "05cbc0c69e35570a8f7f70b3f79fa64a37ad3d16",
+        "sha256": "9c17c7af67ae40eb2e51587cd99f3ce19f83743b06863d04c27262fc8c2b70b8",
+        "bytes": 3546
+      },
+      {
+        "path": "src/cash-reconciliation.js",
+        "status": 200,
+        "gitBlob": "d5bcdc7dd79939eb6e5f8d9f841f6ae6f5600cda",
+        "sha256": "4a44ad4730dbb4e2d624b95675915111eb0535f28aa7ef73162c62ba162b45c4",
+        "bytes": 2040
+      },
+      {
+        "path": "src/shared-flatex-ui.js",
+        "status": 200,
+        "gitBlob": "c7b009b4fceae6e8f7b79a973309e86e855a0ea9",
+        "sha256": "debf5ede5be8954bec4d4c431f410ca9a4ca09a1238519164936e153cfe4694c",
+        "bytes": 8935
+      },
+      {
+        "path": "src/bitpanda-import-ui.js",
+        "status": 200,
+        "gitBlob": "e87f56685ee33026ce64d677a0a8e7f4517061f0",
+        "sha256": "ea6d1af3a3449bf5fd1f2b79e21ba01f9ce436c19292ebf96df956d1d165a14d",
+        "bytes": 13126
+      },
+      {
+        "path": "src/bitcoin-history.js",
+        "status": 200,
+        "gitBlob": "691cbfc4f884f2ab57e2f35bd13cfda495b5bfc1",
+        "sha256": "39a91ec27baf8fb830317252d243292a5d5cff2719aaf2a16678d06d52b601a8",
+        "bytes": 15708
+      },
+      {
+        "path": "src/position-quality-review.js",
+        "status": 200,
+        "gitBlob": "d0388ef31be71e8e0627cf8c830d410c49ab864f",
+        "sha256": "5c147ddc5d138065b1ab912129ac06f693107d98632dde35674524e5da7749db",
+        "bytes": 5046
+      },
+      {
+        "path": "src/historical-csv.js",
+        "status": 200,
+        "gitBlob": "cde8cd27179ba920e0c49d63c1ff3bc8250cdaa4",
+        "sha256": "51c9b185dcd6554682b27e1b8c4882c28adf2fa8f148eed4d6e94ea3c8d07f4b",
+        "bytes": 8496
+      },
+      {
+        "path": "src/wallet-history-valuation.js",
+        "status": 200,
+        "gitBlob": "74e7f0938302e80029bc4f2dea7b2f68d5398fb4",
+        "sha256": "1a57f6f24e891ee92ca0f251b5768d249ff9475ce46fbe3c655e6a4bf55e8f9a",
+        "bytes": 5695
+      },
+      {
+        "path": "src/kraken-link-bridge.js",
+        "status": 200,
+        "gitBlob": "48d8b4594c0c33635bf93a88f51f64c95fe8e423",
+        "sha256": "6e15a9f665549cc3f7516a9041036fc16cee7be36cd9b1fddff35b57e73bd649",
+        "bytes": 4815
+      },
+      {
+        "path": "src/flatex-native.js",
+        "status": 200,
+        "gitBlob": "1cbf2c56b48d1eaf684cb4d9f89623b300962bb2",
+        "sha256": "3dbd088ea3c536c24e3970cf41168334e26e101b38a24ac83a54d21b35b75e4e",
+        "bytes": 10291
+      },
+      {
+        "path": "src/complete-backup.js",
+        "status": 200,
+        "gitBlob": "1f9e6ae63528cf2ffa79a876f357e6fabed258d4",
+        "sha256": "d8dedf52be294c38d0be0699f7ef397616c45b7c19deebd5886178ab2ddd66a4",
+        "bytes": 4212
+      },
+      {
+        "path": "src/import-identity.js",
+        "status": 200,
+        "gitBlob": "3af3a5b826db9cde851c85874701c1b92143987a",
+        "sha256": "6004bdb6818eb6a31440c7560f764d15581da4898340213fc97cdda8de2bb9ea",
+        "bytes": 11864
+      },
+      {
+        "path": "src/wallet-scan-update.js",
+        "status": 200,
+        "gitBlob": "0924d07398250b2c6ba778455391cb0052bdd33c",
+        "sha256": "24678d81be9a24e626a752f8b647fa069ed27eb96f097a0653e27c563742672e",
+        "bytes": 2102
+      },
+      {
+        "path": "src/retired-providers.js",
+        "status": 200,
+        "gitBlob": "9bf55b8a4219d8abfe5aeb2a161d0f904cddb731",
+        "sha256": "ddbd829cfc634ff52cf07716df3418c69db74e774fe9c62268bbd1188cb09279",
+        "bytes": 608
+      },
+      {
+        "path": "src/wallet-visibility.js",
+        "status": 200,
+        "gitBlob": "fa4b9e49fff050b82d287409af37562b72e97b07",
+        "sha256": "719160ec839e82932c639ea522c82873ec508b34cc009194afb4bcc206f4a01d",
+        "bytes": 3444
+      },
+      {
+        "path": "src/portfolio-edit-actions.js",
+        "status": 200,
+        "gitBlob": "3412841500a16abd99aa37e2603603e676d2ad94",
+        "sha256": "8984fa71d3925b0ddcb21ce98de49d57dafb0df4421ae2209ade5360e8995b04",
+        "bytes": 5144
+      },
+      {
+        "path": "src/shared-flatex-reconciliation-ui.js",
+        "status": 200,
+        "gitBlob": "c836f5a5ee0f3208978b7df1fb658bfb530805bb",
+        "sha256": "93dfd7d6e91ea018eafe737a3148048c3a0a3bfcce8e4fd6609d8bca06711a28",
+        "bytes": 4435
+      },
+      {
+        "path": "src/shared-import-ui.js",
+        "status": 200,
+        "gitBlob": "fb28c9bbc44ed7729383df1d619ddf3d532000dd",
+        "sha256": "a61c4b1700750bf3d38b8df7b7580b072c749409dcaa012b1397ab1b63e13d67",
+        "bytes": 10922
+      },
+      {
+        "path": "src/cash-terms.js",
+        "status": 200,
+        "gitBlob": "e0bc7723f1da10ebfedeaebd89905749a3e24c77",
+        "sha256": "856f30d2460787e049abed7b61da28fec826ff22bd80a7d537d7fc6e3c2251b0",
+        "bytes": 5600
+      },
+      {
+        "path": "src/interest-ui.js",
+        "status": 200,
+        "gitBlob": "7e7c5cf5503bc773adad448e7ea48e1b3b73a248",
+        "sha256": "c2c985418c7beed158e2b198717cd50b064d87e0df3920106908eb125293bda7",
+        "bytes": 9433
+      },
+      {
+        "path": "src/flatex-reconciliation.js",
+        "status": 200,
+        "gitBlob": "fdafc8f2f1a86d706a049c3b91545551cccf0af9",
+        "sha256": "2683c3cd8862f9bd3052f0fd2e802a24f6936ec18d6da0bc027d68595a1398d6",
+        "bytes": 3127
+      },
+      {
+        "path": "src/asset-wizard.js",
+        "status": 200,
+        "gitBlob": "3a863542ab6d02ce0def12c735f31069293efb60",
+        "sha256": "2d27329ec83a15bc5884363c6a5c55927ce05da0fd3ba2254c617c7ad893a081",
+        "bytes": 35600
+      },
+      {
+        "path": "src/security-catalog.js",
+        "status": 200,
+        "gitBlob": "b5edf8651d6a3157a80c0087d28f6482d198e161",
+        "sha256": "c648dfdff25e94d3ded67b465a0fdb7bba44fe88efd13d8123849bd3ee2d6ad9",
+        "bytes": 13197
+      },
+      {
+        "path": "src/bitpanda-preview.js",
+        "status": 200,
+        "gitBlob": "38ed3103272fe7110387c68f24f889e1a88f7ca6",
+        "sha256": "be6dc214ff9213c95d8d968052f9c866a00dfc6263ce6f0b2323448f4c6c59d7",
+        "bytes": 5398
+      },
+      {
+        "path": "src/flatex-review-export.js",
+        "status": 200,
+        "gitBlob": "1de187107010784e4a8d0f47e74d3bad17e2f4fd",
+        "sha256": "00ff867780af267736b523f0bf8e803c820ce28ed9f62c0c1cbe0cf5b33503ec",
+        "bytes": 2008
+      },
+      {
+        "path": "src/historical-position-value.js",
+        "status": 200,
+        "gitBlob": "0c6f714150b3d78e4e3086f275d63943d36b43ba",
+        "sha256": "4bca0a47e46a1e6f77cbda80b7f7a54b04b8a78c5a1a06ec8d7e29dab542bf73",
+        "bytes": 10415
+      },
+      {
+        "path": "src/asset-wizard-core.js",
+        "status": 200,
+        "gitBlob": "bcd7d08446adff32223374cce1e8f1f569c214fa",
+        "sha256": "bf1d294050ce1916149d729f5b8fd5736fde27a1eeeb1e202b2389fdf36d5c2c",
+        "bytes": 6192
+      },
+      {
+        "path": "src/crypto-backup.js",
+        "status": 200,
+        "gitBlob": "9ff6c8c7ad78ad14a7fff3dae2b5fd5c7f22dcd4",
+        "sha256": "1a1d3f730d20d7f4c6dd044b7654c76aeba3363ae10a64bb63a134212f82addc",
+        "bytes": 2202
+      },
+      {
+        "path": "src/kraken-source-plan.js",
+        "status": 200,
+        "gitBlob": "c35231c6886d1dc2f4e2d663c4586e1f30f21fc5",
+        "sha256": "81ba98accde72711e58e58c5d8ccfe2b8bb379f1278d1119ada9e49c31ce306e",
+        "bytes": 5669
+      },
+      {
+        "path": "src/staking-catalog.js",
+        "status": 200,
+        "gitBlob": "8a4b4b1206b6949176e6b21a72acea4911467884",
+        "sha256": "365c7771ad172fe8485bd945cc6b2d98d3f840d84085f063c1a73cb565ade025",
+        "bytes": 7494
+      },
+      {
+        "path": "src/bnb-token-scanner.js",
+        "status": 200,
+        "gitBlob": "24e76ae79a1068c7eabdfb1a253a6f8ff00530e5",
+        "sha256": "7f3ec79ebfdb7d7f33ff76fb4c7ab7792a31a5b3e9b9e5cb79f4cb51ffd72b7c",
+        "bytes": 6350
+      },
+      {
+        "path": "src/account-opening.js",
+        "status": 200,
+        "gitBlob": "582a8fbe29fedbc4a92da6c4bf00ece8c72a6e50",
+        "sha256": "9afba4457eeca96c1d3502828668308e2da9a76528e5e1a3da53352ea738f62b",
+        "bytes": 759
+      },
+      {
+        "path": "src/kraken-ethereum-bridge.js",
+        "status": 200,
+        "gitBlob": "d9b14aa5806089767d43e049df70bbb70507a5ae",
+        "sha256": "d5328824d40dc05e744a6c8c4879e6a9bed2d5834d8a765796d46e021006a3b1",
+        "bytes": 12912
+      },
+      {
+        "path": "src/position-detail-ui.js",
+        "status": 200,
+        "gitBlob": "157c9720e120a5b38ebbb954d29baa91601f9d15",
+        "sha256": "fe139620c0ca5dc4126b45f48efdd68dc9bc203e8bc03a02b04cb149c5676f98",
+        "bytes": 14333
+      },
+      {
+        "path": "src/unified-bitcoin-ui.js",
+        "status": 200,
+        "gitBlob": "1893fc655d4f910ecacfc6949250fde82a0dc580",
+        "sha256": "8c27cfb3b723e1b1cb3f54c4cee62288adc91b64f536770a11823d2813251146",
+        "bytes": 6766
+      },
+      {
+        "path": "src/loading-ui.js",
+        "status": 200,
+        "gitBlob": "a2a4c6242ea85fbe92a7e05a6fd89a5f185eff83",
+        "sha256": "0ed29228cb0d955b3466117540975d59aabb47d5100306ced27c6025d3c19854",
+        "bytes": 1664
+      },
+      {
+        "path": "src/purchase-evidence-ui.js",
+        "status": 200,
+        "gitBlob": "d39c5333c4ee10422b825a6bfdfeae7bbbd6f634",
+        "sha256": "d167f4b7f06ebe22ff5763ef920244eacdff193b10c07bc4ebb63a96fb702eb0",
+        "bytes": 6253
+      },
+      {
+        "path": "src/booking-management.js",
+        "status": 200,
+        "gitBlob": "d9cca5680d03ea6191d1f1758fb969d6e21c94c5",
+        "sha256": "9f3a54a3bd9ab3da3c14134e321e01c485f786cebd4884b8e38ae1bef59a59b9",
+        "bytes": 21757
+      },
+      {
+        "path": "src/unified-bitcoin.js",
+        "status": 200,
+        "gitBlob": "fe27c60e3181596b2ec792081ede2d5861fb00e2",
+        "sha256": "5dacc73b199453fd0e15b9d2e3e73e67b1cbbcb4738ce26acc68721b8da18603",
+        "bytes": 17410
+      },
+      {
+        "path": "src/flatex-settlement-audit.js",
+        "status": 200,
+        "gitBlob": "e4a2a45b2212ecbab1a4ff124990d5ad6a49ba63",
+        "sha256": "2567bcaa65e3a735f0bf13ccae2c2302291d1d2ae7a5ec0d134e022e4c7aa261",
+        "bytes": 6519
+      },
+      {
+        "path": "src/position-bookings.js",
+        "status": 200,
+        "gitBlob": "60fb7e9e063b0f455ea1ecdb88384d3da6001d19",
+        "sha256": "3d563399b4b4733348ffb214803c98ce081ef07921a33ee39cefb155ce2046be",
+        "bytes": 1788
+      },
+      {
+        "path": "src/atomic-storage.js",
+        "status": 200,
+        "gitBlob": "294861aca7b65fffd423b26f50c176a04659340f",
+        "sha256": "f7794c4f109e255b05b7131a2b0fc8e75b8e37018df348230e881b59039708cb",
+        "bytes": 10053
+      },
+      {
+        "path": "src/kraken-ledger.js",
+        "status": 200,
+        "gitBlob": "ba9f306137f2a7c2cbe120686fe3930738adf4ff",
+        "sha256": "a8136f8341a5d567d0ca94ac7df1a99504e0d7b8119a82b0c928d403e7413eb6",
+        "bytes": 5612
+      },
+      {
+        "path": "src/decimal.js",
+        "status": 200,
+        "gitBlob": "7896c75407ff67763bc9c969ea203f6e5f1b529a",
+        "sha256": "0141158e6659f39a570944ea2df60a129e51169574bad187abaa5bb9e88a3611",
+        "bytes": 3302
+      },
+      {
+        "path": "src/economic-form-ui.js",
+        "status": 200,
+        "gitBlob": "b035fe67d01d0ef19c1c343e27af94cdff43ed6f",
+        "sha256": "ed650c2994b8cbc059fe1fbda65db14970de426fc39f82d4444033f94e2ba200",
+        "bytes": 1593
+      },
+      {
+        "path": "src/coin-identity.js",
+        "status": 200,
+        "gitBlob": "e7681a4b1cab7c41c950ea1b8999963148340f5f",
+        "sha256": "ad6428598a8f6ff54ac52abfa2e8f5646f01df93972c8c92478b48dcdf8d2f26",
+        "bytes": 643
+      },
+      {
+        "path": "src/refresh-ui.js",
+        "status": 200,
+        "gitBlob": "cd4b56d8d392c90f638b089c91e721a13c3a7d29",
+        "sha256": "3d643bc12585d2e362b6f59161313fe884c3aaadbba12af66a25addcbdeacb0a",
+        "bytes": 891
+      },
+      {
+        "path": "src/credential-visibility.js",
+        "status": 200,
+        "gitBlob": "45fef0f4fac6157ec2350cc1fa828bc5abe8151a",
+        "sha256": "4a683444a5d98637ad4f2f6a6f42c585b6ce37b2a811577bacbaf0e2b5bc7f9e",
+        "bytes": 2268
+      },
+      {
+        "path": "src/csv-batch.js",
+        "status": 200,
+        "gitBlob": "0356e6cd8550f3107742603da2fde9fa7fbcc7df",
+        "sha256": "deb17dd33931c138ffd12813929ff347458988204ca7de169caa5e182a5e40b9",
+        "bytes": 3868
+      },
+      {
+        "path": "src/cash-terms-ui.js",
+        "status": 200,
+        "gitBlob": "4809fc05f141d39ad7e378c44d6e7a287995024c",
+        "sha256": "d60565ac037fa2e8499f9095ec382ebaa85ee0de95b1887ab213eff7d416e22e",
+        "bytes": 7684
+      },
+      {
+        "path": "src/startup.js",
+        "status": 200,
+        "gitBlob": "4121fea8edcd900d456f1dc87abd06d7012aed6b",
+        "sha256": "ba5bce5a6cc763ac79c2dd7c745692c6f0128bc9daec2b95ddd02e708611a488",
+        "bytes": 919
+      },
+      {
+        "path": "src/format.js",
+        "status": 200,
+        "gitBlob": "8857db66fc5a02b5db753de3e77e49a88be9c977",
+        "sha256": "69acdbdbdb297cafd13634e5fe4ce8b4e34417077bf4f0e5459c4931d05f728e",
+        "bytes": 5025
+      },
+      {
+        "path": "src/pchain-evidence.js",
+        "status": 200,
+        "gitBlob": "3c248f1087f0d3273811c50715a1cf888e6d55ed",
+        "sha256": "383b9033dabc1a5380487042340d4f84b4bb5e57e6247c71c6db4361bd47c7f8",
+        "bytes": 4071
+      },
+      {
+        "path": "src/quote-quality.js",
+        "status": 200,
+        "gitBlob": "e4d8e5dee05932ec28788ea101d0bc6c09b354ba",
+        "sha256": "861a8e75afe8177eb12e558143321df88ef1da38a82fc8b5328328799e23660e",
+        "bytes": 4322
+      },
+      {
+        "path": "src/link-explorer-evidence.js",
+        "status": 200,
+        "gitBlob": "3ec9192fd2ffaf300a6d37da3a8de49a05ffe99b",
+        "sha256": "4e85163574dc115233eb6ff346ab29c548a0bd7e2c9688170fb0e03071dabe84",
+        "bytes": 10145
+      },
+      {
+        "path": "src/flatex-net-reconciliation.js",
+        "status": 200,
+        "gitBlob": "2d39c199135dc9348271271c60b36876c4660936",
+        "sha256": "1fbc1203716c4498122ebbd0c917b434faa469083eee58576f804d425fe28c32",
+        "bytes": 17158
+      },
+      {
+        "path": "src/wallet-history-days.js",
+        "status": 200,
+        "gitBlob": "152eee5b8c77893e47f082b9f6c8c511d9d8dd24",
+        "sha256": "1e3d375be1a23569becc91d9ceca26efd1130b92baf9fa0323d2bac76e1d36a3",
+        "bytes": 1858
+      },
+      {
+        "path": "src/solana-history.js",
+        "status": 200,
+        "gitBlob": "8e86eff63b3fc425ae1097255ce3162ba4dbb1b1",
+        "sha256": "ab57d5f731e05403256a559f7d8eb06e4912df793cfa8b69eeb369bc41b2b070",
+        "bytes": 16250
+      },
+      {
+        "path": "src/account-evidence.js",
+        "status": 200,
+        "gitBlob": "3024e91230fc586a4c9f1e4a0746a815794e1d18",
+        "sha256": "6e528ccff93326fc268589789ee064916f8e3dd867c08edfba22ac66db4192b1",
+        "bytes": 1971
+      },
+      {
+        "path": "src/backup-limits.js",
+        "status": 200,
+        "gitBlob": "9c293419fe0fc3540e9c6686abce2f3c2c7e52f5",
+        "sha256": "75540390cc0478de26bf07a1763df3e8ec6629f91dc12af6e8fbe7a168b4dc3f",
+        "bytes": 3335
+      },
+      {
+        "path": "src/position-history.js",
+        "status": 200,
+        "gitBlob": "69bae9bb2126ad9a9cf9207543f1176a68ffe2fb",
+        "sha256": "ba83f32d5f670c14b270fb79546a9caadab3f0caf6dfbde23a47558757ffcfce",
+        "bytes": 8798
+      },
+      {
+        "path": "src/drive-backup.js",
+        "status": 200,
+        "gitBlob": "e93573b9b39010a30ee0c2aa4465340f00de2ef7",
+        "sha256": "d5a90bcce821c3b356ff33e3802cac7ad5ae01c6b02923235fa067ba0b9ae920",
+        "bytes": 27407
+      },
+      {
+        "path": "src/native-staking-networks.js",
+        "status": 200,
+        "gitBlob": "d442a8a22ca5d4cd5ec5d803deba42bd7d4a607a",
+        "sha256": "c7d46120dc25a9feb8e2a68e2c90f540d9fc7b67f4440d7ffbc4c7d1115ad2d2",
+        "bytes": 9479
+      },
+      {
+        "path": "src/ethereum-fallback.js",
+        "status": 200,
+        "gitBlob": "16cab7de80658d72ef01f829e70ebfb75a41e6f8",
+        "sha256": "cdb30f7c0f73ec9027ed3860f7b3688258aae6b5ba2b0d4b47e358a05a28518e",
+        "bytes": 3002
+      },
+      {
+        "path": "src/market.js",
+        "status": 200,
+        "gitBlob": "1e2888ff0ff38fe3edd4ef8a4d4493173a6b1d41",
+        "sha256": "9f6a4d9e61af4d349541083ce053469c77c56617e92aec803ae3e7f8d832820a",
+        "bytes": 32527
+      },
+      {
+        "path": "src/kraken-import.js",
+        "status": 200,
+        "gitBlob": "8248a184ff91f13b79e28aea9c58216e7936c9de",
+        "sha256": "027f22460ec0715063277178368501c068fe1635f82abfb3810fafdf032b5f82",
+        "bytes": 26923
+      },
+      {
+        "path": "src/position-selection.js",
+        "status": 200,
+        "gitBlob": "03ec738409f6d4277c6cf7f62d87ffd46d74adf2",
+        "sha256": "66dc6b4570a938ab783f2270a4f171a18849dcbf4228240d6a831f655fadb38d",
+        "bytes": 9790
+      },
+      {
+        "path": "src/interest-scenario.js",
+        "status": 200,
+        "gitBlob": "332037a4d578c8128121f799165db3a749a82239",
+        "sha256": "9d0c6f9f852af7fa3b35324667db6f8cdac98f97e2710e9c2ca2c5fc426dca89",
+        "bytes": 6000
+      },
+      {
+        "path": "src/booking-insights-ui.js",
+        "status": 200,
+        "gitBlob": "249e18771d565045a809d6b636016b3d488a40b9",
+        "sha256": "6a03e949d2bac5c6585015a7149d9e5b0d217d4e423c3687dd90a37efbf90a5e",
+        "bytes": 3674
+      },
+      {
+        "path": "src/wallet-history-days-worker.js",
+        "status": 200,
+        "gitBlob": "f0389e11f47eb92ce06a3ea2804a1ea343256245",
+        "sha256": "126784f8937c9891df3c424b9e136c8095231dd081e8ac388e4b981957969c93",
+        "bytes": 500
+      },
+      {
+        "path": "src/historical-portfolio-value.js",
+        "status": 200,
+        "gitBlob": "3a49409f21ed1e51c18b641127d461a4898423d1",
+        "sha256": "f7a25d400322f493de76e1d6f8735af746e11d4f8d5bde141ad4155d9bfd8d66",
+        "bytes": 7620
+      },
+      {
+        "path": "src/booking-insights.js",
+        "status": 200,
+        "gitBlob": "c7384d8f9c7ae1e238ed738ecd7ac257dceced36",
+        "sha256": "49367512dc664f7d17514f4ca4651d78898b240e82684fa8b79073effc02b01c",
+        "bytes": 5108
+      },
+      {
+        "path": "src/bitpanda-import.js",
+        "status": 200,
+        "gitBlob": "b42e81350784dd4f4654dfc90c7461e2189e770b",
+        "sha256": "e1c75d4c65f1811270918709e1afd4f24518b61571ed95c2ad66114fd6ee6ad6",
+        "bytes": 19887
+      },
+      {
+        "path": "src/defi.js",
+        "status": 200,
+        "gitBlob": "12fbc404d61ce4412cf9120712ea2ed719da4405",
+        "sha256": "76919ea0050f8620d9adf8131586e91f9a704e908d9df7514c89a67aab5a8fdd",
+        "bytes": 1911
+      },
+      {
+        "path": "src/eodhd-worker-client.js",
+        "status": 200,
+        "gitBlob": "cbcfd911723b3ec9d15342bff8fd6d322dbcd4d9",
+        "sha256": "08d300cb9d0af196abe5f2527eeb99c5e2c0bc48bc1bdac280d3b9e64d49d31f",
+        "bytes": 2099
+      },
+      {
+        "path": "src/flatex-cost-basis.js",
+        "status": 200,
+        "gitBlob": "ba4a63a83f619ec969d8e1a9c979a6f75c4a62e1",
+        "sha256": "34ecc6e725572adac66351edd055aa1e6bf1b4444b3108026da74d87797504e9",
+        "bytes": 1385
+      },
+      {
+        "path": "src/position-icons.js",
+        "status": 200,
+        "gitBlob": "3630fee430d88897294f3f9b81e3473dc4c703cc",
+        "sha256": "92b184755ef217ff582ad8bbf577962c90551001f9f76ff905a8e86caf9ff758",
+        "bytes": 1573
+      },
+      {
+        "path": "src/flatex-net-settlement.js",
+        "status": 200,
+        "gitBlob": "f7d8f011bb020becd57a76aadff2cf9628a60a2a",
+        "sha256": "e8db2b95e673ed3b65951ad6fb0f36fcdbba6b4d3dbc2f79fa183050e482f128",
+        "bytes": 58504
+      },
+      {
+        "path": "src/wallet-history-core.js",
+        "status": 200,
+        "gitBlob": "edcbe5570a903271d07ddc637bd876071e85a40a",
+        "sha256": "d77ec1a31087bf2f86e16d248288291fdfb0f06b0aeaa11b4ba5845a3bc09090",
+        "bytes": 16534
+      },
+      {
+        "path": "src/wallet-history-calculation.js",
+        "status": 200,
+        "gitBlob": "7b2e2c71f34088a4e54679b6da4a1cff07db30f7",
+        "sha256": "81283566517daac6011ca4744f689c292ee017c7d2f1eff1c94832962f20d50b",
+        "bytes": 2576
+      },
+      {
+        "path": "src/position-search.js",
+        "status": 200,
+        "gitBlob": "17f866a8b2af56b1c95c49d298e2fc09570c5cdc",
+        "sha256": "cf4f10501321535da1f14d60f2b1b6748fa5a47cd917a677573c50a412751f01",
+        "bytes": 1514
+      },
+      {
+        "path": "src/wallet-history-state.js",
+        "status": 200,
+        "gitBlob": "f87f593a4ec2be99f351037cec48316acb8db6a3",
+        "sha256": "05d8db23908f6096e1fecd92d48800c54fbc56478316dc94f661bade4b71ec6c",
+        "bytes": 8034
+      },
+      {
+        "path": "src/market-diagnostics.js",
+        "status": 200,
+        "gitBlob": "030b05243edf7e956dfdea404e92dd30e12a0e9a",
+        "sha256": "7e55e3b411600bfd6b01cda5279792294a4a48f08fae5ad58005bade4408923c",
+        "bytes": 5651
+      },
+      {
+        "path": "src/ledger-live-ui.js",
+        "status": 200,
+        "gitBlob": "ee847ff772e1c109c0837616fdc84f7f909e6ae9",
+        "sha256": "5ac7f770006c2b1f92de4a5864a2bc32e407750754cca404914b410c0753426a",
+        "bytes": 3810
+      },
+      {
+        "path": "src/browser-portfolio-storage.js",
+        "status": 200,
+        "gitBlob": "f9be5fe41e861ede12f66960dae59d582510d098",
+        "sha256": "94dd30dfb41e72a26af768bddf1d2220f8a790f42c19c212c0b75bd02a45adbc",
+        "bytes": 14769
+      },
+      {
+        "path": "src/transfer-matching-ui.js",
+        "status": 200,
+        "gitBlob": "a5bf91e3934292df365232da4d1bf3bf0fa4bc2e",
+        "sha256": "fa7de61c73e25c7a094604c18359c131b98d5bf7efc845ace0a697a18200ff8d",
+        "bytes": 12170
+      },
+      {
+        "path": "src/allocation-ui.js",
+        "status": 200,
+        "gitBlob": "583ab225b84160e8523d1601f8bf0122c4b8770c",
+        "sha256": "ce3f8025c5cfbd888b7642173f8b2e298fa3a6efc87363d73fba9031545b6f6a",
+        "bytes": 7236
+      },
+      {
+        "path": "src/dashboard-ui.js",
+        "status": 200,
+        "gitBlob": "baf07a81a54bbd58cea130c6d73ee0ef985c48fb",
+        "sha256": "370ef24ed1d9ea299773bb017016881b2134bdaab27d74c888e2e2a0e29b8cb5",
+        "bytes": 16366
+      },
+      {
+        "path": "src/reference-management.js",
+        "status": 200,
+        "gitBlob": "1fa1ae41a5dcd81ed9cdeaee709dfae7f7fb46a0",
+        "sha256": "40ab1bf09783d6c05ac12aba7f8d686b1a5b54989da2087a3d2817c3605192c9",
+        "bytes": 11681
+      },
+      {
+        "path": "src/security-sources.js",
+        "status": 200,
+        "gitBlob": "c26d8ca97a0a2e2de9bb9d38fb23feed4c9c6b7d",
+        "sha256": "993c2b22e8b93aa03c3150585af341f1ab1315d6da1abad0a8faa4f2b0a06b4d",
+        "bytes": 9505
+      },
+      {
+        "path": "src/bitpanda-withdrawal-evidence.js",
+        "status": 200,
+        "gitBlob": "3a88c649584a9c6f81ec0728dbacae2d4d6cd1f1",
+        "sha256": "e5e2feaf705ef42d3f61d4d6387deacaea1659a07f481b3b5427f4170f6da586",
+        "bytes": 3955
+      },
+      {
+        "path": "src/transactions.js",
+        "status": 200,
+        "gitBlob": "02731e40ea7ecf32d28da4b02cda7cbda8528171",
+        "sha256": "3b3fc129300705568d82c91cdd879839f884816191fd5022b26b8ac3fd506ec7",
+        "bytes": 33264
+      },
+      {
+        "path": "src/bitpanda-preview-ui.js",
+        "status": 200,
+        "gitBlob": "5fc4467fc103116b5cc2d1cb4a50683c64085988",
+        "sha256": "e20610e90d38b47e647857bfb811efe01e8247be3819e99d7929a02ff2023b2d",
+        "bytes": 2654
+      },
+      {
+        "path": "src/instrument-catalog.js",
+        "status": 200,
+        "gitBlob": "8012ff3fe03d60b24aff246f7e4ea73170159ea1",
+        "sha256": "26ea8c201180ffaed5f7caba7820c48086d36beb1d6c2df37546726c2e2e3ed7",
+        "bytes": 10218
+      },
+      {
+        "path": "src/sonic-staking-evidence.js",
+        "status": 200,
+        "gitBlob": "eefd659b275830d83d4ae36709cce0475ce9e7cd",
+        "sha256": "8e8dfe853287343a697a4e0112a997802df0b6c4ba1981950584fe31d986f91f",
+        "bytes": 4545
+      },
+      {
+        "path": "src/valuation-status.js",
+        "status": 200,
+        "gitBlob": "7c889c5888d2fc4e7f6cda8a9c1ae1543f182edb",
+        "sha256": "e09b127f1794b81fbcb79247bd4e973357d7546c9209c71bfb85be3eb616035c",
+        "bytes": 1659
+      },
+      {
+        "path": "src/flatex-backfill.js",
+        "status": 200,
+        "gitBlob": "a224457e9bcc5e90e2ecb476c49eabc675937997",
+        "sha256": "25a4b664803cf13647b7829fa78140dda0d106992e894b1d95e9ec4075705486",
+        "bytes": 11612
+      },
+      {
+        "path": "src/ethereum-history.js",
+        "status": 200,
+        "gitBlob": "21e056201e74bbb6490e74c430601af839699d71",
+        "sha256": "070863c673654e44c58226f4ebe9cadc0260460b7d14a59a7f225ad31bc9d06c",
+        "bytes": 23086
+      },
+      {
+        "path": "src/bitcoin-hd.js",
+        "status": 200,
+        "gitBlob": "4be2e9af21fd5d66c37938727a43d956292fd6bf",
+        "sha256": "d273902a6b6151db6030b6eaa8bce7e5281d5c8f24cbb6bac014f43e53f8f7f6",
+        "bytes": 11504
+      },
+      {
+        "path": "src/interest-account.js",
+        "status": 200,
+        "gitBlob": "10f818e44ff99032ae5e6d85fa6d0392acc30c6d",
+        "sha256": "8718d1ab3befcb583ed83b8df579de3b3f7a52ecc0d8e0cc536197096bd4c66a",
+        "bytes": 1759
+      },
+      {
+        "path": "src/kraken-ledger-ui.js",
+        "status": 200,
+        "gitBlob": "2b3436487f0e78c66e783d46f90baefb5fa2692f",
+        "sha256": "8c9ab9f5b61aa5b321c1f6db0919cc0d3cf48a714e3b5c403aea2116cbbe370b",
+        "bytes": 2670
+      },
+      {
+        "path": "src/alpha-vantage.js",
+        "status": 200,
+        "gitBlob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+        "sha256": "c418510e675bff51e6971024620d39188a08515354af26e7f77779cb56e24a83",
+        "bytes": 10638
+      },
+      {
+        "path": "src/reference-listings.js",
+        "status": 200,
+        "gitBlob": "3ba091983e64a631ad187ebb302299380db49c02",
+        "sha256": "58c3b03b72432553f616c59a51f66ba5e0f97792075f6d6a85fb9d65228c15b0",
+        "bytes": 3170
+      },
+      {
+        "path": "src/eodhd-transport.js",
+        "status": 200,
+        "gitBlob": "dcb4518dd9f1ff73251360ec851e4255bbbd4e72",
+        "sha256": "430dbc5205519879ab2bd45132e219e34667bd6f1eefd1a839866d0374573b82",
+        "bytes": 1290
+      },
+      {
+        "path": "src/kraken-solana-bridge.js",
+        "status": 200,
+        "gitBlob": "782cab38bb79daa0886c6ab66559f61792279dd1",
+        "sha256": "9f9fad97a41db69fbbc83dd9fe8e54d06b0fd326911ba766acd3c3eb9d45a45e",
+        "bytes": 14926
+      },
+      {
+        "path": "src/booking-history.js",
+        "status": 200,
+        "gitBlob": "77d23820cacdbe9a1efb1112eb609241e88c190d",
+        "sha256": "7b003b1bed1e9627574866fbf78be411fa64be9813efb290fe255b08077d9b93",
+        "bytes": 7676
+      },
+      {
+        "path": "src/security-discovery.js",
+        "status": 200,
+        "gitBlob": "b812714d630ca79ed928d9a0bbcf3fe9ea8f0db9",
+        "sha256": "507d8da0447ec8d9209db63d450da0faf10c81d5bece7cbfdaa755a07010220c",
+        "bytes": 3716
+      },
+      {
+        "path": "src/header-status.js",
+        "status": 200,
+        "gitBlob": "be0cee9948b6fe3dcd35c6adaa4108a628481fcd",
+        "sha256": "98b68f05d8eaede72032411b6f0ff17febdb17d60de20ce6578c06caa1e231f0",
+        "bytes": 6611
+      },
+      {
+        "path": "src/flatex-settlements.js",
+        "status": 200,
+        "gitBlob": "16214b0406a740200585f726e9c9b90cb6007dec",
+        "sha256": "b1edf7b5ff2bd898cda2d5d5a22a658fa676749731ad150b8e594935984adc89",
+        "bytes": 10959
+      },
+      {
+        "path": "src/model.js",
+        "status": 200,
+        "gitBlob": "83aab32967ca4ebb48350d4e04d1a4d4cead6b54",
+        "sha256": "7961f067db956547c47460a5c4c2c33eb474edca53cf163d6f705780e9f89e5a",
+        "bytes": 32255
+      },
+      {
+        "path": "src/marketstack.js",
+        "status": 200,
+        "gitBlob": "a686d3010a804db0d324c45324f7e5b9f5deafae",
+        "sha256": "5e9250783561856f98bd915ac08f3961fabd7e968249b1cc14340caba3ef3456",
+        "bytes": 8469
+      },
+      {
+        "path": "src/booking-history-ui.js",
+        "status": 200,
+        "gitBlob": "61212dc0c360a44dbd261ecd70f2314bc4a2e857",
+        "sha256": "4029dc357f16f44d158856abf3e86df5b8fa3982bffbe59a4f2fd42e70e343f4",
+        "bytes": 20508
+      },
+      {
+        "path": "sw.js",
+        "status": 200,
+        "gitBlob": "b62eab832c49ead52c8ed9c0871c31ee6b1a1efb",
+        "sha256": "ec986c4c5b6208e5db6ee42808e098f55c203d79553c79f00ec74654da3601ba",
+        "bytes": 5548
+      },
+      {
+        "path": "styles.css",
+        "status": 200,
+        "gitBlob": "83a190d6fb30db94f7e32a3029dfb6568ee3df2a",
+        "sha256": "9bbc654d3f63d5c5e7935c893f6bc49a2ac56cbb92bde8598b77d385faab138b",
+        "bytes": 168519
+      },
+      {
+        "path": "icons/flask.svg",
+        "status": 200,
+        "gitBlob": "823323630cb3fe1b9a6342e9d6e5421554c1194d",
+        "sha256": "0618e350035ad5305cc012f6c41a15f29da5f1bf0fb22a17829db4a008413fa1",
+        "bytes": 686
+      },
+      {
+        "path": "icons/flask-512.png",
+        "status": 200,
+        "gitBlob": "80a4e85cd1ed06ed8de084904cce4ac09a742cb0",
+        "sha256": "1bf302b1d699aa8609bf6ecd971843e2ea49e5e759721d48de445c8793a2c167",
+        "bytes": 21846
+      },
+      {
+        "path": "icons/flask-maskable-512.png",
+        "status": 200,
+        "gitBlob": "645419333138793ef88441a53d2f362e324fed4a",
+        "sha256": "207a6b34e6a8dfb697cea299b98db0a52acff8650725d9816dd84271912f749d",
+        "bytes": 14006
+      },
+      {
+        "path": "icons/flask-192.png",
+        "status": 200,
+        "gitBlob": "7c1dace9d2ef5be81bc85ed9523fd63147f4a30b",
+        "sha256": "04b83fbee2e3cf9b65d44758dc963a65ebe8e0a424ceb6d2f7c0c69aca0ff119",
+        "bytes": 7706
+      },
+      {
+        "path": "",
+        "status": 200,
+        "gitBlob": "5d6528361b7dba3d1a17cf2711283d97c1b67e07",
+        "sha256": "95405b5f014f9826db59a7f444b75f18d6f347045f571a305133e1c9531df842",
+        "bytes": 48455
+      }
+    ],
+    "sw": "foliolab-open-v291",
+    "checkedAt": "2026-11-06T15:40:08.569797+00:00"
+  },
+  "mainGateArtifacts": [
+    {
+      "id": 13516912403,
+      "name": "dialog-visual-reference",
+      "sha256": "d9bfb981b91b235109b5eb56ff85daef86ef9257439db7f297d23fc56a2093d6",
+      "bytes": 934094,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13515166947,
+      "name": "ci-stage-6b020461aec68b6281dbc00e32c953dc6cec14cb",
+      "sha256": "5a94cd91e98386cfbeb2c5e05645de239200970ddcf94832efed945ac54acabd",
+      "bytes": 354,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13517107768,
+      "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-3",
+      "sha256": "228d3058be827ff26287aa84b81c90cdb6eb49507ade676927545c8bbf2128cc",
+      "bytes": 62886425,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 76,
+      "pngsDecoded": 688,
+      "failureFlags": []
+    },
+    {
+      "id": 13517662167,
+      "name": "release-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb",
+      "sha256": "2e95090941166b751981e70e8664d5149792c131835d198fe75e95720c1ee582",
+      "bytes": 61764670,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 79,
+      "pngsDecoded": 655,
+      "failureFlags": []
+    },
+    {
+      "id": 13515747947,
+      "name": "github-pages",
+      "sha256": "2e5ac92ac591841e8ee69ba430b2f8c9726ce87e8a0592e11adf362d739f92f6",
+      "bytes": 555548,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 0,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13517265823,
+      "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-2",
+      "sha256": "a19884f39bcb02b00b4f9503bdba99b4a28a06ba6af99a4c153c0207d1d54e24",
+      "bytes": 11602227,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 17,
+      "pngsDecoded": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13516826428,
+      "name": "cross-engine-gates-6b020461aec68b6281dbc00e32c953dc6cec14cb-1",
+      "sha256": "8952f066cd6aa98d7e3bd29b5b40c4d00e5eeaf007e1f191ba48a461cb1aabd4",
+      "bytes": 58289795,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 15,
+      "pngsDecoded": 474,
+      "failureFlags": []
+    }
+  ],
+  "mainArtifactQualification": {
+    "actualArchives": 7,
+    "jsonReports": 188,
+    "decodedPNGs": 1911,
+    "failureFlags": []
+  },
+  "production": {
+    "job": 127982523356,
+    "status": "COMPLETED",
+    "conclusion": "SUCCESS",
+    "result": "PASS",
+    "base": "https://foliolab.unperfekt.at/",
+    "artifact": {
+      "id": 13518884397,
+      "name": "production-live-acceptance-6b020461aec68b6281dbc00e32c953dc6cec14cb",
+      "sha256": "8bd32e3e79a36d5daf8c5405e90ee475a4ae709f53ea7cb28a671c62852ffa84",
+      "bytes": 126200048,
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "jsonReports": 132,
+      "pngsDecoded": 1253,
+      "failureFlags": []
+    },
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "UI300": [
+      {
+        "engine": "chromium",
+        "result": "PASS",
+        "base": "https://foliolab.unperfekt.at/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "result": "PASS",
+        "base": "https://foliolab.unperfekt.at/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "result": "PASS",
+        "base": "https://foliolab.unperfekt.at/",
+        "checks": [
+          "7 widths/44px/Axe",
+          "no hero or tiles; brand and five semantic destinations retained",
+          "zero group chip hidden",
+          "exact selected-period endpoints; explicit cashflow scope",
+          "200% text stress/short viewport (not physical zoom or hardware)",
+          "offline actual reload; exact canonical bytes/revision",
+          "partial automatic snapshot remains unavailable without writes"
+        ]
+      }
+    ],
+    "twoFill": [
+      {
+        "engine": "chromium",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "two executions and one cash document, both file orders",
+          "one CAS revision, independent quantities/cash/fees, no invented costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "two executions and one cash document, both file orders",
+          "one CAS revision, independent quantities/cash/fees, no invented costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "two executions and one cash document, both file orders",
+          "one CAS revision, independent quantities/cash/fees, no invented costs",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "five widths/Axe, no external requests"
+        ]
+      }
+    ],
+    "nativeIntegrity": [
+      {
+        "engine": "chromium",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "H1 changed local account/real upload/forced submit exact no mutation",
+          "H2 global refresh after cash booking/one CAS/exact journal",
+          "quota/post-put abort keep bytes and revision",
+          "dated opening protected",
+          "real competing tab wins at canonical CAS boundary",
+          "H3 real wallet discovery under second account rejected",
+          "H3 unused native contract field blocked before canonical IDB commit",
+          "five widths/Axe and actual error screenshot",
+          "M2 undated price remains partial",
+          "M3 tampered date rejected without writes",
+          "encrypted fresh-profile UI restore and offline reload",
+          "deterministic provider fetch fixture; no live provider calls"
+        ]
+      }
+    ],
+    "actualImages": [
+      {
+        "artifactPath": "ui300/chromium-390.png",
+        "sha256": "8f1870d19704771eb0642d3dbbbcd8c65691529fae42af5d3dbab3f3d96f7150",
+        "visuallyInspected": true
+      },
+      {
+        "artifactPath": "ui300/chromium-partial-observation.png",
+        "sha256": "6381d7b45fe7da0d3fc56036e0354baef1e8f99f35ff6822f200aac421da486b",
+        "visuallyInspected": true
+      },
+      {
+        "artifactPath": "ui300/firefox-390.png",
+        "sha256": "223a20085825bf63f39d27147d83ab80468e2d5b39e36b9cb3399ad996e0d441",
+        "visuallyInspected": true
+      },
+      {
+        "artifactPath": "ui300/firefox-partial-observation.png",
+        "sha256": "9a0e2d7455bd36b65f0c19b7f1a1bbd7b8a8ad4bbda404f16494dd9d65db9043",
+        "visuallyInspected": true
+      },
+      {
+        "artifactPath": "ui300/webkit-390.png",
+        "sha256": "30ecaaee0a4f917998447dabbcf7490fc85c0621b636f3511255ae252883bab8",
+        "visuallyInspected": true
+      },
+      {
+        "artifactPath": "ui300/webkit-partial-observation.png",
+        "sha256": "436fdb035343720b8d688b1e4f02c82d134278ef9e5b4bedbd507956a2f1258b",
+        "visuallyInspected": true
+      }
+    ],
+    "liveReportSHA256": "5d6f4846b6107add7f18aa3ad5350a54844726531e4980f5e2bb5faf6ebb53c5",
+    "all152LiveAssetHashesMatchPriorRegularTLS": true
+  },
+  "acceptedAt": "2026-11-06T16:20:44.243239+00:00",
+  "emergencySuccession": {
+    "previousOwner": "414503ed33c6",
+    "authorization": "explicit user revocation and sole transfer",
+    "previousOwnerSTOPPEDConfirmed": false,
+    "checkpointClaim": "4cef7e2937520c96d63b9e791e25e6fa8661292b",
+    "refInventoryChanges": 0,
+    "refsCompared": 272,
+    "privateV60ManifestVerified": 3441
+  },
+  "allMainArtifactQualification": {
+    "actualArchives": 8,
+    "jsonReports": 320,
+    "decodedPNGs": 3164,
+    "failureFlags": [],
+    "priorSevenReceiptsReused": true
+  }
+}
