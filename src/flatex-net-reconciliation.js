@@ -15,7 +15,7 @@ const touches=(b,ids)=>[b.positionId,b.cashPositionId,b.targetPositionId].some(i
 export function flatexReconciliationScope(model,inspection,assignments,selectedIds){
  const binding=reviewNativeFlatexBindings(model,inspection.identities,assignments),ids=new Set(),sourceIds={};
  for(const id of selectedIds){
-  const proof=inspection.pairs.find(p=>p.id===id);if(!proof)bad('Eindeutige EUR-Paare auswählen.');
+  const proof=inspection.pairs.find(p=>p.id===id);if(!proof||proof.version!==1)bad('2:1-Gruppen mit belegtem Anfangsbestand importieren; datierter Abgleich bleibt gesperrt.');
   for(const [type,match] of [['depot',p=>p.isin===proof.isin],['account',p=>p.kind==='cash'&&p.currency==='EUR']]){
    const c=binding.contexts.find(c=>c.sourceId===proof[type].sourceId);if(!c?.confirmed)bad('Aktuelle eigene Quellen und Konten bestätigen.');
    const ps=model.positions.filter(p=>p.accountId===c.accountId&&match(p));if(ps.length!==1)bad('Position und Geldkonto eindeutig zuordnen.');
@@ -94,7 +94,7 @@ export function prepareFlatexNetReconciliationPreview(model,documents,assignment
   validateFlatexNetSettlements(model);
   const {selectedIds=[],observations=[],confirmed=false,stale=false}=options;
   if(stale||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)bad('Eindeutige EUR-Paare ausdrücklich auswählen.');
-  const selected=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(selected.some(p=>!p))bad('Quelle geändert oder nicht eindeutig.');
+  const selected=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(selected.some(p=>!p||p.version!==1))bad('Quelle geändert oder 2:1-Gruppe benötigt belegten Anfangsbestand.');
   const fresh=selected.filter(p=>!model.bookings.some(b=>b.netSettlement?.id===p.id));
   const binding=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale});
   for(const proof of selected){const b=model.bookings.find(b=>b.netSettlement?.id===proof.id);if(b){
@@ -143,3 +143,4 @@ export function prepareFlatexNetReconciliationPreview(model,documents,assignment
   return replay;
  }catch(e){return blocked(e.message);}
 }
+

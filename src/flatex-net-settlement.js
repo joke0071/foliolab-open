@@ -4,8 +4,8 @@ import {inspectNativeFlatexSourceIdentities,sourceDigest,sourceUnmodified,bookin
 import {inspectNativeFlatexOrderLinks} from './flatex-settlements.js';
 import {auditNativeFlatexSettlementAmounts} from './flatex-settlement-audit.js';
 import {reviewNativeFlatexBindings} from './flatex-native-ui.js';
-import {units,exact} from './decimal.js';
-import {validCalendarDate,ledgerQuantityAudit,validateJournalEntry} from './transactions.js';
+import {units,exact,preciseValue,SCALE} from './decimal.js';
+import {validCalendarDate,ledgerQuantityAudit,validateJournalEntry,executeTransaction} from './transactions.js';
 import {previewCSV,CSV_FIELDS} from './csv-import.js';
 import {validateFlatexNetReconciliations} from './flatex-net-reconciliation.js';
 const fail=()=>{throw Error('Flatex-Nettogruppe oder Quellenbeleg widersprüchlich.');};
@@ -46,6 +46,14 @@ export function inspectFlatexNetPairs(documents){
  const links=inspectNativeFlatexOrderLinks(docs,{maxDays:0}),audit=auditNativeFlatexSettlementAmounts(docs,{maxDays:0});
  const pairs=[];
  for(const [i,g]of links.groups.entries()){
+  if(g.status==='multiple-depot-review'&&g.depot.length===2&&g.cash.length===1){
+   const executions=g.depot.map(l=>grouped[l.sourceIndex][l.line-2]).sort((a,b)=>sourceKey(a).localeCompare(sourceKey(b))),account=grouped[g.cash[0].sourceIndex][g.cash[0].line-2];
+   try{const proof=twoFillProof(executions,account,g),members=[...executions,account];
+    const original=identities.rows.filter(r=>r.orderReference===g.orderReference);
+    if(original.every(r=>r.sourceId&&r.externalId&&r.status!=='conflict'&&members.some(s=>sourceKey(s)===sourceKey(r)&&s.payloadDigest===r.payloadDigest))&&!members.some(s=>s.conflict))pairs.push(proof);
+   }catch{}
+   continue;
+  }
   const a=audit.entries[i];if(g.status!=='possible-single'||a.status==='review'||a.currency!=='EUR')continue;
   const depot=grouped[g.depot[0].sourceIndex][g.depot[0].line-2],account=grouped[g.cash[0].sourceIndex][g.cash[0].line-2];
   if(depot.conflict||account.conflict)continue;
@@ -58,6 +66,7 @@ export function inspectFlatexNetPairs(documents){
  return {identities,pairs,reviewCount:links.groups.length-pairs.length+links.unassigned.length};
 }
 export function validateNetSettlement(proof){
+ if(proof?.version===2)return validateTwoFillProof(proof);
  keys(proof,'version id orderReference type date valueDate isin quantityExact unitPriceExact grossExact cashExact differenceExact depot account');
  if(proof.version!==1||!/^fn-[a-f0-9]{64}$/.test(proof.id))fail();
  const docs=[];
@@ -131,7 +140,7 @@ function augmentModel(model,proofs,bindings,openingDate){
  if(!Array.isArray(proofs)||!proofs.length||proofs.length>2500||new Set(proofs.map(p=>p.id)).size!==proofs.length||!validCalendarDate(openingDate)||!ledgerQuantityAudit(model).ok)fail();
  const trades=[],touched=new Set(),selected=new Set(),sourceKeys=new Set();
  for(const proof of proofs){
-  validateNetSettlement(proof);if(!['buy','sell'].includes(proof.type)||openingDate>=proof.date)fail();
+  validateNetSettlement(proof);if(proof.version!==1)fail();if(!['buy','sell'].includes(proof.type)||openingDate>=proof.date)fail();
   const binding=bindings.find(b=>b.groupId===proof.id);if(!binding)fail();
   const p=model.positions.find(p=>p.id===binding.assetId),c=model.positions.find(p=>p.id===binding.cashId);
   if(!p||!c||p.id===c.id||p.accountId===c.accountId||p.providerId!==c.providerId||p.currency!=='EUR'||c.currency!=='EUR'||!['etf','stock','fund'].includes(p.kind)||p.isin!==proof.isin||c.kind!=='cash'||p.archived||c.archived||p.wallet?.enabled||c.wallet?.enabled||p.managementSource==='wallet'||c.managementSource==='wallet')fail();
@@ -175,7 +184,7 @@ export function prepareFlatexNetAugmentationPreview(model,documents,assignments,
  const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
  try{
   if(stale||!openingConfirmed||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)throw Error('Bestehende native Stückbuchungen vollständig auswählen und den belegten Cashanfang vor dem Stapel bestätigen.');
-  const proofs=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(proofs.some(p=>!p))fail();
+  const proofs=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(proofs.some(p=>!p||p.version!==1))fail();
   const bindings=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale}),resolved=[];
   for(const proof of proofs){
    const dc=bindings.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=bindings.contexts.find(c=>c.sourceId===proof.account.sourceId);
@@ -225,9 +234,11 @@ function validateGroup(model,b,j,{removed=false}={}){
 }
 export function validateFlatexNetSettlements(model){
  const ids=new Set(),sources=new Set(),journalIds=new Set();
+ const twoGroups=new Map();for(const b of model.bookings||[])if(b.netSettlement?.version===2){const list=twoGroups.get(b.netSettlement.id)||[];list.push(b);twoGroups.set(b.netSettlement.id,list);}
+ for(const members of twoGroups.values()){const proof=validateTwoFillMembers(model,members);ids.add(proof.id);for(const source of [...proof.executions,proof.account]){const k=sourceKey(source);if(sources.has(k))fail();sources.add(k);}for(const b of members)journalIds.add(b.journalEntryId);}
  const reserve=s=>{if(ids.has(s.id))fail();ids.add(s.id);for(const source of [s.depot,s.account]){const key=sourceKey(source);if(sources.has(key))fail();sources.add(key);}};
- if((model.bookings||[]).some(b=>b.netAugmentation!==undefined&&!b.netSettlement))fail();
- for(const b of model.bookings||[])if(b.netSettlement!==undefined){const j=model.journalEntries.find(j=>j.id===b.journalEntryId);reserve(validateGroup(model,b,j));journalIds.add(j.id);}
+ if((model.bookings||[]).some(b=>(b.netAugmentation!==undefined||b.netMember!==undefined)&&!b.netSettlement||b.netMember!==undefined&&b.netSettlement?.version!==2))fail();
+ for(const b of model.bookings||[])if(b.netSettlement!==undefined&&b.netSettlement.version!==2){const j=model.journalEntries.find(j=>j.id===b.journalEntryId);reserve(validateGroup(model,b,j));journalIds.add(j.id);}
  for(const j of model.journalEntries||[])if((j.netSettlementId!==undefined||j.status==='unresolved-net-settlement'||j.postings.some(p=>p.role==='unresolved-net-amount'))&&!journalIds.has(j.id))fail();
  if(model.flatexNetRemovals!==undefined){
   if(!Array.isArray(model.flatexNetRemovals)||model.flatexNetRemovals.length>2500)fail();
@@ -237,6 +248,7 @@ export function validateFlatexNetSettlements(model){
 }
 /** Explicit selected groups only; unrelated unresolved rows remain visible. */
 export function prepareFlatexNetPreview(model,documents,assignments,{selectedIds=[],openingDate='',openingConfirmed=false,stale=false,mode}={}){
+ const offered=inspectFlatexNetPairs(documents);if(selectedIds.some(id=>offered.pairs.find(p=>p.id===id)?.version===2))return prepareTwoFillPreview(model,documents,assignments,{selectedIds,openingDate,openingConfirmed,stale,mode});
  const inspection=inspectFlatexNetPairs(documents),prepared={...inspection,issues:[]};
  const blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
  try{
@@ -319,7 +331,7 @@ export function prepareFlatexNetBackfillPreview(model,documents,assignments,opti
   const {selectedIds=[],openingDate='',openingConfirmed=false,openingQuantities={},expectedClosing={},closingConfirmed=false,stale=false}=options;
   if(stale||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)throw Error('Eindeutige EUR-Paare ausdrücklich auswählen.');
   const proofs=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));
-  if(proofs.some(p=>!p))throw Error('Ausgewählte Gruppe geändert oder nicht eindeutig.');
+  if(proofs.some(p=>!p||p.version!==1))throw Error('Ausgewählte Gruppe benötigt den Import mit belegtem Anfangsbestand; Endbestandsersatz für 2:1 bleibt gesperrt.');
   if((model.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(s=>proofs.some(p=>[p.depot,p.account].some(n=>sourceKey(s)===sourceKey(n))))))throw Error('Zurückgenommene Wirtschaftsgruppe bleibt gegen Wiederimport gesperrt.');
   // Exact repeats use the existing identity/evidence rules, never reopen a balance.
   const prior=proofs.filter(p=>model.bookings.some(b=>b.netSettlement?.id===p.id));
@@ -372,6 +384,7 @@ export function withdrawFlatexNetGroups(model,ids){
  validateFlatexNetSettlements(model);
  if(!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length)throw Error('Wirtschaftsgruppen ausdrücklich auswählen.');
  if(model.bookings.some(b=>b.netReconciliation?.groupIds.some(id=>ids.includes(id))))throw Error('Datierter Bestandsabgleich schützt diese Gruppen. Nur vollständiges Sitzungs-Undo oder geprüftes Backup wiederherstellen.');
+ if(ids.some(id=>model.bookings.some(b=>b.netSettlement?.id===id&&b.netSettlement.version===2)))throw Error('2:1-Gruppen nur über vollständiges Sitzungs-Undo oder geprüftes Backup zurücknehmen.');
  const selected=ids.map(id=>model.bookings.find(b=>b.netSettlement?.id===id));if(selected.some(b=>!b))throw Error('Aktive Wirtschaftsgruppe fehlt.');
  const chosen=new Set(selected.map(b=>b.journalEntryId));
  for(const b of selected){const j=model.journalEntries.find(j=>j.id===b.journalEntryId),touched=new Set([b.positionId,b.cashPositionId]);
@@ -401,12 +414,116 @@ export function netEvidenceExtension(before,after){
  try{
   if(!before.netSettlement||before.netSettlement.id!==after.netSettlement?.id||!before.importSource||!after.importSource)return false;
   const normalized=structuredClone(after);
-  for(const type of ['depot','account']){
-   const prior=before.netSettlement[type].occurrences,next=after.netSettlement[type].occurrences;
+  for(const path of before.netSettlement.version===2?['depot','account','0','1']:['depot','account']){
+   const type=path,oldSource=/^[01]$/.test(type)?before.netSettlement.executions[Number(type)]:before.netSettlement[type],newSource=/^[01]$/.test(type)?after.netSettlement.executions[Number(type)]:after.netSettlement[type],target=/^[01]$/.test(type)?normalized.netSettlement.executions[Number(type)]:normalized.netSettlement[type];
+   const prior=oldSource.occurrences,next=newSource.occurrences;
    if(next.length<prior.length||prior.some((o,i)=>!equal(o,next[i])))return false;
-   normalized.netSettlement[type].occurrences=structuredClone(prior);
+   target.occurrences=structuredClone(prior);
   }
   normalized.importSource.ownedSnapshot=before.importSource.ownedSnapshot;
   return equal(before,normalized);
  }catch{return false;}
+}
+
+/** Exactly two separately identified executions and one documentary EUR payment.
+ * No price average and no per-execution cash, charges or basis allocation. */
+function twoFillProof(executions,account,g){
+ if(executions.length!==2||executions[0].sourceId!==executions[1].sourceId||sourceKey(executions[0])===sourceKey(executions[1]))fail();
+ for(const s of [...executions,account])if(inspectNativeFlatexSourceIdentities([documentFor(s.type,s.fields,s)]).rows[0].status!=='candidate-source')fail();
+ const rows=executions.map(s=>documentFor('depot',s.fields,s).rows[0]),c=documentFor('account',account.fields,account).rows[0];
+ const fills=rows.map((r,i)=>{
+  const n=units(r.numbers.nominal),q=n<0n?-n:n,s=executions[i];
+  if(r.values.priceCurrency!=='EUR'||r.values.unit!==(s.dialect==='depot13'?'Stück':'Stk.')||q<=0n||(g.type==='buy'?n<=0n:n>=0n)||r.dates.bookingDate!==c.dates.bookingDate||r.dates.valueDate!==c.dates.valueDate||s.dialect==='depot13'&&(r.numbers.fxRate!=='1'||r.values.amountCurrency!=='EUR'))fail();
+  if(q*units(r.numbers.rate)%SCALE!==0n)fail();
+  const grossExact=preciseValue(exact(q),r.numbers.rate);if(s.dialect==='depot13'&&units(r.numbers.amount)!==(g.type==='buy'?-1n:1n)*units(grossExact))fail();
+  return {quantityExact:exact(q),unitPriceExact:r.numbers.rate,grossExact};
+ });
+ if(c.values.amountCurrency!=='EUR'||(g.type==='buy'?units(c.numbers.amount)>=0n:units(c.numbers.amount)<=0n))fail();
+ const quantityExact=exact(fills.reduce((n,f)=>n+units(f.quantityExact),0n)),grossExact=exact(fills.reduce((n,f)=>n+units(f.grossExact),0n)),cashExact=c.numbers.amount;
+ return {version:2,id:'fn-'+sourceDigest(JSON.stringify([executions.map(sourceKey),sourceKey(account)])),orderReference:g.orderReference,type:g.type,date:c.dates.bookingDate,valueDate:c.dates.valueDate,isin:g.isin,quantityExact,grossExact,cashExact,differenceExact:exact(units(cashExact)+(g.type==='buy'?1n:-1n)*units(grossExact)),depot:executions[0],executions,account,fills};
+}
+function validateTwoFillProof(proof){
+ keys(proof,'version id orderReference type date valueDate isin quantityExact grossExact cashExact differenceExact depot executions account fills');
+ if(proof.version!==2||!Array.isArray(proof.executions)||proof.executions.length!==2||!equal(proof.depot,proof.executions[0]))fail();
+ const docs=[];
+ for(const s of [...proof.executions,proof.account]){
+  keys(s,'type sourceId externalId payloadDigest fields occurrences'+(s.dialect!==undefined?' dialect sourceContext':''));
+  if(s.type!==(docs.length<2?'depot':'account')||!Array.isArray(s.occurrences)||!s.occurrences.length||s.occurrences.length>20)fail();
+  const doc=documentFor(s.type,s.fields,s),r=inspectNativeFlatexSourceIdentities([doc]).rows[0];
+  if(r.status!=='candidate-source'||s.sourceId!==r.sourceId||s.externalId!==r.externalId||s.payloadDigest!==r.payloadDigest)fail();
+  const seen=new Set();for(const o of s.occurrences){keys(o,'documentDigest line fields');const key=JSON.stringify([o.documentDigest,o.line]);if(!/^[a-f0-9]{64}$/.test(o.documentDigest)||!Number.isSafeInteger(o.line)||o.line<2||o.line>5001||seen.has(key))fail();seen.add(key);const row=inspectNativeFlatexSourceIdentities([documentFor(s.type,o.fields,s)]).rows[0];if(row.sourceId!==s.sourceId||row.externalId!==s.externalId||row.payloadDigest!==s.payloadDigest)fail();}
+  if(!s.occurrences.some(o=>equal(o.fields,s.fields)))fail();docs.push(doc);
+ }
+ const links=inspectNativeFlatexOrderLinks(docs,{maxDays:0}),g=links.groups[0];
+ if(links.groups.length!==1||links.unassigned.length||g.status!=='multiple-depot-review'||g.depot.length!==2||g.cash.length!==1||[...proof.executions].sort((a,b)=>sourceKey(a).localeCompare(sourceKey(b))).some((s,i)=>s!==proof.executions[i]))fail();
+ const found=twoFillProof(proof.executions,proof.account,g);
+ if(!equal(found,proof))fail();return proof;
+}
+function validateTwoFillMembers(model,members){
+ if(members.length!==3)fail();const proof=validateTwoFillProof(members[0].netSettlement),roles=new Set(),journalIds=new Set();
+ for(const b of members){
+  if(!equal(b.netSettlement,proof)||!['fill-0','fill-1','cash'].includes(b.netMember)||roles.has(b.netMember)||b.netAugmentation!==undefined||b.netReconciliation!==undefined)fail();roles.add(b.netMember);
+  const j=model.journalEntries.find(j=>j.id===b.journalEntryId);if(!j||journalIds.has(j.id))fail();journalIds.add(j.id);validateJournalEntry(j);validateImportSource(b.importSource,b.accountId);
+  const isCash=b.netMember==='cash',index=Number(b.netMember.slice(-1)),source=isCash?proof.account:proof.executions[index],f=isCash?null:proof.fills[index],p=model.positions.find(p=>p.id===b.positionId),sign=proof.type==='buy'?1n:-1n;
+  if(!p||p.currency!=='EUR'||p.wallet?.enabled||p.managementSource==='wallet'||b.accountId!==p.accountId||b.date!==proof.date||j.date!==proof.date||j.type!==b.type||j.source!=='csv'||j.netSettlementId!==proof.id||j.status!=='unresolved-net-settlement'||b.reconciliationStatus!==j.status||b.external!==false||b.transferMatch||b.targetPositionId||b.cashPositionId||j.cashPositionId||b.costsVerified!==false||b.feeEUR!==null||b.taxEUR!==null||b.fxRate!==1||!sourceUnmodified(model,b)||b.importSource.sourceId!==source.sourceId||b.importSource.externalId!==source.externalId)fail();
+  const payload=JSON.parse(b.importSource.sourcePayload);
+  if(!equal(payload,{version:2,netSettlementId:proof.id,member:b.netMember,sourceEvidence:{version:1,payloadDigest:source.payloadDigest},positionId:b.positionId}))fail();
+  const q=isCash?(units(proof.cashExact)<0n?-units(proof.cashExact):units(proof.cashExact)):units(f.quantityExact),amt=isCash?q:units(f.grossExact);
+  if(b.type!==(isCash?(proof.type==='buy'?'withdraw':'deposit'):proof.type)||units(b.quantityExact)!==q||b.quantity!==Number(exact(q))||units(b.amountExactEUR)!==amt||b.amountEUR!==Number(exact(amt))||b.unitPrice!==Number(isCash?'1':f.unitPriceExact))fail();
+  const first=j.postings[0],other=j.postings[1];
+  if(first.positionId!==p.id||first.accountId!==p.accountId||first.role!==(isCash?'cash':'asset')||units(first.quantityDeltaExact)!==(isCash?units(proof.cashExact):sign*q)||units(first.amountBookEURExact)!==(isCash?units(proof.cashExact):sign*amt)||other.positionId!==null||other.accountId!==null||other.quantityDeltaExact!==null||other.role!=='clearing'||units(other.amountBookEURExact)!==(isCash?sign*units(proof.grossExact):-sign*amt))fail();
+  if(isCash){const d=j.postings[2];if(p.kind!=='cash'||j.postings.length!==3||!d||d.role!=='unresolved-net-amount'||d.positionId!==null||d.accountId!==null||d.quantityDeltaExact!==null||units(d.amountBookEURExact)!==-units(proof.cashExact)-sign*units(proof.grossExact))fail();}
+  else if(!['stock','etf','fund'].includes(p.kind)||p.isin!==proof.isin||j.postings.length!==2||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR].some(v=>v!=null))fail();
+  if(model.externalCashFlows.some(flow=>flow.id===b.id))fail();
+ }
+ const c=members.find(b=>b.netMember==='cash'),fills=members.filter(b=>b.netMember!=='cash'),cp=model.positions.find(p=>p.id===c.positionId),asset=model.positions.find(p=>p.id===fills[0].positionId);
+ if(fills.some(b=>b.positionId!==asset.id)||cp.accountId===asset.accountId||cp.providerId!==asset.providerId)fail();
+ const seq=members.map(b=>model.journalEntries.find(j=>j.id===b.journalEntryId).sequence);if(new Set(seq).size!==3||seq[0]===undefined||model.journalEntries.find(j=>j.id===c.journalEntryId).sequence!==Math.max(...seq))fail();
+ return proof;
+}
+function prepareTwoFillPreview(model,documents,assignments,{selectedIds=[],openingDate='',openingConfirmed=false,stale=false,mode}={}){
+ const inspection=inspectFlatexNetPairs(documents),prepared={...inspection,issues:[]},blocked=reason=>({kind:'flatex-native-trade-preview',eligible:false,ready:false,writeEnabled:false,reason,preview:null,prepared});
+ try{
+  validateFlatexNetSettlements(model);if(stale||mode&&mode!=='net'||!Array.isArray(selectedIds)||!selectedIds.length||selectedIds.length>2500||new Set(selectedIds).size!==selectedIds.length)fail();
+  const selected=selectedIds.map(id=>inspection.pairs.find(p=>p.id===id));if(selected.some(p=>!p))fail();
+  const bindings=reviewNativeFlatexBindings(model,inspection.identities,assignments,{stale}),draft=structuredClone(model),rows=[];let duplicates=0,evidenceUpdates=0;
+  for(const proof of selected.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id))){
+   if(proof.version===1){const p=prepareFlatexNetPreview(draft,documents,assignments,{selectedIds:[proof.id],openingDate,openingConfirmed,stale});if(!p.eligible)throw Error(p.reason);Object.assign(draft,p.preview.simulated);rows.push(...p.preview.rows);duplicates+=p.preview.duplicates;continue;}
+   validateTwoFillProof(proof);
+   const dc=bindings.contexts.find(c=>c.sourceId===proof.depot.sourceId),cc=bindings.contexts.find(c=>c.sourceId===proof.account.sourceId);
+   if(!dc?.confirmed||!cc?.confirmed||dc.accountId===cc.accountId)throw Error('Beide eigenen Depot-/Kontozuordnungen aktuell bestätigen.');
+   const assets=draft.positions.filter(p=>p.accountId===dc.accountId&&p.isin===proof.isin),cash=draft.positions.filter(p=>p.accountId===cc.accountId&&p.kind==='cash'&&p.currency==='EUR');if(assets.length!==1||cash.length!==1)fail();
+   const p=assets[0],c=cash[0];if(p.currency!=='EUR'||!['stock','etf','fund'].includes(p.kind)||p.providerId!==c.providerId||[p,c].some(p=>p.archived||p.wallet?.enabled||p.managementSource==='wallet'||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR].some(v=>v!=null)))fail();
+   const previous=draft.bookings.filter(b=>b.netSettlement?.id===proof.id);
+   if(previous.length){validateTwoFillMembers(draft,previous);if(previous.some(b=>b.positionId!==(b.netMember==='cash'?c.id:p.id)))fail();
+    const merged=structuredClone(previous[0].netSettlement);
+    for(const [old,next]of [...merged.executions.map((s,i)=>[s,proof.executions[i]]),[merged.account,proof.account]]){
+     if(old.payloadDigest!==next.payloadDigest||sourceKey(old)!==sourceKey(next))fail();
+     for(const o of next.occurrences)if(!old.occurrences.some(x=>x.documentDigest===o.documentDigest&&x.line===o.line))old.occurrences.push(structuredClone(o));
+    }
+    merged.depot=structuredClone(merged.executions[0]);validateTwoFillProof(merged);
+    if(!equal(merged,previous[0].netSettlement)){for(const b of previous){b.netSettlement=structuredClone(merged);b.importSource.ownedSnapshot=bookingOwnership(draft,b);}evidenceUpdates++;}
+    duplicates+=3;rows.push(...previous.map(b=>({line:rows.length+2,status:'duplicate',row:{netSettlement:proof,notes:b.netMember}})));continue;}
+   const sources=[...proof.executions,proof.account],sameSource=s=>sources.some(n=>sourceKey(s)===sourceKey(n));
+   if(draft.bookings.some(b=>b.importSource&&sameSource(b.importSource)||b.netSettlement&&[b.netSettlement.depot,b.netSettlement.account,...(b.netSettlement.executions||[])].some(sameSource))||(draft.flatexNetRemovals||[]).some(r=>[r.booking.netSettlement.depot,r.booking.netSettlement.account].some(sameSource)))throw Error('Bereits vorhandene Teilmengen oder zurückgenommene Quellen sperren die vollständige 2:1-Gruppe.');
+   for(const pos of [p,c]){
+    const old=draft.bookings.filter(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)),journals=draft.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id)),o=draft.openingPositions.find(o=>o.positionId===pos.id);
+    if((model.snapshots||[]).some(s=>!s.byPosition||Object.hasOwn(s.byPosition,pos.id)))throw Error('Vorhandene Referenzstände benötigen einen gesonderten 2:1-Abgleich.');
+    if(o&&(o.costBasisExact!=null||o.realizedPnLExact!=null))fail();
+    if(old.length||journals.length){if(!o?.asOf||o.asOf>=proof.date||old.some(b=>!b.netSettlement||b.date>=proof.date||!sourceUnmodified(draft,b))||journals.some(j=>j.date>=proof.date||!old.some(b=>b.journalEntryId===j.id)))throw Error('Widersprüchliche oder gleichdatierte Historie bleibt gesperrt.');}
+    else{if(!openingConfirmed||!validCalendarDate(openingDate)||openingDate>=proof.date)throw Error('Unabhängig belegte Anfangsbestände vor der vollständigen 2:1-Gruppe bestätigen.');if(o&&(o.asOf!==openingDate||units(o.quantityExact)!==units(pos.quantityExact??pos.quantity)||o.costBasisExact!=null||o.realizedPnLExact!=null))fail();if(!o)draft.openingPositions.push({positionId:pos.id,quantityExact:exact(units(pos.quantityExact??pos.quantity)),costBasisExact:null,realizedPnLExact:null,source:'observed-opening',asOf:openingDate});}
+   }
+   for(let i=0;i<3;i++){
+    const isCash=i===2,f=proof.fills[i],s=isCash?proof.account:proof.executions[i],member=isCash?'cash':'fill-'+i;
+    const ev=executeTransaction(draft,{date:proof.date,type:isCash?(proof.type==='buy'?'withdraw':'deposit'):proof.type,positionId:isCash?c.id:p.id,quantity:isCash?exact(units(proof.cashExact)<0n?-units(proof.cashExact):units(proof.cashExact)):f.quantityExact,unitPrice:isCash?'1':f.unitPriceExact,...(isCash?{}:{tradeAmountEURExact:f.grossExact}),feeEUR:0,taxEUR:0,fxRate:'1',notes:isCash?'Flatex 2:1 · gemeinsamer Nettocash; Differenz ungeklärt.':'Flatex 2:1 · eigenständige Ausführung; Kosten unbekannt.'});
+    const b=draft.bookings.find(b=>b.id===ev.id),j=draft.journalEntries.find(j=>j.id===b.journalEntryId);b.netSettlement=structuredClone(proof);b.netMember=member;b.external=false;b.feeEUR=null;b.taxEUR=null;b.costsVerified=false;b.reconciliationStatus='unresolved-net-settlement';j.source='csv';j.netSettlementId=proof.id;j.status=b.reconciliationStatus;
+    if(isCash){draft.externalCashFlows=draft.externalCashFlows.filter(f=>f.id!==b.id);const sign=proof.type==='buy'?1n:-1n;j.postings[1].role='clearing';j.postings[1].amountBookEURExact=exact(sign*units(proof.grossExact));j.postings.push({id:proof.id+'-difference',role:'unresolved-net-amount',positionId:null,accountId:null,quantityDeltaExact:null,amountBookEURExact:exact(-units(proof.cashExact)-sign*units(proof.grossExact))});}
+    else{const a=draft.positions.find(a=>a.id===p.id);a.costBasisExact=null;a.costBasisEUR=null;a.realizedPnLExact=null;a.realizedPnLEUR=null;}
+    b.importSource={version:1,sourceId:s.sourceId,accountId:b.accountId,externalId:s.externalId,sourcePayload:JSON.stringify({version:2,netSettlementId:proof.id,member,sourceEvidence:{version:1,payloadDigest:s.payloadDigest},positionId:b.positionId}),fileId:proof.id+':'+member,occurrence:1,ownership:'imported',ownedSnapshot:''};b.importSource.ownedSnapshot=bookingOwnership(draft,b);rows.push({line:rows.length+2,status:'ready',row:{netSettlement:proof,netMember:member,quantityExact:b.quantityExact,unitPriceExact:isCash?'1':f.unitPriceExact,grossExact:b.amountExactEUR,positionId:b.positionId,notes:b.notes}});
+   }
+   draft.version=5;
+  }
+  validateFlatexNetSettlements(draft);if(!ledgerQuantityAudit(draft).ok)fail();
+  return {kind:'flatex-native-trade-preview',eligible:true,ready:false,writeEnabled:false,reason:'',prepared,preview:{baseline:JSON.stringify(model),simulated:draft,rows,issues:[],ready:rows.filter(r=>r.status==='ready').length,duplicates,skipped:0,evidenceUpdates}};
+ }catch(e){return blocked(e.message);}
 }

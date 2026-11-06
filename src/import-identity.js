@@ -17,6 +17,7 @@ export function bookingOwnership(model,booking){
  // Preserve existing snapshot bytes for every old booking. Only the explicit
  // cash augmentation opts into the additional, durable original-source audit.
  if(booking.netAugmentation!==undefined)fields.push('netAugmentation');
+ if(booking.netMember!==undefined)fields.push('netMember');
  const entry=model.journalEntries?.find(e=>e.id===booking.journalEntryId);
  return JSON.stringify([fields.map(k=>booking[k]??null),entry??null]);
 }
@@ -129,3 +130,4 @@ export function removedImportSources(model){
  return (model.journalEntries||[]).filter(j=>j.type==='booking-management-audit'&&j.managementAudit?.version===2&&j.managementAudit.action==='remove')
   .flatMap(j=>j.managementAudit.originals.filter(o=>provenCashImport(o.booking,o.journal)).map(o=>o.booking.importSource));
 }
+
