@@ -25,6 +25,18 @@ export function priceQuality(p,now=Date.now()){
  if(!proven.has(p.quoteQuality))return {state:'unverified',label:'Kursquelle nicht bestätigt'};
  return {state:'confirmed',label:'Datierter Anbieterkurs'};
 }
+/** Current automatic portfolio valuations need both price and FX provenance. */
+export function automaticValuationConfirmed(p,now=Date.now()){
+ if(p.valuationMode==='excluded'||Number(p.quantityExact??p.quantity??0)===0)return true;
+ const quality=priceQuality(p,now).state;
+ if(!['confirmed','ignored'].includes(quality))return false;
+ if(quality==='ignored'&&(!(Number(p.priceExact??p.price)>0)||p.priceStatus))return false;
+ if(p.currency!=='EUR'){
+  const day=String(p.fxRateDate||''),time=/^\d{4}-\d{2}-\d{2}$/.test(day)?Date.parse(day+'T12:00:00Z'):NaN;
+  if(!String(p.fxSource||'').trim()||!(Number(p.fxRateExact??p.fxRate)>0)||!Number.isFinite(time)||new Date(time).toISOString().slice(0,10)!==day||time>now+864e5||now-time>7*864e5)return false;
+ }
+ return true;
+}
 export function quoteQualitySummary(positions,now=Date.now()){
  const counts={confirmed:0,stale:0,derived:0,missing:0,review:0,undated:0,unverified:0};
  for(const p of positions||[]){const s=priceQuality(p,now).state;if(Object.hasOwn(counts,s))counts[s]++;}

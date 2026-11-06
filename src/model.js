@@ -21,6 +21,8 @@ import {enhanceKnownReferenceListing} from './reference-listings.js';
 import {normalizeLegacyCoinId} from './coin-identity.js';
 import {validateBookingArchive} from './booking-history.js';
 import {validateNativeStakingAddress} from './native-staking-networks.js';
+import {assertWalletHoldingAvailable,duplicateWalletHoldings} from './wallet-identity.js';
+import {automaticValuationConfirmed} from './quote-quality.js';
 export const STORE_KEY='foliolab-open-v1';
 /** Remove only app-owned keys; other apps sharing this origin remain untouched. */
 export function purgeLocalAppData(storage=globalThis.localStorage,{preserveStorageMode=false}={}){
@@ -97,6 +99,7 @@ export function createPosition(v,model){if(v.archived!==undefined&&typeof v.arch
   if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
   const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
+  assertWalletHoldingAvailable(model,{id:v.id,wallet,valuationMode:v.valuationMode,representedByPositionId:v.representedByPositionId});
   const costBasisExact=v.costBasisExact==null?(v.costBasisEUR==null||v.costBasisEUR===''?null:exact(units(v.costBasisEUR))):exact(units(v.costBasisExact));
   const costBasisEUR=costBasisExact==null?null:safeNumber(costBasisExact);
   const realizedPnLExact=v.realizedPnLExact==null?(v.realizedPnLEUR==null?null:exact(units(v.realizedPnLEUR))):exact(units(v.realizedPnLExact));
@@ -132,7 +135,7 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const amountExact=manual?exact(units(options.manualTotalEUR)):totalExactEUR(model);
  // Net liabilities may lead to a legitimate negative portfolio value.
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
- const partial=!manual&&model.positions.some(p=>(Number(p.quantityExact??p.quantity)>0&&(!(Number(p.priceExact??p.price)>0)||Boolean(p.priceStatus)))||(p.quoteAsOf&&Number.isFinite(Date.parse(p.quoteAsOf))&&(Date.now()-Date.parse(p.quoteAsOf)>7*864e5)));
+ const partial=!manual&&(model.positions.some(p=>!automaticValuationConfirmed(p))||duplicateWalletHoldings(model).length>0);
  const valuationStatus=manual?'manual':partial?'partial':'observed',source=manual?'manual':'current';
  const byAccount=manual?null:(()=>{const totals=Object.fromEntries(model.accounts.map(a=>[a.id,0]));for(const p of model.positions)if(Object.hasOwn(totals,p.accountId))totals[p.accountId]+=valueEUR(p);return totals;})();
  const byPosition=manual?null:currentPositionValues(model);
@@ -241,10 +244,17 @@ export function safeImport(raw){
     }
     if(booking.journalEntryId!=null&&booking.journalEntryId!==''){
       const linked=journalById.get(booking.journalEntryId);
-      if(!linked||linked.type!==booking.type||
+      if(!linked||linked.type!==booking.type||linked.date!==booking.date||
          !linked.postings.some(posting=>posting.positionId===booking.positionId))
         throw Error('Backup: Buchung und zugeordneter Journal-Eintrag widersprechen sich.');
     }
+  }
+  const linkedJournals=new Set(m.bookings.map(b=>b.journalEntryId).filter(Boolean)),sequences=new Set();
+  for(const entry of m.journalEntries){
+    // Unlinked legacy journals without a sequence keep their existing reader path.
+    if(entry.sequence==null&&!linkedJournals.has(entry.id))continue;
+    if(!Number.isSafeInteger(entry.sequence)||entry.sequence<1||sequences.has(entry.sequence))throw Error('Backup: Journalreihenfolge ist ungültig oder nicht eindeutig.');
+    sequences.add(entry.sequence);
   }
   validateTransferMatches(m);validateFlatexNetSettlements(m);
   m.snapshots=raw.snapshots.map(x=>{

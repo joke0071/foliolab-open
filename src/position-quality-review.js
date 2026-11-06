@@ -2,12 +2,14 @@ import {legacyQuoteDiscrepancies} from './legacy-quote-audit.js';
 import {valuationIssues} from './valuation-status.js';
 import {priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {historyAction} from './booking-history.js';
+import {duplicateWalletHoldings} from './wallet-identity.js';
 const quoteLabels={missing:'Kurs fehlt',derived:'Zuletzt gespeicherter Wert',review:'Kursstatus unklar',outdated:'Kurs älter als 7 Tage'};
 const timestamp=v=>typeof v==='string'&&Number.isFinite(Date.parse(v))?v:null;
 /** Existing evidence only, one affected position regardless of symptom count. */
 export function positionQualityReview(model,now=Date.now()){
  const groups=new Map(),positions=new Map((model.positions||[]).map(p=>[p.id,p]));
  function add(id,issue){if(!positions.has(id))return;const row=groups.get(id)||{id,accountId:positions.get(id).accountId,issues:[]};if(!row.issues.some(x=>x.key===issue.key))row.issues.push(issue);groups.set(id,row);}
+ for(const duplicates of duplicateWalletHoldings(model))for(const p of duplicates)add(p.id,{key:'position:'+p.id+':wallet-identity',category:'history',label:'Dieselbe konkrete Walletposition wird mehrfach angerechnet',source:'Walletidentitätsprüfung',asOf:null,severity:'warning',action:'edit-position',actionLabel:'Walletzuordnung prüfen'});
  for(const {id,type} of valuationIssues(model,now)){
   const p=positions.get(id);add(id,{key:'position:'+id+':quote',category:'quote',label:quoteLabels[type],source:'Kursstatus',asOf:timestamp(p.quoteAsOf),severity:'warning',quality:priceQuality(p,now).state,action:'edit-position',actionLabel:'Kursdaten prüfen'});
  }

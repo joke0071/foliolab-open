@@ -48,7 +48,13 @@ try{
  await manageList(p,'positions');await p.locator('[data-action="edit-position"]').first().click();await p.locator('#dialogFields [name="name"]').fill('SYNTHETIC Live ETF edited');await p.locator('#saveDialog').click();await p.locator('#editDialog').waitFor({state:'hidden'});await p.reload();assert.equal((await state(p)).positions[0].name,'SYNTHETIC Live ETF edited');
  report.checks.push('real UI provider/account/position creation, edit, IndexedDB commit and reload');
  const h=historyFixture(),m=h.model;m.settings.autoRefresh=false;
- for(const other of [annualFixture().model,transferFixture()])for(const key of ['providers','accounts','positions','bookings','journalEntries','openingPositions','externalCashFlows','snapshots'])m[key].push(...other[key]);
+ for(const other of [annualFixture().model,transferFixture()]){
+  // These independent synthetic models start their own sequence at 1. Give the
+  // composed fixture global identities before its first storage/restore.
+  let next=Math.max(0,...m.journalEntries.map(j=>j.sequence))+1;
+  for(const entry of other.journalEntries)entry.sequence=next++;
+  for(const key of ['providers','accounts','positions','bookings','journalEntries','openingPositions','externalCashFlows','snapshots'])m[key].push(...other[key]);
+ }
  // Synthetic data only, assembled using the actually delivered model/history engines.
  const synthetic=await p.evaluate(async({m,event,stream,NOW})=>{const {createPosition,snapshot,backup}=await import('./src/model.js');const {acceptHistory,historyPreview}=await import('./src/wallet-history-state.js');const {replayWalletHistory}=await import('./src/wallet-history-core.js');const w=createPosition({providerId:m.providers[0].id,accountId:m.accounts[0].id,name:'SYNTHETIC Live ETH',kind:'crypto',symbol:'ETH',coinId:'ethereum',quantity:1,price:0,wallet:{enabled:true,chain:'evm',chainId:1,address:'0x1111111111111111111111111111111111111111'}},m);m.positions.push(w);m=acceptHistory(m,historyPreview({replay:replayWalletHistory({events:[event],streams:[stream]}),issues:[]},{id:'wallet-history:'+w.id,chain:'eth',walletKey:w.id,acceptedAt:NOW}));snapshot(m,'2026-10-24','SYNTHETIC',{manualTotalEUR:'30000'});return {json:backup(m,{includeHistory:true}),wallet:w.id};},{m,event:event(),stream:stream(),NOW});
  await restore(p,synthetic.json);assert.equal((await state(p)).bookings.length,m.bookings.length);

@@ -1,7 +1,7 @@
 /** Existing disclosure UI; source documents never become financial transactions. */
 import {escapeHTML as esc} from './model.js';
 import {flatexCustodyAccounts} from './flatex-reconciliation.js';
-import {importSourceKey,sourceUnmodified,validateImportSource} from './import-identity.js';
+import {nativeBankSourceKey,sourceUnmodified,validateImportSource} from './import-identity.js';
 const labels={'order-buy':'ORDER Kauf','order-sell':'ORDER Verkauf',accumulation:'Thesaurierung','custody-change':'Lagerstellenwechsel',split:'Split',merger:'Fusion','fusion-cancellation':'Storno Fusion',cancellation:'Storno',unclassified:'Ungeklärt'};
 const orderLabels={'possible-single':'Mögliche 1:1-Beziehung','multiple-cash-review':'Mehrere Kontobelege prüfen','multiple-depot-review':'Mehrere Depotausführungen prüfen','missing-depot':'Depotbeleg fehlt','missing-cash':'Kontobeleg fehlt',conflict:'Widerspruch prüfen','overlap-review':'Überlappung prüfen','cancelled-review':'Storno prüfen','scope-review':'Quellkontexte prüfen','source-review':'Quellangaben prüfen'};
 const show=v=>esc(v==null||v===''?'unbekannt':String(v).length>300?String(v).slice(0,300)+' (Anzeige gekürzt)':String(v));
@@ -12,7 +12,7 @@ export function reviewNativeFlatexBindings(model,identities,assignments={}, {sta
  for(const key of ['accounts','providers','bookings','journalEntries'])if(!Array.isArray(model?.[key])||model[key].some(x=>typeof x?.id!=='string'||!x.id)||new Set(model[key].map(x=>x.id)).size!==model[key].length)throw Error('Portfoliokontext nicht eindeutig prüfbar.');
  const providers=new Map(model.providers.map(p=>[p.id,p])),choices={depot:flatexCustodyAccounts(model),account:model.accounts.filter(a=>['checking','savings','securities','other'].includes(a.type)&&/flatex/i.test(providers.get(a.providerId)?.name||''))};
  const groups=new Map(),nativeBookings=new Map(),legacyAccounts=new Set();
- for(const b of model.bookings){const key=importSourceKey(b.importSource);if(key){const list=nativeBookings.get(key)||[];list.push(b);nativeBookings.set(key,list);}if(!b.importSource?.sourceId?.startsWith('flatex-native-'))legacyAccounts.add(b.accountId);}
+ for(const b of model.bookings){const key=nativeBankSourceKey(b.importSource);if(key){const list=nativeBookings.get(key)||[];list.push(b);nativeBookings.set(key,list);}if(!b.importSource?.sourceId?.startsWith('flatex-native-'))legacyAccounts.add(b.accountId);}
  for(const r of identities.rows){const key=r.sourceId??JSON.stringify([r.sourceType,r.sourceScope]),list=groups.get(key)||[];list.push(r);groups.set(key,list);}
  const contexts=[...groups.values()].map((rows,index)=>{
   const r=rows[0],options=choices[r.sourceType].map(a=>({id:a.id,label:a.name+' · '+providers.get(a.providerId).name+' · '+a.currency})),binding=r.sourceId?assignments[r.sourceId]:null;
@@ -28,8 +28,9 @@ export function reviewNativeFlatexBindings(model,identities,assignments={}, {sta
    if(!context?.accountId)status='unassigned';
    else if(!context.confirmed)status='unconfirmed';
    else{
-    const matches=nativeBookings.get(importSourceKey({...r.identity,accountId:context.accountId}))||[];
-    if(matches.length>1){status='existing-conflict';reasons=['Mehrere Buchungen mit derselben Quellenidentität.'];}
+    const matches=nativeBookings.get(nativeBankSourceKey(r.identity))||[];
+    if(matches.some(b=>b.accountId!==context.accountId)){status='existing-conflict';reasons=['Diese Bankquelle ist bereits einem anderen Portfolio-Konto zugeordnet. Keine erneute Buchungswirkung.'];}
+    else if(matches.length>1){status='existing-conflict';reasons=['Mehrere Buchungen mit derselben Quellenidentität.'];}
     else if(matches.length){const b=matches[0];try{validateImportSource(b.importSource,b.accountId);const evidence=JSON.parse(b.importSource.sourcePayload).sourceEvidence;if(evidence.payloadDigest!==r.payloadDigest){status='existing-conflict';reasons=['Originalfelder weichen vom vorhandenen Nachweis ab.'];}else if(!sourceUnmodified(model,b)){status='manual-review';reasons=['Manuelle Änderungen bleiben erhalten.'];}else status='existing-source';}catch{status='existing-conflict';reasons=['Vorhandene Herkunft ist nicht vollständig prüfbar.'];}}
    }
   }

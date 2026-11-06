@@ -1,4 +1,5 @@
 /** @typedef {{id:string,symbol:string,mic:string,exchange:string,currency:string}} Listing */
+import {normalizeWalletIdentifier} from './wallet-identity.js';
 /** @typedef {{id:string,key:string,kind:string,name:string,isin:string,coinId:string,listings:Listing[]}} Asset */
 const lower=x=>String(x??'').trim().toLowerCase();
 const upper=x=>String(x??'').trim().toUpperCase();
@@ -14,7 +15,7 @@ export function assetKey(p){
    const w=p.wallet;
    if(w?.enabled){
      const net=w.chain==='evm'||w.chain==='erc20'?'evm:'+(w.chainId||1):w.chain==='sol'||w.chain==='spl'?'solana':w.chain;
-     return 'crypto:'+net+':'+(w.contract?lower(w.contract):'native');
+     return 'crypto:'+net+':'+(w.contract?normalizeWalletIdentifier(w.contract,w.chain):'native');
    }
    if(p.coinId)return 'crypto:cg:'+lower(p.coinId);
    return 'crypto:manual:'+lower(p.symbol)+':'+lower(p.name);
