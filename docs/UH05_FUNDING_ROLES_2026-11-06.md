@@ -1,0 +1,31 @@
+# UH05 – belegte Gutschrift und Orderbelastung getrennt erhalten
+
+Basis: v292 LIVE_ACCEPTED, Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Keine neue Produktfreigabe und keine erneute Releaseabnahme.
+
+## Konkreter neuer Quellenbefund
+
+Die vollständig bereitgestellten größeren Depot-/Kontoexporte wurden privat bytegesichert und unabhängig mit Python CSV/Decimal gelesen. Alle 401 belegten Orderpaare haben genau eine Ausführung und eine Order-Cashbuchung; Buchtag und Valuta stimmen jeweils überein. Der unveränderte Main-Nettoplaner bietet dieselben 401 Version1-Gruppen in beiden Dokumentreihenfolgen mit stabilen IDs an. Alle fünf exakten Mengen-/Preis-/Brutto-/Cash-/Differenzwerte je Paar stimmen mit dem unabhängigen Oracle überein. Quellen bleiben bytegleich; keine Modell-/Journal-/IDB-Übernahme oder Vollhistorienabnahme.
+
+Zusätzlich enthalten die Kontodaten 357 positive Gutschriften mit Kauf-/ISIN-/Orderverweis, eigener Bankreferenz und befüllten Gegenbankfeldern. Jede hat genau eine passende Ausführung/Orderbelastung im selben nativen Kontobereich und gleicht deren Cashbetrag exakt aus. Die bestehenden Orderprüfbelege übernehmen diese Gutschriften nicht als zweites Settlementbein. Die frühere 500-Zeilen-Diagnose war nur ein Ausschnitt; ihr fehlender Mehrcashbefund darf nicht auf diese größeren Dateien verallgemeinert werden.
+
+Der Befund belegt die getrennten Kontobewegungen und ihre Referenzen. Er beweist weder Kontoeigentum noch die Portfolioabgrenzung des Gegenkontos. Exporterprovenienz wird weiterhin nicht aus dem technischen 12/10-Schema abgeleitet. Private Beträge, ISINs, Bank-/Order-/Kontoidentitäten, Zeilen und Hashlocators verbleiben ausschließlich in der privaten Sicherung.
+
+## Enger wirtschaftlicher Vertrag vor Implementierung
+
+Ziel ist ein expliziter Finanzierungsvorgang neben dem bestehenden Order-Settlement; kein generisches Aufsummieren beliebiger Cashbeine. Mengen-/Bruttowirkung des Wertpapierkaufs, tatsächliche negative Settlementbewegung und tatsächliche positive Finanzierung bleiben getrennt. Bestehende V1/V2/V3-Prüfbelege und IDs nicht umdeuten. Eine Finanzierung darf höchstens einmal wirtschaftlich wirken; wiederholte Exporte ergänzen nur belegte Vorkommen. Gleiche Bankidentität mit geänderter Payload sperrt.
+
+Synthetisches Beispiel: 6 Anteile zu10, Settlementcash−63 und Finanzierungscash+63 ergeben Broker-Cashnetto0, aber Brutto60 und weiterhin ungeklärte Differenz−3. Daraus folgt keine bestätigte Gebühr/Steuer/Kostenbasis. [Unabhängiger Decimaloracle](repros/UH05_FUNDING_ROLE_ORACLE_2026-11-06.py) und [tatsächlicher Bericht](release-evidence/uh05-funding-role-oracle-2026-11-06.json) halten beide möglichen Portfolioabgrenzungen getrennt; sie wählen keine davon automatisch aus.
+
+| Noch zu belegende Portfolioabgrenzung | Erforderliche Wirkung |
+| --- | --- |
+| Gegenkonto außerhalb des erfassten Portfolios | Separater belegter Kapitalzufluss; Orderbelastung bleibt interner Kaufvorgang |
+| Eigenes Gegenkonto ebenfalls im Portfolio | Tatsächlich belegtes Gegenbein und ausdrückliche Zuordnung; interner Transfer ohne externen Kapitalzufluss |
+| Herkunft/Eigentum/Umfang ungeklärt | Keine automatisch erzeugte Transfer-/Kapitalflussklassifikation, keine Vollständigkeitsbehauptung |
+
+Vor einer produktiven Erweiterung ist konkret zu klären, ob die Kauf-Gutschriften automatische Einzüge vom eigenen Girokonto sind und ob dieses Konto im Portfolio geführt wird. Für einen internen Transfer ist das tatsächliche Gegenbein wiederzuverwenden/zu belegen; gleicher Betrag/Ordertext allein genügt nicht. Datierte Anfangsbestände und vollständige Chronologie werden gesondert benötigt und niemals aus heutigen Endbeständen zurückgerechnet.
+
+## Nächster ausführbarer Schritt und Gates
+
+Nach bestätigter Cashrolle einen eng versionierten Finanzierungsbeleg im bestehenden Import-/Journal-/CAS-Kern umsetzen. Die gemeinsame UI muss Rolle, alle Quellen, Konten, tatsächliche zwei Cashbewegungen und getrennte Orderwirkung vor der Übernahme anzeigen. Auswahl-/Kontowechsel widerruft sämtliche Freigaben. Ein atomarer CAS-Commit, Wiederimport beider Reihenfolgen/Overlap, negative Payload-/Scope-/Rollenfälle, Quota/post-put, echter Zweittab, vollständiges Undo, verschlüsseltes FreshRestore und Offline in drei Engines bleiben Pflicht; finale Integration/Deployment/tatsächliche Produktion erst am vollständigen Kandidaten.
+
+Bis zur tatsächlichen Rollenklärung kein Produktbranch/PR/CI und keine unbelegte Finanzsemantik. Vorhandene 26 Grenzfälle, alle bisherigen Originale/Oracles/Schutzverträge und offenen UH05/UI300/QUALITY298/CI229/Android/Wallet-/Stakingaufträge erhalten. Fehlende Wallet-/Stakinganzeige bleibt UNKNOWN, niemals Null. GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nach Main.

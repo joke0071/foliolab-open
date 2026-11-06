@@ -1,0 +1,73 @@
+{
+  "scope": "Synthetic independent Decimal role illustration only; no production import/IDB/portfolio mutation",
+  "result": "PASS",
+  "cases": [
+    {
+      "quantity": "6",
+      "unitPrice": "10",
+      "gross": "60",
+      "settlementCash": "-63",
+      "fundingCash": "63",
+      "brokerCashNet": "0",
+      "unallocatedTradeDifference": "-3",
+      "fees": null,
+      "taxes": null,
+      "costBasis": null,
+      "outsidePortfolioIllustration": {
+        "portfolioFlow": "63",
+        "counterAccountCash": null
+      },
+      "trackedOwnAccountIllustration": {
+        "portfolioFlow": "0",
+        "counterAccountCash": "-63"
+      },
+      "selectedRole": null,
+      "result": "PASS"
+    },
+    {
+      "quantity": "1.25",
+      "unitPrice": "8",
+      "gross": "10.00",
+      "settlementCash": "-10.75",
+      "fundingCash": "10.75",
+      "brokerCashNet": "0.00",
+      "unallocatedTradeDifference": "-0.75",
+      "fees": null,
+      "taxes": null,
+      "costBasis": null,
+      "outsidePortfolioIllustration": {
+        "portfolioFlow": "10.75",
+        "counterAccountCash": null
+      },
+      "trackedOwnAccountIllustration": {
+        "portfolioFlow": "0",
+        "counterAccountCash": "-10.75"
+      },
+      "selectedRole": null,
+      "result": "PASS"
+    },
+    {
+      "quantity": "3",
+      "unitPrice": "20",
+      "gross": "60",
+      "settlementCash": "-60",
+      "fundingCash": "60",
+      "brokerCashNet": "0",
+      "unallocatedTradeDifference": "0",
+      "fees": null,
+      "taxes": null,
+      "costBasis": null,
+      "outsidePortfolioIllustration": {
+        "portfolioFlow": "60",
+        "counterAccountCash": null
+      },
+      "trackedOwnAccountIllustration": {
+        "portfolioFlow": "0",
+        "counterAccountCash": "-60"
+      },
+      "selectedRole": null,
+      "result": "PASS"
+    }
+  ],
+  "rule": "Zero broker cash net does not mean zero trade cost or zero portfolio inflow. Do not choose between outside-portfolio funding and tracked own-account transfer without an explicit evidenced boundary."
+}
