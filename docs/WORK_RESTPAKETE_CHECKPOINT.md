@@ -1,3 +1,13 @@
+## ACTIVE – 5ee91c771f2c / Sparplan: vier Cash- und drei Depotbeziehungen belegt – 06.11.2026
+
+Zusätzliche Originalbilder vollständig privat geprüft: vier Finanzierungsgutschriften über ISIN/Orderreferenz mit vier Cashbelastungen verknüpft, drei zusätzlich mit sichtbaren Depotausführungen. Die vierte Depotausführung fehlt im Ausschnitt. Deren Cashbelastung hat einen früheren Buchtag; die vorige Originalexportanforderung wird um diesen Tag erweitert. Exakte Kurse und vollständige native Payloads weiterhin nicht vorhanden. [Aktualisierter Befund](UH05_FUNDING_ROLES_2026-11-06.md). Kein Schluss aus Betragsgleichheit allein, keine Kosten-/Steuerzuordnung aus sichtbarer Differenz, keine rückgerechneten Anfangsbestände.
+
+Nächster Schritt bleibt die vollständige native Depot-/Kontoumsatzquelle für den privat dokumentierten erweiterten Zeitraum. Danach den eng belegten Fall im bestehenden gemeinsamen Kern implementieren und regulär integrieren/produktiv abnehmen. Das externe Girokonto bleibt außerhalb des Portfolios; Nutzerbestätigung gilt für den gezeigten Fall, nicht pauschal alle357 Gutschriften. Keine weiteren Girokontobelege erforderlich.
+
+Private SicherungV75 bestätigt:23.265.744Bytes / SHA256 `1be62ff3f7a6ac4ea9ec2dcaf1430150aae547ae2b7f4b2bf62ea1147037a5b5`, alle4808 Manifestdateien am Archiv geprüft, alle4803 V74-Dateien bytegleich erhalten. Einstieg `delta-5ee91c771f2c/uh05-sparplan-expanded-evidence/STATE.json`. Neue Bilder erstmalsV75, persönliche Werte/Identitäten/Referenzen/Bildhashes ausschließlich privat. v292 bleibt LIVE_ACCEPTED, nicht erneut abgenommen; kein Produktcode/PR/CI/Deployment oder Produkt-WIP. Alle Aufträge/Schutzverträge erhalten. Owner5ee91c771f2c ACTIVE; Checkpointbranch niemals nach Main.
+
+---
+
 ## ACTIVE – 5ee91c771f2c / Sparplanrolle bestätigt, konkrete Originalzeilen fehlen – 06.11.2026
 
 Die Nutzerbestätigung klärt die Portfolioabgrenzung des neu privat belegten Sparplanfalls: Finanzierung vom eigenen externen Girokonto, dieses Konto ausdrücklich nicht in FolioLab anlegen. Gutschrift als externer Kapitalzufluss, ETF-Kauf als interne Umschichtung; Einzahlung ist weder Gewinn noch Rendite. Keine pauschale Rollenfreigabe sämtlicher357 historischer Gutschriften. [Aktualisierter enger Vertrag und konkrete Quellenlücke](UH05_FUNDING_ROLES_2026-11-06.md).
