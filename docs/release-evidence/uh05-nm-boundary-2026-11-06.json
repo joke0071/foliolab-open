@@ -1,0 +1,178 @@
+{
+  "result": "PASS",
+  "main": "cef91b3a8b2baa0c9598178a4fa486877283df45",
+  "scope": "Read-only boundary diagnostic, not N:M import implementation, production UI or private-original N:M evidence",
+  "cases": 18,
+  "results": [
+    {
+      "name": "single EUR",
+      "order": 0,
+      "status": "possible-single",
+      "sourceOccurrences": 2,
+      "netPairs": 1,
+      "reviewCount": 0,
+      "inputUnchanged": true
+    },
+    {
+      "name": "single EUR",
+      "order": 1,
+      "status": "possible-single",
+      "sourceOccurrences": 2,
+      "netPairs": 1,
+      "reviewCount": 0,
+      "inputUnchanged": true
+    },
+    {
+      "name": "one execution two cash legs",
+      "order": 0,
+      "status": "multiple-cash-review",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "one execution two cash legs",
+      "order": 1,
+      "status": "multiple-cash-review",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "two executions one cash leg",
+      "order": 0,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "two executions one cash leg",
+      "order": 1,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "two executions two cash legs",
+      "order": 0,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "two executions two cash legs",
+      "order": 1,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "equal distinct executions and cash legs",
+      "order": 0,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "equal distinct executions and cash legs",
+      "order": 1,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "same-currency USD N:M",
+      "order": 0,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "same-currency USD N:M",
+      "order": 1,
+      "status": "multiple-depot-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "mixed USD executions EUR cash",
+      "order": 0,
+      "status": "source-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "mixed USD executions EUR cash",
+      "order": 1,
+      "status": "source-review",
+      "sourceOccurrences": 4,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "identical repeated export is not a second execution",
+      "order": 0,
+      "status": "overlap-review",
+      "sourceOccurrences": 3,
+      "netPairs": 1,
+      "reviewCount": 0,
+      "inputUnchanged": true
+    },
+    {
+      "name": "identical repeated export is not a second execution",
+      "order": 1,
+      "status": "overlap-review",
+      "sourceOccurrences": 3,
+      "netPairs": 1,
+      "reviewCount": 0,
+      "inputUnchanged": true
+    },
+    {
+      "name": "same bank identity changed payload",
+      "order": 0,
+      "status": "conflict",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    },
+    {
+      "name": "same bank identity changed payload",
+      "order": 1,
+      "status": "conflict",
+      "sourceOccurrences": 3,
+      "netPairs": 0,
+      "reviewCount": 1,
+      "inputUnchanged": true
+    }
+  ],
+  "independentIntegerControl": {
+    "quantity": "3",
+    "grossEUR": "30",
+    "documentaryCashEUR": "-32",
+    "unallocatedDifferenceEUR": "-2",
+    "classification": "Unallocated difference, never inferred fee/tax/FX or per-fill cost basis"
+  },
+  "conclusion": "Current order grouping retains distinct fills but intentionally blocks N:M net pairs. Repeated exact export is deduplicated only by retained source identity/payload. Same-currency USD and documentary mixed-currency N:M remain unsupported. Existing FIN-E2E generic USD partial-fill/FX PASS does not imply native Flatex N:M support."
+}
