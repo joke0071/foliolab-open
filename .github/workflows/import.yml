@@ -429,7 +429,7 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 55
     env:
       ACCEPTANCE_BASE: https://foliolab.unperfekt.at/
       UI_QUALITY_BASE: https://foliolab.unperfekt.at/
