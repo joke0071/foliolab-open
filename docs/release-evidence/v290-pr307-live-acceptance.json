@@ -1,5 +1,5 @@
 {
-  "status": "DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "status": "LIVE_ACCEPTED",
   "owner": "414503ed33c6",
   "release": "v290",
   "PR": 307,
@@ -3043,9 +3043,133 @@
   },
   "production": {
     "job": 127912670313,
-    "status": "IN_PROGRESS",
-    "currentStep": "Verify published bytes, core flows and targeted UI in Chromium",
-    "result": "PENDING"
+    "conclusion": "SUCCESS",
+    "base": "https://foliolab.unperfekt.at/",
+    "main": "a2ffb685db3c0d64d6e68c23d892b540b56bf5c5",
+    "sw": "foliolab-open-v290",
+    "proxyCertificateException": false,
+    "coreResult": "PASS",
+    "assetHashes": 152,
+    "actualBrowserSuites": {
+      "two-fill": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "87580f1b42ede069768474d56f5b42271e7964ff825ad35524aa9378485bfa78"
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "ea6d7f78c15e94c833d962611d6af7c0d7bc770c28561466f7ff58ece69e478a"
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "two executions and one cash document, both file orders",
+            "one CAS revision, independent quantities/cash/fees, no invented costs",
+            "selection revokes all approvals; full zero-write quota/post-put rollback",
+            "actual Undo/recommit/reimport/offline reload",
+            "encrypted v5 backup and actual restore in fresh profile",
+            "real second-tab race at canonical save",
+            "five widths/Axe, no external requests"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "ff0f83c89eb0f1fc9c286941cdf52b17aed14a84defe7c2eed487389a04fd485"
+        }
+      ],
+      "v289-review-integrity": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "a83a4a5842779955334877132f3cbe4aa0f1fb0d3ffe636ec52cedcd2e60689b"
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "a37c88f19257499ff17686c5606b28a9116c6d1bb00b7e14cfb368efd5131eb1"
+        },
+        {
+          "engine": "webkit",
+          "version": "27.2",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ],
+          "visuallyInspected": true,
+          "imageSHA256": "37eedefe4a4bad5461a44f3eb3b80dd17fba38f34d5e5b0ec031c039abcbfa1c"
+        }
+      ]
+    },
+    "twoFillBaseEvidence": "actual production job UI_QUALITY_BASE environment and existing orchestrator; report has no base field",
+    "localProductionSupplement": false,
+    "logSHA256": "4f17044ae61c3bf4dc56070f7b1a46ac6d5c4706e93945047ea049fe94fc1a3f"
   },
   "backupBeforeMerge": {
     "version": 55,
@@ -3062,7 +3186,7 @@
     "New 2:1 EUR remains synthetic, no real private 2:1 original",
     "81 existing originals regression passed; no complete private-history/ownership/hardware claim"
   ],
-  "next": "Qualify existing automatic Main run through deployment, actual Pages/Gitblob/TLS/SW and three-engine production including native-field boundary and 2:1; only then LIVE_ACCEPTED",
+  "next": "UI-REFRESH01 #300 bounded dashboard/navigation/review presentation, then remaining UH05; 3:1 EUR deferred.",
   "mainGateArtifacts": {
     "count": 7,
     "jsonReports": 185,
@@ -3904,6 +4028,17 @@
     "conclusion": "SUCCESS"
   },
   "localAttemptNotes": [
-    "Pages verifier was initially invoked before the asynchronous archive receipt existed; no claim or network acceptance from that invocation, then dependency completed and exact Pages identity passed."
-  ]
+    "Pages verifier was initially invoked before the asynchronous archive receipt existed; no claim or network acceptance from that invocation, then dependency completed and exact Pages identity passed.",
+    "Initial finalizer expected a nonexistent two-fill aggregate base property; stopped before acceptance/write. Final checks use production job environment plus actual reports; no tests rerun."
+  ],
+  "acceptedAt": "2026-11-06T13:56:45.306797+00:00",
+  "mainConclusion": "SUCCESS",
+  "artifactQualification": {
+    "actualArchives": 8,
+    "jsonReports": 314,
+    "decodedPNGs": 3104,
+    "apiUploadLogLocalDigestMatch": true,
+    "CRC": "PASS",
+    "failureFlags": []
+  }
 }

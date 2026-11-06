@@ -1,3 +1,15 @@
+## ACTIVE – 414503ed33c6 / v290 LIVE_ACCEPTED / UI300 NEXT – 06.11.2026
+
+**v290 LIVE_ACCEPTED.** Geschützt gemergter PR307, Main `a2ffb685db3c0d64d6e68c23d892b540b56bf5c5`, Tree `bded2aa81095b59bf15628290e36c32481a76417`. Bestehender automatischer Mainlauf **42220562028, Versuch 1 vollständig SUCCESS**, einschließlich Deployment und tatsächlicher Produktionssuite. 1.243 Tests, 0 Fehler/Skips; Chromium und alle drei Browser-Shards SUCCESS. Keine manuellen Dispatches, Reruns, Duplikate oder Abbrüche.
+
+H1/H2/H3+M1/M2/M3 separat reproduziert und minimal behoben; zusätzliche native Identitätsgrenze ebenfalls negativ reproduziert. Tatsächliche Produktion in Chromium/Firefox/WebKit einschließlich 2:1 EUR, Quota/post-put/CAS/Zweittab, verschlüsseltem Backup/Fresh-Restore und Offline PASS. Sechs tatsächliche 390px-Produktionsbilder der 2:1- und Walletkonfliktkette gesichtet. Acht echte ZIPs nach API-/Uploadlog-/lokalen Digests, Größe und CRC qualifiziert: **314 JSONs ohne Fehlerflags, 3.104 PNGs dekodiert**. Pages exakt **151 Main-Gitblobs**, **152 reguläre TLS-Assetprüfungen ohne Zertifikatsausnahme**, SWv290. [Vollständiger Releasebeleg](release-evidence/v290-pr307-live-acceptance.json).
+
+**Sicherer Checkpoint: private Sicherung Version 56**, 12.382.845 Bytes, SHA256 `792169e304203498be2ede3ad0ae7739567d3ab5a31539199b3a77dddf6af8eb`; alle **2.736 Manifestdateien** am Archiv geprüft, alle **2.371 V55-Dateien bytegleich** erhalten. Einstieg `delta-414503ed33c6/v290-live-acceptance/STATE.json`. Sämtliche Originale und früheren Belege erhalten; keine neuen Browserbilder/ZIPs archiviert.
+
+Owner **414503ed33c6 allein ACTIVE**. **v289 bleibt LIVE_ACCEPTED, nicht erneut abgenommen.** 2:1 weiterhin synthetisch ohne echten privaten 2:1-Originalfall; 81 bisherige Originalgruppen regressionsgeprüft, kein Vollhistorien-/Eigentums-/Hardwareclaim. Jetzt begrenzter UI-REFRESH01-#300-Schnitt: großer Hero und vier Kacheln entfallen; kompakter Gesamtwert und belegte Periodenveränderung am Vermögensverlauf, direkter einzelner Prüfchip, fünf mobile Icon-/Textziele, schlankere Headerhierarchie. Keine neue Finanzengine. Alle übrigen UI300-Nachträge ausdrücklich offen. **3:1 EUR hinter diesen UI-Schnitt zurückgestellt**; übrige N:M-/FX-/Referenz-/Wallet-/Stakingaufträge bleiben erhalten. Alle Finanz-/Identitäts-/Journal-/CAS-/Backup-/Restore-/PWA-/EFF01-/HND01-Schutzverträge gelten weiter. GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## ACTIVE – 414503ed33c6 / v290 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 06.11.2026
 
 **v290 ist deployed, noch nicht LIVE_ACCEPTED.** Main `a2ffb685db3c0d64d6e68c23d892b540b56bf5c5`, Tree `bded2aa81095b59bf15628290e36c32481a76417`, geschützter PR307-Merge. Alleiniger Owner **414503ed33c6 ACTIVE**.
