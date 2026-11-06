@@ -1,3 +1,9 @@
+## Aktuelle Fortsetzung – 06.11.2026
+
+Maßgeblich für Main, Owner, Releasebelege und die nächste Aufgabe ist der [aktuelle zentrale Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). Der [vollständige v292-Abschluss](release-evidence/v292-pr311-live-acceptance.json) und die [anschließende begrenzte UH05-Vorarbeit](UH05_AFTER_v292_2026-11-06.md) sind dort verlinkt. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) gilt; ältere Release-/Ownerangaben unten sind historische Stände, keine aktuelle Schreibzuständigkeit. Alle bisherigen offenen Aufträge bleiben erhalten.
+
+---
+
 ## v275 LIVE_ACCEPTED / UH03 fortgesetzt – 03.11.2026
 
 **v275 LIVE_ACCEPTED**, Main `4def94b43008b8b36c243e586696d0a152010d32`, SWv275/v5. PR289 nach unabhängigem Review und vollständigen PR-/Main-/Produktionsgates veröffentlicht; [verbindliche Live-Abnahme](release-evidence/v275-pr289-live-acceptance.json), [regulärer TLS-Assetabgleich141/141](release-evidence/v275-regular-https-assets.json). v274 war bereits akzeptiert und wurde nicht erneut abgenommen.

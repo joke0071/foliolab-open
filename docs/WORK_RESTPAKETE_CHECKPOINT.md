@@ -1,3 +1,12 @@
+## ACTIVE – 0bfa85b5b416 / v292 LIVE_ACCEPTED / UH05-Vorarbeit gesichert / HND01 wird vorbereitet – 06.11.2026
+
+- **v292 LIVE_ACCEPTED**, Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Mainlauf42288193893 Versuch1/Live128146022885 vollständig SUCCESS und qualifiziert. [Abschluss](release-evidence/v292-pr311-live-acceptance.json):8ZIPs/335JSON/3176dekodiertePNGs,151PagesGitblobs/TLS152/alle3Produktionsengines/3:1 vollständig. v291undv292nicht erneutabnehmen.
+- Anschließend UH05 reinlesend fortgeführt: [26 synthetische Grenzfälle](UH05_AFTER_v292_2026-11-06.md),8bestehende3:1V3-Angebote/18korrektgesperrteMehrcash-/4:1-/FX-/Konfliktfälle inbeidenDokumentreihenfolgen PASS;144JavaScript-/Fixturedateien exaktMainGitblobs, alleEingangsquellen bytegleich. HistorischeRepros/Decimaloracles/81Originalgruppen erhalten. **Keine neueProduktimplementierung/keinProduktbranch/PR/CI**, keineModell-/IDB-Buchung; keinezusätzlicheN:M-/FX-Freigabe.
+- NächsterFachschnitt: vollständigbelegteCashrollen/historischeReferenzzusammenhänge imbestehendenImportkern auswählen; keinblindesAufsummieren, keineunbelegtenKosten/Anfangsbestände, fehlendeLedger-Live-/StakinganzeigeUNKNOWN stattNull. Exporterprovenienz12/10gegen13/8 weiteroffen, nicht ausSchema herleiten.
+- UI300sämtlicheNachträge,QUALITY298einschließlichungeklärterfrühererStarttimeouts,CI229,Android,Wallet-Historie,sichereBuchungsverwaltung undalleSchutzverträge bleiben erhalten. LetztebestätigteSicherungV71/4627Manifestdateien; vollständigeAbschlusssicherungundHND01-Abgabe werdenjetztvorbereitet. **Owner0bfa85b5b416nochACTIVE**, keineAbgabevorabschließenderSicherung. KeinProdukt-WIP außerhalbGit. CheckpointbranchniemalsnachMain.
+
+---
+
 ## v292 – LIVE_ACCEPTED / Owner0bfa85b5b416 ACTIVE – 06.11.2026
 
 **Dieser vollständig belegte Abschluss übersteuert alle älteren DEPLOYED-/PENDING-/FAIL-Zeilen darunter.** Main **`2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`**, Tree **`129c9cac1391f7a306087395c6fc42a01e8d0d4b`**, SW **`foliolab-open-v292`**. [Vollständiger Abschlussbeleg](release-evidence/v292-pr311-live-acceptance.json).
