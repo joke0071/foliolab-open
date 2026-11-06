@@ -1,0 +1,196 @@
+{
+  "status": "v292 DEPLOYED / LIVE_ACCEPTANCE_PENDING / PR310 CI_REPAIR_PENDING",
+  "owner": "e8b533803735",
+  "main": "9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+  "mainTree": "e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e",
+  "pr309": {
+    "merged": true,
+    "integrationRun": 42255819752,
+    "qualified": true,
+    "unitTests": 1252,
+    "failures": 0,
+    "skips": 0
+  },
+  "mainRun": 42259048695,
+  "baseMainGatesAndDeploy": "SUCCESS/qualified",
+  "firstLiveAttempt": {
+    "job": 128049757017,
+    "result": "FAIL",
+    "reason": "initial navigation timeout",
+    "exactCause": "unknown",
+    "receipt": {
+      "id": 13526850428,
+      "name": "production-live-acceptance-9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+      "attempt": 1,
+      "bytes": 306772,
+      "sha256": "b9480ea3e8ca51c771d00861d679a365ba9302361f9b504ca5460c8ea5384c1f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 9,
+      "jsonReports": 1,
+      "pngsDecoded": 6,
+      "acceptanceResult": "FAIL",
+      "failure": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator('#mobileNav [data-page=\"more\"]')\n",
+      "originalRetained": true
+    }
+  },
+  "secondLiveAttempt": {
+    "job": 128054318221,
+    "result": "AUTOMATIC_JOB_TIMEOUT",
+    "minutes": 35,
+    "operatorCancelled": false,
+    "chromiumProductionStep": "SUCCESS",
+    "receipt": {
+      "id": 13528523579,
+      "name": "production-live-acceptance-9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+      "bytes": 111915871,
+      "sha256": "678555983c2bdddb4e9d17ef532865f635bc91696a3529dd9a4697eb9d0ffcec",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1257,
+      "jsonReports": 114,
+      "pngsDecoded": 1107,
+      "failureFlags": [],
+      "acceptanceResult": "PARTIAL_TIMEOUT",
+      "job": 128054318221,
+      "attempt": 2,
+      "automaticAggregateTimeoutMinutes": 35,
+      "operatorCancelled": false
+    }
+  },
+  "productionThreeFill": [
+    {
+      "engine": "chromium",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "dialect": "depot13/account8",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "dialect": "depot13/account8",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "dialect": "depot13/account8",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "three executions and one cash document, both file orders",
+        "ten independent Decimal cases compared to actual canonical IDB records; one UI CAS revision, four members/nine postings/one cash; unknown costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "five widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "productionVisualReview": "All six engine/dialect screenshots inspected",
+  "ordinaryTLS": "151 assets plus root index exact Git bytes",
+  "fullLiveAcceptance": false,
+  "incomplete": [
+    "Rest of Firefox/WebKit UI quality including final primary suite",
+    "Following Firefox/WebKit recovery/finance/transfer suites",
+    "Final visual exposure/completion"
+  ],
+  "budgetRepair": {
+    "pr": 310,
+    "branch": "fix/v292-live-job-budget-e8b533803735",
+    "head": "5869e6fabf39abb90dc5fe566aa0b0922da54251",
+    "tree": "4655eaee42ca5f04d2dfd3ac144cc545745f76dd",
+    "base": "9bf59ae6559bc7199c343acb155b8c50b8b2110b",
+    "files": [
+      ".github/workflows/import.yml",
+      "tests/ci-stage-workflow.test.mjs"
+    ],
+    "aggregateJobBudgetMinutes": {
+      "before": 35,
+      "after": 55
+    },
+    "allSealedCommandHashesPreserved": true,
+    "perSuiteTimeoutsAndAssertionsUnchanged": true,
+    "shippedAppAssetsUnchanged": true,
+    "baselineContractTests": {
+      "passCount": 24,
+      "failures": 0,
+      "skips": 0
+    },
+    "candidateContractTests": {
+      "passCount": 24,
+      "failures": 0,
+      "skips": 0
+    },
+    "newIntegrationRun": 42271163151,
+    "newWalletRun": 42271163392,
+    "status": "FROZEN / IN_PROGRESS"
+  },
+  "next": "Qualify existing PR310 CI; expected-head controlled merge only after all required gates; then qualify new automatic main/deploy/55-minute live run fully. Do not rerun old 35-minute job or accept from partial reports.",
+  "cancellations": "No manual action cancellation. GitHub automatically cancelled live attempt2 at its unchanged 35-minute job limit.",
+  "lastAcceptedVersion": "v291; do not reaccept",
+  "otherOrders": "All remaining orders and protections preserved"
+}
