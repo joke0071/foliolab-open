@@ -1,3 +1,15 @@
+## ACTIVE – b1b383f4f228 / PR309 eingefroren / v292 INTEGRATION_PENDING – 06.11.2026
+
+[PR309](https://github.com/joke0071/foliolab-open/pull/309), Head `2f9a6b6505f58c14cdf9a14b22fc147ca68c88b2`, Tree `e3c68645e0f92160bb1b3b0fc9ab125d02fbfe8e`, exakt13gezielteDateien auf Main `6b020461aec68b6281dbc00e32c953dc6cec14cb`; kein Checkpointbranch-Anteil. Genau3:1EUR mit Version3, vollständigen vierMitgliedern/neunPostings/Einmalcash; V2-Belege/IDs unverändert. [Implementierungsnachweis](https://github.com/joke0071/foliolab-open/blob/feature/uh05-three-fill-eur-b1b383f4f228/docs/UH05_THREE_FILL_IMPLEMENTATION_2026-11-06.md).
+
+Lokal1252Tests/0Fehler/0Skips+SyntaxPASS,40unabhängigeDecimalkombinationen,81OriginalgruppenPASS, alterv291-Reader weistV3 zurück. Tatsächliche gemeinsameUI/IDB/CAS/Quota/post-put/Zweittab/Undo/Wiederimport/verschlüsseltesv5FreshRestore/Offline/Axe inChromium/Firefox/WebKit je beidenDialektenPASS; je10Sollfälle zusätzlich gegen kanonischeIDB-Bytes. Alle neuen3:1Fälle synthetisch; kein privater3:1Original-/Vollhistorien-/Hardwareclaim.
+
+**Vorhandene automatische Integrationsläufe42255819752 undWallet42255819811, jeweilsVersuch1, IN_PROGRESS.** Kandidat eingefroren; keine weiteren Produktpushes/keine CI-Duplikate/Abbrüche. NächsterSchritt: bestehendePflicht-CI samt tatsächlichenBerichten/Bildern qualifizieren, dann kontrollierterMerge/Main/Deployment/tatsächlicheProduktion. **v292 nicht gemergt/deployed/LIVE_ACCEPTED. v291 bleibt LIVE_ACCEPTED und wird nicht erneut abgenommen.**
+
+PrivateSicherung **Version63**:16.516.445Bytes/SHA256 `dbd67ed67ad2887e78b2461988c9ab4984d9c105f02c6fa35bcfc5050e184689`, alle3827Manifestdateien amArchiv geprüft, alle3797V62-Dateien bytegleich. StabileID `libfile_42e6c0236610819189e0ba522c74ecfd`; aktuellerName `FolioLab_private_continuation_next.tar.gz`. Einstieg `delta-b1b383f4f228/three-fill-candidate/STATE.json`, exakte13Kandidatenquellen/Oracles/Logs; keine neuen Browserbilder/ZIPs archiviert. Alle übrigenProduktaufträge/Schutzverträge/EFF01/HND01 erhalten; alleinigerOwnerb1b383f4f228 ACTIVE.
+
+---
+
 ## ACTIVE – b1b383f4f228 / HND01 übernommen / 3:1 EUR Implementierung – 06.11.2026
 
 Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach bestätigter STOPPED/HANDOVER_READY-Abgabe von82ce3d0130ba übernommen. Frische zweimalige Refprüfung unverändert; Main `6b020461aec68b6281dbc00e32c953dc6cec14cb`, Tree `6cc86610f633d4e93665d7f53c40282144c9df28`; nur historische Drafts157/161, keine laufenden Actions oder konkurrierende Schreibaktivität erkennbar. GitHubbefund ist kein technischer Chatstillstandsbeweis. PrivateV62:16.254.265Bytes/SHA256 `d66d6f11ad6d4aa4683e4d7f2773ba1d9f5bae99dfca6080d00ed310d14f4bbd`, alle3797Manifestdateien und205Main-Gitblobs geprüft. Kein Produkt-WIP übernommen.
