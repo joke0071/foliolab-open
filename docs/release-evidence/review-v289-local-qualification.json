@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_QUALIFIED / NOT_INTEGRATED",
+  "status": "LOCAL_CORE_QUALIFIED / WEBKIT_CI_REQUIRED / NOT_INTEGRATED",
   "owner": "414503ed33c6",
   "base": "652e80bcb31aec13c85a0457332bdf53cf98a521",
   "baseTree": "ee506c874fa9578f1daf3387da24b299bba5103e",
@@ -44,19 +44,18 @@
     "result": "REPRODUCED"
   },
   "units": {
-    "fullSuite": 1241,
-    "pass": 1241,
+    "fullSuite": 1243,
+    "pass": 1243,
     "fail": 0,
     "skip": 0,
     "concurrency": 2,
-    "additionalMandatoryGate": 1,
-    "initialResourceFailuresRetained": true,
-    "resourceRecoveryChangedAssertionsOrTimeouts": false
+    "includesMandatoryOrchestrationTest": true,
+    "source": "review-h3-native-full-units.log"
   },
   "syntax": "PASS",
   "browser": {
     "base": "http://127.0.0.1:4185/",
-    "scope": "Synthetic H1/H2/H3/M1/M2/M3; no original or hardware acceptance",
+    "scope": "Initial local chain for the six original review findings; the additional native-field boundary has separate current qualification below",
     "engines": [
       {
         "engine": "chromium",
@@ -1111,7 +1110,7 @@
     "result": "PASS",
     "errors": []
   },
-  "localCoreProbeScope": "HTTP candidate diagnostic, not actual production acceptance; real release remains pending",
+  "localCoreProbeScope": "Initial candidate HTTP diagnostic before the additional native-field boundary fix, not actual production or final-candidate acceptance",
   "legacyBindingRegression": {
     "engines": [
       "chromium",
@@ -1153,5 +1152,98 @@
       "controlled3000": "PASS"
     },
     "benchmarkCorrection": "Distinct synthetic EVM addresses preserve fixture position kinds, counts, quantities and booked values"
+  },
+  "initialUnits": {
+    "fullSuite": 1241,
+    "pass": 1241,
+    "fail": 0,
+    "skip": 0,
+    "concurrency": 2,
+    "additionalMandatoryGate": 1,
+    "initialResourceFailuresRetained": true,
+    "resourceRecoveryChangedAssertionsOrTimeouts": false
+  },
+  "nativeIdentityBoundary": {
+    "negative": {
+      "result": "REPRODUCED",
+      "finding": "H3 unused native metadata bypass",
+      "sourceHead": "f761a8ccaf4fde0d5cc63e211fde2a76bc51c212",
+      "walletKeyGitBlob": "18df72e535d175a44218c7fe4eb700359c0657b9",
+      "scope": "Fully synthetic; fixed pre-correction product bytes, no original or release acceptance",
+      "expectedSingleHoldingEUR": "100",
+      "actualTotalEUR": "200",
+      "countedWallets": 2,
+      "detectedGroups": 0
+    },
+    "correction": "Holding identity includes contract only for the token/validator/stake balance readers that actually use it; native readers ignore irrelevant metadata. Stored wallet fields, histories, IDs and journals are not rewritten.",
+    "desiredSafetyTestBefore": "FAIL: missing expected exception on fixed pre-correction candidate",
+    "reviewTestsAfter": {
+      "pass": 16,
+      "fail": 0,
+      "skip": 0
+    },
+    "localBrowser": {
+      "engines": [
+        {
+          "engine": "chromium",
+          "version": "141.0.7390.37",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ]
+        },
+        {
+          "engine": "firefox",
+          "version": "157.0",
+          "result": "PASS",
+          "checks": [
+            "H1 changed local account/real upload/forced submit exact no mutation",
+            "H2 global refresh after cash booking/one CAS/exact journal",
+            "quota/post-put abort keep bytes and revision",
+            "dated opening protected",
+            "real competing tab wins at canonical CAS boundary",
+            "H3 real wallet discovery under second account rejected",
+            "H3 unused native contract field blocked before canonical IDB commit",
+            "five widths/Axe and actual error screenshot",
+            "M2 undated price remains partial",
+            "M3 tampered date rejected without writes",
+            "encrypted fresh-profile UI restore and offline reload",
+            "deterministic provider fetch fixture; no live provider calls"
+          ]
+        }
+      ],
+      "webkit": "NOT_RUN: execution host lacks libgstreamer-1.0.so.0; mandatory regular WebKit CI must qualify final source before merge"
+    },
+    "originalRegressionAfter": {
+      "status": "ORIGINAL_NATIVE_BUY_SELL_BATCH_PASS",
+      "groups": 81,
+      "buys": 69,
+      "sells": 12,
+      "independentCSVDecimalOracle": true,
+      "exactNetCash": true,
+      "originalAssetPostingsUnchanged": true,
+      "fullOldAuditPreserved": true,
+      "unknownCosts": true,
+      "noExternalFlows": true,
+      "v5Restore": true,
+      "replayAndWithdrawal": true,
+      "controlledOpening": true,
+      "completePrivateHistoryClaimed": false,
+      "setup": "controlled dated original openings + existing native parser/CSV core; no native bootstrap UI claim",
+      "productReleased": false
+    },
+    "syntaxAfter": "PASS",
+    "scope": "Same-address/native-field boundary; no claim of complete wallet ownership, HD alias, liquid-staking or private-history coverage"
   }
 }

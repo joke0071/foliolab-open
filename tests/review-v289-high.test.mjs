@@ -71,6 +71,23 @@ test('H3: one concrete EVM wallet cannot be counted again under another local ac
  assert.equal(JSON.stringify(m),before);
 });
 
+test('H3: unused native contract fields cannot manufacture another economic wallet identity',()=>{
+ const {m,wallet}=walletFixture(),before=JSON.stringify(m);
+ assert.throws(()=>createPosition({...wallet,id:'native-field-bypass',accountId:'b',wallet:{...wallet.wallet,contract:'unused-native-field'}},m),/bereits/);
+ assert.equal(JSON.stringify(m),before);
+ for(const chain of ['evm','btc','btc-hd','sol','cosmos','hedera','near','near-locked','xrp']){
+  const native={...wallet.wallet,chain};
+  assert.equal(walletHoldingKey(native),walletHoldingKey({...native,contract:'unused-native-field'}),chain);
+ }
+ executeTransaction(m,{id:'native-field-cash-in',date:'1999-01-02',type:'deposit',positionId:'cash',quantity:1});
+ const legacy={...structuredClone(wallet),id:'legacy-native-field',accountId:'b',wallet:{...wallet.wallet,contract:'unused-native-field'}};
+ m.positions.push(legacy);const restored=safeImport(JSON.parse(backup(m)));
+ const holdings=positions=>positions.map(({id,providerId,accountId,wallet,quantityExact,costBasisExact,realizedPnLExact})=>({id,providerId,accountId,wallet,quantityExact,costBasisExact,realizedPnLExact}));
+ assert.deepEqual(holdings(restored.positions),holdings(m.positions));
+ assert.deepEqual(restored.bookings,m.bookings);assert.deepEqual(restored.journalEntries,m.journalEntries);assert.deepEqual(restored.openingPositions,m.openingPositions);
+ assert.deepEqual(duplicateWalletHoldings(restored).map(g=>g.map(p=>p.id)),[['wallet','legacy-native-field']]);
+});
+
 test('H3: existing duplicates survive restore as separate histories and are exposed for review',()=>{
  const {m,wallet}=walletFixture();executeTransaction(m,{id:'cash-in',date:'1999-01-02',type:'deposit',positionId:'cash',quantity:1});
  m.positions.push({...structuredClone(wallet),id:'legacy-duplicate',accountId:'b'});

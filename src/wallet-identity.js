@@ -5,8 +5,11 @@ export function normalizeWalletIdentifier(value,chain){
 }
 export function walletHoldingKey(wallet){
  if(!wallet?.enabled)return null;
+ // Match the actual balance readers: native balances ignore contract metadata.
+ // Token and validator/stake readers use that field as a concrete identifier.
+ const contract=['erc20','spl','sol-stake','sonic-stake','cosmos-stake','cosmos-unbonding','xrp-token'].includes(wallet.chain)?wallet.contract:'';
  return JSON.stringify([wallet.chain,['evm','erc20'].includes(wallet.chain)?Number(wallet.chainId||1):null,
-  normalizeWalletIdentifier(wallet.address,wallet.chain),normalizeWalletIdentifier(wallet.contract,wallet.chain)]);
+  normalizeWalletIdentifier(wallet.address,wallet.chain),normalizeWalletIdentifier(contract,wallet.chain)]);
 }
 export function assertWalletHoldingAvailable(model,candidate){
  const key=walletHoldingKey(candidate.wallet);if(!key)return;
