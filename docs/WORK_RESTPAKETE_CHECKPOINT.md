@@ -1,3 +1,14 @@
+## ACTIVE – 0bfa85b5b416 / PR311 INTEGRATION_PENDING – 06.11.2026
+
+- Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. v292 deployed, **nicht LIVE_ACCEPTED**; letzte akzeptierte Version v291 nicht erneut prüfen.
+- Einziger Kandidat PR311 / `test/v292-live-startup-evidence-0bfa85b5b416` / Head `98ebf55448d1c4059c0817d6afdaad5a369f1390`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Genau vier Testdateien, nur Fehlerdiagnostik. Alle bisherigen Assertions, Einzelfristen, Commands, Engines und Appassets unverändert.
+- Bestehende automatische Integration **42284292735 Versuch1**, Wallet **42284292730**; Kandidat bleibt eingefroren. [Lokaler Beleg](release-evidence/v292-pr311-startup-evidence-candidate.json):32 Tests und kontrollierte Browsernegative PASS; originaler und instrumentierter vollständiger HTTPS-Kerntest je6Gruppen/18Axe/152Assets PASS. Keine CI-Ursache daraus abgeleitet.
+- Blocker: wiederholter erster Navigationstimeout im Livejob128111377213; ursprüngliche FAIL-Belege erhalten. Kein Retry/Rerun ausgelöst. Ursache UNKNOWN; keine Folgeimplementierung.
+- **Sicherung Version69 bestätigt:**20.521.983Bytes/SHA256 `35f2a6dd664228ec45c3f937d11e5d459f1a79e313ba296c766d5e0ddde677b0`, alle4207Manifestdateien amArchiv geprüft; alle3968V68-Dateien und sämtliche Originale erhalten. Einstieg `delta-0bfa85b5b416/v292-startup-evidence-pr311/STATE.json`. Keine neuen Browserbilder/ZIPs archiviert.
+- Nächster Schritt: bestehenden PR311-Lauf vollständig qualifizieren; erst danach frischer Head/Base/Tree/Reviews/OwnerGuard und kontrollierter Merge. Automatischen Mainlauf und tatsächliche vollständige Produktion qualifizieren; bei erneutem Fehler konkrete neue Startdiagnostik auswerten. Keine CI duplizieren/abbrechen, alle EFF01/HND01-/Finanz-/Datenverträge und übrigen Aufträge erhalten. Checkpointbranch niemals nach Main.
+
+---
+
 ## ACTIVE – 0bfa85b5b416 / PR311 eingefroren / v292 LIVE_FAILED, NICHT LIVE_ACCEPTED – 06.11.2026
 
 Main `33995738aefd440f5d9ac573b260be4b9d5eadbe`, Tree `4655eaee42ca5f04d2dfd3ac144cc545745f76dd`. PR310gemergt, volleIntegration/Main/Deployment/Pages151Gitblobs/TLS151Assets+Root/SWv292 qualifiziert; ursprünglicherLivejob128111377213 nach152HTTPSAssethashes erneutam erstenNav30s gescheitert. KeineFinanzabnahme/keinGesamtbudgettimeout/keinRetry. [Originalfehler](release-evidence/v292-pr310-live-failure.json).
