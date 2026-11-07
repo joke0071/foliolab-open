@@ -1,3 +1,13 @@
+## ACTIVE – 14118750c7bb / ausdrückliche Ausnahmefreigabe PR314 / v294 Integration · 07.11.2026
+
+Der Nutzer hat auf die konkrete Frage nach dem Merge von PR314 trotz ungeklärter historischer Alpha-IDB-Ursache ausdrücklich mit **„Ja“** geantwortet. Diese neue Ausnahmefreigabe erlaubt die Integration des unveränderten Diagnosekandidaten und die anschließende vollständige reguläre Releaseprüfung. Sie ist kein Ursachenbeweis, keine bestätigte Reparatur und kein LIVE_ACCEPTED. Die frühere Entscheidungssperre ist für genau diesen Kandidaten aufgehoben; alle Pflichtgates bleiben unverändert.
+
+Frisch geprüft: Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71, PR314 OPEN/mergeable clean, HEADcfcbeaf43d9751895e6bddd77011d9cef0b855b2/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2, Elternbasis exakt Main. Reviews/Threads/Conversation leer, Owner unverändert14118750c7bb, keine konkurrierende Aktivität. Private Sicherung V85 aktuell. Vorhandene Integration42383067257 und Wallet42383067236 unverändert SUCCESS; keine CI duplizieren oder abbrechen.
+
+Jetzt expectedHEAD-gebundener Merge ausschließlich von PR314. Danach automatisch entstandenen Mainlauf vollständig einschließlich Pages/Deployment/TLS/Assets/SWv294 und tatsächlicher Chromium-/Firefox-/WebKit-Produktion qualifizieren. Frühe/späte Finanzierung und sämtliche Finanz-/CAS-/Quota-/Undo-/Replay-/Offline-/Restorepflichten erhalten. Bis dahin v294 NICHT LIVE_ACCEPTED. v293 nicht erneut abnehmen, historische Ursache bleibt UNKNOWN. Alle Originale, UH05, UI300 mit zehn Nachträgen und übrige Hauptaufträge/Schutzverträge erhalten. Checkpointbranch niemals vollständig nach Main.
+
+---
+
 ## WAITING_FOR_USER_DECISION – 14118750c7bb / v294 Ursache UNKNOWN / sichere FortsetzungV85 · 07.11.2026
 
 AlleinigeHND01-Übernahme dokumentiert; Owner14118750c7bb bleibt zuständig, keine STOPPED-/Parallelfreigabe. [Vollständiger sicherer Fortsetzungspunkt](CONTINUATION_14118750c7bb_2026-11-07.md). Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71 und PR314-HEADcfcbeaf43d9751895e6bddd77011d9cef0b855b2 unverändert. PR314 OPEN/FROZEN/UNMERGED. Main42378307203FAILURE; vorhandeneIntegration42383067257/Wallet42383067236SUCCESS unverändert. KeineCIwiederholt/dupliziert/abgebrochen; frisch0laufende/queuedActions. v293nicht erneutabgenommen; **v294 NICHT DEPLOYED/LIVE_ACCEPTED.**
