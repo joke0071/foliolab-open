@@ -1,0 +1,174 @@
+{
+  "result": "PASS",
+  "source": "Python Decimal, no product imports or private originals",
+  "cases": [
+    {
+      "name": "before-zero",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "fundingDate": "1999-01-01",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-01",
+          "balanceExact": "21.75"
+        },
+        {
+          "date": "1999-01-02",
+          "balanceExact": "0"
+        }
+      ],
+      "closing": "0",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "before-existing-cash",
+      "opening": "7",
+      "quantity": "3",
+      "price": "10",
+      "cash": "-29.9",
+      "funding": "29.9",
+      "fundingDate": "1999-01-01",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-01",
+          "balanceExact": "36.9"
+        },
+        {
+          "date": "1999-01-02",
+          "balanceExact": "7"
+        }
+      ],
+      "closing": "7",
+      "gross": "30",
+      "difference": "0.1",
+      "externalFlow": "29.9",
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "before-exact-18",
+      "opening": "0",
+      "quantity": "0.000000000000000003",
+      "price": "7",
+      "cash": "-0.000000000000000023",
+      "funding": "0.000000000000000023",
+      "fundingDate": "1999-01-01",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-01",
+          "balanceExact": "0.000000000000000023"
+        },
+        {
+          "date": "1999-01-02",
+          "balanceExact": "0"
+        }
+      ],
+      "closing": "0",
+      "gross": "0.000000000000000021",
+      "difference": "-0.000000000000000002",
+      "externalFlow": "0.000000000000000023",
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "same-zero",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "fundingDate": "1999-01-02",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "balanceExact": "21.75"
+        },
+        {
+          "date": "1999-01-02",
+          "balanceExact": "0"
+        }
+      ],
+      "closing": "0",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "after-zero-blocked",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "fundingDate": "1999-01-03",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": false,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "balanceExact": "-21.75"
+        },
+        {
+          "date": "1999-01-03",
+          "balanceExact": "0"
+        }
+      ],
+      "closing": "0",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "after-enough-cash",
+      "opening": "21.75",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "fundingDate": "1999-01-03",
+      "tradeDate": "1999-01-02",
+      "valueDate": "1999-01-04",
+      "openingDate": "1998-12-31",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "balanceExact": "0"
+        },
+        {
+          "date": "1999-01-03",
+          "balanceExact": "21.75"
+        }
+      ],
+      "closing": "21.75",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "profitFromFunding": "0"
+    }
+  ]
+}
