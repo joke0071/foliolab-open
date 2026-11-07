@@ -1,0 +1,17 @@
+{
+  "recordedDate": "2026-11-07",
+  "owner": "14118750c7bb",
+  "question": "Gibst du ausnahmsweise den Merge von PR314 trotz ungeklärter Ursache frei? Die vollständige Main- und Produktionsabnahme bleibt anschließend Pflicht.",
+  "actualUserAnswer": "Ja",
+  "scope": "Explicit exception for unchanged PR314 integration despite UNKNOWN original cause, followed by unchanged mandatory main/deployment/production qualification.",
+  "originalCause": "UNKNOWN; not a proven repair",
+  "PR": 314,
+  "expectedHead": "cfcbeaf43d9751895e6bddd77011d9cef0b855b2",
+  "qualifiedTree": "c1e1bd3290ecf687bf6c6aaac742ea9489529ee2",
+  "mainBefore": "43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+  "actualMerge": "13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0",
+  "automaticRun": 42398484107,
+  "attempt": 1,
+  "noCIRetryCancelDuplicate": true,
+  "status": "MERGED / MAIN_RELEASE_PENDING; NOT LIVE_ACCEPTED"
+}
