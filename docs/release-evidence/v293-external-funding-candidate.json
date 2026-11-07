@@ -1,0 +1,38 @@
+{
+  "status": "CANDIDATE_NOT_LIVE_ACCEPTED",
+  "owner": "0a8644a36676",
+  "baseMain": "2ca2e03ca1ba203f587f79444fdb43fc4ea62b36",
+  "baseTree": "129c9cac1391f7a306087395c6fc42a01e8d0d4b",
+  "baseRelease": "v292 LIVE_ACCEPTED, not reaccepted",
+  "scope": "one V1 EUR purchase, separate native order debit, individually confirmed external funding credit",
+  "chronology": "original booking dates, distinct retained value dates; same-day credit first; independently evidenced dated opening before purchase; earlier negative cash blocked",
+  "financialEngine": "existing CSV/transaction journal and canonical CAS",
+  "nativeIdentityKeysAndSettlementVersionsUnchanged": true,
+  "privateOriginalQualification": {
+    "result": "PASS",
+    "groups": 4,
+    "sourceRows": 12,
+    "documentOrders": 2,
+    "exactDecimalComparisonsPerOrder": 20,
+    "bookings": 8,
+    "externalFlows": 4,
+    "cashNetZero": true,
+    "repeatDuplicates": 8,
+    "zeroOpeningBlocked": true,
+    "sourceNonmutation": true,
+    "opening": "controlled synthetic test only, not actual user opening evidence",
+    "actualUserPortfolioImportAccepted": false,
+    "privateDataPublished": false
+  },
+  "oldReaderProbe": {
+    "reader": "actual exact v292 source reconstructed from verified Git blobs",
+    "newPersistedContractRejected": true,
+    "ordinaryOldDataReadable": true,
+    "result": "PASS"
+  },
+  "independentOracle": "uh05-funding-decimal-oracle-2026-11-07.json",
+  "targetedTests": 19,
+  "regularThreeEngineCI": "required after candidate freeze",
+  "productionAcceptance": "required after deployment",
+  "noHardwareOrUserPortfolioClaim": true
+}

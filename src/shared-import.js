@@ -66,7 +66,7 @@ export function previewSharedImport(model,sources,choices,{at=new Date().toISOSt
  }
  if(sources.flatex.length){
   const c=choices.flatex;if(!c?.confirmed||!['append','backfill','net','net-backfill','net-augment','net-reconcile','net-funding'].includes(c.options?.mode))throw Error('Flatex: Zuordnung und Importmodus prüfen.');
-  const inspection=inspectFlatexFundingGroups(sources.flatex.map(f=>f.document)),funded=c.options.mode==='net-funding'?inspection.fundingGroups.filter(f=>c.options.selectedIds?.includes(f.settlement.id)).length:0,excluded=c.options.mode.startsWith('net')?Math.max(0,inspection.reviewCount-funded)+inspection.pairs.filter(p=>!c.options.selectedIds?.includes(p.id)).length:0;
+  const inspection=(c.options.mode==='net-funding'?inspectFlatexFundingGroups:inspectFlatexNetPairs)(sources.flatex.map(f=>f.document)),funded=c.options.mode==='net-funding'?inspection.fundingGroups.filter(f=>c.options.selectedIds?.includes(f.settlement.id)).length:0,excluded=c.options.mode.startsWith('net')?Math.max(0,inspection.reviewCount-funded)+inspection.pairs.filter(p=>!c.options.selectedIds?.includes(p.id)).length:0;
   if(excluded&&!c.partialConfirmed)throw Error('Flatex: ungeklärte und nicht ausgewählte Restgruppen ausdrücklich offen lassen.');
   const p=prepareNativeFlatexPreview(draft,sources.flatex.map(f=>f.document),c.assignments,c.options);
   if(!p.eligible)throw Error('Flatex: '+p.reason);

@@ -566,18 +566,19 @@ export function validateFlatexFundingProof(proof){
 }
 /** Documentary offers never infer account ownership or approve any role. */
 export function inspectFlatexFundingGroups(documents){
- const inspection=inspectFlatexNetPairs(documents),sources=new Map();
+ const inspection=inspectFlatexNetPairs(documents),sources=new Map(),byLine=documents.map(d=>new Map(d.rows.map(r=>[r.line,r])));
  for(const r of inspection.identities.rows){
   if(r.sourceType!=='account'||!r.sourceId||!r.externalId)continue;
-  const doc=documents[r.sourceIndex],row=doc.rows.find(x=>x.line===r.line),key=sourceKey(r);
+  const doc=documents[r.sourceIndex],row=byLine[r.sourceIndex].get(r.line),key=sourceKey(r);
   const previous=sources.get(key);
   const occurrence={documentDigest:sourceDigest(JSON.stringify([doc.type,doc.rows.map(x=>x.fields)])),line:row.line,fields:[...row.fields]};
   if(previous){if(previous.payloadDigest!==r.payloadDigest||r.status==='conflict')previous.conflict=true;if(!previous.occurrences.some(o=>o.documentDigest===occurrence.documentDigest&&o.line===occurrence.line))previous.occurrences.push(occurrence);}
   else sources.set(key,{type:'account',...(doc.dialect?{dialect:doc.dialect,sourceContext:{...doc.sourceContext}}:{}),sourceId:r.sourceId,externalId:r.externalId,payloadDigest:r.payloadDigest,fields:[...row.fields],occurrences:[occurrence],...(r.status==='conflict'?{conflict:true}:{})});
  }
- const groups=[];
+ const groups=[],byReference=new Map();
+ for(const s of sources.values()){const ref=fundingReference(documentFor('account',s.fields,s).rows[0]);if(!ref)continue;const key=JSON.stringify([ref[1].toUpperCase(),ref[2]]),list=byReference.get(key)||[];list.push(s);byReference.set(key,list);}
  for(const pair of inspection.pairs.filter(p=>p.version===1&&p.type==='buy')){
-  const candidates=[...sources.values()].filter(s=>{const row=documentFor('account',s.fields,s).rows[0],ref=fundingReference(row);return ref&&ref[1].toUpperCase()===pair.isin&&ref[2]===pair.orderReference;});
+  const candidates=byReference.get(JSON.stringify([pair.isin,pair.orderReference]))||[];
   if(candidates.length!==1||candidates[0].conflict)continue;
   try{const proof=fundingProof(pair,candidates[0]);validateFlatexFundingProof(proof);groups.push(proof);}catch{}
  }
@@ -609,6 +610,7 @@ function validateFlatexFunding(model){
   const trade=members.find(b=>b.netFundingMember==='trade'),credit=members.find(b=>b.netFundingMember==='funding'),f=trade?.netFunding;
   if(!trade||!credit||!equal(f,credit.netFunding)||!equal(trade.netSettlement,f.settlement)||trade.netAugmentation?.version!==3||trade.netAugmentation.fundingId!==f.id||credit.netSettlement!==undefined||credit.netAugmentation!==undefined||credit.netMember!==undefined||credit.netReconciliation!==undefined)fail();
   const cash=model.positions.find(p=>p.id===trade.cashPositionId),j=model.journalEntries.find(j=>j.id===credit.journalEntryId);
+  for(const id of [trade.positionId,trade.cashPositionId]){const o=model.openingPositions.find(o=>o.positionId===id);if(!o||!validCalendarDate(o.asOf)||o.asOf>=f.settlement.date)fail();}
   if(!cash||credit.positionId!==cash.id||credit.accountId!==cash.accountId||credit.type!=='deposit'||credit.date!==f.date||credit.external!==true||credit.transferMatch||credit.targetPositionId||credit.cashPositionId||credit.costsVerified!==undefined||credit.quantityExact!==f.cashExact||credit.quantity!==Number(f.cashExact)||credit.amountExactEUR!==f.cashExact||credit.amountEUR!==Number(f.cashExact)||credit.unitPrice!==1||credit.fxRate!==1||credit.feeEUR!==0||credit.taxEUR!==0||credit.reconciliationStatus!=='recorded')fail();
   validateImportSource(credit.importSource,credit.accountId);validateJournalEntry(j);
   if(!sourceUnmodified(model,credit)||credit.importSource.sourceId!==f.funding.sourceId||credit.importSource.externalId!==f.funding.externalId||j.source!=='csv'||j.date!==f.date||j.type!=='deposit'||j.cashPositionId||j.status!=='recorded'||j.postings.length!==2)fail();
@@ -659,8 +661,8 @@ export function prepareFlatexFundingPreview(model,documents,assignments,{selecte
     if(!equal(normalized,merged))fail();f=merged;
     for(const b of draft.bookings.filter(b=>b.netFunding?.id===f.id)){b.netFunding=structuredClone(f);if(b.netSettlement)b.netSettlement=structuredClone(f.settlement);b.importSource.ownedSnapshot=bookingOwnership(draft,b);}
    }else for(const pos of [p,c]){
-    const journals=model.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id)),opening=model.openingPositions.find(o=>o.positionId===pos.id);
-    if(journals.length){if(!opening?.asOf||opening.asOf>=proof.date||journals.some(j=>j.date>=proof.date)||model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)&&(!b.netSettlement&&!b.netFunding||!sourceUnmodified(model,b))))throw Error('Neue Finanzierung muss nach der unveränderten belegten Journalhistorie liegen.');}
+    const journals=model.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id)),bookings=model.bookings.filter(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)),opening=model.openingPositions.find(o=>o.positionId===pos.id);
+    if(journals.length||bookings.length){if(!opening?.asOf||opening.asOf>=proof.date||journals.some(j=>j.date>=proof.date)||model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)&&(!b.netSettlement&&!b.netFunding||!sourceUnmodified(model,b))))throw Error('Neue Finanzierung muss nach der unveränderten belegten Journalhistorie liegen.');}
     else touched.set(pos.id,proof.date);
     if(model.snapshots.some(s=>s.byPosition&&Object.hasOwn(s.byPosition,pos.id)&&s.date>=proof.date))throw Error('Vorhandener Referenzstand benötigt gesonderten datierten Abgleich.');
    }
