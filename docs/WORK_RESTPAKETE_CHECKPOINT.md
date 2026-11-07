@@ -1,3 +1,13 @@
+## ACTIVE – 706dbcb4272b / v295 DEPLOYED, Main vollständig qualifiziert / V92 / Live läuft · 07.11.2026
+
+Main090f94dda859d8baa1a63f2d0fd44c31d00900a4/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709/SWfoliolab-open-v295. [Mainqualifikation](release-evidence/v295-pr315-main-qualified-deployed.json):Mainlauf42420146322Versuch1/Test1314/1314/0Fehler/0Skips/Syntax/Chromium/Cross1/2/3SUCCESS;Deployment128552341153SUCCESS. Alle6Mainprüfartefakte/API-Upload-Lokalhash/Größe/CRC/210JSON/1926PNG vollständigqualifiziert,9FundingEngine/TimingberichtePASS,3neueMain-CI-Mobilebilderangesehen. Pages13593817919/560443Bytes/SHA256c23687626d77649bf3374ceae54050b6622314e55ac21b10c619d73c79a9afb8:alle151DateienexaktgegenMain-Gitblobs. [UnabhängigerTLS-/Assetbeleg](release-evidence/v295-pr315-independent-assets.json):gewöhnlicherTLS/alle151AssetsplusRoot/152PfadePASS,keineZertifikatsausnahme.
+
+TatsächlicherLivejob128552418950läuftaufProduktion;ChromiumphaseinProgress. **v295DEPLOYED,nochNICHTLIVE_ACCEPTED.** ErstvollständigeDreiEngine-ProduktionundLiveartefakt/API-Upload-Lokalhash/Größe/CRC/JSON/PNG/Netzwerkhashqualifikationabschließen. KeineCIduplizieren,wiederholenoderabbrechen. v294Abnahmewiederverwendet,nichterneutabgenommen. HistorischeAlpha-IDB-UrsacheUNKNOWN,alteAusnahmeverbraucht,keinFixbeweis.
+
+PrivateV92erfolgreich:33631043Bytes/SHA2568ed788f6f04829dd3fe673f3ae291d0f94c2eda597092acf8d30b7e9e3a6ae4f;alle7443Manifestdateiengeprüft,alle6882V91Dateienbytegleich. Einstiegdelta-706dbcb4272b/v295-main-qualified-live-pending/evidence/CURRENT_STATE.json. Keine neuenPNGbytesarchiviert;alleOriginale/Oracles/älterenBelegeerhalten. Neue57Valutafälle/Einzelrollen/belegteAnfänge/Cashchronologie/DKBaußerhalb/alteV1V2V3Identitäten/alleSchutzverträgeerhalten,keineaktuelleNutzerimportabnahme. UH05gesamtPARTIAL;weitereN:M/FX/Referenzen/Basis/Wallet/Staking/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Roadmaperhalten. FehlendeWallet/StakingUNKNOWN. GitHubnurPlugin;CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 706dbcb4272b / v295 Main1314PASS, Cross3offen / V91 gesichert · 07.11.2026
 
 Main090f94dda859d8baa1a63f2d0fd44c31d00900a4/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 unverändert. Mainlauf42420146322Versuch1:Test1314/1314/0Fehler/0Skips,Syntax,Chromium/Cross1/Cross2SUCCESS;5fertigeMainartefakte/API-Upload-Lokalhash/Größe/CRC/122JSON/1228PNG qualifiziert. Cross3/128546651321läuft;Deployment/Livefolgenregulär. **NochkeinLIVE_ACCEPTEDv295.** Vorherigev294Abnahmewiederverwendet,nichterneutgeprüft.
