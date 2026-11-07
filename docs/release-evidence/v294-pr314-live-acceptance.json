@@ -1,0 +1,421 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 294,
+  "owner": "14118750c7bb-r2",
+  "main": "13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0",
+  "tree": "c1e1bd3290ecf687bf6c6aaac742ea9489529ee2",
+  "PRs": [
+    313,
+    314
+  ],
+  "mainRun": 42398484107,
+  "attempt": 1,
+  "conclusion": "SUCCESS",
+  "jobs": [
+    {
+      "id": 128480916748,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "conclusion": "success"
+    },
+    {
+      "id": 128480959313,
+      "name": "test",
+      "conclusion": "success"
+    },
+    {
+      "id": 128480959341,
+      "name": "cross-engine (3)",
+      "conclusion": "success"
+    },
+    {
+      "id": 128480959352,
+      "name": "cross-engine (2)",
+      "conclusion": "success"
+    },
+    {
+      "id": 128480959375,
+      "name": "cross-engine (1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 128480960853,
+      "name": "FAST only / UI contract canary \u2014 no integration approval",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 128486932524,
+      "name": "deploy",
+      "conclusion": "success"
+    },
+    {
+      "id": 128487017950,
+      "name": "live-acceptance",
+      "conclusion": "success"
+    }
+  ],
+  "units": {
+    "tests": 1294,
+    "passed": 1294,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "deployment": {
+    "job": 128486932524,
+    "result": "SUCCESS",
+    "pagesArtifact": 13584189962,
+    "pagesSize": 560218,
+    "pagesSHA256": "335da1e7f879a01877a11f3c66b3ad5e23bd865c16c2d902cfbf91937c2bfeef",
+    "all151ExactGitblobs": "PASS",
+    "ordinaryTLSIndependent152PathMatch": "PASS",
+    "independentAssetEvidence": "v294-pr314-independent-assets.json"
+  },
+  "liveArtifact": {
+    "file": "live-13586766697.zip",
+    "size": 127347000,
+    "sha256": "dfca7201097ccec4d6745f945cb6eb9e868dec3e386c58b1617f3b6fe52535da",
+    "zipCRC": "PASS",
+    "jsonReports": 149,
+    "decodedPNGs": 1265,
+    "flags": [],
+    "result": "PASS",
+    "jsonNames": [
+      "alpha-vantage/idb-chromium.json",
+      "alpha-vantage/idb-webkit.json",
+      "alpha-vantage/idb-firefox.json",
+      "alpha-vantage.json",
+      "bitpanda-evidence-chromium.json",
+      "bitpanda-evidence-firefox-webkit.json",
+      "bitpanda-preview/report.json",
+      "blocked-reasons/report.json",
+      "cash-account-ux.json",
+      "chart-tooltip/report.json",
+      "fin-e2e/chromium.json",
+      "fin-e2e/webkit.json",
+      "fin-e2e/firefox.json",
+      "flatex-context/report.json",
+      "flatex-funding/report-chromium-12-before.json",
+      "flatex-funding/report-chromium-12.json",
+      "flatex-funding/report-firefox-12-before.json",
+      "flatex-funding/report-firefox-12.json",
+      "flatex-funding/report-webkit-12-before.json",
+      "flatex-funding/report-webkit-12.json",
+      "flatex-funding/report.json",
+      "flatex-native-amounts-chromium.json",
+      "flatex-native-amounts-firefox-webkit.json",
+      "flatex-native-binding/report.json",
+      "flatex-native-chromium.json",
+      "flatex-native-commit/report.json",
+      "flatex-native-firefox-webkit.json",
+      "flatex-native-identity-firefox-webkit.json",
+      "flatex-native-projection-chromium.json",
+      "flatex-native-identity-chromium.json",
+      "flatex-native-projection-firefox-webkit.json",
+      "flatex-native-simulation-ui/report.json",
+      "flatex-native-ui/report.json",
+      "flatex-net-augmentation/report.json",
+      "flatex-net-backfill/report.json",
+      "flatex-net-selection/report.json",
+      "flatex-net-settlement/report.json",
+      "flatex-order-links-chromium.json",
+      "flatex-order-links-firefox-webkit.json",
+      "flatex-reconciliation/report-chromium.json",
+      "flatex-reconciliation/report-firefox.json",
+      "flatex-reconciliation/report-webkit.json",
+      "flatex-reconciliation/report.json",
+      "header-status/report.json",
+      "kraken-ledger/report.json",
+      "kraken-link/chromium.json",
+      "kraken-link/firefox.json",
+      "kraken-link/webkit.json",
+      "live/report.json",
+      "loading-pwa/chromium.json",
+      "loading-pwa/firefox.json",
+      "loading-pwa/webkit.json",
+      "management-parity/report.json",
+      "marketstack.json",
+      "missing-position-value/report.json",
+      "pchain-evidence-chromium.json",
+      "pchain-evidence-firefox-webkit.json",
+      "plain-backup-limits/chromium.json",
+      "plain-backup-limits/firefox.json",
+      "plain-backup-limits/webkit.json",
+      "price-csv-tools/report.json",
+      "production-transfers-chromium.json",
+      "production-transfers-cross.json",
+      "production-ui-chromium.json",
+      "production-ui-cross.json",
+      "provider-retirement.json",
+      "recovery-limits/report-chromium.json",
+      "recovery-limits/report-firefox-webkit.json",
+      "reference-management/chromium-sw-baseline.json",
+      "reference-management/firefox-sw-baseline.json",
+      "reference-management/report.json",
+      "reference-management/webkit-sw-baseline.json",
+      "reference-removal/report.json",
+      "shared-import/report.json",
+      "sonic-evidence-firefox-webkit.json",
+      "sonic-evidence-chromium.json",
+      "storage-fixture/chromium-1794075565344.json",
+      "storage-fixture/chromium-1794075571705.json",
+      "storage-fixture/chromium-1794075577988.json",
+      "storage-fixture/chromium-1794075584226.json",
+      "storage-fixture/chromium-1794075590304.json",
+      "storage-fixture/chromium-1794075596291.json",
+      "storage-fixture/chromium-1794075602910.json",
+      "storage-fixture/chromium-1794075608767.json",
+      "storage-fixture/chromium-1794075613917.json",
+      "storage-fixture/chromium-1794075802450.json",
+      "storage-fixture/chromium-1794075807349.json",
+      "storage-fixture/firefox-1794076145224.json",
+      "storage-fixture/firefox-1794076170988.json",
+      "storage-fixture/firefox-1794076191248.json",
+      "storage-fixture/firefox-1794076211470.json",
+      "storage-fixture/firefox-1794076231027.json",
+      "storage-fixture/firefox-1794076251403.json",
+      "storage-fixture/firefox-1794076271081.json",
+      "storage-fixture/firefox-1794076289824.json",
+      "storage-fixture/firefox-1794076298645.json",
+      "storage-fixture/firefox-1794077072022.json",
+      "storage-fixture/firefox-1794077088660.json",
+      "storage-fixture/webkit-1794076160048.json",
+      "storage-fixture/webkit-1794076180382.json",
+      "storage-fixture/webkit-1794076200676.json",
+      "storage-fixture/webkit-1794076220525.json",
+      "storage-fixture/webkit-1794076240642.json",
+      "storage-fixture/webkit-1794076279985.json",
+      "storage-fixture/webkit-1794076260500.json",
+      "storage-fixture/webkit-1794076306843.json",
+      "storage-fixture/webkit-1794076313640.json",
+      "storage-fixture/webkit-1794077080995.json",
+      "storage-fixture/webkit-1794077106565.json",
+      "three-fill/report-chromium-12.json",
+      "three-fill/report-chromium-13.json",
+      "three-fill/report-firefox-12.json",
+      "three-fill/report-firefox-13.json",
+      "three-fill/report-webkit-12.json",
+      "three-fill/report-webkit-13.json",
+      "three-fill/report.json",
+      "transfer-states.json",
+      "two-fill/report-chromium.json",
+      "two-fill/report-firefox.json",
+      "two-fill/report-webkit.json",
+      "two-fill/report.json",
+      "ui-alltag10/chromium-real-touch-pan.json",
+      "ui-alltag10/chromium-real-touch-press.json",
+      "ui-alltag10/long-press.json",
+      "ui-audit-controls/report.json",
+      "ui-quality.json",
+      "ui-textscale/report.json",
+      "ui300/report-chromium.json",
+      "ui300/report-firefox.json",
+      "ui300/report-webkit.json",
+      "v289-review-integrity/chromium-320-axe.json",
+      "v289-review-integrity/chromium-360-axe.json",
+      "v289-review-integrity/chromium-390-axe.json",
+      "v289-review-integrity/chromium-412-axe.json",
+      "v289-review-integrity/chromium-430-axe.json",
+      "v289-review-integrity/firefox-320-axe.json",
+      "v289-review-integrity/firefox-360-axe.json",
+      "v289-review-integrity/firefox-390-axe.json",
+      "v289-review-integrity/firefox-412-axe.json",
+      "v289-review-integrity/firefox-430-axe.json",
+      "v289-review-integrity/report-chromium.json",
+      "v289-review-integrity/report-firefox.json",
+      "v289-review-integrity/report.json",
+      "v289-review-integrity/report-webkit.json",
+      "v289-review-integrity/webkit-320-axe.json",
+      "v289-review-integrity/webkit-360-axe.json",
+      "v289-review-integrity/webkit-390-axe.json",
+      "v289-review-integrity/webkit-412-axe.json",
+      "v289-review-integrity/webkit-430-axe.json"
+    ],
+    "id": 13586766697,
+    "apiUploadLogLocalDigestAndSizeMatch": true,
+    "earlyMobileImagesViewed": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ]
+  },
+  "actualProduction": {
+    "base": "https://foliolab.unperfekt.at/",
+    "releaseSHA": "13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0",
+    "cache": "foliolab-open-v294",
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "networkAssetMatches": 152,
+    "ordinaryTLS": true,
+    "all151PagesGitblobsMatch": true,
+    "all152LiveReportHashesIndependentlyMatchPages": true,
+    "independentOrdinaryTLS152Paths": "PASS",
+    "checks": [
+      "all published precache files + service worker and actual loaded application bytes match checkout",
+      "real UI provider/account/position creation, edit, IndexedDB commit and reload",
+      "five tabs at 320/390/1440, ETF and saved crypto histories, bookings, annual filters, quality actions, transfer preview and dialog focus",
+      "plain actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "encrypted actual UI download -> fresh profile UI restore -> reload, exact bookings",
+      "actual service-worker control/cache update, offline reload/navigation and IndexedDB save/reload"
+    ],
+    "fundingSixEngineTimingReports": [
+      {
+        "engine": "firefox",
+        "timing": "before",
+        "dialect": "depot12/account10",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "chromium",
+        "timing": "before",
+        "dialect": "depot12/account10",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "timing": "after",
+        "dialect": "depot12/account10",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "chromium",
+        "timing": "after",
+        "dialect": "depot12/account10",
+        "version": "141.0.7390.37",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "firefox",
+        "timing": "after",
+        "dialect": "depot12/account10",
+        "version": "157.0",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      },
+      {
+        "engine": "webkit",
+        "timing": "before",
+        "dialect": "depot12/account10",
+        "version": "27.2",
+        "result": "PASS",
+        "checks": [
+          "one purchase, negative order cash, positive external funding, both file orders",
+          "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+          "selection revokes all approvals; full zero-write quota/post-put rollback",
+          "actual Undo/recommit/reimport/offline reload",
+          "encrypted v5 backup and actual restore in fresh profile",
+          "real second-tab race at canonical save",
+          "seven widths/Axe, no external requests"
+        ]
+      }
+    ]
+  },
+  "alphaMainTelemetry": {
+    "firefox": {
+      "fixtureOpenMs": [
+        1,
+        3,
+        3,
+        2,
+        3
+      ],
+      "pendingBefore": [],
+      "blockedOrOpenErrorsOrVersionchanges": [],
+      "maxHeartbeatGapMs": 387
+    },
+    "webkit": {
+      "fixtureOpenMs": [
+        2,
+        0,
+        1,
+        0,
+        0
+      ],
+      "pendingBefore": [],
+      "blockedOrOpenErrorsOrVersionchanges": [],
+      "maxHeartbeatGapMs": 349
+    },
+    "chromium": {
+      "fixtureOpenMs": [
+        0.3,
+        0.1,
+        0.1,
+        0.1,
+        0.2
+      ],
+      "pendingBefore": [],
+      "blockedOrOpenErrorsOrVersionchanges": [],
+      "maxHeartbeatGapMs": 296.79999999998836
+    }
+  },
+  "originalMainFailure": {
+    "run": 42378307203,
+    "conclusion": "FAILURE",
+    "cause": "UNKNOWN",
+    "unchangedRetained": true
+  },
+  "releaseException": "Explicit actual user Ja in v294-pr314-user-exception.json; no root-cause repair claimed",
+  "v293": "previous LIVE_ACCEPTED; not reaccepted",
+  "scope": {
+    "earlyAndLateExternalFunding": true,
+    "noActualUserOpeningOrPortfolioAcceptance": true,
+    "noBlanketRoleFor357Credits": true,
+    "outsideDKBCheckingAccount": true,
+    "noInventedOpeningCostsOrDuplicateEffect": true,
+    "ordinaryExistingDataContractsPreserved": true
+  },
+  "noCIAbortedDuplicatedRetried": true,
+  "checkpointBranchNeverMerged": true,
+  "allOtherOrdersAndProtectionContractsPreserved": true
+}
