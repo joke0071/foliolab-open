@@ -1,3 +1,15 @@
+## ACTIVE – 14118750c7bb-r2 / v294 DEPLOYED / Main vollständig qualifiziert / V86 · 07.11.2026
+
+Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2 unverändert. Bestehender Mainlauf42398484107 Versuch1:1294Tests/0Fehler/0Skips, Syntax und Haupt-/Cross1-/Cross2-/Cross3-/Deploymentjobs SUCCESS. [Mainqualifikation](release-evidence/v294-pr314-main-qualified-deployed.json): sechs Prüfartefakte/API-/Uploadlog-/Lokalhash/Größe/CRC,207JSON und1923PNG vollständig gelesen/dekodiert; sechs frühe/späte Finanzierungsberichte und mobile Frühbilder aller3Engines geprüft. Pages13584189962/SHA256335da1e7f879a01877a11f3c66b3ad5e23bd865c16c2d902cfbf91937c2bfeef:alle151Dateien exakt gegen aktuelle Gitblobs. [Unabhängiger gewöhnlicherTLS-/152Pfadabgleich](release-evidence/v294-pr314-independent-assets.json) PASS, SWfoliolab-open-v294 bestätigt.
+
+Neue Alpha-Fixtureopens Firefox[1,3,3,2,3]ms, WebKit[2,0,1,0,0]ms, Chromium[0.3,0.1,0.1,0.1,0.2]ms; keine zuvor wartenden Requests, keine Blockierungs-/Openfehler-/Versionswechselereignisse. Ursprüngliche Ursache weiterhin UNKNOWN; neue ausdrückliche Nutzer-Ausnahmefreigabe bereits vorhanden und nicht erneut anfordern. Kein Fixbeweis.
+
+Tatsächlicher Livejob128487017950 läuft weiter: Chromium-Produktionsphase SUCCESS; Firefox-/WebKit-Produktionsphase läuft. **v294 DEPLOYED, noch NICHT LIVE_ACCEPTED.** Keine CI dupliziert, wiederholt oder abgebrochen. Jetzt ausschließlich vorhandenen Livejob bis vollständig tatsächlicher DreiEngineabnahme und abschließender Artefaktqualifikation verfolgen; erst dann LIVE_ACCEPTED. v293 nicht erneut abnehmen.
+
+**Private V86 erfolgreich:**27273815Bytes/SHA25674ba8ed7d9cd3c3d8983934c5c48a43d74f1baa91ceb32f05dde3aeac57ad039,alle5759Manifestdateien am Archiv geprüft,sämtliche5529V85-Dateien/Nutzeroriginale bytegleich erhalten. Einstiegdelta-14118750c7bb-r2/v294-main-qualified-live-pending/STATE.json. Neue JSON-/gefilterte Log-/Gitblob-/TLS-Belege gesichert, keine neuen Browserbildbytes archiviert. Identität und kanonischer Name unverändert. Alle Originale/Oracles/UH05/UI300 zehnNachträge/übrigen Aufträge und Schutzverträge erhalten. Owner14118750c7bb-r2 ACTIVE; Checkpointbranch niemals vollständig nach Main.
+
+---
+
 ## ACTIVE – 14118750c7bb-r2 / reguläre HND01-Übernahme nach wieder verfügbarer Umgebung / v294 DEPLOYED, Live offen · 07.11.2026
 
 Nach ausdrücklicher Übergabe von14118750c7bb STOPPED/HANDOVER_READY und wieder verfügbarer Ausführungsumgebung übernimmt Fortsetzung14118750c7bb-r2 allein. Vollständige Übergabe/Entscheidungs-/CI-/Alpha-/Finanzbelege gelesen. Vor erstem GitHub-Schreibzugriff frisch geprüft: Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2 unverändert, PR313/314 gemergt, Reviews/Threads/Conversation leer, nur geparkte Drafts157/161 offen. Zwei vollständige Branchref-Snapshots identisch, keine konkurrierende Owner-/WIP-Aktivität erkennbar. Private V85 neu geladen,26812533Bytes/SHA2568990d93994c23e1223bf439ec5a928d5b04ed50008354dfcb270967ac3cc7571 und sämtliche5529Manifestdateien am Archiv bytegeprüft.
