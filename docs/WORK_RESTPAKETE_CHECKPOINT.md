@@ -1,3 +1,11 @@
+## ACTIVE – 14118750c7bb / alleinige HND01-Übernahme / v294-Ursachengate · 07.11.2026
+
+Reguläre alleinige Übernahme nach vollständig gelesener STOPPED/HANDOVER_READY-Abgabe von96c2624a1e89. Vor erstem GitHub-Schreibzugriff frisch bestätigt: Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71, PR313 gemergt. Zwei vollständige Branchref-Snapshots identisch (278Refs), keine konkurrierende Owner-/WIP-Aktivität erkennbar. Nur eingefrorener PR314 und geparkte Drafts157/161 offen; PR314-HEADcfcbeaf43d9751895e6bddd77011d9cef0b855b2 unverändert, Reviews/Threads/Conversation leer. Keine laufenden/queued Actions. Mainlauf42378307203 Versuch1 FAILURE; PR314-Integration42383067257/Wallet42383067236 SUCCESS. Private V84 frisch materialisiert:26348769Bytes/SHA256cf96135a62bccf399ca7d2bfa3c49d075dc0d08ff8e32e4311ab1bf264cb3182; sämtliche5508Manifestdateien bytegeprüft,0Abweichungen.
+
+Keine neue Ausnahmefreigabe in Nutzerauftrag oder PR-Diskussion. Ursprüngliche Alpha-IDB-Ursache UNKNOWN. PR314 bleibt OPEN/FROZEN/UNMERGED; v294 NICHT DEPLOYED/LIVE_ACCEPTED. v293 nicht erneut abnehmen. Jetzt gezielte lesende Analyse und sicher isolierte hypothesengeführte Reproduktion; kein blinder Retry, keine Fristverlängerung/Schutzlockerung, keine Produktkorrektur ohne belegte Ursache. Ein Release bei UNKNOWN braucht ausdrücklich neue Nutzerentscheidung. Bestehende qualifizierte CI erhalten und nicht duplizieren/abbrechen. Alle Originale/Oracles/UH05/57Valutafälle/UI300 samt zehnNachträgen/QUALITY298/CI229/Android/PWA/Wallet/Staking/Buchungsaufträge und sämtliche Finanz-/Identitäts-/Journal-/CAS-/Restore-/Offline-/Datenschutz-/EFF01-/HND01-Verträge unverändert erhalten. Checkpointbranch niemals vollständig nach Main. Frühzeitiger sicherer HND01-Fortsetzungspunkt wird vorbereitet.
+
+---
+
 ## HANDOVER_READY – 96c2624a1e89 STOPPED / PR314 qualifiziert / v294 am Ursachengate offen · 07.11.2026
 
 **96c2624a1e89 ist STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Keine weitere Produktarbeit durch diese Ausführung. [Vollständige Übergabe und genau nächster Schritt](HANDOVER_96c2624a1e89_2026-11-07.md).
