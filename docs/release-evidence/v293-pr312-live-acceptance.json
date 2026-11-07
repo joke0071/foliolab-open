@@ -10,7 +10,6 @@
   "prHead": "f9e22a67c56d7daaaa65e58aed7ada4a556ce517",
   "testedPRMerge": "359398a9b19ae3eb3b328a54e882cd1da314491f",
   "allThreeTreesEqual": true,
-  "changedProductFiles": 15,
   "finalPRCI": 42362993170,
   "walletCI": 42362993148,
   "mainRun": 42364930399,
@@ -896,5 +895,7 @@
     "activeActionsAtFinalCheck": 0,
     "queuedActionsAtFinalCheck": 0
   },
-  "next": "This bounded external funding slice is productively complete. Preserve remaining main-project work; do not reaccept v292/v293 or request these originals again."
+  "next": "This bounded external funding slice is productively complete. Preserve remaining main-project work; do not reaccept v292/v293 or request these originals again.",
+  "changedFiles": 15,
+  "changedShippedAssets": 7
 }
