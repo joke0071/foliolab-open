@@ -1,0 +1,147 @@
+{
+  "status": "DIAGNOSTIC_CANDIDATE_QUALIFIED__CAUSE_GATE_UNMET",
+  "PR": 314,
+  "head": "cfcbeaf43d9751895e6bddd77011d9cef0b855b2",
+  "tree": "c1e1bd3290ecf687bf6c6aaac742ea9489529ee2",
+  "testedMerge": "9734fb8c2c49d3561107865ea5b1c0f1eb95d325",
+  "main": "43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+  "mainTree": "b9e0345db3a1c0ceaa114d961220d3b17971cd71",
+  "integrationRun": 42383067257,
+  "walletRun": 42383067236,
+  "attempt": 1,
+  "result": "SUCCESS",
+  "units": {
+    "tests": 1294,
+    "passed": 1294,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "fundingCases": "before and after PASS in all three engines; not actual user portfolio acceptance",
+  "artifacts": [
+    {
+      "id": 13579185880,
+      "name": "cross-engine-gates-9734fb8c2c49d3561107865ea5b1c0f1eb95d325-1",
+      "sizeBytes": 58285854,
+      "sha256": "14a7cae705809594788adad7dd0346cbf700cb14d27a68ab2e063e9d984c357b",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "failureFlags": []
+    },
+    {
+      "id": 13579106633,
+      "name": "dialog-visual-reference",
+      "sizeBytes": 933898,
+      "sha256": "cc20aa46d60d44b073b8a950f92bb9ee10b54000165ec1bc5dad1ef899345564",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13578951460,
+      "name": "cross-engine-gates-9734fb8c2c49d3561107865ea5b1c0f1eb95d325-2",
+      "sizeBytes": 11607657,
+      "sha256": "e8a1343ccc33a03c164c97aee525117feb710442f8851b59b0e48aefd2a1ef94",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 19,
+      "decodedPNGs": 74,
+      "failureFlags": []
+    },
+    {
+      "id": 13578937647,
+      "name": "cross-engine-gates-9734fb8c2c49d3561107865ea5b1c0f1eb95d325-3",
+      "sizeBytes": 63680838,
+      "sha256": "77fc1938e99afc41873fa97737ac5c0290b6d0c780571ca86b49eb9b724181a0",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 86,
+      "decodedPNGs": 696,
+      "failureFlags": []
+    },
+    {
+      "id": 13578776028,
+      "name": "ci-stage-9734fb8c2c49d3561107865ea5b1c0f1eb95d325",
+      "sizeBytes": 557,
+      "sha256": "82787ec83b3908b7631fb4e13d9e3935e4f00ae23ac140b8f970f581700ec2a2",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13578737529,
+      "name": "release-gates-9734fb8c2c49d3561107865ea5b1c0f1eb95d325",
+      "sizeBytes": 62113792,
+      "sha256": "f08379fe52eb72b71cfae586e262acd7c3979cd232d23d74553f169269153957",
+      "apiUploadLocalSizeDigest": "MATCH",
+      "zipCRC": "PASS",
+      "jsonReports": 86,
+      "decodedPNGs": 659,
+      "failureFlags": []
+    }
+  ],
+  "totals": {
+    "artifacts": 6,
+    "jsonReports": 207,
+    "decodedPNGs": 1923
+  },
+  "diagnostics": {
+    "originalFailureCause": "UNKNOWN",
+    "originalRun": 42378307203,
+    "originalAttempt": 1,
+    "originalFailureUnchanged": true,
+    "controlledMechanisms": "normal / queued upgrade / queued delete / version error PASS; not evidence these blockers existed in original CI",
+    "currentFixtureOpenMs": {
+      "firefox": [
+        1,
+        37,
+        0,
+        1,
+        1
+      ],
+      "webkit": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ]
+    },
+    "currentOpenBlockedErrors": [],
+    "expectedExhaustedBudgetAbortsPerEngine": 4,
+    "currentChromiumMaxOpenMs": 13.3,
+    "metadataPrivacySentinelsAbsent": true
+  },
+  "unchanged": {
+    "allOriginal33Assertions": true,
+    "fixtureOperations": true,
+    "errorRethrow": true,
+    "productOpenTimeoutMs": 5000,
+    "browserGateDeadlineMs": 180000,
+    "appAssets": true,
+    "SW": true,
+    "cacheBudgetAndFinancialProtection": true,
+    "workflowCommands": true
+  },
+  "originalGateGitblob": "94958749f6e56829d2641e54cb7b4d23004cd935",
+  "byteReconstruction": "Remove additive diagnostic snippets and one added terminal blank LF; canonical original Gitblob matches exactly.",
+  "noRetryCancellationOrDuplicateCI": true,
+  "release": {
+    "PR314Merged": false,
+    "v294": "NOT DEPLOYED / NOT LIVE_ACCEPTED",
+    "lastAccepted": "v293; not reaccepted",
+    "decision": "User required an evidenced cause before correction/release. No product cause or correction is established. Do not silently substitute green diagnostic CI for the cause condition; release with UNKNOWN original cause needs explicit user decision."
+  },
+  "remainingOrdersPreserved": true
+}
