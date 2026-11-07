@@ -1,3 +1,11 @@
+## ACTIVE – 706dbcb4272b / reguläre HND01-Übernahme / UH05 nach v294 · 07.11.2026
+
+Nach ausdrücklicher vollständiger Abgabe durch14118750c7bb-r2 übernimmt706dbcb4272b die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung. Kein paralleler Strang. Vor erstem Schreibzugriff frisch geprüft:Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2;PR313/314 gemergt;Reviews/Inlinekommentare leer;nur geparkteDrafts157/161 offen;keine in_progress/queuedActions;vollständige Branchrefs unverändert;kein neuer Produkt-WIP. PrivateV88 neu geladen:27443450Bytes/SHA2561737b717f079c82bd2c7eaab59e3bfe062dede34ba8c750ae7a666308dcee082;alle5935Manifestdateien geprüft. Verbindliche Übergabe,Valutagrenze,Original-/Decimal-/CI-/Finanz-/Release-/Sicherungsbelege gelesen.
+
+v294 bleibt LIVE_ACCEPTED und wird nicht erneut abgenommen. HistorischeAlpha-IDB-Ursache UNKNOWN;Ausnahmefreigabe verbraucht,kein Fixbeweis. Nächster begrenzter Schnitt:57 Originaloracles;neue strikt versionierte Finanzierungsvariante mit getrennten Originalvaluten und unveränderter Buchtag-/Cashchronologie. Zuerst unabhängige Soll-/Negativ-/Altreaderbelege,dann bestehender gemeinsamer Kern und vollständige reguläre Releasekette. Einzelrolle/Eröffnungen bleiben erforderlich,DKB außerhalb,keine pauschale357-Rolle/erfundenenAnfänge/Kostenbasen. Alle übrigenUH05-/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking/Roadmap-/Schutzverträge erhalten. GitHub ausschließlichPlugin;Checkpointbranch niemals vollständignachMain.
+
+---
+
 ## HANDOVER_READY – 14118750c7bb-r2 STOPPED / v294 LIVE_ACCEPTED / UH0557Oracles / V88 · 07.11.2026
 
 **14118750c7bb-r2 ist STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Keine weitere Produktarbeit. [Vollständige Übergabe und genau nächster Schritt](HANDOVER_14118750c7bb_r2_2026-11-07.md). Kein Projektneustart, kein paralleler Strang.
