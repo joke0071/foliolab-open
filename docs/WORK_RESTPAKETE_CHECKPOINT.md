@@ -1,3 +1,13 @@
+## ACTIVE – 0a8644a36676 / v293 Main-Gates teilweise qualifiziert / letzterCross3-Job läuft – 07.11.2026
+
+Main65405435d79e2cd102f18aa7a0d1c2bff8ae3896/Tree10db823ab52976384b6be2febbb9e01412659c3e unverändert; vorhandenerMainlauf42364930399 Versuch1 weiterhinaktiv. Chromium/test128380921777 SUCCESS, Cross1/128380921850 SUCCESS, Cross2/128380921798 SUCCESS. LetzterCross3/128380921840 nochIN_PROGRESS; nochkeinDeployment-/Livebeleg undkeinLIVE_ACCEPTEDfürv293. KeineProduktänderung/keinweitererCI-Lauf/keinAbbruch.
+
+MaßgeblichevollständigeCI-Zahl ausbeidentatsächlichenPR-/Mainlogs: **1278Tests/1278PASS/0Fehler/0Skips**,SyntaxPASS. AuchvollständigerlokalerNode-Satzjetzt1278PASS; frühere1274-ZeilenwarenlokalerTeilsatzohnevierasynchroneBrowserbereitschaftstests,keinabgesenktesCI-Gate. [Kandidatenbeleg](release-evidence/v293-pr312-candidate-acceptance.json) aufkanonischeCI-Zahl1278präzisiert. AllePflicht-CI-Testsunverändertvollständiggelaufen.
+
+BereitsabgeschlosseneMain-ArtefaktefürChromium/Cross1/Cross2/Plan/Dialoghash-/CRC-/JSON-/PNG-geprüft,0Fehlerflags. FinalePR-Ketteinallen3EnginesvollständigPASSundalle201JSON/1920PNG-Belegequalifiziert. Jetzt genauvorhandenenletztenMainjobbisDeploymentundtatsächlicherProduktionsabnahmeverfolgen,danachRelease-/Privatebelegesichern. SicherungV78,alleOriginale/übrigenAufträge/Schutzverträgeerhalten. Owner0a8644a36676 ACTIVE. CheckpointbranchniemalsvollständignachMain;v292nichtneuabnehmen.
+
+---
+
 ## ACTIVE – 0a8644a36676 / PR312 MERGED / v293 MAIN_RELEASE_PENDING / SicherungV78 – 07.11.2026
 
 PR312 kontrolliertperexpectedHEAD gemergt. Main65405435d79e2cd102f18aa7a0d1c2bff8ae3896, Tree10db823ab52976384b6be2febbb9e01412659c3e exaktgleichfinalemHEADf9e22a67c56d7daaaa65e58aed7ada4a556ce517 undgetestetemsynthetischemMerge359398a9b19ae3eb3b328a54e882cd1da314491f. VorMergeMain/Owner/Reviews/Threadsfrischgeprüft; keinekonkurrierendeAktivitäterkennbar. Nur15isolierteMain-Dateien/3Commits,keineIntegrationdesCheckpointbranches.
