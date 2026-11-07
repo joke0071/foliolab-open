@@ -1,3 +1,11 @@
+## ACTIVE – 96c2624a1e89 / alleinige HND01-Übernahme / v294 Releaseblocker · 07.11.2026
+
+Reguläre alleinige Übernahme nach vollständig gelesener STOPPED/HANDOVER_READY-Abgabe der Ausführung7c09945cb671 unter bisheriger Ownerkennung0a8644a36676. Nutzer hat Entwicklungs-, Integrations-, QA- und Releaseverantwortung übertragen. Vor Schreibzugriff frisch geprüft: Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71 unverändert; zwei vollständige Branchref-Snapshots identisch; PR313 gemergt, Reviews/Inline leer, nur geparkte Drafts157/161 offen. Kein aktiver Produkt-PR/WIP oder konkurrierender Owner erkennbar. Mainlauf42378307203 Versuch1 vollständig FAILURE: Haupttest und Cross1/3 SUCCESS, Cross2/128420432338 FAILURE; Deployment/Live SKIPPED, keine laufenden/queued Actions. V82 frisch heruntergeladen:25089305Bytes/SHA2567ca2338a2e7d29dbade70da0d7ea75c4e7db899c5c8fa8180e8218a2bd83829d; alle5240 Manifestdateien bytegeprüft PASS.
+
+v293 bleibt letzte LIVE_ACCEPTED-Produktion, nicht erneut abnehmen. v294 NICHT DEPLOYED/LIVE_ACCEPTED. Zuerst alle vorhandenen Mainartefakte/Logs qualifizieren und ursprünglichen Alpha-IDB-Fehler erhalten; dann kontrollierte synthetische open-/blocked-/upgrade-/success-/error-/Connection-Diagnose am exakten Mainpfad. Keine unbekannte Ursache behaupten, kein blinder Retry, keine Frist-/Assertion-/Finanzschutzlockerung. Erst belegbare kleine Korrektur regulär integrieren und tatsächliche Main-/Pages-/TLS-/SWv294-/DreiEngine-Produktion abnehmen. Alle Originale/Oracles/UH05/UI300 samt zehn Nachträgen/QUALITY298/CI229/Android/PWA/Wallet/Staking und sämtliche Schutzverträge erhalten. GitHub ausschließlich Plugin; Checkpointbranch niemals vollständig nach Main. Frühzeitige fortsetzbare HND01-Sicherung wird vorbereitet.
+
+---
+
 ## HANDOVER_READY – 7c09945cb671 STOPPED / bisherige Ownerkennung0a8644a36676 / v294 Main-Release blockiert · 07.11.2026
 
 Die in diesem Arbeitskontext unter beibehaltener Ownerkennung **0a8644a36676** ausgeführte Fortsetzung **7c09945cb671 ist STOPPED/HANDOVER_READY** und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab. Keine weitere Produktarbeit durch diese Ausführung, kein paralleler Strang und kein Produkt-WIP. [Vollständige Übergabe mit Startprompt](HANDOVER_7c09945cb671_2026-11-07.md).
