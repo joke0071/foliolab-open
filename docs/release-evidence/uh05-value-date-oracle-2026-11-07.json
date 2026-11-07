@@ -1,0 +1,222 @@
+{
+  "origin": "Invented values only; Python Decimal independent of application",
+  "cases": [
+    {
+      "name": "later-exact-liquidity",
+      "opening": "21.75",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "gross": "20",
+      "difference": "-1.75",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "21.75",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-21.75",
+          "balanceExact": "0"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "21.75",
+          "balanceExact": "21.75"
+        }
+      ]
+    },
+    {
+      "name": "later-short-by-atto",
+      "opening": "21.749999999999999999",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "gross": "20",
+      "difference": "-1.75",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "21.749999999999999999",
+      "eligible": false,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-21.75",
+          "balanceExact": "-0.000000000000000001"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "21.75",
+          "balanceExact": "21.749999999999999999"
+        }
+      ]
+    },
+    {
+      "name": "later-zero",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "gross": "20",
+      "difference": "-1.75",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "0",
+      "eligible": false,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-21.75",
+          "balanceExact": "-21.75"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "21.75",
+          "balanceExact": "0"
+        }
+      ]
+    },
+    {
+      "name": "same-day-zero",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-21.75",
+      "funding": "21.75",
+      "gross": "20",
+      "difference": "-1.75",
+      "tradeDate": "1999-01-05",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "0",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "21.75",
+          "balanceExact": "21.75"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "trade",
+          "deltaExact": "-21.75",
+          "balanceExact": "0"
+        }
+      ]
+    },
+    {
+      "name": "precision",
+      "opening": "0.123456789012345679",
+      "quantity": "0.000000000000000001",
+      "price": "123456789012345678",
+      "cash": "-0.123456789012345679",
+      "funding": "0.123456789012345679",
+      "gross": "0.123456789012345678",
+      "difference": "-0.000000000000000001",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "0.123456789012345679",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-0.123456789012345679",
+          "balanceExact": "0"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "0.123456789012345679",
+          "balanceExact": "0.123456789012345679"
+        }
+      ]
+    },
+    {
+      "name": "zero-difference",
+      "opening": "20",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-20",
+      "funding": "20",
+      "gross": "20",
+      "difference": "0",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "20",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-20",
+          "balanceExact": "0"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "20",
+          "balanceExact": "20"
+        }
+      ]
+    },
+    {
+      "name": "positive-difference",
+      "opening": "19",
+      "quantity": "2",
+      "price": "10",
+      "cash": "-19",
+      "funding": "19",
+      "gross": "20",
+      "difference": "1",
+      "tradeDate": "1999-01-02",
+      "fundingDate": "1999-01-05",
+      "tradeValueDate": "1999-01-04",
+      "fundingValueDate": "1999-01-05",
+      "openingDate": "1999-01-01",
+      "closing": "19",
+      "eligible": true,
+      "path": [
+        {
+          "date": "1999-01-02",
+          "kind": "trade",
+          "deltaExact": "-19",
+          "balanceExact": "0"
+        },
+        {
+          "date": "1999-01-05",
+          "kind": "funding",
+          "deltaExact": "19",
+          "balanceExact": "19"
+        }
+      ]
+    }
+  ]
+}
