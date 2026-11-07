@@ -1,3 +1,13 @@
+## ACTIVE – 706dbcb4272b / PR315 eingefroren / UH05-Valutavertrag / V89 · 07.11.2026
+
+[PR315 und vollständiger Prüfstand](UH05_VALUE_DATE_PR315_2026-11-07.md). HEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 auf unverändertem Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0. Genau8beabsichtigteÄnderungen,alleanderenMainblobs erhalten. Strikte neueFundingV2 fürbelegteNächsterKalendertag-Valuta;alteV1-/SettlementV1V2V3-/Quellenidentitäten unverändert. Buchtagcash/individuelleRolle/belegteAnfänge/Referenzen/Kosten-/Journal-/CAS-/Restoreverträge bleiben geschützt.
+
+57Originalfälle×2Dateireihenfolgen114unabhängigeDecimal-/Altreader-/Restore-/Replay-/Undo-Prüfungen PASS;vollständiger57Stapel inbeidenReihenfolgen114Buchungen/57separateFlüsse/exakteTagescash-/Mengenwerte PASS. Nur kontrollierteTestrollen/Liquidität,keine tatsächlicheNutzerimportabnahme. 1314Tests/0Fehler/0Skips/SyntaxPASS. Gestärkte lokaleChromium/Firefox-UI fertig;lokaleWebKit-OfflineReload-Probe mitinternemFehler erhalten,keinPASS dafürbehaupten. UnverändertevolleIntegrations-CI42417764703Versuch1 plusWallet42417764651Versuch1 laufen;keineDuplikate/Retries/Abbrüche. NochkeinMerge/neuesLIVE_ACCEPTED.
+
+PrivateV89 erfolgreich:28413287Bytes/SHA25616666691d1d7f9dd41c7ea7541bbc068182dc642b22d8a200f544fa3b29569d0;alle6107Manifestdateiengeprüft,alle5935V88Dateienunverändert. v294bleibtLIVE_ACCEPTED,nichterneutabnehmen;historischeAlpha-IDB-UrsacheUNKNOWN,Ausnahmeverbraucht. AlleUH05-/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking/Roadmap-/Schutzverträgeerhalten. DKBaußerhalb;fehlendeWallet/StakingUNKNOWN. CheckpointbranchniemalsnachMain;GitHubnurPlugin.
+
+---
+
 ## ACTIVE – 706dbcb4272b / reguläre HND01-Übernahme / UH05 nach v294 · 07.11.2026
 
 Nach ausdrücklicher vollständiger Abgabe durch14118750c7bb-r2 übernimmt706dbcb4272b die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung. Kein paralleler Strang. Vor erstem Schreibzugriff frisch geprüft:Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2;PR313/314 gemergt;Reviews/Inlinekommentare leer;nur geparkteDrafts157/161 offen;keine in_progress/queuedActions;vollständige Branchrefs unverändert;kein neuer Produkt-WIP. PrivateV88 neu geladen:27443450Bytes/SHA2561737b717f079c82bd2c7eaab59e3bfe062dede34ba8c750ae7a666308dcee082;alle5935Manifestdateien geprüft. Verbindliche Übergabe,Valutagrenze,Original-/Decimal-/CI-/Finanz-/Release-/Sicherungsbelege gelesen.
