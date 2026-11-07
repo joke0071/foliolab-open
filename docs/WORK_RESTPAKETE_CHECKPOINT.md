@@ -1,3 +1,13 @@
+## ACTIVE – 0a8644a36676 / v293 DEPLOYED / LIVE_ACCEPTANCE_PENDING – 07.11.2026
+
+Main65405435d79e2cd102f18aa7a0d1c2bff8ae3896/Tree10db823ab52976384b6be2febbb9e01412659c3e exaktgleichakzeptiertemPR312. BestehenderMainlauf42364930399 Versuch1:1278/1278Tests,0Fehler/Skips,Syntax,Chromium undalle3Firefox/WebKit-ShardsSUCCESS. NeueFinanzierungsketteaufMaininallen3EnginesPASS. Sämtliche7Main-ArtefaktemitAPI-/Uploadlog-/LokalhashundCRCgeprüft;201JSON-Berichte/1920PNGsfehlerfrei. StatischesPages-Artefakt13572281321/SHA256255dee73a4420b2381d380ebb8067c14db47daada15203447635f61fe2778617:alle151ausgeliefertenDateienunabhängiggegenexakteMain-Gitblobsgeprüft,0zusätzliche/fehlendeDateien.
+
+Deployjob128386282439 SUCCESS:exakterStand/PWA-Cachev293ausgerollt,Homepage/SWVersionbestätigt. [DauerhafterDeploymentbeleg](release-evidence/v293-pr312-main-deployed.json). **Livejob128386345631 läuft gegen https://foliolab.unperfekt.at/ imselbenMainlauf. NochkeinLIVE_ACCEPTEDfürv293.** JetztgenaudiesenbereitslaufendenJobbisvollständigemHTTPS-Byteabgleich/Kernabläufen/neuerFinanzierungskette/IDB/Offline/Restore/ZweittabundvollständigerDreiEngineabnahmequalifizieren,danachfinaleLiveartefakteprüfen/Belege/Sicherungaktualisieren. KeineProduktänderung/keineweitereCI/keinAbbruch. V292bleibtbisherigeakzeptierteRückfallbasis,nichterneutabnehmen.
+
+SicherungV78/alleOriginale/ungeklärteKosten/keinNutzeranfangsbeleg/übrigeAufträge/alleSchutzverträgeerhalten. Girokontoaußerhalb;keine357-Massenrolle/erfundenenAnfänge/Datumsverschiebung. AlleinigerOwner0a8644a36676 ACTIVE;GitHubnurPlugin;CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 0a8644a36676 / v293 Main-Gates teilweise qualifiziert / letzterCross3-Job läuft – 07.11.2026
 
 Main65405435d79e2cd102f18aa7a0d1c2bff8ae3896/Tree10db823ab52976384b6be2febbb9e01412659c3e unverändert; vorhandenerMainlauf42364930399 Versuch1 weiterhinaktiv. Chromium/test128380921777 SUCCESS, Cross1/128380921850 SUCCESS, Cross2/128380921798 SUCCESS. LetzterCross3/128380921840 nochIN_PROGRESS; nochkeinDeployment-/Livebeleg undkeinLIVE_ACCEPTEDfürv293. KeineProduktänderung/keinweitererCI-Lauf/keinAbbruch.
