@@ -1,3 +1,13 @@
+## ACTIVE – 14118750c7bb / PR314 MERGED / v294 MAIN_RELEASE_PENDING · 07.11.2026
+
+[PR314](https://github.com/joke0071/foliolab-open/pull/314) wurde nach ausdrücklicher neuer Nutzer-Ausnahmefreigabe expectedHEAD-gebunden integriert. [Entscheidungsbeleg](release-evidence/v294-pr314-user-exception.json). Tatsächlicher Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0 besitzt exakt den qualifizierten Kandidatentreec1e1bd3290ecf687bf6c6aaac742ea9489529ee2. Ursprüngliche Alpha-IDB-Ursache bleibt UNKNOWN; keine Reparaturbehauptung.
+
+Automatisch entstandener Mainlauf42398484107 Versuch1 läuft im vollständigen RELEASE-Pfad. Keine bestehende CI wiederholt, dupliziert oder abgebrochen. Bestehende Kandidatenqualifikation42383067257/Wallet42383067236 bleibt erhalten. Jetzt ausschließlich diesen Mainlauf einschließlich aller Pflichtjobs, Pages/Deployment, gewöhnlicher TLS-/151Gitblob-/SWv294-Prüfung und tatsächlicher DreiEngine-Produktion vollständig qualifizieren. Frühere/spätere Finanzierung, Chronologie, Referenz, CAS, Quota, Undo, Replay, Offline und verschlüsseltes Restore unverändert prüfen. **v294 noch NICHT LIVE_ACCEPTED; v293 nicht erneut abnehmen.**
+
+Alleiniger Owner14118750c7bb bleibt ACTIVE. Private SicherungV85 und alle Originale/Oracles, UH05/57Valutafälle, UI300 mit zehn Designnachträgen, QUALITY298, CI229, Android/PWA, Wallet/Staking/Buchungsverwaltung und sämtliche Schutzverträge erhalten. Keine neue Produktänderung während der Abnahme. Checkpointbranch niemals vollständig nach Main.
+
+---
+
 ## ACTIVE – 14118750c7bb / ausdrückliche Ausnahmefreigabe PR314 / v294 Integration · 07.11.2026
 
 Der Nutzer hat auf die konkrete Frage nach dem Merge von PR314 trotz ungeklärter historischer Alpha-IDB-Ursache ausdrücklich mit **„Ja“** geantwortet. Diese neue Ausnahmefreigabe erlaubt die Integration des unveränderten Diagnosekandidaten und die anschließende vollständige reguläre Releaseprüfung. Sie ist kein Ursachenbeweis, keine bestätigte Reparatur und kein LIVE_ACCEPTED. Die frühere Entscheidungssperre ist für genau diesen Kandidaten aufgehoben; alle Pflichtgates bleiben unverändert.
