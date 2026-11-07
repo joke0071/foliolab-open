@@ -1,3 +1,11 @@
+## ACTIVE – 0a8644a36676 / reguläre HND01-Übernahme / externer Sparplanablauf – 07.11.2026
+
+Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach vollständiger STOPPED/HANDOVER_READY-Abgabe durch5ee91c771f2c übernommen. Übergabe und Finanzierungsvertrag vollständig gelesen. Zweifacher Branchrefabgleich unverändert, Main2ca2e03ca1ba203f587f79444fdb43fc4ea62b36/Tree129c9cac1391f7a306087395c6fc42a01e8d0d4b, nur historische Drafts157/161,0laufende/queuedActions. Private SicherungV76 frisch materialisiert:23486432Bytes, SHA256b66fc00026bcb25eb24acfe45c693316cbce9897a7392957b3dfc2dad61c4da0; alle4819Manifestdateien geprüft. Kein konkurrierender Produktstrang erkennbar.
+
+Jetzt enger explizit externer Finanzierungsablauf im bestehenden Import-/Journal-/CAS-Kern; Girokonto bleibt außerhalb. Chronologieentscheidung: echte Buchdaten und Valuta getrennt erhalten, negative Cashbestände bleiben gesperrt; nur unabhängig belegte datierte Eröffnungen, keine aus dem späteren Finanzierungsbetrag erfundenen Bestände. VierGruppen/zwölfOriginalzeilen und bestehendeDecimal-/Mainbelege wiederverwenden, Originale nicht erneut anfordern. v292LIVE_ACCEPTED nicht erneut abnehmen. Alle übrigen Aufträge/Schutzverträge erhalten. Ein isolierter Mainkandidat, keine CI duplizieren/abbrechen; Checkpointbranch niemals vollständig nachMain. Noch keine neue Produkt-/Produktionsfreigabe.
+
+---
+
 ## HANDOVER_READY – 5ee91c771f2c STOPPED / v292 LIVE_ACCEPTED / Sparplan-Originalquellen vollständig – 07.11.2026
 
 **5ee91c771f2c ist STOPPED und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit vollständig ab.** Früher sicherer HND01-Punkt nach langem Quellen-/QA-Kontext, vor der jetzt anstehenden Finanzimplementierung. [Vollständige Übergabe mit Startprompt](HANDOVER_5ee91c771f2c_2026-11-07.md). Kein Produkt-WIP, aktiver Produktkandidat oder weiterer Produkt-/Integrationsstrang durch diesen Chat.
