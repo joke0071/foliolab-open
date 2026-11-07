@@ -1,3 +1,13 @@
+## ACTIVE – 0a8644a36676 / PR312 vorbereiteter finaler Kandidat / erster Lauf wird nicht abgebrochen – 07.11.2026
+
+Vorbereiteter, noch nicht aufProduktref veröffentlichter Commitf9e22a67c56d7daaaa65e58aed7ada4a556ce517/Tree10db823ab52976384b6be2febbb9e01412659c3e.15Dateien/3Commits direkt aufexaktemMain, keineCheckpoint-Produktdateien integriert.1274Units/0Fehler/0Skips undSyntax PASS,20gezielteFinanztests; zusätzlicheexplizite13/8-Quellscopefälle und lineareReferenz-/Dokumentdigestindizes geprüft.750synthetischeZeilen/250Finanzierungsgruppen in301ms erkannt; keinHardware-/Nutzerhistorienbenchmark.
+
+Erster bestehenderLauf42361524854:WalletSUCCESS,Cross1/2SUCCESS,ChromiumtestFAILED am neuenBrowser-Undovergleich; letzterCross3-Job nochlaufend. TatsächlichesLoggelesen: ausschließlich neu erzeugteBookingUUID imexternenFlow unterschied sich nachvollständigemUndo/Neuimport; Mengen,Bankquellen,Rollen undPostings identisch. NeuerTest vergleicht denFlow überstabileBankquelle undprüft weiterFlow.id===Einzahlungsbuchung.id. Quota/post-put/einCAS/siebenBreiten/Axe davorPASS; mobiles390px-Bild tatsächlich angesehen. KeinProduktions-/Nutzerportfolio-PASS daraus ableiten. Erst nachvollständigemEndedesaltenLaufs neuenHEAD veröffentlichen, keineConcurrency-Abbrüche oder CI-Duplikate. Danach vollständigePflichtCI/Integration/tatsächlicheProduktion; Main/v292weiterunverändert,keineerneuteAbnahme.
+
+AlleOriginale/SicherungV77/vorherigeNachweise/übrigenAufträge/Schutzverträgeerhalten. AlleinigerOwner0a8644a36676 ACTIVE. GitHubnurPlugin; CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 0a8644a36676 / UH05 externer Finanzierungsablauf PR312 / SicherungV77 – 07.11.2026
 
 [PR312](https://github.com/joke0071/foliolab-open/pull/312), veröffentlichterHEADaf66fd30394686643ce92dc2cf69b33e1ff2fdc5/Treeec537f5b49c45b03d9a5bbcc1cb222fc67f803d5. Bestehender Integrationslauf42361524854 läuft, Wallet42361524821 SUCCESS. Keine CI dupliziert oder abgebrochen. Noch kein Merge/Deployment/neuesLIVE_ACCEPTED; Main/v292 bleibt2ca2e03ca1ba203f587f79444fdb43fc4ea62b36, nicht erneut abgenommen.
