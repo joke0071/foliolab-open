@@ -1,0 +1,87 @@
+{
+  "status": "MAIN_RELEASE_BLOCKED",
+  "main": "43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+  "tree": "b9e0345db3a1c0ceaa114d961220d3b17971cd71",
+  "PR": 313,
+  "run": 42378307203,
+  "attempt": 1,
+  "failedJob": 128420432338,
+  "failedShard": "cross-engine (2)",
+  "engine": "firefox",
+  "phase": "tests/browser-alpha-vantage.mjs:63; persisted-budget exhaustion fixture setup",
+  "error": "alphaCache open did not settle within its existing 5000ms timeout; timer src/alpha-vantage.js:26",
+  "established": [
+    "same Main tree as accepted PR313",
+    "four synthetic Alpha quote updates completed",
+    "four provider calls, zero captured pageerrors",
+    "failure after cache/reload/diagnosis/seven-width checks, during direct test alphaCache.update setup",
+    "Alpha implementation and browser-alpha-vantage test unchanged by PR313",
+    "no evidence of transient external HTTP5xx/network/deployment cause"
+  ],
+  "unknown": [
+    "why the real Firefox IndexedDB open request did not settle within 5000ms",
+    "whether IDB request processing, fixture lifecycle or host scheduling caused delay",
+    "relation to earlier startup timeout evidence"
+  ],
+  "prohibitedInference": [
+    "not proven a funding regression",
+    "not proven fixed or harmless flake",
+    "no current Main overall PASS or deployment/live acceptance",
+    "do not replace Main gate by PR PASS"
+  ],
+  "artifact": {
+    "id": 13576188869,
+    "sha256": "797dfb30b55cd2fb10be1ea6efcc24160b8903f00d18c22b4a5dd2b0f24a980b",
+    "sizeBytes": 7432117,
+    "zipCRC": "PASS",
+    "JSONReports": 3,
+    "decodedPNGs": 38,
+    "integrityOnly": true
+  },
+  "currentJobs": [
+    {
+      "id": 128420388642,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420432338,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "id": 128420432369,
+      "name": "test",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 128420432389,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420432398,
+      "name": "cross-engine (3)",
+      "status": "in_progress",
+      "conclusion": null
+    },
+    {
+      "id": 128420433297,
+      "name": "FAST only / UI contract canary \u2014 no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "retryPolicy": "CI229 only narrow proven external transient5xx/network/deployment retries; no blind IDB/test retry, weakened guard or timeout increase",
+  "currentProduction": "last LIVE_ACCEPTED v293; v294 deployment/live not reached",
+  "next": "Finish/qualify already-running jobs without interruption. Then controlled synthetic IDB-open lifecycle diagnostic on exact unchanged Alpha code before any justified fix/new candidate; no blind retry or second financial implementation.",
+  "snapshotAtUTC": "2026-11-07T13:57:50.013Z",
+  "sourceGitBlobs": {
+    "src/alpha-vantage.js": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2",
+    "tests/browser-alpha-vantage.mjs": "94958749f6e56829d2641e54cb7b4d23004cd935"
+  }
+}
