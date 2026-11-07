@@ -1,3 +1,13 @@
+## ACTIVE – 14118750c7bb-r2 / reguläre HND01-Übernahme nach wieder verfügbarer Umgebung / v294 DEPLOYED, Live offen · 07.11.2026
+
+Nach ausdrücklicher Übergabe von14118750c7bb STOPPED/HANDOVER_READY und wieder verfügbarer Ausführungsumgebung übernimmt Fortsetzung14118750c7bb-r2 allein. Vollständige Übergabe/Entscheidungs-/CI-/Alpha-/Finanzbelege gelesen. Vor erstem GitHub-Schreibzugriff frisch geprüft: Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2 unverändert, PR313/314 gemergt, Reviews/Threads/Conversation leer, nur geparkte Drafts157/161 offen. Zwei vollständige Branchref-Snapshots identisch, keine konkurrierende Owner-/WIP-Aktivität erkennbar. Private V85 neu geladen,26812533Bytes/SHA2568990d93994c23e1223bf439ec5a928d5b04ed50008354dfcb270967ac3cc7571 und sämtliche5529Manifestdateien am Archiv bytegeprüft.
+
+Die bereits erteilte ausdrückliche Nutzer-Ausnahmefreigabe zu PR314 gilt; keine erneute Freigabe nötig. Historische Alpha-IDB-Ursache bleibt UNKNOWN, kein Fixbeweis. Bestehender Mainlauf42398484107 Versuch1:1294Tests/0Fehler/0Skips und Haupt-/Cross1-/Cross2-/Cross3-/Deploymentjobs SUCCESS. Deployment128486932524 bestätigt Homepage/SW; tatsächlicher Livejob128487017950 läuft. **v294 DEPLOYED, noch NICHT LIVE_ACCEPTED.** v293 nicht erneut abnehmen. Neue Artefakte jetzt unabhängig Hash/Größe/CRC/JSON/PNG und Pages/Gitblobs/TLS/Assets qualifizieren; Livejob unverändert bis vollständigem Abschluss verfolgen. Keine CI duplizieren, wiederholen oder abbrechen.
+
+Sämtliche Originale/Oracles, UH05/57Valutafälle, UI300 mit zehn Designnachträgen, QUALITY298/CI229/Android/PWA/Wallet/Staking/Buchungsverwaltung und alle Schutzverträge unverändert erhalten. Keine Produktänderung während der Abnahme; Checkpointbranch niemals vollständig nach Main. Nach tatsächlicher vollständiger v294-Abnahme neue private Sicherung unter gleicher Identität und UH05-Fortsetzung.
+
+---
+
 ## HANDOVER_READY – 14118750c7bb STOPPED / PR314 gemergt / Main42398484107 läuft · 07.11.2026
 
 **14118750c7bb ist STOPPED/HANDOVER_READY und gibt vollständig ab.** Lokale Ausführungsumgebung als unavailable gemeldet; keine weitere Produktarbeit. [Vollständige Übergabe](HANDOVER_14118750c7bb_2026-11-07.md). GitHub-Actions unbeeinträchtigt weiterlaufen lassen.
