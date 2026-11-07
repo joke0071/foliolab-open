@@ -27,9 +27,12 @@ src/flatex-net-settlement.js, fundingProof, fordert ausdrücklich row.dates.valu
 
 Der vorhandene Journal-/Cashpfad richtet sich nach den Originalbuchtagen. Unterschiedliche Valuta sind eine gesonderte Beweis-/Readervertragsfrage und kein Anlass, Journalereignisse umzudatieren, Bestände zu erfinden oder negative Cashchronologie freizugeben. Allgemeine native Bank-/CSV-Identität, Quellenpayload, Vollständigkeit und Eigentumsschutz bleiben unverändert.
 
+
+**Zusätzliche echte Produktgrenze:** fundingProof fordert außerdem row.dates.bookingDate<=settlement.valueDate. Bei allen57 Originalfällen liegt der Finanzierungsbuchtag nach der Order-Valuta; sie verletzen deshalb beide Produktbedingungen. Das alte Auditmerkmal fundingNotAfterValue vergleicht den Finanzierungsbuchtag mit der eigenen Finanzierungsvaluta und ist hier weiterhin erfüllt. Bei identischen Valuten waren diese beiden Vergleiche äquivalent; für die57 verschiedenen Valuten sind sie getrennt zu behandeln. Der neue private Oracle führt sharedValueDate und fundingBookNotAfterTradeValue ausdrücklich als zwei getrennte, jeweils57-mal falsche Produktguards. Eine bloße Lockerung der Valutagleichheit würde die57 deshalb weiterhin zurückweisen und klärt den fachlichen Vertrag nicht.
+
 ## Nächster begrenzter Umsetzungsschritt
 
-Zuerst einen engen gespeicherten Vertrag für verschiedene Originalvaluten mit den nun vorhandenen57 unabhängigen Sollfällen und synthetischen Negativfällen festlegen. Kein bloßes Entfernen des Vergleichs oder verändertes Datumsfeld im bestehenden V1-Vertrag.
+Zuerst einen engen gespeicherten Vertrag für verschiedene Originalvaluten und Finanzierung nach der Order-Valuta mit den nun vorhandenen57 unabhängigen Sollfällen und synthetischen Negativfällen festlegen. Kein bloßes Entfernen des Vergleichs oder verändertes Datumsfeld im bestehenden V1-Vertrag.
 
 Vollständige Quellen-/Referenz-/Währungs-/Mengen-/Rollensperren, Dubletten-/Overlap-/Payload-/Kontozuordnungsfälle und exakte Tagescash-/Bestands-/Flussoracles prüfen. Individuelle aktuelle externe Rolle und unabhängig belegte Anfangsbestände bleiben erforderlich. Bekannte Kostenbasen/Referenzen und bereits bestehende Historie behalten ihre Sperren; keine Differenz als Gebühr/Steuer/FX/Kostenbasis deuten.
 
