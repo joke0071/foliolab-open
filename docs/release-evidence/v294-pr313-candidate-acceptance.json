@@ -1,0 +1,81 @@
+{
+  "status": "CANDIDATE_ACCEPTED",
+  "PR": 313,
+  "head": "7d40ed23991854f3c89a08888bcb03719066820b",
+  "tree": "b9e0345db3a1c0ceaa114d961220d3b17971cd71",
+  "testedMerge": "e850cb5df8f3524845ede90574b2e92768230cce",
+  "mainBeforeMerge": "65405435d79e2cd102f18aa7a0d1c2bff8ae3896",
+  "integrationRun": 42376476994,
+  "walletRun": 42376476948,
+  "attempt": 1,
+  "units": {
+    "tests": 1294,
+    "passed": 1294,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "browserScenarios": [
+    "chromium before PASS",
+    "chromium after PASS",
+    "firefox before PASS",
+    "firefox after PASS",
+    "webkit before PASS",
+    "webkit after PASS"
+  ],
+  "qualifiedArtifacts": 6,
+  "jsonReports": 204,
+  "decodedPNGs": 1923,
+  "artifactApiUploadLocalDigestsMatch": true,
+  "zipCRC": "PASS",
+  "jsonFailureFlags": [],
+  "earlierMobileScreenshotsViewed": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "actualUserOpeningEvidence": false,
+  "actualUserPortfolioImportAccepted": false,
+  "privateOriginalCheck": "five groups/15 rows; both orders, independent holdings/flows/daily cash/values/dates, replay/restore/Undo PASS with controlled roles and openings only",
+  "actualV293Reader": "normal v293 funding accepted; earlier new contract rejected",
+  "currentProduction": "v293 LIVE_ACCEPTED; v294 not merged/deployed/accepted yet",
+  "unchangedProtections": true,
+  "artifacts": [
+    {
+      "id": 13576432126,
+      "name": "release-gates-e850cb5df8f3524845ede90574b2e92768230cce",
+      "sizeBytes": 62104097,
+      "digest": "sha256:2eda776cbeb18e8ddab48c1fd76768ee256c6e3f8da302c160351874f23ca71f"
+    },
+    {
+      "id": 13576376240,
+      "name": "cross-engine-gates-e850cb5df8f3524845ede90574b2e92768230cce-1",
+      "sizeBytes": 58287193,
+      "digest": "sha256:319ad19ca11f9b10c2788f7b1eab1e30edd9e8845d43e3c7e5a325bc10df66e6"
+    },
+    {
+      "id": 13576357373,
+      "name": "dialog-visual-reference",
+      "sizeBytes": 933895,
+      "digest": "sha256:5c6a797491933705e0b22e198c3265d8e6736d382fa937ee37f377d568ab6106"
+    },
+    {
+      "id": 13576312067,
+      "name": "cross-engine-gates-e850cb5df8f3524845ede90574b2e92768230cce-3",
+      "sizeBytes": 63685044,
+      "digest": "sha256:520b5287cf84df864caace7b2e112ad0f8cec6ec21e67ac4a4266d2ef0e5bcfa"
+    },
+    {
+      "id": 13576300885,
+      "name": "cross-engine-gates-e850cb5df8f3524845ede90574b2e92768230cce-2",
+      "sizeBytes": 11599630,
+      "digest": "sha256:d4682ca6b389f80e42ed38e721240126ed082131740f3d73b7e5cb3fbdfabe6a"
+    },
+    {
+      "id": 13575693427,
+      "name": "ci-stage-e850cb5df8f3524845ede90574b2e92768230cce",
+      "sizeBytes": 629,
+      "digest": "sha256:0ba36d330a117396ecfa8a0776bd21b84b660cb96c94db017bb64735ee5aa458"
+    }
+  ]
+}
