@@ -1,3 +1,15 @@
+## HANDOVER_READY – 14118750c7bb STOPPED / PR314 gemergt / Main42398484107 läuft · 07.11.2026
+
+**14118750c7bb ist STOPPED/HANDOVER_READY und gibt vollständig ab.** Lokale Ausführungsumgebung als unavailable gemeldet; keine weitere Produktarbeit. [Vollständige Übergabe](HANDOVER_14118750c7bb_2026-11-07.md). GitHub-Actions unbeeinträchtigt weiterlaufen lassen.
+
+**Neue tatsächliche Nutzer-Ausnahmefreigabe „Ja“ liegt vor** und wurde vor Merge [dokumentiert](release-evidence/v294-pr314-user-exception.json). PR314 expectedHEAD-gebunden gemergt; Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0/Treec1e1bd3290ecf687bf6c6aaac742ea9489529ee2 exakt gleich qualifiziertem Kandidaten. Historische Alpha-IDB-Ursache weiterhin UNKNOWN, kein Fixbeweis. Dieselbe Freigabe nicht erneut anfordern.
+
+Automatischer Mainlauf42398484107 Versuch1 läuft im vollständigen RELEASE-Pfad. Hauptjob128480959313 und Cross3/128480959341, Cross2/128480959352, Cross1/128480959375 beim letzten Snapshot IN_PROGRESS. Stagebeleg13584850149/354Bytes/SHA256b0c239dbbeaeb88cd0058a372a473fbf0a2bee57a40371a0fdf49ccb642e05bf lokal Hash/CRC/1JSON PASS:RELEASE/full=true. Kein Gesamt-PASS. Keine CI dupliziert/wiederholt/abgebrochen. Deployment/Live noch nicht erreicht; spätere Zustände frisch lesen. **v294 NICHT LIVE_ACCEPTED**, v293 nicht erneut abnehmen.
+
+Wegen unavailable-Umgebung weitere ZIP-/JSON-/PNG-/Pages-/TLS-/Assetqualifikation noch offen. Private Sicherung bleibt **V85**,26812533Bytes/SHA2568990d93994c23e1223bf439ec5a928d5b04ed50008354dfcb270967ac3cc7571;5529Manifestdateien zuvor geprüft, sämtliche5508V84-Dateien/Originale bytegleich. Metadaten frisch Version85 bestätigt; keine neuere Sicherung erstellt. Neuere Nutzerfreigabe/Merge/Run sind dauerhaft in GitHub gesichert und übersteuern den älteren privaten WAITING-State. Nächste verfügbare Umgebung: V85 prüfen, vorhandenen Mainlauf vollständig qualifizieren, tatsächliche Produktion aller drei Engines abnehmen und private Belege ergänzen. Erst vollständige Pflichtnachweise erlauben LIVE_ACCEPTED; danach UH05 fortsetzen. Alle übrigen Aufträge/Originale/Schutzverträge erhalten. Checkpointbranch niemals vollständig nach Main.
+
+---
+
 ## ACTIVE – 14118750c7bb / PR314 MERGED / v294 MAIN_RELEASE_PENDING · 07.11.2026
 
 [PR314](https://github.com/joke0071/foliolab-open/pull/314) wurde nach ausdrücklicher neuer Nutzer-Ausnahmefreigabe expectedHEAD-gebunden integriert. [Entscheidungsbeleg](release-evidence/v294-pr314-user-exception.json). Tatsächlicher Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0 besitzt exakt den qualifizierten Kandidatentreec1e1bd3290ecf687bf6c6aaac742ea9489529ee2. Ursprüngliche Alpha-IDB-Ursache bleibt UNKNOWN; keine Reparaturbehauptung.
