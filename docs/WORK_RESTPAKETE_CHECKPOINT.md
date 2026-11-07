@@ -1,3 +1,15 @@
+## ACTIVE – 0a8644a36676 / UH05 externer Finanzierungsablauf PR312 / SicherungV77 – 07.11.2026
+
+[PR312](https://github.com/joke0071/foliolab-open/pull/312), veröffentlichterHEADaf66fd30394686643ce92dc2cf69b33e1ff2fdc5/Treeec537f5b49c45b03d9a5bbcc1cb222fc67f803d5. Bestehender Integrationslauf42361524854 läuft, Wallet42361524821 SUCCESS. Keine CI dupliziert oder abgebrochen. Noch kein Merge/Deployment/neuesLIVE_ACCEPTED; Main/v292 bleibt2ca2e03ca1ba203f587f79444fdb43fc4ea62b36, nicht erneut abgenommen.
+
+Enger externer Ablauf im bestehenden CSV-/Journal-/CAS-Kern implementiert: unveränderteV1-Orderbelege, separate native Finanzierung, Einzelrollen, getrennte Cash-/Kapitalflusswirkung, Quellen-/Mitglieder-/Flowvalidierung und vollständigesUndo. Chronologie: echteBuchtage/Valuta, keineNegativcashfreigabe/erfundenenEröffnungen. Vollständige1273Units/0Fehler/0Skips undSyntax PASS;19gezielteTests, unabhängigerDecimaloracle, tatsächlicher alterv292Reader lehnt neuenVertrag ab. VierOriginalgruppen/zwölfZeilen privat durch neuenKern geprüft: beideDateireihenfolgen,8Buchungen/4externeFlüsse,exakteWerte/Wiederimport/Nullanfangssperre PASS; nur kontrollierte synthetischeTest-Eröffnung, keine tatsächlicheNutzeranfangs-/Portfoliofreigabe.
+
+Nachprüfung lokal gehärtet: datierteEröffnung auch dauerhaft beimRestore prüfen, vorhandeneBuchungen ohneJournal schützen, Referenzindex statt wiederholterZeilenparser. UnveröffentlichterGitcommit e8539de80efacce536ed0b85d3dd9d7d158a5280/Treeb81ac6f7d85ada2e8c61e3eb712467137c297454 ist bereits als Objekt gesichert. Erst bestehendenLauf vollständig beenden lassen, Fehler tatsächlich auswerten, danach kontrolliertenNachfolgeHEAD veröffentlichen; laufendeConcurrency niemals durchRefvorziehen abbrechen. FinaleDreiEngineCI/Integration/tatsächlicheProduktion bleiben Pflicht.
+
+PrivateSicherungV77 bestätigt:23687094Bytes/SHA25675c701d6c62372763c9ff2d4a96fa7b87b005cc3ae20b65683463490504f5fef;4824Manifestdateien amArchiv geprüft, alle4819V76-Dateien bytegleich erhalten. Einstieg delta-0a8644a36676/external-funding-stage/STATE.json. Originale/Identitäten/Referenzen bleiben privat. Alle übrigenSchutzverträge/Originale/UI300/QUALITY298/CI229/Wallet-/Staking-/Androidaufträge erhalten. Owner0a8644a36676 ACTIVE; kein parallelerStrang; Checkpointbranch niemals vollständig nachMain.
+
+---
+
 ## ACTIVE – 0a8644a36676 / reguläre HND01-Übernahme / externer Sparplanablauf – 07.11.2026
 
 Alleinige Entwicklungs-, Integrations-, QA- und Releasezuständigkeit nach vollständiger STOPPED/HANDOVER_READY-Abgabe durch5ee91c771f2c übernommen. Übergabe und Finanzierungsvertrag vollständig gelesen. Zweifacher Branchrefabgleich unverändert, Main2ca2e03ca1ba203f587f79444fdb43fc4ea62b36/Tree129c9cac1391f7a306087395c6fc42a01e8d0d4b, nur historische Drafts157/161,0laufende/queuedActions. Private SicherungV76 frisch materialisiert:23486432Bytes, SHA256b66fc00026bcb25eb24acfe45c693316cbce9897a7392957b3dfc2dad61c4da0; alle4819Manifestdateien geprüft. Kein konkurrierender Produktstrang erkennbar.
