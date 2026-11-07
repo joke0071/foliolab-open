@@ -1,3 +1,17 @@
+# Aktueller Nachtrag 07.11.2026 – enger externer Finanzierungsablauf v293 LIVE_ACCEPTED
+
+Der hier vorbereitete enge Finanzierungsvertrag ist mit PR312 produktiv umgesetzt und tatsächlich in Chromium/Firefox/WebKit abgenommen: Main65405435d79e2cd102f18aa7a0d1c2bff8ae3896, Tree10db823ab52976384b6be2febbb9e01412659c3e. [Vollständiger Livebeleg](release-evidence/v293-pr312-live-acceptance.json) / [Umsetzungs- und Chronologievertrag auf exaktem Main](https://github.com/joke0071/foliolab-open/blob/65405435d79e2cd102f18aa7a0d1c2bff8ae3896/docs/UH05_EXTERNAL_FUNDING.md).
+
+Im gemeinsamen CSV-Import den Modus „Sparplankauf mit externer Finanzierung“ auswählen. Ein bestehender V1-EUR-Kauf samt Orderbelastung und eine eindeutig zugehörige positive Finanzierung erhalten einen separaten versionierten Rollen-/Mitglieder-/Quellenvertrag. Jede ausgewählte Gruppe erfordert eine eigene aktuelle externe Bestätigung; das Girokonto bleibt außerhalb. Der bestehende CSV-/Journal-/CAS-Kern erzeugt Kauf und Einzahlung, beide Cashbewegungen und genau einen externen Kapitalfluss. Keine zweite Finanzengine, keine Umdeutung der V1/V2/V3-Belege oder Bankidentitätsschlüssel, keine pauschale Rolle für357historische Gutschriften.
+
+Originalbuchtag und Valuta bleiben getrennt. Eine spätere Finanzierung deckt keinen früheren negativen Cashbestand: unabhängig belegte datierte Anfangsbestände bleiben Pflicht und werden auch beim Restore geprüft. Keine erfundenen Eröffnungen oder Datumsverschiebungen. Differenzen/Kosten/Steuern bleiben ungeklärt. Bestehende Einzelbeine, widersprechende Referenzstände und nicht qualifizierte Historien bleiben geschützt; dies ist keine pauschale Backfill-/Vollhistorienfreigabe. Vollständiges Sitzungs-Undo, Wiederimport/Overlap, Rollen-/Kontowiderrufe, Quota/post-put, echter Zweittab, Offline und verschlüsselter FreshRestore sind auf Produktion in allen3EnginesPASS.
+
+Alle vier Originalgruppen/zwölf Zeilen wurden privat mit dem neuen Kern in beiden Dateireihenfolgen gegen die vorhandenen unabhängigen Sollwerte geprüft. Nur kontrollierte synthetische Eröffnungen dienten der Codeprüfung; kein tatsächlicher Nutzeranfangs-/Portfolioimportbeleg. Originalquellen bleiben vollständig vorhanden und unverändert; nicht erneut anfordern. Die tatsächlichen v292-Leser lehnen den neuen gespeicherten Vertrag ab; gewöhnliche bisherige v3/v5-Daten bleiben lesbar. Aktuelle kompatible Implementierung für den neuen Vertrag ist v293. Alle übrigen Aufträge und Schutzverträge bleiben erhalten.
+
+Die folgenden Abschnitte dokumentieren frühere Arbeitsstände und werden für den oben abgegrenzten Umsetzungsschnitt durch diesen Nachtrag übersteuert.
+
+---
+
 # UH05 – belegte Gutschrift und Orderbelastung getrennt erhalten
 
 Basis: v292 LIVE_ACCEPTED, Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Keine neue Produktfreigabe und keine erneute Releaseabnahme.
