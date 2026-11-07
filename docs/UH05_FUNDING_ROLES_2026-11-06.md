@@ -2,7 +2,15 @@
 
 Basis: v292 LIVE_ACCEPTED, Main `2ca2e03ca1ba203f587f79444fdb43fc4ea62b36`, Tree `129c9cac1391f7a306087395c6fc42a01e8d0d4b`. Keine neue Produktfreigabe und keine erneute Releaseabnahme.
 
-## Nachtrag: Finanzierungsrolle bestätigt, konkrete Originalzeilen fehlen
+## Aktueller Nachtrag: vollständige native Quellen liegen vor
+
+Der Nutzer hat die fehlenden nativen Depot- und Konto-CSVs geliefert. Die bisherigen Quellenlücken sind für die vier gezeigten Sparpläne geschlossen: vier Depotausführungen und acht getrennte Finanzierung-/Settlementkontobewegungen, alle Quellkurse und Quellenidentitäten vorhanden. Unabhängiger Python-Decimaloracle sowie unveränderter Main-Nettoplaner bestätigen alle vier Orderprüfbelege und jeweils fünf exakte Finanzwerte in beiden Dokumentreihenfolgen; IDs stabil, Quellen bytegleich. Keine erneute Originalanforderung.
+
+Die vier Finanzierungsgutschriften sind damit für einen engen explizit extern bestätigten Finanzierungsfall belegt. Der bisherige Nettoplaner übernimmt sie noch nicht. Keine neue Produktfähigkeit oder Nutzerportfolioabnahme behaupten. Die unterschiedliche Buch-/Valutachronologie muss bei der Implementierung ausdrücklich mit dem bestehenden Eröffnungs-/Cash-/Journalvertrag vereinbar bleiben. Keine erfundenen Anfangsbestände oder stille Datumsverschiebung.
+
+[Verbindliche vollständige Übergabe und nächster Umsetzungsschnitt](HANDOVER_5ee91c771f2c_2026-11-07.md). Die nachfolgenden früheren Quellenlücken sind historische Arbeitsstände und werden durch diesen Nachtrag übersteuert.
+
+## Historischer Nachtrag: Finanzierungsrolle bestätigt, konkrete Originalzeilen fehlten
 
 Der Nutzer bestätigt für den neu privat gezeigten Sparplanfall: Die Finanzierung wird per SEPA-Lastschrift vom eigenen Girokonto eingezogen. Dieses Konto liegt ausdrücklich außerhalb des verwalteten Portfolios und wird nicht in FolioLab angelegt. Die Flatex-Gutschrift ist damit ein externer Kapitalzufluss; der Wertpapierkauf bleibt eine interne Umschichtung. Einzahlung ist kein Gewinn und keine Rendite. Diese Erklärung gilt für den gezeigten Fall und ist keine pauschale Rollenfreigabe sämtlicher historischer Kauf-Gutschriften.
 
