@@ -1,3 +1,13 @@
+## ACTIVE – 706dbcb4272b / PR315 vollständig INTEGRATION_QUALIFIED / V90 / kontrollierter Merge folgt · 07.11.2026
+
+[Qualifikation](release-evidence/v295-pr315-integration-qualified.json):gefrorenerHEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd/synthetischerMergea31e96af8673688943d589e86b6d47e35f822fce/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709. VollerIntegrationslauf42417764703Versuch1SUCCESS;Wallet42417764651SUCCESS;1314Tests/0Fehler/0Skips/Syntax/alle3Crossjobs/ChromiumPASS. Alle6Artefakte(API+Uploadlog+Lokalhash/Größe/CRC),210JSON/1926PNG vollständigqualifiziert. Alle9FundingEngine/Timingberichte einschließlichneuerabweichenderValutaPASS;3neueCI-Mobilebilderangesehen. Richtige lokaleWorkflowversionenChromium1.56.1 undFirefox/WebKit1.64.1PASS;frühereWebKit26Offlinefehler separatbehalten,keinRootcausefixbehauptet.
+
+PrivateV90erfolgreich:29711105Bytes/SHA25676326aae5e649933340632c49384a6badc59bbfef2cdb49bae638753f2a15af6;alle6421Manifestdateiengeprüft,alle6107V89Dateienbytegleich. Einstiegdelta-706dbcb4272b/pr315-integration-qualified. VorMergeMain/Tree/Owner/alleRefs/PRs/Reviews/Inline/Conversation/Actions frischgeprüft:Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0unverändert,nurhistorischeDrafts157/161plus315,keinefremdenRefänderungen,0laufende/queuedActions,315mergeable/HEADexakt. JetztkontrollierterexpectedHEAD-Merge;danachvolleMain-/Deployment-/tatsächliche3Engine-ProduktionPflicht. NOCHKEINv295LIVE_ACCEPTED.
+
+v294LIVE_ACCEPTEDwiederverwendet,nichterneutabgenommen;historischeAlpha-IDB-UrsacheUNKNOWN/Ausnahmeverbraucht. 57Originaloracles/2SharedStapel/Altreader/Schutzverträge/individuelleRollen/belegteAnfänge/DKBaußerhalb erhalten;keineaktuelleNutzerimportabnahme. UH05gesamtPARTIAL;alleübrigenFach-/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking-Aufträgeerhalten. GitHubnurPlugin;CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 706dbcb4272b / PR315 eingefroren / UH05-Valutavertrag / V89 · 07.11.2026
 
 [PR315 und vollständiger Prüfstand](UH05_VALUE_DATE_PR315_2026-11-07.md). HEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 auf unverändertem Main13b6e2b5e7d10f250ea4c0b76bfa9a182b668db0. Genau8beabsichtigteÄnderungen,alleanderenMainblobs erhalten. Strikte neueFundingV2 fürbelegteNächsterKalendertag-Valuta;alteV1-/SettlementV1V2V3-/Quellenidentitäten unverändert. Buchtagcash/individuelleRolle/belegteAnfänge/Referenzen/Kosten-/Journal-/CAS-/Restoreverträge bleiben geschützt.
