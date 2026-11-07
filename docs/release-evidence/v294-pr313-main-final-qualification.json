@@ -1,0 +1,160 @@
+{
+  "status": "MAIN_RELEASE_BLOCKED",
+  "main": "43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+  "tree": "b9e0345db3a1c0ceaa114d961220d3b17971cd71",
+  "run": 42378307203,
+  "attempt": 1,
+  "conclusion": "FAILURE",
+  "originalFailureRecord": "v294-pr313-main-gate-failure.json",
+  "originalFailedJob": 128420432338,
+  "originalCause": "UNKNOWN",
+  "units": {
+    "passed": 1294,
+    "failed": 0,
+    "skipped": 0
+  },
+  "jobs": [
+    {
+      "id": 128420388642,
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420432338,
+      "name": "cross-engine (2)",
+      "status": "completed",
+      "conclusion": "failure"
+    },
+    {
+      "id": 128420432369,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420432389,
+      "name": "cross-engine (1)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420432398,
+      "name": "cross-engine (3)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 128420433297,
+      "name": "FAST only / UI contract canary — no integration approval",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 128426574863,
+      "name": "live-acceptance",
+      "status": "completed",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 128426574891,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "skipped"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 13577870501,
+      "name": "cross-engine-gates-43d4e7ad42ceb36b12ebd377d3a299173a421f93-3",
+      "sha256": "823ad20e27ac89c9e43da5f0e6a93e5a6fdae1fff8dbba62491e5120363c962e",
+      "sizeBytes": 63685010,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 86,
+      "decodedPNGs": 696,
+      "jsonFailureFlags": []
+    },
+    {
+      "id": 13577042160,
+      "name": "cross-engine-gates-43d4e7ad42ceb36b12ebd377d3a299173a421f93-1",
+      "sha256": "6a0ea3ca5619168d1ab78f851c6eef3375920550306967976173698fb0a7ddbd",
+      "sizeBytes": 58273411,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "jsonFailureFlags": []
+    },
+    {
+      "id": 13576921859,
+      "name": "release-gates-43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+      "sha256": "9b0256138df610e3d13002ecdaa0e84b60cd0d2f8b90ed50c9881cecdf009dec",
+      "sizeBytes": 62113519,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 85,
+      "decodedPNGs": 659,
+      "jsonFailureFlags": []
+    },
+    {
+      "id": 13576512524,
+      "name": "ci-stage-43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+      "sha256": "dcd8bd2427a087a4fcae6479cc74e8e50f549ba545c7abe3f485b12acfc43eda",
+      "sizeBytes": 353,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "jsonFailureFlags": []
+    },
+    {
+      "id": 13576344832,
+      "name": "dialog-visual-reference",
+      "sha256": "22e85314d6a292137337570c246e60e4d4e7b043dc937f82f8c91d50d95ed8b9",
+      "sizeBytes": 933847,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "jsonFailureFlags": []
+    },
+    {
+      "id": 13576188869,
+      "name": "cross-engine-gates-43d4e7ad42ceb36b12ebd377d3a299173a421f93-2",
+      "sha256": "797dfb30b55cd2fb10be1ea6efcc24160b8903f00d18c22b4a5dd2b0f24a980b",
+      "sizeBytes": 7432117,
+      "apiUploadLocalHashAndSizeMatch": true,
+      "zipCRC": "PASS",
+      "jsonReports": 3,
+      "decodedPNGs": 38,
+      "jsonFailureFlags": []
+    }
+  ],
+  "totals": {
+    "artifacts": 6,
+    "jsonReports": 190,
+    "decodedPNGs": 1887
+  },
+  "financing": {
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "timings": [
+      "before",
+      "after"
+    ],
+    "sixReports": "PASS",
+    "notUserPortfolioAcceptance": true
+  },
+  "release": {
+    "deployment": "SKIPPED",
+    "liveAcceptance": "SKIPPED",
+    "v294": "NOT DEPLOYED / NOT LIVE_ACCEPTED",
+    "lastLiveAccepted": "v293; not reaccepted"
+  },
+  "noRetriesCancelledOrDuplicatedCI": true,
+  "next": "PR314 is isolated metadata-only Alpha IDB lifecycle diagnostics, not a claimed root-cause correction. Original failure retained."
+}
