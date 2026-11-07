@@ -1,3 +1,4 @@
+import {observeAlphaIDBLifecycle} from './alpha-idb-lifecycle-probe.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {chromium,firefox,webkit} from 'playwright';
@@ -11,6 +12,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
  const browser=await ({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'}),p=await context.newPage(),calls=[],errors=[];
  p.on('pageerror',e=>errors.push(e.message));
+ const idbProbe=await observeAlphaIDBLifecycle(context,p);
  await p.addInitScript({content:readFileSync('node_modules/axe-core/axe.min.js','utf8')});
  await context.route('**/*',async route=>{
   const u=new URL(route.request().url());if(u.origin===new URL(base).origin)return route.continue();
@@ -38,7 +40,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
    for(const [symbol,isin]of pairs)m.positions.push(createPosition({id:symbol,providerId:'p',accountId:'a',name:'SYNTHETIC '+symbol,kind:'etf',symbol,isin,currency:'EUR',mic:'XETR',exchange:'Xetra',quantity:'3.141592653589793238',price:0},m));
    m.settings.autoRefresh=false;const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   },pairs);
-  await p.reload();await nav('more');await p.locator('#marketSettings').evaluate(e=>e.open=true);
+  await idbProbe.capture('before-reload');await p.reload();await nav('more');await p.locator('#marketSettings').evaluate(e=>e.open=true);
   assert.equal(await p.locator('[name=alphaVantageKey]').getAttribute('type'),'password');await p.locator('[name=alphaVantageKey]').fill('SYNTHETIC_ALPHA_KEY');
   await p.locator('#apiSettings button[type=submit]').click();await p.waitForFunction(()=>document.getElementById('toast')?.textContent==='Datenquellen und Zugänge lokal gespeichert.');
   const saved=await record();assert.equal(saved.settings.alphaVantageKey,'SYNTHETIC_ALPHA_KEY');assert.ok(!saved.raw.includes('SYNTHETIC_ALPHA_KEY'));
@@ -48,7 +50,7 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   assert.equal(calls.length,4);for(let i=1;i<4;i++)assert.ok(calls[i].time-calls[i-1].respondedAt>=2300,'Requests must leave the complete gap after a slow response');
   const history=await p.evaluate(async()=>{const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{fetchSecurityHistory}=await import('/src/security-sources.js');const s=new PortfolioStorage();try{const m=await s.initialize();return await fetchSecurityHistory(m.positions[0],m.settings,30);}finally{s.close();}});
   assert.equal(history.priceType,'close');assert.equal(history.points.at(-1).total,110);assert.equal(calls.length,4,'Quote/history share daily data');
-  await p.reload();await refresh();assert.equal(calls.length,4,'Cache survives reload');
+  await idbProbe.capture('before-reload');await p.reload();await refresh();assert.equal(calls.length,4,'Cache survives reload');
   const cache=await p.evaluate(async()=>{const {alphaCache,alphaKeyId}=await import('/src/alpha-vantage.js');const s=alphaCache();return {budget:await s.read('budget:'+await alphaKeyId('SYNTHETIC_ALPHA_KEY')),quote:await s.read('daily:VWCE.DEX')};});
   assert.equal(cache.budget.used,4);assert.ok(!JSON.stringify(cache).includes('SYNTHETIC_ALPHA_KEY'));
   await nav('more');await p.locator('#marketSettings').evaluate(e=>e.open=true);await p.locator('#checkMarketSources').click();await p.waitForFunction(()=>document.getElementById('marketDiagnosticStatus')?.textContent.includes('Diagnose beendet'));
@@ -59,16 +61,18 @@ for(const engine of (process.env.ETF_SOURCE_ENGINES||'chromium').split(',')){
   }
   assert.deepEqual(await record(),baseline,'Diagnosis/layout leaves canonical bytes/revision unchanged');
   await p.setViewportSize({width:390,height:844});
+  await idbProbe.capture('before-budget-exhaustion-fixture');
   // Exhausted persisted budget stops network and preserves the last good prices.
   await p.evaluate(async pairs=>{const {alphaCache,alphaKeyId}=await import('/src/alpha-vantage.js');const store=alphaCache();const id=await alphaKeyId('SYNTHETIC_ALPHA_KEY');await store.update('budget:'+id,old=>({...old,used:25}));for(const [symbol]of pairs)await store.update('daily:'+symbol+'.DEX',()=>({day:'1900-01-01'}));},pairs);
   await refresh();assert.equal(calls.length,4);await p.locator('#refreshErrorDetails > summary').click();assert.match(await p.locator('#refreshErrorDetails').innerText(),/Anfragelimit/);
   const after=JSON.parse((await record()).raw);assert.deepEqual(after.positions,JSON.parse(baseline.raw).positions);assert.deepEqual(after.journalEntries,model.journalEntries);
   // A confirmed denial survives reload, but a manual recheck can probe again.
   const denied=()=>p.evaluate(async()=>{const {fetchSecurityQuote}=await import('/src/security-sources.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');const s=new PortfolioStorage();try{const m=await s.initialize();for(const source of ['fmp','twelve'])try{await fetchSecurityQuote(m.positions[0],{...m.settings,securitySource:source,fmpKey:'SYNTHETIC_FMP',twelveKey:'SYNTHETIC_TWELVE'});}catch(e){if(!/Ungültige Wertpapier-Datenquelle/i.test(e.message)||e.message.includes('SYNTHETIC_'))throw e;}}finally{s.close();}});
-  const beforeDenied=await record();await denied();assert.equal(calls.length,4);await p.reload();await denied();assert.equal(calls.length,4);assert.deepEqual(await record(),beforeDenied);
+  const beforeDenied=await record();await denied();assert.equal(calls.length,4);await idbProbe.capture('before-reload');await p.reload();await denied();assert.equal(calls.length,4);assert.deepEqual(await record(),beforeDenied);
   assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',fourQuotes:true,rawClose:true,exactHoldings:true,sharedHistory:true,persistentCache:true,hashedBudget:true,serialThrottle:true,budgetExhaustionPreservesQuotes:true,retiredProviderRequests:0,diagnosticReadOnly:true,widths:[320,360,390,412,430,768,1440],axe:true});
   console.log(engine+': ALPHA-266 four ETF raw EOD/actual IDB/daily cache/shared history/2.5s serial/25-day budget/retention/retired provider exclusion/7 widths/Axe PASS');
- }catch(error){console.log('ALPHA_SYNTHETIC_FAILURE '+JSON.stringify({engine,calls,errors,ui:await p.evaluate(()=>({info:document.getElementById('priceInfo')?.textContent,errors:document.getElementById('refreshErrorDetails')?.textContent})).catch(()=>null)}));throw error;}
- finally{writeFileSync('artifacts/gates/alpha-vantage.json',JSON.stringify(report,null,2));await context.close();await browser.close();}
+ }catch(error){await idbProbe.capture('failure');console.log('ALPHA_SYNTHETIC_FAILURE '+JSON.stringify({engine,calls,errors,ui:await p.evaluate(()=>({info:document.getElementById('priceInfo')?.textContent,errors:document.getElementById('refreshErrorDetails')?.textContent})).catch(()=>null)}));throw error;}
+ finally{await idbProbe.capture('final');writeFileSync('artifacts/gates/alpha-vantage/idb-'+engine+'.json',JSON.stringify({engine,synthetic:true,metadataOnly:true,snapshots:idbProbe.snapshots},null,2));writeFileSync('artifacts/gates/alpha-vantage.json',JSON.stringify(report,null,2));await context.close();await browser.close();}
 }
 clearTimeout(deadline);
+
