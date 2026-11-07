@@ -1,3 +1,13 @@
+## ACTIVE – 706dbcb4272b / PR315 MERGED / v295 MAIN_RELEASE_PENDING · 07.11.2026
+
+PR315 expectedHEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd kontrolliertgemergt. NeuerMain090f94dda859d8baa1a63f2d0fd44c31d00900a4/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 exaktgleichdemvollständigqualifiziertenKandidaten. AutomatischerMainlauf42420146322Versuch1läuftunverändert. Test128546651246,Cross1/128546651358,Cross2/128546651277,Cross3/128546651321 inProgress;Main-/Deployment-/tatsächliche3Engine-ProduktionvollständigPflicht. **v295NICHTLIVE_ACCEPTED;v294bleibtbisherigeabgenommeneProduktion.** KeineCIwiederholt/dupliziert/abgebrochen.
+
+[Integrationsbelege](release-evidence/v295-pr315-integration-qualified.json) unverändert:1314Tests/0Fehler/Skips,6Artefakte/210JSON/1926PNG,9FundingEngine/TimingberichtePASS,57Originaloraclesundbeide57erSharedStapel/Altreaderbelege. PrivateV90:29711105Bytes/SHA25676326aae5e649933340632c49384a6badc59bbfef2cdb49bae638753f2a15af6,6421Manifestdateien/alle6107V89Dateienbytegleich. AlleSchutz-/Quellen-/Rollen-/Eröffnungs-/Journal-/CAS-/Restoreverträgeerhalten;DKBaußerhalb,keineaktuelleNutzerimportabnahme.
+
+NurlesenderFolgekatalog:diebeidenhistorischenExporteenthalten401strikte1:1Gruppen,keinenneuenOriginal-N:M-BelegindiesembegrenztenQuellenpaar. AktuellerKernunterstütztbereits1:1/2:1/3:1;alteV288/V289Planungen nichtneuimplementieren. KeinzweiterProduktstrang. SämtlicheübrigenUH05-/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking-Aufträgeerhalten. FehlendeWallet/StakingUNKNOWN. HistorischeAlpha-IDB-UrsacheUNKNOWN/Ausnahmeverbraucht. GitHubnurPlugin;CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 706dbcb4272b / PR315 vollständig INTEGRATION_QUALIFIED / V90 / kontrollierter Merge folgt · 07.11.2026
 
 [Qualifikation](release-evidence/v295-pr315-integration-qualified.json):gefrorenerHEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd/synthetischerMergea31e96af8673688943d589e86b6d47e35f822fce/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709. VollerIntegrationslauf42417764703Versuch1SUCCESS;Wallet42417764651SUCCESS;1314Tests/0Fehler/0Skips/Syntax/alle3Crossjobs/ChromiumPASS. Alle6Artefakte(API+Uploadlog+Lokalhash/Größe/CRC),210JSON/1926PNG vollständigqualifiziert. Alle9FundingEngine/Timingberichte einschließlichneuerabweichenderValutaPASS;3neueCI-Mobilebilderangesehen. Richtige lokaleWorkflowversionenChromium1.56.1 undFirefox/WebKit1.64.1PASS;frühereWebKit26Offlinefehler separatbehalten,keinRootcausefixbehauptet.
