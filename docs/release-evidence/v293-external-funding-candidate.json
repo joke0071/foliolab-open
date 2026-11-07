@@ -31,7 +31,7 @@
     "result": "PASS"
   },
   "independentOracle": "uh05-funding-decimal-oracle-2026-11-07.json",
-  "targetedTests": 19,
+  "targetedTests": 20,
   "regularThreeEngineCI": "required after candidate freeze",
   "productionAcceptance": "required after deployment",
   "noHardwareOrUserPortfolioClaim": true

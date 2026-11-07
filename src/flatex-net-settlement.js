@@ -566,12 +566,12 @@ export function validateFlatexFundingProof(proof){
 }
 /** Documentary offers never infer account ownership or approve any role. */
 export function inspectFlatexFundingGroups(documents){
- const inspection=inspectFlatexNetPairs(documents),sources=new Map(),byLine=documents.map(d=>new Map(d.rows.map(r=>[r.line,r])));
+ const inspection=inspectFlatexNetPairs(documents),sources=new Map(),byLine=documents.map(d=>new Map(d.rows.map(r=>[r.line,r]))),digests=documents.map(d=>sourceDigest(JSON.stringify([d.type,d.rows.map(r=>r.fields)])));
  for(const r of inspection.identities.rows){
   if(r.sourceType!=='account'||!r.sourceId||!r.externalId)continue;
   const doc=documents[r.sourceIndex],row=byLine[r.sourceIndex].get(r.line),key=sourceKey(r);
   const previous=sources.get(key);
-  const occurrence={documentDigest:sourceDigest(JSON.stringify([doc.type,doc.rows.map(x=>x.fields)])),line:row.line,fields:[...row.fields]};
+  const occurrence={documentDigest:digests[r.sourceIndex],line:row.line,fields:[...row.fields]};
   if(previous){if(previous.payloadDigest!==r.payloadDigest||r.status==='conflict')previous.conflict=true;if(!previous.occurrences.some(o=>o.documentDigest===occurrence.documentDigest&&o.line===occurrence.line))previous.occurrences.push(occurrence);}
   else sources.set(key,{type:'account',...(doc.dialect?{dialect:doc.dialect,sourceContext:{...doc.sourceContext}}:{}),sourceId:r.sourceId,externalId:r.externalId,payloadDigest:r.payloadDigest,fields:[...row.fields],occurrences:[occurrence],...(r.status==='conflict'?{conflict:true}:{})});
  }
