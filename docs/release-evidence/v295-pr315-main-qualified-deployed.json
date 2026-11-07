@@ -1,0 +1,249 @@
+{
+  "status": "MAIN_GATES_ACCEPTED / DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "owner": "706dbcb4272b",
+  "PR": 315,
+  "main": "090f94dda859d8baa1a63f2d0fd44c31d00900a4",
+  "tree": "86e3c7bfac6b861075259875d7f93ffabe6aa709",
+  "run": 42420146322,
+  "attempt": 1,
+  "stage": "RELEASE/full=true",
+  "units": {
+    "tests": 1314,
+    "passed": 1314,
+    "failed": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "testAndCross123": "SUCCESS",
+  "deployment": {
+    "job": 128552341153,
+    "result": "PASS",
+    "id": 13593817919,
+    "size": 560443,
+    "sha256": "c23687626d77649bf3374ceae54050b6622314e55ac21b10c619d73c79a9afb8",
+    "apiUploadLocalDigestSizeMatch": true,
+    "zipCRC": "PASS",
+    "exactMainGitblobs": 151,
+    "ordinaryTLS152Paths": "PASS"
+  },
+  "liveJob": 128552418950,
+  "live": "IN_PROGRESS; no LIVE_ACCEPTED claim",
+  "artifacts": [
+    {
+      "file": "main-13593661016.zip",
+      "size": 58289615,
+      "sha256": "8eaa7f3b6ed80d7fc435afb4ff8e80f18609552ada27ef690718849240e8d7a0",
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-13593671879.zip",
+      "size": 62209361,
+      "sha256": "8146956c2ca71b5ec3fca4852768cd05d7021e0a08aaacbf5b14f70c37869f81",
+      "zipCRC": "PASS",
+      "jsonReports": 87,
+      "decodedPNGs": 660,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-13594091144.zip",
+      "size": 933845,
+      "sha256": "983a395dcb45dd8324cbe41e3ee37b902b894a7ad441d1ddff0ace8502b4eb74",
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-13594235670.zip",
+      "size": 63879873,
+      "sha256": "07e15074f8ff594398e33fa74418c4b0173f8b7b635bf2e8198937f4d435b1ab",
+      "zipCRC": "PASS",
+      "jsonReports": 88,
+      "decodedPNGs": 698,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-13593008037.zip",
+      "size": 353,
+      "sha256": "8c236e6e45891063624d93480eecc8424b7da2c2b5ff3ed325715d4c9daba1ce",
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-13593965163.zip",
+      "size": 11605777,
+      "sha256": "7706ebaa98af5295308e280375a5ac79029c5ee5f8d22c6d1230b6e5496ef321",
+      "zipCRC": "PASS",
+      "jsonReports": 19,
+      "decodedPNGs": 74,
+      "flags": [],
+      "result": "PASS"
+    }
+  ],
+  "totals": {
+    "jsonReports": 210,
+    "decodedPNGs": 1926
+  },
+  "fundingNineReports": [
+    {
+      "engine": "chromium",
+      "timing": "next-day",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "timing": "before",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "chromium",
+      "timing": "after",
+      "dialect": "depot12/account10",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "timing": "next-day",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "timing": "before",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "timing": "after",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "timing": "after",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "timing": "next-day",
+      "dialect": "depot12/account10",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "timing": "before",
+      "dialect": "depot12/account10",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one purchase, negative order cash, positive external funding, both file orders",
+        "one UI CAS revision, two members/five postings/two cash movements, unknown charges; exact original booking/value dates",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "threeNewMainMobileImagesViewed": true,
+  "independentPagesAndTLS": "v295-pr315-independent-assets.json",
+  "noCIRetryCancelDuplicate": true,
+  "v294": "LIVE_ACCEPTED reused without reacceptance",
+  "historicalAlphaCause": "UNKNOWN, no fix claim or new exception",
+  "roleAndOpening": "Controlled tests only; actual per-group roles/evidenced user openings remain required; no user portfolio import acceptance"
+}
