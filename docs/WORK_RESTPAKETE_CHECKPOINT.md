@@ -1,3 +1,13 @@
+## ACTIVE – 0a8644a36676 / PR312 finaler HEAD eingefroren / reguläre Integrations-CI läuft – 07.11.2026
+
+FinalerPR312-HEADf9e22a67c56d7daaaa65e58aed7ada4a556ce517, Tree10db823ab52976384b6be2febbb9e01412659c3e, synthetischerMerge359398a9b19ae3eb3b328a54e882cd1da314491f mitidentischemTree. Alle15geändertenGitblobs bytegenaugegenlokaleDateien geprüft; Scope15Dateien/3Commits abexaktemMain. Vollständige1274Units/0Fehler/0Skips,20gezielteFinanztests undSyntaxPASS. KeineweiterenProduktänderungen währendQualifikation.
+
+ErsterLauf42361524854 vollständig FAILURE beendet, Wallet42361524821 SUCCESS. Cross1/2SUCCESS; Chromium undCross3 tatsächlicheLogszeigen denselbenbehobenenTestUUID-Vergleich nachkomplettemUndo/Neuimport. Erst danachRefperexpectedSHA vorgezogen. KeinelaufendeCIabgebrochen/dupliziert/manuellwiederholt. Finale reguläreIntegrations-CI42362993170 undWallet42362993148 fürgenaudiesenHEAD gestartet; vollständigeDreiEngineQualifikationnochPENDING. Main/v292weiter2ca2e03ca1ba203f587f79444fdb43fc4ea62b36/LIVE_ACCEPTED,keineerneuteAbnahme; keinMerge/neueProduktion.
+
+NächsterSchritt: genauvorhandenefinaleLäufe bisEndeverfolgen, vollständigeLogs/Artefakte/neueFinanzkette inChromium/Firefox/WebKit qualifizieren, Reviews/Main/PR/Ownerfrischprüfen, kontrolliertintegrieren und vorhandenenMainlauf einschließlichDeployment/tatsächlicherneuerProduktionsabnahmevollständigabschließen. Originale/SicherungV77/alleSchutzverträge undübrigenAufträgeerhalten; Eigentümer/Girokontoabgrenzungwiebelegt,keineerfundenenAnfangsbestände. Owner0a8644a36676 ACTIVE; CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 0a8644a36676 / PR312 vorbereiteter finaler Kandidat / erster Lauf wird nicht abgebrochen – 07.11.2026
 
 Vorbereiteter, noch nicht aufProduktref veröffentlichter Commitf9e22a67c56d7daaaa65e58aed7ada4a556ce517/Tree10db823ab52976384b6be2febbb9e01412659c3e.15Dateien/3Commits direkt aufexaktemMain, keineCheckpoint-Produktdateien integriert.1274Units/0Fehler/0Skips undSyntax PASS,20gezielteFinanztests; zusätzlicheexplizite13/8-Quellscopefälle und lineareReferenz-/Dokumentdigestindizes geprüft.750synthetischeZeilen/250Finanzierungsgruppen in301ms erkannt; keinHardware-/Nutzerhistorienbenchmark.
