@@ -1,3 +1,15 @@
+## ACTIVE – 0a8644a36676 / v294 Main-Gate fehlgeschlagen / keine Veröffentlichung · 07.11.2026
+
+Main `43d4e7ad42ceb36b12ebd377d3a299173a421f93`, Tree `b9e0345db3a1c0ceaa114d961220d3b17971cd71` exaktgleichgeprüftemPR313. BestehenderautomatischerMainlauf [42378307203](https://github.com/joke0071/foliolab-open/actions/runs/42378307203), Versuch1, läuftnoch; Cross2/Job128420432338 istFAILURE. **KeineDeployment-/Livefreigabe fürv294. v293bleibt letzteLIVE_ACCEPTED-Produktion, nichterneutabnehmen.** ÜbrigeJobs weiterlaufenlassen, keinAbbruch/keineWiederholung/keinRefvorziehen.
+
+TatsächlichesvollständigesFehlerloggelesen:Firefox imunverändertenAlpha-Vantage-Browserpfad, `tests/browser-alpha-vantage.mjs:63`, beiTestvorbereitungdeserschöpftenpersistiertenBudgets. `alphaCache.open()` antwortetinnerhalbderbestehenden5000msnicht;FehlerausTimer `src/alpha-vantage.js:26`. DavorviersynthetischeKursupdates, gemeinsamerCache/Reload/Diagnose/7Breitengeprüft;Diagnostikzeigt4Anfragen,0Pageerrors,UI4Datenupdates. Ursache desausstehendenIDB-open-Requests ist **nichtnachgewiesen**;nichtalsFinanzierungsregression,behobenenFlakeodererlaubtesTimeoutbypassausgeben. WederCache-Schutz/AnfragelimitnochTestsabschwächen oderblindwiederholen.
+
+Fehlerartefakt13576188869/SHA256 `797dfb30b55cd2fb10be1ea6efcc24160b8903f00d18c22b4a5dd2b0f24a980b`,7432117Bytes,API-/Uploadlog-/Lokalhashidentisch,ZIP-CRC/3JSON/38PNGlesbar; **ArtefaktintegritätistkeinJob-PASS**. VollständigePR313-Kandidatenqualifikationbleibtbelegt:1294Tests/alle3Engines/früheundspäteFinanzierung/6Artefakte/204JSON/1923PNG;Main-Pflichtgatenichtdadurchersetzen. PrivateV81/alleOriginale/alleübrigenAufträgeerhalten.
+
+JetztbestehendenMainlaufvollständigendenlassen,übrigeResultateundFehlerbelegequalifizieren,danachsichererHND01-PunktmitvollständigerSicherungundkonkreterIDB-open-DiagnosegrenzeoderbelegbaregezielteKorrektur. KeinweitererProduktstrang/keineCI-Duplikate. Owner0a8644a36676 unverändertACTIVE,Ausführung7c09945cb671. CheckpointbranchniemalsvollständignachMain;alleSchutzverträge/Originale/UI300-Nachträge/QUALITY298/CI229/Android/Wallet/Stakingerhalten.
+
+---
+
 ## ACTIVE – 0a8644a36676 / PR313 MERGED / v294 MAIN_RELEASE_PENDING / SicherungV81 · 07.11.2026
 
 [PR313](https://github.com/joke0071/foliolab-open/pull/313) kontrolliert per expectedHEAD `7d40ed23991854f3c89a08888bcb03719066820b` gemergt; tatsächlicher Main `43d4e7ad42ceb36b12ebd377d3a299173a421f93`. Kandidat und getesteter synthetischer Merge `e850cb5df8f3524845ede90574b2e92768230cce` haben Tree `b9e0345db3a1c0ceaa114d961220d3b17971cd71`, tatsächlichen Main-Tree unmittelbar frisch abgleichen. Neun isolierte Dateien/einProduktcommit; keinMerge desCheckpointbranches. VorMerge Main/Owner/PR/Reviews/Inline/Actions frischgeprüft:keine konkurrierendeAktivität,0laufende/queuedActions,keineReviews/Inlinekommentare.
