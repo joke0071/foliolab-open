@@ -1,3 +1,13 @@
+## ACTIVE – 706dbcb4272b / v295 Main1314PASS, Cross3offen / V91 gesichert · 07.11.2026
+
+Main090f94dda859d8baa1a63f2d0fd44c31d00900a4/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 unverändert. Mainlauf42420146322Versuch1:Test1314/1314/0Fehler/0Skips,Syntax,Chromium/Cross1/Cross2SUCCESS;5fertigeMainartefakte/API-Upload-Lokalhash/Größe/CRC/122JSON/1228PNG qualifiziert. Cross3/128546651321läuft;Deployment/Livefolgenregulär. **NochkeinLIVE_ACCEPTEDv295.** Vorherigev294Abnahmewiederverwendet,nichterneutgeprüft.
+
+PrivateV91erfolgreich:31624812Bytes/SHA2561affcc25c52673e37d9ccd70010cc90c23b20d9b3f7061210fe312f204eb27c3;alle6882ManifestdateienamArchivgeprüft,alle6421V90Dateienbytegleich. NeuerEinstiegdelta-706dbcb4272b/v295-main-pending/evidence/CURRENT_STATE.json. Keine neuenPNGbytesarchiviert,Originale/Oracles/allebisherigenBelegeerhalten. KeineCIdupliziert,wiederholtoderabgebrochen. JetztbestehendenMain-/Deploy-/tatsächlichen3Engine-Livelaufvollständigqualifizieren;erstnachallenPflichtnachweisenLIVE_ACCEPTED. 57Originaloracles/neuerstrikterV2Vertrag/individuelleRollen/belegteAnfänge/DKBaußerhalb,alteV1/V2/V3IdentitätenundalleSchutzverträgeerhalten. HistorischeAlpha-IDB-UrsacheUNKNOWN/Ausnahmeverbraucht;lokalealteWebKit26Probegetrenntbehalten,richtige1.64.1EnginesPASS.
+
+AlleweiterenUH05-/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking/Roadmapaufträgeunverändert. KeinparallelerProduktstrang. GitHubnurPlugin;CheckpointbranchniemalsnachMain.
+
+---
+
 ## ACTIVE – 706dbcb4272b / PR315 MERGED / v295 MAIN_RELEASE_PENDING · 07.11.2026
 
 PR315 expectedHEADb8f1bfbab2e499e963aaadaebd72cd694f2518fd kontrolliertgemergt. NeuerMain090f94dda859d8baa1a63f2d0fd44c31d00900a4/Tree86e3c7bfac6b861075259875d7f93ffabe6aa709 exaktgleichdemvollständigqualifiziertenKandidaten. AutomatischerMainlauf42420146322Versuch1läuftunverändert. Test128546651246,Cross1/128546651358,Cross2/128546651277,Cross3/128546651321 inProgress;Main-/Deployment-/tatsächliche3Engine-ProduktionvollständigPflicht. **v295NICHTLIVE_ACCEPTED;v294bleibtbisherigeabgenommeneProduktion.** KeineCIwiederholt/dupliziert/abgebrochen.
