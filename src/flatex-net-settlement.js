@@ -556,7 +556,7 @@ function fundingSourceRow(source){
 function fundingReference(row){return /^Kauf\s+([A-Z]{2}[A-Z0-9]{10})\s+(\d+)\s*$/i.exec(row.values.details);}
 function fundingProof(settlement,funding){
  const row=fundingSourceRow(funding),ref=fundingReference(row);
- if(settlement.version!==1||settlement.type!=='buy'||!ref||ref[1].toUpperCase()!==settlement.isin||ref[2]!==settlement.orderReference||funding.sourceId!==settlement.account.sourceId||sourceKey(funding)===sourceKey(settlement.account)||row.values.amountCurrency!=='EUR'||row.numbers.amount===null||units(row.numbers.amount)<=0n||units(row.numbers.amount)!==-units(settlement.cashExact)||row.dates.valueDate!==settlement.valueDate||!validCalendarDate(row.dates.bookingDate)||row.dates.bookingDate<settlement.date||row.dates.bookingDate>settlement.valueDate)fail();
+ if(settlement.version!==1||settlement.type!=='buy'||!ref||ref[1].toUpperCase()!==settlement.isin||ref[2]!==settlement.orderReference||funding.sourceId!==settlement.account.sourceId||sourceKey(funding)===sourceKey(settlement.account)||row.values.amountCurrency!=='EUR'||row.numbers.amount===null||units(row.numbers.amount)<=0n||units(row.numbers.amount)!==-units(settlement.cashExact)||row.dates.valueDate!==settlement.valueDate||!validCalendarDate(row.dates.bookingDate)||row.dates.bookingDate>settlement.valueDate)fail();
  return {version:1,id:'ff-'+sourceDigest(JSON.stringify([settlement.id,sourceKey(funding)])),role:'external',date:row.dates.bookingDate,valueDate:row.dates.valueDate,cashExact:exact(units(row.numbers.amount)),settlement:structuredClone(settlement),funding:structuredClone(funding)};
 }
 export function validateFlatexFundingProof(proof){
@@ -610,7 +610,7 @@ function validateFlatexFunding(model){
   const trade=members.find(b=>b.netFundingMember==='trade'),credit=members.find(b=>b.netFundingMember==='funding'),f=trade?.netFunding;
   if(!trade||!credit||!equal(f,credit.netFunding)||!equal(trade.netSettlement,f.settlement)||trade.netAugmentation?.version!==3||trade.netAugmentation.fundingId!==f.id||credit.netSettlement!==undefined||credit.netAugmentation!==undefined||credit.netMember!==undefined||credit.netReconciliation!==undefined)fail();
   const cash=model.positions.find(p=>p.id===trade.cashPositionId),j=model.journalEntries.find(j=>j.id===credit.journalEntryId);
-  for(const id of [trade.positionId,trade.cashPositionId]){const o=model.openingPositions.find(o=>o.positionId===id);if(!o||!validCalendarDate(o.asOf)||o.asOf>=f.settlement.date)fail();}
+  for(const id of [trade.positionId,trade.cashPositionId]){const o=model.openingPositions.find(o=>o.positionId===id),firstDate=id===trade.cashPositionId&&f.date<f.settlement.date?f.date:f.settlement.date;if(!o||!validCalendarDate(o.asOf)||o.asOf>=firstDate)fail();}
   if(!cash||credit.positionId!==cash.id||credit.accountId!==cash.accountId||credit.type!=='deposit'||credit.date!==f.date||credit.external!==true||credit.transferMatch||credit.targetPositionId||credit.cashPositionId||credit.costsVerified!==undefined||credit.quantityExact!==f.cashExact||credit.quantity!==Number(f.cashExact)||credit.amountExactEUR!==f.cashExact||credit.amountEUR!==Number(f.cashExact)||credit.unitPrice!==1||credit.fxRate!==1||credit.feeEUR!==0||credit.taxEUR!==0||credit.reconciliationStatus!=='recorded')fail();
   validateImportSource(credit.importSource,credit.accountId);validateJournalEntry(j);
   if(!sourceUnmodified(model,credit)||credit.importSource.sourceId!==f.funding.sourceId||credit.importSource.externalId!==f.funding.externalId||j.source!=='csv'||j.date!==f.date||j.type!=='deposit'||j.cashPositionId||j.status!=='recorded'||j.postings.length!==2)fail();
@@ -661,15 +661,15 @@ export function prepareFlatexFundingPreview(model,documents,assignments,{selecte
     if(!equal(normalized,merged))fail();f=merged;
     for(const b of draft.bookings.filter(b=>b.netFunding?.id===f.id)){b.netFunding=structuredClone(f);if(b.netSettlement)b.netSettlement=structuredClone(f.settlement);b.importSource.ownedSnapshot=bookingOwnership(draft,b);}
    }else for(const pos of [p,c]){
-    const journals=model.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id)),bookings=model.bookings.filter(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)),opening=model.openingPositions.find(o=>o.positionId===pos.id);
-    if(journals.length||bookings.length){if(!opening?.asOf||opening.asOf>=proof.date||journals.some(j=>j.date>=proof.date)||model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)&&(!b.netSettlement&&!b.netFunding||!sourceUnmodified(model,b))))throw Error('Neue Finanzierung muss nach der unveränderten belegten Journalhistorie liegen.');}
-    else touched.set(pos.id,proof.date);
-    if(model.snapshots.some(s=>s.byPosition&&Object.hasOwn(s.byPosition,pos.id)&&s.date>=proof.date))throw Error('Vorhandener Referenzstand benötigt gesonderten datierten Abgleich.');
+    const firstDate=pos.id===c.id&&f.date<proof.date?f.date:proof.date,journals=model.journalEntries.filter(j=>j.postings.some(x=>x.positionId===pos.id)),bookings=model.bookings.filter(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)),opening=model.openingPositions.find(o=>o.positionId===pos.id);
+    if(journals.length||bookings.length){if(!opening?.asOf||opening.asOf>=firstDate||journals.some(j=>j.date>=firstDate)||model.bookings.some(b=>[b.positionId,b.cashPositionId,b.targetPositionId].includes(pos.id)&&(!b.netSettlement&&!b.netFunding||!sourceUnmodified(model,b))))throw Error('Neue Finanzierung muss nach der unveränderten belegten Journalhistorie liegen.');}
+    else touched.set(pos.id,touched.has(pos.id)&&touched.get(pos.id)<firstDate?touched.get(pos.id):firstDate);
+    if(model.snapshots.some(s=>s.byPosition&&Object.hasOwn(s.byPosition,pos.id)&&s.date>=firstDate))throw Error('Vorhandener Referenzstand benötigt gesonderten datierten Abgleich.');
    }
    events.push({f,p,c,member:'trade',date:proof.date},{f,p:c,c:null,member:'funding',date:f.date});
   }
   if(touched.size){
-   if(!openingConfirmed||!validCalendarDate(openingDate)||[...touched.values()].some(d=>openingDate>=d))throw Error('Unabhängig belegten Anfangsbestand vor der frühesten Kaufbelastung bestätigen; keine Ableitung aus der späteren Finanzierung.');
+   if(!openingConfirmed||!validCalendarDate(openingDate)||[...touched.values()].some(d=>openingDate>=d))throw Error('Unabhängig belegten Anfangsbestand vor dem frühesten betroffenen Buchtag bestätigen; keine Ableitung aus der Finanzierung.');
    for(const [id]of touched){const p=draft.positions.find(p=>p.id===id),o=draft.openingPositions.find(o=>o.positionId===id);
     if(o&&(o.asOf!==openingDate||units(o.quantityExact)!==units(p.quantityExact??p.quantity)||o.costBasisExact!=null||o.realizedPnLExact!=null))throw Error('Vorhandene Eröffnung bleibt unverändert geschützt.');
     if(model.snapshots.some(s=>!s.byPosition||Object.hasOwn(s.byPosition,id)&&s.date>=openingDate))throw Error('Referenzstand benötigt gesonderten Bestandsabgleich.');
