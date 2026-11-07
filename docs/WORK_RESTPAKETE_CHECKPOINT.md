@@ -1,3 +1,15 @@
+## WAITING_FOR_USER_DECISION – 14118750c7bb / v294 Ursache UNKNOWN / sichere FortsetzungV85 · 07.11.2026
+
+AlleinigeHND01-Übernahme dokumentiert; Owner14118750c7bb bleibt zuständig, keine STOPPED-/Parallelfreigabe. [Vollständiger sicherer Fortsetzungspunkt](CONTINUATION_14118750c7bb_2026-11-07.md). Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71 und PR314-HEADcfcbeaf43d9751895e6bddd77011d9cef0b855b2 unverändert. PR314 OPEN/FROZEN/UNMERGED. Main42378307203FAILURE; vorhandeneIntegration42383067257/Wallet42383067236SUCCESS unverändert. KeineCIwiederholt/dupliziert/abgebrochen; frisch0laufende/queuedActions. v293nicht erneutabgenommen; **v294 NICHT DEPLOYED/LIVE_ACCEPTED.**
+
+[NeuegezielteDiagnose](ALPHA_IDB_FOLLOWUP_2026-11-07.md):vollständigesOriginaljoblog/statischer143Modulvergleich undvierkontrollierteNativeFirefox157-Szenarien. GehalteneVerbindung/6200msSchreibtransaktion/close-pending:Open2–3ms,korrektesLesen nachCommit.5300msHauptthreadstillstand:Success vorTimer,keinTimeout. KeineReproduktion,ursprünglicheUrsacheweiterUNKNOWN. KeinidentifizierterexpliziterUpgrade-/Deleteauslöser imnormalenFixture;keinRootcause-/Fix-/Harmlosigkeitsbeweis. KeineProdukt-/Workflow-/Frist-/Schutzänderung.
+
+**Entscheidungsgrenze unverändert:**Keine neueAusnahmefreigabe.NutzerverlangtbelegbareUrsache;PR314-MergestartetReleasekette undistbeiUNKNOWNnur nachausdrücklicherneuerNutzerfreigabezulässig.BeiFreigabebestehendenqualifiziertenKandidaten/CI wiederverwenden,frischeGuards/expectedHEAD,danachvollständigeautomatischeMain-/Deployment-/TLS-/Assets-/SWv294-/tatsächlicheDreiEngineProduktion.ErstvollständigePflichtnachweiseLIVE_ACCEPTED.OhneFreigabev294gesperrt,weitereDiagnosenurmitneuerkonkreterHypothese.
+
+**PrivateV85 erfolgreich:**26812533Bytes/SHA2568990d93994c23e1223bf439ec5a928d5b04ed50008354dfcb270967ac3cc7571;alle5529Manifestdateien amArchivgeprüft,sämtliche5508V84-Dateien einschließlichOriginalebytegleicherhalten.Einstiegdelta-14118750c7bb/v294-targeted-cause-followup/investigation/STATE.json. AlleUH05/UI300zehnNachträge/QUALITY298/CI229/Android/PWA/Wallet/Staking/Buchungsaufträge undSchutzverträge unverändert erhalten.Checkpointbranchniemalsvollständig nachMain.
+
+---
+
 ## ACTIVE – 14118750c7bb / alleinige HND01-Übernahme / v294-Ursachengate · 07.11.2026
 
 Reguläre alleinige Übernahme nach vollständig gelesener STOPPED/HANDOVER_READY-Abgabe von96c2624a1e89. Vor erstem GitHub-Schreibzugriff frisch bestätigt: Main43d4e7ad42ceb36b12ebd377d3a299173a421f93/Treeb9e0345db3a1c0ceaa114d961220d3b17971cd71, PR313 gemergt. Zwei vollständige Branchref-Snapshots identisch (278Refs), keine konkurrierende Owner-/WIP-Aktivität erkennbar. Nur eingefrorener PR314 und geparkte Drafts157/161 offen; PR314-HEADcfcbeaf43d9751895e6bddd77011d9cef0b855b2 unverändert, Reviews/Threads/Conversation leer. Keine laufenden/queued Actions. Mainlauf42378307203 Versuch1 FAILURE; PR314-Integration42383067257/Wallet42383067236 SUCCESS. Private V84 frisch materialisiert:26348769Bytes/SHA256cf96135a62bccf399ca7d2bfa3c49d075dc0d08ff8e32e4311ab1bf264cb3182; sämtliche5508Manifestdateien bytegeprüft,0Abweichungen.

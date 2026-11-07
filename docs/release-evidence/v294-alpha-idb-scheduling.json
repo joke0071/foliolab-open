@@ -1,0 +1,134 @@
+{
+  "runtime": "157.0",
+  "sourceMain": "43d4e7ad42ceb36b12ebd377d3a299173a421f93",
+  "synthetic": true,
+  "originalCause": "UNKNOWN",
+  "results": [
+    {
+      "scenario": "held-connection",
+      "value": {
+        "value": 7
+      },
+      "error": null,
+      "operationMs": 4,
+      "maxGap": 53,
+      "ticks": 2,
+      "heldRequests": 0,
+      "events": [
+        {
+          "type": "open",
+          "at": 298,
+          "id": 1
+        },
+        {
+          "type": "success",
+          "at": 301,
+          "id": 1
+        }
+      ]
+    },
+    {
+      "scenario": "active-write",
+      "value": {
+        "value": 7
+      },
+      "error": null,
+      "operationMs": 6200,
+      "maxGap": 51,
+      "ticks": 125,
+      "heldRequests": 59286,
+      "events": [
+        {
+          "type": "held-write-start",
+          "at": 93
+        },
+        {
+          "type": "open",
+          "at": 93,
+          "id": 1
+        },
+        {
+          "type": "success",
+          "at": 96,
+          "id": 1
+        },
+        {
+          "type": "held-complete",
+          "at": 6293
+        }
+      ]
+    },
+    {
+      "scenario": "close-pending-write",
+      "value": {
+        "value": 7
+      },
+      "error": null,
+      "operationMs": 6200,
+      "maxGap": 52,
+      "ticks": 125,
+      "heldRequests": 78393,
+      "events": [
+        {
+          "type": "held-write-start",
+          "at": 63
+        },
+        {
+          "type": "held-close-call",
+          "at": 63
+        },
+        {
+          "type": "open",
+          "at": 63,
+          "id": 1
+        },
+        {
+          "type": "success",
+          "at": 65,
+          "id": 1
+        },
+        {
+          "type": "held-complete",
+          "at": 6263
+        }
+      ]
+    },
+    {
+      "scenario": "main-thread-gap",
+      "value": {
+        "value": 7
+      },
+      "error": null,
+      "operationMs": 5302,
+      "maxGap": 5311,
+      "ticks": 4,
+      "heldRequests": 0,
+      "events": [
+        {
+          "type": "open",
+          "at": 131,
+          "id": 1
+        },
+        {
+          "type": "main-thread-released",
+          "at": 5431
+        },
+        {
+          "type": "success",
+          "at": 5431,
+          "id": 1
+        }
+      ]
+    }
+  ],
+  "qualification": {
+    "executionExitCode": 0,
+    "playwright": "1.64.1",
+    "containerCompatibility": "MOZ_DISABLE_CONTENT_SANDBOX=1",
+    "notStandardCIOrProduction": true,
+    "inducedConditionsNotHistoricalEvidence": true,
+    "assertions": "Held connections/writes succeed, open<5000ms; active writes delay read until >=6000ms. Main-thread-gap accepts either actual native outcome and records it without calling it a reproduced timeout."
+  },
+  "evidenceBoundary": "All four controlled scenarios completed without reproducing the original open rejection. Original cause remains UNKNOWN. No new product/PR/CI changes or release.",
+  "sourceGitblob": "6931f179ba98ccdc99222f48da3ba6daeaca7ca2"
+}
