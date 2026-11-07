@@ -22,6 +22,7 @@ export function bookingOwnership(model,booking){
  // cash augmentation opts into the additional, durable original-source audit.
  if(booking.netAugmentation!==undefined)fields.push('netAugmentation');
  if(booking.netMember!==undefined)fields.push('netMember');
+ if(booking.netFunding!==undefined)fields.push('netFunding','netFundingMember');
  const entry=model.journalEntries?.find(e=>e.id===booking.journalEntryId);
  return JSON.stringify([fields.map(k=>booking[k]??null),entry??null]);
 }

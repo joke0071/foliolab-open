@@ -1,4 +1,4 @@
-import {validateNetSettlement,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension,validateNetAugmentationTransition} from './flatex-net-settlement.js';
+import {validateNetSettlement,validateFlatexFundingProof,validateFlatexNetSettlements,hasFlatexNetState,netEvidenceExtension,validateNetAugmentationTransition} from './flatex-net-settlement.js';
 import {importSourceKey,nativeBankSourceKey,bookingOwnership,sourceUnmodified,sourceDigest,validateNativeSourceEvidence,removedImportSources} from './import-identity.js';
 import {units,exact} from './decimal.js';
 import {executeTransaction,ledgerQuantityAudit} from './transactions.js';
@@ -78,6 +78,13 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
    }
    const sourceRow=evidence?{...row,sourceEvidence:evidence}:row;
    if(row.netSettlement){delete sourceRow.netSettlement;sourceRow.netSettlementId=origin.netSettlement.id;sourceRow.netCashExact=origin.netSettlement.cashExact;}
+   if(origin?.netFunding){
+    const f=validateFlatexFundingProof(origin.netFunding),member=origin.netFundingMember,s=member==='trade'?f.settlement.depot:member==='funding'?f.funding:null;
+    if(!s||!evidence||identity.sourceId!==s.sourceId||identity.externalId!==s.externalId||evidence.payloadDigest!==s.payloadDigest||
+     (member==='trade'?row.netSettlement?.id!==f.settlement.id:type!=='deposit'||item.date!==f.date||qty!==f.cashExact||c||price!=='1'||fee!=='0'||tax!=='0'||fx!=='1'))throw Error('Finanzierungsrolle oder native Mitgliedsquelle widersprüchlich.');
+    sourceRow.netFundingId=f.id;sourceRow.netFundingMember=member;
+    row.netFunding=f;row.netFundingMember=member;
+   }
    const source={version:1,sourceId:identity.sourceId,accountId:pos.accountId,
     externalId:identity.externalId,sourcePayload:JSON.stringify(sourceRow),fileId:origin?.fileId||fileDigest+':'+item.index,occurrence:1,ownership:'imported',ownedSnapshot:''};
    // An omitted settlement selection on repeat import cannot erase the
@@ -143,6 +150,7 @@ export function previewCSV(model,parsed,mapping,{defaultPositionId='',cashPositi
     booking.costsVerified=false;
    }
    booking.importFingerprint=id;draft.journalEntries.find(j=>j.id===booking.journalEntryId).source='csv';
+   if(origin?.netFunding){booking.netFunding=structuredClone(origin.netFunding);booking.netFundingMember=origin.netFundingMember;if(booking.netFundingMember==='trade')booking.netAugmentation={version:3,fundingId:booking.netFunding.id};}
    source.occurrence=count;source.ownedSnapshot=bookingOwnership(draft,booking);booking.importSource=source;
    list.push({line:item.index,status:'ready',row});
   }catch(e){issues.push({line:item.index,code:e.code||'invalid-row',message:String(e.message).slice(0,200)});list.push({line:item.index,status:'error',message:String(e.message).slice(0,200)});}

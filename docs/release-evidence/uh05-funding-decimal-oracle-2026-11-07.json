@@ -1,0 +1,120 @@
+{
+  "result": "PASS",
+  "source": "Python decimal; no product imports",
+  "cases": [
+    {
+      "name": "later-funded",
+      "opening": "100",
+      "quantity": "2",
+      "price": "10",
+      "settlement": "-21.75",
+      "funding": "21.75",
+      "later": true,
+      "eligible": true,
+      "closing": "100",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "intermediate": [
+        "78.25",
+        "100"
+      ],
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "later-zero-blocked",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "settlement": "-21.75",
+      "funding": "21.75",
+      "later": true,
+      "eligible": false,
+      "closing": "0",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "intermediate": [
+        "-21.75",
+        "0"
+      ],
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "later-short-blocked",
+      "opening": "21.749999999999999999",
+      "quantity": "2",
+      "price": "10",
+      "settlement": "-21.75",
+      "funding": "21.75",
+      "later": true,
+      "eligible": false,
+      "closing": "21.749999999999999999",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "intermediate": [
+        "-0.000000000000000001",
+        "21.749999999999999999"
+      ],
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "same-day-zero",
+      "opening": "0",
+      "quantity": "2",
+      "price": "10",
+      "settlement": "-21.75",
+      "funding": "21.75",
+      "later": false,
+      "eligible": true,
+      "closing": "0",
+      "gross": "20",
+      "difference": "-1.75",
+      "externalFlow": "21.75",
+      "intermediate": [
+        "21.75",
+        "0"
+      ],
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "exact-18",
+      "opening": "101",
+      "quantity": "0.000000000000000003",
+      "price": "7",
+      "settlement": "-0.000000000000000023",
+      "funding": "0.000000000000000023",
+      "later": true,
+      "eligible": true,
+      "closing": "101",
+      "gross": "0.000000000000000021",
+      "difference": "-0.000000000000000002",
+      "externalFlow": "0.000000000000000023",
+      "intermediate": [
+        "100.999999999999999977",
+        "101"
+      ],
+      "profitFromFunding": "0"
+    },
+    {
+      "name": "unexplained-rebate",
+      "opening": "100",
+      "quantity": "3",
+      "price": "10",
+      "settlement": "-29.9",
+      "funding": "29.9",
+      "later": true,
+      "eligible": true,
+      "closing": "100",
+      "gross": "30",
+      "difference": "0.1",
+      "externalFlow": "29.9",
+      "intermediate": [
+        "70.1",
+        "100"
+      ],
+      "profitFromFunding": "0"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import {prepareFlatexNetPreview,prepareFlatexNetWithdrawalPreview,prepareFlatexNetAugmentationPreview,prepareFlatexNetBackfillPreview} from './flatex-net-settlement.js';
+import {prepareFlatexFundingPreview,prepareFlatexNetPreview,prepareFlatexNetWithdrawalPreview,prepareFlatexNetAugmentationPreview,prepareFlatexNetBackfillPreview} from './flatex-net-settlement.js';
 import {units,exact} from './decimal.js';
 import {previewCSV} from './csv-import.js';
 import {ledgerQuantityAudit} from './transactions.js';
@@ -9,6 +9,10 @@ import {prepareFlatexNetReconciliationPreview} from './flatex-net-reconciliation
 
 /** Strict native simulation over the existing CSV/backfill engines. No write API. */
 export function prepareNativeFlatexPreview(model,documents,assignments,options={}){
+ if(options?.mode==='net-funding'){
+  if(Object.keys(options).some(k=>!['mode','stale','selectedIds','fundingRoles','openingDate','openingConfirmed'].includes(k)))throw Error('Unzulässige Optionen im Finanzierungsablauf.');
+  return prepareFlatexFundingPreview(model,documents,assignments,options);
+ }
  if(options?.mode==='net-reconcile'){
   if(Object.keys(options).some(k=>!['mode','stale','selectedIds','observations','confirmed'].includes(k)))throw Error('Unzulässige Optionen im datierten Bestandsabgleich.');
   return prepareFlatexNetReconciliationPreview(model,documents,assignments,options);
