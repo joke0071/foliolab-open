@@ -1,3 +1,13 @@
+## ACTIVE – 0a8644a36676 / UH05 nach v293 – historische Finanzierungschronologie wird geprüft · 07.11.2026
+
+Reguläre Fortsetzung des bestehenden Hauptauftrags unter unverändertem Owner, keine neue Übernahme und kein paralleler Produktstrang. Ausführender Arbeitskontext `7c09945cb671`. Main `65405435d79e2cd102f18aa7a0d1c2bff8ae3896` / Tree `10db823ab52976384b6be2febbb9e01412659c3e`, v293 LIVE_ACCEPTED und Lauf42364930399 SUCCESS frisch bestätigt; keine erneute Abnahme. Nur historische Drafts157/161, 0 laufende/queued Actions. Private V79 frisch materialisiert: 24.204.333Bytes, SHA256 `3efb6e1575099496d3d09f15e678ddb38271e2c1aa4f8c4763a7ee9f63af92ae`, sämtliche4983Manifestdateien PASS. Alle Originale unverändert.
+
+357historische positive Kaufgutschriften einzeln unabhängig mit Decimal geprüft: 300 dokumentarische Kandidaten mit gleicher Valuta (285 nach,10 am,5 vor Kaufbuchtag);57abweichende Valuten ausdrücklich offen. Rollen bleiben je Gruppe aktuell ausdrücklich zu bestätigen; keine357-Massenklassifikation, keine echte Nutzeranfangs-/Portfolioimportabnahme. Enger nächster Prüfschnitt: fünf referenz-/betrags-/scopegleiche frühere Finanzierungen mit unveränderten Originalbuchtagen. v293 schließt diese Chronologie bisher aus. Erst reproduzieren, dann frühestes tatsächliches Cashereignis einschließlich datierter Eröffnung/Journal-/Referenzschutz behandeln; keine Datumsverschiebung, keine erfundenen Bestände/Kosten. Noch kein Produkt-PR/CI/Deployment.
+
+GitHub nurPlugin; Checkpointbranch niemals vollständig nachMain. UI300 einschließlich aller Nachträge, QUALITY298,CI229,Android,PWA,Wallet/Staking,N:M/FX/Referenzen und sämtliche Finanz-/Identitäts-/Journal-/Restore-/EFF01-/HND01-Verträge bleiben erhalten.
+
+---
+
 ## ACTIVE – 0a8644a36676 / v293 LIVE_ACCEPTED / externer Sparplanablauf produktiv abgeschlossen – 07.11.2026
 
 **v293 ist LIVE_ACCEPTED.** [PR #312](https://github.com/joke0071/foliolab-open/pull/312) ist kontrolliert integriert. Main `65405435d79e2cd102f18aa7a0d1c2bff8ae3896`, Tree `10db823ab52976384b6be2febbb9e01412659c3e`, Cache `foliolab-open-v293`. Kandidat `f9e22a67c56d7daaaa65e58aed7ada4a556ce517`, synthetischer Merge `359398a9b19ae3eb3b328a54e882cd1da314491f` und tatsächlicher Main besitzen denselben geprüften Tree. 15 isolierte geänderte Dateien, davon 7 ausgelieferte Assets; kein Merge des historischen Checkpointbranches.
