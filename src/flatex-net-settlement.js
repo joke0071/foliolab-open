@@ -556,11 +556,19 @@ function fundingSourceRow(source){
 function fundingReference(row){return /^Kauf\s+([A-Z]{2}[A-Z0-9]{10})\s+(\d+)\s*$/i.exec(row.values.details);}
 function fundingProof(settlement,funding){
  const row=fundingSourceRow(funding),ref=fundingReference(row);
- if(settlement.version!==1||settlement.type!=='buy'||!ref||ref[1].toUpperCase()!==settlement.isin||ref[2]!==settlement.orderReference||funding.sourceId!==settlement.account.sourceId||sourceKey(funding)===sourceKey(settlement.account)||row.values.amountCurrency!=='EUR'||row.numbers.amount===null||units(row.numbers.amount)<=0n||units(row.numbers.amount)!==-units(settlement.cashExact)||row.dates.valueDate!==settlement.valueDate||!validCalendarDate(row.dates.bookingDate)||row.dates.bookingDate>settlement.valueDate)fail();
- return {version:1,id:'ff-'+sourceDigest(JSON.stringify([settlement.id,sourceKey(funding)])),role:'external',date:row.dates.bookingDate,valueDate:row.dates.valueDate,cashExact:exact(units(row.numbers.amount)),settlement:structuredClone(settlement),funding:structuredClone(funding)};
+ if(settlement.version!==1||settlement.type!=='buy'||!ref||ref[1].toUpperCase()!==settlement.isin||ref[2]!==settlement.orderReference||funding.sourceId!==settlement.account.sourceId||sourceKey(funding)===sourceKey(settlement.account)||row.values.amountCurrency!=='EUR'||row.numbers.amount===null||units(row.numbers.amount)<=0n||units(row.numbers.amount)!==-units(settlement.cashExact)||!validCalendarDate(row.dates.bookingDate))fail();
+ const sameValueDate=row.dates.valueDate===settlement.valueDate,version=sameValueDate?1:2;
+ if(sameValueDate){if(row.dates.bookingDate>settlement.valueDate)fail();}
+ else{
+  // A separate capability, limited to the evidenced next-calendar-day pattern.
+  // This is documentary linkage only. The existing booking-date ledger still
+  // requires enough independently evidenced cash before every purchase.
+  if(!validCalendarDate(settlement.valueDate)||!validCalendarDate(row.dates.valueDate)||Date.parse(row.dates.valueDate+'T00:00:00Z')-Date.parse(settlement.valueDate+'T00:00:00Z')!==86400000||row.dates.bookingDate!==row.dates.valueDate||settlement.date>row.dates.bookingDate)fail();
+ }
+ return {version,...(version===2?{chronology:'next-day-value-date'}:{}),id:'ff-'+sourceDigest(JSON.stringify(version===1?[settlement.id,sourceKey(funding)]:[2,'next-day-value-date',settlement.id,sourceKey(funding)])),role:'external',date:row.dates.bookingDate,valueDate:row.dates.valueDate,cashExact:exact(units(row.numbers.amount)),settlement:structuredClone(settlement),funding:structuredClone(funding)};
 }
 export function validateFlatexFundingProof(proof){
- keys(proof,'version id role date valueDate cashExact settlement funding');
+ keys(proof,proof?.version===2?'version chronology id role date valueDate cashExact settlement funding':'version id role date valueDate cashExact settlement funding');
  validateNetSettlement(proof.settlement);const expected=fundingProof(proof.settlement,proof.funding);
  if(!equal(expected,proof))fail();return proof;
 }
