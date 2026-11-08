@@ -1,3 +1,13 @@
+## ACTIVE – 382a573e6a17 / PR316 MERGED / v296 MAIN_RELEASE_PENDING · 08.11.2026
+
+PR316 mitexpectedHEAD33d5ea336aa7f8f03c46dd263b351bdc39438c58 kontrolliertgemergt. NeuerMain11a5d792fcfb53e83c8bccb8ef8e9d3fd0c2ae4b/Treefff7b67c9a214795472146b2ae1b6c74dc59ff51exaktgleichdemvollständigqualifiziertenKandidaten. AutomatischerMainlauf42450574048Versuch1läuftunverändert. VollständigeMain-/Deployment-/tatsächliche3EngineProduktionPflicht;nochKEINv296LIVE_ACCEPTED. V295bleibtbisherigeabgenommeneBasis,nichterneutabnehmen.
+
+[Integrationsbelege](release-evidence/v296-pr316-integration-qualified.json):regulärerLauf42448623540/Wallet42448623549SUCCESS,1319/0/0,Syntax/3Engines,6Artefakte/215JSON/1929PNG/API-Upload-Lokalhash/CRCqualifiziert,alle3neuenSpot/Earn-UIberichte+9FundingberichtePASS,3CI-Mobilbilderangesehen. PrivateV96/8745Dateien/alle8355V95Payloadsbytegleich,Einstiegdelta-382a573e6a17/integration-qualified/STATE.json. KeineCIdupliziert/wiederholt/abgebrochen.
+
+EngerbelegterSpot/Earn-Hauptbetragschnitt;keineErträge/externenFlüsse/FX/Kosten-/Anfangserfindung. Nutzeranfänge/Portfolioimportnichtabgenommen. ÜbrigeUH05/UI300zehnNachträge/QUALITY298/CI229/AndroidPWA/WalletStaking/VerwaltungundalleSchutzverträgeerhalten. KeinweitererProduktkandidat.GitHubnurPlugin;CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 382a573e6a17 / PR316 vollständig INTEGRATION_QUALIFIED / V96 / kontrollierter Merge folgt · 08.11.2026
 
 [Qualifikation](release-evidence/v296-pr316-integration-qualified.json):HEAD33d5ea336aa7f8f03c46dd263b351bdc39438c58/getesteterMerge6360c549490e576d6bb3f7909e5c57529c87c441/Treefff7b67c9a214795472146b2ae1b6c74dc59ff51. RegulärerIntegrationslauf42448623540Versuch1undWallet42448623549SUCCESS;1319Tests/0Fehler/0Skips/Syntax/Chromium/Cross1/2/3PASS. Alle6Artefakte/API-Upload-Lokalhash/Größe/CRC/215JSON/1929PNGvollständigqualifiziert. NeueSpot/Earn-Ketteinallen3EnginesPASS,eineCASRevision,Quota/post-put,Undo/Replay/Offline,verschlüsselterFreshRestore+Reload,echterZweittab,7Breiten/Axe;3neueCI-Mobilebilderangesehen. Alle9altenFundingTiming/EngineberichtePASS. PrivateOriginal-/Decimal-/Altreaderbelegeerhalten;keineNutzerportfolio-/Anfangsbestandsabnahmebehauptet.
