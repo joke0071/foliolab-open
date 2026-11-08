@@ -1,3 +1,17 @@
+## UH05 – belegter Hauptbetrag nur zwischen angerechneten eigenen USD-Guthaben · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Owner `8cb2927f295c` unverändert ACTIVE; Main/v298 LIVE_ACCEPTED unverändert, kein Merge. R3-Integration `42511302432` läuft noch im letzten Cross-Engine-Block; Chromium, Cross-Engine1/2 und Wallet bereits SUCCESS. Lauf wird nicht abgebrochen/dupliziert.
+
+Zusätzlicher unabhängiger negativer Rollenfall tatsächlich reproduziert: Der vollständige synthetische USD-Hauptbetrag wurde auch mit als Verbindlichkeit bilanziertem Spot-Cash akzeptiert. Bei ausdrücklich synthetischem aktuellem FX1 führte der interne Transfer zu einem Vermögenssprung statt zur neutralen eigenen Hauptbetragsumbuchung. Kein Nutzerportfolio beschrieben. Native Referenzbeine beweisen keinen Schulden-/Aliaswechsel. Enger Fachvertrag vor Produktänderung gesichert.
+
+Kleinste Sperre im vorhandenen USD-Journal-/Modellvalidator: beide Cashpositionen müssen `included` und ohne Repräsentationsverknüpfung sein. Liability/excluded/represented werden bei Vorschau/Bestätigung sowie aktiver/zurückgenommener Backup-/Restorevalidierung abgewiesen, ohne bestehende Profile umzuklassifizieren oder eine neue Schulden-/FX-Engine zu bauen. Numerische alte EUR-/FX-Fälle außerhalb des neuen UNKNOWN-USD-Status unverändert.
+
+Vorbereiteter eingefrorener Kopf **`846bb1029964d5a151d14e70f9c9ec5446a4cc9a`**, Tree **`c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6`**, noch kein Branchupdate. Dieselben 25 Pfade, vier Blobänderungen gegenüber R3; alle übrigen 1.060 Main-Blobs unverändert. Vollständige lokale 1.345 Tests / 0 Fehler / 0 Skips, Syntax, Original-/Decimal100-Abgleich PASS. Echter gemeinsamer Dialog in Chromium/Firefox/WebKit: vollständiger erlaubter Import und sämtliche Lebenszyklusprüfungen bleiben PASS; unvollständige, liability- und represented-Fälle selbst bei geskripteter Bestätigung mit identischen kanonischen Bytes/CAS-Revisionswerten gesperrt. Eigenes angerechnetes USD-Cash mit ausdrücklich aktuellem FX1 konserviert den Vermögenswert, historische Journal-EUR-Werte bleiben UNKNOWN.
+
+**Nächster Schritt:** R3 regulär vollständig beenden und Belege erhalten; V115 unter gleicher Identität vollständig als V116 mit diesem Kandidaten fortschreiben und erneut materialisiert verifizieren. Danach frischer Kollisionsabgleich und genau eine Aktualisierung desselben PR319 auf den verschärften Kopf, vollständige reguläre CI. R3 wegen der belegten wirtschaftlichen Rollengrenze nicht mergen. Kein v299 LIVE_ACCEPTED vor kontrolliertem Merge und tatsächlicher Main-/Deployment-/Produktionsabnahme aller drei Engines. Keine Schutzprüfung entfernt, keine CI abgebrochen oder identisch dupliziert. UH05 PARTIAL und alle übrigen Aufträge/Originale/Decimal-/Quellen-/Journal-/CAS-/Restore-/PWA-/Datenschutzverträge erhalten.
+
+---
+
 ## UH05 – V115 verifiziert, vollständiger Referenz-/Quellenschutzkopf in regulärer CI · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Owner unverändert `8cb2927f295c` ACTIVE. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` / Tree `887661b67172255deff9e461cb390a0d96f49f1b`, **v298 LIVE_ACCEPTED** unverändert; kein Merge und keine erneute alte Releaseabnahme.
