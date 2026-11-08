@@ -1,3 +1,15 @@
+## UH05 / PR318 – v298 reguläre Integration · 08.11.2026
+
+Alleiniger aktiver Owner `b510a73fed43`. [PR318](https://github.com/joke0071/foliolab-open/pull/318), eingefrorener HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, Base Main unverändert `602ef464a94381ba86615f8e25f82a71c2d25e8d`. Genau sieben beabsichtigte Pfade; alle 1.076 Tree-Blobs und Modi gegen Base/Änderungen geprüft. Nur Importer und SW298 als Laufzeitänderungen; keine Migration/FX-Unterstützung/Journal- oder Datenformatänderung. Vollständige Altgruppen-Replay-/Undo-/dokumentarische Rücknahme bleibt geprüft. UH05 PARTIAL und gesamte Roadmap erhalten.
+
+Lokal 1.326 Tests, null Fehler/Skips, Syntax PASS. Gemeinsamer Import und Spot-/Earn-Suite in Chromium/Firefox/WebKit einschließlich quota/post-put/Undo/reimport/offline/encrypted restore/realem Zweitab-CAS PASS. Neuer nativer Fiat-Schutz in tatsächlicher gemeinsamer UI in allen drei Engines: vier Fälle, vier Breiten, voller bestehender Axe-Tagumfang, spezifischer sichtbarer Grund, gesperrte Bestätigungen und auch Skriptsubmit zurückgewiesen; kanonische IDB-Bytes und Revision unverändert; drei neue Mobilbilder angesehen. Reguläre Integration und tatsächliche Produktion noch ausstehend; noch kein Merge/Deploy/LIVE_ACCEPTED.
+
+Private Sicherung **V104**, gleiche Dateiidentität/Name, **50.602.324 Bytes**, SHA256 `c3696dca1ea7f69a66b31e1e254227925abf815a31c55c2de7c85d798bc6ab5c`, alle **10.829 Manifestdateien** vollständig geprüft und alle 10.792 V103-Payloads bytegleich erhalten. Erwartete Vorgängerversion103 beim Upload bestätigt, lokale Metadaten104 geprüft. Einstieg `delta-b510a73fed43/fiat-local-qualified/STATE.json`; Kandidat, Sollbelege, Vorher-/Nachher- und vollständige lokale Berichte gesichert. Keine Originale öffentlich kopiert.
+
+Nächster Schritt: genau den automatisch für PR318 gestarteten regulären Integrationslauf vollständig qualifizieren; keine CI duplizieren/abbrechen oder grundlos wiederholen. Danach bei frischen kollisionsfreien Befunden kontrollierter Merge und vollständige tatsächliche Produktionsabnahme. v297 LIVE_ACCEPTED nur wiederverwenden; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HND01 ACTIVE – b510a73fed43 · UH05 nativer Fiat-Zuordnungsschutz · 08.11.2026
 
 Alleiniger aktiver Owner: `b510a73fed43`. Reguläre vollständige Übernahme vom ausdrücklich STOPPED/HANDOVER_READY gesetzten Owner `e290961479cf`; bestehender Hauptauftrag wird seriell fortgesetzt.
