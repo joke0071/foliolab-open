@@ -1,3 +1,13 @@
+## HND01 ACTIVE – b510a73fed43 · UH05 nativer Fiat-Zuordnungsschutz · 08.11.2026
+
+Alleiniger aktiver Owner: `b510a73fed43`. Reguläre vollständige Übernahme vom ausdrücklich STOPPED/HANDOVER_READY gesetzten Owner `e290961479cf`; bestehender Hauptauftrag wird seriell fortgesetzt.
+
+Vor erstem Schreiben frisch geprüft: Main `602ef464a94381ba86615f8e25f82a71c2d25e8d`, Tree `7ae902f3e24b5166592a8fc35f90432817be1f3a`, alle 281 Branchrefs, nur historische Drafts #157/#161 offen, PR317 und relevante Reviews/Inline-/Conversationbefunde leer, keine laufenden oder queued Actions. Kein neuer Produktkandidat. Private V103: 49.883.729 Bytes, SHA256 `4c535bb1680906927c3514484202ebef08f1136c64e41d612e04f5331449d86e`, alle 10.792 Manifestdateien bytegenau verifiziert. Lokale Quellen ausschließlich mit Main-Gitblobs abgeglichen; fehlende Dokumente der Teilrekonstruktion sind keine Löschungen.
+
+v297 LIVE_ACCEPTED wird wiederverwendet und nicht erneut abgenommen. Jetzt ausschließlich den belegten frischen nativen Fiat-/Positionsart-Zuordnungsschutz mit vollständiger Altgruppen-Replay-/Undo-/dokumentarischer Rücknahmeverträglichkeit umsetzen. Keine Migration oder vollständige FX-Unterstützung. Originale/Decimal-Belege bleiben privat. Noch keine neue Implementierung/Integration/Releaseabnahme. UH05 PARTIAL; UI300 mit allen zehn Nachträgen, QUALITY298/CI229 und gesamte weitere Roadmap erhalten. GitHub nur Plugin; keine CI duplizieren/abbrechen; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## HANDOVER_READY / STOPPED – e290961479cf · v297 LIVE_ACCEPTED · 08.11.2026
 
 **Owner `e290961479cf` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Keine weitere Produktarbeit durch diese Ausführung. Dies ist die reguläre Fortsetzung des bestehenden Hauptauftrags.
