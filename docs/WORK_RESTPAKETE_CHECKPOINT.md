@@ -1,3 +1,15 @@
+## UI300 / PR317 – erster CI-Befund gesichert / Fokus-Nachfolgekopf vorbereitet · 08.11.2026
+
+Alleiniger Owner e290961479cf. PR317 bleibt unverändert HEADc736a7f223f88b15dbb86ed8be6c4c4d0c63d993/Tree7e8fdcd8e4f82f4422a57d30ce70858a61ad326b. Reguläre Integration42457216800Versuch1: Cross3 FAILED bei target-size im bestehenden Missing-value-Axe-Gate nach Anbieter-Scroll; Wallet42457216739 SUCCESS, Cross2 SUCCESS, übrige Jobs dürfen vollständig auslaufen. Keine CI abgebrochen/dupliziert/wiederholt. Kein Merge/Deploy.
+
+Gezielte Reproduktion: Compact-Höhen ändern den zufälligen Ausschnitt einer am Sticky-Header vorbeigescrollten Zeitraumzeile. Exakter v296-Vergleich nur zur Diagnose, keine erneute Abnahme. Testnachfolge ergänzt echte Shift+Tab/Tab-Navigation plus vollständige Fokus-Sichtbarkeit und Center-Hit-Test vor denselben unveränderten WCAG-/Axe-Regeln; keine Ausnahme, Entfernung, Threshold-/Timeoutlockerung. Dieser gesamte Missing-value-Fall in Chromium141/Firefox157/WebKit27.2 lokal PASS. Alle4Produktblobs exakt unverändert zum eingefrorenen ersten Kopf. Originalfehlerlog/Artefakt13607429112/CRC/Hash/Größe gesichert.
+
+Vorbereiteter **noch nicht als PR-Kopf veröffentlichter** Nachfolgecommit61df747db7c7da9b58112c28c3889559bd0f787b/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a, Parentc736a7f. Erst nach vollständigem Ende des bisherigen Laufs bei unverändertem Main/Owner/PR per expected_sha vorziehen; dadurch keine automatische CI-Abbrechung. Dann neue reguläre Integration für den tatsächlich geänderten Testkopf und echte Produktion vollständig erforderlich. v296 bleibt LIVE_ACCEPTED.
+
+PrivateV100, gleicher Name/Identität,42613375Bytes/SHA2566c49675aa03e67cf6e0dea1f59ea9e9d2e90cde7bbea52047131d01cbad5ec8b/9387Manifestdateien vollständig geprüft; alle9330V99-Payloads und alleOriginale unverändert. Einstieg delta-e290961479cf/ui300-focus-harness-qualified/STATE.json. Alle10UI300-Nachträge/UH05PARTIAL/gesamteRoadmap erhalten. Kein zweiter Kandidat/Finanzschnitt während der Integration.
+
+---
+
 ## UI300 / PR317 – v297 eingefroren / INTEGRATION_PENDING · 08.11.2026
 
 Alleiniger Owner e290961479cf. Einziger Produktkandidat [PR317](https://github.com/joke0071/foliolab-open/pull/317), HEADc736a7f223f88b15dbb86ed8be6c4c4d0c63d993/Tree7e8fdcd8e4f82f4422a57d30ce70858a61ad326b, neun beabsichtigte Dateien. Alle unveränderten Main-Blobs erhalten. Kleine UI300-Reduktion von4Panel-Kickern und normaler Sidebar-Erfolgskarte; bestehende DOM-/Header-/mobile-/Recoverywege und Prüfbereich erhalten. Tatsächliche200%-Textprüfung fand Overflow; gezielte Umbrüche korrigiert und in3Engines bestanden.1319Tests/0Fehler/0Skips/Syntax sowie UI300/Header/FLH03-Recovery jeweils Chromium141/Firefox157/WebKit27.2 lokal PASS:7Breiten/Axe/Tastatur/Fokus/Touch/Offline/exakteByte-/Revisions-Nichtmutation/echteQuota-/CAS-/Recoveryfälle. Drei neue Bilder angesehen. [Umfang](../docs/UI300_COMPACT_STATUS_2026-11-08.md) wird nur mit Kandidat integriert; Pflicht-CI läuft regulär, keine Wiederholung/Abbrüche. Noch kein MERGED/DEPLOYED/LIVE_ACCEPTED fürv297.
