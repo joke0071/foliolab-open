@@ -1,3 +1,15 @@
+## v298 / PR318 – MAIN_GATES_ACCEPTED / DEPLOYED · tatsächliche Liveabnahme läuft · 08.11.2026
+
+Alleiniger aktiver Owner `b510a73fed43`. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`. Mainlauf **42474607569**, Versuch1: **1.326 Tests, null Fehler/Skips, Syntax und Chromium/Firefox/WebKit SUCCESS**. Deployment **128719280178 SUCCESS**. [Mainbeleg](release-evidence/v298-pr318-main-qualified-deployed.json): alle sechs Artefakte/218JSON/1968PNG vollständig API-/Uploadlog-/lokale Hashes/Größe/CRC/JSON-/PNG-Decodierung geprüft; drei neue Main-Mobilbilder tatsächlich angesehen. Pages13615458395/561286Bytes/SHA256 `dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f` gegen151Gitblobs; [unabhängiger TLS-/Assetbeleg](release-evidence/v298-independent-assets.json): alle152HTTPS-Pfade einschließlichRoot exakt bytegleich, reguläreTLS/keineZertifikatsausnahme.
+
+**Tatsächlicher Livejob 128719357824 noch IN_PROGRESS; kein LIVE_ACCEPTED fürv298.** Genau diesen bestehenden Lauf qualifizieren, Produktionsartefakt/152Hashes/3Engine-Fiatschutz und drei neue Produktionsbilder prüfen. Kein weiterer Produktkandidat, keine CI wiederholen/duplizieren/abbrechen. v297 war LIVE_ACCEPTED und wird nicht erneut abgenommen.
+
+Private **V106**, gleicher Name/Identität, **54.077.121Bytes**, SHA256 `e9edacaf1c392fc2abf8f2f32fa93d42ccb49e951f2b71edbe136273d8f6a34f`, **11.635 Manifestdateien** vollständig geprüft; alle11.104V105Payloads und sämtliche früheren Originale/Decimal-Belege unverändert erhalten. ErwarteteVersion105 beim Upload bestätigt; aktuelleVersion106/Name/Größe und lokaleMetadaten frisch bestätigt. Einstieg `delta-b510a73fed43/fiat-main-deployed/STATE.json`. Zwei echteFiatgruppen auf aktuellemCode zusätzlich reinlesend gegen unabhängigeDecimal100/Mitgliedschaft geprüft: ready0/Confirmationabgewiesen/Quell- undModellbytesunverändert/keinePersistenz.
+
+UH05PARTIAL; keineMigration/historischeReparatur/FX-Unterstützung, gesamteRoadmap einschließlichallerzehnUI300Nachträge erhalten. Checkpointbranch niemals nachMainmergen.
+
+---
+
 ## v298 / PR318 – MERGED · Mainlauf 42474607569 · 08.11.2026
 
 Alleiniger aktiver Owner `b510a73fed43`. PR318 kontrolliert mit erwartetem HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59` gemergt. **Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`** frisch bestätigt und exakt gleich qualifiziertem Kandidat-/Integrationsmerge-Tree. Service Worker Kandidat `foliolab-open-v298`.
