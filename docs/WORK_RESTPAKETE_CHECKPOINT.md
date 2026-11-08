@@ -1,3 +1,15 @@
+## v297 Main-Pipeline / neuer belegter UH05-Fiat-Zuordnungsfall gesichert · 08.11.2026
+
+AlleinigerOwner e290961479cf. Main602ef464a94381ba86615f8e25f82a71c2d25e8d/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a unverändert. VollständigerRELEASE-Lauf42459790418Versuch1:Chromium/Cross1/Cross2 bereitsSUCCESS,Cross3nochlaufend;nochkeinDEPLOYED/LIVE_ACCEPTED fürv297. BestehendenLaufweiterqualifizieren;keineCIduplizieren/abbrechen undkeinenProduktnachfolger vor tatsächlicherUI-Produktionsabnahme.
+
+NurlesenderUH05-Quellenabgleich:20OriginalCSV/29Beleg-/Oracledateien(19eindeutigeHashes),aktuellerKraken-/Bitpanda-/Währungsrollenplan. **KonkreterneuerSchutzfall aus2tatsächlichenOriginalgruppen:** nativeUSD-Fiatbeine können im bisherigenImport beiinkorrektermanuellerZuordnung zu einerEUR-basiertenKryptoposition alsKrypto akzeptiertwerden. UnabhängigerrawCSV/PythonDecimal100-BelegfürvollständigeMitglieder/Rollen/exaktebedingteVor-/Nachbestände;aufunverändertemv297-Code mitbeidenGruppen inabgetrennterreinerVorschau ready1/keineIssues reproduziert. **KeinNutzerimport,keineAnfangsfreigabe,keineCAS/keineechtenPortfoliobuchungen.** KeineFX-Kurse/FEE-EUR-Werte/Basis erfunden.
+
+NächsterbegrenzterUH05-Schnitt **erst nachv297LIVE_ACCEPTED**: frischeFiat-/Positionsart-Zuordnungen absichern;weiterhinnurvorhandenenEUR-Cashvertragzulassen,keinUSD-alsKrypto-Umweg. UnverändertevollständiggespeicherteAltgruppen benötigenReplay-/Undo-/dokumentarischeRücknahmekompatibilität;keineautomatischeAltbestandskorrektur/Migration,keineFX-UnterstützungoderneueFinanzengine. FEE/internal-Mengenbehandlung,alleEUR-/Funding-/Transfer-/Quellen-/Kosten-/Anfangs-/CAS-Verträge erhalten. BishernochkeineFinanzproduktänderung/keinzweiterPR.
+
+PrivateV102,gleicherName/Identität,46686510Bytes/SHA2566720a54dd7992c34fe9ceab71234cd498cd5727b1ff55efa0889509db285a1bc/10056Manifestdateienvollständiggeprüft;alle9694V101Payloads/alleOriginale unverändert. Einstiegdelta-e290961479cf/ui300-main-pending-uh05-fiat-proof/STATE.json;Original-/Decimal-/Reprodetails ausschließlichprivatuntercontrol/uh05-fiat-*.json undprobe-fiat-binding.mjs/fiat_original_oracle.py. Alle10UI300Nachträge/UH05PARTIAL/QUALITY298/CI229/gesamteRoadmap erhalten.
+
+---
+
 ## v297 / PR317 – kontrolliert MERGED / Main- und Produktionsabnahme ausstehend · 08.11.2026
 
 AlleinigerOwner e290961479cf. PR317 mit erwartetemHEAD61df747db7c7da9b58112c28c3889559bd0f787b regulärgemergt. Main **602ef464a94381ba86615f8e25f82a71c2d25e8d**, Tree **7ae902f3e24b5166592a8fc35f90432817be1f3a** exaktgleichdem vollständiggeprüftenKandidat-/IntegrationsmergeTree. [Integrationsbeleg](release-evidence/v297-pr317-integration-qualified.json):42457939096Versuch1 undWallet42457939077SUCCESS,1319Tests/0Fehler/0Skips/Syntax/3Engines;alle6Artefakte/215JSON/1956PNG/API-/Upload-/lokaleHashes/Größe/CRC geprüft,3neueCIMobilbilder angesehen. VorMergeMain/Owner/alle281Refs/PRs/Reviews/Actions frischkollisionsfrei, nurhistorischeDrafts157/161neben317,keineaktiven/queuedActions;PrivateV101vollständigverifiziert.
