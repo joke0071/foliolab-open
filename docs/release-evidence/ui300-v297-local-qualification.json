@@ -1,0 +1,58 @@
+{
+  "status": "LOCAL_QUALIFIED / INTEGRATION_PENDING",
+  "owner": "e290961479cf",
+  "version": 297,
+  "base": "11a5d792fcfb53e83c8bccb8ef8e9d3fd0c2ae4b",
+  "baseTree": "fff7b67c9a214795472146b2ae1b6c74dc59ff51",
+  "source": "Main tree via GitHub plugin; every reconstructed file Gitblob-verified",
+  "units": 1319,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "UI300": [
+    "chromium141 PASS",
+    "firefox157 PASS",
+    "webkit27.2 PASS"
+  ],
+  "headerStatus": "all three engines PASS: true pending/failed IDB write, zero mutation, real peer CAS conflict, modal/focus, offline versus local success",
+  "changedHeaders": [
+    "Vermögensverlauf",
+    "Nach Anlageklasse",
+    "Meine Konten und Depots",
+    "Datenquellen & Aktualisierung"
+  ],
+  "sidebar": "normal success hidden; existing saving/error/unavailable/stale text retained; mobile/header/details retained",
+  "widths": [
+    320,
+    360,
+    390,
+    412,
+    430,
+    768,
+    1440
+  ],
+  "textStress": "actual changed headings doubled to200%; automated text stress, not physical zoom",
+  "localTouch": "touch context plus actual tap navigation in all three engines",
+  "Axe": "PASS",
+  "canonicalBytesAndRevision": "unchanged by presentation/navigation/periods/offline/review",
+  "partialObservationsAndDemandReview": "PASS",
+  "threeNewScreenshotsViewed": true,
+  "localBrowserRuntime": "pinned Chromium shell141; Firefox157 local container sandbox flag; WebKit27.2 existing bundled shared-library launcher. Product and CI sandbox settings untouched.",
+  "privateBaseline": "V98 exact archive SHA256 + all9292 manifest payloads verified",
+  "production": "PENDING; v296 LIVE_ACCEPTED reused without reacceptance",
+  "UH05Overall": "PARTIAL",
+  "all10UI300AddendaRetained": true,
+  "noPhysicalAndroidNativeSafariOAuthTalkBackClaim": true,
+  "historicalAlphaIDBCause": "UNKNOWN; prior exception consumed",
+  "privateOriginalsPublished": false,
+  "FLH03Recovery": "all three engines PASS: actual corrupt/unavailable record, unchanged original export, controlled restore, failed save/read, dirty Escape/focus, seven geometries/Axe",
+  "firstIntegration": {
+    "run": 42457216800,
+    "attempt": 1,
+    "head": "c736a7f223f88b15dbb86ed8be6c4c4d0c63d993",
+    "status": "FAILED cross3; other jobs allowed to finish",
+    "cause": "target-size at incidental scrolled header edge in missing-value gate",
+    "followup": "native Shift+Tab/Tab, assert focused full visibility and center hit-test before all unchanged Axe rules; no blind retry"
+  },
+  "focusedMissingValueGate": "Chromium141/Firefox157/WebKit27.2 PASS; 7 widths, native Shift+Tab/Tab, exact focused visibility/center hit testing, unchanged Axe rules and canonical record"
+}

@@ -146,6 +146,8 @@ function syncPortfolioState(){
  document.body.classList.toggle('portfolio-unavailable',unavailable);
  document.body.classList.toggle('portfolio-conflict',conflict);
  const status=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Portfolio lokal gespeichert';
+ // The existing status is visible only while saving or when action is needed.
+ $('sidebarPortfolioStatus').hidden=!(unavailable||conflict||saving||lastStorageError);
  $('localPortfolioStatus').textContent=status;
  $('mobilePortfolioStatus').textContent=unavailable?'Speicher nicht verfügbar':conflict?'Datenstand veraltet':saving?'Wird gespeichert …':lastStorageError?'Speicherfehler · letzte Änderung nicht gespeichert':'Lokal gespeichert';
  headerStatus?.refresh();
