@@ -134,7 +134,7 @@ export function validateUnpricedUSDTransfers(model,{pendingJournalId=null}={}){
   }
   for(const [position,posting] of [[p,out],[t,incoming]]){
    const a=model.accounts.find(a=>a.id===position.accountId);
-   if(position.kind!=='cash'||position.currency!=='USD'||position.price!==1||units(position.priceExact??position.price)!==units(1)||position.wallet?.enabled||!a||a.providerId!==position.providerId||a.currency!=='USD'||posting.accountId!==a.id||[position.costBasisExact,position.costBasisEUR,position.realizedPnLExact,position.realizedPnLEUR].some(x=>x!=null))fail();
+   if(position.kind!=='cash'||position.currency!=='USD'||(position.valuationMode??'included')!=='included'||position.representedByPositionId||position.price!==1||units(position.priceExact??position.price)!==units(1)||position.wallet?.enabled||!a||a.providerId!==position.providerId||a.currency!=='USD'||posting.accountId!==a.id||[position.costBasisExact,position.costBasisEUR,position.realizedPnLExact,position.realizedPnLEUR].some(x=>x!=null))fail();
   }
  }
  return model;

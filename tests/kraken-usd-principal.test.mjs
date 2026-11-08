@@ -38,13 +38,13 @@ test('incomplete, overlapping, changed, fee-unknown and wrong-role native groups
  const f=usdPrincipalFixture(),altered=f.text.replace('17.000000000000000005','18.000000000000000005');const p=previewKrakenImport(f.m,[f.text,altered],f.assignments,f.options);assert.equal(p.ready,0);assert.ok(p.issues.length);
 });
 test('openings, separate own native USD accounts and unknown costs remain mandatory',()=>{
- for(const mutate of [f=>{f.options.openingConfirmed=false;},f=>{f.m.positions[1].price=2;f.m.positions[1].priceExact='2';},f=>{f.m.accounts[1].currency='EUR';},f=>{f.m.positions[1].accountId=f.m.positions[0].accountId;},f=>{f.m.positions[0].costBasisExact='1';f.m.positions[0].costBasisEUR=1;}]){
+ for(const mutate of [f=>{f.options.openingConfirmed=false;},f=>{f.m.positions[1].price=2;f.m.positions[1].priceExact='2';},f=>{f.m.accounts[1].currency='EUR';},f=>{f.m.positions[1].accountId=f.m.positions[0].accountId;},f=>{f.m.positions[0].costBasisExact='1';f.m.positions[0].costBasisEUR=1;},f=>{f.m.positions[0].economicRole='borrowed';f.m.positions[0].valuationMode='liability';},f=>{f.m.positions[1].economicRole='borrowed';f.m.positions[1].valuationMode='liability';},f=>{f.m.positions[0].valuationMode='excluded';f.m.positions[0].representedByPositionId='earn';},f=>{f.m.positions[1].valuationMode='excluded';f.m.positions[1].representedByPositionId='spot';},f=>{f.m.positions[0].representedByPositionId='earn';}]){
   const f=usdPrincipalFixture();mutate(f);const before=JSON.stringify(f.m),p=previewKrakenImport(f.m,[f.text],f.assignments,f.options);assert.equal(p.ready,0);assert.ok(p.issues.length);assert.equal(JSON.stringify(f.m),before);
  }
 });
 test('journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities',()=>{
  const m=approve(usdPrincipalFixture());
- for(const mutate of [m=>{m.journalEntries[0].postings[0].amountBookEURExact='0';},m=>{m.journalEntries[0].nativeCurrency='EUR';},m=>{m.journalEntries[0].postings[1].quantityDeltaExact='1';},m=>{m.positions[1].currency='EUR';},m=>{m.bookings[0].amountEUR=0;},m=>{m.bookings[0].fxRate=1;},m=>{delete m.bookings[0].importSource;},m=>{m.journalEntries[0].source='manual';},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.action.fxRate='1';s.sourcePayload=JSON.stringify(v);},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.bindings[0][1]='other-position';s.sourcePayload=JSON.stringify(v);}]){
+ for(const mutate of [m=>{m.journalEntries[0].postings[0].amountBookEURExact='0';},m=>{m.journalEntries[0].nativeCurrency='EUR';},m=>{m.journalEntries[0].postings[1].quantityDeltaExact='1';},m=>{m.positions[1].currency='EUR';},m=>{m.bookings[0].amountEUR=0;},m=>{m.bookings[0].fxRate=1;},m=>{delete m.bookings[0].importSource;},m=>{m.journalEntries[0].source='manual';},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.action.fxRate='1';s.sourcePayload=JSON.stringify(v);},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.bindings[0][1]='other-position';s.sourcePayload=JSON.stringify(v);},m=>{m.positions[0].economicRole='borrowed';m.positions[0].valuationMode='liability';},m=>{m.positions[1].valuationMode='excluded';m.positions[1].representedByPositionId='spot';}]){
   const bad=structuredClone(m);mutate(bad);const before=JSON.stringify(bad);assert.throws(()=>safeImport(bad));assert.throws(()=>backup(bad));assert.throws(()=>createCompleteBackup(bad));assert.equal(JSON.stringify(bad),before);
  }
 });
@@ -52,6 +52,7 @@ test('current FX updates cannot rewrite UNKNOWN journal or grant historical EUR 
  const m=approve(usdPrincipalFixture()),journal=JSON.stringify(m.journalEntries);for(const p of m.positions){p.fxRate=1;p.fxRateExact='1';}
  assert.equal(totalExactEUR(m),'17.00000000000000001');assert.equal(JSON.stringify(m.journalEntries),journal);const restored=safeImport(JSON.parse(backup(m)));assert.equal(JSON.stringify(restored.journalEntries),journal);
  const h=projectHistoricalPosition(m,'earn',{dates:['1999-02-03']});assert.equal(h.rows[0].valueEURExact,null);
+ const f=usdPrincipalFixture();for(const p of f.m.positions){p.fxRate=1;p.fxRateExact='1';}const total=totalExactEUR(f.m),known=approve(f);assert.equal(totalExactEUR(known),total,'Own included USD principal cannot create a current wealth effect');assert.equal(known.bookings[0].fxRate,null);assert.equal(known.bookings[0].amountEUR,null);
 });
 test('UNKNOWN journal path rejects unqualified callers and other transaction types',()=>{
  const {m}=usdPrincipalFixture(),before=JSON.stringify(m);
