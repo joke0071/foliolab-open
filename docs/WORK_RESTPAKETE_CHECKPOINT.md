@@ -1,3 +1,11 @@
+## HND01 – e290961479cf alleinige Übernahme / UI300 IN_PROGRESS · 08.11.2026
+
+**Alleiniger aktiver Owner: Work /root, Sitzung e290961479cf.** Reguläre vollständige Übernahme vom ausdrücklich STOPPED/HANDOVER_READY Owner382a573e6a17; bestehender Hauptauftrag, kein neuer Strang. Vor erstem Schreibzugriff Main11a5d792fcfb53e83c8bccb8ef8e9d3fd0c2ae4b/Treefff7b67c9a214795472146b2ae1b6c74dc59ff51, alle280Branchrefs, PR316 MERGED/Reviews/Inline/Conversation leer, nur geparkte Drafts157/161 und0in_progress/0queued frisch geprüft. PrivateV98/40906891Bytes/SHA256ffe94d0f086ffbe2bd3795aabaac3ad4a6eb0b6145a206b2ae4d3c277e438f49 sowie alle9292Manifestdateien vollständig geprüft. Kein ungesichertes Produkt-WIP des Vorgängers.
+
+v296 LIVE_ACCEPTED wiederverwendet, nicht erneut abgenommen. Einziger nächster Produktkandidat: begrenzte UI300-Reduktion redundanter Panel-Kicker und permanenter Sidebar-Erfolgskarte. Bestehende Speicher-/Fehler-/Offline-/Stalewege, Prüfbereich und direkte syncPortfolioState-DOM-Verträge schützen; keine Finanz-/Speicher-/Journaländerung. Danach lokale3Engine-Prüfung, reguläre Integration, kontrollierter Merge und echte Produktionsabnahme. Noch kein neuer Produkt-PR/CI/Deploy oder DONE. Alle zehn UI300-Nachträge, UH05 PARTIAL/Originalgrenzen und gesamte Roadmap bleiben erhalten. GitHub nur Plugin, keine CI-Duplikate/Abbrüche, Checkpointbranch niemals vollständig nach Main. Sichere serielle Fortsetzung und rechtzeitiger HND01-Übergabepunkt.
+
+---
+
 ## HANDOVER_READY – 382a573e6a17 STOPPED / v296 LIVE_ACCEPTED / UH05 weiter PARTIAL / V98 · 08.11.2026
 
 **382a573e6a17 ist STOPPED/HANDOVER_READY und hat die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig abgegeben.** Keine weitere Produktarbeit. [Vollständige Übergabe](HANDOVER_382a573e6a17_2026-11-08.md), [genau nächste Fachgrenzen und UI-Arbeit](UH05_NEXT_AFTER_v296_2026-11-08.md), [Startprompt für reguläre Fortsetzung](START_HND01_382a573e6a17_2026-11-08.md). Kein Projektneustart, kein paralleler Strang.
