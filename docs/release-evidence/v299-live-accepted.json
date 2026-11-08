@@ -441,5 +441,171 @@
   "externalFunding": "No gain; DKB remains outside; missing wallet/staking values UNKNOWN",
   "walletRun": 42514005249,
   "walletAttempt": 1,
-  "walletResult": "SUCCESS"
+  "walletResult": "SUCCESS",
+  "evidenceIndex": {
+    "canonical": "this existing release record; no second database",
+    "workflow": {
+      "path": ".github/workflows/import.yml",
+      "gitBlob": "1e4aa051fee8b36d737cc30d4c69a98586e30629"
+    },
+    "testManifest": {
+      "definition": "sorted Git paths and blob SHAs of every tests/*.mjs and tests/*.js, recursive, JSON sorted keys and compact separators",
+      "files": 407,
+      "sha256": "b7d3ff7709abe7bf28f5ce761ae260d1f83b76e140808f42a85ac08bd1da1835"
+    },
+    "tools": {
+      "node": "22.23.4",
+      "npm": "10.9.9",
+      "playwright": "1.56.1",
+      "axeCore": "4.10.3",
+      "chromium": "141.0.7390.37",
+      "firefox": "157.0",
+      "webkit": "27.2"
+    },
+    "artifacts": [
+      {
+        "id": 13631570953,
+        "name": "dialog-visual-reference",
+        "size_in_bytes": 934968,
+        "digest": "sha256:d2ff879c80c965b53a978a6aa373dfaef4f69b7e61dd36cdaf623f2a3b1f54e8",
+        "created_at": "2026-11-08T19:34:33Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13631310413,
+        "name": "cross-engine-gates-020435de829fb4fed2c36e166369556be8a52138-1",
+        "size_in_bytes": 57399468,
+        "digest": "sha256:6485e839f7775f737833cd09a5c055f39bae99e9d528f2ea06066bf2d721e469",
+        "created_at": "2026-11-08T19:27:20Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13630924361,
+        "name": "release-gates-020435de829fb4fed2c36e166369556be8a52138",
+        "size_in_bytes": 62904565,
+        "digest": "sha256:fd8f853c2acab5507202e00e75c3fc24542d8b01bd16d8f541966d41dd1201fe",
+        "created_at": "2026-11-08T19:34:31Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13630447690,
+        "name": "ci-stage-020435de829fb4fed2c36e166369556be8a52138",
+        "size_in_bytes": 791,
+        "digest": "sha256:ebaac22da48bd46d4f60fedc8a7503f61c6052ecd9d2b6aef410d35f7d611a07",
+        "created_at": "2026-11-08T19:14:22Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13630319688,
+        "name": "cross-engine-gates-020435de829fb4fed2c36e166369556be8a52138-3",
+        "size_in_bytes": 66723016,
+        "digest": "sha256:cb548c7c3b2c9fd5eebbaee9848bcd2bfdbd0036ce4f41ad37b041bda63e2a0e",
+        "created_at": "2026-11-08T19:37:40Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13629874752,
+        "name": "cross-engine-gates-020435de829fb4fed2c36e166369556be8a52138-2",
+        "size_in_bytes": 11416936,
+        "digest": "sha256:36010332fba4b5a209f1d8c54efae1789893da401684866fcf2977ae24a01087",
+        "created_at": "2026-11-08T19:20:57Z",
+        "expires_at": "2027-02-06T19:14:12Z",
+        "expired": false,
+        "phase": "pr319-r4"
+      },
+      {
+        "id": 13633486369,
+        "name": "production-live-acceptance-1f051a7059d24751f961fcf2af7fa226b319079e",
+        "size_in_bytes": 131261416,
+        "digest": "sha256:0af71cab57f6f06af7d599f57d3572be1026c164ac4f6f55745e100beaf3f71b",
+        "created_at": "2026-11-08T20:41:35Z",
+        "expires_at": "2026-11-15T20:41:31Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13632645929,
+        "name": "cross-engine-gates-1f051a7059d24751f961fcf2af7fa226b319079e-3",
+        "size_in_bytes": 66719211,
+        "digest": "sha256:b7dc8dd4d9abae54bc0235820c8be813bef4e836f37b9cad3eb3ca915ad78114",
+        "created_at": "2026-11-08T20:08:38Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13632530811,
+        "name": "github-pages",
+        "size_in_bytes": 564646,
+        "digest": "sha256:2febbacfebc04415301fd08fd8f55855b29a5bf80f08785b62d0661dbfabbc55",
+        "created_at": "2026-11-08T20:08:51Z",
+        "expires_at": "2026-11-09T20:08:49Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13632295188,
+        "name": "cross-engine-gates-1f051a7059d24751f961fcf2af7fa226b319079e-1",
+        "size_in_bytes": 57416551,
+        "digest": "sha256:c63ad81c59f7de20f28421f54184136eac6c31189dfc09c23b8503f445d203ba",
+        "created_at": "2026-11-08T19:52:11Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13631701505,
+        "name": "ci-stage-1f051a7059d24751f961fcf2af7fa226b319079e",
+        "size_in_bytes": 354,
+        "digest": "sha256:02f6aa40be6dc194f40bf84748fd2d097dac71754a4cf13885ff939e2870e522",
+        "created_at": "2026-11-08T19:41:41Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13631288728,
+        "name": "dialog-visual-reference",
+        "size_in_bytes": 934968,
+        "digest": "sha256:c7cfd40a0dc337f4886a16cc16118892a4d03b92186b303bc5e37771b8e31e82",
+        "created_at": "2026-11-08T19:56:41Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13631094588,
+        "name": "release-gates-1f051a7059d24751f961fcf2af7fa226b319079e",
+        "size_in_bytes": 62906067,
+        "digest": "sha256:396396423eed1ebfc29187c5aa17e00ceb28a4097d2c6cfbe0cf2a377145b7dc",
+        "created_at": "2026-11-08T19:56:40Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      },
+      {
+        "id": 13630874424,
+        "name": "cross-engine-gates-1f051a7059d24751f961fcf2af7fa226b319079e-2",
+        "size_in_bytes": 11418630,
+        "digest": "sha256:4ccab59b97ce9548e86b76b26404f74a26a41dec0d3afd638b0d2331e8642a6f",
+        "created_at": "2026-11-08T19:47:22Z",
+        "expires_at": "2027-02-06T19:41:33Z",
+        "expired": false,
+        "phase": "main-v299"
+      }
+    ],
+    "qualification": "API digest+size / upload log / local archive SHA256+size / ZIP CRC / every JSON and PNG / actual six new integration and six production images",
+    "reuse": "same qualified tree, test/workflow/dependency statement only; new mandatory pipeline gates remain mandatory",
+    "privacy": "invented public fixtures only; originals/oracles remain private"
+  }
 }

@@ -1,12 +1,68 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## EFF02 – aktueller verbindlicher Fortsetzungsplan, 08.11.2026 nach v299
+
+**v299 LIVE_ACCEPTED** auf Main `1f051a7059d24751f961fcf2af7fa226b319079e`, Tree `c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6`; [bestehender SHA-Belegindex](release-evidence/v299-live-accepted.json). Owner `8cb2927f295c` allein ACTIVE; keine neue Übernahme. Alle bisherigen EFF01-/HND01-/Finanz-/Journal-/CAS-/Mehrtab-/Backup-/Restore-/Offline-/PWA-/Datenschutzverträge gelten weiter. Historische Prioritätsangaben weiter unten werden durch diese neuere Nutzerentscheidung präzisiert, nicht als neuer Auftrag zum Wiederbau gelesen.
+
+**Genau eine kanonische Restpaket-Matrix:** [KONSOLIDIERTE_ROADMAP.md](KONSOLIDIERTE_ROADMAP.md#kanonische-restpaket-matrix). Die vollständige bestehende Bibliotheksprüfung wurde gelesen; ihre31-Issue-Matrix ist nach frischer vollständiger Issueabfrage und gezielter Main-/Releaseprüfung weiterverwendet. Kein zweiter Masterplan oder erneuter Grundlagengesamtaudit. Jede Teilanforderung hat getrennt Ziel 1.0/NACH_1.0 und DONE/PARTIAL/VERIFY/BLOCKED_EXTERNAL/PLANNED, Rest, Beleg, Abhängigkeit und nächste Aktion. Issuezahlen sind keine Fertigstellungsprozente; Gesamtissues werden nicht automatisch geschlossen.
+
+### Endliche 1.0-Ziellinie und nächste Arbeit
+
+Verbindlich sind [EFF02](https://github.com/joke0071/foliolab-open/issues/229#issuecomment-6725697219), [CI-Messreview](https://github.com/joke0071/foliolab-open/issues/229#issuecomment-6725922043), [Roadmap-Audit](https://github.com/joke0071/foliolab-open/issues/124#issuecomment-6725960013) und die neuere [FolioLab 1.0-Entscheidung](https://github.com/joke0071/foliolab-open/issues/124#issuecomment-6726116758) / [EFF02-Verknüpfung](https://github.com/joke0071/foliolab-open/issues/229#issuecomment-6726124312). Nach sicher abgeschlossenem v299 nicht routinemäßig den nächsten Finanzsonderfall eröffnen.
+
+Sechs Pflichtpakete: **K1** gemeinsamer belegter Fünf-Anbieter-Import mit unterstützten Chainbezügen; **K2** ehrliche Finanzübersicht/Kurse/UNKNOWN; **K3** nutzbare sichere Verwaltung; **K4** lokale Speicherung/Offline/Backup/FreshRestore/Altversionsschutz; **K5** tatsächliche Android-PWA-Praxis; **K6** fertige begrenzte Kernbedienung samt klaren Daten-/Backup-/Fehlerhinweisen. Details und externe Gegenproben ausschließlich in der kanonischen Matrix. 1.0 erst bei belegtem Abschluss aller zugeordneten Pflichtteile, ohne bekannten P0/P1-Kernfehler und mit tatsächlich durchgeführter Android-Praxis. Keine Umbenennung von SW-Version, Schema, Origin oder Installationsidentität.
+
+**Nächster konkreter Entwicklungsschritt: UI-R1.** Die vorhandene Kolben-Loaderdarstellung (`index.html`, `src/loading-ui.js`, `styles.css`) und zwei Downloadpfeil-Installationsglyphen im vorhandenen System eng abgrenzen. Taskkarte/Abnahmevertrag und Konfliktgrenzen stehen in der Roadmap. Noch kein neuer Produktpatch/PR/CI durch diese Dokumentation. Anschließend UI-R2 Auswahl/Buttons, UI-R3 Zeitraum/gezielte Icons sowie wirklich fehlende K2/K3/K4-Kernabläufe nach Abhängigkeit. Android A01–A10 und getrennte Safari/OAuth/Tastatur/200%-Schrift/TalkBack-Protokolle früh vorbereiten; ohne echte Durchführung kein Geräte-PASS. UI-R4/Dust mit noch unbestätigter0,01 EUR-Schwelle, Sekundärnavigation, Allokationsring und übrige Spezialfälle bleiben NACH_1.0. Neue belegte P0/P1-Kernfehler haben Vorrang, keine spontane Scopeerweiterung aus Ideen.
+
+### CI-A – angewandter SHA-Belegindex und Kandidaten-Freeze
+
+**Prozess umgesetzt**, keine neue Nachweisinfrastruktur. Der vorhandene Releaseindex trägt Produkt-HEAD/Tree, getesteten PR-Merge, Main-/Live-SHA, Workflow-Gitblob, reproduzierbaren Testmanifest-Fingerprint, Browser-/Toolversionen, Ergebnis und Artefakt-ID/Digest/Größe/Erstellung/Ablaufdatum sowie Grenzen. Originale/Decimal-Oracles bleiben privat; Belegpfade und vorhandene Berichte werden wiederverwendet. Ablauf des GitHub-Artefakts beendet nicht automatisch die gesicherte qualifizierte Aussage; Digest/Metadaten/Berichte und nötige unabhängige Belege sind vorher privat zu sichern. Kein bloßer Hash ohne tatsächlich erfolgte Inhaltsqualifikation als PASS.
+
+Vor finaler Kandidaten-CI: vollständiger kleiner Fachvertrag, lokale gezielte Repros/Negativ-/Legacy-/Finanz-/Storage-/drei-Engine-Prüfungen soweit betroffen, Syntax/Units, klare Dateien und SW-/Assetidentität; danach Kopf einfrieren. Nur neuer echter Fehler rechtfertigt neue Produktrevision. Lauf regulär beenden und Originalfehler/Artefakte behalten, weil `cancel-in-progress:true` sonst den bestehenden Lauf überholen könnte. Keine kosmetischen oder Planänderungen auf die laufende Kandidatenref pushen. Frische Main-/Owner-/Refs-/PR-/Review-/Actions-/WIP-/Sicherungsprüfung und erwarteter HEAD vor Merge; exakt qualifizierter Tree auf Main. Keine neue Architektur oder paralleler Writer. Nur eng beauftragte unabhängige **lesende** Reviews; Hauptowner allein verantwortlich.
+
+Ein alter PASS darf nur für identische relevante Code-/Test-/Workflow-/Dependency-/Build-/Konfigurationsaussage ohne transitive Änderung übernommen werden. Alle vorgeschriebenen Integrations-, Main-, Deployment- und echten Produktionsgates je neuem Kandidaten bleiben bindend. Bereits akzeptierte Releases nicht erneut abnehmen und keine gleiche CI aus Gewohnheit duplizieren. Dokumentation auf bestehender Checkpointref erzeugt keine zusätzliche Full-CI; Checkpointbranch niemals vollständig nach Main mergen.
+
+### Tatsächlich gemessene reguläre Baseline, keine Mess-CI gestartet
+
+| Bestehender Lauf | Chromium | Cross1 | Cross2 | Cross3 | Deploy | Live | Workflow-Wandzeit | Summe erfolgreicher Joblaufzeiten |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PR319/R4 [42514005224](https://github.com/joke0071/foliolab-open/actions/runs/42514005224), Versuch 1 |20:10|12:56|6:33|23:16|nicht auf PR|nicht auf PR|23:31|63:05|
+| Main [42516298459](https://github.com/joke0071/foliolab-open/actions/runs/42516298459), Versuch 1 |14:58|10:28|5:38|26:55|0:17|32:34|60:06|90:59|
+
+Quelle: abgeschlossene GitHub-Run-/Jobzeitstempel, nicht Abrechnungsdaten. Wandzeit=created_at→updated_at des fertigen Workflows; Jobsumme enthält erfolgreiche Jobs einschließlich Planungsjob, keine übersprungenen FAST-Jobs. Beide Läufe prüfen denselben Produkt-Tree, 407 Testquelldateien, Testmanifest-SHA256 `b7d3ff7709abe7bf28f5ce761ae260d1f83b76e140808f42a85ac08bd1da1835` und Workflow-Gitblob `1e4aa051fee8b36d737cc30d4c69a98586e30629`. Main besitzt zusätzlich Deployment/Live und ist deshalb nicht als ganze Wandzeit mit einem PR-Lauf gleichzusetzen. Toolstand: Node 22.23.4/npm 10.9.9, Playwright 1.56.1, Axe 4.10.3; Chromium 141.0.7390.37, Firefox 157.0, WebKit 27.2. Der bestehende unabhängige 17-Läufe-Review ergänzt diese zwei regulären Baselines; seine Stichprobe ist keine Verbrauchsprognose.
+
+**Befund:** Cross3 liegt um 16:43 bzw. 21:17 über Cross2 und bestimmt beide Integrationspfade. Die echte serielle Live-Abnahme ist mit 32:34 der größte zusätzliche Mainblock. Bereits vorhandene drei Shards/Caches/FAST-/INTEGRATION-/RELEASE-Regeln nicht erneut entwickeln. Zusätzliche Browsercachearbeit hat nach dem Review geringere Priorität als das belegte Ungleichgewicht.
+
+### CI-B – erster separater technischer Kandidat, noch PLANNED
+
+Cross3→Cross2 anhand tatsächlicher Testgruppenlaufzeiten und unabhängiger Ressourcen balancieren. Vor Patch genau die verschobenen vollständigen Aufrufe/Browser/Artefaktpfade und Konfliktfreiheit belegen; **jeder bisherige Testaufruf, Browser, jede Assertion, Sicherheits-/Finanz-/Journal-/CAS-/Quota-/Backup-/Offline-/A11y-Prüfung und Frist bleibt erhalten**. Kein Testverschieben zur Umgehung eines Originalfehlers, keine Gateauswahl-/Timeoutlockerung. Kleine eigene CI-Taskkarte und Negativkontrolle vor technischer Umsetzung, nicht gleichzeitig mit UI-/Finanzpatch oder CI-C.
+
+Für technische Änderung 2–3 vergleichbare vollständige reguläre Läufe mit unverändertem fachlichem Testmanifest dokumentieren: kritischer Pfad/Wandzeit, summierte Jobzeiten, Zeit bis erstem verwertbarem Fehler, Artefaktarbeit, tatsächliche Regressionen und Pflicht-PASS. Bestehende passende Läufe und reguläre PR-/Mainläufe bevorzugen; keine identischen Läufe nur für Statistik oder schöne Zahlen. Echte Verringerung erst nach Messung behaupten. CI-B ist kein neues 1.0-Pflichtprojekt; nur bei belastbarem Nutzen konfliktfrei vorziehen.
+
+### CI-C – erst danach separat bewerten, noch PLANNED
+
+Live-Chromium und Live-Firefox/WebKit nur nach gesonderter Risiko-/Nutzenprüfung in isolierten Profilen/Seeds und eindeutigen Artefaktpfaden parallelisieren. **Ein zwingender abschließender Gesamt-PASS** muss sämtliche Browser, Release-SHA/SW, gewöhnliches TLS, Pages/Gitblobs/Assetbytes sowie sämtliche Finanz-/Speicher-/Backup-/Offline-/A11y-Gates binden. Kein Teil-PASS ersetzt Freigabe; keine konkurrierenden produktiven Portfoliomutationen.2–3 vergleichbare vollständige echte Releasebelege erforderlich. Kann aufsummierte Runnerzeit erhöhen; noch keine Workflowänderung und keine garantierte Ersparnis. Reihenfolge CI-A→CI-B→CI-C erhalten, nicht zur zusätzlichen 1.0-Pflicht ausweiten.
+
+### Aufwand und kurzer v299-Postmortem
+
+**Getrennte Größen:** GitHub-Job-/Wandzeiten oben sind gemessen; abrechenbare Runner-Einheiten nicht erhoben. ChatGPT-Work-Verbrauch und Copilot-Credits sind ohne echte Nutzungsdaten **UNKNOWN**; keine Euro-/Credit-/Prozenteinsparung behauptet, keine Zusatzpakete/Resets/Käufe. Artefaktgröße/-zahl und Qualifikationsarbeit sind konkrete Arbeit, aber keine Work-Creditabrechnung. Bestehende Archive/Hash-/JSON-/Bildprüfungen bei identischer Aussage wiederverwenden, keine zweite Datenbank.
+
+v299 benötigte fünf vollständige Integrationskandidaten auf **verschiedenen** Heads:42502695638 scheiterte am unverträglichen alten automatischen Snapshot-Test; korrekt durch unabhängige manuelle Beobachtung und stärkere Erhaltungsassertion ersetzt.42505404269,42508122473,42511302432 waren SUCCESS, aber vor Merge durch tatsächlich reproduzierte offene manuelle/quellabgelöste Restore-, leere UNKNOWN-Referenz-/CAS- und unpassende eigene Cashrollen-Grenzen überholt. Finale42514005224 und Main42516298459 vollständig SUCCESS, jeweils Versuch 1. Alte Läufe regulär beendet, keine identischen Duplikate/Abbrüche oder gelockerten Schutzprüfungen. Alle Originalfehler/Revisionen und vollständigen Qualifikationsbelege privat erhalten. Prozessfolgerung: diese konkreten Aufrufer-/Provenienz-/Kontorollengrenzen künftig **vor Freeze** im lokalen vollständigen Vertrag abdecken; daraus keinen neuen pauschalen Gesamtaudit ableiten.
+
+### Statuspflege und HND01
+
+Nach sicherem Punkt nur kompakt: letzter LIVE_ACCEPTED, alleiniger Owner, aktueller Kandidat/CI, erledigte und verbleibende 1.0-Teilpakete, konkrete externe Voraussetzung, nächste Aktion und verifizierte private Sicherung. Kanonische Matrix hier verlinken, nicht mehrfach kopieren. Vorhandene Originale/Oracles und alle NACH_1.0-Aufträge erhalten. Spätestens zwei akzeptierte Releases oder drei fachliche Produktpakete je Work-Chat bzw. früher bei Kontextlast reguläre HND01-Abgabe vollständig sichern; reine Dokumentation zählt nicht als Produktpaket. Keine neue Übernahme durch diese Integration. Laufende CI nicht zur Rotation abbrechen. Ausführliche HND01-Regeln unten bleiben unverändert.
+
+---
+
+
 Nutzerauftrag vom 01.11.2026. Ergänzt CI-OPT01 #229 und den gesamten bestehenden Masterauftrag. **Prozessregeln ab sofort verbindlich; technische Pipelineänderungen erst nach eigenem belegtem Test.** Kein neuer Produktbranch, keine Entwicklungsübernahme, kein Abbruch laufender Actions. Der aktive Work-Owner bleibt verantwortlich.
 
 ## 1. Ziel, Geltung und Priorität
 
 Mehr tatsächlich nutzbare, sicher veröffentlichte Funktionen je verfügbarem Work-Kontingent. Nicht die Zahl der Commits, Testaufrufe oder Statusmeldungen maximieren. Weder Produktumfang noch Finanz-/Datensicherheitsqualität zur Einsparung still reduzieren.
 
-Aktueller fachlicher Vorrang bleibt unverändert: laufenden Marktquellen-Korrekturrelease sicher abschließen; #266 einschließlich Alt-API-/Schlüsselbereinigung; anschließend gemeinsamer CSV-/Blockchain-Import UH01–UH05 nach `IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md`. #257 und #149 einschließlich Long-Press, tatsächlich verfügbarer Chartzeiträume und CSV-Werkzeugen im kompakten Mehr-Menü bleiben aktiv. Keine neue mehrtägige CI-Optimierung vor diesen Nutzerfunktionen.
+**Historischer Prioritätssnapshot vom01.11.2026, durch den EFF02-/1.0-Kopf oben fortgeschrieben:** laufenden Marktquellen-Korrekturrelease sicher abschließen; #266 einschließlich Alt-API-/Schlüsselbereinigung; anschließend gemeinsamer CSV-/Blockchain-Import UH01–UH05 nach `IMPORT_HISTORY_UNIFIED_PLAN_2026-11-01.md`. #257 und #149 einschließlich Long-Press, tatsächlich verfügbarer Chartzeiträume und CSV-Werkzeugen im kompakten Mehr-Menü bleiben aktiv. Keine neue mehrtägige CI-Optimierung vor diesen Nutzerfunktionen.
 
 Dieses Dokument ist der verbindliche Ergänzungsplan, nicht eine neue Roadmap. Im nächsten regulären Owner-Checkpoint jeweils nur einen Link hierher und die konkrete nächste Aktion aufnehmen. Aktuelle Release-/Owner-Daten nicht durch historische Werte ersetzen; den historischen Checkpointbranch niemals vollständig nach main mergen.
 
@@ -138,3 +194,4 @@ Der Nutzer kann **jederzeit** manuell einen frischen Work-Chat mit einem kurzen 
 - Erfolgskriterium: Ein neuer Work-Chat kann **ohne erneute Projektanalyse** anhand des aktuellen GitHub-Checkpoints den richtigen einzelnen Integrationsstrang weiterführen; kein WIP-Verlust, kein doppelter Release, keine abgebrochene CI und kein Verlust privater Zugangsdaten.
 
 **Operative Standard-Startformel für den Nutzer:** „Übernimm FolioLab Open anhand von `docs/WORK_RESTPAKETE_CHECKPOINT.md` auf `feature/flh05-import-foundation`. Aktuellen Main, offene PRs, CI und aktiven Owner vor jeder Mutation abgleichen. Letzten HANDOVER_READY-Block lesen und den dort genannten nächsten Arbeitsschritt seriell ausführen. Laufende CI nicht abbrechen; keine parallele Implementierung. EFF01/HND01-Regeln anwenden, bei erfolgreicher Abnahme veröffentlichen und neu checkpointen.“
+
