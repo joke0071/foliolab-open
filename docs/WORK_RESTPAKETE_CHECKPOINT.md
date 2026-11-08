@@ -1,3 +1,45 @@
+## STOPPED / HANDOVER_READY – 291c2a60d6ac · reguläre HND01-Abgabe nach v298 · 08.11.2026
+
+**Owner `291c2a60d6ac` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig an den neuen Work-Chat ab.** Dies erfolgt auf verbindlichen Nutzerauftrag nach vollständig verifiziertem Abschluss-Upload. Ab diesem Kopf stellt dieser Owner sämtliche Entwicklungs-, Integrations-, Produkt-QA-, PR-, Merge-, CI- und Release-/Deploymentaktivitäten ein. Kein weiterer Produktkandidat und keine konkurrierende Fortsetzung durch diese Ausführung.
+
+### Verbindlicher Einstieg
+
+Vollständig lesen: [HND01-Übergabe](HANDOVER_291c2a60d6ac_2026-11-08.md), [Startprompt](START_HND01_291c2a60d6ac_2026-11-08.md), [native Fiat-/FX-Vorbereitung](UH05_NATIVE_FIAT_FX_PREPARATION_2026-11-08.md), [vorige Übergabe](HANDOVER_b510a73fed43_2026-11-08.md) sowie sämtliche verlinkten Original-, Decimal-, Finanz-, CI-, UI-, Release- und Sicherungsbelege.
+
+Der neue Work-Chat prüft vor erstem Schreiben Main, Tree, neuesten Owner-/Abgabekopf, sämtliche relevanten Refs, PRs, Reviews, Actions, WIP und aktuelle private Sicherung frisch. Nur bei Kollisionsfreiheit alleinige HND01-Zuständigkeit dokumentieren und den bestehenden Hauptauftrag seriell fortsetzen. Kein Neustart, keine neue Architektur, kein paralleler Strang.
+
+### Produktstand unverändert und bereits abgenommen
+
+**v298 LIVE_ACCEPTED**, PR318 gemergt. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`. Main-/Produktionslauf **42474607569**, Versuch 1, einschließlich Deployment **128719280178** und tatsächlichem Livejob **128719357824 SUCCESS**. 1.326 Tests ohne Fehler/Skips, Chromium/Firefox/WebKit sowie vollständige Artefakt-/Pages-/Gitblob-/reguläre TLS-/Asset-/Produktionsabnahme bestanden. [Vollständiger Livebeleg](release-evidence/v298-pr318-live-acceptance.json). **v298 und v297 nicht erneut abnehmen.** Dieser Owner hat übernommene Releasebelege wiederverwendet und keine neue Releaseabnahme durchgeführt.
+
+### Finale private Sicherung vollständig verifiziert
+
+**Version 109**, kanonischer Name `FolioLab_private_continuation_2026-11-04.tar.gz`, unveränderte Dateiidentität. **57.863.361 Bytes**, SHA256 `7c3b9e7cebb660db7631815a035d76f255707df41668a4c7d1dd088ffe0f8f6a`, **12.418 Manifestdateien vollständig geprüft**. Alle **12.366 V108-Payloads** und sämtliche früheren Nutzeroriginale, Decimal-Oracles, Fachverträge und Produktaufträge bytegleich erhalten.
+
+Upload mit erwarteter Vorgängerversion 108 erfolgreich bestätigt. Danach gespeicherte Version 109 unter derselben Identität neu materialisiert und vollständige Größe/SHA256/Versionsmetadaten sowie sämtliche 12.418 Manifestdateien am gesamten Archiv erneut verifiziert. Keine bloße Metadaten- oder Stichprobenprüfung. Der endgültige eigene Archivhash steht maßgeblich in diesem nach erfolgreicher Sicherung gesetzten Kopf.
+
+Finaler privater Einstieg: **`delta-291c2a60d6ac/hnd01-final-handover/STATE.json`**. Vollständige Übergabe und Startprompt unter `docs/`; frische Main-/Refs-/PR-/Review-/Actions-Snapshots, **31 offene Issues und zwei historische Draft-PRs samt allen 302 vorhandenen Kommentaren**, alle zehn UI300-Nachträge und Prüfrezepte unter `control/`. Der vorige Audit und alle exakten Original-/Decimal-/Mengen-/Nichtmutationsbelege unter `delta-291c2a60d6ac/fiat-fx-preparation/` bleiben unverändert erhalten. Keine neuen CI-ZIP-/PNG-Bytes und keine Originale öffentlich übertragen.
+
+### Frischer kollisionsfreier Abgabestand
+
+Nach verifiziertem Upload Main/Tree unverändert; **sämtliche 561 Gitrefs einschließlich 282 Branchrefs und 279 Pullrefs** geprüft. Gegen den Vorabschluss ausschließlich erwartete eigene HND01-Dokumentation auf dem Checkpointbranch; keine neue Produktbranchänderung. Nur historische Drafts **#157/#161** offen. PR318 ohne Review-/Inline-/Conversationbefunde; relevante Draftreviews/-inline ebenfalls frisch gelesen. **Keine laufenden oder queued Actions.** Alle zehn UI300-Nachträge unverändert. Kein Produkt-WIP oder weiterer Produktkandidat.
+
+Die frühere Scratch-Teilrekonstruktion ist nicht mehr vorhanden und war kein Git-Checkout oder portable Umgebung. Geprüfte Main-Pfade/Gitblobs, Rezepte und Ergebnisse sind vollständig gesichert. Fehlende Scratchdateien sind keine Repositorylöschungen. Für weitere Arbeit Main und erforderliche versionierte Tests/Workflows frisch über das Plugin beziehen.
+
+### UH05 und genau nächster Schritt
+
+**UH05 bleibt PARTIAL.** Die separate native Fiat-/FX-Rollenvorbereitung ist dokumentiert; keine neue FX-Produktimplementierung. Sämtliche bekannten Originalprüfungen auf v298 sind korrekt gesperrt und nichtmutierend; vollständige Mitgliedschaften und unabhängige Decimal100-Sollwerte bleiben privat. Native Mengen beweisen keinen historischen EUR-Wert. Die frühere Inventur und begrenzte Referenzsuche sind keine globale Aussage über fehlende Gegenbelege.
+
+**Genau nächster ausführbarer Schritt nach neuer HND01-Übernahme:** genau einen tatsächlich belegten nativen Cash-/FX-Rollenfall auswählen und dessen vollständige monetäre Behandlung im abgetrennten synthetischen Modell durch bestehende Transaktionen, Journal, Bewertung, historische Bestände, externe Kapitalflüsse, Kostenbasis, UNKNOWN-EUR-Werte und Backup/Restore nachweisen. Zuerst vollständigen gezielt prüfbaren Einzelvertrag und unabhängige Sollwerte sichern, erst danach bei Belastbarkeit einen Produktpatch beginnen.
+
+Kein DefaultFX1, kein aktueller Kurs als historischer FX, keine unbekannten Gebühren/Steuern/Kostenbasis nullsetzen und keine unterschiedlichen Währungen addieren. `transfer` verlangt dasselbe Asset und dieselbe Währung; `swap` unterstützt keine Cashpositionen. Keine neue Finanzengine, pauschale FX-Freigabe, Migration oder automatische historische Reparatur. Vor einer globalen Blockeraussage bereits vorhandene einschlägige Privatpakete prüfen.
+
+Alle N:M-/Cashrollen-/FX-/Referenz-/Kostenbasis-/Wallet-/Staking- und anbieterübergreifenden Aufträge erhalten. DKB bleibt außerhalb; externe Finanzierung ist kein Gewinn; interne Hauptbeträge sind kein Ertrag, externer Zufluss oder neue Kostenbasis. Fehlende Wallet-/Staking-/monetäre Werte bleiben UNKNOWN. Bereits abgenommene UI297- und Finanzschnitte nicht wiederholen. Alle zehn UI300-Nachträge, QUALITY298, CI229, Android-/PWA-Alltags- und Gerätetests, Buchungs-/Positionsverwaltung, Wallet-Historie und die gesamte Roadmap bleiben aktiv.
+
+Alle EFF01-/HND01-, Finanz-, Quellenidentitäts-, Journal-, IndexedDB-, CAS-/Mehrtab-, Backup-/Restore-, Offline-, PWA- und Datenschutzverträge erhalten. **GitHub ausschließlich Plugin. Keine CI duplizieren, abbrechen oder blind wiederholen. Checkpointbranch niemals vollständig nach Main mergen. Mit diesem Kopf ist `291c2a60d6ac` vollständig STOPPED/HANDOVER_READY und hat sämtliche Zuständigkeit abgegeben.**
+
+---
+
 ## UH05 – nativer Fiat-/FX-Vertrag vorbereitet · Owner 291c2a60d6ac ACTIVE · 08.11.2026
 
 Alleiniger aktiver Owner `291c2a60d6ac`; reguläre Übernahme von `b510a73fed43` dokumentiert. **v298 LIVE_ACCEPTED** unverändert auf Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`. Keine erneute v297/v298-Abnahme, kein neuer Produktkandidat und keine CI gestartet/dupliziert/abgebrochen.
