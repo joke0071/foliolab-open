@@ -70,7 +70,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval,allowUncha
   for(const select of host.querySelectorAll('[data-kraken-binding]'))select.onchange=()=>{assignments[select.dataset.krakenBinding]=select.value;invalidate();};
  }
  function renderGroups(){
-  const labels={exchange:'Handel',reward:'Reward','internal-transfer':'Interner Hauptbetragtransfer','deposit-review':'Zugang – Gegenbereich prüfen','withdrawal-review':'Abgang – Gegenbereich prüfen',unresolved:'Ungeklärt'};
+  const labels={exchange:'Handel',reward:'Reward','internal-transfer':'Interner Hauptbetragtransfer','internal-transfer-batch':'Gemeinsame Spot-/Earn-Umbuchung · kein Ertrag','deposit-review':'Zugang – Gegenbereich prüfen','withdrawal-review':'Abgang – Gegenbereich prüfen',unresolved:'Ungeklärt'};
   el('groups').innerHTML=source.groups.slice(0,limit).map(g=>{
    const result=plan?.groups.find(x=>x.id===g.id),movements=g.movements.map(m=>(m.deltaExact??'unbekannt')+' '+m.asset+' ('+m.wallet+')').join(' · ');
    return '<div class="history-sub"><label class="field"><span><input type="checkbox" data-kraken-group="'+esc(g.id)+'"'+(selected.has(g.id)?' checked':'')+'> '+esc(g.rows[0].values.time+' · '+labels[g.kind])+'</span></label><p class="small-help">'+esc(movements)+'</p>'+(['deposit-review','withdrawal-review'].includes(g.kind)?'<label class="field"><span><input type="checkbox" data-kraken-external="'+esc(g.id)+'"'+(external.has(g.id)?' checked':'')+'> Gegenbereich liegt nach eigener Prüfung außerhalb aller erfassten Konten und Wallets.</span></label>':'')+'<p class="small-help">'+esc(result?.message||(result?.status==='ready'?'Geprüft – neue Buchungsgruppe':result?.status==='existing'?'Bereits vorhanden':g.issues.join(' ')))+'</p></div>';

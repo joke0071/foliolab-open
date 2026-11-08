@@ -2,7 +2,7 @@ import {validateSolanaBridgeProof,validateKrakenSolanaBridges,krakenSolanaBridge
 import {validateEthereumBridgeProof,validateKrakenEthereumBridges,krakenEthereumBridgeFor,ethereumBridgeDigest} from './kraken-ethereum-bridge.js';
 import {validateBitcoinBridgeProof,validateKrakenBitcoinBridges,krakenBridgeFor,bitcoinBridgeDigest} from './kraken-bitcoin-bridge.js';
 /** UH03: orchestration over the existing transaction journal, never a second financial engine. */
-import {prepareKrakenSourcePlan} from './kraken-source-plan.js';
+import {prepareKrakenSourcePlan,krakenAutoallocationPairs} from './kraken-source-plan.js';
 import {executeTransaction,ledgerQuantityAudit,validateJournalEntry,nextJournalSequence} from './transactions.js';
 import {KRAKEN_SOURCE,krakenWithdrawalId,withdrawalDigest,validateKrakenWithdrawals} from './kraken-withdrawal-evidence.js';
 import {sourceDigest,sourceUnmodified,bookingOwnership,importSourceKey,validateImportSource} from './import-identity.js';
@@ -114,7 +114,7 @@ function position(model,row,assignments){
  if(p.kind==='cash'?row.values.asset!=='EUR':p.symbol!==row.values.asset)unsupported('Assetcode und Position widersprechen sich; keine Ticker- oder Netzwerkanahme.');
  return p;
 }
-function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge=null,ethereumBridge=null,solanaBridge=null}={}){
+function actionsFor(model,group,assignments,{externalReferences=[],openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null,solanaBridge=null}={}){
  if(group.issues.length)unsupported(group.issues.join(' '));
  const rows=[...group.rows].sort((a,b)=>a.identity.localeCompare(b.identity)),positive=rows.filter(r=>units(r.amountExact)>0n),negative=rows.filter(r=>units(r.amountExact)<0n),actions=[];
  const p=row=>position(model,row,assignments);
@@ -131,6 +131,14 @@ function actionsFor(model,group,assignments,{externalReferences=[],bitcoinBridge
  }else if(group.kind==='internal-transfer'){
   if(p(negative[0]).id===p(positive[0]).id)unsupported('Staking-/Spotbereiche müssen getrennt zugeordnet sein; Hauptbetrag nicht als Ertrag zählen.');
   add('transfer',negative[0],-units(negative[0].amountExact),{targetPositionId:p(positive[0]).id});
+ }else if(group.kind==='internal-transfer-batch'){
+  const pairs=krakenAutoallocationPairs(group.rows);
+  const observed=model.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id);
+  if(!pairs||!openingConfirmed&&!observed||externalReferences.includes(group.id))unsupported('Vollständige interne Kraken-Umbuchung mit ausdrücklich geprüften Anfangsbeständen erforderlich; kein externer Zufluss oder Ertrag.');
+  for(const {debit,credit} of pairs){
+   if(p(debit).id===p(credit).id||p(debit).accountId===p(credit).accountId)unsupported('Spot- und Earn-Bereiche ausdrücklich getrennten Konten zuordnen.');
+   add('transfer',debit,-units(debit.amountExact),{targetPositionId:p(credit).id,notes:'Kraken: interne Spot-/Earn-Umbuchung. Kein Ertrag oder externer Kapitalfluss; Kostenbasis unbekannt.'});
+  }
  }else if(group.kind==='reward')add(p(positive[0]).kind==='cash'?'interest':'reward',positive[0],units(positive[0].amountExact));
  else if(['deposit-review','withdrawal-review'].includes(group.kind)){
   // Ledger IDs are not chain transaction IDs. Never infer internal ownership from amount/time.
@@ -174,7 +182,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
     const row=group.rows[0],source=position(draft,row,assignments),asset=sol?'SOL':eth?.kind==='link-explorer-beacon'?'LINK':eth?'ETH':'BTC',coin=sol?'solana':eth?.kind==='link-explorer-beacon'?'chainlink':eth?'ethereum':'bitcoin';
     if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!==asset||source.coinId!==coin||source.accountId===bridge.event.accountId||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge['principal'+asset]!==exact(-units(row.amountExact))||bridge['exchangeFee'+asset]!==row.feeExact||externalReferences.includes(group.id))unsupported('Wallet-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
    }
-   const actions=actionsFor(draft,group,assignments,{externalReferences,bitcoinBridge:btc,ethereumBridge:eth,solanaBridge:sol});
+   const actions=actionsFor(draft,group,assignments,{externalReferences,openingConfirmed,bitcoinBridge:btc,ethereumBridge:eth,solanaBridge:sol});
    if(actions.length>24)unsupported('Zu viele abhängige Buchungen in einer einzelnen Referenzgruppe.');
    const payload=digest([group.payloadDigest,group.rows.map(r=>[r.identity,assignments[r.streamId]]).sort((a,b)=>a[0].localeCompare(b[0])),externalReferences.includes(group.id),...(bridge?[bridgeDigest(bridge)]:[])]);
    const origins=actions.map((action,i)=>({version:1,sourceId,accountId:draft.positions.find(p=>p.id===action.positionId).accountId,externalId:group.id+':'+i,sourcePayload:JSON.stringify({group:group.id,payload,...(bridge?{[bridgeKey]:bridgeDigest(bridge)}:{}),bindings:[...new Map(group.rows.map(r=>[r.streamId,assignments[r.streamId]])).entries()].sort((a,b)=>a[0].localeCompare(b[0])),action}),fileId:group.id,occurrence:1,ownership:'imported',ownedSnapshot:''}));

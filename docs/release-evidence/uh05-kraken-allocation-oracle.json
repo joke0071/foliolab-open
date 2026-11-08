@@ -1,0 +1,113 @@
+{
+  "status": "SYNTHETIC_ONLY",
+  "rows": [
+    {
+      "refid": "SYN-ALLOCATION-BATCH",
+      "time": "1999-02-03 11:12:13",
+      "type": "earn",
+      "subtype": "autoallocation",
+      "aclass": "currency",
+      "subclass": "crypto",
+      "fee": "0",
+      "amountusd": "",
+      "feeusd": "",
+      "balanceusd": "",
+      "feecurrency": "",
+      "txid": "SYN-ALLOC-BTC-DEBIT",
+      "asset": "BTC",
+      "wallet": "spot / main",
+      "amount": "-0.125000000000000001",
+      "balance": "0.374999999999999999"
+    },
+    {
+      "refid": "SYN-ALLOCATION-BATCH",
+      "time": "1999-02-03 11:12:13",
+      "type": "earn",
+      "subtype": "autoallocation",
+      "aclass": "currency",
+      "subclass": "crypto",
+      "fee": "0",
+      "amountusd": "",
+      "feeusd": "",
+      "balanceusd": "",
+      "feecurrency": "",
+      "txid": "SYN-ALLOC-BTC-CREDIT",
+      "asset": "BTC",
+      "wallet": "earn / liquid",
+      "amount": "0.125000000000000001",
+      "balance": "0.145000000000000001"
+    },
+    {
+      "refid": "SYN-ALLOCATION-BATCH",
+      "time": "1999-02-03 11:12:13",
+      "type": "earn",
+      "subtype": "autoallocation",
+      "aclass": "currency",
+      "subclass": "crypto",
+      "fee": "0",
+      "amountusd": "",
+      "feeusd": "",
+      "balanceusd": "",
+      "feecurrency": "",
+      "txid": "SYN-ALLOC-ETH-DEBIT",
+      "asset": "ETH",
+      "wallet": "spot / main",
+      "amount": "-2.5",
+      "balance": "0.5"
+    },
+    {
+      "refid": "SYN-ALLOCATION-BATCH",
+      "time": "1999-02-03 11:12:13",
+      "type": "earn",
+      "subtype": "autoallocation",
+      "aclass": "currency",
+      "subclass": "crypto",
+      "fee": "0",
+      "amountusd": "",
+      "feeusd": "",
+      "balanceusd": "",
+      "feecurrency": "",
+      "txid": "SYN-ALLOC-ETH-CREDIT",
+      "asset": "ETH",
+      "wallet": "earn / liquid",
+      "amount": "2.5",
+      "balance": "2.75"
+    }
+  ],
+  "expected": [
+    {
+      "asset": "BTC",
+      "wallet": "spot / main",
+      "before": "0.5",
+      "delta": "-0.125000000000000001",
+      "after": "0.374999999999999999"
+    },
+    {
+      "asset": "BTC",
+      "wallet": "earn / liquid",
+      "before": "0.02",
+      "delta": "0.125000000000000001",
+      "after": "0.145000000000000001"
+    },
+    {
+      "asset": "ETH",
+      "wallet": "spot / main",
+      "before": "3",
+      "delta": "-2.5",
+      "after": "0.5"
+    },
+    {
+      "asset": "ETH",
+      "wallet": "earn / liquid",
+      "before": "0.25",
+      "delta": "2.5",
+      "after": "2.75"
+    }
+  ],
+  "bookings": 2,
+  "postings": 4,
+  "externalFlows": 0,
+  "rewards": 0,
+  "fees": 0,
+  "actualUserOpenings": false
+}
