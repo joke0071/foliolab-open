@@ -114,10 +114,17 @@ function position(model,row,assignments){
  if(p.kind==='cash'?row.values.asset!=='EUR':p.symbol!==row.values.asset)unsupported('Assetcode und Position widersprechen sich; keine Ticker- oder Netzwerkanahme.');
  return p;
 }
-function actionsFor(model,group,assignments,{externalReferences=[],openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null,solanaBridge=null}={}){
+function actionsFor(model,group,assignments,{externalReferences=[],openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null,solanaBridge=null}={},reconstructExisting=false){
  if(group.issues.length)unsupported(group.issues.join(' '));
  const rows=[...group.rows].sort((a,b)=>a.identity.localeCompare(b.identity)),positive=rows.filter(r=>units(r.amountExact)>0n),negative=rows.filter(r=>units(r.amountExact)<0n),actions=[];
  const p=row=>position(model,row,assignments);
+ // Admission only: existing actions still need the complete origin/payload/
+ // ownership checks below. This flag is derived internally, never from options.
+ if(!reconstructExisting)for(const row of rows){
+  const assigned=p(row),nativeFiat=row.values.subclass==='fiat';
+  if(nativeFiat&&(row.values.asset!=='EUR'||assigned.kind!=='cash'))unsupported('Native Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.');
+  if(assigned.kind==='cash'&&!nativeFiat)unsupported('Fiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.');
+ }
  const add=(type,row,quantity,more={})=>actions.push({type,date:row.values.time.slice(0,10),positionId:p(row).id,quantity:exact(quantity),unitPrice:p(row).kind==='cash'?'1':'0',feeEUR:'0',taxEUR:'0',fxRate:'1',notes:'Kraken: '+group.kind+'. Kosten-/Steuerbewertung ungeprüft.',...more});
  if(group.kind==='exchange'){
   const incoming=positive[0],outgoing=negative[0],a=p(incoming),b=p(outgoing);
@@ -182,12 +189,12 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
     const row=group.rows[0],source=position(draft,row,assignments),asset=sol?'SOL':eth?.kind==='link-explorer-beacon'?'LINK':eth?'ETH':'BTC',coin=sol?'solana':eth?.kind==='link-explorer-beacon'?'chainlink':eth?'ethereum':'bitcoin';
     if(group.kind!=='withdrawal-review'||group.rows.length!==1||group.issues.length||row.values.asset!==asset||source.coinId!==coin||source.accountId===bridge.event.accountId||bridge.reference!==row.values.refid||bridge.payload!==group.payloadDigest||bridge['principal'+asset]!==exact(-units(row.amountExact))||bridge['exchangeFee'+asset]!==row.feeExact||externalReferences.includes(group.id))unsupported('Wallet-Gegenbeleg passt nicht zur vollständigen Kraken-Gruppe.');
    }
-   const actions=actionsFor(draft,group,assignments,{externalReferences,openingConfirmed,bitcoinBridge:btc,ethereumBridge:eth,solanaBridge:sol});
+   const priorGroup=draft.bookings.filter(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id);
+   const actions=actionsFor(draft,group,assignments,{externalReferences,openingConfirmed,bitcoinBridge:btc,ethereumBridge:eth,solanaBridge:sol},priorGroup.length>0);
    if(actions.length>24)unsupported('Zu viele abhängige Buchungen in einer einzelnen Referenzgruppe.');
    const payload=digest([group.payloadDigest,group.rows.map(r=>[r.identity,assignments[r.streamId]]).sort((a,b)=>a[0].localeCompare(b[0])),externalReferences.includes(group.id),...(bridge?[bridgeDigest(bridge)]:[])]);
    const origins=actions.map((action,i)=>({version:1,sourceId,accountId:draft.positions.find(p=>p.id===action.positionId).accountId,externalId:group.id+':'+i,sourcePayload:JSON.stringify({group:group.id,payload,...(bridge?{[bridgeKey]:bridgeDigest(bridge)}:{}),bindings:[...new Map(group.rows.map(r=>[r.streamId,assignments[r.streamId]])).entries()].sort((a,b)=>a[0].localeCompare(b[0])),action}),fileId:group.id,occurrence:1,ownership:'imported',ownedSnapshot:''}));
    const existing=origins.map(origin=>draft.bookings.filter(b=>importSourceKey(b.importSource)===importSourceKey(origin)));
-   const priorGroup=draft.bookings.filter(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id);
    if(priorGroup.length||existing.some(list=>list.length)){
     if(priorGroup.length!==origins.length)unsupported('Vorhandene Kraken-Gruppe ist unvollständig oder anders zugeordnet.');
     if(existing.some((list,i)=>list.length!==1||list[0].importSource.sourcePayload!==origins[i].sourcePayload||!sourceUnmodified(draft,list[0])))unsupported('Vorhandene Kraken-Gruppe ist unvollständig, geändert oder widersprüchlich.');
