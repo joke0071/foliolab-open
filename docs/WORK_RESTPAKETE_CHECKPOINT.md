@@ -1,3 +1,17 @@
+## v297 LIVE_ACCEPTED – Abschluss gesichert in Vorbereitung · 08.11.2026
+
+Alleiniger aktiver Owner: `e290961479cf`. Noch keine Abgabe; der abschließende HANDOVER_READY-Kopf folgt nach geprüftem privaten Upload.
+
+[PR317](https://github.com/joke0071/foliolab-open/pull/317) gemergt. Main `602ef464a94381ba86615f8e25f82a71c2d25e8d`, Tree `7ae902f3e24b5166592a8fc35f90432817be1f3a`, SW `foliolab-open-v297`. Main-/Produktionslauf **42459790418, Versuch 1, vollständig SUCCESS**, Deployment **128671894633 SUCCESS**, tatsächlicher Livejob **128671976432 SUCCESS**. 1.319 Tests, null Fehler, null Skips; Chromium/Firefox/WebKit einschließlich tatsächlicher Produktion PASS. [Vollständiger Livebeleg](release-evidence/v297-pr317-live-acceptance.json): Liveartefakt13611037576, 129.704.663 Bytes, SHA2564bb402bce07551fda13173c9c2a9241ee503da2db3b883f3eecebf7f66cdab3a, alle156JSON/1298PNG/API-/Upload-/lokale Hashes/Größe/CRC PASS. Alle152Livehashes gegen Pages und gewöhnlicheTLS PASS; drei neue mobile Produktionsbilder plus Desktop-/200%-Bilder angesehen. v296 nur wiederverwendet; v297 nicht erneut abnehmen.
+
+Der begrenzte UI300-Kicker-/Sidebar-Schnitt ist abgeschlossen. Bedeutende Speicher-/Fehler-/Offline-/Warn-/Stale-/Prüfbereichswege erhalten. Kein Finanz-, Journal-, Bewertungs- oder Speicherdatenwechsel. Alle zehn UI300-Nachträge und gesamte Roadmap bleiben erhalten.
+
+[HND01-Abgabe vorbereitet](HANDOVER_e290961479cf_2026-11-08.md), [nächster enger UH05-Schnitt](UH05_NEXT_AFTER_v297_2026-11-08.md), [Original-/Decimal-belegter Fiat-Zuordnungsvertrag](UH05_NATIVE_FIAT_BINDING_2026-11-08.md), [Startprompt](START_HND01_e290961479cf_2026-11-08.md). Zwei echte native Fiat-Fälle isoliert auf unverändertem Code reproduziert, unabhängige Sollwerte gesichert, synthetische v297-Altfixtures und negative Testentwürfe vorbereitet. Noch kein Finanzproduktkandidat oder Finanz-PR. UH05 bleibt PARTIAL; keine FX-Unterstützung oder historische Reparatur behauptet.
+
+Private Sicherung V102 frisch bestätigt; der finale Abschluss wird unter derselben Dateiidentität verifiziert fortgeschrieben. Danach Main/Tree/alle Refs/Owner/PRs/Reviews/Actions/WIP erneut frisch prüfen und erst dann vollständige Abgabe setzen. Keine CI neu starten/duplizieren/abbrechen; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## v297 – MAIN_GATES_ACCEPTED / DEPLOYED / echte LIVE-Abnahme läuft · 08.11.2026
 
 AlleinigerOwner e290961479cf. Main602ef464a94381ba86615f8e25f82a71c2d25e8d/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a/SWfoliolab-open-v297. Mainlauf42459790418Versuch1:1319Tests/0Fehler/0Skips/Syntax/Chromium/Cross1/2/3SUCCESS,Deployment128671894633SUCCESS. [Main-/Deploymentbeleg](release-evidence/v297-pr317-main-qualified-deployed.json):alle6Gateartefakte/215JSON/1956PNG/API-/Upload-/lokaleHashes/Größe/CRC vollständigqualifiziert,3neueMainMobilbilder angesehen. Pages13609482735/561113Bytes/SHA256dd2fecdd4b54dba81b8f2facd97e57ab3ea22acc010ba78435be25385305df35:151DateienexaktgegenGitblobs;[unabhängigegewöhnlicheTLS-Prüfung](release-evidence/v297-independent-assets.json)alle152HTTPS-Pfadeinkl.Rootbytegleich,keineZertifikatsausnahme.
