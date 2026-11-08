@@ -1,0 +1,142 @@
+{
+  "status": "INTEGRATION_QUALIFIED / MERGE_PENDING",
+  "version": 296,
+  "owner": "382a573e6a17",
+  "PR": 316,
+  "head": "33d5ea336aa7f8f03c46dd263b351bdc39438c58",
+  "testedMerge": "6360c549490e576d6bb3f7909e5c57529c87c441",
+  "tree": "fff7b67c9a214795472146b2ae1b6c74dc59ff51",
+  "base": "090f94dda859d8baa1a63f2d0fd44c31d00900a4",
+  "integrationRun": 42448623540,
+  "attempt": 1,
+  "walletRun": 42448623549,
+  "conclusion": "SUCCESS",
+  "units": 1319,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "allTreeBlobsVerified": 1070,
+  "intendedFiles": 11,
+  "artifactCount": 6,
+  "artifacts": [
+    {
+      "file": "pr316-13604788185.zip",
+      "size": 58290979,
+      "sha256": "21ef197f15e5a7bc5fe7036e54cb364ca8f13682094350ca7181d47b2bda33f7",
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "pr316-13605051524.zip",
+      "size": 11606320,
+      "sha256": "debb0a2f635cca7eae4167238abd4cce5bf1c96a9790374a41a6ab4da184e020",
+      "zipCRC": "PASS",
+      "jsonReports": 19,
+      "decodedPNGs": 74,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "pr316-stage.zip",
+      "size": 622,
+      "sha256": "820d8edb003d98660dc7eb0b5bc4cfb1ed52469385bf22f58172a9c3d7d1609b",
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "flags": [],
+      "result": "PASS",
+      "stage": "INTEGRATION",
+      "full": true
+    },
+    {
+      "file": "pr316-13604789509.zip",
+      "size": 935169,
+      "sha256": "bb3f8839939a1346df4bff54e077fa6c894581dcccb9981f82ec22010f6bec9c",
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "pr316-13604699717.zip",
+      "size": 62310908,
+      "sha256": "1b40f0d2cbd3cdc45d829f5c7bc4e8f16dc53c47bb6722ace60f40e315982846",
+      "zipCRC": "PASS",
+      "jsonReports": 89,
+      "decodedPNGs": 661,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "pr316-13605411701.zip",
+      "size": 64104230,
+      "sha256": "b77feb9e079357997603085a00130abe729c29d9c2fa75cafad509bf3030adf6",
+      "zipCRC": "PASS",
+      "jsonReports": 91,
+      "decodedPNGs": 700,
+      "flags": [],
+      "result": "PASS"
+    }
+  ],
+  "jsonReports": 215,
+  "decodedPNGs": 1929,
+  "apiUploadLogLocalDigestSizeCRCJSONPNG": "PASS",
+  "allocationReports": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "threeNewCIMobileImagesActuallyViewed": true,
+  "unchangedNineFundingTimingEngineReports": "PASS",
+  "privateOriginalConditionalCases": "Both source orders, independent CSV/Decimal complete membership, shared import, no source mutation, replay/restore/Undo/full terminal withdrawal PASS; source values and locators remain private",
+  "actualUserOpeningOrPortfolioAcceptance": false,
+  "actualV295Reader": "Ordinary new transfer journals readable; old importer blocks these native groups",
+  "remainingOrderNMorFX": "BLOCKED in examined source scope; no invented group/currency/cost/flow",
+  "noCIRetryDuplicateCancel": true,
+  "v295": "LIVE_ACCEPTED reused without reacceptance",
+  "UH05Overall": "PARTIAL",
+  "noPhysicalAndroidNativeSafariOAuthTalkBackClaim": true
+}

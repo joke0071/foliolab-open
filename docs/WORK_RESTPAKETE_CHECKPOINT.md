@@ -1,3 +1,13 @@
+## ACTIVE – 382a573e6a17 / PR316 vollständig INTEGRATION_QUALIFIED / V96 / kontrollierter Merge folgt · 08.11.2026
+
+[Qualifikation](release-evidence/v296-pr316-integration-qualified.json):HEAD33d5ea336aa7f8f03c46dd263b351bdc39438c58/getesteterMerge6360c549490e576d6bb3f7909e5c57529c87c441/Treefff7b67c9a214795472146b2ae1b6c74dc59ff51. RegulärerIntegrationslauf42448623540Versuch1undWallet42448623549SUCCESS;1319Tests/0Fehler/0Skips/Syntax/Chromium/Cross1/2/3PASS. Alle6Artefakte/API-Upload-Lokalhash/Größe/CRC/215JSON/1929PNGvollständigqualifiziert. NeueSpot/Earn-Ketteinallen3EnginesPASS,eineCASRevision,Quota/post-put,Undo/Replay/Offline,verschlüsselterFreshRestore+Reload,echterZweittab,7Breiten/Axe;3neueCI-Mobilebilderangesehen. Alle9altenFundingTiming/EngineberichtePASS. PrivateOriginal-/Decimal-/Altreaderbelegeerhalten;keineNutzerportfolio-/Anfangsbestandsabnahmebehauptet.
+
+PrivateV96erfolgreichunterderselbenIdentität/kanonischemNamen:38114733Bytes/SHA256b0105b94881630d424c2345696cd5d49fa393d3bfd3245f34356b6cb06664557;alle8745Manifestdateiengeprüft,alle8355V95Payloadsbytegleich. Einstiegdelta-382a573e6a17/integration-qualified/STATE.json. FrischerMain/Owner/alle280Refs/PRs/Reviews/Inline/Conversation/Actionsabgleichkollisionsfrei:nurunsereCheckpoint-/Kandidatenänderungen,Main090f94dda859d8baa1a63f2d0fd44c31d00900a4unverändert,316clean/exakterHEAD,nurhistorischeDrafts157/161daneben,0laufende/queuedActions.
+
+JetztkontrollierterexpectedHEAD-Merge;danachvollständigerMain-/Deployment-/tatsächlicher3EngineProduktionslaufPflicht. NochKEINv296LIVE_ACCEPTED.V295LIVE_ACCEPTEDnurwiederverwendet. UH05gesamtPARTIAL,belegteengeHauptbetragtransferskeinErtrag/externesFunding;USD/unbelegteN:M/FX/Referenz-/Kosten-/Wallet-/Stakingresteoffen.AlleUI300zehnNachträge/QUALITY298/CI229/AndroidPWA/Verwaltungs-/Roadmap-undSchutzverträgeerhalten.GitHubnurPlugin;CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 382a573e6a17 / PR316 reguläre Integration läuft / lokale drei Engines PASS · 08.11.2026
 
 Bestehender Integrationslauf **42448623540 Versuch1** unverändert IN_PROGRESS, Wallet **42448623549 SUCCESS** mit1319/0/0. HEAD33d5ea336aa7f8f03c46dd263b351bdc39438c58 / getesteterMerge6360c549490e576d6bb3f7909e5c57529c87c441 / Treefff7b67c9a214795472146b2ae1b6c74dc59ff51 unabhängiggleich;StageINTEGRATION/full=true,622ByteStageZIP/API-Uploadhash/CRC PASS. Jobs Test128632872370/Cross1-128632872367/Cross2-128632872346/Cross3-128632872386 laufen;keineCIwiederholen/duplizieren/abbrechenundKandidatenunverändertlassen.
