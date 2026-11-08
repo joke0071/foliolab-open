@@ -1,3 +1,13 @@
+## UH05 – CI-Testvorbereitung für UNKNOWN-FX korrigiert · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Owner unverändert ACTIVE. Main/v298 unverändert LIVE_ACCEPTED; kein Merge. PR #319, erster regulärer Integrationslauf `42502695638` hat im Chromium-Job `128798745486` einen konkreten Testvorbereitungsfehler gefunden: `browser-legacy-quotes-chevrons.mjs` rief nach absichtlich widersprüchlichem FX einen automatischen Stichtag auf und erwartete später dessen Erhalt. Der neue Schutz erzeugt fachlich korrekt keinen Zahlenstichtag; daher `0 !== 1` in der historischen Erhaltungsprüfung. Der tatsächliche Fehler lokal unverändert reproduziert. Sämtliche neuen UNKNOWN-/USD-Chromium-Gates waren zuvor PASS. Zwei Cross-Engine-Blöcke und Wallet SUCCESS; letzter Cross-Engine-Block läuft weiter und wird nicht abgebrochen.
+
+Korrektur nur in der Testvorbereitung: automatische Zahlenstichtage bei widersprüchlichem FX ausdrücklich ablehnen, einen unabhängig angegebenen synthetischen Kontrollwert erfassen und danach jedes historische Feld bei Kurs-/FX-Korrektur sowie Reload tief vergleichen. Kein Produktcode oder Schutz entfernt/geändert. Tatsächlicher lokaler bestehender Browserablauf mit verschärften historischen Erhaltungsprüfungen PASS.
+
+Vorbereiteter Commit `5fcf2b1b7c87a316c0198b09af09c342246e9c4f`, Tree `ffe455b44557c5fbf1ce31ef51ff6f6129518fc3`, noch kein Branchupdate; bisherige 23 Dateien byte-/Gitblob-identisch, eine korrigierte bestehende Browser-Testdatei zusätzlich. **Nächster Schritt:** aktuellen Lauf vollständig auslaufen lassen, alle Belege und Testkorrektur unter derselben privaten Sicherungsidentität sichern/verifizieren, dann genau diese neue Revision regulär prüfen. Keine Wiederholung des identischen unveränderten CI-Kopfs. Keine Merge-/Releasefreigabe. V112 bleibt letzter vollständig gespeicherter/verifizierter Stand; nächste Sicherung wird vor der Revision fortgeschrieben. UH05 PARTIAL, alle übrigen Verträge und Aufträge erhalten.
+
+---
+
 ## UH05 – UNKNOWN-FX und enger USD-Hauptbetrag: Kandidat v299 · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Alleiniger Owner unverändert `8cb2927f295c`, **ACTIVE**; keine neue Übernahme. v298 bleibt **LIVE_ACCEPTED**, keine erneute Abnahme. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b` frisch bestätigt. Nur historische Drafts #157/#161 offen, keine laufenden/queued Actions; sämtliche 562 Refs/283 Branchrefs frisch gelesen, nur eigene dokumentierte Änderungen.
