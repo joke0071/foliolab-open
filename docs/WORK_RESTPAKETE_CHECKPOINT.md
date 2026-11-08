@@ -1,3 +1,13 @@
+## ACTIVE – 382a573e6a17 / PR316 eingefroren / UH05 Kraken Spot/Earn / V95 · 08.11.2026
+
+[PR316](https://github.com/joke0071/foliolab-open/pull/316), HEAD`33d5ea336aa7f8f03c46dd263b351bdc39438c58`, Tree`fff7b67c9a214795472146b2ae1b6c74dc59ff51`, auf unverändertem Main090f94dda859d8baa1a63f2d0fd44c31d00900a4. Alle1070Treeblobs gegen Main plus genau11beabsichtigteDateien geprüft;keinCheckpoint-Produktmerge. [Enger Fachvertrag auf dem Kandidaten](https://github.com/joke0071/foliolab-open/blob/33d5ea336aa7f8f03c46dd263b351bdc39438c58/docs/UH05_KRAKEN_ALLOCATION.md). Originalquellen-/Referenz-/Zeit-/Asset-/Wallet-/Decimalbeweis vor Umsetzung:belegte mehrgliedrige interne Spot/Earn-Hauptbetraggruppen;keineErträge/externenFlüsse/Gebühren/FX. NeueGruppen nurmit vollständigen Paaren,einheitlicherRichtung,exakterNullgebühr,manuellengetrenntenKontenundausdrücklichgeprüftenAnfängen. VorhandeneIdentitäten/Kostenbasen/Journale/Eröffnungenbleibengeschützt;USD-/unbelegteKonversionenweiterBLOCKED. Die401Flatex1:1Gruppen liefernweiterkeinenneuenN:M-Beleg. Kein tatsächlicher Nutzerportfolio-/Anfangsbestandsimportbehauptet.
+
+UnabhängigeprivateOriginal-/Decimal-Fälle inbeidenDateireihenfolgen/sharedImport/Restore/Replay/Undo/terminalerGesamtrücknahmePASS;exakterv295reproduziertSperreundliestneuegewöhnlicheTransferjournalewieder. 1319Tests/0Fehler/0Skips,SyntaxPASS. LokalevollständigeChromium141/PW1.56.1undFirefox157/PW1.64.1-UI/CAS/Quota/post-put/Undo/Offline/verschlüsselterFreshRestore+Reload/echterZweittab/7BreitenAxePASS. LokalerWebKitstartzunächstwegenHostbibliothekenblockiert,keineAbnahmebehauptet;regulärevolle3EngineIntegrationundspäterMain/Deployment/tatsächlicheProduktionbleibenPflicht. KeineCIduplizieren/abbrechen. v295bleibtLIVE_ACCEPTED,nichterneutabnehmen;PR316nochNICHTgemergt/neuesLIVE_ACCEPTED.
+
+PrivateV95unterderselbenIdentität/kanonischemNamen vollständigverifiziert:36403893Bytes/SHA256add874587d1089640dfeb35beeadfe5c46b7177964066007df9ac3568a7882b4,8355Manifestdateien;alle8175V93Payloadsbytegleich.Einstiegdelta-382a573e6a17/allocation-candidate/STATE.json. V94waridentischerInhaltuntertemporäremUploadnamen;V95stelltkanonischenNamenwiederher,keineOriginaleoderVersionenentfernt. ÜbrigeUH05/UI300allezehnNachträge/QUALITY298/CI229/AndroidPWA/WalletStaking/Verwaltung/RoadmapundalleSchutzverträgeerhalten.GitHubnurPlugin;CheckpointbranchniemalsvollständignachMain.
+
+---
+
 ## ACTIVE – 382a573e6a17 / reguläre HND01-Übernahme / UH05 nach v295 · 08.11.2026
 
 Nach ausdrücklicher vollständiger Abgabe durch `706dbcb4272b` übernimmt `382a573e6a17` die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung für den bestehenden Hauptauftrag. Kein paralleler Strang, keine neue Architektur.
