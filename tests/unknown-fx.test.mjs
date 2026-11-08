@@ -9,6 +9,7 @@ import {projectHistoricalPosition} from '../src/historical-position-value.js';
 import {createCompleteBackup,unpackCompleteBackup} from '../src/complete-backup.js';
 import {encryptBackup,decryptBackup} from '../src/crypto-backup.js';
 import {portfolioXirr,portfolioTwr} from '../src/performance.js';
+import {prepareReferenceAdd} from '../src/reference-management.js';
 export function unknownFXFixture(){
  const m=blankModel(),p=createProvider({id:'synthetic-fx-provider',name:'Synthetic FX'});m.providers.push(p);
  const a=createAccount({id:'usd-account',providerId:p.id,name:'USD Spot',currency:'USD',type:'exchange'},m);m.accounts.push(a);
@@ -85,5 +86,8 @@ test('UNKNOWN never rewrites existing independently recorded historical observat
  const {m,v}=unknownFXFixture();m.positions.push(createPosition(v,m));
  m.snapshots.push({id:'old-shot',date:'2001-01-01',total:123.456,totalEURExact:'123.456',recordedAt:null,byAccount:null,byPosition:null,valuationStatus:'manual',source:'manual',quoteTimes:[],revisions:[],note:'Independent retained observation'});
  const prior=JSON.stringify(m.snapshots);assert.equal(snapshot(m),null);assert.equal(JSON.stringify(m.snapshots),prior);
+ const before=JSON.stringify(m),date=new Date().toISOString().slice(0,10);
+ assert.throws(()=>prepareReferenceAdd(m,{date,manualTotalEUR:''},{expectedModel:before,confirmed:true}),/Gesamtwert in EUR ist unbekannt/);assert.equal(JSON.stringify(m),before);
+ const observed=prepareReferenceAdd(m,{date,manualTotalEUR:'456.789'},{expectedModel:before,confirmed:true});assert.equal(observed.snapshots.at(-1).totalEURExact,'456.789');assert.equal(JSON.stringify(m),before);
  const restored=safeImport(JSON.parse(backup(m)));assert.equal(JSON.stringify(restored.snapshots),prior);assert.equal(totalExactEUR(restored),null);
 });

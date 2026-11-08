@@ -69,7 +69,7 @@ export function prepareReferenceEdit(model,id,values,{expectedModel,confirmed}={
 }
 export function prepareReferenceAdd(model,{date,note,manualTotalEUR},{expectedModel,confirmed}={}){
  current(model,expectedModel,confirmed);if(typeof date!=='string'||!date)throw Error('Stichtag ausdrücklich angeben.');if(rows(model).some(s=>s.date===date))throw Error('Für diesen Stichtag existiert bereits ein Originalwert. Bitte in der Verwaltung prüfen; Hinzufügen überschreibt ihn nicht.');
- const candidate=clone(model);snapshot(candidate,date,note,{manualTotalEUR});safeImport(clone(candidate));return candidate;
+ const candidate=clone(model);if(snapshot(candidate,date,note,{manualTotalEUR})===null)throw Error('Gesamtwert in EUR ist unbekannt. Bitte einen unabhängig belegten Gesamtwert eingeben.');safeImport(clone(candidate));return candidate;
 }
 const snapshotKeys=['id','date','total','totalEURExact','recordedAt','byAccount','byPosition','valuationStatus','source','quoteTimes','revisions','note'];
 const revisionKeys=['recordedAt','date','note','totalEURExact','valuationStatus','source'];

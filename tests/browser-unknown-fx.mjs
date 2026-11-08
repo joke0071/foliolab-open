@@ -34,6 +34,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    const total=totalExactEUR(model),shot=snapshot(model);return {total,shot,rejected,unchanged:raw===JSON.stringify(model),quantity:model.positions[0].quantityExact,fx:model.positions[0].fxRateExact};
   });
   assert.deepEqual(proof,{total:null,shot:null,rejected:true,unchanged:true,quantity:'17.000000000000000005',fx:'UNKNOWN'});assert.deepEqual(await read(),before);
+  console.log('FX_STAGE',engine,'unknown-reference');
+  await page.locator('#mobileNav [data-page=history]:visible,#sidebarNav [data-page=history]:visible').click();
+  if(!await page.locator('#snapshotManager').evaluate(e=>e.open))await page.locator('#snapshotManager > summary').click();
+  await page.locator('#addSnapshot').click();await page.locator('#saveDialog').click();await page.locator('#dialogError:not(.hidden)').waitFor();assert.match(await page.locator('#dialogError').innerText(),/Gesamtwert in EUR ist unbekannt/);assert.deepEqual(await read(),before);
+  await page.locator('#cancelDialog').click();await page.locator('#mobileNav [data-page=dashboard]:visible,#sidebarNav [data-page=dashboard]:visible').click();
   console.log('FX_STAGE',engine,'rollback');
   for(const mode of ['quota','post-put']){
    console.log('FX_STAGE',engine,mode);
@@ -66,7 +71,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.match(await rp.locator('#totalHint').innerText(),/Teilsumme/);
   }finally{await fresh.close();}
   assert.deepEqual(errors,[]);
-  writeFileSync(dir+'/report-'+engine+'.json',JSON.stringify({engine,result:'PASS',base,checks:['exact USD native quantity and UNKNOWN on save/reload','honest UI partial subtotal and no numeric full EUR total/snapshot','historical transaction missing FX rejected without canonical write','quota and post-put preserve exact bytes/revision','real second-tab CAS rejects stale writer','offline reload stable','encrypted v5 actual UI restore in fresh browser context','four widths and full Axe tags'],newUSDPrincipalAdmission:false},null,2));
+  writeFileSync(dir+'/report-'+engine+'.json',JSON.stringify({engine,result:'PASS',base,checks:['exact USD native quantity and UNKNOWN on save/reload','honest UI partial subtotal and no numeric full EUR total/snapshot','explicit UNKNOWN reference submission rejects without canonical bytes/revision change','historical transaction missing FX rejected without canonical write','quota and post-put preserve exact bytes/revision','real second-tab CAS rejects stale writer','offline reload stable','encrypted v5 actual UI restore in fresh browser context','four widths and full Axe tags'],newUSDPrincipalAdmission:false},null,2));
   console.log('UNKNOWN_FX_PASS',engine);
  }finally{await context.close();await browser.close();}
 }
