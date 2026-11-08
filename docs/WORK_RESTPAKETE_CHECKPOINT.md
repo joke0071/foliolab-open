@@ -1,3 +1,19 @@
+## UI-R1 eingefroren · PR320 INTEGRATION läuft · Owner 20d9afddc0ae ACTIVE · 08.11.2026
+
+Alleiniger Owner `20d9afddc0ae`; [kontrollierte Übernahme samt Nutzerwiderruf und tatsächlich vorgefundener HND01-Abgabe](HND01_TAKEOVER_20d9afddc0ae_2026-11-08.md) unverändert. **v299 bleibt LIVE_ACCEPTED**, Main `1f051a7059d24751f961fcf2af7fa226b319079e`, Tree `c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6`; keine Wiederabnahme.
+
+**UI-R1 implementiert, noch nicht integriert/live abgenommen:** [PR320](https://github.com/joke0071/foliolab-open/pull/320), Branch `ui/ui-r1-loader-install-v300-20d9afddc0ae`, eingefrorener HEAD `74fd8bc0f11d30b5fa05628117acf26e9ae870b4`, Tree `34c90e0ec5597db2047b404a2f814fe1bfd1c770`, getesteter PR-Merge `274cdd3e262eae9eec1eac408d62ff1458e58da2`. Exakt5Dateien: Start-/Inline-Donut, beide Gerät-plus-Installationsglyphen, CSS, bestehender Loader-/PWA-Test und normaler SW-Cachebumpv300. app.js/startup.js/Manifest/Markenicons/Finanz-/Storagecode unverändert.
+
+Lokale Vorprüfung: **1.345 Units,0Fehler/Skips; Syntax PASS; vollständiger bestehender Loader-/PWA-Test Chromium/Firefox/WebKit PASS** einschließlich drei Animationsframes, statischem Reduced Motion/Fehlerstatus, schnellem/verzögertem Start/Späterfolg, 320–1440px/200%-Text, unverändertem Prompt-/Hilfs-/Standalone-/Fokus-/Touchverhalten und exakten Portfolio-Bytes/Revision. Synthetische Ansichten visuell geprüft. Lokale Firefox-Sandboxkonfiguration/WebKit-Bibliotheken privat nachvollziehbar; reale Hardwareabnahme daraus nicht abgeleitet.
+
+Reguläre bestehende Läufe **42527328482** (Pflichtintegration) und **42527328968** (Wallet), jeweils Versuch1, gestartet und laufen. Keine Duplikate/Abbrüche, keine Änderungen am eingefrorenen Kandidaten während CI. **Genau nächster Schritt:** dieselben Läufe bis zum tatsächlichen Ende qualifizieren, vollständige Artefakte/Uploads/SHA/Tree/Browser-/Finanz-/Storagegates prüfen; erst dann kollisionsgeprüfter Merge und unveränderte Main-/Deployment-/echte Produktionsgates. Noch kein v300 LIVE_ACCEPTED.
+
+Private **V123** unter derselben Dateiidentität gespeichert, erneut materialisiert und **alle26.691Manifestdateien vollständig verifiziert**; sämtliche26.608V122-Payloads erhalten, einschließlich aller26.595V121-Payloads/Originale/Decimal-Oracles. **124.241.875Bytes**, SHA256 `ca2b6fdd48116a2fae06af24575bd1128d7bfb94f9c9766e6139c327af8c5706`. Einstieg `delta-20d9afddc0ae/ui-r1-candidate/STATE.json`; enthält Übernahme, genaue fünf Kandidatdateien, lokale Berichte/Bilder und Fachvertrag. PR/CI wurden danach eröffnet und sind oben frisch referenziert.
+
+EFF02/[kanonische41Teilumfänge/K1–K6](KONSOLIDIERTE_ROADMAP.md#kanonische-restpaket-matrix) unverändert; UI-R1 bleibt bis tatsächlicher Liveabnahme PLANNED in der Matrix. Anschließend UI-R2→UI-R3/Kernpflichtpakete seriell. Reale Android A01–A10 und übrige externe Gegenproben offen. [EFF01/EFF02/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) und sämtliche Schutzverträge erhalten. GitHub nur Plugin; Checkpointbranch niemals vollständig mergen. Zähler0akzeptierteReleases/0abgeschlosseneProduktpakete.
+
+---
+
 ## Kontrollierte Übernahme · Owner 20d9afddc0ae ACTIVE · 08.11.2026
 
 **Owner `20d9afddc0ae` allein ACTIVE.** Ausdrücklicher Nutzerwiderruf der Freigaben von `8cb2927f295c` und Notfallfortsetzung beauftragt. Bei frischer lesender Prüfung bereits neuere tatsächliche reguläre STOPPED/HANDOVER_READY-Abgabe in `a16d1653bb0078fe5624c18bb3a5ff73fb528e78` vorgefunden; kein alter ACTIVE-Eintrag umgedeutet. Ausnahmegrund, tatsächlicher Befund und vollständige Kollisionsprüfung: [Übernahmenachweis](HND01_TAKEOVER_20d9afddc0ae_2026-11-08.md).
