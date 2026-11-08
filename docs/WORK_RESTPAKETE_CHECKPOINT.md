@@ -1,3 +1,52 @@
+## HANDOVER_READY / STOPPED – b510a73fed43 · v298 LIVE_ACCEPTED · 08.11.2026
+
+**Owner `b510a73fed43` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Reguläre kontrollierte HND01-Abgabe an den neuen Work-Chat auf ausdrücklichen Nutzerauftrag. Ab diesem Kopf keine weitere Produktarbeit, kein neuer PR, Merge, CI-Start oder Deployment durch diese Ausführung. Kein Neustart und kein paralleler Strang.
+
+### Verbindlicher Einstieg
+
+Vollständig lesen: [HND01-Übergabe](HANDOVER_b510a73fed43_2026-11-08.md), [Startprompt](START_HND01_b510a73fed43_2026-11-08.md), [genau nächster UH05-Schritt](UH05_NEXT_AFTER_v298_2026-11-08.md), [Fachvertrag auf Main](https://github.com/joke0071/foliolab-open/blob/dc017c6807be85b9e1ce95dd422cf88ae221d0ef/docs/UH05_FIAT_ADMISSION_GUARD_2026-11-08.md) und sämtliche dort verlinkten Original-, Decimal-, Finanz-, CI-, UI-, Release- und Sicherungsbelege.
+
+Vor erstem Schreiben Main, Tree, Owner, alle relevanten Refs, PRs, Reviews/Inline-/Conversationbefunde, Actions, WIP und aktuelle private Sicherung frisch bestätigen. Erst bei Kollisionsfreiheit die alleinige neue HND01-Übernahme dokumentieren. Die bisherige Ausführung hat sämtliche Zuständigkeit abgegeben.
+
+### Produktiv vollständig abgenommen
+
+**v298 LIVE_ACCEPTED**, [PR318](https://github.com/joke0071/foliolab-open/pull/318) gemergt. **Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`.** v298 nicht erneut abnehmen. v297 war bereits LIVE_ACCEPTED und wurde nur wiederverwendet.
+
+- Reguläre Integration **42472374785**, Versuch 1, und Wallet **42472374753 SUCCESS**. **1.326 Tests, null Fehler, null Skips**, Syntax und Chromium/Firefox/WebKit PASS. [Integrationsbeleg](release-evidence/v298-pr318-integration-qualified.json).
+- Main-/Produktionslauf **42474607569**, Versuch 1, vollständig **SUCCESS**. Deployment **128719280178 SUCCESS**, tatsächlicher Livejob **128719357824 SUCCESS**. [Main/Deployment](release-evidence/v298-pr318-main-qualified-deployed.json), [vollständige tatsächliche Liveabnahme](release-evidence/v298-pr318-live-acceptance.json).
+- Integration und Main jeweils **sechs Gateartefakte / 218 JSON-Berichte / 1.968 PNGs**, vollständig API-/Uploadlog-/lokale SHA256 und Größe, ZIP-CRC sowie alle JSON-/PNG-Decodierungen PASS. Jeweils drei neue mobile CI-Bilder tatsächlich angesehen.
+- Pages-Artefakt **13615458395**, **561.286 Bytes**, SHA256 `dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f`: alle **151 physischen Dateien exakt gegen Main-Gitblobs** geprüft. [Unabhängiger Asset-/TLS-Beleg](release-evidence/v298-independent-assets.json): alle **152 HTTPS-Pfade einschließlich Root bytegleich**, reguläre TLS-Prüfung ohne Zertifikatsausnahme.
+- Liveartefakt **13616812585**, **130.717.429 Bytes**, SHA256 `6e1ca559ac735ccb77c1894449d61ecc1efd5494b764608bb94df7603e165931`: API-/Uploadlog-/lokale Hashes und Größe, ZIP-CRC, sämtliche **159 JSON-Berichte / 1.310 PNGs** vollständig PASS, keine Fehlerflags. Alle **152 tatsächlichen Livebericht-Hashes gegen Pages** abgeglichen. Main-SHA/SW298, sechs Coregruppen, 18 Core-Axe-Scans ohne Verstöße und sämtliche Pflichtpfade PASS.
+- Neuer nativer Fiat-Vertrag in tatsächlicher gemeinsamer Importoberfläche **Chromium/Firefox/WebKit PASS**: vier synthetische Fälle, vier Breiten, voller bestehender Axe-Tagumfang, konkreter sichtbarer Sperrgrund, gesperrte Bestätigungen und zurückgewiesener Skriptsubmit; kanonische IDB-Bytes und Revision einschließlich Offline-Reload unverändert. Drei neue tatsächliche Produktionsbilder angesehen. Bestehende Shared-/Spot-Earn-/Funding-/UI300-/Header-/Missing-value-/Quota-/Post-put-/Mehrtab-/Undo-/Restore-/Offline-Verträge erhalten und bestanden.
+
+Keine CI dupliziert, abgebrochen oder blind wiederholt. Keine tatsächliche Nutzeranfangs-/Portfolioimportabnahme und keine physische Android-/native Safari-/OAuth-/TalkBack-Abnahme. Historische Alpha-IDB-Ursache UNKNOWN; alte Ausnahme verbraucht, kein Reparaturbeweis.
+
+### Finale private Sicherung vollständig verifiziert
+
+**Version 107**, kanonischer Name `FolioLab_private_continuation_2026-11-04.tar.gz`, **unveränderte Dateiidentität**. **56.724.583 Bytes**, SHA256 `d3d0019e863ae3bf5accca6df8b50d4bbae53fcf3f4c53a64bbd3fa1e0a0ed68`, **12.340 Manifestdateien** vollständig geprüft. Sämtliche **11.635 V106-Payloads** sowie alle früheren Originale, Decimal-Oracles, Produktaufträge und Schutzverträge bytegleich erhalten.
+
+Upload mit erwarteter Vorgängerversion106 erfolgreich bestätigt; Versionsmetadaten107 gesetzt. Danach die aktuelle serverseitige Version107 unter derselben Identität erneut materialisiert und unabhängig deren vollständige Größe, SHA256, Versionsmetadaten sowie sämtliche 12.340 Manifestdateien am gesamten Archiv verifiziert. Keine bloße Metadaten- oder Stichprobenprüfung.
+
+Privater Einstieg: **`delta-b510a73fed43/v298-live-accepted-handover/STATE.json`**, vollständige Kontroll-/Original-/Decimal-/UI-/CI-/Releasebelege und HND01-Dateien unter `control/`, tatsächliche CI-/Live-JSON-Berichte unter `ci-reports/`. Keine neuen CI-ZIP-/PNG-Bytes im Archiv; vollständige Hash-/CRC-/Prüfreceipts, Rezepte und GitHub-Locators erhalten. Der eigene endgültige Archivhash kann nicht im Archiv selbst stehen; dieser nach erfolgreicher Sicherung gesetzte Kopf ist dafür maßgeblich.
+
+### Frischer kollisionsfreier Abgabestand
+
+Nach dem verifizierten Upload **Main und Tree unverändert**, sämtliche **282 Branch-Refs** erneut geprüft und seit dem vorigen Abschluss-Snapshot unverändert. Nur historische Drafts **#157/#161** offen; PR318 gemergt und ohne Review-/Inline-/Conversationbefunde. **Keine laufenden oder queued Actions.** Alle zehn UI300-Nachträge frisch unverändert bestätigt. 620 vorhandene lokale Main-Blobs erneut exakt abgeglichen; kein Produkt-WIP oder weiterer Produktkandidat. Lokale Teilrekonstruktion ohne `.git`; fehlende unveränderte Dokumente sind keine Löschungen. Diagnose-/Dependency-/Browserordner und Launcher sind keine Produktänderungen.
+
+### UH05, UI300 und genau nächste Arbeit
+
+**UH05 bleibt PARTIAL.** Der begrenzte v298-Zulassungsschutz ist abgeschlossen, keine Migration, automatische historische Reparatur, neue Finanzengine oder vollständige Fremdwährungs-/FX-Unterstützung. Vollständig gespeicherte unveränderte Altgruppen behalten Replay ohne neue Wirkung, Undo und dokumentarische Rücknahme. Zwei tatsächliche Originalgruppen auf aktuellem Code erneut rein lesend gegen raw-CSV-/Decimal100-Mitgliedschaft, Rollen und exakte bedingte Vor-/Nachbestände geprüft: ready0, Bestätigung abgewiesen, Original-/Modellbytes unverändert, keine Persistenz und keine Nutzeranfangsfreigabe.
+
+**Genau nächster ausführbarer Schritt nach neuer HND01-Übernahme:** frisches Main über das Plugin beziehen; das im finalen privaten `control/` gesicherte `audit-v298-original-admission.mjs` mit den erhaltenen Original-/Decimal-Dateien ausführen. Die beiden bekannten nativen Fiatfälle müssen weiter ready0/Bestätigung abgewiesen/keine Mutation liefern. Anschließend den tatsächlichen Fiat-/FX-Originalrest mit vollständiger Referenzmitgliedschaft und nativen Währungs-/Walletrollen inventarisieren und einen **separaten begrenzten Fiat-/FX-Vertrag mit unabhängigen exakten Sollwerten** vorbereiten. Keine neue Finanzimplementierung aus der alten Fehlzuordnungsreproduktion ableiten. Genaue Einstiegspfade und Grenzen in Übergabe und nächstem UH05-Dokument.
+
+Bereits abgenommene Flatex-1:1-/2:1-/3:1-, FundingV2-/Valuta- und Spot-/Earn-Schnitte erhalten; nicht erneut entwickeln oder abnehmen. DKB bleibt außerhalb; externe Finanzierung kein Gewinn; interne Hauptbeträge kein Ertrag, externer Zufluss oder neue Kostenbasis; fehlende Wallets/Staking UNKNOWN. Alle zehn UI300-Nachträge und gesamte Roadmap erhalten, **#300 insgesamt nicht DONE**. Vorhandenen Hero-/Chart-/Navigations-/Prüfbereichs-/Kicker-/Sidebar-Schnitt nicht erneut bauen. Das neue begrenzte lesende Icon-Quelleninventar ist Vorbereitung, keine globale Icon- oder Geräteabnahme.
+
+QUALITY298, CI229, echte Android-/PWA-Alltagsperformance und Gerätetests, Wallet-Historie/Staking, Verwaltung, Kursversorgung/Analysen/Datenqualität, Backup/Restore/optionales Drive sowie alle übrigen Produktaufträge und Schutzverträge bleiben aktiv. Originale nicht erneut anfordern oder öffentlich kopieren.
+
+**GitHub nur Plugin. Checkpointbranch niemals vollständig nach Main mergen. Mit diesem Kopf ist `b510a73fed43` vollständig STOPPED/HANDOVER_READY und hat die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig abgegeben.**
+
+---
+
 ## v298 / PR318 – MAIN_GATES_ACCEPTED / DEPLOYED · tatsächliche Liveabnahme läuft · 08.11.2026
 
 Alleiniger aktiver Owner `b510a73fed43`. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`. Mainlauf **42474607569**, Versuch1: **1.326 Tests, null Fehler/Skips, Syntax und Chromium/Firefox/WebKit SUCCESS**. Deployment **128719280178 SUCCESS**. [Mainbeleg](release-evidence/v298-pr318-main-qualified-deployed.json): alle sechs Artefakte/218JSON/1968PNG vollständig API-/Uploadlog-/lokale Hashes/Größe/CRC/JSON-/PNG-Decodierung geprüft; drei neue Main-Mobilbilder tatsächlich angesehen. Pages13615458395/561286Bytes/SHA256 `dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f` gegen151Gitblobs; [unabhängiger TLS-/Assetbeleg](release-evidence/v298-independent-assets.json): alle152HTTPS-Pfade einschließlichRoot exakt bytegleich, reguläreTLS/keineZertifikatsausnahme.
