@@ -1,3 +1,13 @@
+## v298 / PR318 – INTEGRATION_QUALIFIED · Merge vorbereitet · 08.11.2026
+
+Alleiniger aktiver Owner `b510a73fed43`. [Vollständiger Integrationsbeleg](release-evidence/v298-pr318-integration-qualified.json): regulärer Lauf **42472374785**, Versuch1, und Wallet **42472374753 SUCCESS**. **1.326 Tests / null Fehler / null Skips**, Syntax und Chromium/Firefox/WebKit einschließlich neuem tatsächlichem Fiat-UI-Vertrag PASS. Alle sechs Artefakte / **218 JSON / 1.968 PNG**, API-/Uploadlog-/lokale SHA256+Größe, ZIP-CRC, vollständige JSON-/PNG-Decodierung PASS; drei neue CI-Mobilbilder tatsächlich angesehen. Exakter getesteter Merge `3335afc8bd6223b46ca364936b50570ba98d7308`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59` eingefroren.
+
+Private **V105**, gleicher Name/Identität, **51.958.212 Bytes**, SHA256 `aee52b925281e0be3297ae82e200f1ec803ee05fc6465d909ced987978e475a6`, **11.104 Manifestdateien** vollständig geprüft; alle 10.829 V104-Payloads/Originale/Oracles bytegleich erhalten. Erfolgreicher Upload mit erwarteter Version104, Version105/Identität/Größe/Hash frisch bestätigt. Einstieg `delta-b510a73fed43/fiat-integration-qualified/STATE.json`.
+
+Direkt vor dem kontrollierten Merge Main/Tree unverändert, alle282Refs ohne unerwartete Änderung, nur318+historischeDrafts157/161 offen, PR318 mergeable/clean und keine Reviews/Inline-/Conversationbefunde; keine aktiven/queuedActions. Owner unverändert. Noch kein Merge/Deploy/LIVE_ACCEPTED. Nach Merge obligatorisch vollständige Main-/Produktionsabnahme; kein weiterer Produktkandidat. v297LIVE_ACCEPTED nicht erneut abnehmen; UH05PARTIAL, gesamteRoadmap erhalten; keineCIduplizieren/abbrechen und Checkpointbranch niemals nachMain mergen.
+
+---
+
 ## UH05 / PR318 – v298 reguläre Integration · 08.11.2026
 
 Alleiniger aktiver Owner `b510a73fed43`. [PR318](https://github.com/joke0071/foliolab-open/pull/318), eingefrorener HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, Base Main unverändert `602ef464a94381ba86615f8e25f82a71c2d25e8d`. Genau sieben beabsichtigte Pfade; alle 1.076 Tree-Blobs und Modi gegen Base/Änderungen geprüft. Nur Importer und SW298 als Laufzeitänderungen; keine Migration/FX-Unterstützung/Journal- oder Datenformatänderung. Vollständige Altgruppen-Replay-/Undo-/dokumentarische Rücknahme bleibt geprüft. UH05 PARTIAL und gesamte Roadmap erhalten.
