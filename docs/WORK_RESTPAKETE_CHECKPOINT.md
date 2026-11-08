@@ -1,3 +1,13 @@
+## v297 / PR317 – kontrolliert MERGED / Main- und Produktionsabnahme ausstehend · 08.11.2026
+
+AlleinigerOwner e290961479cf. PR317 mit erwartetemHEAD61df747db7c7da9b58112c28c3889559bd0f787b regulärgemergt. Main **602ef464a94381ba86615f8e25f82a71c2d25e8d**, Tree **7ae902f3e24b5166592a8fc35f90432817be1f3a** exaktgleichdem vollständiggeprüftenKandidat-/IntegrationsmergeTree. [Integrationsbeleg](release-evidence/v297-pr317-integration-qualified.json):42457939096Versuch1 undWallet42457939077SUCCESS,1319Tests/0Fehler/0Skips/Syntax/3Engines;alle6Artefakte/215JSON/1956PNG/API-/Upload-/lokaleHashes/Größe/CRC geprüft,3neueCIMobilbilder angesehen. VorMergeMain/Owner/alle281Refs/PRs/Reviews/Actions frischkollisionsfrei, nurhistorischeDrafts157/161neben317,keineaktiven/queuedActions;PrivateV101vollständigverifiziert.
+
+NeueautomatischeMain-/Produktionsläufe: 42459790418 FolioLab Open – testen und veröffentlichen in_progress. NochKEINDEPLOYED/LIVE_ACCEPTED fürv297. LetztesvollständigbestätigtesLive bleibtv296; nicht erneutabnehmen. NächsterSchritt bestehendenMainlaufvollständigqualifizieren,Pages/Gitblobs/reguläreTLS/Assets undtatsächliche3EngineProduktion abnehmen. KeineCIduplizieren/abbrechen,keinenweiterenProduktkandidatenbeginnen.
+
+PrivateV101/44580337Bytes/SHA256c302948d18c233006f0fed5722de5db32d0dfd2236be7ea20dcf87a49018abc8/9694Manifestdateien geprüft;alle9387V100Payloads undOriginale unverändert. Einstiegdelta-e290961479cf/ui300-integration-qualified/STATE.json. Alle10UI300Nachträge/UH05PARTIAL/QUALITY298/CI229/gesamteRoadmap erhalten. WeitererQuellen-/Runtimeabgleich nurlesendvorbereitet.
+
+---
+
 ## UI300 / PR317 – exakt laufende finale Pflicht-CI 42457939096 · 08.11.2026
 
 AlleinigerOwner e290961479cf. FinalerHEAD61df747db7c7da9b58112c28c3889559bd0f787b/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a, getesteterMerge6ddff0b15edf3e230e6104a26f51e10bfef91a9b mit exaktgleichemTree. **Aktueller regulärer Integrationslauf42457939096Versuch1**;Wallet42457939077SUCCESS,PlanINTEGRATION/full=true/10Dateien verifiziert,Stageartefakt13608825273/621Bytes/SHA256c34daa868f6d37f9fbbd2d14a1cd9858285ca88a23085db1e3a06ac7c2a8021f qualifiziert. Cross2 bereitsSUCCESS,Chromium/Cross1/Cross3 zumSnapshot nochlaufend. Nicht erneut starten/abbrechen. Noch keinMerge/Deploy/LIVE_ACCEPTED;Mainv296 unverändert11a5d792. ErsteCI42457216800 vollständig beendet und unverändertalsFAILED erhalten; neuerKopf enthält zusätzliche nativeFokus-/Sichtbarkeits-/Hit-Test-Prüfung, keineAxe-Regelabschaltung und keineProduktblobänderung gegenübererstemKopf.
