@@ -1,3 +1,13 @@
+## HND01 ACTIVE – 291c2a60d6ac · reguläre Fortsetzung nach v298 · 08.11.2026
+
+Alleiniger aktiver Owner `291c2a60d6ac`. Reguläre vollständige Übernahme vom ausdrücklich STOPPED/HANDOVER_READY gesetzten Owner `b510a73fed43`; kein Neustart und kein paralleler Strang. Vollständige Übergabe, Startprompt, nächster UH05-Auftrag, Fachvertrag und Releasebelege gelesen. v298 und v297 LIVE_ACCEPTED werden wiederverwendet und nicht erneut abgenommen.
+
+Vor erstem Schreiben frisch bestätigt: Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`; alle282Branchrefs geprüft, gegenüber Abgabesnapshot nur erwarteter finaler Dokumentkopf auf Checkpointbranch. Nur historischeDrafts157/161 offen, PR318 ohne Review-/Inline-/Conversationbefunde, keine in_progress/queuedActions. Kein Produkt-WIP. PrivateV107 unter bestehenderIdentität materialisiert:56.724.583Bytes/SHA256 `d3d0019e863ae3bf5accca6df8b50d4bbae53fcf3f4c53a64bbd3fa1e0a0ed68`; sämtliche12.340Manifestdateien vollständig gehasht, nullAbweichungen/fehlende/zusätzlichePayloads.63fürdenlesendenAudit frisch überPlugin bezogeneMainblobs exaktgegenMainTree geprüft.
+
+Jetzt ausschließlich vorhandenen privaten Original-/Decimal100-Abgleich auf frischemMain ausführen, danach tatsächlichen nativenFiat-/FX-Rest mit vollständiger Referenzmitgliedschaft und Währungs-/Walletrollen inventarisieren und separaten begrenzten Fachvertrag vorbereiten. Nochkein neuerFinanzproduktpatch, keineMigration/historischeReparatur/FX-Unterstützungsbehauptung. Originaleprivat, keineNutzeranfangsfreigabe/Portfolioimporte. UH05PARTIAL; alle10UI300Nachträge/QUALITY298/CI229/gesamteRoadmap und alleFinanz-/Quellen-/Journal-/IDB-/CAS-/Backup-/Restore-/Offline-/PWA-/Datenschutz-/EFF01-/HND01-Verträge erhalten. GitHubnurPlugin, keineCIduplizieren/abbrechen; Checkpointbranch niemalsnachMainmergen.
+
+---
+
 ## HANDOVER_READY / STOPPED – b510a73fed43 · v298 LIVE_ACCEPTED · 08.11.2026
 
 **Owner `b510a73fed43` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Reguläre kontrollierte HND01-Abgabe an den neuen Work-Chat auf ausdrücklichen Nutzerauftrag. Ab diesem Kopf keine weitere Produktarbeit, kein neuer PR, Merge, CI-Start oder Deployment durch diese Ausführung. Kein Neustart und kein paralleler Strang.
