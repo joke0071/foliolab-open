@@ -1,0 +1,186 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "e290961479cf",
+  "version": 297,
+  "PR": 317,
+  "merged": true,
+  "main": "602ef464a94381ba86615f8e25f82a71c2d25e8d",
+  "tree": "7ae902f3e24b5166592a8fc35f90432817be1f3a",
+  "candidateHead": "61df747db7c7da9b58112c28c3889559bd0f787b",
+  "testedIntegrationMerge": "6ddff0b15edf3e230e6104a26f51e10bfef91a9b",
+  "integrationRun": 42457939096,
+  "integrationAttempt": 1,
+  "integrationResult": "SUCCESS",
+  "walletRun": 42457939077,
+  "walletResult": "SUCCESS",
+  "firstIntegration": {
+    "run": 42457216800,
+    "result": "FAILED, preserved; changed native focus/visibility test head only after completion; no retry/cancel/duplicate"
+  },
+  "mainRun": 42459790418,
+  "mainAttempt": 1,
+  "mainRunResult": "SUCCESS",
+  "mainUnits": 1319,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "mainCross123": "SUCCESS",
+  "deploymentJob": 128671894633,
+  "deploymentResult": "SUCCESS",
+  "liveJob": 128671976432,
+  "liveJobResult": "SUCCESS",
+  "mainGateArtifactCount": 6,
+  "mainJSONReports": 215,
+  "mainDecodedPNGs": 1956,
+  "mainArtifactQualification": "API/upload/local SHA256+size, ZIP CRC, all JSON/PNG PASS",
+  "pagesArtifact": 13609482735,
+  "pagesSize": 561113,
+  "pagesSHA256": "dd2fecdd4b54dba81b8f2facd97e57ab3ea22acc010ba78435be25385305df35",
+  "pagesGitBlobMatches": 151,
+  "ordinaryTLSPaths": 152,
+  "certificateException": false,
+  "actualLiveAssetHashesComparedToPages": 152,
+  "liveArtifact": 13611037576,
+  "liveArtifactReceipt": {
+    "file": "live-v297-13611037576.zip",
+    "size": 129704663,
+    "sha256": "4bb402bce07551fda13173c9c2a9241ee503da2db3b883f3eecebf7f66cdab3a",
+    "zipCRC": "PASS",
+    "jsonReports": 156,
+    "decodedPNGs": 1298,
+    "flags": [],
+    "result": "PASS"
+  },
+  "liveApiUploadLocalDigestAndSize": "PASS",
+  "liveCoreCheckGroups": 6,
+  "liveAxeScans": 18,
+  "liveAxeViolations": 0,
+  "liveCache": "foliolab-open-v297",
+  "liveBase": "https://foliolab.unperfekt.at/",
+  "threeNewProductionMobileImagesViewed": true,
+  "productionUI300Reports": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    }
+  ],
+  "productionHeaderAndMissingValue": "Chromium actual production gate logs + Firefox/WebKit reports PASS",
+  "productionPreservedAllocationReports": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "productionPreservedFundingReports": [
+    "flatex-funding/report-chromium-12-before.json",
+    "flatex-funding/report-chromium-12-next-day.json",
+    "flatex-funding/report-chromium-12.json",
+    "flatex-funding/report-firefox-12-before.json",
+    "flatex-funding/report-firefox-12-next-day.json",
+    "flatex-funding/report-firefox-12.json",
+    "flatex-funding/report-webkit-12-before.json",
+    "flatex-funding/report-webkit-12-next-day.json",
+    "flatex-funding/report-webkit-12.json",
+    "flatex-funding/report.json"
+  ],
+  "preservedSourceAndJournalContracts": true,
+  "noNewStoredFieldOrJournalType": true,
+  "noCIRetryDuplicateCancel": true,
+  "v296": "Previously LIVE_ACCEPTED; reused without reacceptance",
+  "actualUserOpeningPortfolioAcceptance": false,
+  "physicalAndroidNativeSafariOAuthTalkBackAcceptance": false,
+  "historicalAlphaIDBCause": "UNKNOWN; prior exception consumed; no fix claim",
+  "UH05Overall": "PARTIAL",
+  "nextUH05": "Original/Decimal/isolated-memory evidence for fresh native fiat binding guard secured, no product implementation yet",
+  "sourceData": "Only invented public fixtures; originals and independent raw Decimal results remain private",
+  "links": [
+    "v297-pr317-integration-qualified.json",
+    "v297-pr317-main-qualified-deployed.json",
+    "v297-independent-assets.json",
+    "../UH05_NATIVE_FIAT_BINDING_2026-11-08.md"
+  ],
+  "additionalProductionImagesViewed": [
+    "chromium settings desktop1440",
+    "webkit settings changed heading computed text200",
+    "firefox dashboard desktop1440"
+  ]
+}
