@@ -1,3 +1,13 @@
+## Kontrollierte Übernahme · Owner 20d9afddc0ae ACTIVE · 08.11.2026
+
+**Owner `20d9afddc0ae` allein ACTIVE.** Ausdrücklicher Nutzerwiderruf der Freigaben von `8cb2927f295c` und Notfallfortsetzung beauftragt. Bei frischer lesender Prüfung bereits neuere tatsächliche reguläre STOPPED/HANDOVER_READY-Abgabe in `a16d1653bb0078fe5624c18bb3a5ff73fb528e78` vorgefunden; kein alter ACTIVE-Eintrag umgedeutet. Ausnahmegrund, tatsächlicher Befund und vollständige Kollisionsprüfung: [Übernahmenachweis](HND01_TAKEOVER_20d9afddc0ae_2026-11-08.md).
+
+v299 LIVE_ACCEPTED unverändert; Main `1f051a7059d24751f961fcf2af7fa226b319079e`, Tree `c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6`. Alle563Refs geprüft, nur erwartete HND01-Dokumentation seit Ausgang; keine laufenden/queued Actions, nur historische Drafts157/161, kein UI-R1-WIP. Private **V122 vollständig verifiziert**, 26.608 Manifestdateien; alle26.595V121-Payloads bytegleich erhalten, Originale/Decimal-Oracles zugänglich. Größe/SHA und Belege im Übernahmenachweis.
+
+EFF02 und [kanonische41Teilumfänge/K1–K6](KONSOLIDIERTE_ROADMAP.md#kanonische-restpaket-matrix) übernommen. **Jetzt UI-R1** gemäß vorhandener Taskkarte, anschließend serielle 1.0-Fortsetzung. Kein erneuter Audit/v299-Abnahmelauf. [EFF01/EFF02/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) und sämtliche Schutzverträge erhalten; echte Geräte-/Accountgates offen. GitHub nur Plugin, keine CI-Duplikate/Abbrüche, Checkpointbranch niemals vollständig mergen. Zähler0Releases/0Produktpakete.
+
+---
+
 ## HND01 – STOPPED/HANDOVER_READY · Owner 8cb2927f295c · 08.11.2026
 
 **Owner `8cb2927f295c` ist ausdrücklich STOPPED/HANDOVER_READY.** Reguläre Abgabe auf ausdrücklichen Nutzerauftrag abgeschlossen; alleinige Entwicklungs-, Integrations-, QA-, CI-, Merge- und Releaseverantwortung abgegeben. Sämtliche eigenen Entwicklungsaktivitäten eingestellt. Kein neuer Produktowner durch diese Abgabe automatisch eingesetzt. Historische ACTIVE-Einträge darunter sind überholt.
