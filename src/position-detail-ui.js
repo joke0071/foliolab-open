@@ -5,7 +5,7 @@ import {renderChartPeriodButtons} from './chart-periods.js';
 import {drawInteractiveChart,attachChartInteractions} from './dashboard-ui.js';
 import {importedHistoryForPeriod} from './historical-csv.js';
 import {positionBookingTimeline} from './position-bookings.js';
-import {displayQuotePrice} from './quote-quality.js';
+import {displayQuotePrice,positionValueLabel,hasMissingPositionValue} from './quote-quality.js';
 
 /** Browser exceptions cannot distinguish a CORS rejection from a network blocker.
  * Always display a complete, credential-safe explanation rather than a raw
@@ -35,7 +35,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const account=model.accounts.find(a=>a.id===p.accountId);
  const providerAccountIds=new Set(model.accounts.filter(a=>a.providerId===(account?.providerId||p.providerId)).map(a=>a.id));
  const providerTotal=model.positions.filter(x=>providerAccountIds.has(x.accountId)).reduce((sum,x)=>sum+valueEUR(x),0);
- const amount=valueEUR(p),weight=providerTotal>0&&amount>=0?100*amount/providerTotal:null;
+ const amount=valueEUR(p),weight=providerTotal>0&&amount!==null&&amount>=0&&!model.positions.some(x=>providerAccountIds.has(x.accountId)&&hasMissingPositionValue(x))?100*amount/providerTotal:null;
  const cost=p.costBasisEUR==null?'–':money(p.costBasisEUR);
  const quotePrice=displayQuotePrice(p);
  const price=quotePrice===null?'Nicht verfügbar':quoteCurrency(quotePrice,p.currency||'EUR');
@@ -43,7 +43,7 @@ export function positionDetailMarkup(p,model,{esc,money,quant,valueEUR,days=30})
  const quoteCredit=p.quoteSource==='CoinPaprika'?'<a class="position-history-external" href="https://coinpaprika.com/" target="_blank" rel="noopener noreferrer">Powered by CoinPaprika</a>':'';
  const meta='<div class="position-detail-grid">'+
    [['Bestand',quant(Number(p.quantityExact??p.quantity))+' '+(p.symbol||'Stk.')],
-    ['Kurs je Einheit',price],['Positionswert',money(amount)],['Einstandswert',cost]]
+    ['Kurs je Einheit',price],['Positionswert',positionValueLabel(p,amount,money)],['Einstandswert',cost]]
    .map(([name,value])=>'<div class="position-detail-stat"><span>'+esc(name)+'</span><strong>'+esc(value)+'</strong></div>').join('')+'</div>';
  const allocation=weight==null?'<p class="position-detail-note">Anteil am Anbieter nicht sinnvoll bestimmbar (Nullsaldo oder Verbindlichkeit).</p>':
    '<div class="position-share"><div class="position-share-label"><span>Anteil am Anbieter</span><strong>'+esc(new Intl.NumberFormat('de-AT',{maximumFractionDigits:1}).format(weight))+' %</strong></div>'+

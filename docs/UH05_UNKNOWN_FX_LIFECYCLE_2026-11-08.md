@@ -1,0 +1,15 @@
+# UH05 UNKNOWN-FX: lifecycle contract before admission
+Owner: 8cb2927f295c. Baseline v298 LIVE_ACCEPTED / dc017c6807be85b9e1ce95dd422cf88ae221d0ef. No reacceptance.
+
+The first actual loss is createPosition's `v.fxRate ?? 1`; safeImport reuses that constructor. Raw source/import preview do not justify that rate. Missing historical FX already rejects normal non-EUR money transactions.
+
+Missing/null/empty FX is explicit UNKNOWN. Existing finite numeric legacy FX1 and other stored numeric rates retain their values, provenance, journal and historical snapshots; no inferred repair. New contradictory or invalid FX rejects. Existing numeric display/exact discrepancies retain both raw values and remain reviewable, without a new EUR valuation.
+
+An unknown position uses `fxRate:null, fxRateExact:"UNKNOWN"` in the existing exact FX field. This is deliberately a non-decimal sentinel: unchanged older readers reject it while parsing, instead of normalizing nullable FX to1. No schema migration or reinterpretation of existing numeric rates. New readers must reject sentinel-plus-numeric contradictions. Backup must canonicalize absent nullable FX to this fail-closed representation without mutating the source. Legacy stored numeric1 is never reclassified merely because its source/date is absent; independent provenance and freshness remain distinct review requirements.
+
+Native quantities remain exact. Known FX1 and known nonunit rates remain usable. Nonzero native positions with UNKNOWN/invalid FX have null EUR valuation; complete totals and gain attribution remain unavailable. Known partial sums have explicit coverage and labels. Zero quantity or excluded contributions may remain mathematical0, without claiming a known rate. No automatic numeric snapshot is created when the full EUR total is unknown; old snapshots are preserved. Explicit reference creation without an independently supplied total must reject when the complete EUR value is UNKNOWN, without a successful-save claim, canonical write or CAS revision. A separately supplied known observation remains allowed. Historical valuation continues to require its own dated FX, never current position FX. Regular foreign-currency transactions still require explicit historical FX; a current position rate is never substituted.
+
+Before native USD principal admission: actual persistence/reload/offline/encrypted fresh restore and old-reader rejection must be proven, including honest UI, totals, history and metrics; complete native-group rejection must preserve canonical bytes and revision. Existing CAS/quota/post-put/Undo/replay/withdrawal gates remain unchanged. The later USD Spot/Earn case remains separately gated, with complete native membership and independent Decimal100 oracles. No new engine, general FX admission, migration or historical repair.
+
+This document freezes the intended narrow contract, not a passed release or product admission. Main remains v298, UH05 PARTIAL; all roadmap and protection contracts remain active.
+

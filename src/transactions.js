@@ -1,7 +1,9 @@
 import {validateNetSettlement} from './flatex-net-settlement.js';
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
-import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
+import {bookingOwnership,sourceDigest,provenCashImport,sourceUnmodified,validateImportSource} from './import-identity.js';
+import {FX_UNKNOWN} from './fx-state.js';
+export const UNPRICED_USD_PRINCIPAL='unpriced-native-usd-principal';
 
 /** Existing canonical-day check shared by readers and journal validation.
  * Validity depends only on the primitive day, never on portfolio or clock.
@@ -49,7 +51,7 @@ const remember=(m,p,v,quantity,fee,tax,fx,tradeEUR)=>{
  const entry={id:v.id||((globalThis.crypto?.randomUUID?.())||'tx-'+Date.now()+'-'+Math.random()),type:v.type,date:v.date,
    positionId:p.id,accountId:p.accountId,positionName:p.name,quantity:Number(exact(quantity)),
    quantityExact:exact(quantity),unitPrice:Number(v.unitPrice??p.price),feeEUR:Number(exact(fee)),taxEUR:Number(exact(tax)),
-   fxRate:Number(exact(fx)),fxRateDate:words(v.fxRateDate,20)||null,fxSource:words(v.fxSource,80)||null,amountEUR:Number(exact(tradeEUR)),amountExactEUR:exact(tradeEUR),
+   fxRate:fx===null?null:Number(exact(fx)),fxRateDate:words(v.fxRateDate,20)||null,fxSource:words(v.fxSource,80)||null,amountEUR:tradeEUR===null?null:Number(exact(tradeEUR)),amountExactEUR:tradeEUR===null?null:exact(tradeEUR),
    targetPositionId:v.targetPositionId||null,external:v.type==='deposit'||v.type==='withdraw',notes:words(v.notes,180)};
  if(m.bookings.some(t=>t.id===entry.id))throw Error('Buchungs-ID existiert bereits.');
  m.bookings.unshift(entry);
@@ -81,6 +83,12 @@ export function captureOpenings(model){
 /** Atomic journal records are independent of current market valuations. */
 export function validateJournalEntry(entry){
  if(!entry||!entry.id||!/^(?:19|20)\d\d-\d\d-\d\d$/.test(entry.date)||!validCalendarDate(entry.date)||!Array.isArray(entry.postings)||!entry.postings.length||entry.postings.length>24)throw Error('Journal-Eintrag ungültig.');
+ if(entry.status===UNPRICED_USD_PRINCIPAL){
+  const [out,incoming]=entry.postings;
+  if(entry.type!=='transfer'||entry.nativeCurrency!=='USD'||entry.postings.length!==2||!out?.id||!incoming?.id||out.id===incoming.id||out.role!=='transfer-out'||incoming.role!=='transfer-in'||!out.positionId||!incoming.positionId||out.positionId===incoming.positionId||!out.accountId||!incoming.accountId||out.accountId===incoming.accountId||entry.postings.some(p=>p.amountBookEURExact!==FX_UNKNOWN)||units(out.quantityDeltaExact)>=0n||units(incoming.quantityDeltaExact)!==-units(out.quantityDeltaExact))throw Error('Unbewerteter USD-Hauptbetrag im Journal widersprüchlich.');
+  return entry; // Balanced by the same native USD principal, never by adding UNKNOWN EUR.
+ }
+ if(entry.nativeCurrency!==undefined)throw Error('Unbekannter nativer Journalvertrag.');
  const ids=new Set(),sum=entry.postings.reduce((n,p)=>{
   if(!p.id||ids.has(p.id)||!p.role||p.amountBookEURExact==null)throw Error('Journal-Buchung ungültig.');
   ids.add(p.id);if(p.quantityDeltaExact!=null)units(p.quantityDeltaExact);
@@ -108,8 +116,32 @@ export function validateJournalEntry(entry){
 
  return entry;
 }
+/** Bind the narrow UNKNOWN journal to its exact booking and own USD cash accounts. */
+export function validateUnpricedUSDTransfers(model,{pendingJournalId=null}={}){
+ for(const j of model.journalEntries||[]){
+  if(j.status!==UNPRICED_USD_PRINCIPAL)continue;
+  validateJournalEntry(j);const [out,incoming]=j.postings,bookings=(model.bookings||[]).filter(b=>b.journalEntryId===j.id),b=bookings[0],p=model.positions.find(p=>p.id===out.positionId),t=model.positions.find(p=>p.id===incoming.positionId);
+  const fail=()=>{throw Error('Unbewertete USD-Hauptbetragsbuchung widersprüchlich.');};
+  if(bookings.length!==1||!b||!p||!t||b.type!=='transfer'||b.date!==j.date||b.positionId!==p.id||b.targetPositionId!==t.id||b.accountId!==p.accountId||b.reconciliationStatus!==UNPRICED_USD_PRINCIPAL||b.fxRate!==null||b.fxRateDate!==null||b.fxSource!==null||b.amountEUR!==null||b.amountExactEUR!==null||b.unitPrice!==1||b.feeEUR!==0||b.taxEUR!==null||b.costsVerified!==false||b.external!==false||b.cashPositionId!==null||j.cashPositionId!==null||!Number.isSafeInteger(j.sequence)||j.sequence<1||units(b.quantityExact)!==units(incoming.quantityDeltaExact)||b.quantity!==Number(exact(units(b.quantityExact)))||units(b.targetQuantityExact)!==units(b.quantityExact)||(model.externalCashFlows||[]).some(f=>f.id===b.id))fail();
+  if(p.providerId!==t.providerId||p.accountId===t.accountId)fail();
+  // Only the one in-flight core entry may precede origin attachment. Every
+  // stored/restored entry must retain the existing complete import ownership.
+  if(j.id!==pendingJournalId){
+   const s=validateImportSource(b.importSource,b.accountId);let v;
+   try{v=JSON.parse(s?.sourcePayload);}catch{fail();}
+   const a=v?.action,bindings=v?.bindings;
+   if(!s||j.source!=='kraken-uh03-v1'||s.sourceId!==j.source||!s.fileId||!/^[a-f0-9]{64}$/.test(s.fileId)||b.id!=='uh03:'+s.fileId+':0'||j.id!==b.id||s.externalId!==s.fileId+':0'||s.occurrence!==1||s.ownership!=='imported'||!sourceUnmodified(model,b)||v?.group!==s.fileId||!/^[a-f0-9]{64}$/.test(v?.payload||'')||!Array.isArray(bindings)||bindings.length!==2||bindings.some(x=>!Array.isArray(x)||x.length!==2||typeof x[0]!=='string'||!x[0])||new Set(bindings.map(x=>x[0])).size!==2||new Set(bindings.map(x=>x[1])).size!==2||!bindings.some(x=>x[1]===p.id)||!bindings.some(x=>x[1]===t.id)||a?.type!=='transfer'||a.date!==b.date||a.positionId!==p.id||a.targetPositionId!==t.id||a.quantity!==b.quantityExact||a.unitPrice!=='1'||a.feeEUR!=='0'||a.taxEUR!=='0'||a.fxRate!==FX_UNKNOWN||a.notes!==b.notes)fail();
+  }
+  for(const [position,posting] of [[p,out],[t,incoming]]){
+   const a=model.accounts.find(a=>a.id===position.accountId);
+   if(position.kind!=='cash'||position.currency!=='USD'||(position.valuationMode??'included')!=='included'||position.representedByPositionId||position.price!==1||units(position.priceExact??position.price)!==units(1)||position.wallet?.enabled||!a||a.providerId!==position.providerId||a.currency!=='USD'||posting.accountId!==a.id||[position.costBasisExact,position.costBasisEUR,position.realizedPnLExact,position.realizedPnLEUR].some(x=>x!=null))fail();
+  }
+ }
+ return model;
+}
 /** Compare recorded holdings to opening balance plus chronological, exact journal movements. */
-export function ledgerQuantityAudit(model){
+export function ledgerQuantityAudit(model,{pendingUSDJournalId=null}={}){
+ validateUnpricedUSDTransfers(model,{pendingJournalId:pendingUSDJournalId});
  const balances=new Map((model.openingPositions||[]).map(x=>[x.positionId,units(x.quantityExact)]));
  const ordered=[...(model.journalEntries||[])].sort((a,b)=>a.date.localeCompare(b.date)||(a.sequence||0)-(b.sequence||0));
  for(const entry of ordered){
@@ -133,8 +165,8 @@ function lastJournalDate(model,positionId){
 }
 function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuantity){
  const postings=[],post=(role,value,position=null,delta=null)=>{
-   const n=typeof value==='bigint'?value:units(value);
-   postings.push({id:id(),role,positionId:position?.id??null,accountId:position?.accountId??null,quantityDeltaExact:delta==null?null:exact(delta),amountBookEURExact:exact(n)});
+   const n=value===FX_UNKNOWN?FX_UNKNOWN:typeof value==='bigint'?value:units(value);
+   postings.push({id:id(),role,positionId:position?.id??null,accountId:position?.accountId??null,quantityDeltaExact:delta==null?null:exact(delta),amountBookEURExact:n===FX_UNKNOWN?FX_UNKNOWN:exact(n)});
  };
  const charges=fee+tax;
  if(kind==='buy'||kind==='sell'){
@@ -154,7 +186,7 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
    post(kind==='deposit'||kind==='withdraw'?'external-clearing':kind==='fee'?'fee':kind==='tax'?'tax':'income',-amt);
  }else if(kind==='transfer'){
    const target=copy.positions.find(x=>x.id===v.targetPositionId);
-   post('transfer-out',-cash,p,-qty);post('transfer-in',cash,target,qty);
+   post('transfer-out',cash===null?FX_UNKNOWN:-cash,p,-qty);post('transfer-in',cash===null?FX_UNKNOWN:cash,target,qty);
  }else if(kind==='swap'||kind==='merger'){
    const target=copy.positions.find(x=>x.id===v.targetPositionId);
    post('nonmonetary-out',zero,p,-qty);
@@ -168,7 +200,8 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
   sequence:nextJournalSequence(copy),postings,
   cashPositionId:linkedCash?.id||null,
   ...(v.netSettlement?{netSettlementId:v.netSettlement.id}:{}),
-  status:v.netSettlement?'unresolved-net-settlement':kind==='fee'&&p.kind==='crypto'?'unpriced-asset-fee':['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
+  ...(cash===null?{nativeCurrency:'USD'}:{}),
+  status:cash===null?UNPRICED_USD_PRINCIPAL:v.netSettlement?'unresolved-net-settlement':kind==='fee'&&p.kind==='crypto'?'unpriced-asset-fee':['buy','sell'].includes(kind)&&!linkedCash?'unresolved-clearing':'recorded',
   source:'manual'};
  return validateJournalEntry(entry);
 }
@@ -179,9 +212,13 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
  * @param {object} input
  * @returns {Transaction}
  */
-export function executeTransaction(model,input){
+export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=false}={}){
  if(!TX_TYPES[input?.type])throw Error('Buchungstyp wird nicht unterstützt.');
  if(!dateOk(input.date))throw Error('Ungültiges Datum.');
+ // A form's FX text is never permission to bypass historical FX/fee evidence.
+ // Only the complete native source orchestration may request this bounded mode.
+ if(input.fxRate===FX_UNKNOWN&&sourceQualifiedUSDPrincipal!==true)
+  throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');
  const copy=structuredClone(model),p=pos(copy,input.positionId),kind=input.type;
  captureOpenings(copy);
  const affected=[p.id,input.targetPositionId,input.cashPositionId].filter(Boolean);
@@ -194,11 +231,16 @@ export function executeTransaction(model,input){
    throw Error('Barabfindung/Barausgleich wird bei dieser Kapitalmaßnahme nicht automatisch gebucht. Brokerabrechnung separat prüfen.');
  if((fee>0n||tax>0n)&&!['buy','sell'].includes(kind))throw Error('Nebenkosten für diesen Vorgang bitte separat als Gebühren-/Steuerbuchung erfassen.');
  if(p.kind==='cash'&&['buy','sell'].includes(kind))throw Error('Geldkonten über Ein-/Auszahlung oder Transfer buchen, nicht als Wertpapier kaufen/verkaufen.');
- const unitPrice=amount(input.unitPrice??p.price),fx=p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
+ const unitPrice=amount(input.unitPrice??p.price),unpriced=input.fxRate===FX_UNKNOWN&&kind==='transfer'&&p.kind==='cash'&&p.currency==='USD';
+ if(unpriced){
+  const t=checkTarget(copy,p,input.targetPositionId);
+  if(t.kind!=='cash'||t.currency!=='USD'||t.providerId!==p.providerId||t.accountId===p.accountId||unitPrice!==units(1)||String(input.feeEUR)!=='0'||String(input.taxEUR)!=='0'||words(input.fxSource)||words(input.fxRateDate)||[p,t].some(x=>x.price!==1||units(x.priceExact??x.price)!==units(1)||[x.costBasisExact,x.costBasisEUR,x.realizedPnLExact,x.realizedPnLEUR].some(v=>v!=null)))throw Error('Unbewerteter USD-Transfer benötigt zwei eigene USD-Geldbereiche ohne Kosten-/Ergebnisannahme.');
+ }
+ const fx=unpriced?null:p.currency==='EUR'?units(1):input.fxRate==null||input.fxRate===''?(()=>{throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');})():amount(input.fxRate,1n);
  // A native execution can state the settled EUR trade value more precisely than
  // quantity × a rounded display price. Keep that authoritative total exact.
  if(input.tradeAmountEURExact!==undefined&&(!['buy','sell'].includes(kind)||p.currency!=='EUR'))throw Error('Exakter Ausführungsbetrag benötigt einen EUR-Kauf oder -Verkauf.');
- const cash=input.tradeAmountEURExact===undefined?mul(mul(qty,unitPrice),fx):amount(input.tradeAmountEURExact,1n);
+ const cash=unpriced?null:input.tradeAmountEURExact===undefined?mul(mul(qty,unitPrice),fx):amount(input.tradeAmountEURExact,1n);
  const b=basis(p);let changed=false,linkedCash=null;
  const net=input.netSettlement;
  if(net){
@@ -277,6 +319,7 @@ export function executeTransaction(model,input){
  p.managementSource='transactions';if(['transfer','swap','merger'].includes(kind))copy.positions.find(x=>x.id===input.targetPositionId).managementSource='transactions';
  if(net){setBasis(p,null);p.realizedPnLExact=null;p.realizedPnLEUR=null;}
  const entry=remember(copy,p,input,qty,fee,tax,fx,cash);
+ if(unpriced){entry.taxEUR=null;entry.costsVerified=false;}
  if(net){entry.netSettlement=structuredClone(net);entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;copy.version=5;}
  if(kind==='fee'&&p.kind==='crypto'){entry.amountEUR=null;entry.amountExactEUR=null;entry.unitPrice=null;entry.feeEUR=null;entry.taxEUR=null;entry.costsVerified=false;}
  if(kind==='transfer'||kind==='swap'||kind==='merger')entry.targetQuantityExact=kind==='transfer'?exact(qty):exact(amount(input.targetQuantity,1n));
@@ -297,8 +340,9 @@ export function executeTransaction(model,input){
    const signed=kind==='deposit'?mul(qty,fx):-mul(qty,fx);
    copy.externalCashFlows.push({id:entry.id,date:input.date,amountEUR:Number(exact(signed)),amountExactEUR:exact(signed)});
  }
- const audit=ledgerQuantityAudit(copy);
+ const audit=ledgerQuantityAudit(copy,{pendingUSDJournalId:unpriced?journal.id:null});
  if(!audit.ok)throw Error('Journal und Bestände stimmen nicht überein. Buchung abgebrochen.');
+ validateUnpricedUSDTransfers(copy,{pendingJournalId:unpriced?journal.id:null});
  // Commit validated changes while preserving references used by currently open dialogs.
  const originals=new Map(model.positions.map(p=>[p.id,p]));
  copy.positions=copy.positions.map(p=>{const original=originals.get(p.id);if(!original)return p;Object.assign(original,p);return original;});

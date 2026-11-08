@@ -1,4 +1,5 @@
 /** Actual quote provenance must not be confused with a successful refresh attempt. */
+import {positionFX,positionValuation} from './fx-state.js';
 const proven=new Set(['configured-listing','verified-listing','provider-timestamp']);
 /** Read-only display evidence. Legacy/default zeroes have no recorded source,
  * so they cannot be distinguished from an absent quote. Never change valuation. */
@@ -32,6 +33,7 @@ export function automaticValuationConfirmed(p,now=Date.now()){
  if(!['confirmed','ignored'].includes(quality))return false;
  if(quality==='ignored'&&(!(Number(p.priceExact??p.price)>0)||p.priceStatus))return false;
  if(p.currency!=='EUR'){
+  if(positionFX(p).state!=='known')return false;
   const day=String(p.fxRateDate||''),time=/^\d{4}-\d{2}-\d{2}$/.test(day)?Date.parse(day+'T12:00:00Z'):NaN;
   if(!String(p.fxSource||'').trim()||!(Number(p.fxRateExact??p.fxRate)>0)||!Number.isFinite(time)||new Date(time).toISOString().slice(0,10)!==day||time>now+864e5||now-time>7*864e5)return false;
  }
@@ -55,12 +57,14 @@ export function positionValueLabel(position,value,formatMoney){
 
 /** Same missing-value rule for individual and aggregate presentation. No valuation math. */
 export function hasMissingPositionValue(position){
- return displayQuotePrice(position)===null&&Number(position.quantityExact??position.quantity)!==0&&position.valuationMode!=='excluded';
+ return (displayQuotePrice(position)===null||positionFX(position).state!=='known')&&Number(position.quantityExact??position.quantity)!==0&&position.valuationMode!=='excluded';
 }
 export function aggregateValuePresentation(positions,value,formatMoney){
  const included=positions.filter(p=>p.valuationMode!=='excluded');
  const missing=included.filter(hasMissingPositionValue).length;
  const allUnknown=missing>0&&missing===included.length;
- return {missing,allUnknown,value:allUnknown?'Nicht bewertet':formatMoney(value),
-  note:missing?(allUnknown?'':'Bekannte Teilsumme · ')+missing+' Position'+(missing===1?'':'en')+' ohne Kurs':''};
+ const fxMissing=included.some(p=>Number(p.quantityExact??p.quantity)!==0&&positionFX(p).state!=='known');
+ const knownTotalEUR=fxMissing?Number(positionValuation(included).knownTotalExactEUR):value;
+ return {missing,allUnknown,...(fxMissing?{knownTotalEUR}:{}),value:allUnknown?'Nicht bewertet':formatMoney(knownTotalEUR),
+  note:missing?(allUnknown?'':'Bekannte Teilsumme · ')+missing+' Position'+(missing===1?'':'en')+(fxMissing?' ohne belegte EUR-Bewertung':' ohne Kurs'):''};
 }

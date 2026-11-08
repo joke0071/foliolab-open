@@ -59,3 +59,5 @@ report.result='PASS';writeFileSync(dir+'/report.json',JSON.stringify(report,null
 
 await import('./browser-kraken-allocation.mjs');
 await import('./browser-kraken-fiat-binding.mjs');
+await import('./browser-unknown-fx.mjs');
+await import('./browser-kraken-usd-principal.mjs');

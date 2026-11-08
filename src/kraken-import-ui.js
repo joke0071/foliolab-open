@@ -63,7 +63,7 @@ export function createKrakenImportUI({host,inputs,getModel,onApproval,allowUncha
  const invalidate=({clearProof=true}={})=>{++lookupGeneration;lookupController?.abort();if(clearProof){bitcoinBridge=null;ethereumBridge=null;solanaBridge=null;}plan=null;approved=false;el('approve').checked=false;el('approve').disabled=true;el('status').textContent='Auswahl geändert. Erneut prüfen.';notify();};
  function renderBindings(){
   el('bindings').innerHTML=streams.slice(0,bindingLimit).map(row=>{
-   const positions=getModel().positions.filter(p=>!p.wallet?.enabled&&p.currency==='EUR'&&(row.values.asset==='EUR'?p.kind==='cash':p.kind==='crypto'&&p.symbol===row.values.asset));
+   const positions=getModel().positions.filter(p=>!p.wallet?.enabled&&(p.currency==='EUR'&&(row.values.asset==='EUR'?p.kind==='cash':p.kind==='crypto'&&p.symbol===row.values.asset)||row.values.asset==='USD'&&row.values.subclass==='fiat'&&p.kind==='cash'&&p.currency==='USD'&&getModel().accounts.some(a=>a.id===p.accountId&&a.providerId===p.providerId&&a.currency==='USD')));
    return '<label class="field"><span>'+esc(row.values.asset+' · '+row.values.wallet+' · '+row.values.subclass)+'</span><select data-kraken-binding="'+esc(row.streamId)+'"><option value="">Bitte ausdrücklich zuordnen</option>'+positions.map(p=>'<option value="'+esc(p.id)+'"'+(assignments[row.streamId]===p.id?' selected':'')+'>'+esc((getModel().providers.find(v=>v.id===p.providerId)?.name||'Anbieter')+' / '+(getModel().accounts.find(a=>a.id===p.accountId)?.name||'Konto')+' / '+p.name)+'</option>').join('')+'</select></label>';
   }).join('');
   el('more-bindings').hidden=bindingLimit>=streams.length;el('more-bindings').classList.toggle('hidden',bindingLimit>=streams.length);

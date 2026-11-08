@@ -9,6 +9,8 @@ import {sourceDigest,sourceUnmodified,bookingOwnership,importSourceKey,validateI
 import {units,exact,div} from './decimal.js';
 import {backup,safeImport} from './model.js';
 import {setArchivePresentation} from './booking-history.js';
+import {FX_UNKNOWN} from './fx-state.js';
+import {UNPRICED_USD_PRINCIPAL} from './transactions.js';
 const digest=v=>sourceDigest(JSON.stringify(v));
 const sourceId='kraken-uh03-v1';
 const unsupported=message=>{throw Error(message);};
@@ -110,19 +112,28 @@ function* chronologicalGroups(selected,draft,assignments){
 }
 function position(model,row,assignments){
  const id=assignments[row.streamId],p=model.positions.find(p=>p.id===id);
- if(!p||p.wallet?.enabled||p.managementSource==='wallet'||!['cash','crypto'].includes(p.kind)||p.currency!=='EUR')unsupported('Jeden Kraken-Asset-/Walletbereich ausdrücklich einer manuellen EUR-Position zuordnen.');
- if(p.kind==='cash'?row.values.asset!=='EUR':p.symbol!==row.values.asset)unsupported('Assetcode und Position widersprechen sich; keine Ticker- oder Netzwerkanahme.');
+ const usd=p?.kind==='cash'&&p.currency==='USD'&&row.values.asset==='USD'&&row.values.subclass==='fiat'&&model.accounts.some(a=>a.id===p.accountId&&a.providerId===p.providerId&&a.currency==='USD');
+ if(!p||p.wallet?.enabled||p.managementSource==='wallet'||!['cash','crypto'].includes(p.kind)||p.currency!=='EUR'&&!usd)unsupported('Jeden Kraken-Asset-/Walletbereich ausdrücklich einer passenden manuellen Position zuordnen; USD nur für den begrenzten Hauptbetragsvertrag.');
+ if(p.kind==='cash'?row.values.asset!==p.currency:p.symbol!==row.values.asset)unsupported('Assetcode und Position widersprechen sich; keine Ticker- oder Netzwerkanahme.');
  return p;
+}
+function nativeUSDPrincipal(group){
+ const rows=group.rows;
+ if(group.kind!=='internal-transfer'||rows.length!==2||group.issues.length||new Set(rows.map(r=>r.values.refid)).size!==1||!rows[0].values.refid||new Set(rows.map(r=>r.values.time)).size!==1||rows.some(r=>r.issues.length||r.values.type!=='earn'||r.values.subtype!=='autoallocation'||r.values.aclass!=='currency'||r.values.subclass!=='fiat'||r.values.asset!=='USD'||r.feeExact!=='0'||!String(r.values.fee).trim()))return false;
+ const out=rows.find(r=>units(r.amountExact)<0n),incoming=rows.find(r=>units(r.amountExact)>0n);
+ return Boolean(out&&incoming&&out.values.wallet==='spot / main'&&incoming.values.wallet==='earn / liquid'&&units(out.amountExact)===-units(incoming.amountExact));
 }
 function actionsFor(model,group,assignments,{externalReferences=[],openingConfirmed=false,bitcoinBridge=null,ethereumBridge=null,solanaBridge=null}={},reconstructExisting=false){
  if(group.issues.length)unsupported(group.issues.join(' '));
  const rows=[...group.rows].sort((a,b)=>a.identity.localeCompare(b.identity)),positive=rows.filter(r=>units(r.amountExact)>0n),negative=rows.filter(r=>units(r.amountExact)<0n),actions=[];
  const p=row=>position(model,row,assignments);
+ const usdPrincipal=nativeUSDPrincipal(group)&&rows.every(row=>p(row).kind==='cash'&&p(row).currency==='USD');
+ if(usdPrincipal&&(!openingConfirmed&&!reconstructExisting||externalReferences.includes(group.id)||bitcoinBridge||ethereumBridge||solanaBridge))unsupported('Vollständigen eigenen USD-Spot-/Earn-Hauptbetrag und Quellenanfänge ausdrücklich bestätigen.');
  // Admission only: existing actions still need the complete origin/payload/
  // ownership checks below. This flag is derived internally, never from options.
  if(!reconstructExisting)for(const row of rows){
   const assigned=p(row),nativeFiat=row.values.subclass==='fiat';
-  if(nativeFiat&&(row.values.asset!=='EUR'||assigned.kind!=='cash'))unsupported('Native Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.');
+  if(nativeFiat&&(row.values.asset!=='EUR'||assigned.kind!=='cash')&&!usdPrincipal)unsupported('Native Fiat-Zeilen benötigen EUR-Cash; USD ist ausschließlich als vollständiger Spot-/Earn-Hauptbetrag zulässig.');
   if(assigned.kind==='cash'&&!nativeFiat)unsupported('Fiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.');
  }
  const add=(type,row,quantity,more={})=>actions.push({type,date:row.values.time.slice(0,10),positionId:p(row).id,quantity:exact(quantity),unitPrice:p(row).kind==='cash'?'1':'0',feeEUR:'0',taxEUR:'0',fxRate:'1',notes:'Kraken: '+group.kind+'. Kosten-/Steuerbewertung ungeprüft.',...more});
@@ -137,7 +148,8 @@ function actionsFor(model,group,assignments,{externalReferences=[],openingConfir
   else unsupported('Handelsgruppe benötigt zwei verschiedene belegte Assets.');
  }else if(group.kind==='internal-transfer'){
   if(p(negative[0]).id===p(positive[0]).id)unsupported('Staking-/Spotbereiche müssen getrennt zugeordnet sein; Hauptbetrag nicht als Ertrag zählen.');
-  add('transfer',negative[0],-units(negative[0].amountExact),{targetPositionId:p(positive[0]).id});
+  if(usdPrincipal&&p(negative[0]).accountId===p(positive[0]).accountId)unsupported('USD Spot und Earn benötigen getrennte eigene Konten.');
+  add('transfer',negative[0],-units(negative[0].amountExact),{targetPositionId:p(positive[0]).id,...(usdPrincipal?{fxRate:FX_UNKNOWN,notes:'Kraken: nativer USD-Hauptbetrag Spot → Earn. EUR-Wert unbekannt; kein Ertrag, externer Fluss oder neue Kostenbasis.'}:{})});
  }else if(group.kind==='internal-transfer-batch'){
   const pairs=krakenAutoallocationPairs(group.rows);
   const observed=model.bookings.some(b=>b.importSource?.sourceId===sourceId&&b.importSource.fileId===group.id);
@@ -222,7 +234,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    for(const id of touched){const p=draft.positions.find(p=>p.id===id);if(p.kind==='crypto'&&(p.costBasisExact!=null||p.costBasisEUR!=null||p.realizedPnLExact!=null||p.realizedPnLEUR!=null))unsupported('Vorhandene bestätigte Kostenbasis oder realisierte Ergebnisse zuerst fachlich abgleichen.');}
    const candidate=structuredClone(draft);
    for(const [i,action] of actions.entries()){
-    const b=executeTransaction(candidate,{...action,id:'uh03:'+group.id+':'+i});
+    const b=executeTransaction(candidate,{...action,id:'uh03:'+group.id+':'+i},{sourceQualifiedUSDPrincipal:action.fxRate===FX_UNKNOWN&&nativeUSDPrincipal(group)});
     const j=candidate.journalEntries.find(j=>j.id===b.journalEntryId);j.source=sourceId;if(bridge&&i===0)j[sol?'krakenSolanaBridge':eth?'krakenEthereumBridge':'krakenBitcoinBridge']=structuredClone(bridge);
     // Ledger quantities and cash settlement are facts; historical EUR fee valuation/taxes are not.
     b.costsVerified=false;b.taxEUR=null;
@@ -261,7 +273,7 @@ export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
  const id=selectedGroups[0],originals=group.actions.map((_,i)=>{
   const booking=model.bookings.find(b=>b.id==='uh03:'+id+':'+i),journal=model.journalEntries.find(j=>j.id===booking?.journalEntryId);
   if(!booking||!journal||journal.id!==booking.id||journal.source!==KRAKEN_SOURCE||!sourceUnmodified(model,booking)||booking.transferMatch)throw Error('Kraken-Gruppe wurde geändert oder ist verknüpft.');
-  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source krakenBitcoinBridge krakenEthereumBridge krakenSolanaBridge'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
+  const knownBooking='id type date positionId accountId positionName quantity quantityExact unitPrice feeEUR taxEUR fxRate fxRateDate fxSource amountEUR amountExactEUR targetPositionId external notes journalEntryId cashPositionId reconciliationStatus targetQuantityExact costsVerified importSource'.split(' '),knownJournal='id type date recordedAt sequence postings cashPositionId status source krakenBitcoinBridge krakenEthereumBridge krakenSolanaBridge nativeCurrency'.split(' '),knownPosting='id role positionId accountId quantityDeltaExact amountBookEURExact'.split(' ');
   if(Object.keys(booking).some(k=>!knownBooking.includes(k))||Object.keys(journal).some(k=>!knownJournal.includes(k))||journal.postings.some(p=>Object.keys(p).some(k=>!knownPosting.includes(k)))||!Number.isSafeInteger(journal.sequence))throw Error('Unbekannte Gruppenfelder oder Journalreihenfolge zuerst abgleichen.');
   return structuredClone({booking,journal,flows:model.externalCashFlows.filter(f=>f.id===booking.id)});
  });
@@ -284,7 +296,8 @@ export function previewKrakenWithdrawal(model,inputs,assignments,options={}){
  const changes=[];
  for(const positionId of touched){
   const p=draft.positions.find(p=>p.id===positionId),opening=draft.openingPositions.find(o=>o.positionId===positionId);
-  if(!p||p.wallet?.enabled||p.currency!=='EUR'||!['cash','crypto'].includes(p.kind)||!opening||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,opening.costBasisExact,opening.realizedPnLExact].some(v=>v!=null))throw Error('Wallet, fehlender Anfangsbestand oder bestätigte Kosten-/Ergebniswerte bleiben geschützt.');
+  const usd=p?.kind==='cash'&&p.currency==='USD'&&originals.every(o=>o.journal.status===UNPRICED_USD_PRINCIPAL);
+  if(!p||p.wallet?.enabled||p.currency!=='EUR'&&!usd||!['cash','crypto'].includes(p.kind)||!opening||[p.costBasisExact,p.costBasisEUR,p.realizedPnLExact,p.realizedPnLEUR,opening.costBasisExact,opening.realizedPnLExact].some(v=>v!=null))throw Error('Wallet, fehlender Anfangsbestand oder bestätigte Kosten-/Ergebniswerte bleiben geschützt.');
   const delta=originals.reduce((sum,o)=>sum+o.journal.postings.filter(p=>p.positionId===positionId&&p.quantityDeltaExact!=null).reduce((n,p)=>n+units(p.quantityDeltaExact),0n),0n),before=qty(p),after=before-delta;
   if(after<0n)throw Error('Rücknahme würde einen negativen Bestand erzeugen.');
   changes.push({positionId,before:exact(before),after:exact(after),delta:exact(-delta)});p.quantityExact=exact(after);p.quantity=Number(p.quantityExact);
