@@ -1,3 +1,11 @@
+## UI300 / PR317 – v297 eingefroren / INTEGRATION_PENDING · 08.11.2026
+
+Alleiniger Owner e290961479cf. Einziger Produktkandidat [PR317](https://github.com/joke0071/foliolab-open/pull/317), HEADc736a7f223f88b15dbb86ed8be6c4c4d0c63d993/Tree7e8fdcd8e4f82f4422a57d30ce70858a61ad326b, neun beabsichtigte Dateien. Alle unveränderten Main-Blobs erhalten. Kleine UI300-Reduktion von4Panel-Kickern und normaler Sidebar-Erfolgskarte; bestehende DOM-/Header-/mobile-/Recoverywege und Prüfbereich erhalten. Tatsächliche200%-Textprüfung fand Overflow; gezielte Umbrüche korrigiert und in3Engines bestanden.1319Tests/0Fehler/0Skips/Syntax sowie UI300/Header/FLH03-Recovery jeweils Chromium141/Firefox157/WebKit27.2 lokal PASS:7Breiten/Axe/Tastatur/Fokus/Touch/Offline/exakteByte-/Revisions-Nichtmutation/echteQuota-/CAS-/Recoveryfälle. Drei neue Bilder angesehen. [Umfang](../docs/UI300_COMPACT_STATUS_2026-11-08.md) wird nur mit Kandidat integriert; Pflicht-CI läuft regulär, keine Wiederholung/Abbrüche. Noch kein MERGED/DEPLOYED/LIVE_ACCEPTED fürv297.
+
+PrivateV99 unter unveränderter Identität und kanonischem Namen,41609389Bytes/SHA256dd962500bf14bc999c16f1818c1ce95529f24b27015f6176c531ac222c8bff17/9330Manifestdateien geprüft, sämtliche9292V98-Payloads unverändert. Einstieg delta-e290961479cf/ui300-local-qualified/STATE.json. v296 weiterhin LIVE_ACCEPTED, nicht erneut abnehmen. Alle10UI300-Nachträge/UH05PARTIAL/gesamteRoadmap erhalten. Nächster Schritt exakt bestehenden PR317-Lauf vollständig qualifizieren, kontrollierter Merge und echte Produktion; kein zweiter Produktkandidat.
+
+---
+
 ## HND01 – e290961479cf alleinige Übernahme / UI300 IN_PROGRESS · 08.11.2026
 
 **Alleiniger aktiver Owner: Work /root, Sitzung e290961479cf.** Reguläre vollständige Übernahme vom ausdrücklich STOPPED/HANDOVER_READY Owner382a573e6a17; bestehender Hauptauftrag, kein neuer Strang. Vor erstem Schreibzugriff Main11a5d792fcfb53e83c8bccb8ef8e9d3fd0c2ae4b/Treefff7b67c9a214795472146b2ae1b6c74dc59ff51, alle280Branchrefs, PR316 MERGED/Reviews/Inline/Conversation leer, nur geparkte Drafts157/161 und0in_progress/0queued frisch geprüft. PrivateV98/40906891Bytes/SHA256ffe94d0f086ffbe2bd3795aabaac3ad4a6eb0b6145a206b2ae4d3c277e438f49 sowie alle9292Manifestdateien vollständig geprüft. Kein ungesichertes Produkt-WIP des Vorgängers.
