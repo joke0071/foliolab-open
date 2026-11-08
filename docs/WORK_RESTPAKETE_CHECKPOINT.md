@@ -1,3 +1,11 @@
+## UI300 / PR317 – finaler Fokus-Testkopf veröffentlicht / neue reguläre Integration · 08.11.2026
+
+Alleiniger Owner e290961479cf. HEAD61df747db7c7da9b58112c28c3889559bd0f787b/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a,10beabsichtigteDateien. Erstlauf42457216800Versuch1 vollständig beendet: Chromium undCross3 gleicher reproduzierter target-size-Scrollscanbefund;Cross1/2/WalletSUCCESS,Deploy/Live erwartungsgemäß nicht gestartet. Kein Abbruch/Retry/Duplikat. Erst danach frischeMain-/Owner-/alle281Refs-/Review-/Actions-Prüfung kollisionsfrei und PR per expected_sha kontrolliert vorgezogen. Alle4Produktblobs unverändert; genau der oben dokumentierte tatsächlich in3Engines geprüfte Fokus-/Sichtbarkeits-/Hit-Test-Zusatz, gleicheAxe-Regeln. Eine neue reguläreIntegration für den geänderten Kopf läuft; noch keinMERGED/DEPLOYED/LIVE_ACCEPTED.
+
+PrivateV100/9387Manifestdateien/allevorherigenPayloads undOriginale unverändert wie im vorigen Eintrag. NächsterSchritt genau neuen aktuellenLauf qualifizieren; bei vollständig grünenGates kontrollierterMerge und echteProduktion. v296LIVE_ACCEPTED wiederverwenden, keine neueFinanzimplementierung und keinzweiterProduktkandidat. GesamteRoadmap/10UI300Nachträge/UH05PARTIAL erhalten.
+
+---
+
 ## UI300 / PR317 – erster CI-Befund gesichert / Fokus-Nachfolgekopf vorbereitet · 08.11.2026
 
 Alleiniger Owner e290961479cf. PR317 bleibt unverändert HEADc736a7f223f88b15dbb86ed8be6c4c4d0c63d993/Tree7e8fdcd8e4f82f4422a57d30ce70858a61ad326b. Reguläre Integration42457216800Versuch1: Cross3 FAILED bei target-size im bestehenden Missing-value-Axe-Gate nach Anbieter-Scroll; Wallet42457216739 SUCCESS, Cross2 SUCCESS, übrige Jobs dürfen vollständig auslaufen. Keine CI abgebrochen/dupliziert/wiederholt. Kein Merge/Deploy.
