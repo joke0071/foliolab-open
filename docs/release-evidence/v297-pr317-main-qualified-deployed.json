@@ -1,1 +1,153 @@
-cat: handover/v297-pr317-main-qualified-deployed.json: No such file or directory
+{
+  "status": "MAIN_GATES_ACCEPTED / DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "owner": "e290961479cf",
+  "version": 297,
+  "PR": 317,
+  "main": "602ef464a94381ba86615f8e25f82a71c2d25e8d",
+  "tree": "7ae902f3e24b5166592a8fc35f90432817be1f3a",
+  "run": 42459790418,
+  "attempt": 1,
+  "stage": "RELEASE/full=true",
+  "units": 1319,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "mainTestCross123": "SUCCESS",
+  "deploymentJob": 128671894633,
+  "deploymentResult": "SUCCESS",
+  "liveJob": 128671976432,
+  "live": "IN_PROGRESS; no LIVE_ACCEPTED claim",
+  "artifacts": [
+    {
+      "file": "main-v297-13610065807.zip",
+      "size": 65631139,
+      "sha256": "43b7c49a93cb7508a0a588c770ecb031ffe8631f761f54e8e960d2eeaa6ca7b3",
+      "zipCRC": "PASS",
+      "jsonReports": 91,
+      "decodedPNGs": 718,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v297-13609596578.zip",
+      "size": 62447975,
+      "sha256": "5db157c23ff56f2932021d179a416159d1245337b75f666d9d744706e02958e5",
+      "zipCRC": "PASS",
+      "jsonReports": 89,
+      "decodedPNGs": 670,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v297-13609143630.zip",
+      "size": 11417417,
+      "sha256": "ec3296f7c573c1245834df13275d641e551d8bdbe720e4a9d766dfc736c638b0",
+      "zipCRC": "PASS",
+      "jsonReports": 19,
+      "decodedPNGs": 74,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v297-13608999366.zip",
+      "size": 57409579,
+      "sha256": "b9df6d822dc431d9bb08b40c9e2fa642ae3802c1312591af4f324b459ea5d13d",
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v297-13608883860.zip",
+      "size": 934965,
+      "sha256": "068efd45c5cf2ae698556b1ccfce983e2de88d4f3b8d6bffce3b118e356e185b",
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v297-13608669400.zip",
+      "size": 354,
+      "sha256": "c9c9fe910aeb57085843e1293c050d7c7ee6cf4cc7a8588daf12452eaa8fe3f7",
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "flags": [],
+      "result": "PASS"
+    }
+  ],
+  "artifactCount": 6,
+  "jsonReports": 215,
+  "decodedPNGs": 1956,
+  "apiUploadLocalDigestSizeCRCJSONPNG": "PASS",
+  "UI300Reports": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    }
+  ],
+  "headerAndMissingValueThreeEngineReports": "PASS",
+  "threeNewMainMobileImagesActuallyViewed": true,
+  "pagesArtifact": 13609482735,
+  "pagesSize": 561113,
+  "pagesDigest": "dd2fecdd4b54dba81b8f2facd97e57ab3ea22acc010ba78435be25385305df35",
+  "pages151GitBlobs": "PASS",
+  "independentAssetProbe": {
+    "main": "602ef464a94381ba86615f8e25f82a71c2d25e8d",
+    "tree": "7ae902f3e24b5166592a8fc35f90432817be1f3a",
+    "pagesGitBlobMatches": 151,
+    "ordinaryTLS": true,
+    "certificateException": false,
+    "result": "PASS",
+    "TLSRequests": 152,
+    "rootIndexMatch": true
+  },
+  "noCIManualRetryDuplicateCancel": true,
+  "v296": "Previously LIVE_ACCEPTED, reused without reacceptance",
+  "UH05Overall": "PARTIAL",
+  "nativeFiatFollowup": "Original/Decimal/isolated-memory proof secured; no product changes until v297 actual live acceptance"
+}
