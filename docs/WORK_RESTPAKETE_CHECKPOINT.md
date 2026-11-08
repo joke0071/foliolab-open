@@ -1,3 +1,17 @@
+## UH05 – UNKNOWN-FX und enger USD-Hauptbetrag: Kandidat v299 · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Alleiniger Owner unverändert `8cb2927f295c`, **ACTIVE**; keine neue Übernahme. v298 bleibt **LIVE_ACCEPTED**, keine erneute Abnahme. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b` frisch bestätigt. Nur historische Drafts #157/#161 offen, keine laufenden/queued Actions; sämtliche 562 Refs/283 Branchrefs frisch gelesen, nur eigene dokumentierte Änderungen.
+
+[UNKNOWN-FX-Vertrag](UH05_UNKNOWN_FX_LIFECYCLE_2026-11-08.md) und [enger USD-Journalvertrag](UH05_USD_PRINCIPAL_UNKNOWN_JOURNAL_2026-11-08.md) vor Produktintegration gesichert. Erster tatsächlicher v298-Verlust: `createPosition` mit `v.fxRate ?? 1`; tatsächlicher alter Reader verwirft neue UNKNOWN-Datensätze nachweislich. Keine pauschale Migration oder historische Reparatur. Historisch belegte numerische Kurse, einschließlich 1, erhalten. Unbekannte EUR-Gesamtwerte bleiben null/UNKNOWN und erscheinen nicht als vollständiges Vermögen, Rendite oder Kostenbasis.
+
+Eingefrorener Main-basierter Kandidat `16907526866e755b3bf7aedf0d20699b98e7a284`, Tree `9a1178435babe0b48f045653d5445a1e2ea251b7`, Branch `feature/uh05-unknown-fx-usd-principal-v299`, genau 23 beabsichtigte Dateien, sämtliche übrigen Tree-Einträge identisch. Lokal 1.345 Tests/0 Fehler/0 Skips und Syntax PASS. Tatsächliche UNKNOWN-FX-Lebenszyklus- und gemeinsame USD-Importdialogprüfung in Chromium/Firefox/WebKit PASS; Original/Decimal100 unabhängig auf abgetrenntem Bedingungsmodell geprüft, keine echten Nutzeranfangsbestände angelegt. CI des exakten eingefrorenen Kopfs bleibt zwingend.
+
+Private Sicherung **V112** unter identischer Dateiidentität gespeichert und erneut materialisiert vollständig geprüft: 62.010.489 Bytes, SHA256 `411330264c2fdd8d63245ec88794cd7e393699c7d533cb9b29ea6b4c752a6e24`, 12.984 Manifestdateien; alle 12.732 V111-Payloads byteidentisch erhalten. Einstieg `delta-8cb2927f295c/unknown-fx-usd-candidate/STATE.json`. Keine privaten Originalreferenzen oder monetären Nutzerwerte veröffentlicht.
+
+**Nächster Schritt:** genau eine reguläre PR zur Integration öffnen, exakte CI/Reviews/Artefakte qualifizieren; danach frische Kollisionsprüfung, kontrollierter Merge, Main/Deployment und tatsächliche Produktionsabnahme aller drei Engines. Kein LIVE_ACCEPTED für v299 behauptet. Keine CI dupliziert/abgebrochen. Checkpointbranch niemals nach Main mergen. UH05 bleibt PARTIAL; sämtliche übrigen Rollen-/N:M-/FX-/Kostenbasis-/Wallet-/Stakingaufträge, UI300 mit zehn Nachträgen, QUALITY298, CI229, Android/PWA und weitere Roadmap vollständig erhalten. DKB außerhalb; externe Finanzierung kein Gewinn, fehlende Werte UNKNOWN.
+
+---
+
 ## UH05 – einzelner USD-Hauptbetragsvertrag charakterisiert · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Alleiniger aktiver Owner `8cb2927f295c`; reguläre Übernahme von `291c2a60d6ac` mit `f89666c2a05adc9fc580adec80a4de719ff66f8f` dokumentiert. **v298 LIVE_ACCEPTED unverändert**, Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, SW `foliolab-open-v298`. v297/v298 nicht erneut abgenommen. Kein Produktpatch, Produkt-PR, neues Release oder Produkt-WIP; keine CI gestartet/dupliziert/abgebrochen.
