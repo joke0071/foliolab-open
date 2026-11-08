@@ -1,0 +1,17 @@
+{
+  "method": "Independent Python Decimal100; no importer/model arithmetic",
+  "allValuesAndReferencesInvented": true,
+  "currency": "USD",
+  "quantityExact": "17.000000000000000005",
+  "sourceBeforeExact": "17.000000000000000005",
+  "sourceAfterExact": "0",
+  "targetBeforeExact": "0.000000000000000005",
+  "targetAfterExact": "17.00000000000000001",
+  "nativeNetExact": "0",
+  "nativeFeeExact": "0",
+  "grossHistoricalEUR": null,
+  "currentEURWithoutFX": null,
+  "externalFlowEURExact": "0",
+  "incomeEURExact": "0",
+  "newCostBasisEUR": null
+}

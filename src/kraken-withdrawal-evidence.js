@@ -1,7 +1,7 @@
 /** Persistent economic rollback evidence; source attribution is retained, never detached. */
 import {sourceDigest,sourceUnmodified,validateImportSource} from './import-identity.js';
 import {units} from './decimal.js';
-import {validateJournalEntry} from './transactions.js';
+import {validateJournalEntry,validateUnpricedUSDTransfers} from './transactions.js';
 export const KRAKEN_SOURCE='kraken-uh03-v1';
 export const krakenWithdrawalId=group=>'uh03:'+group+':undo';
 export const withdrawalDigest=originals=>sourceDigest(JSON.stringify(originals));
@@ -17,6 +17,7 @@ export function validateKrakenWithdrawals(model){
    const b=o?.booking,r=o?.journal,s=b?.importSource;
    if(!b||!r||!s)fail();
    validateJournalEntry(r);
+   validateUnpricedUSDTransfers({...model,bookings:[b],journalEntries:[r],externalCashFlows:[]});
    validateImportSource(s,b.accountId);
    let v;try{v=JSON.parse(s.sourcePayload);}catch{fail();}
    if(b.id!=='uh03:'+e.group+':'+i||b.journalEntryId!==b.id||r.id!==b.id||r.source!==KRAKEN_SOURCE||b.type!==r.type||b.date!==r.date||s.sourceId!==KRAKEN_SOURCE||s.fileId!==e.group||s.externalId!==e.group+':'+i||s.occurrence!==1||v.group!==e.group||typeof v.payload!=='string'||!Array.isArray(v.bindings)||!sourceUnmodified({journalEntries:[r]},b)||!Array.isArray(o.flows)||o.flows.length>1||ids.has(b.id))fail();

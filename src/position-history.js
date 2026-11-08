@@ -3,6 +3,7 @@ import {marketSourceOptions,fetchSecurityHistory} from './security-sources.js';
 import {coinPaprikaHistoricalQuote,coinPaprikaMapping} from './crypto-fallbacks.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {valueSign} from './defi.js';
+import {signedPositionValueExact} from './fx-state.js';
 
 export const POSITION_PERIODS=Object.freeze([[7,'7 T'],[30,'1 M'],[90,'3 M'],[180,'6 M'],[365,'1 J']]);
 const LONG_PERIOD=1826;
@@ -77,9 +78,7 @@ export async function coinGeckoHistoricalResponse(coinId,settings={},fetcher=glo
 export function currentPositionValues(model){
  const values=Object.create(null);
  for(const p of model.positions){
-  const q=p.quantityExact??p.quantity,price=p.priceExact??p.price;
-  const fx=p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate);
-  values[p.id]=exact(units(preciseValue(q,price,fx))*BigInt(valueSign(p)));
+  values[p.id]=signedPositionValueExact(p);
  }
  return values;
 }

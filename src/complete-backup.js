@@ -7,6 +7,8 @@ import {portableWalletHistory} from './wallet-history-state.js';
  * are NEVER part of this format.
  */
 import {defaultSettings,assertDataVersion} from './model.js';
+import {normalizePositionFX} from './fx-state.js';
+import {validateUnpricedUSDTransfers} from './transactions.js';
 export const COMPLETE_BACKUP_KIND='FolioLabCompleteBackup';
 export const COMPLETE_BACKUP_VERSION=1;
 const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
@@ -44,7 +46,8 @@ export function portableDrivePreferences(input){
 export function createCompleteBackup(data,configuration=null,history=null){
  if(!plain(data)||!Array.isArray(data.positions)||!Array.isArray(data.snapshots))throw Error('Ungültige Portfoliodaten.');
  assertDataVersion(data);
- const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data:{...data,settings:defaultSettings()}};
+ validateUnpricedUSDTransfers(data);
+ const copy={kind:COMPLETE_BACKUP_KIND,backupVersion:COMPLETE_BACKUP_VERSION,createdAt:new Date().toISOString(),data:{...data,positions:data.positions.map(p=>({...p,...normalizePositionFX(p,{legacy:true})})),settings:defaultSettings()}};
  if(configuration!==null){
   if(!plain(configuration))throw Error('Backup-Konfiguration ungültig.');
   copy.configuration={

@@ -13,7 +13,7 @@ import {validatePurchaseEvidence} from './purchase-evidence.js';
 import {validateImportSource} from './import-identity.js';
 import {rebuildAssets,listingId} from './assets.js';
 import {validateEconomicPosition,valueSign} from './defi.js';
-import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches,validCalendarDate} from './transactions.js';
+import {executeTransaction,captureOpenings,validateJournalEntry,ledgerQuantityAudit,validateTransferMatches,validateUnpricedUSDTransfers,validCalendarDate} from './transactions.js';
 import {units,exact,preciseValue} from './decimal.js';
 import {currentPositionValues} from './position-history.js';
 import {validateImportedPriceHistory} from './historical-csv.js';
@@ -23,6 +23,7 @@ import {validateBookingArchive} from './booking-history.js';
 import {validateNativeStakingAddress} from './native-staking-networks.js';
 import {assertWalletHoldingAvailable,duplicateWalletHoldings} from './wallet-identity.js';
 import {automaticValuationConfirmed} from './quote-quality.js';
+import {normalizePositionFX,grossPositionValueExact,signedPositionValueExact,positionValuation} from './fx-state.js';
 export const STORE_KEY='foliolab-open-v1';
 /** Remove only app-owned keys; other apps sharing this origin remain untouched. */
 export function purgeLocalAppData(storage=globalThis.localStorage,{preserveStorageMode=false}={}){
@@ -93,11 +94,11 @@ export function validateWallet(wallet){if(!wallet?.enabled)return null;const cha
   if(chain==='btc-hd'&&!['auto','p2wpkh','p2sh-p2wpkh','p2pkh'].includes(addressType))throw Error('Unbekannter Bitcoin-HD-Adresstyp.');
   return {enabled:true,chain,address,contract,decimals,chainId,addressType};
 }
-export function createPosition(v,model){if(v.archived!==undefined&&typeof v.archived!=='boolean')throw Error('Ungültige Archivmarkierung.');const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
+export function createPosition(v,model,{legacyFX=false}={}){if(v.archived!==undefined&&typeof v.archived!=='boolean')throw Error('Ungültige Archivmarkierung.');const name=cleanString(v.name,110);if(!name)throw Error('Bitte einen Positionsnamen eingeben.');if(!model.providers.some(x=>x.id===v.providerId))throw Error('Bitte einen gültigen Anbieter auswählen.');
   model.accounts??=[];const account=v.accountId?model.accounts.find(a=>a.id===v.accountId):defaultAccount(model,v.providerId);if(!account||account.providerId!==v.providerId)throw Error('Bitte ein Konto dieses Anbieters auswählen.');
   const mic=cleanString(v.mic,8).toUpperCase();
   if(mic&&!/^[A-Z0-9]{4}$/.test(mic))throw Error('Börsen-MIC muss aus vier Zeichen bestehen.');
-  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fxRate=currency==='EUR'?1:safeNumber(v.fxRate??1,0.00000001,1000);
+  const kind=KINDS.includes(v.kind)?v.kind:'other';const quantityExact=exact(units(v.quantityExact??v.quantity??0));const quantity=safeNumber(quantityExact);const price=safeNumber(v.price??0);const currency=['EUR','USD','CHF','GBP','CAD','AUD','JPY','NOK','SEK','DKK','PLN','CZK','HUF','NZD','SGD'].includes(v.currency)?v.currency:'EUR';const fx=normalizePositionFX({...v,currency},{legacy:legacyFX}),fxRate=fx.fxRate;
   const wallet=kind==='crypto'?validateWallet(v.wallet):null;const managementSource=wallet?.enabled?'wallet':v.managementSource==='transactions'?'transactions':'manual';
   assertWalletHoldingAvailable(model,{id:v.id,wallet,valuationMode:v.valuationMode,representedByPositionId:v.representedByPositionId});
   const costBasisExact=v.costBasisExact==null?(v.costBasisEUR==null||v.costBasisEUR===''?null:exact(units(v.costBasisEUR))):exact(units(v.costBasisExact));
@@ -112,16 +113,16 @@ export function createPosition(v,model){if(v.archived!==undefined&&typeof v.arch
     quoteSource:cleanString(v.quoteSource,70)||null,quoteAsOf:cleanString(v.quoteAsOf,45)||null,
     quoteFetchedAt:cleanString(v.quoteFetchedAt,45)||null,quoteQuality:cleanString(v.quoteQuality,45)||null,
     fxSource:cleanString(v.fxSource,70)||null,fxRateDate:cleanString(v.fxRateDate,20)||null,
-    fxRateExact:v.fxRateExact==null?exact(units(fxRate)):exact(units(v.fxRateExact)),
+    fxRateExact:fx.fxRateExact,
     eodhdSymbol:cleanString(v.eodhdSymbol,45).toUpperCase(),fmpSymbol:cleanString(v.fmpSymbol,45).toUpperCase(),tradingViewSymbol:cleanString(v.tradingViewSymbol,48).toUpperCase(),
     exchange:cleanString(v.exchange,60),symbol:cleanString(v.symbol,32).toUpperCase(),isin:cleanString(v.isin,20).toUpperCase(),coinId:cleanString(identity.id,110),coinIdMigration:identity.migration,quantity,quantityExact,price,currency,fxRate,wallet,updatedAt:cleanString(v.updatedAt,40)||null,notes:cleanString(v.notes,300)};
 }
-export function grossValueEUR(p){return Number(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)));}
-export function valueEUR(p){return grossValueEUR(p)*valueSign(p);}
-export function totalExactEUR(model){return exact(model.positions.reduce((sum,p)=>sum+units(preciseValue(p.quantityExact??p.quantity,p.priceExact??p.price,p.currency==='EUR'?'1':(p.fxRateExact??p.fxRate)))*BigInt(valueSign(p)),0n));}
-export function totalEUR(model){return Number(totalExactEUR(model));}
-export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){if(p.costBasisEUR!=null){unrealized+=valueEUR(p)-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}return {unrealized,realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
-export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>({key,name,total:model.positions.filter(p=>p.kind===key).reduce((n,p)=>n+valueEUR(p),0)})).filter(x=>x.total>0);}
+export function grossValueEUR(p){const v=grossPositionValueExact(p);return v===null?null:Number(v);}
+export function valueEUR(p){const v=signedPositionValueExact(p);return v===null?null:Number(v);}
+export function totalExactEUR(model){return positionValuation(model.positions).totalExactEUR;}
+export function totalEUR(model){const v=totalExactEUR(model);return v===null?null:Number(v);}
+export function gainSummary(model){let unrealized=0,realized=0,withBasis=0,withRealized=0;for(const p of model.positions){const v=valueEUR(p);if(p.costBasisEUR!=null&&v!==null){unrealized+=v-p.costBasisEUR;withBasis++;}if(p.realizedPnLEUR!=null){realized+=p.realizedPnLEUR;withRealized++;}}const missingFX=model.positions.some(p=>signedPositionValueExact(p)===null);return {unrealized:missingFX?null:unrealized,...(missingFX?{knownUnrealized:unrealized}:{}),realized,withBasis,withRealized,unvalued:model.positions.length-withBasis};}
+export function groupByKind(model){return Object.entries(TYPES).map(([key,name])=>{const v=positionValuation(model.positions.filter(p=>p.kind===key));return {key,name,total:v.totalExactEUR===null?null:Number(v.totalExactEUR),...(v.totalExactEUR===null?{knownTotal:Number(v.knownTotalExactEUR)}:{})};}).filter(x=>x.total===null||x.total>0);}
 /**
  * Historical valuations may ONLY be recorded when their value is explicitly supplied.
  * A backdated snapshot cannot use today's portfolio prices or balances.
@@ -133,6 +134,9 @@ export function snapshot(model,date=new Date().toISOString().slice(0,10),note=''
  const manual=options.manualTotalEUR!=null&&String(options.manualTotalEUR).trim()!=='';
  if(date!==today&&!manual)throw Error('Für historische Stichtage bitte den tatsächlich damals bekannten Portfoliowert eingeben; heutige Kurse sind keine historischen Daten.');
  const amountExact=manual?exact(units(options.manualTotalEUR)):totalExactEUR(model);
+ // No numeric snapshot can represent an unknown full EUR total. Preserve all
+ // existing observations and do not create a fictitious zero/partial endpoint.
+ if(amountExact===null)return null;
  // Net liabilities may lead to a legitimate negative portfolio value.
  const amount=Number(amountExact),recordedAt=new Date().toISOString();
  const partial=!manual&&(model.positions.some(p=>!automaticValuationConfirmed(p))||duplicateWalletHoldings(model).length>0);
@@ -190,7 +194,7 @@ export function safeImport(raw){
   if(raw.version>=2){m.accounts=raw.accounts.map(a=>createAccount(a,m));uniqueIds(m.accounts,'Konten');}
   // v1 stored holdings directly under providers; create a default account per provider.
   if(raw.version===1)for(const p of m.providers)defaultAccount(m,p.id);
-  m.positions=raw.positions.map(p=>createPosition(enhanceKnownReferenceListing(p),m));uniqueIds(m.positions,'Positionen');
+  m.positions=raw.positions.map(p=>createPosition(enhanceKnownReferenceListing(p),m,{legacyFX:true}));uniqueIds(m.positions,'Positionen');
   if(raw.priceHistories!=null){
    if(typeof raw.priceHistories!=='object'||Array.isArray(raw.priceHistories))throw Error('Kurshistorien im Backup sind beschädigt.');
    const entries=Object.entries(raw.priceHistories);
@@ -256,7 +260,7 @@ export function safeImport(raw){
     if(!Number.isSafeInteger(entry.sequence)||entry.sequence<1||sequences.has(entry.sequence))throw Error('Backup: Journalreihenfolge ist ungültig oder nicht eindeutig.');
     sequences.add(entry.sequence);
   }
-  validateTransferMatches(m);validateFlatexNetSettlements(m);
+  validateTransferMatches(m);validateUnpricedUSDTransfers(m);validateFlatexNetSettlements(m);
   m.snapshots=raw.snapshots.map(x=>{
     if(!x||!x.id||!validCalendarDate(x.date)||!exactMatchesDisplay(x.total,x.totalEURExact))throw Error('Ungültiger Stichtag oder widersprüchlicher Betrag im Backup.');
     return {id:cleanString(x.id,120),date:x.date,total:safeNumber(x.total,-1e18,1e18),
@@ -291,7 +295,7 @@ export function safeImport(raw){
   assertDataVersion(m);
   return m;
 }
-export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
+export function backup(model,{includeHistory=false}={}){assertDataVersion(model);validateUnpricedUSDTransfers(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);const copy=structuredClone(model);for(const p of copy.positions){if(p.currency!=='EUR')Object.assign(p,normalizePositionFX(p,{legacy:true}));}if(!includeHistory)delete copy.walletHistory;else if(copy.walletHistory)copy.walletHistory=validateWalletHistory(copy.walletHistory);rebuildAssets(copy);copy.settings=defaultSettings();return JSON.stringify(copy,null,2);}
 /** Daten niemals stillschweigend durch ein leeres Portfolio ersetzen, wenn der Speicher fehlerhaft ist. */
 const observedStorage=new WeakMap();
 export function load(storage=globalThis.localStorage){
@@ -313,18 +317,18 @@ export function persist(model,storage=globalThis.localStorage){
  // once another tab has activated transactional IndexedDB.
  if(storage.getItem('foliolab-open-storage-mode')==='idb-v1')
   throw Error('IndexedDB ist in einem anderen Tab aktiv. Bitte FolioLab neu laden.');
- assertDataVersion(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);
+ assertDataVersion(model);validateUnpricedUSDTransfers(model);validateFlatexNetSettlements(model);validateUnifiedBitcoinEconomics(model);validateKrakenWithdrawals(model);validateBitpandaWithdrawals(model);validateKrakenBitcoinBridges(model);validateKrakenEthereumBridges(model);validateKrakenSolanaBridges(model);
  if(model.bookingPresentation!==undefined)validateBookingArchive(model.bookingPresentation,model);
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
- const serialized=JSON.stringify({...model,settings:withoutRetiredSettings(model.settings),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
+ const serialized=JSON.stringify({...model,positions:model.positions.map(p=>({...p,...normalizePositionFX(p,{legacy:true})})),settings:withoutRetiredSettings(model.settings),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);
 }
 // Cache formatting objects only, never amounts; bound the currency-key set.
 const moneyFormatters=new Map(),quantityFormatter=new Intl.NumberFormat('de-AT',{maximumFractionDigits:8}),tinyQuantityFormatter=new Intl.NumberFormat('de-AT',{notation:'scientific',maximumSignificantDigits:8});
-export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return formatter.format(Number.isFinite(n)?n:0);};
+export const money=(n,c='EUR')=>{let formatter=moneyFormatters.get(c);if(!formatter){formatter=new Intl.NumberFormat('de-AT',{style:'currency',currency:c,maximumFractionDigits:2});if(typeof c==='string'&&c.length===3&&moneyFormatters.size<16)moneyFormatters.set(c,formatter);}return Number.isFinite(n)?formatter.format(n):'Nicht bewertet';};
 export const quant=n=>{const value=Number(n);return Number.isFinite(value)&&value!==0&&Math.abs(value)<1e-8?tinyQuantityFormatter.format(n):quantityFormatter.format(n);};
 export function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 

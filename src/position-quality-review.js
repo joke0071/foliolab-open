@@ -3,6 +3,7 @@ import {valuationIssues} from './valuation-status.js';
 import {priceQuality,quoteQualitySummary} from './quote-quality.js';
 import {historyAction} from './booking-history.js';
 import {duplicateWalletHoldings} from './wallet-identity.js';
+import {positionFX} from './fx-state.js';
 const quoteLabels={missing:'Kurs fehlt',derived:'Zuletzt gespeicherter Wert',review:'Kursstatus unklar',outdated:'Kurs älter als 7 Tage'};
 const timestamp=v=>typeof v==='string'&&Number.isFinite(Date.parse(v))?v:null;
 /** Existing evidence only, one affected position regardless of symptom count. */
@@ -11,7 +12,7 @@ export function positionQualityReview(model,now=Date.now()){
  function add(id,issue){if(!positions.has(id))return;const row=groups.get(id)||{id,accountId:positions.get(id).accountId,issues:[]};if(!row.issues.some(x=>x.key===issue.key))row.issues.push(issue);groups.set(id,row);}
  for(const duplicates of duplicateWalletHoldings(model))for(const p of duplicates)add(p.id,{key:'position:'+p.id+':wallet-identity',category:'history',label:'Dieselbe konkrete Walletposition wird mehrfach angerechnet',source:'Walletidentitätsprüfung',asOf:null,severity:'warning',action:'edit-position',actionLabel:'Walletzuordnung prüfen'});
  for(const {id,type} of valuationIssues(model,now)){
-  const p=positions.get(id);add(id,{key:'position:'+id+':quote',category:'quote',label:quoteLabels[type],source:'Kursstatus',asOf:timestamp(p.quoteAsOf),severity:'warning',quality:priceQuality(p,now).state,action:'edit-position',actionLabel:'Kursdaten prüfen'});
+  const p=positions.get(id),fx=positionFX(p);add(id,{key:'position:'+id+':quote',category:'quote',label:fx.state==='unknown'?'EUR-Wechselkurs fehlt':fx.state==='invalid'?'EUR-Wechselkurs widersprüchlich':quoteLabels[type],source:fx.state==='known'?'Kursstatus':'EUR-Bewertung',asOf:timestamp(fx.state==='known'?p.quoteAsOf:p.fxRateDate),severity:'warning',quality:priceQuality(p,now).state,action:'edit-position',actionLabel:'Kursdaten prüfen'});
  }
  for(const session of model.walletHistory?.sessions||[]){
   const p=positions.get(session.walletKey)||[...positions.values()].find(p=>session.id==='wallet-history:'+p.id);if(!p)continue;
