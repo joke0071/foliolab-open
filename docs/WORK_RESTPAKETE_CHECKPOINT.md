@@ -1,3 +1,13 @@
+## v298 / PR318 – MERGED · Mainlauf 42474607569 · 08.11.2026
+
+Alleiniger aktiver Owner `b510a73fed43`. PR318 kontrolliert mit erwartetem HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59` gemergt. **Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`** frisch bestätigt und exakt gleich qualifiziertem Kandidat-/Integrationsmerge-Tree. Service Worker Kandidat `foliolab-open-v298`.
+
+Automatisch gestarteter regulärer Main-/Produktionslauf **42474607569**, Versuch1. Noch kein DEPLOYED/LIVE_ACCEPTED fürv298. Genau diesen Lauf vollständig qualifizieren, anschließend Pages gegen Gitblobs und reguläre TLS/152Assets sowie tatsächliche Produktion einschließlich neuem Fiat-UI-Vertrag in drei Engines prüfen. Keine CI duplizieren/abbrechen; keinen weiteren Produktkandidaten beginnen. Letztes bestätigtes Live bleibtv297, nicht erneut abnehmen.
+
+[Integration](release-evidence/v298-pr318-integration-qualified.json):42472374785 undWallet42472374753SUCCESS,1326Tests/0Fehler/0Skips/Syntax/3Engines;6Artefakte/218JSON/1968PNG vollständigAPI-Upload-Lokal-Hash/Größe/CRC/Decodierunggeprüft,3neueCIbilderangesehen. VorMergeMain/Owner/alle282Refs/PRs/Reviews/Actions frischkollisionsfrei;PrivateV105vollständigverifiziert(11.104Manifestdateien/allevorherigenPayloadsbytegleich). Einstiegdelta-b510a73fed43/fiat-integration-qualified/STATE.json. UH05PARTIAL undgesamteRoadmaperhalten. Checkpointbranch niemals nachMainmergen.
+
+---
+
 ## v298 / PR318 – INTEGRATION_QUALIFIED · Merge vorbereitet · 08.11.2026
 
 Alleiniger aktiver Owner `b510a73fed43`. [Vollständiger Integrationsbeleg](release-evidence/v298-pr318-integration-qualified.json): regulärer Lauf **42472374785**, Versuch1, und Wallet **42472374753 SUCCESS**. **1.326 Tests / null Fehler / null Skips**, Syntax und Chromium/Firefox/WebKit einschließlich neuem tatsächlichem Fiat-UI-Vertrag PASS. Alle sechs Artefakte / **218 JSON / 1.968 PNG**, API-/Uploadlog-/lokale SHA256+Größe, ZIP-CRC, vollständige JSON-/PNG-Decodierung PASS; drei neue CI-Mobilbilder tatsächlich angesehen. Exakter getesteter Merge `3335afc8bd6223b46ca364936b50570ba98d7308`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, HEAD `31efa22249a6e154c779f348c5cdc4c7143e6c59` eingefroren.
