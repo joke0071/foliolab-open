@@ -5,6 +5,28 @@ import {units,exact} from './decimal.js';
 const digest=v=>sourceDigest(JSON.stringify(v));
 const streamOf=v=>JSON.stringify([v.asset,v.wallet,v.subclass]);
 const abs=n=>n<0n?-n:n;
+/** Documentary multi-asset principal allocation, never pairing by aggregate sum.
+ * One native reference/time owns exactly one debit and credit per declared asset.
+ * Wallet names/direction, subclass and zero fees are part of this bounded proof.
+ */
+export function krakenAutoallocationPairs(rows){
+ if(rows.length<4||rows.length>24||rows.length%2||rows.some(r=>r.issues.length||r.values.type!=='earn'||r.values.subtype!=='autoallocation'||r.values.aclass!=='currency'||r.amountExact===null||r.feeExact!=='0')||new Set(rows.map(r=>r.values.refid)).size!==1||!rows[0].values.refid||new Set(rows.map(r=>r.values.time)).size!==1)return null;
+ const assets=new Map(),identities=new Set();
+ for(const row of rows){
+  if(!row.identity||identities.has(row.identity))return null;identities.add(row.identity);
+  const list=assets.get(row.values.asset)||[];list.push(row);assets.set(row.values.asset,list);
+ }
+ const pairs=[],directions=new Set();
+ for(const [asset,legs] of [...assets].sort(([a],[b])=>a.localeCompare(b))){
+  if(legs.length!==2)return null;
+  const debit=legs.find(r=>units(r.amountExact)<0n),credit=legs.find(r=>units(r.amountExact)>0n);
+  if(!debit||!credit||units(debit.amountExact)!==-units(credit.amountExact)||debit.values.subclass!==credit.values.subclass||!['crypto','stable_coin','fiat'].includes(debit.values.subclass)||debit.values.subclass==='fiat'&&asset!=='EUR')return null;
+  const direction=JSON.stringify([debit.values.wallet,credit.values.wallet]);
+  if(!['["spot / main","earn / liquid"]','["earn / liquid","spot / main"]'].includes(direction))return null;
+  directions.add(direction);pairs.push({asset,debit,credit});
+ }
+ return directions.size===1?pairs:null;
+}
 /** Each Ledger ID owns its complete payload; refid groups never replace leg identities. */
 export function prepareKrakenSourcePlan(inputs){
  if(!Array.isArray(inputs)||!inputs.length||inputs.length>20)throw Error('Kraken: 1 bis 20 Originaldateien erforderlich.');
@@ -49,6 +71,7 @@ export function prepareKrakenSourcePlan(inputs){
   if(g.rows.every(r=>['trade','spend','receive'].includes(r.values.type))&&positive.length===1&&negative.length===1)kind='exchange';
   else if(g.rows.every(r=>r.values.type==='earn'&&r.values.subtype==='reward')&&positive.length===1&&!negative.length)kind='reward';
   else if(g.rows.every(r=>r.values.type==='transfer'||r.values.type==='earn'&&['allocation','deallocation','autoallocation','autoallocate'].includes(r.values.subtype))&&positive.length===1&&negative.length===1&&positive[0].values.asset===negative[0].values.asset&&units(positive[0].amountExact)===-units(negative[0].amountExact))kind='internal-transfer';
+  else if(krakenAutoallocationPairs(g.rows))kind='internal-transfer-batch';
   else if(g.rows.every(r=>r.values.type==='deposit')&&positive.length===1&&!negative.length)kind='deposit-review';
   else if(g.rows.every(r=>r.values.type==='withdrawal')&&negative.length===1&&!positive.length)kind='withdrawal-review';
   if(new Set(g.rows.map(r=>r.values.time)).size!==1)issues.push('Referenzgruppe enthält verschiedene Zeitpunkte; keine automatische Ausführungsreihenfolge.');
