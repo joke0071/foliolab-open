@@ -1,3 +1,54 @@
+## HANDOVER_READY / STOPPED – e290961479cf · v297 LIVE_ACCEPTED · 08.11.2026
+
+**Owner `e290961479cf` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig ab.** Keine weitere Produktarbeit durch diese Ausführung. Dies ist die reguläre Fortsetzung des bestehenden Hauptauftrags.
+
+### Verbindlicher Einstieg
+
+Vollständig lesen: [HND01-Übergabe](HANDOVER_e290961479cf_2026-11-08.md), [nächster serieller UH05-Schnitt](UH05_NEXT_AFTER_v297_2026-11-08.md), [Original-/Decimal-belegter Fiat-Zuordnungsvertrag](UH05_NATIVE_FIAT_BINDING_2026-11-08.md), [Startprompt](START_HND01_e290961479cf_2026-11-08.md), einschließlich aller verlinkten Original-, Decimal-, Finanz-, CI-, UI-, Release- und Sicherungsbelege.
+
+Vor erstem Schreibzugriff Main, Tree, Owner, sämtliche relevanten Branches/Refs, PRs, Reviews/Inline-/Conversationbefunde, Actions, WIP und aktuelle private Sicherung frisch prüfen. Bei Kollisionsfreiheit alleinige HND01-Übernahme dokumentieren und eigenständig seriell fortsetzen. Kein Neustart, keine neue Architektur und kein paralleler Strang.
+
+### Produktiv vollständig abgenommen
+
+**v297 LIVE_ACCEPTED**, [PR317](https://github.com/joke0071/foliolab-open/pull/317) gemergt. Main `602ef464a94381ba86615f8e25f82a71c2d25e8d`, Tree `7ae902f3e24b5166592a8fc35f90432817be1f3a`, SW `foliolab-open-v297`. Nicht erneut abnehmen.
+
+- Finale reguläre Integration **42457939096**, Versuch 1, und Walletlauf **42457939077 SUCCESS**.
+- Main-/Produktionslauf **42459790418**, Versuch 1, vollständig SUCCESS. **1.319 Tests, null Fehler, null Skips**, Syntax und Chromium/Firefox/WebKit PASS.
+- Deployment **128671894633 SUCCESS**, tatsächlicher Livejob **128671976432 SUCCESS**.
+- [Livebeleg](release-evidence/v297-pr317-live-acceptance.json), [Main/Deployment](release-evidence/v297-pr317-main-qualified-deployed.json), [unabhängige Pages/Gitblob/TLS-Assets](release-evidence/v297-independent-assets.json), [Integration](release-evidence/v297-pr317-integration-qualified.json).
+- Integration und Main je sechs Gateartefakte, je **215 JSON / 1.956 PNG**, API-/Uploadlog-/lokale SHA256, Größe, ZIP-CRC und alle JSON-/PNG-Bytes geprüft; je drei neue mobile CI-Bilder angesehen.
+- Pages **13609482735**, **561.113 Bytes**, SHA256 `dd2fecdd4b54dba81b8f2facd97e57ab3ea22acc010ba78435be25385305df35`: alle **151 physischen Dateien** exakt gegen Main-Gitblobs. Unabhängig alle **152 HTTPS-Pfade einschließlich Root** bytegleich bei gewöhnlicher TLS-Prüfung ohne Zertifikatsausnahme.
+- Liveartefakt **13611037576**, **129.704.663 Bytes**, SHA256 `4bb402bce07551fda13173c9c2a9241ee503da2db3b883f3eecebf7f66cdab3a`: alle **156 JSON / 1.298 PNG**, API-/Uploadlog-/lokaler Hash, Größe und CRC PASS, null Fehlerflags. Alle **152 Livehashes** gegen Pages geprüft. Exakter Main-SHA/SW297, sechs Coregruppen und 18 Axe-Scans ohne Verstöße PASS.
+- Drei neue tatsächliche Produktionsmobilebilder aus Chromium/Firefox/WebKit sowie Desktop- und 200%-Überschriftenbilder angesehen. UI300/Header/Missing-value, Offline, Fehler-/Konfliktzustände und erhaltene Funding-/Transferverträge tatsächlich auf Produktion PASS. 200% bedeutet berechnete Schriftverdopplung; keine physische Gerätetest- oder Browserzoombehauptung.
+
+Der begrenzte UI300-Schnitt ist abgeschlossen: vier redundante Kicker entfernt, permanente Sidebar-Erfolgskarte bedarfsabhängig, scoped Umbruch/Typografie harmonisiert. Wichtige Speicher-, Fehler-, Offline-, Warn-, Stale- und Prüfbereichswege erhalten. Keine Finanz-, Journal-, Bewertungs- oder Speicherdatenänderung. Bestehenden Hero-/Chart-/Navigationsschnitt nicht erneut entwickeln. Alle zehn UI300-Nachträge und die gesamte Roadmap bleiben erhalten; #300 insgesamt nicht DONE.
+
+Erste Integration42457216800 bleibt als FAILED erhalten. Erst nach vollständigem Ende folgte ein geänderter Testkopf mit nativer Fokus-/vollständiger Sichtbarkeits-/Hit-Test-Prüfung vor demselben vollständigen Axe-Scan; keine Regel-/Grenzwert-/Assertionsabschwächung und keine Produktblobänderung bei diesem Folgeschritt. Kein blinder Retry, keine manuelle CI-Doppelung und kein Abbruch.
+
+### Private Sicherung vollständig verifiziert
+
+**Version 103**, kanonischer Name `FolioLab_private_continuation_2026-11-04.tar.gz`, unveränderte Dateiidentität. **49.883.729 Bytes**, SHA256 `4c535bb1680906927c3514484202ebef08f1136c64e41d612e04f5331449d86e`. Alle **10.792 Manifestdateien** vollständig am Archiv geprüft, alle **10.056 V102-Payloads** und sämtliche früheren Originale/Decimal-Oracles/Sicherungsstände bytegleich bewahrt. Erfolgreicher Upload mit erwarteter Vorgängerversion102 bestätigt, lokale Versionsmetadaten103 gesetzt und danach aktuelle Version/Name/Größe erneut gelesen.
+
+Privater Einstieg: `delta-e290961479cf/v297-live-accepted-handover/STATE.json`. Tatsächliche Liveberichte, Logs, Prüfrezepte, Artefaktlocators, UI-/Finanz-/Original-/Decimal-Nachweise und die synthetische Vorbereitung unter `control/` und `ci-reports/`. Keine neuen CI-ZIP-/PNG-Bytes ins Archiv. Das Archiv kann seinen eigenen finalen Hash nicht enthalten; dieser nach dem Upload gesetzte Kopf ist dafür maßgeblich.
+
+### Nächste Arbeit und Grenzen
+
+**UH05 bleibt PARTIAL.** Übrige private Original-/Oraclepakete erneut gelesen: zwei tatsächliche native Fiat-Gruppen belegen jetzt eine Zuordnungslücke zur manuellen EUR-basierten Kryptoposition. Herkunft, vollständige Referenzmitgliedschaft, native Rollen, unabhängige raw-CSV-/Decimal-100-Sollwerte sowie isolierte Vorschau und In-Memory-Bestätigung auf unverändertem v297 sind privat gesichert. Keine tatsächliche Nutzeranfangsfreigabe, keine IDB-/CAS-Schreibvorgänge oder realen Portfolioimporte betroffen.
+
+Als Nächstes enger Schutz **frischer nativer Fiat-/Positionsart-Zuordnungen**, mit bestehendem EUR-Cashvertrag und voller Altgruppen-Replay-/Undo-/dokumentarischer Rücknahmekompatibilität. Zwei mit dem echten unveränderten v297-Importer erzeugte synthetische Altmodelle sowie sechs vorbereitete Testgruppen sind gesichert; fünf erwartete Negativfehler auf altem Code, eine Positivgruppe PASS. Das sind private Testentwürfe, kein implementierter Finanzschnitt und keine fehlgeschlagene Releaseprüfung. Kein weiterer Produktkandidat oder Finanz-PR vorhanden. Nach Umsetzung sämtliche bestehenden Gates, reguläre Integration, kontrollierter Merge und tatsächliche Produktionsabnahme durchführen. Keine Migration, automatische historische Korrektur, neue Finanzengine oder vollständige FX-Unterstützung daraus ableiten.
+
+Keine hypothetischen N:M-/FX-Fälle aus den 401 strikten historischen Flatex-1:1-Gruppen erzeugen. Bereits abgenommene 2:1-/3:1-, 57 FundingV2- und v296-Spot/Earn-Funktionen erhalten. DKB bleibt außerhalb; externe Finanzierung kein Gewinn; interne Hauptbeträge kein Ertrag, externe Einzahlung oder neue Kostenbasis. Fehlende Wallets und Staking bleiben UNKNOWN. Historische Alpha-IDB-Ursache UNKNOWN; alte Ausnahme verbraucht; keinen Fix behaupten.
+
+QUALITY-TRUST01 #298 mit [begrenzter lesender Runtime-/AST-Vorbereitung](QUALITY298_RUNTIME_AUDIT_PREPARATION_2026-11-08.md), CI-OPT01 #229, Android/PWA samt echten Gerätetests, Wallet-Historie/Staking, Verwaltung, Kurse/Analysen/Datenqualität, Backup/Restore/optionales Drive sowie gesamte weitere Roadmap erhalten. Keine Hardware-/native-Safari-/OAuth-/TalkBack-Abnahme oder vollständigen Lizenz-/Sicherheits-/Datenschutzabschluss behaupten.
+
+### Frischer kollisionsfreier Abschluss
+
+Nach Upload Main und Tree unverändert bestätigt; alle **281 Branch-Refs** geprüft, seit Vorabschluss ausschließlich erwartete Dokumentänderungen auf dem Checkpointbranch. Nur historische Drafts **#157/#161** offen; zu PR317 keine Reviews/Inline-/Conversationbefunde. **Keine laufenden oder queued Actions**, kein weiterer Produktkandidat. Alle zehn UI300-Nachträge frisch unverändert. Lokale Produktblobs entsprechen Main; Teilrekonstruktion ohne .git, fehlende unveränderte Dateien sind keine Löschungen. Private Entwürfe und lokale QA-Launcher sind im HND01 dokumentiert und nicht zu committen.
+
+Alle EFF01/HND01-, Finanz-, Quellenidentitäts-, Journal-, IndexedDB-, CAS-/Mehrtab-, Backup-/Restore-, Offline-, PWA- und Datenschutzverträge erhalten. GitHub ausschließlich Plugin; keine CI duplizieren, abbrechen oder grundlos wiederholen. Private Sicherung gleiche Dateiidentität, vor kritischen Änderungen prüfen. **Checkpointbranch niemals vollständig nach Main mergen.** Mit diesem Kopf ist e290961479cf vollständig STOPPED und hat sämtliche Zuständigkeit abgegeben.
+
+---
+
 ## v297 LIVE_ACCEPTED – Abschluss gesichert in Vorbereitung · 08.11.2026
 
 Alleiniger aktiver Owner: `e290961479cf`. Noch keine Abgabe; der abschließende HANDOVER_READY-Kopf folgt nach geprüftem privaten Upload.
