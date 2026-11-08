@@ -58,3 +58,4 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
 report.result='PASS';writeFileSync(dir+'/report.json',JSON.stringify(report,null,2));finish();
 
 await import('./browser-kraken-allocation.mjs');
+await import('./browser-kraken-fiat-binding.mjs');
