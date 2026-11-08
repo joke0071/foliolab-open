@@ -36,6 +36,13 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await p.locator('[data-provider-id="p"]>summary').click();
    for(const id of ['missing-etf','missing-crypto','zero-holding','sourced-zero','positive'])assert.equal(await p.locator('[data-position-id="'+id+'"] .provider-holding-right strong').innerText(),id.startsWith('missing-')?'Nicht bewertet':money(id==='positive'?3:0));
    assert.match(await p.locator('.aggregate-provider-note').innerText(),/Bekannte Teilsumme · 2 Positionen ohne Kurs/);assert.match(await p.locator('.aggregate-account-note').innerText(),/2 Positionen ohne Kurs/);
+   // The provider disclosure above scrolls the page. Exercise the period control's
+   // real keyboard focus before scanning it, so its target is in the viewport
+   // rather than incidentally cut by the sticky header at this scroll offset.
+   const period=p.locator('#miniChartPeriods [data-mini-range="all"]');await period.focus();
+   await p.keyboard.press('Shift+Tab');await p.keyboard.press('Tab');
+   assert.equal(await period.evaluate(e=>e===document.activeElement),true,JSON.stringify({engine,width,focus:await p.evaluate(()=>({active:document.activeElement?.outerHTML,scrollY}))}));
+   assert.equal(await period.evaluate(e=>{const r=e.getBoundingClientRect(),h=document.querySelector('.mobile-header'),n=document.querySelector('#mobileNav'),top=h.checkVisibility()?h.getBoundingClientRect().bottom:0,bottom=n.checkVisibility()?n.getBoundingClientRect().top:innerHeight;return r.top>=top&&r.bottom<=bottom&&e.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));}),true,'keyboard-focused period is fully visible and hit-testable between sticky bars');
    assert.deepEqual(await p.evaluate(async()=>(await axe.run('#dashboardPage',{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}))),[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    await p.locator('#allocationLegend [data-allocation-key="cash"]').click();await resetAllocation(width);assert.equal(await p.locator('#donutShare').innerText(),'Teilsumme');
    await p.evaluate(()=>{document.activeElement?.blur();scrollTo(0,0);});await p.screenshot({path:`${out}/${engine}-${width}-dashboard.png`,fullPage:true});await p.locator('[data-provider-id="p"]>summary').click();

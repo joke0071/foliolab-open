@@ -45,5 +45,14 @@
   "noPhysicalAndroidNativeSafariOAuthTalkBackClaim": true,
   "historicalAlphaIDBCause": "UNKNOWN; prior exception consumed",
   "privateOriginalsPublished": false,
-  "FLH03Recovery": "all three engines PASS: actual corrupt/unavailable record, unchanged original export, controlled restore, failed save/read, dirty Escape/focus, seven geometries/Axe"
+  "FLH03Recovery": "all three engines PASS: actual corrupt/unavailable record, unchanged original export, controlled restore, failed save/read, dirty Escape/focus, seven geometries/Axe",
+  "firstIntegration": {
+    "run": 42457216800,
+    "attempt": 1,
+    "head": "c736a7f223f88b15dbb86ed8be6c4c4d0c63d993",
+    "status": "FAILED cross3; other jobs allowed to finish",
+    "cause": "target-size at incidental scrolled header edge in missing-value gate",
+    "followup": "native Shift+Tab/Tab, assert focused full visibility and center hit-test before all unchanged Axe rules; no blind retry"
+  },
+  "focusedMissingValueGate": "Chromium141/Firefox157/WebKit27.2 PASS; 7 widths, native Shift+Tab/Tab, exact focused visibility/center hit testing, unchanged Axe rules and canonical record"
 }

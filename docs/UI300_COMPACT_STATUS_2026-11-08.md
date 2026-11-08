@@ -40,3 +40,16 @@ contracts. UH05 overall remains PARTIAL; no N:M, FX, costs, quantities, flows
 or user opening permission is inferred from this UI change. DKB stays outside;
 external funding is not profit; missing wallets/staking remain UNKNOWN. The
 historical Alpha-IDB cause is UNKNOWN and its prior exception is consumed.
+
+## Focused target-size diagnosis
+
+The first regular integration found a target-size scan failure after a provider
+disclosure scrolled the dashboard. Compact headings changed the incidental
+position of the period controls at the sticky header edge. An exact v296
+baseline diagnosis showed the same controls already outside the viewport; this
+is a diagnostic comparison, not renewed v296 acceptance. The follow-up exercises
+native Shift+Tab/Tab on the period control and asserts actual focused visibility
+and center-point hit testing between the sticky bars before the unchanged full
+dashboard Axe scan. All WCAG tags, source/value/nonmutation assertions, widths
+and fixtures remain; no target-size rule, threshold or scan is removed.
+The original failed run/log/artifact stays recorded and is not retried blindly.
