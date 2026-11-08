@@ -1,5 +1,5 @@
 {
-  "status": "MAIN_GATES_ACCEPTED / DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "status": "MAIN_GATES_ACCEPTED / DEPLOYED / LIVE_ACCEPTED_REFERENCE",
   "owner": "b510a73fed43",
   "version": 298,
   "PR": 318,
@@ -221,7 +221,7 @@
   "deploymentJob": 128719280178,
   "deploymentResult": "SUCCESS",
   "liveJob": 128719357824,
-  "liveResult": "IN_PROGRESS; no LIVE_ACCEPTED claim",
+  "liveResult": "SUCCESS; full LIVE_ACCEPTED evidence in v298-pr318-live-acceptance.json",
   "pagesArtifact": 13615458395,
   "pagesSize": 561286,
   "pagesSHA256": "dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f",
@@ -229,5 +229,7 @@
   "pages151GitBlobs": "PASS",
   "ordinaryTLSPaths": 152,
   "certificateException": false,
-  "independentAssetsResult": "PASS"
+  "independentAssetsResult": "PASS",
+  "mainRunResult": "SUCCESS",
+  "actualLiveEvidence": "v298-pr318-live-acceptance.json"
 }
