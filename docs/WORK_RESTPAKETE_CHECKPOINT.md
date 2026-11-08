@@ -1,3 +1,11 @@
+## UI300 / PR317 – exakt laufende finale Pflicht-CI 42457939096 · 08.11.2026
+
+AlleinigerOwner e290961479cf. FinalerHEAD61df747db7c7da9b58112c28c3889559bd0f787b/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a, getesteterMerge6ddff0b15edf3e230e6104a26f51e10bfef91a9b mit exaktgleichemTree. **Aktueller regulärer Integrationslauf42457939096Versuch1**;Wallet42457939077SUCCESS,PlanINTEGRATION/full=true/10Dateien verifiziert,Stageartefakt13608825273/621Bytes/SHA256c34daa868f6d37f9fbbd2d14a1cd9858285ca88a23085db1e3a06ac7c2a8021f qualifiziert. Cross2 bereitsSUCCESS,Chromium/Cross1/Cross3 zumSnapshot nochlaufend. Nicht erneut starten/abbrechen. Noch keinMerge/Deploy/LIVE_ACCEPTED;Mainv296 unverändert11a5d792. ErsteCI42457216800 vollständig beendet und unverändertalsFAILED erhalten; neuerKopf enthält zusätzliche nativeFokus-/Sichtbarkeits-/Hit-Test-Prüfung, keineAxe-Regelabschaltung und keineProduktblobänderung gegenübererstemKopf.
+
+SichererWiedereinstieg: genau42457939096vollständig auswerten, aktuelleKopf-/Main-/Owner-/PR-/Reviewstände prüfen, allePflichtartefakte/Logs/aktuellenUI300-Berichte qualifizieren; erst danachkontrolliertmergen und echteMain-/Produktionsabnahme. PrivateV100 enthältVorlage/Originalfehler/allevorherigenPayloads. UH05-Quellenabgleich undQUALITY298-Inventar nurlesend vorbereitet, keinweitererFinanz-/Produktstrang. Alle10UI300Nachträge/Restroadmap erhalten.
+
+---
+
 ## UI300 / PR317 – finaler Fokus-Testkopf veröffentlicht / neue reguläre Integration · 08.11.2026
 
 Alleiniger Owner e290961479cf. HEAD61df747db7c7da9b58112c28c3889559bd0f787b/Tree7ae902f3e24b5166592a8fc35f90432817be1f3a,10beabsichtigteDateien. Erstlauf42457216800Versuch1 vollständig beendet: Chromium undCross3 gleicher reproduzierter target-size-Scrollscanbefund;Cross1/2/WalletSUCCESS,Deploy/Live erwartungsgemäß nicht gestartet. Kein Abbruch/Retry/Duplikat. Erst danach frischeMain-/Owner-/alle281Refs-/Review-/Actions-Prüfung kollisionsfrei und PR per expected_sha kontrolliert vorgezogen. Alle4Produktblobs unverändert; genau der oben dokumentierte tatsächlich in3Engines geprüfte Fokus-/Sichtbarkeits-/Hit-Test-Zusatz, gleicheAxe-Regeln. Eine neue reguläreIntegration für den geänderten Kopf läuft; noch keinMERGED/DEPLOYED/LIVE_ACCEPTED.
