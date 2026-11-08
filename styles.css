@@ -1890,19 +1890,16 @@
 .simple-cash-actions .btn{min-height:44px;min-width:44px;white-space:normal}
 .simple-cash-account .simple-cash-label span{white-space:normal;overflow-wrap:anywhere}
 
-/* UI-LOAD01: original flask; transform/opacity only, no JS animation loop. */
-.lab-flask{width:32px;height:32px;flex:none;vertical-align:middle}
-.lab-liquid{transform-origin:32px 50px;animation:lab-liquid 2.8s ease-in-out infinite}
-.lab-bubble{animation:lab-bubble 2.6s ease-out infinite;opacity:0;transform-box:view-box}
-.lab-bubble:nth-child(2){animation-delay:-.87s}.lab-bubble:nth-child(3){animation-delay:-1.73s}
-@keyframes lab-liquid{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-2px) rotate(2.5deg)}}
-@keyframes lab-bubble{0%{opacity:0;transform:translate(0,0) scale(.7)}12%{opacity:.95}70%{opacity:.9}100%{opacity:0;transform:translate(1.5px,-24px) scale(1.15)}}
-.lab-loading>.lab-flask{margin-right:8px}
+/* UI-R1: portfolio segments rotate together; transform only, no JS animation loop. */
+.portfolio-loader{width:32px;height:32px;flex:none;vertical-align:middle}
+.portfolio-loader-orbit{transform-box:view-box;transform-origin:32px 32px;animation:portfolio-loader-turn 2.4s linear infinite}
+@keyframes portfolio-loader-turn{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
+.lab-loading>.portfolio-loader{margin-right:8px}
 .app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
-.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.lab-flask{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
+.app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.portfolio-loader{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
-.startup-delayed .lab-liquid,.startup-delayed .lab-bubble{animation:none}.startup-delayed .lab-bubble{opacity:.5}
-@media(prefers-reduced-motion:reduce){.lab-liquid,.lab-bubble{animation:none}.lab-bubble{opacity:.6}}
+.startup-delayed .portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}
+@media(prefers-reduced-motion:reduce){.portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}}
 
 /* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */
 #csvBitpandaEconomic summary{min-height:45px;padding:12px 0;cursor:pointer;overflow-wrap:anywhere}
