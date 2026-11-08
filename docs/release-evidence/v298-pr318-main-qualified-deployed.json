@@ -1,0 +1,233 @@
+{
+  "status": "MAIN_GATES_ACCEPTED / DEPLOYED / LIVE_ACCEPTANCE_PENDING",
+  "owner": "b510a73fed43",
+  "version": 298,
+  "PR": 318,
+  "phase": "main",
+  "run": 42474607569,
+  "attempt": 1,
+  "head": "dc017c6807be85b9e1ce95dd422cf88ae221d0ef",
+  "tree": "887661b67172255deff9e461cb390a0d96f49f1b",
+  "units": 1326,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "allMandatoryJobs": "SUCCESS",
+  "artifacts": [
+    {
+      "file": "main-v298-13616095010.zip",
+      "size": 66355126,
+      "sha256": "15ef604b7d2b98aeac30d655812606aec0c5707ecbf9335e442bcc8832837191",
+      "zipCRC": "PASS",
+      "jsonReports": 93,
+      "decodedPNGs": 726,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v298-13615555019.zip",
+      "size": 11418352,
+      "sha256": "7f87aca4db3dd24b4e24cbb342347b72575272b91892b91d86384046b52da053",
+      "zipCRC": "PASS",
+      "jsonReports": 19,
+      "decodedPNGs": 74,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v298-13615267670.zip",
+      "size": 934965,
+      "sha256": "5a7a7036f33bd6013b8c9932de67cb03beb28ae1023704601fa642d809f899ea",
+      "zipCRC": "PASS",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v298-13615069309.zip",
+      "size": 62747457,
+      "sha256": "8cb1fe22e2e7dc40b6ad3a97ee09c8081760fa1073b0dfa87d0a66262a8a0a3d",
+      "zipCRC": "PASS",
+      "jsonReports": 90,
+      "decodedPNGs": 674,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v298-13614961279.zip",
+      "size": 353,
+      "sha256": "c0e0cbab396d4634c33ea215f5a7e633e5893f6c08db9cb562e7fba52749e06d",
+      "zipCRC": "PASS",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "flags": [],
+      "result": "PASS"
+    },
+    {
+      "file": "main-v298-13614927800.zip",
+      "size": 57413890,
+      "sha256": "376c19e0f40f1cae9f6593d2566c2b34d93734643aeb56bde89dcdb1f0a04e58",
+      "zipCRC": "PASS",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "flags": [],
+      "result": "PASS"
+    }
+  ],
+  "artifactCount": 6,
+  "jsonReports": 218,
+  "decodedPNGs": 1968,
+  "APIUploadLocalSizeCRCJSONPNG": "PASS",
+  "nativeFiatReports": {
+    "firefox": {
+      "engine": "firefox",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Handel\n\n13 EUR (spot) \u00b7 -17 USD (spot) \u00b7 -0.2 FEE (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nGepr\u00fcft \u2013 neue Buchungsgruppe\n\n 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nFiat-Cash ben\u00f6tigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    },
+    "webkit": {
+      "engine": "webkit",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Handel\n\n13 EUR (spot) \u00b7 -17 USD (spot) \u00b7 -0.2 FEE (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nGepr\u00fcft \u2013 neue Buchungsgruppe\n\n 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nFiat-Cash ben\u00f6tigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    },
+    "chromium": {
+      "engine": "chromium",
+      "result": "PASS",
+      "base": "http://127.0.0.1:4173/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Handel\n\n13 EUR (spot) \u00b7 -17 USD (spot) \u00b7 -0.2 FEE (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nGepr\u00fcft \u2013 neue Buchungsgruppe\n\n 1999-01-02 12:00:00 \u00b7 Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen ben\u00f6tigen EUR-Cash; Fremdw\u00e4hrungsfiat ist noch nicht unterst\u00fctzt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 \u00b7 Reward\n\n1 EUR (spot)\n\nFiat-Cash ben\u00f6tigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    }
+  },
+  "noCIDuplicateRetryCancel": true,
+  "v297": "LIVE_ACCEPTED reused without repeat acceptance",
+  "UH05": "PARTIAL",
+  "allRoadmapPreserved": true,
+  "actualUserOpeningPortfolioAcceptance": false,
+  "physicalAndroidNativeSafariOAuthTalkBackAcceptance": false,
+  "historicalAlphaIDBCause": "UNKNOWN; prior exception consumed",
+  "threeNewMainImagesViewed": true,
+  "deploymentJob": 128719280178,
+  "deploymentResult": "SUCCESS",
+  "liveJob": 128719357824,
+  "liveResult": "IN_PROGRESS; no LIVE_ACCEPTED claim",
+  "pagesArtifact": 13615458395,
+  "pagesSize": 561286,
+  "pagesSHA256": "dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f",
+  "pagesAPIUploadLocalCRC": "PASS",
+  "pages151GitBlobs": "PASS",
+  "ordinaryTLSPaths": 152,
+  "certificateException": false,
+  "independentAssetsResult": "PASS"
+}
