@@ -1,3 +1,19 @@
+## UH05 – V115 verifiziert, vollständiger Referenz-/Quellenschutzkopf in regulärer CI · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Owner unverändert `8cb2927f295c` ACTIVE. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` / Tree `887661b67172255deff9e461cb390a0d96f49f1b`, **v298 LIVE_ACCEPTED** unverändert; kein Merge und keine erneute alte Releaseabnahme.
+
+Private **V115** unter identischer Dateiidentität gespeichert, erneut materialisiert und **alle 15.465 Manifestdateien vollständig geprüft**; sämtliche 14.333 V114-Payloads unverändert erhalten. 73.181.750 Bytes, SHA256 `7560929429a7995dae0edeb085adde5c7ede2c1f70ef1f2f472573c5b3ef22cd`. Einstieg `delta-8cb2927f295c/unknown-fx-reference-guard-r3/STATE.json`; alle früheren Originale/Decimal-/Finanz-/Roadmapbelege erhalten.
+
+Frischer kollisionsfreier Main/Owner/564-Refs-/PR-/Reviews-/Actions-/WIP-/Sicherungsabgleich; keine laufenden oder queued Actions vor Kopfaktualisierung. R2-Lauf `42508122473` und Wallet `42508122519` vollständig SUCCESS und beendet, aber durch den belegten leeren UNKNOWN-Referenz-/CAS-Aufruferfehler überholt und nicht gemergt. Alle sechs R2-Artefakte / 224 JSON / 1.974 PNG vollständig qualifiziert.
+
+Denselben PR319 mit Ref-Lease ohne Force einmal auf **`a60f959f965dbc13a577ca5f4d929bf90a5d9c12`**, Tree **`ca10e89355503b4eaabfcc3613ff294cdb49c0ef`** aktualisiert. Genau 25 beabsichtigte Pfade, alle übrigen 1.060 Main-Blobs unverändert. Temporärer getesteter PR-Merge **`5a6241ebb4290922aff90b16360e22bff90e75d5`** hat exakt denselben Baum. Regulärer Integrationslauf **`42511302432`** Versuch 1 und Walletlauf **`42511302552`** Versuch 1 automatisch ausgelöst. Keine CI abgebrochen/identisch dupliziert.
+
+Gesicherte lokale Qualifikation: 1.345 Tests / 0 Fehler / 0 Skips, Syntax, 21 FX-Zustände, unabhängige private Original-/Decimal100-Belege. Echter UNKNOWN-Lebenszyklus einschließlich manuellem leeren Referenzdialog in Chromium/Firefox/WebKit: Ablehnung ohne kanonische Bytes-/CAS-Revisionsänderung; bekannter separater Kontrollwert zulässig; alte Beobachtungen unverändert. Vollständiger source-qualified USD-Spot-/Earn-Pfad, aktive/zurückgenommene Herkunftsbindung, manuelle UNKNOWN- und verschlüsselte abgelöste-Herkunft-Restore-Ablehnung, validiertes FreshRestore/Quota/post-put/Mehrtab/Replay/Undo/Offline aus unverändertem USD-Kern erhalten; sämtliche Pflichtgates im neuen exakten Lauf erneut zwingend.
+
+**Nächster Schritt:** diesen eingefrorenen CI-Kopf vollständig qualifizieren, alle Artefakte und tatsächlichen drei Enginebilder prüfen, Sicherung vor Integration fortschreiben; erst danach frischer Kollisionsabgleich und kontrollierter PR319-Merge, vollständiger Main-/Deploymentlauf und tatsächliche Produktionsabnahme aller drei Engines einschließlich neuer UNKNOWN-Referenz- und USD-Quellengrenzen, Pages-/Gitblob-/TLS-/Assets. Nur dann v299 LIVE_ACCEPTED. UH05 PARTIAL und alle übrigen Rollen/Roadmap/EFF01/HND01/CAS/Restore/PWA/Datenschutzverträge erhalten; kein Checkpointbranch-Merge, keine Migration oder historische Reparatur. DKB außerhalb, externe Finanzierung kein Gewinn, fehlende Werte UNKNOWN.
+
+---
+
 ## UH05 – explizite UNKNOWN-Stichtagsbestätigung vor CAS-Schreiben abweisen · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Owner unverändert ACTIVE, Main/v298 unverändert LIVE_ACCEPTED; kein Merge. R2-Integration `42508122473` Versuch 1 und Wallet `42508122519` Versuch 1 vollständig SUCCESS; alle sechs Artefakte / 224 JSON / 1.974 PNG mit API-/Upload-/lokalem Hash+Größe, CRC und vollständigem Decode qualifiziert. Alle alten Läufe regulär beendet, nicht dupliziert/abgebrochen.
