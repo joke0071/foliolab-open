@@ -1,3 +1,17 @@
+## HND01 ACTIVE – 8cb2927f295c · reguläre Übernahme nach v298 · 08.11.2026
+
+Alleiniger aktiver Owner `8cb2927f295c`. Reguläre Übernahme von `291c2a60d6ac` nach dessen ausdrücklicher STOPPED/HANDOVER_READY-Abgabe auf Checkpointcommit `67fd37e7cd1215e4b585b8e1a28c656739407f4a`. Übergabe, Startprompt, native Fiat-/FX-Vorbereitung und verlinkte v298-Belege gelesen. Kein Neustart, keine neue Architektur und kein paralleler Produktstrang.
+
+Vor erstem Schreiben frisch geprüft: Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`; sämtliche 561 Gitrefs einschließlich 282 Branchrefs. Gegen den gesicherten V108/V109-Vorstand nur erwartete HND01-Dokumentation auf dem Checkpointbranch. Nur historische Drafts #157/#161 offen, relevante Reviews/Inlinebefunde leer; PR318 gemergt ohne Review-/Inline-/Conversationbefunde. Keine in_progress/queued Actions. Kein Produkt-WIP. Main-/Produktionslauf42474607569 weiterhin SUCCESS; v298 LIVE_ACCEPTED und v297 werden wiederverwendet, nicht erneut abgenommen.
+
+Private V109 unter derselben Dateiidentität materialisiert: 57.863.361 Bytes, SHA256 `7c3b9e7cebb660db7631815a035d76f255707df41668a4c7d1dd088ffe0f8f6a`; Versionsmetadaten109 und sämtliche 12.418 Manifestdateien vollständig geprüft, null fehlende/abweichende/zusätzliche Payloads. Alle Nutzeroriginale und Decimal-Oracles erhalten.
+
+Nächster serieller Schritt: genau einen belegten nativen Fiat-Hauptbetragsfall auswählen; vollständige monetäre Behandlung im abgetrennten synthetischen Modell durch bestehenden Transaktions-/Journal-/Bewertungs-/Historien-/externenFluss-/Kostenbasis-/UNKNOWN-/Backup-/Restorekern nachweisen und gezielt prüfbaren Einzelvertrag vor jedem Produktpatch sichern. Noch keine FX-Produktimplementierung, keine neue Finanzengine/Migration/historische Reparatur. Unbekannte Werte bleiben UNKNOWN; kein DefaultFX1, kein aktueller Kurs als historischer Kurs.
+
+UH05 PARTIAL. DKB außerhalb; externe Finanzierung kein Gewinn, interne Hauptbeträge kein Ertrag/externer Zufluss/neue Kostenbasis. Fehlende Wallet-/Stakingwerte UNKNOWN. Alle zehn UI300-Nachträge, QUALITY298, CI229, Android-/PWA-Arbeit und gesamte Roadmap sowie sämtliche EFF01-/HND01-/Finanz-/Quellen-/Journal-/IDB-/CAS-/Mehrtab-/Backup-/Restore-/Offline-/PWA-/Datenschutzverträge erhalten. GitHub nur Plugin; keine CI duplizieren/abbrechen; Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## STOPPED / HANDOVER_READY – 291c2a60d6ac · reguläre HND01-Abgabe nach v298 · 08.11.2026
 
 **Owner `291c2a60d6ac` ist ausdrücklich STOPPED/HANDOVER_READY und gibt die alleinige Entwicklungs-, Integrations-, QA- und Releaseverantwortung vollständig an den neuen Work-Chat ab.** Dies erfolgt auf verbindlichen Nutzerauftrag nach vollständig verifiziertem Abschluss-Upload. Ab diesem Kopf stellt dieser Owner sämtliche Entwicklungs-, Integrations-, Produkt-QA-, PR-, Merge-, CI- und Release-/Deploymentaktivitäten ein. Kein weiterer Produktkandidat und keine konkurrierende Fortsetzung durch diese Ausführung.
