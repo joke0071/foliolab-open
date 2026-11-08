@@ -1,0 +1,309 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "b510a73fed43",
+  "version": 298,
+  "PR": 318,
+  "merged": true,
+  "main": "dc017c6807be85b9e1ce95dd422cf88ae221d0ef",
+  "tree": "887661b67172255deff9e461cb390a0d96f49f1b",
+  "candidateHead": "31efa22249a6e154c779f348c5cdc4c7143e6c59",
+  "testedIntegrationMerge": "3335afc8bd6223b46ca364936b50570ba98d7308",
+  "integrationRun": 42472374785,
+  "integrationAttempt": 1,
+  "integrationResult": "SUCCESS",
+  "walletRun": 42472374753,
+  "walletResult": "SUCCESS",
+  "mainRun": 42474607569,
+  "mainAttempt": 1,
+  "mainRunResult": "SUCCESS",
+  "mainUnits": 1326,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "mainCross123": "SUCCESS",
+  "deploymentJob": 128719280178,
+  "deploymentResult": "SUCCESS",
+  "liveJob": 128719357824,
+  "liveJobResult": "SUCCESS",
+  "mainGateArtifactCount": 6,
+  "mainJSONReports": 218,
+  "mainDecodedPNGs": 1968,
+  "mainArtifactQualification": "API/upload/local SHA256+size, ZIP CRC, all JSON/PNG PASS",
+  "pagesArtifact": 13615458395,
+  "pagesSize": 561286,
+  "pagesSHA256": "dae57e74bddae001039fe419dc6ecd513f823195a785b260ca6ce0ae8bd5fc7f",
+  "pagesGitBlobMatches": 151,
+  "ordinaryTLSPaths": 152,
+  "certificateException": false,
+  "actualLiveAssetHashesComparedToPages": 152,
+  "liveArtifact": 13616812585,
+  "liveArtifactReceipt": {
+    "file": "live-v298-13616812585.zip",
+    "size": 130717429,
+    "sha256": "6e1ca559ac735ccb77c1894449d61ecc1efd5494b764608bb94df7603e165931",
+    "zipCRC": "PASS",
+    "jsonReports": 159,
+    "decodedPNGs": 1310,
+    "flags": [],
+    "result": "PASS"
+  },
+  "liveApiUploadLocalDigestAndSize": "PASS",
+  "liveCoreCheckGroups": 6,
+  "liveAxeScans": 18,
+  "liveAxeViolations": 0,
+  "liveCache": "foliolab-open-v298",
+  "liveBase": "https://foliolab.unperfekt.at/",
+  "threeNewProductionMobileImagesViewed": true,
+  "productionFiatReports": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Handel\n\n13 EUR (spot) · -17 USD (spot) · -0.2 FEE (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nGeprüft – neue Buchungsgruppe\n\n 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nFiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Handel\n\n13 EUR (spot) · -17 USD (spot) · -0.2 FEE (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nGeprüft – neue Buchungsgruppe\n\n 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nFiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        {
+          "scenario": "fiat-exchange-with-internal-fee",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Handel\n\n13 EUR (spot) · -17 USD (spot) · -0.2 FEE (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "fiat-reward",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "mixed-no-partial-commit",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nGeprüft – neue Buchungsgruppe\n\n 1999-01-02 12:00:00 · Reward\n\n0.3 USD (spot)\n\nNative Fiat-Zeilen benötigen EUR-Cash; Fremdwährungsfiat ist noch nicht unterstützt.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        },
+        {
+          "scenario": "cash-without-fiat-role",
+          "result": "PASS",
+          "visibleReason": " 1999-01-02 12:00:00 · Reward\n\n1 EUR (spot)\n\nFiat-Cash benötigt die native EUR-Fiat-Rolle der Quelle.",
+          "disabledApprovals": true,
+          "scriptedSubmitRejected": true,
+          "canonicalBytesAndRevisionUnchanged": true,
+          "offlineReloadUnchanged": true
+        }
+      ]
+    }
+  ],
+  "productionPreservedAllocationReports": [
+    {
+      "engine": "chromium",
+      "version": "141.0.7390.37",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "version": "157.0",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2",
+      "result": "PASS",
+      "checks": [
+        "one native reference, exact per-asset Spot/Earn transfers, reversed rows and overlap",
+        "one CAS revision, independent 18-decimal quantities, no external flow/reward/fees or invented costs",
+        "selection revokes all approvals; full zero-write quota/post-put rollback",
+        "actual Undo/recommit/reimport/offline reload",
+        "encrypted v5 backup and actual restore in fresh profile",
+        "real second-tab race at canonical save",
+        "seven widths/Axe, no external requests"
+      ]
+    }
+  ],
+  "productionUI300Reports": [
+    {
+      "engine": "chromium",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "result": "PASS",
+      "base": "https://foliolab.unperfekt.at/",
+      "checks": [
+        "7 widths/44px/Axe; four targeted compact headings, 200% text and no clipping",
+        "healthy and offline sidebar success fully hidden; meaningful status paths retained",
+        "no hero or tiles; brand and five semantic destinations retained",
+        "zero group chip hidden",
+        "exact selected-period endpoints; explicit cashflow scope",
+        "200% text stress/short viewport (not physical zoom or hardware)",
+        "offline actual reload; exact canonical bytes/revision",
+        "partial automatic snapshot remains unavailable without writes"
+      ]
+    }
+  ],
+  "productionHeaderAndMissingValue": "Chromium actual production gate logs + Firefox/WebKit reports PASS",
+  "productionPreservedFundingReports": [
+    "flatex-funding/report-chromium-12-before.json",
+    "flatex-funding/report-chromium-12-next-day.json",
+    "flatex-funding/report-chromium-12.json",
+    "flatex-funding/report-firefox-12-before.json",
+    "flatex-funding/report-firefox-12-next-day.json",
+    "flatex-funding/report-firefox-12.json",
+    "flatex-funding/report-webkit-12-before.json",
+    "flatex-funding/report-webkit-12-next-day.json",
+    "flatex-funding/report-webkit-12.json",
+    "flatex-funding/report.json"
+  ],
+  "preservedSourceAndJournalContracts": true,
+  "noNewStoredFieldOrJournalType": true,
+  "noCIRetryDuplicateCancel": true,
+  "v297": "Previously LIVE_ACCEPTED; reused without reacceptance",
+  "actualUserOpeningPortfolioAcceptance": false,
+  "physicalAndroidNativeSafariOAuthTalkBackAcceptance": false,
+  "historicalAlphaIDBCause": "UNKNOWN; prior exception consumed; no fix claim",
+  "UH05Overall": "PARTIAL",
+  "allRoadmapAnd10UI300AddendaPreserved": true,
+  "sourceData": "Only invented public fixtures; originals and independent raw Decimal results remain private",
+  "links": [
+    "v298-pr318-integration-qualified.json",
+    "v298-pr318-main-qualified-deployed.json",
+    "v298-independent-assets.json",
+    "../UH05_FIAT_ADMISSION_GUARD_2026-11-08.md",
+    "../UH05_NEXT_AFTER_v298_2026-11-08.md"
+  ]
+}
