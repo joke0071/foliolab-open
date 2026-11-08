@@ -1,3 +1,17 @@
+## UH05 – explizite UNKNOWN-Stichtagsbestätigung vor CAS-Schreiben abweisen · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Owner unverändert ACTIVE, Main/v298 unverändert LIVE_ACCEPTED; kein Merge. R2-Integration `42508122473` Versuch 1 und Wallet `42508122519` Versuch 1 vollständig SUCCESS; alle sechs Artefakte / 224 JSON / 1.974 PNG mit API-/Upload-/lokalem Hash+Größe, CRC und vollständigem Decode qualifiziert. Alle alten Läufe regulär beendet, nicht dupliziert/abgebrochen.
+
+Zusätzliche Lebenszyklusprüfung hat einen konkreten Aufruferfehler nach der korrekten automatischen UNKNOWN-Stichtagssperre nachgewiesen: `prepareReferenceAdd` ignorierte den null-Rückgabewert von `snapshot`. Tatsächliche isolierte UI-Reproduktion: leerer Gesamtwert bei UNKNOWN meldet „Stichtag gespeichert“, weiterhin 0 Stichtage, **identische kanonische Bytes, aber CAS-Revision +1**. Keine fiktive EUR-Zahl wurde erzeugt, jedoch war die Bestätigung fachlich unzulässig. Der erhaltene originale unveränderte Helfer ist per Main-Gitblob nachgewiesen.
+
+Fachvertrag vor Produktänderung präzisiert. Kleinste Korrektur im bestehenden Referenzvorbereitungskern: bei ausdrücklich angeforderter Referenz ohne unabhängig eingegebenen Gesamtwert und vollständigem EUR-Wert UNKNOWN Fehler vor Rückgabe eines speicherbaren Entwurfs; automatische Aufrufe lassen UNKNOWN weiterhin ohne Zahlenstichtag. Bekannte unabhängige manuelle Beobachtungen einschließlich alter Originale bleiben zulässig und unverändert.
+
+Neuer eingefrorener Kandidat **`a60f959f965dbc13a577ca5f4d929bf90a5d9c12`**, Tree **`ca10e89355503b4eaabfcc3613ff294cdb49c0ef`**, noch kein Branchupdate; genau 25 beabsichtigte Pfade, 4 Blobänderungen gegenüber R2, alle übrigen 1.060 Main-Blobs unverändert. Lokal wieder 1.345 Tests / 0 Fehler / 0 Skips, Syntax und tatsächlicher UNKNOWN-Lebenszyklus einschließlich manuellem leeren Stichtagsdialog in Chromium/Firefox/WebKit PASS: abgelehnte Bestätigung lässt kanonische Bytes und CAS-Revision identisch. Separat eingegebener bekannter Kontrollwert bleibt gültig. Source-qualified USD-Import-/Journal-/Herkunfts-/Restoregrenzen unverändert erhalten.
+
+**Nächster Schritt:** R2-Erfolg als durch diesen zusätzlichen belegten Aufruferfehler überholt sichern, V114 unter gleicher Identität als V115 mit vollständigem neuen Kandidaten fortschreiben und erneut materialisiert vollständig prüfen; frischer Kollisionsabgleich; denselben PR319 einmal auf neuen Kopf aktualisieren und regulär komplett qualifizieren. R2 nicht mergen. Kein v299 LIVE_ACCEPTED vor allen Pflichtgates, Main/Deployment/echter Produktionsabnahme aller drei Engines. Keine neue Architektur, Migration, historische Reparatur, Quellenablösung oder Nutzeranfangsbestände. UH05 PARTIAL und alle übrigen Verträge/Aufträge erhalten.
+
+---
+
 ## UH05 – V114 vollständig verifiziert, finaler Quellen-Schutzkopf in regulärer CI · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Alleiniger Owner `8cb2927f295c` unverändert ACTIVE; keine neue Übernahme. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, **v298 LIVE_ACCEPTED** unverändert. Keine erneute Abnahme und kein Produktivpatch vor vollständigen neuen Gates.
