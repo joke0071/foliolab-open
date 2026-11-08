@@ -1,3 +1,17 @@
+## UH05 – UNKNOWN-Zugang und Restore-Herkunft zusätzlich begrenzt · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Alleiniger Owner unverändert `8cb2927f295c`, ACTIVE. v298 LIVE_ACCEPTED / Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` unverändert; kein Merge. R1-Lauf `42505404269` hat Chromium einschließlich korrigiertem Altmodelltest sowie Cross-Engine1/2 und Wallet vollständig SUCCESS; Cross-Engine3 läuft regulär weiter. Kein Abbruch oder Duplikat.
+
+Zusätzliche Eingangsprüfung fand eine konkrete Scope-Lücke: generischer manueller USD-Transfer mit dem FX-Text `UNKNOWN` konnte den nur für qualifizierte native Quellen vorgesehenen Modus aufrufen. Synthetischer unqualifizierter Kernaufruf vor Korrektur tatsächlich akzeptiert, ohne Persistenz reproduziert. Fachvertrag vor Produktänderung enger gesichert. Der Kern verlangt jetzt einen separaten internen qualifizierten Aufruf nach vollständiger nativer Gruppenprüfung. Normale manuelle/generische Buchungen behalten numerisches historisches FX. Kein dauerhafter Berechtigungswert wird gespeichert.
+
+Zusätzlich bindet die reguläre Modell-/Backup-/Restore-/Journalprüfung gespeicherte aktive und zurückgenommene UNKNOWN-USD-Einträge strikt an ihre vorhandene Kraken-Herkunft, exakte Bindungen, Aktion und Ownership-Snapshot. Nur genau der eine neue interne Kerneintrag darf unmittelbar vor Quellenanbindung ausgenommen sein; kein gespeicherter Datensatz. Abgelöste Herkunft wird nicht in eine manuelle UNKNOWN-Buchung umgedeutet. Quellenidentitäten und wirtschaftliche Wirkungen unverändert.
+
+Verschärfter Kandidat `afddfadb19060803b75faf2064bc2c5716187a48`, Tree `997461ac9c743deba3f9c406b572090bf4b99161`, **noch kein Branchupdate**, genau dieselben 24 Pfade, fünf Blobänderungen gegenüber R1. Lokal 1.345 Tests / 0 Fehler / 0 Skips und Syntax PASS. Tatsächliche manuelle UNKNOWN-Ablehnung und verschlüsseltes FreshRestore mit entfernter Quellenherkunft in Chromium/Firefox/WebKit ohne kanonische Bytes-/Revisionsänderung; gültiger gemeinsamer Import, Quota/post-put, Offline, Replay, Undo, CAS und vollständiges gültiges FreshRestore weiterhin PASS. Unabhängiger privater Original-/Decimal100-Abgleich erneut PASS, kein Nutzerportfolio beschrieben. 21 zusätzliche FX-Zustandsgrenzen PASS.
+
+**Nächster Schritt:** R1 vollständig auslaufen lassen und Belege sichern; private V113 unter derselben Identität als V114 mit diesem vollständigen Kandidaten fortschreiben und erneut vollständig verifizieren; erst dann denselben PR319 einmal auf den verschärften Kopf aktualisieren und regulär komplett qualifizieren. R1 darf wegen des zusätzlich belegten und korrigierten Zugangs nicht mehr gemergt werden. Keine Merge-/Releaseabnahme behauptet. UH05 PARTIAL; sämtliche übrigen Aufträge und Schutzverträge erhalten.
+
+---
+
 ## UH05 – V113 gesichert, korrigierter PR319-Kopf regulär in Prüfung · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Alleiniger Owner `8cb2927f295c` unverändert ACTIVE. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` / Tree `887661b67172255deff9e461cb390a0d96f49f1b`, v298 LIVE_ACCEPTED unverändert. Alle 564 Refs frisch verglichen: nur eigene Checkpointänderungen und die zwei erwarteten PR319-Refs zusätzlich; keine fremden Änderungen. Keine offenen Reviews/Diskussionen; nur PR319 plus historische Drafts157/161. Vor Kopfaktualisierung keine laufenden oder queued Actions.
