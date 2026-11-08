@@ -29,7 +29,7 @@ for(const engine of (process.env.FLH03_ABCE_ENGINES||'chromium').split(',')){
    await p.setViewportSize({width,height});await nav('dashboard');
    assert.equal(await p.locator('#onboarding').isVisible(),false);assert.equal(await p.locator('#summaryStats').count(),0);assert.equal(await p.locator('#dashboardChange').innerText(),'–');
    assert.equal(await p.locator('#totalValue').textContent(),'–');
-   for(const id of ['localPortfolioStatus','mobilePortfolioStatus'])assert.match(await p.locator('#'+id).textContent(),/nicht verfügbar/);
+   for(const id of ['localPortfolioStatus','mobilePortfolioStatus'])assert.match(await p.locator('#'+id).textContent(),/nicht verfügbar/);assert.equal(await p.locator('#sidebarPortfolioStatus').getAttribute('hidden'),null,'unavailable storage status is retained');
    await scan('recovery '+width+'x'+height);
   }
   for(const tab of ['positions','bookings','more']){await nav(tab);for(const id of tab==='positions'?['addWizard','addWallet','refreshAll']:tab==='bookings'?['addBooking','openCSVImport']:['addProvider','addAccount','deleteAll'])assert.ok(await p.locator('#'+id).isDisabled(),id+' recovery gate');}
