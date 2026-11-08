@@ -1,3 +1,19 @@
+## UH05 – V114 vollständig verifiziert, finaler Quellen-Schutzkopf in regulärer CI · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Alleiniger Owner `8cb2927f295c` unverändert ACTIVE; keine neue Übernahme. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef`, Tree `887661b67172255deff9e461cb390a0d96f49f1b`, **v298 LIVE_ACCEPTED** unverändert. Keine erneute Abnahme und kein Produktivpatch vor vollständigen neuen Gates.
+
+R1-Integration `42505404269` Versuch 1 und Wallet `42505404270` Versuch 1 vollständig SUCCESS; alle sechs Artefakte / 224 JSON / 1.974 PNG mit API-/Upload-/lokalen Hashes, Größe, CRC und vollständigem Decode geprüft. R1 wird durch den zusätzlich nachgewiesenen und korrigierten manuellen UNKNOWN-Zugang sowie die strengere Restore-Herkunftsbindung ersetzt, nicht gemergt. Alle alten Läufe regulär beendet; keine CI abgebrochen oder identisch dupliziert.
+
+Private **V114** unter derselben Identität gespeichert, erneut materialisiert und **sämtliche 14.333 Manifestdateien vollständig geprüft**, einschließlich aller unveränderten 13.502 V113-Payloads. 68.236.593 Bytes, SHA256 `ef56d2b697a9ee0a40813feef34dcf88d2bfb8ac078908a4629b82b835a8217e`. Einstieg `delta-8cb2927f295c/unknown-fx-source-qualified-r2/STATE.json`; alle früheren Originale/Decimal-Oracles und Roadmapbelege erhalten.
+
+Nach frischem Main/Tree/Owner/564-Refs-/PR-/Reviews-/Actions-/WIP-/Sicherungsabgleich ohne Kollision denselben PR319 mit Ref-Lease und ohne Force auf **`afddfadb19060803b75faf2064bc2c5716187a48`**, Tree **`997461ac9c743deba3f9c406b572090bf4b99161`** aktualisiert. Genau 24 beabsichtigte Pfade, alle übrigen 1.061 Main-Blobs unverändert. Temporärer PR-Merge `463d93b141c3a75f6f50c9bf85c96ec7510aeb7e` hat exakt denselben Baum. Regulärer Integrationslauf **`42508122473`** Versuch 1 und Walletlauf **`42508122519`** Versuch 1 automatisch gestartet; noch keine Freigabe.
+
+Lokale finale Qualifikation: 1.345 Tests / 0 Fehler / 0 Skips, Syntax, 21 FX-Zustandsgrenzen, unabhängiger Original-/Decimal100-Abgleich sowie tatsächlicher gemeinsamer Import und negative manuelle UNKNOWN-/verschlüsselte abgelöste-Herkunft-Restore-Versuche in Chromium/Firefox/WebKit PASS. Kanonische Bytes und CAS-Revision bleiben bei Ablehnung identisch. Keine neue Finanzengine, pauschale FX-Unterstützung, Migration, historische Reparatur oder erfundene Nutzeranfangsbestände.
+
+**Nächster Schritt:** eingefrorene R2-CI exakt qualifizieren, sämtliche Artefakte/Reviews prüfen und private Sicherung vor Integration fortschreiben; anschließend frischer Kollisionsabgleich, kontrollierter PR319-Merge, vollständiger Main-/Deploymentlauf und tatsächliche Produktionsabnahme aller drei Engines einschließlich neuer UNKNOWN-/USD-Quellengrenzen, Pages-/Gitblob-/TLS-/Assetabgleich. Nur dann v299 LIVE_ACCEPTED. Checkpointbranch niemals nach Main mergen. UH05 PARTIAL und gesamte übrige Roadmap/zehn UI300-Nachträge/EFF01/HND01/Finanz-/Datenschutz-/CAS-/Restore-/PWA-Verträge erhalten. DKB außerhalb; externe Finanzierung kein Gewinn; fehlende Werte UNKNOWN.
+
+---
+
 ## UH05 – UNKNOWN-Zugang und Restore-Herkunft zusätzlich begrenzt · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Alleiniger Owner unverändert `8cb2927f295c`, ACTIVE. v298 LIVE_ACCEPTED / Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` unverändert; kein Merge. R1-Lauf `42505404269` hat Chromium einschließlich korrigiertem Altmodelltest sowie Cross-Engine1/2 und Wallet vollständig SUCCESS; Cross-Engine3 läuft regulär weiter. Kein Abbruch oder Duplikat.
