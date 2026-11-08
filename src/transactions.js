@@ -1,7 +1,7 @@
 import {validateNetSettlement} from './flatex-net-settlement.js';
 import {assetKey} from './assets.js';
 import {units,exact,mul,div} from './decimal.js';
-import {bookingOwnership,sourceDigest,provenCashImport} from './import-identity.js';
+import {bookingOwnership,sourceDigest,provenCashImport,sourceUnmodified,validateImportSource} from './import-identity.js';
 import {FX_UNKNOWN} from './fx-state.js';
 export const UNPRICED_USD_PRINCIPAL='unpriced-native-usd-principal';
 
@@ -117,13 +117,21 @@ export function validateJournalEntry(entry){
  return entry;
 }
 /** Bind the narrow UNKNOWN journal to its exact booking and own USD cash accounts. */
-export function validateUnpricedUSDTransfers(model){
+export function validateUnpricedUSDTransfers(model,{pendingJournalId=null}={}){
  for(const j of model.journalEntries||[]){
   if(j.status!==UNPRICED_USD_PRINCIPAL)continue;
   validateJournalEntry(j);const [out,incoming]=j.postings,bookings=(model.bookings||[]).filter(b=>b.journalEntryId===j.id),b=bookings[0],p=model.positions.find(p=>p.id===out.positionId),t=model.positions.find(p=>p.id===incoming.positionId);
   const fail=()=>{throw Error('Unbewertete USD-Hauptbetragsbuchung widersprüchlich.');};
   if(bookings.length!==1||!b||!p||!t||b.type!=='transfer'||b.date!==j.date||b.positionId!==p.id||b.targetPositionId!==t.id||b.accountId!==p.accountId||b.reconciliationStatus!==UNPRICED_USD_PRINCIPAL||b.fxRate!==null||b.fxRateDate!==null||b.fxSource!==null||b.amountEUR!==null||b.amountExactEUR!==null||b.unitPrice!==1||b.feeEUR!==0||b.taxEUR!==null||b.costsVerified!==false||b.external!==false||b.cashPositionId!==null||j.cashPositionId!==null||!Number.isSafeInteger(j.sequence)||j.sequence<1||units(b.quantityExact)!==units(incoming.quantityDeltaExact)||b.quantity!==Number(exact(units(b.quantityExact)))||units(b.targetQuantityExact)!==units(b.quantityExact)||(model.externalCashFlows||[]).some(f=>f.id===b.id))fail();
   if(p.providerId!==t.providerId||p.accountId===t.accountId)fail();
+  // Only the one in-flight core entry may precede origin attachment. Every
+  // stored/restored entry must retain the existing complete import ownership.
+  if(j.id!==pendingJournalId){
+   const s=validateImportSource(b.importSource,b.accountId);let v;
+   try{v=JSON.parse(s?.sourcePayload);}catch{fail();}
+   const a=v?.action,bindings=v?.bindings;
+   if(!s||j.source!=='kraken-uh03-v1'||s.sourceId!==j.source||!s.fileId||!/^[a-f0-9]{64}$/.test(s.fileId)||b.id!=='uh03:'+s.fileId+':0'||j.id!==b.id||s.externalId!==s.fileId+':0'||s.occurrence!==1||s.ownership!=='imported'||!sourceUnmodified(model,b)||v?.group!==s.fileId||!/^[a-f0-9]{64}$/.test(v?.payload||'')||!Array.isArray(bindings)||bindings.length!==2||bindings.some(x=>!Array.isArray(x)||x.length!==2||typeof x[0]!=='string'||!x[0])||new Set(bindings.map(x=>x[0])).size!==2||new Set(bindings.map(x=>x[1])).size!==2||!bindings.some(x=>x[1]===p.id)||!bindings.some(x=>x[1]===t.id)||a?.type!=='transfer'||a.date!==b.date||a.positionId!==p.id||a.targetPositionId!==t.id||a.quantity!==b.quantityExact||a.unitPrice!=='1'||a.feeEUR!=='0'||a.taxEUR!=='0'||a.fxRate!==FX_UNKNOWN||a.notes!==b.notes)fail();
+  }
   for(const [position,posting] of [[p,out],[t,incoming]]){
    const a=model.accounts.find(a=>a.id===position.accountId);
    if(position.kind!=='cash'||position.currency!=='USD'||position.price!==1||units(position.priceExact??position.price)!==units(1)||position.wallet?.enabled||!a||a.providerId!==position.providerId||a.currency!=='USD'||posting.accountId!==a.id||[position.costBasisExact,position.costBasisEUR,position.realizedPnLExact,position.realizedPnLEUR].some(x=>x!=null))fail();
@@ -132,8 +140,8 @@ export function validateUnpricedUSDTransfers(model){
  return model;
 }
 /** Compare recorded holdings to opening balance plus chronological, exact journal movements. */
-export function ledgerQuantityAudit(model){
- validateUnpricedUSDTransfers(model);
+export function ledgerQuantityAudit(model,{pendingUSDJournalId=null}={}){
+ validateUnpricedUSDTransfers(model,{pendingJournalId:pendingUSDJournalId});
  const balances=new Map((model.openingPositions||[]).map(x=>[x.positionId,units(x.quantityExact)]));
  const ordered=[...(model.journalEntries||[])].sort((a,b)=>a.date.localeCompare(b.date)||(a.sequence||0)-(b.sequence||0));
  for(const entry of ordered){
@@ -204,9 +212,13 @@ function postingsFor(copy,p,kind,v,qty,fee,tax,fx,cash,linkedCash,previousQuanti
  * @param {object} input
  * @returns {Transaction}
  */
-export function executeTransaction(model,input){
+export function executeTransaction(model,input,{sourceQualifiedUSDPrincipal=false}={}){
  if(!TX_TYPES[input?.type])throw Error('Buchungstyp wird nicht unterstützt.');
  if(!dateOk(input.date))throw Error('Ungültiges Datum.');
+ // A form's FX text is never permission to bypass historical FX/fee evidence.
+ // Only the complete native source orchestration may request this bounded mode.
+ if(input.fxRate===FX_UNKNOWN&&sourceQualifiedUSDPrincipal!==true)
+  throw Error('Bitte eine gültige Zahl als historischen Wechselkurs eingeben.');
  const copy=structuredClone(model),p=pos(copy,input.positionId),kind=input.type;
  captureOpenings(copy);
  const affected=[p.id,input.targetPositionId,input.cashPositionId].filter(Boolean);
@@ -328,9 +340,9 @@ export function executeTransaction(model,input){
    const signed=kind==='deposit'?mul(qty,fx):-mul(qty,fx);
    copy.externalCashFlows.push({id:entry.id,date:input.date,amountEUR:Number(exact(signed)),amountExactEUR:exact(signed)});
  }
- const audit=ledgerQuantityAudit(copy);
+ const audit=ledgerQuantityAudit(copy,{pendingUSDJournalId:unpriced?journal.id:null});
  if(!audit.ok)throw Error('Journal und Bestände stimmen nicht überein. Buchung abgebrochen.');
- validateUnpricedUSDTransfers(copy);
+ validateUnpricedUSDTransfers(copy,{pendingJournalId:unpriced?journal.id:null});
  // Commit validated changes while preserving references used by currently open dialogs.
  const originals=new Map(model.positions.map(p=>[p.id,p]));
  copy.positions=copy.positions.map(p=>{const original=originals.get(p.id);if(!original)return p;Object.assign(original,p);return original;});

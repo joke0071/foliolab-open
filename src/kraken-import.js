@@ -234,7 +234,7 @@ export function previewKrakenImport(model,inputs,assignments,{selectedGroups=nul
    for(const id of touched){const p=draft.positions.find(p=>p.id===id);if(p.kind==='crypto'&&(p.costBasisExact!=null||p.costBasisEUR!=null||p.realizedPnLExact!=null||p.realizedPnLEUR!=null))unsupported('Vorhandene bestätigte Kostenbasis oder realisierte Ergebnisse zuerst fachlich abgleichen.');}
    const candidate=structuredClone(draft);
    for(const [i,action] of actions.entries()){
-    const b=executeTransaction(candidate,{...action,id:'uh03:'+group.id+':'+i});
+    const b=executeTransaction(candidate,{...action,id:'uh03:'+group.id+':'+i},{sourceQualifiedUSDPrincipal:action.fxRate===FX_UNKNOWN&&nativeUSDPrincipal(group)});
     const j=candidate.journalEntries.find(j=>j.id===b.journalEntryId);j.source=sourceId;if(bridge&&i===0)j[sol?'krakenSolanaBridge':eth?'krakenEthereumBridge':'krakenBitcoinBridge']=structuredClone(bridge);
     // Ledger quantities and cash settlement are facts; historical EUR fee valuation/taxes are not.
     b.costsVerified=false;b.taxEUR=null;

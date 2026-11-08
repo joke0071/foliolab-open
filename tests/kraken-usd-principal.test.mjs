@@ -7,6 +7,7 @@ import {validateJournalEntry,validateUnpricedUSDTransfers,ledgerQuantityAudit,ex
 import {readSharedImportFiles,previewSharedImport,confirmSharedImport} from '../src/shared-import.js';
 import {csvUndoReceipt,undoCSV} from '../src/csv-batch.js';
 import {projectHistoricalPosition} from '../src/historical-position-value.js';
+import {createCompleteBackup} from '../src/complete-backup.js';
 const oracle=JSON.parse(readFileSync(new URL('../docs/release-evidence/uh05-usd-principal-decimal100.json',import.meta.url)));
 const approve=f=>{const p=previewKrakenImport(f.m,[f.text],f.assignments,f.options);assert.equal(p.ready,1,JSON.stringify(p.issues));return confirmKrakenImport(f.m,[f.text],f.assignments,{...f.options,baseline:p.baseline,confirmed:true});};
 test('one complete native USD principal preserves amounts and UNKNOWN gross EUR without external effects',()=>{
@@ -43,8 +44,8 @@ test('openings, separate own native USD accounts and unknown costs remain mandat
 });
 test('journal/restore rejects monetary zero substitutions, wrong currencies and inconsistent quantities',()=>{
  const m=approve(usdPrincipalFixture());
- for(const mutate of [m=>{m.journalEntries[0].postings[0].amountBookEURExact='0';},m=>{m.journalEntries[0].nativeCurrency='EUR';},m=>{m.journalEntries[0].postings[1].quantityDeltaExact='1';},m=>{m.positions[1].currency='EUR';},m=>{m.bookings[0].amountEUR=0;},m=>{m.bookings[0].fxRate=1;}]){
-  const bad=structuredClone(m);mutate(bad);const before=JSON.stringify(bad);assert.throws(()=>safeImport(bad));assert.equal(JSON.stringify(bad),before);
+ for(const mutate of [m=>{m.journalEntries[0].postings[0].amountBookEURExact='0';},m=>{m.journalEntries[0].nativeCurrency='EUR';},m=>{m.journalEntries[0].postings[1].quantityDeltaExact='1';},m=>{m.positions[1].currency='EUR';},m=>{m.bookings[0].amountEUR=0;},m=>{m.bookings[0].fxRate=1;},m=>{delete m.bookings[0].importSource;},m=>{m.journalEntries[0].source='manual';},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.action.fxRate='1';s.sourcePayload=JSON.stringify(v);},m=>{const s=m.bookings[0].importSource,v=JSON.parse(s.sourcePayload);v.bindings[0][1]='other-position';s.sourcePayload=JSON.stringify(v);}]){
+  const bad=structuredClone(m);mutate(bad);const before=JSON.stringify(bad);assert.throws(()=>safeImport(bad));assert.throws(()=>backup(bad));assert.throws(()=>createCompleteBackup(bad));assert.equal(JSON.stringify(bad),before);
  }
 });
 test('current FX updates cannot rewrite UNKNOWN journal or grant historical EUR valuation',()=>{
@@ -52,8 +53,8 @@ test('current FX updates cannot rewrite UNKNOWN journal or grant historical EUR 
  assert.equal(totalExactEUR(m),'17.00000000000000001');assert.equal(JSON.stringify(m.journalEntries),journal);const restored=safeImport(JSON.parse(backup(m)));assert.equal(JSON.stringify(restored.journalEntries),journal);
  const h=projectHistoricalPosition(m,'earn',{dates:['1999-02-03']});assert.equal(h.rows[0].valueEURExact,null);
 });
-test('UNKNOWN journal path is unavailable to other transaction types or currencies',()=>{
+test('UNKNOWN journal path rejects unqualified callers and other transaction types',()=>{
  const {m}=usdPrincipalFixture(),before=JSON.stringify(m);
- for(const type of ['deposit','withdraw','reward','swap'])assert.throws(()=>executeTransaction(m,{type,positionId:'spot',targetPositionId:'earn',date:'1999-02-03',quantity:'1',unitPrice:'1',fxRate:'UNKNOWN',feeEUR:'0',taxEUR:'0'}));
+ for(const type of ['deposit','withdraw','reward','swap','transfer'])assert.throws(()=>executeTransaction(m,{type,positionId:'spot',targetPositionId:'earn',date:'1999-02-03',quantity:'1',unitPrice:'1',fxRate:'UNKNOWN',feeEUR:'0',taxEUR:'0'}));
  assert.equal(JSON.stringify(m),before);
 });
