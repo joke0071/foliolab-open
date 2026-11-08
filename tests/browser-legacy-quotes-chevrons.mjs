@@ -34,7 +34,11 @@ try{
   add('Ethereum veralteter Kurs','crypto','EUR','ethereum').priceExact='80';
   add('USD ETF','etf','USD','').fxRateExact='0.8';
   add('Hohe Preispräzision','crypto','EUR','').priceExact='100.000000000000000001';
-  snapshot(m,new Date().toISOString().slice(0,10),'Vor dem Audit');
+  const date=new Date().toISOString().slice(0,10);
+  if(snapshot(m,date,'Unbelegter automatischer Wert')!==null)
+   throw Error('Contradictory FX cannot manufacture an automatic numeric snapshot');
+  // Independent synthetic observation, never derived from contradictory FX.
+  snapshot(m,date,'Unabhängig erfasster Kontrollpunkt',{manualTotalEUR:'123.456'});
   persist(m);
  });
  await page.reload();
@@ -66,6 +70,8 @@ try{
  await audit.locator(':scope > summary').click();
  assert.equal(await audit.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),0);
  const before=await page.evaluate(()=>localStorage.getItem('foliolab-open-v1'));
+ const historicalBefore=JSON.parse(before).snapshots;
+ assert.equal(historicalBefore.length,1,'Independent historical observation exists before the audit');
  const requestsBefore=externalRequests;
  await page.locator('#runLegacyQuoteAudit').click();
  assert.equal(externalRequests,requestsBefore,'Local scan must make no network requests');
@@ -80,7 +86,7 @@ try{
  let state=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')));
  assert.equal(state.positions.find(x=>x.name==='Bitcoin Altbestand').priceExact,'123.5');
  assert.equal(state.positions.find(x=>x.name==='Bitcoin Altbestand').quoteSource,'CoinGecko');
- assert.equal(state.snapshots.length,1,'Historical snapshots must be unchanged');
+ assert.deepEqual(state.snapshots,historicalBefore,'Every historical snapshot field must be unchanged');
  const eth=audit.locator('.legacy-quote-item').filter({hasText:'Ethereum veralteter Kurs'});
  await eth.locator('[data-audit-fix="price"]').click();
  await page.waitForFunction(()=>String(document.getElementById('toast')?.textContent||'').startsWith('Kursprüfung:'));
@@ -97,12 +103,14 @@ try{
  assert.equal(state.positions.find(x=>x.name==='USD ETF').fxRateExact,'0.94');
  assert.equal(state.positions.find(x=>x.name==='USD ETF').fxSource,'Frankfurter');
  assert.equal(state.positions.find(x=>x.name==='Ethereum veralteter Kurs').priceExact,'80');
- assert.equal(state.snapshots.length,1);
+ assert.deepEqual(state.snapshots,historicalBefore,'FX correction cannot rewrite the independent observation');
  await page.reload();await page.locator('#mobileNav [data-page="positions"]').click();await page.locator('[data-filter="__review"]').click();
  await page.locator('#legacyQuoteAudit > summary').click();
  await page.locator('#runLegacyQuoteAudit').click();
  assert.equal(await page.locator('#legacyQuoteAuditResults .legacy-quote-item').count(),1,
   'Audited repairs survive reload, stale quote remains reviewable');
+ assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots),historicalBefore,
+  'Independent observation survives reload byte-for-byte at every field');
  for(const width of [320,390,430,768,1440]){
   await page.setViewportSize({width,height:850});
   const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:innerWidth}));
