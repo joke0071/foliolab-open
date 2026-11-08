@@ -1,3 +1,15 @@
+## UH05 – V113 gesichert, korrigierter PR319-Kopf regulär in Prüfung · Owner 8cb2927f295c ACTIVE · 08.11.2026
+
+Alleiniger Owner `8cb2927f295c` unverändert ACTIVE. Main `dc017c6807be85b9e1ce95dd422cf88ae221d0ef` / Tree `887661b67172255deff9e461cb390a0d96f49f1b`, v298 LIVE_ACCEPTED unverändert. Alle 564 Refs frisch verglichen: nur eigene Checkpointänderungen und die zwei erwarteten PR319-Refs zusätzlich; keine fremden Änderungen. Keine offenen Reviews/Diskussionen; nur PR319 plus historische Drafts157/161. Vor Kopfaktualisierung keine laufenden oder queued Actions.
+
+Erster Integrationslauf `42502695638` vollständig und ohne Abbruch beendet: FAILURE ausschließlich wegen der nachfolgend dokumentierten Altmodell-Testvorbereitung; alle drei Cross-Engine-Jobs und Wallet SUCCESS. Sechs Artefakte mit API/Upload/lokalem SHA256+Größe, ZIP-CRC, allen 224 JSON-Berichten und 1.974 dekodierten PNGs qualifiziert; dies ist Archivintegrität, keine grüne Gesamt-CI. Neue UNKNOWN-FX-/USD-Gates aller drei Engines PASS. Ursprüngliche Chromium-Fehlstelle lokal reproduziert; korrigierter bestehender Browsertest mit verschärftem historischen Vollvergleich PASS, zwölf zuvor unerreichte Chromium-Gates lokal PASS. Keine Produkt-/Schutzänderung nach dem ersten Freeze.
+
+Private **V113** unter gleicher Dateiidentität gespeichert, erneut materialisiert und vollständig geprüft: 64.480.743 Bytes, SHA256 `fdead3c8efd908761ba3b572bde947e7b3b20aa0c3e844c65cfc10aedc074884`, 13.502 Manifestdateien, alle 12.984 V112-Payloads unverändert. Einstieg `delta-8cb2927f295c/unknown-fx-ci-fixture-r1/STATE.json`.
+
+PR319 regulär einmal auf vorbereiteten Commit `5fcf2b1b7c87a316c0198b09af09c342246e9c4f`, Tree `ffe455b44557c5fbf1ce31ef51ff6f6129518fc3` aktualisiert, mit erwarteter alter Ref und ohne Force. Genau 24 beabsichtigte Dateien; alle ursprünglichen 23 Kandidatendateien unverändert, nur bestehender Altmodell-Browsertest korrigiert. **Nächster Schritt:** neue reguläre exakte CI qualifizieren; kein Merge und kein v299 LIVE_ACCEPTED vor allen Pflichtgates. Keine CI dupliziert/abgebrochen. Checkpointbranch nicht nach Main mergen. UH05 PARTIAL und alle übrigen Roadmap-/Original-/Decimal-/Finanz-/Datenschutzverträge erhalten.
+
+---
+
 ## UH05 – CI-Testvorbereitung für UNKNOWN-FX korrigiert · Owner 8cb2927f295c ACTIVE · 08.11.2026
 
 Owner unverändert ACTIVE. Main/v298 unverändert LIVE_ACCEPTED; kein Merge. PR #319, erster regulärer Integrationslauf `42502695638` hat im Chromium-Job `128798745486` einen konkreten Testvorbereitungsfehler gefunden: `browser-legacy-quotes-chevrons.mjs` rief nach absichtlich widersprüchlichem FX einen automatischen Stichtag auf und erwartete später dessen Erhalt. Der neue Schutz erzeugt fachlich korrekt keinen Zahlenstichtag; daher `0 !== 1` in der historischen Erhaltungsprüfung. Der tatsächliche Fehler lokal unverändert reproduziert. Sämtliche neuen UNKNOWN-/USD-Chromium-Gates waren zuvor PASS. Zwei Cross-Engine-Blöcke und Wallet SUCCESS; letzter Cross-Engine-Block läuft weiter und wird nicht abgebrochen.
