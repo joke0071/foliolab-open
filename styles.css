@@ -1066,7 +1066,7 @@
 
 /* FLH03-08: controls appear only in the explicit selection mode. */
 .selection-check{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px;overflow-wrap:anywhere}
-.selection-check input{width:20px;height:20px;flex-shrink:0}
+.selection-check input{width:20px;height:20px;flex-shrink:0;accent-color:#267044}
 .btn.selection-danger{color:#6b211c;border-color:#6b211c;background:#fff;transition:none}
 .btn.selection-danger:hover{background:#fff0ed}
 #positionSelectionTools{flex-wrap:wrap;margin:12px 0}
@@ -1139,9 +1139,8 @@
 .selection-master{display:flex;align-items:center;gap:8px;min-width:44px;min-height:auto;padding:4px 8px;border:1px solid #c9d9cc;border-radius:10px;cursor:pointer;max-width:100%;overflow-wrap:anywhere;font-size:12px}
 /* Keep the grid item min-height auto: older WebKit caches a stale height on resize
    with a non-auto minimum (WebKit326939). Inner34px + padding8px + borders2px retains44px. */
-.selection-master input{width:20px;height:20px;flex-shrink:0;accent-color:#327f52}
+.selection-master input{width:20px;height:20px;flex-shrink:0;accent-color:#267044}
 .selection-master>span{display:flex;align-items:center;min-width:0;min-height:34px;white-space:normal}
-.selection-master:focus-within{outline:2px solid #327f52;outline-offset:2px}
 .position-card-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px;padding:4px 12px;min-height:52px}
 .position-card-tools>.selection-check{padding:0;gap:6px;font-size:12px}
 .position-card-tools>.position-row-actions{margin-left:auto;gap:4px}
@@ -1911,8 +1910,19 @@
 .selection-mark .selection-glyph{position:relative;pointer-events:none;display:grid;place-items:center;width:100%;height:100%;border:2px solid #7f9c89;border-radius:inherit;background:#fff;color:#2d5d40}
 .selection-mark .selection-glyph svg{width:20px;height:20px}
 .selection-mark>input:checked+.selection-glyph{border-color:#267044;background:#e3f1e8}
-.selection-mark>input:checked+.selection-glyph::after{content:"\2713";position:absolute;right:-6px;bottom:-6px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#267044;color:#fff;font-size:12px;font-weight:700;line-height:1}
-.selection-mark>input:focus-visible+.selection-glyph{outline:3px solid #1d4ed8;outline-offset:2px}
+.selection-mark .selection-glyph::after{content:"";position:absolute;right:-5px;bottom:-5px;display:grid;place-items:center;width:18px;height:18px;border:2px solid #68816f;border-radius:5px;background:#fff;color:#fff;font-size:12px;font-weight:700;line-height:1}
+.selection-mark>input:checked+.selection-glyph::after{content:"\2713";border-color:#267044;background:#267044}
+.selection-mark>input:disabled+.selection-glyph{opacity:.5}
+.selection-mark>input:disabled{cursor:not-allowed}
+.selection-mark>input:focus-visible+.selection-glyph{outline:3px solid #2d6946;outline-offset:2px}
+@media(forced-colors:active){
+ .selection-mark .selection-glyph{border-color:ButtonText;background:Canvas;color:CanvasText}
+ .selection-mark .selection-glyph::after{border-color:ButtonText;background:Canvas;color:CanvasText}
+ .selection-mark>input:checked+.selection-glyph::after{border-color:Highlight;background:Highlight;color:HighlightText;forced-color-adjust:none}
+ .selection-mark>input:focus-visible+.selection-glyph{outline-color:Highlight}
+ .selection-mark>input:disabled+.selection-glyph{opacity:1;color:GrayText;border-color:GrayText}
+ .selection-mark>input:disabled+.selection-glyph::after{border-color:GrayText}
+}
 #positionList .position-entry:has(.selection-mark)>.holding-row{grid-row:1}
 #positionList .position-entry .holding-l>.selection-mark{width:44px;height:44px}
 #positionList,#bookingList,#snapshotList{-webkit-touch-callout:none}
