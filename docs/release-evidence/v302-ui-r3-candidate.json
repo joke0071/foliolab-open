@@ -85,6 +85,16 @@
       "sha256": "911069e42cbe2f700b774f80dca6d60fbd6fe09edca25a095116f2c092b34dbb",
       "allPathsVerified": true,
       "writeOutcome": "UNKNOWN; no automatic retry; durable metadata still129"
+    },
+    "localV130Final": {
+      "paths": 28451,
+      "bytes": 635498524,
+      "sha256": "16a19f43e06cbe73a95a333b86691d6a84297ab75d614996c4f1c8aa3101befd",
+      "allPathsVerified": true,
+      "allPriorManifestPayloadsRetained": true,
+      "includes": "Exact candidate source, both corrected complete CI runs plus initial run retained, original ZIP/log/API/hash receipts, local QA and K1/K2 preparation",
+      "newLibraryWriteAttempted": false,
+      "writeReason": "Earlier write outcome remains unknown; last authoritative Library metadata version129; no automatic second write"
     }
   },
   "publicRelease": false,
@@ -180,5 +190,11 @@
   ],
   "testManifest": "94bc326810c6df64d831121d41e13a678408b61a72c5ffc147468afd36e19dcb",
   "testManifestAlgorithm": "SHA256 of canonical UTF-8 JSON path/SHA256 pairs, comma/colon separators",
-  "nextProductDelta": "K1 evidence mapping remains PARTIAL; K2 frequency setting read-only preparation, no second productive branch."
+  "nextProductDelta": "K1 evidence mapping remains PARTIAL; K2 frequency setting read-only preparation, no second productive branch.",
+  "knownPrivacyFollowup": {
+    "status": "PRELIMINARY_PUBLICATION_GUARD_GAP; no confirmed data disclosure",
+    "scope": "General ignore protection for private CSV/backups/archives, preserve intentional fixtures",
+    "roadmap": "K6-TRUST",
+    "auditorEvidenceModified": false
+  }
 }
