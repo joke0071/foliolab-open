@@ -1,0 +1,1895 @@
+{
+  "status": "INTEGRATION_QUALIFIED_NOT_MERGED",
+  "version": 300,
+  "ownerAtQualification": "20d9afddc0ae",
+  "lastAccepted": "v299 LIVE_ACCEPTED",
+  "main": "1f051a7059d24751f961fcf2af7fa226b319079e",
+  "mainTree": "c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6",
+  "PR": 320,
+  "candidateHead": "74fd8bc0f11d30b5fa05628117acf26e9ae870b4",
+  "candidateTree": "34c90e0ec5597db2047b404a2f814fe1bfd1c770",
+  "testedIntegrationMerge": "274cdd3e262eae9eec1eac408d62ff1458e58da2",
+  "testedTreeEqualsCandidate": true,
+  "integrationRun": 42527328482,
+  "integrationAttempt": 1,
+  "integrationResult": "SUCCESS",
+  "walletRun": 42527328968,
+  "walletAttempt": 1,
+  "walletResult": "SUCCESS",
+  "walletUnits": 1345,
+  "units": 1345,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "browserEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "workflowGitBlob": "1e4aa051fee8b36d737cc30d4c69a98586e30629",
+  "testManifest": {
+    "algorithm": "SHA256 of UTF-8 JSON sorted-key compact array, Git-tree path order, each entry path/gitBlob; includes all tests/ and worker/tests/ blobs",
+    "fileCount": 416,
+    "sha256": "8683e390635a21df99f3981cbbf18c8282d96400ce5ef0d095640727f1739931",
+    "entries": [
+      {
+        "path": "tests/account-evidence.test.mjs",
+        "gitBlob": "c96ea59c79cd0936e2e9811dffe746a8f37d79cb"
+      },
+      {
+        "path": "tests/account-opening.test.mjs",
+        "gitBlob": "874cd3d27be383346b10c0c2dac07e135fe456c0"
+      },
+      {
+        "path": "tests/accounts-migration.test.mjs",
+        "gitBlob": "e027eb9a1de3ef47d39168b890d4cf47b8ea81a4"
+      },
+      {
+        "path": "tests/allocation-ui.test.mjs",
+        "gitBlob": "8236403ad1f67f1949d56136a69904721c30a96c"
+      },
+      {
+        "path": "tests/alpha-idb-lifecycle-probe.mjs",
+        "gitBlob": "3e47ebb3c953cb8b011fc357dc511e7b2dac372d"
+      },
+      {
+        "path": "tests/alpha-vantage.test.mjs",
+        "gitBlob": "1c6a75b0641bf46b2d543f5022b5d1807504e39b"
+      },
+      {
+        "path": "tests/annual-overview-fixture.mjs",
+        "gitBlob": "2211f8470a4a4a7e37c71549bc24a0fe68cf3582"
+      },
+      {
+        "path": "tests/annual-overview.test.mjs",
+        "gitBlob": "a94b501ad8b4525fab0115757fef14400fe205b8"
+      },
+      {
+        "path": "tests/asset-wizard-core.test.mjs",
+        "gitBlob": "722885ed38161cd0997dc822cac6737c3ba3c625"
+      },
+      {
+        "path": "tests/assets.test.mjs",
+        "gitBlob": "4c8898f59f34877f6d0afc08896c6f55f0152356"
+      },
+      {
+        "path": "tests/backup-limits.test.mjs",
+        "gitBlob": "adf4412fd3b0eee670852f4cfe52699de16444be"
+      },
+      {
+        "path": "tests/backup-references.test.mjs",
+        "gitBlob": "567b0cf1d02e3b974d4805030bd0b96964800356"
+      },
+      {
+        "path": "tests/backup-vault.test.mjs",
+        "gitBlob": "73ab553d5e3af024d9c075b7c2e34e107d5d2aa0"
+      },
+      {
+        "path": "tests/benchmark-controlled-abba.mjs",
+        "gitBlob": "e676615974e0e5ac500e810313e10544bae95184"
+      },
+      {
+        "path": "tests/benchmark-mixed-startup.mjs",
+        "gitBlob": "d37aa27f402318f40341346e69961889d6128e9f"
+      },
+      {
+        "path": "tests/benchmark-startup.mjs",
+        "gitBlob": "5c8be6d3395400fcc953c33296b883466492d8b7"
+      },
+      {
+        "path": "tests/bitcoin-history-fixtures.mjs",
+        "gitBlob": "b9b8af115bafd15f4f3f4b89ea952ce6a57a0d04"
+      },
+      {
+        "path": "tests/bitcoin-history.test.mjs",
+        "gitBlob": "709a1b5215d0b9cb2cbd9ab7e2f1d677a1af3b6e"
+      },
+      {
+        "path": "tests/bitpanda-fixture.mjs",
+        "gitBlob": "715fd7af8fed98fddc0d1cf501e42a32e72c2046"
+      },
+      {
+        "path": "tests/bitpanda-impact-ui.test.mjs",
+        "gitBlob": "d1886336ffbcb6a7a75d5248754aa9500a3ab5bf"
+      },
+      {
+        "path": "tests/bitpanda-import-fixture.mjs",
+        "gitBlob": "1f188a8035e9fb2accc34daa3fd58eb22d4368a2"
+      },
+      {
+        "path": "tests/bitpanda-import.test.mjs",
+        "gitBlob": "263823d2fa61a70769c0b4fecad7e6b6f8bcf0d6"
+      },
+      {
+        "path": "tests/bitpanda-preview-ui.test.mjs",
+        "gitBlob": "97b04c9a38189296d54cfcf4368221626d676045"
+      },
+      {
+        "path": "tests/bitpanda-preview.test.mjs",
+        "gitBlob": "cdde7acefed5afbc6ef30447dba85f26200b2d36"
+      },
+      {
+        "path": "tests/bitpanda-withdrawal-browser-contract.mjs",
+        "gitBlob": "f2e6a008391f24d44f0a354814f7706288f1d563"
+      },
+      {
+        "path": "tests/bitpanda-withdrawal.test.mjs",
+        "gitBlob": "276a3e22395dea946a5c8e8aff9011b02d4a21a5"
+      },
+      {
+        "path": "tests/blockchain-adapters.test.mjs",
+        "gitBlob": "32e07a94c4e4c86ca19989a48641d79818e148f5"
+      },
+      {
+        "path": "tests/blocked-reasons-ui.test.mjs",
+        "gitBlob": "a0c75b4dcc33a8381f1d551f4f0e88d0cbd32750"
+      },
+      {
+        "path": "tests/booking-archive.test.mjs",
+        "gitBlob": "5f1fdf362946e74933ace88ae6b54aa785495767"
+      },
+      {
+        "path": "tests/booking-history-fixture.mjs",
+        "gitBlob": "1405fbba420b17788f8f6dd0889ad0f3cd35b82b"
+      },
+      {
+        "path": "tests/booking-history.test.mjs",
+        "gitBlob": "f79c9f4a3f7dba04e7a62fe218453eac3847cd6a"
+      },
+      {
+        "path": "tests/booking-insights.test.mjs",
+        "gitBlob": "d4b5777d69ea94958d62c978887b896dd785414a"
+      },
+      {
+        "path": "tests/booking-management-changes.test.mjs",
+        "gitBlob": "2174ad9bc16dbca685f427cf6344bad2baca696a"
+      },
+      {
+        "path": "tests/booking-management.test.mjs",
+        "gitBlob": "152f5c394c002d16f2e0e2c95aa930539823fd88"
+      },
+      {
+        "path": "tests/booking-row-index.test.mjs",
+        "gitBlob": "a1c1d4408cd6bbb7fbe52ea3a85e320c340b3478"
+      },
+      {
+        "path": "tests/booking-transfer-browser-contract.mjs",
+        "gitBlob": "f72a0a6d9d300c56afff816bceadaba8279a8476"
+      },
+      {
+        "path": "tests/booking-transfer-integration.test.mjs",
+        "gitBlob": "7ecbc15940c6f374225746ab8906619db643fa0d"
+      },
+      {
+        "path": "tests/booking-ui-fixture.mjs",
+        "gitBlob": "a8d82e169072be0b95d0ba6047a9b3f353dda64f"
+      },
+      {
+        "path": "tests/browser-accessibility-audit.mjs",
+        "gitBlob": "fad24c538b0e783f14d5f0624a861daa445c74d6"
+      },
+      {
+        "path": "tests/browser-account-deeplink.mjs",
+        "gitBlob": "a69fa71eae22e4e0c16ca1986a585e43cdc1fa43"
+      },
+      {
+        "path": "tests/browser-account-opening.mjs",
+        "gitBlob": "da1eca53dff47222dbfd64f2ae469fa1fadd4c06"
+      },
+      {
+        "path": "tests/browser-allocation.mjs",
+        "gitBlob": "38a0bb04519698f6df361b8eb72f0e899a0a1240"
+      },
+      {
+        "path": "tests/browser-alpha-vantage.mjs",
+        "gitBlob": "cb5fab1306885d4f7c4139575cf117570d965d5f"
+      },
+      {
+        "path": "tests/browser-annual-overview.mjs",
+        "gitBlob": "31cb6d6fee9dd46b0511d87a2dac1fe764e31784"
+      },
+      {
+        "path": "tests/browser-asset-wizard.mjs",
+        "gitBlob": "d7130f7648dbd6ae90b8ed769d33a30e70bd1628"
+      },
+      {
+        "path": "tests/browser-async-readiness.mjs",
+        "gitBlob": "72be21d61db1eb3edea09ef5bc548d68e4a13426"
+      },
+      {
+        "path": "tests/browser-async-readiness.test.mjs",
+        "gitBlob": "6fc1dd90632ac7a6d206e1ef11b3f25b22869b7a"
+      },
+      {
+        "path": "tests/browser-atomic-storage-cross-engine.mjs",
+        "gitBlob": "9ff2118ce7a31c239e60c0aeed40ff94b889dec2"
+      },
+      {
+        "path": "tests/browser-atomic-storage.mjs",
+        "gitBlob": "5cec9c639626b90cf8d6b3819ce6b5509e3d3f95"
+      },
+      {
+        "path": "tests/browser-audit.mjs",
+        "gitBlob": "67e30a4a6128c01bd1314310d8ef04bc5ec5778f"
+      },
+      {
+        "path": "tests/browser-avalanche-valuation.mjs",
+        "gitBlob": "0524e1089c9675285223a4ea68f283cf8c1830be"
+      },
+      {
+        "path": "tests/browser-bitcoin-history.mjs",
+        "gitBlob": "51a51ff326ac31c8b4860d0f94217322b1597afb"
+      },
+      {
+        "path": "tests/browser-bitpanda-evidence.mjs",
+        "gitBlob": "f7464e176bddf7776875e16420ec870d37351bfd"
+      },
+      {
+        "path": "tests/browser-bitpanda-import.mjs",
+        "gitBlob": "6abb939ce0e44a3ae6a2cab3819d5b40721485bb"
+      },
+      {
+        "path": "tests/browser-bitpanda-preview.mjs",
+        "gitBlob": "97ad655a59cc92e7261c5034ca356cd070b0f20a"
+      },
+      {
+        "path": "tests/browser-blocked-reasons.mjs",
+        "gitBlob": "87326ffa40ba11243229106086d2575af3ced151"
+      },
+      {
+        "path": "tests/browser-booking-filters.mjs",
+        "gitBlob": "f33e732e12f5b3778cd1ed22c3d43a6eec9c825e"
+      },
+      {
+        "path": "tests/browser-booking-history.mjs",
+        "gitBlob": "3222f2d81279e968d12b0f9c6193b8d1d5bc0a47"
+      },
+      {
+        "path": "tests/browser-booking-management.mjs",
+        "gitBlob": "fd3f71fb7bb480db0f1940365c4f79d821cea0e2"
+      },
+      {
+        "path": "tests/browser-booking-ui.mjs",
+        "gitBlob": "2fd180328c688b78d0c7f679b3e8012959846563"
+      },
+      {
+        "path": "tests/browser-cash-account-ux.mjs",
+        "gitBlob": "365d4f9c58d2b96611f9ef32f5010445c5a11d6b"
+      },
+      {
+        "path": "tests/browser-cash-reconciliation.mjs",
+        "gitBlob": "eb6e6700442f5b18c7a91e40698e299a73e298d0"
+      },
+      {
+        "path": "tests/browser-cash-terms.mjs",
+        "gitBlob": "6df087901b83b27c06ffdf49d6fa32b9d124f10d"
+      },
+      {
+        "path": "tests/browser-catalog-expansion.mjs",
+        "gitBlob": "12f9276eb62e1b41a6ff406901554835b6c3fa34"
+      },
+      {
+        "path": "tests/browser-chart-period-consistency.mjs",
+        "gitBlob": "1631ebaf8a51ae08ce1a43b6a3751b00400f2a83"
+      },
+      {
+        "path": "tests/browser-chart-tooltip.mjs",
+        "gitBlob": "52e0a5d10c0c100746e13735df9a08cb99d94f80"
+      },
+      {
+        "path": "tests/browser-controlled-storage-fixture.mjs",
+        "gitBlob": "7ee6568522425c1a4bcb7549d3be68abda96c09f"
+      },
+      {
+        "path": "tests/browser-corrupt-backup-restore.mjs",
+        "gitBlob": "d9c5d4bf2e1eeea2b8099faa2807ebc23da2ef9c"
+      },
+      {
+        "path": "tests/browser-cross-engine.mjs",
+        "gitBlob": "0e2931205c01646b61bf52bb0ce07de3b6009b82"
+      },
+      {
+        "path": "tests/browser-crypto-history-resilience.mjs",
+        "gitBlob": "97235a631e10eaedf85978bff60d777f4d4186db"
+      },
+      {
+        "path": "tests/browser-csv-batch.mjs",
+        "gitBlob": "fb6011b894cad3deeaf6e4779ebb4cea1831be0e"
+      },
+      {
+        "path": "tests/browser-csv-review-a11y.mjs",
+        "gitBlob": "805749bd5cd4ba97fff60b317b98e8aaf3b26580"
+      },
+      {
+        "path": "tests/browser-dashboard-periods.mjs",
+        "gitBlob": "b5a5fbfa570d2b050be8261b6e7577346215e3e8"
+      },
+      {
+        "path": "tests/browser-dashboard-polish.mjs",
+        "gitBlob": "946d67acbaf3cde7a3bd653af30d4ca1fcba2156"
+      },
+      {
+        "path": "tests/browser-data-source-settings.mjs",
+        "gitBlob": "5e8628552d11918d2fdca12282fd9684b29769fe"
+      },
+      {
+        "path": "tests/browser-defi-dialog-guidance.mjs",
+        "gitBlob": "e405e515c081b78ae71c3a0f3e3c1b6eab1adf62"
+      },
+      {
+        "path": "tests/browser-dialog-a11y-mobile.mjs",
+        "gitBlob": "100a414c2ef0b603019ef7cfbc747606cb060e01"
+      },
+      {
+        "path": "tests/browser-dialog-consistency.mjs",
+        "gitBlob": "3807c2c27faa63d3361f3c1ff49a0b19904de001"
+      },
+      {
+        "path": "tests/browser-dialog-financial-choices.mjs",
+        "gitBlob": "48a51cd49fdbaef9e36f503c531669495f59a83f"
+      },
+      {
+        "path": "tests/browser-dialog-visual-regression.mjs",
+        "gitBlob": "5bfa14c3e532ba8e5a98c6e8a12fcf28d96e408e"
+      },
+      {
+        "path": "tests/browser-dialog-visual.mjs",
+        "gitBlob": "fdeca58a00bf37de54811d7527d8fe4ec0a8327f"
+      },
+      {
+        "path": "tests/browser-disclosures.mjs",
+        "gitBlob": "e8c622ab24ead10319a0211d872ab05efe4afaec"
+      },
+      {
+        "path": "tests/browser-eodhd-credentials.mjs",
+        "gitBlob": "75efa9a108ea151527b5f85409fd1c5696dad534"
+      },
+      {
+        "path": "tests/browser-eodhd-worker.mjs",
+        "gitBlob": "60a4ce274c58f20ce3f0c952d1aae9c64a42790f"
+      },
+      {
+        "path": "tests/browser-etf-crypto-fallbacks.mjs",
+        "gitBlob": "e3712f42657c818954661e3281678f7567e60313"
+      },
+      {
+        "path": "tests/browser-etf-source-recovery.mjs",
+        "gitBlob": "a43a5c853214413c253f8ddc2d5f7ffef33f8bfe"
+      },
+      {
+        "path": "tests/browser-ethereum-history.mjs",
+        "gitBlob": "8e0c05a7a4dfa6cca19f7366a8a11d3db57cf04a"
+      },
+      {
+        "path": "tests/browser-extended-chart-periods.mjs",
+        "gitBlob": "6c90f49539cc6697ae2aa4d4daaa38a2a802d12b"
+      },
+      {
+        "path": "tests/browser-extended.mjs",
+        "gitBlob": "54e314ce4ef31eb45c8b323fc90ae122d5957ed3"
+      },
+      {
+        "path": "tests/browser-failure-diagnostics.mjs",
+        "gitBlob": "2d022a41447e557d6c8ac0f2f5efba0290fe220a"
+      },
+      {
+        "path": "tests/browser-fin-e2e.mjs",
+        "gitBlob": "89e78e4813df9a6011ab8171f399fbb5cf00292e"
+      },
+      {
+        "path": "tests/browser-flatex-backfill.mjs",
+        "gitBlob": "98e55eefd3e47f05f91b878fb0366e90d91890bd"
+      },
+      {
+        "path": "tests/browser-flatex-context.mjs",
+        "gitBlob": "852b061c5076697f1654cf121c3bcc8d816d35f2"
+      },
+      {
+        "path": "tests/browser-flatex-funding.mjs",
+        "gitBlob": "75f4cbfb022cf0736a50b2a15e38d4d17949f732"
+      },
+      {
+        "path": "tests/browser-flatex-import.mjs",
+        "gitBlob": "fb2572d9fee80c1311544d7311e05536becf2657"
+      },
+      {
+        "path": "tests/browser-flatex-native-amounts.mjs",
+        "gitBlob": "0251d14de149388d1de6765ba4e432cb5169adbd"
+      },
+      {
+        "path": "tests/browser-flatex-native-binding.mjs",
+        "gitBlob": "b6fb65f6fcb517f7222d3ba4ff0f3ab5d69989bd"
+      },
+      {
+        "path": "tests/browser-flatex-native-commit.mjs",
+        "gitBlob": "1650475428eab3b9e7a31602bec5313dc407ec50"
+      },
+      {
+        "path": "tests/browser-flatex-native-identity.mjs",
+        "gitBlob": "a67f9c8267f4e5f71f8ac7ce0babe22d758d63d8"
+      },
+      {
+        "path": "tests/browser-flatex-native-projection.mjs",
+        "gitBlob": "bf020a0a2c03f9e75145be394495c519a86a8981"
+      },
+      {
+        "path": "tests/browser-flatex-native-simulation-ui.mjs",
+        "gitBlob": "b2ae0d03a024549c74689ac8cece6fead1018b1f"
+      },
+      {
+        "path": "tests/browser-flatex-native-ui.mjs",
+        "gitBlob": "c27f89485581ca98673759484cc94bf51fb9139d"
+      },
+      {
+        "path": "tests/browser-flatex-native.mjs",
+        "gitBlob": "a90c2ec6f02a693d3e6d3c71d25161ed2c7d3f81"
+      },
+      {
+        "path": "tests/browser-flatex-net-augmentation.mjs",
+        "gitBlob": "6dfe58d303227cc76d092794dcbd61be0bf49ddd"
+      },
+      {
+        "path": "tests/browser-flatex-net-backfill.mjs",
+        "gitBlob": "decd608bfce7f55d8568ad1892a24606a3b22200"
+      },
+      {
+        "path": "tests/browser-flatex-net-selection.mjs",
+        "gitBlob": "97ba7d6281494dae2c50dfd918bfbc35934d321f"
+      },
+      {
+        "path": "tests/browser-flatex-net-settlement.mjs",
+        "gitBlob": "34260b5ee587c7af350d2d81e652211c19cfc969"
+      },
+      {
+        "path": "tests/browser-flatex-order-links.mjs",
+        "gitBlob": "74589cfd7f36e1ecb223f8192543bc81fc375587"
+      },
+      {
+        "path": "tests/browser-flatex-reconciliation.mjs",
+        "gitBlob": "9c2e914454fd1ed75d0886d6531afa9164933a6e"
+      },
+      {
+        "path": "tests/browser-flatex-three-fill.mjs",
+        "gitBlob": "498b2809b46916157b07560554067ee687f2e490"
+      },
+      {
+        "path": "tests/browser-flatex-two-fill.mjs",
+        "gitBlob": "a4085a3dd9dc43fc770cef50f1a973a1b5a40ba7"
+      },
+      {
+        "path": "tests/browser-flh02-release.mjs",
+        "gitBlob": "4fcae13a6471a77bd2719dd7a6cb192a056e00a2"
+      },
+      {
+        "path": "tests/browser-flh03-abce.mjs",
+        "gitBlob": "4d29bff1deb317c58de504a36b3ec7eaf715c143"
+      },
+      {
+        "path": "tests/browser-gate-deadline.mjs",
+        "gitBlob": "fb5c331208381d5f60732eea15cdb514e03c9c7b"
+      },
+      {
+        "path": "tests/browser-gate-deadline.test.mjs",
+        "gitBlob": "fcc82dcdec3aae189a18ce31f653385062398347"
+      },
+      {
+        "path": "tests/browser-header-status.mjs",
+        "gitBlob": "d24034b6c101822fa588e36c6e3f7dc0a8714c85"
+      },
+      {
+        "path": "tests/browser-historical-csv.mjs",
+        "gitBlob": "f94b8beeaa6320d67b0da3f5c24c79f7dd45c2df"
+      },
+      {
+        "path": "tests/browser-historical-position-value.mjs",
+        "gitBlob": "8a93a53084dfaffbe058ef5c0924ba840c8f7b12"
+      },
+      {
+        "path": "tests/browser-history-followup.mjs",
+        "gitBlob": "b854e5088e8bf253c4fa5ea6a54de74e5589ef32"
+      },
+      {
+        "path": "tests/browser-history-storage.mjs",
+        "gitBlob": "6073384f5e90352324a4179f0e20a3660cbb71e7"
+      },
+      {
+        "path": "tests/browser-history-ui.mjs",
+        "gitBlob": "2b04bd208ee527aceee5d780abe9f1269e0dc037"
+      },
+      {
+        "path": "tests/browser-history-worker.mjs",
+        "gitBlob": "0d35a2c925991554ab2d38d6737adc9642ae69be"
+      },
+      {
+        "path": "tests/browser-idb-concurrent-imports.mjs",
+        "gitBlob": "091c94173eaf10d89d411458b32d6672a19d426c"
+      },
+      {
+        "path": "tests/browser-idb-corrupt-recovery.mjs",
+        "gitBlob": "4c750782530fc841c63d90e3e65dc59305147d52"
+      },
+      {
+        "path": "tests/browser-idb-crash-recovery.mjs",
+        "gitBlob": "b6fee448cb48778982d71874365d45c262cbbbba"
+      },
+      {
+        "path": "tests/browser-idb-cutover.mjs",
+        "gitBlob": "4058f6c1aff0c16465902acce707567d3fb10721"
+      },
+      {
+        "path": "tests/browser-idb-migration-acceptance.mjs",
+        "gitBlob": "3b740de8ec80fafe86b5999c8bf06a9949853826"
+      },
+      {
+        "path": "tests/browser-idb-migration-resilience.mjs",
+        "gitBlob": "f5cc877168553922015a05117cefce4214ce7151"
+      },
+      {
+        "path": "tests/browser-idb-new-install.mjs",
+        "gitBlob": "41878bf2443ab0d212c247b0b39859cf7e3fe1f2"
+      },
+      {
+        "path": "tests/browser-idb-unmarked-recovery.mjs",
+        "gitBlob": "804b44032b9cc82b2c37b88ac41bfc080d2f16a9"
+      },
+      {
+        "path": "tests/browser-import-cash-removal.mjs",
+        "gitBlob": "7a760466db1f102e2ff768d4dc75a431c4ac4a94"
+      },
+      {
+        "path": "tests/browser-interest-scenario.mjs",
+        "gitBlob": "3a23bf239c002b03dd3463b63e95d343449f82f9"
+      },
+      {
+        "path": "tests/browser-key-privacy.mjs",
+        "gitBlob": "65b473f2eac7dfd52936bac2f715ed7a48f9d066"
+      },
+      {
+        "path": "tests/browser-kraken-allocation.mjs",
+        "gitBlob": "60d438ec2b938667c6b5701cf6f6474e47082bb2"
+      },
+      {
+        "path": "tests/browser-kraken-fiat-binding.mjs",
+        "gitBlob": "c5d1a6b15f64770c5e0ab6d0b2ffeac531725187"
+      },
+      {
+        "path": "tests/browser-kraken-import.mjs",
+        "gitBlob": "5cd2025e30423997b5d99660a98e96cb22154b3f"
+      },
+      {
+        "path": "tests/browser-kraken-ledger.mjs",
+        "gitBlob": "b7d05b809d35227c53e6e9833df598f93a0e9c7d"
+      },
+      {
+        "path": "tests/browser-kraken-usd-principal.mjs",
+        "gitBlob": "561aad18c4a9dde33de35c23ccd8c0fe297afd50"
+      },
+      {
+        "path": "tests/browser-ledger-live.mjs",
+        "gitBlob": "3f930f662f849a82d4b270e35c41456f5d1053bc"
+      },
+      {
+        "path": "tests/browser-ledger-xpub.mjs",
+        "gitBlob": "dab34a611bd9e58a6badd66f39fe687dd52d5e58"
+      },
+      {
+        "path": "tests/browser-ledger.mjs",
+        "gitBlob": "a95d8d97281d53a2877ea464395e41b8cc914f46"
+      },
+      {
+        "path": "tests/browser-legacy-quotes-chevrons.mjs",
+        "gitBlob": "c51ece3240d889c395d5a6b569b8629e083312e0"
+      },
+      {
+        "path": "tests/browser-listing-review-clarity.mjs",
+        "gitBlob": "d8b84afdd19fcce3937f66b883be4ece10243536"
+      },
+      {
+        "path": "tests/browser-live-acceptance.mjs",
+        "gitBlob": "5199c757310ed7f9262baf9847981c87ac2c340a"
+      },
+      {
+        "path": "tests/browser-live-flh02.mjs",
+        "gitBlob": "d22112b0511b239863ff987e41f881fe75b32afb"
+      },
+      {
+        "path": "tests/browser-live-purchase-evidence.mjs",
+        "gitBlob": "2206eebdc87df7b02c5bd913dd9ffc87a4f410dc"
+      },
+      {
+        "path": "tests/browser-live-startup-diagnostics.mjs",
+        "gitBlob": "ea9984ed7fb77dca75107b76528cd6d5a555348e"
+      },
+      {
+        "path": "tests/browser-loading-pwa.mjs",
+        "gitBlob": "8a3758b227277a1b11facf47eb888dbfed6d5405"
+      },
+      {
+        "path": "tests/browser-management-mode.mjs",
+        "gitBlob": "e2064b6dff4e6ebec55337988962f21aaa9b3b4c"
+      },
+      {
+        "path": "tests/browser-management-parity.mjs",
+        "gitBlob": "277da6b30bbce494b179edae306565bdf2acd05e"
+      },
+      {
+        "path": "tests/browser-market-diagnostics.mjs",
+        "gitBlob": "af99217234f4a1d1c92884c5647e521bfd67b650"
+      },
+      {
+        "path": "tests/browser-marketstack.mjs",
+        "gitBlob": "de686fb641f21c6e4bedac0f265f8af3a7ab6d24"
+      },
+      {
+        "path": "tests/browser-missing-position-value.mjs",
+        "gitBlob": "c12e637633aa144b6dbdcedf8d58f6b07591df9b"
+      },
+      {
+        "path": "tests/browser-modal-clarity.mjs",
+        "gitBlob": "54be6b61baa65d884385e3e31e4cb72776358d55"
+      },
+      {
+        "path": "tests/browser-multitab-integrity.mjs",
+        "gitBlob": "8ccc39b6c050860bedaa1788910259996c777bea"
+      },
+      {
+        "path": "tests/browser-offline-mobile.mjs",
+        "gitBlob": "8fae2c7c35f99622e7c302e0207f5a526e9d2768"
+      },
+      {
+        "path": "tests/browser-onboarding-suggestions.mjs",
+        "gitBlob": "d986616d66a266cd6d920986d889b9eb7808f9d0"
+      },
+      {
+        "path": "tests/browser-p0-import.mjs",
+        "gitBlob": "bdb81194c6930ae9673f81a72254075361552f88"
+      },
+      {
+        "path": "tests/browser-p0-storage.mjs",
+        "gitBlob": "8703b8b6618a068bc9bccbb0a40569473caed239"
+      },
+      {
+        "path": "tests/browser-pchain-evidence.mjs",
+        "gitBlob": "deb9afe76a91f55c02d95a7bf1fb49a1721200ad"
+      },
+      {
+        "path": "tests/browser-phase2.mjs",
+        "gitBlob": "d6b0b1cfc62ba828b25e993deee2cf3143665e42"
+      },
+      {
+        "path": "tests/browser-phase3.mjs",
+        "gitBlob": "9327376ac5e29f2228518c6826f200cecf09fc83"
+      },
+      {
+        "path": "tests/browser-plain-backup-limits.mjs",
+        "gitBlob": "868ff55758882566e7698cabde8a0e8058d2514b"
+      },
+      {
+        "path": "tests/browser-portfolio-scale.mjs",
+        "gitBlob": "648fd01bb33b53b5cf27ba5b58d7d71a57f98ac2"
+      },
+      {
+        "path": "tests/browser-position-archive.mjs",
+        "gitBlob": "c309983843ed921a48fbfbf9eed56e86e1231ff5"
+      },
+      {
+        "path": "tests/browser-position-details.mjs",
+        "gitBlob": "2a98b4f54945a5056defcd7d028640873a6b4c83"
+      },
+      {
+        "path": "tests/browser-position-drilldown.mjs",
+        "gitBlob": "734d8a965180537e204fd27975fe908dc59bb9d6"
+      },
+      {
+        "path": "tests/browser-position-editor-ux.mjs",
+        "gitBlob": "9d426bf3650b22766b0f32a9b8d7faa38d37491b"
+      },
+      {
+        "path": "tests/browser-position-removal.mjs",
+        "gitBlob": "c00b7b6731f47e0423d1a5225b1f27656bf1cdea"
+      },
+      {
+        "path": "tests/browser-position-search.mjs",
+        "gitBlob": "24051714803bad3c152e3a641cdc83e415e0cc20"
+      },
+      {
+        "path": "tests/browser-position-selection.mjs",
+        "gitBlob": "11550a7dde12ebd63813352766249b4079d2b3cb"
+      },
+      {
+        "path": "tests/browser-price-csv-tools.mjs",
+        "gitBlob": "c7ba3f3f73f42111a6fb6bf051fbc8d90715f89c"
+      },
+      {
+        "path": "tests/browser-provider-accordion.mjs",
+        "gitBlob": "43ef8995d727aa0cc91de63abb7ab3a839c19fcc"
+      },
+      {
+        "path": "tests/browser-provider-retirement.mjs",
+        "gitBlob": "b25d84be1e8dd8d3082df3ddef5b4abfdf6d3778"
+      },
+      {
+        "path": "tests/browser-public-instruments.mjs",
+        "gitBlob": "ac79bee74a79b99ac0ecc380c1f5b64f433f9399"
+      },
+      {
+        "path": "tests/browser-purchase-evidence.mjs",
+        "gitBlob": "33956ea6b053bcc9911be2a4df17e7bf406c2630"
+      },
+      {
+        "path": "tests/browser-pwa-update.mjs",
+        "gitBlob": "16bea9ebf90c7697e4266a16468cba2960b76bfc"
+      },
+      {
+        "path": "tests/browser-pwa-updates.mjs",
+        "gitBlob": "e73bfba02447691f08624cf74be6fc7408ab9456"
+      },
+      {
+        "path": "tests/browser-quality-review.mjs",
+        "gitBlob": "ff63751911dd09d7b43ae2f4eaa69af5e2f0ea29"
+      },
+      {
+        "path": "tests/browser-readability.mjs",
+        "gitBlob": "f7489f35a6d2931ad27a7a16c1ea9e8c5259e8ed"
+      },
+      {
+        "path": "tests/browser-recovery-backup-limits.mjs",
+        "gitBlob": "75d8a3017eeeb5cee950db403bdec702b4b4b149"
+      },
+      {
+        "path": "tests/browser-reference-management.mjs",
+        "gitBlob": "a88edffb853895011a7d86b69622c69a18a00f5c"
+      },
+      {
+        "path": "tests/browser-reference-removal.mjs",
+        "gitBlob": "48122a2bbf688061afa4b7ab39afa12cff7c22a4"
+      },
+      {
+        "path": "tests/browser-responsive-actions.mjs",
+        "gitBlob": "130b3ed8f011cf19efab3ee2351ceb3f8eb03730"
+      },
+      {
+        "path": "tests/browser-review-v289-integrity.mjs",
+        "gitBlob": "07883288a6ac88178f1ff047ba55ac7b630254a5"
+      },
+      {
+        "path": "tests/browser-security-catalog.mjs",
+        "gitBlob": "ca49ac5c00da72b1f58d500fa8e576682deb302e"
+      },
+      {
+        "path": "tests/browser-security-sources.mjs",
+        "gitBlob": "ac1e3729c348b7133312984fe15db0d6ab1c9e6d"
+      },
+      {
+        "path": "tests/browser-settings-backup.mjs",
+        "gitBlob": "fcea317b1886337b83216a9035ee29df4ae868c8"
+      },
+      {
+        "path": "tests/browser-shared-import.mjs",
+        "gitBlob": "01f46ea04d84e98876cc5d4c6520a6e9501cc3e2"
+      },
+      {
+        "path": "tests/browser-smoke.mjs",
+        "gitBlob": "aad132c888d2a05d9f2a39e02ae4f17c7f08d27c"
+      },
+      {
+        "path": "tests/browser-solana-provider-matrix.mjs",
+        "gitBlob": "ba24286994c19227276e5a5fcb3541cd4c9e1daa"
+      },
+      {
+        "path": "tests/browser-solana-rpc-help.mjs",
+        "gitBlob": "81bd0c33bfb8f25049dacf31a2f12a8a031b259b"
+      },
+      {
+        "path": "tests/browser-sonic-staking-evidence.mjs",
+        "gitBlob": "f21455cfe1d55c220ead531e7f8055a14889d0b1"
+      },
+      {
+        "path": "tests/browser-staking-coverage.mjs",
+        "gitBlob": "d265dd4a01c8e88c3a0be3e44c2f78823716956f"
+      },
+      {
+        "path": "tests/browser-staking-dialog-scope.mjs",
+        "gitBlob": "5ed93d4244c7ac9240c5c6ec128e87bf2fbc0788"
+      },
+      {
+        "path": "tests/browser-transfer-matching.mjs",
+        "gitBlob": "c0fd73098bced896e2c79ad16c7905724cc755a7"
+      },
+      {
+        "path": "tests/browser-transfer-states.mjs",
+        "gitBlob": "8c746c6016815521afcd11d0b028e78cdaa92e42"
+      },
+      {
+        "path": "tests/browser-ui-alltag10.mjs",
+        "gitBlob": "acc67ee03dda5f2e98f5fb1067243970a77841d7"
+      },
+      {
+        "path": "tests/browser-ui-audit-controls.mjs",
+        "gitBlob": "b2845c9aab4424776e2a2be66c9a6fa51f995bac"
+      },
+      {
+        "path": "tests/browser-ui-quality.mjs",
+        "gitBlob": "fd8f3d3c1c9b4ce816b9f96c457c8e4ee073fb54"
+      },
+      {
+        "path": "tests/browser-ui-small-rests.mjs",
+        "gitBlob": "0f2bb67ffe8c2fd6869eb4eea459cec1df4e7756"
+      },
+      {
+        "path": "tests/browser-ui-textscale.mjs",
+        "gitBlob": "6494694c9a850fce4565b4c4613dbd808484a7dd"
+      },
+      {
+        "path": "tests/browser-ui07-audit.mjs",
+        "gitBlob": "122d35235951a28c9f51d38214f76c86580193a1"
+      },
+      {
+        "path": "tests/browser-unified-bitcoin.mjs",
+        "gitBlob": "e675f0812e402aee17158ace6fd316316ee0ab49"
+      },
+      {
+        "path": "tests/browser-universal-security-discovery.mjs",
+        "gitBlob": "1c14547832bfce1b190d7c6f29a1e3f61996a063"
+      },
+      {
+        "path": "tests/browser-unknown-fx.mjs",
+        "gitBlob": "50e6ff1a4eea4984a7ef64f7695e5fccfe504b0f"
+      },
+      {
+        "path": "tests/browser-valuation-drilldown.mjs",
+        "gitBlob": "bb461d0b8951fecbc02167512aefea6708bb4f48"
+      },
+      {
+        "path": "tests/browser-wallet-history-core.mjs",
+        "gitBlob": "96d0a444aef8e3f470686865fa8c6b8fbacca3fd"
+      },
+      {
+        "path": "tests/browser-wallet-live-audit.mjs",
+        "gitBlob": "9309ff666636f004488d56f4c439989fb2483482"
+      },
+      {
+        "path": "tests/browser-wallet-live-integration.mjs",
+        "gitBlob": "32c898111b8b88dd0c2f643bd4826e285262fc58"
+      },
+      {
+        "path": "tests/calendar-date.test.mjs",
+        "gitBlob": "5e1d9ba2d71dc630f3e3a35d3b6ed56274e98855"
+      },
+      {
+        "path": "tests/calendar-integrity.test.mjs",
+        "gitBlob": "f2787b0f7665f6a949e75668f8cc2859e05d996e"
+      },
+      {
+        "path": "tests/capital-flows.test.mjs",
+        "gitBlob": "269b4c99a7899e2ddd7e9432c580a20f76422eb7"
+      },
+      {
+        "path": "tests/cash-account-ux.test.mjs",
+        "gitBlob": "f74150712daa0dbbc2536070b5d8c3782be821c8"
+      },
+      {
+        "path": "tests/cash-reconciliation.test.mjs",
+        "gitBlob": "5e8c8e4ac3c48ec1706a694c8987f8fc641e7d77"
+      },
+      {
+        "path": "tests/cash-terms-ui.test.mjs",
+        "gitBlob": "11c4330505c7879f2cef02e8e2de9947aa09f783"
+      },
+      {
+        "path": "tests/cash-terms.test.mjs",
+        "gitBlob": "57d0685fe105236dc02e46a18de83433f33aae8e"
+      },
+      {
+        "path": "tests/chart-periods.test.mjs",
+        "gitBlob": "635d603307bb74648669434782463d12e019aa16"
+      },
+      {
+        "path": "tests/ci-cross-engine-manifest.test.mjs",
+        "gitBlob": "70d06835f2f465710924bf7f715089c27415b172"
+      },
+      {
+        "path": "tests/ci-stage-plan.mjs",
+        "gitBlob": "dd51c5ef18a128379f7ad2f35f19cb68ba6e874b"
+      },
+      {
+        "path": "tests/ci-stage-plan.test.mjs",
+        "gitBlob": "cae1a265627c3cfb0ebae7861c4cb13805e019b9"
+      },
+      {
+        "path": "tests/ci-stage-workflow.test.mjs",
+        "gitBlob": "b3c52ecbd56ba4a7aa4c75c8e301ccf26ad50ca0"
+      },
+      {
+        "path": "tests/coin-identity.test.mjs",
+        "gitBlob": "aa7fd779a377ca861b3657404abbe2b01e29ee95"
+      },
+      {
+        "path": "tests/complete-backup.test.mjs",
+        "gitBlob": "7c6016e4fae4adb8bb1ffe21b1e48744a1fb8413"
+      },
+      {
+        "path": "tests/crypto-history-resilience.test.mjs",
+        "gitBlob": "1642142ca0ad9bb55b87107f2a05d69ce619182e"
+      },
+      {
+        "path": "tests/csv-batch.test.mjs",
+        "gitBlob": "0a3122f641b0c29f3cb2cbe8d06017a48d449418"
+      },
+      {
+        "path": "tests/csv-clarity.test.mjs",
+        "gitBlob": "2449002209b289fa7d322ac7374fb56fa9558adf"
+      },
+      {
+        "path": "tests/dashboard-ui.test.mjs",
+        "gitBlob": "ab50d31d24dd276ef25f69faee6260250dc01415"
+      },
+      {
+        "path": "tests/decimal-parsing-equivalence.test.mjs",
+        "gitBlob": "d3d3d81c40cf4a46d9dcb456c31c4ad33c937db3"
+      },
+      {
+        "path": "tests/defi-audit.test.mjs",
+        "gitBlob": "a5d84754ad3105f007efd6530bdf1a83b981bd47"
+      },
+      {
+        "path": "tests/dialog-visual-pixel-baselines.json",
+        "gitBlob": "a0977a69ffb2df70c45ec8f3c3c2ff1147f0246f"
+      },
+      {
+        "path": "tests/drive-backup.test.mjs",
+        "gitBlob": "20f8a9e4639202a345333e9ab854a80d2035cf03"
+      },
+      {
+        "path": "tests/economic-form-ui.test.mjs",
+        "gitBlob": "2c9188598c76ea31dc2fdbeaeb52beede631f09d"
+      },
+      {
+        "path": "tests/encrypted-backup.test.mjs",
+        "gitBlob": "89026bbed36308372134ba96fc3394a5da7df539"
+      },
+      {
+        "path": "tests/etf-crypto-fallbacks.test.mjs",
+        "gitBlob": "2fb829f967c1891d65b4c4fd85727970fbbbe306"
+      },
+      {
+        "path": "tests/ethereum-fallback.test.mjs",
+        "gitBlob": "f7de3fdedaacffea7df71856943eb97a63310847"
+      },
+      {
+        "path": "tests/ethereum-history-fixtures.mjs",
+        "gitBlob": "3c604a5b330e3778a421846f9431f5724dc357ea"
+      },
+      {
+        "path": "tests/ethereum-history.test.mjs",
+        "gitBlob": "25a80377284f9b73a4d0cb226e7768b13f025bf3"
+      },
+      {
+        "path": "tests/extended-chart-periods.test.mjs",
+        "gitBlob": "46e96a2473d086d9bc5efb0810abb91305cc3761"
+      },
+      {
+        "path": "tests/fin-e2e-scenario.mjs",
+        "gitBlob": "f6fe3582489ce29005f5d2e63c8d9aa9e870e30d"
+      },
+      {
+        "path": "tests/fin-e2e.test.mjs",
+        "gitBlob": "c2d9ffd770741a49166ede33d6fc33d1a7673a9d"
+      },
+      {
+        "path": "tests/financial-precision.test.mjs",
+        "gitBlob": "ab80dae9a07804964f07061479203a4d80733d38"
+      },
+      {
+        "path": "tests/fixtures/booking-ui/legacy-v190-header.mjs",
+        "gitBlob": "2e9965719d67884f67e36bd4a687b8786e7043c7"
+      },
+      {
+        "path": "tests/fixtures/flh03/january.csv",
+        "gitBlob": "c922c49576fccea936921a8e3b339fc1c9d682b9"
+      },
+      {
+        "path": "tests/fixtures/flh03/overlap.csv",
+        "gitBlob": "d60fc59bd7f8c2e835182b651789db95cf1f8a39"
+      },
+      {
+        "path": "tests/fixtures/interest-reference.json",
+        "gitBlob": "623d8738fcc127d88a464ab01b7d10b4230e6eee"
+      },
+      {
+        "path": "tests/flatex-account-scope.test.mjs",
+        "gitBlob": "e82390210a5e443fd07c01890860ef852771adf3"
+      },
+      {
+        "path": "tests/flatex-backfill.test.mjs",
+        "gitBlob": "c5c03bc3d3219e6187b2353dcda953dc66818cda"
+      },
+      {
+        "path": "tests/flatex-cash-audit.test.mjs",
+        "gitBlob": "b7e8c27e0ee23cdc26ea8a79573f2c5d9816f822"
+      },
+      {
+        "path": "tests/flatex-context-fixture.mjs",
+        "gitBlob": "f8687944f0c339be1841c6deae3b3be409470ae2"
+      },
+      {
+        "path": "tests/flatex-context.test.mjs",
+        "gitBlob": "72aa7f953b6935d5f00528fa92181d4325efde65"
+      },
+      {
+        "path": "tests/flatex-cost-basis.test.mjs",
+        "gitBlob": "b8b81e2268bfa016037596436d862d3a6f676c68"
+      },
+      {
+        "path": "tests/flatex-depot13.test.mjs",
+        "gitBlob": "104d86725cc8b6116831b5323fbc1e018aad5304"
+      },
+      {
+        "path": "tests/flatex-early-funding.test.mjs",
+        "gitBlob": "b944e87ed6c52b30a6d0450895116bb71e84ab37"
+      },
+      {
+        "path": "tests/flatex-funding-fixture.mjs",
+        "gitBlob": "e714efbc14a07c939692e4eb7b45870f9ad423c8"
+      },
+      {
+        "path": "tests/flatex-funding.test.mjs",
+        "gitBlob": "cac563b14456cb87c181d61f32633667e8d3d319"
+      },
+      {
+        "path": "tests/flatex-import.test.mjs",
+        "gitBlob": "b1f965ddaa9055c5cbdc8fefb4dae84d0f1d114b"
+      },
+      {
+        "path": "tests/flatex-native-amount-ui.test.mjs",
+        "gitBlob": "126bf3081ed8742bd46a2ef13cd96f8b4d8e5c2f"
+      },
+      {
+        "path": "tests/flatex-native-amounts.test.mjs",
+        "gitBlob": "ee273c0299989e6777c4ac5ce378e462d7383d94"
+      },
+      {
+        "path": "tests/flatex-native-binding.test.mjs",
+        "gitBlob": "135a00794c74b3181b82913c05b9a558345e726a"
+      },
+      {
+        "path": "tests/flatex-native-fixture.mjs",
+        "gitBlob": "e388c52b3fc52c8b152621cdb32e605491f5eb33"
+      },
+      {
+        "path": "tests/flatex-native-identity.test.mjs",
+        "gitBlob": "8ec30454f75403dc14a8459c07d8798d6bc45f7c"
+      },
+      {
+        "path": "tests/flatex-native-projection-fixture.mjs",
+        "gitBlob": "a367423506994cadc330ee06e3b3b6ba5f02e41d"
+      },
+      {
+        "path": "tests/flatex-native-projection.test.mjs",
+        "gitBlob": "8244f419ef4ca8334eda03c0007422fe471dcefc"
+      },
+      {
+        "path": "tests/flatex-native-simulation-ui.test.mjs",
+        "gitBlob": "5eca5cb2b4e1769b2b0902767e88ab15c9be7a54"
+      },
+      {
+        "path": "tests/flatex-native-ui.test.mjs",
+        "gitBlob": "93bdba05bdc8c8d342e8a3ec7aa0d314bc3190ad"
+      },
+      {
+        "path": "tests/flatex-native.test.mjs",
+        "gitBlob": "231c1aae7fd65ae395b4e69f3eb8a27c03225bd6"
+      },
+      {
+        "path": "tests/flatex-net-augmentation.test.mjs",
+        "gitBlob": "48e2bc59a18a782932cf0a512edc0e8a4a1e59c1"
+      },
+      {
+        "path": "tests/flatex-net-backfill.test.mjs",
+        "gitBlob": "985c09f81544038af320f5b99b8f0181c8fb0861"
+      },
+      {
+        "path": "tests/flatex-net-fixture.mjs",
+        "gitBlob": "e4efff54bc318052c5a6a75392fcb1add90f3974"
+      },
+      {
+        "path": "tests/flatex-net-reconciliation-fixture.mjs",
+        "gitBlob": "9667d06f4f46b1470174107afdb69556f21dfbf1"
+      },
+      {
+        "path": "tests/flatex-net-reconciliation.test.mjs",
+        "gitBlob": "5e51760135dc75693840bbf310a6b2ba5a28f818"
+      },
+      {
+        "path": "tests/flatex-net-settlement.test.mjs",
+        "gitBlob": "79f92a533289bf2d9f84ae928b940ea67f038bfc"
+      },
+      {
+        "path": "tests/flatex-order-links.test.mjs",
+        "gitBlob": "027a2825ee8be8067e1d10725f44cc14a8c3c9b9"
+      },
+      {
+        "path": "tests/flatex-order-ui.test.mjs",
+        "gitBlob": "a94245256610377cc745ce03fc1aca5994efb1a9"
+      },
+      {
+        "path": "tests/flatex-reconciliation.test.mjs",
+        "gitBlob": "d2ae22bfb71d6c450617917a6531354c3b64c163"
+      },
+      {
+        "path": "tests/flatex-review-export.test.mjs",
+        "gitBlob": "3384d8a317b5eabf73b41687dcc25af23598df78"
+      },
+      {
+        "path": "tests/flatex-settlement-audit.test.mjs",
+        "gitBlob": "7666d404b85b846b579b940c6fddc58fffded6ab"
+      },
+      {
+        "path": "tests/flatex-settlements.test.mjs",
+        "gitBlob": "c853b21684641b77d08bb05695c35d43d4b7319f"
+      },
+      {
+        "path": "tests/flatex-three-fill-fixture.mjs",
+        "gitBlob": "99b20cc1f3c9606955881e974ff1af652c68db16"
+      },
+      {
+        "path": "tests/flatex-three-fill-oracle.mjs",
+        "gitBlob": "5260c80e93ddd3cd8f939941ed6a9c5175684351"
+      },
+      {
+        "path": "tests/flatex-three-fill.test.mjs",
+        "gitBlob": "b868103cc20489aca6e521c65094e9bf0e0b99eb"
+      },
+      {
+        "path": "tests/flatex-two-fill-fixture.mjs",
+        "gitBlob": "57ce1adcf15eeb6494ac3e99d6d7d280f900a79c"
+      },
+      {
+        "path": "tests/flatex-two-fill.test.mjs",
+        "gitBlob": "60fa01c5e599e6a5303ed7c364fb2210e9692a4d"
+      },
+      {
+        "path": "tests/flatex-value-date-fixture.mjs",
+        "gitBlob": "5ad736bf068502399d6e59b215f439727d35b287"
+      },
+      {
+        "path": "tests/flatex-value-date.test.mjs",
+        "gitBlob": "0c8d71cf3f445dc429a7c8d50aea31336416674e"
+      },
+      {
+        "path": "tests/flh02-integration.test.mjs",
+        "gitBlob": "f282e985fde420179bb6dcd08cb67a44db0ba8bc"
+      },
+      {
+        "path": "tests/flh03-summary.test.mjs",
+        "gitBlob": "ffe99c1de8b1c999bafee3353eb3a9ff1578e4fb"
+      },
+      {
+        "path": "tests/header-status.test.mjs",
+        "gitBlob": "b7eb998185491095113d59b785fe58efa288b047"
+      },
+      {
+        "path": "tests/historical-axis-labels.test.mjs",
+        "gitBlob": "722dac42f266d3dd281d689e530b2939ca9d49ba"
+      },
+      {
+        "path": "tests/historical-csv.test.mjs",
+        "gitBlob": "37cae247ea8941eeb595ebdf26172c3a8b71c5d3"
+      },
+      {
+        "path": "tests/historical-portfolio-value.test.mjs",
+        "gitBlob": "87c2cec9df928330bef05d7ccf1a05637a30b5af"
+      },
+      {
+        "path": "tests/historical-position-value.test.mjs",
+        "gitBlob": "a1803dc952641f7dcc5bc354b4e26464775edfbf"
+      },
+      {
+        "path": "tests/history-calendar.test.mjs",
+        "gitBlob": "f675a1756412325df3a1c55bb83075a5372790d6"
+      },
+      {
+        "path": "tests/import-cash-removal.test.mjs",
+        "gitBlob": "b3614f0f1c973754bcdc6027670928232c5ee28b"
+      },
+      {
+        "path": "tests/instrument-catalog.test.mjs",
+        "gitBlob": "26155872915d07e4ed5bdf3dffe7c012bbc7046d"
+      },
+      {
+        "path": "tests/interest-account.test.mjs",
+        "gitBlob": "e9dc5c624b1c17ea14cdeec826b5e1f3f489dcd0"
+      },
+      {
+        "path": "tests/interest-scenario.test.mjs",
+        "gitBlob": "b5766231e668eb9967f125975633e87cab5c7767"
+      },
+      {
+        "path": "tests/interest-ui.test.mjs",
+        "gitBlob": "975832abb1910ec2154f38267aa8495e61430f0e"
+      },
+      {
+        "path": "tests/kraken-allocation-fixture.mjs",
+        "gitBlob": "feb6c5028fc35fb156f3f2ec9fbab8beba5da289"
+      },
+      {
+        "path": "tests/kraken-allocation.test.mjs",
+        "gitBlob": "993a745e73f6de5e3b12aa792ff299cd03d3c4f1"
+      },
+      {
+        "path": "tests/kraken-balance-trail.test.mjs",
+        "gitBlob": "f8b35f9a01522d95bf5190254a28a8716fd9ac41"
+      },
+      {
+        "path": "tests/kraken-bitcoin-bridge-fixture.mjs",
+        "gitBlob": "a7ba346c4f2bb4bc2b439c98092f0289680abf3a"
+      },
+      {
+        "path": "tests/kraken-bitcoin-bridge.test.mjs",
+        "gitBlob": "f22e7be9d359beff11471444b2722f961e8b20a9"
+      },
+      {
+        "path": "tests/kraken-chronology.test.mjs",
+        "gitBlob": "2b37ebfbf63c1919b783de7c4eea45526e8208ed"
+      },
+      {
+        "path": "tests/kraken-ethereum-bridge-fixture.mjs",
+        "gitBlob": "f97ded1178cd5d8333ca8d84d47984237b91a34a"
+      },
+      {
+        "path": "tests/kraken-ethereum-bridge.test.mjs",
+        "gitBlob": "4352e0933a734df9ab5b2bdf3ffbf5154d876028"
+      },
+      {
+        "path": "tests/kraken-fiat-binding.test.mjs",
+        "gitBlob": "06acbf19e9a0a2e8faec4a68d307b43d65f0bcdc"
+      },
+      {
+        "path": "tests/kraken-fiat-legacy-v297.json",
+        "gitBlob": "03018dd4fc2943ffad8253692cdab83f3fed81e0"
+      },
+      {
+        "path": "tests/kraken-import-fixture.mjs",
+        "gitBlob": "1a4b6a55e38e361ae7e4a9a2cd4e3dae2887de9d"
+      },
+      {
+        "path": "tests/kraken-import.test.mjs",
+        "gitBlob": "ca36bfd4c84ea212e1f3b8d6ac172a6909a6e9fd"
+      },
+      {
+        "path": "tests/kraken-ledger-fixture.mjs",
+        "gitBlob": "68b56cabd842a6f0bed3d10eed98987df3d23f0a"
+      },
+      {
+        "path": "tests/kraken-ledger.test.mjs",
+        "gitBlob": "b6d9eb287f4ac8cc7b6a710869b45e45fbe436cb"
+      },
+      {
+        "path": "tests/kraken-link-bridge-fixture.mjs",
+        "gitBlob": "0bf6dcafb4db9f393f2ce1458fed533992b9d950"
+      },
+      {
+        "path": "tests/kraken-link-bridge.test.mjs",
+        "gitBlob": "083c1548fa599d291ba6951aebad8a867d66ada1"
+      },
+      {
+        "path": "tests/kraken-solana-bridge-fixture.mjs",
+        "gitBlob": "448318cc19d821e0cd9f82c3a2654a59120de5dd"
+      },
+      {
+        "path": "tests/kraken-solana-bridge.test.mjs",
+        "gitBlob": "db1ac8d9060b1b31cd475d75649b15c9ddddb9e4"
+      },
+      {
+        "path": "tests/kraken-source-plan.test.mjs",
+        "gitBlob": "5c225e4c2a6ccaf65f2f6489b05322f151e9f105"
+      },
+      {
+        "path": "tests/kraken-usd-principal-fixture.mjs",
+        "gitBlob": "eb45af9cf6e7e2698fc27c56bbda40b4535b9567"
+      },
+      {
+        "path": "tests/kraken-usd-principal.test.mjs",
+        "gitBlob": "d62d9f18951d232ddcda15771558336b642135f0"
+      },
+      {
+        "path": "tests/kraken-withdrawal.test.mjs",
+        "gitBlob": "9d942340ebce726c1da4e4bd0537e8a12e5382a0"
+      },
+      {
+        "path": "tests/ledger-live-fixture.mjs",
+        "gitBlob": "f2825a6a9b072ed5cc8787eec51c6ae8c3621b4c"
+      },
+      {
+        "path": "tests/ledger-live.test.mjs",
+        "gitBlob": "84ad3dd54af5db068fd20da6ddec49da0b131fcf"
+      },
+      {
+        "path": "tests/ledger-multistep-fx-corporate.test.mjs",
+        "gitBlob": "aa4d617b8d1afe7a41950d66805b7e5599fa7da4"
+      },
+      {
+        "path": "tests/ledger-reference-arithmetic.test.mjs",
+        "gitBlob": "b8a2fef37cc111891411e6faaff12c4f870e35fa"
+      },
+      {
+        "path": "tests/ledger-v3.test.mjs",
+        "gitBlob": "cc808f3990581401e213bfd5c7e7e8f707c3ac20"
+      },
+      {
+        "path": "tests/legacy-browser-fixture.mjs",
+        "gitBlob": "15021cbc88b2098c667ae4839f11b134fa38fc34"
+      },
+      {
+        "path": "tests/legacy-quote-audit.test.mjs",
+        "gitBlob": "ec91981c54d86158defa05a8a8ed615bb9908554"
+      },
+      {
+        "path": "tests/live-probes.mjs",
+        "gitBlob": "72d440783da787449401f5b38f7763c0f961316b"
+      },
+      {
+        "path": "tests/live-startup-diagnostics.mjs",
+        "gitBlob": "9189bfdc6b28ef8a6ded4f2a5f64740dbb2576e5"
+      },
+      {
+        "path": "tests/live-startup-diagnostics.test.mjs",
+        "gitBlob": "2eec1dddbab43816fcc39b0dbfd6baaca444e7a2"
+      },
+      {
+        "path": "tests/locale-display-browser-contract.mjs",
+        "gitBlob": "206e92d103383e01f95f47918e4ff228b6e31175"
+      },
+      {
+        "path": "tests/locale-display.test.mjs",
+        "gitBlob": "0b6bf23a1df2c677511c3539c43d0cd2731960cb"
+      },
+      {
+        "path": "tests/market-diagnostics.test.mjs",
+        "gitBlob": "4ecf9e5e2a77df0b1a75a2b209c09cfe46e99362"
+      },
+      {
+        "path": "tests/market.test.mjs",
+        "gitBlob": "976ce6e4446afe898f049bc9c6ed0b1c49362c54"
+      },
+      {
+        "path": "tests/marketstack.test.mjs",
+        "gitBlob": "207a9f2f9dbde64e0f9a9250412b1470220d30b1"
+      },
+      {
+        "path": "tests/missing-position-value.test.mjs",
+        "gitBlob": "d361172e360650cd23b3c692a5d963d97f7d84b6"
+      },
+      {
+        "path": "tests/model.test.mjs",
+        "gitBlob": "8c988e98f1257fc6b7a0dd84479e79a05ea29dae"
+      },
+      {
+        "path": "tests/mvp-staking-wallets.test.mjs",
+        "gitBlob": "b3ecf512206200841c57ecedace0deed2c4fc181"
+      },
+      {
+        "path": "tests/native-staking-networks.test.mjs",
+        "gitBlob": "c269dfaa4b8f64141d64e944e48f64631ba412b7"
+      },
+      {
+        "path": "tests/onboarding-suggestions.test.mjs",
+        "gitBlob": "f96b6a95c7dde48cd0dcb6b15d5011ae353a0fc6"
+      },
+      {
+        "path": "tests/p0-import-conflicts.test.mjs",
+        "gitBlob": "731822985036fd9fd4e96627db37e3aa82b495f4"
+      },
+      {
+        "path": "tests/p0-import-fixture.mjs",
+        "gitBlob": "e4711dd84b406251a3229718c040c9128ef0929f"
+      },
+      {
+        "path": "tests/p0-import-identity.test.mjs",
+        "gitBlob": "22f71d1e29055d99fcda207b5cb4619fd912cfb5"
+      },
+      {
+        "path": "tests/p0-local-storage.test.mjs",
+        "gitBlob": "fe1def3685adf09b5dfa71907f50133cb140dd82"
+      },
+      {
+        "path": "tests/p0-performance-boundaries.test.mjs",
+        "gitBlob": "37a2a362d9200156291b6d96d4bea5734fee3890"
+      },
+      {
+        "path": "tests/pchain-evidence-fixture.mjs",
+        "gitBlob": "bf76385e34b4a9524554311a46b033c0317136a5"
+      },
+      {
+        "path": "tests/pchain-evidence.test.mjs",
+        "gitBlob": "6dd99ccead7f14759f4295df1e8c481bf594d647"
+      },
+      {
+        "path": "tests/pchain-identity-fixture.mjs",
+        "gitBlob": "be2e38a5668890bf9d02f3fcd36836c693f200ea"
+      },
+      {
+        "path": "tests/pchain-identity.test.mjs",
+        "gitBlob": "1b5835904ffed51678429376683704bd60310370"
+      },
+      {
+        "path": "tests/perf01-reconciliation-index.test.mjs",
+        "gitBlob": "e021d4dd2eb0b279e2b800312055ca7bd2091c3a"
+      },
+      {
+        "path": "tests/performance-integration.test.mjs",
+        "gitBlob": "db746690047f1caf871bba25089ed3c2f8229418"
+      },
+      {
+        "path": "tests/phase2-market-performance.test.mjs",
+        "gitBlob": "5b850041070db677d1690998a51cb90e62ead464"
+      },
+      {
+        "path": "tests/phase3-csv-wallet-defi.test.mjs",
+        "gitBlob": "fc3b3a83439326b7a90c93b27f2ede84c56ed262"
+      },
+      {
+        "path": "tests/plain-backup-fixture.mjs",
+        "gitBlob": "3e0ba5d161910f389df851c4430043384276c40d"
+      },
+      {
+        "path": "tests/plain-backup-limits.test.mjs",
+        "gitBlob": "105289c8f102d5d06af636cd8de9a38c00faaa26"
+      },
+      {
+        "path": "tests/portfolio-edit-actions.test.mjs",
+        "gitBlob": "22886488f12ebcada0a2a926a20c441e1577b265"
+      },
+      {
+        "path": "tests/portfolio-scale.test.mjs",
+        "gitBlob": "fe7e99841b0e184f2989265fe1766691d4ca1cf3"
+      },
+      {
+        "path": "tests/portfolio-storage.test.mjs",
+        "gitBlob": "f775141f50ea9073fe8071c20c7ea632fb8dfe1f"
+      },
+      {
+        "path": "tests/position-archive.test.mjs",
+        "gitBlob": "e9849773d840c781ef2ecf166c6a34a730fd085d"
+      },
+      {
+        "path": "tests/position-bookings.test.mjs",
+        "gitBlob": "79f90e96d16085b9e81edcd8474a2ba627b27216"
+      },
+      {
+        "path": "tests/position-detail-priority.test.mjs",
+        "gitBlob": "07f893e43fa721f6fe5475bff3454dbf9cd01dff"
+      },
+      {
+        "path": "tests/position-drilldown.test.mjs",
+        "gitBlob": "092d6c5a39040e94ba6e446b9c3fff866dce080d"
+      },
+      {
+        "path": "tests/position-icons.test.mjs",
+        "gitBlob": "54994b448ef7e42b48c42dbbb18bbb672943a3c1"
+      },
+      {
+        "path": "tests/position-quality-review.test.mjs",
+        "gitBlob": "ab26705a0166701a79941c870b8725db5fa24672"
+      },
+      {
+        "path": "tests/position-search.test.mjs",
+        "gitBlob": "04aa3c9f332373b58a27145ff9e4825251acff1c"
+      },
+      {
+        "path": "tests/position-selection.test.mjs",
+        "gitBlob": "ede1f87ef4cfb37ed994acc156c5dd9708516594"
+      },
+      {
+        "path": "tests/privacy-dataflow.test.mjs",
+        "gitBlob": "034c21e282b7bdc2e91a5aa93c9c0e402cc0dac5"
+      },
+      {
+        "path": "tests/public-instruments-client.test.mjs",
+        "gitBlob": "4dc8b17a58d10fb4e30f815e04b9f5bcab3982b7"
+      },
+      {
+        "path": "tests/purchase-evidence.test.mjs",
+        "gitBlob": "03717cf26afdb15a51b1a9f1c1b032d96d240335"
+      },
+      {
+        "path": "tests/reference-management.test.mjs",
+        "gitBlob": "399b1148367ec0caf12a922af3066e668dfb0af1"
+      },
+      {
+        "path": "tests/reference/interest_reference.py",
+        "gitBlob": "9aa34e29783e9b7281b7b6b5e06841e9c567394b"
+      },
+      {
+        "path": "tests/refresh-ui.test.mjs",
+        "gitBlob": "fda3a989ecac4ed1e69b76c0ae9ae7e536ac8cc3"
+      },
+      {
+        "path": "tests/retired-providers.test.mjs",
+        "gitBlob": "0d6d0c51da8c7810de0d0c2da02efd93e66aea23"
+      },
+      {
+        "path": "tests/review-v289-fixture.mjs",
+        "gitBlob": "d9a3cddea2dc69ee70f4067cb479889aeba21167"
+      },
+      {
+        "path": "tests/review-v289-gates.test.mjs",
+        "gitBlob": "b845962092d559b61a730fa1f6385221abc440b5"
+      },
+      {
+        "path": "tests/review-v289-high.test.mjs",
+        "gitBlob": "a1d69a58d143635ea60a35d782387770c7926621"
+      },
+      {
+        "path": "tests/review-v289-medium.test.mjs",
+        "gitBlob": "ecf03a103305912b45e2b2b5390f0e5107e316d8"
+      },
+      {
+        "path": "tests/security-catalog.test.mjs",
+        "gitBlob": "9188fafb4517d1dcdc5cc2f470a221042094b665"
+      },
+      {
+        "path": "tests/security-privacy.test.mjs",
+        "gitBlob": "f02a64f930b0d0bdd5e0925bf00fe784723ddaa1"
+      },
+      {
+        "path": "tests/security-sources.test.mjs",
+        "gitBlob": "259bbc2698406d75c895ea9db236a954a4fa5337"
+      },
+      {
+        "path": "tests/service-worker.test.mjs",
+        "gitBlob": "215a58523fd4ce3e829611d64fb2395d05463494"
+      },
+      {
+        "path": "tests/shared-import-fixture.mjs",
+        "gitBlob": "9c55d0926e5f8b59cf032c02631682a19058c773"
+      },
+      {
+        "path": "tests/shared-import.test.mjs",
+        "gitBlob": "18ec78abb408d7b31c7fc0b6a28482dc8803807b"
+      },
+      {
+        "path": "tests/solana-history-fixtures.mjs",
+        "gitBlob": "555cf9af77dc7ffe83fb41e1b4662c94daaddb46"
+      },
+      {
+        "path": "tests/solana-history.test.mjs",
+        "gitBlob": "b44739c6718687f0217b42399f46e660fa40d061"
+      },
+      {
+        "path": "tests/sonic-staking-evidence-fixture.mjs",
+        "gitBlob": "35d0f9ef12926258bcdda031026d1451a05c8620"
+      },
+      {
+        "path": "tests/sonic-staking-evidence.test.mjs",
+        "gitBlob": "b3e2c92a7455de7af78e09d58301933847c365c7"
+      },
+      {
+        "path": "tests/staking-discovery.test.mjs",
+        "gitBlob": "2586ef7a099962c24863f14e8d479d3d977702f3"
+      },
+      {
+        "path": "tests/storage-origin.html",
+        "gitBlob": "4bc801127e545aa1088e43c18137ec66bf20cd8b"
+      },
+      {
+        "path": "tests/structured-quality-browser-contract.mjs",
+        "gitBlob": "90a38a0f225411736250bbd751b7c5d6e778d69c"
+      },
+      {
+        "path": "tests/structured-quality-review.test.mjs",
+        "gitBlob": "a67765198bf4c303e1cffdb2ea96779c6dc9801b"
+      },
+      {
+        "path": "tests/summarize-controlled-abba.mjs",
+        "gitBlob": "ea727d54ce06ee8187f355f364c842d2f07d4819"
+      },
+      {
+        "path": "tests/transactions.test.mjs",
+        "gitBlob": "bdb32fbbc0e2e389fa17f18cc4675e49f569e3b8"
+      },
+      {
+        "path": "tests/transfer-dialog-choices.test.mjs",
+        "gitBlob": "583917d0e6dc409552038b6054505084555ae939"
+      },
+      {
+        "path": "tests/transfer-matching-fixture.mjs",
+        "gitBlob": "da7e8cd5246a3156fb2b84558247cf0cfe4f0029"
+      },
+      {
+        "path": "tests/transfer-matching.test.mjs",
+        "gitBlob": "c341fcb97b49209bed7cf9fc9cd9fa5c0d467d96"
+      },
+      {
+        "path": "tests/ui-m28-k02-crypto-coverage.test.mjs",
+        "gitBlob": "85f6afe52ede1e5d387dfd431f16ad685d7251db"
+      },
+      {
+        "path": "tests/ui-quality-presentation.test.mjs",
+        "gitBlob": "061050f3a0e859ee9c611a0bc7f8b7ad378cc0b5"
+      },
+      {
+        "path": "tests/ui300-browser-contract.mjs",
+        "gitBlob": "97a13dca2981e3814dd29942c22775afde780f91"
+      },
+      {
+        "path": "tests/ui300-presentation.test.mjs",
+        "gitBlob": "9f59651c8710b97847a99d7d97d7031e8be81343"
+      },
+      {
+        "path": "tests/unified-bitcoin.test.mjs",
+        "gitBlob": "ecd12fdbefcdedcca6eabba0faf20982a9a34490"
+      },
+      {
+        "path": "tests/universal-security-discovery.test.mjs",
+        "gitBlob": "bc7896a0a5465288ee5ad6713e45a27622e24496"
+      },
+      {
+        "path": "tests/unknown-fx.test.mjs",
+        "gitBlob": "6e913c05422fbee477183911b0261c683bc8d2f3"
+      },
+      {
+        "path": "tests/valuation-status.test.mjs",
+        "gitBlob": "bdabf36472a54bd6c6d0a1980634b5a0a9a1d130"
+      },
+      {
+        "path": "tests/wallet-discovery.test.mjs",
+        "gitBlob": "f4564a7e2f3327b39cca51bd3d703b53b2c5b1f5"
+      },
+      {
+        "path": "tests/wallet-history-core.test.mjs",
+        "gitBlob": "339015160a376e8a20e24f68536dc09b1991c0e4"
+      },
+      {
+        "path": "tests/wallet-history-days.test.mjs",
+        "gitBlob": "b3f2ce735b5a0e94adcce7e4d0682a803028a118"
+      },
+      {
+        "path": "tests/wallet-history-fixtures.mjs",
+        "gitBlob": "1949b9138f70a094b7cd715a9eca4bfe87846adc"
+      },
+      {
+        "path": "tests/wallet-history-state.test.mjs",
+        "gitBlob": "d10334043dfdfce4fbaba3dd2473d2affc87eb29"
+      },
+      {
+        "path": "tests/wallet-history-valuation.test.mjs",
+        "gitBlob": "682d11acaebf5e4551a1818811e82acaadeff577"
+      },
+      {
+        "path": "tests/wallet-history-worker-errors.test.mjs",
+        "gitBlob": "8dbea924643a2ff0f7319ec68a05b425313c8b1f"
+      },
+      {
+        "path": "tests/wallet-scan-valuation.test.mjs",
+        "gitBlob": "fbed9c979efbafe8f4c4a3cb610764baa1f9f8e5"
+      },
+      {
+        "path": "tests/wallet-visibility.test.mjs",
+        "gitBlob": "0538e1cfcf5e9ef9cdca5c198f091f451ac90e0e"
+      },
+      {
+        "path": "worker/tests/instruments.test.mjs",
+        "gitBlob": "87570b6518a8750cc29d6c3aa028e334bafb1b8f"
+      },
+      {
+        "path": "worker/tests/market.test.mjs",
+        "gitBlob": "775b31642c06efb8092cb39892781e6851522bfe"
+      }
+    ]
+  },
+  "tools": {
+    "node": "22.23.4",
+    "npm": "10.9.9",
+    "chromiumJobPlaywright": "1.56.1",
+    "crossEnginePlaywright": "1.64.1",
+    "axeCore": "4.10.3",
+    "actualInstallLogsPreserved": true
+  },
+  "artifacts": [
+    {
+      "id": 13636961644,
+      "name": "cross-engine-gates-274cdd3e262eae9eec1eac408d62ff1458e58da2-3",
+      "size": 66797960,
+      "sha256": "e93efb54478a829a61a9f6d8e4fb781da5794e3ef4c75080a0d1639a497021c0",
+      "created": "2026-11-08T22:20:20Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 97,
+      "decodedPNGs": 730,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    },
+    {
+      "id": 13636955459,
+      "name": "release-gates-274cdd3e262eae9eec1eac408d62ff1458e58da2",
+      "size": 63171556,
+      "sha256": "bc854cfac5c5765a23e752f81b52ffc579d4830223eb59077ac0b1876b29646e",
+      "created": "2026-11-08T22:12:41Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 92,
+      "decodedPNGs": 686,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    },
+    {
+      "id": 13636332518,
+      "name": "dialog-visual-reference",
+      "size": 934968,
+      "sha256": "45b9391d147b033cba086cec91167d2fb74a8e28fc5e4f1155895201faef4199",
+      "created": "2026-11-08T22:12:42Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 0,
+      "decodedPNGs": 20,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    },
+    {
+      "id": 13636116647,
+      "name": "ci-stage-274cdd3e262eae9eec1eac408d62ff1458e58da2",
+      "size": 500,
+      "sha256": "70ae0dc6ca085805d9f7f1945c575af30f8591f6f513b1bd40f0abe0a6dc9250",
+      "created": "2026-11-08T21:52:15Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 1,
+      "decodedPNGs": 0,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    },
+    {
+      "id": 13635798009,
+      "name": "cross-engine-gates-274cdd3e262eae9eec1eac408d62ff1458e58da2-1",
+      "size": 57451986,
+      "sha256": "00f40801f54c806671f506fde8d4713be093d334caaeb7e019ec0c7ff8b75f7a",
+      "created": "2026-11-08T22:04:29Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 15,
+      "decodedPNGs": 474,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    },
+    {
+      "id": 13635719212,
+      "name": "cross-engine-gates-274cdd3e262eae9eec1eac408d62ff1458e58da2-2",
+      "size": 11928699,
+      "sha256": "c62ef350eedf71384798218c21cd9dff49d0c84149185b75abb60d80343e988e",
+      "created": "2026-11-08T21:59:47Z",
+      "expires": "2027-02-06T21:52:06Z",
+      "jsonReports": 19,
+      "decodedPNGs": 94,
+      "CRC": "PASS",
+      "APIUploadLocalBinding": "PASS"
+    }
+  ],
+  "artifactCount": 6,
+  "JSONReports": 224,
+  "decodedPNGs": 2004,
+  "newCIImagesViewed": 6,
+  "loadingPWA": {
+    "chromium": {
+      "result": "PASS",
+      "checks": [
+        "watchdog download failure",
+        "refresh persistence failure/exact record",
+        "delayed IndexedDB initialization",
+        "inline loader deduplication",
+        "slow module graph",
+        "300ms visibility",
+        "timeout then late completion",
+        "read-only module error",
+        "storage failure recovery",
+        "reduced motion",
+        "320px/axe",
+        "record-preserving reload",
+        "manifest identity/PNG dimensions",
+        "compact install icon states",
+        "three distinct animation frames",
+        "320–1440px and 200% text",
+        "identical ID-free startup and inline SVG"
+      ],
+      "reportSHA256": "aa5a0bd83267207df4a64dc4c4eede72be77a0869fcfc6e9095fb13eae280f4c"
+    },
+    "firefox": {
+      "result": "PASS",
+      "checks": [
+        "watchdog download failure",
+        "refresh persistence failure/exact record",
+        "delayed IndexedDB initialization",
+        "inline loader deduplication",
+        "slow module graph",
+        "300ms visibility",
+        "timeout then late completion",
+        "read-only module error",
+        "storage failure recovery",
+        "reduced motion",
+        "320px/axe",
+        "record-preserving reload",
+        "manifest identity/PNG dimensions",
+        "compact install icon states",
+        "three distinct animation frames",
+        "320–1440px and 200% text",
+        "identical ID-free startup and inline SVG"
+      ],
+      "reportSHA256": "ca10e1c722bb990c3751570ed9907194ce14c3e97f3916a4bd2568eeeea37b63"
+    },
+    "webkit": {
+      "result": "PASS",
+      "checks": [
+        "watchdog download failure",
+        "refresh persistence failure/exact record",
+        "delayed IndexedDB initialization",
+        "inline loader deduplication",
+        "slow module graph",
+        "300ms visibility",
+        "timeout then late completion",
+        "read-only module error",
+        "storage failure recovery",
+        "reduced motion",
+        "320px/axe",
+        "record-preserving reload",
+        "manifest identity/PNG dimensions",
+        "compact install icon states",
+        "three distinct animation frames",
+        "320–1440px and 200% text",
+        "identical ID-free startup and inline SVG"
+      ],
+      "reportSHA256": "6f26153c19e8c7e4487399e0fa75a96f45074443f0c518f8263061c5dee37570"
+    }
+  },
+  "preservedFinancialGateEngines": {
+    "unknown-fx": [
+      "firefox",
+      "webkit",
+      "chromium"
+    ],
+    "kraken-usd-principal": [
+      "firefox",
+      "webkit",
+      "chromium"
+    ]
+  },
+  "protectedContracts": "Financial/UNKNOWN/source identity/journal/IDB/CAS/multitab/backup/restore/offline/PWA/privacy preserved; only 5 files changed",
+  "newCIStartedForHandover": 0,
+  "mergePerformed": false,
+  "deploymentForV300": false,
+  "productionAcceptedForV300": false,
+  "actualPhysicalAndroidSafariOAuthTalkBackAcceptance": false,
+  "candidateCache": "foliolab-open-v300",
+  "lastAcceptedCache": "foliolab-open-v299",
+  "handover": "docs/HANDOVER_20d9afddc0ae_2026-11-09.md",
+  "privateBackup": {
+    "expectedVersion": 124,
+    "priorVersion": 123,
+    "entry": "delta-20d9afddc0ae/hnd01-final-handover/STATE.json",
+    "allPriorPayloadsPreserved": true,
+    "finalDigestInPublicCheckpoint": true,
+    "version": 124,
+    "archiveBytes": 326951415,
+    "archiveSHA256": "fce4a268e1ee3384c665f07b0d290260ec402c98bc161fa85c29a99d751b9840",
+    "manifestFiles": 26989,
+    "allV123PayloadsPreserved": 26691,
+    "savedArchiveReadback": "PASS",
+    "allSavedPayloadsVerified": 26989
+  },
+  "scope": "UI-R1 existing startup/inline loader and two install glyphs; no new engine or finance/storage/app/manifest change",
+  "next": "Fresh collision-free takeover, reuse valid frozen candidate qualification, expected-head PR320 integration, then all mandatory main/deploy/actual production gates. Never merge checkpoint branch."
+}
