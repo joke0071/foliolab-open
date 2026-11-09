@@ -1,12 +1,18 @@
 {
   "owner": "c43b5e91f20a",
-  "base": "1708d4e947061f353187727ccae54daa1727db7e",
-  "mainTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
+  "version": 302,
+  "status": "INTEGRATION_IN_PROGRESS",
   "lastLiveAccepted": 301,
-  "candidateHead": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
-  "candidateTree": "c36f4be2a06b8aed6c9da980c08b515c797530dc",
-  "branch": "ui/ui-r3-review-periods-v302-c43b5e91f20a",
-  "status": "CURRENT_INTEGRATION_RUNNING_MORE_LABEL_WIP",
+  "PR": 322,
+  "main": "1708d4e947061f353187727ccae54daa1727db7e",
+  "baseTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
+  "candidateHead": "96522496e399752c26bfb0661f75f2b3f1878b5c",
+  "candidateTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
+  "testedMerge": "090e653ca969265b440de34b41bd8e0cd92f450d",
+  "integrationRun": 42709224108,
+  "integrationAttempt": 1,
+  "walletRun": 42709224472,
+  "walletResult": "SUCCESS",
   "files": [
     "index.html",
     "src/app.js",
@@ -16,17 +22,17 @@
     "tests/structured-quality-browser-contract.mjs",
     "tests/browser-flh03-abce.mjs"
   ],
-  "tests": {
+  "local": {
     "units": 1345,
     "failures": 0,
     "skips": 0,
     "syntax": "PASS",
-    "reviewEngines": [
-      "chromium",
-      "firefox",
-      "webkit"
-    ],
-    "reviewCounts": [
+    "engines": {
+      "chromium": "141.0.7390.37",
+      "firefox": "157.0",
+      "webkit": "27.2"
+    },
+    "counts": [
       0,
       1,
       5
@@ -41,106 +47,50 @@
       1440
     ],
     "zoom": "200% computed text",
-    "periods": "all three PASS",
-    "selection": "all three PASS",
-    "loadingPWA": "all three PASS",
-    "hardwareAndroid": "NOT PERFORMED; external",
-    "TalkBack": "NOT PERFORMED; external"
+    "reviewNavigationFocusFiltersAndExactRecord": "PASS",
+    "periodSelectionAndTouch": "PASS",
+    "normalMoreOneLineAndBounds": "PASS",
+    "negativeControl": "original normal More has2lines; corrected1line"
   },
-  "audit": {
-    "role": "independent read-only",
-    "publicRelease": "requires relevant critical findings resolved and required clearance"
-  },
-  "backup": {
-    "version": 129,
-    "paths": 28339,
-    "retainedV128Paths": 28303,
-    "sha256": "9051b84b6eb6a8c7d8905f7825b414cc80c56647526a7ae048e995feafaf3431",
-    "readback": "identical",
-    "candidateContainsCorrection": false
-  },
-  "next": "Save and verify same private identity; open the one regular UI-R3 integration PR. No duplicate CI, no release before qualification/privacy gate.",
-  "pr": 322,
-  "testedMerge": "ca7eadf1cc58fe7f50ba28aea33ecc9c59e9dfe7",
-  "integrationRun": 42705095823,
-  "walletRun": 42705095812,
-  "privacyClearance": "pending independent audit; no public release claimed",
-  "iconInventory": {
-    "alreadyConsistent": [
-      "shared format.svg renderer",
-      "position action icon map",
-      "history disclosure icons",
-      "calendar and add-reference outlines",
-      "install glyphs accepted in UI-R1"
-    ],
-    "deltas": [
-      "settings gear centered within standard viewBox",
-      "shield outline fits same bounds",
-      "storage/Drive header stroke 1.7 to existing family 1.8",
-      "settings/accounts/data panel neutral icon color"
-    ],
-    "excluded": [
-      "asset/provider logos",
-      "manifest/favicon/brand identities"
-    ],
-    "newDependencies": false
-  },
-  "firstFailure": {
-    "run": 42701185716,
-    "jobs": [
-      129446149741,
-      129446149843
-    ],
-    "file": "tests/browser-flh03-abce.mjs",
-    "line": 72,
-    "cause": "onboarding predecessor no longer exists after removal of freestanding review wrapper",
-    "correction": "preserve >=16px separation assertion against actual page heading",
-    "localCorrectionEngines": [
-      "chromium",
-      "firefox",
-      "webkit"
-    ],
-    "pushed": true
-  },
-  "preparedCorrection": {
-    "head": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
-    "tree": "c36f4be2a06b8aed6c9da980c08b515c797530dc",
-    "pushed": true,
-    "additionalPath": "tests/browser-flh03-abce.mjs",
-    "applicationAssetChanges": false,
-    "localABCE": "all three engines PASS"
-  },
-  "initialCross1": "SUCCESS",
-  "initialCross3": "SUCCESS",
-  "legacyK6Finding": "Existing fixed-height empty-chart copy overlaps status under 200% computed text on unchanged v301; separately recorded, no claim of whole-app hardware accessibility acceptance",
-  "initialRun": {
-    "id": 42701185716,
-    "status": "FAILURE",
-    "cross1": "SUCCESS",
-    "cross3": "SUCCESS",
-    "test": "FAILURE obsolete layout assumption",
-    "cross2": "FAILURE same assumption",
-    "artifacts": 5,
-    "jsonReports": 156,
-    "decodedPNGs": 1417,
-    "allDigestsAndContentQualified": true
-  },
-  "visualFollowup": {
-    "head": "96522496e399752c26bfb0661f75f2b3f1878b5c",
-    "tree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
-    "pushed": false,
-    "cause": "normal-size More label fragmentation visible in original CI screenshots",
-    "paths": [
-      "styles.css",
-      "tests/structured-quality-browser-contract.mjs"
-    ],
-    "localVersions": {
-      "chromium": "141.0.7390.37",
-      "firefox": "157.0",
-      "webkit": "27.2"
+  "previousRuns": [
+    {
+      "head": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "run": 42701185716,
+      "result": "FAILURE",
+      "cause": "obsolete onboarding predecessor assumption",
+      "artifacts": 5,
+      "JSON": 156,
+      "PNG": 1417,
+      "fullyQualifiedAndRetained": true
     },
-    "normalLabel": "one line and bounded",
-    "zoom200": "PASS",
-    "periods": "all three engines PASS"
-  }
+    {
+      "head": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
+      "run": 42705095823,
+      "result": "SUCCESS_SUPERSEDED",
+      "cause": "confirmed normal More label fragmentation in actual CI images",
+      "artifacts": 6,
+      "JSON": 224,
+      "PNG": 2059,
+      "fullyQualifiedAndRetained": true
+    }
+  ],
+  "backup": {
+    "savedVersion": 129,
+    "savedPaths": 28339,
+    "savedReadback": "identical",
+    "savedSHA256": "9051b84b6eb6a8c7d8905f7825b414cc80c56647526a7ae048e995feafaf3431",
+    "localV130": {
+      "paths": 28387,
+      "bytes": 547429476,
+      "sha256": "911069e42cbe2f700b774f80dca6d60fbd6fe09edca25a095116f2c092b34dbb",
+      "allPathsVerified": true,
+      "writeOutcome": "UNKNOWN; no automatic retry; durable metadata still129"
+    }
+  },
+  "publicRelease": false,
+  "privacyClearance": "not yet evidenced",
+  "parallelAuditor": "independent read-only",
+  "physicalAndroidTalkBackSafariOAuth": "not performed; external",
+  "legacyK6Finding": "200% fixed-height empty-chart copy overlap also reproduced on unchanged v301; separate from new review row",
+  "noDuplicateRetryOrCancellation": true
 }
