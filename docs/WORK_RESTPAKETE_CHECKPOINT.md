@@ -1,3 +1,19 @@
+## HND01 autorisierte Notfallübernahme · Owner a6ff240d7772 allein ACTIVE · 09.11.2026
+
+**Beauftragung von `39ca9a8217a6` durch den Nutzer endgültig widerrufen; bisherige ACTIVE-Einträge SUPERSEDED / REVOKED.** Alleinige Entwicklungs-/Integrations-/QA-/Releaseverantwortung jetzt `a6ff240d7772`, nach ausdrücklich autorisierter Notfallübernahme ohne reguläre Übergabedatei. [Prüfung, Widerruf und Fortsetzungsvertrag](HND01_EMERGENCY_TAKEOVER_a6ff240d7772_2026-11-09.md). Keine STOPPED-Erklärung des Vorgängers erfunden.
+
+**v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`. UI-R1/UI-R2 DONE; PR321 integriert und Main-/Produktionslauf42633639603 SUCCESS. Keine Wiederabnahme/identische CI.
+
+Frisch geprüft:567Refs/285Branches, unveränderter Main/Checkpoint, nur historische Drafts157/161 offen,0laufende/0queuedActions, keine konkrete neue parallele Schreibaktivität. Fehlende Actions sind kein Prozessstoppbeweis; expliziter Widerruf plus konsistenter Zustand und erwartete Branch-HEAD-Bedingung begründen diese kontrollierte Übernahme. Jede unerwartete Fremdänderung blockiert weitere Mutationen.
+
+**V128 unverändert und selbst vollständig verifiziert:**391.285.424Bytes, SHA256`bf1931b5a44145a554384859dc79ab4d75b7fe3edbc7c6a120a903f05ef28b84`,28.303Manifestpfade/0Fehler; sämtliche Originale/Decimal-Oracles erhalten. Spätere v301-OriginalZIPs/Audit-WIP laut Vorgänger nur lokal; noch kein neuer Sicherungsstand behauptet.
+
+**Aktive Arbeit: bestehenden Datenschutz-Audit abschließen und neue Originalnachweise privat sichern**, danach UI-R3/K1–K6 seriell gemäß kanonischer41Scope-Matrix. Alle Schutzverträge/externeGates erhalten. GitHubnurPlugin; kein vollständigerCheckpointbranch-Merge. Zähler0Releases/0Produktpakete.
+
+---
+
+> Historischer folgender Kopf: Ownerstatus `39ca9a8217a6 ACTIVE` ist durch obigen ausdrücklichen Widerruf und die Notfallübernahme überholt; fachliche Belege bleiben gültig.
+
 ## v301 LIVE_ACCEPTED / UI-R2 DONE · Datenschutz-Audit in Arbeit · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
 
 **v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`, SW `foliolab-open-v301`. PR321 exakt qualifiziert integriert; [vollständiger Abnahmeindex](release-evidence/v301-live-accepted.json). Integration42628020936/Wallet42628020931 und regulärer Main-/Produktionslauf42633639603 Versuch1 SUCCESS; Deployment129227834059/Live129228439531 SUCCESS.
