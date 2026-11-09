@@ -1,3 +1,15 @@
+## UI-R2 · PR321 Integration IN_PROGRESS · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
+
+v300 bleibt LIVE_ACCEPTED, Main `eda51c008e3c906c9b1d9c485c8d1aa6916fb971`. UI-R2 in [PR321](https://github.com/joke0071/foliolab-open/pull/321), eingefrorener HEAD `012335777c81ae62289a64322fd8193974f37462`, Tree `4528097d89271c9dc93d14334ba30c7bc6e41ad0`, getestete PR-Mergeref `d2361f901df4062b31cb7473a7a6367754644c2f`. Reguläre Integration42623686242 Versuch1 IN_PROGRESS; Wallet42623686219 SUCCESS. Kein Abbruch/Retry/Duplikat und kein Merge vor vollständiger Qualifikation.
+
+Lokale1345Units/Syntax/SW, Auswahl/Long-Press/44px/indeterminate/Keyboard/exakteIDB-Bytes und 0/1/100/101-Verwaltungsmatrix in3Engines PASS. Computed200%Chromium/Firefox PASS; älterer lokaler WebKit26 zeigt **denselben unveränderten normalen Verlaufsfilter-Overflow** auf Main und Kandidat (320px/scroll383), keine UI-R2-Regression, kein Gate gelockert. Tatsächliche Pflicht-CI bleibt maßgeblich.
+
+**Gesichertes lokales Follow-up-WIP:** ursprünglicher #300-Vertrag verlangt zusätzlich sichtbaren Desktop-Hover. [Reproduzierbarer enger Patch](UI_R2_HOVER_WIP_39ca9a8217a6.patch) ergänzt Hover nur für aktivierbare Iconcheckboxen und tatsächliche Hover-/Disabled-Gegenprobe; lokal3Engines PASS. Noch nicht auf Kandidatenref gepusht, bestehende CI regulär auslaufen lassen. Danach nur geänderten vollständigen Kandidaten erneut einfrieren/qualifizieren. App-/Finanz-/Storage-/Auswahllogik unverändert.
+
+Private V127 vollständig verifiziert (27.845Dateien); V128 mit vorhandenem Kandidaten-/Übernahme-/lokalem Belegstand wird zusätzlich verlustfrei aufgebaut. Noch kein V128-Speicher-/Readback-PASS behauptet. Alle41Scopes, Originale, Decimal-Oracles und EFF01/EFF02/HND01 erhalten. UI-R3 erst nach sicher abgeschlossenem UI-R2; keine parallele Produktimplementierung. Zähler0Releases/0abgeschlossenePakete.
+
+---
+
 ## HND01 regulär übernommen · Owner 39ca9a8217a6 allein ACTIVE · 09.11.2026
 
 Reguläre alleinige Übernahme von `0f34093e6ee3` nach dessen ausdrücklichem STOPPED/HANDOVER_READY. Vor erstem Repository-Schreibzugriff frisch geprüft: Main/Tree, alle565Refs (284Branchrefs), offene PRs157/161 und abgeschlossene320, Reviews/Threads/Kommentare, Actions (0aktiv/0queued),31offeneIssues und WIP. Gegen den privaten Abgabesnapshot ausschließlich finale Checkpointpublikation034d539 und GitHub-generierte historische PR161-Mergeref geändert; keine konkurrierende Produktarbeit. Alle bisherigen Originalaufträge und EFF01/EFF02/HND01 gelten unverändert.
