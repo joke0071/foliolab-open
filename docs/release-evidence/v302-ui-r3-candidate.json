@@ -1,0 +1,85 @@
+{
+  "owner": "c43b5e91f20a",
+  "base": "1708d4e947061f353187727ccae54daa1727db7e",
+  "mainTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
+  "lastLiveAccepted": 301,
+  "candidateHead": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+  "candidateTree": "0e0ccc8d2a32fea928350cc5357293d4afb60543",
+  "branch": "ui/ui-r3-review-periods-v302-c43b5e91f20a",
+  "status": "INTEGRATION_IN_PROGRESS",
+  "files": [
+    "index.html",
+    "src/app.js",
+    "src/format.js",
+    "styles.css",
+    "sw.js",
+    "tests/structured-quality-browser-contract.mjs"
+  ],
+  "tests": {
+    "units": 1345,
+    "failures": 0,
+    "skips": 0,
+    "syntax": "PASS",
+    "reviewEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "reviewCounts": [
+      0,
+      1,
+      5
+    ],
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "zoom": "200% computed text",
+    "periods": "all three PASS",
+    "selection": "all three PASS",
+    "loadingPWA": "all three PASS",
+    "hardwareAndroid": "NOT PERFORMED; external",
+    "TalkBack": "NOT PERFORMED; external"
+  },
+  "audit": {
+    "role": "independent read-only",
+    "publicRelease": "requires relevant critical findings resolved and required clearance"
+  },
+  "backup": {
+    "previousVersion": 128,
+    "previousSHA256": "bf1931b5a44145a554384859dc79ab4d75b7fe3edbc7c6a120a903f05ef28b84",
+    "all28303ManifestPayloadsVerified": true,
+    "postV128predecessorLocalEvidenceAvailable": false
+  },
+  "next": "Save and verify same private identity; open the one regular UI-R3 integration PR. No duplicate CI, no release before qualification/privacy gate.",
+  "pr": 322,
+  "testedMerge": "fe320eb10300127528aeed583e282191d2bebb9f",
+  "integrationRun": 42701185716,
+  "walletRun": 42701185963,
+  "privacyClearance": "pending independent audit; no public release claimed",
+  "iconInventory": {
+    "alreadyConsistent": [
+      "shared format.svg renderer",
+      "position action icon map",
+      "history disclosure icons",
+      "calendar and add-reference outlines",
+      "install glyphs accepted in UI-R1"
+    ],
+    "deltas": [
+      "settings gear centered within standard viewBox",
+      "shield outline fits same bounds",
+      "storage/Drive header stroke 1.7 to existing family 1.8",
+      "settings/accounts/data panel neutral icon color"
+    ],
+    "excluded": [
+      "asset/provider logos",
+      "manifest/favicon/brand identities"
+    ],
+    "newDependencies": false
+  }
+}

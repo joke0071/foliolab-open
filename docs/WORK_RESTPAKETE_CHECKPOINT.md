@@ -1,10 +1,16 @@
-## HND01 Produktübernahme · Owner c43b5e91f20a allein ACTIVE · 09.11.2026
+## UI-R3 eingefroren · PR322 Integration läuft · Owner c43b5e91f20a allein ACTIVE · 09.11.2026
 
-**Ausdrückliche neue Nutzerentscheidung:** Produkt-Schreibverantwortung von `7bc0edcbe85a` widerrufen; er ist ausschließlich unabhängiger lesender Datenschutz-/Sicherheitsauditor. Neuer alleiniger Produkt-/Integrations-/QA-/Releaseowner `c43b5e91f20a`. [Übernahme und frische Kollisionsprüfung](HND01_TAKEOVER_c43b5e91f20a_2026-11-09.md). Frühere ACTIVE-Produktrechte von7bc0edcbe85a und seinen Vorgängern sind überholt; historische Inhalte unverändert erhalten.
+Alleiniger Produkt-/Integrations-/QA-/Releaseowner `c43b5e91f20a`; [autorisierte Übernahme](HND01_TAKEOVER_c43b5e91f20a_2026-11-09.md). `7bc0edcbe85a` ausschließlich unabhängiger lesender Datenschutz-/Sicherheitsauditor, ohne Produkt-Schreibrechte. Unerwartete Fremdänderungen blockieren Mutationen.
 
-**v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`; UI-R1/UI-R2 DONE. 567Refs konsistent, nur Drafts157/161,0aktive/queued/waiting/pendingActions. Private **V128 selbst vollständig verifiziert:28.303Manifestdateien/0Fehler**, ArchivSHA256`bf1931b5a44145a554384859dc79ab4d75b7fe3edbc7c6a120a903f05ef28b84`; alleOriginale/Oracles erhalten. Spätere nurlokalev301-/Auditbelege nicht als durchV128 gesichert ausgeben.
+**v301 bleibt LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`; UI-R1/UI-R2 DONE. **UI-R3 in [PR322](https://github.com/joke0071/foliolab-open/pull/322)**, Branch`ui/ui-r3-review-periods-v302-c43b5e91f20a`, eingefrorener HEAD`258fb2370ae7558b5678b48035b43c0ae74d4dc0`, Tree`0e0ccc8d2a32fea928350cc5357293d4afb60543`, PR-Testmerge`fe320eb10300127528aeed583e282191d2bebb9f`. Exakt6Dateien: integrierter Prüfhinweis unterGesamtvermögen, ruhigeZeitraumflächen, gezielteIcon-Deltas, bestehenderUI-Vertrag, SWv302. KeineFinanz-/Storage-/Periodenlogikänderung.
 
-**AktiveArbeit: UI-R3 einschließlich integriertem Prüfhinweis unter Gesamtvermögen**, anschließend K1–K6 seriell gemäß kanonischer41Scope-Matrix. Audit unabhängig/lesend parallel, kein generellerEntwicklungsstopp; kritischeBefunde/Freigabegates voröffentlichemRelease beachten. Kein UI-R3-PR bisher. Keine neueCI/Releasewiederabnahme durchÜbernahme. EFF01/EFF02/HND01 gültig; Checkpointbranch niemalsvollständigmergen. Zähler0Releases/0Produktpakete.
+Lokale **1345Units/0Fehler/0Skips/Syntax PASS**. DreiEngines:0/1/5Prüfpositionen,7Breiten320–1440,200%-Text,Tastatur/Axe/Navigation/Fokusrückkehr/Filter/exakteIDB-BytesRevision PASS; vorhandeneZeitraum-/Langzeit-/LongPress-/Auswahl-/LoaderPWA-Gates PASS. AndroidHardware/TalkBack/Safari/OAuth unverändert extern, keinGeräte-PASS behauptet.
+
+**Reguläre Integration42701185716 und Wallet42701185963 Versuch1 laufen.** Kein Gesamt-PASS, keinMerge/Deployment; Kandidat bleibt eingefroren, keineCI duplizieren/abbrechen. [Kandidaten-/Scopebeleg](release-evidence/v302-ui-r3-candidate.json).
+
+Private **V128 vollständig selbst verifiziert:28.303Manifestdateien/0Fehler**, Originale/Decimal-Oracles erhalten. Neuer Sicherungsschnitt mit Übernahme/Kandidat/lokalerQA unter gleicherIdentität inArbeit; noch keinSpeicher-/Readback-PASS. SpätereVorgänger-v301-/Audit-WIPnichtalsinV128gesichertausgeben.
+
+NächsteAktion: dieselbenregulärenLäufevollständigqualifizieren/Belege sichern; Main-/Releasefreigabe erstnachallenGates und erforderlicherDatenschutzklärung. AuditkeinallgemeinerEntwicklungsstopp; währendCI nurlesendeK1-Original-/Oraclezuordnung, keinezweiteProduktimplementierung. DanachK1–K6seriell gemäß[kanonischer41Scope-Matrix](KONSOLIDIERTE_ROADMAP.md). EFF01/EFF02/HND01 undalleSchutzverträgeerhalten; Checkpointbranchniemalsvollständigmergen. Zähler0Releases/0abgeschlosseneProduktpakete.
 
 ---
 
