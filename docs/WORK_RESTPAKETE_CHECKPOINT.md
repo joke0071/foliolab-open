@@ -1,3 +1,15 @@
+## HND01 regulär übernommen · Owner 39ca9a8217a6 allein ACTIVE · 09.11.2026
+
+Reguläre alleinige Übernahme von `0f34093e6ee3` nach dessen ausdrücklichem STOPPED/HANDOVER_READY. Vor erstem Repository-Schreibzugriff frisch geprüft: Main/Tree, alle565Refs (284Branchrefs), offene PRs157/161 und abgeschlossene320, Reviews/Threads/Kommentare, Actions (0aktiv/0queued),31offeneIssues und WIP. Gegen den privaten Abgabesnapshot ausschließlich finale Checkpointpublikation034d539 und GitHub-generierte historische PR161-Mergeref geändert; keine konkurrierende Produktarbeit. Alle bisherigen Originalaufträge und EFF01/EFF02/HND01 gelten unverändert.
+
+**v300 bleibt LIVE_ACCEPTED:** Main `eda51c008e3c906c9b1d9c485c8d1aa6916fb971`, Tree `34c90e0ec5597db2047b404a2f814fe1bfd1c770`, PR320 abgeschlossen, Produktionsworkflow42573930681 Versuch1 SUCCESS. [Abnahmeindex](release-evidence/v300-live-accepted.json) vollständig gelesen und wiederverwendet; keine erneute Abnahme, keine identische CI.
+
+**Private V127 frisch vollständig verifiziert:** gleiche Identität,362.618.516Bytes,SHA256 `b497c1a3e30699dbdf45e8776690bbc7f36b15eee1709777aa3da877686de5cf`, gewöhnlich entpackt und alle27.845Manifestpfade PASS.579relevante Quellblobs exakt gegen Main geprüft. Zusätzlich vorhandene historische Doku-Capturedatei ist kein aktueller Produktquellstand und wird nicht übernommen. Keine ungesicherte Produktänderung; UI-R2 noch nicht implementiert.
+
+**Aktiver nächster Schnitt UI-R2**, mainbasiert, zunächst lokale gezielte Reproduktion. [Taskkarte](UI_R2_TASK_39ca9a8217a6.md); kanonische [41-Teilumfang-Matrix](KONSOLIDIERTE_ROADMAP.md) bleibt einzige Roadmap. Danach UI-R3/K1–K6 seriell. Reale Android-/Safari-/OAuth-/TalkBack-Gegenproben bleiben extern offen. Kein vollständiger Checkpointbranch-Merge. Zähler seit Übernahme:0akzeptierteReleases/0abgeschlosseneProduktpakete.
+
+---
+
 ## v300 LIVE_ACCEPTED · HND01 STOPPED/HANDOVER_READY · Owner 0f34093e6ee3 · 09.11.2026
 
 **Owner `0f34093e6ee3` ist ausdrücklich STOPPED/HANDOVER_READY.** Reguläre vollständige Abgabe am sicheren abgeschlossenen Releasepunkt wegen Kontextlast gemäß HND01; sämtliche Entwicklungs-, Integrations-, QA-, CI-, Merge- und Releaseaktivitäten eingestellt. Kein Nachfolger automatisch eingesetzt; historische ACTIVE-Köpfe darunter sind überholt. [Vollständige Übergabe und kopierfertiger Startprompt](HANDOVER_0f34093e6ee3_2026-11-09.md).
