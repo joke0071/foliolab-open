@@ -26,6 +26,56 @@ const lists={
  bookings:{nav:'bookings',row:'.booking-management-row[data-booking-id="bk-1"]',box:'[data-booking-select]',done:'[data-booking-manage="cancel"]',manage:'#bookingListHead [data-booking-manage="select"]',open:'.booking-management-row[data-booking-id="bk-1"] details.booking-meta'},
  references:{nav:'history',row:'.reference-row[data-reference-id="ref-1"]',box:'[data-reference-select]',done:'#manageReferences[aria-pressed="true"]',manage:'#manageReferences',open:null}
 };
+// UI-R2: inspect the actual native controls and CSS without changing selection logic.
+const selectionPresentation=async(p,name,c,engine)=>{
+ const master=p.locator({positions:'#positionSelectFiltered',bookings:'#bookingSelectFiltered',references:'#referenceSelectVisible'}[name]);
+ const box=p.locator(c.box).first();
+ assert.equal(await box.evaluate(e=>getComputedStyle(e).accentColor),'rgb(38, 112, 68)',name+' coherent native accent');
+ if(name==='positions'){
+  assert.equal(await box.evaluate(e=>{const s=getComputedStyle(e.nextElementSibling,'::after');return s.content==='""'&&parseFloat(s.width)>=18&&s.borderStyle==='solid';}),true,'unchecked position has a visible empty selection badge');
+  assert.equal(await box.locator('..').getByRole('checkbox').count(),1,'one semantic position checkbox');
+  if(engine==='chromium'){
+   const hover=await p.context().browser().newPage({hasTouch:false,serviceWorkers:'block'});
+   try{
+    await hover.setContent('<link rel="stylesheet" href="'+base+'styles.css"><label class="selection-mark"><input type="checkbox" aria-label="SYNTHETIC hover probe"><span class="selection-glyph"></span></label>');
+    assert.equal(await hover.evaluate(()=>matchMedia('(hover:hover)').matches),true,'desktop hover probe');
+    await hover.locator('input').hover();
+    assert.equal(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(237, 245, 239)','position hover is visible');
+    await hover.locator('input').evaluate(e=>e.disabled=true);
+    assert.notEqual(await hover.locator('.selection-glyph').evaluate(e=>getComputedStyle(e).backgroundColor),'rgb(237, 245, 239)','disabled position has no hover signal');
+   }finally{await hover.close();}
+  }
+  await box.evaluate(e=>e.disabled=true);
+  assert.equal(await box.evaluate(e=>getComputedStyle(e.nextElementSibling).opacity),'0.5','disabled position remains visibly disabled');
+  await box.evaluate(e=>e.disabled=false);
+ }
+ await box.click();
+ assert.equal(await master.evaluate(e=>e.indeterminate),true,name+' partial selection remains native indeterminate');
+ if(name==='positions')assert.notEqual(await box.evaluate(e=>getComputedStyle(e.nextElementSibling,'::after').content),'""','checked badge has a mark');
+ await master.click();
+ assert.equal(await master.evaluate(e=>getComputedStyle(e.closest('label')).outlineStyle),'none',name+' pointer has no extra master outline');
+ await p.keyboard.press('Tab');await p.keyboard.press('Shift+Tab');
+ assert.equal(await master.evaluate(e=>e.matches(':focus-visible')&&getComputedStyle(e).outlineStyle==='solid'&&parseFloat(getComputedStyle(e).outlineWidth)>=2&&getComputedStyle(e.closest('label')).outlineStyle==='none'),true,name+' one visible keyboard focus');
+ const checked=await master.isChecked();
+ await master.evaluate(e=>{e.disabled=true;e.click();});
+ assert.equal(await master.isChecked(),checked,name+' disabled native master cannot toggle');
+ await master.evaluate(e=>e.disabled=false);
+ for(const width of [320,390,1440]){
+  await p.setViewportSize({width,height:900});
+  assert.equal(await box.locator('..').evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44;}),true,name+' checkbox44px '+width);
+  assert.equal(await master.locator('..').evaluate(e=>{const r=e.getBoundingClientRect();return r.width>=44&&r.height>=44;}),true,name+' master44px '+width);
+  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' selection overflow '+width);
+  await box.scrollIntoViewIfNeeded();
+  await p.screenshot({path:'artifacts/gates/ui-alltag10/'+engine+'-'+name+'-selection-'+width+'.png'});
+ }
+ if(engine==='chromium'&&name==='positions'){
+  await p.emulateMedia({forcedColors:'active'});
+  assert.equal(await box.evaluate(e=>getComputedStyle(e.nextElementSibling,'::after').borderStyle),'solid','forced-colors selection badge remains visible');
+  await p.screenshot({path:'artifacts/gates/ui-alltag10/chromium-position-selection-forced-colors.png'});
+  await p.emulateMedia({forcedColors:'none'});
+ }
+ await p.setViewportSize({width:390,height:900});
+};
 const record=p=>p.evaluate(async()=>{const {openPortfolioDB,readPortfolioRecord}=await import('/src/atomic-storage.js');const db=await openPortfolioDB();try{return JSON.stringify(await readPortfolioRecord(db));}finally{db.close();}});
 for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
@@ -85,7 +135,7 @@ for(const engine of (process.env.UI_ENGINES||'chromium').split(',')){
   await p.locator(c.done).first().click();await p.waitForTimeout(300);assert.equal(await selecting(),0,name+' Fertig removes checkboxes');
   assert.equal(await p.locator(c.manage).count()>0,true,name+' Verwalten reachable again');
   // deliberate path without long press
-  await p.locator(c.manage).first().click();assert.ok(await selecting()>0,name+' Verwalten works without long press');await p.locator(c.done).first().click();
+  await p.locator(c.manage).first().click();assert.ok(await selecting()>0,name+' Verwalten works without long press');await selectionPresentation(p,name,c,engine);await p.locator(c.done).first().click();
   result[name]='PASS';
  }
 
