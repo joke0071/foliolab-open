@@ -1,5 +1,11 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## Fortschreibung – UI-R1/v300 abgeschlossen, 09.11.2026
+
+**v300 LIVE_ACCEPTED**, [vollständiger SHA-/Abnahmeindex](release-evidence/v300-live-accepted.json); genau nächster Schritt **UI-R2**, danach UI-R3/K1–K6 gemäß [kanonischer 41-Teilumfang-Matrix](KONSOLIDIERTE_ROADMAP.md). Alle EFF01/EFF02/HND01- und Schutzverträge unverändert. Aktueller Owner-/STOPPED-Status ausschließlich im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md); [HND01-Abgabe nach einem akzeptierten Release wegen Kontextlast](HANDOVER_0f34093e6ee3_2026-11-09.md).
+
+Regulärer Main-/Produktionslauf42573930681 Versuch1 SUCCESS: Workflow-Wandzeit66:36, Summe erfolgreicher Jobs104:54; Chromium20:03, Cross1/2/3 11:47/6:39/21:05, Deploy0:14, Live44:57. Gemessene Job-/Runzeitstempel, keine Abrechnungseinheiten. Keine Optimierung umgesetzt oder Ersparnis behauptet; Work-/Copilot-Verbrauch UNKNOWN. Vorhandene PR320-Qualifikation wiederverwendet; keine doppelte CI/kein Retry/Abbruch. CI-B/C weiterhin getrennte spätere Pakete.
+
 ## EFF02 – aktueller verbindlicher Fortsetzungsplan, 08.11.2026 nach v299
 
 **v299 LIVE_ACCEPTED** auf Main `1f051a7059d24751f961fcf2af7fa226b319079e`, Tree `c4d3208a342ab5f8d5217b9f01de7b49b1cc44e6`; [bestehender SHA-Belegindex](release-evidence/v299-live-accepted.json). Owner `8cb2927f295c` allein ACTIVE; keine neue Übernahme. Alle bisherigen EFF01-/HND01-/Finanz-/Journal-/CAS-/Mehrtab-/Backup-/Restore-/Offline-/PWA-/Datenschutzverträge gelten weiter. Historische Prioritätsangaben weiter unten werden durch diese neuere Nutzerentscheidung präzisiert, nicht als neuer Auftrag zum Wiederbau gelesen.

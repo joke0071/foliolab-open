@@ -1,3 +1,9 @@
+## Aktuelle Fortsetzung – 09.11.2026 nach v300
+
+v300 LIVE_ACCEPTED / UI-R1 DONE; [vollständiger Abnahmeindex](release-evidence/v300-live-accepted.json). Genau nächster Schritt UI-R2, danach UI-R3/K1–K6 seriell gemäß [kanonischer Roadmap](KONSOLIDIERTE_ROADMAP.md) und [EFF01/EFF02/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md). Alle 41 Teilumfänge und Originalaufträge erhalten; historische Prioritäten unten nicht als Wiederbauauftrag lesen. Aktueller Owner-/Abgabestatus allein im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) und [HND01](HANDOVER_0f34093e6ee3_2026-11-09.md).
+
+---
+
 ## Aktuelle Fortsetzung – 06.11.2026
 
 Maßgeblich für Main, Owner, Releasebelege und die nächste Aufgabe ist der [aktuelle zentrale Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md). Der [vollständige v292-Abschluss](release-evidence/v292-pr311-live-acceptance.json) und die [anschließende begrenzte UH05-Vorarbeit](UH05_AFTER_v292_2026-11-06.md) sind dort verlinkt. [EFF01/HND01](WORK_EFFICIENCY_PLAN_2026-11-01.md) gilt; ältere Release-/Ownerangaben unten sind historische Stände, keine aktuelle Schreibzuständigkeit. Alle bisherigen offenen Aufträge bleiben erhalten.
