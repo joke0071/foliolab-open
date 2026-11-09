@@ -1914,6 +1914,7 @@
 .selection-mark>input:checked+.selection-glyph::after{content:"\2713";border-color:#267044;background:#267044}
 .selection-mark>input:disabled+.selection-glyph{opacity:.5}
 .selection-mark>input:disabled{cursor:not-allowed}
+@media(hover:hover){.selection-mark>input:not(:disabled):hover+.selection-glyph{border-color:#267044;background:#edf5ef}}
 .selection-mark>input:focus-visible+.selection-glyph{outline:3px solid #2d6946;outline-offset:2px}
 @media(forced-colors:active){
  .selection-mark .selection-glyph{border-color:ButtonText;background:Canvas;color:CanvasText}
