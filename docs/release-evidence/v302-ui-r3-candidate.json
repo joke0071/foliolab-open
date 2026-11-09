@@ -6,7 +6,7 @@
   "candidateHead": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
   "candidateTree": "c36f4be2a06b8aed6c9da980c08b515c797530dc",
   "branch": "ui/ui-r3-review-periods-v302-c43b5e91f20a",
-  "status": "FINAL_INTEGRATION_IN_PROGRESS",
+  "status": "CURRENT_INTEGRATION_RUNNING_MORE_LABEL_WIP",
   "files": [
     "index.html",
     "src/app.js",
@@ -100,7 +100,7 @@
       "firefox",
       "webkit"
     ],
-    "pushed": false
+    "pushed": true
   },
   "preparedCorrection": {
     "head": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
@@ -111,7 +111,7 @@
     "localABCE": "all three engines PASS"
   },
   "initialCross1": "SUCCESS",
-  "initialCross3": "IN_PROGRESS",
+  "initialCross3": "SUCCESS",
   "legacyK6Finding": "Existing fixed-height empty-chart copy overlaps status under 200% computed text on unchanged v301; separately recorded, no claim of whole-app hardware accessibility acceptance",
   "initialRun": {
     "id": 42701185716,
@@ -124,5 +124,23 @@
     "jsonReports": 156,
     "decodedPNGs": 1417,
     "allDigestsAndContentQualified": true
+  },
+  "visualFollowup": {
+    "head": "96522496e399752c26bfb0661f75f2b3f1878b5c",
+    "tree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
+    "pushed": false,
+    "cause": "normal-size More label fragmentation visible in original CI screenshots",
+    "paths": [
+      "styles.css",
+      "tests/structured-quality-browser-contract.mjs"
+    ],
+    "localVersions": {
+      "chromium": "141.0.7390.37",
+      "firefox": "157.0",
+      "webkit": "27.2"
+    },
+    "normalLabel": "one line and bounded",
+    "zoom200": "PASS",
+    "periods": "all three engines PASS"
   }
 }
