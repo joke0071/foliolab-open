@@ -1,0 +1,77 @@
+{
+  "status": "MAIN_GATES_AND_STATIC_PRODUCTION_QUALIFIED_LIVE_PENDING",
+  "owner": "0f34093e6ee3",
+  "PR": 320,
+  "head": "eda51c008e3c906c9b1d9c485c8d1aa6916fb971",
+  "testedCommit": "eda51c008e3c906c9b1d9c485c8d1aa6916fb971",
+  "tree": "34c90e0ec5597db2047b404a2f814fe1bfd1c770",
+  "run": 42573930681,
+  "attempt": 1,
+  "result": "SUCCESS",
+  "units": 1345,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "artifactCount": 6,
+  "jsonReports": 224,
+  "decodedPNGs": 2004,
+  "artifactBinding": "API/upload/local SHA256+size; ZIP CRC; every JSON/PNG parsed/decoded",
+  "version": 300,
+  "noCIRetryDuplicateOrCancel": true,
+  "physicalDeviceAcceptance": false,
+  "newImagesViewed": true,
+  "newImagesViewedCount": 6,
+  "deployment": "SUCCESS",
+  "liveJob": 129024268542,
+  "liveStatus": "IN_PROGRESS",
+  "lastAccepted": "v299 LIVE_ACCEPTED",
+  "deploymentJob": 129024182701,
+  "pagesGitBlobMatches": 152,
+  "ordinaryTLSPaths": 153,
+  "certificateException": false,
+  "rootIndexMatch": true,
+  "artifacts": [
+    {
+      "id": 13655700065,
+      "name": "dialog-visual-reference",
+      "size": 933614,
+      "sha256": "001142a65edf31fa12ad36005ddd3bac5b9f1647936301884b5a3d51e8f3f572"
+    },
+    {
+      "id": 13655411413,
+      "name": "cross-engine-gates-eda51c008e3c906c9b1d9c485c8d1aa6916fb971-3",
+      "size": 66789252,
+      "sha256": "1787d66f73a185ed6f94bc24e0cb8294209754549ba16713d68132a1f79d2053"
+    },
+    {
+      "id": 13655250155,
+      "name": "cross-engine-gates-eda51c008e3c906c9b1d9c485c8d1aa6916fb971-1",
+      "size": 57451816,
+      "sha256": "823774e96acc5e00e7d0e8e3ee2a07538c8ed350a579f8bce8c60ebb188f66c8"
+    },
+    {
+      "id": 13655147715,
+      "name": "github-pages",
+      "size": 563809,
+      "sha256": "2f89ee413a6834242b1fb3a59eeddfa263c2ab867865c5a7b4378d2b566ed9b6"
+    },
+    {
+      "id": 13654973589,
+      "name": "release-gates-eda51c008e3c906c9b1d9c485c8d1aa6916fb971",
+      "size": 63163430,
+      "sha256": "261bcbf83a57fe82cee8afa539e6e89adc4b8452278f5adfb1fa5d0ba66075a1"
+    },
+    {
+      "id": 13654631254,
+      "name": "ci-stage-eda51c008e3c906c9b1d9c485c8d1aa6916fb971",
+      "size": 353,
+      "sha256": "5952be57a43f30033b141637f621248ab09cf68f97119f54b4fa0d80eba1758d"
+    },
+    {
+      "id": 13654338725,
+      "name": "cross-engine-gates-eda51c008e3c906c9b1d9c485c8d1aa6916fb971-2",
+      "size": 11930583,
+      "sha256": "a26bf57ef78d5bcd126971ae0f255fb67d55a271e2ab645af046eef41541d596"
+    }
+  ]
+}
