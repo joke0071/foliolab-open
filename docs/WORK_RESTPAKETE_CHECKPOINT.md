@@ -1,3 +1,19 @@
+## HND01 Notfallübernahme · Owner 7bc0edcbe85a allein ACTIVE · 09.11.2026
+
+**Nutzer widerruft ausdrücklich sowohl `39ca9a8217a6` als auch Nachfolger `a6ff240d7772`.** Frühere ACTIVE-Einträge beider Sitzungen SUPERSEDED / REVOKED. Alleinige Entwicklungs-/Integrations-/QA-/Releaseverantwortung jetzt `7bc0edcbe85a`; [frische Prüfung und Übernahmevertrag](HND01_EMERGENCY_TAKEOVER_7bc0edcbe85a_2026-11-09.md).
+
+**v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`; UI-R1/UI-R2 DONE. Keine Wiederabnahme/identischeCI.
+
+Erneut285Branchrefs/282PR-Refs, unveränderteMain/Checkpoint-HEADs, nur historischeDrafts157/161, jeweils0in_progress/queued/waiting/pendingActions; keine konkrete neue parallele Schreibaktivität. Übernahme atomar mit erwartetem Branch-HEAD; unerwarteteFremdänderung stoppt Mutationen.
+
+**PrivateV128 unverändert vorhanden; eigene erneute Verifikation läuft.** Nach V128 entstandene v301-OriginalZIPs/Audit-WIP bis tatsächlicher Wiedergewinnung weiterhin NICHT DURCH V128 GESICHERT. Keine lokaleVorgänger-Vollständigkeit behauptet; sämtliche vorhandenenOriginale/Schutzverträge erhalten.
+
+**AktiveArbeit: Datenschutz-Audit abschließen und Belege privat sichern**, danach UI-R3/K1–K6 seriell gemäß kanonischer41Scope-Matrix. GitHubnurPlugin; kein vollständigerCheckpointbranch-Merge. Zähler0Releases/0Produktpakete.
+
+---
+
+> Historischer folgender Kopf: `a6ff240d7772 ACTIVE` ist ausdrücklich widerrufen/überholt; fachliche Nachweise bleiben erhalten.
+
 ## HND01 autorisierte Notfallübernahme · Owner a6ff240d7772 allein ACTIVE · 09.11.2026
 
 **Beauftragung von `39ca9a8217a6` durch den Nutzer endgültig widerrufen; bisherige ACTIVE-Einträge SUPERSEDED / REVOKED.** Alleinige Entwicklungs-/Integrations-/QA-/Releaseverantwortung jetzt `a6ff240d7772`, nach ausdrücklich autorisierter Notfallübernahme ohne reguläre Übergabedatei. [Prüfung, Widerruf und Fortsetzungsvertrag](HND01_EMERGENCY_TAKEOVER_a6ff240d7772_2026-11-09.md). Keine STOPPED-Erklärung des Vorgängers erfunden.
