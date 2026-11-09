@@ -1,3 +1,15 @@
+## HND01 Produktübernahme · Owner c43b5e91f20a allein ACTIVE · 09.11.2026
+
+**Ausdrückliche neue Nutzerentscheidung:** Produkt-Schreibverantwortung von `7bc0edcbe85a` widerrufen; er ist ausschließlich unabhängiger lesender Datenschutz-/Sicherheitsauditor. Neuer alleiniger Produkt-/Integrations-/QA-/Releaseowner `c43b5e91f20a`. [Übernahme und frische Kollisionsprüfung](HND01_TAKEOVER_c43b5e91f20a_2026-11-09.md). Frühere ACTIVE-Produktrechte von7bc0edcbe85a und seinen Vorgängern sind überholt; historische Inhalte unverändert erhalten.
+
+**v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`; UI-R1/UI-R2 DONE. 567Refs konsistent, nur Drafts157/161,0aktive/queued/waiting/pendingActions. Private **V128 selbst vollständig verifiziert:28.303Manifestdateien/0Fehler**, ArchivSHA256`bf1931b5a44145a554384859dc79ab4d75b7fe3edbc7c6a120a903f05ef28b84`; alleOriginale/Oracles erhalten. Spätere nurlokalev301-/Auditbelege nicht als durchV128 gesichert ausgeben.
+
+**AktiveArbeit: UI-R3 einschließlich integriertem Prüfhinweis unter Gesamtvermögen**, anschließend K1–K6 seriell gemäß kanonischer41Scope-Matrix. Audit unabhängig/lesend parallel, kein generellerEntwicklungsstopp; kritischeBefunde/Freigabegates voröffentlichemRelease beachten. Kein UI-R3-PR bisher. Keine neueCI/Releasewiederabnahme durchÜbernahme. EFF01/EFF02/HND01 gültig; Checkpointbranch niemalsvollständigmergen. Zähler0Releases/0Produktpakete.
+
+---
+
+> Historischer folgender Kopf: `7bc0edcbe85a ACTIVE` als Produktowner ist ausdrücklich widerrufen; seine Auditrolle ist ausschließlich lesend.
+
 ## HND01 Notfallübernahme · Owner 7bc0edcbe85a allein ACTIVE · 09.11.2026
 
 **Nutzer widerruft ausdrücklich sowohl `39ca9a8217a6` als auch Nachfolger `a6ff240d7772`.** Frühere ACTIVE-Einträge beider Sitzungen SUPERSEDED / REVOKED. Alleinige Entwicklungs-/Integrations-/QA-/Releaseverantwortung jetzt `7bc0edcbe85a`; [frische Prüfung und Übernahmevertrag](HND01_EMERGENCY_TAKEOVER_7bc0edcbe85a_2026-11-09.md).
