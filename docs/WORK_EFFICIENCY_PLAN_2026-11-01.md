@@ -1,5 +1,12 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## Zusatzauftrag – GitHub-Veröffentlichungs-/Datenschutz-Audit, 09.11.2026
+
+Im bestehenden QUALITY-TRUST01#298 und K6-TRUST/EFF02, keine neue Roadmap/Entwicklungsübernahme: zunächst vollständig lesender Audit aller erreichbaren Refs/Historie/gelöschten Gitdateien, PR-/Issue-Texte und Kommentare, Actions-Artefakte/ZIPs/Logs, Release-/Fixture-/Screenshot-/Kompressionsinhalte und Pages-/Runtime-Assets. Bereits tatsächlich geprüfte Inhalte per exakten Git-/Dateihashes wiederverwenden; synthetic-Label allein genügt nicht. Abdeckung pro Bereich mit realen Zahlen und BESTÄTIGT UNBEDENKLICH/FINDING/NICHT VOLLSTÄNDIG PRÜFBAR führen, keine pauschale100%-Behauptung.
+
+Bestehenden Owner und Produkt-CI erhalten; nur bestätigter sensibler Fund erzwingt Veröffentlichungsstopp betroffener Inhalte und private Fund-/Risikodokumentation. Keine sensiblen Werte/Pfade/Commit-Locators in öffentliche Fundberichte, keine eigenmächtigen Force-Pushes/Historienbereinigungen/CI-Abbrüche. Bereinigung erst konkret und freigegeben. Kollisionsfrei begrenzte Original-/Backupmuster, risikobasierten tracked-Blob-/Commit-Scan, explizit begründete synthetische Fixtures und datensparsame Beleg-/Artefakt-/Logregeln prüfen. Kein umfangreicher Pipeline-/Architekturumbau. Abschluss nur redigiert in #298 und EFF02; Originale/private Sicherungsidentität erhalten. Danach bestehenden1.0-Plan fortsetzen.
+
+
 ## Fortschreibung – UI-R1/v300 abgeschlossen, 09.11.2026
 
 **v300 LIVE_ACCEPTED**, [vollständiger SHA-/Abnahmeindex](release-evidence/v300-live-accepted.json); genau nächster Schritt **UI-R2**, danach UI-R3/K1–K6 gemäß [kanonischer 41-Teilumfang-Matrix](KONSOLIDIERTE_ROADMAP.md). Alle EFF01/EFF02/HND01- und Schutzverträge unverändert. Aktueller Owner-/STOPPED-Status ausschließlich im [zentralen Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md); [HND01-Abgabe nach einem akzeptierten Release wegen Kontextlast](HANDOVER_0f34093e6ee3_2026-11-09.md).
