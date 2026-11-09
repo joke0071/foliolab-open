@@ -1999,11 +1999,13 @@
 .flatex-net-actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.flatex-net-actions .btn{max-width:100%;white-space:normal;min-height:44px}
 
 /* UI300: one compact wealth summary at the existing chart, with a direct review entry. */
-.dashboard-review-entry:has([hidden]){display:none}
-.dashboard-review-entry{display:flex;justify-content:flex-end;margin:0 0 12px}
-.dashboard-review-chip{min-height:44px;max-width:100%;padding:9px 14px;border:1px solid #d8e3da;border-radius:24px;background:#f4f7f3;color:#315b43;font-size:13px;font-weight:650;line-height:1.4;text-align:left}
-.dashboard-review-chip::before{content:'!';display:inline-grid;place-items:center;width:17px;height:17px;margin-right:8px;border:1px solid currentColor;border-radius:50%;font-weight:750}
-.dashboard-review-chip:hover{background:#e8f1e8}
+.dashboard-review-row{display:grid;grid-template-columns:18px minmax(0,1fr) 16px;align-items:center;gap:9px;width:100%;min-height:44px;margin:9px 0 0;padding:8px 10px;border:0;border-radius:4px;background:#f2f6ef;color:#315b43;font:inherit;font-size:13px;font-weight:600;line-height:1.4;text-align:left;cursor:pointer}
+.dashboard-review-row>span{min-width:0;overflow-wrap:anywhere}
+.dashboard-review-row>svg{display:block;flex-shrink:0}
+.dashboard-review-arrow{opacity:.7}
+.dashboard-review-row:focus-visible{outline:2px solid #245b3f;outline-offset:2px}
+@media(hover:hover) and (pointer:fine){.dashboard-review-row:hover{background:#e8f0e3}}
+@media(forced-colors:active){.dashboard-review-row{border:1px solid ButtonText}.dashboard-review-row:focus-visible{outline-color:Highlight}}
 .dashboard-metrics{display:flex;flex-wrap:wrap;gap:18px 32px;margin:4px 0 20px;align-items:flex-start}
 .dashboard-metrics>div{min-width:0;flex:1 1 180px}
 .dashboard-metric-label{display:block;color:#506b59;font-size:12px;line-height:1.5}
@@ -2019,7 +2021,6 @@
  .mobile-nav button.active svg{stroke-width:2.4}
  .mobile-nav button.active span{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
  .mobile-nav button:focus-visible{outline:2px solid #245b3f;outline-offset:-2px}
- .dashboard-review-entry{margin-bottom:10px}
  .dashboard-metrics{gap:14px;margin-bottom:16px}
  .dashboard-metrics>div{flex-basis:100%}
 }
@@ -2028,3 +2029,23 @@
 .compact-panel-head{flex-wrap:wrap}
 .compact-panel-head>div{flex:1 1 10rem;min-width:0;max-width:100%}
 .compact-panel-head h2{margin-top:0;line-height:1.35;overflow-wrap:anywhere}
+
+/* UI-R3: preserve presets, disclosure geometry and semantics; quiet shared surfaces. */
+.chart-period,#historyPage .chart-period.history-chart-period,.chart-period.position-period{background:#f1f3f1;border-color:transparent;box-shadow:none}
+.chart-period button,#historyPage .chart-period.history-chart-period button,.chart-period.position-period button{color:#526158}
+.chart-period button.selected,.chart-period button[aria-pressed="true"],#historyPage .chart-period.history-chart-period button.selected,#historyPage .chart-period.history-chart-period button[aria-pressed="true"],.chart-period.position-period button.selected,.chart-period.position-period button[aria-pressed="true"]{background:#e3ebe0;color:#24533b;box-shadow:none}
+#settingsGear,#accountsIcon,#securityIcon{color:#53675b}
+@media(max-width:720px){
+ .chart-period:has(.period-more),#historyPage .chart-period.history-chart-period:has(.period-more){background:#f1f3f1;border-radius:10px}
+ .chart-period:has(.period-more) button:not(.selected),#historyPage .chart-period.history-chart-period:has(.period-more) button:not(.selected),.chart-period .period-more>summary{background:transparent;color:#526158}
+ .chart-period .period-more[open]>summary,.chart-period .period-more.has-active>summary,.chart-period:has(.period-more) button.selected,#historyPage .chart-period.history-chart-period:has(.period-more) button.selected{background:#e3ebe0;color:#24533b}
+}
+@media(hover:hover) and (pointer:fine){.chart-period button:not(:disabled):not(.selected):hover,.chart-period .period-more>summary:hover{background:#e6eae5}}
+
+/* Enlarged text wraps inside each existing period target instead of crossing its neighbour. */
+.chart-period:has(.period-more) button,#historyPage .chart-period.history-chart-period:has(.period-more) button,.chart-period .period-more>summary{white-space:normal;overflow-wrap:anywhere;line-height:1.3}
+
+.chart-period:has(.period-more),#historyPage .chart-period.history-chart-period:has(.period-more){flex-wrap:wrap;row-gap:2px}
+.chart-period:has(.period-more) button,#historyPage .chart-period.history-chart-period:has(.period-more) button,.chart-period .period-more{min-width:max(44px,3.6em)}
+
+.chart-period .period-more{font-size:12px}
