@@ -1,3 +1,19 @@
+## v301 LIVE_ACCEPTED / UI-R2 DONE · Datenschutz-Audit in Arbeit · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
+
+**v301 LIVE_ACCEPTED**, Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`, SW `foliolab-open-v301`. PR321 exakt qualifiziert integriert; [vollständiger Abnahmeindex](release-evidence/v301-live-accepted.json). Integration42628020936/Wallet42628020931 und regulärer Main-/Produktionslauf42633639603 Versuch1 SUCCESS; Deployment129227834059/Live129228439531 SUCCESS.
+
+1345Units/0Fehler/0Skips/Syntax und3Engines PASS. Sechs Main-ZIPs mit224JSON/2032PNG, tatsächliches Produktions-ZIP13686750965 mit165JSON/1374PNG vollständig per API-/Upload-/lokalerSHA256/Größe/CRC/JSON-/PNG-Inhalt qualifiziert. Drei neue Main- und sechs neue Produktionsansichten gesehen;6Livegruppen/18Axe-Scans/0Verstöße. Pages13684186149 gegen152Gitblobs;153gewöhnlicheTLS-Pfade inklusiveRoot bytegleich, keineZertifikatsausnahme. Keinev300-Wiederabnahme, keinRetry/Abbruch/identischeCI.
+
+**UI-R2 DONE:** bestehende Symbolcheckboxen klar unchecked/checked, einheitlicher nativer Akzent, eine sichtbare Tastaturkontur, enabled-onlyHover bei feinemZeiger. Nur styles.css/sw.js/bestehenderBrowsertest geändert; Long-Press/Selektion/Filter/Pagination/44px/Löschschutz/Finanz-/Storage-/UNKNOWN-Verträge erhalten. ExterneAndroid/Safari/OAuth/Drive/TalkBack-Abnahmen bleibenoffen. Zähler1LIVE_ACCEPTED/1fertigesProduktpaket seitÜbernahme.
+
+PrivateV128 weiterhin gespeicherter/verifizierterStand (28303Manifestpfade, alleV127Payloads bytegleich). NeuePR-/Main-/Live-OriginalZIPs unverändert lokal gesichert; nächster privater Sicherungsschnitt enthält diese und den Auditstand. Keine neue Sicherungsversion behauptet.
+
+**Datenschutz-Audit gemäß Nutzerauftrag bleibt IN_PROGRESS in QUALITY-TRUST01#298/EFF02.** Kein bestätigter sensiblerFund bisher; Inventar-/Scanabdeckung ist keine vollständige Unbedenklichkeitsabnahme. Historische/binäre/Actions-Inhalte und Revieweinträge werden weiter geprüft. Wortfolgenalarm aus JavaScript-Booleanarray als Fehlalarm belegt; keine Recovery-Phrase. Keine privatenWerte/Originalkennungen öffentlich dokumentieren. Kein neuerOwner/keine zweiteRoadmap.
+
+Genau nächsteArbeit: Audit mit tatsächlicherAbdeckung und redigierterDokumentation/geeignetembegrenztemSchutz abschließen; danach UI-R3 undK1–K6 seriell gemäß kanonischer41Scope-Matrix. HND01 am sicherenPunkt beiKontextlast bzw. höchstens2akzeptiertenReleases/3Paketen beachten. GitHubnurPlugin; Checkpointbranch niemalsvollständignachMainmergen.
+
+---
+
 ## UI-R2 Main integriert / Produktionsabnahme läuft · Datenschutz-Audit lesend · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
 
 **Letzter LIVE_ACCEPTED bleibt v300.** [PR321](https://github.com/joke0071/foliolab-open/pull/321) regulär mit erwartetem HEAD `bc55656730fa341c831a0d1bedc4e0df056ed13b` integriert. Neuer Main `1708d4e947061f353187727ccae54daa1727db7e`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f` exakt gleich geprüftem Kandidaten-/PR-Mergetree. **Regulärer Main-/Produktionslauf42633639603 Versuch1 IN_PROGRESS.** Kein v301-LIVE_ACCEPTED vor vollständiger Main-/Deploy-/echter Produktionsqualifikation.

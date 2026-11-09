@@ -1,5 +1,9 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## Fortschreibung – UI-R2/v301 abgeschlossen, 09.11.2026
+
+**v301 LIVE_ACCEPTED / UI-R2 DONE**, [Abnahmeindex](release-evidence/v301-live-accepted.json). Reguläre vorhandene Integration/Wallet/Main/Produktion vollständig qualifiziert, kein Retry/Abbruch/identischerDuplikatlauf. 1345Tests,3Engines,153gewöhnlicheTLS-Pfade und echteProduktionsbilder PASS. Veröffentlichungsaudit bleibt IN_PROGRESS unter bestehendemQUALITY-TRUST01/K6-TRUST; keine pauschaleDatenschutzfreigabe aus Produktprüfungen. Danach UI-R3/K1–K6; alle41Scopes/externenGates/Originale erhalten.
+
 ## Zusatzauftrag – GitHub-Veröffentlichungs-/Datenschutz-Audit, 09.11.2026
 
 Im bestehenden QUALITY-TRUST01#298 und K6-TRUST/EFF02, keine neue Roadmap/Entwicklungsübernahme: zunächst vollständig lesender Audit aller erreichbaren Refs/Historie/gelöschten Gitdateien, PR-/Issue-Texte und Kommentare, Actions-Artefakte/ZIPs/Logs, Release-/Fixture-/Screenshot-/Kompressionsinhalte und Pages-/Runtime-Assets. Bereits tatsächlich geprüfte Inhalte per exakten Git-/Dateihashes wiederverwenden; synthetic-Label allein genügt nicht. Abdeckung pro Bereich mit realen Zahlen und BESTÄTIGT UNBEDENKLICH/FINDING/NICHT VOLLSTÄNDIG PRÜFBAR führen, keine pauschale100%-Behauptung.
