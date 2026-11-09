@@ -1,3 +1,19 @@
+## UI-R2 vollständig eingefroren · PR321 finale Integration · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
+
+**v300 bleibt LIVE_ACCEPTED**, Main `eda51c008e3c906c9b1d9c485c8d1aa6916fb971`, Tree `34c90e0ec5597db2047b404a2f814fe1bfd1c770`. Keine erneute v300-Abnahme.
+
+[PR321](https://github.com/joke0071/foliolab-open/pull/321) finaler HEAD `bc55656730fa341c831a0d1bedc4e0df056ed13b`, Tree `32e3dcda83114b7bd5415adb2078b1086e1ca25f`, PR-Mergeref `91368693894783bfa2aa0f8ab50a04b005c96c20`. **Reguläre finale Integration42628020936 und Wallet42628020931 Versuch1 laufen/anstehend**. Kandidat bis zum vollständigen Ergebnis eingefroren; kein paralleler Writer, kein Merge vor Qualifikation.
+
+Drei Dateien: styles.css/sw.js(v301)/bestehenderUI-ALLTAG10-Test. Explizite unchecked/checked/disabled/Keyboard/Pointer/Hover-Zustände, eine semantische Checkbox und44px erhalten. Keine App-/Auswahl-/Finanz-/Storage-/Workflow-/Manifeständerung. Lokale1345Units/Syntax/SW, Auswahl/Long-Press/Verwaltungs-Matrix in3Engines PASS. Zusätzlicher tatsächlicher Desktop-Hover/disabled-no-hover PASS. Die finale neue CSS-Regel wurde anschließend in allen3lokalen Auswahlgegenproben geprüft.
+
+Vorläufer012335 wurde regulär vollständig SUCCESS beendet: Integration42623686242/Wallet42623686219 Versuch1. Anschließend auf denselben PR fortgeschrieben, weil der ursprüngliche #300-Vertrag noch explizites Hover verlangte; **keine identischen CI-Duplikate, kein Abbruch/Retry**. Vorläufer nicht gemergt/als Release abgenommen. Tatsächliche CI bestätigt auch200%-Text in3Engines; lokaler ältererWebKit26-Overflow war identisch auf unverändertemMain.
+
+Private V127 vollständig verifiziert; V128 mit alleiniger Übernahme und beiden lokalen Kandidatenständen in Vorbereitung, noch kein Speicher-/Readback-PASS behauptet. Alle27.845Originalpayloads/Decimal-Oracles und41Scopes erhalten. Ausschließlich explizite neue Delta-Pfade aufnehmen; zusätzliche nicht zum alten Manifest gehörende Transfer-Zwischendateien sind keine neuen Originalbelege. Bestehende Standard-TAR/XZ-/128MiB-Dictionary-/ZIP-Nachbarschaft beibehalten; keine Original-ZIP-Bytes ändern.
+
+Nächste Aktion: bestehende finale Läufe regulär qualifizieren, exakt getesteten Tree integrieren, reguläre Main-/Produktionsgates abschließen. Danach UI-R3/K1–K6 seriell gemäß [kanonischer Matrix](KONSOLIDIERTE_ROADMAP.md). Externe Geräte-/Accountabnahmen bleiben offen. Zähler0akzeptierteReleases/0abgeschlossenePakete. Checkpointbranch niemals vollständig mergen.
+
+---
+
 ## UI-R2 · PR321 Integration IN_PROGRESS · Owner39ca9a8217a6 allein ACTIVE · 09.11.2026
 
 v300 bleibt LIVE_ACCEPTED, Main `eda51c008e3c906c9b1d9c485c8d1aa6916fb971`. UI-R2 in [PR321](https://github.com/joke0071/foliolab-open/pull/321), eingefrorener HEAD `012335777c81ae62289a64322fd8193974f37462`, Tree `4528097d89271c9dc93d14334ba30c7bc6e41ad0`, getestete PR-Mergeref `d2361f901df4062b31cb7473a7a6367754644c2f`. Reguläre Integration42623686242 Versuch1 IN_PROGRESS; Wallet42623686219 SUCCESS. Kein Abbruch/Retry/Duplikat und kein Merge vor vollständiger Qualifikation.
