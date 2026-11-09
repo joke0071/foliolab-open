@@ -6,7 +6,7 @@
   "candidateHead": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
   "candidateTree": "0e0ccc8d2a32fea928350cc5357293d4afb60543",
   "branch": "ui/ui-r3-review-periods-v302-c43b5e91f20a",
-  "status": "INTEGRATION_IN_PROGRESS",
+  "status": "INITIAL_INTEGRATION_FAILED_OTHER_JOBS_PENDING",
   "files": [
     "index.html",
     "src/app.js",
@@ -51,10 +51,12 @@
     "publicRelease": "requires relevant critical findings resolved and required clearance"
   },
   "backup": {
-    "previousVersion": 128,
-    "previousSHA256": "bf1931b5a44145a554384859dc79ab4d75b7fe3edbc7c6a120a903f05ef28b84",
-    "all28303ManifestPayloadsVerified": true,
-    "postV128predecessorLocalEvidenceAvailable": false
+    "version": 129,
+    "paths": 28339,
+    "retainedV128Paths": 28303,
+    "sha256": "9051b84b6eb6a8c7d8905f7825b414cc80c56647526a7ae048e995feafaf3431",
+    "readback": "identical",
+    "candidateContainsCorrection": false
   },
   "next": "Save and verify same private identity; open the one regular UI-R3 integration PR. No duplicate CI, no release before qualification/privacy gate.",
   "pr": 322,
@@ -81,5 +83,22 @@
       "manifest/favicon/brand identities"
     ],
     "newDependencies": false
+  },
+  "firstFailure": {
+    "run": 42701185716,
+    "jobs": [
+      129446149741,
+      129446149843
+    ],
+    "file": "tests/browser-flh03-abce.mjs",
+    "line": 72,
+    "cause": "onboarding predecessor no longer exists after removal of freestanding review wrapper",
+    "correction": "preserve >=16px separation assertion against actual page heading",
+    "localCorrectionEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "pushed": false
   }
 }

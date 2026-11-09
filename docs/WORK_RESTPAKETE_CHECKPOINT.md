@@ -1,4 +1,4 @@
-## UI-R3 eingefroren · PR322 Integration läuft · Owner c43b5e91f20a allein ACTIVE · 09.11.2026
+## UI-R3 PR322 · Layouttest-Korrektur vorbereitet · übrige CI läuft · Owner c43b5e91f20a allein ACTIVE · 09.11.2026
 
 Alleiniger Produkt-/Integrations-/QA-/Releaseowner `c43b5e91f20a`; [autorisierte Übernahme](HND01_TAKEOVER_c43b5e91f20a_2026-11-09.md). `7bc0edcbe85a` ausschließlich unabhängiger lesender Datenschutz-/Sicherheitsauditor, ohne Produkt-Schreibrechte. Unerwartete Fremdänderungen blockieren Mutationen.
 
@@ -6,11 +6,11 @@ Alleiniger Produkt-/Integrations-/QA-/Releaseowner `c43b5e91f20a`; [autorisierte
 
 Lokale **1345Units/0Fehler/0Skips/Syntax PASS**. DreiEngines:0/1/5Prüfpositionen,7Breiten320–1440,200%-Text,Tastatur/Axe/Navigation/Fokusrückkehr/Filter/exakteIDB-BytesRevision PASS; vorhandeneZeitraum-/Langzeit-/LongPress-/Auswahl-/LoaderPWA-Gates PASS. AndroidHardware/TalkBack/Safari/OAuth unverändert extern, keinGeräte-PASS behauptet.
 
-**Reguläre Integration42701185716 und Wallet42701185963 Versuch1 laufen.** Kein Gesamt-PASS, keinMerge/Deployment; Kandidat bleibt eingefroren, keineCI duplizieren/abbrechen. [Kandidaten-/Scopebeleg](release-evidence/v302-ui-r3-candidate.json).
+**Wallet42701185963 Versuch1 SUCCESS. Integration42701185716 Versuch1 hat Fehler in test/cross2; cross1/cross3 laufen regulär weiter.** Kein Gesamt-PASS, keinMerge/Deployment; aktuelle Kandidatenref bleibt eingefroren, keineCI duplizieren/abbrechen. **Originalfehler:** browser-flh03-abce.mjs:72 erwartet den entfernten Vorgängercontainer von onboarding und greift auf null zu. [Gesicherte enge Testkorrektur](UI_R3_ABCE_LAYOUT_WIP_c43b5e91f20a.patch) misst denselben Mindestabstand jetzt zur tatsächlichen Seitenüberschrift; lokalalle3EnginesmitunverändertenFinanz-/Recovery-/A11y-PrüfungenPASS. Noch NICHT auf Kandidatenref gepusht. Erst alleOriginaljobsausterminalemLauf sichern, dann ausschließlich korrigiertenneuenHEAD in demselbenPR regulärqualifizieren. [Kandidaten-/Scopebeleg](release-evidence/v302-ui-r3-candidate.json).
 
-Private **V128 vollständig selbst verifiziert:28.303Manifestdateien/0Fehler**, Originale/Decimal-Oracles erhalten. Neuer Sicherungsschnitt mit Übernahme/Kandidat/lokalerQA unter gleicherIdentität inArbeit; noch keinSpeicher-/Readback-PASS. SpätereVorgänger-v301-/Audit-WIPnichtalsinV128gesichertausgeben.
+Private **V129 gespeichert und Readback identisch verifiziert**:28.339Manifestdateien/0Fehler, alle28.303V128-Payloads bytegleicherhalten;405.006.624Bytes/SHA256`9051b84b6eb6a8c7d8905f7825b414cc80c56647526a7ae048e995feafaf3431`. Enthält Übernahme und eingefrorenen6Dateien-Kandidaten/lokaleQA. PR-/CI-Originale und neueLayouttestkorrektur danach entstanden, noch nicht als inV129enthalten behaupten. SpätereVorgänger-v301-/Audit-WIPnichtalsinV128gesichertausgeben.
 
-NächsteAktion: dieselbenregulärenLäufevollständigqualifizieren/Belege sichern; Main-/Releasefreigabe erstnachallenGates und erforderlicherDatenschutzklärung. AuditkeinallgemeinerEntwicklungsstopp; währendCI nurlesendeK1-Original-/Oraclezuordnung, keinezweiteProduktimplementierung. DanachK1–K6seriell gemäß[kanonischer41Scope-Matrix](KONSOLIDIERTE_ROADMAP.md). EFF01/EFF02/HND01 undalleSchutzverträgeerhalten; Checkpointbranchniemalsvollständigmergen. Zähler0Releases/0abgeschlosseneProduktpakete.
+NächsteAktion: Originaljobsregulärbeenden/Originalbelegesichern; danachlokalbestandeneLayouttestkorrekturaufdenselbenPRqualifizieren; Main-/Releasefreigabe erstnachallenGates und erforderlicherDatenschutzklärung. AuditkeinallgemeinerEntwicklungsstopp; währendCI nurlesendeK1-Original-/Oraclezuordnung, keinezweiteProduktimplementierung. DanachK1–K6seriell gemäß[kanonischer41Scope-Matrix](KONSOLIDIERTE_ROADMAP.md). EFF01/EFF02/HND01 undalleSchutzverträgeerhalten; Checkpointbranchniemalsvollständigmergen. Zähler0Releases/0abgeschlosseneProduktpakete.
 
 ---
 
