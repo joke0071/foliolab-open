@@ -100,5 +100,16 @@
       "webkit"
     ],
     "pushed": false
-  }
+  },
+  "preparedCorrection": {
+    "head": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
+    "tree": "c36f4be2a06b8aed6c9da980c08b515c797530dc",
+    "pushed": false,
+    "additionalPath": "tests/browser-flh03-abce.mjs",
+    "applicationAssetChanges": false,
+    "localABCE": "all three engines PASS"
+  },
+  "initialCross1": "SUCCESS",
+  "initialCross3": "IN_PROGRESS",
+  "legacyK6Finding": "Existing fixed-height empty-chart copy overlaps status under 200% computed text on unchanged v301; separately recorded, no claim of whole-app hardware accessibility acceptance"
 }
