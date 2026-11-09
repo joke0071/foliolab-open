@@ -18,6 +18,7 @@ export async function structuredQualityBrowserContract({p,nav,record,scan,engine
   for(const width of [320,360,390,412,430,768,1440]){
    await p.setViewportSize({width,height:900});await nav('dashboard');
    assert.equal(await p.locator('.dashboard-review-entry').count(),0,'no freestanding container, even when hidden');
+   assert.ok(await p.locator('#miniChartPeriods .period-more>summary').evaluateAll(nodes=>nodes.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).every(el=>{const r=document.createRange();r.selectNodeContents(el);const bounds=el.getBoundingClientRect(),rects=[...r.getClientRects()].filter(b=>b.width);return new Set(rects.map(b=>Math.round(b.top))).size===1&&rects.every(b=>b.left>=bounds.left-1&&b.right<=bounds.right+1);})), 'normal More label stays on one line');
    assert.equal(await p.locator('.dashboard-current>#dashboardReview').count(),1,'review belongs directly to current wealth');
    const box=await entry.boundingBox();
    if(!count){assert.equal(box,null,'zero warnings occupy no layout space');assert.ok(await entry.evaluate(el=>el.hidden));}

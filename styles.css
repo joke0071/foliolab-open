@@ -2049,3 +2049,7 @@
 .chart-period:has(.period-more) button,#historyPage .chart-period.history-chart-period:has(.period-more) button,.chart-period .period-more{min-width:max(44px,3.6em)}
 
 .chart-period .period-more{font-size:12px}
+
+/* Keep the More label whole at normal size; enlarged text still gets the wider em-based target. */
+.chart-period .period-more{min-width:max(48px,3.6em)}
+.chart-period .period-more>summary{white-space:nowrap;overflow-wrap:normal}
