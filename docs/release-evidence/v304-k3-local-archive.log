@@ -1,0 +1,6 @@
+chromium: restore begins plain
+chromium: restore result plain {"positions":[{"id":"cash"},{"id":"asset","archived":true},{"id":"same"}],"toast":"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.","status":"Transaktionale IndexedDB aktiv","record":{"revision":2,"positions":["cash","asset","same"]}}
+chromium: restore begins encrypted
+chromium: restore result encrypted {"positions":[{"id":"cash"},{"id":"asset","archived":true},{"id":"same"}],"toast":"Backup wiederhergestellt. Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.","status":"Transaktionale IndexedDB aktiv","record":{"revision":2,"positions":["cash","asset","same"]}}
+chromium: existing-wallet editor eight networks, exact identity/text-only save, discard, quota, peer CAS and reload PASS
+chromium: archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS

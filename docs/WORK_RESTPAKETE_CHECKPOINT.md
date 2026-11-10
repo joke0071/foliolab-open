@@ -1,3 +1,17 @@
+## STOPPED / HANDOVER_READY · e595fcc6d453 · PR324 eingefroren / CI läuft
+
+Reguläre vollständigeAbgabewegenKontextlast am sicherenKandidaten. AlleEntwicklungs-/Integrations-/QA-/Releaseverantwortung abgegeben; frühereACTIVE-Zeilenhistorisch. [KompakteAbgabeundNachfolgerprompt](HANDOVER_e595fcc6d453_2026-11-10.md#kopierfertiger-nachfolgerprompt).
+
+**LetzterLIVE_ACCEPTEDv303**, Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1. **[PR324](https://github.com/joke0071/foliolab-open/pull/324)** einzigerProduktkandidat: HEAD365c16c272071bd3a1ff28ee3ff97be7d1b5a447/Treec6afbfe49152cbc29fa2722bf6bc3b16b01ad062; Testmerge4ed2c63e8b8a6878acccef67c8b52851b30b9209 exaktgleicherTree. Integration42846766057Versuch1IN_PROGRESS,Wallet42846766025SUCCESS. KeineCI_ACCEPTED-/v304LIVE_ACCEPTED-Behauptung; eingefroreneRefnichtändern/keineDuplikate/Abbrüche.
+
+K3-Wallet-Edit-Kernlücke engbehoben: bestehendesunterstütztesNetzwerk wirdbeim normalenTextedit erhalten stattBTC-Fallback.3vorbereiteteK2-Kurshilfenmitgeführt;7Dateieninsgesamt.[LokalerKandidatenbeleg](release-evidence/v304-k3-local-candidate.json):1353Units/0FAIL/0SKIP/SyntaxPASS;8Netzwerke/Identity/Text-only/1Revision/Abbruch/Quota/Peer-CAS/Reload inChromium+FirefoxPASS; vorhandeneChromiumArchiv-/Offline-/Plain-/EncryptedFreshRestore-/Axe-/Editor8BreitenPASS. NegativeKontrolle desursprünglichenMenüs fällt durch. WebKitlokalfehlendeHostlibs, weiterhinPflicht-CI. KeineWorkflow-/Finanz-/Schema-/Scanneränderung.
+
+V132/Original-/Ergänzungsketteunverändert; keinneuerprivaterSpeicherauftrag/Rohoriginalklasse. Quellen/abgeleiteteNachweisevollständiggitgesichert; neueCI-Originale nachAbschluss zusätzlichprivatinkrementellsichern.289Refs/alteDrafts157/161/PR324/Reviewsfrischabgeglichen, keinekonkurrierendeProduktarbeit.
+
+**Genau nächsteAktion:** frischkollisionsfreialleinübernehmen; bestehendePR324-CI vollständigqualifizieren/Originaleerhalten; beiPflicht-PASSexaktintegrieren,Main/Deploy/tatsächlicheProduktionabnehmenundneueOriginaleprivatversionsgeschützt+readbackgeprüftsichern. V304nochNICHTLIVE_ACCEPTED. K1–K6/externenGeräte-/OAuthgrenzen/Schutzverträgeerhalten; EFF03nichtausweiten,Checkpointbranchniewholemergen,HND01-Rgilt.
+
+---
+
 ## ACTIVE · e595fcc6d453 · K3-Wallet-Edit-Kernlücke reproduziert
 
 v303/Main73a17662e53d4b4d88125a85879e5fcae112596e unverändert LIVE_ACCEPTED; V132/Originalkette erhalten. [Begrenzte Taskkarte und Repro](K3_WALLET_EDITOR_2026-11-10.md): bestehende sol-stake-Position fällt im normalen Editor mangels passenderOption auf btc zurück. Isolierte tatsächlicheposForm/nativeDOM/FormData/createPosition-Kette bestätigt; nur synthetisch, kein persistenterSchreibzugriff. Betroffen sind acht unterstützte, in diesemSelect fehlendeNetzwerktypen. Keine neueStaking-/Finanzengine.

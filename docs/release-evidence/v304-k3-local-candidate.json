@@ -1,0 +1,109 @@
+{
+  "status": "LOCAL_CANDIDATE_VALIDATED_CI_IN_PROGRESS",
+  "scope": "K3 ordinary wallet text edit; three K2 source guides bundled",
+  "version": 304,
+  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "mainTree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+  "lastLiveAccepted": 303,
+  "PR": 324,
+  "head": "365c16c272071bd3a1ff28ee3ff97be7d1b5a447",
+  "tree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "testedMerge": "4ed2c63e8b8a6878acccef67c8b52851b30b9209",
+  "testedMergeTreeMatches": true,
+  "sourceBlobs": [
+    {
+      "path": "src/app.js",
+      "bytes": 300252,
+      "sha": "30d3a3ae3efb05f638280c423da273a04548b1ea"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 5597,
+      "sha": "eab1b9ee621d2528096d8cfd543e857c2793cf92"
+    },
+    {
+      "path": "tests/browser-position-archive.mjs",
+      "bytes": 28210,
+      "sha": "67f4f8c01b021049aa3dc7785b422bb9bcd10980"
+    },
+    {
+      "path": "tests/browser-wallet-editor-retention.mjs",
+      "bytes": 7355,
+      "sha": "1af6cc523aa7590737dc4f290195bd19b64eff21"
+    }
+  ],
+  "integrationRun": 42846766057,
+  "integrationAttempt": 1,
+  "integrationStatus": "in_progress",
+  "walletRun": 42846766025,
+  "walletStatus": "completed_success",
+  "local": {
+    "node": "24.22.1",
+    "playwright": "1.56.1",
+    "units": {
+      "tests": 1353,
+      "pass": 1353,
+      "fail": 0,
+      "skipped": 0
+    },
+    "syntax": "PASS",
+    "chromium": [
+      "eight supported existing network identities retained",
+      "name/notes only; one revision each",
+      "exact wallet and quantities/economic records",
+      "cancel/discard",
+      "quota",
+      "peer CAS",
+      "reload",
+      "existing editor eight widths",
+      "full archive/offline/plain/encrypted fresh restore/Axe"
+    ],
+    "firefox": [
+      "eight supported existing network identities retained",
+      "name/notes only; one revision each",
+      "exact wallet and quantities/economic records",
+      "cancel/discard",
+      "quota",
+      "peer CAS",
+      "reload"
+    ],
+    "webkit": "NOT_RUN locally: missing host libraries; mandatory CI retained",
+    "negativeControl": "Full real browser regression fails with original menu: selected btc, expected sol-stake; candidate restored and exact Gitblob reverified",
+    "logHashes": [
+      {
+        "name": "k3-qualified-unit.log",
+        "bytes": 134501,
+        "sha256": "94a9a8adbd82fa6bb57087b7de904dc7c4e7b2d64ed2fbd826a0b26bd7b42d63"
+      },
+      {
+        "name": "k3-qualified-syntax.log",
+        "bytes": 203,
+        "sha256": "45ec98e8609d91c615ae6a08d540a6f554b02be522fb3483b1c2ab8a267f7965"
+      },
+      {
+        "name": "k3-archive-chromium.log",
+        "bytes": 990,
+        "sha256": "c4036e3daa7bb043b917279325b12be35aca9bedefdeafbe1c3cf4c58bf7dc95"
+      }
+    ]
+  },
+  "runtimeDelta": "Only existing-wallet extra selected option in posForm and SW cache v304; no scanner/finance/schema/storage/workflow change",
+  "newBrowserGate": "Imported by existing three-engine browser-position-archive suite; commands unchanged, no skipped old assertions",
+  "backup": {
+    "inheritedDurableVersion": 132,
+    "newPrivateOriginalClasses": false,
+    "newBackupWrite": false,
+    "ciOriginalsPending": "Preserve completed CI/production originals incrementally under existing private identity and full inherited companion chain"
+  },
+  "gatesOpen": [
+    "full CI content qualification",
+    "integration",
+    "Main",
+    "deployment",
+    "actual production",
+    "new CI-original backup/readback"
+  ],
+  "physicalAndroidTalkBackSafariOAuth": "external, not performed",
+  "releaseAccepted": false,
+  "owner": "e595fcc6d453"
+}
