@@ -1,5 +1,31 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## EFF03 – Vereinfachung und Entkopplung der Entwicklungsprozesse
+
+**Status: GEPLANT · Nutzerauftrag 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
+
+**Ziel:** Die FolioLab-Entwicklung skalierbarer, schneller und zuverlässiger gestalten. Den organisatorischen Aufwand pro Release reduzieren, ohne Abstriche bei Finanzintegrität, Datensicherheit oder Produktqualität.
+
+### Verbindlicher Prüf- und Optimierungsumfang
+
+1. **Agenten entlasten:** Produktentwicklung, Testausführung, Sicherungen, Dokumentation und Releaseprüfung so weit wie sinnvoll voneinander entkoppeln.
+2. **CI-Ergebnisse verdichten:** Maschinenlesbare Zusammenfassungen statt wiederholter manueller Auswertung Tausender Artefakte. Detaillierte Originale bleiben verfügbar.
+3. **Prüfungen effizienter gestalten:** Identische bereits qualifizierte Nachweise wiederverwenden, redundante Analysen und unnötige Werkzeugaufrufe vermeiden.
+4. **Sicherungen optimieren:** Inkrementelle, wiederaufnehmbare Sicherungsschritte mit unverändertem Versions-, Integritäts- und Readback-Schutz.
+5. **Dokumentation vereinfachen:** Ein kompakter aktueller Checkpoint, eine kanonische Roadmap und verlinkte Detailnachweise statt mehrfacher Protokollierung.
+6. **Work-Sitzungen stabilisieren:** HND01-R anwenden, kurze Fachpakete, frühzeitige Übergaben und rekonstruierbare Zwischenstände.
+7. **Wiederholungen reduzieren:** Bereits erledigte Aufgaben und akzeptierte Releases nicht erneut analysieren oder abnehmen.
+
+### Umsetzung und erster begrenzter Schritt
+
+Zuerst die tatsächlich zeit- und ressourcenintensiven Abläufe anhand vorhandener GitHub-/CI-Nachweise identifizieren. Keine separate Gesamtprojektprüfung und keine neuen CI-Läufe nur für diese Dokumentationsänderung.
+
+Nach sicher abgeschlossenem v303 als ersten begrenzten Schritt vorhandene v303-Run-/Jobzeiten und den tatsächlich angefallenen Aufwand für Artefaktqualifikation, Sicherung und Dokumentation knapp auswerten. Bereits vorliegende Nachweise verwenden; unbekannte Verbrauchswerte ausdrücklich unbekannt lassen. Danach eine kleine, risikoarme Verbesserung nach messbarem Nutzen auswählen und ihren begrenzten Umfang sowie Vorher-/Nachher-Maß festhalten. Keine vorgezogene Implementierung während des laufenden Releases.
+
+Keine neue komplexe Infrastruktur schaffen, wenn bestehende Werkzeuge ausreichen. Alle verpflichtenden Tests, Schutzverträge und externen Abnahmen bleiben vollständig erhalten. Automatisierung darf keine ungeprüften PASS-Erklärungen erzeugen. Detailoriginale und nachvollziehbare Ergebniszuordnung bleiben erhalten; bestehende alleinige Integrationsverantwortung und HND01-R gelten weiter.
+
+**Erfolgskriterium:** Weniger redundante Werkzeugaufrufe, geringerer Dokumentations- und Sicherungsaufwand, zuverlässigere Agentenübergaben und kürzere Entwicklungszyklen bei gleichbleibender nachweisbarer Qualität.
+
 ## HND01-R – Resiliente Work-Ausführung · verbindlich ab 10.11.2026
 
 Neuere ausdrückliche Nutzerentscheidung; ersetzt die älteren Schwellen von zwei Releases/drei Paketen. Reguläre Chat-Rotation **spätestens nach einem LIVE_ACCEPTED-Release oder einem größeren abgeschlossenen Fachpaket**, früher bei instabilem Chat oder zunehmender Kontextlast. Laufende Actions regulär beenden, keine Abbrüche zur Rotation.
