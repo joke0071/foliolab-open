@@ -1,3 +1,11 @@
+## ACTIVE · e595fcc6d453 · K3-Wallet-Edit-Kernlücke reproduziert
+
+v303/Main73a17662e53d4b4d88125a85879e5fcae112596e unverändert LIVE_ACCEPTED; V132/Originalkette erhalten. [Begrenzte Taskkarte und Repro](K3_WALLET_EDITOR_2026-11-10.md): bestehende sol-stake-Position fällt im normalen Editor mangels passenderOption auf btc zurück. Isolierte tatsächlicheposForm/nativeDOM/FormData/createPosition-Kette bestätigt; nur synthetisch, kein persistenterSchreibzugriff. Betroffen sind acht unterstützte, in diesemSelect fehlendeNetzwerktypen. Keine neueStaking-/Finanzengine.
+
+Genau nächsteAktion: vorhandene zusätzlicheNetzwerkkennung im Editor explizit korrekt auswählen/erhalten; gezielte Form-/Rename-/Reload-/Abbruch-/Quota-/CAS-Prüfung, Units/Syntax und dann reguläreKandidaten-/Main-/Produktionsgates vorFreigabe. K2-Drei-Hilfenkandidat dd1bcecbd5255313e150257952fcb7aecccd3817 für dieses passendeBedienungspaket erhalten. Keine universelleLöschfreigabe, keineEFF03-Ausweitung, keinev303-Wiederabnahme. Owner bleibt alleinACTIVE.
+
+---
+
 ## ACTIVE · e595fcc6d453 · K2-Hilfenkandidat validiert · v303/V132 unverändert
 
 Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner e595fcc6d453 nach regulärer Abgabe4932401a9f1d. **v303 LIVE_ACCEPTED**, Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 unverändert. V132-Version132/405432320Bytes aktuell bestätigt; qualifizierte Original-/Readback-/Restorekette wiederverwendet, kein neuer Sicherungsauftrag.
