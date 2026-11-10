@@ -1,0 +1,74 @@
+{
+  "status": "CI_ACCEPTED",
+  "owner": "ae53485c3674",
+  "pr": 323,
+  "head": "c9b9a47f285dda11b65a6ecf815094992997e616",
+  "tree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+  "testedMerge": "d1434832292da33cc3b2d63bbb62b42d19e30eba",
+  "integrationRun": 42796350018,
+  "walletRun": 42796350012,
+  "attempt": 1,
+  "units": 1353,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "artifacts": [
+    {
+      "id": 13754946931,
+      "name": "cross-engine-gates-d1434832292da33cc3b2d63bbb62b42d19e30eba-1",
+      "size_in_bytes": 59102833,
+      "digest": "sha256:3dded9cfdb234a830324b6be05a802ffb127a767171564402ecc43e13af84a8d"
+    },
+    {
+      "id": 13754864774,
+      "name": "cross-engine-gates-d1434832292da33cc3b2d63bbb62b42d19e30eba-3",
+      "size_in_bytes": 68734865,
+      "digest": "sha256:0eb3a01829409e78ae732f5368c15076744483e8556e6f27589cea361eda2cbc"
+    },
+    {
+      "id": 13754663511,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934658,
+      "digest": "sha256:da0b5e72139170f4cc8a9272347177daa599bcfe09f93eefa6fef9ceb7313ebe"
+    },
+    {
+      "id": 13754621860,
+      "name": "cross-engine-gates-d1434832292da33cc3b2d63bbb62b42d19e30eba-2",
+      "size_in_bytes": 12339940,
+      "digest": "sha256:67e45242c7fdee4cdba7022282688075daeebecb8c1493e4a119b9a4dc28e809"
+    },
+    {
+      "id": 13754433638,
+      "name": "release-gates-d1434832292da33cc3b2d63bbb62b42d19e30eba",
+      "size_in_bytes": 65124458,
+      "digest": "sha256:caa5f679740b64eecb676b234a5d1eb5d95e5d5fb38ff9758468bdf53c7cca61"
+    },
+    {
+      "id": 13753686487,
+      "name": "ci-stage-d1434832292da33cc3b2d63bbb62b42d19e30eba",
+      "size_in_bytes": 633,
+      "digest": "sha256:5fd543b7530e3813eb930665821814c00b2ff8a57ff55922c996c9417142a7aa"
+    }
+  ],
+  "zipDigestsSizesCRC": "PASS",
+  "json": 229,
+  "png": 2065,
+  "reportFailureFlags": 0,
+  "actualVisualReview": [
+    "chromium-390",
+    "firefox-390",
+    "webkit-390-200"
+  ],
+  "sourceFiles": 16,
+  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "mainRun": 42814350681,
+  "mainStatus": "IN_PROGRESS",
+  "liveAccepted": false,
+  "backupBaseVersion": 130,
+  "newCIOriginalsDurable": false
+}
