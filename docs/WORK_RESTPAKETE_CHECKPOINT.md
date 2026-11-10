@@ -1,3 +1,11 @@
+## ACTIVE · e595fcc6d453-r3 · v304 Produktionsabnahme
+
+Reguläre alleinige Fortsetzung auf ausdrücklichen Nachfolgerauftrag. Vorgänger e595fcc6d453-r2 hat vollständig STOPPED / HANDOVER_READY abgegeben. Frisch geprüft: Main a21db8a92f488820114f3b86fc3d5a4ad96be1b2 / Tree c6afbfe49152cbc29fa2722bf6bc3b16b01ad062, Checkpoint 4d97eb7da78d2e90e110fa340671682367d49caf, 289 Refs, nur historische Draft-PRs 157/161, keine konkurrierende Arbeit. Private Sicherung V133 unverändert vorhanden; vollständige bisherige Belege werden wiederverwendet.
+
+Mainlauf 42853846824: Test und Cross 1–3 SUCCESS, Deployment SUCCESS, tatsächliche Live-Abnahme läuft. Keine neue CI, kein Retry, kein Produktpush. Letzter LIVE_ACCEPTED bleibt v303. Nächster Schritt: Originale und Produktion qualifizieren, neue Originale inkrementell sichern und rückprüfen; erst danach v304 LIVE_ACCEPTED. Alle bestehenden Schutzverträge und externen Abnahmegrenzen bleiben gültig.
+
+---
+
 ## STOPPED / HANDOVER_READY · e595fcc6d453-r2 · PR324 integriert / Main läuft / V133 verifiziert
 
 Reguläre vollständige Abgabe wegen Kontextlast am sicheren Integrationspunkt. Alle Entwicklungs-/Integrations-/QA-/Releaseverantwortung abgegeben; frühere ACTIVE-Zeilen historisch. [Kompakte Abgabe und Nachfolgerprompt](HANDOVER_e595fcc6d453_r2_2026-11-10.md#kopierfertiger-nachfolgerprompt).
