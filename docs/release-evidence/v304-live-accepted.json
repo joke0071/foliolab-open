@@ -1,0 +1,212 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+  "cache": "foliolab-open-v304",
+  "base": "https://foliolab.unperfekt.at/",
+  "ordinaryTLS": true,
+  "assetHashMatches": 154,
+  "loadedAssets": 141,
+  "coreGroups": 6,
+  "axeScans": 18,
+  "axeViolations": 0,
+  "mainRun": 42853846824,
+  "liveJob": 129977069113,
+  "mainResult": "SUCCESS",
+  "liveResult": "SUCCESS",
+  "json": 169,
+  "png": 1407,
+  "failureFlags": [],
+  "artifact": {
+    "artifactId": 13788260322,
+    "bytes": 137889878,
+    "sha256": "7b4d4153ba0d31c2555254de99811d9ef753b84cbc3188b7edd5be5b7ee8542b",
+    "apiUploadLogDigestMatch": true,
+    "CRC": "PASS"
+  },
+  "actualProductionVisualReview": [
+    "ui-positions-390.png",
+    "c5-bookings-390.png",
+    "c5-connections-390.png",
+    "c5-connections-viewport-390.png"
+  ],
+  "visualReviewScope": "Actual unchanged production views reviewed; fixed/sticky capture offsets interpreted against viewport view and tested bounding boxes. Frozen PR wallet-editor 390px view reused; direct actual production wallet editor assertions separately passed in all three engines.",
+  "physicalAndroidTalkBackSafariOAuth": "external; not performed",
+  "version": 304,
+  "previousLiveAccepted": 303,
+  "candidateHead": "365c16c272071bd3a1ff28ee3ff97be7d1b5a447",
+  "testedMerge": "4ed2c63e8b8a6878acccef67c8b52851b30b9209",
+  "tree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "PR": 324,
+  "integrationRun": 42846766057,
+  "walletRun": 42846766025,
+  "integrationResult": "SUCCESS",
+  "walletResult": "SUCCESS",
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "mainQualification": "v304-main-qualified.json",
+  "productionQualification": "v304-production-qualified.json",
+  "walletProductionQualification": "v304-wallet-production-qualified.json",
+  "mainArtifacts": [
+    {
+      "id": 13783592180,
+      "name": "cross-engine-gates-a21db8a92f488820114f3b86fc3d5a4ad96be1b2-3",
+      "bytes": 68729754,
+      "sha256": "4e7fee927ae796c0b719a6cc21ead7e4e6d00e70ac7aef30ffd235c38d2e0d7c"
+    },
+    {
+      "id": 13783360622,
+      "name": "cross-engine-gates-a21db8a92f488820114f3b86fc3d5a4ad96be1b2-1",
+      "bytes": 59095658,
+      "sha256": "c986c1868a0e714545f188a04d33f44e55a765e97ab9b342340fc07137ba90b1"
+    },
+    {
+      "id": 13782848177,
+      "name": "dialog-visual-reference",
+      "bytes": 934704,
+      "sha256": "61dc918f84ad3e03aaf8e00fd43f70fae04b21ab7309f8ab55a09eb3a8bef87d"
+    },
+    {
+      "id": 13782769143,
+      "name": "github-pages",
+      "bytes": 567383,
+      "sha256": "2c8e49ddc20d413f56123ac6f45718d513deb282a0b7d85507d058c72cb3391a"
+    },
+    {
+      "id": 13782384296,
+      "name": "release-gates-a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+      "bytes": 65118756,
+      "sha256": "b9fe80581cd64eec9332e2de50b652e563a9adee811bde823d7ea5ef08c7b737"
+    },
+    {
+      "id": 13780739495,
+      "name": "ci-stage-a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+      "bytes": 354,
+      "sha256": "697a6344028c25b8b77a87d772894dd34403aca8dad4ec1c199e9602bab82c1a"
+    },
+    {
+      "id": 13780734867,
+      "name": "cross-engine-gates-a21db8a92f488820114f3b86fc3d5a4ad96be1b2-2",
+      "bytes": 12340052,
+      "sha256": "7487eeb95dc9733438b753ccf9f7933b79736a7f4c2d018ba01ebe48b7b24959"
+    }
+  ],
+  "mainJSON": 229,
+  "mainPNGs": 2065,
+  "mainDistinctAssertions": 481,
+  "mainContextReportClassesReviewed": 8,
+  "productionDistinctPredecessorAssertions": 281,
+  "productionContextReportClassesReviewed": 7,
+  "pagesExactGitblobMatches": 153,
+  "uploadLogDigestProof": [
+    {
+      "id": 13783592180,
+      "job": 129961524721,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13783360622,
+      "job": 129961524830,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13782848177,
+      "job": 129961524335,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13782769143,
+      "job": 129976826168,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13782384296,
+      "job": 129961524335,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13780739495,
+      "job": 129961416558,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13780734867,
+      "job": 129961524491,
+      "apiDigestEqualsUploadLog": true
+    },
+    {
+      "id": 13788260322,
+      "job": 129977069113,
+      "apiDigestEqualsUploadLog": true
+    }
+  ],
+  "noDuplicateRetryOrCancellation": true,
+  "retryScope": "CI runs only; supplemental local browser prerequisites were repaired without product changes. Initial environment-blocked logs preserved.",
+  "fastOnlyCanary": "intentionally skipped because full RELEASE regression ran; no required integration/release gate skipped",
+  "scope": "Eight existing supplemental wallet networks retained in ordinary name/note edits; three prepared K2 source-help documents. Overall K2/K3 remain PARTIAL.",
+  "walletEditors": {
+    "integrationAndMainEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "actualProductionEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "networks": 8,
+    "checks": [
+      "actual native selected network",
+      "eight text-only one-revision commits",
+      "unchanged wallet/quantity/economic records",
+      "discard",
+      "quota exact-record retention",
+      "actual reload",
+      "peer CAS winner retained"
+    ],
+    "supplementalTransport": "Environment HTTPS inspection proxy certificate exception; not TLS acceptance. Independent mandatory production core verified ordinary TLS and all deployed asset bytes.",
+    "workflowCoverage": "Current live workflow does not invoke archive suite; explicit direct production checks supplied the new wallet coverage."
+  },
+  "backup": {
+    "durableVersion": 134,
+    "expectedPreviousVersion": 133,
+    "bytes": 405473280,
+    "sha256": "bee510667229954a8201d807a794b231a5879a4257cbda992dfdbe1b7700d3dd",
+    "rootManifestPaths": 5,
+    "rootReadbackIdentical": true,
+    "failures": 0,
+    "completeV133ArchivePreservedByteIdentical": true,
+    "allOlderOriginalsIndicesAndRestoreProgramsPreserved": true,
+    "previousFullRestoreEvidenceReused": true,
+    "newMainIncrement": {
+      "file_name": "FolioLab_v304_Main_originals_2026-11-10.tar",
+      "bytes": 209039360,
+      "sha256": "1429c41200b5c00d1b64f5f9063d9ad2d2498c9013c96328f81ba4d06a161df5",
+      "manifestPaths": 21,
+      "readbackVerified": true
+    },
+    "newProductionIncrement": {
+      "file_name": "FolioLab_v304_Production_originals_2026-11-10.tar",
+      "bytes": 151961600,
+      "sha256": "90c579416e87361c6a06b232f7aed38510fad21eb7f5b0e0aff54de27987faa0",
+      "manifestPaths": 41,
+      "readbackVerified": true
+    },
+    "actualIncrementalRestore": {
+      "paths": 67,
+      "failures": 0,
+      "fullV302RestoreRepeated": false,
+      "readbackInputs": true
+    },
+    "privateLocators": "Only in private unchanged/current indices; root alone is not full payload set",
+    "pendingWrites": false,
+    "verification": "private-v134-durable-verification.json"
+  },
+  "owner": "e595fcc6d453-r3",
+  "acceptedDate": "2026-11-10"
+}

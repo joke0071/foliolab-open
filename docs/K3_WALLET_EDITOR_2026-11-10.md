@@ -1,5 +1,14 @@
 # K3 – bestehende Wallet-Netzwerke beim Bearbeiten erhalten
 
+## Abschluss des begrenzten Schnitts – v304 LIVE_ACCEPTED
+
+PR324 ist regulär integriert: Main `a21db8a92f488820114f3b86fc3d5a4ad96be1b2` / Tree `c6afbfe49152cbc29fa2722bf6bc3b16b01ad062`. [Abnahmeindex](release-evidence/v304-live-accepted.json): 1353 Units, Syntax, Main-/Deploy-/tatsächliche Produktionsgates bestanden. Die vollständige neue Acht-Netzwerk-Editorprüfung ist in PR/Main sowie ausdrücklich direkt gegen die veröffentlichte App in Chromium, Firefox und WebKit bestanden, einschließlich Identität/Finanzdaten, je einer Revision, Abbruch, Quota, Reload und Peer-CAS. [Direkter Produktionsbeleg](release-evidence/v304-wallet-production-qualified.json).
+
+Die direkte Zusatzprüfung nutzt die Zertifikatsausnahme des Umgebungs-Inspektionsproxys; die normale TLS-/Assetabnahme ist unabhängig im Pflicht-Produktionskern belegt. Der aktuelle Live-Workflow ruft die Archivsuite nicht auf: Eine frühere Kommentarformulierung begründet keine automatische Workflowabdeckung. Die zusätzliche direkte Drei-Engine-Prüfung liefert diesen Nachweis ausdrücklich.
+
+V134 und beide neuen Originalergänzungen dauerhaft rückgeprüft; tatsächlicher inkrementeller Restore 67 Manifestpfade/0 Fehler. Dieser begrenzte Schnitt ist DONE; Gesamt-K3 bleibt PARTIAL. Keine universelle Lösch-, Scanner- oder neue manuelle Netzfreigabe. Die folgenden Abschnitte dokumentieren den historischen Ausgangsstand und die Entstehung des Kandidaten; aktuelle Zuständigkeit ausschließlich im zentralen Checkpoint.
+
+
 Basis v303/Main73a17662e53d4b4d88125a85879e5fcae112596e. Owner e595fcc6d453 allein ACTIVE.
 
 ## Reproduzierte Kernlücke

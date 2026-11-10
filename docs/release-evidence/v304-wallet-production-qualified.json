@@ -1,0 +1,69 @@
+{
+  "status": "TARGETED_PRODUCTION_WALLET_UI_QUALIFIED_NOT_RELEASE_APPROVAL",
+  "head": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+  "tree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "base": "https://foliolab.unperfekt.at/",
+  "engines": [
+    {
+      "engine": "chromium",
+      "networks": 8,
+      "status": "PASS",
+      "checks": [
+        "actual native selected network",
+        "eight text-only one-revision commits",
+        "unchanged wallet/quantity/economic records",
+        "discard",
+        "quota exact-record retention",
+        "actual reload",
+        "peer CAS winner retained"
+      ]
+    },
+    {
+      "engine": "firefox",
+      "networks": 8,
+      "status": "PASS",
+      "checks": [
+        "actual native selected network",
+        "eight text-only one-revision commits",
+        "unchanged wallet/quantity/economic records",
+        "discard",
+        "quota exact-record retention",
+        "actual reload",
+        "peer CAS winner retained"
+      ]
+    },
+    {
+      "engine": "webkit",
+      "networks": 8,
+      "status": "PASS",
+      "checks": [
+        "actual native selected network",
+        "eight text-only one-revision commits",
+        "unchanged wallet/quantity/economic records",
+        "discard",
+        "quota exact-record retention",
+        "actual reload",
+        "peer CAS winner retained"
+      ]
+    }
+  ],
+  "transport": "Supplemental UI checks use environment HTTPS inspection proxy certificate exception; independent ordinary-TLS asset/core proof belongs to mandatory Main live gate",
+  "workflowCoverage": "Current live workflow does not run the archive suite; these are explicit standalone supplemental checks, not inferred workflow coverage",
+  "data": "isolated synthetic disposable profiles; no credentials or private portfolio",
+  "originals": {
+    "wallet-production-check.json": "ad42d6071ab6782e48ea9a5d1b0711d93c87dfb3772d8f2f8d60154ca5f05283",
+    "wallet-production-webkit-user-runtime.log": "5f17c93370e9570753fda3a48645005f026f616749d6b9d74e1d3edb0d66aada",
+    "wallet-production-proxy-check.json": "c0e45236df140c7fda09714cef092684a2ee8507e01876d6071267346fa1d0dd",
+    "local-webkit-dependency-setup.log": "ac81a903ab6b11eed815622d05e7c10a7024a71a0bf823ebeca712b4057203ab",
+    "wallet-production-proxy-check.log": "9d86ac2930e4070cf1bee5f9b504b9e94248d3a8a69d855d93f1d58aa1513694",
+    "wallet-production-webkit-user-runtime-executed.log": "efacfaa482ddcfd3badcad298633f2f24e5d703f9693c03b259b5f1aa986ce9a",
+    "wallet-production-check.mjs": "856f5da21e4892a9ea80dd69d77dc0daad31ed865f6159a3476f0e3bf67cc672",
+    "wallet-production-webkit-user-runtime-final.log": "d9dc72494aef02add8dac26f14017b6d02fc501b7947e7bdc600209a61c021f7",
+    "supplemental-scope.json": "79b268404ec2e3b28e2e90e348e47d703f3fd16642a1fbef85df741c07beae44",
+    "wallet-production-check.log": "c3f869a613f8d119b09934a9f4896851d475d7e1d920ddea97b006f2cf543557",
+    "wallet-production-proxy-check.mjs": "ab6d23650ba4a8b7824743aaca1a959626a4bcb0f2875cc3462ac6a39233ade3",
+    "wallet-production-webkit-user-runtime.mjs": "bb8720dfb0946b0479fca72c8e6af418b9e81c394f0b53dcd4cfc2be5c44a2b7",
+    "wallet-production-webkit-user-runtime.json": "0f59e9040088d64e7f92f3bf1565ad581e2ed74c4dd8480d3b2bd864adcef86f",
+    "qualified-predecessor-production-contract.json": "13bfaf40f470044a608f21de45ad4bba5f60ad0b9f25282443fcd1ce0369c0d9"
+  }
+}

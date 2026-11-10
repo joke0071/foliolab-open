@@ -1,0 +1,43 @@
+{
+  "status": "PRODUCTION_CONTENT_QUALIFIED_NOT_AUTOMATIC_RELEASE_APPROVAL",
+  "artifact": {
+    "id": 13788260322,
+    "name": "production-live-acceptance-a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+    "bytes": 137889878,
+    "sha256": "7b4d4153ba0d31c2555254de99811d9ef753b84cbc3188b7edd5be5b7ee8542b",
+    "run": 42853846824,
+    "head": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2"
+  },
+  "JSON": 169,
+  "PNGDecoded": 1407,
+  "distinctPredecessorAssertions": 281,
+  "metadataOrContextOnlyReports": [
+    "alpha-vantage/idb-chromium.json",
+    "alpha-vantage/idb-firefox.json",
+    "alpha-vantage/idb-webkit.json",
+    "provider-retirement.json",
+    "ui-alltag10/chromium-real-touch-pan.json",
+    "ui-alltag10/chromium-real-touch-press.json",
+    "ui-alltag10/long-press.json"
+  ],
+  "actualPublishedAssetMatches": 154,
+  "coreGroups": 6,
+  "AxeScans": 18,
+  "ordinaryTLS": true,
+  "UIAndTransfersEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "supplementalNewWalletEditorLiveEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "newWalletEditorMainAndIntegrationEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "failures": 0
+}

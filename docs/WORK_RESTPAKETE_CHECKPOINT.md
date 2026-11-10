@@ -1,3 +1,19 @@
+## STOPPED / HANDOVER_READY · e595fcc6d453-r3 · v304 LIVE_ACCEPTED · V134 verifiziert
+
+Reguläre vollständige Abgabe nach abgeschlossenem v304-Paket gemäß HND01-R. Sämtliche Entwicklungs-, Integrations-, QA- und Releaseverantwortung ist abgegeben; frühere ACTIVE-Zeilen sind historisch. [Übergabe und Nachfolgerprompt](HANDOVER_e595fcc6d453_r3_2026-11-10.md#kopierfertiger-nachfolgerprompt).
+
+**v304 LIVE_ACCEPTED.** Main `a21db8a92f488820114f3b86fc3d5a4ad96be1b2` / Tree `c6afbfe49152cbc29fa2722bf6bc3b16b01ad062`; PR324 regulär integriert. [Mainlauf 42853846824](https://github.com/joke0071/foliolab-open/actions/runs/42853846824), Versuch 1, einschließlich Deployment und tatsächlicher Produktion SUCCESS. [Abnahmeindex](release-evidence/v304-live-accepted.json).
+
+1353 Units, 0 Fehler/Skips, Syntax und drei Engines bestanden. Main: sieben Originalarchive, 229 JSON, 2065 dekodierte PNG, 481 verschiedene explizite Kontrollen; acht Kontextklassen separat geprüft. Alle 153 Pages-Dateien passen exakt zum eingefrorenen Git-Tree. Produktion: 169 JSON, 1407 dekodierte PNG, 281 verschiedene Vorgänger-Kontrollen, sieben Kontextklassen separat geprüft; 154 Assetpfade unter gewöhnlichem TLS bytegenau, sechs Kernprüfgruppen und 18 Axe-Scans bestanden. Größen und Digests aller acht Originalarchive stimmen zusätzlich mit den jeweiligen Uploadlogs überein.
+
+Neue Wallet-Textedit-Kette für acht bestehende Netzwerke in PR/Main und ausdrücklich direkt auf der veröffentlichten App in Chromium/Firefox/WebKit bestanden: Auswahl, je eine Revision, Identität/Mengen/Finanzen, Abbruch, Quota, Reload, Peer-CAS. Die zusätzliche direkte UI-Prüfung nutzt die Zertifikatsausnahme des Umgebungs-Inspektionsproxys; keine TLS-Abnahme daraus abgeleitet. Der normale Live-Workflow ruft die Archivsuite nicht auf; diese Abdeckung wird ausdrücklich durch die eigenständige Drei-Engine-Prüfung belegt. Drei vorbereitete Kurshilfen im selben sieben Dateien umfassenden Paket. Gesamt-K2/K3 bleiben PARTIAL.
+
+**V134 dauerhaft gespeichert und erneut bytegleich rückgeprüft:** 405473280 Bytes, SHA256 `bee510667229954a8201d807a794b231a5879a4257cbda992dfdbe1b7700d3dd`, fünf Rootmanifestpfade. V133 vollständig byteidentisch samt gesamter älterer Original-/Companion-/Index-/Restorekette erhalten. Neue Main-/Produktions-Ergänzungen separat unveränderlich gespeichert und gepinnt vollständig rückgeprüft. Tatsächlicher inkrementeller Restore: 67 Manifestpfade, 0 Fehler; identische frühere Vollrestorebelege wiederverwendet. [Redigierter Sicherungsbeleg](release-evidence/private-v134-durable-verification.json). Root allein kein vollständiger Payloadsatz; private Indices/README/Restoreprogramme verwenden. Kein offener Speicherauftrag.
+
+Main/Checkpoint/PRs frisch kollisionsfrei: Main unverändert, nur historische Drafts157/161 offen, kein Produkt-WIP oder laufender notwendiger Releasejob. Keine neue CI, kein Retry/Abbruch, kein weiterer Produktpush. Nächster Owner prüft vor erster Mutation frisch und übernimmt nur unter erwarteter HEAD. Danach K1–K6 seriell gemäß kanonischer Matrix; vorhandene K1-Belegzuordnung verwenden und nur eine reproduzierte Kernlücke öffnen. v304 nicht erneut prüfen oder sichern. Physische Android/TalkBack/Safari/OAuth bleiben extern. EFF03 nicht ausweiten; allgemeiner Audit optional, alle übrigen Schutzverträge bleiben bindend. GitHub nur Plugin; Checkpointbranch niemals vollständig mergen.
+
+---
+
 ## ACTIVE · e595fcc6d453-r3 · v304 Produktionsabnahme
 
 Reguläre alleinige Fortsetzung auf ausdrücklichen Nachfolgerauftrag. Vorgänger e595fcc6d453-r2 hat vollständig STOPPED / HANDOVER_READY abgegeben. Frisch geprüft: Main a21db8a92f488820114f3b86fc3d5a4ad96be1b2 / Tree c6afbfe49152cbc29fa2722bf6bc3b16b01ad062, Checkpoint 4d97eb7da78d2e90e110fa340671682367d49caf, 289 Refs, nur historische Draft-PRs 157/161, keine konkurrierende Arbeit. Private Sicherung V133 unverändert vorhanden; vollständige bisherige Belege werden wiederverwendet.

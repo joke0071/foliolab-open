@@ -1,5 +1,5 @@
 {
-  "status": "MAIN_CI_AND_DEPLOY_QUALIFIED_NOT_LIVE_ACCEPTED",
+  "status": "MAIN_CI_DEPLOY_AND_REQUIRED_PRODUCTION_COMPLETED",
   "owner": "e595fcc6d453-r3",
   "release": 304,
   "lastLiveAccepted": 303,
@@ -33,11 +33,13 @@
     "manifestPaths": 21,
     "durableReadback": "PASS"
   },
-  "liveAcceptance": "IN_PROGRESS; Chromium step succeeded; Firefox/WebKit step running",
+  "liveAcceptance": "SUCCESS; final manual acceptance in v304-live-accepted.json",
   "notes": [
     "PR324 identical-tree qualification reused",
     "No new CI/retries/aborts or product writes",
     "Root V133 unchanged; final root update awaits production originals",
     "Mandatory production gates remain required"
-  ]
+  ],
+  "originalArtifactDigestsMatchCorrespondingUploadLogs": true,
+  "finalBackupVersion": 134
 }

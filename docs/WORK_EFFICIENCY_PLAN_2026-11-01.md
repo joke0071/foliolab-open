@@ -1,3 +1,9 @@
+## Fortschreibung – v304 sicher abgeschlossen · 10.11.2026
+
+[v304 LIVE_ACCEPTED](release-evidence/v304-live-accepted.json), Main/Deploy/tatsächliche Produktion SUCCESS. Bereits qualifizierte identische PR-/Quell-/V133-Belege wiederverwendet; keine neue CI, kein Retry/Abbruch, keine Gateabschwächung. Neue Main-/Produktionsoriginale getrennt und unveränderlich gesichert, bestehender Root versionsgeschützt 133→134 fortgeschrieben und gepinnt vollständig rückgeprüft; tatsächlicher inkrementeller Restore 67 Manifestpfade/0 Fehler. Unveränderte frühere Vollrestorebelege wiederverwendet.
+
+Gezielte neue Wallet-Prüfung zusätzlich direkt in drei Produktionsbrowsern belegt; keine Abdeckung aus einem Kommentar oder bloßem Istwert angenommen. EFF03 bleibt beim bereits qualifizierten begrenzten Verdichter; keine neue Workflow-/CI-Plattform und keine automatische Freigabeentscheidung. Danach K1–K6 seriell; aktuelle Zuständigkeit ausschließlich im zentralen Checkpoint. [Reguläre HND01-Abgabe](HANDOVER_e595fcc6d453_r3_2026-11-10.md).
+
 ## Fortschreibung – EFF03 lokaler Verdichter · 10.11.2026
 
 **Begrenzter lokaler Kandidat implementiert und am vorhandenen v303-Satz validiert**, nur auf bestehender Checkpointref, keine Main-/CI-/Gate-/Produktänderung. [Vertrag und Nachweise](EFF03_RESULT_DIGEST_2026-11-10.md).8OriginalZIPs/398JSON/745explizite Ergebnisfelder,0FINDINGS/15UNKNOWN;3472PNG nurCRC, keine neue Bildabnahme. Kompakte Ausgabe4793Bytes/2,831s; technische Erstübersicht1Zusammenfassungsread+15expliziteDetailberichte statt398Einzelberichte, keine Gleichsetzung mit vollständiger fachlicher Qualifikation. Aktive frühere Auswertungszeit/Workverbrauch UNKNOWN.10adversarialeTests und4v303-bezogeneNegativkontrollen bestanden; Originale unverändert, keine PASS-Automatik.

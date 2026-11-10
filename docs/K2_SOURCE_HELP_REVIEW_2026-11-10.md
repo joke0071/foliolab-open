@@ -1,6 +1,6 @@
 # K2-KURSE – begrenzter Quellen-/Hilfenabgleich, 10.11.2026
 
-**DOC_CANDIDATE_VALIDATED; nicht in Main integriert, keine Releasefreigabe.**
+**Begrenzter Drei-Hilfen-Schnitt DONE / v304 LIVE_ACCEPTED.** In PR324 zusammen mit der Wallet-Edit-Korrektur regulär veröffentlicht: Main `a21db8a92f488820114f3b86fc3d5a4ad96be1b2` / Tree `c6afbfe49152cbc29fa2722bf6bc3b16b01ad062`. [Abnahmeindex](release-evidence/v304-live-accepted.json). Main, Deployment und tatsächliche Produktion bestanden; Originale mit V134 dauerhaft rückgeprüft. Gesamt-K2-KURSE bleibt PARTIAL. Die folgenden Abschnitte sind der historische Ausgangs-/Kandidatenbeleg; fertige Quellen, Frequenzauswahl und diese drei Hilfen nicht neu bauen.
 
 ## Taskkarte
 

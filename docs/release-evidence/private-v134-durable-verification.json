@@ -1,0 +1,44 @@
+{
+  "status": "DURABLE_READBACK_AND_ACTUAL_INCREMENTAL_RESTORE_VERIFIED",
+  "version": 134,
+  "previousVersion": 133,
+  "sameRootIdentityVersionGuarded": true,
+  "root": {
+    "bytes": 405473280,
+    "sha256": "bee510667229954a8201d807a794b231a5879a4257cbda992dfdbe1b7700d3dd",
+    "manifestPaths": 5,
+    "durableReadbackVerified": true
+  },
+  "previousRoot": {
+    "version": 133,
+    "bytes": 405452800,
+    "sha256": "e31784848db7c8bfdb601030444367df3eaacbfc94aa3ee34df665cad1cfae80",
+    "preservedByteIdentically": true
+  },
+  "newImmutableIncrements": [
+    {
+      "file_name": "FolioLab_v304_Main_originals_2026-11-10.tar",
+      "bytes": 209039360,
+      "sha256": "1429c41200b5c00d1b64f5f9063d9ad2d2498c9013c96328f81ba4d06a161df5",
+      "manifestPaths": 21,
+      "readbackVerified": true
+    },
+    {
+      "file_name": "FolioLab_v304_Production_originals_2026-11-10.tar",
+      "bytes": 151961600,
+      "sha256": "90c579416e87361c6a06b232f7aed38510fad21eb7f5b0e0aff54de27987faa0",
+      "manifestPaths": 41,
+      "readbackVerified": true
+    }
+  ],
+  "actualIncrementalRestore": {
+    "manifestPaths": 67,
+    "failures": 0,
+    "performedAgainstReadbackRootAndPinnedReadbackIncrements": true
+  },
+  "allOlderOriginalsPrivateIndicesAndRestoreProgramsPreserved": true,
+  "identicalEarlierFullRestoreEvidenceReused": true,
+  "rootAloneIsCompletePayloadSet": false,
+  "pendingWrites": false,
+  "privateLocatorPublication": "none"
+}
