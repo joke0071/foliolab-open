@@ -1,0 +1,390 @@
+{
+  "owner": "c43b5e91f20a",
+  "version": 302,
+  "status": "LIVE_ACCEPTED",
+  "lastLiveAccepted": 302,
+  "PR": 322,
+  "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+  "baseTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
+  "candidateHead": "96522496e399752c26bfb0661f75f2b3f1878b5c",
+  "candidateTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
+  "testedMerge": "090e653ca969265b440de34b41bd8e0cd92f450d",
+  "integrationRun": 42709224108,
+  "integrationAttempt": 1,
+  "walletRun": 42709224472,
+  "walletResult": "SUCCESS",
+  "files": [
+    "index.html",
+    "src/app.js",
+    "src/format.js",
+    "styles.css",
+    "sw.js",
+    "tests/structured-quality-browser-contract.mjs",
+    "tests/browser-flh03-abce.mjs"
+  ],
+  "local": {
+    "units": 1345,
+    "failures": 0,
+    "skips": 0,
+    "syntax": "PASS",
+    "engines": {
+      "chromium": "141.0.7390.37",
+      "firefox": "157.0",
+      "webkit": "27.2"
+    },
+    "counts": [
+      0,
+      1,
+      5
+    ],
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "zoom": "200% computed text",
+    "reviewNavigationFocusFiltersAndExactRecord": "PASS",
+    "periodSelectionAndTouch": "PASS",
+    "normalMoreOneLineAndBounds": "PASS",
+    "negativeControl": "original normal More has2lines; corrected1line"
+  },
+  "previousRuns": [
+    {
+      "head": "258fb2370ae7558b5678b48035b43c0ae74d4dc0",
+      "run": 42701185716,
+      "result": "FAILURE",
+      "cause": "obsolete onboarding predecessor assumption",
+      "artifacts": 5,
+      "JSON": 156,
+      "PNG": 1417,
+      "fullyQualifiedAndRetained": true
+    },
+    {
+      "head": "38be716dfe858c2a8cbe0729c79fa43c5a29565d",
+      "run": 42705095823,
+      "result": "SUCCESS_SUPERSEDED",
+      "cause": "confirmed normal More label fragmentation in actual CI images",
+      "artifacts": 6,
+      "JSON": 224,
+      "PNG": 2059,
+      "fullyQualifiedAndRetained": true
+    }
+  ],
+  "backup": {
+    "savedVersion": 129,
+    "savedPaths": 28339,
+    "savedReadback": "identical",
+    "savedSHA256": "9051b84b6eb6a8c7d8905f7825b414cc80c56647526a7ae048e995feafaf3431",
+    "localV130": {
+      "paths": 28387,
+      "bytes": 547429476,
+      "sha256": "911069e42cbe2f700b774f80dca6d60fbd6fe09edca25a095116f2c092b34dbb",
+      "allPathsVerified": true,
+      "writeOutcome": "UNKNOWN; no automatic retry; durable metadata still129",
+      "availability": "historical local verification; not currently present"
+    },
+    "localV130Final": {
+      "paths": 28451,
+      "bytes": 635498524,
+      "sha256": "16a19f43e06cbe73a95a333b86691d6a84297ab75d614996c4f1c8aa3101befd",
+      "allPathsVerified": true,
+      "allPriorManifestPayloadsRetained": true,
+      "includes": "Exact candidate source, both corrected complete CI runs plus initial run retained, original ZIP/log/API/hash receipts, local QA and K1/K2 preparation",
+      "newLibraryWriteAttempted": false,
+      "writeReason": "Earlier write outcome remains unknown; last authoritative Library metadata version129; no automatic second write",
+      "availability": "Historical local verification2026-11-09; file no longer present after environment reset2026-11-10; no confirmed Library save. Recover from V129 plus remote sources/artifacts before claiming current availability."
+    },
+    "metadataRechecked": {
+      "date": "2026-11-10",
+      "savedVersion": 129,
+      "bytes": 405006624
+    },
+    "recovery": {
+      "date": "2026-11-10",
+      "baseVersion": 129,
+      "basePathsReverified": 28339,
+      "artifactsRecovered": 17,
+      "logsRecovered": 16,
+      "candidateGitblobs": 7,
+      "localArchive": {
+        "paths": 28411,
+        "bytes": 614840364,
+        "sha256": "3a7daec9aebe7781ab71c350907db13057b64a291e31ef22af27a3496cb860f6",
+        "allPathsVerified": true,
+        "allV129PayloadsRetained": true
+      },
+      "newLibraryWriteAttempted": false,
+      "previousScratchOnlyArchiveRecovered": false
+    },
+    "finalAcceptedCapsule": "preparing locally with all main and production original artifacts; no new Library write attempted; durable version129 remains last confirmed"
+  },
+  "publicRelease": true,
+  "privacyClearance": "General audit clearance not required by explicit user decision2026-11-10; confirmed incidents must be addressed before affected release",
+  "parallelAuditor": "independent read-only",
+  "physicalAndroidTalkBackSafariOAuth": "not performed; external",
+  "legacyK6Finding": "200% fixed-height empty-chart copy overlap also reproduced on unchanged v301; separate from new review row",
+  "noDuplicateRetryOrCancellation": true,
+  "integrationResult": "SUCCESS",
+  "artifacts": [
+    {
+      "id": 13713979423,
+      "name": "ci-stage-090e653ca969265b440de34b41bd8e0cd92f450d",
+      "bytes": 527,
+      "sha256": "a5521e9013597552e464618d50d22aa9cc8ce7b39d6a004b5d36200515af81c1",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13715602797,
+      "name": "cross-engine-gates-090e653ca969265b440de34b41bd8e0cd92f450d-2",
+      "bytes": 11906229,
+      "sha256": "34f30faec2cafbd2fee995caa9f3ce9ffd7d9f133e2c60a451e1bb3b07588fa9",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 114,
+      "jsonReports": 19,
+      "pngsDecoded": 94,
+      "failureFlags": []
+    },
+    {
+      "id": 13717035400,
+      "name": "dialog-visual-reference",
+      "bytes": 933614,
+      "sha256": "ff411ce6fe6fd513d4c8958e93146bf33b5ecff9511f381b774132b0d09fde1e",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13717085383,
+      "name": "release-gates-090e653ca969265b440de34b41bd8e0cd92f450d",
+      "bytes": 64806972,
+      "sha256": "be2e8132c1a1671ca1d334ca8208442301dada94576aa4f4e33d2e3897f4f750",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 800,
+      "jsonReports": 92,
+      "pngsDecoded": 705,
+      "failureFlags": []
+    },
+    {
+      "id": 13715287773,
+      "name": "cross-engine-gates-090e653ca969265b440de34b41bd8e0cd92f450d-1",
+      "bytes": 58860178,
+      "sha256": "3929008856fa4799696bc7a2fd9974cbf8184de7619925f6bc5633258387eaa7",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 508,
+      "jsonReports": 15,
+      "pngsDecoded": 492,
+      "failureFlags": []
+    },
+    {
+      "id": 13716951021,
+      "name": "cross-engine-gates-090e653ca969265b440de34b41bd8e0cd92f450d-3",
+      "bytes": 68651355,
+      "sha256": "eae7677555c5ef5e23721aca07ecb6126b28f941f0bd1fd70c504f4c004310fe",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 846,
+      "jsonReports": 97,
+      "pngsDecoded": 748,
+      "failureFlags": []
+    }
+  ],
+  "jsonReports": 224,
+  "pngsDecoded": 2059,
+  "failureFlags": 0,
+  "artifactVerification": "All six original ZIPs: exact API/upload/localSHA256 and size, CRC, all JSON and PNG content verified",
+  "visualVerification": [
+    "Chromium0/1/5at390",
+    "Firefox0at390",
+    "WebKit5at390 and1at1440",
+    "WebKit320 and1440/Firefox390 hero"
+  ],
+  "testManifest": "94bc326810c6df64d831121d41e13a678408b61a72c5ffc147468afd36e19dcb",
+  "testManifestAlgorithm": "SHA256 of canonical UTF-8 JSON path/SHA256 pairs, comma/colon separators",
+  "nextProductDelta": "K2-KURSE: frequency selector daily default and safe attempt/success/backoff semantics; prepared, not implemented. K1 remains PARTIAL external anchors.",
+  "knownPrivacyFollowup": {
+    "status": "PRELIMINARY_PUBLICATION_GUARD_GAP; no confirmed data disclosure",
+    "scope": "General ignore protection for private CSV/backups/archives, preserve intentional fixtures",
+    "roadmap": "K6-TRUST",
+    "auditorEvidenceModified": false
+  },
+  "releasePolicy": {
+    "changedByUser": "2026-11-10",
+    "generalPrivacyAuditGate": false,
+    "independentHistoricalReview": "optional read-only companion",
+    "confirmedIncidents": "must be addressed before affected release",
+    "technicalFinancialIntegrityCIBackupAndOwnerGates": "unchanged",
+    "decision": "docs/PRIVACY_REVIEW_POLICY_2026-11-10.md"
+  },
+  "reusedCurrentArtifactsMatch": true,
+  "artifactsCurrentlyExpired": false,
+  "mainBaseline": "1708d4e947061f353187727ccae54daa1727db7e",
+  "mainTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
+  "mainRun": 42770050654,
+  "mainResult": "SUCCESS",
+  "mainIntegrationResult": "SUCCESS",
+  "mainRunResult": "SUCCESS",
+  "mainArtifacts": [
+    {
+      "id": 13741789285,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-3",
+      "bytes": 68640781,
+      "sha256": "1a60db6c42606bf5076dd557f850f0e08897b8ae026f3b69a8ff286990002452",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 846,
+      "jsonReports": 97,
+      "pngsDecoded": 748,
+      "failureFlags": []
+    },
+    {
+      "id": 13741760812,
+      "name": "ci-stage-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 354,
+      "sha256": "32bd6c88e91b1ee757b435519b9e78287b2ab5628b5b8d32451a3f1b5cd1e862",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13741714370,
+      "name": "dialog-visual-reference",
+      "bytes": 934655,
+      "sha256": "4a6b75fb884a887ec7674176fc72ab4929f848f7a0c0e33e1b9887141da1fc2d",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13741283815,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-1",
+      "bytes": 58869504,
+      "sha256": "ae0f0a6437b28848386e3f0b87ef3d7b974ba2ce8d1bd3249d59145a31330045",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 508,
+      "jsonReports": 15,
+      "pngsDecoded": 492,
+      "failureFlags": []
+    },
+    {
+      "id": 13741914008,
+      "name": "release-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 64784601,
+      "sha256": "850e641f8891a235d65a613aad3557cc3ca92f7ef9ab7cb7bffef58251adf4be",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 800,
+      "jsonReports": 92,
+      "pngsDecoded": 705,
+      "failureFlags": []
+    },
+    {
+      "id": 13741353117,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-2",
+      "bytes": 11904858,
+      "sha256": "c82f6dd1a49f423a827b601ca5f5c8e47b14789af747417244ef47bc17a3ec4d",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 114,
+      "jsonReports": 19,
+      "pngsDecoded": 94,
+      "failureFlags": []
+    }
+  ],
+  "mainJSONReports": 224,
+  "mainPNGsDecoded": 2059,
+  "mainUnits": {
+    "tests": 1345,
+    "pass": 1345,
+    "fail": 0,
+    "skipped": 0
+  },
+  "deployJob": 129682765708,
+  "deployResult": "SUCCESS",
+  "liveJob": 129682873647,
+  "liveResult": "SUCCESS",
+  "pages": {
+    "id": 13742003810,
+    "bytes": 564659,
+    "sha256": "1d281562e15a1978a4e670ded85b4900e4424716d34218fcf18a0ccb8cc20a8b",
+    "all152ExpectedGitblobsMatch": true,
+    "tree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66"
+  },
+  "targetedPrivacyCheck": {
+    "scope": "Only seven changed UI-R3 files and six own process-document snapshots",
+    "privateOriginalCSVFilesRead": 18,
+    "exactPrivateMarkerMatches": 0,
+    "negativeControl": "PASS",
+    "exhaustiveHistoryAudit": false
+  },
+  "previousLiveAccepted": 301,
+  "liveAccepted": true,
+  "live": {
+    "result": "PASS",
+    "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+    "cache": "foliolab-open-v302",
+    "base": "https://foliolab.unperfekt.at/",
+    "ordinaryTLS": true,
+    "assetMatches": 153,
+    "loadedAssets": 140,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "coreViolations": 0,
+    "artifact": {
+      "id": 13744356503,
+      "name": "production-live-acceptance-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 137051482,
+      "sha256": "06553d8f550359e5a3e5f517bde3b00ad35f38af0b2ea24a7484cbe3029b835f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1605,
+      "jsonReports": 165,
+      "pngsDecoded": 1401,
+      "failureFlags": []
+    },
+    "actualProductionScreenshotsViewed": [
+      "Chromium0/1/5at390",
+      "Firefox5at1440",
+      "WebKit1at390"
+    ],
+    "scope": "Chromium core plus required Firefox/WebKit UI/finance/storage/backup/restore/offline/Axe suites; actual deployed URL; physical Android/TalkBack/Safari/OAuth remain external"
+  },
+  "productionArtifact": {
+    "id": 13744356503,
+    "name": "production-live-acceptance-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+    "bytes": 137051482,
+    "sha256": "06553d8f550359e5a3e5f517bde3b00ad35f38af0b2ea24a7484cbe3029b835f",
+    "apiUploadLogLocalMatch": true,
+    "CRC": "PASS",
+    "entries": 1605,
+    "jsonReports": 165,
+    "pngsDecoded": 1401,
+    "failureFlags": []
+  },
+  "acceptedAt": "2026-11-10T07:44:13.822Z",
+  "counters": {
+    "acceptedReleases": 1,
+    "completedProductPackages": 1
+  }
+}

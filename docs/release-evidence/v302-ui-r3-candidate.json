@@ -1,8 +1,8 @@
 {
   "owner": "c43b5e91f20a",
   "version": 302,
-  "status": "DEPLOYED_LIVE_ACCEPTANCE_PENDING",
-  "lastLiveAccepted": 301,
+  "status": "LIVE_ACCEPTED",
+  "lastLiveAccepted": 302,
   "PR": 322,
   "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
   "baseTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
@@ -119,9 +119,10 @@
       },
       "newLibraryWriteAttempted": false,
       "previousScratchOnlyArchiveRecovered": false
-    }
+    },
+    "finalAcceptedCapsule": "preparing locally with all main and production original artifacts; no new Library write attempted; durable version129 remains last confirmed"
   },
-  "publicRelease": "DEPLOYED_NOT_LIVE_ACCEPTED",
+  "publicRelease": true,
   "privacyClearance": "General audit clearance not required by explicit user decision2026-11-10; confirmed incidents must be addressed before affected release",
   "parallelAuditor": "independent read-only",
   "physicalAndroidTalkBackSafariOAuth": "not performed; external",
@@ -214,7 +215,7 @@
   ],
   "testManifest": "94bc326810c6df64d831121d41e13a678408b61a72c5ffc147468afd36e19dcb",
   "testManifestAlgorithm": "SHA256 of canonical UTF-8 JSON path/SHA256 pairs, comma/colon separators",
-  "nextProductDelta": "K1 evidence mapping remains PARTIAL; K2 frequency setting read-only preparation, no second productive branch.",
+  "nextProductDelta": "K2-KURSE: frequency selector daily default and safe attempt/success/backoff semantics; prepared, not implemented. K1 remains PARTIAL external anchors.",
   "knownPrivacyFollowup": {
     "status": "PRELIMINARY_PUBLICATION_GUARD_GAP; no confirmed data disclosure",
     "scope": "General ignore protection for private CSV/backups/archives, preserve intentional fixtures",
@@ -234,9 +235,9 @@
   "mainBaseline": "1708d4e947061f353187727ccae54daa1727db7e",
   "mainTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
   "mainRun": 42770050654,
-  "mainResult": "IN_PROGRESS",
+  "mainResult": "SUCCESS",
   "mainIntegrationResult": "SUCCESS",
-  "mainRunResult": "IN_PROGRESS",
+  "mainRunResult": "SUCCESS",
   "mainArtifacts": [
     {
       "id": 13741789285,
@@ -322,7 +323,7 @@
   "deployJob": 129682765708,
   "deployResult": "SUCCESS",
   "liveJob": 129682873647,
-  "liveResult": "IN_PROGRESS",
+  "liveResult": "SUCCESS",
   "pages": {
     "id": 13742003810,
     "bytes": 564659,
@@ -336,5 +337,54 @@
     "exactPrivateMarkerMatches": 0,
     "negativeControl": "PASS",
     "exhaustiveHistoryAudit": false
+  },
+  "previousLiveAccepted": 301,
+  "liveAccepted": true,
+  "live": {
+    "result": "PASS",
+    "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+    "cache": "foliolab-open-v302",
+    "base": "https://foliolab.unperfekt.at/",
+    "ordinaryTLS": true,
+    "assetMatches": 153,
+    "loadedAssets": 140,
+    "coreGroups": 6,
+    "coreAxeScans": 18,
+    "coreViolations": 0,
+    "artifact": {
+      "id": 13744356503,
+      "name": "production-live-acceptance-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 137051482,
+      "sha256": "06553d8f550359e5a3e5f517bde3b00ad35f38af0b2ea24a7484cbe3029b835f",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1605,
+      "jsonReports": 165,
+      "pngsDecoded": 1401,
+      "failureFlags": []
+    },
+    "actualProductionScreenshotsViewed": [
+      "Chromium0/1/5at390",
+      "Firefox5at1440",
+      "WebKit1at390"
+    ],
+    "scope": "Chromium core plus required Firefox/WebKit UI/finance/storage/backup/restore/offline/Axe suites; actual deployed URL; physical Android/TalkBack/Safari/OAuth remain external"
+  },
+  "productionArtifact": {
+    "id": 13744356503,
+    "name": "production-live-acceptance-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+    "bytes": 137051482,
+    "sha256": "06553d8f550359e5a3e5f517bde3b00ad35f38af0b2ea24a7484cbe3029b835f",
+    "apiUploadLogLocalMatch": true,
+    "CRC": "PASS",
+    "entries": 1605,
+    "jsonReports": 165,
+    "pngsDecoded": 1401,
+    "failureFlags": []
+  },
+  "acceptedAt": "2026-11-10T07:44:13.822Z",
+  "counters": {
+    "acceptedReleases": 1,
+    "completedProductPackages": 1
   }
 }
