@@ -219,8 +219,8 @@ function renderDashboard(){const total=totalEUR(model);const aggregate=aggregate
   $('totalHint').textContent=aggregate.note||'';
   const review=structuredQualityReview(model),chip=$('dashboardReview');
   chip.hidden=!review.groups.length;
-  chip.textContent=review.groups.length+' Position'+(review.groups.length===1?'':'en')+' prüfen';
-  chip.setAttribute('aria-label',chip.textContent+' · Prüfbereich öffnen');
+  $('dashboardReviewLabel').textContent=review.groups.length+' Position'+(review.groups.length===1?'':'en')+' prüfen';
+  chip.setAttribute('aria-label',$('dashboardReviewLabel').textContent+' · Prüfbereich öffnen');
   const onboarding=$('onboarding');onboarding.classList.toggle('hidden',!!model.providers.length);if(!model.providers.length)onboarding.innerHTML='<strong>Willkommen bei FolioLab</strong><p>Starte mit einem Anbieter und Konto, einer öffentlichen Wallet oder einem vorhandenen Backup.</p><div class="toolbar-buttons"><button class="btn primary" data-action="start-wizard">Anlage hinzufügen</button><button class="btn outline" data-action="start-provider">Anbieter verwalten</button><button class="btn outline" data-action="start-wallet">Wallet verbinden</button><button class="btn outline" data-action="start-import">Backup importieren</button></div>';
    const wealth=wealthView();
   const alloc=allocationBreakdown(model,valueEUR,TYPES);

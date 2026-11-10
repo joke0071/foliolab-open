@@ -3,6 +3,48 @@ import {mkdir} from 'node:fs/promises';
 /** Runs against the delivered modules in the existing isolated synthetic profile.
  * Shared by the required UI gate on localhost and the actual production URL. */
 export async function structuredQualityBrowserContract({p,nav,record,scan,engine,scans}){
+ // UI-R3: the delivered inline entry uses the existing grouped review, at every cardinality.
+ const out='artifacts/gates/structured-quality';await mkdir(out,{recursive:true});
+ for(const count of [0,1,5]){
+  await p.evaluate(async count=>{
+   const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
+   const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'r3-provider',name:'SYNTHETIC R3 Provider'}));m.accounts.push(createAccount({id:'r3-account',providerId:'r3-provider',name:'SYNTHETIC R3 Account',type:'securities'},m));
+   m.positions.push(createPosition({id:'r3-cash',providerId:'r3-provider',accountId:'r3-account',name:'SYNTHETIC Cash',kind:'cash',quantity:100,price:1},m));
+   for(let i=0;i<count;i++)m.positions.push(createPosition({id:'r3-'+i,providerId:'r3-provider',accountId:'r3-account',name:'SYNTHETIC Review '+i,kind:'etf',quantity:1,price:0,archived:i===0},m));
+   const store=new PortfolioStorage();await store.initialize();await store.save(m);store.close();
+  },count);
+  await p.reload();await p.waitForFunction(()=>document.getElementById('portfolioStorageState')?.textContent.includes('IndexedDB aktiv'));await nav('dashboard');
+  const untouched=await record(),entry=p.locator('#dashboardReview');
+  for(const width of [320,360,390,412,430,768,1440]){
+   await p.setViewportSize({width,height:900});await nav('dashboard');
+   assert.equal(await p.locator('.dashboard-review-entry').count(),0,'no freestanding container, even when hidden');
+   assert.ok(await p.locator('#miniChartPeriods .period-more>summary').evaluateAll(nodes=>nodes.filter(el=>el.getBoundingClientRect().width&&el.getBoundingClientRect().height).every(el=>{const r=document.createRange();r.selectNodeContents(el);const bounds=el.getBoundingClientRect(),rects=[...r.getClientRects()].filter(b=>b.width);return new Set(rects.map(b=>Math.round(b.top))).size===1&&rects.every(b=>b.left>=bounds.left-1&&b.right<=bounds.right+1);})), 'normal More label stays on one line');
+   assert.equal(await p.locator('.dashboard-current>#dashboardReview').count(),1,'review belongs directly to current wealth');
+   const box=await entry.boundingBox();
+   if(!count){assert.equal(box,null,'zero warnings occupy no layout space');assert.ok(await entry.evaluate(el=>el.hidden));}
+   else{
+    assert.equal((await entry.innerText()).trim(),count+' Position'+(count===1?'':'en')+' prüfen');
+    assert.equal(await entry.getAttribute('aria-label'),count+' Position'+(count===1?'':'en')+' prüfen · Prüfbereich öffnen');
+    assert.equal(await entry.locator('svg[aria-hidden=true]').count(),2,'warning and navigation icon are decorative');
+    assert.ok(box.height>=44&&box.width>=44,'whole row has a sufficient touch target');
+    assert.ok(await entry.evaluate(el=>{const b=el.getBoundingClientRect(),v=document.getElementById('totalValue').getBoundingClientRect(),card=el.closest('.panel').getBoundingClientRect();return b.top>=v.bottom&&b.left>=card.left&&b.right<=card.right;}),'entry follows amount and stays within wealth card');
+    await p.keyboard.press('Tab');await entry.focus();assert.ok(await entry.evaluate(el=>el.matches(':focus-visible')&&getComputedStyle(el).outlineStyle!=='none'),'visible keyboard focus');
+    await p.keyboard.press(width===390?'Space':'Enter');assert.equal(await p.locator('.quality-review-card').count(),count);assert.equal(await p.locator('#qualityReviewKind').inputValue(),'all');assert.equal(await p.locator('#qualityReviewAccount').inputValue(),'');
+    assert.ok(await p.locator('#qualityReviewHeading').evaluate(el=>el===document.activeElement));
+    await p.locator('[data-action=close-quality-review]').click();assert.ok(await entry.evaluate(el=>el===document.activeElement),'return focuses the integrated entry');
+   }
+   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'responsive inline review layout');
+   await scan('UI-R3 review '+count+' / '+width);scans.push({page:'UI-R3-review',count,width,height:900});
+   if(width===390||width===1440)await p.screenshot({path:`${out}/${engine}-r3-${count}-${width}.png`,fullPage:true});
+  }
+  await p.setViewportSize({width:320,height:800});
+  await p.evaluate(()=>{const nodes=[...document.querySelectorAll('#dashboardPage, #dashboardPage *')],sizes=nodes.map(el=>parseFloat(getComputedStyle(el).fontSize));nodes.forEach((el,i)=>el.style.fontSize=sizes[i]*2+'px');});
+  assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'200% computed text reflows without horizontal overflow');
+  if(count)assert.ok(await entry.evaluate(el=>el.scrollWidth<=el.clientWidth+1),'200% review text remains fully visible');
+  assert.ok(await p.locator('#miniChartPeriods').evaluate(el=>[...el.querySelectorAll('button,summary')].filter(n=>n.getBoundingClientRect().width&&n.getBoundingClientRect().height).every(n=>{const b=n.getBoundingClientRect(),r=document.createRange();r.selectNodeContents(n);return [...r.getClientRects()].every(t=>t.width===0||t.left>=b.left-1&&t.right<=b.right+1);})), '200% period labels stay inside their own targets');
+  await scan('UI-R3 200% review '+count);await p.screenshot({path:`${out}/${engine}-r3-${count}-200pct.png`,fullPage:true});
+  assert.deepEqual(await record(),untouched,'review navigation and visual stress preserve exact portfolio bytes/revision');
+ }
  await p.evaluate(async()=>{
   const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
   const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'quality-provider',name:'SYNTHETIC Quality Provider'}));m.accounts.push(createAccount({id:'quality-account',providerId:'quality-provider',name:'SYNTHETIC Quality Account',type:'securities'},m));
