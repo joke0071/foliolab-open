@@ -1,0 +1,92 @@
+{
+  "status": "MAIN_TEST_DEPLOY_ORIGINALS_QUALIFIED_PRODUCTION_PENDING",
+  "run": 42902930951,
+  "attempt": 1,
+  "head": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+  "tree": "ca1ec2ac2babb708dee3ee35a21e30f437f9ae66",
+  "JSON": 229,
+  "decodedPNG": 2065,
+  "distinctRecordedAssertions": 472,
+  "originalUploadDigestMatches": 7,
+  "pagesGitBlobMatches": 153,
+  "failures": 0,
+  "QAReview": 5848989116,
+  "QA": "bounded independent acceptance for exact unchanged PR HEAD40632c0ddf335493c6a6900beee29049be7b3e5e",
+  "production": "PENDING",
+  "unchangedQualifiedPartsReused": true,
+  "artifacts": [
+    {
+      "id": 13805940871,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-3",
+      "size_in_bytes": 68781102,
+      "digest": "sha256:e12560c7a64292ebd38504b9a42500d6f71c259088fd8d3f59c08dacdd3d2bcf",
+      "created_at": "2026-11-10T21:37:14Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13805865134,
+      "name": "release-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+      "size_in_bytes": 65572948,
+      "digest": "sha256:06d66ec466db016fc442e85b88470bfce44871c79bf9d54939cd3fe308454ffa",
+      "created_at": "2026-11-10T21:31:44Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13805451834,
+      "name": "github-pages",
+      "size_in_bytes": 567802,
+      "digest": "sha256:7edcbbeb598870520a227d2b2e9f9ac9909c8e1c53bab63b80c97f31acc0cd16",
+      "created_at": "2026-11-10T21:37:27Z",
+      "expires_at": "2026-11-11T21:37:26Z",
+      "expired": false
+    },
+    {
+      "id": 13805340427,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-1",
+      "size_in_bytes": 60003428,
+      "digest": "sha256:c7f4ecfcf063771dd821cfb28077a74b99fe68701c5a09ffd54b4f0cc899feb2",
+      "created_at": "2026-11-10T21:26:53Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13804627530,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934692,
+      "digest": "sha256:bd96dbcf878415717aed1f888a138342cc05f7899f994a2c2ce925feca5996cd",
+      "created_at": "2026-11-10T21:31:46Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13804385225,
+      "name": "ci-stage-9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+      "size_in_bytes": 353,
+      "digest": "sha256:7f9271024eae885466dc0bea6d0bd73e37569135bffc2c1e5d1ed7b137d02d2e",
+      "created_at": "2026-11-10T21:13:39Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13803024373,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-2",
+      "size_in_bytes": 12406583,
+      "digest": "sha256:d26d1e7bc412e01a174887adebfe7b08c02738e8cb9b18b382e108c9c2a711d5",
+      "created_at": "2026-11-10T21:21:58Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    }
+  ],
+  "newOriginalsDurablePinnedReadback": {
+    "bytes": 210606080,
+    "sha256": "d685f64f29a7d133a8509799b1154b35c6ea5aa886a12ad2d78a5400160f3ade",
+    "manifestPaths": 31,
+    "readbackVerified": true
+  },
+  "backupRootCurrent": 137,
+  "newFinalRootPending": true,
+  "liveJob": 130146998193,
+  "directNewCopyProbe": "published WebKit PASS without certificate exception; local Chromium/Firefox host transport/CA limits are not a PASS; unchanged mandatory three-engine production gate remains required"
+}
