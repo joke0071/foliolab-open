@@ -1,3 +1,15 @@
+## ACTIVE · f66807554013 · reguläre HND01-Übernahme · 10.11.2026
+
+Vorgänger ae53485c3674 ist regulär STOPPED/HANDOVER_READY. Neuer alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner: f66807554013. Vor Schreibzugriff Main/Tree, alle 287 Branchrefs, offene PRs (nur historische Drafts157/161), PR323-Reviews/Kommentare, Actions, WIP und private Sicherung frisch abgeglichen; keine konkurrierende Produktaktivität festgestellt. Übernahme unter erwarteter Checkpoint-HEAD 321831b20cd1d340311d2db1f601b6b8063a0d3f.
+
+Letzter LIVE_ACCEPTED v302. Main73a17662e53d4b4d88125a85879e5fcae112596e / Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 unverändert, PR323 regulär integriert. Bestehender Mainlauf42814350681 Versuch1: vier Testjobs und Deploy SUCCESS, echte live-acceptance129834759711 IN_PROGRESS. Kein v303-LIVE_ACCEPTED behauptet, keine neue CI/kein Abbruch/keine Produktmutation.
+
+Private V131 frisch materialisiert:405407144Bytes/SHA256f9e4d3fa2006080f292bd44aecf9c9f7d611da3a88dda4ca3cf1e3cec3a4c9b0 exakt. Privater Index/README/Restoreprogramm gelesen; identische qualifizierte V130-/V302-/PR323-Belege werden wiederverwendet. Neue Main-/Produktionsoriginale noch zu qualifizieren und inkrementell mit Readback zu sichern. Keine ungesicherten Produktänderungen übernommen.
+
+Genau nächste Aktion: bestehende Main-/Live-Originale vollständig qualifizieren und erhalten, tatsächliche Release-Gates abnehmen, Sicherung versionsgeschützt fortschreiben. EFF03 erst danach begrenzt auswerten; HND01-R nach LIVE_ACCEPTED regulär abgeben. Alle Schutzverträge unverändert; Checkpointbranch niemals vollständig mergen.
+
+---
+
 ## STOPPED / HANDOVER_READY · ae53485c3674 · v303 Main-CI läuft / V131 geprüft / EFF03 geplant
 
 Owner `ae53485c3674` gibt die gesamte Entwicklungs-, Integrations-, QA- und Releaseverantwortung regulär wegen Kontextlast ab; frühere ACTIVE-Zeilen sind historisch. Keine weiteren Produktaktionen durch diesenChat. [Verbindliche kompakte Abgabe und kopierfertiger Nachfolgerprompt](HANDOVER_ae53485c3674_2026-11-10.md#kopierfertiger-nachfolgerprompt).
