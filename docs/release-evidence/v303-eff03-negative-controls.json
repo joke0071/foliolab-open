@@ -1,0 +1,26 @@
+{
+  "controls": {
+    "missingReport": {
+      "disposition": "FINDINGS",
+      "findings": 2
+    },
+    "wrongDigest": {
+      "disposition": "FINDINGS",
+      "findings": 1
+    },
+    "wrongRun": {
+      "disposition": "FINDINGS",
+      "findings": 1
+    },
+    "realReportFailureFlagIsolatedClone": {
+      "sourceArtifact": 13765870573,
+      "member": "refresh-frequency/report.json",
+      "disposition": "FINDINGS",
+      "findings": 1,
+      "originalModified": false
+    }
+  },
+  "standaloneAdversarialTests": 10,
+  "originalsModified": false,
+  "releaseApproval": false
+}

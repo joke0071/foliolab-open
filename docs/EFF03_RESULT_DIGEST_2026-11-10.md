@@ -17,3 +17,23 @@ Negative Kontrollen müssen fehlenden Bericht, falschen Digest, echten Fehlerfla
 ## Übernahmeprüfung
 
 287Refs erfasst; Main/Tree und Checkpoint-HEAD6bf08028c627442d5191fa06d2c54e8f0517bc44 stimmen mit regulärer Abgabe überein. Nur historische Drafts157/161 offen, keine Reviews/Inlinekommentare;0in_progress/queuedActions. Kein lokales WIP. Sicherungsidentität aktuell132/405432320Bytes bestätigt; unveränderte V132-Readback-/Restorebelege wiederverwendet, keine erneute Vollrestorebehauptung. Alle vorherigen Originalketten erhalten.
+
+## Ergebnis des begrenzten Kandidaten
+
+**LOCAL_CANDIDATE_VALIDATED**, ausschließlich auf der bestehenden Checkpointref bereitgestellt; nicht nach Main integriert und kein Produktrelease. Werkzeug: `tools/summarize_release_artifacts.py`; Standardbibliothek, lokaler Read-only-Lauf. Aufruf: `python3 tools/summarize_release_artifacts.py docs/release-evidence/v303-eff03-input-contract.json <ZIP-Verzeichnis>`. Optional `--details` liefert den vollständigen Index. Exit0 bedeutet nur REVIEW_REQUIRED; Exit1 FINDINGS, Exit2 UNKNOWN. Niemals Releasefreigabe.
+
+[Expliziter v303-Eingangsvertrag](release-evidence/v303-eff03-input-contract.json), [kompakte Ausgabe](release-evidence/v303-eff03-summary.json), [Negativkontrollen](release-evidence/v303-eff03-negative-controls.json). ZIP-Dateinamen entsprechen den Artefakt-IDs. Erwartete Größen/Digests stammen aus dem bereits qualifizierten v303-Abnahmeindex; zusätzlich alle8 aktuellen API-Artefaktmetadaten einschließlich Run/Head/Größe/Digest verglichen. Main-Tree und Versuch1 frisch bestätigt. Getrennte Vorlaufinventur aus den bereits qualifizierten OriginalZIPs erstellt; nicht automatisch auf neue Releases übertragen oder mit neuen Istwerten als Soll regenerieren.
+
+Ergebnis:8Archive/Digest+Größe+vollständigerCRC,398JSON,3472PNG-CRC,745 explizite Ergebnisassertions;0FINDINGS,15UNKNOWN wegen bewusst fehlender Ergebnisadapter. Keine PNG-Dekodierung/Sichtprüfung wiederholt. Laufzeit2,831s auf dieser Umgebung, kompakte Ausgabe4793Bytes. Keine Gesamtsemantikprüfung: übrige Felder bleiben ungeprüft, alle Fach-/CI-/Gerätegates bleiben erforderlich.
+
+Bei der ersten Erprobung wurde ein Ergebnisobjekt mit mehreren Unterergebnissen zunächst fälschlich als skalarer Fehlschlag markiert. Expliziter Adapter für die tatsächlich geprüfte Chromium-Long-Press-Struktur korrigiert; andere unbekannte Formen bleiben UNKNOWN. Keinen Produktfehler daraus abgeleitet.
+
+Messbare technische Sichtung auf identischem Satz:398Einzelberichte im vollständigen Ausgangsinventar; jetzt1kompakte Ausgabe und15explizit ausgewiesene Detailberichte. Diese15Originale zur Schemaeinordnung geöffnet;6Diagnostik-Snapshots,3Provider-Retirement-Berichte ohne skalaren Status,4Ereignisprotokolle,2andereLong-Press-Ergebnisobjekte. WeiterhinUNKNOWN im Werkzeug, kein stiller Adapter-/PASS-Zwang. Dieser16-Read-Pfad ist nur die technische Erstübersicht der definierten Felder, **kein äquivalenter Ersatz für398vollständige fachliche Einzelprüfungen**. Tatsächliche frühere aktive Auswertungszeit/Workverbrauch UNKNOWN; keine gemessene Zeitersparnis oder Prozentersparnis behauptet.
+
+10gezielte adversariale Tests bestanden: leeresManifest/Runabweichung/fehlenderBericht/Digest/Größe/CRC/echterFehler/Fehlerliste/UNKNOWN/fehlenderPointer/unsichererZIP-Pfad/Originalerhaltung. Zusätzlich auf dem v303-Vertrag fehlendenBericht/falschenDigest/falschenRun und einen echten FAIL im isolierten Klon des tatsächlichen Refresh-Berichts geprüft: alleFINDINGS; Originale unverändert. Vollständige Rohoriginale sind bereits in V132 samt Ergänzungen dauerhaft gesichert; keine neue Originalklasse oder privater Payload durch das Werkzeug entstanden. Neuer Quellcode und abgeleitete redigierte Belege gitbasiert erhalten; V132 bleibt unverändert. Kein zusätzlicher Vollrestore/keine neue private Version behauptet.
+
+## Nächste Arbeit und Grenze
+
+Kandidat kann im nächsten real nötigen Auswertungsschritt unterstützend verwendet werden; neue Releaseverträge müssen unabhängig aus vorgeschriebenen Berichten/qualifizierten Quellen erstellt werden. Nicht durch einfaches Inventarisieren beliebiger neuer Istwerte eine Sollfreigabe erfinden. Keine automatische CI-Einbindung oder Folgeplattform. Aufwand begrenzt lassen.
+
+Danach seriell K1–K6 gemäß kanonischer Matrix: vorhandene K1-Belegzuordnung verwenden, konkret fehlende unabhängige Originalanker extern lassen; nächsten K2-KURSE-Quellen-/Hilfen-/Copy-Rest gegen bestehenden Main abgrenzen, nur reproduzierte Kernlücke öffnen. Kein neuer Finanzsonderfall und kein Wiederbau fertiger UI/Frequenzteile. Physische Android/TalkBack/Safari/OAuth-Grenzen unverändert.

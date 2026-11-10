@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "identity": {
+    "head": "73a17662e53d4b4d88125a85879e5fcae112596e",
+    "tree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+    "run": 42814350681,
+    "attempt": 1
+  },
+  "disposition": "UNKNOWN",
+  "releaseApproval": false,
+  "findings": [],
+  "unknowns": [
+    {
+      "artifact": 13765870573,
+      "member": "alpha-vantage/idb-chromium.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13765870573,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13765870573,
+      "member": "ui-alltag10/chromium-real-touch-pan.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13765870573,
+      "member": "ui-alltag10/chromium-real-touch-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13764665632,
+      "member": "ui-alltag10/long-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13764615134,
+      "member": "alpha-vantage/idb-firefox.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13764615134,
+      "member": "alpha-vantage/idb-webkit.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13764615134,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "alpha-vantage/idb-chromium.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "alpha-vantage/idb-firefox.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "alpha-vantage/idb-webkit.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "provider-retirement.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "ui-alltag10/chromium-real-touch-pan.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "ui-alltag10/chromium-real-touch-press.json",
+      "reason": "no reviewed outcome adapter"
+    },
+    {
+      "artifact": 13767344523,
+      "member": "ui-alltag10/long-press.json",
+      "reason": "no reviewed outcome adapter"
+    }
+  ],
+  "counts": {
+    "artifacts": 8,
+    "reports": 398,
+    "png": 3472,
+    "assertions": 745
+  },
+  "artifacts": [
+    {
+      "id": 13766045564,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 934658,
+      "sha256": "d6960d26ec2f9647e75ecf06264cb1b7eac29edd9c5349a9215a54194e4157f7",
+      "reports": 0,
+      "png": 20
+    },
+    {
+      "id": 13765986754,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 567072,
+      "sha256": "e6d9f39ddc2565ff9b0122a3f2da0e026f266659e9769a14fc9880d0d84f6b11",
+      "reports": 0,
+      "png": 0
+    },
+    {
+      "id": 13765870573,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 65122294,
+      "sha256": "eecc24644ab31ac98409f5bbe692901f744256c1295c589498107af4505298df",
+      "reports": 94,
+      "png": 707
+    },
+    {
+      "id": 13764665632,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 59093718,
+      "sha256": "c7cb9b85fef3b3d4c991d7dbd24fd5aab5e6b1d548b1c26976430722f71e1ca1",
+      "reports": 15,
+      "png": 492
+    },
+    {
+      "id": 13764615134,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 12340792,
+      "sha256": "58c16df2db3cffa856c92fa7735b0cf6f70d0d18671f3908fd96c9277d3d9481",
+      "reports": 22,
+      "png": 98
+    },
+    {
+      "id": 13764432780,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 68734283,
+      "sha256": "a497b7cee789f33ebb5eb579aa2fbb42b75c786433e9a878929237884403d3ff",
+      "reports": 97,
+      "png": 748
+    },
+    {
+      "id": 13764282310,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 354,
+      "sha256": "1d23765277aba8c662a7c44f8c3426c7d6b73fd15f4587efb8aa21f9bcdbefb5",
+      "reports": 1,
+      "png": 0
+    },
+    {
+      "id": 13767344523,
+      "integrity": "DIGEST_SIZE_CRC_VERIFIED",
+      "bytes": 137897740,
+      "sha256": "301a73f146096435fbfd7cbae5858b13db96846fb8016e3296a6623b1feb4200",
+      "reports": 169,
+      "png": 1407
+    }
+  ],
+  "seconds": 2.831,
+  "limits": [
+    "Only explicit reviewed JSON pointers are evaluated; other fields remain unassessed.",
+    "Hashes bind originals; they do not establish semantic correctness.",
+    "PNG files CRC-checked, not decoded or visually reviewed.",
+    "Human/financial/physical-device/CI/release gates remain required."
+  ],
+  "reportIndex": "Use the input manifest for paths/digests/assertions, or --details."
+}

@@ -1,8 +1,14 @@
+## Fortschreibung – EFF03 lokaler Verdichter · 10.11.2026
+
+**Begrenzter lokaler Kandidat implementiert und am vorhandenen v303-Satz validiert**, nur auf bestehender Checkpointref, keine Main-/CI-/Gate-/Produktänderung. [Vertrag und Nachweise](EFF03_RESULT_DIGEST_2026-11-10.md).8OriginalZIPs/398JSON/745explizite Ergebnisfelder,0FINDINGS/15UNKNOWN;3472PNG nurCRC, keine neue Bildabnahme. Kompakte Ausgabe4793Bytes/2,831s; technische Erstübersicht1Zusammenfassungsread+15expliziteDetailberichte statt398Einzelberichte, keine Gleichsetzung mit vollständiger fachlicher Qualifikation. Aktive frühere Auswertungszeit/Workverbrauch UNKNOWN.10adversarialeTests und4v303-bezogeneNegativkontrollen bestanden; Originale unverändert, keine PASS-Automatik.
+
+V303/Main/Tree und V132 samt Originalkette unverändert. Unterstützender lokaler Kandidat, keine neue CI-Plattform/automatische Gateentscheidung. Nächster Produktumfang wieder K1–K6 gemäß kanonischer Matrix; keine Erweiterung des Optimierungsprojekts.
+
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
 ## EFF03 – Vereinfachung und Entkopplung der Entwicklungsprozesse
 
-**Status: erster begrenzter Mess-/Priorisierungsschritt abgeschlossen; technischer Kandidat GEPLANT · Nutzerauftrag 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
+**Status: Mess-/Priorisierung abgeschlossen; begrenzter lokaler Ergebnisverdichter LOCAL_CANDIDATE_VALIDATED, auf Checkpointref verfügbar · 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
 
 **Ziel:** Die FolioLab-Entwicklung skalierbarer, schneller und zuverlässiger gestalten. Den organisatorischen Aufwand pro Release reduzieren, ohne Abstriche bei Finanzintegrität, Datensicherheit oder Produktqualität.
 
@@ -28,7 +34,7 @@ Keine neue komplexe Infrastruktur schaffen, wenn bestehende Werkzeuge ausreichen
 
 ### Erster begrenzter EFF03-Schritt – 10.11.2026 nach v303/V132
 
-**Messbasis verdichtet; nächster technischer Kandidat PLANNED.** Erst nach tatsächlich qualifiziertem v303 und dauerhaft bytegleich rückgeprüfter V132 ausgewertet; keine neue Mess-CI und keine Änderung an Gates/Testauswahl. [Abnahme](release-evidence/v303-live-accepted.json), [vorhandene Run-/Jobmesswerte](release-evidence/v303-eff03-baseline.json).
+**Messbasis verdichtet; begrenzter lokaler Kandidat inzwischen validiert, siehe aktuelle Fortschreibung oben.** Erst nach tatsächlich qualifiziertem v303 und dauerhaft bytegleich rückgeprüfter V132 ausgewertet; keine neue Mess-CI und keine Änderung an Gates/Testauswahl. [Abnahme](release-evidence/v303-live-accepted.json), [vorhandene Run-/Jobmesswerte](release-evidence/v303-eff03-baseline.json).
 
 | Bestehender Mainlauf42814350681, Versuch1 | Zeit |
 | --- | --- |
@@ -39,7 +45,7 @@ Keine neue komplexe Infrastruktur schaffen, wenn bestehende Werkzeuge ausreichen
 
 Acht neue OriginalZIPs,398JSON-Berichte und3472PNG qualifiziert. Inkrementelle Sicherung: zwei unveränderliche neue Teile mit19+9Manifestpfaden; Root enthält vollständige unveränderte V131,5Rootmanifestpfade;33extrahierte inkrementelle Pfade tatsächlich geprüft. Frühere identische PR-/V302-Nachweise wiederverwendet. Keine zweite CI, kein Retry/Abbruch. Tatsächliche Work-Credits, aktive manuelle Analysezeit und Dokumentationszeit **UNKNOWN**; Jobzeiten sind keine Abrechnungseinheiten. Der erste Root-Latestabruf war nach Erfolg132 noch131; erneute Metadaten und gepinnter Byteabruf bestätigten132, ohne zweiten Schreibversuch.
 
-**Priorisiert, noch nicht implementiert:** ein kleiner lokaler Ergebnisverdichter für vorhandene OriginalZIPs/JSON/Metadaten. Je SHA/Tree/Run/Versuch vollständige Originalzuordnung mit Digest/Größe/CRC, erwarteten Berichten, Fehlern und UNKNOWN liefern; Detailoriginale verfügbar halten. Keine neue Plattform, kein Gate-/Workflowwechsel, keine automatische PASS-Erklärung. Tatsächliche Bild-/Fachprüfung und Pflichtgates bleiben erhalten. Vorher/Nachher-Maß: Anzahl notwendiger Detailreads und aktive Auswertungszeit auf demselben vorhandenen v303-Satz; jetzige aktive Zeit UNKNOWN, keine Prozentersparnis behaupten. Negative Kontrollen: fehlender Bericht, falscher Digest und echter Fehlerflag müssen sichtbar scheitern. Vor Implementierung Umfang knapp festlegen; bei fehlendem Nutzen stoppen. K1–K6 unverändert, HND01-R nach diesem Release regulär abgeben.
+**Historischer Auswahlstand vor Umsetzung, inzwischen durch obige Kandidatenprüfung fortgeschrieben:** ein kleiner lokaler Ergebnisverdichter für vorhandene OriginalZIPs/JSON/Metadaten. Je SHA/Tree/Run/Versuch vollständige Originalzuordnung mit Digest/Größe/CRC, erwarteten Berichten, Fehlern und UNKNOWN liefern; Detailoriginale verfügbar halten. Keine neue Plattform, kein Gate-/Workflowwechsel, keine automatische PASS-Erklärung. Tatsächliche Bild-/Fachprüfung und Pflichtgates bleiben erhalten. Vorher/Nachher-Maß: Anzahl notwendiger Detailreads und aktive Auswertungszeit auf demselben vorhandenen v303-Satz; jetzige aktive Zeit UNKNOWN, keine Prozentersparnis behaupten. Negative Kontrollen: fehlender Bericht, falscher Digest und echter Fehlerflag müssen sichtbar scheitern. Vor Implementierung Umfang knapp festlegen; bei fehlendem Nutzen stoppen. K1–K6 unverändert, HND01-R nach diesem Release regulär abgeben.
 
 ## HND01-R – Resiliente Work-Ausführung · verbindlich ab 10.11.2026
 
