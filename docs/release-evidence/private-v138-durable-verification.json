@@ -1,0 +1,12 @@
+{
+  "bytes": 405585920,
+  "sha256": "b219942115470d1c02ee246a63723d4cc2c1cc2b319aa72cd4bc65c1a1fdb184",
+  "rootManifestPaths": 5,
+  "previousVersion": 137,
+  "targetVersion": 138,
+  "previousRootPreserved": true,
+  "incrementReadbackVerified": true,
+  "actualExtractedManifestPaths": 59,
+  "restoreFailures": 0,
+  "pinnedReadbackVerified": true
+}

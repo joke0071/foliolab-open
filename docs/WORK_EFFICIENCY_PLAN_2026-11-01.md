@@ -1,3 +1,22 @@
+## Fortschreibung – 10.11.2026 EFF03-Zwei-Agenten-Pilot PR326/v305 abgeschlossen
+
+**v305 LIVE_ACCEPTED und V138 tatsächlich wiederhergestellt.** [Abnahme](release-evidence/v305-live-accepted.json), [Messreview](release-evidence/eff03-pr326-pilot-result.json), [reguläre HND01-R-Abgabe](HANDOVER_93890745b277_2026-11-10.md). Zwei fachlich zusammengehörige Backup-/Safari-Copy-Änderungen; Hauptagent allein Code/Integration/Sicherung, unabhängige QA nur lesend plus ein redigiertes SHA-gebundenes PR-Review. DEV_ACTIVE→QA_READY→QA_ACCEPTED→MERGE_READY→LIVE_ACCEPTED real durchlaufen; Hauptagent hat Reviews UND Kommentare selbst frisch gelesen.0Produktbefunde,0Korrekturrevisionen nach Freeze, keine CI-Retries/Abbrüche/Duplikat-Messläufe. Bestehende QA-Automatisierung unverändert, keine neue Plattform oder weitere Automatisierung.
+
+| Beobachtung | Tatsächlicher Beleg / Grenze |
+| --- | --- |
+| QA-Übergabe | [PR326](https://github.com/joke0071/foliolab-open/pull/326), eingefrorener HEAD40632c0ddf335493c6a6900beee29049be7b3e5e, unabhängige [Review5848989116](https://github.com/joke0071/foliolab-open/pull/326#pullrequestreview-5848989116) |
+| Zeitliche Überlappung | Review3:41nach PR-Erstellung, vor Ende der Pflicht-CI; das ist keine gemessene aktive QA-Zeit |
+| PR-CI / Main inklusive Produktion |29:30 /60:24 Wandzeit; erfolgreiche Main-Jobs zusammen99:48, keine Work-Credits |
+| Qualität |1353Units/0Fehler/0Skips; alle unveränderten PR/Wallet/Main/Deploy/gewöhnlichenTLS-/3Engine-Produktionsgates;627neueCI-JSON/5537dekodiertePNG/14Originalarchive vollständig zugeordnet; unabhängige eigene Source-/Tree-/DOM-/Tastatur-/Layout-/Axe-Gegenprüfung |
+| Sicherung | V137-PR-Originale und V138-Main-/Produktionsoriginale dauerhaft gepinnt bytegleich; V138 tatsächlicher inkrementellerRestore59Manifestpfade/0Fehler, komplette Vorgängerkette erhalten |
+| Aktive Aufwände / Credits | Entwicklung,QA,Korrektur,Auswertung,Sicherung,Dokumentation undWork-Credits UNKNOWN; keine aktive Zeit aus Wand-/Jobzeit erfinden |
+| Historischer Vergleich | anderer Scope und PR325-Versuch2; vorhandene API-Zeitstempel erhalten, kein kontrollierter Einzelversuch-Vergleich und keine Prozentersparnis ableiten |
+| Ergebnis | Rollen-/PR-Kommunikation und SHA-Schutz funktionieren im ersten kleinen Paket; kein belastbarer quantitativer Effizienznachweis und keine weitere Automatisierung daraus |
+
+Der lokale WebKit-Offlinefehler ist als Debian-Umgebungsgrenze mit exaktemv304-Gegenbeleg erhalten; die unveränderten CI-PWA-/Offlinegates bestanden in allen3Engines mitv305. Zusätzliche neueCopy direktinveröffentlichterWebKit-Seite geprüft; zusätzliche lokaleChrome-/Firefox-Probes durchHosttransport/Proxy-CA begrenzt, keinPASS undkeineTLS-Ausnahme daraus. Alle verpflichtenden tatsächlichenProduktionsgates bestanden separat mitgewöhnlichemTLS. NativeGeräte-/Safari-/ITP-/TalkBack-/OAuth-/Originalankergrenzen bleibenextern, K6-TRUSTgesamtVERIFY.
+
+Danach K1–K6 seriell gemäß kanonischerMatrix; fertigenPilot nichtwiederholen, keine neueGesamtanalyse/Roadmap/CI-Plattform. HND01-R sowie sämtliche Finanz-/Datenintegritäts-/Backup-/Restore-/Releaseverträge bleiben verbindlich.
+
 ## Fortschreibung – v304 sicher abgeschlossen · 10.11.2026
 
 [v304 LIVE_ACCEPTED](release-evidence/v304-live-accepted.json), Main/Deploy/tatsächliche Produktion SUCCESS. Bereits qualifizierte identische PR-/Quell-/V133-Belege wiederverwendet; keine neue CI, kein Retry/Abbruch, keine Gateabschwächung. Neue Main-/Produktionsoriginale getrennt und unveränderlich gesichert, bestehender Root versionsgeschützt 133→134 fortgeschrieben und gepinnt vollständig rückgeprüft; tatsächlicher inkrementeller Restore 67 Manifestpfade/0 Fehler. Unveränderte frühere Vollrestorebelege wiederverwendet.
@@ -16,7 +35,7 @@ V303/Main/Tree und V132 samt Originalkette unverändert. Unterstützender lokale
 
 ### EFF03 – Zwei-Agenten-Modell · Nutzerentscheidung 10.11.2026
 
-**Verbindlicher Ablauf ab dem nächsten geeigneten Fachpaket nach regulärem Abschluss des bereits laufenden PR325-Main-/Produktionslaufs.** Keine laufende CI abbrechen, duplizieren oder überholen. Der bisherige Ergebnisverdichter bleibt ein begrenztes Hilfsmittel ohne automatische Freigabe; diese organisatorische Entkopplung ersetzt weder Pflichtgates noch HND01-R. Praktische Erprobung und Nutzenbewertung stehen noch aus.
+**Verbindlicher Ablauf ab dem nächsten geeigneten Fachpaket nach regulärem Abschluss des bereits laufenden PR325-Main-/Produktionslaufs.** Keine laufende CI abbrechen, duplizieren oder überholen. Der bisherige Ergebnisverdichter bleibt ein begrenztes Hilfsmittel ohne automatische Freigabe; diese organisatorische Entkopplung ersetzt weder Pflichtgates noch HND01-R. Erste praktische Erprobung mit PR326/v305 abgeschlossen; [Messreview und Grenzen](release-evidence/eff03-pr326-pilot-result.json). Keine gemessene Prozent-/Creditersparnis, aktive Aufwände UNKNOWN; weitere Automatisierung nur bei belegtem Nutzen.
 
 | Rolle | Verantwortung und Schreibrechte |
 | --- | --- |
@@ -38,7 +57,7 @@ V303/Main/Tree und V132 samt Originalkette unverändert. Unterstützender lokale
 
 **Korrekturschleife:** Geänderter Commit-SHA erfordert erneute unabhängige Prüfung der betroffenen Aussagen und eine neue SHA-Zuordnung am PR. Unverändert gültige Belege gezielt wiederverwenden; keine pauschale Übernahme einer alten QA_ACCEPTED-Aussage auf geänderten Code. QA prüft unabhängig und meldet Findings oder Acceptance direkt am PR; Hauptagent ruft diese vor Integration selbst ab. Kein Selbstreview durch den Hauptagenten als Ersatz für den QA-Agenten. Notwendige Korrekturen bleiben beim alleinigen Hauptagenten.
 
-**Erste praktische Erprobung:** Nach dem aktuellen regulären Releaseabschluss das nächste geeignete zusammenhängende K1–K6-Fachpaket gemäß kanonischer Matrix auswählen, Umfang und Risiken vor Entwicklung benennen, zwei Rollen einsetzen und das vollständige DEV_ACTIVE→QA_READY→QA_FINDINGS/QA_ACCEPTED→MERGE_READY→LIVE_ACCEPTED-Verfahren am PR nachvollziehbar ausführen. Kein künstlicher Produktpatch oder zweiter CI-Lauf allein zum Ausprobieren des Prozesses. Fertige UNKNOWN-FX-, UI-R1/R2/R3-, Frequenz-, Wallet-/Hilfenschnitte nicht neu implementieren. HND01-R gilt unverändert; der nächste alleinige Owner übernimmt den Pilotauftrag bei regulärer Rotation.
+**Historischer Pilotauftrag, inzwischen PR326/v305 abgeschlossen:** Nach dem aktuellen regulären Releaseabschluss das nächste geeignete zusammenhängende K1–K6-Fachpaket gemäß kanonischer Matrix auswählen, Umfang und Risiken vor Entwicklung benennen, zwei Rollen einsetzen und das vollständige DEV_ACTIVE→QA_READY→QA_FINDINGS/QA_ACCEPTED→MERGE_READY→LIVE_ACCEPTED-Verfahren am PR nachvollziehbar ausführen. Kein künstlicher Produktpatch oder zweiter CI-Lauf allein zum Ausprobieren des Prozesses. Fertige UNKNOWN-FX-, UI-R1/R2/R3-, Frequenz-, Wallet-/Hilfenschnitte nicht neu implementieren. HND01-R gilt unverändert; der nächste alleinige Owner übernimmt den Pilotauftrag bei regulärer Rotation.
 
 **Bewertung nach genau diesem ersten gemeinsamen Paket:** Tatsächlich gemessenen aktiven Entwicklungs-, QA-, Korrektur-, Auswertungs-, Sicherungs- und Dokumentationsaufwand sowie Wandzeit, notwendige Detailreads/CI-Wiederholungen/Übergaben und Nutzen der unabhängig gefundenen Fehler knapp am Pilot-PR und hier verlinkt bewerten. Vorhandene Vergleichsdaten verwenden, unterschiedliche Paketrisiken und wiederverwendete Belege benennen; fehlende Messwerte UNKNOWN lassen. Weder Jobzeit als Work-Credits noch eine ungeprüfte Prozentersparnis ausgeben. Prüfqualität umfasst belegte Befunde/Negativgegenproben, erfüllte unveränderte Pflichtgates und offen ausgewiesene Grenzen. Erst bei nachgewiesenem Nutzen weiter automatisieren.
 

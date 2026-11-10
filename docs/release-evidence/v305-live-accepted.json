@@ -1,0 +1,200 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "cache": "foliolab-open-v305",
+  "main": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+  "tree": "ca1ec2ac2babb708dee3ee35a21e30f437f9ae66",
+  "PR": 326,
+  "PRHead": "40632c0ddf335493c6a6900beee29049be7b3e5e",
+  "testedPRMerge": "68bd5e320c231d42c7d68648c0f6600fe2533240",
+  "PRRun": 42896890562,
+  "WalletRun": 42896890935,
+  "MainRun": 42902930951,
+  "LiveJob": 130146998193,
+  "allRunAttempts": 1,
+  "QAReviewURL": "https://github.com/joke0071/foliolab-open/pull/326#pullrequestreview-5848989116",
+  "QA": "independent bounded QA_ACCEPTED for unchanged exact PR HEAD; no product findings",
+  "unitTests": 1353,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "mainQualification": {
+    "status": "MAIN_TEST_DEPLOY_ORIGINALS_QUALIFIED_PRODUCTION_PENDING",
+    "run": 42902930951,
+    "attempt": 1,
+    "head": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+    "tree": "ca1ec2ac2babb708dee3ee35a21e30f437f9ae66",
+    "JSON": 229,
+    "decodedPNG": 2065,
+    "distinctRecordedAssertions": 472,
+    "originalUploadDigestMatches": 7,
+    "pagesGitBlobMatches": 153,
+    "failures": 0,
+    "QAReview": 5848989116,
+    "QA": "bounded independent acceptance for exact unchanged PR HEAD40632c0ddf335493c6a6900beee29049be7b3e5e",
+    "unchangedQualifiedPartsReused": true
+  },
+  "productionQualification": {
+    "status": "PRODUCTION_ORIGINAL_CONTENT_QUALIFIED_NOT_AUTOMATIC_RELEASE_ACCEPTANCE",
+    "run": 42902930951,
+    "head": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+    "tree": "ca1ec2ac2babb708dee3ee35a21e30f437f9ae66",
+    "cache": "foliolab-open-v305",
+    "artifact": 13806983591,
+    "artifactDigest": "sha256:08d8e61aaa155964303fdd3c2583f0f03cd0f2ced1c0e6e110637123bc4f8d97",
+    "artifactBytes": 138154848,
+    "JSON": 169,
+    "decodedPNG": 1407,
+    "distinctRecordedAssertions": 281,
+    "directlyQualifiedContextReports": [
+      "alpha-vantage/idb-chromium.json",
+      "alpha-vantage/idb-firefox.json",
+      "alpha-vantage/idb-webkit.json",
+      "provider-retirement.json",
+      "ui-alltag10/chromium-real-touch-pan.json",
+      "ui-alltag10/chromium-real-touch-press.json",
+      "ui-alltag10/long-press.json"
+    ],
+    "publishedAssetMatches": 154,
+    "loadedAssets": 141,
+    "coreGroups": 6,
+    "AxeScans": 18,
+    "proxyCertificateException": false,
+    "UIAndTransferEngines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "failures": 0
+  },
+  "artifacts": [
+    {
+      "id": 13806983591,
+      "name": "production-live-acceptance-9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+      "size_in_bytes": 138154848,
+      "digest": "sha256:08d8e61aaa155964303fdd3c2583f0f03cd0f2ced1c0e6e110637123bc4f8d97",
+      "created_at": "2026-11-10T22:13:51Z",
+      "expires_at": "2026-11-17T22:13:47Z",
+      "expired": false
+    },
+    {
+      "id": 13805940871,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-3",
+      "size_in_bytes": 68781102,
+      "digest": "sha256:e12560c7a64292ebd38504b9a42500d6f71c259088fd8d3f59c08dacdd3d2bcf",
+      "created_at": "2026-11-10T21:37:14Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13805865134,
+      "name": "release-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+      "size_in_bytes": 65572948,
+      "digest": "sha256:06d66ec466db016fc442e85b88470bfce44871c79bf9d54939cd3fe308454ffa",
+      "created_at": "2026-11-10T21:31:44Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13805451834,
+      "name": "github-pages",
+      "size_in_bytes": 567802,
+      "digest": "sha256:7edcbbeb598870520a227d2b2e9f9ac9909c8e1c53bab63b80c97f31acc0cd16",
+      "created_at": "2026-11-10T21:37:27Z",
+      "expires_at": "2026-11-11T21:37:26Z",
+      "expired": false
+    },
+    {
+      "id": 13805340427,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-1",
+      "size_in_bytes": 60003428,
+      "digest": "sha256:c7f4ecfcf063771dd821cfb28077a74b99fe68701c5a09ffd54b4f0cc899feb2",
+      "created_at": "2026-11-10T21:26:53Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13804627530,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934692,
+      "digest": "sha256:bd96dbcf878415717aed1f888a138342cc05f7899f994a2c2ce925feca5996cd",
+      "created_at": "2026-11-10T21:31:46Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13804385225,
+      "name": "ci-stage-9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+      "size_in_bytes": 353,
+      "digest": "sha256:7f9271024eae885466dc0bea6d0bd73e37569135bffc2c1e5d1ed7b137d02d2e",
+      "created_at": "2026-11-10T21:13:39Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    },
+    {
+      "id": 13803024373,
+      "name": "cross-engine-gates-9ab3653fc508fa35fe0f20ecf56a14004f837d3e-2",
+      "size_in_bytes": 12406583,
+      "digest": "sha256:d26d1e7bc412e01a174887adebfe7b08c02738e8cb9b18b382e108c9c2a711d5",
+      "created_at": "2026-11-10T21:21:58Z",
+      "expires_at": "2027-02-08T21:13:31Z",
+      "expired": false
+    }
+  ],
+  "backup": {
+    "bytes": 405585920,
+    "sha256": "b219942115470d1c02ee246a63723d4cc2c1cc2b319aa72cd4bc65c1a1fdb184",
+    "rootManifestPaths": 5,
+    "previousVersion": 137,
+    "targetVersion": 138,
+    "previousRootPreserved": true,
+    "incrementReadbackVerified": true,
+    "actualExtractedManifestPaths": 59,
+    "restoreFailures": 0,
+    "pinnedReadbackVerified": true
+  },
+  "newImmutableOriginals": [
+    {
+      "bytes": 210606080,
+      "sha256": "d685f64f29a7d133a8509799b1154b35c6ea5aa886a12ad2d78a5400160f3ade",
+      "manifestPaths": 31,
+      "readbackVerified": true
+    },
+    {
+      "bytes": 139110400,
+      "sha256": "0f7aee8570cf8417003820eb37e284ab2c42fae29f290734fe18dc3291b1946a",
+      "manifestPaths": 23,
+      "readbackVerified": true
+    }
+  ],
+  "sourceTestWorkflowFingerprints": {
+    "src/": {
+      "files": 145,
+      "gitFingerprint": "cc3ed73e2f719084b32bbdac8bf3974ddbbe86e053c1f4f3c3cc4f637a33721c"
+    },
+    "tests/": {
+      "files": 417,
+      "gitFingerprint": "c0a50547d8d6747b871099084afc4b53b216bdf16b93a1c5b48417f1128405a3"
+    },
+    "worker/src/": {
+      "files": 2,
+      "gitFingerprint": "5eecfccd4f6de4587ff4497094738f8e1ed9995e1c2a5d6490436aace8d0dc8d"
+    },
+    "worker/tests/": {
+      "files": 2,
+      "gitFingerprint": "89c63a18bf9ce5d56e6546720dc82e587306e99175080dac6380df549c31a27b"
+    },
+    ".github/workflows/": {
+      "files": 5,
+      "gitFingerprint": "0b153de0844b9a3e549b935c6c9004251528a601c876a6d4a57729799bb70bcd"
+    }
+  },
+  "reusedUnchangedEvidence": "Qualified v304/PR325 financial/storage/actual wallet production/original oracle statements retained only for byte-identical relevant sources; all mandatory new PR/Main/production gates executed. Prior identical full restore evidence reused; new actual incremental extraction directly checked59paths.",
+  "directAdditionalNewCopyProbe": "actual published WebKit PASS with ordinary TLS; optional local Chromium/Firefox host transport/CA blocks are explicit, not a PASS; mandatory actual CI production all three engines PASS without certificate exception",
+  "noRetriesAbortsDuplicateMeasurementCI": true,
+  "limits": [
+    "K6-TRUST overall VERIFY",
+    "native Android/Safari/ITP/TalkBack/system font/OAuth remain external",
+    "independent private historical initial/end/ownership anchors remain external",
+    "not FolioLab1.0 or universal portfolio/platform acceptance"
+  ],
+  "runFinishedAt": "2026-11-10T22:13:54Z"
+}

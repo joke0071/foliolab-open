@@ -1,0 +1,51 @@
+{
+  "pilotPR": 326,
+  "QAReview": 5848989116,
+  "PRCreatedAt": "2026-11-10T20:35:58Z",
+  "QAReviewSubmittedAt": "2026-11-10T20:39:39Z",
+  "PRCI": {
+    "run": 42896890562,
+    "createdAt": "2026-11-10T20:36:02Z",
+    "finishedAt": "2026-11-10T21:05:32Z",
+    "wallSeconds": 1770
+  },
+  "existingBaselinePR325": {
+    "run": 42873427362,
+    "createdAt": "2026-11-10T18:15:58Z",
+    "finishedAt": "2026-11-10T18:54:52Z",
+    "scopeDifference": "different scope and historical run_attempt=2; created_at\u2192updated_at envelope is not a controlled single-attempt comparison",
+    "observedAPIEnvelopeSeconds": 2334,
+    "runAttempt": 2,
+    "singleAttemptComparableWallSeconds": "UNKNOWN"
+  },
+  "activeDevelopmentSeconds": "UNKNOWN",
+  "activeQASeconds": "UNKNOWN",
+  "activeCorrectionSeconds": "UNKNOWN",
+  "activeEvaluationSeconds": "UNKNOWN",
+  "activeBackupSeconds": "UNKNOWN",
+  "activeDocumentationSeconds": "UNKNOWN",
+  "WorkCredits": "UNKNOWN",
+  "independentProductFindings": 0,
+  "candidateRevisionsAfterFreeze": 0,
+  "CIRetries": 0,
+  "CIAborts": 0,
+  "duplicateMeasurementRuns": 0,
+  "QACompletedBeforeCIFinished": true,
+  "MainCIIncludingProduction": {
+    "run": 42902930951,
+    "attempt": 1,
+    "createdAt": "2026-11-10T21:13:30Z",
+    "finishedAt": "2026-11-10T22:13:54Z",
+    "wallSeconds": 3624,
+    "successfulJobSeconds": 5988
+  },
+  "QAReviewDelayAfterPRSeconds": 221,
+  "newOriginalArchives": 14,
+  "newCIJSONReports": 627,
+  "newCIPNGDecoded": 5537,
+  "requiredGates": "PR/Wallet/Main/Deploy/ordinary-TLS production/three engines/durable V138 pinned readback/actual incremental restore PASS",
+  "conclusion": "Two-agent PR handoff/review and exact-SHA integration demonstrated; QA completed during mandatory CI with no product findings or candidate correction. No measured percentage saving or Work-credit reduction; active timings UNKNOWN, historical baseline is not a controlled comparable single-attempt sample. Existing QA automation unchanged; no new automation/platform introduced.",
+  "status": "FIRST_PILOT_COMPLETED_AFTER_LIVE_ACCEPTED_AND_V138_ACTUAL_RESTORE",
+  "backupVersion": 138,
+  "actualExtractedManifestPaths": 59
+}
