@@ -1,0 +1,56 @@
+{
+  "runWallSeconds": 3906,
+  "jobs": [
+    {
+      "name": "Determine FAST / INTEGRATION / RELEASE",
+      "id": 129823482415,
+      "seconds": 8
+    },
+    {
+      "name": "cross-engine (3)",
+      "id": 129823561726,
+      "seconds": 1336
+    },
+    {
+      "name": "test",
+      "id": 129823561740,
+      "seconds": 917
+    },
+    {
+      "name": "cross-engine (2)",
+      "id": 129823561801,
+      "seconds": 475
+    },
+    {
+      "name": "cross-engine (1)",
+      "id": 129823561930,
+      "seconds": 639
+    },
+    {
+      "name": "deploy",
+      "id": 129834385222,
+      "seconds": 42
+    },
+    {
+      "name": "live-acceptance",
+      "id": 129834759711,
+      "seconds": 2510
+    }
+  ],
+  "workCredits": "UNKNOWN",
+  "manualAnalysisEffort": "UNKNOWN",
+  "originals": {
+    "mainZIPs": 7,
+    "productionZIPs": 1,
+    "mainJSON": 229,
+    "productionJSON": 169,
+    "mainPNG": 2065,
+    "productionPNG": 1407,
+    "newRootManifestPaths": 5,
+    "newMainManifestPaths": 19,
+    "newProductionManifestPaths": 9,
+    "actualIncrementalRestoredPaths": 33
+  },
+  "rootReadbackConsistency": "initial latest read131 after success132; metadata reread confirmed132; pinned byte readback matched; no second write",
+  "successfulJobSeconds": 5927
+}

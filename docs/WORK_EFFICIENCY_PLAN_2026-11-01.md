@@ -2,7 +2,7 @@
 
 ## EFF03 – Vereinfachung und Entkopplung der Entwicklungsprozesse
 
-**Status: GEPLANT · Nutzerauftrag 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
+**Status: erster begrenzter Mess-/Priorisierungsschritt abgeschlossen; technischer Kandidat GEPLANT · Nutzerauftrag 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
 
 **Ziel:** Die FolioLab-Entwicklung skalierbarer, schneller und zuverlässiger gestalten. Den organisatorischen Aufwand pro Release reduzieren, ohne Abstriche bei Finanzintegrität, Datensicherheit oder Produktqualität.
 
@@ -25,6 +25,21 @@ Nach sicher abgeschlossenem v303 als ersten begrenzten Schritt vorhandene v303-R
 Keine neue komplexe Infrastruktur schaffen, wenn bestehende Werkzeuge ausreichen. Alle verpflichtenden Tests, Schutzverträge und externen Abnahmen bleiben vollständig erhalten. Automatisierung darf keine ungeprüften PASS-Erklärungen erzeugen. Detailoriginale und nachvollziehbare Ergebniszuordnung bleiben erhalten; bestehende alleinige Integrationsverantwortung und HND01-R gelten weiter.
 
 **Erfolgskriterium:** Weniger redundante Werkzeugaufrufe, geringerer Dokumentations- und Sicherungsaufwand, zuverlässigere Agentenübergaben und kürzere Entwicklungszyklen bei gleichbleibender nachweisbarer Qualität.
+
+### Erster begrenzter EFF03-Schritt – 10.11.2026 nach v303/V132
+
+**Messbasis verdichtet; nächster technischer Kandidat PLANNED.** Erst nach tatsächlich qualifiziertem v303 und dauerhaft bytegleich rückgeprüfter V132 ausgewertet; keine neue Mess-CI und keine Änderung an Gates/Testauswahl. [Abnahme](release-evidence/v303-live-accepted.json), [vorhandene Run-/Jobmesswerte](release-evidence/v303-eff03-baseline.json).
+
+| Bestehender Mainlauf42814350681, Versuch1 | Zeit |
+| --- | --- |
+| Workflow-Wandzeit |65:06|
+| Summe erfolgreicher Jobs |98:47|
+| Chromium / Cross1 / Cross2 / Cross3 |15:17 / 10:39 / 7:55 / 22:16|
+| Deployment / tatsächliche Live-Abnahme |0:42 / 41:50|
+
+Acht neue OriginalZIPs,398JSON-Berichte und3472PNG qualifiziert. Inkrementelle Sicherung: zwei unveränderliche neue Teile mit19+9Manifestpfaden; Root enthält vollständige unveränderte V131,5Rootmanifestpfade;33extrahierte inkrementelle Pfade tatsächlich geprüft. Frühere identische PR-/V302-Nachweise wiederverwendet. Keine zweite CI, kein Retry/Abbruch. Tatsächliche Work-Credits, aktive manuelle Analysezeit und Dokumentationszeit **UNKNOWN**; Jobzeiten sind keine Abrechnungseinheiten. Der erste Root-Latestabruf war nach Erfolg132 noch131; erneute Metadaten und gepinnter Byteabruf bestätigten132, ohne zweiten Schreibversuch.
+
+**Priorisiert, noch nicht implementiert:** ein kleiner lokaler Ergebnisverdichter für vorhandene OriginalZIPs/JSON/Metadaten. Je SHA/Tree/Run/Versuch vollständige Originalzuordnung mit Digest/Größe/CRC, erwarteten Berichten, Fehlern und UNKNOWN liefern; Detailoriginale verfügbar halten. Keine neue Plattform, kein Gate-/Workflowwechsel, keine automatische PASS-Erklärung. Tatsächliche Bild-/Fachprüfung und Pflichtgates bleiben erhalten. Vorher/Nachher-Maß: Anzahl notwendiger Detailreads und aktive Auswertungszeit auf demselben vorhandenen v303-Satz; jetzige aktive Zeit UNKNOWN, keine Prozentersparnis behaupten. Negative Kontrollen: fehlender Bericht, falscher Digest und echter Fehlerflag müssen sichtbar scheitern. Vor Implementierung Umfang knapp festlegen; bei fehlendem Nutzen stoppen. K1–K6 unverändert, HND01-R nach diesem Release regulär abgeben.
 
 ## HND01-R – Resiliente Work-Ausführung · verbindlich ab 10.11.2026
 

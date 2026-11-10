@@ -1,0 +1,32 @@
+{
+  "durableVersion": 132,
+  "expectedPreviousVersion": 131,
+  "bytes": 405432320,
+  "sha256": "2e8100c7640dc91a34d392dd85a2cb9330ae5ee39898afff10b3d30014a70285",
+  "rootManifestPaths": 5,
+  "rootReadbackIdentical": true,
+  "failures": 0,
+  "completeV131ArchivePreservedByteIdentical": true,
+  "unchangedInheritedCompanions": 3,
+  "previousFullRestoreEvidenceReused": true,
+  "newMainIncrement": {
+    "bytes": 208803840,
+    "sha256": "e72da68dd934a8c079dca0815ba29c4426cc71fefd2a40dff8329be9e0264a1e",
+    "manifestPaths": 19,
+    "actualRestore": "PASS"
+  },
+  "newProductionIncrement": {
+    "bytes": 138752000,
+    "sha256": "50d86fc1481c4b55515d735d4adbc4f07a62d6d424fbefdd9b5da08dacea57ad",
+    "manifestPaths": 9,
+    "readbackIdentical": true,
+    "allMemberHashesVerified": true
+  },
+  "actualIncrementalRestore": {
+    "paths": 33,
+    "failures": 0,
+    "fullV302RestoreRepeated": false
+  },
+  "readbackConsistency": "First latest read briefly returned131; same-identity metadata then confirmed132; pinned current-version readback matched. Single guarded write only.",
+  "privateLocators": "Only in private predecessor/current indices; current root alone is not full payload set"
+}

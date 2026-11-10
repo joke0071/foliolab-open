@@ -1,0 +1,140 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "cache": "foliolab-open-v303",
+  "base": "https://foliolab.unperfekt.at/",
+  "ordinaryTLS": true,
+  "assetHashMatches": 154,
+  "loadedAssets": 141,
+  "coreGroups": 6,
+  "axeScans": 18,
+  "axeViolations": 0,
+  "mainRun": 42814350681,
+  "liveJob": 129834759711,
+  "mainResult": "SUCCESS",
+  "liveResult": "SUCCESS",
+  "json": 169,
+  "png": 1407,
+  "failureFlags": [],
+  "artifact": {
+    "artifactId": 13767344523,
+    "bytes": 137897740,
+    "sha256": "301a73f146096435fbfd7cbae5858b13db96846fb8016e3296a6623b1feb4200",
+    "apiUploadLogDigestMatch": true,
+    "CRC": "PASS"
+  },
+  "actualProductionVisualReview": [
+    "refresh-frequency/chromium-390.png",
+    "refresh-frequency/firefox-390.png",
+    "refresh-frequency/webkit-390-200.png"
+  ],
+  "physicalAndroidTalkBackSafariOAuth": "external; not performed",
+  "version": 303,
+  "previousLiveAccepted": 302,
+  "candidateHead": "c9b9a47f285dda11b65a6ecf815094992997e616",
+  "testedMerge": "d1434832292da33cc3b2d63bbb62b42d19e30eba",
+  "tree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+  "PR": 323,
+  "integrationRun": 42796350018,
+  "walletRun": 42796350012,
+  "integrationResult": "SUCCESS",
+  "walletResult": "SUCCESS",
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "mainQualification": "v303-main-qualified.json",
+  "mainArtifacts": [
+    {
+      "id": 13766045564,
+      "name": "dialog-visual-reference",
+      "bytes": 934658,
+      "sha256": "d6960d26ec2f9647e75ecf06264cb1b7eac29edd9c5349a9215a54194e4157f7"
+    },
+    {
+      "id": 13765986754,
+      "name": "github-pages",
+      "bytes": 567072,
+      "sha256": "e6d9f39ddc2565ff9b0122a3f2da0e026f266659e9769a14fc9880d0d84f6b11"
+    },
+    {
+      "id": 13765870573,
+      "name": "release-gates-73a17662e53d4b4d88125a85879e5fcae112596e",
+      "bytes": 65122294,
+      "sha256": "eecc24644ab31ac98409f5bbe692901f744256c1295c589498107af4505298df"
+    },
+    {
+      "id": 13764665632,
+      "name": "cross-engine-gates-73a17662e53d4b4d88125a85879e5fcae112596e-1",
+      "bytes": 59093718,
+      "sha256": "c7cb9b85fef3b3d4c991d7dbd24fd5aab5e6b1d548b1c26976430722f71e1ca1"
+    },
+    {
+      "id": 13764615134,
+      "name": "cross-engine-gates-73a17662e53d4b4d88125a85879e5fcae112596e-2",
+      "bytes": 12340792,
+      "sha256": "58c16df2db3cffa856c92fa7735b0cf6f70d0d18671f3908fd96c9277d3d9481"
+    },
+    {
+      "id": 13764432780,
+      "name": "cross-engine-gates-73a17662e53d4b4d88125a85879e5fcae112596e-3",
+      "bytes": 68734283,
+      "sha256": "a497b7cee789f33ebb5eb579aa2fbb42b75c786433e9a878929237884403d3ff"
+    },
+    {
+      "id": 13764282310,
+      "name": "ci-stage-73a17662e53d4b4d88125a85879e5fcae112596e",
+      "bytes": 354,
+      "sha256": "1d23765277aba8c662a7c44f8c3426c7d6b73fd15f4587efb8aa21f9bcdbefb5"
+    }
+  ],
+  "mainJSON": 229,
+  "mainPNGs": 2065,
+  "pagesExactGitblobMatches": 153,
+  "noDuplicateRetryOrCancellation": true,
+  "backup": {
+    "durableVersion": 132,
+    "expectedPreviousVersion": 131,
+    "bytes": 405432320,
+    "sha256": "2e8100c7640dc91a34d392dd85a2cb9330ae5ee39898afff10b3d30014a70285",
+    "rootManifestPaths": 5,
+    "rootReadbackIdentical": true,
+    "failures": 0,
+    "completeV131ArchivePreservedByteIdentical": true,
+    "unchangedInheritedCompanions": 3,
+    "previousFullRestoreEvidenceReused": true,
+    "newMainIncrement": {
+      "bytes": 208803840,
+      "sha256": "e72da68dd934a8c079dca0815ba29c4426cc71fefd2a40dff8329be9e0264a1e",
+      "manifestPaths": 19,
+      "actualRestore": "PASS"
+    },
+    "newProductionIncrement": {
+      "bytes": 138752000,
+      "sha256": "50d86fc1481c4b55515d735d4adbc4f07a62d6d424fbefdd9b5da08dacea57ad",
+      "manifestPaths": 9,
+      "readbackIdentical": true,
+      "allMemberHashesVerified": true
+    },
+    "actualIncrementalRestore": {
+      "paths": 33,
+      "failures": 0,
+      "fullV302RestoreRepeated": false
+    },
+    "readbackConsistency": "First latest read briefly returned131; same-identity metadata then confirmed132; pinned current-version readback matched. Single guarded write only.",
+    "privateLocators": "Only in private predecessor/current indices; current root alone is not full payload set",
+    "completion": "DURABLE_READBACK_VERIFIED"
+  },
+  "scope": "K2 refresh-frequency slice; K2-KURSE overall PARTIAL; physical external gates unchanged",
+  "owner": "f66807554013",
+  "liveAccepted": true,
+  "lastLiveAccepted": 303,
+  "acceptedAt": "2026-11-10T13:31:36.948Z",
+  "counters": {
+    "acceptedReleases": 1,
+    "completedProductPackages": 1
+  }
+}
