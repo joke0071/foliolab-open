@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "ba485b196eb287a712f8368dafc08208915e0125",
+  "sourcePath": "docs/WORK_RESTPAKETE_CHECKPOINT.md",
+  "sourceGitBlob": "1a97b3da7791235157e938b1ba427b5986cb1803",
+  "sourceBytes": 1053474,
+  "sourceSHA256": "3890e6e6f23851016876c8a731d99029524a90f236ac0bce6ddeb3b9e183c64b",
+  "reconstruction": "Concatenate part-01.md through final part in listed order without separators. Byte-identical to original checkpoint snapshot. Historical status lines do not define current ownership.",
+  "parts": [
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-01.md",
+      "bytes": 121670,
+      "sha256": "7610fe76968a96a62cacc34d8f1e92945396293f81945073060a71c777f9aaa0"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-02.md",
+      "bytes": 121641,
+      "sha256": "01de76b009a6785fb510152a8dce358007de70695cefc145a673db7d9a31b134"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-03.md",
+      "bytes": 121315,
+      "sha256": "5b51ae02d12c144de24edc7e2357dff9ced590e05160fdd20e6be62cca0e3721"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-04.md",
+      "bytes": 121117,
+      "sha256": "94caf9dbcc427c8c1a5baaff9dc29ea306e1ca1b2160f884faa72d80ac7c7536"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-05.md",
+      "bytes": 121564,
+      "sha256": "ccdf50a0b06691e891bfe0d0194dc80daf62ff94e066219eec60801ca5419562"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-06.md",
+      "bytes": 121784,
+      "sha256": "d632136e59a1139684620cd9d53e08726eb726f50b6767b00d0cbb3baa58befa"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-07.md",
+      "bytes": 121189,
+      "sha256": "7fe6833e5739ae95e4bfb54290f81671aefae812a8677e39b88e6c4a4a6e39e8"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-08.md",
+      "bytes": 121207,
+      "sha256": "e66b1582332c179c1ff90bf37f3f3511e5cee3280ecb1d2da7c61189e68ef524"
+    },
+    {
+      "path": "docs/checkpoint-history/2026-11-10_74f8b54eb065/part-09.md",
+      "bytes": 81987,
+      "sha256": "221cb99d3d5ba15f553076d2446596621d5721aad84b955cbcb0775d8e0a89da"
+    }
+  ]
+}
