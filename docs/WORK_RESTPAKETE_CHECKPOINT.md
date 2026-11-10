@@ -1,3 +1,11 @@
+## ACTIVE · 74f8b54eb065 · PR325 CI-Umgebungsfehler eingegrenzt
+
+Kandidat unverändert eingefroren. Cross2/Job130030439713 scheitert im Setup-Schritt „Install Firefox and WebKit for cross-engine regression“ nach8Minuten beim langsamen Ubuntu-Paketdownload; eigentliche Browsertests dieses Jobs SKIPPED. Originaljoblog tatsächlich gelesen, kein Produktfehler behauptet. Übrige Test-/Cross1-/Cross3-Jobs laufen regulär weiter, Wallet42873427365 SUCCESS. Kein Abbruch/Push/Retry erfolgt. Genau nächste Aktion: ersten Lauf regulär enden lassen, dann ausschließlich ausgefallenen Setupjob mit unverändertem Kandidaten gezielt wiederholen. Erfolgreiche Jobs erhalten; keine Gateabschwächung.
+
+V134 jetzt zusätzlich privat geladen:405473280Bytes und SHA256bee510667229954a8201d807a794b231a5879a4257cbda992dfdbe1b7700d3dd tatsächlich bytegleich bestätigt; frühere Voll-/67Pfade-Restorebelege wiederverwendet, kein neuer Vollrestore. Vorhandener PR324-Originalteil privat geladen und erwartete209223680Bytes/SHA2569a9b4a116d23d2c3854baa6f76adf925e2a19389e1cf3991c052d1eb2a733c8b bestätigt; unveränderten expliziten Vorgänger-Berichtsvertrag für spätere PR325-Qualifikation vorbereitet. Keine privaten Sicherungsschreibaufträge. Produktion weiterhin v304 LIVE_ACCEPTED.
+
+---
+
 ## ACTIVE · 74f8b54eb065 · PR325 eingefroren / CI läuft · 10.11.2026
 
 [K6-TRUST-Schutzkandidat PR325](https://github.com/joke0071/foliolab-open/pull/325), Branch chore/k6-private-file-guard-74f8b54eb065, HEAD25ba00b407802c261286be5cb8f8d317a376e9af / Tree7c1d889aa759b4b6e3c7dd1cd3967466a926a31a, Testmerge76a0381785d61b07664d64c758efa0dae3fdaf9e. Genau zwei Dateien: .gitignore und begrenzte Prüfdokumentation. Keine Runtime-/Finanz-/Schema-/Workflow-/SW-Änderung. [Maschinenlesbarer lokaler Kandidatenbeleg](release-evidence/k6-private-file-guard-candidate.json).
