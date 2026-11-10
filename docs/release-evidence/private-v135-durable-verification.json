@@ -1,0 +1,30 @@
+{
+  "status": "DURABLE_READBACK_AND_ACTUAL_INCREMENTAL_RESTORE_VERIFIED",
+  "version": 135,
+  "previousVersion": 134,
+  "root": {
+    "bytes": 405493760,
+    "sha256": "749bb493213174ac0eba71c41664a0921a709f28daca292b5b6aec7bfdb21e89",
+    "rootManifestPaths": 5,
+    "incrementManifestPaths": 30,
+    "previousVersion": 134,
+    "targetVersion": 135,
+    "previousRootPreserved": true,
+    "incrementReadbackVerified": true
+  },
+  "actualIncrementalRestore": {
+    "manifestPaths": 35,
+    "failures": 0,
+    "readbackInputs": true
+  },
+  "increment": {
+    "file_name": "FolioLab_PR325_originals_2026-11-10.tar",
+    "bytes": 208844800,
+    "sha256": "67c1c421daeb25ac0852ea80fbd938eac9d3b5181b74acc87fbfc74ef758457e",
+    "manifestPaths": 30
+  },
+  "olderRootAndAllOriginalIndicesCompanionsPreserved": true,
+  "oldFullRestoreEvidenceReused": true,
+  "rootAloneCompletePayloadSet": false,
+  "pendingWrites": false
+}
