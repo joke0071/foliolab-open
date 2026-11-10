@@ -120,7 +120,17 @@
       "newLibraryWriteAttempted": false,
       "previousScratchOnlyArchiveRecovered": false
     },
-    "finalAcceptedCapsule": "preparing locally with all main and production original artifacts; no new Library write attempted; durable version129 remains last confirmed"
+    "finalAcceptedCapsule": {
+      "bytes": 860691540,
+      "sha256": "89fd412fae5b564741760141e2d8cec532a23d4e0f85ebb293d48ac9e1e2074e",
+      "verifiedPaths": 28448,
+      "failures": 0,
+      "allDurableV129PathsRetained": true,
+      "all25NewOriginalCIZIPsRetained": true,
+      "newLibraryWriteAttempted": false,
+      "durableVersionStill": 129,
+      "reason": "Earlier write outcome unknown; no automatic retry; concrete new guarded save decision pending"
+    }
   },
   "publicRelease": true,
   "privacyClearance": "General audit clearance not required by explicit user decision2026-11-10; confirmed incidents must be addressed before affected release",
@@ -215,7 +225,7 @@
   ],
   "testManifest": "94bc326810c6df64d831121d41e13a678408b61a72c5ffc147468afd36e19dcb",
   "testManifestAlgorithm": "SHA256 of canonical UTF-8 JSON path/SHA256 pairs, comma/colon separators",
-  "nextProductDelta": "K2-KURSE: frequency selector daily default and safe attempt/success/backoff semantics; prepared, not implemented. K1 remains PARTIAL external anchors.",
+  "nextProductDelta": "K2-KURSE frequency selector next; exact user specification and source boundaries prepared. No K2 implementation or active new CI. General audit is not a release/development gate.",
   "knownPrivacyFollowup": {
     "status": "PRELIMINARY_PUBLICATION_GUARD_GAP; no confirmed data disclosure",
     "scope": "General ignore protection for private CSV/backups/archives, preserve intentional fixtures",
