@@ -1,0 +1,91 @@
+{
+  "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+  "candidateTree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+  "files": {
+    "index.html": "373ae0756523eaca100d7df3438e2712d22a926244c7942c7209002c6aab8b5d",
+    "src/app.js": "d2f2aa1476a0ffc300a7b81d573ac1cd635dcc4182f9aa3c99cde19948bd60ed",
+    "src/atomic-storage.js": "1d4a0c55fdebbb23d1e3ada9cd7d49cee7f3a4375e8403729c3b847ba572ca9e",
+    "src/browser-portfolio-storage.js": "f81f7384b549c41679c391efbfbbdc79dc26a18b5d2c26c7f435d6a752183a90",
+    "src/complete-backup.js": "fbb7ed6910a0d4ad5a737bd4a64a77df69098cadebb3b088beb79101b02e19d5",
+    "src/model.js": "0dc778ccc9e789cc6ecdf105d70473d1294ed1ce8e3422ccf2e281c9212cfa4c",
+    "src/refresh-frequency.js": "aed7f2d99842a1f6b90d5924745dc8931b8db3b73b6031a1d7d9dc496898ef29",
+    "sw.js": "bb151d67509d4753f982ad79ad632d8eca5c005902acc7320a99a90bdcabc957",
+    "tests/browser-etf-source-recovery.mjs": "be7752de463e4926617f548c7a83cb1569432350f9f4e807009ec5d8913aa533",
+    "tests/browser-idb-migration-acceptance.mjs": "d52d2ffdfd0a48d334e8e87620f072a8bd6ea6c7e4577933d10b6f1e198918fc",
+    "tests/browser-live-acceptance.mjs": "db151b57f177bd6600a867a91a4f9d63b823a244f9a9f96d6aa83629cc0c4699",
+    "tests/browser-refresh-frequency.mjs": "a3e2620a83480d22865db2668ef04780d55d147edf327771a3f1b26d9a92b567",
+    "tests/browser-settings-backup.mjs": "7be6c64b12055671aaf396e4843986e3eec591232d4f08b2fdd32666b15f13da",
+    "tests/complete-backup.test.mjs": "bdd00a85660bdde6fea3e589809855cd151bee5127c1269e068e340a07f2ff1a",
+    "tests/live-startup-diagnostics.test.mjs": "ddd8fbfe0375f911803799b30afdde7643169d9649330dc6c500eeb4aee78105",
+    "tests/refresh-frequency.test.mjs": "a6ba853220c98afc4200437c517d4c0e22707a0b0359a41ec2692b7033080ef5"
+  },
+  "unitTests": 1353,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "browserReports": {
+    "chromium": {
+      "engine": "chromium",
+      "result": "PASS",
+      "legacyReadOnly": true,
+      "frequencies": 4,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "axe": true,
+      "quota": true,
+      "multitab": true,
+      "partialNoRepeat": true,
+      "stalePreferenceNonmutation": true,
+      "walletWithAndWithoutQuote": true,
+      "offlineDenialNetworkSaveFailure": true,
+      "textScale200": true
+    },
+    "firefox": {
+      "engine": "firefox",
+      "result": "PASS",
+      "legacyReadOnly": true,
+      "frequencies": 4,
+      "widths": [
+        320,
+        360,
+        390,
+        412,
+        430,
+        768,
+        1440
+      ],
+      "axe": true,
+      "quota": true,
+      "multitab": true,
+      "partialNoRepeat": true,
+      "stalePreferenceNonmutation": true,
+      "walletWithAndWithoutQuote": true,
+      "offlineDenialNetworkSaveFailure": true,
+      "textScale200": true
+    }
+  },
+  "webkit": "NOT_RUN_LOCAL: missing host libraries; full CI required",
+  "backup": "V129 durable; preparation rejected before invocation because file860691540 exceeds536870912. Complete multi-part save in progress; no new durable completion yet.",
+  "otherLocalPass": [
+    "settings-backup",
+    "data-source-settings",
+    "IDB plain/encrypted migration",
+    "provider-retirement",
+    "Alpha Vantage",
+    "Marketstack"
+  ],
+  "head": "c9b9a47f285dda11b65a6ecf815094992997e616",
+  "testedMerge": "d1434832292da33cc3b2d63bbb62b42d19e30eba",
+  "integrationRun": 42796350018,
+  "walletRun": 42796350012,
+  "integrationStatus": "IN_PROGRESS",
+  "PR": 323,
+  "all16RemoteBlobsMatchLocal": true
+}

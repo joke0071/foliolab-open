@@ -15,3 +15,7 @@ V129 und tatsächlich vorhandenesv302-Abschlussarchiv vollständig selbst erneut
 
 ## Nächste Aktion
 Browservertrag gezielt fertigprüfen; vor PR Kandidat sauber einfrieren, Originalfehler erhalten. Offenen Sicherungsschritt vor Veröffentlichung klären; keine leere/unvollständige Ersatzsicherung. Danach reguläre Kandidaten-/Wallet-/Main-/Deployment-/Live-Gates unverändert. Nach einem LIVE_ACCEPTED oder größerem abgeschlossenen Paket reguläre HND01-R-Abgabe, keine neue Roadmap.
+
+## Fortschritt – PR323
+
+Kandidat c9b9a47f285dda11b65a6ecf815094992997e616/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 eingefroren,16Dateien exakt lokal/remote. Testmerged1434832292da33cc3b2d63bbb62b42d19e30eba gleicherTree; Integration42796350018/Wallet42796350012 IN_PROGRESS. Neue Kette Chromium/Firefox sowie Settings/DataSources/Migration/ProviderRetirement/Alpha/Marketstack tatsächlichPASS. Live-Assertionstransport aufSelect/off angepasst; alle übrigen historischenGatebytes bleiben hashgeschützt. Aktueller Sicherungsblocker ist536870912Byte-Dateilimit, nicht fehlende Nutzerfreigabe oder Versionskonflikt. Größengeprüfte vollständigeTeil-/Indexfortschreibung mitV129-Erhalt wird bearbeitet; noch kein dauerhafter neuerAbschluss.

@@ -1,3 +1,15 @@
+## K2 / PR323 · eingefrorener Kandidat · Pflicht-CI IN_PROGRESS · Owner7b9e47799d13 allein ACTIVE
+
+LetzterLIVE_ACCEPTED bleibtv302/Main179d424aef1f6f35c3f6f72600e4bbe885ef329c. [PR323](https://github.com/joke0071/foliolab-open/pull/323), HEAD`c9b9a47f285dda11b65a6ecf815094992997e616`, Tree`160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1`, Testmerge`d1434832292da33cc3b2d63bbb62b42d19e30eba` mit identischemTree. Alle16Gitblobs entsprechen exakt der lokalen Prüfung. Integration42796350018 undWallet42796350012 laufen regulär; keinCI_ACCEPTED/Merge/Release behauptet, nichtduplizieren/abbrechen, eingefroreneRef unverändert lassen.
+
+1353Units/0Fehler/0Skips/SyntaxPASS. Neue Frequenzkette Chromium/Firefox PASS einschließlichQuota/CAS/Mehrtab/Teilabruf/WalletmitundohneQuote/Offline/402/429/Netzverlust/Savefehler/7Breiten/echterberechneter200%-Schrift/Tastatur/Axe. Bestehende Einstellungen/Migration/KursquellenpfadePASS; synchronenButton-Lock vor asynchronerWebLock-Anforderung korrigiert. WebKitlokal fehlendeHostbibliotheken, weiterhin Pflicht-CI. [Kompakter Kandidatenbeleg](release-evidence/v303-k2-local-candidate.json).
+
+**Sicherungsfehler konkret geklärt:** volle860691540Bytes übersteigen das harte536870912Byte-Dateilimit. Vorbereitung wurde vor Aktionsaufruf abgewiesen, keine unbestätigte neueVersion. V129 bleibt dauerhaft bestätigt und vollständig nachgeprüft. Vollständigev302-Datei lokal/alle28448Pfade qualifiziert. Jetzt größenkonforme2-Teil-Sicherung mit vollständigemWiederherstellungsindex und unveränderterV129-Rückfallbasis vorbereiten; beideTeile dauerhaft rückprüfen, erst dann bestehenden Sicherungsgegenstand versionsgeschützt fortschreiben. Kein leerer/unvollständiger Ersatz, keine privaten Originale öffentlich.
+
+Genau nächsteAktion: vollständigesSicherungsset abschließen und reguläreCI-Ergebnisse sichten. HND01-R unverändert; spätestens nach einem LIVE_ACCEPTED oder größeren abgeschlossenenFachpaket reguläreAbgabe. AlterOwnerc43b5e91f20a widerrufen. Kein zweiterProduktstrang/keine zweiteRoadmap. Kopierfertige Startformel unten bis tatsächlicherAbgabe ausdrücklich KEINEAbgabe.
+
+---
+
 ## K2 lokal implementiert / Browserprüfung läuft · Owner7b9e47799d13 allein ACTIVE
 
 v302 bleibt LIVE_ACCEPTED, Main179d424aef1f6f35c3f6f72600e4bbe885ef329c unverändert. HND01-Notfallübernahme und HND01-R in6049377a3e4500b6b0b1da69b662de68b65e7c40 dokumentiert. Kein Produkt-PR/CI/Release gestartet. [Kompakter K2-Arbeitsstand](K2_REFRESH_EXECUTION_2026-11-10.md):1353Units/0Fehler/0Skips/Syntax PASS; Browservertrag IN_PROGRESS, keine Abnahme behauptet.
