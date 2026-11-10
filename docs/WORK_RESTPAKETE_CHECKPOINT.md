@@ -1,3 +1,15 @@
+## ACTIVE · e595fcc6d453 · K2-Hilfenkandidat validiert · v303/V132 unverändert
+
+Alleiniger Entwicklungs-/Integrations-/QA-/Releaseowner e595fcc6d453 nach regulärer Abgabe4932401a9f1d. **v303 LIVE_ACCEPTED**, Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 unverändert. V132-Version132/405432320Bytes aktuell bestätigt; qualifizierte Original-/Readback-/Restorekette wiederverwendet, kein neuer Sicherungsauftrag.
+
+**DOC_CANDIDATE_VALIDATED**, [begrenzter Quellen-/Hilfenabgleich](K2_SOURCE_HELP_REVIEW_2026-11-10.md): exakt README/Worker-/Diagrammhilfe mit entfernten Anbieterempfehlungen korrigiert. Mainbasierter einziger Kandidat dd1bcecbd5255313e150257952fcb7aecccd3817/Tree759e8b5099c86ed39825c553cc5c7b5c27bbb40f auf docs/k2-source-help-e595fcc6d453; alle übrigen Gitblobs identisch,27gezielteUnitsPASS/0FAIL/0SKIP,DiffcheckPASS. Keine PR/CI/Mainintegration/Deployment; noch nicht veröffentlicht, K2-KURSE weiterhinPARTIAL. Keine zusätzlicheVollreleasekette allein für dieseTextkorrekturen. Historisch abweichendeCheckpoint-README erhalten; Checkpointbranch niemals vollständig mergen.
+
+288Refs einschließlich eigener neuer Kandidatenref; außer eigenerCheckpointfortschreibung und dieserRef kein fremdesDelta, Main/alteDrafts157/161/Reviews/Actions stabil. Keine ungesicherten Produktänderungen; Kandidat und neue abgeleiteteBelege vollständiggitgesichert, keine neuen privatenOriginalklassen. EFF03 bleibt begrenzter lokalerKandidat, kein Ausbau. K1-Anfangs-/End-/Ownershipanker sowie echteAndroid-/TalkBack-/Safari-/OAuth-Gates bleiben konkret extern.
+
+**Genau nächste Aktion:** Hilfenkandidat ohne erneute Grundanalyse in der nächsten fachlich passenden gebündeltenIntegration verwenden; sämtliche dann vorgeschriebenenKandidaten-/Main-/Produktionsgates erhalten. Vorher K3 gemäßkanonischerMatrix begrenzt gegen vorhandenev272/v273/v275/v299-Belege abgrenzen; nur einen tatsächlich unbenutzbaren normalenAnlage-/Bearbeitungs-/Archiv-/Rücknahmeweg als Repro öffnen. Keine universelleLöschfreigabe, keinefertigenUI-/Finanzteile neu bauen. HND01-R gilt; Zähler0Releases/0größereabgeschlosseneProduktpakete.
+
+---
+
 ## ACTIVE · e595fcc6d453 · reguläre HND01-Übernahme · K2-KURSE Hilfenabgleich
 
 Owner4932401a9f1d ist regulär STOPPED/HANDOVER_READY. Neuer alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner: e595fcc6d453. Übernahme unter erwarteter Checkpoint-HEAD 28d1c2fb5cc7cc9d274a9c18cee7f86f786cf095. Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 frisch bestätigt;287Branchrefs zweimal identisch, nur historischeDrafts157/161 mit unveränderten Köpfen/Zeitpunkten, Reviews/Threads leer, keine laufenden/queuedActions. Keine ungesicherten Produktänderungen laut regulärer Abgabe; kein konkurrierender Produktwriter festgestellt.

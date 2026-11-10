@@ -1,0 +1,35 @@
+✔ default encrypted backup omits all settings and credentials (5.192438ms)
+✔ opt-in full backup includes the complete user API/RPC configuration and Google OAuth client ID (1.028137ms)
+✔ untrusted configuration is strictly whitelisted, data must use supported schema (1.046734ms)
+✔ Free crypto histories stay capped at one year even when keys are configured (2.58302ms)
+✔ Long periods are conditional on a verified listing and actual CSV history (2.387073ms)
+✔ Max cannot be fabricated from a partial remote feed (0.331303ms)
+✔ Actual supported presets remain reachable in detail controls, including three years (11.397177ms)
+✔ Three-year local view reports actual coverage and never requests or invents older prices (6.250845ms)
+✔ one validated frequency preserves legacy opt-out and daily defaults (2.600748ms)
+✔ legacy read normalizes in memory without writing source bytes (4.856968ms)
+✔ all four encrypted opt-in preferences roundtrip, other configuration retained (308.432067ms)
+✔ exact intervals use persisted complete success, never mere attempt (0.838716ms)
+✔ partial save skips paid successes but retries missing work with bounded backoff (0.795607ms)
+✔ failed canonical save cannot promote either a task or full success (0.220355ms)
+✔ offline and opt-out issue no claim; quota and corrupt state fail closed (0.405702ms)
+✔ manual remains independent and a backwards clock gets bounded recovery (0.165982ms)
+✔ Only retired keys and selectors are removed; unknown fields and active access survive (2.564167ms)
+✔ Legacy physical cleanup, save and reload remove retired values without financial changes or deleting original backups (4.775374ms)
+✔ Complete new backups and legacy restore/re-export exclude retired keys, preserve opt-in active credentials and historical provenance (1.463797ms)
+✔ Old callers can never issue retired quote or history requests; direct worker access stays independent (2.80641ms)
+✔ An external TradingView chart API is not exposed; quote sources remain strictly configured (3.954247ms)
+✔ FMP and EODHD provider identifiers survive backups, secret API keys never exported (6.784067ms)
+✔ Optional authenticated EODHD worker is a safe first-class market source without local EODHD key (6.837525ms)
+✔ Worker endpoint and access key must be an explicitly configured HTTPS pair (0.438927ms)
+✔ No worker secrets can escape an unencrypted portfolio backup (0.342086ms)
+✔ five year EODHD chart extends real upstream date boundaries without inventing observations (0.746451ms)
+✔ Explicit provider mapping cannot override conflicting Xetra venue or curated ISIN (0.839953ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 637.772174
