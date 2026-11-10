@@ -1,3 +1,13 @@
+## ACTIVE · e595fcc6d453-r2 · PR324 CI_ACCEPTED · V133 verifiziert
+
+v303 bleibt LIVE_ACCEPTED. Main 73a17662e53d4b4d88125a85879e5fcae112596e unverändert. PR324 ist CI_ACCEPTED: HEAD365c16c272071bd3a1ff28ee3ff97be7d1b5a447 / Treec6afbfe49152cbc29fa2722bf6bc3b16b01ad062; Testmerge4ed2c63e8b8a6878acccef67c8b52851b30b9209 gleicher Tree. Integration42846766057 Versuch1 und Wallet42846766025 SUCCESS. [Qualifikation](release-evidence/v304-pr324-integration-qualified.json): 1353 Units,0 Fehler,0 Skips,Syntax und drei Engines PASS;6 Original-ZIPs/229 JSON/2065 tatsächlich dekodierte PNGs,481 verschiedene explizite Kontrollen und8 ergänzende Kontextberichte geprüft. Neue Wallet-Edit-Kette für8Netzwerke in allen3Engines PASS; aktuelle synthetische390px-Darstellung visuell geprüft. Keine neue CI/Retry/Abbrüche.
+
+V133 dauerhaft gespeichert und nach erneutem Laden bytegleich geprüft:405452800 Bytes/SHA256e31784848db7c8bfdb601030444367df3eaacbfc94aa3ee34df665cad1cfae80. [Redigierter Beleg](release-evidence/private-v133-durable-verification.json). Vollständiger unveränderter V132-Root und gesamte ältere Ergänzungskette erhalten. Neue unveränderliche PR324-Ergänzung209223680Bytes ebenfalls dauerhaft bytegleich geprüft;37Manifestpfade. Tatsächlich extrahierter inkrementellerRestore42Manifestpfade/0Fehler. Root allein enthält nicht die späteren Originale; private Indizes/README/Restoreprogramme verwenden.
+
+Genau nächste Aktion: Main/Owner/Refs/PR/Reviews/Actions erneut frisch prüfen und den exakt qualifizierten PR324-Kandidaten regulär integrieren. Dann vorgeschriebene Main-/Deploy-/tatsächliche Produktionsgates und neue Original-Sicherung. Noch kein v304 LIVE_ACCEPTED. Alle Schutzverträge/externen Geräte-/OAuth-Grenzen erhalten, Checkpointbranch niemals vollständig mergen.
+
+---
+
 ## ACTIVE · e595fcc6d453-r2 · reguläre Fortsetzung von PR324
 
 Die reguläre Abgabe von e595fcc6d453 ist bestätigt. Nach frischer Prüfung übernimmt e595fcc6d453-r2 allein die Entwicklungs-, Integrations-, QA- und Releaseverantwortung. Erwartete Checkpoint-HEAD: fee0f4f304d90aa10bc2953df69b06a6b07af5ce. Main 73a17662e53d4b4d88125a85879e5fcae112596e und PR324-HEAD 365c16c272071bd3a1ff28ee3ff97be7d1b5a447 unverändert; 289 Branchrefs, offene PRs und leere Reviews/Inlinekommentare geprüft. Keine konkurrierende Produktarbeit festgestellt.

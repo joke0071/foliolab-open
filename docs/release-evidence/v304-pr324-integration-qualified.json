@@ -1,0 +1,105 @@
+{
+  "status": "CI_ACCEPTED",
+  "owner": "e595fcc6d453-r2",
+  "pr": 324,
+  "head": "365c16c272071bd3a1ff28ee3ff97be7d1b5a447",
+  "tree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "testedMerge": "4ed2c63e8b8a6878acccef67c8b52851b30b9209",
+  "integrationRun": 42846766057,
+  "walletRun": 42846766025,
+  "attempt": 1,
+  "units": 1353,
+  "failures": 0,
+  "skips": 0,
+  "syntax": "PASS",
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "artifacts": [
+    {
+      "id": 13781601129,
+      "name": "cross-engine-gates-4ed2c63e8b8a6878acccef67c8b52851b30b9209-3",
+      "size_in_bytes": 68735528,
+      "digest": "sha256:e01c9ed42fb53cd17da3cd94d6e536c7cfe154279c9bb00baa161f66136b3d56"
+    },
+    {
+      "id": 13780355772,
+      "name": "release-gates-4ed2c63e8b8a6878acccef67c8b52851b30b9209",
+      "size_in_bytes": 65121379,
+      "digest": "sha256:11ffd8b9b7c25fca8fcb259099faba70a656539c869203b07ef2baf36ce098c1"
+    },
+    {
+      "id": 13780115815,
+      "name": "cross-engine-gates-4ed2c63e8b8a6878acccef67c8b52851b30b9209-1",
+      "size_in_bytes": 59081087,
+      "digest": "sha256:58b1597cd8ce80128796f1d340f226ae7d162518dc7568a02156886f172c465d"
+    },
+    {
+      "id": 13779124624,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934655,
+      "digest": "sha256:426b605e2a74a59da52d61a779f55b236151eb6bc1f4bc866714146ff5e64904"
+    },
+    {
+      "id": 13778933436,
+      "name": "cross-engine-gates-4ed2c63e8b8a6878acccef67c8b52851b30b9209-2",
+      "size_in_bytes": 12341643,
+      "digest": "sha256:7a3913e2151369d26fe4193ab621459e11ea0bfda6af7014237b642058c09fb4"
+    },
+    {
+      "id": 13777707448,
+      "name": "ci-stage-4ed2c63e8b8a6878acccef67c8b52851b30b9209",
+      "size_in_bytes": 568,
+      "digest": "sha256:9e901c6c6c963bb069fd391f7c1c96b5f97214b372ebd25b8a019706390560e3"
+    }
+  ],
+  "zipDigestsSizesCRC": "PASS",
+  "json": 229,
+  "png": 2065,
+  "pngActualDecode": "PASS",
+  "distinctExplicitControls": 481,
+  "contextReportClassesReviewed": 8,
+  "reportFailureFlags": 0,
+  "newWalletEditors": {
+    "chromium": 8,
+    "firefox": 8,
+    "webkit": 8,
+    "status": "PASS",
+    "semantics": "native selected network; eight text-only one-revision commits; exact wallet/quantity/economic records; discard; quota; reload; peer CAS"
+  },
+  "actualVisualReview": [
+    "local actual synthetic wallet editor,390px,selected sol-stake,no horizontal overflow"
+  ],
+  "sourceFiles": 16,
+  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "liveAccepted": false,
+  "backupBaseVersion": 132,
+  "newCIOriginalsDurable": true,
+  "newIncrement": {
+    "bytes": 209223680,
+    "sha256": "9a9b4a116d23d2c3854baa6f76adf925e2a19389e1cf3991c052d1eb2a733c8b",
+    "manifestPaths": 37,
+    "readbackIdentical": true,
+    "actualRestore": "PASS"
+  },
+  "backupVersion": 133,
+  "rootReadback": "DURABLE_READBACK_VERIFIED",
+  "sourceQualification": "qualified predecessor relevant report assertions; dynamic names bound by class; stage requirements independently frozen for PR; new wallet checks from source/taskcard. No observed report data regenerated as expected values.",
+  "physicalAndroidTalkBackSafariOAuth": "external; not performed",
+  "backup": {
+    "bytes": 405452800,
+    "sha256": "e31784848db7c8bfdb601030444367df3eaacbfc94aa3ee34df665cad1cfae80",
+    "rootManifestPaths": 5,
+    "baseV132Preserved": true,
+    "durableVersion": 133,
+    "expectedPreviousVersion": 132,
+    "rootReadbackIdentical": true,
+    "newIncrementReadbackIdentical": true,
+    "incrementManifestPaths": 37,
+    "actualIncrementalRestorePaths": 42,
+    "oldFullV302RestoreRepeated": false,
+    "failures": 0
+  }
+}

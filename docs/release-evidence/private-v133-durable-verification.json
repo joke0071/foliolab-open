@@ -1,0 +1,14 @@
+{
+  "bytes": 405452800,
+  "sha256": "e31784848db7c8bfdb601030444367df3eaacbfc94aa3ee34df665cad1cfae80",
+  "rootManifestPaths": 5,
+  "baseV132Preserved": true,
+  "durableVersion": 133,
+  "expectedPreviousVersion": 132,
+  "rootReadbackIdentical": true,
+  "newIncrementReadbackIdentical": true,
+  "incrementManifestPaths": 37,
+  "actualIncrementalRestorePaths": 42,
+  "oldFullV302RestoreRepeated": false,
+  "failures": 0
+}
