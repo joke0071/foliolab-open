@@ -1,0 +1,40 @@
+{
+  "status": "DURABLE_READBACK_AND_ACTUAL_INCREMENTAL_RESTORE_VERIFIED",
+  "version": 136,
+  "previousVersion": 135,
+  "root": {
+    "file_name": "FolioLab_private_continuation_2026-11-04.tar.xz",
+    "bytes": 405524480,
+    "sha256": "06e0920450924806f2ecd35f16ab9c9693694def9e28853b470436ce431db8ad",
+    "rootManifestPaths": 5,
+    "incrementManifestPaths": 37,
+    "previousVersion": 135,
+    "targetVersion": 136,
+    "previousRootPreserved": true,
+    "incrementReadbackVerified": true
+  },
+  "actualIncrementalRestore": {
+    "manifestPaths": 42,
+    "failures": 0,
+    "readbackInputs": true,
+    "extractedFilesActuallyHashed": true
+  },
+  "olderRootAndAllOriginalIndicesCompanionsPreserved": true,
+  "oldFullRestoreEvidenceReused": true,
+  "rootAloneCompletePayloadSet": false,
+  "pendingWrites": false,
+  "mainIncrement": {
+    "file_name": "FolioLab_PR325_Main_originals_2026-11-10.tar",
+    "bytes": 208885760,
+    "sha256": "a1b2433b96850220a5445d6419d3dfacc48b5b7fe521da93e65a4c62f1029dab",
+    "manifestPaths": 23,
+    "readbackVerified": true
+  },
+  "productionIncrement": {
+    "file_name": "FolioLab_PR325_Production_originals_2026-11-10.tar",
+    "bytes": 138711040,
+    "sha256": "aa1550a2d321236f5f2230d3dbdbba9a27524daeff0aa7419b7ceed30bd8b219",
+    "manifestPaths": 14,
+    "readbackVerified": true
+  }
+}

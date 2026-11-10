@@ -1,0 +1,45 @@
+{
+  "status": "PRODUCTION_CONTENT_QUALIFIED_NOT_AUTOMATIC_RELEASE_APPROVAL",
+  "artifact": {
+    "id": 13800285342,
+    "name": "production-live-acceptance-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+    "bytes": 137888222,
+    "sha256": "75cc0b330225ae5c954a27cb394977983bff0d9b32b48b2a2da0a3c7eb9795a1",
+    "run": 42881588853,
+    "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+    "attempt": 1
+  },
+  "JSON": 169,
+  "PNGDecoded": 1407,
+  "distinctPredecessorAssertions": 281,
+  "metadataOrContextOnlyReports": [
+    "alpha-vantage/idb-chromium.json",
+    "alpha-vantage/idb-firefox.json",
+    "alpha-vantage/idb-webkit.json",
+    "provider-retirement.json",
+    "ui-alltag10/chromium-real-touch-pan.json",
+    "ui-alltag10/chromium-real-touch-press.json",
+    "ui-alltag10/long-press.json"
+  ],
+  "actualPublishedAssetMatches": 154,
+  "coreGroups": 6,
+  "AxeScans": 18,
+  "ordinaryTLS": true,
+  "UIAndTransfersEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "supplementalWalletEditorLiveEvidence": "unchanged runtime; exact v304 accepted evidence reused, no new supplemental live execution claimed",
+  "newWalletEditorMainAndIntegrationEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "failures": 0,
+  "originalUploadLogDigestMatch": true,
+  "workflowResult": "SUCCESS",
+  "workflowAttempt": 1,
+  "newVisualAcceptance": "No runtime change; accepted v304 actual production visual views reused; all new PNGs decoded.",
+  "pagesByteIdenticalToAcceptedV304Files": 153
+}

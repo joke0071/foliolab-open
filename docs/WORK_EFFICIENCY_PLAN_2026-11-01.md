@@ -14,7 +14,40 @@ V303/Main/Tree und V132 samt Originalkette unverändert. Unterstützender lokale
 
 ## EFF03 – Vereinfachung und Entkopplung der Entwicklungsprozesse
 
-**Status: Mess-/Priorisierung abgeschlossen; begrenzter lokaler Ergebnisverdichter LOCAL_CANDIDATE_VALIDATED, auf Checkpointref verfügbar · 10.11.2026.** Nächster organisatorischer Optimierungsumfang nach sicher abgeschlossenem v303 einschließlich tatsächlicher Abnahme und Sicherung. Die laufende v303-Integration und Sicherung werden nicht unterbrochen. K1–K6 bleiben die verbindlichen Produktziele; EFF03 soll deren Fertigstellung beschleunigen, nicht verzögern. Keine zweite Roadmap.
+### EFF03 – Zwei-Agenten-Modell · Nutzerentscheidung 10.11.2026
+
+**Verbindlicher Ablauf ab dem nächsten geeigneten Fachpaket nach regulärem Abschluss des bereits laufenden PR325-Main-/Produktionslaufs.** Keine laufende CI abbrechen, duplizieren oder überholen. Der bisherige Ergebnisverdichter bleibt ein begrenztes Hilfsmittel ohne automatische Freigabe; diese organisatorische Entkopplung ersetzt weder Pflichtgates noch HND01-R. Praktische Erprobung und Nutzenbewertung stehen noch aus.
+
+| Rolle | Verantwortung und Schreibrechte |
+| --- | --- |
+| Hauptagent | Alleiniger Owner für Produktcode, Entwicklungsbranches, Checkpoint, Integration, Releases und private Sicherungen; führt notwendige lokale Tests aus, stellt den vollständigen Kandidaten bereit und entscheidet anhand aller unabhängigen Nachweise. |
+| QA-Agent | Unabhängige Prüfung genau des eingefrorenen PR-Kandidaten. Ausschließlich lesen sowie redigierte Reviews/Kommentare am betreffenden PR schreiben. Keine Code-, Branch-, Checkpoint-, Workflow-, Release- oder Sicherungsänderungen; keine Ownerübernahme. |
+
+**Paket und Freeze:** Zwei bis vier fachlich zusammengehörige Änderungen auf einem Entwicklungsbranch bündeln; risikoarme UI-Änderungen nicht unnötig mit Finanz- oder Speichermutationen mischen. Notwendige lokale Tests bereits während der Entwicklung ausführen. Erst den vollständigen Kandidaten fertigstellen, dann Commit-SHA und Prüfvertrag einfrieren. Der Hauptagent stellt am PR Scope, konkrete Risiken, Test-/Negativkriterien, Commit-SHA, relevante unverändert wiederverwendbare Belege und tatsächlich offene externe Grenzen bereit. Keine privaten Originale, Kontowerte oder Sicherungsidentitäten in öffentliche Übergaben.
+
+**Verbindliche Übergabestelle ist der GitHub-PR, nicht der Chat oder eine automatische Benachrichtigung.**
+
+| Status | Zuständiger Schritt / Übergang |
+| --- | --- |
+| DEV_ACTIVE | Hauptagent entwickelt und testet das zusammenhängende Paket. |
+| QA_READY | Vollständiger Kandidat und Prüfvertrag sind unter exakter Commit-SHA eingefroren; QA-Auftrag mit Scope/Risiken/Kriterien steht am PR. |
+| QA_FINDINGS | QA hinterlegt unabhängig belegte, redigierte Befunde mit geprüfter SHA direkt am PR; Hauptagent korrigiert notwendige Punkte. |
+| QA_ACCEPTED | QA bestätigt den unabhängig geprüften benannten Umfang unter exakter SHA und nennt verbleibende Grenzen. Kein Ersatz für CI, Main-, Produktions- oder sonstige Pflichtgates. |
+| MERGE_READY | Hauptagent hat neue Reviews UND Kommentare selbst frisch abgerufen, notwendige Befunde geklärt und erfolgreiche verpflichtende CI sowie alle sonstigen Integrationsgates für den eingefrorenen Stand belegt. |
+| LIVE_ACCEPTED | Erst nach Integration des exakt qualifizierten Stands, vollständiger Main-/Produktionsabnahme und privater Sicherung mit Versions-, Integritäts-, Rücklese- und Restore-Schutz. |
+
+**Korrekturschleife:** Geänderter Commit-SHA erfordert erneute unabhängige Prüfung der betroffenen Aussagen und eine neue SHA-Zuordnung am PR. Unverändert gültige Belege gezielt wiederverwenden; keine pauschale Übernahme einer alten QA_ACCEPTED-Aussage auf geänderten Code. QA prüft unabhängig und meldet Findings oder Acceptance direkt am PR; Hauptagent ruft diese vor Integration selbst ab. Kein Selbstreview durch den Hauptagenten als Ersatz für den QA-Agenten. Notwendige Korrekturen bleiben beim alleinigen Hauptagenten.
+
+**Erste praktische Erprobung:** Nach dem aktuellen regulären Releaseabschluss das nächste geeignete zusammenhängende K1–K6-Fachpaket gemäß kanonischer Matrix auswählen, Umfang und Risiken vor Entwicklung benennen, zwei Rollen einsetzen und das vollständige DEV_ACTIVE→QA_READY→QA_FINDINGS/QA_ACCEPTED→MERGE_READY→LIVE_ACCEPTED-Verfahren am PR nachvollziehbar ausführen. Kein künstlicher Produktpatch oder zweiter CI-Lauf allein zum Ausprobieren des Prozesses. Fertige UNKNOWN-FX-, UI-R1/R2/R3-, Frequenz-, Wallet-/Hilfenschnitte nicht neu implementieren. HND01-R gilt unverändert; der nächste alleinige Owner übernimmt den Pilotauftrag bei regulärer Rotation.
+
+**Bewertung nach genau diesem ersten gemeinsamen Paket:** Tatsächlich gemessenen aktiven Entwicklungs-, QA-, Korrektur-, Auswertungs-, Sicherungs- und Dokumentationsaufwand sowie Wandzeit, notwendige Detailreads/CI-Wiederholungen/Übergaben und Nutzen der unabhängig gefundenen Fehler knapp am Pilot-PR und hier verlinkt bewerten. Vorhandene Vergleichsdaten verwenden, unterschiedliche Paketrisiken und wiederverwendete Belege benennen; fehlende Messwerte UNKNOWN lassen. Weder Jobzeit als Work-Credits noch eine ungeprüfte Prozentersparnis ausgeben. Prüfqualität umfasst belegte Befunde/Negativgegenproben, erfüllte unveränderte Pflichtgates und offen ausgewiesene Grenzen. Erst bei nachgewiesenem Nutzen weiter automatisieren.
+
+Keine zusätzliche CI-Plattform, zweite Roadmap oder umfangreichen Checkpointstrukturen. Finanz-, Datenintegritäts-, Backup-, Restore-, Release- und HND01-R-Verträge bleiben vollständig gültig. Der allgemeine historische Datenschutz-Audit bleibt gemäß gesonderter Nutzerentscheidung optional; die hier beauftragte unabhängige Kandidaten-QA ist ein eigenes Integrationsgate.
+
+
+### Historischer erster Optimierungsschritt: Ergebnisverdichtung
+
+**Historischer Stand des Ergebnisverdichters:** Mess-/Priorisierung abgeschlossen; begrenzter lokaler Ergebnisverdichter LOCAL_CANDIDATE_VALIDATED, auf Checkpointref verfügbar. v303 ist inzwischen LIVE_ACCEPTED. Der neue verbindliche organisatorische Ablauf und der noch ausstehende Zwei-Agenten-Pilot stehen oben; K1–K6 bleiben die Produktziele. Keine zweite Roadmap.
 
 **Ziel:** Die FolioLab-Entwicklung skalierbarer, schneller und zuverlässiger gestalten. Den organisatorischen Aufwand pro Release reduzieren, ohne Abstriche bei Finanzintegrität, Datensicherheit oder Produktqualität.
 
@@ -278,4 +311,5 @@ Der Nutzer kann **jederzeit** manuell einen frischen Work-Chat mit einem kurzen 
 - Erfolgskriterium: Ein neuer Work-Chat kann **ohne erneute Projektanalyse** anhand des aktuellen GitHub-Checkpoints den richtigen einzelnen Integrationsstrang weiterführen; kein WIP-Verlust, kein doppelter Release, keine abgebrochene CI und kein Verlust privater Zugangsdaten.
 
 **Operative Standard-Startformel für den Nutzer:** „Übernimm FolioLab Open anhand von `docs/WORK_RESTPAKETE_CHECKPOINT.md` auf `feature/flh05-import-foundation`. Aktuellen Main, offene PRs, CI und aktiven Owner vor jeder Mutation abgleichen. Letzten HANDOVER_READY-Block lesen und den dort genannten nächsten Arbeitsschritt seriell ausführen. Laufende CI nicht abbrechen; keine parallele Implementierung. EFF01/HND01-Regeln anwenden, bei erfolgreicher Abnahme veröffentlichen und neu checkpointen.“
+
 

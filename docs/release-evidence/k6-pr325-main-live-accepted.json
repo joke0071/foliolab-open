@@ -1,0 +1,113 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 304,
+  "newRuntimeVersion": false,
+  "scope": "PR325 private export/archive/database ignore guard and documentation; runtime/finance/schema/workflow/SW unchanged",
+  "PR": 325,
+  "main": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+  "tree": "7c1d889aa759b4b6e3c7dd1cd3967466a926a31a",
+  "cache": "foliolab-open-v304",
+  "previousFullyAcceptedMain": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+  "mainRun": 42881588853,
+  "liveJob": 130076428325,
+  "attempt": 1,
+  "mainResult": "SUCCESS",
+  "deployResult": "SUCCESS",
+  "liveResult": "SUCCESS",
+  "ciRetries": 0,
+  "ciCancellations": 0,
+  "newCIRuns": 0,
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "mainJSON": 229,
+  "mainPNGs": 2065,
+  "mainExplicitAssertions": 481,
+  "mainContextClassesDirectlyReviewed": 8,
+  "productionJSON": 169,
+  "productionPNGs": 1407,
+  "productionExplicitPredecessorAssertions": 281,
+  "productionContextClassesReviewed": 7,
+  "pagesExactGitblobMatches": 153,
+  "pagesByteIdenticalToAcceptedV304Files": 153,
+  "actualPublishedAssetMatches": 154,
+  "ordinaryTLS": true,
+  "proxyCertificateException": false,
+  "loadedAssets": 141,
+  "coreGroups": 6,
+  "axeScans": 18,
+  "axeViolations": 0,
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "originalArtifactSizesDigestsCRCAndUploadLogsMatch": true,
+  "productionArtifact": {
+    "id": 13800285342,
+    "name": "production-live-acceptance-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+    "bytes": 137888222,
+    "sha256": "75cc0b330225ae5c954a27cb394977983bff0d9b32b48b2a2da0a3c7eb9795a1",
+    "run": 42881588853,
+    "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+    "attempt": 1
+  },
+  "mainQualification": "k6-pr325-main-qualified.json",
+  "productionQualification": "k6-pr325-production-qualified.json",
+  "backupQualification": "private-v136-durable-verification.json",
+  "evidenceReuse": "Exact qualified PR325/v304 source and predecessor assertion contracts reused. All 153 deployed files byte-identical to accepted v304. Prior actual visual and supplementary wallet production evidence reused; no new supplemental wallet or manual visual execution claimed. All new PNG files decoded.",
+  "backup": {
+    "status": "DURABLE_READBACK_AND_ACTUAL_INCREMENTAL_RESTORE_VERIFIED",
+    "version": 136,
+    "previousVersion": 135,
+    "root": {
+      "file_name": "FolioLab_private_continuation_2026-11-04.tar.xz",
+      "bytes": 405524480,
+      "sha256": "06e0920450924806f2ecd35f16ab9c9693694def9e28853b470436ce431db8ad",
+      "rootManifestPaths": 5,
+      "incrementManifestPaths": 37,
+      "previousVersion": 135,
+      "targetVersion": 136,
+      "previousRootPreserved": true,
+      "incrementReadbackVerified": true
+    },
+    "actualIncrementalRestore": {
+      "manifestPaths": 42,
+      "failures": 0,
+      "readbackInputs": true,
+      "extractedFilesActuallyHashed": true
+    },
+    "olderRootAndAllOriginalIndicesCompanionsPreserved": true,
+    "oldFullRestoreEvidenceReused": true,
+    "rootAloneCompletePayloadSet": false,
+    "pendingWrites": false,
+    "mainIncrement": {
+      "file_name": "FolioLab_PR325_Main_originals_2026-11-10.tar",
+      "bytes": 208885760,
+      "sha256": "a1b2433b96850220a5445d6419d3dfacc48b5b7fe521da93e65a4c62f1029dab",
+      "manifestPaths": 23,
+      "readbackVerified": true
+    },
+    "productionIncrement": {
+      "file_name": "FolioLab_PR325_Production_originals_2026-11-10.tar",
+      "bytes": 138711040,
+      "sha256": "aa1550a2d321236f5f2230d3dbdbba9a27524daeff0aa7419b7ceed30bd8b219",
+      "manifestPaths": 14,
+      "readbackVerified": true
+    }
+  },
+  "overallK6TRUST": "VERIFY",
+  "physicalAndroidTalkBackSafariOAuth": "external; not performed",
+  "EFF03": {
+    "twoAgentProcess": "documented in existing efficiency plan after this closeout",
+    "pilot": "PLANNED; not executed or accepted",
+    "nextCandidateIndependentQARequired": true,
+    "currentPR325": "closed under prior process as expressly requested; no retroactive QA_ACCEPTED claim",
+    "effortSavings": "UNKNOWN until first actual pilot",
+    "HND01R": "unchanged"
+  },
+  "failureFlags": []
+}
