@@ -1,3 +1,15 @@
+## ACTIVE · 74f8b54eb065 · PR325 eingefroren / CI läuft · 10.11.2026
+
+[K6-TRUST-Schutzkandidat PR325](https://github.com/joke0071/foliolab-open/pull/325), Branch chore/k6-private-file-guard-74f8b54eb065, HEAD25ba00b407802c261286be5cb8f8d317a376e9af / Tree7c1d889aa759b4b6e3c7dd1cd3967466a926a31a, Testmerge76a0381785d61b07664d64c758efa0dae3fdaf9e. Genau zwei Dateien: .gitignore und begrenzte Prüfdokumentation. Keine Runtime-/Finanz-/Schema-/Workflow-/SW-Änderung. [Maschinenlesbarer lokaler Kandidatenbeleg](release-evidence/k6-private-file-guard-candidate.json).
+
+Tatsächliche git check-ignore --no-index-Prüfung:30 Schutzfälle ignoriert/9 erlaubte Beispiele frei/alle1089Mainblobpfade frei,0neueBlockaden. Baseline-Gegenkontrolle:26Schutzfälle ungeschützt einschließlich account.csv/backup.json/private/data.json/nested/a.tar.xz. Keine privaten Eingaben; vorhandene genau3synthetische Payloads über exakte Pfade erlaubt. Ignoreregeln sind keine Inhalts-/Historienprüfung und verhindern kein force-add.
+
+Integration42873427362 und Wallet42873427365 regulär gestartet. Kein CI_ACCEPTED/Merge/Release behauptet. Eingefrorenen Kandidaten während laufender CI nicht ändern, duplizieren oder abbrechen. Main/v304 und V134 unverändert; keine neue Sicherungsoriginalklasse bis zu neuen CI-Originalen. Alle bisherigen Finanz-/UNKNOWN-FX-/UI-Belege bei unveränderten Blobs weiterverwendbar.
+
+Genau nächste Aktion: bestehende Pflicht-CI vollständig qualifizieren, erforderliche Originale privat inkrementell sichern und rückprüfen; erst dann exakt qualifizierten PR integrieren, nachfolgende verpflichtende Main-/Produktionsgates beachten. Vor Mutation Main/Refs/PR/Owner frisch prüfen. K1–K6/externen Grenzen erhalten; kein AusbauEFF03, kein historischerCheckpointmerge. Alleiniger Owner74f8b54eb065.
+
+---
+
 ## ACTIVE · 74f8b54eb065 · autorisierte HND01-Notfallübernahme · 10.11.2026
 
 Der Nutzer widerruft mit sofortiger Wirkung die gesamte Entwicklungs-, Integrations-, QA-, Sicherungs- und Releasebeauftragung des bisherigen Hauptagenten und autorisiert diese alleinige Übernahme. Frisch festgestellter Vorgänger ist e595fcc6d453-r3, bereits regulär STOPPED/HANDOVER_READY; keine fortgesetzte ACTIVE-Arbeit. Frühere Owner sind abgelöst, historische Nachweise bleiben unverändert.

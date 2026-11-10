@@ -1,0 +1,29 @@
+{
+  "status": "LOCAL_GIT_IGNORE_CANDIDATE_VALIDATED",
+  "owner": "74f8b54eb065",
+  "date": "2026-11-10",
+  "base": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+  "baseTree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+  "tree": "7c1d889aa759b4b6e3c7dd1cd3967466a926a31a",
+  "PR": 325,
+  "changedPaths": [
+    ".gitignore",
+    "docs/K6_PRIVATE_FILE_GUARD_2026-11-10.md"
+  ],
+  "protectedCases": 30,
+  "allowedCases": 9,
+  "currentMainBlobPaths": 1089,
+  "newlyIgnoredCurrentPaths": 0,
+  "baselineNegativeControlExposedCases": 26,
+  "privateInputUsed": false,
+  "runtimeAndFinancialBlobsUnchanged": true,
+  "fullCIRequired": true,
+  "integrationRun": 42873427362,
+  "walletRun": 42873427365,
+  "CI_ACCEPTED": false,
+  "merged": false,
+  "lastLiveAccepted": 304,
+  "backupVersion": 134,
+  "newPrivateOriginalClass": false
+}
