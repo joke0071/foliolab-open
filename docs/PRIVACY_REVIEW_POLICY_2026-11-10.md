@@ -32,10 +32,12 @@ Dies ist eine Zuordnung des vorhandenen Vorberichts vom 09.11.2026 und der aktue
 
 **Verdacht bzw. Schutzmaßnahme:** allgemeiner Ignore-Schutz für private CSV-/Backup-/Archivdateien fehlt laut Vorbericht; als K6-TRUST-Maßnahme erfasst. Kein bestätigter Datenabfluss. Legitime Test-Fixtures bei einer gezielten Korrektur erhalten. Private Originale und Fundbelege bleiben privat.
 
+Zusätzlicher enger Gegencheck am10.11.: die7neuenUI-R3-Dateien und6eigene Produktdokument-Snapshots gegen aus18privatenOriginal-CSV-Dateien extrahierte Kennungen geprüft;0exakteTreffer, Negativkontrolle PASS. Keine sensiblen Kennungen ausgegeben. Der Check ersetzt keine vollständige Namens-/Kontonummern-/Secret- oder Historienprüfung; IBAN-Extraktion nur fürAT/DE-Ziffernformate mitPrüfsumme.
+
 ## Aktueller Produkt- und Sicherungsstand
 
 PR322 bleibt unverändert integrationsqualifiziert: HEAD `96522496e399752c26bfb0661f75f2b3f1878b5c`, Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`, Integration42709224108 und Wallet42709224472 SUCCESS. Bereits bestandene 1.345 Unit-Tests, drei Engines und UI-R3-Gates werden wiederverwendet; kein neuer Testlauf für diese Dokumentationsänderung.
 
 Dauerhafte Sicherungsmetadaten weiterhin V129 unter bestehender Identität. Die am09.11. lokal geprüfte, aber nicht bestätigt gespeicherte V130-Datei ist nach einem Umgebungswechsel nicht mehr lokal vorhanden. Ihre frühere lokale Prüfung bleibt historischer Nachweis, keine aktuelle Verfügbarkeitszusage. Alle 17 GitHub-Artefakte der drei UI-R3-Fassungen werden weiter als nicht abgelaufen gemeldet; aktuelle finale IDs/Digests entsprechen den qualifizierten Belegen. Wiederherstellung und sichere private Fortschreibung sind ein eigener technischer Punkt; daraus entsteht keine neue Auditfreigabepflicht.
 
-[Zentraler Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) und [Kandidatenbeleg](release-evidence/v302-ui-r3-candidate.json) führen den tatsächlichen Releasezustand. Main bleibt bis zum regulären Abschluss der übrigen Pflichtgates v301 LIVE_ACCEPTED.
+[Zentraler Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md) und [Kandidatenbeleg](release-evidence/v302-ui-r3-candidate.json) führen den tatsächlichen Releasezustand. PR322 ist inzwischen auf exakt demselben Tree integriert, Main179d424aef1f6f35c3f6f72600e4bbe885ef329c. Alle Main-Integrationsjobs und Deployment SUCCESS; echte Live-Abnahme129682873647 läuft. v301 bleibt letzte LIVE_ACCEPTED-Basis bis zu deren tatsächlichem Erfolg. V129 ist inzwischen erneut vollständig geprüft, alle17Original-ZIPs,16Joblogs und7Kandidat-Gitblobs sind wiederhergestellt. Das neue lokale Wiederherstellungsarchiv umfasst28.411Pfade/0Fehler; neue dauerhafte private Version weiter nicht behauptet.

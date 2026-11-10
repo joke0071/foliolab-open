@@ -1,7 +1,7 @@
 {
   "owner": "c43b5e91f20a",
   "version": 302,
-  "status": "MERGED_MAIN_INTEGRATION_IN_PROGRESS",
+  "status": "DEPLOYED_LIVE_ACCEPTANCE_PENDING",
   "lastLiveAccepted": 301,
   "PR": 322,
   "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
@@ -121,7 +121,7 @@
       "previousScratchOnlyArchiveRecovered": false
     }
   },
-  "publicRelease": false,
+  "publicRelease": "DEPLOYED_NOT_LIVE_ACCEPTED",
   "privacyClearance": "General audit clearance not required by explicit user decision2026-11-10; confirmed incidents must be addressed before affected release",
   "parallelAuditor": "independent read-only",
   "physicalAndroidTalkBackSafariOAuth": "not performed; external",
@@ -234,5 +234,107 @@
   "mainBaseline": "1708d4e947061f353187727ccae54daa1727db7e",
   "mainTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
   "mainRun": 42770050654,
-  "mainResult": "IN_PROGRESS"
+  "mainResult": "IN_PROGRESS",
+  "mainIntegrationResult": "SUCCESS",
+  "mainRunResult": "IN_PROGRESS",
+  "mainArtifacts": [
+    {
+      "id": 13741789285,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-3",
+      "bytes": 68640781,
+      "sha256": "1a60db6c42606bf5076dd557f850f0e08897b8ae026f3b69a8ff286990002452",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 846,
+      "jsonReports": 97,
+      "pngsDecoded": 748,
+      "failureFlags": []
+    },
+    {
+      "id": 13741760812,
+      "name": "ci-stage-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 354,
+      "sha256": "32bd6c88e91b1ee757b435519b9e78287b2ab5628b5b8d32451a3f1b5cd1e862",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 1,
+      "jsonReports": 1,
+      "pngsDecoded": 0,
+      "failureFlags": []
+    },
+    {
+      "id": 13741714370,
+      "name": "dialog-visual-reference",
+      "bytes": 934655,
+      "sha256": "4a6b75fb884a887ec7674176fc72ab4929f848f7a0c0e33e1b9887141da1fc2d",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 20,
+      "jsonReports": 0,
+      "pngsDecoded": 20,
+      "failureFlags": []
+    },
+    {
+      "id": 13741283815,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-1",
+      "bytes": 58869504,
+      "sha256": "ae0f0a6437b28848386e3f0b87ef3d7b974ba2ce8d1bd3249d59145a31330045",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 508,
+      "jsonReports": 15,
+      "pngsDecoded": 492,
+      "failureFlags": []
+    },
+    {
+      "id": 13741914008,
+      "name": "release-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c",
+      "bytes": 64784601,
+      "sha256": "850e641f8891a235d65a613aad3557cc3ca92f7ef9ab7cb7bffef58251adf4be",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 800,
+      "jsonReports": 92,
+      "pngsDecoded": 705,
+      "failureFlags": []
+    },
+    {
+      "id": 13741353117,
+      "name": "cross-engine-gates-179d424aef1f6f35c3f6f72600e4bbe885ef329c-2",
+      "bytes": 11904858,
+      "sha256": "c82f6dd1a49f423a827b601ca5f5c8e47b14789af747417244ef47bc17a3ec4d",
+      "apiUploadLogLocalMatch": true,
+      "CRC": "PASS",
+      "entries": 114,
+      "jsonReports": 19,
+      "pngsDecoded": 94,
+      "failureFlags": []
+    }
+  ],
+  "mainJSONReports": 224,
+  "mainPNGsDecoded": 2059,
+  "mainUnits": {
+    "tests": 1345,
+    "pass": 1345,
+    "fail": 0,
+    "skipped": 0
+  },
+  "deployJob": 129682765708,
+  "deployResult": "SUCCESS",
+  "liveJob": 129682873647,
+  "liveResult": "IN_PROGRESS",
+  "pages": {
+    "id": 13742003810,
+    "bytes": 564659,
+    "sha256": "1d281562e15a1978a4e670ded85b4900e4424716d34218fcf18a0ccb8cc20a8b",
+    "all152ExpectedGitblobsMatch": true,
+    "tree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66"
+  },
+  "targetedPrivacyCheck": {
+    "scope": "Only seven changed UI-R3 files and six own process-document snapshots",
+    "privateOriginalCSVFilesRead": 18,
+    "exactPrivateMarkerMatches": 0,
+    "negativeControl": "PASS",
+    "exhaustiveHistoryAudit": false
+  }
 }
