@@ -1,3 +1,11 @@
+## ACTIVE · 4932401a9f1d · reguläre HND01-Übernahme · EFF03 begrenzt
+
+Vorgängerf66807554013 regulär STOPPED/HANDOVER_READY. Neuer alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner4932401a9f1d. Erwartete Checkpoint-HEAD6bf08028c627442d5191fa06d2c54e8f0517bc44; Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 unverändert, v303 LIVE_ACCEPTED.287Refs/alteDrafts157+161/Reviews/Actions/WIP/Sicherung frisch geprüft; keine konkurrierende Produktaktivität festgestellt. V132-Version/Größe bestätigt, identische qualifizierte Original-/Restorebelege wiederverwendet.
+
+Genau nächste Arbeit: [begrenzten EFF03-Vertrag](EFF03_RESULT_DIGEST_2026-11-10.md) mit vorhandenem v303-Satz lokal umsetzen und Negativkontrollen messen. Keine neueCI/Releasewiederabnahme/Gateänderung. UI-R1/R2/R3 undK2-Frequenzschnitt DONE; übrigeK1–K6/externenGates unverändert. Keine ungesicherten Produktänderungen. Zähler0Releases/0Produktpakete. HND01-R gilt.
+
+---
+
 ## STOPPED / HANDOVER_READY · f66807554013 · v303 LIVE_ACCEPTED · V132 geprüft
 
 Owner f66807554013 gibt sämtliche Entwicklungs-, Integrations-, QA- und Releaseverantwortung nach einem akzeptierten Release regulär ab. Frühere ACTIVE-Zeilen sind historisch. [Kompakte Abgabe und kopierfertiger Nachfolgerprompt](HANDOVER_f66807554013_2026-11-10.md#kopierfertiger-nachfolgerprompt).
