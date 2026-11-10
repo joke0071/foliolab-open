@@ -1,5 +1,17 @@
 # EFF01 – Verbindlicher Arbeitsplan für effiziente FolioLab-Entwicklung
 
+## HND01-R – Resiliente Work-Ausführung · verbindlich ab 10.11.2026
+
+Neuere ausdrückliche Nutzerentscheidung; ersetzt die älteren Schwellen von zwei Releases/drei Paketen. Reguläre Chat-Rotation **spätestens nach einem LIVE_ACCEPTED-Release oder einem größeren abgeschlossenen Fachpaket**, früher bei instabilem Chat oder zunehmender Kontextlast. Laufende Actions regulär beenden, keine Abbrüche zur Rotation.
+
+Kompakte wiederaufnehmbare GitHub-Checkpoints nach fachlicher Abgrenzung, Implementierung, PR-Erstellung, CI-Abschluss, Veröffentlichung und Sicherung: alleiniger Owner, exakte Main-/Kandidaten-/Tree-/Run-Identität, letzter LIVE_ACCEPTED, tatsächlicher Sicherungsstand, offene Grenzen und genau nächste Aktion. Große Werkzeugoperationen in abgeschlossene Abschnitte mit erhaltenen Zwischenergebnissen unterteilen.
+
+Keine wiederholten vollständigen Projektanalysen. Bereits qualifizierte identische Belege bei unveränderter relevanter Aussage wiederverwenden; alle verpflichtenden neuen Kandidaten-/Main-/Produktionsgates bleiben erhalten. Keine engen Polling-Schleifen. Private Sicherungen möglichst inkrementell, mit Versionsschutz und weiterhin vollständiger Integritäts- und Originalerhaltungsprüfung; keine leeren/unvollständigen Ersatzarchive.
+
+Am sicheren Übergabepunkt reguläre HND01-Abgabe, alleinige Schreibverantwortung eindeutig beenden und einen **kopierfertigen Nachfolgerprompt dauerhaft im zentralen Checkpoint** hinterlegen. Bei instabilem Chat frühzeitig WIP/Belege/konkrete nächste Aktion sichern; keine wiederholten Übergabeaufforderungen an ausgefallene Agenten.
+
+Unverändert: sämtliche technischen, finanziellen, Datenschutz-, Datenintegritäts-, CI-, Backup- und Release-Schutzverträge. Keine zusätzlichen Workflows oder CI-Läufe ausschließlich für diese Prozessdokumentation. Keine zweite Roadmap oder Architektur.
+
 ## Fortschreibung – UI-R3/v302 LIVE_ACCEPTED, 10.11.2026
 
 **UI-R3/PR322 regulär integriert**, Main `179d424aef1f6f35c3f6f72600e4bbe885ef329c`/Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`, exakt qualifizierter Tree. Mainlauf42770050654 Versuch1 vollständig SUCCESS, einschließlich Deployment und echter Live-Abnahme129682873647. v302 LIVE_ACCEPTED, [Abnahmeindex](release-evidence/v302-live-accepted.json). **v301 LIVE_ACCEPTED / UI-R2 DONE** bleibt bestätigte Vorgängerbasis, [Abnahmeindex](release-evidence/v301-live-accepted.json). Reguläre vorhandene Integration/Wallet/Main/Produktion vollständig qualifiziert, kein Retry/Abbruch/identischerDuplikatlauf. 1345Tests,3Engines,153gewöhnlicheTLS-Pfade und echteProduktionsbilder PASS. Seit ausdrücklicher Nutzerentscheidung10.11.2026 ist die historische Datenschutzkontrolle unter QUALITY-TRUST01/K6-TRUST optional und kein Entwicklungs-/Integrations-/Release-Gate. Keine Unbedenklichkeit ungeprüfter Inhalte behaupten. UI-R3/K1–K6 ohne allgemeinen Auditabschluss fortsetzen; konkrete bestätigte Vorfälle und alle übrigen Pflichtgates bleiben verbindlich. [Entscheidung und begrenzter Auftrag](PRIVACY_REVIEW_POLICY_2026-11-10.md); alle41Scopes/externenGates/Originale erhalten.
