@@ -7,3 +7,36 @@ node_modules/
 *.p12
 *.keystore
 .DATABASE
+
+# Private exports and backup payloads; keep originals outside the checkout.
+private/
+backups/
+exports/
+originals/
+*.csv
+*.tsv
+*.xls
+*.xlsx
+*.ods
+*.zip
+*.7z
+*.rar
+*.tar
+*.tgz
+*.gz
+*.xz
+*.bz2
+*.bak
+*.db
+*.sqlite
+*.sqlite3
+*.json.enc
+*.encrypted.json
+*backup*.json
+*Backup*.json
+*BACKUP*.json
+
+# Exact reviewed synthetic fixtures; never allowlist whole directories.
+!/tests/fixtures/flh03/january.csv
+!/tests/fixtures/flh03/overlap.csv
+!/docs/perf-evidence/2026-10-31/render-v238/fixture.json.gz
