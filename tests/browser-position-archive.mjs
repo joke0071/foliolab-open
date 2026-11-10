@@ -1,3 +1,4 @@
+import {checkExistingWalletEditor} from './browser-wallet-editor-retention.mjs';
 import {manageList} from './browser-management-mode.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
@@ -147,6 +148,8 @@ for(const engine of (process.env.ARCHIVE_ENGINES||'chromium').split(',')){
   await p.locator('#positionArchiveFilter').selectOption('archived');await menu();assert.ok(await p.locator('[data-action=clear-position-selection]').isDisabled(),'fresh mode begins with no implicit selection');await cycle();
   const restoreIds=await p.locator('[data-position-select]:checked').evaluateAll(es=>es.map(e=>e.dataset.positionSelect)),restoreBefore=await record();assert.equal(restoreIds.length,100);
   await p.locator('[data-action=archive-selected]').click();await commit();const restoredBatch=await record(),beforeBatch=JSON.parse(restoreBefore.raw),afterBatch=JSON.parse(restoredBatch.raw);assert.equal(restoredBatch.revision,restoreBefore.revision+1);for(const position of afterBatch.positions){const original=beforeBatch.positions.find(p=>p.id===position.id);assert.deepEqual(position,restoreIds.includes(position.id)?Object.fromEntries(Object.entries(original).filter(([key])=>key!=='archived')):original,'only explicitly selected archive flags are removed');}assert.deepEqual({...afterBatch,positions:[]},{...beforeBatch,positions:[]},'batch restoration never changes economic records');
+  const walletEditor=await checkExistingWalletEditor(browser,{base,engine});
+  report.walletEditors??=[];report.walletEditors.push(walletEditor);
   assert.deepEqual(errors,[]);report.engines.push({engine,status:'PASS',scans,checks:['linked positive holding visibility only/exact history and totals','cancel/Escape/focus','same ISIN separate accounts','edit retains archive','one revision archive/unarchive','actual quota and post-put transaction abort rollback','401 archive-aware UI selection before pagination','dashboard quality drilldown includes archived valued holdings','peer CAS conflict','offline archive/reload','fresh plain/encrypted UI restore']});
   console.log(engine+': archive/unarchive, unchanged economics/history, edit identity, quota/CAS, actual offline save/reload, plain/encrypted fresh UI restore, six-width Axe PASS');
  }finally{writeFileSync('artifacts/gates/position-archive.json',JSON.stringify(report,null,2)+'\n');await ctx.close();await browser.close();}

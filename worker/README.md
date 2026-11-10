@@ -23,7 +23,9 @@ Wrangler kann bei der ersten Verwendung zur Installation und Autorisierung auffo
 
 ## Optional: Eigener EODHD-Kursdienst (native Diagramme)
 
-Direkte EODHD-Abfragen von GitHub Pages können durch Browser-CORS blockiert werden. Der selbst betriebene Worker ruft die fest definierte EODHD-API serverseitig ab. Dieser Kursdienst ist unabhängig von der OpenFIGI-Suche: Du kannst nur die Suche, nur Kursdaten oder beides verwenden. **Es gibt keinen für alle Nutzer bereitgestellten Proxy und keinen gemeinsamen EODHD-Schlüssel.**
+Stand dieser Kurshilfe: 10.11.2026, abgeglichen mit v303. Eine eingerichtete Verbindung ist kein Nachweis für einen berechtigten Tarif oder eine vollständige Kursreihe.
+
+Direkte EODHD-Abfragen sind in FolioLab nicht als Browser-Kursquelle verfügbar. Der selbst betriebene Worker ruft die fest definierte EODHD-API serverseitig ab. Dieser Kursdienst ist unabhängig von der OpenFIGI-Suche: Du kannst nur die Suche, nur Kursdaten oder beides verwenden. **Es gibt keinen für alle Nutzer bereitgestellten Proxy und keinen gemeinsamen EODHD-Schlüssel.**
 
 1. Den oben beschriebenen Worker in deinem **eigenen Cloudflare-Konto** bereitstellen. Verwende dafür das aktuelle `worker/src/index.js` und `worker/src/market.js`.
 2. Deinen **eigenen EODHD-API-Schlüssel** als Worker-Secret setzen. Im Projektverzeichnis `worker` ausführen:
@@ -44,13 +46,13 @@ Direkte EODHD-Abfragen von GitHub Pages können durch Browser-CORS blockiert wer
 4. In FolioLab Open **Mehr → Datenquellen & Aktualisierung → Eigener EODHD-Kursdienst** öffnen. Dort die HTTPS-Basisadresse deines Workers (ohne Pfad, z. B. `https://foliolab-open-instruments.DEINE-SUBDOMAIN.workers.dev`) und genau denselben `MARKET_ACCESS_TOKEN` eingeben und speichern. Falls du schon einen OpenFIGI-Worker betreibst, kannst du **denselben aktuellen Worker** mit den ergänzten Secrets verwenden.
 5. Im Portfolio unter **Positionen** den echten Börsencode (z. B. `VWCE.XETRA`, Handelsplatz Xetra, MIC `XETR`, EUR) bestätigen und **Aktualisieren** drücken. In der Übersicht erscheint der native Kursverlauf, sobald dein Worker gültige historische Schlusskurse liefert.
 
-**Ohne Worker** bleiben direkte EODHD-/FMP-/Twelve-Data-Anbindungen und CSV-Kursimporte verfügbar. Ein Worker behebt CORS, aber nicht einen ungültigen EODHD-Schlüssel, einen unzureichenden Tarif oder eine falsche Börsenkennung. Es gibt keine automatische Cloudflare-Veröffentlichung durch das FolioLab-Open-Repository.
+**Ohne Worker** bleiben Alpha Vantage und Marketstack mit eigenem Zugang, manuelle Kurspflege und lokale CSV-Kursimporte verfügbar. Die direkte EUR/Xetra-Abdeckung ist für VWCE, XDEM, XDEQ und 5MVL belegt; daraus folgt keine allgemeine Kurs- oder Langzeithistorienabdeckung. FMP, Twelve Data und direkte EODHD-Schlüssel sind entfernt. Ein Worker behebt CORS, aber nicht einen ungültigen EODHD-Schlüssel, einen unzureichenden Tarif oder eine falsche Börsenkennung. Es gibt keine automatische Cloudflare-Veröffentlichung durch das FolioLab-Open-Repository.
 
 ### EODHD-Sicherheit
 
 - Nur `POST /api/market/eodhd` ist erlaubt, mit einem `Authorization: Bearer`-Token. Ein bloßer CORS-Origin-Check wäre **kein** ausreichender Zugriffsschutz.
 - **Keine offene Proxy-URL:** Der Worker ruft ausschließlich `https://eodhd.com/api/eod/` mit validiertem Börsensymbol und engem Datumskorridor auf. Der Browser sendet nur Börsensymbol und angefragte Tage, **keine** Stückzahlen, Depot- oder Wallet-Daten und keinen EODHD-Schlüssel.
-- Der EODHD-Schlüssel bleibt als Cloudflare Secret serverseitig; der Worker-Zugriffsschlüssel wird lokal im Browser gespeichert und ausschließlich an den **explizit gewählten** Worker übertragen. Er wird nicht in Backups exportiert, nicht in URLs eingebettet und nicht an OpenFIGI weitergegeben. Verwende nur deinen eigenen, vertrauenswürdigen Worker.
+- Der EODHD-Schlüssel bleibt als Cloudflare Secret serverseitig; der Worker-Zugriffsschlüssel wird lokal im Browser gespeichert und ausschließlich an den **explizit gewählten** Worker übertragen. Im normalen unverschlüsselten Portfolioexport ist er ausgeschlossen. Nur bei ausdrücklich aktivierter Option für das vollständige verschlüsselte Backup werden unterstützte Einstellungen einschließlich Worker-Adresse und Zugriffsschlüssel gesichert. Er wird nicht in URLs eingebettet und nicht an OpenFIGI weitergegeben. Verwende nur deinen eigenen, vertrauenswürdigen Worker.
 - Antworten enthalten keine Zugangsdaten. Keine Kursanfragen zwischenspeichern, wenn dadurch fremde Nutzer Zugriff erhalten könnten. Endpunkte sind `no-store`; Kursabdeckung und API-Limits richten sich nach deinem EODHD-Tarif.
 - Bei Verlust oder öffentlicher Weitergabe eines Schlüssels diesen bei Cloudflare bzw. EODHD erneuern.
 

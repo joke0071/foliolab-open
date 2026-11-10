@@ -1,21 +1,37 @@
-# Längere native Kursdiagramme – FolioLab Open (24.10.2026)
+# Native Kursdiagramme – Quellen und verfügbare Zeiträume
 
-## Gültige Zeiträume
+Stand: 10.11.2026, abgeglichen mit v303. Aktueller Kurs, Marktkursverlauf und persönliche Wertentwicklung sind getrennte Aussagen. Ein erfolgreicher aktueller Kursabruf belegt keine vollständige Historie.
 
-Die Basis-Auswahl für native Marktkursdiagramme bleibt `7 T · 1 M · 3 M · 1 J`. Diese Auswahl erscheint für CoinGecko/CoinPaprika ohne kostenpflichtige Datenzugänge unverändert. Freie CoinGecko-Demo-Historie und freie CoinPaprika-Tageshistorie reichen nur ungefähr ein Jahr.
+## Verfügbare Zeiträume
 
-`5 J` erscheint für ETFs/Aktien/Fonds, sofern (a) eine passende, vollständig zugeordnete Quelle EODHD, FMP oder Twelve Data konfiguriert ist oder (b) ein importierter und validierter CSV-Kursverlauf wenigstens ungefähr fünf Kalenderjahre abdeckt. Der Provider/Tarif muss die angeforderte Zeitspanne tatsächlich freigeben. Bei einem jüngeren ETF können weniger Beobachtungen vorliegen; FolioLab benennt deshalb den **tatsächlich gelieferten Anfangs- und Endtag**. Es ergänzt keine fiktiven Punkte.
+Positionsdiagramme bieten die Basiszeiträume `7 T · 1 M · 3 M · 6 M · 1 J`. Angezeigt wird nur die tatsächlich verfügbare Datenreihe innerhalb des gewählten Zeitraums; eine Auswahl von `1 J` garantiert kein vollständiges Jahr.
 
-`Max` erscheint nur bei bereits vorhandenen, validierten CSV-Kursen mit Beobachtungen, die älter als ein Jahr sind. Max bedeutet: alle tatsächlich importierten Daten, nicht die unbekannte gesamte Historie einer externen API. Selbst bei zusätzlich konfigurierten API-Quellen lädt Max ausschließlich die lokale CSV-Historie; dadurch wird keine vermeintlich vollständige API-Vergangenheit suggeriert. Bis zu 6.500 datierte CSV-Beobachtungen je Position können importiert werden.
+Für ETFs, Aktien und Fonds werden `3 J` und `5 J` zusätzlich angeboten, wenn eine passend konfigurierte eigene EODHD-Workerquelle zur Notierung verfügbar ist oder eine lokale validierte Kurshistorie mit mindestens zwei unterschiedlichen Datumswerten ungefähr fünf Jahre zurückreicht. Die Auswahl einer Workerquelle beweist weder Berechtigung noch erfolgreiche Lieferung. Alpha Vantage oder Marketstack allein schalten diese Langzeitoptionen nicht frei.
 
-Bei zwei zusätzlichen Zeiträumen zeigt Desktop alle sechs Zeiträume. Auf Smartphones bleiben vier direkte Schaltflächen und eine kompakte **Mehr**-Auswahl für `5 J`/`Max`. Wenn nur ein zusätzlicher Zeitraum existiert, erscheint dieser direkt als fünfte Auswahl.
+Bei Kryptoanlagen bleiben die externen freien Historienabrufe auf höchstens ein Jahr begrenzt. Eine ausreichend alte lokale Historie kann zusätzlich `3 J`/`5 J` ermöglichen; dadurch werden keine älteren API-Kurse angefordert oder ergänzt.
 
-## Quellen und Limits
+`Max` steht nur bei einer lokalen validierten Historie mit mindestens zwei Beobachtungen und einem Anfang vor mehr als einem Jahr zur Verfügung. Es zeigt die vorhandene lokale Datenreihe, nicht die unbekannte gesamte Vergangenheit einer API. Höchstens 6.500 datierte CSV-Beobachtungen je Position werden unterstützt. Lücken oder kurze Reihen werden nicht durch erfundene Kurse geschlossen.
 
-- **CoinGecko Demo / CoinPaprika Free:** keine 5-Jahres-Option, unveränderte schlüssellose Datenlogik.
-- **EODHD direkt / FMP:** bestehender API-Zugang und bestätigter Handelsplatz; echte 5-Jahres-Abfrage mit Datumsbegrenzung, keine künstliche Extrapolation.
-- **Twelve Data:** 5-Jahres-Abfrage mit `start_date` und `end_date`, ohne historienverkürzendes `outputsize=500`. Das verfügbare Datenvolumen hängt von Notierung und Tarif ab.
-- **Eigener EODHD-Worker:** Worker-Vorlage und Client sind auf ca. fünf Jahre beziehungsweise höchstens 1.800 bestätigte Schlusskurstage erweitert; bestehende selbst installierte ältere Worker müssen gesondert aktualisiert werden. Private Worker-Zugangsdaten verbleiben im Worker beziehungsweise lokal wie zuvor. Die Änderung im Repository aktualisiert keinen privat betriebenen Worker automatisch.
-- **CSV:** Quelle wird weiterhin als nicht unabhängig geprüft kenntlich gemacht, zählt nicht zur Anlagerendite und verändert weder Bestände noch Buchungen.
+Die Darstellung und Gruppierung der Zeitraum-Schaltflächen richtet sich nach Ansicht und Breite. Die gewählte Aktualisierungshäufigkeit unter „Mehr“ steuert keine dieser Diagrammoptionen.
 
-Eine gescheiterte 5-Jahres-Abfrage macht aus 365 Tagen keine vermeintliche Fünfjahres-Historie. Fehler werden als solche angezeigt. Bei tatsächlich kurzen historischen Reihen zeigt das Diagramm nur den belegten Datumsbereich und erklärt das.
+## Aktive Quellen und Grenzen
+
+| Quelle | Aktueller Kurs und Historie | Grenze |
+| --- | --- | --- |
+| Alpha Vantage | Tagesreihe mit eigenem Schlüssel; belegte Referenzen VWCE, XDEM, XDEQ und 5MVL in EUR auf Xetra | Kompakte Reihe mit höchstens 100 Handelstagen; keine Mehrjahreszusage. Suche, Diagnose und Kurse teilen das lokale Tagesbudget. |
+| Marketstack | Tageskurse mit eigenem Schlüssel für die belegten EUR/Xetra-Referenzen | Der aktuelle Adapter fordert rund 330 Kalendertage an. Fehlende oder Null-Schlusskurse sperren die Historienübernahme; ein separat geprüfter jüngster Tageskurs kann trotzdem nutzbar sein. |
+| Eigener EODHD-Worker | Optionaler eigener Kursdienst mit bestätigtem Börsensymbol und separatem Zugriffsschlüssel | Mehrjahresdaten nur, wenn der eigene Dienst und Tarif sie tatsächlich liefern. Bestehende privat betriebene Worker werden durch ein Repositoryupdate nicht automatisch aktualisiert. |
+| CoinGecko / CoinPaprika | Externe Kryptohistorie höchstens ein Jahr | Aktuelle Kryptokurse beweisen keinen erfolgreichen Historienabruf. Fehler und fehlende historische EUR-Umrechnung bleiben sichtbar. |
+| Lokale CSV | Tatsächliche, zur Position und Handelswährung passende Schlusskurse | Vom Nutzer geprüfte Daten, keine unabhängige Quellenbestätigung; kein Ändern von aktuellem Positionskurs, Mengen oder Buchungen. |
+
+FMP, Twelve Data und direkte EODHD-Schlüssel sind keine aktiven Browser-Kursquellen. Historische Quellnamen und Notierungskennungen dürfen in gespeicherten Kursbelegen erhalten bleiben; sie aktivieren keinen entfernten Anbieter.
+
+Die bestehende Quellenauswahl versucht im Modus „Automatisch“ passende konfigurierte Quellen in der Reihenfolge Alpha Vantage → Marketstack → eigener EODHD-Worker. Daten verschiedener Börsen oder Währungen werden nicht als Ersatz vermischt. Eine gescheiterte Mehrjahresabfrage macht aus einer kurzen Reihe keine vollständige Fünfjahreshistorie; maßgeblich bleiben die tatsächlich gelieferten Anfangs- und Endtage.
+
+## Aktualisierung und Zugangsdaten
+
+Unter **Mehr → Datenquellen & Aktualisierung** ist **Täglich** Standard. **Nur manuell**, **Alle 6 Stunden** und **Alle 30 Minuten** sind auswählbar. Fällige automatische Abrufe erfolgen beim Öffnen der App und bleiben von Anbieterbudgets, Erreichbarkeit und Fehlerpausen abhängig.
+
+Eigene Zugänge sind optional. Ohne sie bleiben manuelle Kurspflege und lokale CSV nutzbar. Normale unverschlüsselte Portfolioexporte enthalten keine Zugangsdaten. Das vollständige verschlüsselte Backup kann unterstützte aktive Einstellungen nur nach ausdrücklicher Aktivierung der entsprechenden Option einschließen. Der EODHD-Anbieter-Schlüssel bleibt im eigenen Worker; FolioLab verwendet dessen separaten Zugriffsschlüssel.
+
+[Einrichtung des optionalen Workers](../worker/README.md) · [Überblick und Datenquellen](../README.md)
