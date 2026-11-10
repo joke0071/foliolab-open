@@ -72,7 +72,28 @@
     }
   },
   "webkit": "NOT_RUN_LOCAL: missing host libraries; full CI required",
-  "backup": "V129 durable; preparation rejected before invocation because file860691540 exceeds536870912. Complete multi-part save in progress; no new durable completion yet.",
+  "backup": {
+    "version": 130,
+    "bytes": 405381920,
+    "sha256": "d6bbb65ffd47a3ae4e593f5e8aeda4888ee8542c2349898994569ff203a51e18",
+    "rootManifestPaths": 20,
+    "completeContinuationPaths": 28448,
+    "basePaths": 28339,
+    "companionFiles": 2,
+    "setComplete": true,
+    "durableVersion": 130,
+    "rootReadbackIdentical": true,
+    "allRootMembersHashVerified": true,
+    "twoCompanionsReadbackIdentical": true,
+    "restoreTest": {
+      "bytes": 860691540,
+      "sha256": "89fd412fae5b564741760141e2d8cec532a23d4e0f85ebb293d48ac9e1e2074e",
+      "verifiedPaths": 28448,
+      "failures": 0
+    },
+    "samePersistentIdentity": true,
+    "failures": 0
+  },
   "otherLocalPass": [
     "settings-backup",
     "data-source-settings",
@@ -87,5 +108,7 @@
   "walletRun": 42796350012,
   "integrationStatus": "IN_PROGRESS",
   "PR": 323,
-  "all16RemoteBlobsMatchLocal": true
+  "all16RemoteBlobsMatchLocal": true,
+  "handoverStatus": "STOPPED/HANDOVER_READY",
+  "walletResult": "SUCCESS"
 }
