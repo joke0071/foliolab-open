@@ -1,3 +1,15 @@
+## ACTIVE · ae53485c3674 · reguläre HND01-Übernahme · 10.11.2026
+
+Owner `7b9e47799d13` hat regulär vollständig STOPPED/HANDOVER_READY abgegeben. Neuer alleiniger Produkt-, Integrations-, QA- und Releaseowner: `ae53485c3674`. Frisch geprüfte Main-/Checkpoint-/287Branchrefs stabil, PR323 einziger Produktkandidat, historische Drafts157/161 unverändert; keine Reviews/Inlinekommentare und keine konkurrierenden Actions/Schreibaktivitäten festgestellt. Übernahme unter erwarteter Checkpoint-HEAD `cd6de780727ee01f6f68ab29761a2c3f2b44e346`.
+
+Letzter LIVE_ACCEPTED v302/Main `179d424aef1f6f35c3f6f72600e4bbe885ef329c`, Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`. PR323 HEAD `c9b9a47f285dda11b65a6ecf815094992997e616`/Tree `160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1` unverändert. Integration42796350018 Versuch1 und Wallet42796350012 inzwischen SUCCESS; alle vier Pflicht-Testjobs SUCCESS, Deploy/Live beim PR planmäßig SKIPPED. Noch kein CI_ACCEPTED/Merge/v303-Release behauptet; Originalqualifikation folgt.
+
+V130-Rootversion/405381920Bytes und beide unveränderlichen Begleitdateien/471859200+388832340Bytes frisch bestätigt; qualifizierte byteidentische Restorebelege aus [Abgabe](HANDOVER_7b9e47799d13_2026-11-10.md) und [Sicherungsindex](release-evidence/private-v130-durable-verification.json) wiederverwenden. Neue PR323-Originale noch zu sichern. Keine ungesicherten Produktänderungen übernommen.
+
+Genau nächste Aktion: PR323-Originalberichte/Logs qualifizieren, bei vollständigem Pflicht-PASS exakt integrieren, Main/Deploy/echteLive-Gates abnehmen und neue Originale privat versionsgeschützt sichern. HND01-R: nach einem LIVE_ACCEPTED reguläre Abgabe; K1–K6 danach seriell. Checkpointbranch niemals vollständig mergen.
+
+---
+
 ## STOPPED / HANDOVER_READY · 7b9e47799d13 · K2 PR323 CI läuft · V130 dauerhaft vollständig geprüft
 
 **Reguläre vollständige Abgabe nach HND01-R wegen Kontextlast.** Owner7b9e47799d13 stellt Entwicklungs-, Integrations-, QA- und Releaseaktivitäten ein. Frühere ACTIVE-Zeilen darunter sind historisch. NeuerChat kann nach frischer Kollisionsprüfung allein übernehmen; keine weitere Aufforderung an alte widerrufeneOwner. [Verbindliche kompakte Abgabe](HANDOVER_7b9e47799d13_2026-11-10.md).
