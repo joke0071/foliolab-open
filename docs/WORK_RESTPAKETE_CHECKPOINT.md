@@ -1,3 +1,15 @@
+## ACTIVE · 74f8b54eb065 · PR325 gezielter Cross2-Retry / 207 Berichte qualifiziert
+
+Erster Integrationsversuch42873427362 regulär completed/failure: test, Cross1 und Cross3 SUCCESS; ausschließlich Cross2-Setup nach8Minuten Paketdownload-Timeout fehlgeschlagen, keine Browserausführung dort. Nach vollständigem Laufende ausschließlich Job130030439713 gezielt neu gestartet. Neuer Cross2-Job130048371164 im selben Lauf/Versuch2: Setup inzwischen SUCCESS, Browsertests laufen. Erfolgreiche Erstversuchsoriginale/-jobs bleiben gültig; keine Wiederholung ihrer Tests, kein Abbruch/Push. Wallet42873427365 SUCCESS mit1353Tests/0Fehler/0Skips.
+
+Fünf erfolgreiche Erstversuchsarchive tatsächlich qualifiziert:207JSON/1967dekodiertePNG/409expliziteKontrollen,0Fehler; relevante unveränderte Vorgängerassertions wiederverwendet. Weitere Kontext-/Diagnoseklassen getrennt eingeordnet; Long-Press/Retirement/Touchereignisse identisch zum qualifizierten Vorgänger, volatile IDB-Zeitdiagnose separat. Größen/Digests auch mit Uploadlogs abgeglichen. [Teilbeleg](release-evidence/k6-pr325-partial-qualification.json). Kein CI_ACCEPTED: Cross2 fehlt.
+
+Kandidat/Testmerge/Tree unverändert25ba00b407802c261286be5cb8f8d317a376e9af /76a0381785d61b07664d64c758efa0dae3fdaf9e /7c1d889aa759b4b6e3c7dd1cd3967466a926a31a. Beide geänderten Gitblobs lokal exakt bestätigt.290Refs frisch: ausschließlich eigene Checkpoint-/Kandidatenänderungen, keine fremdeMutation. Main/v304 unverändert, V134 bytegleich bestätigt. Neue CI-Originale lokal vollständig bis zu diesem Teilstand erhalten; zusätzliche dauerhafte inkrementelle Sicherung nach vollständiger Qualifikation noch offen, kein Speicherauftrag gestartet.
+
+Genau nächste Aktion: ausschließlich laufenden Cross2-Retry vollständig auswerten, Originale/Uploadlogs/Schutzverträge qualifizieren; neue Originale privat versionsgeschützt inkrementell sichern und rücklesen. Erst dann kontrollierte Integration. Main-/Deploy-/Produktionspflichtgates bleiben bindend; keine neue Produktversion aus reiner .gitignore-/Dokumentationsänderung ableiten. K1–K6/HND01-R/externen Grenzen unverändert.
+
+---
+
 ## ACTIVE · 74f8b54eb065 · PR325 CI-Umgebungsfehler eingegrenzt
 
 Kandidat unverändert eingefroren. Cross2/Job130030439713 scheitert im Setup-Schritt „Install Firefox and WebKit for cross-engine regression“ nach8Minuten beim langsamen Ubuntu-Paketdownload; eigentliche Browsertests dieses Jobs SKIPPED. Originaljoblog tatsächlich gelesen, kein Produktfehler behauptet. Übrige Test-/Cross1-/Cross3-Jobs laufen regulär weiter, Wallet42873427365 SUCCESS. Kein Abbruch/Push/Retry erfolgt. Genau nächste Aktion: ersten Lauf regulär enden lassen, dann ausschließlich ausgefallenen Setupjob mit unverändertem Kandidaten gezielt wiederholen. Erfolgreiche Jobs erhalten; keine Gateabschwächung.

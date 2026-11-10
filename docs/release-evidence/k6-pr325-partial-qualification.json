@@ -1,0 +1,103 @@
+{
+  "status": "PARTIAL_QUALIFICATION_MISSING_CROSS2",
+  "rows": [
+    {
+      "kind": "cross1",
+      "artifact": {
+        "id": 13791441614,
+        "name": "cross-engine-gates-76a0381785d61b07664d64c758efa0dae3fdaf9e-1",
+        "bytes": 59091728,
+        "sha256": "e7719e21bff5f085e864771235942d224d9a5b0dfc2d0025c3f619f47db7947a",
+        "run": 42873427362,
+        "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+        "attempt": 1
+      },
+      "JSON": 15,
+      "PNGDecoded": 492,
+      "explicitAssertions": 65,
+      "metadataOrContextOnlyReports": [
+        "ui-alltag10/long-press.json"
+      ],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "stage",
+      "artifact": {
+        "id": 13791315050,
+        "name": "ci-stage-76a0381785d61b07664d64c758efa0dae3fdaf9e",
+        "bytes": 502,
+        "sha256": "5cfaa3fd68cd495bde08fecfe278a8385acf6299db49a133e573960f11702715",
+        "run": 42873427362,
+        "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+        "attempt": 1
+      },
+      "JSON": 1,
+      "PNGDecoded": 0,
+      "explicitAssertions": 5,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "release",
+      "artifact": {
+        "id": 13792911195,
+        "name": "release-gates-76a0381785d61b07664d64c758efa0dae3fdaf9e",
+        "bytes": 65112886,
+        "sha256": "dd59475fa60ce62cd7023a2479396ed9eb2873c36c2a3858d4502117404a45c9",
+        "run": 42873427362,
+        "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+        "attempt": 1
+      },
+      "JSON": 94,
+      "PNGDecoded": 707,
+      "explicitAssertions": 172,
+      "metadataOrContextOnlyReports": [
+        "alpha-vantage/idb-chromium.json",
+        "provider-retirement.json",
+        "ui-alltag10/chromium-real-touch-pan.json",
+        "ui-alltag10/chromium-real-touch-press.json"
+      ],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "dialog",
+      "artifact": {
+        "id": 13791728212,
+        "name": "dialog-visual-reference",
+        "bytes": 934704,
+        "sha256": "51f9230f5c07fce8544e68bd40df87387d75b15b9de689040800cd6d7d86ce0e",
+        "run": 42873427362,
+        "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+        "attempt": 1
+      },
+      "JSON": 0,
+      "PNGDecoded": 20,
+      "explicitAssertions": 0,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "cross3",
+      "artifact": {
+        "id": 13791774801,
+        "name": "cross-engine-gates-76a0381785d61b07664d64c758efa0dae3fdaf9e-3",
+        "bytes": 68735573,
+        "sha256": "e7387bc45ac6c3741b080a2ebcb83f0caa7df9f8621af1b344bedee50d32e3d2",
+        "run": 42873427362,
+        "head": "25ba00b407802c261286be5cb8f8d317a376e9af",
+        "attempt": 1
+      },
+      "JSON": 97,
+      "PNGDecoded": 748,
+      "explicitAssertions": 167,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    }
+  ],
+  "JSON": 207,
+  "PNGDecoded": 1967,
+  "explicitAssertions": 409,
+  "failures": 0,
+  "CI_ACCEPTED": false,
+  "retry": "only failed Cross2 install job; original successful jobs preserved"
+}
