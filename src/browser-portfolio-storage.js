@@ -24,7 +24,7 @@ function restored(record){
  const m=safeImport(JSON.parse(record.raw));
  const allowed=defaultSettings();
  for(const key of Object.keys(allowed))if(Object.hasOwn(record.settings,key))allowed[key]=record.settings[key];
- m.settings=allowed;
+ m.settings=portableSettings(allowed);
  return m;
 }
 export class PortfolioStorage {

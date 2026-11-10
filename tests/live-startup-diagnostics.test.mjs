@@ -32,9 +32,16 @@ test('closed or unresponsive page cannot replace the original gate result with a
  const closed=await observeLiveStartup(page(async()=>{throw Error('page closed');}),base);assert.match((await closed()).state.captureError,/page closed/);
  const hung=await observeLiveStartup(page(()=>new Promise(()=>{})),base,{captureBudget:10});assert.match((await hung()).state.captureError,/exceeded diagnostic budget/);
 });
-test('all pre-existing live assertions, actions and deadlines remain byte-identical after removing diagnostics only',()=>{
+test('pre-existing live assertions and deadlines remain byte-identical except the explicit K2 frequency transport',()=>{
  let source=readFileSync(new URL('./browser-live-acceptance.mjs',import.meta.url),'utf8');
  const additions=["import {observeLiveStartup} from './live-startup-diagnostics.mjs';\n",'let diagnoseStartup=null;\n',' diagnoseStartup=await observeLiveStartup(p,base);\n','if(diagnoseStartup)report.startupDiagnostics=await diagnoseStartup();'];
  for(const line of additions){assert.equal(source.split(line).length,2);source=source.replace(line,'');}
+ // The checkbox became one canonical frequency select. Require these exact
+ // replacements, then retain the original hash for every unrelated gate byte.
+ const frequencyDeltas=[
+  ["await p.locator('#autoRefresh').selectOption('off');await p.waitForFunction(()=>document.getElementById('autoRefresh').value==='off');","await p.locator('#autoRefresh').uncheck();await p.waitForFunction(()=>!document.getElementById('autoRefresh').checked);"],
+  ["assert.equal(restored.settings.autoRefresh,'off');","assert.equal(restored.settings.autoRefresh,false);"]
+ ];
+ for(const [current,previous] of frequencyDeltas){assert.equal(source.split(current).length,2);source=source.replace(current,previous);}
  assert.equal(createHash('sha256').update(source).digest('hex'),'f5fa53b9d3272b2ea0f16f38e9730b25288d906383d115864e7732c92965a7c3');
 });
