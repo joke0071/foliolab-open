@@ -59,6 +59,7 @@ import {allocationBreakdown,renderAllocationDonut,attachAllocationInteractions} 
 import {searchAndSortPositions,positionListScope} from './position-search.js';
 import {createAssetWizard} from './asset-wizard.js';
 import {queryPublicInstruments,validatedPublicEndpoint} from './public-instruments-client.js';
+import {refreshFrequency,refreshSettings,beginAutoRefresh,refreshScope,REFRESH_LOCK} from './refresh-frequency.js';
 import {refreshFailures,refreshHeadline} from './refresh-ui.js';
 import {diagnoseMarketSources,marketSupplySummary} from './market-diagnostics.js';
 import {displayQuotePrice,priceQuality,positionValueLabel,aggregateValuePresentation} from './quote-quality.js';
@@ -731,7 +732,7 @@ function renderSettings(){
    '<div class="settings-provider-actions"><button class="row-btn" data-action="edit-provider" data-id="'+esc(p.id)+'" title="Anbieter bearbeiten" aria-label="Anbieter bearbeiten">'+svg('pencil',15)+'</button>'+
    '<button class="row-btn" data-action="delete-provider" data-id="'+esc(p.id)+'" title="Anbieter löschen" aria-label="Anbieter löschen">'+svg('trash',15)+'</button></div></div>';
  }).join(''):empty('Noch kein Anbieter hinterlegt.');
- $('autoRefresh').checked=model.settings.autoRefresh!==false;
+ renderRefreshFrequency();
  if(document.activeElement!==$('solanaRpc'))$('solanaRpc').value=model.settings.solanaRpc||'';
  const reminder=$('backupReminder');let last=0;
  try{last=Date.parse(localStorage.getItem('foliolab-open-last-backup-at')||'')||0;}catch{}
@@ -2075,13 +2076,34 @@ async function startPerformanceTracking(){
  if(!confirm('Heute als Beginn der vollständigen Cashflow-Erfassung festlegen? Ältere Renditen werden nicht geschätzt.'))return;
  model.performanceFlowTrackingSince=date;model.externalCashFlows=[];snapshot(model,date,'Beginn der Renditeerfassung');await save();notify('Startwert für künftige XIRR-Ermittlung gespeichert.');
 }
-async function refreshAll(){
+function renderRefreshFrequency(){
+ $('autoRefresh').value=refreshFrequency(model.settings.autoRefresh);
+ $('autoRefreshQuota').classList.toggle('hidden',!['6h','30m'].includes($('autoRefresh').value));
+}
+async function refreshAll({automatic=false}={}){
  if(busy||saving||editorSubmitting||loadFailure||otherTabChangedPortfolio)return;
- busy=true;$('refreshAll').disabled=true;$('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';setLoading($('priceInfo'),true);
- const errors=[];let successes=0;const now=new Date().toISOString();
+ if(!navigator.locks){if(!automatic)notify('Aktualisierung benötigt einen Browser mit Web Locks.',true);return;}
+ busy=true;$('refreshAll').disabled=true;
+ try{return await navigator.locks.request(REFRESH_LOCK,{ifAvailable:true},async lock=>{
+  if(!lock){if(!automatic)notify('Eine Aktualisierung läuft bereits in einem anderen Tab.');return;}
+  if(saving||editorSubmitting||loadFailure||otherTabChangedPortfolio)return;
+  try{
+   await portfolioStore.assertCurrent();
+   let attempt=null;
+   try{attempt=beginAutoRefresh(localStorage,{frequency:model.settings.autoRefresh,scope:await refreshScope(model),online:navigator.onLine,manual:!automatic});}
+   catch(error){if(automatic)throw error;}
+   if(automatic&&!attempt)return;
+   await refreshSources(attempt);
+  }catch(error){notify(error.message,true);}
+ });}finally{busy=false;setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
+}
+async function refreshSources(attempt=null){
+ $('priceInfo').classList.remove('hidden');$('priceInfo').textContent='Kurse und Wallet-Bestände werden abgefragt …';setLoading($('priceInfo'),true);
+ const errors=[];let successes=0,saved=false;const now=new Date().toISOString();
+ const due=key=>!attempt||attempt.due(key),done=key=>attempt?.success(key);
  try{
-  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p)));
-  const securities=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol);
+  const cryptos=model.positions.filter(p=>p.kind==='crypto'&&(p.coinId||defiLlamaContractKey(p))&&due('quote:'+p.id));
+  const securities=model.positions.filter(p=>['etf','stock','fund'].includes(p.kind)&&p.symbol&&due('quote:'+p.id));
   if(cryptos.length){
    let quotes={},primaryFailure='';
    try{quotes=await cryptoPrices(cryptos.map(p=>p.coinId).filter(Boolean),model.settings.coinGeckoKey);}
@@ -2102,7 +2124,7 @@ async function refreshAll(){
      p.price=result.price;p.priceExact=String(result.price);
      p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
      p.quoteSource=result.source;p.quoteAsOf=result.asOf;
-     p.quoteFetchedAt=now;p.quoteQuality=result.quality;p.updatedAt=now;p.priceStatus=null;successes++;
+     p.quoteFetchedAt=now;p.quoteQuality=result.quality;p.updatedAt=now;p.priceStatus=null;successes++;done('quote:'+p.id);
     }else{
      const hint=p.coinId==='sonic'&&String(p.symbol||'').toUpperCase()==='S'?' Prüfe die CoinGecko-ID sonic-3.':'';
      errors.push(p.name+': '+issue.slice(0,150)+hint+' Bisheriger Kurs bleibt erhalten.');
@@ -2115,17 +2137,18 @@ async function refreshAll(){
      try{
       const q=await fetchSecurityQuote(p,model.settings);
       p.price=q.price;p.priceExact=String(q.price);p.quoteSource=q.source;p.quoteAsOf=q.asOf;
-      p.quoteFetchedAt=now;p.quoteQuality=q.quality;p.updatedAt=now;p.priceStatus=null;successes++;
+      p.quoteFetchedAt=now;p.quoteQuality=q.quality;p.updatedAt=now;p.priceStatus=null;successes++;done('quote:'+p.id);
      }catch(e){errors.push(`${p.symbol}: ${e.message}`);}
     }
   }
+  else if(securities.length)errors.push('Wertpapierkurse: Keine nutzbare automatische Quelle eingerichtet.');
   // Daily reference rates are not broker execution prices.
   const fxCache=new Map();
-  for(const p of model.positions.filter(x=>x.currency!=='EUR')){
+  for(const p of model.positions.filter(x=>x.currency!=='EUR'&&due('fx:'+x.currency))){
    try{
     if(!fxCache.has(p.currency))fxCache.set(p.currency,await exchangeRateQuote(p.currency,''));
     const q=fxCache.get(p.currency);
-    p.fxRate=q.rate;p.fxRateExact=String(q.rate);p.fxSource=q.source;p.fxRateDate=q.date;p.fxUpdatedAt=now;successes++;
+    p.fxRate=q.rate;p.fxRateExact=String(q.rate);p.fxSource=q.source;p.fxRateDate=q.date;p.fxUpdatedAt=now;successes++;done('fx:'+p.currency);
    }catch(e){errors.push(`${p.currency}/EUR: ${e.message}`);}
   }
   const networkCache=new Map();
@@ -2135,7 +2158,7 @@ async function refreshAll(){
     return (await networkCache.get(key)).clone();
   };
   const contractsByChain=new Map();
-  for(const p of model.positions.filter(p=>p.kind==='crypto'&&p.wallet?.chain==='erc20'&&p.wallet?.contract)){
+  for(const p of model.positions.filter(p=>p.kind==='crypto'&&p.wallet?.chain==='erc20'&&p.wallet?.contract&&due('token:'+p.id))){
     const id=Number(p.wallet.chainId||1);if(!contractsByChain.has(id))contractsByChain.set(id,[]);
     contractsByChain.get(id).push(p);
   }
@@ -2144,17 +2167,19 @@ async function refreshAll(){
     const quotes=await evmContractPrices(chainId,positions.map(p=>p.wallet.contract),model.settings.coinGeckoKey);
     for(const p of positions){const rate=Number(quotes[p.wallet.contract.toLowerCase()]?.eur);
      if(rate>0){p.price=rate;p.priceExact=String(rate);p.currency='EUR';p.fxRate=1;p.fxRateExact='1';
-      p.quoteSource='CoinGecko Token';p.quoteFetchedAt=now;p.quoteQuality='provider-undated';p.quoteAsOf=null;p.updatedAt=now;p.priceStatus=null;successes++;}}
+      p.quoteSource='CoinGecko Token';p.quoteFetchedAt=now;p.quoteQuality='provider-undated';p.quoteAsOf=null;p.updatedAt=now;p.priceStatus=null;successes++;done('token:'+p.id);}
+     else errors.push(p.name+': Kein gültiger Tokenpreis; bisheriger Kurs bleibt erhalten.');}
    }catch(e){errors.push('Tokenpreise: '+e.message);}
   }
-  for(const p of model.positions.filter(p=>p.wallet?.enabled)){
+  for(const p of model.positions.filter(p=>p.wallet?.enabled&&due('wallet:'+p.id))){
    try{
     const hdScan=p.wallet.chain==='btc-hd'?await scanBitcoinAccount(p.wallet.address,{fetcher:walletFetch,addressType:p.wallet.addressType||'auto'}):null;
     const exactQty=hdScan?.quantityExact??await walletBalanceExact(p.wallet,model.settings,walletFetch);
-    updateScannedWalletPosition(p,{chain:p.wallet.chain,quantityExact:exactQty,addressType:hdScan?.addressType},{updatedAt:now,model});successes++;
+    updateScannedWalletPosition(p,{chain:p.wallet.chain,quantityExact:exactQty,addressType:hdScan?.addressType},{updatedAt:now,model});successes++;done('wallet:'+p.id);
    }catch(e){errors.push(`${p.name} Wallet: ${e.message}`);}
   }
-  if(successes){snapshot(model);await save();}else render();
+  if(successes){snapshot(model);await save();saved=true;}else render();
+  attempt?.finish({saved,complete:successes>0&&errors.length===0,scope:saved?await refreshScope(model):undefined});attempt=null;
   const status=refreshHeadline(successes,errors),details=$('refreshErrorDetails');
   $('priceInfo').textContent=status+' · '+new Date().toLocaleTimeString('de-AT',{hour:'2-digit',minute:'2-digit'});
   $('priceInfo').classList.toggle('refresh-warning',errors.length>0);
@@ -2166,7 +2191,7 @@ async function refreshAll(){
   if(errors.length)notify(status+' · Details unter „Positionen“.',true);
   else notify(successes?'Portfolio aktualisiert.':'Keine automatischen Kurs- oder Wallet-Quellen eingerichtet.');
  }catch(e){$('priceInfo').textContent='Aktualisierung fehlgeschlagen. Gespeicherten Stand prüfen und später erneut versuchen.';$('priceInfo').classList.add('refresh-warning');$('refreshErrorDetails').classList.add('hidden');notify(e.message,true);}
- finally{busy=false;setLoading($('priceInfo'),false);$('refreshAll').disabled=false;}
+ finally{try{attempt?.finish();}catch(error){notify('Automatischer Versuchsstand konnte nicht gespeichert werden: '+error.message,true);}}
 }
 const FULL_BACKUP_OPTION='foliolab-open-backup-include-configuration-v1';
 const HISTORY_BACKUP_OPTION='foliolab-open-backup-include-history-v1';
@@ -2651,7 +2676,7 @@ $('apiSettings').addEventListener('submit',async e=>{
     status.textContent='Solana-RPC nicht erreichbar: '+String(error.message||error).slice(0,180);
    }finally{button.disabled=false;}
   });
-  $('autoRefresh').checked=model.settings.autoRefresh!==false;$('autoRefresh').addEventListener('change',async e=>{model.settings.autoRefresh=e.target.checked;await save();notify(e.target.checked?'Automatische Aktualisierung aktiviert.':'Automatische Aktualisierung deaktiviert.');});
+  renderRefreshFrequency();$('autoRefresh').addEventListener('change',async e=>{try{model.settings=refreshSettings({...model.settings,autoRefresh:e.target.value});await save();notify(e.target.value==='off'?'Automatische Aktualisierung deaktiviert.':'Aktualisierungsintervall gespeichert.');}catch{renderRefreshFrequency();}});
   for(const k of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
   $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
  $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
@@ -2793,8 +2818,8 @@ updateInstallControls();standaloneMedia.addEventListener('change',updateInstallC
 $('appStartup').hidden=true;document.querySelector('.layout').inert=false;
 performance.mark('foliolab-interactive');
 window.dispatchEvent(new Event('foliolab:ready'));
-if(!loadFailure&&location.protocol==='https:'&&model.settings.autoRefresh!==false){
+if(!loadFailure&&location.protocol==='https:'&&refreshFrequency(model.settings.autoRefresh)!=='off'){
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
-  if(candidates){try{const key='foliolab-open-last-auto-refresh';const last=Number(localStorage.getItem(key)||0);if(Date.now()-last>30*60*1000){localStorage.setItem(key,String(Date.now()));setTimeout(()=>refreshAll(),1000);}}catch(e){/* local storage may be disabled */}}
+  if(candidates)setTimeout(()=>refreshAll({automatic:true}),1000);
 }
 

@@ -1,3 +1,4 @@
+import {refreshSettings} from './refresh-frequency.js';
 import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {backup, safeImport, STORE_KEY,defaultSettings} from './model.js';
 
@@ -35,6 +36,7 @@ function portableSettings(settings) {
  if(settings===null)return null; // deletion tombstone
  const defaults=defaultSettings();
  if(!settings||typeof settings!=='object'||Array.isArray(settings))throw Error('Ungültige Portfoliokonfiguration.');
+ settings=refreshSettings(settings);
  const values={};
  for(const [key,reference] of Object.entries(defaults)){
   const value=Object.hasOwn(settings,key)?settings[key]:reference;

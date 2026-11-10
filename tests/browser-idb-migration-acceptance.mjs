@@ -21,7 +21,7 @@ for(const engine of (process.env.IDB_ENGINES||'chromium').split(',')){
     m=acceptHistory(m,historyPreview({replay:replayWalletHistory({events:[event()],streams:[stream()]}),issues:[]},{id:'migration-history',chain:'eth',walletKey:'public-wallet',acceptedAt:NOW}));
     m=checkpointHistory(m,{id:'migration-pending',chain:'eth',walletKey:'public-wallet',provider:'rpc.test',filter:'all',tip:'10',updatedAt:NOW});
     persist(m);
-    return {raw:localStorage.getItem(STORE_KEY),portable:JSON.parse(backup(m,{includeHistory:true})),settings:m.settings};
+    return {raw:localStorage.getItem(STORE_KEY),portable:JSON.parse(backup(m,{includeHistory:true})),settings:JSON.parse(localStorage.getItem(STORE_KEY)).settings};
    });
    await page.goto('http://127.0.0.1:4173/');
    await page.locator('#mobileNav [data-page="more"]').click();

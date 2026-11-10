@@ -1,3 +1,4 @@
+import {refreshSettings} from './refresh-frequency.js';
 import {withoutRetiredSettings} from './retired-providers.js';
 import {portableWalletHistory} from './wallet-history-state.js';
 /**
@@ -19,6 +20,7 @@ function checkedString(v,label,max=8192){
 }
 export function portableSettings(input){
  if(!plain(input))throw Error('Backup-Einstellungen haben ein ungültiges Format.');
+ input=refreshSettings(input);
  const defaults=defaultSettings(),result={...defaults};
  for(const [key,value] of Object.entries(defaults)){
   if(!own(input,key))continue;

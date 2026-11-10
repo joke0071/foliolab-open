@@ -26,8 +26,9 @@ test('opt-in full backup includes the complete user API/RPC configuration and Go
     access_token:'must-never-include',refresh_token:'never',folderId:'device-specific'}
  });
  const recovered=unpackCompleteBackup(payload);
- for(const key of ['alphaVantageKey','etherscanKey','marketstackKey','coinGeckoKey','eodhdWorkerAccessToken','solanaRpc','autoRefresh'])
+ for(const key of ['alphaVantageKey','etherscanKey','marketstackKey','coinGeckoKey','eodhdWorkerAccessToken','solanaRpc'])
   assert.equal(recovered.configuration.settings[key],m.settings[key]);
+ assert.equal(recovered.configuration.settings.autoRefresh,'off');
  assert.equal(recovered.configuration.drive.clientId,'12345-abc.apps.googleusercontent.com');
  assert.equal(recovered.configuration.drive.mode,'weekly');
  assert.equal(recovered.configuration.drive.retention,5);

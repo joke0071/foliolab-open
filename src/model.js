@@ -5,6 +5,7 @@ import {validateBitpandaWithdrawals,hasBitpandaWithdrawals} from './bitpanda-wit
 import {validateKrakenBitcoinBridges} from './kraken-bitcoin-bridge.js';
 import {validateKrakenWithdrawals} from './kraken-withdrawal-evidence.js';
 import {validateUnifiedBitcoinEconomics,hasUnifiedBitcoinState} from './unified-bitcoin.js';
+import {refreshSettings} from './refresh-frequency.js';
 import {withoutRetiredSettings,retiredSettingsPresent} from './retired-providers.js';
 import {normalizeInterestTerms} from './interest-scenario.js';
 import {normalizeCashTerms} from './cash-terms.js';
@@ -43,7 +44,7 @@ export function purgeLegacySnapshots(storage=globalThis.localStorage){
 
 export const TYPES={etf:'ETF',stock:'Aktie',fund:'Fonds',crypto:'Krypto',cash:'Guthaben',other:'Sonstiges'};
 export const KINDS=Object.keys(TYPES);
-export const defaultSettings=()=>({currency:'EUR',alphaVantageKey:'',marketstackKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:true,lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
+export const defaultSettings=()=>({currency:'EUR',alphaVantageKey:'',marketstackKey:'',securitySource:'auto',coinGeckoKey:'',etherscanKey:'',binplorerKey:'',solanaRpc:'https://solana-rpc.publicnode.com',showSmall:true,autoRefresh:'daily',lastAccountId:'',publicInstrumentEndpoint:'',eodhdWorkerEndpoint:'',eodhdWorkerAccessToken:''});
 export const blankModel=()=>({version:3,providers:[],accounts:[],assets:[],positions:[],bookings:[],journalEntries:[],openingPositions:[],externalCashFlows:[],snapshots:[],priceHistories:Object.create(null),performanceFlowTrackingSince:null,settings:defaultSettings()});
 const cleanString=(s,max=120)=>String(s??'').trim().slice(0,max);
 export const uid=()=>globalThis.crypto?.randomUUID?.()??`id-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -308,7 +309,7 @@ export function load(storage=globalThis.localStorage){
   const input=parsed.settings||{},settings=defaultSettings();
   for(const k of Object.keys(settings))if(Object.hasOwn(input,k))settings[k]=input[k];
   if(settings.solanaRpc==='https://api.mainnet-beta.solana.com')settings.solanaRpc='https://solana-rpc.publicnode.com';
-  result.settings=withoutRetiredSettings(settings);
+  result.settings=withoutRetiredSettings(refreshSettings(settings));
   observedStorage.set(storage,raw);
   return result;
 }
@@ -322,7 +323,7 @@ export function persist(model,storage=globalThis.localStorage){
  const current=storage.getItem(STORE_KEY);
  if(observedStorage.has(storage)&&current!==observedStorage.get(storage))throw Error('Portfolio wurde in einem anderen Tab geändert. Bitte diesen Tab neu laden und Änderungen erneut vornehmen.');
  rebuildAssets(model);
- const serialized=JSON.stringify({...model,positions:model.positions.map(p=>({...p,...normalizePositionFX(p,{legacy:true})})),settings:withoutRetiredSettings(model.settings),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
+ const serialized=JSON.stringify({...model,positions:model.positions.map(p=>({...p,...normalizePositionFX(p,{legacy:true})})),settings:withoutRetiredSettings(refreshSettings(model.settings)),...(model.walletHistory?{walletHistory:validateWalletHistory(model.walletHistory)}:{})});
  storage.setItem(STORE_KEY,serialized);
  observedStorage.set(storage,serialized);
 }
