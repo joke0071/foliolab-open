@@ -1,3 +1,11 @@
+## ACTIVE · eb71278b8660 · reguläre HND01-Übernahme · 10.11.2026
+
+Alleiniger Entwicklungs-, Integrations-, QA-, Sicherungs- und Releaseowner: **eb71278b8660**. Vorgänger74f8b54eb065 ist ausdrücklich STOPPED/HANDOVER_READY. Vor Mutation frisch geprüft: Mainf7f990d24a3a1ba2a2e13c377b0b8c0216a45e43/Tree7c1d889aa759b4b6e3c7dd1cd3967466a926a31a unverändert;290Heads, nur historische Drafts157/161 offen, PR325 ohne Reviews, keine neue konkurrierende Produktref. V135-Metadaten unter bestehender privater Identität aktuell:Version135/405493760Bytes; vorherige bytegleiche Rücklese-/Restorebelege werden unverändert wiederverwendet. Kein neuer Mainpush/CI-Start/Abbruch.
+
+Bestehender Mainlauf42881588853: Test/Cross1/2/3 und Deploy inzwischen SUCCESS, tatsächliche Live-Abnahme läuft. Letzter vollständig qualifizierter Release bleibt v304 auf a21db8a92f488820114f3b86fc3d5a4ad96be1b2. Genau nächste Aktion: bestehende neue Main-/Produktionsoriginale vollständig qualifizieren und privat inkrementell sichern/rücklesen; erst danach Mainabschluss behaupten. Runtime/SW bleiben v304. HND01-R und alle Schutzverträge gelten. Keine parallele Umsetzung oder vollständiger Checkpointbranch-Merge.
+
+---
+
 ## STOPPED / HANDOVER_READY · 74f8b54eb065 · PR325 integriert / Main läuft / V135 verifiziert
 
 Reguläre vollständige HND01-Abgabe am sicheren Integrationspunkt wegen erheblicher Kontextlast und tatsächlichem temporärem Werkzeugzustandsverlust. Persistente Dateien und bestätigte Schreibvorgänge blieben erhalten; Rücklese-/Restoreprüfung danach vollständig abgeschlossen. Sämtliche Entwicklungs-, Integrations-, QA-, Sicherungs- und Releaseverantwortung ist abgegeben; frühere ACTIVE-Zeilen sind historisch. Keine weiteren Produktaktionen aus dieser Sitzung. [Vollständige Abgabe](HANDOVER_74f8b54eb065_2026-11-10.md).
