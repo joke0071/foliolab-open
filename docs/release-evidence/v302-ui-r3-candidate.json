@@ -1,7 +1,7 @@
 {
   "owner": "c43b5e91f20a",
   "version": 302,
-  "status": "INTEGRATION_QUALIFIED_RELEASE_GATED",
+  "status": "INTEGRATION_QUALIFIED_BACKUP_RECOVERY_PENDING",
   "lastLiveAccepted": 301,
   "PR": 322,
   "main": "1708d4e947061f353187727ccae54daa1727db7e",
@@ -84,7 +84,8 @@
       "bytes": 547429476,
       "sha256": "911069e42cbe2f700b774f80dca6d60fbd6fe09edca25a095116f2c092b34dbb",
       "allPathsVerified": true,
-      "writeOutcome": "UNKNOWN; no automatic retry; durable metadata still129"
+      "writeOutcome": "UNKNOWN; no automatic retry; durable metadata still129",
+      "availability": "historical local verification; not currently present"
     },
     "localV130Final": {
       "paths": 28451,
@@ -94,11 +95,17 @@
       "allPriorManifestPayloadsRetained": true,
       "includes": "Exact candidate source, both corrected complete CI runs plus initial run retained, original ZIP/log/API/hash receipts, local QA and K1/K2 preparation",
       "newLibraryWriteAttempted": false,
-      "writeReason": "Earlier write outcome remains unknown; last authoritative Library metadata version129; no automatic second write"
+      "writeReason": "Earlier write outcome remains unknown; last authoritative Library metadata version129; no automatic second write",
+      "availability": "Historical local verification2026-11-09; file no longer present after environment reset2026-11-10; no confirmed Library save. Recover from V129 plus remote sources/artifacts before claiming current availability."
+    },
+    "metadataRechecked": {
+      "date": "2026-11-10",
+      "savedVersion": 129,
+      "bytes": 405006624
     }
   },
   "publicRelease": false,
-  "privacyClearance": "not yet evidenced",
+  "privacyClearance": "General audit clearance not required by explicit user decision2026-11-10; confirmed incidents must be addressed before affected release",
   "parallelAuditor": "independent read-only",
   "physicalAndroidTalkBackSafariOAuth": "not performed; external",
   "legacyK6Finding": "200% fixed-height empty-chart copy overlap also reproduced on unchanged v301; separate from new review row",
@@ -196,5 +203,15 @@
     "scope": "General ignore protection for private CSV/backups/archives, preserve intentional fixtures",
     "roadmap": "K6-TRUST",
     "auditorEvidenceModified": false
-  }
+  },
+  "releasePolicy": {
+    "changedByUser": "2026-11-10",
+    "generalPrivacyAuditGate": false,
+    "independentHistoricalReview": "optional read-only companion",
+    "confirmedIncidents": "must be addressed before affected release",
+    "technicalFinancialIntegrityCIBackupAndOwnerGates": "unchanged",
+    "decision": "docs/PRIVACY_REVIEW_POLICY_2026-11-10.md"
+  },
+  "reusedCurrentArtifactsMatch": true,
+  "artifactsCurrentlyExpired": false
 }
