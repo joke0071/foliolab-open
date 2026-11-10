@@ -70,5 +70,6 @@
   "mainStatus": "IN_PROGRESS",
   "liveAccepted": false,
   "backupBaseVersion": 130,
-  "newCIOriginalsDurable": false
+  "newCIOriginalsDurable": true,
+  "backupVersion": 131
 }

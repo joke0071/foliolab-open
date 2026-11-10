@@ -1,0 +1,30 @@
+{
+  "durableVersion": 131,
+  "bytes": 405407144,
+  "sha256": "f9e4d3fa2006080f292bd44aecf9c9f7d611da3a88dda4ca3cf1e3cec3a4c9b0",
+  "expectedPreviousVersion": 130,
+  "rootReadbackIdentical": true,
+  "rootManifestPaths": 5,
+  "failures": 0,
+  "completeV130ArchivePreservedByteIdentical": true,
+  "previousV302CompanionsUnchanged": 2,
+  "previousFullRestoreEvidenceReused": true,
+  "previousV302Paths": 28448,
+  "previousV129Paths": 28339,
+  "newImmutablePR323Increment": {
+    "bytes": 208435200,
+    "sha256": "0d04a2e6ff1f190be160acc5fe0fbc45f1e6d7eb312297aeabc7f8d03a4b073f",
+    "readbackIdentical": true,
+    "manifestPaths": 29,
+    "allMemberHashesVerified": true,
+    "originalZIPs": 6,
+    "decodedJobLogs": 5,
+    "exactChangedGitblobs": 16
+  },
+  "actualIncrementRestoreTest": "PASS",
+  "mainRun": 42814350681,
+  "mainStatus": "IN_PROGRESS",
+  "lastLiveAccepted": 302,
+  "newMainAndProductionOriginalsNotYetIncluded": true,
+  "privateLocators": "Preserved only in private continuation index; root alone is not full later payload set"
+}
