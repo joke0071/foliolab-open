@@ -1,0 +1,43 @@
+{
+  "status": "MAIN_CI_AND_DEPLOY_QUALIFIED_NOT_LIVE_ACCEPTED",
+  "owner": "e595fcc6d453-r3",
+  "release": 304,
+  "lastLiveAccepted": 303,
+  "head": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
+  "tree": "c6afbfe49152cbc29fa2722bf6bc3b16b01ad062",
+  "run": 42853846824,
+  "attempt": 1,
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "mainOriginals": {
+    "archives": 7,
+    "json": 229,
+    "pngDecoded": 2065,
+    "explicitAssertions": 481,
+    "contextReportClasses": 8,
+    "failures": 0,
+    "pagesFilesMatchingFrozenGitTree": 153
+  },
+  "mainOriginalBackup": {
+    "bytes": 209039360,
+    "sha256": "1429c41200b5c00d1b64f5f9063d9ad2d2498c9013c96328f81ba4d06a161df5",
+    "manifestPaths": 21,
+    "durableReadback": "PASS"
+  },
+  "liveAcceptance": "IN_PROGRESS; Chromium step succeeded; Firefox/WebKit step running",
+  "notes": [
+    "PR324 identical-tree qualification reused",
+    "No new CI/retries/aborts or product writes",
+    "Root V133 unchanged; final root update awaits production originals",
+    "Mandatory production gates remain required"
+  ]
+}
