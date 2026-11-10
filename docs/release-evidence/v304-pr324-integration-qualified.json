@@ -73,7 +73,7 @@
     "local actual synthetic wallet editor,390px,selected sol-stake,no horizontal overflow"
   ],
   "sourceFiles": 16,
-  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "main": "a21db8a92f488820114f3b86fc3d5a4ad96be1b2",
   "liveAccepted": false,
   "backupBaseVersion": 132,
   "newCIOriginalsDurable": true,
@@ -101,5 +101,10 @@
     "actualIncrementalRestorePaths": 42,
     "oldFullV302RestoreRepeated": false,
     "failures": 0
-  }
+  },
+  "baseMain": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "mainRun": 42853846824,
+  "mainStatus": "IN_PROGRESS",
+  "integrated": true,
+  "mainTreeExact": true
 }

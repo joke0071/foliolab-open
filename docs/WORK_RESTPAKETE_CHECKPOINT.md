@@ -1,3 +1,17 @@
+## STOPPED / HANDOVER_READY · e595fcc6d453-r2 · PR324 integriert / Main läuft / V133 verifiziert
+
+Reguläre vollständige Abgabe wegen Kontextlast am sicheren Integrationspunkt. Alle Entwicklungs-/Integrations-/QA-/Releaseverantwortung abgegeben; frühere ACTIVE-Zeilen historisch. [Kompakte Abgabe und Nachfolgerprompt](HANDOVER_e595fcc6d453_r2_2026-11-10.md#kopierfertiger-nachfolgerprompt).
+
+**Letzter LIVE_ACCEPTED v303.** PR324 CI_ACCEPTED und regulär integriert: Main a21db8a92f488820114f3b86fc3d5a4ad96be1b2 / Tree c6afbfe49152cbc29fa2722bf6bc3b16b01ad062 exakt qualifizierter Kandidat/Testmerge. **Main42853846824 IN_PROGRESS**, test/Cross1/2/3 laufen; Deploy/Live offen. Keine Duplikate, Abbrüche oder überholenden Pushes. v304 noch NICHT LIVE_ACCEPTED.
+
+[Integrationsqualifikation](release-evidence/v304-pr324-integration-qualified.json): Integration42846766057/Wallet42846766025 Versuch1 SUCCESS;1353Units/0Fehler/0Skips/Syntax/3EnginesPASS;6OriginalZIPs/229JSON/2065 dekodiertePNG/481 verschiedene expliziteKontrollen und8Kontextklassen geprüft. Neue8-Netzwerk-Wallet-Edit-Kette in3EnginesPASS; aktuelle synthetische390px-Ansicht angesehen. Drei Kurshilfen im selben7-Dateien-Paket; keine Scanner-/Finanz-/Schema-/Workflowänderung.
+
+**V133 dauerhaft gespeichert und erneut bytegleich rückgeprüft**,405452800Bytes/SHA256e31784848db7c8bfdb601030444367df3eaacbfc94aa3ee34df665cad1cfae80;5Rootmanifestpfade/0Fehler. Vollständige unveränderteV132/ältereOriginalkette erhalten. Neuer unveränderlicherPR324-Teil209223680Bytes/37Manifestpfade ebenfalls dauerhaftbytegleich; tatsächlicherinkrementellerRestore42Manifestpfade/0Fehler. [RedigierterSicherungsbeleg](release-evidence/private-v133-durable-verification.json). Rootallein nichtvollständigerPayloadsatz; privateIndices/README/Restoreprogramme/Companions nutzen. Kein offenerSpeicherauftrag.
+
+289Refs/Main/Tree/PRs/Reviews/Actions frisch geprüft, nur historischeDrafts157/161offen, keine konkurrierendeProduktarbeit oder ungesichertesWIP. Genau nächsteAktion: frischkollisionsfreialleinübernehmen; bestehendenMainlaufqualifizieren,Main/Deploy/tatsächlicheProduktionabnehmenundneueOriginaleprivatinkrementell+readbackgeprüftsichern. Erst dannv304LIVE_ACCEPTED. IdentischeBelegewiederverwenden,allePflichtgates/HND01-R/externenGrenzenerhalten. Checkpointbranchniemalsvollständigmergen.
+
+---
+
 ## ACTIVE · e595fcc6d453-r2 · PR324 CI_ACCEPTED · V133 verifiziert
 
 v303 bleibt LIVE_ACCEPTED. Main 73a17662e53d4b4d88125a85879e5fcae112596e unverändert. PR324 ist CI_ACCEPTED: HEAD365c16c272071bd3a1ff28ee3ff97be7d1b5a447 / Treec6afbfe49152cbc29fa2722bf6bc3b16b01ad062; Testmerge4ed2c63e8b8a6878acccef67c8b52851b30b9209 gleicher Tree. Integration42846766057 Versuch1 und Wallet42846766025 SUCCESS. [Qualifikation](release-evidence/v304-pr324-integration-qualified.json): 1353 Units,0 Fehler,0 Skips,Syntax und drei Engines PASS;6 Original-ZIPs/229 JSON/2065 tatsächlich dekodierte PNGs,481 verschiedene explizite Kontrollen und8 ergänzende Kontextberichte geprüft. Neue Wallet-Edit-Kette für8Netzwerke in allen3Engines PASS; aktuelle synthetische390px-Darstellung visuell geprüft. Keine neue CI/Retry/Abbrüche.
