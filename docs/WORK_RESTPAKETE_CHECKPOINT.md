@@ -1,3 +1,13 @@
+## ACTIVE · e595fcc6d453 · reguläre HND01-Übernahme · K2-KURSE Hilfenabgleich
+
+Owner4932401a9f1d ist regulär STOPPED/HANDOVER_READY. Neuer alleiniger Entwicklungs-, Integrations-, QA- und Releaseowner: e595fcc6d453. Übernahme unter erwarteter Checkpoint-HEAD 28d1c2fb5cc7cc9d274a9c18cee7f86f786cf095. Main73a17662e53d4b4d88125a85879e5fcae112596e/Tree160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1 frisch bestätigt;287Branchrefs zweimal identisch, nur historischeDrafts157/161 mit unveränderten Köpfen/Zeitpunkten, Reviews/Threads leer, keine laufenden/queuedActions. Keine ungesicherten Produktänderungen laut regulärer Abgabe; kein konkurrierender Produktwriter festgestellt.
+
+v303 bleibt LIVE_ACCEPTED; qualifizierte identische CI-/Produktions-/Original-/Restorebelege wiederverwendet. V132-Version132/405432320Bytes aktuell bestätigt; Root-/Ergänzungskette und privateIdentitäten erhalten. Kein neuer Speicherauftrag/Restore nötig. EFF03 bleibt begrenzter lokaler Kandidat; keine Ausweitung. K1-Belegzuordnung unverändert, unabhängige Anfangs-/End-/Ownershipanker extern.
+
+Genau nächster Schritt: reproduzierte K2-KURSE-Hilfen-/Copylücke gegen Main eng abgrenzen. README empfiehlt TwelveData, Workerhilfe empfiehlt entfernte Direktquellen, Diagrammhilfe empfiehlt entfernte Langzeitquellen. Aktive App-Quellen/Frequenz bereits vorhanden; keine neue Finanz-/Quellenengine. Keine zusätzlichen CI-Läufe nur für Prozessdokumentation, Checkpointbranch niemals vollständig mergen. HND01-R/alle Schutzverträge erhalten. Zähler0Releases/0Produktpakete.
+
+---
+
 ## STOPPED / HANDOVER_READY · 4932401a9f1d · EFF03 lokal validiert · v303/V132 unverändert
 
 Owner4932401a9f1d gibt alle Entwicklungs-, Integrations-, QA- und Releaseverantwortung regulär nach begrenztem abgeschlossenen EFF03-Werkzeugpaket ab; frühereACTIVE-Zeilen historisch. [Kompakte Abgabe und kopierfertiger Nachfolgerprompt](HANDOVER_4932401a9f1d_2026-11-10.md#kopierfertiger-nachfolgerprompt).
