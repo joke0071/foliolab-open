@@ -1,0 +1,59 @@
+{
+  "owner": "f66807554013",
+  "main": "73a17662e53d4b4d88125a85879e5fcae112596e",
+  "tree": "160ba4767a04dc6a3d38b2d2058dbf529a2c7ff1",
+  "run": 42814350681,
+  "attempt": 1,
+  "status": "MAIN_TEST_AND_DEPLOY_QUALIFIED; LIVE_IN_PROGRESS",
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "syntax": "PASS",
+  "artifactCount": 7,
+  "artifactDigestsSizesCRC": "PASS",
+  "json": 229,
+  "pngDecoded": 2065,
+  "statusPassFields": 444,
+  "reportFailureFlags": [],
+  "pagesExactGitblobMatches": 153,
+  "workflowGitblob": "7dc92e02c585cb6e678227d14cb98d3d093d17ff",
+  "actualVisualReview": [
+    "refresh-frequency/chromium-390.png",
+    "refresh-frequency/firefox-390.png",
+    "refresh-frequency/webkit-390-200.png"
+  ],
+  "refreshFrequency": {
+    "chromium": "PASS",
+    "firefox": "PASS",
+    "webkit": "PASS",
+    "widths": [
+      320,
+      360,
+      390,
+      412,
+      430,
+      768,
+      1440
+    ],
+    "quota": true,
+    "multitab": true,
+    "partialNoRepeat": true,
+    "stalePreferenceNonmutation": true,
+    "legacyReadOnly": true,
+    "textScale200": true
+  },
+  "reusedEvidence": "v303-pr323-integration-qualified.json and private-v131-durable-verification.json",
+  "liveAccepted": false,
+  "limits": "Main artefacts only; ongoing production gate not yet qualified; physical Android/TalkBack/Safari/OAuth remain external.",
+  "newMainOriginalsDurableReadback": {
+    "bytes": 208803840,
+    "sha256": "e72da68dd934a8c079dca0815ba29c4426cc71fefd2a40dff8329be9e0264a1e",
+    "manifestPaths": 19,
+    "actualRestore": "PASS"
+  },
+  "rootVersion": 131,
+  "newProductionOriginalsNotYetAvailable": true
+}
