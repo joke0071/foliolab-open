@@ -1,0 +1,119 @@
+{
+  "status": "MERGE_READY_NOT_LIVE_ACCEPTED",
+  "run": 42896890562,
+  "attempt": 1,
+  "head": "40632c0ddf335493c6a6900beee29049be7b3e5e",
+  "tested": "68bd5e320c231d42c7d68648c0f6600fe2533240",
+  "tree": "ca1ec2ac2babb708dee3ee35a21e30f437f9ae66",
+  "JSON": 229,
+  "decodedPNG": 2065,
+  "distinctRecordedAssertions": 472,
+  "originalUploadDigestMatches": 6,
+  "failures": 0,
+  "walletRun": 42896890935,
+  "wallet": "SUCCESS",
+  "QAReview": 5848989116,
+  "QA": "bounded QA_ACCEPTED",
+  "unchangedQualifiedPartsReused": true,
+  "PR": 326,
+  "base": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+  "QAReviewURL": "https://github.com/joke0071/foliolab-open/pull/326#pullrequestreview-5848989116",
+  "cache": "foliolab-open-v305",
+  "artifacts": [
+    {
+      "id": 13803097249,
+      "name": "cross-engine-gates-68bd5e320c231d42c7d68648c0f6600fe2533240-3",
+      "size_in_bytes": 68784490,
+      "digest": "sha256:6015ea1f18531f204fce3fdf0e6bc9c162eed8544526d9ca73f46ae2dcfc9898",
+      "created_at": "2026-11-10T21:05:28Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    },
+    {
+      "id": 13801721292,
+      "name": "cross-engine-gates-68bd5e320c231d42c7d68648c0f6600fe2533240-2",
+      "size_in_bytes": 12405981,
+      "digest": "sha256:0464c8724fb8b996147bb718d2a14ce02872bd45217425daf816bdf9d2d4530d",
+      "created_at": "2026-11-10T20:44:35Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    },
+    {
+      "id": 13801497760,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 934639,
+      "digest": "sha256:2626c34341f99c484321a6055b7462fc712a71d3a32102db2eafb11fc00f9d18",
+      "created_at": "2026-11-10T20:51:06Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    },
+    {
+      "id": 13801238016,
+      "name": "release-gates-68bd5e320c231d42c7d68648c0f6600fe2533240",
+      "size_in_bytes": 65576914,
+      "digest": "sha256:8d2f00dc5d5eabaa584efff3fe6e193d5b6ed9c22e5a790cc3e9568660989719",
+      "created_at": "2026-11-10T20:51:04Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    },
+    {
+      "id": 13800809630,
+      "name": "cross-engine-gates-68bd5e320c231d42c7d68648c0f6600fe2533240-1",
+      "size_in_bytes": 60002869,
+      "digest": "sha256:3cc3069062197e53713bdf1b6f965dbb23abe5a1571a9b7a2f84aafca0c873ed",
+      "created_at": "2026-11-10T20:50:16Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    },
+    {
+      "id": 13800323332,
+      "name": "ci-stage-68bd5e320c231d42c7d68648c0f6600fe2533240",
+      "size_in_bytes": 508,
+      "digest": "sha256:f0eb21e3116ef70011a91e96c9d1d8885f120cb690fa7719e97e5edc7eb0a8bd",
+      "created_at": "2026-11-10T20:36:11Z",
+      "expires_at": "2027-02-08T20:36:02Z",
+      "expired": false
+    }
+  ],
+  "backup": {
+    "bytes": 405555200,
+    "sha256": "303d8d87aec85eae2ec86bd83a759a429520a32be5e7c69d67cc8c2344ccda3f",
+    "rootManifestPaths": 5,
+    "previousVersion": 136,
+    "targetVersion": 137,
+    "previousRootPreserved": true,
+    "incrementReadbackVerified": true,
+    "actualExtractedManifestPaths": 58,
+    "restoreFailures": 0,
+    "pinnedReadbackVerified": true
+  },
+  "unchangedSourceTestWorkflowFingerprints": {
+    "src/": {
+      "files": 145,
+      "gitFingerprint": "cc3ed73e2f719084b32bbdac8bf3974ddbbe86e053c1f4f3c3cc4f637a33721c"
+    },
+    "tests/": {
+      "files": 417,
+      "gitFingerprint": "c0a50547d8d6747b871099084afc4b53b216bdf16b93a1c5b48417f1128405a3"
+    },
+    "worker/src/": {
+      "files": 2,
+      "gitFingerprint": "5eecfccd4f6de4587ff4497094738f8e1ed9995e1c2a5d6490436aace8d0dc8d"
+    },
+    "worker/tests/": {
+      "files": 2,
+      "gitFingerprint": "89c63a18bf9ce5d56e6546720dc82e587306e99175080dac6380df549c31a27b"
+    },
+    ".github/workflows/": {
+      "files": 5,
+      "gitFingerprint": "0b153de0844b9a3e549b935c6c9004251528a601c876a6d4a57729799bb70bcd"
+    }
+  },
+  "PWAUpdateCI": "Chromium/Firefox/WebKit PASS, cache v305; local Debian WebKit offline counterexample does not reproduce in unchanged CI",
+  "limits": [
+    "not integrated or deployed yet",
+    "native Android/Safari/ITP/TalkBack/OAuth and independent private original anchors remain external",
+    "K6-TRUST overall VERIFY",
+    "full Main/production/new originals backup gates still required"
+  ]
+}
