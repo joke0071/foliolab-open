@@ -1,10 +1,10 @@
 {
   "owner": "c43b5e91f20a",
   "version": 302,
-  "status": "INTEGRATION_QUALIFIED_BACKUP_RECOVERY_PENDING",
+  "status": "MERGED_MAIN_INTEGRATION_IN_PROGRESS",
   "lastLiveAccepted": 301,
   "PR": 322,
-  "main": "1708d4e947061f353187727ccae54daa1727db7e",
+  "main": "179d424aef1f6f35c3f6f72600e4bbe885ef329c",
   "baseTree": "32e3dcda83114b7bd5415adb2078b1086e1ca25f",
   "candidateHead": "96522496e399752c26bfb0661f75f2b3f1878b5c",
   "candidateTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
@@ -102,6 +102,23 @@
       "date": "2026-11-10",
       "savedVersion": 129,
       "bytes": 405006624
+    },
+    "recovery": {
+      "date": "2026-11-10",
+      "baseVersion": 129,
+      "basePathsReverified": 28339,
+      "artifactsRecovered": 17,
+      "logsRecovered": 16,
+      "candidateGitblobs": 7,
+      "localArchive": {
+        "paths": 28411,
+        "bytes": 614840364,
+        "sha256": "3a7daec9aebe7781ab71c350907db13057b64a291e31ef22af27a3496cb860f6",
+        "allPathsVerified": true,
+        "allV129PayloadsRetained": true
+      },
+      "newLibraryWriteAttempted": false,
+      "previousScratchOnlyArchiveRecovered": false
     }
   },
   "publicRelease": false,
@@ -213,5 +230,9 @@
     "decision": "docs/PRIVACY_REVIEW_POLICY_2026-11-10.md"
   },
   "reusedCurrentArtifactsMatch": true,
-  "artifactsCurrentlyExpired": false
+  "artifactsCurrentlyExpired": false,
+  "mainBaseline": "1708d4e947061f353187727ccae54daa1727db7e",
+  "mainTree": "1d0e20afc7aefce1d5a4b9446356addc53bd7f66",
+  "mainRun": 42770050654,
+  "mainResult": "IN_PROGRESS"
 }

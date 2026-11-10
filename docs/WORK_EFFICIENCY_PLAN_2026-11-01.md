@@ -2,7 +2,7 @@
 
 ## Fortschreibung – UI-R2/v301 abgeschlossen, 09.11.2026
 
-**v301 LIVE_ACCEPTED / UI-R2 DONE**, [Abnahmeindex](release-evidence/v301-live-accepted.json). Reguläre vorhandene Integration/Wallet/Main/Produktion vollständig qualifiziert, kein Retry/Abbruch/identischerDuplikatlauf. 1345Tests,3Engines,153gewöhnlicheTLS-Pfade und echteProduktionsbilder PASS. Veröffentlichungsaudit bleibt IN_PROGRESS unter bestehendemQUALITY-TRUST01/K6-TRUST; keine pauschaleDatenschutzfreigabe aus Produktprüfungen. Danach UI-R3/K1–K6; alle41Scopes/externenGates/Originale erhalten.
+**UI-R3/PR322 regulär integriert**, Main `179d424aef1f6f35c3f6f72600e4bbe885ef329c`/Tree `1d0e20afc7aefce1d5a4b9446356addc53bd7f66`, exakt qualifizierter Tree. Mainlauf42770050654 Versuch1 IN_PROGRESS; noch keinv302 LIVE_ACCEPTED. **v301 LIVE_ACCEPTED / UI-R2 DONE** bleibt bestätigte Vorgängerbasis, [Abnahmeindex](release-evidence/v301-live-accepted.json). Reguläre vorhandene Integration/Wallet/Main/Produktion vollständig qualifiziert, kein Retry/Abbruch/identischerDuplikatlauf. 1345Tests,3Engines,153gewöhnlicheTLS-Pfade und echteProduktionsbilder PASS. Seit ausdrücklicher Nutzerentscheidung10.11.2026 ist die historische Datenschutzkontrolle unter QUALITY-TRUST01/K6-TRUST optional und kein Entwicklungs-/Integrations-/Release-Gate. Keine Unbedenklichkeit ungeprüfter Inhalte behaupten. UI-R3/K1–K6 ohne allgemeinen Auditabschluss fortsetzen; konkrete bestätigte Vorfälle und alle übrigen Pflichtgates bleiben verbindlich. [Entscheidung und begrenzter Auftrag](PRIVACY_REVIEW_POLICY_2026-11-10.md); alle41Scopes/externenGates/Originale erhalten.
 
 ## Zusatzauftrag – GitHub-Veröffentlichungs-/Datenschutz-Audit, 09.11.2026
 
