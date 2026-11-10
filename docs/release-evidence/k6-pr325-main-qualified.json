@@ -1,0 +1,136 @@
+{
+  "status": "CONTENT_CHECKS_VALIDATED_NOT_AUTOMATIC_RELEASE_APPROVAL",
+  "baseContract": "Unchanged qualified predecessor assertions; frozen Main identity and RELEASE non-PR stage contract; eight diagnostic/context report classes reused from unchanged PR325/v304 evidence.",
+  "rows": [
+    {
+      "kind": "release",
+      "artifact": {
+        "id": 13793714902,
+        "name": "release-gates-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "bytes": 65116848,
+        "sha256": "3dc951b9d04d62f75702873642d68410f0776d09c4bc809606c58beb035e77ac",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 94,
+      "PNGDecoded": 707,
+      "explicitAssertions": 172,
+      "metadataOrContextOnlyReports": [
+        "alpha-vantage/idb-chromium.json",
+        "provider-retirement.json",
+        "ui-alltag10/chromium-real-touch-pan.json",
+        "ui-alltag10/chromium-real-touch-press.json"
+      ],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "cross1",
+      "artifact": {
+        "id": 13794479055,
+        "name": "cross-engine-gates-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43-1",
+        "bytes": 59093497,
+        "sha256": "40b1670b8c008492f7a116a71dfff882233f226fcc31cfcdd83489cdf6cc7139",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 15,
+      "PNGDecoded": 492,
+      "explicitAssertions": 65,
+      "metadataOrContextOnlyReports": [
+        "ui-alltag10/long-press.json"
+      ],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "cross2",
+      "artifact": {
+        "id": 13793628770,
+        "name": "cross-engine-gates-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43-2",
+        "bytes": 12341553,
+        "sha256": "19d769cfcfb55ebf0125756572d8f377dfe59ece327a747a3b51a6215396c49d",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 22,
+      "PNGDecoded": 98,
+      "explicitAssertions": 72,
+      "metadataOrContextOnlyReports": [
+        "alpha-vantage/idb-firefox.json",
+        "alpha-vantage/idb-webkit.json",
+        "provider-retirement.json"
+      ],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "cross3",
+      "artifact": {
+        "id": 13795403983,
+        "name": "cross-engine-gates-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43-3",
+        "bytes": 68734826,
+        "sha256": "31b8e79bdb9dc6668e4c66f3fef811c80d34d460061f4e9922be903b8073491c",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 97,
+      "PNGDecoded": 748,
+      "explicitAssertions": 167,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "stage",
+      "artifact": {
+        "id": 13794307170,
+        "name": "ci-stage-f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "bytes": 353,
+        "sha256": "f882d51f8465e638b901c2f405d52cb6095ea4a60d66191323baedd197e81894",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 1,
+      "PNGDecoded": 0,
+      "explicitAssertions": 5,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    },
+    {
+      "kind": "dialog",
+      "artifact": {
+        "id": 13796010424,
+        "name": "dialog-visual-reference",
+        "bytes": 934602,
+        "sha256": "223c03fbfa32be27f298d32c51d03a5329022e6cd08330b24aab4b541bfa680a",
+        "run": 42881588853,
+        "head": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+        "attempt": 1
+      },
+      "JSON": 0,
+      "PNGDecoded": 20,
+      "explicitAssertions": 0,
+      "metadataOrContextOnlyReports": [],
+      "sizeDigestCRC": "PASS"
+    }
+  ],
+  "JSON": 229,
+  "PNGDecoded": 2065,
+  "explicitAssertions": 481,
+  "failures": 0,
+  "main": "f7f990d24a3a1ba2a2e13c377b0b8c0216a45e43",
+  "tree": "7c1d889aa759b4b6e3c7dd1cd3967466a926a31a",
+  "run": 42881588853,
+  "attempt": 1,
+  "units": {
+    "tests": 1353,
+    "pass": 1353,
+    "fail": 0,
+    "skipped": 0
+  },
+  "originalUploadLogDigestsMatch": true,
+  "pagesExactGitblobMatches": 153,
+  "runtimeUnchanged": true
+}
