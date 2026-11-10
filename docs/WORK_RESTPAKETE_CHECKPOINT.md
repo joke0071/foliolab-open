@@ -1,3 +1,17 @@
+## ACTIVE · 74f8b54eb065 · autorisierte HND01-Notfallübernahme · 10.11.2026
+
+Der Nutzer widerruft mit sofortiger Wirkung die gesamte Entwicklungs-, Integrations-, QA-, Sicherungs- und Releasebeauftragung des bisherigen Hauptagenten und autorisiert diese alleinige Übernahme. Frisch festgestellter Vorgänger ist e595fcc6d453-r3, bereits regulär STOPPED/HANDOVER_READY; keine fortgesetzte ACTIVE-Arbeit. Frühere Owner sind abgelöst, historische Nachweise bleiben unverändert.
+
+Main a21db8a92f488820114f3b86fc3d5a4ad96be1b2 / Tree c6afbfe49152cbc29fa2722bf6bc3b16b01ad062 frisch bestätigt; v304 LIVE_ACCEPTED samt erfolgreichem Mainlauf42853846824/Deploy/Livejob129977069113. 289 Branchrefs in zwei unabhängigen Snapshots identisch, nur historische Drafts157/161 mit unveränderten Köpfen und leeren Reviews offen; 0 in_progress/0 queued Actions. Keine konkurrierende Schreibaktivität oder ungesichertes Produkt-WIP gemäß letzter Abgabe festgestellt. Übernahme unter erwarteter Checkpoint-HEAD 3b9f93b73c96426c1770b51b8bbd62cddb97ec5e.
+
+Private Sicherungsmetadaten frisch: bestehende Identität Version134,405473280Bytes, Änderungszeit10.11.2026 17:39:07UTC. Identische qualifizierte V134-Hash-/Readback-/67-Pfade-Restorebelege wiederverwendet, keine neue Vollprüfung oder Sicherung behauptet; kein offener Speicherauftrag. Keine privaten Locators veröffentlicht.
+
+Roadmap: D-IMPORT/D-FX299/UI-R1–R3/K2-Frequenz/v304-Wallet-/Hilfenschnitt DONE; K1/K2/K3/K4 PARTIAL, K5 und physische Geräte-/OAuth-/Ownershipanker extern, K6 gezielte Restprüfung. EFF03 begrenzten Verdichter wiederverwenden, nicht ausweiten. Kein erneuter v304-Lauf.
+
+Nächster begrenzter Fachschnitt: K6-TRUST vorhandenen konkreten Ignore-Schutzrest reproduzieren und minimal beheben, legitime synthetische Fixtures/öffentliche Assets erhalten. K1-Belegzuordnung bleibt gültig; keine unbekannten Originalanker erfinden, kein zweiter Import-/Finanzkern. Nach jedem relevanten Schritt Checkpoint fortschreiben; alle Schutzverträge/HND01-R erhalten. Checkpointbranch niemals vollständig nach Main mergen.
+
+---
+
 ## STOPPED / HANDOVER_READY · e595fcc6d453-r3 · v304 LIVE_ACCEPTED · V134 verifiziert
 
 Reguläre vollständige Abgabe nach abgeschlossenem v304-Paket gemäß HND01-R. Sämtliche Entwicklungs-, Integrations-, QA- und Releaseverantwortung ist abgegeben; frühere ACTIVE-Zeilen sind historisch. [Übergabe und Nachfolgerprompt](HANDOVER_e595fcc6d453_r3_2026-11-10.md#kopierfertiger-nachfolgerprompt).
