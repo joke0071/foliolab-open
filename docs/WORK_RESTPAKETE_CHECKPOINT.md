@@ -1,3 +1,13 @@
+## ACTIVE · main-40aba94dd4bd-20261111 · PR327 eingefroren / Pflicht-CI läuft
+
+K1–K6-Fortsetzung: K6-Seitennavigation. Tatsächliche go-Funktion im isolierten Quellcode-Repro:2erwartete Baselinefehler/1Pass; Kandidat3Pass. Lokal1356Units/0Fehler/0Skips und SyntaxPASS. Browserlokal durch fehlendeBinaries/Hostsocketverbot blockiert, keinPASS. Neuer echter Tastatur-/4Breiten-/IDB-Bytes-/Revisionsvertrag in vorhandener UI300-Suite, damit unverändert PR/Main/echteProduktion3Engines. Nur go-/SW306-/Tests-/Prüfdokumentdelta.
+
+[PR327](https://github.com/joke0071/foliolab-open/pull/327), HEAD7822860d6bb848320ed83f939e8528ad3388e2cf/Tree501c94e126088bfcddd79f26501cf9520f11e3a3 eingefroren. Läufe42973683465/42973683722 IN_PROGRESS, keineRetries/Abbrüche/Duplikatmessung. Main9ab3653f/v305LIVE_ACCEPTED unverändert. V138 frisch vollständig heruntergeladen und gegen405585920Bytes/SHA256b219942115470d1c02ee246a63723d4cc2c1cc2b319aa72cd4bc65c1a1fdb184 bytegleich geprüft; bestehendeRestore59Pfade/0Fehler nicht erneut behauptet. Keine neue privateSpeichermutation.
+
+Ein-Agenten-Entscheidung oben im EFF03 gilt; historische separateQA-/Webhook-/Einzelschrittrotation ersetzt. Genau nächsteAktion: diese bereitslaufende CI auswerten; echteBrowser-/Reflowbelege vorIntegration prüfen, neueReviews UND Kommentare lesen, sämtlicheMain-/Produktions-/Backup-/Restoregates erhalten. KeineweitereProduktimplementierung währenddiesesKandidatenlaufs.
+
+---
+
 ## ACTIVE · main-40aba94dd4bd-20261111 · alleiniger Hauptauftrag · 11.11.2026
 
 Kontrollierte reguläre HND01-Übernahme von auto-k6c-20261111-0208 (STOPPED/HANDOVER_READY). Vor erster Mutation bestätigt: Main9ab3653fc508fa35fe0f20ecf56a14004f837d3e/Treeca1ec2ac2babb708dee3ee35a21e30f437f9ae66; erwarteter Checkpoint-HEAD7b88a31ddda83401ae15d8de33b18d7c7901c426. Heads vollständig gelesen; nur historische Drafts157/161 offen; PR326-Review und Kommentare gelesen; keine laufende oder wartende Action, kein konkurrierender Produktwriter oder ungesichertes Produkt-WIP belegt. v305 bleibt LIVE_ACCEPTED. V138-Metadaten frisch bestätigt (Version138/405585920Bytes), vorhandener gepinnter Restorebeleg59Pfade/0Fehler; keine neue Sicherung oder erneute Vollabnahme behauptet.
