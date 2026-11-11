@@ -15,6 +15,11 @@ class MirrorSelection(unittest.TestCase):
 import os,sys
 from pathlib import Path
 a=sys.argv[1:]; url=a[-1]
+for flag,value in [('--proto','=https'),('--connect-timeout','3'),('--max-time','8'),('--retry','0')]:
+ assert a[a.index(flag)+1]==value,(flag,a)
+assert all(flag in a for flag in ['--fail','--silent','--show-error','--output'])
+assert not any(flag in a for flag in ['--insecure','-k','--location','-L'])
+assert url.startswith('https://')
 with open(os.environ['CALLS'],'a') as f:f.write(url+'\\n')
 if os.environ['SUCCESS'] and os.environ['SUCCESS'] in url:
  Path(a[a.index('--output')+1]).write_text('HTML' if os.environ['INVALID'] else '-----BEGIN PGP SIGNED MESSAGE-----\\n')
