@@ -1,3 +1,11 @@
+## ACTIVE · main-b180b1102417-20261111 · autorisierte HND01-Notfallübernahme / K3-K4
+
+Vorgänger main-75ea9fa46556-20261111 durch Nutzer ausdrücklich abberufen. Frische wiederholte Kollisionsprüfung: Main 37119745f9ac9e2356477202cae55948f3d74882 / Tree 3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5; Checkpoint e38d21d5d5516bbfe09b5d9b0e9a521538bf31ce unverändert; alle 293 Heads ohne Bewegung, nur historische Drafts157/161 offen, PR328 Reviews/Kommentare leer; keine laufenden/wartenden Actions. Kein konkurrierender Writer oder neuer Kandidat belegt. V142 frisch materialisiert: 405708800 Bytes / SHA256 14cc93f559adc3464a458f78630644439649360d17c323fa4e9b4e60c2d2d45b exakt zum gültigen Abnahmebeleg; keine neue Sicherungsoperation. Frühere Restorequalifikation unverändert wiederverwendet. Alleinige Schreibverantwortung unter erwartetem Checkpoint-HEAD übernommen; Ein-Agenten-Modell, keine Automatisierung.
+
+v307 bleibt LIVE_ACCEPTED. Vorhandene Taskkarte K3_SETTINGS_REPLACEMENT_2026-11-11.md maßgeblich: bestätigter Reset sowie erfolgreich angenommener lokaler/Drive-Konfigurationsrestore gleichen API-Formularwerte ab und maskieren Schlüssel; gewöhnliches Rendern/Abbruch/Fehler/abgelehnte Konfiguration erhalten Entwürfe. Genau nächste Aktion: Source-Handlerfälle erweitern, begrenzten gemeinsamen Abgleich implementieren, echten IDB-/verschlüsselten UI-Restorevertrag in bestehende Drei-Engine-Suite aufnehmen; dann vollständigen Kandidaten einfrieren/qualifizieren. Kein Eingriff in Finanz/Schema/CAS/Kryptografie/Identität.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · nächstes K3/K4-Paket abgegrenzt
 
 V307/V142 bleiben vollständig LIVE_ACCEPTED/verifiziert. Frische Mainprüfung bestätigt37119745f9ac9e2356477202cae55948f3d74882; keine neue Produktintegration oder private Speichermutation. [Fachpaket und gemeinsame Prüfliste](K3_SETTINGS_REPLACEMENT_2026-11-11.md): API-Formular nach bestätigtem vollständigem Reset und ausdrücklich angenommenem Konfigurationsrestore an das übernommene Modell anpassen und maskieren; gewöhnliche Entwürfe bei Rendern/abgelehnter Konfiguration/Fehler erhalten. Bestehende RPC-/Frequenzdarstellung ist bereits synchron, kein Neubau.
