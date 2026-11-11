@@ -1,0 +1,144 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 307,
+  "owner": "main-75ea9fa46556-20261111",
+  "PR": 328,
+  "head": "8c5d11e8370d0d1e4071ffe9f03127ba27c61475",
+  "main": "37119745f9ac9e2356477202cae55948f3d74882",
+  "tree": "3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5",
+  "run": 42996734436,
+  "attempt": 1,
+  "deployJob": 130455321736,
+  "liveJob": 130455465813,
+  "cache": "foliolab-open-v307",
+  "allMandatoryJobsSuccess": true,
+  "unitTests": 1366,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "PRQualification": "v307-pr328-qualified.json",
+  "mainQualification": "v307-main-qualified-production-pending.json",
+  "mainEvidence": {
+    "JSON": 235,
+    "decodedPNG": 2065,
+    "priorSchemaComparisons": 422,
+    "newNativeAndHandlerContractsDirectlyReviewed": true,
+    "contextReports": {
+      "metadataIDB": 3,
+      "controlledStorage": 42,
+      "providerRetirement": 2,
+      "touch": 2,
+      "longPress": 2
+    },
+    "pagesExactGitBlobMatches": 153
+  },
+  "production": {
+    "JSON": 175,
+    "decodedPNG": 1407,
+    "priorSchemaComparisons": 248,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "ordinaryTLS": true,
+    "assetHashesExactlyMatchPagesPayload": 154,
+    "axeScans": 18,
+    "axeViolations": 0,
+    "newHandlerAndNavigationContractsDirectlyReviewed": true,
+    "controllerEventInDeliveredHandlerTestExplicitlySynthetic": true,
+    "actualFailedIDBPutAndCanonicalRollbackVerified": true,
+    "providerRequests": 0,
+    "contextReports": {
+      "metadataIDB": 3,
+      "controlledStorage": 33,
+      "providerRetirement": 1,
+      "touch": 2,
+      "longPress": 1
+    },
+    "new390pxImageDirectlyReviewed": true
+  },
+  "allEightOriginalDigestsSizesIDsAndUploadLogsVerified": true,
+  "artifacts": [
+    {
+      "id": 13847144680,
+      "name": "production-live-acceptance-37119745f9ac9e2356477202cae55948f3d74882",
+      "size_in_bytes": 138148649,
+      "digest": "sha256:fcb539058d55c755545e1b785337cb5a70b1d8c4867a06516e2a16000c378414"
+    },
+    {
+      "id": 13845723032,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-3",
+      "size_in_bytes": 68781615,
+      "digest": "sha256:57f8af2d7bc5fd9e358d7dac6a283a5dff7a98bac58fa659324f0c45e97d9b84"
+    },
+    {
+      "id": 13845325847,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-1",
+      "size_in_bytes": 60004884,
+      "digest": "sha256:87709c6c7ace5e6649fec6400b75c95c7c2b5afb1b3b83506a9065f0b1ce6d46"
+    },
+    {
+      "id": 13845313669,
+      "name": "github-pages",
+      "size_in_bytes": 568111,
+      "digest": "sha256:a2ac0511107ae6de093cab2ec006663cdf55afbbe62291412eb438a104484256"
+    },
+    {
+      "id": 13845307588,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933194,
+      "digest": "sha256:818e04a84a14cdafe9f8abfd3a6467843832328ca35a8deea48f246d6cf80ba6"
+    },
+    {
+      "id": 13845081189,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-2",
+      "size_in_bytes": 12410163,
+      "digest": "sha256:f5f2e67e2d6612b8cc9c707af8f1c065f629fdbae0a53523c2f2f0c542da741d"
+    },
+    {
+      "id": 13844449179,
+      "name": "release-gates-37119745f9ac9e2356477202cae55948f3d74882",
+      "size_in_bytes": 65552058,
+      "digest": "sha256:d3fb49cd9449627668cbf195a8789e362bcb70568c48a5d32ad62c1e14f9f539"
+    },
+    {
+      "id": 13844022770,
+      "name": "ci-stage-37119745f9ac9e2356477202cae55948f3d74882",
+      "size_in_bytes": 354,
+      "digest": "sha256:7586d07f579bcb15fa2f3f020279c1cf200b5963249792e1616033dc4d9c0451"
+    }
+  ],
+  "history": {
+    "firstCandidateRun": 42990255793,
+    "firstCandidateOutcome": "FAILED_NEW_TEST_ASSERTION_LAYER",
+    "correction": "Two assertions corrected from intentionally redacted raw.settings to canonical record.settings; product code unchanged.",
+    "correctedCandidateRun": 42992039252,
+    "wallet": 42992039325,
+    "allAttempts": 1,
+    "noIdenticalRetriesOrAborts": true,
+    "allFirstAndCorrectedCandidateOriginalsRetainedInV141": true
+  },
+  "backup": {
+    "version": 142,
+    "previousVersion": 141,
+    "bytes": 405708800,
+    "sha256": "14cc93f559adc3464a458f78630644439649360d17c323fa4e9b4e60c2d2d45b",
+    "pinnedReadbackVerified": true,
+    "entirePreviousRootAndAllHistoricalOriginalCompanionChainsPreserved": true,
+    "immutableIncrement": {
+      "bytes": 349112320,
+      "sha256": "21e17554808d6088eaf0abcd4ca8569b24266d6c5a9dc8e9416ceb474c6af339",
+      "manifestPaths": 32,
+      "pinnedReadbackVerified": true
+    },
+    "actualIncrementalRestoreManifestPaths": 37,
+    "restoreFailures": 0,
+    "unchangedHistoricalFullRestoreEvidenceReused": true
+  },
+  "limits": [
+    "Bounded K4 data-source draft/update protection accepted; K4 overall remains PARTIAL",
+    "No FolioLab 1.0 overall acceptance",
+    "Native Android/Safari/TalkBack/system-font/OAuth and independent original/ownership anchors remain external"
+  ],
+  "nextAction": "Bounded normal K3/K4 settings-form state review after explicit reset/restore; reproduce a concrete gap before a new product candidate, retain external device/original boundaries."
+}
