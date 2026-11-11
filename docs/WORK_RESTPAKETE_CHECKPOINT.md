@@ -1,3 +1,11 @@
+## ACTIVE · main-75ea9fa46556-20261111 · autorisierte HND01-Notfallübernahme / v306-Abschluss
+
+Vorgänger main-40aba94dd4bd-20261111 ausdrücklich durch Nutzer abberufen. Frische Kollisionsprüfung: Main 8a5c5c2d164b87831814be8fe0258356928d1abc / Tree 501c94e126088bfcddd79f26501cf9520f11e3a3; Checkpoint-HEAD 83b69a49530782b923a226c7a4a442bfb3e66065 unverändert bei wiederholter Prüfung, vollständige Heads gelesen, nur historische Drafts157/161 offen; PR327 keine Reviews, Baselinekommentar gelesen; keine laufenden/wartenden Actions, kein tatsächlicher konkurrierender Writer belegt. Mainlauf42977860611 einschließlich Livejob130390010383 inzwischen SUCCESS, Versuch1. Neue Produktionsoriginale heruntergeladen, API-Digest/Größe/ZIP-CRC stimmen; fachliche Qualifikation läuft. V139 frisch materialisiert und SHA256/Größe gegen Nachweis bestätigt; V140 noch offen. Kein LIVE_ACCEPTED aus CI allein. v305 bleibt letzter vollständig abgenommener Release.
+
+Genau nächste Aktion: neue Produktionsberichte und Originalzuordnung qualifizieren; Main-/Produktionsoriginale unveränderlich sichern, Root139→140 geschützt fortschreiben/gepinnt rücklesen/tatsächlich inkrementell restaurieren; erst dann v306 LIVE_ACCEPTED. Danach vorhandene K4-Taskkarte docs/K4_UPDATE_DRAFTS_2026-11-11.md als zusammenhängendes Paket fortsetzen. Keine zusätzliche Agenten-/Automatisierungsschleife, keine Doppel-CI, kein Checkpoint-Gesamtmerge. Alle Schutzverträge bleiben bindend.
+
+---
+
 ## ACTIVE · main-40aba94dd4bd-20261111 · Main/Deploy qualifiziert / echte Produktion läuft
 
 Main8a5c5c2d164b87831814be8fe0258356928d1abc/Tree501c94e126088bfcddd79f26501cf9520f11e3a3 exaktqualifizierterPR327-Tree. [Main-/Deploymentbeleg](release-evidence/v306-main-qualified-production-pending.json): bestehenderLauf42977860611/Deploy130389898728 SUCCESS,Versuch1;1356Units/0Fehler/0Skips;232JSON/2065dekodiertePNG/479explizitePrüfungen+50direkteKontextberichte;153PagesdateienexaktGitblobs,alle7Originalarchive/API-/Uploadlogbelegeverifiziert. DirekteöffentlicheProduktionsgegenprobe(neuesH1-Fokusziel)PASS,keinErsatzfürPflichtgates.
