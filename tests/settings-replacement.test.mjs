@@ -6,7 +6,7 @@ import {blankModel,defaultSettings,safeImport} from '../src/model.js';
 import {validatedPublicEndpoint} from '../src/public-instruments-client.js';
 const source=readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 const keys=['securitySource','alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','publicInstrumentEndpoint','eodhdWorkerEndpoint','eodhdWorkerAccessToken'];
-function harness({accept=true,fail=false,cacheFail=false,configuration=true}={}){
+function harness({accept=true,fail=false,cacheFail=false,configuration=true,vaultFail=false,preferencesFail=false}={}){
  const settings={...defaultSettings(),coinGeckoKey:'SYNTHETIC_STORED'};
  const elements=Object.fromEntries(keys.map(key=>[key,{value:settings[key]||'',type:key.endsWith('Key')||key.endsWith('Token')?'text':'text'}]));
  for(const field of Object.values(elements))field.closest=()=>({querySelector:()=>({click(){field.type='password';}})});
@@ -22,9 +22,9 @@ function harness({accept=true,fail=false,cacheFail=false,configuration=true}={})
   portfolioStore:{async save(model){if(fail)throw Error('SYNTHETIC_COMMIT_FAILURE');committed=structuredClone(model);},async reload(){return structuredClone(committed);},async removeAll(){if(fail)throw Error('SYNTHETIC_REMOVE_FAILURE');removed=true;}},
   async clearAlphaCache(){if(cacheFail)throw Error('SYNTHETIC_CACHE_FAILURE');},
   assertLocalBackupFileSize(){},isPasswordBackup:()=>true,COMPLETE_BACKUP_KIND:'SYNTHETIC_COMPLETE',
-  async decryptPasswordBackup(){return JSON.stringify({kind:'SYNTHETIC_COMPLETE'});},async adoptBackupPassword(){},async refreshBackupPasswordStatus(){},
+  async decryptPasswordBackup(){return JSON.stringify({kind:'SYNTHETIC_COMPLETE'});},async adoptBackupPassword(){if(vaultFail)throw Error('SYNTHETIC_VAULT_FAILURE');},async refreshBackupPasswordStatus(){},
   unpackCompleteBackup:()=>({data:imported,configuration:config}),unresolvedListings:()=>[],
-  async hasBackupPassword(){return false;},downloadBackup(){},backupDone(){},applyImportedDriveConfiguration(){},
+  async hasBackupPassword(){return false;},downloadBackup(){},backupDone(){},applyImportedDriveConfiguration(){if(preferencesFail)throw Error('SYNTHETIC_PREFERENCES_FAILURE');},
   window:{FolioDriveBackup:{}},location:{reload(){throw Error('unexpected reload');}}
  });
  const run=(a,b)=>vm.runInContext(source.slice(source.indexOf(a),source.indexOf(b,source.indexOf(a))),context);
@@ -61,4 +61,10 @@ for(const path of ['file','drive']){
  test(path+' failed commit preserves the draft and previous settings',async()=>{
   const h=harness({fail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';if(path==='drive')await assert.rejects(h.drive(),/SYNTHETIC_COMMIT_FAILURE/);else await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_STORED');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.context.model.settings.coinGeckoKey,'SYNTHETIC_STORED');
  });
+ test(path+' failed post-commit preferences keep the draft while retaining the committed model',async()=>{
+  const h=harness({preferencesFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';if(path==='drive')await assert.rejects(h.drive(),/SYNTHETIC_PREFERENCES_FAILURE/);else await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.elements.coinGeckoKey.type,'text');assert.equal(h.dirty(),true);
+ });
 }
+test('file vault adoption failure preserves a visible draft after portfolio commit',async()=>{
+ const h=harness({vaultFail:true});h.elements.coinGeckoKey.value='SYNTHETIC_DRAFT';await h.file();assert.equal(h.committed().settings.coinGeckoKey,'SYNTHETIC_NEW');assert.equal(h.elements.coinGeckoKey.value,'SYNTHETIC_DRAFT');assert.equal(h.elements.coinGeckoKey.type,'text');assert.equal(h.dirty(),true);
+});

@@ -2493,13 +2493,13 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
   model=imported;filter='all';
   try{await save()}catch(error){model=previous;throw error}
   loadFailure=null;
-  if(configuration)syncApiSettingsForm();
   if(v2Envelope){
     await adoptBackupPassword(v2Envelope,password);
     await refreshBackupPasswordStatus();
     await window.FolioDriveBackup?.refreshVaultStatus?.();
   }
   if(configuration)applyImportedDriveConfiguration(configuration);
+  if(configuration)syncApiSettingsForm();
   notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
  }catch(err){notify(err.message,true)}finally{setLoading(restoreStatus,false);renderBackupStatus();}
 });
@@ -2567,9 +2567,9 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         const previous=model;
         model=imported;filter='all';
         try{await save()}catch(error){model=previous;throw error}
-        if(accepted)syncApiSettingsForm();
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone();
+        if(accepted)syncApiSettingsForm();
         notify('Google-Drive-Backup erfolgreich wiederhergestellt.');
         return true;
       },
