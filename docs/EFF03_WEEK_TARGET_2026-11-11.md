@@ -78,6 +78,18 @@ Vor Umsetzung kurze Amortisationsrechnung: zusätzliche aktive Umsetzung/Prüfun
 
 Technische Primärquellen: [GitHub Job-Matrizen](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/run-job-variations), [Cache-Grenzen und Identität](https://docs.github.com/en/actions/reference/workflows-and-actions/dependency-caching), [Artefakte versus Cache](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts). Sie belegen Mechanismen, keine bereits erreichte FolioLab-Ersparnis.
 
+### 6.1 Geprüfte Ergänzungen zum nächsten Optimierungsschnitt
+
+Der [geprüfte Maßnahmenkatalog im Effizienzplan](WORK_EFFICIENCY_PLAN_2026-11-01.md) konkretisiert diesen Zielplan, ohne neue Scope-IDs oder eine zweite Roadmap einzuführen.
+
+- Vor Freeze bei betroffenen Abläufen nicht nur Fehler vor dem Commit, sondern auch nachgelagerte Vault-/Präferenz-/UI-Fehler prüfen. PR329 lieferte hierfür einen konkreten Korrekturanlass trotz erster grüner CI. Bestehende frühe Gegenproben nutzen; native finale Nachweise bleiben Pflicht.
+- Neue Originalarchive einmal herunterladen und zugeordnet für Integritätsprüfung, bestehenden Verdichter, fachliche Detailprüfung und Sicherungsupload weiterverwenden. Gelerntes am selben verifizierten Satz erhalten. Gepinntes unabhängiges Sicherungs-Readback und tatsächlicher erforderlicher Restore bleiben erhalten; keine doppelte lokale Entpack-/Downloadarbeit aus Gewohnheit.
+- Kleine ergänzende technische Optionen sind getrennte gelockte CI-Testwerkzeuge/npm-Downloadcache, exakt gepinnter Browser-Cache auch im Produktionsjob und angepasste Kompression PNG-lastiger Originalarchive. Im gelesenen Workflow fehlen der Produktions-Cache-Restore und eine explizite Upload-Kompressionsstufe; Testwerkzeuge werden mehrfach installiert. Noch keine Implementierung oder belegte Einsparung dieser Optionen.
+- Zuerst den belegten P-CI-B-Engpass bearbeiten; eine kleine Installations-/Cache-/Kompressionsoption nur bei positiver Gesamtamortisation einschieben. P-CI-C weiter separat. Testaufbau-Wiederverwendung nur nach Messung; keine Browserpool-/Framework-Neuentwicklung. In der begrenzten PWA-/Recovery-Stichprobe kein pauschales `waitForTimeout` gefunden: keine vorhandenen 30-s-Fehlerwächter oder fachlichen Ereignistimer zur vermeintlichen Beschleunigung entfernen.
+- Pro Schnitt tatsächliche aktive Arbeit, Installation, Test, Archivierung/Übertragung, Cache-Hit, Workflow-Wandzeit und summierte Jobzeit auseinanderhalten. Identische Dateien, Pflichtmanifest/Engines/Assertions/Fristen, Fehleroriginale und alle Sicherungs-/Restoreverträge erhalten. Bestehende reguläre Vergleichsläufe nutzen; das halbtägige Gesamtbudget wird durch diese Optionen nicht vervielfacht.
+
+Diese Ergänzung verändert keinen laufenden Kandidaten, Mainlauf oder Owner. Am nächsten sicheren Punkt durch den bestehenden Hauptagenten übernehmen. Die bisherigen konkreten Workflow-Freigabegrenzen gelten weiter; der aktuelle Auftrag autorisiert die Planfortschreibung, keinen ungeprüften Workflow-Merge. Details, Prüfbefunde und Abnahmekriterien nur im verlinkten Effizienzplan pflegen.
+
 ## 7. Externe Voraussetzungen ab Tag 1, nicht erst vor Veröffentlichung
 
 Vorhandene private Originale und autorisierte Nachweise zuerst gezielt wiederverwenden. Fehlende Voraussetzungen in EINER kompakten Liste mit Scope, konkret benötigtem Beleg, Zuständigem und spätestem Bereitstellungspunkt sammeln. Keine pauschale erneute Anforderung aller bereits gelieferten Dateien.
