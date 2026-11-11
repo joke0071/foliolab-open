@@ -51,7 +51,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.equal(await p.evaluate(()=>window.__installCalls),1);assert.equal(await p.locator('#installButton').getAttribute('data-install-mode'),'help');assert.equal(await p.locator('#installAppSection').isVisible(),true,'choice alone never claims installed');
   }
   await p.evaluate(()=>window.dispatchEvent(new Event('appinstalled')));assert.equal(await p.locator('#installAppSection').isVisible(),false);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.deepEqual(await record(p),before);
-  checks.push('late prompt; manual help; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; actual appinstalled event; exact IDB record unchanged');
+  checks.push('late prompt; manual help; dismissal/navigation/reload; accepted/dismissed/error/pending; single consumption; delivered appinstalled handler with synthetic event; exact IDB record unchanged');
   for(const blocked of ['local','both']){
    const q=await fresh(blocked),stored=await record(q);await prompt(q);await q.locator('#dismissInstallHint').click();await nav(q,'more');await prompt(q);assert.equal(await q.locator('#sidebarInstallHint').isVisible(),false,'blocked preference writes retain memory');
    if(blocked==='local'){await q.reload();await ready(q);await prompt(q);assert.equal(await q.locator('#sidebarInstallHint').isVisible(),false,'session fallback survives reload');}
@@ -62,7 +62,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   await standalone.evaluate(()=>window.__setSyntheticStandalone(false));await standalone.locator('#sidebarInstallHint').waitFor({state:'visible'});await standalone.locator('#installButton').focus();await standalone.evaluate(()=>window.__setSyntheticStandalone(true));assert.equal(await standalone.locator('#installAppSection').isVisible(),false);assert.equal(await standalone.evaluate(()=>document.activeElement.dataset.page),'more','hiding an installation control retains visible navigation focus');
   checks.push('synthetic initial standalone and media change hide all offers and restore visible focus; no hardware claim');
   const layout=await fresh();
-  for(const width of [320,390,430,768,1440]){await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');await scan(layout);}
+  for(const width of [320,390,430,768,1440]){await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');await scan(layout);assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const legend=e.querySelector('.alloc-legend');return legend.children.length>0||legend.getBoundingClientRect().height<20;}),'empty allocation legend reserves no filler height');}
   await layout.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'nav-p',name:'Synthetic provider with a deliberately long readable name'}));m.accounts.push(createAccount({id:'nav-a',providerId:'nav-p',name:'Synthetic long securities account name',type:'securities'},m));m.positions.push(createPosition({id:'nav-etf',providerId:'nav-p',accountId:'nav-a',name:'Synthetic ETF with a long security name',kind:'etf',quantity:'1234567.89',price:'100'},m));
@@ -82,6 +82,15 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await scan(layout);await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-${width}.png`});assert.deepEqual(await record(layout),stored,'disclosures/layout preserve exact portfolio record');
   }
   checks.push('five widths; long provider/account/position names and large amounts; graph/allocation/accounts arrangement; compact disclosures/CSV retained; axe/overflow; exact IDB record unchanged');
+  await layout.evaluate(async()=>{
+   const {PortfolioStorage}=await import('/src/browser-portfolio-storage.js'),{createProvider,createAccount,createPosition}=await import('/src/model.js');const s=new PortfolioStorage();const m=await s.initialize();
+   for(let i=1;i<=11;i++){const providerId='nav-large-p'+i,accountId='nav-large-a'+i;m.providers.push(createProvider({id:providerId,name:'Synthetic large-list provider '+i}));m.accounts.push(createAccount({id:accountId,providerId,name:'Synthetic large-list account '+i,type:'securities'},m));for(let j=0;j<8;j++)m.positions.push(createPosition({id:'nav-large-'+i+'-'+j,providerId,accountId,name:'Synthetic readable holding '+i+' / '+j,kind:'etf',currency:'EUR',quantity:'1.23456789',price:'100'},m));}
+   await s.save(m);s.close();
+  });await layout.reload();await ready(layout);await nav(layout,'dashboard');const large=await record(layout);
+  assert.equal(await layout.locator('#providerOverview>.provider-accordion').count(),12);assert.equal(await layout.locator('#providerOverview [data-position-id]').count(),90,'large list retains every position');
+  await layout.setViewportSize({width:320,height:740});const last=layout.locator('#providerOverview>.provider-accordion').last();await last.locator(':scope>summary').click();await last.locator('[data-position-id=nav-large-11-7]>summary').click();assert.ok(await last.locator('[data-action=import-price-history][data-id=nav-large-11-7]').isVisible());await scan(layout);
+  await layout.locator('#dashboardPage').evaluate(root=>{const sizes=[...root.querySelectorAll('*')].map(e=>[e,parseFloat(getComputedStyle(e).fontSize)]);for(const[e,size]of sizes)e.style.fontSize=size*1.5+'px';});await scan(layout);assert.deepEqual(await record(layout),large,'large list, actual disclosures and synthetic text scale preserve canonical record');
+  checks.push('12 providers/90 positions retained; last provider/position reachable; native summary clicks; 320px synthetic 150% text; exact IDB record unchanged');
   writeFileSync(`artifacts/gates/navigation-installation/${engine}.json`,JSON.stringify({engine,result:'PASS',widths:[320,390,430,768,1440],checks,syntheticInstallEvents:true,physicalAndroid:false,realInstallation:false},null,2));
  }finally{await Promise.all(contexts.map(c=>c.close()));await browser.close();}
 }

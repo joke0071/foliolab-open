@@ -2117,3 +2117,4 @@
 @media(min-width:1180px){#dashboardPage .dashboard-overview{grid-template-columns:minmax(0,1.55fr) minmax(310px,1fr)}}
 @media(max-width:720px){.install-settings-panel{align-items:flex-start;flex-wrap:wrap;padding:16px}#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
 @media(max-width:420px){#dashboardPage .dashboard-allocation .donut{width:128px;height:128px;flex-basis:128px}#dashboardPage .dashboard-allocation .donut-inner{width:88px;height:88px}.dashboard-providers .provider-holding-right{white-space:normal;text-align:right}.dashboard-providers .provider-holding-right strong{overflow-wrap:anywhere}}
+@media(max-width:360px){#dashboardPage .dashboard-allocation .alloc-legend{flex:1 1 auto}}
