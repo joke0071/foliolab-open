@@ -1,9 +1,17 @@
+import {spawnSync} from 'node:child_process';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 const source = readFileSync(new URL('../.github/workflows/import.yml', import.meta.url), 'utf8');
 const hashes = {"test": "ff07928ba1afb9b46963a14c07070f667bf11656e3b5d015791371c6c660329c", "cross-engine": "968e44c353136e18f3e108d30ab40a00b54acc4a58ef4e3758704160e44070d9", "deploy": "568af6de8fc542f67cdfb8255b00a38f7e06f0f8ca04d15f314d90fa8b5ac459", "live-acceptance": "650739b764551d00bf7529d17662f8369eddabf38f5473842fe80af2c75f856e"};
+const originalUbuntuMirrorSetup = "          # Keep Ubuntu signatures/TLS verification; avoid the observed stalling Azure mirror.\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
+const boundedUbuntuMirrorSetup = "          # Probe bounded HTTPS Ubuntu alternatives before changing either mirror list.\n          archive_mirror=''\n          security_mirror=''\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            archive_mirror=\"$(bash tools/select-ubuntu-mirror.sh archive noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            security_mirror=\"$(bash tools/select-ubuntu-mirror.sh security noble)\"\n          fi\n          if [[ -f /etc/apt/apt-mirrors.txt ]]; then\n            printf '%s\\n' \"$archive_mirror\" | sudo tee /etc/apt/apt-mirrors.txt >/dev/null\n          fi\n          if [[ -f /etc/apt/apt-mirrors-security.txt ]]; then\n            printf '%s\\n' \"$security_mirror\" | sudo tee /etc/apt/apt-mirrors-security.txt >/dev/null\n          fi\n";
+function normalizeUbuntuMirrorSetup(source) {
+ assert.equal(source.split(boundedUbuntuMirrorSetup).length,3,'Both exact bounded mirror selections required');
+ assert.equal(source.split(originalUbuntuMirrorSetup).length,1,'Old forced single mirror must be replaced in both paths');
+ return source.split(boundedUbuntuMirrorSetup).join(originalUbuntuMirrorSetup);
+}
 const pinnedCacheSteps = [
  [
   "      - name: Restore pinned Chromium shell cache (FAST)",
@@ -33,6 +41,7 @@ const pinnedCacheSteps = [
  * stanzas, mandatory additional recovery/finance/ETF suites and the increased live timeout.
  * The unchanged baseline hashes still protect all original workflow bodies. */
 function originalContractWithOnlyPinnedCaches(source) {
+ source=normalizeUbuntuMirrorSetup(source);
  assert.equal(source.split("*'<title>FolioLab</title>'*").length,2,'Exact visible title deployment gate required');
  let reduced=source.replace("*'<title>FolioLab</title>'*","*'FolioLab Open'*");
  const additions=[
@@ -159,3 +168,19 @@ test('UH04 net economics is additive and mandatory in all four integration/produ
  for(const line of lines)for(const changed of [source.replace(line+'\n',''),source.replace(line+'\n',line+'\n'+line+'\n')])assert.throws(()=>validate(changed));
  assert.throws(()=>validate(source.replace('UI_QUALITY_ENGINES=firefox,webkit node tests/browser-flatex-net-settlement.mjs','UI_QUALITY_ENGINES=firefox node tests/browser-flatex-net-settlement.mjs')));
 });
+
+test('Ubuntu mirror amendment rejects removed probes, non-HTTPS alternatives and skipped dependency installation',()=>{
+ for(const changed of [
+  source.replace('bash tools/select-ubuntu-mirror.sh archive noble','echo https://archive.ubuntu.com/ubuntu/'),
+  source.replace('bash tools/select-ubuntu-mirror.sh security noble','echo http://security.ubuntu.com/ubuntu/'),
+  source.replace('archive_mirror=\'\'','archive_mirror=\'https://unknown.invalid/\''),
+  source.replace('timeout-minutes: 8','timeout-minutes: 9'),
+  source.replace('--with-deps firefox webkit','firefox webkit')
+ ]) { assert.notEqual(changed,source);assert.throws(()=>validate(changed)); }
+});
+
+test('Ubuntu mirror selector succeeds and fails safely under seven isolated network simulations',()=>{
+ const result=spawnSync('python3',[new URL('./ubuntu-mirror-helper.test.py',import.meta.url).pathname],{encoding:'utf8'});
+ assert.equal(result.status,0,result.stdout+result.stderr);
+});
+

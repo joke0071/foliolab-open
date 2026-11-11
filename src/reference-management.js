@@ -60,8 +60,8 @@ export function prepareReferenceArchive(model,{ids,archived},{expectedModel,conf
  setArchivePresentation(candidate,{referenceIds:[...next]});safeImport(clone(candidate));return candidate;
 }
 export function previewReferenceEdit(model,id,values){
- safeImport(clone(model));const permission=referencePermissions(model,id);if(permission.editReason)throw Error(permission.editReason);
- const change=snapshotEditChanges(model,id,values);
+ safeImport(clone(model));const permission=referencePermissions(model,id);
+ const change=snapshotEditChanges(model,id,values);if(permission.editReason&&change.correction)throw Error(permission.editReason);
  return {id,correction:change.correction,before:{date:change.current.date,totalEURExact:change.current.totalEURExact,note:change.current.note},after:{date:change.date,totalEURExact:change.totalExact,note:change.note},impact:change.correction?'Datum oder Betrag verändern die historische Beobachtung, den Abgleich und gegebenenfalls Renditen. Bestehende Originalrevisionen bleiben erhalten.':'Nur die Notiz ändert sich; Datum, Betrag und Renditestart bleiben erhalten.'};
 }
 export function prepareReferenceEdit(model,id,values,{expectedModel,confirmed}={}){

@@ -51,10 +51,15 @@ try{
  assert.equal(await list.locator('[data-action="delete-snapshot"],.row-btn,svg').count(),0,'normal references have no destructive or icon actions');assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),0,'normal mode hides editing');
  const original=await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots);
  await page.locator('#manageReferences').click();
- assert.equal(await list.first().locator('[data-action="edit-snapshot"]').count(),0,'observed original is source-protected');
- assert.match(await list.first().innerText(),/Herkunft geschützt/);
+ assert.equal(await list.first().locator('[data-action="edit-snapshot"]').count(),1,'observed original exposes a note-only editor');
+ assert.match(await list.first().innerText(),/Datum und Betrag geschützt/);
+ await list.first().locator('[data-action="edit-snapshot"]').click();
+ for(const name of ['date','manualTotalEUR'])assert.ok(await page.locator('#editorForm [name='+name+']').evaluate(e=>e.readOnly),'legacy observed original keeps '+name+' protected');
+ assert.equal(await page.locator('#editorForm [name=note]').evaluate(e=>e.readOnly),false,'note remains editable without promoting provenance');
+ await page.locator('#cancelDialog').click();await page.locator('#editDialog').waitFor({state:'hidden'});
+ assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('foliolab-open-v1')).snapshots),original,'inspecting protected fields changes no legacy original');
  assert.equal(await page.locator('[data-reference-manage=remove]').isDisabled(),true,'dependent references cannot be deleted');
- assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),1,'editable references show edit and checkbox together');
+ assert.equal(await list.locator('[data-action="edit-snapshot"]').count(),2,'both manual and note-only originals show edit and checkbox together');
  await list.last().locator('[data-action="edit-snapshot"]').click();
  assert.equal(await page.locator('#dialogTitle').innerText(),'Referenzwert bearbeiten');
  await page.locator('#editorForm [name="note"]').fill('Korrigierte Notiz');
