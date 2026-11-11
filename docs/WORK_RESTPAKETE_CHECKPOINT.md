@@ -1,3 +1,11 @@
+## ACTIVE · main-75ea9fa46556-20261111 · PR328 korrigierter Testkandidat / Pflicht-CI R2 läuft
+
+NeuerHEAD8c5d11e8370d0d1e4071ffe9f03127ba27c61475/Tree3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5; PR-Merge19aeb661bafa12e884f7aac063c550a6a50d16a7. Bestehende neueLäufe42992039252/Wallet42992039325 abwarten. ErsterLauf42990255793 regulärbeendet,keinAbbruch/Retry:Chromium+Cross3 neuerFormulartestFAIL,übrigeCross1/2+WalletSUCCESS. Ursache: meineTestassertion lasbereinigte raw.settings statt kanonischem record.settings; backup()setzt raw.settings absichtlichaufDefaults,save()persistiertEinstellungen separatindemselbenRecord. ZweiAssertions berichtigt,Produktcodeunverändert;10lokaleSource-Verträge/SyntaxerneutPASS. NeueSHAerfordertvollePflicht-CI,keineTransferfreigabealterTeil-PASS. TatsächlicheersteNativeWorker-Entwurfs-/Cancel-/Verwerf-/IDB-FälleFirefox/WebKitbereitsdirektausOriginalZIPgeprüftPASS. Fehlerhistorie/Originaleerhalten undamKandidatenabschlussgemeinsamsichern.
+
+v306/V140unverändertLIVE_ACCEPTED;keineoffeneprivateSpeichermutation. Genau nächsteAktion: aktuelleLäufe42992039252/42992039325 vollständigqualifizieren,neueReviews UNDKommentarelesen;OriginalebeiderKandidatenversionenunveränderlichsichern/Rootgeschütztfortschreiben/rücklesen/restaurieren;erstvollqualifiziertintegrieren,danachMain/echteProduktionseparat. KeineweitereProduktimplementierung währenddieserPrüfung.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · K4/v307 PR328 eingefroren / Pflicht-CI läuft
 
 [PR328](https://github.com/joke0071/foliolab-open/pull/328), HEAD5035a9345aecb7cad16a2cc26db83c9c8e25425c/Tree960ce4145c5e87047c41e815349bfbf10b790a07; getesteterPR-Merge527b12b611f2104834666b794c13eeb6ce2926d6. ZusammenhängenderK4-Update-/Formularentwurfschutz implementiert; vorPatch4PASS/6reproduzierteFehler,danach10PASS/0Fehler/0Skips undSyntaxPASS. NativeWorker-Entwurf/Cancel/Verwerfen separat in bestehenderPWA-Suite, tatsächlicheausgelieferteHandler mit ausdrücklichsynthetischemControllerchange/Speichern/Normalisierung/Leeren/echtemfehlgeschlagenemIDB-put in bestehenderUI300-Suite. Keine neuenProvideranfragen oderSchlüsselwerte imBericht zulässig. LokalerChromium-Start hostbedingtfehlgeschlagen,keinBrowserPASS.
