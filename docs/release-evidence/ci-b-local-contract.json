@@ -1,0 +1,50 @@
+{
+  "status": "LOCAL_CANDIDATE_ONLY",
+  "base": "0be4c7f07a60e1d17ce5a5691261a52810701329",
+  "baseTree": "f8de9bb981a350b87215f8ac7c70ac268d749ea7",
+  "baselineRun": 43016219473,
+  "baselineAttempt": 1,
+  "measuredJobSeconds": {
+    "Determine FAST / INTEGRATION / RELEASE": 9.0,
+    "test": 927.0,
+    "cross-engine (1)": 739.0,
+    "cross-engine (3)": 1735.0,
+    "cross-engine (2)": 450.0
+  },
+  "measuredUiGroupIntervalSeconds": 754.289376,
+  "modelPredictedJobSeconds": {
+    "test": 927.0,
+    "cross-engine (1)": 739.0,
+    "cross-engine (2)": 1204.289376,
+    "cross-engine (3)": 980.710624
+  },
+  "modelPredictedCriticalPathSavingSeconds": 530.710624,
+  "localContractTests": 26,
+  "failures": 0,
+  "skips": 0,
+  "historicalManifestAndSealedHashesUnchanged": true,
+  "workflowOtherBytesUnchanged": true,
+  "bashSyntax": "PASS",
+  "negativeControls": [
+    "drop suite",
+    "duplicate suite",
+    "reduce engines",
+    "missing shard",
+    "wrong move location",
+    "superseded layout",
+    "weaken deploy dependencies",
+    "unversioned cache",
+    "loosen timeout",
+    "unsafe FAST selection"
+  ],
+  "artifactSharedPaths": "Only six byte-identical committed ui-visual01 PNG references and per-job browser-install log; no shared generated JSON. Separate later Flatex suites remain invoked, so moved imported duplicates may now retain additional independent outputs. Qualify the complete report/engine union and explicit moved per-shard inventories; do not compare only archive counts.",
+  "runtimeTests": "Existing full PR/Main/live suites still required; none started for this prepared WIP",
+  "secondBaselineRun": 43023136886,
+  "secondBaselineStatus": "IN_PROGRESS",
+  "productRuntimeChanged": false,
+  "releaseAccepted": false,
+  "measuredSavings": null,
+  "workCredits": null,
+  "requiresConcreteWorkflowMergeApproval": true,
+  "qualificationPlan": "Use regular required PR plus Main as two after observations; same-v308 corrected PR and current Main as two before observations. Never trigger duplicates for timing. Hold DONE until all comparison and release gates qualify."
+}

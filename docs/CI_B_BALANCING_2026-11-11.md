@@ -1,0 +1,25 @@
+# P-CI-B: one bounded Cross3 to Cross2 move
+
+Prepared independently while the frozen v308 Main release runs. Not a release, no second final CI, no runtime/SW/storage/finance/identity change. Base `0be4c7f07a60e1d17ce5a5691261a52810701329`, tree `f8de9bb981a350b87215f8ac7c70ac268d749ea7`. Reconcile with the actually accepted Main before a PR.
+
+## Exact change and protected invariants
+
+Move the unchanged `UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs` invocation from the beginning of Cross3 to the end of Cross2. Every other workflow byte remains identical. Keep the existing three isolated runners, all serial test commands and both engines, assertions, deadlines, browser versions/cache keys, artifact uploads, FAST classifier, deployment dependencies and complete live body. Cross2's earlier recovery/finance/PWA checks retain their existing order; Cross3's remaining financial/storage suites start sooner. No new parallel browser processes inside a runner.
+
+Historical `docs/ci/cross-engine-baseline.v1.json` and `cross-engine-v221.v1.json`, and every historical sealed workflow hash remain unchanged. A small test-only normalizer accepts exactly one occurrence of the full two-engine command immediately after Cross2's existing position-removal command and before the Cross3 boundary. It reconstructs the historical placement before running the unchanged historical manifest/hash assertions. Missing, duplicated, reduced-engine, old or arbitrary placement is rejected. This explicitly reviewed scheduling delta does not grant a generic reordering exception.
+
+## Isolation and artifacts
+
+The moved entry point executes its imported gates serially, owns isolated browser/context state and closes its primary browser/context. It uses the same job-local static HTTP server; there is no shared production write or new persistent profile. Cross2 and Cross3 have no common generated JSON paths in the qualified v308 baseline artifacts. Six shared PNGs are byte-identical committed `artifacts/gates/ui-visual01` references; the browser-install log is job-local. Existing additional explicit Flatex UI/commit invocations stay in Cross3 even though the UI entry point also imports them. Their separate outputs can now both survive in distinct artifacts. Review the full report/engine union and moved per-shard inventories, including added duplicate evidence; do not demand identical archive sizes or accept counts as semantic proof.
+
+## Evidence and bounded benefit
+
+Corrected v308 PR run43016219473, attempt1: Chromium15:27, Cross1 12:19, Cross2 7:30, Cross3 28:55. UI group measured from its first explicit gate-start to final WebKit presentation result: 12:34.289. Arithmetic redistribution predicts a longest job about20:04 and roughly8:51 less pre-deploy waiting per comparable full phase. This is a scheduling hypothesis, not a measured saving; runner load, artifacts and the next real run can change it. Active implementation time and Work credits are UNKNOWN. Scope is one command move plus its narrowly required test-contract adaptation; no new CI platform. Additional cache/version migration or live parallelization is outside this candidate.
+
+Use the corrected v308 PR and current v308 Main as two normal before observations on the identical runtime/test tree. Required candidate PR and, after concrete approval, required Main provide two after observations; no duplicate runs for statistics. Compare unchanged test invocation manifest, every required engine/report, time to first feedback, critical-path wall time and summed job time. Real Main/deploy/live acceptance remains separate. Do not mark P-CI-B DONE before the actual comparisons and all acceptance/backup gates.
+
+## Local checks and next gates
+
+26 targeted CI contract tests PASS,0failures/skips; extracted Bash body syntax PASS. Negative controls cover dropped/duplicate suites, reduced engine sets, missing shard, unauthorized placement, weakened deployment dependency, unsafe cache keys, changed timeout and unsafe FAST classification. Initial unchanged historical placement assertions correctly rejected the proposed move. A local fixture-added trailing newline then caused the final live-body seal to fail; restored the exact fetched workflow bytes, keeping every historical hash unchanged. No remote workflow/CI change or retry resulted from these local failures.
+
+Next: finish v308 safely, reconcile this isolated candidate, freeze its exact SHA and run the full mandatory PR/Wallet and CI canary gates. Review original outputs, both artifact distributions and full coverage, preserve originals and backup/readback/restore. The existing #229 contract requires the user's concrete workflow-merge approval after the reviewable candidate is complete. Do not merge or deploy this workflow candidate merely under the general routine product permission. Once approved, qualify Main/deployment/actual production and post-release backup normally. Runtime version remains v308 for this scheduling-only change.

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {historicalCrossEngineLayout} from './ci-cross-engine-layout.mjs';
 const workflow=readFileSync(new URL('../.github/workflows/import.yml',import.meta.url),'utf8');
 const manifest=JSON.parse(readFileSync(new URL('../docs/ci/cross-engine-baseline.v1.json',import.meta.url),'utf8'));
 const v221=JSON.parse(readFileSync(new URL('../docs/ci/cross-engine-v221.v1.json',import.meta.url),'utf8'));
@@ -25,6 +26,7 @@ const recoveryCommand='RECOVERY_ENGINES=firefox,webkit node tests/browser-recove
 const command=/^(?:[A-Z][A-Z0-9_]*=\S+\s+)?node tests\/browser-[\w-]+\.mjs$/;
 const commands=s=>s.split('\n').map(l=>l.trim()).filter(l=>command.test(l));
 function validate(source){
+ source=historicalCrossEngineLayout(source);
  const begin=source.indexOf('  cross-engine:'),end=source.indexOf('\n  deploy:',begin);
  assert.ok(begin>=0&&end>begin);const cross=source.slice(begin,end),all=commands(cross);
  assert.equal(all.filter(c=>c===cashCommand).length,1,'Cash account UX mandatory exactly once in both engines');

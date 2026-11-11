@@ -353,8 +353,8 @@ jobs:
             SONIC_EVIDENCE_ENGINES=firefox,webkit node tests/browser-sonic-staking-evidence.mjs
             FLH03_ABCE_ENGINES=firefox,webkit node tests/browser-flh03-abce.mjs
             FLH03_08_ENGINES=firefox,webkit node tests/browser-position-removal.mjs
-          else
             UI_QUALITY_ENGINES=firefox,webkit node tests/browser-ui-quality.mjs
+          else
             CASH_ENGINES=firefox,webkit node tests/browser-cash-reconciliation.mjs
             INTEREST_ENGINES=firefox,webkit node tests/browser-interest-scenario.mjs
             IDB_ENGINES=firefox,webkit node tests/browser-idb-new-install.mjs
