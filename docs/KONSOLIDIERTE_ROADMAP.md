@@ -1,3 +1,7 @@
+## Planungsnachtrag · 11.11.2026
+
+Der [Sieben-Tage-Zielplan](EFF03_WEEK_TARGET_2026-11-11.md) ordnet die bestehende 41-Scope-Matrix ohne Statusumdeutung. Laufenden Kandidaten regulär abschließen, danach einmaliger Rest-/Kapazitätsabgleich und begrenzter P-CI-B-Vertrag; externe Nachweise und sämtliche Pflichtgates bleiben erhalten. Kein neuer DONE-Status aus Planung.
+
 ## Fortschreibung – 11.11.2026 v307 LIVE_ACCEPTED / V142
 
 [Abnahme](release-evidence/v307-live-accepted.json): begrenzter K4-Schnitt zum Schutz ungespeicherter Datenquellenentwürfe bei PWA-Updates abgeschlossen. Automatische Workerübernahme erhält den Entwurf nach Fokusverlust; bewusstes Aktualisieren fragt vor dem Verwerfen. Normalisierte gespeicherte Adressen, leere gespeicherte Schlüssel und tatsächliche fehlgeschlagene IDB-Schreibvorgänge sind geprüft. Native Workerfälle in PR/Main sowie ausdrücklich synthetische Controllerereignisse auf den tatsächlich ausgelieferten Handlern in drei Produktionsengines belegt.

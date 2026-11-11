@@ -1,3 +1,13 @@
+## ACTIVE · main-b180b1102417-20261111 · PR329 korrigierter Kandidat / neue Pflicht-CI läuft
+
+Neuer eingefrorener HEAD dde8cac4b366e61d73794f36b20953433338d247 / Tree f8de9bb981a350b87215f8ac7c70ac268d749ea7, PR-Merge cb19a44cae4ceb4ca25835882ec09789bddd723a. Derselbe Produktbranch nach vollständigem Ende des ersten Laufs geschützt fortgeschrieben. Neue Läufe43016219473(PR)/43016219168(Wallet) IN_PROGRESS; alle Gates erneut am Korrektur-SHA, keine identischen Retries/Abbrüche. Source14+vorhandene10Tests sowie vollständig lokal1380Units/0Fehler/0Skips+SyntaxPASS. Neue echte Vault-/Präferenzfehler nach Portfolio-Commit im nativen verschlüsselten UI-Restorevertrag; noch keine Browserabnahme dieses SHA.
+
+Erster Kandidat3bd46d5/Run43012561165/Wallet43012561133 vollständig SUCCESS, aber eigener nachträglicher Source-Befund (3post-commitEntwurfsverluste), deshalb NICHT integriert. Alle Originale/Quellstände und Fehlerrepros bleiben erhalten; gemeinsamer Abschlussbackup beider Kandidaten nach Korrekturqualifikation. v307/V142 unverändert LIVE_ACCEPTED, keine private Speichermutation.
+
+Neuen [Sieben-Tage-Plan](EFF03_WEEK_TARGET_2026-11-11.md) getrennt geprüft/verlinkt und unverändert erhalten; er ist ein Planungsziel, keine Abnahmegarantie. Laufenden Kandidaten zuerst sicher abschließen; danach begrenzter Rest-/Kapazitäts-/externenAbgleich und P-CI-B gemäß vorhandenem Vertrag. Genau nächste Aktion: bestehende neuen Läufe qualifizieren, Originale beider Kandidaten unveränderlich sichern/rücklesen/V143geschütztfortschreiben/tatsächlichrestaurieren, neue Reviews UND Kommentare prüfen; erst dann korrigierten Kandidaten integrieren, Main/Deploy/echteProduktion separat.
+
+---
+
 ## ACTIVE · main-b180b1102417-20261111 · PR329 eigene QA-Befunde / Korrektur vorbereitet
 
 Parallel eingegangener reiner Planungsnachtrag EFF03_WEEK_TARGET_2026-11-11.md (Commit e5af20d) frisch geprüft: nur separate Dokumentation, zentraler Owner/Checkpoint/Produkt/Main/CI/Sicherung unverändert; keine zweite Produktübernahme. Nachtrag erhalten, keine Überschreibung. Ursprüngliche PR-CI inzwischen vollständig SUCCESS; R1 bleibt wegen eigener QA-Befunde gesperrt.

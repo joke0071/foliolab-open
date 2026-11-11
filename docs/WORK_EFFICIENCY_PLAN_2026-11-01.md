@@ -1,3 +1,7 @@
+## Planungsnachtrag · 11.11.2026
+
+Der ergänzte [Sieben-Tage-Zielplan](EFF03_WEEK_TARGET_2026-11-11.md) ist erhalten und für die nächste sichere Planungsphase verlinkt. Laufenden PR329 zuerst mit allen Pflichtgates abschließen; keine Abnahmegarantie oder parallele Produktübernahme. Aktueller Stand nur im zentralen Checkpoint.
+
 ## EFF03 – Ein-Agenten-Modell · verbindliche Nutzerentscheidung 11.11.2026
 
 Der automatisierte Zwei-Agenten-Versuch ist beendet. Ein alleiniger HND01-Hauptagent verantwortet Planung, Architektur, Implementierung, eigene QA, Regression, CI, PRs, Integration, Deployment, tatsächliche Produktionsabnahme, private Sicherung, Restore und Dokumentation. Die vier zugehörigen ChatGPT-Automatisierungen einschließlich GitHub-Webhooks sind laut ausdrücklicher Nutzerentscheidung deaktiviert; keine neue Automatisierung wird eingerichtet.
