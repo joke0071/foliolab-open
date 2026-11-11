@@ -1,0 +1,20 @@
+{
+  "release": 309,
+  "status": "PREDECESSOR_LIVE_ACCEPTANCE_IDENTITY_CONFIRMED",
+  "owner": "main-b0e9dc91640e-20261111",
+  "main": "0b8c6de007fff4d16ee930aa852354e4d52d513f",
+  "rootVersion": 147,
+  "rootBytes": 405882880,
+  "rootSha256": "b8e127bd5bb1b21ae075c32c10adf2bdc8e40927dab852ad50c1cc1afd3f3dd2",
+  "incrementBytes": 355184640,
+  "incrementSha256": "5e1da44e0b1c1936fb45a7d5c77b89f68bcba5d174957a5c69ab47a595064a07",
+  "freshActualRestoreReadbackFiles": 223,
+  "restoreFailures": 0,
+  "productionOriginalSha256": "7a69d7cf1af8e246702fbbeb1b8cb1049a63dbd7e93a8b9999d217600c9392bf",
+  "productionJson": 178,
+  "productionPngDecoded": 1413,
+  "productionAssetHashesVerified": 154,
+  "historicalSemanticAndVisualQualification": "identity-bound qualified predecessor evidence reused",
+  "newHardwareAcceptance": false,
+  "newFullHistoricalRestore": false
+}
