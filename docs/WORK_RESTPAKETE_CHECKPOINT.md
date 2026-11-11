@@ -1,3 +1,13 @@
+## ACTIVE · main-518556806b3b-20261111 · v309 Mainabnahme / isoliertes Navigations-WIP
+
+Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89 unverändert, bestehender Mainlauf43067473948 läuft. Chromium sowie Cross1/2 SUCCESS; Cross3 noch IN_PROGRESS. Erste fünf Originalarchive einmal heruntergeladen/API-Digest/Bytes zugeordnet, drei fertige Testgruppen inhaltlich vorgeprüft; Teilprüfungen sind keine Gesamtfreigabe. v308 bleibt LIVE_ACCEPTED. V146 unverändert/keine offene private Mutation; Main/Deploy/tatsächliche Drei-Engine-Produktion und gebündelte Sicherung/V147/Readback/Restore bleiben vor v309LIVE_ACCEPTED verpflichtend.
+
+Genau ein aktiver isolierter Folgeschnitt B: Branch feature/navigation-overview-518556806b3b, WIP 21e465183ba2c2b46ae09e33e9dbbfc5a2fa00bc/Treef905a8fc51851548bbda33d4a60643e51becb9d7 auf aktuellem Main. Unterstreichung Desktopnav, natürliche Dashboardhöhen mit Donut/Konten neben Vermögensverlauf, kompaktere Bestandsdetails; Mehr→App installieren und nur bei direktem Angebot schließbarer Desktophinweis, bestehende Prompt-/Hilfelogik und UI-Präferenz mit Session-/Speicherfehlerfallback. Fünf gezielte Präferenztests und JS-Syntax PASS; Browser-/Sicht-/Fachprüfungen noch offen. Lokaler Chromiumstart hier an Hostsocket-EPERM gescheitert, kein BrowserPASS/keine Umgehung. Native neue Ablaufprüfungen vorbereitet, noch nicht ausgeführt. Kein PR, kein Freeze, keine finale Folge-CI vor sicherem v309-Abschluss. CI-B466be00 lediglich erhalten/zurückgestellt, kein zweiter aktiver Folgeschnitt. Öffentliche Gestaltungsreferenzen Finanzfluss/extraETF/Parqet gelesen; keine privaten Screenshots veröffentlicht.
+
+Frisch vor WIP-Schreibzugriff Main/Checkpoint/Branch und PR330Reviews/Issue-/Inlinekommentare unverändert/leere Listen. Alleiniger Owner bleibt gleich, keine zusätzliche Automation/Agenten. Installations-/Origin-/Datenformatidentität unverändert; Hardware-Android/OAuth/Zweigeräte/Sync weiter extern offen. Priorität weiterhin Abschluss A, dann vollständige Qualifikation B gemäß Wochenplan.
+
+---
+
 ## ACTIVE · main-518556806b3b-20261111 · PR330 integriert / Main43067473948 läuft
 
 PR330 mit expectedHEAD5d755b89 geschützt integriert. **Main0b8c6de007fff4d16ee930aa852354e4d52d513f / Treec72516b2012c4102642341166eaef5f6940a7c89** ist exakt der qualifizierte Kandidat. Bestehender automatischer Mainlauf **43067473948 IN_PROGRESS**; keine Doppel-CI oder Abbrüche. [PR-Abnahme und V146](release-evidence/v309-pr330-qualified.json) unverändert gültig:1387Units, dreiEngines,239JSON/2094PNG/609Vergleiche/50direktgeprüfteKontexte; tatsächlicher inkrementeller Restore92Dateien/0Fehler. V146frischgepinnt/ByteReadback bestätigt, keine offene private Mutation.
