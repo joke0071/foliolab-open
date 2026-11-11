@@ -1,3 +1,7 @@
+## Korrektur nach erstem PR328-Versuch
+
+Lauf42990255793 am HEAD5035a9345aecb7cad16a2cc26db83c9c8e25425c ist kein PASS: neuer Formularvertrag prüfte den normalisierten Endpoint fälschlich in JSON.parse(record.raw).settings statt record.settings. backup() setzt die transportable raw.settings absichtlich auf defaultSettings(); PortfolioStorage.save() schreibt die tatsächlichen Einstellungen separat in denselben kanonischen Record. Zwei Assertions auf den richtigen gespeicherten Einstellungsdatensatz korrigiert; keine Produkt-/Speicher-/Testgateänderung. Tatsächliche native Worker-/Entwurfs-/Cancel-/Verwerf-/exakteIDB-Fälle aus Shard2 Firefox/WebKit bereits PASS, keine pauschale Kandidatenfreigabe daraus. Keine unveränderte Wiederholung oder Abbruch; nach regulärem Ende neuer SHA und vollständige Pflicht-CI. Zehn lokale Source-Verträge und Syntax erneut PASS. Fehlgeschlagene Originale erhalten und beim Kandidatenabschluss gemeinsam sichern.
+
 ## Implementierter Kandidat v307 · main-75ea9fa46556-20261111
 
 Gemeinsames K4-Ergebnis: Formularentwürfe nach Fokusverlust bei automatischem Update erhalten; bewusstes Aktualisieren erst nach bestätigtem Verwerfen. Bestehende Formwerte werden unmittelbar mit den aktuellen gespeicherten Modelleinstellungen verglichen; keine zweite Schlüsselkopie oder Entwurfspersistenz. Semantisch gleiche HTTPS-Endpunkte bleiben sauber, ungültige neue Eingaben geschützt. Bestehende Busy-/Editor-/Dialog-/Fokusgrenzen bleiben erhalten.

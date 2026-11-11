@@ -30,11 +30,11 @@ export async function pwaUpdateDraftBrowserContract({p:parent,engine}){
   await p.locator('[name=coinGeckoKey]').fill('SYNTHETIC_SAVED_KEY');
   await p.locator('#apiSettings').evaluate(form=>form.requestSubmit());
   await p.waitForFunction(()=>document.getElementById('toast').textContent==='Datenquellen und Zugänge lokal gespeichert.');
-  assert.equal(JSON.parse((await record()).raw).settings.publicInstrumentEndpoint,'https://example.invalid');
+  assert.equal((await record()).settings.publicInstrumentEndpoint,'https://example.invalid');
   await cleanReload();await more();
   await p.locator('[name=coinGeckoKey]').fill('');await p.locator('#apiSettings').evaluate(form=>form.requestSubmit());
   await p.waitForFunction(()=>document.getElementById('toast').textContent==='Datenquellen und Zugänge lokal gespeichert.');
-  assert.equal(JSON.parse((await record()).raw).settings.coinGeckoKey,'');await cleanReload();await more();
+  assert.equal((await record()).settings.coinGeckoKey,'');await cleanReload();await more();
   // One actual failed IDB put; rollback must not mark the still-visible draft clean.
   const beforeFailure=await record(),failureDocument=await p.evaluate(()=>performance.timeOrigin);
   await p.locator('[name=coinGeckoKey]').fill('SYNTHETIC_FAILED_SAVE_DRAFT');
