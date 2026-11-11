@@ -1897,7 +1897,7 @@
 .app-startup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#f7f9f6;color:#173b2d;padding:24px;visibility:hidden;animation:startup-show 0s .3s forwards}
 .app-startup[hidden]{display:none}.startup-card{max-width:420px;text-align:center}.startup-card>.portfolio-loader{width:88px;height:88px}.startup-card p{line-height:1.6}.startup-card a{min-height:44px}
 @keyframes startup-show{to{visibility:visible}}
-.startup-delayed .portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}
+.startup-failed .portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}
 @media(prefers-reduced-motion:reduce){.portfolio-loader-orbit{animation:none;transform:rotate(-90deg)}}
 
 /* Native Bitpanda import disclosures retain comfortable pointer/keyboard targets. */

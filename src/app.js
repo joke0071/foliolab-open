@@ -261,7 +261,7 @@ function renderReferences(){
  }else{tools.innerHTML='';status.textContent=archived.size?archived.size+' archivierte Referenzwerte sind über „Ansicht“ erreichbar. Finanzwerte bleiben enthalten.':'';}
  if(canUndoCSV(model,referenceRemovalReceipt))tools.innerHTML+='<div class="settings-actions"><button type="button" class="btn outline" data-reference-manage="undo-removal" '+(!bookingWritable()?'disabled':'')+'>Referenzlöschung rückgängig</button></div>';
  $('snapshotList').innerHTML=visible.length?visible.map(s=>{const permission=permissionById.get(s.id);
-  return '<div class="history-row reference-row" data-reference-id="'+esc(s.id)+'">'+(referenceSelecting?'<label class="selection-check"><input type="checkbox" data-reference-select="'+esc(s.id)+'" '+(selectedReferenceIds.includes(s.id)?'checked ':'')+'aria-label="Stichtag '+esc(dateLabel(s.date))+' auswählen"></label>':'')+'<div class="reference-copy"><div class="history-title">'+esc(dateLabel(s.date))+'</div><div class="history-sub">'+esc(s.note||'Portfolio-Stand')+'<br>'+esc(referenceOrigin(s))+(archived.has(s.id)?' · archiviert':'')+'</div>'+(permission.editReason?'<span class="reference-protection" title="'+esc(permission.editReason)+'">Herkunft geschützt · Quelle prüfen.</span>':'')+'</div><div class="holding-r"><strong class="history-amount">'+money(s.total)+'</strong>'+(referenceSelecting&&!permission.editReason?'<div class="snapshot-row-actions"><button type="button" class="link-button" data-action="edit-snapshot" data-id="'+esc(s.id)+'" title="Referenzwert bearbeiten" aria-label="Stichtag vom '+esc(dateLabel(s.date))+' bearbeiten">Bearbeiten</button></div>':'')+'</div></div>';
+  return '<div class="history-row reference-row" data-reference-id="'+esc(s.id)+'">'+(referenceSelecting?'<label class="selection-check"><input type="checkbox" data-reference-select="'+esc(s.id)+'" '+(selectedReferenceIds.includes(s.id)?'checked ':'')+'aria-label="Stichtag '+esc(dateLabel(s.date))+' auswählen"></label>':'')+'<div class="reference-copy"><div class="history-title">'+esc(dateLabel(s.date))+'</div><div class="history-sub">'+esc(s.note||'Portfolio-Stand')+'<br>'+esc(referenceOrigin(s))+(archived.has(s.id)?' · archiviert':'')+'</div>'+(permission.editReason?'<span class="reference-protection" title="'+esc(permission.editReason)+'">Datum und Betrag geschützt · Notiz bearbeitbar.</span>':'')+'</div><div class="holding-r"><strong class="history-amount">'+money(s.total)+'</strong>'+(referenceSelecting?'<div class="snapshot-row-actions"><button type="button" class="link-button" data-action="edit-snapshot" data-id="'+esc(s.id)+'" aria-label="Stichtag vom '+esc(dateLabel(s.date))+' bearbeiten">Bearbeiten</button></div>':'')+'</div></div>';
  }).join('')+(rows.length>visible.length?'<button type="button" class="btn outline" data-reference-manage="more">Weitere '+Math.min(100,rows.length-visible.length)+' anzeigen</button>':''):empty('Keine Referenzwerte in dieser Ansicht.');
 }
 function focusReferences(){($('referenceSelectVisible')||$('manageReferences')).focus();}
@@ -2042,22 +2042,21 @@ function openBooking(){
 function openSnapshot(s=null){
  assertBookingWritable();
  const editing=Boolean(s),permission=editing?referencePermissions(model,s.id):null;
- if(permission?.editReason)return notify(permission.editReason,true);
- const expectedModel=JSON.stringify(model),locked=Boolean(permission?.startProtected),total=s?.totalEURExact??String(s?.total??'');
+ const expectedModel=JSON.stringify(model),locked=Boolean(permission?.startProtected||permission?.editReason),total=s?.totalEURExact??String(s?.total??'');
  showDialog(editing?'Referenzwert bearbeiten':'Stichtag hinzufügen','HISTORISCHE REFERENZWERTE',
-  (editing?'<p class="dialog-intro">Eindeutig manuell erfassten Wert korrigieren. Vor einer Änderung von Datum oder Betrag wird die Wirkung ausdrücklich zur Bestätigung angezeigt. Alte Revisionen bleiben erhalten.</p>':
+  (editing?'<p class="dialog-intro">'+(permission.editReason?esc(permission.editReason)+' Die Notiz kann bearbeitet werden.':'Eindeutig manuell erfassten Wert korrigieren. Vor einer Änderung von Datum oder Betrag wird die Wirkung ausdrücklich zur Bestätigung angezeigt. Alte Revisionen bleiben erhalten.')+'</p>':
    '<p class="dialog-intro">Heute kann der aktuelle Portfoliowert erfasst werden. Für frühere Tage ist der damals tatsächlich bekannte Gesamtwert erforderlich. Vorhandene Originalwerte werden nicht überschrieben.</p>')+
   field('Stichtag','date',s?.date||new Date().toISOString().slice(0,10),'date','required max="'+new Date().toISOString().slice(0,10)+'"'+(locked?' readonly':''))+
   field(editing?'Gespeicherter Gesamtwert in EUR':'Historischer Gesamtwert in EUR (bei früherem Datum erforderlich)','manualTotalEUR',total,'text','inputmode="decimal"'+(editing?' required':'')+(locked?' readonly':'')+' placeholder="z. B. 12345,67"')+
   field('Notiz (optional)','note',s?.note||'','text','maxlength="180"')+
-  (locked?'<p class="small-help" id="snapshotLocked">Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.</p>':'')+
+  (locked?'<p class="small-help" id="snapshotLocked">'+(permission.editReason?'Originalquelle: Datum und Gesamtwert bleiben geschützt. Die Notiz wird mit ihrer bisherigen Revision gespeichert.':'Beginn der Renditeerfassung: Datum und Startwert sind geschützt, die Notiz kann bearbeitet werden.')+'</p>':'')+
   (editing?'<div class="booking-delete-action"><button type="button" id="deleteSnapshot" class="btn outline selection-danger" '+(permission.deleteReason?'disabled aria-describedby="referenceEditorDeleteReason"':'')+'>Stichtag löschen</button>'+(permission.deleteReason?'<p class="small-help" id="referenceEditorDeleteReason">'+esc(permission.deleteReason)+'</p>':'')+'</div>':''),
   async v=>{
    assertBookingWritable();await portfolioStore.assertCurrent();assertBookingWritable();
    if(editing){
     const values={date:v.date,totalEUR:v.manualTotalEUR,note:v.note},preview=previewReferenceEdit(model,s.id,values);
     const amount=value=>money(Number(value))+' (genau '+String(value).replace('.',',')+' EUR)';
-    if(preview.correction&&!confirm('Änderung prüfen: '+dateLabel(preview.before.date)+' · '+amount(preview.before.totalEURExact)+' → '+dateLabel(preview.after.date)+' · '+amount(preview.after.totalEURExact)+'\n'+preview.impact+'\nDiese manuelle Korrektur bestätigen?'))return;
+    if(preview.correction&&!confirm('Änderung prüfen: '+dateLabel(preview.before.date)+' · '+amount(preview.before.totalEURExact)+' → '+dateLabel(preview.after.date)+' · '+amount(preview.after.totalEURExact)+'\n'+preview.impact+'\nDiese manuelle Korrektur bestätigen?'))return false;
     model=prepareReferenceEdit(model,s.id,values,{expectedModel,confirmed:true});
    }else model=prepareReferenceAdd(model,{date:v.date,note:v.note,manualTotalEUR:v.manualTotalEUR},{expectedModel,confirmed:true});
    await save();renderHistory();notify(editing?'Referenzwert aktualisiert.':'Stichtag gespeichert.');

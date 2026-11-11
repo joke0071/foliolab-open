@@ -76,7 +76,7 @@ test('manual correction previews actual before/after values and preserves origin
  const edited=prepareReferenceEdit(a,id,values,consent(a)),s=edited.snapshots[1];assert.equal(raw(a),before);assert.equal(s.totalEURExact,'111.25');assert.equal(s.revisions.at(-1).totalEURExact,'110');assert.equal(s.revisions.at(-1).date,'2024-01-01');assert.equal(edited.performanceFlowTrackingSince,m.performanceFlowTrackingSince);assert.deepEqual(edited.bookingPresentation,a.bookingPresentation);assert.deepEqual(edited.positions,a.positions);
 });
 test('automatic, legacy, unknown and contradictory manual sources block correction at runtime',()=>{
- for(const kind of ['current','legacy','unknown','contradictory']){const m=fixture(),s=m.snapshots[1];if(kind==='contradictory')s.byAccount={a:110};else{s.source=kind;s.valuationStatus=kind==='legacy'?'legacy-unverified':'observed';}const before=raw(m);assert.ok(referencePermissions(m,s.id).editReason);assert.throws(()=>prepareReferenceEdit(m,s.id,{note:'Changed'},consent(m)),/Herkunft/);assert.equal(raw(m),before);}
+ for(const kind of ['current','legacy','unknown','contradictory']){const m=fixture(),s=m.snapshots[1];if(kind==='contradictory')s.byAccount={a:110};else{s.source=kind;s.valuationStatus=kind==='legacy'?'legacy-unverified':'observed';}const before=raw(m);assert.ok(referencePermissions(m,s.id).editReason);assert.throws(()=>prepareReferenceEdit(m,s.id,{totalEUR:'111',note:'Changed'},consent(m)),/Herkunft/);assert.equal(raw(m),before);}
 });
 test('performance start and duplicate dates stay guarded; note edits retain all financial values',()=>{
  const m=fixture(),id=m.snapshots[0].id;assert.equal(referencePermissions(m,id).startProtected,true);assert.throws(()=>prepareReferenceEdit(m,id,{totalEUR:'99'},consent(m)),/Startstichtag/);assert.throws(()=>prepareReferenceEdit(m,m.snapshots[1].id,{date:m.snapshots[0].date},consent(m)),/existiert/);
@@ -136,4 +136,22 @@ test('10,000 reference IDs retain exact explicit scope across pagination and sta
  const narrow=all.slice(-1),summary=referenceSelectionSummary(m,selected,narrow);assert.equal(summary.hiddenCount,9999);assert.equal(summary.currentCount,10000);
  assert.deepEqual(updateReferenceSelection(m,selected,{type:'toggle',id:narrow[0]},narrow),all.slice(0,-1));
  const stale=structuredClone(m);stale.snapshots.pop();assert.equal(referenceSelectionSummary(stale,selected,all.slice(0,-1)).requiresRefresh,true);assert.throws(()=>updateReferenceSelection(stale,selected,{type:'cycle',pageIds:page,matchingIds:all.slice(0,-1)},all.slice(0,-1)),/veraltet/);assert.equal(raw(m),before);
+});
+
+
+test('protected source notes gain an editor without changing provenance, exact observations, history or journal',async()=>{
+ for(const [source,valuationStatus]of [['current','observed'],['current','partial'],['legacy','legacy-unverified'],['unknown','unknown']]){
+  const m=fixture(),s=m.snapshots[1];s.source=source;s.valuationStatus=valuationStatus;
+  if(source==='current'){s.byAccount={a:110};s.byPosition={cash:'110'};s.quoteTimes=[{positionId:'cash',updatedAt:'2024-01-01'}];}
+  const original=clone(s),before=raw(m),view=historicalWealthView(m,{basis:'observed'}).samples.map(x=>({date:x.date,total:x.total}));
+  const a=prepareReferenceEdit(m,s.id,{date:s.date,totalEUR:s.totalEURExact,note:'Synthetic annotated original'},consent(m)),after=a.snapshots[1];
+  assert.equal(raw(m),before);assert.equal(after.source,original.source);assert.equal(after.valuationStatus,original.valuationStatus);assert.equal(after.totalEURExact,original.totalEURExact);assert.equal(after.date,original.date);assert.deepEqual(after.byAccount,original.byAccount);assert.deepEqual(after.byPosition,original.byPosition);assert.deepEqual(after.quoteTimes,original.quoteTimes);
+  assert.equal(after.note,'Synthetic annotated original');assert.equal(after.revisions.at(-1).note,original.note);assert.equal(after.revisions.at(-1).source,original.source);assert.equal(after.revisions.at(-1).valuationStatus,original.valuationStatus);
+  for(const key of ['positions','bookings','journalEntries','openingPositions','externalCashFlows','performanceFlowTrackingSince'])assert.deepEqual(a[key],m[key]);
+  assert.deepEqual(historicalWealthView(a,{basis:'observed'}).samples.map(x=>({date:x.date,total:x.total})),view);assert.equal(portfolioTwr(a,'2023-01-01','2024-01-01'),portfolioTwr(m,'2023-01-01','2024-01-01'));assert.equal(portfolioXirr(a,'2023-01-01','2024-01-01'),portfolioXirr(m,'2023-01-01','2024-01-01'));
+  const restored=safeImport(JSON.parse(backup(a,{includeHistory:true})));assert.equal(raw(restored.snapshots),raw(a.snapshots));
+  const encrypted=await encryptBackup(backup(a,{includeHistory:true}),'Synthetic annotation 2026!');const recovered=safeImport(JSON.parse(await decryptBackup(JSON.parse(encrypted),'Synthetic annotation 2026!')));assert.equal(raw(recovered.snapshots),raw(a.snapshots));
+  assert.throws(()=>prepareReferenceEdit(a,s.id,{date:'2024-01-02',note:'forged'},consent(a)),/Herkunft/);assert.throws(()=>prepareReferenceEdit(a,s.id,{totalEUR:'111',note:'forged'},consent(a)),/Herkunft/);
+  assert.throws(()=>prepareReferenceEdit(a,s.id,{note:'stale'},consent(m)),/veraltet/);assert.equal(raw(m),before);
+ }
 });
