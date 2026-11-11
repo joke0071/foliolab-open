@@ -1,3 +1,7 @@
+## Nutzerbefunde · Navigation, Installation und Kernfunktionen · 11.11.2026
+
+Die [konkrete Ergänzung im bestehenden Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md#nutzerbefunde--11112026--bestehende-pakete-konkretisieren) ordnet Stichtagsbearbeitung und Android-Startanimation funktional vorrangig ein. Navigation einschließlich **Mehr → App installieren**, dauerhaft schließbarem Desktopseitenleistenhinweis und Entfernung der Headerglyphen gemeinsam mit Dashboard-/Kontenlayout bündeln. Vorhandene Verwaltungs-/Installationslogik wiederverwenden, konkrete Regressionen begrenzt öffnen, private Screenshots nicht veröffentlichen. Laufenden v308 nicht erweitern; keine zusätzliche CI/Gesamtanalyse, keine Aktivierung zurückgestellter Optionen. Bestehender alleiniger Owner und sämtliche Schutzgates bleiben erhalten.
+
 ## Aktive Prozessregeln
 
 Maßgeblich sind die Ein-Agenten-Entscheidung und der Wochenauftrag vom 11.11.2026: ein alleiniger HND01-Hauptowner; **Rotation bei tatsächlicher Kontextlast, technischer Grenze oder ausdrücklichem Nutzerauftrag am sicheren Punkt, keine feste Release-/Paketzahl und keine Abgabe nach bloßen Leseschritten.** Kein separater QA-Agent oder Webhook erforderlich; unabhängige maschinelle Nachweise, gezielte Zusatzprüfung kritischer Unklarheiten und alle technischen Schutzgates bleiben bindend. Ältere widersprechende organisatorische Regeln sind unten ausdrücklich historisch markiert. Produkt-/Owner-/Kandidatenstatus ausschließlich im aktuellen zentralen Checkpoint prüfen; verworfene Snapshot-SHAs sind keine Integrationsgrundlage.
