@@ -2113,6 +2113,7 @@
 .dashboard-providers .position-detail-note,.dashboard-providers .position-detail-source{font-size:11px;line-height:1.45;margin-top:8px}
 .dashboard-providers .position-period{margin-top:10px;gap:6px}
 .dashboard-providers .position-period button{min-height:44px}
+.dashboard-providers .position-history-compact>summary{color:#4d6756}
 .dashboard-providers .position-history-plot{margin-top:8px}
 .dashboard-providers .position-history-chart.chart-area{height:146px;margin-top:8px}
 .dashboard-providers .position-booking-history{margin-top:8px}

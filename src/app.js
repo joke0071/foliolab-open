@@ -2712,6 +2712,18 @@ $('apiSettings').addEventListener('submit',async e=>{
    try{await prompt.prompt();const choice=await prompt.userChoice;if(choice?.outcome==='dismissed')notify('Installation abgebrochen.');}catch{notify('Installation konnte nicht gestartet werden.',true);}
    finally{installPromptBusy=false;updateInstallControls();restoreInstallFocus(button);}
   }));
+  // Firefox can leave a programmatically focused hint below a short sidebar.
+  // Scroll only this existing sidebar, never the portfolio page or its data.
+  const revealInstallHintFocus=()=>{
+   const sidebar=$('sidebarInstallHint').closest('.sidebar'),target=document.activeElement;
+   if(!sidebar||!$('sidebarInstallHint').contains(target)||!target?.getClientRects().length)return;
+   const box=sidebar.getBoundingClientRect(),r=target.getBoundingClientRect();
+   const top=Math.max(0,box.top)+6,bottom=Math.min(innerHeight,box.bottom)-6;
+   if(r.bottom>bottom)sidebar.scrollTop+=r.bottom-bottom;
+   else if(r.top<top)sidebar.scrollTop-=top-r.top;
+  };
+  $('sidebarInstallHint').addEventListener('focusin',revealInstallHintFocus);
+  window.addEventListener('resize',revealInstallHintFocus);
   $('dismissInstallHint').addEventListener('click',()=>{
    installHintPreference.dismiss();updateInstallControls();restoreInstallFocus(null);
   });

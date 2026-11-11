@@ -33,7 +33,11 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   e.userChoice=outcome==='pending'?new Promise(r=>window.__installResolve=r):Promise.resolve({outcome});
   window.dispatchEvent(e);return e.defaultPrevented;
  },outcome);
- const scan=async p=>{assert.deepEqual(await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations.map(v=>v.id)),[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));};
+ const scan=async p=>{
+  const violations=await p.evaluate(async()=>(await axe.run({runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}})).violations);
+  if(violations.length){writeFileSync(`artifacts/gates/navigation-installation/${engine}-a11y-failure.json`,JSON.stringify({engine,result:'FAIL',violations},null,2));await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-a11y-failure.png`});console.error('NAVIGATION_A11Y_FAILURE',JSON.stringify(violations));}
+  assert.deepEqual(violations.map(v=>v.id),[]);assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ };
  try{
   const p=await fresh(),before=await record(p);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'no sidebar offer without a direct prompt');
@@ -50,7 +54,9 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    writeFileSync(`artifacts/gates/navigation-installation/${engine}-short-sidebar-failure.json`,JSON.stringify({engine,result:'FAIL',geometry},null,2));
    await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-short-sidebar-failure.png`});throw error;
   }
-  assert.ok(await p.locator('#dismissInstallHint').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'short desktop sidebar scrolls the focused dismissal action into view');await scan(p);await p.setViewportSize({width:1440,height:900});
+  assert.ok(await p.locator('#dismissInstallHint').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'short desktop sidebar scrolls the focused dismissal action into view');
+  await p.keyboard.press('Shift+Tab');assert.equal(await p.evaluate(()=>document.activeElement.dataset.installLocation),'sidebar');await p.keyboard.press('Tab');assert.equal(await p.evaluate(()=>document.activeElement.id),'dismissInstallHint');assert.ok(await p.locator('#dismissInstallHint').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'native keyboard focus also remains completely visible in the short sidebar');
+  await p.setViewportSize({width:1440,height:300});await p.waitForFunction(()=>{const e=document.getElementById('dismissInstallHint'),r=e.getBoundingClientRect();return innerHeight===300&&document.activeElement===e&&r.top>=0&&r.bottom<=innerHeight;},null,{timeout:5000});await scan(p);await p.setViewportSize({width:1440,height:900});
   await p.locator('#dismissInstallHint').click();assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.dataset.page),'more','dismissal leaves a visible keyboard target');
   for(const page of ['dashboard','positions','more'])await nav(p,page);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);await p.reload();await ready(p);await prompt(p);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'persistent dismissal survives reload');
