@@ -1,3 +1,9 @@
+## Technischer Haltepunkt · 11.11.2026 · PR330 / V145
+
+v308 bleibt LIVE_ACCEPTED. [PR330-Befund](release-evidence/v309-ci-blocked.json): Stichtagsnotizen und Loader in tatsächlichem Chromium gezielt PASS,1385Units/0Fehler/0Skips; Gesamt-CI nicht qualifiziert. Drei Cross-Jobs beider Kandidaten scheitern vor Tests an wiederholtem Ubuntu-DNS-/Installationsfehler. Weitere reine Legacy-Testkorrektur28bfce08 vorbereitet, native Qualifikation offen, PR-Branch unverändert und kein dritter blinder Lauf. V145 gepinnt rückgelesen/tatsächlich75Manifestdateien restauriert,0Fehler; alle elf Originalarchive beider Läufe und ältere Ketten erhalten. [Technische Abgabe/Fortsetzung](HANDOVER_a845c64598ab_2026-11-11.md). Gesamt-K3/K5/K6 und alle26 offenen Scopes behalten ihre Abnahmegrenzen; kein neuer DONE-Status aus Implementierung oder Teilprüfung. Navigation/Installation/Dashboard bleibt das nächste beauftragte Nutzerpaket nach sicherem Funktionsabschluss. Aktueller Owner/Stand ausschließlich im Checkpoint.
+
+---
+
 ## Fortschreibung · 11.11.2026 · v308 / aktuelle Nutzerbefunde
 
 [v308 LIVE_ACCEPTED](release-evidence/v308-live-accepted.json), Main0be4c7f07a60e1d17ce5a5691261a52810701329/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7; V144 geschützt rückgelesen und tatsächlicher inkrementeller Restore26Manifestdateien/0Fehler. Begrenzte v306-Navigationsfokus-, v307-Entwurfs- und v308-Reset-/Konfigurationsrestore-Abschlüsse erhalten; Gesamt-K3/K4/K6 bleiben offen im exakt benannten Umfang. [PR330](https://github.com/joke0071/foliolab-open/pull/330) für Stichtagsnotizen/verzögerten Start ist nur eingefrorener Kandidat, noch keine Release-/Hardwareabnahme.

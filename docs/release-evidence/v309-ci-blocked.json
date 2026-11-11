@@ -1,0 +1,83 @@
+{
+  "status": "CI_BLOCKED_EXTERNAL_AND_PREPARED_TEST_CORRECTION",
+  "releaseAccepted": false,
+  "version": 309,
+  "owner": "main-a845c64598ab-20261111",
+  "lastLiveAccepted": 308,
+  "main": "0be4c7f07a60e1d17ce5a5691261a52810701329",
+  "mainTree": "f8de9bb981a350b87215f8ac7c70ac268d749ea7",
+  "pr": 330,
+  "testedHead": "af7673336a08a7da79e45eb2c551d0cc271d4593",
+  "testedTree": "646689659d4febbf7625ca56812fd8735fe4294a",
+  "testedMerge": "575a9c51d44f07a479d5957a66f28d29190de9a8",
+  "run": 43040242297,
+  "attempt": 1,
+  "walletRun": 43040242290,
+  "wallet": "SUCCESS",
+  "unitTests": 1385,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "targetedChromium": {
+    "references": "PASS",
+    "loadingPwa": "PASS",
+    "physicalAndroid": false,
+    "imagesWidthsReviewed": [
+      320,
+      390,
+      430,
+      768,
+      1440
+    ],
+    "delayedImageReviewed": true,
+    "overallChromiumJob": "FAIL_STALE_LEGACY_UI_EXPECTATION",
+    "imageReviewSource": "Reference management views from first candidate, identical product code to corrected candidate; delayed-loader view from corrected candidate."
+  },
+  "crossEngine": {
+    "jobs": [
+      130589905308,
+      130589905404,
+      130589905431
+    ],
+    "status": "FAIL_BEFORE_REGRESSION",
+    "cause": "Temporary failure resolving archive.ubuntu.com; unchanged 8-minute install timeout",
+    "repeatedOnBothDistinctCandidates": true,
+    "thirdBlindRunStarted": false
+  },
+  "preparedCorrection": {
+    "head": "28bfce08407612257a09b177a23c9975e7e061f2",
+    "tree": "e8eaaec1647160e7bbcaa69779c6b97530dd6ac8",
+    "branch": "wip/pr330-legacy-contract-a845c64598ab",
+    "scope": "Legacy position-details expectations now require note-only editor, readonly date/amount and byte-identical cancel; product code unchanged",
+    "syntax": "PASS",
+    "nativeQualification": "PENDING",
+    "prBranchMoved": false
+  },
+  "firstCandidate": {
+    "head": "9c19de226357de67fc3d4327d02d148041d92fc1",
+    "run": 43038133160,
+    "accepted": false,
+    "cause": "New dialog listener race plus same three cross-engine DNS/setup failures",
+    "archives": 5
+  },
+  "secondCandidateArchives": 6,
+  "totalOriginalArchives": 11,
+  "allArchiveDigestsSizesCRCsVerified": true,
+  "mergePerformed": false,
+  "workflowChanged": false,
+  "sourceOrIdentityFormatChanged": false,
+  "next": "Preserve current PR head. After infrastructure recovery recheck owner/Main/Tree/refs/reviews/comments/Actions/private root; then protected PR ref movement to prepared correction and fresh full mandatory CI at that SHA. Do not integrate either failed SHA. Preserve all first/second originals. Main/production/PR backup gates still required.",
+  "backup": {
+    "version": 145,
+    "previousVersion": 144,
+    "bytes": 405811200,
+    "sha256": "92d5b1a052571b8ee33d0fa2827468a24f63e33ab7982af4ab9f4dc0a69b6aed",
+    "immutableIncrementBytes": 96921600,
+    "immutableIncrementSha256": "94d83b8fe554994ed4801a5d42c4d35c67cf9dd5a1b5ee2b01e61fc497258280",
+    "manifestPaths": 70,
+    "pinnedRootAndIncrementReadback": true,
+    "actualExtractedReadbackPaths": 75,
+    "restoreFailures": 0,
+    "entirePreviousRootAndAllOlderChainsPreserved": true,
+    "historicalUnchangedFullRestoreEvidenceReused": true
+  }
+}
