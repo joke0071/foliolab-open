@@ -6,6 +6,18 @@ Dieser Nachtrag ist ein Ausführungs- und Priorisierungsplan, keine zweite Roadm
 
 **Ziel ist nicht Garantie.** Eine vollständige Umsetzung und produktive Abnahme aller 41 Positionen innerhalb der Woche ist derzeit nicht belastbar nachgewiesen: echte Restaufwände, verfügbare aktive Agentenzeit, Originalbelege, OAuth-/Betreiberfreigaben und Gerätezugang sind nicht vollständig geklärt. BLOCKED_EXTERNAL, fehlende Zustimmung, nur implementierter Code oder ein vorbereiteter Test gelten niemals als DONE. Das Ziel darf nicht durch Scope-Streichung, Umbenennung oder Abschwächung von Abnahmen scheinbar erfüllt werden.
 
+## Ausführung: zusätzliche Effizienzhebel · 11.11.2026
+
+Die [konkreten Grenzen und Erfolgskriterien](WORK_EFFICIENCY_PLAN_2026-11-01.md#eff03--nächste-organisatorische-entlastung--11112026) ergänzen bestehendes EFF03/HND01 und P-CI-B; keine neuen Produkt-Scopes. Reihenfolge: **laufenden v309-Abschluss gemäß frischem Checkpoint vollständig schließen → vorbereitetes Navigations-/Dashboard-/Installationspaket qualifizieren → vorhandenen P-CI-B-Kandidaten nach #229 separat prüfen.** Stichtags-/Animationsbefunde bleiben entsprechend ihrem eigenen fachlichen Vertrag priorisiert; der Hauptagent passt die Reihenfolge nur anhand frischer Blocker an.
+
+- **Sofort beim nächsten eigenen sicheren Checkpoint (hoch):** aktiven Kopf auf Owner, gültige SHAs/Kandidat, offene Gates, Sicherungsstand und nächste Aktion verdichten. Historische Einträge/Belege erhalten; höchstens 30 Minuten redaktionell. Messung: aktive Zeit und Lesemenge für Wiederaufnahme, keine durch Verdichtung verlorene Pflichtinformation.
+- **Bei ohnehin nötigen Kontrollen (mittel):** Statuslesungen von schreib-/freigabekritischen Kollisionsprüfungen unterscheiden; über zwei reguläre Abschnitte wiederholte Vollinventuren und Zeit erfassen, höchstens 30 Minuten Zusatzanalyse. Jede Mutation/Übernahme erhält weiterhin den frischen einschlägigen vollständigen Identitäts- und Konkurrenzabgleich.
+- **Beim nächsten nativen Test (mittel):** belegte lokale Browsergrenze einmal vermerken, identische unveränderte Fehlstarts vermeiden, tatsächlichen Browsernachweis in geeigneter Umgebung erbringen; höchstens 15 Minuten Zusatzarbeit. Kein lokaler Fehlschlag wird zum PASS.
+- **Bei regulärer Artefaktauswertung (bedingt):** wiederkehrende Form und aktive Einordnungszeit messen; höchstens eine klar definierte Verdichterform innerhalb der bestehenden 60-Minuten-Grenze und des halbtägigen Gesamtbudgets ergänzen, falls sie sich amortisiert. UNKNOWN/Negativfälle, unabhängige Oracles, Originale und Sichtprüfung bleiben Pflicht.
+- **Nach dem Nutzerpaket (hoch):** P-CI-B mit zwei geeigneten regulären Vorher/Nachher-Läufen und vollständiger Manifest-/Drei-Engine-Prüfung bewerten; keine Behauptung einer bereits erzielten Beschleunigung. Konkrete Workflowfreigabe nach #229 bleibt nötig.
+
+Erfolg wird an tatsächlich verkürzter Zeit bis zum vollständig abgenommenen Paket gemessen; CI-Wandzeit, aktive Arbeit, Fehlkorrekturen, Auswertung und Sicherung getrennt führen. Die sieben Tage sind weiterhin ein Ziel ohne Scope-Streichung, Gateverkürzung oder automatische Fertigmeldung.
+
 ## Nutzerbefunde · 11.11.2026 · bestehende Pakete konkretisieren
 
 Gegen aktuellen Main `0be4c7f07a60e1d17ce5a5691261a52810701329` und bestehende Scope-Zuordnung geprüft. Private Screenshots ausschließlich lokal angesehen; öffentliche Belege nur synthetisch. Keine neue Roadmap und keine Erweiterung des eingefrorenen v308. Nach dessen vollständigem Abschluss Funktionsbefunde priorisieren; vorbereiteten P-CI-B-Schnitt erhalten, keine parallele finale CI oder neue Gesamtanalyse.
