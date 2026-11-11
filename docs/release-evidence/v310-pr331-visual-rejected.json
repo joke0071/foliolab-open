@@ -1,0 +1,21 @@
+{
+  "status": "CI_SUCCESS_REJECTED_VISUAL_READABILITY",
+  "head": "6e485ec8d9eb00252089add4332c5fdd9f3b340d",
+  "tree": "f7fb5137576278b72c5880e0580ea749c02ca1c2",
+  "run": 43091474262,
+  "unitTests": 1392,
+  "failures": 0,
+  "skips": 0,
+  "archives": 6,
+  "json": 241,
+  "pngDecoded": 2089,
+  "digestFindings": 0,
+  "diagnosticContextsReviewedSeparately": 50,
+  "finding": "Direct 320px Missing-Value screenshot shows unnecessarily squeezed account name beside value and positions action; targeted mobile name/value row correction required.",
+  "newHead": "9bd5d951f53bf2b5e6084c21362f71f0529059d5",
+  "newTree": "b57812513269c1c62918709c323e976bb75be9f7",
+  "newQualification": "OPEN",
+  "physicalAndroid": false,
+  "realInstallation": false,
+  "releaseApproval": false
+}
