@@ -1,3 +1,7 @@
+## Fortschreibung – 11.11.2026 v306 LIVE_ACCEPTED / V140
+
+[Abnahme](release-evidence/v306-live-accepted.json): neuer K6-Navigationsfokus mit Tastatur in drei tatsächlichen Produktionsengines/4Breiten und exakter Daten-/Revisionsinvarianz abgenommen. Main8a5c5c2d164b87831814be8fe0258356928d1abc/Tree501c94e126088bfcddd79f26501cf9520f11e3a3; vorhandenePflichtCI/Main/Deploy/ProduktionSUCCESS, keineDuplikate/Retry/Abbruch. V140versionsgeschützt/gepinntbytegleich; tatsächlicherinkrementellerRestore28Manifestpfade/0Fehler; ganzeV139/ältereOriginalkettenbewahrt. K6gesamtVERIFY/1.0offen; alle41Scopes/externeGeräte-/Originalgrenzenunverändert. NächstesK4-Paket schützt ungespeicherteDatenquellenentwürfe beiPWA-Update gemäß bestehenderTaskkarte; aktuellerOwner/StandnurimzentralenCheckpoint.
+
 ## Fortschreibung – 11.11.2026 Ein-Agenten-Hauptauftrag
 
 EFF03-Zwei-Agenten-Automatisierung und verpflichtende separate Kandidaten-QA durch ausdrückliche Nutzerentscheidung beendet. Ein Hauptagent führt K1–K6 kontinuierlich einschließlich eigener QA, aller unveränderten technischen Pflichtgates und privater Sicherung/Restore fort. Historische Pilotnachweise und die 41-Scope-Matrix unverändert; keine neue Roadmap. [Aktueller Prozess](WORK_EFFICIENCY_PLAN_2026-11-01.md), [alleiniger Owner](WORK_RESTPAKETE_CHECKPOINT.md). v305 bleibt LIVE_ACCEPTED, keine neue Produktabnahme aus diesem Dokumentationsschnitt.
