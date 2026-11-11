@@ -1,12 +1,8 @@
 # EFF03 – Sieben-Tage-Ziel für den vollständigen bestehenden Entwicklungsumfang
 
-## Aktive Ausführung: geplante Rotation · 11.11.2026
+## Rotationsversuch beendet · 11.11.2026
 
-Nutzerauftrag: eine Entwicklungsautomation „FolioLab Entwicklung mit Übergabe“ mit90-Minuten-Takt; Solltermin11.11.2026,21:25Europe/Vienna gespeichert. **Einrichtung nach Probe PAUSIERT:** Tool erzeugt chatgebundene Aufgabe, manueller Start nur inline; eigenständiger neuer Chat pro Lauf ist nicht einstellbar/belegt. Aufgabenoberfläche erfordert in der verfügbaren Browserumgebung Anmeldung. Kein geplanter Entwicklungsstart, solange pausiert. Bestehender Owner bleibt verantwortlich; erst nach verifiziertem eigenständigem Ausführungsziel und regulärer Abgabe aktivieren. Pro Lauf45Minuten Arbeit und15Minuten Übergabereserve als Ziel für höchstens60Minuten verstrichene Zeit. Vollständiger [aktueller Vertrag](WORK_EFFICIENCY_PLAN_2026-11-01.md#aktive-nutzerentscheidung-geplante-rotation--11112026) hat Vorrang vor älteren Verboten fester Rotation/dieser einzelnen Automation; keine separate QA-/Webhookschleife.
-
-Der bisherige Owner übergibt am nächsten sicheren Punkt selbst; der Nachfolger übernimmt ausschließlich nach aktueller STOPPED/HANDOVER_READY-Abgabe und frischem geschütztem HND01-Abgleich. Kein automatischer Widerruf bei Hänger, kein hart erzwungener60-Minuten-Abbruch. Fehlende Abgabe führt zu lesender Blockermeldung statt zweitem Writer. CI darf mit exakten IDs weiterlaufen und sicher übergeben werden; offene Mutationen dürfen es nicht. Nach Abgabe keinerlei weitere Schreibaktion des Vorgängers.
-
-Der erste tatsächliche Tasklauf und zwei reguläre Übergänge müssen neue Ausführungs-/Chatidentität, korrekte Ownerfolge und Wiederaufnahme belegen. Bis dahin ist nur Einrichtung bestätigt. Keine Zusatz-CI für diese Prozessprüfung. Fachliche Paketpriorität, gesamter Wochenumfang und alle Abnahmeanforderungen bleiben erhalten; keine Pflicht, einen vollständigen Release in einen Lauf zu pressen.
+Die versuchte automatische Chatrotation ist **nicht aktiv**: Der verfügbare Adapter konnte eigenständige neue Chats nicht einstellen oder nachweisen. Die angelegte Aufgabe bleibt deaktiviert. Daraus gelten **keine 45-/60-/90-Minuten-Arbeits-, Stopp- oder Übergabepflichten**. Der alleinige Hauptagent setzt den autorisierten Arbeitsplan fort; reguläre Übergabe nur bei tatsächlicher Kontext-/Technikgrenze oder Nutzerauftrag am sicheren Punkt. Keine Abgabe in Erwartung eines automatischen Nachfolgers. Alle bestehenden fachlichen Schutzverträge bleiben erhalten; keine weitere Rotationsentwicklung ohne neuen Auftrag.
 
 ## Ausführungsstand · 11.11.2026 · v309 abgeschlossen
 
