@@ -1,0 +1,126 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "version": 306,
+  "owner": "main-75ea9fa46556-20261111",
+  "main": "8a5c5c2d164b87831814be8fe0258356928d1abc",
+  "tree": "501c94e126088bfcddd79f26501cf9520f11e3a3",
+  "PR": 327,
+  "run": 42977860611,
+  "attempt": 1,
+  "deployJob": 130389898728,
+  "liveJob": 130390010383,
+  "allMandatoryJobsSuccess": true,
+  "engines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "cache": "foliolab-open-v306",
+  "unitTests": 1356,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "mainQualificationReused": "v306-main-qualified-production-pending.json",
+  "PRQualificationReused": "v306-pr327-qualified.json",
+  "production": {
+    "JSON": 172,
+    "decodedPNG": 1407,
+    "explicitResultComparisons": 299,
+    "assetHashes": 154,
+    "axeScans": 18,
+    "axeViolations": 0,
+    "ordinaryTLS": true,
+    "navigationFocusWidths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "canonicalBytesAndRevisionUnchanged": true,
+    "contextDiagnosticsReviewed": 36
+  },
+  "allEightOriginalDigestsSizesIDsAndUploadLogsVerified": true,
+  "originalArtifacts": [
+    {
+      "id": 13839158318,
+      "name": "production-live-acceptance-8a5c5c2d164b87831814be8fe0258356928d1abc",
+      "size_in_bytes": 138143293,
+      "digest": "sha256:d8a896db550b821a528b25a13dd6c7e48e2104bf4a6c6ea73cbc27c8f478b81e"
+    },
+    {
+      "id": 13837585614,
+      "name": "release-gates-8a5c5c2d164b87831814be8fe0258356928d1abc",
+      "size_in_bytes": 65570369,
+      "digest": "sha256:4f2f73d4a002808fb120172c2bd6e21c4a6c5818d2921168822f236c8b47e8fc"
+    },
+    {
+      "id": 13837306416,
+      "name": "github-pages",
+      "size_in_bytes": 567861,
+      "digest": "sha256:bf674d9f9f00d7899fdf810cbadb493aff1d2577d4d8f707ccfde8caa9c36039"
+    },
+    {
+      "id": 13837112741,
+      "name": "cross-engine-gates-8a5c5c2d164b87831814be8fe0258356928d1abc-3",
+      "size_in_bytes": 68783708,
+      "digest": "sha256:7b61f082b83a1578c3a2da79136a86dae8bcb1ea0392a215321d42906ec24232"
+    },
+    {
+      "id": 13837011132,
+      "name": "cross-engine-gates-8a5c5c2d164b87831814be8fe0258356928d1abc-1",
+      "size_in_bytes": 60009274,
+      "digest": "sha256:1e926296e07dec1d03e6c61e513b785b7735ecd91ef955e941509d0c4d0c19f1"
+    },
+    {
+      "id": 13836842692,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933141,
+      "digest": "sha256:e8ec6ef36574a42ae8bc6a67d9990a021ee4dd2f8cbc8163a9d2104c98dd47d4"
+    },
+    {
+      "id": 13836446835,
+      "name": "ci-stage-8a5c5c2d164b87831814be8fe0258356928d1abc",
+      "size_in_bytes": 354,
+      "digest": "sha256:ddaefca2ff789f4d9cf36ec78894adc682294ec7298eb973ca50d5acec5c5c84"
+    },
+    {
+      "id": 13836003804,
+      "name": "cross-engine-gates-8a5c5c2d164b87831814be8fe0258356928d1abc-2",
+      "size_in_bytes": 12410675,
+      "digest": "sha256:5c1ece837fc5716da1e4c40bef3419a31b8d3c8d2be4628db461cd19c9fbb4f5"
+    }
+  ],
+  "backup": {
+    "version": 140,
+    "previousVersion": 139,
+    "bytes": 405647360,
+    "sha256": "a93a9641267dfcba4be14511a51d3e0d29cc1b61dd95cb0970279b6329e8924f",
+    "pinnedReadbackVerified": true,
+    "entirePreviousRootPreserved": true,
+    "completePriorCompanionAndOriginalChainsRetained": true,
+    "newImmutableIncrements": [
+      {
+        "bytes": 347258880,
+        "sha256": "f3fd8d5e29d3261f3b6f59f9cb3924c954dfd27286830bc368decc606a7f4f5c",
+        "manifestPaths": 17,
+        "pinnedReadbackVerified": true
+      },
+      {
+        "bytes": 1689600,
+        "sha256": "f62aae1b538c2761690314e2ed8d92b64e0cb4b449d16e02aba8e79d52f8b5b8",
+        "manifestPaths": 6,
+        "pinnedReadbackVerified": true
+      }
+    ],
+    "rootManifestPaths": 5,
+    "actualIncrementalRestoreManifestPaths": 28,
+    "restoreFailures": 0,
+    "unchangedHistoricalFullRestoreEvidenceReused": true
+  },
+  "noNewCIRetryAbortOrDuplicate": true,
+  "limits": [
+    "K6 total remains VERIFY; no FolioLab 1.0 overall acceptance",
+    "Native Android/Safari/TalkBack/system fonts/OAuth and independent ownership/original anchors remain external",
+    "Private identities and payloads retained privately"
+  ],
+  "nextAction": "Implement bounded K4 update/unsaved data-source draft protection using docs/K4_UPDATE_DRAFTS_2026-11-11.md"
+}
