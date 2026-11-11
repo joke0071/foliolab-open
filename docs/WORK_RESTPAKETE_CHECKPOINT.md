@@ -1,3 +1,15 @@
+## ACTIVE · main-b180b1102417-20261111 · PR329 eigene QA-Befunde / Korrektur vorbereitet
+
+Parallel eingegangener reiner Planungsnachtrag EFF03_WEEK_TARGET_2026-11-11.md (Commit e5af20d) frisch geprüft: nur separate Dokumentation, zentraler Owner/Checkpoint/Produkt/Main/CI/Sicherung unverändert; keine zweite Produktübernahme. Nachtrag erhalten, keine Überschreibung. Ursprüngliche PR-CI inzwischen vollständig SUCCESS; R1 bleibt wegen eigener QA-Befunde gesperrt.
+
+Erster PR329-HEAD 3bd46d59591ce32b8ac2f856620d79522e367d1b / Tree 08d2b2b67a900d79b51dcb632d21b52f99636f7a **NICHT INTEGRIEREN**: zusätzliche ausgeführte Source-Gegenprobe reproduziert drei Entwurfsverluste bei nachgelagertem Vault-/Drive-Präferenzfehler nach erfolgreichem Portfolio-Commit. PR-Beschreibung mit OWN_QA_FINDINGS markiert. Ursprünglicher Lauf43012561165 läuft unverändert aus (Chromium/Cross1/Cross2 SUCCESS, Cross3 noch IN_PROGRESS); Wallet43012561133 SUCCESS. Keine Retries/Abbrüche.
+
+Korrektur als unveränderlicher Git-Commit dde8cac4b366e61d73794f36b20953433338d247 / Tree f8de9bb981a350b87215f8ac7c70ac268d749ea7 vorbereitet, Parent erster PR-HEAD; **Produktbranch noch NICHT bewegt**, damit bestehende CI nicht automatisch abgebrochen wird. Gemeinsamer Formularabgleich erst nach vollständig abgeschlossener Restore-Konfigurationsübernahme; Fehler behalten sichtbaren Entwurf, bereits committed Modell wird nicht fälschlich zurückgerollt. Source14+vorhandene10Tests PASS, vollständig lokal1380Units/0Fehler/0Skips+SyntaxPASS. Neue native tatsächliche Vault-/Präferenzschreibfehler im verschlüsselten UI-Restorevertrag ergänzt; noch keine Browserabnahme dieses Korrektur-SHAs. Lokales WIP exakt im genannten Git-Commit reproduzierbar, keine private Speichermutation.
+
+v307/V142 bleiben LIVE_ACCEPTED/verifiziert. Genau nächste Aktion: ursprünglichen Lauf auslaufen lassen und alle Originale erhalten; dann bestehenden Produktbranch geschützt von 3bd46d59591ce32b8ac2f856620d79522e367d1b auf vorbereiteten dde8cac4b366e61d73794f36b20953433338d247 fortschreiben, PR-Vertrag/SHA aktualisieren und neue automatische Pflicht-CI vollständig qualifizieren. Keine neue parallele PR, kein Merge des ersten Kandidaten. Danach alle PR-/Sicherungs-/Main-/Live-/Restoregates unverändert.
+
+---
+
 ## ACTIVE · main-b180b1102417-20261111 · PR329 eingefroren / Pflicht-CI läuft
 
 [PR329](https://github.com/joke0071/foliolab-open/pull/329), HEAD 3bd46d59591ce32b8ac2f856620d79522e367d1b / Tree 08d2b2b67a900d79b51dcb632d21b52f99636f7a; PR-Merge 6c2aa4fd790c0862e075ea1f54d68d192d09adc2. K3/K4-API-Formularabgleich nach bestätigtem Reset/angenommenem Konfigurationsrestore implementiert; gewöhnliche Entwürfe bleiben erhalten, bestehende Maskierung genutzt. Baseline 7PASS/4erwartete Fehler; Kandidat 11neue+10vorhandene Source-Verträge PASS. Vollständig lokal 1377Units/0Fehler/0Skips, SyntaxPASS. Native IDB-/echter verschlüsselter UI-Dateirestorevertrag in bestehende UI300-Drei-Engine-Suite integriert; lokaler Browserstart hostbedingt blockiert, kein BrowserPASS. Keine Finanz-/Speicher-/Schema-/Workflow-/Kryptografie-/Identitätsänderung.
