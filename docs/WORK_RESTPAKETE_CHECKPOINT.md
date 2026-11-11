@@ -1,3 +1,11 @@
+## ACTIVE · main-75ea9fa46556-20261111 · K4/v307 PR328 eingefroren / Pflicht-CI läuft
+
+[PR328](https://github.com/joke0071/foliolab-open/pull/328), HEAD5035a9345aecb7cad16a2cc26db83c9c8e25425c/Tree960ce4145c5e87047c41e815349bfbf10b790a07; getesteterPR-Merge527b12b611f2104834666b794c13eeb6ce2926d6. ZusammenhängenderK4-Update-/Formularentwurfschutz implementiert; vorPatch4PASS/6reproduzierteFehler,danach10PASS/0Fehler/0Skips undSyntaxPASS. NativeWorker-Entwurf/Cancel/Verwerfen separat in bestehenderPWA-Suite, tatsächlicheausgelieferteHandler mit ausdrücklichsynthetischemControllerchange/Speichern/Normalisierung/Leeren/echtemfehlgeschlagenemIDB-put in bestehenderUI300-Suite. Keine neuenProvideranfragen oderSchlüsselwerte imBericht zulässig. LokalerChromium-Start hostbedingtfehlgeschlagen,keinBrowserPASS.
+
+Läufe42990255793/Wallet42990255736 bereitsIN_PROGRESS;keineRetries/Abbrüche/Doppel-CI. v306/V140 vollständigabgenommen/unverändert,keineoffeneSpeichermutation. AllePrüfphasen getrennt/Ein-Agenten-Modell. Genau nächsteAktion: diesePflicht-CI anhandvorhandenerRunIDs auswerten,Originale/Reviews UNDKommentare prüfen;keineIntegration ohnequalifiziertenKandidaten und erforderlicheSicherung. BeiFindingsgezieltkorrigieren/Neukandidaten prüfen. KeineweitereProduktimplementierungwährendKandidatenlauf.
+
+---
+
 ## ACTIVE · main-75ea9fa46556-20261111 · v306 LIVE_ACCEPTED / V140 verifiziert
 
 [v306 vollständig abgenommen](release-evidence/v306-live-accepted.json): Main8a5c5c2d164b87831814be8fe0258356928d1abc/Tree501c94e126088bfcddd79f26501cf9520f11e3a3; bestehenderMainlauf42977860611/Deploy130389898728/Live130390010383 SUCCESS,Versuch1. PR-/Mainqualifikation unverändert wiederverwendet. Neue tatsächliche Produktion3Engines:172JSON/1407dekodiertePNG/299expliziteErgebnisvergleiche+36direkteIDB-/Workerdiagnosen;154Assetabgleiche,18Axe/0Verstöße; Navigationsfokus320/390/768/1440 mit exaktenDaten-/Revisionsinvarianten. Alle8OriginalZIPs/API-Digests/Größen/IDs/Uploadlogs geprüft. Keine neueCI/Retry/Abbruch/Duplikatmessung.
