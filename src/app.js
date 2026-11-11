@@ -2722,6 +2722,20 @@ $('apiSettings').addEventListener('submit',async e=>{
    if(r.bottom>bottom)sidebar.scrollTop+=r.bottom-bottom;
    else if(r.top<top)sidebar.scrollTop-=top-r.top;
   };
+  // Native focus scrolling does not consistently account for the mobile sticky bars.
+  const revealDashboardPeriodFocus=()=>{
+   const target=document.activeElement;
+   if(!$('miniChartPeriods').contains(target)||!target?.getClientRects().length)return;
+   const header=document.querySelector('.mobile-header'),nav=$('mobileNav');
+   const headerVisible=Boolean(header?.getClientRects().length),navVisible=Boolean(nav?.getClientRects().length);
+   if(!headerVisible&&!navVisible)return;
+   const top=(headerVisible?Math.max(0,header.getBoundingClientRect().bottom):0)+6;
+   const bottom=(navVisible?Math.min(innerHeight,nav.getBoundingClientRect().top):innerHeight)-6;
+   const r=target.getBoundingClientRect(),delta=r.top<top?r.top-top:r.bottom>bottom?r.bottom-bottom:0;
+   if(delta)window.scrollBy({top:delta,left:0,behavior:'auto'});
+  };
+  $('miniChartPeriods').addEventListener('focusin',revealDashboardPeriodFocus);
+  window.addEventListener('resize',revealDashboardPeriodFocus);
   $('sidebarInstallHint').addEventListener('focusin',revealInstallHintFocus);
   window.addEventListener('resize',revealInstallHintFocus);
   $('dismissInstallHint').addEventListener('click',()=>{
