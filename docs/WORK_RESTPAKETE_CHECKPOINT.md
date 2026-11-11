@@ -1,3 +1,14 @@
+## ACTIVE · main-518556806b3b-20261111
+
+- **Main:** 0b8c6de007fff4d16ee930aa852354e4d52d513f · Tree c72516b2012c4102642341166eaef5f6940a7c89.
+- **Release:** [v309 LIVE_ACCEPTED](release-evidence/v309-live-accepted.json). PR330/Main43067473948/Deployment/echte Drei-Engine-Produktion vollständig qualifiziert. Keine offenen technischen v309-Gates; tatsächliches Android bleibt extern.
+- **Sicherung:** V147, gepinnt bytegleich; echte inkrementelle Wiederherstellung und Datei-Readback223Manifestdateien/0Fehler. Alle V146/älteren Original-, Companion-, Oracle- und Korrekturketten erhalten; keine offene private Operation.
+- **Nächste Aktion:** fertiges Navigations-/Dashboard-/Installationspaket gegen aktuellen Main prüfen, Prüfvertrag einfrieren und reguläre volle PR-CI starten. Branch feature/navigation-overview-518556806b3b · WIP f109f506b11dcfcfc7d2daecbecef4c978194c03 · Tree 972b3971ab522d68d5cca2a8e32e1a85082a34ef. Fünf Präferenztests/Syntax PASS; native Browser-/Sicht-/Fachprüfung offen. Bekannte lokale Hostsocket-EPERM-Grenze nicht identisch wiederholen.
+- **Danach:** vorhandenen P-CI-B466be00 gemäß frischem [Wochenplan](EFF03_WEEK_TARGET_2026-11-11.md) und konkreter #229-Grenze separat prüfen. Keine parallele finale CI, kein zweiter aktiver Folgeschnitt, kein Checkpoint-Gesamtmerge.
+- **Externe Grenzen:** reales Android/Safari/TalkBack, OAuth/Zweigeräte/Sync und fachliche Originallücken bleiben offen; keine pauschalen Scope-DONE-Status. Alleiniger Owner unverändert; zwei abgeschlossene reine Planergänzungen erhalten, frischer vollständiger Abgleich ohne Konkurrenz.
+
+## Unveränderte Historie
+
 ## ACTIVE · main-518556806b3b-20261111 · v309 Main/Deploy qualifiziert / tatsächliche Produktion läuft
 
 [Main-/Deploy-Nachweis](release-evidence/v309-main-qualified.json): Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89, Run43067473948 Versuch1. Alle verpflichtenden Mainjobs SUCCESS,1387Units/0Fehler/0Skips. FAST erwartungsgemäß SKIPPED bei NonPR-RELEASE/ciContract=false. Sieben Originalarchive API/Uploadlog/Digest/Bytes/CRC exakt zugeordnet;238JSON/2071PNG/542Vergleiche,0Findings und50 separat direkt eingeordnete Adapterkontexte. Verdichterdisposition bleibt UNKNOWN, kein automatischer PASS. Pages153Dateien exakt zu Main-Gitblobs und qualifizierten Quellen; Referenzansichten30PNG bytegleich zu geprüften PR-Originalen, neue drei verzögerte Loaderansichten direkt geprüft. Deployment130702719863 SUCCESS.

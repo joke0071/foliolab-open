@@ -1,3 +1,11 @@
+## Fortschreibung · 11.11.2026 · v309 LIVE_ACCEPTED / V147
+
+[v309-Abnahme](release-evidence/v309-live-accepted.json): PR330/Main0b8c6de007fff4d16ee930aa852354e4d52d513f/Treec72516b2012c4102642341166eaef5f6940a7c89 vollständig einschließlich tatsächlicher Drei-Engine-Produktion qualifiziert. Alle Stichtage haben den vorhandenen Bearbeitungseinstieg; eindeutig manuelle Werte behalten bestätigte Datum-/Betragskorrekturen, geschützte Originale ausschließlich revisionsbewahrende Notizkorrekturen. Verzögerung lässt den Loader weiter animieren; tatsächliche Fehler stoppen ihn, Reduced Motion bleibt respektiert. Hardware-Android bleibt extern ungeprüft.
+
+V147 geschützt und gepinnt bytegleich, tatsächlicher inkrementeller Restore samt extrahiertem Readback223Manifestdateien/0Fehler. Alle älteren Originalketten bewahrt. Neue fachliche Teilkriterien geschlossen, Gesamt-K3/K5/K6 und die kanonische41-Scope-Matrix werden nicht pauschal DONE. Nächste Aktion: bereits vorbereitetes Navigation-/Dashboard-/Installationspaket vollständig qualifizieren, danach P-CI-B nach #229; zwei neue organisatorische Planergänzungen unverändert erhalten. Aktuelle SHAs/Gates/Owner nur im [Checkpoint](WORK_RESTPAKETE_CHECKPOINT.md).
+
+## Unveränderte historische Fortschreibungen
+
 ## Technischer Haltepunkt · 11.11.2026 · PR330 / V145
 
 v308 bleibt LIVE_ACCEPTED. [PR330-Befund](release-evidence/v309-ci-blocked.json): Stichtagsnotizen und Loader in tatsächlichem Chromium gezielt PASS,1385Units/0Fehler/0Skips; Gesamt-CI nicht qualifiziert. Drei Cross-Jobs beider Kandidaten scheitern vor Tests an wiederholtem Ubuntu-DNS-/Installationsfehler. Weitere reine Legacy-Testkorrektur28bfce08 vorbereitet, native Qualifikation offen, PR-Branch unverändert und kein dritter blinder Lauf. V145 gepinnt rückgelesen/tatsächlich75Manifestdateien restauriert,0Fehler; alle elf Originalarchive beider Läufe und ältere Ketten erhalten. [Technische Abgabe/Fortsetzung](HANDOVER_a845c64598ab_2026-11-11.md). Gesamt-K3/K5/K6 und alle26 offenen Scopes behalten ihre Abnahmegrenzen; kein neuer DONE-Status aus Implementierung oder Teilprüfung. Navigation/Installation/Dashboard bleibt das nächste beauftragte Nutzerpaket nach sicherem Funktionsabschluss. Aktueller Owner/Stand ausschließlich im Checkpoint.

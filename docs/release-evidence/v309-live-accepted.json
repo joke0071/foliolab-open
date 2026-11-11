@@ -1,0 +1,90 @@
+{
+  "status": "LIVE_ACCEPTED",
+  "owner": "main-518556806b3b-20261111",
+  "release": 309,
+  "main": "0b8c6de007fff4d16ee930aa852354e4d52d513f",
+  "mainTree": "c72516b2012c4102642341166eaef5f6940a7c89",
+  "run": 43067473948,
+  "attempt": 1,
+  "allRequiredJobs": "SUCCESS",
+  "fast": "EXPECTED_SKIPPED_NON_PR_RELEASE",
+  "unitTests": 1387,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "mainProductionQualified": true,
+  "releaseAccepted": true,
+  "archives": 8,
+  "mainEvidence": {
+    "archives": 7,
+    "json": 238,
+    "png": 2071,
+    "digestAssertions": 542,
+    "findings": 0,
+    "separatelyReviewedContexts": 50,
+    "pagesFiles": 153,
+    "exactGitblobs": true
+  },
+  "productionEvidence": {
+    "job": 130702880980,
+    "artifact": 13883171922,
+    "bytes": 139141029,
+    "sha256": "7a69d7cf1af8e246702fbbeb1b8cb1049a63dbd7e93a8b9999d217600c9392bf",
+    "json": 178,
+    "png": 1413,
+    "digestAssertions": 365,
+    "directSemanticComparisons": 348,
+    "separatelyReviewedContexts": 40,
+    "findings": 0,
+    "assetHashes": 154,
+    "ordinaryTls": true,
+    "proxyCertificateException": false,
+    "coreAxeScans": 18,
+    "violations": 0
+  },
+  "digestDispositionPreserved": "UNKNOWN; exact 50 Main and 40 production pairs independently classified, no automatic release PASS",
+  "visual": {
+    "referenceViewsPerPhase": 30,
+    "exactPreviouslyReviewedBytes": true,
+    "newDelayedLoaderViewsPerPhase": 3,
+    "directReview": "PASS"
+  },
+  "privateBaseline": {
+    "version": 146,
+    "bytes": 405841920,
+    "sha256": "6ce096fbdeb44d4eb21cc7e8e313130b951eabbbd8b8dc2c5ffe772f3daa9733"
+  },
+  "backupReadbackRestore": {
+    "version": 147,
+    "expectedPreviousVersion": 146,
+    "rootBytes": 405882880,
+    "rootSha256": "b8e127bd5bb1b21ae075c32c10adf2bdc8e40927dab852ad50c1cc1afd3f3dd2",
+    "rootManifestPaths": 5,
+    "rootPinnedByteReadback": true,
+    "immutableIncrementBytes": 355184640,
+    "immutableIncrementSha256": "5e1da44e0b1c1936fb45a7d5c77b89f68bcba5d174957a5c69ab47a595064a07",
+    "incrementManifestPaths": 218,
+    "incrementPinnedByteReadback": true,
+    "actualIncrementalRestoreFiles": 223,
+    "extractedFileReadback": true,
+    "failures": 0,
+    "historicalFullRestore": "identical qualified predecessor proof reused; not newly repeated",
+    "allPreviousOriginalCompanionOracleAndCorrectionChainsPreserved": true,
+    "privateOperationOpen": false
+  },
+  "lastLiveAccepted": 309,
+  "hardwareAndroid": false,
+  "oauthTwoDeviceSyncAcceptance": false,
+  "nextNavigationWip": "f109f506b11dcfcfc7d2daecbecef4c978194c03",
+  "ciBPreserved": "466be00d49d3a5308cb28075dd7572e4d0ce596b",
+  "timings": {
+    "nativeMainThroughProductionWallSeconds": 4210,
+    "mainLongestCrossSeconds": 1751,
+    "productionJobSeconds": 2423,
+    "summedNativeJobSeconds": 6422,
+    "activeAgentSeconds": "UNKNOWN; not inferred from CI wall time"
+  },
+  "planningUpdatesPreserved": [
+    "9a0e72a6829cc5bdbc3994e4ef0f65751ae7c1cf",
+    "27a4604023d26304a6cb985d48f704bd81731e14"
+  ]
+}
