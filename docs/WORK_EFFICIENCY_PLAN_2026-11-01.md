@@ -1,3 +1,20 @@
+## Aktive Nutzerentscheidung: geplante Rotation · 11.11.2026
+
+Der Nutzer hat die Einrichtung ausdrücklich beauftragt: **ein Entwicklungsauftrag „FolioLab Entwicklung mit Übergabe“, alle 90 Minuten**, erster planmäßiger Start 11.11.2026,21:25 Europe/Vienna. Aufgabe aktiviert; tatsächliche Ausführung/Chatwechsel und erfolgreicher HND01-Wechsel müssen noch anhand von Laufbelegen bestätigt werden. Diese Entscheidung ersetzt ausschließlich ältere Verbote dieser einen Automation und feste-Rotation-Ausschlüsse. Das Ein-Owner-Modell bleibt; frühere QA-/Webhookautomationen bleiben deaktiviert.
+
+**Verbesserter Ablauf:** höchstens60Minuten angestrebte gesamte verstrichene Laufzeit ab tatsächlichem Start, einschließlich Werkzeugen und Warten; ab45Minuten keine neue Phase,15Minuten für Übergabe. Früherer sicherer Abschluss ist zulässig. Die30Minuten bis zum nächsten Sollstart sind Puffer, kein Beweis einer Beendigung; der Scheduler bietet hier keinen nachgewiesenen harten60-Minuten-Abbruch.
+
+1. Frischen Checkpoint und relevante Verträge lesen. Der aktuelle manuelle Hauptagent bleibt bis zu seiner eigenen regulären Abgabe verantwortlich. Ihn am nächsten sicheren Punkt übergeben lassen; eingefrorene Kandidaten bewahren.
+2. Nur aktuelle ausdrückliche STOPPED/HANDOVER_READY-Abgabe, keine offene Mutation und frische HND01-Kollisionsprüfung erlauben Übernahme. Neue eindeutige Ownerkennung/Start/Abgabeziel gegen den frischen Checkpoint-Datei-SHA schreiben und rücklesen. Konflikt bedeutet neu prüfen; niemals fremden Owner überschreiben. Eine alte Abgabe in der Historie genügt nicht.
+3. Zusammenhängend am belegten nächsten Schritt arbeiten. Keine Gesamtanalyse pro Lauf, keine Pflicht zu einem ganzen Release innerhalb60Minuten, keine kleinen künstlichen Releases. Ein Lauf kann mehrere kurze abhängige Schritte bearbeiten.
+4. Externe CI darf samt Run-/SHA-/Gatezustand weiterlaufen und bei sicherer HND01-Abgabe an den Nachfolger übergehen. Offene private Schreiboperationen, unbestätigte Mutationen oder noch schreibende Agentenprozesse verhindern HANDOVER_READY. Keine neuen nicht unterbrechbaren Operationen beginnen, wenn Restzeit für Abschluss/Readback voraussichtlich nicht reicht.
+5. Remote wiederaufnehmbaren Stand, Originalnachweise und genau nächste Aktion sichern; aktuellen Kopf kurz halten. Nur nach tatsächlichem Abschluss eigener Schreiboperationen STOPPED/HANDOVER_READY schreiben/rücklesen; danach keine weitere Mutation. Bei Blocker ehrlich HANDOVER_BLOCKED melden.
+6. ACTIVE/fehlende Abgabe/fehlender Toolzugriff: Nachfolger bleibt lesend, meldet konkreten Blocker und beendet den Lauf. Zeitablauf oder vermeintlicher Chat-Hänger erteilen keine Schreibberechtigung. Bestehende externe CI nicht abbrechen/duplizieren. Kein automatischer Notfallwiderruf.
+
+**Qualifikation:** gespeicherten Auftrag und Zeitplan rücklesen; erste tatsächliche Ausführung prüfen. An den ersten zwei regulären Übergängen neue Ausführungs-/Chatidentität, korrekte Ownerfolge, Remote-Wiederaufnahme und fehlende Überschneidung belegen. Wiederholte unveränderte Blocker nicht durch Vollinventuren oder neue Automationen vervielfachen. Erst dann funktionierende Rotation behaupten; angelegter Zeitplan allein ist kein laufender Entwickler. Aktive Entwicklungszeit, Übergabezeit und tatsächlicher Paketfortschritt messen.
+
+Alle Finanz-/Daten-/Drei-Engine-/CI-/Produktions-/Sicherungs-/Readback-/Restoreverträge, #229-Freigabegrenzen und Wochenumfang bleiben verbindlich. Keine zusätzlichen kostenpflichtigen Käufe. Nach tatsächlich vollständig erledigter kanonischer Roadmap Aufgabe pausieren.
+
 ## EFF03 – nächste organisatorische Entlastung · 11.11.2026
 
 **Priorität nach dem laufenden Releaseabschluss und dem bereits vorbereiteten Nutzerpaket:** bestehende Abläufe knapper ausführen, statt eine weitere Optimierungsplattform zu eröffnen. Die folgenden Punkte ergänzen vorhandene EFF03-/P-CI-B-Pakete und ändern keine Abnahmeregel.
