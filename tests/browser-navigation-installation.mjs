@@ -38,7 +38,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   const p=await fresh(),before=await record(p);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'no sidebar offer without a direct prompt');
   await nav(p,'more');assert.equal(await p.locator('#installButton').innerText(),'App installieren');await p.locator('#installButton').click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');await p.locator('#cancelDialog').click();
-  assert.equal(await prompt(p),true);await p.locator('#sidebarInstallHint').waitFor({state:'visible'});await p.locator('#dismissInstallHint').click();assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);
+  assert.equal(await prompt(p),true);await p.locator('#sidebarInstallHint').waitFor({state:'visible'});await scan(p);await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-desktop-install-hint.png`});await p.locator('#dismissInstallHint').click();assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.dataset.page),'more','dismissal leaves a visible keyboard target');
   for(const page of ['dashboard','positions','more'])await nav(p,page);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);await p.reload();await ready(p);await prompt(p);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'persistent dismissal survives reload');
   await nav(p,'more');await p.locator('#installButton').click();assert.equal(await p.evaluate(()=>window.__installCalls),1,'dismissal of hint leaves the More action available');

@@ -2076,10 +2076,10 @@
 #dashboardPage .dashboard-overview>.panel,#dashboardPage .dashboard-side>.panel{min-width:0;align-self:start}
 #dashboardPage .dashboard-providers{margin-top:0;padding:18px}
 #dashboardPage .dashboard-allocation{padding:18px}
-#dashboardPage .dashboard-allocation .allocation-layout{min-height:0;gap:12px}
+#dashboardPage .dashboard-allocation .allocation-layout{min-height:0;gap:12px;flex-wrap:wrap}
 #dashboardPage .dashboard-allocation .donut{width:142px;height:142px;flex:0 0 142px}
 #dashboardPage .dashboard-allocation .donut-inner{width:96px;height:96px}
-#dashboardPage .dashboard-allocation .alloc-legend{min-width:0}
+#dashboardPage .dashboard-allocation .alloc-legend{min-width:0;flex:1 1 160px}
 #dashboardPage .dashboard-allocation .alloc-legend-row{min-height:44px;padding:6px 4px}
 .dashboard-providers .panel-head{gap:8px;margin-bottom:10px;align-items:start}
 .dashboard-providers .panel-head h2{font-size:16px;line-height:1.35}
@@ -2090,7 +2090,7 @@
 .dashboard-providers .provider-mark{width:30px;height:30px;border-radius:8px;font-size:13px}
 .dashboard-providers .provider-name{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;font-size:12px;line-height:1.35}
 .dashboard-providers .provider-note{font-size:10px;line-height:1.4}
-.dashboard-providers .provider-total{font-size:13px;line-height:1.35;max-width:100%;overflow-wrap:anywhere}
+#dashboardPage .dashboard-providers .provider-total{font-size:13px;line-height:1.35;max-width:none;overflow-wrap:anywhere}
 .dashboard-providers .provider-detail{padding:2px 0 8px}
 .dashboard-providers .provider-account{padding:8px 0 0;margin:0}
 .dashboard-providers .provider-account-head{gap:6px;flex-wrap:wrap;align-items:center;padding:6px 0}
