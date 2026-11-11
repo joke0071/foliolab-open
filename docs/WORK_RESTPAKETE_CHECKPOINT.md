@@ -1,3 +1,15 @@
+## ACTIVE / WAITING_SPECIFIC_WORKFLOW_APPROVAL · main-518556806b3b-20261111 · v308 übernommen / PR330-Setup konkret vorbereitet
+
+Alleinige Übernahme dokumentiert; kein konkurrierender Writer. v308 LIVE_ACCEPTED/Main0be4c7f unverändert übernommen. PR330af767333 und Legacy-WIP28bfce08 unverändert; CI-B466be00 erhalten. V145-Metadaten frisch bestätigt, Vorgänger-Restore75Dateien/0Fehler nur identitätsgebunden wiederverwendet; keine neue privateMutation oder neueAbnahme.
+
+[Konkreter Setup-Kandidat281809a8b3960bf0c42726fd42ebe9ac9073d226](https://github.com/joke0071/foliolab-open/commit/281809a8b3960bf0c42726fd42ebe9ac9073d226), Tree7fc984dc308fbafe17394ced988a01d7b097d650, Branchwip/pr330-ubuntu-setup-518556806b3b, auf Legacy-Korrektur28bfce08. [Vertrag/Nachweise](https://github.com/joke0071/foliolab-open/blob/281809a8b3960bf0c42726fd42ebe9ac9073d226/docs/CI_PR330_UBUNTU_SETUP_2026-11-11.md). Zwei bestehende Setupblöcke wählen bounded HTTPS-Ubuntu-Mirrors vor Änderung beiderListen; unveränderteAPT-Signaturprüfung/Playwright--with-deps/Browser/Testaufrufe/Manifeste/Timeouts/Gates. HistorischeWorkflowhashes unverändert, nurexakteSetupnormalisierung.22lokaleNodeverträgePASS einschließlich6simulierterNetzwerkfälle;18Shellblöcke/HelperSyntaxPASS; vorbereiteterLegacytestSyntaxPASS. KeinRunner-/Browser-/AndroidPASS. NichtgarantierteMirrorerreichbarkeit explizitoffen.
+
+Kein dritter blinderLauf, keinPR-Push/Merge/Deployment. Konkrete Workflow-Kandidaten-/Mergefreigabe gemäß beibehaltenem#229-Vertrag ausstehend; keine weitereallgemeineÜbernahmefreigabe. Nach spezifischerFreigabe frischeKollisionsprüfung, PR330expectedHEADaf767333 geschütztauf281809a8 fortschreiben, vollständigePR/Wallet/Original-/Sicht-/Fach-/privateSicherungs-/Readback-/Restoregates; erst dannMerge, Main/Deploy/echte3EngineProduktion/Abschlussbackupseparat. Bei erneutemNetzwerkfehler ursächlichstoppen, keineidentischeWiederholung.
+
+NeueWIP-Quellen unveränderlichremoteversioniert; keine neuenCI-Originale oder offeneprivateSpeicheroperation. KeineHintergrundausführung. Navigation/Installation/Dashboard undgesamteRoadmap danachbeauftragt; Hardware/OAuth/Zweigeräte/Syncexternoffen. EinAgent, keineAutomatisierungen.
+
+---
+
 ## ACTIVE · main-518556806b3b-20261111 · kontrollierte HND01-Übernahme / v308 übernommen / PR330 blockiert
 
 Aktueller Nutzerauftrag autorisiert alleinige Notfallübernahme; neuerer Vorgänger main-a845c64598ab-20261111 ist bereits STOPPED/HANDOVER_READY. Vor erster Mutation wiederholt alle297Heads unverändert; erwarteter Checkpoint-HEAD42ae1b6c9cce017ddd6406f7aa394ce107585567, Main0be4c7f07a60e1d17ce5a5691261a52810701329/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7. PR330 unverändert af767333, vorbereitete Korrektur28bfce08 und CI-B466be00 erhalten; nur historische Drafts157/161 zusätzlich offen. Reviews, Issue- und Inlinekommentare330 leer; keine laufenden/wartenden Actions. PrivateRootmetadaten frisch V145/405811200Bytes, letzteÄnderung15:04:17UTC; Vorgänger dokumentiert keine offene Operation. Keine konkurrierende Git-/Sicherungsmutation belegt.
