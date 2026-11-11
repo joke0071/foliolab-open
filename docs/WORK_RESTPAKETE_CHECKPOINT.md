@@ -1,3 +1,13 @@
+## ACTIVE · main-518556806b3b-20261111 · kontrollierte HND01-Übernahme / v308 übernommen / PR330 blockiert
+
+Aktueller Nutzerauftrag autorisiert alleinige Notfallübernahme; neuerer Vorgänger main-a845c64598ab-20261111 ist bereits STOPPED/HANDOVER_READY. Vor erster Mutation wiederholt alle297Heads unverändert; erwarteter Checkpoint-HEAD42ae1b6c9cce017ddd6406f7aa394ce107585567, Main0be4c7f07a60e1d17ce5a5691261a52810701329/Treef8de9bb981a350b87215f8ac7c70ac268d749ea7. PR330 unverändert af767333, vorbereitete Korrektur28bfce08 und CI-B466be00 erhalten; nur historische Drafts157/161 zusätzlich offen. Reviews, Issue- und Inlinekommentare330 leer; keine laufenden/wartenden Actions. PrivateRootmetadaten frisch V145/405811200Bytes, letzteÄnderung15:04:17UTC; Vorgänger dokumentiert keine offene Operation. Keine konkurrierende Git-/Sicherungsmutation belegt.
+
+v308 LIVE_ACCEPTED/V144 gemäß identitätsgebundenem Abschluss übernommen, nicht erneut integriert/geprüft. V145-Restore75Dateien/0Fehler ist Vorgängernachweis, keine neue Restorebehauptung. PR330 bleibt MERGE_BLOCKED:1385Units/gezielteChromiumbelege kein Gesamtpass; drei Cross-Jobs beider Kandidaten vor Tests am Ubuntu-Netzwerk-/8-Minuten-Installationsblocker. Frische Job-/Stepidentitäten und Cross1-Originalprotokoll gelesen; kein dritter blinder Lauf.
+
+Genau nächste Aktion: vorbereitete Legacy-Testkorrektur gegen frischen Main/Diff prüfen; Infrastrukturursache auf kleinsten konkreten Setup-Kandidaten eingrenzen und vorhandene Workflowfreigabegrenze respektieren. Erst nach belastbarem Infrastrukturpfad PR330 geschützt aktualisieren/alle Pflichtgates am neuen SHA qualifizieren. Navigation/Installation/Dashboard und ganze Roadmap bleiben beauftragt, CI-B erhalten; keine zweite finale CI oder zusätzliche Agenten/Automatisierungen. Keine privateMutation, keine Hardware-/OAuth-/Zweigeräte-/Syncabnahme.
+
+---
+
 ## STOPPED / HANDOVER_READY · main-a845c64598ab-20261111 · v308 LIVE_ACCEPTED / PR330 technisch blockiert / V145 verifiziert
 
 Technischer Haltepunkt nach wiederholt belegtem CI-Netzwerkblocker; alle Actions beendet. Keine weitere Schreibaktivität oder Hintergrundfortsetzung aus dieser Ausführung, kein ungesichertes WIP und keine offene private Mutation. [Vollständige HND01-Abgabe und exakte Fortsetzung](HANDOVER_a845c64598ab_2026-11-11.md).
