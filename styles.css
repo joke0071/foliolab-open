@@ -2098,7 +2098,7 @@
 #dashboardPage .dashboard-providers .aggregate-account-value strong{white-space:normal;overflow-wrap:anywhere}
 .dashboard-providers .provider-holding .provider-holding-right{min-width:0;max-width:52%;flex-shrink:1;white-space:normal;text-align:right}
 .dashboard-providers .provider-holding-right strong{overflow-wrap:anywhere}
-.dashboard-providers .provider-detail{padding:2px 0 8px}
+.dashboard-providers .provider-detail{margin:0;padding:2px 0 8px;border-left:0}
 .dashboard-providers .provider-account{padding:8px 0 0;margin:0}
 .dashboard-providers .provider-account-head{gap:6px;flex-wrap:wrap;align-items:center;padding:6px 0}
 .dashboard-providers .provider-account-head>div{min-width:0;flex:1}
@@ -2120,8 +2120,9 @@
 .dashboard-providers .position-booking-history .history-row{padding:8px 0}
 .dashboard-providers .position-csv-actions{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px;margin-top:8px}
 .dashboard-providers .position-csv-import,.dashboard-providers .position-csv-remove{width:auto;max-width:100%;flex:0 1 auto;min-height:44px;padding:8px 10px}
-@media(min-width:980px) and (max-width:1179px){#dashboardPage .dashboard-side{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:1180px){#dashboardPage .dashboard-overview{grid-template-columns:minmax(0,1.55fr) minmax(310px,1fr)}}
+/* Eight desktop period targets need 386px before card padding. Keep accounts
+   full width below 1180px, and reserve 430px for their card in the wide grid. */
+@media(min-width:1180px){#dashboardPage .dashboard-overview{grid-template-columns:minmax(0,1.55fr) minmax(430px,1fr)}}
 @media(max-width:720px){.install-settings-panel{align-items:flex-start;flex-wrap:wrap;padding:16px}#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
 @media(max-width:420px){#dashboardPage .dashboard-allocation .donut{width:12.8em;height:12.8em;flex-basis:12.8em}#dashboardPage .dashboard-allocation .donut-inner{width:8.8em;height:8.8em}}
 @media(max-width:360px){#dashboardPage .dashboard-allocation .alloc-legend{flex:1 1 auto}}

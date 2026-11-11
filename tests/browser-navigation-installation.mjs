@@ -39,7 +39,18 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'no sidebar offer without a direct prompt');
   await nav(p,'more');assert.equal(await p.locator('#installButton').innerText(),'App installieren');await p.locator('#installButton').click();assert.equal(await p.locator('#dialogTitle').innerText(),'FolioLab als App verwenden');await p.locator('#cancelDialog').click();
   assert.equal(await prompt(p),true);await p.locator('#sidebarInstallHint').waitFor({state:'visible'});await scan(p);await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-desktop-install-hint.png`});
-  await p.setViewportSize({width:1440,height:360});await p.locator('#dismissInstallHint').focus();assert.ok(await p.locator('#dismissInstallHint').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'short desktop sidebar scrolls the focused dismissal action into view');await scan(p);await p.setViewportSize({width:1440,height:900});
+  await p.setViewportSize({width:1440,height:360});
+  // A resize command acknowledgement is not the native viewport/focus-scroll result.
+  // Wait on the actual viewport and native focused-target geometry; never force scrolling.
+  await p.waitForFunction(()=>innerWidth===1440&&innerHeight===360,null,{timeout:5000});
+  await p.locator('#dismissInstallHint').focus();
+  try{await p.waitForFunction(()=>{const e=document.getElementById('dismissInstallHint'),r=e.getBoundingClientRect();return document.activeElement===e&&r.top>=0&&r.bottom<=innerHeight;},null,{timeout:5000});}
+  catch(error){
+   const geometry=await p.evaluate(()=>({viewport:{width:innerWidth,height:innerHeight,scrollY},active:document.activeElement?.id,elements:Object.fromEntries(['.sidebar','.sidebar-footer','#sidebarNav','#sidebarInstallHint','#dismissInstallHint'].map(selector=>{const e=document.querySelector(selector),r=e.getBoundingClientRect();return[selector,{top:r.top,bottom:r.bottom,height:r.height,scrollTop:e.scrollTop,scrollHeight:e.scrollHeight,clientHeight:e.clientHeight}];}))}));
+   writeFileSync(`artifacts/gates/navigation-installation/${engine}-short-sidebar-failure.json`,JSON.stringify({engine,result:'FAIL',geometry},null,2));
+   await p.screenshot({path:`artifacts/gates/navigation-installation/${engine}-short-sidebar-failure.png`});throw error;
+  }
+  assert.ok(await p.locator('#dismissInstallHint').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}),'short desktop sidebar scrolls the focused dismissal action into view');await scan(p);await p.setViewportSize({width:1440,height:900});
   await p.locator('#dismissInstallHint').click();assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);assert.equal(await p.evaluate(()=>document.activeElement.dataset.page),'more','dismissal leaves a visible keyboard target');
   for(const page of ['dashboard','positions','more'])await nav(p,page);
   assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false);await p.reload();await ready(p);await prompt(p);assert.equal(await p.locator('#sidebarInstallHint').isVisible(),false,'persistent dismissal survives reload');
@@ -78,7 +89,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const content=e.querySelector('.allocation-layout').getBoundingClientRect(),box=e.getBoundingClientRect();return box.bottom-content.bottom<50;}),'allocation has no stretched empty tail');
    if(width===1440){assert.ok(await layout.locator('.dashboard-overview').evaluate(e=>{const history=e.querySelector('.dashboard-history').getBoundingClientRect(),side=e.querySelector('.dashboard-side').getBoundingClientRect();return history.right<=side.left&&Math.abs(history.top-side.top)<2;}));assert.equal(await layout.locator('#sidebarNav button.active').evaluate(e=>getComputedStyle(e).boxShadow),'none');assert.equal(await layout.locator('#sidebarNav button.active span').evaluate(e=>getComputedStyle(e).textDecorationLine),'underline');}
    await layout.locator('#providerOverview details').evaluateAll(es=>es.forEach(e=>e.open=true));
-   assert.match(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),/Unbekannt/,'compact summary never invents an EUR valuation for unknown FX');
+   assert.equal(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),'Synthetic USD with unknown FX\nNicht bewertet','compact summary never invents an EUR valuation for unknown FX');
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>e.getBoundingClientRect().height>=44));
    await scan(layout);await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-${width}.png`});assert.deepEqual(await record(layout),stored,'disclosures/layout preserve exact portfolio record');
@@ -86,7 +97,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
   checks.push('five widths; long provider/account/position names and large amounts; graph/allocation/accounts arrangement; compact disclosures/CSV retained; axe/overflow; exact IDB record unchanged');
   for(const width of [980,1180]){
    await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');
-   assert.ok(await layout.locator('.dashboard-overview').evaluate((root,width)=>{const history=root.querySelector('.dashboard-history').getBoundingClientRect(),side=root.querySelector('.dashboard-side').getBoundingClientRect(),allocation=root.querySelector('.dashboard-allocation').getBoundingClientRect(),providers=root.querySelector('.dashboard-providers').getBoundingClientRect();return width===980?history.bottom<=side.top&&allocation.right<=providers.left&&Math.abs(allocation.top-providers.top)<2:history.right<=side.left&&Math.abs(history.top-side.top)<2&&allocation.bottom<=providers.top;},width),'natural card arrangement at each new grid breakpoint');await scan(layout);assert.deepEqual(await record(layout),stored);
+   assert.ok(await layout.locator('.dashboard-overview').evaluate((root,width)=>{const history=root.querySelector('.dashboard-history').getBoundingClientRect(),side=root.querySelector('.dashboard-side').getBoundingClientRect(),allocation=root.querySelector('.dashboard-allocation').getBoundingClientRect(),providers=root.querySelector('.dashboard-providers').getBoundingClientRect();return width===980?history.bottom<=side.top&&allocation.bottom<=providers.top:history.right<=side.left&&Math.abs(history.top-side.top)<2&&allocation.bottom<=providers.top;},width),'natural card arrangement at each new grid breakpoint');await scan(layout);assert.deepEqual(await record(layout),stored);
   }
   checks.push('980/1180 grid breakpoint edges; natural card alignment; no overflow or portfolio writes');
   await layout.evaluate(async()=>{
