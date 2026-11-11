@@ -2317,6 +2317,23 @@ function openHistoricalPriceCSV(positionId){
 }
 async function handleActions(e){const button=e.target.closest('[data-action]');if(!button)return;const id=button.dataset.id;switch(button.dataset.action){case 'archive-position':openPositionArchive(id);break;case 'select-positions':positionSelecting=true;renderPositions();focusPositionSelection();break;case 'archive-selected':openSelectedPositionArchive();break;case 'clear-position-selection':selectedPositionIds=[];renderPositions();focusPositionSelection();break;case 'cancel-selection':selectedPositionIds=[];positionSelecting=false;renderPositions();focusPositionSelection();break;case 'preview-removal':openPositionRemoval();break;case 'refresh-quality-sources':{const pending=refreshAll();renderPositions();await pending;if(page==='positions'&&qualityReviewOpen){renderPositions();$('qualityReviewSourceActions').querySelector('button')?.focus({preventScroll:true});}break;}case 'open-quality-review':openQualityReview();break;case 'close-quality-review':closeQualityReview();break;case 'more-quality-review':{const previous=qualityReviewLimit;qualityReviewLimit+=50;renderPositions();const next=$('qualityReviewList').children[previous];(next?.querySelector('button')||$('qualityReviewHeading')).focus({preventScroll:true});next?.scrollIntoView({block:'nearest'});break;}case 'review-legacy-quote':if(!qualityReviewOpen)openQualityReview();$('legacyQuoteAudit').open=true;legacyAuditPerformed=true;renderLegacyQuoteAudit();$('runLegacyQuoteAudit').focus();break;case 'reset-quality-review':reviewKind='all';reviewAccount='';qualityReviewLimit=50;renderPositions();$('qualityReviewKind').focus();break;case 'reset-income-filters':incomeYear='';incomeAccount='';incomeLimit=100;renderBookings();$('incomeYear').focus();break;case 'more-income-lines':incomeLimit+=100;renderBookings();$('incomeRecords').open=true;break;case 'booking-transfer':transferMatchingUI.open(button,{bookingId:id});break;case 'account-transfer-review':case 'transfer-matching':transferMatchingUI.open(button);break;case 'check-cash-balance':openCashBalanceCheck(id);break;case 'booking-history':bookingHistoryUI.open(id,button);break;case 'wallet-history':walletHistoryUI.open(id,button);break;case 'retry-price-chart':showPositionDetail(id);break;case 'import-price-history':openHistoricalPriceCSV(id);break;case 'remove-price-history':{if(!model.priceHistories?.[id])break;if(confirm('Nur die für diese Position importierten CSV-Kurse entfernen? Bestand und Stichtage bleiben unverändert.')){const previous=model.priceHistories[id];delete model.priceHistories[id];try{await save();}catch(err){model.priceHistories[id]=previous;notify(err.message,true);break;}notify('Importierten Kursverlauf entfernt.');}break;}case 'more-listing-review':listingReviewLimit+=50;renderPositions();break;case 'more-positions':positionLimit+=100;renderPositions();break;case 'more-bookings':bookingLimit+=100;renderBookings();break;case 'start-booking':openBooking();break;case 'start-csv':openCSVImport();break;case 'view-account':filter='account:'+id;go('positions');break;case 'history-positions':go('positions');break;case 'start-wizard':assetWizard.open();break;case 'start-provider':go('more');openProvider();break;case 'start-wallet':openWalletImport();break;case 'start-import':$('backupFile').click();break;case 'edit-position':openPosition(model.positions.find(x=>x.id===id));break;case 'delete-position':confirmDeletePosition(id);break;case 'edit-snapshot':{const shot=model.snapshots.find(x=>x.id===id);if(shot)openSnapshot(shot);break;}case 'edit-provider':openProvider(model.providers.find(x=>x.id===id));break;case 'edit-account':openAccount(model.accounts.find(x=>x.id===id));break;case 'delete-account':{if(model.positions.some(p=>p.accountId===id))return notify('Konto enthält Positionen – zuerst umziehen oder löschen.',true);if(confirm('Konto wirklich löschen?')){model.accounts=model.accounts.filter(a=>a.id!==id);await save();}break;}case 'delete-provider':{if(model.positions.some(p=>p.providerId===id)||model.accounts.some(a=>a.providerId===id))return notify('Dieser Anbieter besitzt noch Konten oder Positionen.',true);if(confirm('Anbieter wirklich löschen?')){model.providers=model.providers.filter(x=>x.id!==id);if(filter===id)filter='all';await save();}break;}case 'delete-snapshot':{try{openReferenceRemoval([id]);}catch(error){notify(error.message,true);}break;
 }}}
+// Only explicit successful model replacements discard API drafts. Ordinary
+// render/save paths must keep the user's unfinished form values.
+function syncApiSettingsForm(){
+ const form=$('apiSettings');
+ for(const key of ['securitySource','alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','publicInstrumentEndpoint','eodhdWorkerEndpoint','eodhdWorkerAccessToken']){
+  const field=form.elements.namedItem(key);
+  if(field)field.value=model.settings[key]||(key==='securitySource'?'auto':'');
+ }
+ for(const key of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','eodhdWorkerAccessToken']){
+  const field=form.elements.namedItem(key);
+  if(field?.type==='text')field.closest('.credential-control')?.querySelector('.credential-toggle')?.click();
+ }
+ const rpc=$('solanaRpc');
+ if(rpc?.type==='text')rpc.closest('.credential-control')?.querySelector('.credential-toggle')?.click();
+ const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;
+ $('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
+}
 function initEvents(){
  // Long press = existing Verwalten mode plus the pressed row only; short tap keeps its normal action.
  const focusSelected=(root,attr,id)=>[...root.querySelectorAll('['+attr+']')].find(el=>el.getAttribute(attr)===id)?.focus({preventScroll:true});
@@ -2482,6 +2499,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
     await window.FolioDriveBackup?.refreshVaultStatus?.();
   }
   if(configuration)applyImportedDriveConfiguration(configuration);
+  if(configuration)syncApiSettingsForm();
   notify('Backup wiederhergestellt.'+(unresolvedListings().length?' Unter „Positionen“ kannst du fehlende Wertpapier-Stammdaten ansehen.':''));
  }catch(err){notify(err.message,true)}finally{setLoading(restoreStatus,false);renderBackupStatus();}
 });
@@ -2551,6 +2569,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
         try{await save()}catch(error){model=previous;throw error}
         if(accepted)applyImportedDriveConfiguration(accepted);
         backupDone();
+        if(accepted)syncApiSettingsForm();
         notify('Google-Drive-Backup erfolgreich wiederhergestellt.');
         return true;
       },
@@ -2562,7 +2581,7 @@ $('resolveListings').addEventListener('click',openListingReview);$('addProvider'
  if(!confirm('Alle lokalen Positionen, Stichtage, API-Schlüssel und ältere Migrationskopien auf diesem Gerät endgültig löschen? Stelle vorher ein Backup sicher.'))return;
  try{
   await portfolioStore.removeAll();
-  loadFailure=null;model=blankModel();filter='all';render();
+  loadFailure=null;model=blankModel();filter='all';render();syncApiSettingsForm();
   try{await clearAlphaCache();}catch{notify('Portfolio und Zugangsdaten gelöscht. Der Kurscache konnte nicht entfernt werden; bitte die Website-Daten im Browser prüfen.',true);return;}
   notify('Lokale FolioLab-Daten einschließlich alter Migrationskopien gelöscht.');
  }catch(error){notify('Lokale Daten konnten nicht vollständig gelöscht werden. Bitte die Website-Daten im Browser prüfen.',true);}
@@ -2681,12 +2700,7 @@ $('apiSettings').addEventListener('submit',async e=>{
    }finally{button.disabled=false;}
   });
   renderRefreshFrequency();$('autoRefresh').addEventListener('change',async e=>{try{model.settings=refreshSettings({...model.settings,autoRefresh:e.target.value});await save();notify(e.target.value==='off'?'Automatische Aktualisierung deaktiviert.':'Aktualisierungsintervall gespeichert.');}catch{renderRefreshFrequency();}});
-  for(const k of ['alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey'])if($('apiSettings').elements[k])$('apiSettings').elements[k].value=model.settings[k]||'';
-  $('apiSettings').elements.securitySource.value=model.settings.securitySource||'auto';
- $('apiSettings').elements.publicInstrumentEndpoint.value=model.settings.publicInstrumentEndpoint||'';
- $('apiSettings').elements.eodhdWorkerEndpoint.value=model.settings.eodhdWorkerEndpoint||'';
- $('apiSettings').elements.eodhdWorkerAccessToken.value=model.settings.eodhdWorkerAccessToken||'';
- const configured=[model.settings.publicInstrumentEndpoint,model.settings.eodhdWorkerEndpoint].filter(Boolean).length;$('optionalConnectionStatus').textContent=configured?configured+' eingerichtet':'Nicht eingerichtet';
+  syncApiSettingsForm();
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallControls();});
   window.addEventListener('appinstalled',()=>{installPrompt=null;document.documentElement.dataset.appInstalled='1';updateInstallControls();notify('FolioLab wurde als App installiert.');});
   document.querySelectorAll('[data-install-action]').forEach(button=>button.addEventListener('click',async()=>{
