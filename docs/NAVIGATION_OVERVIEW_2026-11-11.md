@@ -1,0 +1,17 @@
+# Navigation, Übersicht und Installation – isolierter Folgeschnitt
+
+Vorbereitung auf Main 0b8c6de007fff4d16ee930aa852354e4d52d513f. Kein Freeze, keine Gesamtfreigabe. Finale PR-CI erst nach vollständigem v309-Abschluss. Der separate CI-B-Schnitt bleibt unverändert zurückgestellt.
+
+Die Desktopnavigation kennzeichnet die aktive Seite mit einer klaren Unterstreichung. Der Vermögensverlauf steht auf breiten Ansichten neben Anlageklassen und Konten/Depots. Die Karten behalten natürliche Höhen; kleinere Ansichten stapeln sich. Ausgeklappte Bestandsdetails, Kennzahlen, Kursverlauf, Vorgänge und CSV-Aktionen verwenden dieselben bestehenden Renderfunktionen und Aktionen mit kompakteren Abständen. Keine Finanz-, Journal-, Bewertungs-, Speicher- oder Datenformatberechnung geändert.
+
+Installation steht auf Desktop und Mobil unter Mehr → App installieren, mit Symbol und Text. Der zusätzliche Desktophinweis „FolioLab als App nutzen“ erscheint nur mit einem direkten Browserangebot und ohne erkannte Installation. Die bestehende Prompt-/Hilfelogik bleibt zuständig. Ein Prompt wird einmal verbraucht; währenddessen sind beide Aktionen gesperrt. Abbruch und Fehler kehren zur Hilfe zurück, Annahme allein behauptet keine Installation. appinstalled und Standalone blenden die Angebote aus. Ein geschlossener Hinweis bleibt über Navigation/Reload geschlossen; bei blockiertem localStorage übernimmt sessionStorage, bei beiden Fehlern der laufende Speicherzustand. Der neue Schlüssel ist ausschließlich eine Darstellungspräferenz und kein Portfoliodatenspeicher.
+
+Geprüfte öffentliche Gestaltungsreferenzen vom 11.11.2026:
+
+- [Finanzfluss Copilot Dashboard](https://www.finanzfluss.de/copilot/hilfe/dashboard/): Vermögensverlauf, Verteilung und Konten/Depots als zusammenhängende Übersicht.
+- [extraETF Finanzmanager](https://extraetf.com/de/service/finanzmanager): gemeinsame Übersicht mehrerer Depots/Anlageklassen.
+- [Parqet Webapp Übersicht](https://faq.parqet.com/de/articles/660871-die-parqet-webapp-im-uberblick): Chart, seitliche Kennzahlen und responsive Bestandsübersicht.
+
+Keine fremden Bilder/Assets übernommen; öffentliche Prüfbelege ausschließlich synthetisch.
+
+Fünf gezielte Präferenztests bestanden. Syntax und UNKNOWN-FX-Testfixture geprüft. Neue native Browserfälle sind vorbereitet: fünf Breiten, leere Übersicht, lange Namen/große Werte/UNKNOWN-FX, kompakte Details/CSV, Axe/Überlauf und exakte unveränderte IndexedDB-Records; spätes Angebot, Hilfe, Schließen/Reload, Speicherfehler, Promptabbruch/-fehler/-annahme, Mehrfachklick, appinstalled und synthetische Standalone-Wechsel. Vorhandene vollständige Prüfungen bleiben erhalten. Der lokale Browserstart scheiterte am Hostsocket-EPERM; daraus folgt kein Browser-PASS. Kein Umgehen der Hostbeschränkung, keine Android-Hardware-/echte Installationsabnahme. Tatsächliches Android ist weiterhin gesondert zu prüfen.

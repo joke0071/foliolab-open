@@ -8,16 +8,20 @@ mkdirSync('artifacts/gates/navigation-installation',{recursive:true});
 for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
  const browser=await({chromium,firefox,webkit})[engine].launch({headless:true,args:engine==='chromium'?['--no-sandbox',...(proxy?['--ignore-certificate-errors']:[])]:[],...(proxy?{proxy:{server:proxy}}:{})});
  const contexts=[],checks=[];
- const fresh=async(blocked='none')=>{
+ const fresh=async(blocked='none',standalone=false)=>{
   const c=await browser.newContext({viewport:{width:1440,height:900},serviceWorkers:'block',ignoreHTTPSErrors:Boolean(proxy)});contexts.push(c);
   await c.addInitScript({content:readFileSync(new URL('../node_modules/axe-core/axe.min.js',import.meta.url),'utf8')});
-  await c.addInitScript(({key,blocked})=>{
+  await c.addInitScript(({key,blocked,standalone})=>{
+   const originalMedia=window.matchMedia.bind(window),listeners=new Set();let installed=standalone;
+   const media={media:'(display-mode: standalone)',get matches(){return installed;},addEventListener(type,f){if(type==='change')listeners.add(f);},removeEventListener(type,f){if(type==='change')listeners.delete(f);}};
+   window.matchMedia=query=>query===media.media?media:originalMedia(query);
+   window.__setSyntheticStandalone=value=>{installed=value;for(const f of listeners)f({matches:value,media:media.media});};
    // Fault only this display preference; portfolio persistence remains real.
    const get=Storage.prototype.getItem,set=Storage.prototype.setItem;
    const fail=s=>blocked==='both'||(blocked==='local'&&s===localStorage);
    Storage.prototype.getItem=function(k){if(k===key&&fail(this))throw new DOMException('Synthetic preference read','SecurityError');return get.call(this,k);};
    Storage.prototype.setItem=function(k,v){if(k===key&&fail(this))throw new DOMException('Synthetic preference write','QuotaExceededError');return set.call(this,k,v);};
-  },{key,blocked});
+  },{key,blocked,standalone});
   const p=await c.newPage();await p.goto(base);await ready(p);return p;
  };
  const ready=p=>p.waitForFunction(()=>document.getElementById('appStartup').hidden&&document.getElementById('portfolioStorageState').textContent.includes('IndexedDB aktiv'));
@@ -54,10 +58,16 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.deepEqual(await record(q),stored);
   }
   checks.push('local preference storage failure/session fallback and both stores failing/memory; portfolio bytes unchanged');
+  const standalone=await fresh('none',true);await nav(standalone,'more');await prompt(standalone);assert.equal(await standalone.locator('#installAppSection').isVisible(),false);assert.equal(await standalone.locator('#sidebarInstallHint').isVisible(),false);
+  await standalone.evaluate(()=>window.__setSyntheticStandalone(false));await standalone.locator('#sidebarInstallHint').waitFor({state:'visible'});await standalone.locator('#installButton').focus();await standalone.evaluate(()=>window.__setSyntheticStandalone(true));assert.equal(await standalone.locator('#installAppSection').isVisible(),false);assert.equal(await standalone.evaluate(()=>document.activeElement.dataset.page),'more','hiding an installation control retains visible navigation focus');
+  checks.push('synthetic initial standalone and media change hide all offers and restore visible focus; no hardware claim');
   const layout=await fresh();
+  for(const width of [320,390,430,768,1440]){await layout.setViewportSize({width,height:900});await nav(layout,'dashboard');await scan(layout);}
   await layout.evaluate(async()=>{
    const {blankModel,createProvider,createAccount,createPosition}=await import('/src/model.js'),{PortfolioStorage}=await import('/src/browser-portfolio-storage.js');
    const m=blankModel();m.settings.autoRefresh=false;m.providers.push(createProvider({id:'nav-p',name:'Synthetic provider with a deliberately long readable name'}));m.accounts.push(createAccount({id:'nav-a',providerId:'nav-p',name:'Synthetic long securities account name',type:'securities'},m));m.positions.push(createPosition({id:'nav-etf',providerId:'nav-p',accountId:'nav-a',name:'Synthetic ETF with a long security name',kind:'etf',quantity:'1234567.89',price:'100'},m));
+   m.positions.push(createPosition({id:'nav-unknown',providerId:'nav-p',accountId:'nav-a',name:'Synthetic USD with unknown FX',kind:'stock',currency:'USD',quantity:'2',price:'100'},m));
+   if(m.positions.at(-1).fxRateExact!=='UNKNOWN'||m.positions.at(-1).fxRate!==null)throw Error('Fixture must preserve UNKNOWN FX');
    const s=new PortfolioStorage();await s.initialize();await s.save(m);s.close();
   });await layout.reload();await ready(layout);const stored=await record(layout);
   for(const width of [320,390,430,768,1440]){
@@ -66,6 +76,7 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    assert.ok(await layout.locator('.dashboard-allocation').evaluate(e=>{const content=e.querySelector('.allocation-layout').getBoundingClientRect(),box=e.getBoundingClientRect();return box.bottom-content.bottom<50;}),'allocation has no stretched empty tail');
    if(width===1440){assert.ok(await layout.locator('.dashboard-overview').evaluate(e=>{const history=e.querySelector('.dashboard-history').getBoundingClientRect(),side=e.querySelector('.dashboard-side').getBoundingClientRect();return history.right<=side.left&&Math.abs(history.top-side.top)<2;}));assert.equal(await layout.locator('#sidebarNav button.active').evaluate(e=>getComputedStyle(e).boxShadow),'none');assert.equal(await layout.locator('#sidebarNav button.active span').evaluate(e=>getComputedStyle(e).textDecorationLine),'underline');}
    await layout.locator('#providerOverview details').evaluateAll(es=>es.forEach(e=>e.open=true));
+   assert.match(await layout.locator('[data-position-id=nav-unknown]>summary').innerText(),/Unbekannt/,'compact summary never invents an EUR valuation for unknown FX');
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>e.getBoundingClientRect().height>=44));
    await scan(layout);await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-${width}.png`});assert.deepEqual(await record(layout),stored,'disclosures/layout preserve exact portfolio record');
