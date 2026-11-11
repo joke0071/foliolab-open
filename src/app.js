@@ -2765,10 +2765,25 @@ function showRecoveryNotice(){
   $('backupFile').click();
  });
 }
+function apiSettingsHasDraft(){
+ const form=$('apiSettings');
+ if(!form)return false;
+ for(const key of ['securitySource','alphaVantageKey','marketstackKey','coinGeckoKey','etherscanKey','binplorerKey','publicInstrumentEndpoint','eodhdWorkerEndpoint','eodhdWorkerAccessToken']){
+  const field=form.elements.namedItem(key);
+  if(!field)continue;
+  const current=String(field.value||'').trim(),stored=String(model.settings[key]||(key==='securitySource'?'auto':'')).trim();
+  if(current===stored)continue;
+  if(key==='publicInstrumentEndpoint'||key==='eodhdWorkerEndpoint'){
+   try{if((validatedPublicEndpoint(current)||'')===(validatedPublicEndpoint(stored)||''))continue;}catch{}
+  }
+  return true;
+ }
+ return false;
+}
 function pwaUpdateShouldDefer(){
  const active=document.activeElement;
  return saving||busy||Boolean(editor)||Boolean(document.querySelector('dialog[open]'))||
-  Boolean(active&&active.matches('input, textarea, select, [contenteditable="true"]'));
+  Boolean(active&&active.matches('input, textarea, select, [contenteditable="true"]'))||apiSettingsHasDraft();
 }
 function showPwaUpdateNotice(){
  let banner=$('pwaUpdateNotice');
@@ -2786,6 +2801,7 @@ function showPwaUpdateNotice(){
   if(saving||busy||editor||document.querySelector('dialog[open]')){
    notify('Bitte den laufenden Vorgang zuerst abschließen.',true);return;
   }
+  if(apiSettingsHasDraft()&&!confirm('Datenquellen-Eingaben sind noch nicht gespeichert. Eingaben verwerfen und FolioLab jetzt aktualisieren?'))return;
   location.reload();
  });
  banner.append(message,button);
@@ -2826,4 +2842,5 @@ if(!loadFailure&&location.protocol==='https:'&&refreshFrequency(model.settings.a
   const candidates=model.positions.some(p=>p.wallet?.enabled||(p.kind==='crypto'&&p.coinId)||((model.settings.alphaVantageKey||model.settings.marketstackKey||(model.settings.eodhdWorkerEndpoint&&model.settings.eodhdWorkerAccessToken))&&['etf','stock','fund'].includes(p.kind)&&p.symbol));
   if(candidates)setTimeout(()=>refreshAll({automatic:true}),1000);
 }
+
 
