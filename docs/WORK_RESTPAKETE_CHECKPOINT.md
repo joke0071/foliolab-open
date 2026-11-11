@@ -1,3 +1,13 @@
+## ACTIVE · main-518556806b3b-20261111 · PR330 gezielt korrigiert / vollständige neue CI
+
+Kandidat281809a8/Run43057433111 beendet: ChromiumgesamtsuiteSUCCESS, FASTSUCCESS(66AxeScans0Verstöße), Wallet43057433359SUCCESS(1387Units0Fehler0Skips). Alle3Cross-Jobs ausschließlichvorBrowsertests anDNSfürarchive.ubuntu.comundus.archive.ubuntu.comgescheitert; keineSystemlistenänderung. KeinMerge/Deployment/Gesamtpass. SiebenOriginalarchiveAPIgebunden/erste5bereitsDigestGrößeCRCverifiziert; letzte2werdenmitdenselbenBytesqualifiziertundgemeinsammiteventuellenFolgeoriginalengesichert.
+
+Innerhalb ausdrücklicher#229-Korrekturfreigabe fester zusätzlicherHTTPS-Spiegelmirrors.edge.kernel.org aufUbuntu-Mirrorliste/Betreiber-/noble-/noble-security-Verzeichnissegeprüft. GewöhnlichesTLS/APT-Signaturen/Browser/Testaufrufe/Fristenunverändert.7NetzwerksimulationenerzwingenTLS-/HTTPS-/connect3/max8/Retry0-Argumente;22lokaleVerträgePASS. KeinRunnerPASSausPrimärquellen.
+
+PR330nachfrischenMain/Checkpoint/299Heads/ReviewsUNDKommentaren(Listeleer) undbeendetemaltenLauf mitexpectedHEAD281809a8 geschütztauf **5d755b89ae6a2139493194da38f3611e17d45284 / Treec72516b2012c4102642341166eaef5f6940a7c89** fortgeschrieben. VorbereiteteKorrektur83da93 undV145-Ketteerhalten. AktuelleLäufe:43060854039/Wallet scan checks, 43060854022/FolioLab Open – testen und veröffentlichen, 43060854033/Bounded live initialization diagnostics. DieseLäufevollständigqualifizieren; keineidentischenRetries/Abbrüche/zweitefinaleCI. VorIntegrationalleOriginal-/Sicht-/Fach-/immutableSicherungs-/gepinntReadback-/Restoregates; Main/Deploy/echteProduktionseparat. v308bleibtLIVE_ACCEPTED/Main0be4c7f; CI-B466be00erhalten. PrivateV145frischbytegleichrückgelesen,nochkeineneueSpeichermutation. Android/OAuth/Zweigeräte/Syncweiterextern.
+
+---
+
 ## ACTIVE · main-518556806b3b-20261111 · konkrete #229-Freigabe erteilt / PR330 aktualisiert
 
 Nutzer hat am11.11.2026 ausdrücklich Kandidat281809a8 (UbuntuHTTPS-Ausweichserver) zur vollständigenCI/Auswertung und nurbei allenPflichtgates Integration/Deployment freigegeben. KeineTest-/Timeout-/Qualitätsabschwächung; keineerneuteallgemeineFreigabe erforderlich. FrischeKollisionsprüfung: alle298Heads identischvorPR-Push, Main0be4c7f/Checkpointda9c87ce, PR330Reviews/Issue-/Inlinekommentareleer, nurhistorischeDrafts157/161zusätzlichoffen; jüngsteActionsallebeendet. PrivateV145/405811200Bytes/15:04:17UTCunverändert, keineoffeneprivateOperation.
