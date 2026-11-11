@@ -1,3 +1,15 @@
+## ACTIVE · main-0981e24cc507-20261111 · v308 Main/Deployment qualifiziert, Produktion läuft
+
+Main `0be4c7f07a60e1d17ce5a5691261a52810701329`, Tree `f8de9bb981a350b87215f8ac7c70ac268d749ea7`. [Main-/Deploymentbeleg](release-evidence/v308-main-qualified-production-pending.json): bestehender Lauf43023136886, alle Pflicht-Mainjobs und Deployment130545263496 SUCCESS, Versuch1; tatsächliche Produktion130545466119 IN_PROGRESS. 1380 Units ohne Fehler/Skips; 238 JSON,2068 dekodierte PNG,452 explizite Ergebnisvergleiche und50 direkt geprüfte Diagnostikkontexte. Alle153 Pages-Dateien exakt Git-Blobs. Neue native Reset-/verschlüsselte UI-Restore-/post-commit-Vault-/Präferenzfälle in drei Main-Engines qualifiziert; aktuelle Firefoxansicht direkt geprüft, identische Chromium/WebKit-Bildbytes aus geprüfter PR wiederverwendet. Alle sieben abgeschlossenen Originale einschließlich Uploadlogs geprüft; dieselben lokalen Bytes für Abschluss weiterverwenden. Produktionsoriginale bleiben PENDING.
+
+Aktuelle EFF03-Köpfe und Wochenplan6.1/6.2 auf Planstand81d5ad5 gelesen und erhalten. Frühe Auswertung abgeschlossener Jobartefakte hier bereits tatsächlich durchgeführt. Fehlerprüfung vor Freeze und fachliche Bündelung anwenden. Parallele finale CI, TARGETED und weitere technische Optionen bleiben inaktiv; kein zusätzlicher Lauf oder Daueraudit. Alleiniger Owner unverändert. Isolierter CI-B-Folgeschnitt auf `chore/ci-b-balance-0981e24cc507`, Commit466be00d49d3a5308cb28075dd7572e4d0ce596b,26 lokale Vertragsprüfungen PASS; noch keine PR/finale CI/Integration.
+
+Android-QA-Paket mit gültigen synthetischen Leser-Roundtrips vorbereitet und Nutzer bereitgestellt: kleines Portfolio5Positionen/2Buchungen einschließlich echtem Null/Kleinst/UNKNOWN-FX; großes251Positionen/500Buchungen, feste unabhängige Sollwerte und Journalaudit PASS. Kein Android-PASS daraus. Nutzerentscheidungen: frei einstellbare Kleinstbestandsgrenze, standardmäßig alle sichtbar; nur echtes Android verfügbar; bestehende Drive-Verbindung laut Nutzer funktionsfähig, Tokenablauf/Zweigeräte/Sync weiterhin ungeprüft. Einmaliger26Scope-Restabgleich als lokaler Entwurf der bestehenden Matrix vorbereitet, keine zweite Roadmap und kein neuer DONE-Status.
+
+v307 bleibt letzter LIVE_ACCEPTED; V143 exakt rückgelesen/tatsächlich116Manifestdateien restauriert,0Fehler. Keine offene private Schreiboperation. Nächste Aktion: bestehende tatsächliche Produktion vollständig qualifizieren; alle neuen Main-/Produktionsoriginale gebündelt unveränderlich sichern,rücklesen,Root geschützt fortschreiben und tatsächlich restaurieren. Erst dann v308 LIVE_ACCEPTED, Restmatrix fortschreiben und CI-B-Folgekandidat gegen akzeptierten Main qualifizieren. Keine zweite finale CI oder Integration parallel.
+
+---
+
 ## ACTIVE · main-0981e24cc507-20261111 · v308 Main läuft / unabhängiger CI-B-WIP gesichert
 
 Zwei fremde reinePlanungsnachträgea6657aa/d513874frischgeprüftundvollständigerhalten: ausschließlichEffizienz-/Wochenplan,keineOwner-/Checkpoint-/Produkt-/Main-/Workflow-/Sicherungsänderung. ErwarteterRefabgleichverhinderteÜberschreibung; aufneuenCheckpoint-HEADd513874rekonstruiert.
