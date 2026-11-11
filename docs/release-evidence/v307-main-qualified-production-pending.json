@@ -1,0 +1,83 @@
+{
+  "status": "MAIN_TEST_DEPLOY_QUALIFIED_PRODUCTION_IN_PROGRESS",
+  "owner": "main-75ea9fa46556-20261111",
+  "main": "37119745f9ac9e2356477202cae55948f3d74882",
+  "tree": "3c5cc434bc8f9600a727d53b71ffda0d5ab7e8d5",
+  "run": 42996734436,
+  "attempt": 1,
+  "deployJob": 130455321736,
+  "liveJob": 130455465813,
+  "cache": "foliolab-open-v307",
+  "mainTestAndDeployJobsSuccess": true,
+  "unitTests": 1366,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "jsonReports": 235,
+  "decodedPNG": 2065,
+  "explicitPriorSchemaComparisons": 422,
+  "additionalNewContractsDirectlyReviewed": true,
+  "newNativeAndHandlerEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "contextReportsReviewed": {
+    "metadataIDB": 3,
+    "controlledStorage": 42,
+    "providerRetirement": 2,
+    "touch": 2,
+    "longPress": 2
+  },
+  "pagesExactGitBlobMatches": 153,
+  "allSevenOriginalSizeDigestIDUploadLogMatches": true,
+  "artifacts": [
+    {
+      "id": 13845723032,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-3",
+      "size_in_bytes": 68781615,
+      "digest": "sha256:57f8af2d7bc5fd9e358d7dac6a283a5dff7a98bac58fa659324f0c45e97d9b84"
+    },
+    {
+      "id": 13845325847,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-1",
+      "size_in_bytes": 60004884,
+      "digest": "sha256:87709c6c7ace5e6649fec6400b75c95c7c2b5afb1b3b83506a9065f0b1ce6d46"
+    },
+    {
+      "id": 13845313669,
+      "name": "github-pages",
+      "size_in_bytes": 568111,
+      "digest": "sha256:a2ac0511107ae6de093cab2ec006663cdf55afbbe62291412eb438a104484256"
+    },
+    {
+      "id": 13845307588,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933194,
+      "digest": "sha256:818e04a84a14cdafe9f8abfd3a6467843832328ca35a8deea48f246d6cf80ba6"
+    },
+    {
+      "id": 13845081189,
+      "name": "cross-engine-gates-37119745f9ac9e2356477202cae55948f3d74882-2",
+      "size_in_bytes": 12410163,
+      "digest": "sha256:f5f2e67e2d6612b8cc9c707af8f1c065f629fdbae0a53523c2f2f0c542da741d"
+    },
+    {
+      "id": 13844449179,
+      "name": "release-gates-37119745f9ac9e2356477202cae55948f3d74882",
+      "size_in_bytes": 65552058,
+      "digest": "sha256:d3fb49cd9449627668cbf195a8789e362bcb70568c48a5d32ad62c1e14f9f539"
+    },
+    {
+      "id": 13844022770,
+      "name": "ci-stage-37119745f9ac9e2356477202cae55948f3d74882",
+      "size_in_bytes": 354,
+      "digest": "sha256:7586d07f579bcb15fa2f3f020279c1cf200b5963249792e1616033dc4d9c0451"
+    }
+  ],
+  "backup": "V141 pinned and actually incrementally restored; final new Main/production immutable increment and protected V142 remain pending",
+  "limits": [
+    "Mandatory actual three-engine production gate is still running",
+    "No LIVE_ACCEPTED from Main CI or deployment alone",
+    "Native Android/Safari/TalkBack/OAuth/original ownership anchors remain external"
+  ]
+}
