@@ -1,3 +1,13 @@
+## ACTIVE · main-40aba94dd4bd-20261111 · PR327 qualifiziert / V139 verifiziert / Integration vorbereitet
+
+Ein-Agenten-Hauptauftrag gilt gemäß [EFF03](WORK_EFFICIENCY_PLAN_2026-11-01.md). [PR327-Kandidatenabnahme](release-evidence/v306-pr327-qualified.json): HEAD7822860d6bb848320ed83f939e8528ad3388e2cf/Tree501c94e126088bfcddd79f26501cf9520f11e3a3; getesteterPR-Merge8f569cd445b263c566b0f5f34462518e8608154f exaktgleicherTree. PR42973683465/Wallet42973683722 SUCCESS,Versuch1.1356Units/0Fehler/0Skips;232JSON/2065dekodiertePNG/479expliziteErgebnisprüfungen und50direktgeprüfteKontextberichte; neuerFokusvertrag3Engines/4Breiten,exakteIDBBytes/Revisionerhalten. Alle6OriginalZIPs/API-/Uploadlogdigests/Größe/IDsverifiziert. EigeneQA,keinefalscheunabhängigeAgentenabnahme.
+
+V139 versionsgeschützt138→139 vollständiggepinnt bytegleichrückgelesen:405616640Bytes/SHA2565e06d2371c140ce006bb359f22c78a6c8bf7e87f97353071d77f8c89cceae3b9. VollständigeV138undalleälterenOriginal-/Companionketten erhalten. NeuerunveränderlicherOriginalteil211722240Bytes/SHA256382e71b84115ea114bf6b87559a010df242270bcbb7445322be4230d16e67619/45Manifestpfadegepinntbytegleich; tatsächlicherinkrementellerRestore50Manifestpfade/0Fehler. KeineoffeneSpeicheroperation. IdentischeältereVollrestorebelegewiederverwendet; privateIdentitätennurprivat.
+
+VorIntegration Main9ab3653fc508fa35fe0f20ecf56a14004f837d3e/Treeca1ec2ac2babb708dee3ee35a21e30f437f9ae66 undCheckpoint660b38b04275045c4dfc9253092ba999795dc825 frischunverändert; alleinigerOwner,keinfremdesWIP,keineReviews undnur eigenerBaselinekommentar. Genau nächsteAktion: PR327 mitexpectedHEAD geschütztintegrieren, exaktgleichenTree bestätigen, bestehendenMainlauf/Deployment/echteProduktionvollständigqualifizieren undneueOriginaleversionsgeschütztsichern. v305bleibtletzterLIVE_ACCEPTEDbisalleGatesbelegt. KeinCheckpoint-Gesamtmerge,keineDoppel-CI.
+
+---
+
 ## ACTIVE · main-40aba94dd4bd-20261111 · PR327 eingefroren / Pflicht-CI läuft
 
 K1–K6-Fortsetzung: K6-Seitennavigation. Tatsächliche go-Funktion im isolierten Quellcode-Repro:2erwartete Baselinefehler/1Pass; Kandidat3Pass. Lokal1356Units/0Fehler/0Skips und SyntaxPASS. Browserlokal durch fehlendeBinaries/Hostsocketverbot blockiert, keinPASS. Neuer echter Tastatur-/4Breiten-/IDB-Bytes-/Revisionsvertrag in vorhandener UI300-Suite, damit unverändert PR/Main/echteProduktion3Engines. Nur go-/SW306-/Tests-/Prüfdokumentdelta.

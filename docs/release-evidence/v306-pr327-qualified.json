@@ -1,0 +1,98 @@
+{
+  "status": "PR_CANDIDATE_QUALIFIED_NOT_RELEASE_ACCEPTED",
+  "owner": "main-40aba94dd4bd-20261111",
+  "PR": 327,
+  "PRHead": "7822860d6bb848320ed83f939e8528ad3388e2cf",
+  "tree": "501c94e126088bfcddd79f26501cf9520f11e3a3",
+  "testedPRMerge": "8f569cd445b263c566b0f5f34462518e8608154f",
+  "base": "9ab3653fc508fa35fe0f20ecf56a14004f837d3e",
+  "PRRun": 42973683465,
+  "WalletRun": 42973683722,
+  "allAttempts": 1,
+  "allMandatoryJobsSuccess": true,
+  "unitTests": 1356,
+  "unitFailures": 0,
+  "unitSkips": 0,
+  "jsonReports": 232,
+  "decodedPNG": 2065,
+  "explicitReviewedAssertions": 479,
+  "contextReportsDirectlyReviewed": 50,
+  "navigationEngines": [
+    "chromium",
+    "firefox",
+    "webkit"
+  ],
+  "widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "canonicalBytesAndRevisionUnchanged": true,
+  "originalArtifactUploadDigestSizeIdMatches": 6,
+  "artifacts": [
+    {
+      "id": 13836490387,
+      "name": "cross-engine-gates-8f569cd445b263c566b0f5f34462518e8608154f-3",
+      "size_in_bytes": 68786085,
+      "digest": "sha256:b6d71ee51ba984b321d8638336970318d4cc2e01eacffa84f81b67498cf3ddac"
+    },
+    {
+      "id": 13835107575,
+      "name": "cross-engine-gates-8f569cd445b263c566b0f5f34462518e8608154f-2",
+      "size_in_bytes": 12409101,
+      "digest": "sha256:b8a1e051cdba5978f883a98dcaa110f5b63b2683752af91aa40fd229ff515bc6"
+    },
+    {
+      "id": 13834998877,
+      "name": "release-gates-8f569cd445b263c566b0f5f34462518e8608154f",
+      "size_in_bytes": 65563994,
+      "digest": "sha256:a68e5d7b2efd448c4ceff26a229acd15f9f2639dd7e36497fc88691e0dc46b21"
+    },
+    {
+      "id": 13834978970,
+      "name": "dialog-visual-reference",
+      "size_in_bytes": 933194,
+      "digest": "sha256:ce59edd0517adf5a2266cb0e3e2a9b12cbe489bfc78927efcd2af1aa9a979296"
+    },
+    {
+      "id": 13834851140,
+      "name": "ci-stage-8f569cd445b263c566b0f5f34462518e8608154f",
+      "size_in_bytes": 556,
+      "digest": "sha256:4a7a5fd4a2a50b0e716c47c0599ef71dffb3ee33549face447fde9696a86768d"
+    },
+    {
+      "id": 13834079362,
+      "name": "cross-engine-gates-8f569cd445b263c566b0f5f34462518e8608154f-1",
+      "size_in_bytes": 60006003,
+      "digest": "sha256:c38465435109a14d6fbc9f4d54d59f54f8941edd0f1624edfcfb75828b3f39e5"
+    }
+  ],
+  "backup": {
+    "previousVersion": 138,
+    "targetVersion": 139,
+    "bytes": 405616640,
+    "sha256": "5e06d2371c140ce006bb359f22c78a6c8bf7e87f97353071d77f8c89cceae3b9",
+    "pinnedReadbackVerified": true,
+    "previousRootPreserved": true,
+    "incrementReadbackVerified": true,
+    "rootManifestPaths": 5,
+    "actualExtractedManifestPaths": 50,
+    "restoreFailures": 0
+  },
+  "immutableOriginals": {
+    "bytes": 211722240,
+    "sha256": "382e71b84115ea114bf6b87559a010df242270bcbb7445322be4230d16e67619",
+    "manifestPaths": 45,
+    "pinnedReadbackVerified": true
+  },
+  "baselineFocusLossDirectProductionConfirmed": true,
+  "localBrowserHostLimitNotPass": true,
+  "QA": "Own QA plus existing independent machine gates; separate EFF03 QA/webhook obligation ended by explicit user decision11.11.2026",
+  "noRetriesAbortsOrDuplicateMeasurementCI": true,
+  "limits": [
+    "Main/deploy/actual production acceptance still required",
+    "Not native Android/TalkBack/Safari/system font/OAuth qualification",
+    "K6 overall VERIFY; not FolioLab1.0 acceptance"
+  ]
+}
