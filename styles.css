@@ -2127,3 +2127,13 @@
 @media(max-width:720px){.install-settings-panel{align-items:flex-start;flex-wrap:wrap;padding:16px}#dashboardPage .dashboard-overview,#dashboardPage .dashboard-side{gap:12px}}
 @media(max-width:420px){#dashboardPage .dashboard-allocation .donut{width:12.8em;height:12.8em;flex-basis:12.8em}#dashboardPage .dashboard-allocation .donut-inner{width:8.8em;height:8.8em}}
 @media(max-width:360px){#dashboardPage .dashboard-allocation .alloc-legend{flex:1 1 auto}}
+
+/* Narrow account cards keep readable names above values and actions. */
+@media(max-width:540px){
+ .dashboard-providers .provider-row{grid-template-columns:minmax(0,1fr) 10px}
+ .dashboard-providers .provider-l{grid-column:1;grid-row:1}
+ #dashboardPage .dashboard-providers .provider-total{grid-column:1;grid-row:2;justify-self:start;text-align:left;margin-left:0;white-space:normal;max-width:100%}
+ .dashboard-providers .provider-chevron{grid-column:2;grid-row:1/span 2}
+ .dashboard-providers .provider-account-head>div{flex:1 1 100%}
+ #dashboardPage .dashboard-providers .aggregate-account-value{max-width:100%;margin-right:auto}
+}

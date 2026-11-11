@@ -99,6 +99,10 @@ for(const engine of (process.env.UI_QUALITY_ENGINES||'chromium').split(',')){
    await Promise.all(['nav-etf','nav-unknown'].map(id=>layout.locator('[data-action=import-price-history][data-id='+id+']').waitFor({state:'visible',timeout:5000})));
    assert.ok(await layout.locator('[data-action=import-price-history][data-id=nav-etf]').isVisible());
    assert.ok(await layout.locator('.position-csv-import').first().evaluate(e=>e.getBoundingClientRect().height>=44));
+   if(width<=430){
+    assert.ok(await layout.locator('#providerOverview>.provider-accordion').first().evaluate(root=>{const row=root.querySelector(':scope>.provider-row'),name=row.querySelector('.provider-l>div');return name.getBoundingClientRect().width>=row.getBoundingClientRect().width*.55;}),'narrow provider name retains readable width beside the separate value row');
+    assert.ok(await layout.locator('.provider-account-head').first().evaluate(head=>head.querySelector(':scope>div').getBoundingClientRect().width>=head.getBoundingClientRect().width*.8),'narrow account name retains a full row above value and positions action');
+   }
    await scan(layout);await layout.screenshot({path:`artifacts/gates/navigation-installation/${engine}-${width}.png`});assert.deepEqual(await record(layout),stored,'disclosures/layout preserve exact portfolio record');
   }
   checks.push('five widths; long provider/account/position names and large amounts; graph/allocation/accounts arrangement; compact disclosures/CSV retained; axe/overflow; exact IDB record unchanged');
